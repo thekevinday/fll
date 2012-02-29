@@ -1,0 +1,21 @@
+# fss-0000
+
+project_name fss_extended_read
+project_level 3
+
+version_major 0
+version_minor 2
+version_micro 0
+
+build_compiler gcc
+build_libraries -lc -lf_memory -lf_console -lf_conversion -lf_output -lf_file -lfl_fss -lfl_console -lfl_file -lfl_strings -lfl_colors -lfl_directory -lfl_execute -lfll_fss -lfll_colors
+build_sources_library fss_extended_read.c
+build_sources_program main.c
+build_sources_headers fss_extended_read.h
+build_shared yes
+
+flags_all -z now
+flags_shared
+flags_static
+flags_library -fPIC
+flags_program -fPIE -lfss_extended_read

@@ -1,0 +1,21 @@
+# fss-0000
+
+project_name fll_fss
+project_level 2
+
+version_major 0
+version_minor 2
+version_micro 1
+
+build_compiler gcc
+build_libraries -lc -lf_memory -lf_file -lf_conversion -lfl_fss
+build_sources_library fss_basic.c fss_basic_list.c fss_extended.c
+build_sources_program 
+build_sources_headers fss_basic.h fss_basic_list.h fss_extended.h
+build_shared yes
+
+flags_all -z now
+flags_shared
+flags_static
+flags_library -fPIC
+flags_program -fPIE
