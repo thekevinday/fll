@@ -141,9 +141,13 @@ extern "C"{
 
 // Defines a variable to be used by arrays.
 #ifndef _di_f_array_length_
-  typedef f_u_long f_array_length;
+  typedef f_u_long      f_array_length;
+  typedef f_u_int       f_array_length_short;
+  typedef f_u_long_long f_array_length_long;
 
-  #define f_array_length_initialize 0
+  #define f_array_length_initialize       0
+  #define f_array_length_short_initialize f_array_length_initialize
+  #define f_array_length_long_initialize  f_array_length_initialize
 #endif // _di_f_array_length_
 
 #ifdef __cplusplus
