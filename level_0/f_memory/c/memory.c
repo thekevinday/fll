@@ -36,7 +36,7 @@ extern "C"{
   }
 #endif // _di_f_new_
 
-#ifndef _di_f_delete_
+#if ! ( defined (_di_f_delete_) || defined (_f_memory_FORCE_secure_memory_) )
   f_return_status f_delete(void **pointer, const f_memory_size_t type, const f_memory_length length){
     #ifndef _di_level_0_parameter_checking_
       if (pointer == 0) return f_invalid_parameter;
@@ -52,9 +52,9 @@ extern "C"{
 
     return f_none;
   }
-#endif // _di_f_delete_
+#endif // ! ( defined (_di_f_delete_) || defined (_f_memory_FORCE_secure_memory_) )
 
-#ifndef _di_f_destroy_
+#if ! ( defined (_di_f_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
   f_return_status f_destroy(void **pointer, const f_memory_size_t type, const f_memory_length length){
     #ifndef _di_level_0_parameter_checking_
       if (length  <  0) return f_invalid_parameter;
@@ -76,9 +76,9 @@ extern "C"{
 
     return f_none;
   }
-#endif // _di_f_destroy_
+#endif // ! ( defined (_di_f_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
 
-#ifndef _di_f_resize_
+#if ! ( defined (_di_f_resize_) || defined (_f_memory_FORCE_secure_memory_) )
   f_return_status f_resize(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length){
     #ifndef _di_level_0_parameter_checking_
       if (type       <= 0) return f_invalid_parameter;
@@ -130,9 +130,9 @@ extern "C"{
 
     return f_reallocation_error;
   }
-#endif // _di_f_resize_
+#endif // ! ( defined (_di_f_resize_) || defined (_f_memory_FORCE_secure_memory_) )
 
-#ifndef _di_f_adjust_
+#if ! ( defined (_di_f_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
   f_return_status f_adjust(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length){
     #ifndef _di_level_0_parameter_checking_
       if (type       <= 0) return f_invalid_parameter;
@@ -192,7 +192,7 @@ extern "C"{
 
     return f_reallocation_error;
   }
-#endif // _di_f_adjust_
+#endif // ! ( defined (_di_f_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
 
 #ifdef __cplusplus
 } // extern "C"
