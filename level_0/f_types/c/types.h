@@ -139,6 +139,13 @@ extern "C"{
   #define f_standard_warning stdout // I still hope for a separate pipe for warnings
 #endif // _di_f_types_standard_output_
 
+// Defines a variable to be used by arrays.
+#ifndef _di_f_array_length_
+  typedef f_u_long f_array_length;
+
+  #define f_array_length_initialize 0
+#endif // _di_f_array_length_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
