@@ -124,7 +124,7 @@ extern "C"{
     f_string_length stop;
   } f_string_location;
 
-  #define f_string_location_initialize { f_string_length_initialize, f_string_length_initialize }
+  #define f_string_location_initialize { 1, 0 }
 
   #define f_new_string_location(status, string_location, length)   status = f_new_array((void **) & string_location, sizeof(f_string_location), length)
   #define f_delete_string_location(status, string_location, size)  status = f_delete((void **) & string_location, sizeof(f_string_location), size)

@@ -235,7 +235,8 @@ extern "C"{
         {
           f_string_location input = f_string_location_initialize;
 
-          input.stop = data->buffer.used - 1;
+          input.start = 0;
+          input.stop  = data->buffer.used - 1;
 
           status = fll_fss_basic_read(&data->buffer, &input, &data->objects, &data->contents);
         }
