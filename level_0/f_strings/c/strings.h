@@ -97,11 +97,11 @@ extern "C"{
 #ifndef _di_f_string_lengths_
   typedef struct {
     f_string_length *array;
-    f_string_length size;   // total amount of allocated space
-    f_string_length used;   // total number of allocated spaces used
+    f_array_length  size;  // total amount of allocated space
+    f_array_length  used;  // total number of allocated spaces used
   } f_string_lengths;
 
-  #define f_string_lengths_initialize { f_string_length_initialize, f_string_length_initialize, f_string_length_initialize }
+  #define f_string_lengths_initialize { f_string_length_initialize, f_array_length_initialize, f_array_length_initialize }
 
   #define f_delete_string_lengths(status, lengths) \
     f_delete_structure(status, lengths, f_string_length)
@@ -141,11 +141,11 @@ extern "C"{
 #ifndef _di_f_string_locations_
   typedef struct {
     f_string_location *array; // the array of string locations
-    f_string_length   size;   // total amount of allocated space
-    f_string_length   used;   // total number of allocated spaces used
+    f_array_length    size;   // total amount of allocated space
+    f_array_length    used;   // total number of allocated spaces used
   } f_string_locations;
 
-  #define f_string_locations_initialize {0, f_string_length_initialize, f_string_length_initialize}
+  #define f_string_locations_initialize {0, f_array_length_initialize, f_array_length_initialize}
 
   #define f_delete_string_locations(status, locations) \
     f_delete_structure(status, locations, f_string_location)

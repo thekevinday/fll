@@ -122,7 +122,7 @@ extern "C"{
 #endif // _di_fss_extended_read_print_help_
 
 #ifndef _di_fss_extended_read_main_
-  f_return_status fss_extended_read_main(const f_s_int argc, const f_string argv[], fss_extended_read_data *data){
+  f_return_status fss_extended_read_main(const f_array_length argc, const f_string argv[], fss_extended_read_data *data){
     f_status status            = f_status_initialize;
     f_status allocation_status = f_status_initialize;
 

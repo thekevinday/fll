@@ -31,8 +31,8 @@ extern "C"{
 #endif // _di_fl_execute_path_
 
 #ifndef _di_fl_execute_program_
-  // TODO: this will find the program based on PATH environment so that static paths do not have to be used as with f_execute_path
-  //f_return_status fl_execute_program(const f_string program_name, const f_string arguments[], f_s_int *results);
+  // This will find the program based on PATH environment so that static paths do not have to be used as with f_execute_path
+  extern f_return_status fl_execute_program(const f_string program_name, const f_string arguments[], f_s_int *results);
 #endif // _di_fl_execute_program_
 
 #ifdef __cplusplus

@@ -1,6 +1,6 @@
 #include <level_3/fss_basic_list_read.h>
 
-int main(const f_s_int argc, const f_string argv[]){
+int main(const f_array_length argc, const f_string argv[]){
   f_status                 status = f_status_initialize;
   fss_basic_list_read_data data   = fss_basic_list_read_data_initialize;
 

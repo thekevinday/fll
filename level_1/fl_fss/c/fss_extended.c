@@ -172,7 +172,7 @@ extern "C"{
             }
 
             if (delimits.used > 0) {
-              f_string_length counter = 0;
+              f_array_length counter = 0;
 
               for (; counter < delimits.used; counter++) {
                 buffer->string[delimits.array[counter]] = f_fss_delimit_placeholder;

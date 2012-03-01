@@ -11,7 +11,7 @@ extern "C"{
 #endif
 
 #ifndef _di_fl_process_parameters_
-  f_return_status fl_process_parameters(const f_u_int argc, const f_string argv[], f_console_parameter parameters[], const f_u_int total_parameters, f_string_lengths *remaining){
+  f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_u_int total_parameters, f_string_lengths *remaining){
     #ifndef _di_level_1_parameter_checking_
       if (remaining == f_null) return f_invalid_parameter;
     #endif // _di_level_1_parameter_checking_
@@ -20,11 +20,11 @@ extern "C"{
     f_console_id result = 0;
     f_bool       found  = f_false;
 
-    f_u_int location          = 1; // parameter 0 represents the program name so skip it
-    f_u_int sub_location      = 0;
-    f_u_int increments        = 0;
-    f_u_int string_length     = 0;
-    f_u_int parameter_counter = 0;
+    f_array_length location          = 1; // parameter 0 represents the program name so skip it
+    f_string_length sub_location     = 0;
+    f_string_length increments       = 0;
+    f_string_length string_length    = 0;
+    f_array_length parameter_counter = 0;
 
     f_string_lengths extra_initiator = f_string_lengths_initialize;
 
