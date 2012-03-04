@@ -27,17 +27,17 @@ extern "C" {
 
 #ifndef _di_fl_serialize_
   // this function will append a string to the serialize.
-  extern f_return_status fl_serialize(const f_dynamic_string value, f_serialized *serialized);
+  extern f_return_status fl_serialize(const f_u_short strategy, const f_dynamic_string value, f_serialized *serialized);
 #endif // _di_fl_serialize_
 
 #ifndef _di_fl_unserialize_
   // this function will unserialize a serialized string and store the results in an array of strings.
-  extern f_return_status fl_unserialize(const f_serialized serialized, f_string_locations *locations);
+  extern f_return_status fl_unserialize(const f_u_short strategy, const f_serialized serialized, f_string_locations *locations);
 #endif // _di_fl_unserialize_
 
 #ifndef _di_fl_unserialize_get_
   // this function will pull a single serialized value from the serialized string at the given index.
-  extern f_return_status fl_unserialize_get(const f_serialized serialized, const f_array_length index, f_string_location *location);
+  extern f_return_status fl_unserialize_get(const f_u_short strategy, const f_serialized serialized, const f_array_length index, f_string_location *location);
 #endif // _di_fl_unserialize_get_
 
 #ifdef __cplusplus

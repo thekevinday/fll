@@ -47,10 +47,9 @@ extern "C"{
     f_string_length size;      // total amount of allocated space
     f_string_length used;      // total number of allocated spaces used
     f_array_length variables;  // total number of serialized variables stored
-    f_u_short strategy,        // serialized strategy in use
   } f_serialized;
 
-  #define f_serialized_initialize { f_string_initialize, f_string_length_initialize, f_string_length_initialize, f_array_length_initialize, 0 }
+  #define f_serialized_initialize { f_string_initialize, f_string_length_initialize, f_string_length_initialize, f_array_length_initialize }
 
   #define f_delete_serialized(status, serialized) \
     status = f_delete((void **) & serialized.string, sizeof(f_string), serialized.size); \

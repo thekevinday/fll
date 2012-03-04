@@ -11,12 +11,12 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_serialize_
-  f_return_status fl_serialize(const f_dynamic_string value, f_serialized *serialized) {
+  f_return_status fl_serialize(const f_u_short strategy, const f_dynamic_string value, f_serialized *serialized) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
 
-    if (serialized.strategy != f_serialized_strategy_simple) {
+    if (strategy != f_serialized_strategy_simple) {
       return f_unsupported;
     }
 
@@ -37,13 +37,13 @@ extern "C" {
 #endif // _di_fl_serialize_
 
 #ifndef _di_fl_unserialize_
-  f_return_status fl_unserialize(const f_serialized *serialized, f_string_locations *locations) {
+  f_return_status fl_unserialize(const f_u_short strategy, const f_serialized *serialized, f_string_locations *locations) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized == f_null) return f_invalid_parameter;
       if (locations  == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
 
-    if (serialized.strategy != f_serialized_strategy_simple) {
+    if (strategy != f_serialized_strategy_simple) {
       return f_unsupported;
     }
 
@@ -91,13 +91,13 @@ extern "C" {
 #endif // _di_fl_unserialize_
 
 #ifndef _di_fl_unserialize_get_
-  f_return_status fl_unserialize_get(const f_serialized serialized, const f_array_length index, f_string_location *location) {
+  f_return_status fl_unserialize_get(const f_u_short strategy, const f_serialized serialized, const f_array_length index, f_string_location *location) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized == f_null) return f_invalid_parameter;
       if (location   == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
 
-    if (serialized.strategy != f_serialized_strategy_simple) {
+    if (strategy != f_serialized_strategy_simple) {
       return f_unsupported;
     }
 
