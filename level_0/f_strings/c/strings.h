@@ -61,6 +61,12 @@ extern "C"{
   #define string_format_long_long_unsigned "%llu"
 #endif // _di_string_format_pointers_
 
+#ifdef _di_f_array_length_printf_
+  typedef f_array_length_printf       string_format_unsigned;
+  typedef f_array_length_short_printf string_format_long_unsigned;
+  typedef f_array_length_long_printf  string_format_long_long_unsigned;
+#endif // _di_f_array_length_printf_
+
 // define the basic string type
 #ifndef _di_f_have_string_
   typedef f_autochar *f_string;
@@ -83,6 +89,7 @@ extern "C"{
   typedef f_u_long f_string_length;
 
   #define f_string_length_initialize 0
+  #define f_string_length_printf string_format_long_unsigned
 
   #define f_new_string_length(status, string, length)   status = f_new_array((void **) & string, sizeof(f_string_length), length)
   #define f_delete_string_length(status, string)        status = f_delete((void **) & string)
