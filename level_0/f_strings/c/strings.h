@@ -50,6 +50,8 @@ extern "C"{
   #define string_format_unsigned           "%u"
   #define string_format_double             "%d"
   #define string_format_float              "%f"
+  #define string_format_short_integer      "%hi"
+  #define string_format_short_unsigned     "%hu"
   #define string_format_long_integer       "%li"
   #define string_format_long_unsigned      "%lu"
   #define string_format_long_double        "%ld"
