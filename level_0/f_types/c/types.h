@@ -33,15 +33,15 @@ extern "C"{
   #define f_s_short        signed short
   #define f_s_long_long    signed long long
   #define f_s_short_short  signed short
-  #define f_s_double       signed double
-  #define f_s_long_double  signed long double
+  #define f_s_double       double
+  #define f_s_long_double  long double
   #define f_u_int          unsigned int
   #define f_u_short        unsigned short
   #define f_u_short_short  unsigned short
   #define f_u_long         unsigned long
   #define f_u_long_long    unsigned long long
-  #define f_u_double       unsigned double
-  #define f_u_long_double  unsigned long double
+  #define f_u_double       double
+  #define f_u_long_double  long double
   #define f_char           char                 // should ONLY be char
   #define f_wchar          wchar                // should ONLY be wchar
   #define f_autochar       char                 // can be wchar or char
