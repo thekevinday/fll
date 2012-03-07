@@ -83,12 +83,16 @@ generate_main(){
 
   generate_load_settings
 
-  if [[ $operation == "build" && ! -f ${path_build}.built ]] ; then
-    if [[ ! -f ${path_build}.prepared ]] ; then
-      generate_prepare_build
-    fi
+  if [[ $operation == "build" ]] ; then
+    if [[ -f ${path_build}.built ]] ; then
+      echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
+    else
+      if [[ ! -f ${path_build}.prepared ]] ; then
+        generate_prepare_build
+      fi
 
-    generate_operation_build
+      generate_operation_build
+    fi
   elif [[ $operation == "clean" ]] ; then
     generate_operation_clean
   elif [[ $operation == "fail-multiple" ]] ; then
