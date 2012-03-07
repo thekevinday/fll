@@ -43,6 +43,23 @@ extern "C"{
   #define f_placeholder '\0'
 #endif // _di_f_have_placeholder_
 
+#ifndef _di_string_format_pointers_
+  #define string_format_string             "%s"
+  #define string_format_character          "%c"
+  #define string_format_integer            "%i"
+  #define string_format_unsigned           "%u"
+  #define string_format_double             "%d"
+  #define string_format_float              "%f"
+  #define string_format_long_integer       "%li"
+  #define string_format_long_unsigned      "%lu"
+  #define string_format_long_double        "%ld"
+  #define string_format_long_float         "%lf"
+  #define string_format_long_long_integer  "%lli"
+  #define string_format_long_long_unsigned "%llu"
+  #define string_format_long_long_double   "%lld"
+  #define string_format_long_long_float    "%llf"
+#endif // _di_string_format_pointers_
+
 // define the basic string type
 #ifndef _di_f_have_string_
   typedef f_autochar *f_string;
@@ -60,23 +77,6 @@ extern "C"{
   #define f_adjust_string(status, string, old_length, new_length) \
     status = f_adjust((void **) & string, sizeof(f_string), old_length, new_length)
 #endif // _di_f_have_string_
-
-#ifndef _di_string_format_pointers_
-  #define string_format_string             "%s"
-  #define string_format_character          "%c"
-  #define string_format_integer            "%i"
-  #define string_format_unsigned           "%u"
-  #define string_format_double             "%d"
-  #define string_format_float              "%f"
-  #define string_format_long_integer       "%li"
-  #define string_format_long_unsigned      "%lu"
-  #define string_format_long_double        "%ld"
-  #define string_format_long_float         "%lf"
-  #define string_format_long_long_integer  "%lli"
-  #define string_format_long_long_unsigned "%llu"
-  #define string_format_long_long_double   "%lld"
-  #define string_format_long_long_float    "%llf"
-#endif // _di_string_format_pointers_
 
 #ifndef _di_f_string_length_
   typedef f_u_long f_string_length;
