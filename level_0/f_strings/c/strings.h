@@ -55,11 +55,8 @@ extern "C"{
   #define string_format_long_integer       "%li"
   #define string_format_long_unsigned      "%lu"
   #define string_format_long_double        "%ld"
-  #define string_format_long_float         "%lf"
   #define string_format_long_long_integer  "%lli"
   #define string_format_long_long_unsigned "%llu"
-  #define string_format_long_long_double   "%lld"
-  #define string_format_long_long_float    "%llf"
 #endif // _di_string_format_pointers_
 
 // define the basic string type
