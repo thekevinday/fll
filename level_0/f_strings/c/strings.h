@@ -46,6 +46,8 @@ extern "C"{
 #ifndef _di_string_format_pointers_
   #define string_format_string             "%s"
   #define string_format_character          "%c"
+  #define string_format_wide_string        "%ls"
+  #define string_format_wide_character     "%lc"
   #define string_format_integer            "%i"
   #define string_format_unsigned           "%u"
   #define string_format_double             "%d"
