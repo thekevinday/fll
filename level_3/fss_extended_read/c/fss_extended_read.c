@@ -279,7 +279,7 @@ extern "C"{
         }
 
         // now that all of the files have been read, process the objects and contents
-        if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found){
+        if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found && data->parameters[fss_basic_read_parameter_name].result == f_console_result_none){
           fprintf(f_standard_output, "%u\n", (unsigned int) data->objects.used);
         } else {
           current = 0;
@@ -324,6 +324,7 @@ extern "C"{
           } else {
             current = 0;
 
+            f_string_length total       = f_string_length_initialize;
             f_string_length name_length = f_string_length_initialize;
             f_string_length argv_length = f_string_length_initialize;
 
@@ -338,12 +339,16 @@ extern "C"{
                     if (fl_compare_strings(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_extended_read_parameter_name].additional], name_length, argv_length) == f_equal_to){
 
                       if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)){
-                        if (data->contents.array[current].used > select){
-                          f_print_partial_dynamic_string(f_standard_output, data->buffer, data->contents.array[current].array[select]);
-                          fprintf(f_standard_output, "\n");
+                        if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found){
+                          total++;
                         } else {
-                          // for all objects with no data, print a newline
-                          fprintf(f_standard_output, "\n");
+                          if (data->contents.array[current].used > select){
+                            f_print_partial_dynamic_string(f_standard_output, data->buffer, data->contents.array[current].array[select]);
+                            fprintf(f_standard_output, "\n");
+                          } else {
+                            // for all objects with no data, print a newline
+                            fprintf(f_standard_output, "\n");
+                          }
                         }
                       }
 
@@ -357,6 +362,10 @@ extern "C"{
                     }
                   }
                 } // for
+
+                if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found && data->parameters[fss_basic_read_parameter_count].result == f_console_result_none){
+                  fprintf(f_standard_output, f_string_length_printf "\n", total);
+                }
               } else {
                 // when and because the object parameter is specified, the name parameter refers to the content instead of the object
                 // therefore, make the search on the content and display the object
