@@ -128,7 +128,7 @@ extern "C"{
 #endif // _di_fss_extended_read_print_help_
 
 #ifndef _di_fss_extended_read_main_
-  extern f_return_status fss_extended_read_main(const f_s_int argc, const f_string argv[], fss_extended_read_data *data);
+  extern f_return_status fss_extended_read_main(const f_array_length argc, const f_string argv[], fss_extended_read_data *data);
 #endif // _di_fss_extended_read_main_
 
 #ifndef _di_fss_extended_read_delete_data_
