@@ -236,7 +236,13 @@ generate_operation_build(){
   local sources=
   local i=
 
-  if [[ $shared == "yes" ]] ; then
+  if [[ $sources_headers != "" ]] ; then
+    for i in $sources_headers ; do
+      cp -vf sources/c/$i ${path_build}includes/level_$level/ || failure=1
+    done
+  fi
+
+  if [[ $failure == "" && $shared == "yes" ]] ; then
     if [[ $sources_library != "" ]] ; then
       for i in $sources_library ; do
         sources="${sources}sources/c/$i "
@@ -260,7 +266,7 @@ generate_operation_build(){
       echo $compiler $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]} $sources -o ${path_build}programs/$name
       $compiler $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]} $sources -o ${path_build}programs/$name || failure=1
     fi
-  else
+  elif [[ $failure == "" ]] ; then
     if [[ $sources_library != "" ]] ; then
       for i in $sources_library ; do
         sources="${sources}sources/c/$i "
@@ -279,12 +285,6 @@ generate_operation_build(){
       echo $compiler $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} $sources -static -o ${path_build}programs/$name
       $compiler $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} $sources -static -o ${path_build}programs/$name || failure=1
     fi
-  fi
-
-  if [[ $failure == "" && $sources_headers != "" ]] ; then
-    for i in $sources_headers ; do
-      cp -vf sources/c/$i ${path_build}includes/level_$level/ || failure=1
-    done
   fi
 
   if [[ $failure != "" ]] ; then
