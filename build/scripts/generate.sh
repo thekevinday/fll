@@ -57,7 +57,7 @@ generate_main(){
         elif [[ $operation == "" ]] ; then
           operation=$p
         else
-          operation=fail
+          operation=fail-multiple
         fi
       else
         if [[ $grab_next == "path_build" ]] ; then
@@ -91,8 +91,12 @@ generate_main(){
     generate_operation_build
   elif [[ $operation == "clean" ]] ; then
     generate_operation_clean
-  else
+  elif [[ $operation == "fail-multiple" ]] ; then
     echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
+  elif [[ $operation == "" ]] ; then
+    echo -e "${c_error}ERROR: no operation was given.$c_reset"
+  else
+    echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
   fi
 }
 
