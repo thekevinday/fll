@@ -4,7 +4,7 @@ project_name f_console
 project_level 0
 
 version_major 0
-version_minor 2
+version_minor 3
 version_micro 0
 
 build_compiler gcc

@@ -4,7 +4,7 @@ project_name fss_extended_read
 project_level 3
 
 version_major 0
-version_minor 2
+version_minor 3
 version_micro 0
 
 build_compiler gcc
