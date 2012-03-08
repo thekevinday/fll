@@ -61,10 +61,10 @@ extern "C"{
   #define string_format_long_long_unsigned "%llu"
 #endif // _di_string_format_pointers_
 
-#ifdef _di_f_array_length_printf_
-  typedef f_array_length_printf       string_format_unsigned;
-  typedef f_array_length_short_printf string_format_long_unsigned;
-  typedef f_array_length_long_printf  string_format_long_long_unsigned;
+#ifndef _di_f_array_length_printf_
+  #define f_array_length_printf       string_format_unsigned
+  #define f_array_length_short_printf string_format_long_unsigned
+  #define f_array_length_long_printf  string_format_long_long_unsigned
 #endif // _di_f_array_length_printf_
 
 // define the basic string type
