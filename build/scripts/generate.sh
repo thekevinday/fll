@@ -32,6 +32,8 @@ generate_main(){
   local settings_file=data/build/settings
   local operation=
   local path_build=build/
+  local path_c=sources/c/
+  local path_bash=sources/bash/
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -54,6 +56,10 @@ generate_main(){
           grab_next=path_build
         elif [[ $p == "-s" || $p == "--settings" ]] ; then
           grab_next=settings_file
+        elif [[ $p == "-B" || $p == "--bash_path" ]] ; then
+          grab_next=path_bash
+        elif [[ $p == "-c" || $p == "--c_path" ]] ; then
+          grab_next=path_c
         elif [[ $operation == "" ]] ; then
           operation=$p
         else
@@ -64,6 +70,10 @@ generate_main(){
           path_build=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "settings_file" ]] ; then
           settings_file=$(echo $p | sed -e 's|^//*|/|')
+        elif [[ $grab_next == "path_bash" ]] ; then
+          path_bash=$(echo $p | sed -e 's|/*$|/|')
+        elif [[ $grab_next == "path_c" ]] ; then
+          path_c=$(echo $p | sed -e 's|/*$|/|')
         fi
 
         grab_next=
@@ -82,6 +92,19 @@ generate_main(){
   fi
 
   generate_load_settings
+
+  # TODO: enable when bash support is implemented
+  #if [[ ! -d $path_bash ]] ; then
+  #  echo -e "${c_error}ERROR: the bash path of $c_notice$path_bash$c_error is invalid.$c_reset"
+  #  generate_cleanup
+  #  exit 0
+  #fi
+
+  if [[ ! -d $path_c && ( ${variables[$(generate_id build_sources_library)]} != "" || ${variables[$(generate_id build_sources_program)]} != "" || ${variables[$(generate_id build_sources_headers)]} != "" ) ]] ; then
+    echo -e "${c_error}ERROR: the c path of '$c_notice$path_c$c_error' is invalid.$c_reset"
+    generate_cleanup
+    exit 0
+  fi
 
   if [[ $operation == "build" ]] ; then
     if [[ -f ${path_build}.built ]] ; then
@@ -143,6 +166,8 @@ generate_help(){
   echo -e "${c_highlight}Generate Options:$c_reset"
   echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}     Specify a custom build directory"
   echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}  Specify a custom build settings file"
+  echo -e " -${c_important}B$c_reset, --${c_important}bash_path${c_reset} Specify a custom path to the bash source files"
+  echo -e " -${c_important}c$c_reset, --${c_important}c_path${c_reset}    Specify a custom path to the c source files"
   echo
 }
 
@@ -238,14 +263,14 @@ generate_operation_build(){
 
   if [[ $sources_headers != "" ]] ; then
     for i in $sources_headers ; do
-      cp -vf sources/c/$i ${path_build}includes/level_$level/ || failure=1
+      cp -vf $path_c$i ${path_build}includes/level_$level/ || failure=1
     done
   fi
 
   if [[ $failure == "" && $shared == "yes" ]] ; then
     if [[ $sources_library != "" ]] ; then
       for i in $sources_library ; do
-        sources="${sources}sources/c/$i "
+        sources="$sources$path_c$i "
       done
 
       echo $compiler $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]} $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/lib$name.so.$major.$minor.$micro
@@ -260,7 +285,7 @@ generate_operation_build(){
     if [[ $failure == "" && $sources_program != "" ]] ; then
       sources=
       for i in $sources_program ; do
-        sources="${sources}sources/c/$i "
+        sources="$sources$path_c$i "
       done
 
       echo $compiler $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]} $sources -o ${path_build}programs/$name
@@ -269,7 +294,7 @@ generate_operation_build(){
   elif [[ $failure == "" ]] ; then
     if [[ $sources_library != "" ]] ; then
       for i in $sources_library ; do
-        sources="${sources}sources/c/$i "
+        sources="{sources$path_c$i "
       done
 
       echo $compiler $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} $sources -static -o ${path_build}libraries/lib$name.a
@@ -279,7 +304,7 @@ generate_operation_build(){
     if [[ $failure == "" && $sources_program != "" ]] ; then
       sources=
       for i in $sources_program ; do
-        sources="${sources}sources/c/$i "
+        sources="$sources$path_c$i "
       done
 
       echo $compiler $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} $sources -static -o ${path_build}programs/$name
