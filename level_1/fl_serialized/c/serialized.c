@@ -10,77 +10,64 @@
 extern "C" {
 #endif
 
-#ifndef _di_fl_serialize_
-  f_return_status fl_serialize(const f_u_short strategy, const f_dynamic_string value, f_serialized *serialized) {
+#ifndef _di_fl_serialize_simple_
+  f_return_status fl_serialize_simple(const f_dynamic_string value, f_dynamic_string *serialized) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
 
-    if (strategy != f_serialized_strategy_simple) {
-      return f_unsupported;
-    }
-
     f_status status = f_status_initialize;
 
+
     if (serialized->used + value.used + 1 >= serialized->size) {
-      f_resize_serialized(status, (*serialized), serialized->size + value.used + f_serialized_default_allocation_step);
+      f_resize_dynamic_string(status, (*serialized), serialized->size + value.used + f_serialized_default_allocation_step);
 
       if (f_macro_test_for_allocation_errors(status)) return status;
     }
 
-    memcpy(serialized->string + serialized->used, f_serialized_strategy_simple_splitter, sizeof(f_autochar));
-    memcpy(serialized->string + serialized->used + 1, value->string, sizeof(f_autochar) * value.used);
-    serialized->used += value.used + 1;
+    if (serialized->used == 0) {
+      memcpy(serialized->string + serialized->used, value.string, sizeof(f_autochar) * value.used);
+      serialized->used += value.used;
+    } else {
+      memcpy(serialized->string + serialized->used, f_serialized_simple_splitter_string, sizeof(f_autochar));
+      memcpy(serialized->string + serialized->used + 1, value.string, sizeof(f_autochar) * value.used);
+      serialized->used += value.used + 1;
+    }
 
     return f_none;
   }
-#endif // _di_fl_serialize_
+#endif // _di_fl_serialize_simple_
 
-#ifndef _di_fl_unserialize_
-  f_return_status fl_unserialize(const f_u_short strategy, const f_serialized *serialized, f_string_locations *locations) {
+#ifndef _di_fl_unserialize_simple_
+  f_return_status fl_unserialize_simple(const f_dynamic_string serialized, f_string_locations *locations) {
     #ifndef _di_level_0_parameter_checking_
-      if (serialized == f_null) return f_invalid_parameter;
-      if (locations  == f_null) return f_invalid_parameter;
+      if (locations == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
-
-    if (strategy != f_serialized_strategy_simple) {
-      return f_unsupported;
-    }
 
     f_status status = f_status_initialize;
 
-    f_array_length i       = 0;
-    f_array_length current = 0;
+    f_array_length i     = 0;
+    f_array_length start = 0;
 
-    f_string_length start = 1;
-    f_string_length stop  = 0;
+    while (i <= serialized.used) {
+      if (serialized.string[i] == f_serialized_simple_splitter || i == serialized.used) {
+        if (locations->used + 1 >= locations->size) {
+          f_resize_string_locations(status, (*locations), locations->size + f_serialized_default_allocation_step);
 
-    while (i < serialized.used) {
-      if (current == index) {
-        if (start > stop) {
-          start = i;
-          stop  = i;
+          if (f_macro_test_for_allocation_errors(status)) return status;
         }
 
-        if (serialized.string[i] == f_serialized_strategy_simple_splitter) {
-          stop = i - 1;
-
-          if (locations->used + 1 >= locations->size) {
-            f_resize_string_locations(status, (*locations), locations->size + f_serialized_default_allocation_step);
-
-            if (f_macro_test_for_allocation_errors(status)) return status;
-          }
-
-          locations->array[locations->used].start = start;
-          locations->array[locations->used].stop  = stop;
+        if (start == i) {
+          locations->array[locations->used].start = 1;
+          locations->array[locations->used].stop  = 0;
           locations->used++;
-
-          start = 1;
-          stop  = 0;
+        } else {
+          locations->array[locations->used].start = start;
+          locations->array[locations->used].stop  = i - 1;
+          locations->used++;
         }
-      }
-      else if (serialized.string[i] == f_serialized_strategy_simple_splitter) {
-        current++;
+
+        start = i + 1;
       }
 
       i++;
@@ -88,18 +75,13 @@ extern "C" {
 
     return f_none;
   }
-#endif // _di_fl_unserialize_
+#endif // _di_fl_unserialize_simple_
 
-#ifndef _di_fl_unserialize_get_
-  f_return_status fl_unserialize_get(const f_u_short strategy, const f_serialized serialized, const f_array_length index, f_string_location *location) {
+#ifndef _di_fl_unserialize_simple_get_
+  f_return_status fl_unserialize_simple_get(const f_dynamic_string serialized, const f_array_length index, f_string_location *location) {
     #ifndef _di_level_0_parameter_checking_
-      if (serialized == f_null) return f_invalid_parameter;
-      if (location   == f_null) return f_invalid_parameter;
+      if (location == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
-
-    if (strategy != f_serialized_strategy_simple) {
-      return f_unsupported;
-    }
 
     f_status status = f_status_initialize;
 
@@ -111,17 +93,17 @@ extern "C" {
 
     while (i < serialized.used) {
       if (current == index){
-        if (location->start > location->stop){
+        if (location->start > location->stop) {
           location->start = i;
           location->stop  = i;
         }
 
-        if (serialized.string[i] == f_serialized_strategy_simple_splitter) {
+        if (serialized.string[i] == f_serialized_simple_splitter) {
           location->stop = i - 1;
           break;
         }
       }
-      else if (serialized.string[i] == f_serialized_strategy_simple_splitter) {
+      else if (serialized.string[i] == f_serialized_simple_splitter) {
         current++;
       }
 
@@ -130,7 +112,7 @@ extern "C" {
 
     return f_none;
   }
-#endif // _di_fl_unserialize_get_
+#endif // _di_fl_unserialize_simple_get_
 
 #ifdef __cplusplus
 } // extern "C"

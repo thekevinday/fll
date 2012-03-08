@@ -25,20 +25,20 @@
 extern "C" {
 #endif
 
-#ifndef _di_fl_serialize_
+#ifndef _di_fl_serialize_simple_
   // this function will append a string to the serialize.
-  extern f_return_status fl_serialize(const f_u_short strategy, const f_dynamic_string value, f_serialized *serialized);
-#endif // _di_fl_serialize_
+  extern f_return_status fl_serialize_simple(const f_dynamic_string value, f_dynamic_string *serialized);
+#endif // _di_fl_serialize_simple_
 
-#ifndef _di_fl_unserialize_
+#ifndef _di_fl_unserialize_simple_
   // this function will unserialize a serialized string and store the results in an array of strings.
-  extern f_return_status fl_unserialize(const f_u_short strategy, const f_serialized serialized, f_string_locations *locations);
+  extern f_return_status fl_unserialize_simple(const f_dynamic_string serialized, f_string_locations *locations);
 #endif // _di_fl_unserialize_
 
-#ifndef _di_fl_unserialize_get_
+#ifndef _di_fl_unserialize_simple_get_
   // this function will pull a single serialized value from the serialized string at the given index.
-  extern f_return_status fl_unserialize_get(const f_u_short strategy, const f_serialized serialized, const f_array_length index, f_string_location *location);
-#endif // _di_fl_unserialize_get_
+  extern f_return_status fl_unserialize_simple_get(const f_dynamic_string serialized, const f_array_length index, f_string_location *location);
+#endif // _di_fl_unserialize_simple_get_
 
 #ifdef __cplusplus
 } // extern "C"
