@@ -14,6 +14,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <linux/limits.h> // defines PATH_MAX
+#include <string.h>
+#include <memory.h>
 
 // fll-0 includes
 #include <level_0/strings.h>
@@ -34,7 +37,7 @@ extern "C"{
 
 #ifndef _di_fll_execute_program_
   // This will find the program based on PATH environment so that static paths do not have to be used as with f_execute_path
-  extern f_return_status fll_execute_program(const f_string program_name, const f_string arguments[], f_s_int *results);
+  extern f_return_status fll_execute_program(const f_string program_name, const f_dynamic_strings arguments, f_s_int *results);
 #endif // _di_fll_execute_program_
 
 #ifdef __cplusplus
