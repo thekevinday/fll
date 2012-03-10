@@ -168,6 +168,7 @@ enum {
     f_file_not_open,
     f_file_allocation_error,
     f_file_reallocation_error,
+    f_file_stat_error,
     f_file_error,
   #endif // _di_f_error_file_
 
