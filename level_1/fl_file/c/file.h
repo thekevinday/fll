@@ -22,6 +22,10 @@ extern "C"{
   extern f_return_status fl_file_read(f_file file, const f_file_position position, f_dynamic_string *buffer);
 #endif // _di_fl_file_read_
 
+#ifndef _di_fl_file_read_fifo_
+  extern f_return_status fl_file_read_fifo(f_file file, f_dynamic_string *buffer);
+#endif // _di_fl_file_read_fifo_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

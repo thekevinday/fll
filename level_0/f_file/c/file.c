@@ -131,6 +131,33 @@ extern "C"{
   }
 #endif // _di_f_file_read_
 
+#ifndef _di_f_file_read_fifo_
+  f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer){
+    #ifndef _di_level_0_parameter_checking_
+      if (file_information == f_null) return f_invalid_parameter;
+    #endif // _di_level_0_parameter_checking_
+
+    if (file_information->file == 0) return f_file_not_open;
+
+    f_s_int result = 0;
+
+    // now do the actual read
+    result = fread(buffer->string + buffer->used, file_information->byte_size, buffer->size - 1, file_information->file);
+
+    if (file_information->file == 0)         return f_file_read_error;
+    if (ferror(file_information->file) != 0) return f_file_read_error;
+
+    buffer->used += result;
+
+    // make sure to communicate that we are done without a problem and the eof was reached
+    if (feof(file_information->file)){
+      return f_none_on_eof;
+    }
+
+    return f_none;
+  }
+#endif // _di_f_file_read_fifo_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

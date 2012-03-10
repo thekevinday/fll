@@ -206,6 +206,11 @@ extern "C"{
   extern f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location);
 #endif // _di_f_file_read_
 
+#ifndef _di_f_file_read_fifo_
+  // read a given amount of data from the buffer, will not auto seek
+  extern f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer);
+#endif // _di_f_file_read_fifo_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

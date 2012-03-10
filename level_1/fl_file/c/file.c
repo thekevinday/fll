@@ -36,10 +36,12 @@ extern "C"{
 
     // populate the buffer
     do{
-      f_resize_dynamic_string(status, (*buffer), size);
+      if (buffer->size < size){
+        f_resize_dynamic_string(status, (*buffer), size);
 
-      if (f_macro_test_for_allocation_errors(status)){
-        return status;
+        if (f_macro_test_for_allocation_errors(status)){
+          return status;
+        }
       }
 
       status = f_file_read(&file, buffer, position);
@@ -62,6 +64,48 @@ extern "C"{
     return f_none;
   }
 #endif // _di_fl_file_read_
+
+#ifndef _di_fl_file_read_fifo_
+  f_return_status fl_file_read_fifo(f_file file, f_dynamic_string *buffer){
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer == f_null) return f_invalid_parameter;
+    #endif // _di_level_1_parameter_checking_
+
+    if (file.file == 0) return f_file_not_open;
+
+    f_status        status = f_status_initialize;
+    f_string_length size   = f_string_length_initialize;
+
+    size = f_file_default_read_size;
+
+    // populate the buffer
+    do {
+      if (buffer->size < size){
+        f_resize_dynamic_string(status, (*buffer), size);
+
+        if (f_macro_test_for_allocation_errors(status)){
+          return status;
+        }
+      }
+
+      status = f_file_read_fifo(&file, buffer);
+
+      if (status == f_none_on_eof){
+        break;
+      } else if (status != f_none){
+        return status;
+      }
+
+      if (size + f_file_default_read_size > f_string_max_size){
+        return f_overflow;
+      }
+
+      size += f_file_default_read_size;
+    } while (f_true);
+
+    return f_none;
+  }
+#endif // _di_fl_file_read_fifo_
 
 #ifdef __cplusplus
 } // extern "C"
