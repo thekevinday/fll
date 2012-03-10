@@ -27,7 +27,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <malloc.h>
-#include <string.h>
 
 // fll includes
 #include <level_0/errors.h>
