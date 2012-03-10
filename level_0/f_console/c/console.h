@@ -56,11 +56,13 @@ extern "C"{
   #define f_console_standard_short_help     "h"
   #define f_console_standard_short_light    "l" // usage: +l
   #define f_console_standard_short_no_color "n" // usage: +n
+  #define f_console_standard_short_pipe     "p" // usage: +p <size>
   #define f_console_standard_short_version  "v"
 
   #define f_console_standard_long_help     "help"
   #define f_console_standard_long_light    "light"
   #define f_console_standard_long_no_color "no_color"
+  #define f_console_standard_long_pipe     "pipe"
   #define f_console_standard_long_version  "version"
 #endif // _di_f_standard_console_parameters_
 
