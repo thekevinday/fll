@@ -37,9 +37,11 @@ extern "C"{
 #endif // _di_f_file_types_
 
 #ifndef _di_f_file_oldstyle_modes_
-  #define f_file_read_only  "r"
-  #define f_file_write_only "w"
-  #define f_file_read_write "rw"
+  #define f_file_read_only         "r"
+  #define f_file_read_write        "r+"
+  #define f_file_read_write_create "rw"
+  #define f_file_read_write_append "a+"
+  #define f_file_write_create      "w"
 #endif // _di_f_file_oldstyle_modes_
 
 #ifndef _di_f_file_seeks_
