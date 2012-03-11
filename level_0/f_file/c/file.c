@@ -74,7 +74,9 @@ extern "C"{
 #ifndef _di_f_file_read_
   f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location){
     #ifndef _di_level_0_parameter_checking_
-      if (file_information        == f_null) return f_invalid_parameter;
+      if (file_information == f_null)       return f_invalid_parameter;
+      if (buffer->used     >= buffer->size) return f_invalid_parameter;
+
       if (location.buffer_start    < 0)      return f_invalid_parameter;
       if (location.file_start      < 0)      return f_invalid_parameter;
       if (location.total_elements  < 0)      return f_invalid_parameter;
@@ -103,7 +105,7 @@ extern "C"{
 
     // now do the actual read
     if (location.total_elements == 0){
-      result = fread(buffer->string + location.buffer_start, file_information->byte_size, buffer->size - 1, file_information->file);
+      result = fread(buffer->string + location.buffer_start, file_information->byte_size, buffer->size - buffer->used - 1, file_information->file);
     } else {
       result = fread(buffer->string + location.buffer_start, file_information->byte_size, location.total_elements, file_information->file);
     }
@@ -114,7 +116,7 @@ extern "C"{
     // now save how much of our allocated buffer is actually used
     // also make sure that we aren't making used space vanish
     if (location.buffer_start + result > buffer->used){
-      buffer->used = location.buffer_start + result;
+      buffer->used = location.buffer_start + (result / file_information->byte_size);
     }
 
     // append an EOS only when the total elements were set to 0
@@ -134,7 +136,8 @@ extern "C"{
 #ifndef _di_f_file_read_fifo_
   f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer){
     #ifndef _di_level_0_parameter_checking_
-      if (file_information == f_null) return f_invalid_parameter;
+      if (file_information == f_null)       return f_invalid_parameter;
+      if (buffer->used     >= buffer->size) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
 
     if (file_information->file == 0) return f_file_not_open;
@@ -142,12 +145,12 @@ extern "C"{
     f_s_int result = 0;
 
     // now do the actual read
-    result = fread(buffer->string + buffer->used, file_information->byte_size, buffer->size - 1, file_information->file);
+    result = fread(buffer->string + buffer->used, file_information->byte_size, buffer->size - buffer->used - 1, file_information->file);
 
     if (file_information->file == 0)         return f_file_read_error;
     if (ferror(file_information->file) != 0) return f_file_read_error;
 
-    buffer->used += result;
+    buffer->used += (result / file_information->byte_size);
 
     // make sure to communicate that we are done without a problem and the eof was reached
     if (feof(file_information->file)){

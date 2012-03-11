@@ -36,7 +36,7 @@ extern "C"{
 
     // populate the buffer
     do{
-      if (buffer->size < size){
+      if (buffer->size <= size){
         f_resize_dynamic_string(status, (*buffer), size);
 
         if (f_macro_test_for_allocation_errors(status)){
@@ -80,7 +80,7 @@ extern "C"{
 
     // populate the buffer
     do {
-      if (buffer->size < size){
+      if (buffer->size <= size){
         f_resize_dynamic_string(status, (*buffer), size);
 
         if (f_macro_test_for_allocation_errors(status)){
