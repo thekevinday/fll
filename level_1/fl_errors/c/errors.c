@@ -43,6 +43,9 @@ extern "C"{
         case f_critical:
           *string = "critical";
           break;
+        case f_unknown:
+          *string = "unknown";
+          break;
         case f_unsupported:
           *string = "unsupported";
           break;
