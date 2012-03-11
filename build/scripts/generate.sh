@@ -253,7 +253,7 @@ generate_operation_build(){
   local minor=${variables[$(generate_id version_minor)]}
   local micro=${variables[$(generate_id version_micro)]}
   local compiler=${variables[$(generate_id build_compiler)]}
-  local arguments="-I${path_build}includes ${variables[$(generate_id flags_all)]} ${variables[$(generate_id build_libraries)]}"
+  local arguments="-I${path_build}includes -L${path_build}libraries ${variables[$(generate_id flags_all)]} ${variables[$(generate_id build_libraries)]}"
   local shared=${variables[$(generate_id build_shared)]}
   local sources_library=${variables[$(generate_id build_sources_library)]}
   local sources_program=${variables[$(generate_id build_sources_program)]}
