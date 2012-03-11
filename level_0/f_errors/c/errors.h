@@ -132,6 +132,8 @@ enum {
     f_error_on_eof,
     f_error_on_eos,
     f_error_on_stop,
+    f_buffer_too_small,
+    f_buffer_too_large,
     f_string_too_small,
     f_string_too_large,
     f_unterminated_nest,
