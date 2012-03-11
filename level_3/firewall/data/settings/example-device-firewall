@@ -1,0 +1,80 @@
+# fss-0002
+
+main:
+  # setup initial operations
+  direction input
+  device this
+  action append
+
+
+  # Define a blacklist and a whitelist, put ip addresses in the file named 'example-device-whitelist' separated by whitespace to whitelist an ip address
+  ip_list source example-device-whitelist -j ACCEPT
+  ip_list source example-device-blacklist -j REJECT
+  ip_list destination example-device-whitelist -j ACCEPT
+  ip_list destination example-device-blacklist -j REJECT
+
+
+  ## DNS Server (Bind or Maradns) (zoneserver from maradns does this portion)
+  ## is tcp needed?
+  #direction output
+  #rule -p udp --dport 53 -j ACCEPT
+  #direction input
+  #rule -p udp --dport 53 -j ACCEPT
+
+
+  ## Http / Web
+  #rule -p tcp --dport 80 --j LOG --log-prefix "TRAFFIC:WEB "
+  #rule -p tcp --dport 80 -j ACCEPT
+
+
+  ## Https / Secure Web
+  #rule -p tcp --dport 443 --j LOG --log-prefix "TRAFFIC:WEB "
+  #rule -p tcp --dport 443 -j ACCEPT
+
+
+  ## MySQL
+  #rule -p tcp --dport 3306 -j ACCEPT
+
+
+  ## Music Player Daemon
+  #rule -p tcp --dport 6600 -j ACCEPT
+
+
+  ## Camsource
+  #rule -p tcp --dport 9192 -j ACCEPT
+
+
+  ## Cups Printer Administration
+  #rule -p tcp --dport 631 -j ACCEPT
+
+
+  ## Ssh (OpenSSH)
+  #rule -p tcp --dport 22 -j LOG --log-prefix "TRAFFIC:SSH "
+  #rule -p tcp --dport 22 -j ACCEPT
+
+
+  ## clamd (Clam Antivirus) - remote access, not needed for normal
+  #rule -p tcp --dport 3310 -j ACCEPT
+
+
+  ## Virtual Network Client Server (add 1 for each seperat vnc server)
+  #rule -p tcp --dport 5900 -j ACCEPT
+
+
+  ## Printer Port, is probably open...safer to close unless you are SERVING a printer
+  #rule -p tcp --dport 515 -j REJECT
+
+
+  ## Subversion server
+  #rule -p tcp --dport 3690 -j ACCEPT
+  #rule -p udp --dport 3690 -j ACCEPT
+
+
+  ## Silc server
+  #rule -p tcp --dport 706 -j ACCEPT
+
+
+  ## Worms of Prey
+  #rule -p tcp --dport 47288 -j ACCEPT
+  #rule -p udp --sport 47288:47544 -j ACCEPT
+  #rule -p udp --dport 47288:47544 -j ACCEPT 
