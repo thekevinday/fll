@@ -287,6 +287,7 @@ extern "C"{
       }
     } else {
       fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more files");
+      status = f_invalid_parameter;
     }
 
     fss_basic_read_delete_data(data);
