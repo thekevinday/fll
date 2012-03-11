@@ -451,6 +451,8 @@ extern "C"{
         }
       }
     }
+
+    return f_none;
   }
 #endif // _di_fss_basic_read_main_
 
