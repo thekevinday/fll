@@ -115,6 +115,8 @@ extern "C"{
 #endif // _di_fss_basic_read_print_help_
 
 #ifndef _di_fss_basic_read_main_
+  f_return_status fss_basic_read_main_process_file(const f_array_length argc, const f_string argv[], fss_basic_read_data *data, const f_string filename, const f_string_length target) __attribute__((visibility("internal")));
+
   f_return_status fss_basic_read_main(const f_array_length argc, const f_string argv[], fss_basic_read_data *data){
     f_status status            = f_status_initialize;
     f_status allocation_status = f_status_initialize;
@@ -157,244 +159,298 @@ extern "C"{
       fss_basic_read_print_help(*data);
     } else if (data->parameters[fss_basic_read_parameter_version].result == f_console_result_found){
       fss_basic_read_print_version(*data);
-    } else if (data->remaining.used > 0){
+    } else if (data->remaining.used > 0 || data->process_pipe){
       f_string_length counter = f_string_length_initialize;
-      f_string_length current = f_string_length_initialize;
       f_string_length target  = f_string_length_initialize;
-      f_string_length found   = f_string_length_initialize;
       f_string_length original_size = data->file_position.total_elements;
 
       if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional){
         target = (f_string_length) atoll(argv[data->parameters[fss_basic_read_parameter_count].additional]);
       }
 
-      for (; counter < data->remaining.used; counter++){
+      if (data->process_pipe) {
         f_file file = f_file_initialize;
 
-        status = f_file_open(&file, argv[data->remaining.array[counter]]);
+        file.file = f_pipe;
 
-        data->file_position.total_elements = original_size;
-
-        if (status != f_none){
-          if (status == f_invalid_parameter){
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
-          } else if (status == f_file_not_found){
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", argv[data->remaining.array[counter]]);
-          } else if (status == f_file_open_error){
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", argv[data->remaining.array[counter]]);
-          } else if (status == f_file_descriptor_error){
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->remaining.array[counter]]);
-          } else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
-          }
-
-          fss_basic_read_delete_data(data);
-          return status;
-        }
-
-        // TODO: this file size set functionality might be turned into an fl_file (or f_file) function
-        if (data->file_position.total_elements == 0){
-          fseek(file.file, 0, SEEK_END);
-
-          data->file_position.total_elements = ftell(file.file);
-
-          // skip past empty files
-          if (data->file_position.total_elements == 0){
-            f_file_close(&file);
-            continue;
-          }
-
-          fseek(file.file, 0, SEEK_SET);
-        }
-
-        status = fl_file_read(file, data->file_position, &data->buffer);
-
-        f_file_close(&file);
+        status = fl_file_read_fifo(file, &data->buffer);
 
         if (status != f_none && status != f_none_on_eof && status != f_none_on_eos){
           if (status == f_invalid_parameter){
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read()");
           } else if (status == f_overflow){
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'", argv[data->remaining.array[counter]]);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'", "-");
           } else if (status == f_file_not_open){
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: The file '%s' is no longer open", argv[data->remaining.array[counter]]);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: The file '%s' is no longer open", "-");
           } else if (status == f_file_seek_error){
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A seek error occurred while accessing the file '%s'", argv[data->remaining.array[counter]]);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A seek error occurred while accessing the file '%s'", "-");
           } else if (status == f_file_read_error){
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A read error occurred while accessing the file '%s'", argv[data->remaining.array[counter]]);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A read error occurred while accessing the file '%s'", "-");
           } else if (f_macro_test_for_allocation_errors(status)){
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
           } else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read()", status);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read()", "-");
           }
 
           fss_basic_read_delete_data(data);
           return status;
         }
 
-        {
-          f_string_location input = f_string_location_initialize;
+        status = fss_basic_read_main_process_file(argc, argv, data, "-", target);
 
-          input.start = 0;
-          input.stop  = data->buffer.used - 1;
-
-          status = fll_fss_basic_read(&data->buffer, &input, &data->objects, &data->contents);
+        if (status != f_none && status != f_none_on_eof && status != f_none_on_eos){
+          return status;
         }
 
-        if (status != f_none && status != f_none_on_eos && status != f_none_on_stop && status != fl_fss_found_object_no_content){
-          if (status == f_invalid_parameter){
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'", argv[data->remaining.array[counter]]);
-
-            fss_basic_read_delete_data(data);
-            return status;
-          } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop || status == f_no_data_on_eof){
-            // not an error in this case
-          } else if (f_macro_test_for_allocation_errors(status)){
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
-
-            fss_basic_read_delete_data(data);
-            return status;
-          } else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'", status, argv[data->remaining.array[counter]]);
-          }
-
-          // clear buffers, then attempt the next file
-          f_delete_fss_contents(allocation_status, data->contents);
-          f_delete_fss_objects(allocation_status, data->objects);
-          f_delete_dynamic_string(allocation_status, data->buffer);
-
-          continue;
-        }
-
-        // now that all of the files have been read, process the objects and contents
-        if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found && data->parameters[fss_basic_read_parameter_name].result == f_console_result_none){
-          fprintf(f_standard_output, "%u\n", (unsigned int) data->objects.used);
-        } else {
-          current = 0;
-
-          if (data->parameters[fss_basic_read_parameter_name].result == f_console_result_none){
-            if (data->parameters[fss_basic_read_parameter_object].result == f_console_result_none){
-              for (; current < data->objects.used; current++){
-                if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional && found == target)){
-                  if (data->contents.array[current].used > 0){
-                    f_print_partial_dynamic_string(f_standard_output, data->buffer, data->contents.array[current].array[0]);
-                    fprintf(f_standard_output, "\n");
-                  } else {
-                    // for all objects with no data, print a newline
-                    fprintf(f_standard_output, "\n");
-                  }
-                }
-
-                if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional){
-                  if (found == target){
-                    break;
-                  } else {
-                    found++;
-                  }
-                }
-              } // for
-            } else {
-              for (; current < data->objects.used; current++){
-                if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional && found == target)){
-                  f_print_partial_dynamic_string(f_standard_output, data->buffer, data->objects.array[current]);
-                  fprintf(f_standard_output, "\n");
-                }
-
-                if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional){
-                  if (found == target){
-                    break;
-                  } else {
-                    found++;
-                  }
-                }
-              } // for
-            }
-          } else {
-            current = 0;
-
-            f_string_length total       = f_string_length_initialize;
-            f_string_length name_length = f_string_length_initialize;
-            f_string_length argv_length = f_string_length_initialize;
-
-            if (data->parameters[fss_basic_read_parameter_name].result == f_console_result_additional){
-              argv_length = strlen(argv[data->parameters[fss_basic_read_parameter_name].additional]);
-
-              if (data->parameters[fss_basic_read_parameter_object].result == f_console_result_none){
-                for (; current < data->objects.used; current++){
-                  name_length = data->objects.array[current].stop - data->objects.array[current].start + 1;
-
-                  if (name_length == argv_length){
-                    if (fl_compare_strings(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_basic_read_parameter_name].additional], name_length, argv_length) == f_equal_to){
-
-                      if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional && found == target)){
-                        if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found){
-                          total++;
-                        } else {
-                          if (data->contents.array[current].used > 0){
-                            f_print_partial_dynamic_string(f_standard_output, data->buffer, data->contents.array[current].array[0]);
-                            fprintf(f_standard_output, "\n");
-                          } else {
-                            // for all objects with no data, print a newline
-                            fprintf(f_standard_output, "\n");
-                          }
-                        }
-                      }
-
-                      if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional){
-                        if (found == target){
-                          break;
-                        } else {
-                          found++;
-                        }
-                      }
-                    }
-                  }
-                } // for
-
-                if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found && data->parameters[fss_basic_read_parameter_count].result == f_console_result_none){
-                  fprintf(f_standard_output, f_string_length_printf "\n", total);
-                }
-              } else {
-                // when and because the object parameter is specified, the name parameter refers to the content instead of the object
-                // therefore, make the search on the content and display the object
-                for (; current < data->contents.used; current++){
-                  if (data->contents.array[current].used > 0){
-                    name_length = data->contents.array[current].array[0].stop - data->contents.array[current].array[0].start + 1;
-
-                    if (name_length == argv_length){
-                      if (fl_compare_strings(data->buffer.string + data->contents.array[current].array[0].start, argv[data->parameters[fss_basic_read_parameter_name].additional], name_length, argv_length) == f_equal_to){
-                        if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional && found == target)){
-                          f_print_partial_dynamic_string(f_standard_output, data->buffer, data->objects.array[current]);
-                          fprintf(f_standard_output, "\n");
-                        }
-
-                        if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional){
-                          if (found == target){
-                            break;
-                          } else {
-                            found++;
-                          }
-                        }
-                      }
-                    }
-                  }
-                } // for
-              }
-            }
-          }
-        }
-
-        // clear buffers before repeating the loop
+        // clear buffers before continuing
         f_delete_fss_contents(allocation_status, data->contents);
         f_delete_fss_objects(allocation_status, data->objects);
         f_delete_dynamic_string(allocation_status, data->buffer);
-      } // for
+      }
+
+      if (data->remaining.used > 0){
+        for (; counter < data->remaining.used; counter++){
+          f_file file = f_file_initialize;
+
+          status = f_file_open(&file, argv[data->remaining.array[counter]]);
+
+          data->file_position.total_elements = original_size;
+
+          if (status != f_none){
+            if (status == f_invalid_parameter){
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
+            } else if (status == f_file_not_found){
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", argv[data->remaining.array[counter]]);
+            } else if (status == f_file_open_error){
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", argv[data->remaining.array[counter]]);
+            } else if (status == f_file_descriptor_error){
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->remaining.array[counter]]);
+            } else {
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
+            }
+
+            fss_basic_read_delete_data(data);
+            return status;
+          }
+
+          // TODO: this file size set functionality might be turned into an fl_file (or f_file) function
+          if (data->file_position.total_elements == 0){
+            fseek(file.file, 0, SEEK_END);
+
+            data->file_position.total_elements = ftell(file.file);
+
+            // skip past empty files
+            if (data->file_position.total_elements == 0){
+              f_file_close(&file);
+              continue;
+            }
+
+            fseek(file.file, 0, SEEK_SET);
+          }
+
+          status = fl_file_read(file, data->file_position, &data->buffer);
+
+          f_file_close(&file);
+
+          if (status != f_none && status != f_none_on_eof && status != f_none_on_eos){
+            if (status == f_invalid_parameter){
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read()");
+            } else if (status == f_overflow){
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'", argv[data->remaining.array[counter]]);
+            } else if (status == f_file_not_open){
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: The file '%s' is no longer open", argv[data->remaining.array[counter]]);
+            } else if (status == f_file_seek_error){
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A seek error occurred while accessing the file '%s'", argv[data->remaining.array[counter]]);
+            } else if (status == f_file_read_error){
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A read error occurred while accessing the file '%s'", argv[data->remaining.array[counter]]);
+            } else if (f_macro_test_for_allocation_errors(status)){
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+            } else {
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read()", argv[data->remaining.array[counter]]);
+            }
+
+            fss_basic_read_delete_data(data);
+            return status;
+          }
+
+          status = fss_basic_read_main_process_file(argc, argv, data, argv[data->remaining.array[counter]], target);
+
+          if (status != f_none && status != f_none_on_eof && status != f_none_on_eos){
+            return status;
+          }
+
+          // clear buffers before repeating the loop
+          f_delete_fss_contents(allocation_status, data->contents);
+          f_delete_fss_objects(allocation_status, data->objects);
+          f_delete_dynamic_string(allocation_status, data->buffer);
+        } // for
+      }
     } else {
       fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more files");
     }
 
     fss_basic_read_delete_data(data);
     return status;
+  }
+
+  f_return_status fss_basic_read_main_process_file(const f_array_length argc, const f_string argv[], fss_basic_read_data *data, const f_string filename, const f_string_length target){
+    f_status status            = f_status_initialize;
+    f_status allocation_status = f_status_initialize;
+
+    f_string_length current = f_string_length_initialize;
+    f_string_length found   = f_string_length_initialize;
+
+    {
+      f_string_location input = f_string_location_initialize;
+
+      input.start = 0;
+      input.stop  = data->buffer.used - 1;
+
+      status = fll_fss_basic_read(&data->buffer, &input, &data->objects, &data->contents);
+    }
+
+    if (status != f_none && status != f_none_on_eos && status != f_none_on_stop && status != fl_fss_found_object_no_content){
+      if (status == f_invalid_parameter){
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'", filename);
+
+        fss_basic_read_delete_data(data);
+        return status;
+      } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop || status == f_no_data_on_eof){
+        // not an error in this case
+      } else if (f_macro_test_for_allocation_errors(status)){
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+
+        fss_basic_read_delete_data(data);
+        return status;
+      } else {
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'", status, filename);
+      }
+
+      // clear buffers, then attempt the next file
+      f_delete_fss_contents(allocation_status, data->contents);
+      f_delete_fss_objects(allocation_status, data->objects);
+      f_delete_dynamic_string(allocation_status, data->buffer);
+
+      return f_none;
+    }
+
+    // now that the file has been read, process the objects and contents
+    if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found && data->parameters[fss_basic_read_parameter_name].result == f_console_result_none){
+      fprintf(f_standard_output, "%u\n", (unsigned int) data->objects.used);
+    } else {
+      current = 0;
+
+      if (data->parameters[fss_basic_read_parameter_name].result == f_console_result_none){
+        if (data->parameters[fss_basic_read_parameter_object].result == f_console_result_none){
+          for (; current < data->objects.used; current++){
+            if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional && found == target)){
+              if (data->contents.array[current].used > 0){
+                f_print_partial_dynamic_string(f_standard_output, data->buffer, data->contents.array[current].array[0]);
+                fprintf(f_standard_output, "\n");
+              } else {
+                // for all objects with no data, print a newline
+                fprintf(f_standard_output, "\n");
+              }
+            }
+
+            if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional){
+              if (found == target){
+                break;
+              } else {
+                found++;
+              }
+            }
+          } // for
+        } else {
+          for (; current < data->objects.used; current++){
+            if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional && found == target)){
+              f_print_partial_dynamic_string(f_standard_output, data->buffer, data->objects.array[current]);
+              fprintf(f_standard_output, "\n");
+            }
+
+            if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional){
+              if (found == target){
+                break;
+              } else {
+                found++;
+              }
+            }
+          } // for
+        }
+      } else {
+        current = 0;
+
+        f_string_length total       = f_string_length_initialize;
+        f_string_length name_length = f_string_length_initialize;
+        f_string_length argv_length = f_string_length_initialize;
+
+        if (data->parameters[fss_basic_read_parameter_name].result == f_console_result_additional){
+          argv_length = strlen(argv[data->parameters[fss_basic_read_parameter_name].additional]);
+
+          if (data->parameters[fss_basic_read_parameter_object].result == f_console_result_none){
+            for (; current < data->objects.used; current++){
+              name_length = data->objects.array[current].stop - data->objects.array[current].start + 1;
+
+              if (name_length == argv_length){
+                if (fl_compare_strings(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_basic_read_parameter_name].additional], name_length, argv_length) == f_equal_to){
+
+                  if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional && found == target)){
+                    if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found){
+                      total++;
+                    } else {
+                      if (data->contents.array[current].used > 0){
+                        f_print_partial_dynamic_string(f_standard_output, data->buffer, data->contents.array[current].array[0]);
+                        fprintf(f_standard_output, "\n");
+                      } else {
+                        // for all objects with no data, print a newline
+                        fprintf(f_standard_output, "\n");
+                      }
+                    }
+                  }
+
+                  if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional){
+                    if (found == target){
+                      break;
+                    } else {
+                      found++;
+                    }
+                  }
+                }
+              }
+            } // for
+
+            if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found && data->parameters[fss_basic_read_parameter_count].result == f_console_result_none){
+              fprintf(f_standard_output, f_string_length_printf "\n", total);
+            }
+          } else {
+            // when and because the object parameter is specified, the name parameter refers to the content instead of the object
+            // therefore, make the search on the content and display the object
+            for (; current < data->contents.used; current++){
+              if (data->contents.array[current].used > 0){
+                name_length = data->contents.array[current].array[0].stop - data->contents.array[current].array[0].start + 1;
+
+                if (name_length == argv_length){
+                  if (fl_compare_strings(data->buffer.string + data->contents.array[current].array[0].start, argv[data->parameters[fss_basic_read_parameter_name].additional], name_length, argv_length) == f_equal_to){
+                    if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional && found == target)){
+                      f_print_partial_dynamic_string(f_standard_output, data->buffer, data->objects.array[current]);
+                      fprintf(f_standard_output, "\n");
+                    }
+
+                    if (data->parameters[fss_basic_read_parameter_count].result == f_console_result_additional){
+                      if (found == target){
+                        break;
+                      } else {
+                        found++;
+                      }
+                    }
+                  }
+                }
+              }
+            } // for
+          }
+        }
+      }
+    }
   }
 #endif // _di_fss_basic_read_main_
 
