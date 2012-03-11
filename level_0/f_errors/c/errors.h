@@ -92,12 +92,12 @@ extern "C"{
 
 // use of an enumerator makes more sense here than explicitly defining every error code
 enum {
-  #ifndef _di_f_error_booleans_
+  #ifndef _di_f_errors_booleans_
     f_false,
     f_true,
-  #endif // _di_f_error_booleans_
+  #endif // _di_f_errors_booleans_
 
-  #ifndef _di_f_error_basic_
+  #ifndef _di_f_errors_basic_
     f_none,
     f_dummy,             // to only be used as a placeholder
     f_warn,              // warning
@@ -111,18 +111,18 @@ enum {
     f_output_error,
     f_does_not_exist,
     f_failure,
-  #endif // _di_f_error_basic_
+  #endif // _di_f_errors_basic_
 
-  #ifndef _di_f_error_digits_
+  #ifndef _di_f_errors_digits_
     f_underflow,
     f_overflow,
     f_divide_by_zero,
     f_cannot_be_negative,
     f_cannot_be_positive,
     f_cannot_be_zero,
-  #endif // _di_f_error_digits_
+  #endif // _di_f_errors_digits_
 
-  #ifndef _di_f_error_buffers_
+  #ifndef _di_f_errors_buffers_
     f_no_data_on_eof,            // warning
     f_no_data_on_eos,            // warning
     f_no_data_on_stop,           // warning
@@ -144,18 +144,18 @@ enum {
     f_unterminated_group_on_eos,
     f_unterminated_group_on_eof,
     f_unterminated_group_on_stop,
-  #endif // _di_f_error_buffers_
+  #endif // _di_f_errors_buffers_
 
-  #ifndef _di_f_error_allocation_
+  #ifndef _di_f_errors_allocation_
     f_allocation_error,
     f_reallocation_error,
-  #endif // _di_f_error_allocation_
+  #endif // _di_f_errors_allocation_
 
-  #ifndef _di_f_error_fork_
+  #ifndef _di_f_errors_fork_
     f_fork_failed,
-  #endif // _di_f_error_fork_
+  #endif // _di_f_errors_fork_
 
-  #ifndef _di_f_error_file_
+  #ifndef _di_f_errors_file_
     f_file_seek_error,
     f_file_read_error,
     f_file_write_error,
@@ -172,10 +172,10 @@ enum {
     f_file_reallocation_error,
     f_file_stat_error,
     f_file_error,
-  #endif // _di_f_error_file_
+  #endif // _di_f_errors_file_
 
   // most of these are a guess until I get around to researching & implementing linux directory I/O
-  #ifndef _di_f_error_directory_
+  #ifndef _di_f_errors_directory_
     f_directory_read_error,
     f_directory_write_error,
     f_directory_flush_error,
@@ -190,14 +190,14 @@ enum {
     f_directory_allocation_error,
     f_directory_reallocation_error,
     f_directory_error,
-  #endif // _di_f_error_directory_
+  #endif // _di_f_errors_directory_
 
-  #ifndef _di_f_error_non_
+  #ifndef _di_f_errors_non_
     f_less_than,
     f_equal_to,
     f_not_equal_to,
     f_greater_than,
-  #endif // _di_f_error_non_
+  #endif // _di_f_errors_non_
 
   // required
   f_last_error_code
