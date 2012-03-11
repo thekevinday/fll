@@ -43,7 +43,7 @@ extern "C"{
 
 #ifndef _di_fss_extended_read_version_
   #define fss_extended_read_major_version "0"
-  #define fss_extended_read_minor_version "2"
+  #define fss_extended_read_minor_version "3"
   #define fss_extended_read_micro_version "0"
   #define fss_extended_read_version fss_extended_read_major_version "." fss_extended_read_minor_version "." fss_extended_read_micro_version
 #endif // _di_fss_extended_read_version_
