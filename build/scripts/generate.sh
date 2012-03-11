@@ -34,6 +34,7 @@ generate_main(){
   local path_build=build/
   local path_c=sources/c/
   local path_bash=sources/bash/
+  local path_settings=data/settings/
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -60,6 +61,8 @@ generate_main(){
           grab_next=path_bash
         elif [[ $p == "-c" || $p == "--c_path" ]] ; then
           grab_next=path_c
+        elif [[ $p == "-S" || $p == "--settings_path" ]] ; then
+          grab_next=path_settings
         elif [[ $operation == "" ]] ; then
           operation=$p
         else
@@ -74,6 +77,8 @@ generate_main(){
           path_bash=$(echo $p | sed -e 's|/*$|/|')
         elif [[ $grab_next == "path_c" ]] ; then
           path_c=$(echo $p | sed -e 's|/*$|/|')
+        elif [[ $grab_next == "path_settings" ]] ; then
+          path_settings=$(echo $p | sed -e 's|/*$|/|')
         fi
 
         grab_next=
@@ -164,10 +169,11 @@ generate_help(){
   echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program"
   echo
   echo -e "${c_highlight}Generate Options:$c_reset"
-  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}     Specify a custom build directory"
-  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}  Specify a custom build settings file"
-  echo -e " -${c_important}B$c_reset, --${c_important}bash_path${c_reset} Specify a custom path to the bash source files"
-  echo -e " -${c_important}c$c_reset, --${c_important}c_path${c_reset}    Specify a custom path to the c source files"
+  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}          Specify a custom build directory"
+  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}       Specify a custom build settings file"
+  echo -e " -${c_important}B$c_reset, --${c_important}bash_path${c_reset}      Specify a custom path to the bash source files"
+  echo -e " -${c_important}c$c_reset, --${c_important}c_path${c_reset}         Specify a custom path to the c source files"
+  echo -e " -${c_important}S$c_reset, --${c_important}settings_path${c_reset}  Specify a custom path to the settings files"
   echo
 }
 
@@ -185,12 +191,13 @@ generate_id(){
     "build_sources_library") echo -n 7;;
     "build_sources_program") echo -n 8;;
     "build_sources_headers") echo -n 10;;
-    "build_shared") echo -n 11;;
-    "flags_all") echo -n 12;;
-    "flags_shared") echo -n 13;;
-    "flags_static") echo -n 14;;
-    "flags_library") echo -n 15;;
-    "flags_program") echo -n 16;;
+    "build_sources_settings") echo -n 11;;
+    "build_shared") echo -n 12;;
+    "flags_all") echo -n 13;;
+    "flags_shared") echo -n 14;;
+    "flags_static") echo -n 15;;
+    "flags_library") echo -n 16;;
+    "flags_program") echo -n 17;;
   esac
 }
 
@@ -211,7 +218,7 @@ generate_load_settings(){
     exit $failure
   fi
 
-  for i in project_name project_level version_major version_minor version_micro build_compiler build_libraries build_sources_library build_sources_program build_sources_headers build_sources_headers build_shared flags_all flags_shared flags_static flags_library flags_program ; do
+  for i in project_name project_level version_major version_minor version_micro build_compiler build_libraries build_sources_library build_sources_program build_sources_headers build_sources_settings build_shared flags_all flags_shared flags_static flags_library flags_program ; do
     variables[$(generate_id $i)]=$(grep -s -o "^[[:space:]]*$i\>.*$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 }
@@ -220,7 +227,7 @@ generate_prepare_build(){
   local failure=
   local level=${variables[$(generate_id project_level)]}
 
-  mkdir -vp ${path_build}{includes,programs,libraries} || failure=1
+  mkdir -vp ${path_build}{includes,programs,libraries,settings} || failure=1
 
   if [[ $failure == "" && $level != "" ]] ; then
     mkdir -vp ${path_build}includes/level_$level || failure=1
@@ -258,10 +265,17 @@ generate_operation_build(){
   local sources_library=${variables[$(generate_id build_sources_library)]}
   local sources_program=${variables[$(generate_id build_sources_program)]}
   local sources_headers=${variables[$(generate_id build_sources_headers)]}
+  local sources_settings=${variables[$(generate_id build_sources_settings)]}
   local sources=
   local i=
 
-  if [[ $sources_headers != "" ]] ; then
+  if [[ $sources_settings != "" ]] ; then
+    for i in $sources_settings ; do
+      cp -vf $path_c$i ${path_build}settings/ || failure=1
+    done
+  fi
+
+  if [[ $failure == "" && $sources_headers != "" ]] ; then
     for i in $sources_headers ; do
       cp -vf $path_c$i ${path_build}includes/level_$level/ || failure=1
     done
@@ -324,7 +338,7 @@ generate_operation_build(){
 generate_operation_clean(){
   local i=
 
-  for i in ${path_build}{includes,programs,libraries} ; do
+  for i in ${path_build}{includes,programs,libraries,settings} ; do
     if [[ -e $i ]] ; then
       rm -vRf $i
     fi
