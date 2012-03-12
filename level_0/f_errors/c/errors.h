@@ -98,7 +98,7 @@ enum {
   #endif // _di_f_errors_booleans_
 
   #ifndef _di_f_errors_basic_
-    f_none,
+    f_none = 131,        // start at 131 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
     f_dummy,             // to only be used as a placeholder
     f_warn,              // warning
     f_critical,
