@@ -59,6 +59,29 @@ extern "C"{
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
     printf("   Print only the version number");
 
+    printf("\n  %s", f_console_symbol_short_enable);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, error_code_short_is_okay);
+
+    printf(", %s", f_console_symbol_long_enable);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, error_code_long_is_okay);
+    printf("    Returns true if the error code is not an error.");
+
+
+    printf("\n");
+    printf("\n  %s", f_console_symbol_short_enable);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, error_code_short_is_warning);
+
+    printf(", %s", f_console_symbol_long_enable);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, error_code_long_is_warning);
+    printf(" Returns true if the error code is a warning.");
+
+    printf("\n  %s", f_console_symbol_short_enable);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, error_code_short_is_error);
+
+    printf(", %s", f_console_symbol_long_enable);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, error_code_long_is_error);
+    printf("   Returns true if the error code is an error.");
+
 
     printf("\n\n");
     fl_print_color(f_standard_output, data.context.important, data.context.reset, " Usage: ");
@@ -128,6 +151,60 @@ extern "C"{
       error_code_print_help(*data);
     } else if (data->parameters[error_code_parameter_version].result == f_console_result_found){
       error_code_print_version(*data);
+    } else if (data->parameters[error_code_parameter_is_error].result == f_console_result_found && data->remaining.used > 0){
+      f_array_length counter = f_array_length_initialize;
+
+      f_status code = f_status_initialize;
+
+      status = f_false;
+
+      for (; counter < data->remaining.used; counter++){
+        code = (f_status) atoll(argv[data->remaining.array[counter]]);
+
+        if (fl_errors_is_error(code)){
+          error_code_delete_data(data);
+          return f_true;
+        }
+      }
+
+      error_code_delete_data(data);
+      return f_false;
+    } else if (data->parameters[error_code_parameter_is_warning].result == f_console_result_found && data->remaining.used > 0){
+      f_array_length counter = f_array_length_initialize;
+
+      f_status code = f_status_initialize;
+
+      status = f_false;
+
+      for (; counter < data->remaining.used; counter++){
+        code = (f_status) atoll(argv[data->remaining.array[counter]]);
+
+        if (fl_errors_is_warning(code)){
+          error_code_delete_data(data);
+          return f_true;
+        }
+      }
+
+      error_code_delete_data(data);
+      return f_false;
+    } else if (data->parameters[error_code_parameter_is_okay].result == f_console_result_found && data->remaining.used > 0){
+      f_array_length counter = f_array_length_initialize;
+
+      f_status code = f_status_initialize;
+
+      status = f_false;
+
+      for (; counter < data->remaining.used; counter++){
+        code = (f_status) atoll(argv[data->remaining.array[counter]]);
+
+        if (fl_errors_is_okay(code)){
+          error_code_delete_data(data);
+          return f_true;
+        }
+      }
+
+      error_code_delete_data(data);
+      return f_false;
     } else if (data->remaining.used > 0 || data->process_pipe){
       f_array_length counter = f_array_length_initialize;
 

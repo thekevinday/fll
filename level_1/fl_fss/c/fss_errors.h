@@ -47,7 +47,6 @@ enum {
   #endif // _di_fl_fss_errors_success_
 }; // enum
 
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

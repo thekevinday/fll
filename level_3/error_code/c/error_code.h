@@ -47,11 +47,23 @@ extern "C"{
 #endif // _di_error_code_name_
 
 #ifndef _di_error_code_defines_
+  #define error_code_short_is_okay    "o"
+  #define error_code_short_is_warning "w"
+  #define error_code_short_is_error   "e"
+
+  #define error_code_long_is_okay    "is_okay"
+  #define error_code_long_is_warning "is_warning"
+  #define error_code_long_is_error   "is_error"
+
   enum {
     error_code_parameter_help,
     error_code_parameter_light,
     error_code_parameter_no_color,
     error_code_parameter_version,
+
+    error_code_parameter_is_okay,
+    error_code_parameter_is_warning,
+    error_code_parameter_is_error,
   };
 
   #define f_console_parameter_initialize_error_code \
@@ -60,9 +72,12 @@ extern "C"{
       f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(error_code_short_is_okay, error_code_long_is_okay, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(error_code_short_is_warning, error_code_long_is_warning, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(error_code_short_is_error, error_code_long_is_error, 0, 0, f_false, f_console_type_normal, 0), \
     }
 
-  #define error_code_total_parameters 4
+  #define error_code_total_parameters 7
 #endif // _di_error_code_defines_
 
 #ifndef _di_error_code_data_

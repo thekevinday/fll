@@ -14,8 +14,7 @@ extern "C"{
 #endif
 
 #ifndef _di_fl_errors_to_string_
-  // Convert error codes to their string equivalents.
-  f_return_status fl_errors_to_string(const f_status error, f_string *string){
+  f_return_status fl_errors_to_string(const f_status error, f_string *string) {
     #ifndef _di_level_1_parameter_checking_
       if (string == f_null) return f_invalid_parameter;
     #endif // _di_level_1_parameter_checking_
@@ -294,6 +293,87 @@ extern "C"{
     return f_none;
   }
 #endif // _di_fl_errors_to_string_
+
+#ifndef _di_fl_errors_is_error_
+  f_return_status fl_errors_is_error(const f_status error) {
+    if (fl_errors_is_okay(error) == f_true) {
+      return f_false;
+    } else if (fl_errors_is_warning(error) == f_true) {
+      return f_false;
+    }
+
+    return f_true;
+  }
+#endif // _di_fl_errors_is_error_
+
+#ifndef _di_fl_errors_is_warning_
+  f_return_status fl_errors_is_warning(const f_status error) {
+    switch(error){
+      #ifndef _di_fl_errors_basic_
+        case f_no_data:
+          return f_true;
+      #endif // _di_fl_errors_basic_
+
+      #ifndef _di_f_errors_buffers_
+        case f_no_data_on_eof:
+          return f_true;
+        case f_no_data_on_eos:
+          return f_true;
+        case f_no_data_on_stop:
+          return f_true;
+        case f_none_on_eof:
+          return f_true;
+        case f_none_on_eos:
+          return f_true;
+        case f_none_on_stop:
+          return f_true;
+      #endif // _di_f_errors_buffers_
+
+      default:
+        return f_false;
+    }
+
+    return f_unknown;
+  }
+#endif // _di_fl_errors_is_warning_
+
+#ifndef _di_fl_errors_is_okay_
+  // Returns true or false depending on whether the standard context of the error code represents an normal return status and not an error.
+  // Keep in mind that many of the error codes are context-specific and may be reported as an "okay" here when it is in fact not okay.
+  f_return_status fl_errors_is_okay(const f_status error) {
+    switch(error){
+      #ifndef _di_fl_errors_booleans_
+        case f_false:
+          return f_true;
+        case f_true:
+          return f_true;
+      #endif // _di_fl_errors_booleans_
+
+      #ifndef _di_fl_errors_basic_
+        case f_none:
+          return f_true;
+        case f_dummy:
+          return f_true;
+      #endif // _di_fl_errors_basic_
+
+      #ifndef _di_fll_error_non_
+        case f_less_than:
+          return f_true;
+        case f_equal_to:
+          return f_true;
+        case f_not_equal_to:
+          return f_true;
+        case f_greater_than:
+          return f_true;
+      #endif // _di_fl_errors_non_
+
+      default:
+        return f_false;
+    }
+
+    return f_unknown;
+  }
+#endif // _di_fl_errors_is_okay_
 
 #ifdef __cplusplus
 } // extern "C"

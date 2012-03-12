@@ -33,6 +33,25 @@ extern "C"{
   extern f_return_status fll_fss_errors_to_string(const f_status error, f_string *string);
 #endif // _di_fll_errors_to_string_
 
+#ifndef _di_fll_fss_errors_is_error_
+  // Returns true or false depending on whether the standard context of the error code represents an error.
+  // Keep in mind that many of the error codes are context-specific and may be reported as an error here when it is in fact not an error.
+  extern f_return_status fll_fss_errors_is_error(const f_status error);
+#endif // _di_fll_fss_errors_is_error_
+
+#ifndef _di_fll_fss_errors_is_warning_
+  // Returns true or false depending on whether the standard context of the error code represents a warning.
+  // Keep in mind that many of the error codes are context-specific and may be reported as a warning here when it is in fact not a warning.
+  extern f_return_status fll_fss_errors_is_warning(const f_status error);
+#endif // _di_fll_fss_errors_is_warning_
+
+
+#ifndef _di_fll_fss_errors_is_okay_
+  // Returns true or false depending on whether the standard context of the error code represents an normal return status and not an error.
+  // Keep in mind that many of the error codes are context-specific and may be reported as "okay" here when it is in fact not okay.
+  extern f_return_status fll_fss_errors_is_okay(const f_status error);
+#endif // _di_fll_fss_errors_is_okay_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
