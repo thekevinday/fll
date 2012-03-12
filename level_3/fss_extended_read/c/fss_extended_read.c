@@ -61,38 +61,38 @@ extern "C"{
 
 
     printf("\n\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_name);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_read_short_name);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_name);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_read_long_name);
     printf("      Find and print content from this object name");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_count);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_read_short_count);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_count);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_read_long_count);
     printf("     Find a specific occurrence of the object");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_total);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_read_short_total);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_total);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_read_long_total);
     printf("     Print the total number of objects in this file");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_object);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_read_short_object);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_object);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_read_long_object);
     printf("    Print the object instead of the content");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_select);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_read_short_select);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_select);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_read_long_select);
     printf("    Select a specific content to print, default is 0");
 
 

@@ -54,17 +54,17 @@ extern "C"{
 #endif // _di_fss_extended_read_name_
 
 #ifndef _di_fss_extended_read_defines_
-  #define f_console_standard_short_name   "n"
-  #define f_console_standard_short_count  "c"
-  #define f_console_standard_short_total  "t"
-  #define f_console_standard_short_object "o"
-  #define f_console_standard_short_select "s"
+  #define fss_extended_read_short_name   "n"
+  #define fss_extended_read_short_count  "c"
+  #define fss_extended_read_short_total  "t"
+  #define fss_extended_read_short_object "o"
+  #define fss_extended_read_short_select "s"
 
-  #define f_console_standard_long_name   "name"
-  #define f_console_standard_long_count  "count"
-  #define f_console_standard_long_total  "total"
-  #define f_console_standard_long_object "object"
-  #define f_console_standard_long_select "select"
+  #define fss_extended_read_long_name   "name"
+  #define fss_extended_read_long_count  "count"
+  #define fss_extended_read_long_total  "total"
+  #define fss_extended_read_long_object "object"
+  #define fss_extended_read_long_select "select"
 
   enum {
     fss_extended_read_parameter_help,
@@ -85,11 +85,11 @@ extern "C"{
       f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(f_console_standard_short_name, f_console_standard_long_name, 0, 0, f_true, f_console_type_normal, 0), \
-      f_console_parameter_initialize(f_console_standard_short_count, f_console_standard_long_count, 0, 0, f_true, f_console_type_normal, 0), \
-      f_console_parameter_initialize(f_console_standard_short_total, f_console_standard_long_total, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(f_console_standard_short_object, f_console_standard_long_object, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(f_console_standard_short_select, f_console_standard_long_select, 0, 0, f_true, f_console_type_normal, 0), \
+      f_console_parameter_initialize(fss_extended_read_short_name, fss_extended_read_long_name, 0, 0, f_true, f_console_type_normal, 0), \
+      f_console_parameter_initialize(fss_extended_read_short_count, fss_extended_read_long_count, 0, 0, f_true, f_console_type_normal, 0), \
+      f_console_parameter_initialize(fss_extended_read_short_total, fss_extended_read_long_total, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(fss_extended_read_short_object, fss_extended_read_long_object, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(fss_extended_read_short_select, fss_extended_read_long_select, 0, 0, f_true, f_console_type_normal, 0), \
     }
 
   #define fss_extended_read_total_parameters 9
