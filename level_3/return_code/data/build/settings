@@ -1,6 +1,6 @@
 # fss-0000
 
-project_name error_code
+project_name return_code
 project_level 3
 
 version_major 0
@@ -9,13 +9,13 @@ version_micro 0
 
 build_compiler gcc
 build_libraries -lc  -lf_memory -lf_console -lfl_console -lf_conversion -lf_pipe -lf_output -lfl_colors -lfll_colors -lfl_errors
-build_sources_library error_code.c
+build_sources_library return_code.c
 build_sources_program main.c
-build_sources_headers error_code.h
+build_sources_headers return_code.h
 build_shared yes
 
 flags_all -z now
 flags_shared
 flags_static
 flags_library -fPIC
-flags_program -fPIE -lerror_code
+flags_program -fPIE -lreturn_code

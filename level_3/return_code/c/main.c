@@ -1,7 +1,7 @@
-#include <level_3/error_code.h>
+#include <level_3/return_code.h>
 
 int main(const f_array_length argc, const f_string argv[]){
-  error_code_data data = error_code_data_initialize;
+  return_code_data data = return_code_data_initialize;
 
   /*
   if (f_pipe_exists()){
@@ -9,5 +9,5 @@ int main(const f_array_length argc, const f_string argv[]){
   }
   */
 
-  return error_code_main(argc, argv, &data);
+  return return_code_main(argc, argv, &data);
 }
