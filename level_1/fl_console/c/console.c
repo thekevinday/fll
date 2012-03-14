@@ -11,7 +11,7 @@ extern "C"{
 #endif
 
 #ifndef _di_fl_process_parameters_
-  f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_u_int total_parameters, f_string_lengths *remaining){
+  f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, f_string_lengths *remaining){
     #ifndef _di_level_1_parameter_checking_
       if (remaining == f_null) return f_invalid_parameter;
     #endif // _di_level_1_parameter_checking_
