@@ -156,8 +156,6 @@ extern "C"{
 
       f_status code = f_status_initialize;
 
-      status = f_false;
-
       for (; counter < data->remaining.used; counter++){
         code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
@@ -174,8 +172,6 @@ extern "C"{
 
       f_status code = f_status_initialize;
 
-      status = f_false;
-
       for (; counter < data->remaining.used; counter++){
         code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
@@ -191,8 +187,6 @@ extern "C"{
       f_array_length counter = f_array_length_initialize;
 
       f_status code = f_status_initialize;
-
-      status = f_false;
 
       for (; counter < data->remaining.used; counter++){
         code = (f_status) atoll(argv[data->remaining.array[counter]]);
