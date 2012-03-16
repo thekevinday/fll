@@ -16,7 +16,7 @@ extern "C"{
       if (string == f_null) return f_invalid_parameter;
     #endif // _di_level_2_parameter_checking_
 
-    switch(error) {
+    switch (error) {
       #ifndef _di_fll_fss_errors_error_
         case fl_fss_invalid_format:
           *string = "fl_fss_invalid_format";
@@ -80,7 +80,7 @@ extern "C"{
 
 #ifndef _di_fll_fss_errors_is_warning_
   f_return_status fll_fss_errors_is_warning(const f_status error) {
-    switch(error) {
+    switch (error) {
       #ifndef _di_fll_fss_errors_basic_
         case f_no_data:
           return f_true;
@@ -111,7 +111,7 @@ extern "C"{
 
 #ifndef _di_fll_fss_errors_is_okay_
   f_return_status fll_fss_errors_is_okay(const f_status error) {
-    switch(error) {
+    switch (error) {
       #ifndef _di_fll_fss_errors_booleans_
         case f_false:
           return f_true;

@@ -14,7 +14,7 @@ extern "C"{
   f_return_status f_is_digit(const f_autochar character) {
 
     // at this point, it seems that it would incur more overhead to use the libc isdigit here, so just use one less call and test it here
-    switch(character) {
+    switch (character) {
       case '0':
       case '1':
       case '2':
@@ -36,7 +36,7 @@ extern "C"{
 #ifndef _di_f_is_hexdigit_
   f_return_status f_is_hexdigit(const f_autochar character) {
 
-    switch(character) {
+    switch (character) {
       case '0':
       case '1':
       case '2':
@@ -72,7 +72,7 @@ extern "C"{
       if (digit == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
 
-    switch(character) {
+    switch (character) {
       case '0': *digit = 0;  break;
       case '1': *digit = 1;  break;
       case '2': *digit = 2;  break;
@@ -97,7 +97,7 @@ extern "C"{
       if (digit == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
 
-    switch(character) {
+    switch (character) {
       case '0': *digit = 0;  break;
       case '1': *digit = 1;  break;
       case '2': *digit = 2;  break;
