@@ -337,6 +337,57 @@ extern "C"{
     object_position.start = object->used;
     object_position.stop  = object->used;
 
+    if (input.string[input_position.start] == f_fss_delimit_slash) {
+      f_string_length delimit_slash_count = 0;
+
+      while (input_position.start <= input_position.stop) {
+        if (input.string[input_position.start] == f_fss_delimit_placeholder) {
+          input_position.start++;
+          continue;
+        } else if (input.string[input_position.start] != f_fss_delimit_slash) {
+          break;
+        }
+
+        object->string[object_position.stop] = input.string[input_position.start];
+        object_position.stop++;
+        delimit_slash_count++;
+        input_position.start++;
+      } // while
+
+      if (input.string[input_position.start] == f_fss_delimit_single_quote || input.string[input_position.start] == f_fss_delimit_double_quote) {
+        pre_allocate_size += delimit_slash_count + 1;
+
+        if (pre_allocate_size > object->size) {
+          f_resize_dynamic_string(status, (*object), pre_allocate_size + f_fss_default_allocation_step);
+
+          if (f_macro_test_for_allocation_errors(status)) return status;
+        }
+
+        while (delimit_slash_count > 0) {
+          object->string[object_position.stop] = f_fss_delimit_slash;
+          object_position.stop++;
+          delimit_slash_count--;
+        } // while
+
+        object->string[object_position.stop] = input.string[input_position.start];
+        object_position.stop++;
+        input_position.start++;
+      }
+    } else if (input.string[input_position.start] == f_fss_delimit_single_quote || input.string[input_position.start] == f_fss_delimit_double_quote) {
+      pre_allocate_size++;
+
+      if (pre_allocate_size > object->size) {
+        f_resize_dynamic_string(status, (*object), pre_allocate_size + f_fss_default_allocation_step);
+
+        if (f_macro_test_for_allocation_errors(status)) return status;
+      }
+
+      object->string[object_position.stop] = f_fss_delimit_slash;
+      object->string[object_position.stop + 1] = input.string[input_position.start];
+      object_position.stop += 2;
+      input_position.start++;
+    }
+
     while (input_position.start <= input_position.stop) {
       if (input.string[input_position.start] == f_fss_delimit_placeholder) {
         input_position.start++;
