@@ -100,7 +100,7 @@ extern "C"{
           } // for()
 
           sub_location += increments;
-        } // while()
+        } // while
 
       // now handle the inverse commands
       } else if (argv[location][0] == f_console_symbol_disable) {
@@ -152,7 +152,7 @@ extern "C"{
           } // for()
 
           sub_location += increments;
-        } // while()
+        } // while
       } else {
         // use found to determine if the remaining parameter should be populated
         found = f_false;
@@ -204,7 +204,7 @@ extern "C"{
       }
 
       ++location;
-    } // while()
+    } // while
 
     if (extra_initiator.used > 0) {
       status = f_no_data;

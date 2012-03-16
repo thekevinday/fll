@@ -59,7 +59,7 @@ extern "C"{
 
       if (position->start >= buffer.used)    return f_none_on_eos;
       if (position->start  > position->stop) return f_none_on_stop;
-    } // while()
+    } // while
 
     return f_none;
   }
@@ -81,7 +81,7 @@ extern "C"{
 
       if (position->start >= buffer.used)    return f_none_on_eos;
       if (position->start  > position->stop) return f_none_on_stop;
-    } // while()
+    } // while
 
     return f_none;
   }
@@ -103,7 +103,7 @@ extern "C"{
 
       if (position->start >= buffer.used)    return f_none_on_eos;
       if (position->start  > position->stop) return f_none_on_stop;
-    } // while()
+    } // while
 
     return f_none;
   }
@@ -132,12 +132,12 @@ extern "C"{
     while (i1 < stop1) {
       if (string1[i1] != f_eos) return f_not_equal_to;
       i1++;
-    } // while()
+    } // while
 
     while (i2 < stop2) {
       if (string2[i2] != f_eos) return f_not_equal_to;
       i2++;
-    } // while()
+    } // while
 
     return f_equal_to;
   }
@@ -169,12 +169,12 @@ extern "C"{
     while (i1 < stop1) {
       if (string1.string[i1] != f_eos) return f_not_equal_to;
       i1++;
-    } // while()
+    } // while
 
     while (i2 < stop2) {
       if (string2.string[i2] != f_eos) return f_not_equal_to;
       i2++;
-    } // while()
+    } // while
 
     return f_equal_to;
   }
@@ -212,12 +212,12 @@ extern "C"{
     while (i1 < stop1) {
       if (string1.string[i1] != f_eos) return f_not_equal_to;
       i1++;
-    } // while()
+    } // while
 
     while (i2 < stop2) {
       if (string2.string[i2] != f_eos) return f_not_equal_to;
       i2++;
-    } // while()
+    } // while
 
     return f_equal_to;
   }
