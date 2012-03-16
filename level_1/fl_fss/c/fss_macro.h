@@ -93,7 +93,7 @@ extern "C"{
 
 #ifndef _di_fl_macro_fss_object_seek_till_newline_
   #define fl_macro_fss_object_seek_till_newline(buffer, input, eos_status, stop_status) \
-    while(buffer.string[input.start] != f_eol) { \
+    while (buffer.string[input.start] != f_eol) { \
       ++input.start; \
       if (input.start >= buffer.used) { \
         return eos_status; \
@@ -106,7 +106,7 @@ extern "C"{
 
 #ifndef _di_fl_macro_fss_content_seek_till_newline_
   #define fl_macro_fss_content_seek_till_newline(buffer, input, found, eos_status, stop_status) \
-    while(buffer.string[input.start] != f_eol) { \
+    while (buffer.string[input.start] != f_eol) { \
       ++input.start; \
       if (input.start >= buffer.used) { \
         found.array[found.used].stop = input.stop; \

@@ -141,7 +141,7 @@ extern "C"{
     f_u_long        scale            = 0;
     f_u_long        temp_digit       = 0;
 
-    while(current_location < location.stop) {
+    while (current_location < location.stop) {
       if (f_character_to_digit(string[current_location], &temp_digit) == f_none) {
 
         // when the scale exists, then we need to make the number larger, for this function the scale is base 10
@@ -176,7 +176,7 @@ extern "C"{
     f_u_long        scale            = 0;
     f_u_long        temp_digit       = 0;
 
-    while(current_location < location.stop) {
+    while (current_location < location.stop) {
       if (f_character_to_hexdigit(string[current_location], &temp_digit) == f_none) {
 
         // when the scale exists, then we need to make the number larger, for this function the scale is base 16

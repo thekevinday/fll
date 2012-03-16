@@ -358,7 +358,7 @@ extern "C"{
             fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
 
             if (!isgraph(buffer->string[input->start])) {
-              while(buffer->string[input->start] != f_eol) {
+              while (buffer->string[input->start] != f_eol) {
                 ++input->start;
 
                 if (input->start >= buffer->used) {

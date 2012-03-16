@@ -249,7 +249,7 @@ extern "C"{
     }
 
     // seek to the end of the line
-    while(input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
+    while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
       ++input->start;
     }
 
