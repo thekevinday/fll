@@ -40,6 +40,16 @@ extern "C"{
   extern f_return_status fl_fss_basic_content_read(f_dynamic_string *buffer, f_string_location *input, f_fss_content *found);
 #endif // _di_fl_fss_basic_content_read_
 
+#ifndef _di_fl_fss_basic_object_write_
+  // write an fss-0000 object
+  extern f_return_status fl_fss_basic_object_write(const f_dynamic_string input, f_dynamic_string *object);
+#endif // _di_fl_fss_basic_object_write_
+
+#ifndef _di_fl_fss_basic_content_write_
+  // write an fss-0000 content
+  extern f_return_status fl_fss_basic_content_write(const f_dynamic_string input, f_dynamic_string *content);
+#endif // _di_fl_fss_basic_content_write_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

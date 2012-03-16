@@ -301,6 +301,191 @@ extern "C"{
   }
 #endif // _di_fl_fss_basic_content_read_
 
+#ifndef _di_fl_fss_basic_object_write_
+  f_return_status fl_fss_basic_object_write(const f_dynamic_string input, f_dynamic_string *object) {
+    #ifndef _di_level_1_parameter_checking_
+      if (object == f_null) return f_invalid_parameter;
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = f_status_initialize;
+
+    f_string_location input_position    = f_string_location_initialize;
+    f_string_location object_position   = f_string_location_initialize;
+    f_string_length   start_position    = f_string_initialize;
+    f_string_length   pre_allocate_size = f_string_length_initialize;
+
+    input_position.start = 0;
+    input_position.stop  = input.used;
+
+    fl_macro_fss_skip_past_all_whitespace(input, input_position)
+
+    if (input_position.start >= input.used) {
+      return f_no_data;
+    }
+
+    start_position = input_position.start;
+
+    // add an additional 3 to ensure that there is room for the start and stop quotes or a slash delimit and the object open character.
+    pre_allocate_size = object->used + (input_position.stop - input_position.start) + 3 + f_fss_default_allocation_step;
+
+    if (pre_allocate_size > object->size) {
+      f_resize_dynamic_string(status, (*object), pre_allocate_size);
+
+      if (f_macro_test_for_allocation_errors(status)) return status;
+    }
+
+    object_position.start = object->used;
+    object_position.stop  = object->used;
+
+    while (input_position.start <= input_position.stop) {
+      if (input.string[input_position.start] == f_fss_delimit_placeholder) {
+        input_position.start++;
+        continue;
+      } else if (isspace(input.string[input_position.start])) {
+        f_string_length first_space = input_position.start;
+
+        input_position.start++;
+
+        while (input_position.start <= input_position.stop && isspace(input.string[input_position.start])) {
+          input_position.start++;
+        } // while
+
+        if (input_position.start > input_position.stop) {
+          object->string[first_space] = f_fss_basic_open;
+          object->used = object_position.stop + 1;
+          break;
+        }
+
+        // restart the loop searching for f_fss_delimit_double_quote.
+        input_position.start = start_position;
+        object_position.stop = object_position.start;
+
+        object->string[object_position.stop] = f_fss_delimit_double_quote;
+        object_position.stop++;
+
+        while (input_position.start <= input_position.stop) {
+          if (input.string[input_position.start] == f_fss_delimit_placeholder) {
+            input_position.start++;
+            continue;
+          } else if (input.string[input_position.start] == f_fss_delimit_double_quote) {
+            pre_allocate_size++;
+
+            if (pre_allocate_size > object->size) {
+              f_resize_dynamic_string(status, (*object), pre_allocate_size + f_fss_default_allocation_step);
+
+              if (f_macro_test_for_allocation_errors(status)) return status;
+            }
+
+            object->string[object_position.stop] = f_fss_delimit_slash;
+            object_position.stop++;
+          } else if (input.string[input_position.start] == f_fss_delimit_slash) {
+            f_string_length delimit_slash_count = 0;
+
+            do {
+              object->string[object_position.stop] = input.string[input_position.start];
+              object_position.stop++;
+              delimit_slash_count++;
+              input_position.start++;
+
+              fl_macro_fss_skip_past_delimit_placeholders(input, input_position);
+
+              if (input_position.start > input_position.stop) {
+                break;
+              }
+
+              if (input.string[input_position.start] == f_fss_delimit_double_quote) {
+                pre_allocate_size += delimit_slash_count;
+
+                if (pre_allocate_size > object->size) {
+                  f_resize_dynamic_string(status, (*object), pre_allocate_size + f_fss_default_allocation_step);
+
+                  if (f_macro_test_for_allocation_errors(status)) return status;
+                }
+
+                break;
+              } else if (input.string[input_position.start] != f_fss_delimit_slash) {
+                delimit_slash_count = 0;
+                break;
+              }
+            } while (f_true);
+
+            while (delimit_slash_count > 0) {
+              object->string[object_position.stop] = f_fss_delimit_slash;
+              object_position.stop++;
+              delimit_slash_count--;
+            } // while
+
+            continue;
+          }
+
+          object->string[object_position.stop] = input.string[input_position.start];
+          input_position.start++;
+          object_position.stop++;
+        } // while
+
+        object->string[object_position.stop] = f_fss_delimit_double_quote;
+        object->string[object_position.stop + 1] = f_fss_basic_open;
+        object->used = object_position.stop + 2;
+        break;
+      }
+
+      object->string[object_position.stop] = input.string[input_position.start];
+      input_position.start++;
+      object_position.stop++;
+    } // while
+
+    if (object->used < object_position.stop) {
+      object->string[object_position.stop] = f_fss_basic_open;
+      object->used = object_position.stop + 1;
+    }
+
+    return f_none;
+  }
+#endif // _di_fl_fss_basic_object_write_
+
+#ifndef _di_fl_fss_basic_content_write_
+  f_return_status fl_fss_basic_content_write(const f_dynamic_string input, f_dynamic_string *content) {
+    #ifndef _di_level_1_parameter_checking_
+      if (content == f_null) return f_invalid_parameter;
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = f_status_initialize;
+
+    f_string_location input_position    = f_string_location_initialize;
+    f_string_location content_position   = f_string_location_initialize;
+    f_string_length   pre_allocate_size = f_string_length_initialize;
+
+    // add an additional 1 to ensure that there is room for the terminating newline.
+    pre_allocate_size = content->used + (input.used) + 1 + f_fss_default_allocation_step;
+
+    input_position.start = 0;
+    input_position.stop  = input.used;
+
+    content_position.start = content->used;
+    content_position.stop  = content->used;
+
+    if (pre_allocate_size > content->size) {
+      f_resize_dynamic_string(status, (*content), pre_allocate_size);
+
+      if (f_macro_test_for_allocation_errors(status)) return status;
+    }
+
+    while (input_position.start <= input_position.stop) {
+      if (input.string[input_position.start] != f_eol && input.string[input_position.start] != f_fss_delimit_placeholder) {
+        content->string[content_position.stop] = input.string[input_position.start];
+        content_position.stop++;
+      }
+
+      input_position.start++;
+    } // while
+
+    content->string[content_position.stop] = f_eol;
+    content->used = content_position.stop + 1;
+
+    return f_none;
+  }
+#endif // _di_fl_fss_basic_content_write_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

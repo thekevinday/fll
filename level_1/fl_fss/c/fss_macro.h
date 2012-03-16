@@ -26,6 +26,16 @@ extern "C"{
     } // while
 #endif // _di_fl_macro_fss_skip_past_whitespace_
 
+#ifndef _di_fl_macro_fss_skip_past_all_whitespace_
+  #define fl_macro_fss_skip_past_all_whitespace(buffer, input) \
+    while (!isgraph(buffer.string[input.start]) || buffer.string[input.start] == f_fss_delimit_placeholder){ \
+      ++input.start;\
+      \
+      if (input.start >= buffer.used) break; \
+      if (input.start  > input.stop) break; \
+    } // while
+#endif // _di_fl_macro_fss_skip_past_all_whitespace_
+
 #ifndef _di_fl_macro_fss_skip_past_delimit_placeholders_
   #define fl_macro_fss_skip_past_delimit_placeholders(buffer, input) \
     while (buffer.string[input.start] == f_fss_delimit_placeholder){ \
