@@ -66,7 +66,7 @@ extern "C"{
         quoted = buffer->string[input->start];
         input->start++;
       } else if (buffer->string[input->start] == f_fss_delimit_slash) {
-        do{
+        do {
           ++input->start;
 
           fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
@@ -117,7 +117,7 @@ extern "C"{
       // a dynamically populated location of all delimits to apply
       f_string_lengths delimits = f_string_lengths_initialize;
 
-      do{
+      do {
         fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
         fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
 
@@ -284,7 +284,7 @@ extern "C"{
     found->array[found->used].start = input->start;
 
     // search for valid content
-    do{
+    do {
       fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
       fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
 

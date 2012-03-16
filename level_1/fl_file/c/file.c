@@ -35,7 +35,7 @@ extern "C"{
     }
 
     // populate the buffer
-    do{
+    do {
       if (buffer->size <= size) {
         f_resize_dynamic_string(status, (*buffer), size);
 

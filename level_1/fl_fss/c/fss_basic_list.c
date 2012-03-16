@@ -104,7 +104,7 @@ extern "C"{
 
     // identify where the object ends
     if (quoted == f_eos) {
-      do{
+      do {
         fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
         fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_error_on_eos, f_error_on_stop)
 
@@ -190,7 +190,7 @@ extern "C"{
       f_string_length quote_location = f_string_length_initialize;
 
       // the quote must end before the opener begins, in this case the colon ':', so a quoted object would look like: "quoted object":\n
-      do{
+      do {
         fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
         fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_error_on_eos, f_error_on_stop)
 
@@ -270,7 +270,7 @@ extern "C"{
     f_string_length quote_delimit     = f_string_length_initialize;
 
     // search until stop point, end of string, or until a valid basic list object is found
-    do{
+    do {
       if (has_quote_delimit) {
         has_quote_delimit = f_false;
       }
@@ -353,7 +353,7 @@ extern "C"{
 
         // identify where the potential object ends
         if (quoted == f_eos) {
-          do{
+          do {
             fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
             fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
 
@@ -491,7 +491,7 @@ extern "C"{
           } while (f_true);
         } else {
           // the quote must end before the opener begins, in this case the colon ':', so a quoted object would look like: "quoted object":\n
-          do{
+          do {
             fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
             fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_unterminated_group_on_eos, f_unterminated_group_on_stop)
 
