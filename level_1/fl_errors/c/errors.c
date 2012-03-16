@@ -22,266 +22,266 @@ extern "C"{
     switch(error){
       #ifndef _di_fl_errors_booleans_
         case f_false:
-          *string = "false";
+          *string = "f_false";
           break;
         case f_true:
-          *string = "true";
+          *string = "f_true";
           break;
       #endif // _di_fl_errors_booleans_
 
       #ifndef _di_fl_errors_basic_
         case f_none:
-          *string = "none";
+          *string = "f_none";
           break;
         case f_dummy:
-          *string = "dummy";
+          *string = "f_dummy";
           break;
         case f_warn:
-          *string = "warn";
+          *string = "f_warn";
           break;
         case f_critical:
-          *string = "critical";
+          *string = "f_critical";
           break;
         case f_unknown:
-          *string = "unknown";
+          *string = "f_unknown";
           break;
         case f_unsupported:
-          *string = "unsupported";
+          *string = "f_unsupported";
           break;
         case f_invalid_parameter:
-          *string = "invalid parameter";
+          *string = "f_invalid_parameter";
           break;
         case f_invalid_syntax:
-          *string = "invalid syntax";
+          *string = "f_invalid_syntax";
           break;
         case f_invalid_data:
-          *string = "invalid data";
+          *string = "f_invalid_data";
           break;
         case f_no_data:
-          *string = "no data";
+          *string = "f_no_data";
           break;
         case f_output_error:
-          *string = "output error";
+          *string = "f_output_error";
           break;
         case f_does_not_exist:
-          *string = "does not exist";
+          *string = "f_does_not_exist";
           break;
         case f_failure:
-          *string = "failure";
+          *string = "f_failure";
           break;
       #endif // _di_fl_errors_basic_
 
       #ifndef _di_fl_errors_digits_
         case f_underflow:
-          *string = "underflow";
+          *string = "f_underflow";
           break;
         case f_overflow:
-          *string = "overflow";
+          *string = "f_overflow";
           break;
         case f_divide_by_zero:
-          *string = "divide_by_zero";
+          *string = "f_divide_by_zero";
           break;
         case f_cannot_be_negative:
-          *string = "cannot_be_negative";
+          *string = "f_cannot_be_negative";
           break;
         case f_cannot_be_positive:
-          *string = "cannot_be_positive";
+          *string = "f_cannot_be_positive";
           break;
         case f_cannot_be_zero:
-          *string = "cannot_be_zero";
+          *string = "f_cannot_be_zero";
           break;
       #endif // _di_fl_errors_digits_
 
       #ifndef _di_fl_errors_buffers_
         case f_no_data_on_eof:
-          *string = "no data on eof";
+          *string = "f_no_data_on_eof";
           break;
         case f_no_data_on_eos:
-          *string = "no data on eos";
+          *string = "f_no_data_on_eos";
           break;
         case f_no_data_on_stop:
-          *string = "no data on stop";
+          *string = "f_no_data_on_stop";
           break;
         case f_none_on_eof:
-          *string = "none on eof";
+          *string = "f_none_on_eof";
           break;
         case f_none_on_eos:
-          *string = "none on eos";
+          *string = "f_none_on_eos";
           break;
         case f_none_on_stop:
-          *string = "none on stop";
+          *string = "f_none_on_stop";
           break;
         case f_error_on_eof:
-          *string = "error on eof";
+          *string = "f_error_on_eof";
           break;
         case f_error_on_eos:
-          *string = "error on eos";
+          *string = "f_error_on_eos";
           break;
         case f_error_on_stop:
-          *string = "error on stop";
+          *string = "f_error_on_stop";
           break;
         case f_buffer_too_small:
-          *string = "buffer too small";
+          *string = "f_buffer_too_small";
           break;
         case f_buffer_too_large:
-          *string = "buffer too large";
+          *string = "f_buffer_too_large";
           break;
         case f_string_too_small:
-          *string = "string too small";
+          *string = "f_string_too_small";
           break;
         case f_string_too_large:
-          *string = "string too large";
+          *string = "f_string_too_large";
           break;
         case f_unterminated_nest:
-          *string = "unterminated nest";
+          *string = "f_unterminated_nest";
           break;
         case f_unterminated_nest_on_eos:
-          *string = "unterminated nest on eos";
+          *string = "f_unterminated_nest_on_eos";
           break;
         case f_unterminated_nest_on_eof:
-          *string = "unterminated nest on eof";
+          *string = "f_unterminated_nest_on_eof";
           break;
         case f_unterminated_nest_on_stop:
-          *string = "unterminated nest on stop";
+          *string = "f_unterminated_nest_on_stop";
           break;
         case f_unterminated_group:
-          *string = "unterminated group";
+          *string = "f_unterminated_group";
           break;
         case f_unterminated_group_on_eos:
-          *string = "unterminated group on eos";
+          *string = "f_unterminated_group_on_eos";
           break;
         case f_unterminated_group_on_eof:
-          *string = "unterminated group on eof";
+          *string = "f_unterminated_group_on_eof";
           break;
         case f_unterminated_group_on_stop:
-          *string = "unterminated group on_ top";
+          *string = "f_unterminated_group_on_stop";
           break;
       #endif // _di_fl_errors_buffers_
 
       #ifndef _di_fl_errors_allocation_
         case f_allocation_error:
-          *string = "allocation error";
+          *string = "f_allocation_error";
           break;
         case f_reallocation_error:
-          *string = "reallocation error";
+          *string = "f_reallocation_error";
           break;
       #endif // _di_fl_errors_allocation_
 
       #ifndef _di_fl_errors_fork_
         case f_fork_failed:
-          *string = "fork failed";
+          *string = "f_fork_failed";
           break;
       #endif // _di_fl_errors_fork_
 
       #ifndef _di_fl_errors_file_
         case f_file_seek_error:
-          *string = "file seek error";
+          *string = "f_file_seek_error";
           break;
         case f_file_read_error:
-          *string = "file read error";
+          *string = "f_file_read_error";
           break;
         case f_file_write_error:
-          *string = "file write error";
+          *string = "f_file_write_error";
           break;
         case f_file_flush_error:
-          *string = "file flush error";
+          *string = "f_file_flush_error";
           break;
         case f_file_purge_error:
-          *string = "file purge error";
+          *string = "f_file_purge_error";
           break;
         case f_file_open_error:
-          *string = "file open error";
+          *string = "f_file_open_error";
           break;
         case f_file_close_error:
-          *string = "file close error";
+          *string = "f_file_close_error";
           break;
         case f_file_synchronize_error:
-          *string = "file synchronize error";
+          *string = "f_file_synchronize_error";
           break;
         case f_file_descriptor_error:
-          *string = "file descriptor error";
+          *string = "f_file_descriptor_error";
           break;
         case f_file_not_found:
-          *string = "file not found";
+          *string = "f_file_not_found";
           break;
         case f_file_is_empty:
-          *string = "file is empty";
+          *string = "f_file_is_empty";
           break;
         case f_file_not_open:
-          *string = "file not open";
+          *string = "f_file_not_open";
           break;
         case f_file_allocation_error:
-          *string = "file allocation error";
+          *string = "f_file_allocation_error";
           break;
         case f_file_reallocation_error:
-          *string = "file reallocation error";
+          *string = "f_file_reallocation_error";
           break;
         case f_file_stat_error:
-          *string = "file stat error";
+          *string = "f_file_stat_error";
           break;
         case f_file_error:
-          *string = "file error";
+          *string = "f_file_error";
           break;
       #endif // _di_fl_errors_file_
 
       // most of these are a guess until I get around to researching & implementing linux directory I/O
       #ifndef _di_fl_errors_directory_
         case f_directory_read_error:
-          *string = "directory read error";
+          *string = "f_directory_read_error";
           break;
         case f_directory_write_error:
-          *string = "directory write error";
+          *string = "f_directory_write_error";
           break;
         case f_directory_flush_error:
-          *string = "directory flush error";
+          *string = "f_directory_flush_error";
           break;
         case f_directory_purge_error:
-          *string = "directory purge error";
+          *string = "f_directory_purge_error";
           break;
         case f_directory_open_error:
-          *string = "directory open error";
+          *string = "f_directory_open_error";
           break;
         case f_directory_close_error:
-          *string = "directory close error";
+          *string = "f_directory_close_error";
           break;
         case f_directory_synchronize_error:
-          *string = "directory synchronize error";
+          *string = "f_directory_synchronize_error";
           break;
         case f_directory_descriptor_error:
-          *string = "directory descriptor error";
+          *string = "f_directory_descriptor_error";
           break;
         case f_directory_not_found:
-          *string = "directory not found";
+          *string = "f_directory_not_found";
           break;
         case f_directory_is_empty:
-          *string = "directory is empty";
+          *string = "f_directory_is_empty";
           break;
         case f_directory_not_open:
-          *string = "directory not open";
+          *string = "f_directory_not_open";
           break;
         case f_directory_allocation_error:
-          *string = "directory allocation error";
+          *string = "f_directory_allocation_error";
           break;
         case f_directory_reallocation_error:
-          *string = "directory reallocation error";
+          *string = "f_directory_reallocation_error";
           break;
         case f_directory_error:
-          *string = "directory error";
+          *string = "f_directory_error";
           break;
       #endif // _di_fl_errors_directory_
 
       #ifndef _di_fll_error_non_
         case f_less_than:
-          *string = "less than";
+          *string = "f_less_than";
           break;
         case f_equal_to:
-          *string = "equal to";
+          *string = "f_equal_to";
           break;
         case f_not_equal_to:
-          *string = "not equal to";
+          *string = "f_not_equal_to";
           break;
         case f_greater_than:
-          *string = "greater than";
+          *string = "f_greater_than";
           break;
       #endif // _di_fl_errors_non_
 
