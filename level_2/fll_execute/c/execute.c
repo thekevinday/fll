@@ -14,7 +14,7 @@ extern "C"{
 #endif
 
 #ifndef _di_fll_execute_path_
-  f_return_status fll_execute_path(const f_string program_path, const f_dynamic_strings arguments, f_s_int *results){
+  f_return_status fll_execute_path(const f_string program_path, const f_dynamic_strings arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
       if (results == f_null) return f_invalid_parameter;
 
@@ -32,10 +32,10 @@ extern "C"{
 
     last_slash = strrchr(program_path, '/');
 
-    if (last_slash != f_null){
+    if (last_slash != f_null) {
       name_size = strnlen(last_slash, PATH_MAX);
 
-      if (name_size > 1){
+      if (name_size > 1) {
         f_new_string(status, program_name, name_size + 1);
 
         if (f_macro_test_for_allocation_errors(status)) return status;
@@ -49,7 +49,7 @@ extern "C"{
 
     status = f_new_array((void **) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
 
-    if (f_macro_test_for_allocation_errors(status)){
+    if (f_macro_test_for_allocation_errors(status)) {
       f_status tmp_status = f_status_initialize;
 
       f_delete_string(tmp_status, program_name, name_size);
@@ -62,7 +62,7 @@ extern "C"{
       arguments_array[0] = program_name;
       counter++;
 
-      for (; counter < arguments.used; counter++){
+      for (; counter < arguments.used; counter++) {
         arguments_array[counter] = arguments.array[counter].string;
       }
 
@@ -75,11 +75,11 @@ extern "C"{
 
     process_id = vfork();
 
-    if (process_id < 0){
+    if (process_id < 0) {
       return f_fork_failed;
     }
 
-    if (process_id == 0){ // child
+    if (process_id == 0) { // child
       execv(program_path, arguments_array);
 
       // according to manpages, calling _exit() is safer and should be called here instead of exit()
@@ -99,7 +99,7 @@ extern "C"{
 #endif // _di_fll_execute_path_
 
 #ifndef _di_fll_execute_program_
-  f_return_status fll_execute_program(const f_string program_name, const f_dynamic_strings arguments, f_s_int *results){
+  f_return_status fll_execute_program(const f_string program_name, const f_dynamic_strings arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
       if (results == f_null) return f_invalid_parameter;
 
@@ -121,7 +121,7 @@ extern "C"{
       arguments_array[0] = program_name;
       counter++;
 
-      for (; counter < arguments.used; counter++){
+      for (; counter < arguments.used; counter++) {
         arguments_array[counter] = arguments.array[counter].string;
       }
 
@@ -134,11 +134,11 @@ extern "C"{
 
     process_id = vfork();
 
-    if (process_id < 0){
+    if (process_id < 0) {
       return f_fork_failed;
     }
 
-    if (process_id == 0){ // child
+    if (process_id == 0) { // child
       execvp(program_name, arguments_array);
 
       // according to manpages, calling _exit() is safer and should be called here instead of exit()

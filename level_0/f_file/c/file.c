@@ -15,7 +15,7 @@ extern "C"{
 #endif
 
 #ifndef _di_f_file_open_
-  f_return_status f_file_open(f_file *file_information, const f_string filename){
+  f_return_status f_file_open(f_file *file_information, const f_string filename) {
     #ifndef _di_level_0_parameter_checking_
       if (file_information == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
@@ -37,7 +37,7 @@ extern "C"{
 #endif // _di_f_file_open_
 
 #ifndef _di_f_file_close_
-  f_return_status f_file_close(f_file *file_information){
+  f_return_status f_file_close(f_file *file_information) {
     #ifndef _di_level_0_parameter_checking_
       if (file_information == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
@@ -45,12 +45,12 @@ extern "C"{
     if (file_information->file == 0) return f_file_not_open;
 
     // if we were given a file descriptor as well, make sure to flush all changes to the disk that are not flushed by the 'fflush()' command
-    if (file_information->id != 0){
+    if (file_information->id != 0) {
       // make sure all unfinished data gets completed
       if (fsync(file_information->id) != 0) return f_file_synchronize_error;
     }
 
-    if (fclose(file_information->file) == 0){
+    if (fclose(file_information->file) == 0) {
       file_information->file = 0;
       return f_none;
     }
@@ -59,7 +59,7 @@ extern "C"{
 #endif // _di_f_file_close_
 
 #ifndef _di_f_file_flush_
-  f_return_status f_file_flush(f_file *file_information){
+  f_return_status f_file_flush(f_file *file_information) {
     #ifndef _di_level_0_parameter_checking_
       if (file_information == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
@@ -72,7 +72,7 @@ extern "C"{
 #endif // _di_f_file_flush_
 
 #ifndef _di_f_file_read_
-  f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location){
+  f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location) {
     #ifndef _di_level_0_parameter_checking_
       if (file_information == f_null)       return f_invalid_parameter;
       if (buffer->used     >= buffer->size) return f_invalid_parameter;
@@ -82,7 +82,7 @@ extern "C"{
       if (location.total_elements  < 0)      return f_invalid_parameter;
 
       // when the available buffer size is smaller than the total elements, then there is not enough allocated memory available to read the file
-      if (location.total_elements > 0){
+      if (location.total_elements > 0) {
         if (buffer->size - location.buffer_start < location.total_elements) return f_invalid_parameter;
       }
     #endif // _di_level_0_parameter_checking_
@@ -95,16 +95,16 @@ extern "C"{
 
     f_s_int result = 0;
 
-    if (current_file_position > location.file_start){
+    if (current_file_position > location.file_start) {
       result = f_file_seek_from_current(file_information->file, file_information->byte_size * (0 - (current_file_position - location.file_start)));
-    } else if (current_file_position < location.file_start){
+    } else if (current_file_position < location.file_start) {
       result = f_file_seek_from_current(file_information->file, file_information->byte_size * (location.file_start - current_file_position));
     }
 
     if (result != 0) return f_file_seek_error;
 
     // now do the actual read
-    if (location.total_elements == 0){
+    if (location.total_elements == 0) {
       result = fread(buffer->string + location.buffer_start, file_information->byte_size, buffer->size - buffer->used - 1, file_information->file);
     } else {
       result = fread(buffer->string + location.buffer_start, file_information->byte_size, location.total_elements, file_information->file);
@@ -115,17 +115,17 @@ extern "C"{
 
     // now save how much of our allocated buffer is actually used
     // also make sure that we aren't making used space vanish
-    if (location.buffer_start + result > buffer->used){
+    if (location.buffer_start + result > buffer->used) {
       buffer->used = location.buffer_start + (result / file_information->byte_size);
     }
 
     // append an EOS only when the total elements were set to 0
-    if (location.total_elements == 0){
+    if (location.total_elements == 0) {
       buffer->string[buffer->used] = f_eos;
     }
 
     // make sure to communicate that we are done without a problem and the eof was reached
-    if (feof(file_information->file)){
+    if (feof(file_information->file)) {
       return f_none_on_eof;
     }
 
@@ -134,7 +134,7 @@ extern "C"{
 #endif // _di_f_file_read_
 
 #ifndef _di_f_file_read_fifo_
-  f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer){
+  f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (file_information == f_null)       return f_invalid_parameter;
       if (buffer->used     >= buffer->size) return f_invalid_parameter;
@@ -153,7 +153,7 @@ extern "C"{
     buffer->used += (result / file_information->byte_size);
 
     // make sure to communicate that we are done without a problem and the eof was reached
-    if (feof(file_information->file)){
+    if (feof(file_information->file)) {
       return f_none_on_eof;
     }
 

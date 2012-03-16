@@ -12,7 +12,7 @@ extern "C"{
 
 // version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
 #ifndef _di_fss_extended_read_print_version_
-  f_return_status fss_extended_read_print_version(const fss_extended_read_data data){
+  f_return_status fss_extended_read_print_version(const fss_extended_read_data data) {
     printf("%s\n", fss_extended_read_version);
 
     return f_none;
@@ -20,7 +20,7 @@ extern "C"{
 #endif // _fss_extended_read_print_version_
 
 #ifndef _di_fss_extended_read_print_help_
-  f_return_status fss_extended_read_print_help(const fss_extended_read_data data){
+  f_return_status fss_extended_read_print_help(const fss_extended_read_data data) {
     printf("\n");
     fl_print_color(f_standard_output, data.context.title, data.context.reset, " %s", fss_extended_read_name_long);
 
@@ -124,17 +124,17 @@ extern "C"{
 #ifndef _di_fss_extended_read_main_
   f_return_status fss_extended_read_main_process_file(const f_array_length argc, const f_string argv[], fss_extended_read_data *data, const f_string filename, const f_string_length target, const f_string_length select) __attribute__((visibility("internal")));
 
-  f_return_status fss_extended_read_main(const f_array_length argc, const f_string argv[], fss_extended_read_data *data){
+  f_return_status fss_extended_read_main(const f_array_length argc, const f_string argv[], fss_extended_read_data *data) {
     f_status status            = f_status_initialize;
     f_status allocation_status = f_status_initialize;
 
     status = fl_process_parameters(argc, argv, data->parameters, fss_extended_read_total_parameters, &data->remaining);
 
     // load colors when not told to show no colors
-    if (data->parameters[fss_extended_read_parameter_no_color].result == f_console_result_none){
+    if (data->parameters[fss_extended_read_parameter_no_color].result == f_console_result_none) {
       fll_new_color_context(allocation_status, data->context);
 
-      if (allocation_status == f_none){
+      if (allocation_status == f_none) {
         fll_colors_load_context(&data->context, data->parameters[fss_extended_read_parameter_light].result == f_console_result_found);
       } else {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
@@ -143,15 +143,15 @@ extern "C"{
       }
     }
 
-    if (status != f_none){
-      if (status == f_no_data){
+    if (status != f_none) {
+      if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // TODO: there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
-      } else if (f_macro_test_for_allocation_errors(status)){
+      } else if (f_macro_test_for_allocation_errors(status)) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
-      } else if (status == f_invalid_parameter){
+      } else if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");
       } else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", status);
@@ -162,21 +162,21 @@ extern "C"{
     }
 
     // execute parameter results
-    if (data->parameters[fss_extended_read_parameter_help].result == f_console_result_found){
+    if (data->parameters[fss_extended_read_parameter_help].result == f_console_result_found) {
       fss_extended_read_print_help(*data);
-    } else if (data->parameters[fss_extended_read_parameter_version].result == f_console_result_found){
+    } else if (data->parameters[fss_extended_read_parameter_version].result == f_console_result_found) {
       fss_extended_read_print_version(*data);
-    } else if (data->remaining.used > 0 || data->process_pipe){
+    } else if (data->remaining.used > 0 || data->process_pipe) {
       f_string_length counter = f_string_length_initialize;
       f_string_length target  = f_string_length_initialize;
       f_string_length select  = f_string_length_initialize;
       f_string_length original_size = data->file_position.total_elements;
 
-      if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional){
+      if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional) {
         target = (f_string_length) atoll(argv[data->parameters[fss_extended_read_parameter_count].additional]);
       }
 
-      if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional){
+      if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
         select = (f_string_length) atoll(argv[data->parameters[fss_extended_read_parameter_select].additional]);
       }
 
@@ -187,14 +187,14 @@ extern "C"{
 
         status = fl_file_read_fifo(file, &data->buffer);
 
-        if (status != f_none){
-          if (status == f_invalid_parameter){
+        if (status != f_none) {
+          if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
-          } else if (status == f_file_not_found){
+          } else if (status == f_file_not_found) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", "-");
-          } else if (status == f_file_open_error){
+          } else if (status == f_file_open_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", "-");
-          } else if (status == f_file_descriptor_error){
+          } else if (status == f_file_descriptor_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
           } else {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
@@ -207,7 +207,7 @@ extern "C"{
         status = fss_extended_read_main_process_file(argc, argv, data, "-", target, select);
 
 
-        if (status != f_none && status != f_none_on_eof && status != f_none_on_eos){
+        if (status != f_none && status != f_none_on_eof && status != f_none_on_eos) {
           return status;
         }
 
@@ -217,21 +217,21 @@ extern "C"{
         f_delete_dynamic_string(allocation_status, data->buffer);
       }
 
-      for (; counter < data->remaining.used; counter++){
+      for (; counter < data->remaining.used; counter++) {
         f_file file = f_file_initialize;
 
         status = f_file_open(&file, argv[data->remaining.array[counter]]);
 
         data->file_position.total_elements = original_size;
 
-        if (status != f_none){
-          if (status == f_invalid_parameter){
+        if (status != f_none) {
+          if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
-          } else if (status == f_file_not_found){
+          } else if (status == f_file_not_found) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", argv[data->remaining.array[counter]]);
-          } else if (status == f_file_open_error){
+          } else if (status == f_file_open_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", argv[data->remaining.array[counter]]);
-          } else if (status == f_file_descriptor_error){
+          } else if (status == f_file_descriptor_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->remaining.array[counter]]);
           } else {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
@@ -242,13 +242,13 @@ extern "C"{
         }
 
         // TODO: this file size set functionality might be turned into an fl_file (or f_file) function
-        if (data->file_position.total_elements == 0){
+        if (data->file_position.total_elements == 0) {
           fseek(file.file, 0, SEEK_END);
 
           data->file_position.total_elements = ftell(file.file);
 
           // skip past empty files
-          if (data->file_position.total_elements == 0){
+          if (data->file_position.total_elements == 0) {
             f_file_close(&file);
             continue;
           }
@@ -260,18 +260,18 @@ extern "C"{
 
         f_file_close(&file);
 
-        if (status != f_none && status != f_none_on_eof && status != f_none_on_eos){
-          if (status == f_invalid_parameter){
+        if (status != f_none && status != f_none_on_eof && status != f_none_on_eos) {
+          if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read()");
-          } else if (status == f_overflow){
+          } else if (status == f_overflow) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'", argv[data->remaining.array[counter]]);
-          } else if (status == f_file_not_open){
+          } else if (status == f_file_not_open) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: The file '%s' is no longer open", argv[data->remaining.array[counter]]);
-          } else if (status == f_file_seek_error){
+          } else if (status == f_file_seek_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A seek error occurred while accessing the file '%s'", argv[data->remaining.array[counter]]);
-          } else if (status == f_file_read_error){
+          } else if (status == f_file_read_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A read error occurred while accessing the file '%s'", argv[data->remaining.array[counter]]);
-          } else if (f_macro_test_for_allocation_errors(status)){
+          } else if (f_macro_test_for_allocation_errors(status)) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
           } else {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read()", status);
@@ -283,7 +283,7 @@ extern "C"{
 
         status = fss_extended_read_main_process_file(argc, argv, data, argv[data->remaining.array[counter]], target, select);
 
-        if (status != f_none && status != f_none_on_eof && status != f_none_on_eos){
+        if (status != f_none && status != f_none_on_eof && status != f_none_on_eos) {
           return status;
         }
 
@@ -317,15 +317,15 @@ extern "C"{
       status = fll_fss_extended_read(&data->buffer, &input, &data->objects, &data->contents);
     }
 
-    if (status != f_none && status != f_none_on_eos && status != f_none_on_stop && status != fl_fss_found_object_no_content){
-      if (status == f_invalid_parameter){
+    if (status != f_none && status != f_none_on_eos && status != f_none_on_stop && status != fl_fss_found_object_no_content) {
+      if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_extended_read() for the file '%s'", filename);
 
         fss_extended_read_delete_data(data);
         return status;
-      } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop || status == f_no_data_on_eof){
+      } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop || status == f_no_data_on_eof) {
         // not an error in this case
-      } else if (f_macro_test_for_allocation_errors(status)){
+      } else if (f_macro_test_for_allocation_errors(status)) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
 
         fss_extended_read_delete_data(data);
@@ -343,16 +343,16 @@ extern "C"{
     }
 
     // now that all of the files have been read, process the objects and contents
-    if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found && data->parameters[fss_extended_read_parameter_name].result == f_console_result_none){
+    if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found && data->parameters[fss_extended_read_parameter_name].result == f_console_result_none) {
       fprintf(f_standard_output, "%u\n", (unsigned int) data->objects.used);
     } else {
       current = 0;
 
-      if (data->parameters[fss_extended_read_parameter_name].result == f_console_result_none){
-        if (data->parameters[fss_extended_read_parameter_object].result == f_console_result_none){
-          for (; current < data->objects.used; current++){
-            if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)){
-              if (data->contents.array[current].used > select){
+      if (data->parameters[fss_extended_read_parameter_name].result == f_console_result_none) {
+        if (data->parameters[fss_extended_read_parameter_object].result == f_console_result_none) {
+          for (; current < data->objects.used; current++) {
+            if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)) {
+              if (data->contents.array[current].used > select) {
                 f_print_partial_dynamic_string(f_standard_output, data->buffer, data->contents.array[current].array[select]);
                 fprintf(f_standard_output, "\n");
               } else {
@@ -361,8 +361,8 @@ extern "C"{
               }
             }
 
-            if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional){
-              if (found == target){
+            if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional) {
+              if (found == target) {
                 break;
               } else {
                 found++;
@@ -370,14 +370,14 @@ extern "C"{
             }
           } // for
         } else {
-          for (; current < data->objects.used; current++){
-            if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)){
+          for (; current < data->objects.used; current++) {
+            if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)) {
               f_print_partial_dynamic_string(f_standard_output, data->buffer, data->objects.array[current]);
               fprintf(f_standard_output, "\n");
             }
 
-            if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional){
-              if (found == target){
+            if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional) {
+              if (found == target) {
                 break;
               } else {
                 found++;
@@ -392,21 +392,21 @@ extern "C"{
         f_string_length name_length = f_string_length_initialize;
         f_string_length argv_length = f_string_length_initialize;
 
-        if (data->parameters[fss_extended_read_parameter_name].result == f_console_result_additional){
+        if (data->parameters[fss_extended_read_parameter_name].result == f_console_result_additional) {
           argv_length = strlen(argv[data->parameters[fss_extended_read_parameter_name].additional]);
 
-          if (data->parameters[fss_extended_read_parameter_object].result == f_console_result_none){
-            for (; current < data->objects.used; current++){
+          if (data->parameters[fss_extended_read_parameter_object].result == f_console_result_none) {
+            for (; current < data->objects.used; current++) {
               name_length = data->objects.array[current].stop - data->objects.array[current].start + 1;
 
-              if (name_length == argv_length){
-                if (fl_compare_strings(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_extended_read_parameter_name].additional], name_length, argv_length) == f_equal_to){
+              if (name_length == argv_length) {
+                if (fl_compare_strings(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_extended_read_parameter_name].additional], name_length, argv_length) == f_equal_to) {
 
-                  if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)){
-                    if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found){
+                  if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)) {
+                    if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
                       total++;
                     } else {
-                      if (data->contents.array[current].used > select){
+                      if (data->contents.array[current].used > select) {
                         f_print_partial_dynamic_string(f_standard_output, data->buffer, data->contents.array[current].array[select]);
                         fprintf(f_standard_output, "\n");
                       } else {
@@ -416,8 +416,8 @@ extern "C"{
                     }
                   }
 
-                  if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional){
-                    if (found == target){
+                  if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional) {
+                    if (found == target) {
                       break;
                     } else {
                       found++;
@@ -427,25 +427,25 @@ extern "C"{
               }
             } // for
 
-            if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found && data->parameters[fss_extended_read_parameter_count].result == f_console_result_none){
+            if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found && data->parameters[fss_extended_read_parameter_count].result == f_console_result_none) {
               fprintf(f_standard_output, f_string_length_printf "\n", total);
             }
           } else {
             // when and because the object parameter is specified, the name parameter refers to the content instead of the object
             // therefore, make the search on the content and display the object
-            for (; current < data->contents.used; current++){
-              if (data->contents.array[current].used > select){
+            for (; current < data->contents.used; current++) {
+              if (data->contents.array[current].used > select) {
                 name_length = data->contents.array[current].array[select].stop - data->contents.array[current].array[select].start + 1;
 
-                if (name_length == argv_length){
-                  if (fl_compare_strings(data->buffer.string + data->contents.array[current].array[select].start, argv[data->parameters[fss_extended_read_parameter_name].additional], name_length, argv_length) == f_equal_to){
-                    if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)){
+                if (name_length == argv_length) {
+                  if (fl_compare_strings(data->buffer.string + data->contents.array[current].array[select].start, argv[data->parameters[fss_extended_read_parameter_name].additional], name_length, argv_length) == f_equal_to) {
+                    if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)) {
                       f_print_partial_dynamic_string(f_standard_output, data->buffer, data->objects.array[current]);
                       fprintf(f_standard_output, "\n");
                     }
 
-                    if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional){
-                      if (found == target){
+                    if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional) {
+                      if (found == target) {
                         break;
                       } else {
                         found++;
@@ -465,7 +465,7 @@ extern "C"{
 #endif // _di_fss_extended_read_main_
 
 #ifndef _di_fss_extended_read_delete_data_
-  f_return_status fss_extended_read_delete_data(fss_extended_read_data *data){
+  f_return_status fss_extended_read_delete_data(fss_extended_read_data *data) {
     f_status status = f_status_initialize;
 
     f_delete_fss_contents(status, data->contents);

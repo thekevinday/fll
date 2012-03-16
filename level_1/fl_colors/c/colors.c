@@ -11,7 +11,7 @@ extern "C"{
 #endif
 
 #ifndef _di_fl_set_color_
-  f_return_status fl_set_color(f_file_type file, const f_colors_format format, const f_autochar *color1, const f_autochar *color2, const f_autochar *color3, const f_autochar *color4, const f_autochar *color5){
+  f_return_status fl_set_color(f_file_type file, const f_colors_format format, const f_autochar *color1, const f_autochar *color2, const f_autochar *color3, const f_autochar *color4, const f_autochar *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (file   == f_null) return f_invalid_parameter;
       if (color1 == f_null) return f_invalid_parameter;
@@ -33,7 +33,7 @@ extern "C"{
 #endif // _di_fl_set_color_
 
 #ifndef _di_fl_save_color_
-  f_return_status fl_save_color(f_dynamic_string *buffer, const f_colors_format format, const f_autochar *color1, const f_autochar *color2, const f_autochar *color3, const f_autochar *color4, const f_autochar *color5){
+  f_return_status fl_save_color(f_dynamic_string *buffer, const f_colors_format format, const f_autochar *color1, const f_autochar *color2, const f_autochar *color3, const f_autochar *color4, const f_autochar *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == f_null) return f_invalid_parameter;
       if (color1 == f_null) return f_invalid_parameter;
@@ -53,27 +53,27 @@ extern "C"{
     else                       string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size) + strnlen(color4, f_color_max_size) + strnlen(color5, f_color_max_size);
 
     // make sure there is enough allocated space, if not, then allocate some more
-    if (buffer->size - buffer->used - 1 < string_size){
+    if (buffer->size - buffer->used - 1 < string_size) {
       f_status status = f_status_initialize;
 
       f_resize_dynamic_string(status, (*buffer), buffer->used + string_size + 1); // the additional 1 is the EOS
 
-      if (f_macro_test_for_allocation_errors(status)){
+      if (f_macro_test_for_allocation_errors(status)) {
         return status;
       }
     }
 
-    if (color2 == f_null){
+    if (color2 == f_null) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.end, f_color_max_size);
-    } else if (color3 == f_null){
+    } else if (color3 == f_null) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.medium, f_color_max_size);
       strncat(buffer->string, color2, f_color_max_size);
       strncat(buffer->string, format.end, f_color_max_size);
-    } else if (color4 == f_null){
+    } else if (color4 == f_null) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.medium, f_color_max_size);
@@ -81,7 +81,7 @@ extern "C"{
       strncat(buffer->string, format.medium, f_color_max_size);
       strncat(buffer->string, color3, f_color_max_size);
       strncat(buffer->string, format.end, f_color_max_size);
-    } else if (color5 == f_null){
+    } else if (color5 == f_null) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.medium, f_color_max_size);
@@ -116,13 +116,13 @@ extern "C"{
 #endif // _di_fl_save_color_
 
 #ifndef _di_fl_print_color_
-  f_return_status fl_print_color(f_file_type file, const f_dynamic_string start_color, const f_dynamic_string end_color, const f_autochar *string, ...){
+  f_return_status fl_print_color(f_file_type file, const f_dynamic_string start_color, const f_dynamic_string end_color, const f_autochar *string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file   == f_null) return f_invalid_parameter;
       if (string == f_null) return f_invalid_parameter;
     #endif // _di_level_1_parameter_checking_
 
-    if (start_color.used != 0){
+    if (start_color.used != 0) {
       fprintf(file, "%s", start_color.string);
     }
 
@@ -134,7 +134,7 @@ extern "C"{
 
     va_end(ap);
 
-    if (end_color.used != 0){
+    if (end_color.used != 0) {
       fprintf(file, "%s", end_color.string);
     }
 
@@ -143,13 +143,13 @@ extern "C"{
 #endif // _di_fl_print_color_
 
 #ifndef _di_fl_print_color_line_
-  f_return_status fl_print_color_line(f_file_type file, const f_dynamic_string start_color, const f_dynamic_string end_color, const f_autochar *string, ...){
+  f_return_status fl_print_color_line(f_file_type file, const f_dynamic_string start_color, const f_dynamic_string end_color, const f_autochar *string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file   == f_null) return f_invalid_parameter;
       if (string == f_null) return f_invalid_parameter;
     #endif // _di_level_1_parameter_checking_
 
-    if (start_color.used != 0){
+    if (start_color.used != 0) {
       fprintf(file, "%s", start_color.string);
     }
 
@@ -161,7 +161,7 @@ extern "C"{
 
     va_end(ap);
 
-    if (end_color.used != 0){
+    if (end_color.used != 0) {
       fprintf(file, "%s", end_color.string);
     }
 
@@ -173,8 +173,8 @@ extern "C"{
 #endif // _di_fl_print_color_line_
 
 #ifndef _di_fl_print_color_code_
-  f_return_status fl_print_color_code(f_file_type file, const f_dynamic_string color){
-    if (color.used != 0){
+  f_return_status fl_print_color_code(f_file_type file, const f_dynamic_string color) {
+    if (color.used != 0) {
       fprintf(file, "%s", color.string);
     }
 

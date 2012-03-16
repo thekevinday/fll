@@ -11,7 +11,7 @@ extern "C"{
 #endif
 
 #ifndef _di_fll_colors_load_context_
-  f_return_status fll_colors_load_context(fll_color_context *data, f_bool use_light_colors){
+  f_return_status fll_colors_load_context(fll_color_context *data, f_bool use_light_colors) {
     #ifndef _di_level_2_parameter_checking_
       if (data == 0) return f_invalid_parameter;
     #endif // _di_level_2_parameter_checking_
@@ -22,7 +22,7 @@ extern "C"{
     {
       f_autochar *environment = getenv("TERM");
 
-      if (!environment || strncmp(environment, "linux", 6) == 0){
+      if (!environment || strncmp(environment, "linux", 6) == 0) {
         data->color_list = f_colors_linux;
       } else {
         data->color_list = f_colors_xterminal;
@@ -30,7 +30,7 @@ extern "C"{
     }
 
     // load the colors
-    if (use_light_colors){
+    if (use_light_colors) {
       status = fl_save_color1(&data->reset, data->color_format, data->color_list.reset);
 
       if (status == f_none) status = fl_save_color1(&data->warning,   data->color_format, data->color_list.yellow);

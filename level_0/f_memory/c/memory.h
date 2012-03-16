@@ -104,7 +104,7 @@ extern "C"{
   // type:       the structure type
   #define f_delete_structure(status, structure, type) \
     status = f_delete((void **) & structure.array, sizeof(type), structure.size); \
-    if (status == f_none){ \
+    if (status == f_none) { \
       structure.size = 0; \
       structure.used = 0; \
     }
@@ -116,7 +116,7 @@ extern "C"{
   // type:       the structure type
   #define f_destroy_structure(status, structure, type) \
     status = f_destroy((void **) & structure.array, sizeof(type), structure.size); \
-    if (status == f_none){ \
+    if (status == f_none) { \
       structure.size = 0; \
       structure.used = 0; \
     }
@@ -128,7 +128,7 @@ extern "C"{
   // type:       the structure type
   #define f_resize_structure(status, structure, type, new_length) \
     status = f_resize((void **) & structure.array, sizeof(type), structure.size, new_length); \
-    if (status == f_none){ \
+    if (status == f_none) { \
       structure.size = new_length; \
       if (structure.used > structure.size) structure.used = new_length; \
     }
@@ -140,7 +140,7 @@ extern "C"{
   // type:       the structure type
   #define f_adjust_structure(status, structure, type, new_length) \
     status = f_adjust((void **) & structure.array, sizeof(type), structure.size, new_length); \
-    if (status == f_none){ \
+    if (status == f_none) { \
       structure.size = new_length; \
       if (structure.used > structure.size) structure.used = new_length; \
     }
@@ -155,7 +155,7 @@ extern "C"{
   // type:       the structure type
   #define f_delete_structures(status, structures, type) \
     status = f_none; \
-    while (structures.size > 0){ \
+    while (structures.size > 0) { \
       --structures.size; \
       f_delete_structure(status, structures.array[structures.size], type); \
       if (status != f_none) break; \
@@ -170,7 +170,7 @@ extern "C"{
   // type:       the structure type
   #define f_destroy_structures(status, structures, type) \
     status = f_none; \
-    while (structures.size > 0){ \
+    while (structures.size > 0) { \
       --structures.size; \
       f_destroy_structure(status, structures.array[structures.size], type); \
       if (status != f_none) break; \
@@ -185,18 +185,18 @@ extern "C"{
   // type:       the structure type
   #define f_resize_structures(status, structures, type, new_length, length_variable) \
     status = f_none; \
-    if (new_length < structures.size){ \
+    if (new_length < structures.size) { \
       length_variable i = structures.size - new_length; \
-      for (; i < structures.size; ++i){ \
+      for (; i < structures.size; ++i) { \
         f_delete_structure(status, structures.array[i], type); \
         if (status != f_none) break; \
       } \
     } \
     if (status == f_none) status = f_resize((void **) & structures.array, sizeof(type), structures.size, new_length); \
     if (status == f_none) { \
-      if (new_length > structures.size){ \
+      if (new_length > structures.size) { \
         length_variable i = structures.size; \
-        for (; i < new_length; ++i){ \
+        for (; i < new_length; ++i) { \
           memset(&structures.array[i], 0, sizeof(type)); \
         } \
       } \
@@ -211,18 +211,18 @@ extern "C"{
   // type:       the structure type
   #define f_adjust_structures(status, structures, type, new_length, length_variable) \
     status = f_none; \
-    if (new_length < structures.size){ \
+    if (new_length < structures.size) { \
       length_variable i = structures.size - new_length; \
-      for (; i < structures.size; ++i){ \
+      for (; i < structures.size; ++i) { \
         f_destroy_structure(status, structures.array[i], type); \
         if (status != f_none) break; \
       } \
     } \
     if (status == f_none) status = f_adjust((void **) & structures.array, sizeof(type), structures.size, new_length); \
     if (status == f_none) { \
-      if (new_length > structures.size){ \
+      if (new_length > structures.size) { \
         length_variable i = structures.size; \
-        for (; i < new_length; ++i){ \
+        for (; i < new_length; ++i) { \
           memset(&structures.array[i], 0, sizeof(type)); \
         } \
       } \

@@ -92,7 +92,7 @@ extern "C" {
     location->stop  = 0;
 
     while (i < serialized.used) {
-      if (current == index){
+      if (current == index) {
         if (location->start > location->stop) {
           location->start = i;
           location->stop  = i;

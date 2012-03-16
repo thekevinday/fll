@@ -12,7 +12,7 @@ extern "C"{
 #endif
 
 #ifndef _di_fl_fss_identify_
-  f_return_status fl_fss_identify(const f_dynamic_string buffer, f_fss_header *header){
+  f_return_status fl_fss_identify(const f_dynamic_string buffer, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
       if (header      == f_null) return f_invalid_parameter;
       if (buffer.used <= 0)      return f_invalid_parameter;
@@ -21,16 +21,16 @@ extern "C"{
     register f_string_length i = 0;
 
     // If this correctly follows the FSS specification, then this should be all that needs to be done (as well as atoh for ascii to hex)
-    if                   (buffer.string[i] == f_fss_type_header_open){  i++;
-      if                 (buffer.string[i] == f_fss_type_header_part1){ i++;
-        if               (buffer.string[i] == f_fss_type_header_part2){ i++;
-          if             (buffer.string[i] == f_fss_type_header_part3){ i++;
-            if           (buffer.string[i] == f_fss_type_header_part4){ i++;
-              if         (buffer.string[i] == f_fss_type_header_part5){ i++;
-                if       (f_is_hexdigit(buffer.string[i]) == f_true){   i++;
-                  if     (f_is_hexdigit(buffer.string[i]) == f_true){   i++;
-                    if   (f_is_hexdigit(buffer.string[i]) == f_true){   i++;
-                      if (f_is_hexdigit(buffer.string[i]) == f_true){   i++;
+    if                   (buffer.string[i] == f_fss_type_header_open) {  i++;
+      if                 (buffer.string[i] == f_fss_type_header_part1) { i++;
+        if               (buffer.string[i] == f_fss_type_header_part2) { i++;
+          if             (buffer.string[i] == f_fss_type_header_part3) { i++;
+            if           (buffer.string[i] == f_fss_type_header_part4) { i++;
+              if         (buffer.string[i] == f_fss_type_header_part5) { i++;
+                if       (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
+                  if     (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
+                    if   (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
+                      if (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
 
                         f_string_location location = f_string_location_initialize;
 
@@ -41,7 +41,7 @@ extern "C"{
                         f_string_to_hexdigit(buffer.string, &header->type, location);
 
                         // 2: At this point, we can still know the proper format for the file and still have a invalid header, handle accordingly
-                        if (buffer.string[i] == f_fss_type_header_close){
+                        if (buffer.string[i] == f_fss_type_header_close) {
                           i++;
                           header->length = i;
 
@@ -62,14 +62,14 @@ extern "C"{
           }
         }
       // people can miss spaces, so lets accept in an attempt to interpret the file anyway, but return values at this point are to be flagged as invalid
-      } else if        (buffer.string[i] == f_fss_type_header_part2){ i++;
-        if             (buffer.string[i] == f_fss_type_header_part3){ i++;
-          if           (buffer.string[i] == f_fss_type_header_part4){ i++;
-            if         (buffer.string[i] == f_fss_type_header_part5){ i++;
-              if       (f_is_hexdigit(buffer.string[i]) == f_true){   i++;
-                if     (f_is_hexdigit(buffer.string[i]) == f_true){   i++;
-                  if   (f_is_hexdigit(buffer.string[i]) == f_true){   i++;
-                    if (f_is_hexdigit(buffer.string[i]) == f_true){   i++;
+      } else if        (buffer.string[i] == f_fss_type_header_part2) { i++;
+        if             (buffer.string[i] == f_fss_type_header_part3) { i++;
+          if           (buffer.string[i] == f_fss_type_header_part4) { i++;
+            if         (buffer.string[i] == f_fss_type_header_part5) { i++;
+              if       (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
+                if     (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
+                  if   (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
+                    if (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
 
                       f_string_location location = f_string_location_initialize;
 
@@ -99,7 +99,7 @@ extern "C"{
 #endif // _di_fl_fss_identify_
 
 #ifndef _di_fl_fss_identify_file_
-  f_return_status fl_fss_identify_file(f_file *file_information, f_fss_header *header){
+  f_return_status fl_fss_identify_file(f_file *file_information, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
       if (file_information               == f_null) return f_invalid_parameter;
       if (header                         == f_null) return f_invalid_parameter;
@@ -125,14 +125,14 @@ extern "C"{
 
     f_adjust_dynamic_string(status, buffer, location.total_elements + 1);
 
-    if (f_macro_test_for_allocation_errors(status)){
+    if (f_macro_test_for_allocation_errors(status)) {
       return status;
     }
 
     // 2: buffer the file
     status = f_file_read(file_information, &buffer, location);
 
-    if (f_macro_test_for_basic_errors(status) || f_macro_test_for_file_errors(status)){
+    if (f_macro_test_for_basic_errors(status) || f_macro_test_for_file_errors(status)) {
       return status;
     }
 
@@ -144,7 +144,7 @@ extern "C"{
 #endif // _di_fl_fss_identify_file_
 
 #ifndef _di_fl_fss_shift_delimiters_
-f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, const f_string_location location){
+f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, const f_string_location location) {
   #ifndef _di_level_1_parameter_checking_
     if (buffer->used   <= 0)              return f_invalid_parameter;
     if (location.start  < 0)              return f_invalid_parameter;
@@ -157,26 +157,26 @@ f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, const f_string
 
   position = location.start;
 
-  while (position < buffer->used && position <= location.stop){
-    if (buffer->string[position] == f_fss_delimit_placeholder){
+  while (position < buffer->used && position <= location.stop) {
+    if (buffer->string[position] == f_fss_delimit_placeholder) {
       distance++;
     }
 
     // do not waste time trying to process what is only going to be replaced with a delimit placeholder
-    if (position + distance >= buffer->used || position + distance > location.stop){
+    if (position + distance >= buffer->used || position + distance > location.stop) {
       break;
     }
 
     // shift everything down one for each placeholder found
-    if (distance > 0){
+    if (distance > 0) {
       buffer->string[position] = buffer->string[position + distance];
     }
 
     ++position;
   }
 
-  if (distance > 0){
-    while (position < buffer->used + distance && position <= location.stop){
+  if (distance > 0) {
+    while (position < buffer->used + distance && position <= location.stop) {
       buffer->string[position] = f_fss_delimit_placeholder;
       ++position;
     }

@@ -19,7 +19,7 @@ extern "C"{
       if (string == f_null) return f_invalid_parameter;
     #endif // _di_level_1_parameter_checking_
 
-    switch(error){
+    switch(error) {
       #ifndef _di_fl_errors_booleans_
         case f_false:
           *string = "f_false";
@@ -308,7 +308,7 @@ extern "C"{
 
 #ifndef _di_fl_errors_is_warning_
   f_return_status fl_errors_is_warning(const f_status error) {
-    switch(error){
+    switch(error) {
       #ifndef _di_fl_errors_basic_
         case f_no_data:
           return f_true;
@@ -341,7 +341,7 @@ extern "C"{
   // Returns true or false depending on whether the standard context of the error code represents an normal return status and not an error.
   // Keep in mind that many of the error codes are context-specific and may be reported as an "okay" here when it is in fact not okay.
   f_return_status fl_errors_is_okay(const f_status error) {
-    switch(error){
+    switch(error) {
       #ifndef _di_fl_errors_booleans_
         case f_false:
           return f_true;

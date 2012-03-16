@@ -11,10 +11,10 @@ extern "C"{
 #endif
 
 #ifndef _di_f_is_digit_
-  f_return_status f_is_digit(const f_autochar character){
+  f_return_status f_is_digit(const f_autochar character) {
 
     // at this point, it seems that it would incur more overhead to use the libc isdigit here, so just use one less call and test it here
-    switch(character){
+    switch(character) {
       case '0':
       case '1':
       case '2':
@@ -34,9 +34,9 @@ extern "C"{
 #endif // _di_f_is_digit_
 
 #ifndef _di_f_is_hexdigit_
-  f_return_status f_is_hexdigit(const f_autochar character){
+  f_return_status f_is_hexdigit(const f_autochar character) {
 
-    switch(character){
+    switch(character) {
       case '0':
       case '1':
       case '2':
@@ -67,12 +67,12 @@ extern "C"{
 #endif // _di_f_is_hexdigit_
 
 #ifndef _di_f_character_to_digit_
-  f_return_status f_character_to_digit(const f_autochar character, f_u_long *digit){
+  f_return_status f_character_to_digit(const f_autochar character, f_u_long *digit) {
     #ifndef _di_level_0_parameter_checking_
       if (digit == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
 
-    switch(character){
+    switch(character) {
       case '0': *digit = 0;  break;
       case '1': *digit = 1;  break;
       case '2': *digit = 2;  break;
@@ -92,12 +92,12 @@ extern "C"{
 #endif // _di_f_character_to_digit_
 
 #ifndef _di_f_character_to_hexdigit_
-  f_return_status f_character_to_hexdigit(const f_autochar character, f_u_long *digit){
+  f_return_status f_character_to_hexdigit(const f_autochar character, f_u_long *digit) {
     #ifndef _di_level_0_parameter_checking_
       if (digit == f_null) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
 
-    switch(character){
+    switch(character) {
       case '0': *digit = 0;  break;
       case '1': *digit = 1;  break;
       case '2': *digit = 2;  break;
@@ -129,7 +129,7 @@ extern "C"{
 #endif // _di_f_character_to_hexdigit_
 
 #ifndef _di_f_string_to_digit_
-  f_return_status f_string_to_digit(const f_string string, f_u_long *digit, const f_string_location location){
+  f_return_status f_string_to_digit(const f_string string, f_u_long *digit, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (digit          == f_null)         return f_invalid_parameter;
       if (location.start  < 0)              return f_invalid_parameter;
@@ -141,11 +141,11 @@ extern "C"{
     f_u_long        scale            = 0;
     f_u_long        temp_digit       = 0;
 
-    while(current_location < location.stop){
-      if (f_character_to_digit(string[current_location], &temp_digit) == f_none){
+    while(current_location < location.stop) {
+      if (f_character_to_digit(string[current_location], &temp_digit) == f_none) {
 
         // when the scale exists, then we need to make the number larger, for this function the scale is base 10
-        if (scale > 0){
+        if (scale > 0) {
           *digit = 10 * *digit;
           *digit += temp_digit;
         } else {
@@ -164,7 +164,7 @@ extern "C"{
 #endif // _di_f_string_to_digit_
 
 #ifndef _di_f_string_to_hexdigit_
-  f_return_status f_string_to_hexdigit(const f_string string, f_u_long *digit, const f_string_location location){
+  f_return_status f_string_to_hexdigit(const f_string string, f_u_long *digit, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (digit          == f_null)         return f_invalid_parameter;
       if (location.start  < 0)              return f_invalid_parameter;
@@ -176,11 +176,11 @@ extern "C"{
     f_u_long        scale            = 0;
     f_u_long        temp_digit       = 0;
 
-    while(current_location < location.stop){
-      if (f_character_to_hexdigit(string[current_location], &temp_digit) == f_none){
+    while(current_location < location.stop) {
+      if (f_character_to_hexdigit(string[current_location], &temp_digit) == f_none) {
 
         // when the scale exists, then we need to make the number larger, for this function the scale is base 16
-        if (scale > 0){
+        if (scale > 0) {
           *digit <<= 4;
           *digit += temp_digit;
         } else {

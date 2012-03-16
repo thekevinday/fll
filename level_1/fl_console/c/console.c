@@ -11,7 +11,7 @@ extern "C"{
 #endif
 
 #ifndef _di_fl_process_parameters_
-  f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, f_string_lengths *remaining){
+  f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, f_string_lengths *remaining) {
     #ifndef _di_level_1_parameter_checking_
       if (remaining == f_null) return f_invalid_parameter;
     #endif // _di_level_1_parameter_checking_
@@ -30,7 +30,7 @@ extern "C"{
 
 
     // loop through and read all parameters
-    while (location < argc){
+    while (location < argc) {
       f_console_identify(argv[location], &result);
 
       string_length = strnlen(argv[location], f_console_max_size);
@@ -51,20 +51,20 @@ extern "C"{
       }
 
       // Now handle the normal commands
-      if (argv[location][0] == f_console_symbol_enable){
-        while (sub_location < string_length){
-          for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++){
-            if (parameters[parameter_counter].type == f_console_type_normal){
-              if (parameters[parameter_counter].symbol_short != 0 && parameters[parameter_counter].symbol_long != 0){
-                if (f_console_is_enable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_short, parameters[parameter_counter].symbol_long, string_length + 1)){
+      if (argv[location][0] == f_console_symbol_enable) {
+        while (sub_location < string_length) {
+          for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++) {
+            if (parameters[parameter_counter].type == f_console_type_normal) {
+              if (parameters[parameter_counter].symbol_short != 0 && parameters[parameter_counter].symbol_long != 0) {
+                if (f_console_is_enable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_short, parameters[parameter_counter].symbol_long, string_length + 1)) {
                   parameters[parameter_counter].result = f_console_result_found;
 
-                  if (parameters[parameter_counter].has_additional){
-                    if (extra_initiator.used >= extra_initiator.size){
+                  if (parameters[parameter_counter].has_additional) {
+                    if (extra_initiator.used >= extra_initiator.size) {
                       f_status allocation_status = f_status_initialize;
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
-                      if (f_macro_test_for_allocation_errors(allocation_status)){
+                      if (f_macro_test_for_allocation_errors(allocation_status)) {
                         f_delete_string_lengths(status, extra_initiator);
                         return allocation_status;
                       }
@@ -77,15 +77,15 @@ extern "C"{
               }
 
               if (parameters[parameter_counter].symbol_extra != 0) {
-                if (f_console_is_extra_enable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_extra, string_length + 1)){
+                if (f_console_is_extra_enable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_extra, string_length + 1)) {
                   parameters[parameter_counter].result = f_console_result_found;
 
-                  if (parameters[parameter_counter].has_additional){
-                    if (extra_initiator.used >= extra_initiator.size){
+                  if (parameters[parameter_counter].has_additional) {
+                    if (extra_initiator.used >= extra_initiator.size) {
                       f_status allocation_status = f_status_initialize;
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
-                      if (f_macro_test_for_allocation_errors(allocation_status)){
+                      if (f_macro_test_for_allocation_errors(allocation_status)) {
                         f_delete_string_lengths(status, extra_initiator);
                         return allocation_status;
                       }
@@ -104,19 +104,19 @@ extern "C"{
 
       // now handle the inverse commands
       } else if (argv[location][0] == f_console_symbol_disable) {
-        while (sub_location < string_length){
-          for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++){
-            if (parameters[parameter_counter].type == f_console_type_inverse){
-              if (parameters[parameter_counter].symbol_short != 0 && parameters[parameter_counter].symbol_long != 0){
-                if (f_console_is_disable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_short, parameters[parameter_counter].symbol_long, string_length + 1)){
+        while (sub_location < string_length) {
+          for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++) {
+            if (parameters[parameter_counter].type == f_console_type_inverse) {
+              if (parameters[parameter_counter].symbol_short != 0 && parameters[parameter_counter].symbol_long != 0) {
+                if (f_console_is_disable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_short, parameters[parameter_counter].symbol_long, string_length + 1)) {
                   parameters[parameter_counter].result = f_console_result_found;
 
-                  if (parameters[parameter_counter].has_additional){
-                    if (extra_initiator.used >= extra_initiator.size){
+                  if (parameters[parameter_counter].has_additional) {
+                    if (extra_initiator.used >= extra_initiator.size) {
                       f_status allocation_status = f_status_initialize;
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
-                      if (f_macro_test_for_allocation_errors(allocation_status)){
+                      if (f_macro_test_for_allocation_errors(allocation_status)) {
                         f_delete_string_lengths(status, extra_initiator);
                         return allocation_status;
                       }
@@ -129,15 +129,15 @@ extern "C"{
               }
 
               if (parameters[parameter_counter].symbol_extra != 0) {
-                if (f_console_is_extra_disable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_extra, string_length + 1)){
+                if (f_console_is_extra_disable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_extra, string_length + 1)) {
                   parameters[parameter_counter].result = f_console_result_found;
 
-                  if (parameters[parameter_counter].has_additional){
-                    if (extra_initiator.used >= extra_initiator.size){
+                  if (parameters[parameter_counter].has_additional) {
+                    if (extra_initiator.used >= extra_initiator.size) {
                       f_status allocation_status = f_status_initialize;
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
-                      if (f_macro_test_for_allocation_errors(allocation_status)){
+                      if (f_macro_test_for_allocation_errors(allocation_status)) {
                         f_delete_string_lengths(status, extra_initiator);
                         return allocation_status;
                       }
@@ -157,10 +157,10 @@ extern "C"{
         // use found to determine if the remaining parameter should be populated
         found = f_false;
 
-        for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++){
-          if (parameters[parameter_counter].type == f_console_type_other){
-            if (parameters[parameter_counter].length > 0 && parameters[parameter_counter].symbol_other != 0){
-              if (strncmp(argv[location], parameters[parameter_counter].symbol_other, parameters[parameter_counter].length + 1) == 0){
+        for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++) {
+          if (parameters[parameter_counter].type == f_console_type_other) {
+            if (parameters[parameter_counter].length > 0 && parameters[parameter_counter].symbol_other != 0) {
+              if (strncmp(argv[location], parameters[parameter_counter].symbol_other, parameters[parameter_counter].length + 1) == 0) {
                 parameters[parameter_counter].result = f_console_result_found;
 
                 // when "other" is supplied, the extra will be recycled to represent the location of the "other" such that ordering can be determined by the caller
@@ -173,8 +173,8 @@ extern "C"{
           }
         } // for()
 
-        if (!found){
-          if (extra_initiator.used > 0){
+        if (!found) {
+          if (extra_initiator.used > 0) {
             parameters[extra_initiator.array[0]].result     = f_console_result_additional;
             parameters[extra_initiator.array[0]].additional = location;
 
@@ -182,16 +182,16 @@ extern "C"{
 
             f_string_length i = 0;
 
-            for (; i < extra_initiator.used; i++){
+            for (; i < extra_initiator.used; i++) {
               extra_initiator.array[i] = extra_initiator.array[i + 1];
             }
           } else {
-            if (remaining->used >= remaining->size){
+            if (remaining->used >= remaining->size) {
               f_status allocation_status = f_status_initialize;
 
               f_resize_string_lengths(allocation_status, (*remaining), remaining->size + f_console_default_allocation_step);
 
-              if (f_macro_test_for_allocation_errors(allocation_status)){
+              if (f_macro_test_for_allocation_errors(allocation_status)) {
                 f_delete_string_lengths(status, extra_initiator);
                 return allocation_status;
               }
@@ -206,7 +206,7 @@ extern "C"{
       ++location;
     } // while()
 
-    if (extra_initiator.used > 0){
+    if (extra_initiator.used > 0) {
       status = f_no_data;
     } else {
       status = f_none;

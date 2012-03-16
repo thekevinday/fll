@@ -181,28 +181,28 @@ extern "C"{
 
   #define f_delete_dynamic_string(status, dynamic) \
     status = f_delete((void **) & dynamic.string, sizeof(f_string), dynamic.size); \
-    if (status == f_none){ \
+    if (status == f_none) { \
       dynamic.size = 0; \
       dynamic.used = 0; \
     }
 
   #define f_destroy_dynamic_string(status, dynamic) \
     status = f_destroy((void **) & dynamic.string, sizeof(f_string), dynamic.size); \
-    if (status == f_none){ \
+    if (status == f_none) { \
       dynamic.size = 0; \
       dynamic.used = 0; \
     }
 
   #define f_resize_dynamic_string(status, dynamic, new_length) \
     status = f_resize((void **) & dynamic.string, sizeof(f_string), dynamic.size, new_length); \
-    if (status == f_none){ \
+    if (status == f_none) { \
       dynamic.size = new_length; \
       if (dynamic.used > dynamic.size) dynamic.used = new_length; \
     }
 
   #define f_adjust_dynamic_string(status, dynamic, new_length) \
     status = f_adjust((void **) & dynamic.string, sizeof(f_string), dynamic.size, new_length); \
-    if (status == f_none){ \
+    if (status == f_none) { \
       dynamic.size = new_length; \
       if (dynamic.used > dynamic.size) dynamic.used = new_length; \
     }
@@ -220,7 +220,7 @@ extern "C"{
 
   #define f_delete_dynamic_strings(status, dynamics) \
     status = f_none; \
-    while (dynamics.size > 0){ \
+    while (dynamics.size > 0) { \
       --dynamics.size; \
       f_delete_dynamic_string(status, dynamics.array[dynamics.size]); \
       if (status != f_none) break; \
@@ -230,7 +230,7 @@ extern "C"{
 
   #define f_destroy_dynamic_strings(status, dynamics) \
     status = f_none; \
-    while (dynamics.size > 0){ \
+    while (dynamics.size > 0) { \
       --dynamics.size; \
       f_destroy_dynamic_string(status, dynamics.array[dynamics.size]); \
       if (status != f_none) break; \
@@ -240,18 +240,18 @@ extern "C"{
 
   #define f_resize_dynamic_strings(status, dynamics, new_length) \
     status = f_none; \
-    if (new_length < dynamics.size){ \
+    if (new_length < dynamics.size) { \
       f_string_length i = dynamics.size - new_length; \
-      for (; i < dynamics.size; ++i){ \
+      for (; i < dynamics.size; ++i) { \
         f_delete_dynamic_string(status, dynamics.array[i]); \
         if (status != f_none) break; \
       } \
     } \
     if (status == f_none) status = f_resize((void **) & dynamics.array, sizeof(f_dynamic_string), dynamics.size, new_length); \
     if (status == f_none) { \
-      if (new_length > dynamics.size){ \
+      if (new_length > dynamics.size) { \
         f_string_length i = dynamics.size; \
-        for (; i < new_length; ++i){ \
+        for (; i < new_length; ++i) { \
           memset(&dynamics.array[i], 0, sizeof(f_string)); \
         } \
       } \
@@ -261,18 +261,18 @@ extern "C"{
 
   #define f_adjust_dynamic_strings(status, dynamics, new_length) \
     status = f_none; \
-    if (new_length < dynamics.size){ \
+    if (new_length < dynamics.size) { \
       f_string_length i = dynamics.size - new_length; \
-      for (; i < dynamics.size; ++i){ \
+      for (; i < dynamics.size; ++i) { \
         f_destroy_dynamic_string(status, dynamics.array[i]); \
         if (status != f_none) break; \
       } \
     } \
     if (status == f_none) status = f_adjust((void **) & dynamics.array, sizeof(f_dynamic_string), dynamics.size, new_length); \
     if (status == f_none) { \
-      if (new_length > dynamics.size){ \
+      if (new_length > dynamics.size) { \
         f_string_length i = dynamics.size; \
-        for (; i < new_length; ++i){ \
+        for (; i < new_length; ++i) { \
           memset(&dynamics.array[i], 0, sizeof(f_dynamic_string)); \
         } \
       } \

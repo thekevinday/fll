@@ -13,7 +13,7 @@ extern "C"{
 
 #ifndef _di_fl_directory_list_
   // put the names of each file and/or directory inside the names parameter
-  f_return_status fl_directory_list(const f_string directory_path, f_dynamic_strings *names){
+  f_return_status fl_directory_list(const f_string directory_path, f_dynamic_strings *names) {
     #ifndef _di_level_1_parameter_checking_
       if (names == f_null) return f_invalid_parameter;
     #endif // _di_level_1_parameter_checking_
@@ -30,17 +30,17 @@ extern "C"{
         size = strnlen(listing[counter]->d_name, 256); // as far as I can tell 256 is the max directory name length
 
         // there is no reason to include "." and ".." in the directory listing
-        if (strncmp(listing[counter]->d_name, "..", 3) != 0 && strncmp(listing[counter]->d_name, ".", 2) != 0){
-          if (names->used >= names->size){
+        if (strncmp(listing[counter]->d_name, "..", 3) != 0 && strncmp(listing[counter]->d_name, ".", 2) != 0) {
+          if (names->used >= names->size) {
             f_resize_dynamic_strings(status, (*names), names->used + fl_directory_default_allocation_step);
 
-            if (f_macro_test_for_allocation_errors(status)){
+            if (f_macro_test_for_allocation_errors(status)) {
               return status;
             }
           }
 
           f_resize_dynamic_string(status, names->array[names->used], size);
-          if (f_macro_test_for_allocation_errors(status)){
+          if (f_macro_test_for_allocation_errors(status)) {
             return status;
           }
 
@@ -56,10 +56,10 @@ extern "C"{
     // FIXME: the second and third paramater are probably wrong
     f_delete((void **) & listing, sizeof(struct dirent *), 0);
 
-    if (length == 0){
+    if (length == 0) {
       // an empty directory
       return f_no_data;
-    } else if (length == -1){
+    } else if (length == -1) {
       if (errno == ENOMEM) return f_allocation_error;
       else                 return f_failure;
     }

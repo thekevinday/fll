@@ -12,7 +12,7 @@ extern "C"{
 
 // version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
 #ifndef _di_return_code_print_version_
-  f_return_status return_code_print_version(const return_code_data data){
+  f_return_status return_code_print_version(const return_code_data data) {
     printf("%s\n", return_code_version);
 
     return f_none;
@@ -20,7 +20,7 @@ extern "C"{
 #endif // _return_code_print_version_
 
 #ifndef _di_return_code_print_help_
-  f_return_status return_code_print_help(const return_code_data data){
+  f_return_status return_code_print_help(const return_code_data data) {
     printf("\n");
     fl_print_color(f_standard_output, data.context.title, data.context.reset, " %s", return_code_name_long);
 
@@ -109,17 +109,17 @@ extern "C"{
 #endif // _di_return_code_print_help_
 
 #ifndef _di_return_code_main_
-  f_return_status return_code_main(const f_array_length argc, const f_string argv[], return_code_data *data){
+  f_return_status return_code_main(const f_array_length argc, const f_string argv[], return_code_data *data) {
     f_status status            = f_status_initialize;
     f_status allocation_status = f_status_initialize;
 
     status = fl_process_parameters(argc, argv, data->parameters, return_code_total_parameters, &data->remaining);
 
     // load colors when not told to show no colors
-    if (data->parameters[return_code_parameter_no_color].result == f_console_result_none){
+    if (data->parameters[return_code_parameter_no_color].result == f_console_result_none) {
       fll_new_color_context(allocation_status, data->context);
 
-      if (allocation_status == f_none){
+      if (allocation_status == f_none) {
         fll_colors_load_context(&data->context, data->parameters[return_code_parameter_light].result == f_console_result_found);
       } else {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
@@ -128,15 +128,15 @@ extern "C"{
       }
     }
 
-    if (status != f_none){
-      if (status == f_no_data){
+    if (status != f_none) {
+      if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // TODO: there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
-      } else if (f_macro_test_for_allocation_errors(status)){
+      } else if (f_macro_test_for_allocation_errors(status)) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
-      } else if (status == f_invalid_parameter){
+      } else if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
       } else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", status);
@@ -147,19 +147,19 @@ extern "C"{
     }
 
     // execute parameter results
-    if (data->parameters[return_code_parameter_help].result == f_console_result_found){
+    if (data->parameters[return_code_parameter_help].result == f_console_result_found) {
       return_code_print_help(*data);
-    } else if (data->parameters[return_code_parameter_version].result == f_console_result_found){
+    } else if (data->parameters[return_code_parameter_version].result == f_console_result_found) {
       return_code_print_version(*data);
-    } else if (data->parameters[return_code_parameter_is_error].result == f_console_result_found && data->remaining.used > 0){
+    } else if (data->parameters[return_code_parameter_is_error].result == f_console_result_found && data->remaining.used > 0) {
       f_array_length counter = f_array_length_initialize;
 
       f_status code = f_status_initialize;
 
-      for (; counter < data->remaining.used; counter++){
+      for (; counter < data->remaining.used; counter++) {
         code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
-        if (fl_errors_is_error(code)){
+        if (fl_errors_is_error(code)) {
           return_code_delete_data(data);
           return f_true;
         }
@@ -167,15 +167,15 @@ extern "C"{
 
       return_code_delete_data(data);
       return f_false;
-    } else if (data->parameters[return_code_parameter_is_warning].result == f_console_result_found && data->remaining.used > 0){
+    } else if (data->parameters[return_code_parameter_is_warning].result == f_console_result_found && data->remaining.used > 0) {
       f_array_length counter = f_array_length_initialize;
 
       f_status code = f_status_initialize;
 
-      for (; counter < data->remaining.used; counter++){
+      for (; counter < data->remaining.used; counter++) {
         code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
-        if (fl_errors_is_warning(code)){
+        if (fl_errors_is_warning(code)) {
           return_code_delete_data(data);
           return f_true;
         }
@@ -183,15 +183,15 @@ extern "C"{
 
       return_code_delete_data(data);
       return f_false;
-    } else if (data->parameters[return_code_parameter_is_okay].result == f_console_result_found && data->remaining.used > 0){
+    } else if (data->parameters[return_code_parameter_is_okay].result == f_console_result_found && data->remaining.used > 0) {
       f_array_length counter = f_array_length_initialize;
 
       f_status code = f_status_initialize;
 
-      for (; counter < data->remaining.used; counter++){
+      for (; counter < data->remaining.used; counter++) {
         code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
-        if (fl_errors_is_okay(code)){
+        if (fl_errors_is_okay(code)) {
           return_code_delete_data(data);
           return f_true;
         }
@@ -199,19 +199,19 @@ extern "C"{
 
       return_code_delete_data(data);
       return f_false;
-    } else if (data->remaining.used > 0 || data->process_pipe){
+    } else if (data->remaining.used > 0 || data->process_pipe) {
       f_array_length counter = f_array_length_initialize;
 
       if (data->process_pipe) {
         // TODO: how should this be done?
       }
 
-      if (data->remaining.used > 0){
-        for (; counter < data->remaining.used; counter++){
+      if (data->remaining.used > 0) {
+        for (; counter < data->remaining.used; counter++) {
           f_status code   = (f_status) atoll(argv[data->remaining.array[counter]]);
           f_string string = f_null;
 
-          if (fl_errors_to_string(code, &string) == f_none){
+          if (fl_errors_to_string(code, &string) == f_none) {
             printf("%s\n", string);
           }
         } // for
@@ -227,7 +227,7 @@ extern "C"{
 #endif // _di_return_code_main_
 
 #ifndef _di_return_code_delete_data_
-  f_return_status return_code_delete_data(return_code_data *data){
+  f_return_status return_code_delete_data(return_code_data *data) {
     f_status status = f_status_initialize;
 
     f_delete_string_lengths(status, data->remaining);
