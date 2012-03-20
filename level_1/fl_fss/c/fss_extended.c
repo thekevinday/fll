@@ -432,7 +432,7 @@ extern "C"{
     if (buffer.string[input->start] == f_fss_delimit_slash) {
       f_string_length delimit_slash_count = 0;
 
-      while (input->start <= input->stop) {
+      while (input->start <= input->stop && input->start < buffer.used) {
         if (buffer.string[input->start] == f_fss_delimit_placeholder) {
           input->start++;
           continue;
@@ -480,7 +480,7 @@ extern "C"{
       input->start++;
     }
 
-    while (input->start <= input->stop) {
+    while (input->start <= input->stop && input->start < buffer.used) {
       if (buffer.string[input->start] == f_fss_delimit_placeholder) {
         input->start++;
         continue;
@@ -489,11 +489,11 @@ extern "C"{
 
         input->start++;
 
-        while (input->start <= input->stop && isspace(buffer.string[input->start])) {
+        while (input->start <= input->stop && input->start < buffer.used && isspace(buffer.string[input->start])) {
           input->start++;
         } // while
 
-        if (input->start > input->stop) {
+        if (input->start > input->stop || input->start >= buffer.used) {
           object->string[first_space] = f_fss_extended_open;
           object->used = object_position.stop + 1;
           break;
@@ -506,7 +506,7 @@ extern "C"{
         object->string[object_position.stop] = f_fss_delimit_double_quote;
         object_position.stop++;
 
-        while (input->start <= input->stop) {
+        while (input->start <= input->stop && input->start < buffer.used) {
           if (buffer.string[input->start] == f_fss_delimit_placeholder) {
             input->start++;
             continue;
@@ -532,7 +532,7 @@ extern "C"{
 
               fl_macro_fss_skip_past_delimit_placeholders(buffer, (*input));
 
-              if (input->start > input->stop) {
+              if (input->start > input->stop || input->start >= buffer.used) {
                 break;
               }
 
