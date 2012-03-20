@@ -100,12 +100,9 @@ extern "C"{
         case f_none_on_stop:
           return f_true;
       #endif // _di_f_errors_buffers_
-
-      default:
-        return f_false;
     }
 
-    return f_unknown;
+    return f_false;
   }
 #endif // _di_fll_fss_errors_is_warning_
 
@@ -136,12 +133,9 @@ extern "C"{
         case f_greater_than:
           return f_true;
       #endif // _di_fll_fss_errors_non_
-
-      default:
-        return f_false;
     }
 
-    return f_unknown;
+    return f_false;
   }
 #endif // _di_fll_fss_errors_is_okay_
 
