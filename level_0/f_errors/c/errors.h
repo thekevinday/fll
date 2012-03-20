@@ -124,12 +124,15 @@ enum {
 
   #ifndef _di_f_errors_buffers_
     f_no_data_on_eof,            // warning
+    f_no_data_on_eol,            // warning
     f_no_data_on_eos,            // warning
     f_no_data_on_stop,           // warning
     f_none_on_eof,               // warning
+    f_none_on_eol,               // warning
     f_none_on_eos,               // warning
     f_none_on_stop,              // "stop" location was reached
     f_error_on_eof,
+    f_error_on_eol,
     f_error_on_eos,
     f_error_on_stop,
     f_buffer_too_small,
@@ -137,12 +140,14 @@ enum {
     f_string_too_small,
     f_string_too_large,
     f_unterminated_nest,
-    f_unterminated_nest_on_eos,
     f_unterminated_nest_on_eof,
+    f_unterminated_nest_on_eol,
+    f_unterminated_nest_on_eos,
     f_unterminated_nest_on_stop,
     f_unterminated_group,
-    f_unterminated_group_on_eos,
     f_unterminated_group_on_eof,
+    f_unterminated_group_on_eol,
+    f_unterminated_group_on_eos,
     f_unterminated_group_on_stop,
   #endif // _di_f_errors_buffers_
 

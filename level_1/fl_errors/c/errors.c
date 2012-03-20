@@ -96,6 +96,9 @@ extern "C"{
         case f_no_data_on_eof:
           *string = "f_no_data_on_eof";
           break;
+        case f_no_data_on_eol:
+          *string = "f_no_data_on_eol";
+          break;
         case f_no_data_on_eos:
           *string = "f_no_data_on_eos";
           break;
@@ -105,6 +108,9 @@ extern "C"{
         case f_none_on_eof:
           *string = "f_none_on_eof";
           break;
+        case f_none_on_eol:
+          *string = "f_none_on_eol";
+          break;
         case f_none_on_eos:
           *string = "f_none_on_eos";
           break;
@@ -113,6 +119,9 @@ extern "C"{
           break;
         case f_error_on_eof:
           *string = "f_error_on_eof";
+          break;
+        case f_error_on_eol:
+          *string = "f_error_on_eol";
           break;
         case f_error_on_eos:
           *string = "f_error_on_eos";
@@ -135,11 +144,14 @@ extern "C"{
         case f_unterminated_nest:
           *string = "f_unterminated_nest";
           break;
-        case f_unterminated_nest_on_eos:
-          *string = "f_unterminated_nest_on_eos";
-          break;
         case f_unterminated_nest_on_eof:
           *string = "f_unterminated_nest_on_eof";
+          break;
+        case f_unterminated_nest_on_eol:
+          *string = "f_unterminated_nest_on_eol";
+          break;
+        case f_unterminated_nest_on_eos:
+          *string = "f_unterminated_nest_on_eos";
           break;
         case f_unterminated_nest_on_stop:
           *string = "f_unterminated_nest_on_stop";
@@ -147,11 +159,14 @@ extern "C"{
         case f_unterminated_group:
           *string = "f_unterminated_group";
           break;
-        case f_unterminated_group_on_eos:
-          *string = "f_unterminated_group_on_eos";
-          break;
         case f_unterminated_group_on_eof:
           *string = "f_unterminated_group_on_eof";
+          break;
+        case f_unterminated_group_on_eol:
+          *string = "f_unterminated_group_on_eol";
+          break;
+        case f_unterminated_group_on_eos:
+          *string = "f_unterminated_group_on_eos";
           break;
         case f_unterminated_group_on_stop:
           *string = "f_unterminated_group_on_stop";
@@ -317,11 +332,15 @@ extern "C"{
       #ifndef _di_f_errors_buffers_
         case f_no_data_on_eof:
           return f_true;
+        case f_no_data_on_eol:
+          return f_true;
         case f_no_data_on_eos:
           return f_true;
         case f_no_data_on_stop:
           return f_true;
         case f_none_on_eof:
+          return f_true;
+        case f_none_on_eol:
           return f_true;
         case f_none_on_eos:
           return f_true;
