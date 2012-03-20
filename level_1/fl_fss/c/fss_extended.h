@@ -24,7 +24,6 @@
 // fll-1 includes
 #include <level_1/fss.h>
 #include <level_1/fss_macro.h>
-#include <level_1/fss_basic.h>
 #include <level_1/fss_errors.h>
 
 #ifdef __cplusplus
