@@ -479,7 +479,13 @@ extern "C"{
     }
 
     while (input->start <= input->stop && input->start < buffer.used) {
-      if (buffer.string[input->start] != f_eol && buffer.string[input->start] != f_fss_delimit_placeholder) {
+      if (buffer.string[input->start] == f_eol){
+        content->string[content_position.stop] = f_eol;
+        content->used = content_position.stop + 1;
+        return f_none_on_eos;
+      }
+
+      if (buffer.string[input->start] != f_fss_delimit_placeholder) {
         content->string[content_position.stop] = buffer.string[input->start];
         content_position.stop++;
       }
