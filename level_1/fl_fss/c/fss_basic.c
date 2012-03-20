@@ -33,9 +33,8 @@ extern "C"{
 
     // when handling delimits, the only time they should be applied is when a valid object would exist
     // however, the delimits will appear before a valid object, so remember their positions and only apply them after a would be valid object is confirmed
-    f_bool          has_delimit   = f_false;
-    f_bool          ignore_quotes = f_false;
-    f_string_length location      = f_string_length_initialize;
+    f_bool          has_delimit = f_false;
+    f_string_length location    = f_string_length_initialize;
 
     // begin the search
     found->start = input->start;
@@ -53,48 +52,41 @@ extern "C"{
 
     // identify where the object begins
     if (buffer->string[input->start] == f_fss_delimit_slash) {
-      f_string_length first_slash = input->start;
+      f_string_length last_slash = input->start;
       input->start++;
 
-      fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
+      while (input->start <= input->stop && input->start < buffer->used) {
+        if (buffer->string[input->start] == f_fss_delimit_placeholder) {
+          input->start++;
+          continue;
+        } else if (!isgraph(buffer->string[input->start])) {
+          found->stop = input->start - 1;
+          input->start++;
+          return fl_fss_found_object;
+        } else if (buffer->string[input->start] != f_fss_delimit_slash) {
+          break;
+        }
+
+        last_slash = input->start;
+        input->start++;
+      } // while
+
       fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
 
-      // A slash only delimits if a delimit quote would follow the slash
       if (buffer->string[input->start] == f_fss_delimit_single_quote || buffer->string[input->start] == f_fss_delimit_double_quote) {
-        location = first_slash;
-        has_delimit = f_true;
-        quoted = buffer->string[input->start];
+        buffer->string[last_slash] = f_fss_delimit_placeholder;
         input->start++;
-      } else if (buffer->string[input->start] == f_fss_delimit_slash) {
-        do {
-          ++input->start;
-
-          fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
-          fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
-
-          if (buffer->string[input->start] == f_fss_delimit_single_quote || buffer->string[input->start] == f_fss_delimit_double_quote) {
-            location = first_slash;
-            has_delimit = f_true;
-            quoted = buffer->string[input->start];
-            ignore_quotes = f_true;
-            input->start++;
-          } else if (!isgraph(buffer->string[input->start])) {
-            found->stop = input->start - 1;
-            input->start++;
-            return fl_fss_found_object;
-          }
-        } while (buffer->string[input->start] == f_fss_delimit_slash);
       }
     } else if (buffer->string[input->start] == f_fss_delimit_single_quote || buffer->string[input->start] == f_fss_delimit_double_quote) {
       quoted = buffer->string[input->start];
       input->start++;
-      location = input->start;
+      found->start = input->start;
     }
 
     // identify where the object ends
     if (quoted == f_eos) {
       while (isgraph(buffer->string[input->start]) || buffer->string[input->start] == f_fss_delimit_placeholder) {
-        ++input->start;
+        input->start++;
         fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
       } // while
 
@@ -110,147 +102,119 @@ extern "C"{
         return fl_fss_found_object;
       }
     } else {
-      // remember the very first space in case a valid object close is not found
-      f_string_length pre_space   = f_string_length_initialize;
-      f_bool          found_space = f_false;
-
-      // a dynamically populated location of all delimits to apply
-      f_string_lengths delimits = f_string_lengths_initialize;
-
-      do {
-        fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
-        fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
-
-        if (buffer->string[input->start] == f_eol) {
-          if (found_space) {
-            found->stop = pre_space;
-            input->start = pre_space;
-          } else {
-            found->stop = input->start - 1;
-          }
-
+      while (input->start <= input->stop && input->start < buffer->used) {
+        if (buffer->string[input->start] == f_fss_delimit_slash) {
+          f_string_length first_slash = input->start;
+          f_string_length slash_count = 1;
           input->start++;
 
-          f_status status = f_status_initialize;
-          f_delete_string_lengths(status, delimits)
-
-          if (found_space) {
-            return fl_fss_found_object;
-          } else {
-            return fl_fss_found_object_no_content;
-          }
-        } else if (isspace(buffer->string[input->start])) {
-          if (!found_space) {
-            pre_space = input->start - 1;
-            found_space = f_true;
-          }
-        } else if (buffer->string[input->start] == quoted) {
-          f_string_length quote_location = input->start;
-          ++input->start;
-
-          fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
-          fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
-
-          if (isspace(buffer->string[input->start])) {
-            // this quote is a valid object close quote, so handle appropriately
-            if (has_delimit) {
-              buffer->string[location] = f_fss_delimit_placeholder;
-
-              if (ignore_quotes) {
-                if (found_space) {
-                  found->stop = pre_space;
-                  input->start = pre_space;
-                } else {
-                  found->stop = input->start -1;
-                }
-              } else {
-                found->stop = quote_location -1;
-              }
-            } else {
-              found->start = location;
-              found->stop  = quote_location - 1;
-            }
-
-            if (delimits.used > 0) {
-              f_array_length counter = 0;
-
-              for (; counter < delimits.used; counter++) {
-                buffer->string[delimits.array[counter]] = f_fss_delimit_placeholder;
-              } // for
-            }
-
-            f_status status = f_status_initialize;
-            f_delete_string_lengths(status, delimits)
-
-            input->start++;
-            return fl_fss_found_object;
-          } else {
-            continue;
-          }
-        } else if (buffer->string[input->start] == f_fss_delimit_slash) {
-          f_string_length first_slash = input->start;
-          ++input->start;
-
-          fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
-          fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
-
-          // A slash only delimits here if whitespace would follow the quote
-          if (buffer->string[input->start] == quoted) {
-            ++input->start;
-
-            fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
-            fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
-
-            if (isspace(buffer->string[input->start])) {
-              if (delimits.used >= delimits.size) {
-                f_status status = f_status_initialize;
-
-                f_resize_string_lengths(status, delimits, delimits.size + f_fss_default_allocation_step);
-                if (f_macro_test_for_allocation_errors(status)) return status;
-              }
-
-              delimits.array[delimits.used] = first_slash;
-              delimits.used++;
-            } else {
+          while (input->start <= input->stop && input->start < buffer->used) {
+            if (buffer->string[input->start] == f_fss_delimit_placeholder) {
+              input->start++;
               continue;
+            } else if (buffer->string[input->start] != f_fss_delimit_slash) {
+              break;
             }
-          } else if (buffer->string[input->start] == f_fss_delimit_slash) {
-            ++input->start;
 
-            fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
-            fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
+            slash_count++;
+            input->start++;
+          } // while
 
-            // A slash only delimits here if whitespace would follow the quote
-            if (buffer->string[input->start] == quoted) {
-              ++input->start;
+          fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
+
+          if (buffer->string[input->start] == quoted) {
+            location     = input->start;
+            input->start = first_slash;
+
+            if (slash_count % 2 == 0) {
+              while (slash_count > 0) {
+                if (buffer->string[input->start] == f_fss_delimit_slash) {
+                  if (slash_count % 2 != 0) {
+                    buffer->string[input->start] = f_fss_delimit_placeholder;
+                  }
+
+                  slash_count--;
+                }
+
+                input->start++;
+              } // while
+
+              input->start = location + 1;
 
               fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
               fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
 
-              if (isspace(buffer->string[input->start])) {
-                if (delimits.used >= delimits.size) {
-                  f_status status = f_status_initialize;
+              if (isgraph(buffer->string[input->start])) {
+                while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
+                  input->start++;
+                } // while
 
-                  f_resize_string_lengths(status, delimits, delimits.size + f_fss_default_allocation_step);
-                  if (f_macro_test_for_allocation_errors(status)) return status;
+                input->start++;
+                return fl_fss_found_no_object;
+              } else if (buffer->string[input->start] == f_eol) {
+                found->stop = input->start - 1;
+                input->start++;
+
+                return fl_fss_found_object_no_content;
+              }
+
+              found->stop = input->start - 1;
+              input->start++;
+              return fl_fss_found_object;
+            } else {
+              while (slash_count > 0) {
+                if (buffer->string[input->start] == f_fss_delimit_slash) {
+                  if (slash_count % 2 != 0) {
+                    buffer->string[input->start] = f_fss_delimit_placeholder;
+                  }
+
+                  slash_count--;
                 }
 
-                delimits.array[delimits.used] = first_slash;
-                delimits.used++;
-              } else {
-                continue;
-              }
+                input->start++;
+              } // while
+
+              input->start = location;
             }
           }
+        } else if (buffer->string[input->start] == quoted) {
+          found->stop = input->start - 1;
+          input->start++;
+
+          while (input->start <= input->stop && input->start < buffer->used) {
+            if (buffer->string[input->start] == f_eol) {
+              input->start++;
+              return fl_fss_found_object_no_content;
+            } else if (isspace(buffer->string[input->start])) {
+              input->start++;
+              return fl_fss_found_object;
+            } else if (buffer->string[input->start] != f_fss_delimit_placeholder) {
+              while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
+                input->start++;
+              } // while
+
+              input->start++;
+              return fl_fss_found_no_object;
+            }
+
+            input->start++;
+          }
+
+          fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
+        } else if (buffer->string[input->start] == f_eol) {
+          input->start++;
+          return fl_fss_found_no_object;
         }
 
-        ++input->start;
-      } while (f_true);
+        input->start++;
+      } // while
+
+      fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
     }
 
-    // seek to the end of the line
+    // seek to the end of the line when no valid object is found
     while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
-      ++input->start;
+      input->start++;
     }
 
     input->start++;
