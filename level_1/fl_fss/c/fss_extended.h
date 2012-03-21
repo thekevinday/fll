@@ -45,6 +45,11 @@ extern "C"{
   extern f_return_status fl_fss_extended_object_write(const f_dynamic_string buffer, f_string_location *input, f_dynamic_string *object);
 #endif // _di_fl_fss_extended_object_write_
 
+#ifndef _di_fl_fss_extended_content_write_
+  // write an fss-0001 content
+  extern f_return_status fl_fss_extended_content_write(const f_dynamic_string buffer, f_string_location *input, f_dynamic_string *content);
+#endif // _di_fl_fss_extended_content_write_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
