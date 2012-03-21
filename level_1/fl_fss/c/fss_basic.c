@@ -277,10 +277,12 @@ extern "C"{
     f_string_length   start_position    = f_string_initialize;
     f_string_length   pre_allocate_size = f_string_length_initialize;
 
-    fl_macro_fss_skip_past_all_whitespace(buffer, (*input))
+    fl_macro_fss_skip_past_delimit_placeholders(buffer, (*input))
 
-    if (input->start >= buffer.used) {
-      return f_no_data;
+    if (input->start > input->stop) {
+      return f_no_data_on_stop;
+    } else if (input->start >= buffer.used) {
+      return f_no_data_on_eos;
     }
 
     start_position = input->start;
@@ -353,20 +355,6 @@ extern "C"{
         input->start++;
         continue;
       } else if (isspace(buffer.string[input->start])) {
-        f_string_length first_space = input->start;
-
-        input->start++;
-
-        while (input->start <= input->stop && input->start < buffer.used && isspace(buffer.string[input->start])) {
-          input->start++;
-        } // while
-
-        if (input->start > input->stop || input->start >= buffer.used) {
-          object->string[first_space] = f_fss_basic_open;
-          object->used = object_position.stop + 1;
-          break;
-        }
-
         // restart the loop searching for f_fss_delimit_double_quote.
         input->start = start_position;
         object_position.stop = object_position.start;

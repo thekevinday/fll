@@ -409,10 +409,12 @@ extern "C"{
     f_string_length   start_position    = f_string_initialize;
     f_string_length   pre_allocate_size = f_string_length_initialize;
 
-    fl_macro_fss_skip_past_all_whitespace(buffer, (*input))
+    fl_macro_fss_skip_past_delimit_placeholders(buffer, (*input))
 
-    if (input->start >= buffer.used) {
-      return f_no_data;
+    if (input->start > input->stop) {
+      return f_no_data_on_stop;
+    } else if (input->start >= buffer.used) {
+      return f_no_data_on_eos;
     }
 
     start_position = input->start;
