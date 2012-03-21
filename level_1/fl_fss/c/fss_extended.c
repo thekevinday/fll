@@ -582,6 +582,12 @@ extern "C"{
       object->used = object_position.stop + 1;
     }
 
+    if (input->start > input->stop) {
+      return f_none_on_stop;
+    } else if (input->start >= buffer.used) {
+      return f_none_on_eos;
+    }
+
     return f_none;
   }
 #endif // _di_fl_fss_extended_object_write_
