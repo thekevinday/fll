@@ -432,7 +432,7 @@ extern "C"{
     object_position.stop  = object->used;
 
     if (buffer.string[input->start] == f_fss_delimit_slash) {
-      f_string_length delimit_slash_count = 0;
+      f_string_length slash_count = 0;
 
       while (input->start <= input->stop && input->start < buffer.used) {
         if (buffer.string[input->start] == f_fss_delimit_placeholder) {
@@ -444,12 +444,12 @@ extern "C"{
 
         object->string[object_position.stop] = buffer.string[input->start];
         object_position.stop++;
-        delimit_slash_count++;
+        slash_count++;
         input->start++;
       } // while
 
       if (buffer.string[input->start] == f_fss_delimit_single_quote || buffer.string[input->start] == f_fss_delimit_double_quote) {
-        pre_allocate_size += delimit_slash_count + 1;
+        pre_allocate_size += slash_count + 1;
 
         if (pre_allocate_size > object->size) {
           f_resize_dynamic_string(status, (*object), pre_allocate_size + f_fss_default_allocation_step);
@@ -457,10 +457,10 @@ extern "C"{
           if (f_macro_test_for_allocation_errors(status)) return status;
         }
 
-        while (delimit_slash_count > 0) {
+        while (slash_count > 0) {
           object->string[object_position.stop] = f_fss_delimit_slash;
           object_position.stop++;
-          delimit_slash_count--;
+          slash_count--;
         } // while
 
         object->string[object_position.stop] = buffer.string[input->start];
@@ -524,12 +524,12 @@ extern "C"{
             object->string[object_position.stop] = f_fss_delimit_slash;
             object_position.stop++;
           } else if (buffer.string[input->start] == f_fss_delimit_slash) {
-            f_string_length delimit_slash_count = 0;
+            f_string_length slash_count = 0;
 
             do {
               object->string[object_position.stop] = buffer.string[input->start];
               object_position.stop++;
-              delimit_slash_count++;
+              slash_count++;
               input->start++;
 
               fl_macro_fss_skip_past_delimit_placeholders(buffer, (*input));
@@ -539,7 +539,7 @@ extern "C"{
               }
 
               if (buffer.string[input->start] == f_fss_delimit_double_quote) {
-                pre_allocate_size += delimit_slash_count;
+                pre_allocate_size += slash_count;
 
                 if (pre_allocate_size > object->size) {
                   f_resize_dynamic_string(status, (*object), pre_allocate_size + f_fss_default_allocation_step);
@@ -549,15 +549,15 @@ extern "C"{
 
                 break;
               } else if (buffer.string[input->start] != f_fss_delimit_slash) {
-                delimit_slash_count = 0;
+                slash_count = 0;
                 break;
               }
             } while (f_true);
 
-            while (delimit_slash_count > 0) {
+            while (slash_count > 0) {
               object->string[object_position.stop] = f_fss_delimit_slash;
               object_position.stop++;
-              delimit_slash_count--;
+              slash_count--;
             } // while
 
             continue;
