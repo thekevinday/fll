@@ -5,7 +5,9 @@
  * Programmers:   Kevin Day
  * Documentation:
  *
- * Provides error definitions
+ * Provides error definitions.
+ *
+ * Warning: changing error codes will break abi, so recompile every file that includes and uses these error codes when this gets changed.
  */
 #ifndef _F_errors_h
 #define _F_errors_h

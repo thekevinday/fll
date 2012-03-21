@@ -3,6 +3,10 @@
  * Version:       0.3.x
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
+ *
+ * Provides fss-specific error definitions.
+ *
+ * Warning: changing error codes will break abi, so recompile every file that includes and uses these error codes when this gets changed.
  */
 #ifndef _FL_fss_errors_h
 #define _FL_fss_errors_h
