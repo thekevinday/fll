@@ -300,8 +300,6 @@ extern "C"{
     object_position.stop  = object->used;
 
     if (buffer.string[input->start] == f_fss_delimit_slash) {
-      f_string_length slash_count = 0;
-
       while (input->start <= input->stop && input->start < buffer.used) {
         if (buffer.string[input->start] == f_fss_delimit_placeholder) {
           input->start++;
@@ -312,12 +310,11 @@ extern "C"{
 
         object->string[object_position.stop] = buffer.string[input->start];
         object_position.stop++;
-        slash_count++;
         input->start++;
       } // while
 
       if (buffer.string[input->start] == f_fss_delimit_single_quote || buffer.string[input->start] == f_fss_delimit_double_quote) {
-        pre_allocate_size += slash_count + 1;
+        pre_allocate_size++;
 
         if (pre_allocate_size > object->size) {
           f_resize_dynamic_string(status, (*object), pre_allocate_size + f_fss_default_allocation_step);
@@ -325,14 +322,9 @@ extern "C"{
           if (f_macro_test_for_allocation_errors(status)) return status;
         }
 
-        while (slash_count > 0) {
-          object->string[object_position.stop] = f_fss_delimit_slash;
-          object_position.stop++;
-          slash_count--;
-        } // while
-
-        object->string[object_position.stop] = buffer.string[input->start];
-        object_position.stop++;
+        object->string[object_position.stop] = f_fss_delimit_slash;
+        object->string[object_position.stop + 1] = buffer.string[input->start];
+        object_position.stop += 2;
         input->start++;
       }
     } else if (buffer.string[input->start] == f_fss_delimit_single_quote || buffer.string[input->start] == f_fss_delimit_double_quote) {
