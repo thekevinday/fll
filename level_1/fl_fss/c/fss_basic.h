@@ -42,12 +42,12 @@ extern "C"{
 
 #ifndef _di_fl_fss_basic_object_write_
   // write an fss-0000 object
-  extern f_return_status fl_fss_basic_object_write(const f_dynamic_string buffer, f_string_location *input, f_dynamic_string *object);
+  extern f_return_status fl_fss_basic_object_write(const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer);
 #endif // _di_fl_fss_basic_object_write_
 
 #ifndef _di_fl_fss_basic_content_write_
   // write an fss-0000 content
-  extern f_return_status fl_fss_basic_content_write(const f_dynamic_string buffer, f_string_location *input, f_dynamic_string *content);
+  extern f_return_status fl_fss_basic_content_write(const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer);
 #endif // _di_fl_fss_basic_content_write_
 
 #ifdef __cplusplus
