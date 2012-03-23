@@ -177,11 +177,11 @@ enum {
 #ifndef _di_fss_content_
   typedef struct {
     f_string_location *array; // the array of locations
-    f_string_length   size;   // total amount of allocated space
-    f_string_length   used;   // total number of allocated spaces used
+    f_array_length   size;   // total amount of allocated space
+    f_array_length   used;   // total number of allocated spaces used
   } f_fss_content;
 
-  #define f_fss_content_initialize { 0, f_string_length_initialize, f_string_length_initialize }
+  #define f_fss_content_initialize { 0, f_array_length_initialize, f_array_length_initialize }
 
   #define f_delete_fss_content(status, content) \
     f_delete_structure(status, content, f_string_location)
@@ -200,11 +200,11 @@ enum {
 #ifndef _di_f_fss_contents_
   typedef struct {
     f_fss_content   *array; // the array of fss content
-    f_string_length  size;  // total amount of allocated space
-    f_string_length  used;  // total number of allocated spaces used
+    f_array_length  size;  // total amount of allocated space
+    f_array_length  used;  // total number of allocated spaces used
   } f_fss_contents;
 
-  #define f_fss_contents_initialize { 0, f_string_length_initialize, f_string_length_initialize }
+  #define f_fss_contents_initialize { 0, f_array_length_initialize, f_array_length_initialize }
 
   #define f_delete_fss_contents(status, contents) \
     f_delete_structures(status, contents, f_fss_content)
@@ -213,10 +213,10 @@ enum {
     f_destroy_structures(status, contents, f_fss_content)
 
   #define f_resize_fss_contents(status, contents, new_length) \
-    f_resize_structures(status, contents, f_fss_content, new_length, f_string_length)
+    f_resize_structures(status, contents, f_fss_content, new_length, f_array_length)
 
   #define f_adjust_fss_contents(status, contents, new_length) \
-    f_resize_structures(status, contents, f_fss_content, new_length, f_string_length)
+    f_resize_structures(status, contents, f_fss_content, new_length, f_array_length)
 #endif // _di_f_fss_contents_
 
 #ifdef __cplusplus
