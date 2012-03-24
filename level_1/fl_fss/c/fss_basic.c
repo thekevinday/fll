@@ -272,6 +272,7 @@ extern "C"{
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_status_initialize;
+    f_bool   quoted = f_false;
 
     f_string_location buffer_position   = f_string_location_initialize;
     f_string_length   start_position    = f_string_initialize;
@@ -340,13 +341,23 @@ extern "C"{
       buffer->string[buffer_position.stop + 1] = object.string[input->start];
       buffer_position.stop += 2;
       input->start++;
+    } else if (object.string[input->start] == f_fss_comment) {
+      quoted = f_true;
     }
 
     while (input->start <= input->stop && input->start < object.used) {
       if (object.string[input->start] == f_fss_delimit_placeholder) {
         input->start++;
         continue;
-      } else if (isspace(object.string[input->start])) {
+      } else if (isspace(object.string[input->start]) || quoted) {
+        pre_allocate_size++;
+
+        if (pre_allocate_size > buffer->size) {
+          f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
+
+          if (f_macro_test_for_allocation_errors(status)) return status;
+        }
+
         // restart the loop searching for f_fss_delimit_double_quote.
         input->start = start_position;
         buffer_position.stop = buffer_position.start;
