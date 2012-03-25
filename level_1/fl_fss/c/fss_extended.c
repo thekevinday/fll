@@ -23,7 +23,7 @@ extern "C"{
     #endif // _di_level_1_parameter_checking_
 
     fl_macro_fss_skip_past_whitespace((*buffer), (*input))
-    fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_error_on_eos, f_error_on_stop)
+    fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_no_data_on_eos, f_no_data_on_stop)
 
     // return found nothing if this line only contains whitespace and delimit placeholders
     if (buffer->string[input->start] == f_fss_extended_close) {
@@ -41,7 +41,7 @@ extern "C"{
 
     // ignore all comment lines
     if (buffer->string[input->start] == f_fss_comment) {
-      fl_macro_fss_object_seek_till_newline((*buffer), (*input), f_error_on_eos, f_error_on_stop)
+      fl_macro_fss_object_seek_till_newline((*buffer), (*input), f_no_data_on_eos, f_no_data_on_stop)
 
       input->start++;
       return fl_fss_found_no_object;
@@ -120,7 +120,7 @@ extern "C"{
             input->start++;
           } // while
 
-          fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
+          fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_unterminated_group_on_eos, f_unterminated_group_on_stop)
 
           if (buffer->string[input->start] == quoted) {
             location     = input->start;
@@ -142,7 +142,7 @@ extern "C"{
               input->start = location + 1;
 
               fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
-              fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
+              fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_unterminated_group_on_eos, f_unterminated_group_on_stop)
 
               if (isgraph(buffer->string[input->start])) {
                 while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
@@ -209,7 +209,7 @@ extern "C"{
         input->start++;
       } // while
 
-      fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
+      fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_unterminated_group_on_eos, f_unterminated_group_on_stop)
     }
 
     // seek to the end of the line when no valid object is found
@@ -235,7 +235,7 @@ extern "C"{
     #endif // _di_level_1_parameter_checking_
 
     fl_macro_fss_skip_past_whitespace((*buffer), (*input))
-    fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_error_on_eos, f_error_on_stop)
+    fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
 
     // return found nothing if this line only contains whitespace and delimit placeholders
     if (buffer->string[input->start] == f_fss_extended_close) {
@@ -371,7 +371,7 @@ extern "C"{
                 input->start = location + 1;
 
                 fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
-                fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+                fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
 
                 if (isgraph(buffer->string[input->start])) {
                   while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
@@ -439,7 +439,7 @@ extern "C"{
               break;
             }
 
-            fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+            fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
           } else if (buffer->string[input->start] == f_eol) {
 
             if (found->used == already_used) {
@@ -457,7 +457,7 @@ extern "C"{
           input->start++;
         } // while
 
-        fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
+        fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_unterminated_group_on_eos, f_unterminated_group_on_stop)
       }
 
       if (continue_main_loop) {
