@@ -149,6 +149,8 @@ extern "C"{
                   input->start++;
                 } // while
 
+                fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_no_data_on_eos, f_no_data_on_stop)
+
                 input->start++;
                 return fl_fss_found_no_object;
               } else if (buffer->string[input->start] == f_eol) {
@@ -193,12 +195,14 @@ extern "C"{
                 input->start++;
               } // while
 
+              fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_no_data_on_eos, f_no_data_on_stop)
+
               input->start++;
               return fl_fss_found_no_object;
             }
 
             input->start++;
-          }
+          } // while
 
           fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
         } else if (buffer->string[input->start] == f_eol) {
@@ -215,7 +219,9 @@ extern "C"{
     // seek to the end of the line when no valid object is found
     while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
       input->start++;
-    }
+    } // while
+
+    fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_no_data_on_eos, f_no_data_on_stop)
 
     input->start++;
     return fl_fss_found_no_object;
@@ -378,6 +384,8 @@ extern "C"{
                     input->start++;
                   } // while
 
+                  fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+
                   input->start++;
                   return f_unterminated_group;
                 } else if (buffer->string[input->start] == f_eol) {
@@ -428,6 +436,8 @@ extern "C"{
                   input->start++;
                 } // while
 
+                fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+
                 input->start++;
                 return f_unterminated_group;
               }
@@ -473,7 +483,9 @@ extern "C"{
     // seek to the end of the line when no valid content is found
     while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
       input->start++;
-    }
+    } // while
+
+    fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), f_none_on_eos, f_none_on_stop)
 
     if (found->used == already_used) {
       input->start++;

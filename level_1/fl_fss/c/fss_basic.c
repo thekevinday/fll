@@ -149,6 +149,8 @@ extern "C"{
                   input->start++;
                 } // while
 
+                fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_no_data_on_eos, f_no_data_on_stop)
+
                 input->start++;
                 return fl_fss_found_no_object;
               } else if (buffer->string[input->start] == f_eol) {
@@ -193,6 +195,8 @@ extern "C"{
                 input->start++;
               } // while
 
+              fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_no_data_on_eos, f_no_data_on_stop)
+
               input->start++;
               return fl_fss_found_no_object;
             }
@@ -215,7 +219,9 @@ extern "C"{
     // seek to the end of the line when no valid object is found
     while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
       input->start++;
-    }
+    } // while
+
+    fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_no_data_on_eos, f_no_data_on_stop)
 
     input->start++;
     return fl_fss_found_no_object;
