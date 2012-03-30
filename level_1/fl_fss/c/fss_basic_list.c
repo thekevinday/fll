@@ -300,6 +300,290 @@ extern "C"{
   }
 #endif // _di_fl_fss_basic_list_content_read_
 
+#ifndef _di_fl_fss_basic_list_object_write_
+  f_return_status fl_fss_basic_list_object_write(const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer == f_null) return f_invalid_parameter;
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = f_status_initialize;
+
+    f_string_location buffer_position   = f_string_location_initialize;
+    f_string_length   start_position    = f_string_initialize;
+    f_string_length   pre_allocate_size = f_string_length_initialize;
+    f_string_length   start_buffer      = f_string_length_initialize;
+
+    fl_macro_fss_skip_past_delimit_placeholders(object, (*input))
+
+    if (input->start > input->stop) {
+      return f_no_data_on_stop;
+    } else if (input->start >= object.used) {
+      return f_no_data_on_eos;
+    }
+
+    start_position = input->start;
+
+    // add an additional 2 to ensure that there is room for the slash delimit and the object open character.
+    pre_allocate_size = buffer->used + (input->stop - input->start) + 2 + f_fss_default_allocation_step;
+
+    if (pre_allocate_size > buffer->size) {
+      f_resize_dynamic_string(status, (*buffer), pre_allocate_size);
+
+      if (f_macro_test_for_allocation_errors(status)) return status;
+    }
+
+    buffer_position.start = buffer->used;
+    buffer_position.stop = buffer->used;
+
+    while (input->start <= input->stop && input->start < object.used) {
+      if (object.string[input->start] == f_fss_comment) {
+        // comments are not allowed and this format has no way of "wrapping" a comment.
+        return f_invalid_data;
+      } else if (isgraph(object.string[input->start])) {
+        break;
+      }
+
+      if (object.string[input->start] != f_fss_delimit_placeholder) {
+        buffer->string[buffer_position.stop] = object.string[input->start];
+        buffer_position.stop++;
+      }
+
+      input->start++;
+    } // while
+
+    while (input->start <= input->stop && input->start < object.used) {
+      if (object.string[input->start] == f_fss_delimit_slash) {
+        f_string_length slash_count = 1;
+
+        buffer->string[buffer_position.stop] = object.string[input->start];
+        buffer_position.stop++;
+
+        input->start++;
+
+        while (input->start <= input->stop && input->start < object.used) {
+          if (object.string[input->start] == f_fss_delimit_placeholder) {
+            input->start++;
+            continue;
+          } else if (object.string[input->start] != f_fss_delimit_slash) {
+            break;
+          }
+
+          buffer->string[buffer_position.stop] = object.string[input->start];
+          buffer_position.stop++;
+          input->start++;
+          slash_count++;
+        } // while
+
+        if (input->start > input->stop || input->start >= object.used) {
+          pre_allocate_size += slash_count;
+
+          if (pre_allocate_size > buffer->size) {
+            f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
+
+            if (f_macro_test_for_allocation_errors(status)) return status;
+          }
+
+          while (slash_count > 0) {
+            buffer->string[buffer_position.stop] = f_fss_delimit_slash;
+            buffer_position.stop++;
+            slash_count--;
+          } // while
+
+          break;
+        }
+      }
+      else if (object.string[input->start] == f_eol) {
+        if (buffer_position.stop == buffer_position.start) {
+          return f_no_data_on_eol;
+        }
+
+        break;
+      }
+
+      if (object.string[input->start] != f_fss_delimit_placeholder) {
+        buffer->string[buffer_position.stop] = object.string[input->start];
+        buffer_position.stop++;
+      }
+
+      input->start++;
+    } // while
+
+    buffer->string[buffer_position.stop] = f_fss_basic_list_open;
+    buffer->string[buffer_position.stop + 1] = f_eol;
+    buffer->used = buffer_position.stop + 2;
+
+    if (input->start > input->stop) {
+      return f_none_on_stop;
+    } else if (input->start >= object.used) {
+      return f_none_on_eos;
+    }
+
+    return f_none;
+  }
+#endif // _di_fl_fss_basic_list_object_write_
+
+#ifndef _di_fl_fss_basic_list_content_write_
+  f_return_status fl_fss_basic_list_content_write(const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer == f_null) return f_invalid_parameter;
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status     = f_status_initialize;
+    f_bool   is_comment = f_false;
+    f_bool   has_graph  = f_false;
+
+    f_string_location buffer_position   = f_string_location_initialize;
+    f_string_length   start_position    = f_string_initialize;
+    f_string_length   pre_allocate_size = f_string_length_initialize;
+
+    fl_macro_fss_skip_past_delimit_placeholders(content, (*input))
+
+    if (input->start > input->stop) {
+      return f_no_data_on_stop;
+    } else if (input->start >= content.used) {
+      return f_no_data_on_eos;
+    }
+
+    start_position = input->start;
+
+    // add an additional 2 to ensure that there is room for the slash delimit and the content open character.
+    pre_allocate_size = buffer->used + (input->stop - input->start) + 2 + f_fss_default_allocation_step;
+
+    if (pre_allocate_size > buffer->size) {
+      f_resize_dynamic_string(status, (*buffer), pre_allocate_size);
+
+      if (f_macro_test_for_allocation_errors(status)) return status;
+    }
+
+    buffer_position.start = buffer->used;
+    buffer_position.stop = buffer->used;
+
+    while (input->start <= input->stop && input->start < content.used) {
+      if (content.string[input->start] == f_fss_delimit_slash && !is_comment) {
+        f_string_length slash_count = 1;
+
+        buffer->string[buffer_position.stop] = content.string[input->start];
+        buffer_position.stop++;
+
+        has_graph = f_true;
+        input->start++;
+
+        while (input->start <= input->stop && input->start < content.used) {
+          if (content.string[input->start] == f_fss_delimit_placeholder) {
+            input->start++;
+            continue;
+          } else if (content.string[input->start] != f_fss_delimit_slash) {
+            break;
+          }
+
+          buffer->string[buffer_position.stop] = content.string[input->start];
+          buffer_position.stop++;
+          input->start++;
+          slash_count++;
+        } // while
+
+        if (content.string[input->start] == f_fss_basic_list_open) {
+          f_string_length location = input->start;
+
+          input->start++;
+
+          while (input->start < content.used && input->start <= input->stop) {
+            if (content.string[input->start] == f_eol || isgraph(content.string[input->start])) {
+              break;
+            }
+
+            input->start++;
+          } // while
+
+          if (content.string[input->start] == f_eol || input->start >= content.used || input->start > input->stop) {
+            pre_allocate_size += slash_count + 1;
+
+            if (pre_allocate_size > buffer->size) {
+              f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
+
+              if (f_macro_test_for_allocation_errors(status)) return status;
+            }
+
+            while (slash_count > 0) {
+              buffer->string[buffer_position.stop] = f_fss_delimit_slash;
+              buffer_position.stop++;
+              slash_count--;
+            } // while
+
+            buffer->string[buffer_position.stop] = f_fss_delimit_slash;
+            buffer_position.stop++;
+            has_graph = f_false;
+            is_comment = f_false;
+          }
+
+          buffer->string[buffer_position.stop] = f_fss_basic_list_open;
+          buffer_position.stop++;
+          input->start = location + 1;
+          continue;
+        }
+      } else if (content.string[input->start] == f_fss_basic_list_open && !is_comment) {
+        f_string_length location = input->start;
+
+        has_graph = f_true;
+        input->start++;
+
+        while (input->start < content.used && input->start <= input->stop) {
+          if (content.string[input->start] == f_eol || isgraph(content.string[input->start])) {
+            break;
+          }
+
+          input->start++;
+        } // while
+
+        if (content.string[input->start] == f_eol || input->start >= content.used || input->start > input->stop) {
+          pre_allocate_size++;
+
+          if (pre_allocate_size > buffer->size) {
+            f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
+
+            if (f_macro_test_for_allocation_errors(status)) return status;
+          }
+
+          buffer->string[buffer_position.stop] = f_fss_delimit_slash;
+          buffer_position.stop++;
+          has_graph = f_false;
+          is_comment = f_false;
+        }
+
+        buffer->string[buffer_position.stop] = f_fss_basic_list_open;
+        buffer_position.stop++;
+        input->start = location + 1;
+        continue;
+      } else if (content.string[input->start] == f_fss_comment && !has_graph) {
+        is_comment = f_true;
+      } else if (content.string[input->start] == f_eol) {
+        has_graph = f_false;
+        is_comment = f_false;
+      } else if (isgraph(content.string[input->start])) {
+        has_graph = f_true;
+      }
+
+      if (content.string[input->start] != f_fss_delimit_placeholder) {
+        buffer->string[buffer_position.stop] = content.string[input->start];
+        buffer_position.stop++;
+      }
+
+      input->start++;
+    } // while
+
+    buffer->string[buffer_position.stop] = f_eol;
+    buffer->used = buffer_position.stop + 1;
+
+    if (input->start > input->stop) {
+      return f_none_on_stop;
+    } else if (input->start >= content.used) {
+      return f_none_on_eos;
+    }
+
+    return f_none;
+  }
+#endif // _di_fl_fss_basic_list_content_write_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
