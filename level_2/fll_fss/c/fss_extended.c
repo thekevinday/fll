@@ -118,6 +118,47 @@ extern "C"{
   }
 #endif // _di_fll_fss_extended_read_
 
+#ifndef _di_fll_fss_extended_write_
+  f_return_status fll_fss_extended_write(const f_dynamic_string object, const f_dynamic_strings contents, f_dynamic_string *buffer) {
+    #ifndef _di_level_2_parameter_checking_
+      if (buffer        == f_null)        return f_invalid_parameter;
+      if (contents.used  > contents.size) return f_invalid_parameter;
+    #endif // _di_level_2_parameter_checking_
+
+    f_status          status   = 0;
+    f_array_length    current  = 0;
+    f_string_location location = f_string_location_initialize;
+
+    location.start = 0;
+    location.stop = object.used - 1;
+
+    status = fl_fss_extended_object_write(object, &location, buffer);
+
+    if (f_macro_test_for_no_data_errors(status)) {
+      return status;
+    }
+
+    if (f_macro_test_for_none_errors(status)) {
+      while (current < contents.used) {
+        location.start = 0;
+        location.stop = contents.array[current].used - 1;
+        status = fl_fss_extended_content_write(contents.array[current], &location, buffer);
+
+        if (f_macro_test_for_no_data_errors(status)) {
+          return status;
+        }
+
+        current++;
+      } // while
+
+      // extended always ends each call with a space, and so the last position should be replaced with an eol.
+      buffer->string[buffer->used - 1] = f_eol;
+    }
+
+    return f_none;
+  }
+#endif // _di_fll_fss_extended_write_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

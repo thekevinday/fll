@@ -118,6 +118,50 @@ extern "C"{
   }
 #endif // _di_fll_fss_basic_read_
 
+#ifndef _di_fll_fss_basic_write_
+  f_return_status fll_fss_basic_write(const f_dynamic_string object, const f_dynamic_strings contents, f_dynamic_string *buffer) {
+    #ifndef _di_level_2_parameter_checking_
+      if (buffer        == f_null)        return f_invalid_parameter;
+      if (contents.used  > contents.size) return f_invalid_parameter;
+    #endif // _di_level_2_parameter_checking_
+
+    f_status          status   = 0;
+    f_array_length    current  = 0;
+    f_string_location location = f_string_location_initialize;
+
+    location.start = 0;
+    location.stop = object.used - 1;
+
+    status = fl_fss_basic_object_write(object, &location, buffer);
+
+    if (f_macro_test_for_no_data_errors(status)) {
+      return status;
+    }
+
+    if (f_macro_test_for_none_errors(status)) {
+      if (contents.used > 0) {
+        location.start = 0;
+        location.stop = contents.array[0].used - 1;
+        status = fl_fss_basic_content_write(contents.array[0], &location, buffer);
+
+        if (f_macro_test_for_no_data_errors(status)) {
+          return status;
+        }
+      } else {
+        if (buffer->used >= buffer->size) {
+          f_resize_dynamic_string(status, (*buffer), buffer->size + f_fss_default_allocation_step);
+          if (f_macro_test_for_allocation_errors(status)) return status;
+        }
+
+        buffer->string[buffer->used] = f_eol;
+        buffer->used++;
+      }
+    }
+
+    return f_none;
+  }
+#endif // _di_fll_fss_basic_write_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

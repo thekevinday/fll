@@ -32,6 +32,11 @@ extern "C"{
   extern f_return_status fll_fss_basic_read(f_dynamic_string *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents);
 #endif // _di_fll_fss_basic_read_
 
+#ifndef _di_fll_fss_basic_write_
+  // write an fss-0000 object and then content
+  extern f_return_status fll_fss_basic_write(const f_dynamic_string object, const f_dynamic_strings contents, f_dynamic_string *buffer);
+#endif // _di_fll_fss_basic_write_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
