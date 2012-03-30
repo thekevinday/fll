@@ -92,6 +92,50 @@ extern "C"{
       potential_error == f_directory_not_open )
 #endif // _di_f_macro_test_for_directory_errors_
 
+#ifndef _di_f_macro_test_for_none_errors_
+  #define f_macro_test_for_none_errors(potential_error) \
+    ( potential_error == f_none        || \
+      potential_error == f_none_on_eof || \
+      potential_error == f_none_on_eol || \
+      potential_error == f_none_on_eos || \
+      potential_error == f_none_on_stop)
+#endif // _di_f_macro_test_for_none_errors_
+
+#ifndef _di_f_macro_test_for_no_data_errors_
+  #define f_macro_test_for_no_data_errors(potential_error) \
+    ( potential_error == f_no_data        || \
+      potential_error == f_no_data_on_eof || \
+      potential_error == f_no_data_on_eol || \
+      potential_error == f_no_data_on_eos || \
+      potential_error == f_no_data_on_stop)
+#endif // _di_f_macro_test_for_no_data_errors_
+
+#ifndef _di_f_macro_test_for_on_errors_
+  #define f_macro_test_for_on_errors(potential_error) \
+    ( potential_error == f_error_on_eof || \
+      potential_error == f_error_on_eol || \
+      potential_error == f_error_on_eos || \
+      potential_error == f_error_on_stop)
+#endif // _di_f_macro_test_for_on_errors_
+
+#ifndef _di_f_macro_test_for_unterminated_nest_errors_
+  #define f_macro_test_for_unterminated_nest_errors(potential_error) \
+    ( potential_error == f_unterminated_nest        || \
+      potential_error == f_unterminated_nest_on_eof || \
+      potential_error == f_unterminated_nest_on_eol || \
+      potential_error == f_unterminated_nest_on_eos || \
+      potential_error == f_unterminated_nest_on_stop)
+#endif // _di_f_macro_test_for_unterminated_nest_errors_
+
+#ifndef _di_f_macro_test_for_unterminated_group_errors_
+  #define f_macro_test_for_unterminated_group_errors(potential_error) \
+    ( potential_error == f_unterminated_group        || \
+      potential_error == f_unterminated_group_on_eof || \
+      potential_error == f_unterminated_group_on_eol || \
+      potential_error == f_unterminated_group_on_eos || \
+      potential_error == f_unterminated_group_on_stop)
+#endif // _di_f_macro_test_for_unterminated_group_errors_
+
 // use of an enumerator makes more sense here than explicitly defining every error code
 enum {
   #ifndef _di_f_errors_booleans_
