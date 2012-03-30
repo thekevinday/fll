@@ -581,6 +581,16 @@ extern "C"{
       if (object.string[input->start] == f_fss_delimit_placeholder) {
         input->start++;
         continue;
+      } else if (object.string[input->start] == f_eol) {
+        if (quoted) {
+          buffer->string[buffer_position.stop] = f_fss_delimit_double_quote;
+          buffer_position.stop++;
+        }
+
+        buffer->string[buffer_position.stop] = f_fss_basic_open;
+        buffer->used = buffer_position.stop + 1;
+
+        return f_none_on_eol;
       } else if (isspace(object.string[input->start]) || quoted) {
         f_string_length first_space = input->start;
 
@@ -666,6 +676,14 @@ extern "C"{
             } // while
 
             continue;
+          } else if (object.string[input->start] == f_eol) {
+            buffer->string[buffer_position.stop] = f_fss_delimit_double_quote;
+            buffer_position.stop++;
+
+            buffer->string[buffer_position.stop] = f_fss_basic_open;
+            buffer->used = buffer_position.stop + 1;
+
+            return f_none_on_eol;
           }
 
           buffer->string[buffer_position.stop] = object.string[input->start];
