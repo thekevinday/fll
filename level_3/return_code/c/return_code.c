@@ -59,6 +59,8 @@ extern "C"{
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
     printf("   Print only the version number");
 
+
+    printf("\n");
     printf("\n  %s", f_console_symbol_short_enable);
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, return_code_short_is_okay);
 
@@ -66,8 +68,6 @@ extern "C"{
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, return_code_long_is_okay);
     printf("    Returns true if the error code is not an error.");
 
-
-    printf("\n");
     printf("\n  %s", f_console_symbol_short_enable);
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, return_code_short_is_warning);
 
