@@ -33,8 +33,7 @@ extern "C"{
 
     // when handling delimits, the only time they should be applied is when a valid object would exist
     // however, the delimits will appear before a valid object, so remember their positions and only apply them after a would be valid object is confirmed
-    f_bool          has_delimit = f_false;
-    f_string_length location    = f_string_length_initialize;
+    f_bool has_delimit = f_false;
 
     // begin the search
     found->start = input->start;
@@ -123,7 +122,8 @@ extern "C"{
           fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), f_unterminated_group_on_eos, f_unterminated_group_on_stop)
 
           if (buffer->string[input->start] == quoted) {
-            location     = input->start;
+            f_string_length location = input->start;
+
             input->start = first_slash;
 
             if (slash_count % 2 == 0) {
