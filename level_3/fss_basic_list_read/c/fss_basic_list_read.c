@@ -179,7 +179,7 @@ extern "C"{
       f_string_length original_size = data->file_position.total_elements;
 
       if (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_additional) {
-        target = (f_string_length) atoll(argv[data->parameters[fss_basic_list_read_parameter_count].additional]);
+        target = (f_string_length) atoll(argv[data->parameters[fss_basic_list_read_parameter_count].additional.array[0]]);
       }
 
       if (data->process_pipe) {
@@ -374,7 +374,7 @@ extern "C"{
                 if (data->contents.array[current].used > 0) {
                   f_string_length   counter  = data->contents.array[current].array[0].start;
                   f_string_length   position = 0;
-                  f_string_length   target   = (f_string_length) atoll(argv[data->parameters[fss_basic_list_read_parameter_line].additional]);
+                  f_string_length   target   = (f_string_length) atoll(argv[data->parameters[fss_basic_list_read_parameter_line].additional.array[0]]);
                   f_string_location range    = f_string_location_initialize;
 
                   // use an invalid range to communicate range not found
@@ -445,14 +445,14 @@ extern "C"{
         f_string_length argv_length = f_string_length_initialize;
 
         if (data->parameters[fss_basic_list_read_parameter_name].result == f_console_result_additional) {
-          argv_length = strlen(argv[data->parameters[fss_basic_list_read_parameter_name].additional]);
+          argv_length = strlen(argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]]);
 
           if (data->parameters[fss_basic_list_read_parameter_object].result == f_console_result_none) {
             for (; current < data->objects.used; current++) {
               name_length = data->objects.array[current].stop - data->objects.array[current].start + 1;
 
               if (name_length == argv_length) {
-                if (fl_compare_strings(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_basic_list_read_parameter_name].additional], name_length, argv_length) == f_equal_to) {
+                if (fl_compare_strings(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
 
                   if (data->parameters[fss_basic_list_read_parameter_size].result == f_console_result_found) {
                     if (data->contents.array[current].used > 0) {
@@ -474,7 +474,7 @@ extern "C"{
                     if (data->contents.array[current].used > 0) {
                       f_string_length   counter  = data->contents.array[current].array[0].start;
                       f_string_length   position = 0;
-                      f_string_length   target   = (f_string_length) atoll(argv[data->parameters[fss_basic_list_read_parameter_line].additional]);
+                      f_string_length   target   = (f_string_length) atoll(argv[data->parameters[fss_basic_list_read_parameter_line].additional.array[0]]);
                       f_string_location range    = f_string_location_initialize;
 
                       // use an invalid range to communicate range not found
@@ -540,7 +540,7 @@ extern "C"{
                 name_length = data->contents.array[current].array[0].stop - data->contents.array[current].array[0].start + 1;
 
                 if (name_length == argv_length) {
-                  if (fl_compare_strings(data->buffer.string + data->contents.array[current].array[0].start, argv[data->parameters[fss_basic_list_read_parameter_name].additional], name_length, argv_length) == f_equal_to) {
+                  if (fl_compare_strings(data->buffer.string + data->contents.array[current].array[0].start, argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
                     if (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_additional && found == target)) {
                       f_print_partial_dynamic_string(f_standard_output, data->buffer, data->objects.array[current]);
                       fprintf(f_standard_output, "\n");
@@ -568,7 +568,13 @@ extern "C"{
 
 #ifndef _di_fss_basic_list_read_delete_data_
   f_return_status fss_basic_list_read_delete_data(fss_basic_list_read_data *data) {
-    f_status status = f_status_initialize;
+    f_status        status = f_status_initialize;
+    f_string_length i      = 0;
+
+    while (i < fss_basic_list_read_total_parameters) {
+      f_delete_string_lengths(status, data->parameters[i].additional);
+      i++;
+    } // while
 
     f_delete_fss_contents(status, data->contents);
     f_delete_fss_objects(status, data->objects);

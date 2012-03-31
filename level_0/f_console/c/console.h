@@ -99,12 +99,12 @@ extern "C"{
     const f_bool    has_additional;
     const f_u_int   type;
     f_u_int         result;
-    f_string_length additional;
+    f_string_lengths additional;
     f_string_length length;
   } f_console_parameter;
 
   #define f_console_parameter_initialize(symbol_short, symbol_long, symbol_extra, symbol_other, has_additional, type_value, length) \
-    { symbol_short, symbol_long, symbol_extra, symbol_other, has_additional, type_value, f_console_result_none, 0, length }
+    { symbol_short, symbol_long, symbol_extra, symbol_other, has_additional, type_value, f_console_result_none, f_string_lengths_initialize, length }
 #endif // _di_f_console_parameter_
 
 #ifndef _di_f_console_identify_

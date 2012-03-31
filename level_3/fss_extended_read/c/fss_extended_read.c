@@ -173,11 +173,11 @@ extern "C"{
       f_string_length original_size = data->file_position.total_elements;
 
       if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional) {
-        target = (f_string_length) atoll(argv[data->parameters[fss_extended_read_parameter_count].additional]);
+        target = (f_string_length) atoll(argv[data->parameters[fss_extended_read_parameter_count].additional.array[0]]);
       }
 
       if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-        select = (f_string_length) atoll(argv[data->parameters[fss_extended_read_parameter_select].additional]);
+        select = (f_string_length) atoll(argv[data->parameters[fss_extended_read_parameter_select].additional.array[0]]);
       }
 
       if (data->process_pipe) {
@@ -393,14 +393,14 @@ extern "C"{
         f_string_length argv_length = f_string_length_initialize;
 
         if (data->parameters[fss_extended_read_parameter_name].result == f_console_result_additional) {
-          argv_length = strlen(argv[data->parameters[fss_extended_read_parameter_name].additional]);
+          argv_length = strlen(argv[data->parameters[fss_extended_read_parameter_name].additional.array[0]]);
 
           if (data->parameters[fss_extended_read_parameter_object].result == f_console_result_none) {
             for (; current < data->objects.used; current++) {
               name_length = data->objects.array[current].stop - data->objects.array[current].start + 1;
 
               if (name_length == argv_length) {
-                if (fl_compare_strings(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_extended_read_parameter_name].additional], name_length, argv_length) == f_equal_to) {
+                if (fl_compare_strings(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_extended_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
 
                   if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)) {
                     if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
@@ -438,7 +438,7 @@ extern "C"{
                 name_length = data->contents.array[current].array[select].stop - data->contents.array[current].array[select].start + 1;
 
                 if (name_length == argv_length) {
-                  if (fl_compare_strings(data->buffer.string + data->contents.array[current].array[select].start, argv[data->parameters[fss_extended_read_parameter_name].additional], name_length, argv_length) == f_equal_to) {
+                  if (fl_compare_strings(data->buffer.string + data->contents.array[current].array[select].start, argv[data->parameters[fss_extended_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
                     if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_none || (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional && found == target)) {
                       f_print_partial_dynamic_string(f_standard_output, data->buffer, data->objects.array[current]);
                       fprintf(f_standard_output, "\n");
@@ -466,7 +466,13 @@ extern "C"{
 
 #ifndef _di_fss_extended_read_delete_data_
   f_return_status fss_extended_read_delete_data(fss_extended_read_data *data) {
-    f_status status = f_status_initialize;
+    f_status        status = f_status_initialize;
+    f_string_length i      = 0;
+
+    while (i < fss_extended_read_total_parameters) {
+      f_delete_string_lengths(status, data->parameters[i].additional);
+      i++;
+    } // while
 
     f_delete_fss_contents(status, data->contents);
     f_delete_fss_objects(status, data->objects);

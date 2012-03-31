@@ -228,7 +228,13 @@ extern "C"{
 
 #ifndef _di_fss_return_code_delete_data_
   f_return_status fss_return_code_delete_data(fss_return_code_data *data) {
-    f_status status = f_status_initialize;
+    f_status        status = f_status_initialize;
+    f_string_length i      = 0;
+
+    while (i < fss_return_code_total_parameters) {
+      f_delete_string_lengths(status, data->parameters[i].additional);
+      i++;
+    } // while
 
     f_delete_string_lengths(status, data->remaining);
     fll_delete_color_context(status, data->context);

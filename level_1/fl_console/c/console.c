@@ -65,6 +65,13 @@ extern "C"{
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
                       if (f_macro_test_for_allocation_errors(allocation_status)) {
+                        f_string_length i = 0;
+
+                        while (i < total_parameters) {
+                          f_delete_string_lengths(status, parameters[i].additional);
+                          i++;
+                        } // while
+
                         f_delete_string_lengths(status, extra_initiator);
                         return allocation_status;
                       }
@@ -86,6 +93,13 @@ extern "C"{
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
                       if (f_macro_test_for_allocation_errors(allocation_status)) {
+                        f_string_length i = 0;
+
+                        while (i < total_parameters) {
+                          f_delete_string_lengths(status, parameters[i].additional);
+                          i++;
+                        } // while
+
                         f_delete_string_lengths(status, extra_initiator);
                         return allocation_status;
                       }
@@ -116,7 +130,15 @@ extern "C"{
                       f_status allocation_status = f_status_initialize;
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
+
                       if (f_macro_test_for_allocation_errors(allocation_status)) {
+                        f_string_length i = 0;
+
+                        while (i < total_parameters) {
+                          f_delete_string_lengths(status, parameters[i].additional);
+                          i++;
+                        } // while
+
                         f_delete_string_lengths(status, extra_initiator);
                         return allocation_status;
                       }
@@ -137,7 +159,15 @@ extern "C"{
                       f_status allocation_status = f_status_initialize;
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
+
                       if (f_macro_test_for_allocation_errors(allocation_status)) {
+                        f_string_length i = 0;
+
+                        while (i < total_parameters) {
+                          f_delete_string_lengths(status, parameters[i].additional);
+                          i++;
+                        } // while
+
                         f_delete_string_lengths(status, extra_initiator);
                         return allocation_status;
                       }
@@ -161,10 +191,29 @@ extern "C"{
           if (parameters[parameter_counter].type == f_console_type_other) {
             if (parameters[parameter_counter].length > 0 && parameters[parameter_counter].symbol_other != 0) {
               if (strncmp(argv[location], parameters[parameter_counter].symbol_other, parameters[parameter_counter].length + 1) == 0) {
+                f_status allocation_status = f_status_initialize;
+
+                if (parameters[parameter_counter].additional.used >= parameters[parameter_counter].additional.size) {
+                  f_resize_string_lengths(allocation_status, parameters[parameter_counter].additional, parameters[parameter_counter].additional.size + f_console_default_allocation_step);
+                }
+
+                if (f_macro_test_for_allocation_errors(allocation_status)) {
+                  f_string_length i = 0;
+
+                  while (i < total_parameters) {
+                    f_delete_string_lengths(status, parameters[i].additional);
+                    i++;
+                  } // while
+
+                  f_delete_string_lengths(status, extra_initiator);
+                  return allocation_status;
+                }
+
                 parameters[parameter_counter].result = f_console_result_found;
 
                 // when "other" is supplied, the extra will be recycled to represent the location of the "other" such that ordering can be determined by the caller
-                parameters[parameter_counter].additional = location;
+                parameters[parameter_counter].additional.array[parameters[parameter_counter].additional.used] = location;
+                parameters[parameter_counter].additional.used++;
 
                 found = f_true;
                 break;
@@ -175,8 +224,27 @@ extern "C"{
 
         if (!found) {
           if (extra_initiator.used > 0) {
-            parameters[extra_initiator.array[0]].result     = f_console_result_additional;
-            parameters[extra_initiator.array[0]].additional = location;
+            f_status allocation_status = f_status_initialize;
+
+            if (parameters[extra_initiator.array[0]].additional.used >= parameters[extra_initiator.array[0]].additional.size) {
+                f_resize_string_lengths(allocation_status, parameters[extra_initiator.array[0]].additional, parameters[extra_initiator.array[0]].additional.size + f_console_default_allocation_step);
+              }
+
+              if (f_macro_test_for_allocation_errors(allocation_status)) {
+                f_string_length i = 0;
+
+                while (i < total_parameters) {
+                  f_delete_string_lengths(status, parameters[i].additional);
+                  i++;
+                } // while
+
+                f_delete_string_lengths(status, extra_initiator);
+                return allocation_status;
+              }
+
+            parameters[extra_initiator.array[0]].result = f_console_result_additional;
+            parameters[extra_initiator.array[0]].additional.array[parameters[extra_initiator.array[0]].additional.used] = location;
+            parameters[extra_initiator.array[0]].additional.used++;
 
             extra_initiator.used--;
 
@@ -192,6 +260,13 @@ extern "C"{
               f_resize_string_lengths(allocation_status, (*remaining), remaining->size + f_console_default_allocation_step);
 
               if (f_macro_test_for_allocation_errors(allocation_status)) {
+                f_string_length i = 0;
+
+                while (i < total_parameters) {
+                  f_delete_string_lengths(status, parameters[i].additional);
+                  i++;
+                } // while
+
                 f_delete_string_lengths(status, extra_initiator);
                 return allocation_status;
               }

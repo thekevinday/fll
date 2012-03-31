@@ -162,7 +162,7 @@ extern "C"{
 
       if (data->parameters[firewall_parameter_command_stop].result == f_console_result_found) {
         if (found_command) {
-          if (data->parameters[command].additional > data->parameters[firewall_parameter_command_stop].additional) {
+          if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_stop].additional.array[0]) {
             command = firewall_parameter_command_stop;
           }
         } else {
@@ -173,7 +173,7 @@ extern "C"{
 
       if (data->parameters[firewall_parameter_command_restart].result == f_console_result_found) {
         if (found_command) {
-          if (data->parameters[command].additional > data->parameters[firewall_parameter_command_restart].additional) {
+          if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_restart].additional.array[0]) {
             command = firewall_parameter_command_restart;
           }
         } else {
@@ -184,7 +184,7 @@ extern "C"{
 
       if (data->parameters[firewall_parameter_command_lock].result == f_console_result_found) {
         if (found_command) {
-          if (data->parameters[command].additional > data->parameters[firewall_parameter_command_lock].additional) {
+          if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_lock].additional.array[0]) {
             command = firewall_parameter_command_lock;
           }
         } else {
@@ -195,7 +195,7 @@ extern "C"{
 
       if (data->parameters[firewall_parameter_command_show].result == f_console_result_found) {
         if (found_command) {
-          if (data->parameters[command].additional > data->parameters[firewall_parameter_command_show].additional) {
+          if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_show].additional.array[0]) {
             command = firewall_parameter_command_show;
           }
         } else {
@@ -1629,7 +1629,13 @@ extern "C"{
 
 #ifndef _di_firewall_delete_data_
   f_return_status firewall_delete_data(firewall_data *data) {
-    f_status status = f_status_initialize;
+    f_status        status = f_status_initialize;
+    f_string_length i      = 0;
+
+    while (i < firewall_total_parameters) {
+      f_delete_string_lengths(status, data->parameters[i].additional);
+      i++;
+    } // while
 
     f_delete_fss_contents(status, data->contents);
     f_delete_fss_objects(status, data->objects);
