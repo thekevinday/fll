@@ -867,11 +867,7 @@ extern "C"{
             input->start++;
           } // while
 
-          if (input->start > input->stop || input->start >= content.used) {
-            break;
-          }
-
-          if (content.string[input->start] == quoted) {
+          if (content.string[input->start] == quoted || input->start > input->stop || input->start >= content.used) {
             pre_allocate_size += slash_count + 1;
 
             if (pre_allocate_size > buffer->size) {
@@ -885,6 +881,10 @@ extern "C"{
               buffer_position.stop++;
               slash_count--;
             } // while
+
+            if (input->start > input->stop || input->start >= content.used) {
+              break;
+            }
 
             buffer->string[buffer_position.stop] = f_fss_delimit_slash;
             buffer->string[buffer_position.stop + 1] = quoted;
