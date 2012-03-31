@@ -42,6 +42,7 @@ extern "C"{
   #define f_file_read_write_create "rw"
   #define f_file_read_write_append "a+"
   #define f_file_write_create      "w"
+  #define f_file_write_append      "a"
 #endif // _di_f_file_oldstyle_modes_
 
 #ifndef _di_f_file_seeks_
