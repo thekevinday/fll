@@ -185,7 +185,7 @@ extern "C"{
               } else if (buffer->string[input->start] == f_eol) {
                 fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
-                found->stop = input->start - 1;
+                found->stop = location - 1;
                 input->start++;
 
                 return fl_fss_found_object_no_content;
@@ -193,7 +193,7 @@ extern "C"{
 
               fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
-              found->stop = input->start - 1;
+              found->stop = location - 1;
               input->start++;
               return fl_fss_found_object;
             } else {
@@ -476,14 +476,14 @@ extern "C"{
                 } else if (buffer->string[input->start] == f_eol) {
                   fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
-                  found->array[found->used].stop = input->start - 1;
+                  found->array[found->used].stop = location - 1;
                   input->start++;
                   found->used++;
 
                   return fl_fss_found_content;
                 }
 
-                found->array[found->used].stop = input->start - 1;
+                found->array[found->used].stop = location - 1;
                 input->start++;
                 found->used++;
                 continue;
