@@ -116,7 +116,7 @@ extern "C"{
 
     size = fwrite(buffer.string, file.byte_size, buffer.used, file.file);
 
-    if (size <= buffer.used * file.byte_size) {
+    if (size < buffer.used * file.byte_size) {
       return f_file_write_error;
     }
 
@@ -139,7 +139,7 @@ extern "C"{
 
     size = fwrite(buffer.string + position.start, file.byte_size, total, file.file);
 
-    if (size <= total * file.byte_size) {
+    if (size < total * file.byte_size) {
       return f_file_write_error;
     }
 
