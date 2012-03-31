@@ -26,6 +26,14 @@ extern "C"{
   extern f_return_status fl_file_read_fifo(f_file file, f_dynamic_string *buffer);
 #endif // _di_fl_file_read_fifo_
 
+#ifndef _di_fl_file_write_
+  extern f_return_status fl_file_write(f_file file, const f_dynamic_string buffer);
+#endif // _di_fl_file_write_
+
+#ifndef _di_fl_file_write_partial_
+  extern f_return_status fl_file_write_partial(f_file file, const f_dynamic_string buffer, const f_string_location position);
+#endif // _di_fl_file_write_partial_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
