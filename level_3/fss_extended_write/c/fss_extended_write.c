@@ -62,18 +62,18 @@ extern "C"{
 
     printf("\n");
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_type);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_object);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_type);
-    printf("     Specify a what to write: object or content.");
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_object);
+    printf("   Write an object instead of content.");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_output);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_file);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_output);
-    printf("   Specify a file to send output to.");
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_file);
+    printf("     Specify a file to send output to.");
 
     printf("\n  %s", f_console_symbol_short_enable);
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_string);
@@ -152,18 +152,12 @@ extern "C"{
       fss_extended_write_print_help(*data);
     } else if (data->parameters[fss_extended_write_parameter_version].result == f_console_result_found) {
       fss_extended_write_print_version(*data);
-    } else if (data->parameters[fss_extended_write_parameter_type].result == f_console_result_additional) {
+    } else {
       f_array_length counter = f_array_length_initialize;
-      f_max_u_short  type    = 0;
+      f_bool         object  = (data->parameters[fss_extended_write_parameter_object].result == f_console_result_found);
 
       f_dynamic_string  buffer   = f_dynamic_string_initialize;
       f_string_location location = f_string_location_initialize;
-
-      if (strncmp("object", argv[data->parameters[fss_extended_write_parameter_type].additional.array[0]], 7) == 0) {
-        type = fss_extended_write_type_object;
-      } else if (strncmp("content", argv[data->parameters[fss_extended_write_parameter_type].additional.array[0]], 8) == 0) {
-        type = fss_extended_write_type_content;
-      }
 
       if (data->process_pipe) {
         f_file           file  = f_file_initialize;
@@ -194,13 +188,13 @@ extern "C"{
         location.start = 0;
         location.stop = input.used - 1;
 
-        if (type == fss_extended_write_type_object) {
+        if (object) {
           status = fl_fss_extended_object_write(input, &location, &buffer);
 
           if (f_macro_test_for_no_data_errors(status)) {
             return status;
           }
-        } else if (type == fss_extended_write_type_content) {
+        } else {
           status = fl_fss_extended_content_write(input, &location, &buffer);
 
           if (f_macro_test_for_no_data_errors(status)) {
@@ -225,7 +219,7 @@ extern "C"{
       } else if (data->parameters[fss_extended_write_parameter_string].result == f_console_result_additional) {
         f_dynamic_string input = f_dynamic_string_initialize;
 
-        if (type == fss_extended_write_type_object) {
+        if (object) {
           input.string = argv[data->parameters[fss_extended_write_parameter_string].additional.array[0]];
           input.used = strlen(input.string);
 
@@ -237,7 +231,7 @@ extern "C"{
           if (f_macro_test_for_no_data_errors(status)) {
             return status;
           }
-        } else if (type == fss_extended_write_type_content) {
+        } else {
           f_string_length i = 0;
 
           while (i < data->parameters[fss_extended_write_parameter_string].additional.used) {
@@ -273,11 +267,11 @@ extern "C"{
         status = f_none;
       }
 
-      if (data->parameters[fss_extended_write_parameter_output].result == f_console_result_additional) {
+      if (data->parameters[fss_extended_write_parameter_file].result == f_console_result_additional) {
         f_file output = f_file_initialize;
 
         output.mode = f_file_write_append;
-        status = f_file_open(&output, argv[data->parameters[fss_extended_write_parameter_output].additional.array[0]]);
+        status = f_file_open(&output, argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
 
         if (status != f_none) {
           f_file_close(&output);
@@ -285,11 +279,11 @@ extern "C"{
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           } else if (status == f_file_not_found) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", argv[data->parameters[fss_extended_write_parameter_output].additional.array[0]]);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           } else if (status == f_file_open_error) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", argv[data->parameters[fss_extended_write_parameter_output].additional.array[0]]);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           } else if (status == f_file_descriptor_error) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->parameters[fss_extended_write_parameter_output].additional.array[0]]);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           } else {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
           }
@@ -305,7 +299,7 @@ extern "C"{
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");
           } else if (status == f_file_write_error) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", argv[data->parameters[fss_extended_write_parameter_output].additional.array[0]]);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           } else {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", status);
           }
@@ -316,9 +310,6 @@ extern "C"{
       } else {
         f_print_dynamic_string(f_standard_output, buffer);
       }
-    } else {
-      fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you must specify the type to write: object, content, or both.");
-      status = f_invalid_parameter;
     }
 
     fss_extended_write_delete_data(data);
