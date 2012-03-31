@@ -44,7 +44,15 @@ extern "C"{
           if (status == fl_fss_found_object || status == fl_fss_found_object_no_content) {
             objects->used++;
 
-            fl_macro_fss_allocate_content_if_necessary(contents->array[contents->used]);
+            if (contents->array[contents->used].used >= contents->array[contents->used].size) {
+              f_status status = f_status_initialize;
+
+              f_resize_fss_content(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+
+              if (f_macro_test_for_allocation_errors(status)) {
+                return status;
+              }
+            }
 
             contents->used++;
 
@@ -74,7 +82,15 @@ extern "C"{
         } else if (status == fl_fss_found_object_no_content) {
           found_data = f_true;
 
-          fl_macro_fss_allocate_content_if_necessary(contents->array[contents->used]);
+          if (contents->array[contents->used].used >= contents->array[contents->used].size) {
+            f_status status = f_status_initialize;
+
+            f_resize_fss_content(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+
+            if (f_macro_test_for_allocation_errors(status)) {
+              return status;
+            }
+          }
 
           break;
         }
