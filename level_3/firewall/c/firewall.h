@@ -67,6 +67,10 @@ extern "C"{
   #define firewall_program_name_length 8
 #endif // _di_firewall_paths_
 
+#ifndef _di_firewall_default_allocation_step_
+  #define firewall_default_allocation_step f_memory_default_allocation_step
+#endif // _di_firewall_default_allocation_step_
+
 #ifndef _di_firewall_defines_
   #define firewall_group_first "first"
   #define firewall_group_last "last"
@@ -183,6 +187,10 @@ extern "C"{
   #define firewall_device_input_command_length  2
   #define firewall_device_output_command_length 2
 
+  #define firewall_chain_create_command  "-N"
+
+  #define firewall_chain_create_command_length 2
+
   enum {
     firewall_parameter_help,
     firewall_parameter_light,
@@ -228,6 +236,8 @@ extern "C"{
     f_dynamic_string  buffer;
     f_fss_objects     objects;
     f_fss_contents    contents;
+    f_string_lengths  custom;
+    f_dynamic_strings chains;
     f_file_position   file_position;
     f_string_lengths  remaining;
     f_dynamic_strings devices;
@@ -241,6 +251,8 @@ extern "C"{
       f_dynamic_string_initialize, \
       f_fss_objects_initialize, \
       f_fss_contents_initialize, \
+      f_string_lengths_initialize, \
+      f_dynamic_strings_initialize, \
       f_file_position_initialize, \
       f_string_lengths_initialize, \
       f_dynamic_strings_initialize, \

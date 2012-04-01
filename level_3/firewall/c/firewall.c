@@ -106,7 +106,7 @@ extern "C"{
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
-  f_return_status firewall_perform_commands(const f_fss_objects objects, const f_fss_contents contents, const f_bool is_global, const f_string_length this_device, const f_dynamic_string buffer, const firewall_data data) __attribute__((visibility("internal")));
+  f_return_status firewall_perform_commands(const f_fss_objects objects, const f_fss_contents contents, const f_bool is_global, const f_string_length this_device, const f_dynamic_string buffer, const firewall_data data, const f_dynamic_string *custom_chain) __attribute__((visibility("internal")));
 
   f_return_status firewall_main(const f_s_int argc, const f_string argv[], firewall_data *data) {
     f_status status            = f_status_initialize;
@@ -564,27 +564,34 @@ extern "C"{
               first       = counter;
               found_first = f_true;
             }
-          }
-
-          if (!found_last && length >= firewall_group_last_length) {
+          } else if (!found_last && length >= firewall_group_last_length) {
             if (fl_compare_strings((f_string) firewall_group_last, data->buffer.string + data->objects.array[counter].start, firewall_group_last_length, length) == f_equal_to) {
               last       = counter;
               found_last = f_true;
             }
-          }
-
-          if (!found_stop && length >= firewall_group_stop_length) {
+          } else if (!found_stop && length >= firewall_group_stop_length) {
             if (fl_compare_strings((f_string) firewall_group_stop, data->buffer.string + data->objects.array[counter].start, firewall_group_stop_length, length) == f_equal_to) {
               stop       = counter;
               found_stop = f_true;
             }
-          }
-
-          if (!found_lock && length >= firewall_group_lock_length) {
+          } else if (!found_lock && length >= firewall_group_lock_length) {
             if (fl_compare_strings((f_string) firewall_group_lock, data->buffer.string + data->objects.array[counter].start, firewall_group_lock_length, length) == f_equal_to) {
               lock       = counter;
               found_lock = f_true;
             }
+          } else {
+            if (data->custom.used >= data->custom.size) {
+              f_resize_string_lengths(status, data->custom, data->custom.size + firewall_default_allocation_step);
+
+              if (f_macro_test_for_allocation_errors(status)) {
+                fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+                firewall_delete_data(data);
+                return status;
+              }
+            }
+
+            data->custom.array[data->custom.used] = counter;
+            data->custom.used++;
           }
         }
 
@@ -605,7 +612,7 @@ extern "C"{
             status = fll_fss_extended_read(&data->buffer, &input, &extended_objects, &extended_contents);
 
             if (status == f_none || status == f_none_on_stop || status == f_none_on_eos) {
-              status = firewall_perform_commands(extended_objects, extended_contents, f_true, 0, data->buffer, *data);
+              status = firewall_perform_commands(extended_objects, extended_contents, f_true, 0, data->buffer, *data, f_null);
 
               if (status != f_none) {
                 if (f_macro_test_for_allocation_errors(status)) {
@@ -634,7 +641,7 @@ extern "C"{
               status = fll_fss_extended_read(&data->buffer, &input, &extended_objects, &extended_contents);
 
               if (status == f_none || status == f_none_on_stop || status == f_none_on_eos) {
-                status = firewall_perform_commands(extended_objects, extended_contents, f_true, 0, data->buffer, *data);
+                status = firewall_perform_commands(extended_objects, extended_contents, f_true, 0, data->buffer, *data, f_null);
               }
             }
 
@@ -651,7 +658,7 @@ extern "C"{
               status = fll_fss_extended_read(&data->buffer, &input, &extended_objects, &extended_contents);
 
               if (status == f_none || status == f_none_on_stop || status == f_none_on_eos) {
-                status = firewall_perform_commands(extended_objects, extended_contents, f_true, 0, data->buffer, *data);
+                status = firewall_perform_commands(extended_objects, extended_contents, f_true, 0, data->buffer, *data, f_null);
 
                 if (status != f_none) {
                   if (f_macro_test_for_allocation_errors(status)) {
@@ -671,7 +678,240 @@ extern "C"{
                   f_delete_fss_objects(status, extended_objects);
                   f_delete_fss_contents(status, extended_contents);
 
-                  f_string_length counter = f_string_length_initialize;
+                  f_string_length counter = 0;
+
+                  {
+                    f_dynamic_string chain_argument = f_dynamic_string_initialize;
+
+                    while (counter < data->custom.used) {
+                      f_dynamic_string custom_chain   = f_dynamic_string_initialize;
+                      f_string_length  chain_location = 0;
+
+                      input.start = data->objects.array[data->custom.array[counter]].start;
+                      input.stop  = data->objects.array[data->custom.array[counter]].stop;
+
+                      // ensure that the chain exists
+                      if (counter < data->custom.used && data->custom.array[counter] < data->objects.used) {
+                        f_string_length counter2  = 0;
+                        f_string_length max_size  = 0;
+                        f_bool          new_chain = f_true;
+
+                        counter2 = data->objects.array[data->custom.array[counter2]].start;
+                        max_size = data->objects.array[data->custom.array[counter2]].stop - data->objects.array[data->custom.array[counter2]].start + 1;
+
+                        if (max_size >= custom_chain.size) {
+                          f_resize_dynamic_string(status, custom_chain, max_size + firewall_default_allocation_step);
+
+                          if (f_macro_test_for_allocation_errors(status)) {
+                            f_status allocation_status = f_status_initialize;
+
+                            f_delete_dynamic_string(allocation_status, custom_chain);
+                            f_delete_dynamic_string(allocation_status, chain_argument);
+                            f_delete_fss_objects(allocation_status, extended_objects);
+                            f_delete_fss_contents(allocation_status, extended_contents);
+                            firewall_delete_data(data);
+                            return status;
+                          }
+                        }
+
+                        custom_chain.used = 0;
+                        counter2 = input.start;
+                        while (counter2 <= input.stop && custom_chain.used <= custom_chain.size) {
+                          if (data->buffer.string[counter2] == f_fss_delimit_placeholder) {
+                            counter2++;
+                            continue;
+                          }
+
+                          custom_chain.string[custom_chain.used] = data->buffer.string[counter2];
+                          custom_chain.used++;
+                          counter2++;
+                        } // while
+
+                        if (firewall_chain_create_command_length > chain_argument.size) {
+                          f_resize_dynamic_string(status, chain_argument, firewall_chain_create_command_length);
+
+                          if (f_macro_test_for_allocation_errors(status)) {
+                            f_status allocation_status = f_status_initialize;
+
+                            f_delete_dynamic_string(allocation_status, custom_chain);
+                            f_delete_dynamic_string(allocation_status, chain_argument);
+                            f_delete_fss_objects(allocation_status, extended_objects);
+                            f_delete_fss_contents(allocation_status, extended_contents);
+                            firewall_delete_data(data);
+                            return status;
+                          }
+                        }
+
+                        strncat(chain_argument.string, firewall_chain_create_command, firewall_chain_create_command_length);
+                        chain_argument.used = firewall_chain_create_command_length;
+                        chain_location = 0;
+
+
+                        while (chain_location < data->chains.used) {
+                          if (fl_compare_dynamic_strings(custom_chain, data->chains.array[chain_location]) == f_equal_to) {
+                            f_delete_dynamic_string(allocation_status, custom_chain);
+
+                            new_chain = f_false;
+                            break;
+                          }
+
+                          chain_location++;
+                        } // while
+
+                        if (new_chain) {
+                          if (data->chains.used >= data->chains.size) {
+                            f_resize_dynamic_strings(status, data->chains, data->chains.size + firewall_default_allocation_step);
+
+                            if (f_macro_test_for_allocation_errors(status)) {
+                              f_status allocation_status = f_status_initialize;
+
+                              f_delete_dynamic_string(allocation_status, custom_chain);
+                              f_delete_dynamic_string(allocation_status, chain_argument);
+                              f_delete_fss_objects(allocation_status, extended_objects);
+                              f_delete_fss_contents(allocation_status, extended_contents);
+                              firewall_delete_data(data);
+                              return status;
+                            }
+                          }
+
+                          f_s_int           results   = 0;
+                          f_dynamic_strings arguments = f_dynamic_strings_initialize;
+
+                          f_resize_dynamic_strings(status, arguments, 3);
+
+                          arguments.array[0].string = (f_string) firewall_chain_create_command;
+                          arguments.array[1].string = chain_argument.string;
+                          arguments.array[2].string = custom_chain.string;
+
+                          arguments.array[0].used = firewall_chain_create_command_length;
+                          arguments.array[1].used = chain_argument.used;
+                          arguments.array[2].used = custom_chain.used;
+
+                          arguments.used = 3;
+                          arguments.size = 3;
+
+                          if (f_macro_test_for_allocation_errors(status)) {
+                            f_status allocation_status = f_status_initialize;
+
+                            arguments.array[0].string = 0;
+                            arguments.array[1].string = 0;
+                            arguments.array[2].string = 0;
+
+                            arguments.array[0].used = 0;
+                            arguments.array[1].used = 0;
+                            arguments.array[2].used = 0;
+
+                            f_delete_dynamic_string(allocation_status, custom_chain);
+                            f_delete_dynamic_string(allocation_status, chain_argument);
+                            f_delete_dynamic_strings(allocation_status, arguments);
+                            f_delete_fss_objects(allocation_status, extended_objects);
+                            f_delete_fss_contents(allocation_status, extended_contents);
+                            firewall_delete_data(data);
+                            return status;
+                          }
+
+                          status = fll_execute_program((f_string) firewall_program_name, arguments, &results);
+
+                          if (status == f_failure) {
+                            f_status allocation_status = f_status_initialize;
+
+                            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_program_name);
+                            fprintf(f_standard_error, "  ");
+
+                            f_string_length i = f_string_length_initialize;
+
+                            fl_print_color_code(f_standard_error, data->context.error);
+
+                            for (; i < arguments.used; i++) {
+                              fprintf(f_standard_error, "%s ", arguments.array[i].string);
+                            }
+
+                            fl_print_color_code(f_standard_error, data->context.reset);
+                            fprintf(f_standard_error, "\n");
+
+                            arguments.array[0].string = 0;
+                            arguments.array[1].string = 0;
+                            arguments.array[2].string = 0;
+
+                            arguments.array[0].used = 0;
+                            arguments.array[1].used = 0;
+                            arguments.array[2].used = 0;
+
+                            f_delete_dynamic_string(allocation_status, custom_chain);
+                            f_delete_dynamic_string(allocation_status, chain_argument);
+                            f_delete_dynamic_strings(allocation_status, arguments);
+                            f_delete_fss_objects(allocation_status, extended_objects);
+                            f_delete_fss_contents(allocation_status, extended_contents);
+                            firewall_delete_data(data);
+                            return status;
+                          } else if (status == f_invalid_parameter) {
+                            f_status allocation_status = f_status_initialize;
+
+                            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_execute_path()");
+
+                            arguments.array[0].string = 0;
+                            arguments.array[1].string = 0;
+                            arguments.array[2].string = 0;
+
+                            arguments.array[0].used = 0;
+                            arguments.array[1].used = 0;
+                            arguments.array[2].used = 0;
+
+                            f_delete_dynamic_string(allocation_status, custom_chain);
+                            f_delete_dynamic_string(allocation_status, chain_argument);
+                            f_delete_dynamic_strings(allocation_status, arguments);
+                            f_delete_fss_objects(allocation_status, extended_objects);
+                            f_delete_fss_contents(allocation_status, extended_contents);
+                            firewall_delete_data(data);
+                            return status;
+                          }
+
+                          arguments.array[0].string = 0;
+                          arguments.array[1].string = 0;
+                          arguments.array[2].string = 0;
+
+                          arguments.array[0].used = 0;
+                          arguments.array[1].used = 0;
+                          arguments.array[2].used = 0;
+
+                          f_delete_dynamic_strings(status, arguments);
+
+                          data->chains.array[data->chains.used] = custom_chain;
+                          custom_chain.string = 0;
+                          custom_chain.used = 0;
+                          chain_location = data->chains.used;
+                          data->chains.used++;
+                        }
+                      }
+
+                      input.start = data->contents.array[data->custom.array[counter]].array[0].start;
+                      input.stop  = data->contents.array[data->custom.array[counter]].array[0].stop;
+
+                      status = fll_fss_extended_read(&data->buffer, &input, &extended_objects, &extended_contents);
+
+                      if (status == f_none || status == f_none_on_stop || status == f_none_on_eos) {
+                        status = firewall_perform_commands(extended_objects, extended_contents, f_true, counter, data->buffer, *data, &data->chains.array[chain_location]);
+
+                        if (status != f_none) {
+                          if (f_macro_test_for_allocation_errors(status)) {
+                            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory", status);
+                          } else if (status == f_failure) {
+                            // the error message has already been displayed
+                          } else {
+                            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands()", status);
+                          }
+                        }
+                      }
+
+                      f_delete_dynamic_string(status, chain_argument);
+                      f_delete_fss_objects(status, extended_objects);
+                      f_delete_fss_contents(status, extended_contents);
+
+                      counter++;
+                    } // while
+                  }
+
+                  counter = 0;
 
                   for (; counter < data->devices.used; counter++) {
                     f_file           file          = f_file_initialize;
@@ -786,50 +1026,320 @@ extern "C"{
 
                     {
                       f_string_length buffer_counter = f_string_length_initialize;
-                      f_string_length name_length    = f_string_length_initialize;
+                      f_string_length length         = f_string_length_initialize;
 
-                      for (; buffer_counter < list_objects.used; buffer_counter++) {
-                        name_length = list_objects.array[buffer_counter].stop - list_objects.array[buffer_counter].start + 1;
+                      while (buffer_counter < list_objects.used) {
+                        length = list_objects.array[buffer_counter].stop - list_objects.array[buffer_counter].start + 1;
 
-                        if (name_length >= firewall_group_main_length) {
-                          if (fl_compare_strings((f_string) firewall_group_main, buffer.string + list_objects.array[buffer_counter].start, firewall_group_main_length, length) == f_equal_to) {
-                            f_string_location input = f_string_location_initialize;
+                        if (fl_compare_strings((f_string) firewall_group_main, buffer.string + list_objects.array[buffer_counter].start, firewall_group_main_length, length) == f_equal_to) {
+                          f_string_location input = f_string_location_initialize;
 
-                            input.start = list_contents.array[buffer_counter].array[0].start;
-                            input.stop  = list_contents.array[buffer_counter].array[0].stop;
+                          input.start = list_contents.array[buffer_counter].array[0].start;
+                          input.stop  = list_contents.array[buffer_counter].array[0].stop;
 
-                            status = fll_fss_extended_read(&buffer, &input, &extended_objects, &extended_contents);
+                          status = fll_fss_extended_read(&buffer, &input, &extended_objects, &extended_contents);
 
-                            if (status == f_none || status == f_none_on_stop || status == f_none_on_eos) {
-                              status = firewall_perform_commands(extended_objects, extended_contents, f_false, counter, buffer, *data);
+                          if (status == f_none || status == f_none_on_stop || status == f_none_on_eos) {
+                            status = firewall_perform_commands(extended_objects, extended_contents, f_false, counter, buffer, *data, f_null);
 
-                              if (status != f_none) {
-                                if (f_macro_test_for_allocation_errors(status)) {
-                                  fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory", status);
-                                } else if (status == f_failure) {
-                                  // the error message has already been displayed
-                                } else {
-                                  fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands()", status);
-                                }
-                              }
-                            } else {
-                              if (status == f_invalid_parameter) {
-                                fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_extended_read() for the file '%s'", file_path.string);
-                              } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop) {
-                                fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: No relevant data was found within the file '%s'", file_path.string);
-                              } else if (f_macro_test_for_allocation_errors(status)) {
+                            if (status != f_none) {
+                              if (f_macro_test_for_allocation_errors(status)) {
                                 fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory", status);
+                              } else if (status == f_failure) {
+                                // the error message has already been displayed
                               } else {
-                                fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_extended_read() for the file '%s'", status, file_path.string);
+                                fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands()", status);
+                              }
+                            }
+                          } else {
+                            if (status == f_invalid_parameter) {
+                              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_extended_read() for the file '%s'", file_path.string);
+                            } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop) {
+                              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: No relevant data was found within the file '%s'", file_path.string);
+                            } else if (f_macro_test_for_allocation_errors(status)) {
+                              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory", status);
+                            } else {
+                              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_extended_read() for the file '%s'", status, file_path.string);
+                            }
+                          }
+                        } else if (fl_compare_strings((f_string) firewall_group_first, buffer.string + list_objects.array[buffer_counter].start, firewall_group_first_length, length) == f_equal_to) {
+                          // skip this, device-specific rules do not support this.
+                        } else if (fl_compare_strings((f_string) firewall_group_last, buffer.string + list_objects.array[buffer_counter].start, firewall_group_last_length, length) == f_equal_to) {
+                          // skip this, device-specific rules do not support this.
+                        } else if (fl_compare_strings((f_string) firewall_group_stop, buffer.string + list_objects.array[buffer_counter].start, firewall_group_stop_length, length) == f_equal_to) {
+                          // skip this, device-specific rules do not support this.
+                        } else if (fl_compare_strings((f_string) firewall_group_lock, buffer.string + list_objects.array[buffer_counter].start, firewall_group_lock_length, length) == f_equal_to) {
+                          // skip this, device-specific rules do not support this.
+                        } else {
+                          f_delete_fss_objects(allocation_status, extended_objects);
+                          f_delete_fss_contents(allocation_status, extended_contents);
+
+                          f_string_location input = f_string_location_initialize;
+
+                          f_dynamic_string custom_chain   = f_dynamic_string_initialize;
+                          f_dynamic_string chain_argument = f_dynamic_string_initialize;
+                          f_string_length  chain_location = 0;
+
+                          f_string_length counter2  = 0;
+                          f_string_length max_size  = 0;
+                          f_bool          new_chain = f_true;
+
+                          input.start = list_objects.array[buffer_counter].start;
+                          input.stop  = list_objects.array[buffer_counter].stop;
+
+                          if (data->chains.used >= data->chains.size) {
+                            f_resize_dynamic_strings(status, data->chains, data->chains.size + firewall_default_allocation_step);
+
+                            if (f_macro_test_for_allocation_errors(status)) {
+                              f_status allocation_status = f_status_initialize;
+
+                              f_delete_dynamic_string(allocation_status, custom_chain);
+                              f_delete_dynamic_string(allocation_status, chain_argument);
+                              f_delete_fss_objects(allocation_status, extended_objects);
+                              f_delete_fss_contents(allocation_status, extended_contents);
+                              firewall_delete_data(data);
+                              return status;
+                            }
+                          }
+
+                          // ensure that the chain exists
+                          // TODO: run a loop here and make sure to only add a chain if it does not already exist (avoids iptables error)
+                          counter2 = list_objects.array[buffer_counter].start;
+                          max_size = list_objects.array[buffer_counter].stop - list_objects.array[buffer_counter].start + 1;
+
+                          if (max_size >= custom_chain.size) {
+                            f_resize_dynamic_string(status, custom_chain, max_size + firewall_default_allocation_step);
+
+                            if (f_macro_test_for_allocation_errors(status)) {
+                              f_status allocation_status = f_status_initialize;
+
+                              f_delete_dynamic_string(allocation_status, custom_chain);
+                              f_delete_dynamic_string(allocation_status, chain_argument);
+                              f_delete_fss_objects(allocation_status, extended_objects);
+                              f_delete_fss_contents(allocation_status, extended_contents);
+                              f_delete_dynamic_string(allocation_status, buffer);
+                              f_delete_dynamic_string(allocation_status, file_path);
+                              f_delete_fss_objects(allocation_status, list_objects);
+                              f_delete_fss_contents(allocation_status, list_contents);
+                              firewall_delete_data(data);
+                              return status;
+                            }
+                          }
+
+                          custom_chain.used = 0;
+                          counter2 = input.start;
+                          while (counter2 <= input.stop && custom_chain.used <= custom_chain.size) {
+                            if (buffer.string[counter2] == f_fss_delimit_placeholder) {
+                              counter2++;
+                              continue;
+                            }
+
+                            custom_chain.string[custom_chain.used] = buffer.string[counter2];
+                            custom_chain.used++;
+                            counter2++;
+                          } // while
+
+                          if (firewall_chain_create_command_length > chain_argument.size) {
+                            f_resize_dynamic_string(status, chain_argument, firewall_chain_create_command_length);
+
+                            if (f_macro_test_for_allocation_errors(status)) {
+                              f_status allocation_status = f_status_initialize;
+
+                              f_delete_dynamic_string(allocation_status, custom_chain);
+                              f_delete_dynamic_string(allocation_status, chain_argument);
+                              f_delete_fss_objects(allocation_status, extended_objects);
+                              f_delete_fss_contents(allocation_status, extended_contents);
+                              f_delete_dynamic_string(allocation_status, buffer);
+                              f_delete_dynamic_string(allocation_status, file_path);
+                              f_delete_fss_objects(allocation_status, list_objects);
+                              f_delete_fss_contents(allocation_status, list_contents);
+                              firewall_delete_data(data);
+                              return status;
+                            }
+                          }
+
+                          strncat(chain_argument.string, firewall_chain_create_command, firewall_chain_create_command_length);
+                          chain_argument.used = firewall_chain_create_command_length;
+                          chain_location = 0;
+
+                          while (chain_location < data->chains.used) {
+                            if (fl_compare_dynamic_strings(custom_chain, data->chains.array[chain_location]) == f_equal_to) {
+                              f_delete_dynamic_string(allocation_status, custom_chain);
+
+                              new_chain = f_false;
+                              break;
+                            }
+
+                            chain_location++;
+                          } // while
+
+                          if (new_chain) {
+                            if (data->chains.used >= data->chains.size) {
+                              f_resize_dynamic_strings(status, data->chains, data->chains.size + firewall_default_allocation_step);
+
+                              if (f_macro_test_for_allocation_errors(status)) {
+                                f_status allocation_status = f_status_initialize;
+
+                                f_delete_dynamic_string(allocation_status, custom_chain);
+                                f_delete_dynamic_string(allocation_status, chain_argument);
+                                f_delete_fss_objects(allocation_status, extended_objects);
+                                f_delete_fss_contents(allocation_status, extended_contents);
+                                f_delete_dynamic_string(allocation_status, buffer);
+                                f_delete_dynamic_string(allocation_status, file_path);
+                                f_delete_fss_objects(allocation_status, list_objects);
+                                f_delete_fss_contents(allocation_status, list_contents);
+                                firewall_delete_data(data);
+                                return status;
                               }
                             }
 
-                            break;
+                            f_s_int           results   = 0;
+                            f_dynamic_strings arguments = f_dynamic_strings_initialize;
+
+                            f_resize_dynamic_strings(status, arguments, 3);
+
+                            arguments.array[0].string = (f_string) firewall_chain_create_command;
+                            arguments.array[1].string = chain_argument.string;
+                            arguments.array[2].string = custom_chain.string;
+
+                            arguments.array[0].used = firewall_chain_create_command_length;
+                            arguments.array[1].used = chain_argument.used;
+                            arguments.array[2].used = custom_chain.used;
+
+                            arguments.used = 3;
+                            arguments.size = 3;
+
+                            if (f_macro_test_for_allocation_errors(status)) {
+                              f_status allocation_status = f_status_initialize;
+
+                              arguments.array[0].string = 0;
+                              arguments.array[1].string = 0;
+                              arguments.array[2].string = 0;
+
+                              arguments.array[0].used = 0;
+                              arguments.array[1].used = 0;
+                              arguments.array[2].used = 0;
+
+                              f_delete_dynamic_string(allocation_status, custom_chain);
+                              f_delete_dynamic_string(allocation_status, chain_argument);
+                              f_delete_dynamic_strings(allocation_status, arguments);
+                              f_delete_fss_objects(allocation_status, extended_objects);
+                              f_delete_fss_contents(allocation_status, extended_contents);
+                              f_delete_dynamic_string(allocation_status, buffer);
+                              f_delete_dynamic_string(allocation_status, file_path);
+                              f_delete_fss_objects(allocation_status, list_objects);
+                              f_delete_fss_contents(allocation_status, list_contents);
+                              firewall_delete_data(data);
+                              return status;
+                            }
+
+                            status = fll_execute_program((f_string) firewall_program_name, arguments, &results);
+
+                            if (status == f_failure) {
+                              f_status allocation_status = f_status_initialize;
+
+                              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_program_name);
+                              fprintf(f_standard_error, "  ");
+
+                              f_string_length i = f_string_length_initialize;
+
+                              fl_print_color_code(f_standard_error, data->context.error);
+
+                              for (; i < arguments.used; i++) {
+                                fprintf(f_standard_error, "%s ", arguments.array[i].string);
+                              }
+
+                              fl_print_color_code(f_standard_error, data->context.reset);
+                              fprintf(f_standard_error, "\n");
+
+                              arguments.array[0].string = 0;
+                              arguments.array[1].string = 0;
+                              arguments.array[2].string = 0;
+
+                              arguments.array[0].used = 0;
+                              arguments.array[1].used = 0;
+                              arguments.array[2].used = 0;
+
+                              f_delete_dynamic_string(allocation_status, custom_chain);
+                              f_delete_dynamic_string(allocation_status, chain_argument);
+                              f_delete_dynamic_strings(allocation_status, arguments);
+                              f_delete_fss_objects(allocation_status, extended_objects);
+                              f_delete_fss_contents(allocation_status, extended_contents);
+                              f_delete_dynamic_string(allocation_status, buffer);
+                              f_delete_dynamic_string(allocation_status, file_path);
+                              f_delete_fss_objects(allocation_status, list_objects);
+                              f_delete_fss_contents(allocation_status, list_contents);
+                              firewall_delete_data(data);
+                              return status;
+                            } else if (status == f_invalid_parameter) {
+                              f_status allocation_status = f_status_initialize;
+
+                              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_execute_path()");
+
+                              arguments.array[0].string = 0;
+                              arguments.array[1].string = 0;
+                              arguments.array[2].string = 0;
+
+                              arguments.array[0].used = 0;
+                              arguments.array[1].used = 0;
+                              arguments.array[2].used = 0;
+
+                              f_delete_dynamic_string(allocation_status, custom_chain);
+                              f_delete_dynamic_string(allocation_status, chain_argument);
+                              f_delete_dynamic_strings(allocation_status, arguments);
+                              f_delete_fss_objects(allocation_status, extended_objects);
+                              f_delete_fss_contents(allocation_status, extended_contents);
+                              f_delete_dynamic_string(allocation_status, buffer);
+                              f_delete_dynamic_string(allocation_status, file_path);
+                              f_delete_fss_objects(allocation_status, list_objects);
+                              f_delete_fss_contents(allocation_status, list_contents);
+                              firewall_delete_data(data);
+                              return status;
+                            }
+
+                            arguments.array[0].string = 0;
+                            arguments.array[1].string = 0;
+                            arguments.array[2].string = 0;
+
+                            arguments.array[0].used = 0;
+                            arguments.array[1].used = 0;
+                            arguments.array[2].used = 0;
+
+                            f_delete_dynamic_strings(status, arguments);
+
+                            data->chains.array[data->chains.used] = custom_chain;
+                            custom_chain.string = 0;
+                            custom_chain.used = 0;
+                            chain_location = data->chains.used;
+                            data->chains.used++;
                           }
 
-                          // TODO: consider supporting "lock" and "stop" rules for individual devices
+                          input.start = list_contents.array[buffer_counter].array[0].start;
+                          input.stop  = list_contents.array[buffer_counter].array[0].stop;
+
+                          status = fll_fss_extended_read(&buffer, &input, &extended_objects, &extended_contents);
+
+                          if (status == f_none || status == f_none_on_stop || status == f_none_on_eos) {
+                            status = firewall_perform_commands(extended_objects, extended_contents, f_false, buffer_counter, buffer, *data, &data->chains.array[chain_location]);
+
+                            if (status != f_none) {
+                              if (f_macro_test_for_allocation_errors(status)) {
+                                fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory", status);
+                              } else if (status == f_failure) {
+                                // the error message has already been displayed
+                              } else {
+                                fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands()", status);
+                              }
+                            }
+                          }
+
+                          f_delete_dynamic_string(allocation_status, chain_argument);
+                          f_delete_fss_objects(allocation_status, extended_objects);
+                          f_delete_fss_contents(allocation_status, extended_contents);
                         }
-                      }
+
+                        buffer_counter++;
+                      } // while
                     }
 
                     f_delete_dynamic_string(allocation_status, buffer);
@@ -847,7 +1357,7 @@ extern "C"{
                   status = fll_fss_extended_read(&data->buffer, &input, &extended_objects, &extended_contents);
 
                   if (status == f_none || status == f_none_on_stop || status == f_none_on_eos) {
-                    status = firewall_perform_commands(extended_objects, extended_contents, f_true, 0, data->buffer, *data);
+                    status = firewall_perform_commands(extended_objects, extended_contents, f_true, 0, data->buffer, *data, f_null);
 
                     if (status != f_none) {
                       if (f_macro_test_for_allocation_errors(status)) {
@@ -933,7 +1443,7 @@ extern "C"{
     return status;
   }
 
-    f_return_status firewall_perform_commands(const f_fss_objects objects, const f_fss_contents contents, const f_bool is_global, const f_string_length this_device, const f_dynamic_string buffer, const firewall_data data) {
+  f_return_status firewall_perform_commands(const f_fss_objects objects, const f_fss_contents contents, const f_bool is_global, const f_string_length this_device, const f_dynamic_string buffer, const firewall_data data, const f_dynamic_string *custom_chain) {
     f_status status            = f_status_initialize;
     f_status allocation_status = f_status_initialize;
 
@@ -1228,7 +1738,14 @@ extern "C"{
       }
 
       if (action != firewall_action_none_id) {
-        if (direction == firewall_direction_forward_id) {
+        if (custom_chain != f_null) {
+          f_resize_dynamic_string(status, argument, custom_chain->used);
+
+          if (f_macro_test_for_allocation_errors(status)) break;
+
+          strncat(argument.string, custom_chain->string, custom_chain->used);
+          argument.used = custom_chain->used;
+        } else if (direction == firewall_direction_forward_id) {
           f_resize_dynamic_string(status, argument, firewall_direction_forward_command_length);
 
           if (f_macro_test_for_allocation_errors(status)) break;
@@ -1639,6 +2156,8 @@ extern "C"{
 
     f_delete_fss_contents(status, data->contents);
     f_delete_fss_objects(status, data->objects);
+    f_delete_string_lengths(status, data->custom);
+    f_delete_dynamic_strings(status, data->chains);
     f_delete_dynamic_string(status, data->buffer);
     f_delete_string_lengths(status, data->remaining);
     f_delete_dynamic_strings(status, data->devices);
