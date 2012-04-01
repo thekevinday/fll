@@ -64,7 +64,6 @@ extern "C"{
   #define network_devices_length       15
   #define firewall_file_default_length 16
   #define firewall_file_suffix_length  9
-  #define firewall_program_length      8
   #define firewall_program_name_length 8
 #endif // _di_firewall_paths_
 
@@ -147,8 +146,8 @@ extern "C"{
   #define firewall_direction_input_command_length       5
   #define firewall_direction_output_command_length      6
   #define firewall_direction_forward_command_length     7
-  #define firewall_direction_postrouting_command_length 12
-  #define firewall_direction_prerouting_command_length  11
+  #define firewall_direction_postrouting_command_length 11
+  #define firewall_direction_prerouting_command_length  10
 
   #define firewall_action        "action"
   #define firewall_action_append "append"
