@@ -1103,7 +1103,6 @@ extern "C"{
                           }
 
                           // ensure that the chain exists
-                          // TODO: run a loop here and make sure to only add a chain if it does not already exist (avoids iptables error)
                           counter2 = list_objects.array[buffer_counter].start;
                           max_size = list_objects.array[buffer_counter].stop - list_objects.array[buffer_counter].start + 1;
 
