@@ -559,26 +559,18 @@ extern "C"{
         for (; counter < data->objects.used; counter++) {
           length = data->objects.array[counter].stop - data->objects.array[counter].start + 1;
 
-          if (!found_first && length >= firewall_group_first_length) {
-            if (fl_compare_strings((f_string) firewall_group_first, data->buffer.string + data->objects.array[counter].start, firewall_group_first_length, length) == f_equal_to) {
-              first       = counter;
-              found_first = f_true;
-            }
-          } else if (!found_last && length >= firewall_group_last_length) {
-            if (fl_compare_strings((f_string) firewall_group_last, data->buffer.string + data->objects.array[counter].start, firewall_group_last_length, length) == f_equal_to) {
-              last       = counter;
-              found_last = f_true;
-            }
-          } else if (!found_stop && length >= firewall_group_stop_length) {
-            if (fl_compare_strings((f_string) firewall_group_stop, data->buffer.string + data->objects.array[counter].start, firewall_group_stop_length, length) == f_equal_to) {
-              stop       = counter;
-              found_stop = f_true;
-            }
-          } else if (!found_lock && length >= firewall_group_lock_length) {
-            if (fl_compare_strings((f_string) firewall_group_lock, data->buffer.string + data->objects.array[counter].start, firewall_group_lock_length, length) == f_equal_to) {
-              lock       = counter;
-              found_lock = f_true;
-            }
+          if (!found_first && fl_compare_strings((f_string) firewall_group_first, data->buffer.string + data->objects.array[counter].start, firewall_group_first_length, length) == f_equal_to) {
+            first = counter;
+            found_first = f_true;
+          } else if (!found_last && fl_compare_strings((f_string) firewall_group_last, data->buffer.string + data->objects.array[counter].start, firewall_group_last_length, length) == f_equal_to) {
+            last = counter;
+            found_last = f_true;
+          } else if (!found_stop && fl_compare_strings((f_string) firewall_group_stop, data->buffer.string + data->objects.array[counter].start, firewall_group_stop_length, length) == f_equal_to) {
+            stop = counter;
+            found_stop = f_true;
+          } else if (!found_lock && fl_compare_strings((f_string) firewall_group_lock, data->buffer.string + data->objects.array[counter].start, firewall_group_lock_length, length) == f_equal_to) {
+            lock = counter;
+            found_lock = f_true;
           } else {
             if (data->custom.used >= data->custom.size) {
               f_resize_string_lengths(status, data->custom, data->custom.size + firewall_default_allocation_step);
