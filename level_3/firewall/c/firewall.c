@@ -696,8 +696,8 @@ extern "C"{
                         f_string_length max_size  = 0;
                         f_bool          new_chain = f_true;
 
-                        counter2 = data->objects.array[data->custom.array[counter2]].start;
-                        max_size = data->objects.array[data->custom.array[counter2]].stop - data->objects.array[data->custom.array[counter2]].start + 1;
+                        counter2 = input.start;
+                        max_size = input.stop - input.start + 1;
 
                         if (max_size >= custom_chain.size) {
                           f_resize_dynamic_string(status, custom_chain, max_size + firewall_default_allocation_step);
