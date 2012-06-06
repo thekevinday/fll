@@ -148,9 +148,6 @@ extern "C"{
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= 0) return f_invalid_parameter;
       if (string2.used <= 0) return f_invalid_parameter;
-
-      if (string1.used > string1.size) return f_invalid_parameter;
-      if (string2.used > string2.size) return f_invalid_parameter;
     #endif // _di_level_1_parameter_checking_
 
     f_string_length i1 = f_string_length_initialize;
@@ -185,9 +182,6 @@ extern "C"{
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= 0) return f_invalid_parameter;
       if (string2.used <= 0) return f_invalid_parameter;
-
-      if (string1.used > string1.size) return f_invalid_parameter;
-      if (string2.used > string2.size) return f_invalid_parameter;
 
       if (offset1.start > offset1.stop) return f_invalid_parameter;
       if (offset2.start > offset2.stop) return f_invalid_parameter;
