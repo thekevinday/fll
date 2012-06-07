@@ -314,6 +314,10 @@ extern "C"{
             return fl_fss_found_content;
           }
 
+          if (!found_newline) {
+            input->start = last_newline;
+          }
+
           return fl_fss_found_no_content;
         }
 
