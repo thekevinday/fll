@@ -18,6 +18,7 @@
 
 // fll-0 includes
 #include <level_0/types.h>
+#include <level_0/types_array.h>
 #include <level_0/strings.h>
 #include <level_0/file.h>
 #include <level_0/console.h>
@@ -56,13 +57,17 @@ extern "C"{
 #ifndef _di_firewall_paths_
   #define network_path          "/etc/network/" // TODO: this should be moved to a network project library, possibly the Paths project in fot the network project
   #define network_devices       "/sys/class/net/" // TODO: this should also be moved to a network project library
-  #define firewall_file_default "default-firewall"
+  #define firewall_file_first   "firewall-first"
+  #define firewall_file_last    "firewall-last"
+  #define firewall_file_other   "firewall-other"
   #define firewall_file_suffix  "-firewall"
   #define firewall_program_name "iptables"
 
   #define network_path_length          13
   #define network_devices_length       15
-  #define firewall_file_default_length 16
+  #define firewall_file_first_length   14
+  #define firewall_file_last_length    13
+  #define firewall_file_other_length   14
   #define firewall_file_suffix_length  9
   #define firewall_program_name_length 8
 #endif // _di_firewall_paths_
@@ -72,14 +77,10 @@ extern "C"{
 #endif // _di_firewall_default_allocation_step_
 
 #ifndef _di_firewall_defines_
-  #define firewall_group_first "first"
-  #define firewall_group_last "last"
   #define firewall_group_stop "stop"
   #define firewall_group_lock "lock"
   #define firewall_group_main "main"
 
-  #define firewall_group_first_length 5
-  #define firewall_group_last_length  4
   #define firewall_group_stop_length  4
   #define firewall_group_lock_length  4
   #define firewall_group_main_length  4
@@ -176,10 +177,12 @@ extern "C"{
   #define firewall_device      "device"
   #define firewall_device_all  "all"
   #define firewall_device_this "this"
+  #define firewall_device_loop "lo"
 
   #define firewall_device_length      6
   #define firewall_device_all_length  3
   #define firewall_device_this_length 4
+  #define firewall_device_loop_length 2
 
   #define firewall_device_input_command  "-i"
   #define firewall_device_output_command "-o"
@@ -188,8 +191,11 @@ extern "C"{
   #define firewall_device_output_command_length 2
 
   #define firewall_chain_create_command  "-N"
+  #define firewall_chain_unchain_command  "-X"
 
   #define firewall_chain_create_command_length 2
+  #define firewall_chain_unchain_command_length 2
+
 
   enum {
     firewall_parameter_help,
@@ -233,12 +239,7 @@ extern "C"{
   typedef struct {
     f_console_parameter parameters[firewall_total_parameters];
 
-    f_dynamic_string  buffer;
-    f_fss_objects     objects;
-    f_fss_contents    contents;
-    f_string_lengths  custom;
     f_dynamic_strings chains;
-    f_file_position   file_position;
     f_string_lengths  remaining;
     f_dynamic_strings devices;
 
@@ -248,12 +249,7 @@ extern "C"{
   #define firewall_data_initialize \
     { \
       f_console_parameter_initialize_firewall, \
-      f_dynamic_string_initialize, \
-      f_fss_objects_initialize, \
-      f_fss_contents_initialize, \
-      f_string_lengths_initialize, \
       f_dynamic_strings_initialize, \
-      f_file_position_initialize, \
       f_string_lengths_initialize, \
       f_dynamic_strings_initialize, \
       fll_color_context_initialize, \
