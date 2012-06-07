@@ -8,10 +8,10 @@ version_minor 3
 version_micro 0
 
 build_compiler gcc
-build_libraries -lc 
-build_sources_library 
-build_sources_program 
-build_sources_headers types.h
+build_libraries -lc
+build_sources_library
+build_sources_program
+build_sources_headers types.h types_array.h
 build_shared yes
 
 flags_all -z now
