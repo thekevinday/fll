@@ -186,6 +186,15 @@ extern "C"{
   #define f_file_mode_world_wx  (S_IWOTH | S_IXOTH)
 #endif // _di_f_file_modes_
 
+#ifndef _di_f_macro_file_reset_position_
+  #define f_macro_file_reset_position(position, file) \
+    if (position.total_elements == 0) { \
+      fseek(file.file, 0, SEEK_END); \
+      position.total_elements = ftell(file.file); \
+      fseek(file.file, 0, SEEK_SET); \
+    }
+#endif // _di_f_macro_file_reset_position_
+
 #ifndef _di_f_file_open_
   // open a particular file and save its stream
   // filename = name of the file
