@@ -109,7 +109,7 @@ extern "C"{
     f_array_length  used;  // total number of allocated spaces used
   } f_string_lengths;
 
-  #define f_string_lengths_initialize { f_string_length_initialize, f_array_length_initialize, f_array_length_initialize }
+  #define f_string_lengths_initialize { 0, f_array_length_initialize, f_array_length_initialize }
 
   #define f_delete_string_lengths(status, lengths) \
     f_delete_structure(status, lengths, f_string_length)
