@@ -1,0 +1,54 @@
+# fss-0002
+# valid direction: input, output, forward, postrouting, postrouting-output, postrouting-input, prerouting, prerouting-output, prerouting-input, none
+# valid device: all, this, (any device name goes here without parenthesis)
+# valid action: append, insert, policy, none
+# valid procotol: none, (any valid iptables protocol type, such as tcp, udp, and icmp)
+
+stop:
+  action policy
+
+  direction input
+  rule ACCEPT
+
+  direction output
+  rule ACCEPT
+
+  direction forward
+  rule ACCEPT
+
+  direction none
+  action none
+  rule --flush
+  rule -t nat --flush
+  rule -t mangle --flush
+  rule --delete-chain
+  rule -t nat --delete-chain
+  rule -t mangle --delete-chain
+
+lock:
+  action policy
+
+  direction input
+  rule DROP
+
+  direction output
+  rule DROP
+
+  direction forward
+  rule DROP
+
+  direction none
+  action none
+  rule --flush
+  rule -t nat --flush
+  rule -t mangle --flush
+  rule --delete-chain
+  rule -t nat --delete-chain
+  rule -t mangle --delete-chain
+
+  action insert
+  direction input
+  device lo
+  rule -j ACCEPT
+
+  direction output

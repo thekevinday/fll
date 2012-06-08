@@ -1,0 +1,117 @@
+# fss-0002
+# valid direction: input, output, forward, postrouting, postrouting-output, postrouting-input, prerouting, prerouting-output, prerouting-input, none
+# valid device: all, this, (any device name goes here without parenthesis)
+# valid action: append, insert, policy, none
+# valid procotol: none, (any valid iptables protocol type, such as tcp, udp, and icmp)
+
+main:
+  # initialize the firewall
+  direction none
+  action none
+
+  rule -F
+  rule -Z
+  rule -t nat -F
+  rule -t mangle -F
+
+  # setup initial operations
+  direction input
+  action append
+
+
+  # Enable ALL local connections (loopback)
+  device lo
+  direction output
+  rule -j ACCEPT
+
+  direction input
+  rule -j ACCEPT
+  device all
+
+  # the above loopback rules should catch all true loopback connections
+  # the following loopback rules will only catch anything if a loopback spoofing is happending
+  # therefore, do not allow spoof by DROPing
+  #rule -s 127.0.0.1 -j DROP
+  #rule -d 127.0.0.1 -j DROP
+
+
+  # Drop all INVALID packets so they aren't even processed
+  direction output
+  rule -m state --state INVALID -j DROP
+
+  direction input
+  rule -m state --state INVALID -j DROP
+
+
+  # Allow ALL input&output connections that have already been established by this host
+  direction output
+  rule -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+  direction input
+  rule -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+
+  # send all tcp packets to the tcp queue
+  direction output
+  protocol tcp
+  rule -m state --state NEW -j output-tcp
+
+  direction input
+  rule -m state --state NEW -j input-tcp
+
+
+  # send all udp packets to the udp queue
+  direction output
+  protocol udp
+  rule -m state --state NEW -j output-udp
+
+  direction input
+  rule -m state --state NEW -j input-udp
+
+
+  # send all tcp packets to the tcp queue
+  direction output
+  protocol icmp
+  rule -m state --state NEW -j output-icmp
+
+  direction input
+  rule -m state --state NEW -j input-icmp
+
+
+input-tcp:
+  direction input
+  protocol tcp
+
+  # Prevent an XMAS attack
+  rule --tcp-flags ALL ALL -j DROP
+
+  # Prevent NULL attack
+  rule --tcp-flags ALL NONE -j DROP
+
+
+input-udp:
+  direction input
+  protocol udp
+
+  # Allow dhcp client renewals. If these are blocked, you will not be able to renew easily
+  rule -s 0.0.0.0 --sport 67 -d 255.255.255.255 --dport 68 -j ACCEPT
+
+
+input-icmp:
+  direction input
+  protocol icmp
+
+
+output-tcp:
+  direction output
+  protocol tcp
+
+
+output-udp:
+  direction output
+  protocol udp
+
+
+output-icmp:
+  direction output
+  protocol icmp
