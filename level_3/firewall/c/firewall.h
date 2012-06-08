@@ -190,6 +190,16 @@ extern "C"{
   #define firewall_device_input_command_length  2
   #define firewall_device_output_command_length 2
 
+  #define firewall_protocol      "protocol"
+  #define firewall_protocol_none "none"
+
+  #define firewall_protocol_length      8
+  #define firewall_protocol_none_length 4
+
+  #define firewall_protocol_command "-p"
+
+  #define firewall_protocol_command_length 2
+
   #define firewall_chain_create_command  "-N"
   #define firewall_chain_unchain_command  "-X"
 

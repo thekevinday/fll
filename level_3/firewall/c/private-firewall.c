@@ -7,7 +7,7 @@
 #ifndef _di_firewall_perform_commands_
   f_return_status firewall_perform_commands(const firewall_local_data local, const firewall_data data) {
     f_status status = f_status_initialize;
-    f_status allocation_status = f_status_initialize;
+    f_status status2 = f_status_initialize;
 
     f_string_length i = f_string_length_initialize;
     f_dynamic_string argument = f_dynamic_string_initialize;
@@ -24,10 +24,12 @@
     f_bool direction_output = f_false;
     f_bool device_all = f_false;
     f_bool ip_list_direction = f_false; // false = source, true = destination
+    f_bool use_protocol = f_false;
 
     f_string_length direction = firewall_direction_none_id;
     f_dynamic_string device = f_dynamic_string_initialize;
     f_string_length action = firewall_action_append_id;
+    f_dynamic_string protocol = f_dynamic_string_initialize;
 
     if (local.is_global) {
       device_all = f_true;
@@ -35,7 +37,7 @@
       f_resize_dynamic_string(status, device, data.devices.array[local.device].used);
 
       if (f_macro_test_for_allocation_errors(status)) {
-        f_delete_dynamic_string(allocation_status, device);
+        f_delete_dynamic_string(status2, device);
 
         return status;
       }
@@ -51,7 +53,7 @@
       is_ip_list        = f_false;
       ip_list_direction = f_false;
 
-      f_delete_dynamic_string(allocation_status, ip_list);
+      f_delete_dynamic_string(status2, ip_list);
 
       if (length >= firewall_direction_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_direction, length, firewall_direction_length) == f_equal_to) {
         length = (local.rule_contents.array[i].array[0].stop - local.rule_contents.array[i].array[0].start) + 1;
@@ -201,6 +203,27 @@
           ip_list_direction = f_true;
         } else {
           invalid = f_true;
+        }
+      } else if (length >= firewall_protocol_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_protocol, length, firewall_protocol_length) == f_equal_to) {
+        length = (local.rule_contents.array[i].array[0].stop - local.rule_contents.array[i].array[0].start) + 1;
+
+        if (local.rule_contents.array[i].used <= 0 || local.rule_contents.array[i].used > 1) {
+          invalid = f_true;
+        } else {
+          f_delete_dynamic_string(status, protocol);
+          f_resize_dynamic_string(status, protocol, length);
+
+          if (f_macro_test_for_allocation_errors(status)) break;
+
+          if (fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_protocol_none, length, firewall_protocol_none_length) == f_equal_to) {
+            use_protocol = f_false;
+          } else {
+            strncat(protocol.string, local.buffer.string + local.rule_contents.array[i].array[0].start, length);
+            protocol.used = length;
+            use_protocol = f_true;
+          }
+
+          continue;
         }
       } else if (length < firewall_rule_length || fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_rule, length, firewall_rule_length) == f_not_equal_to) {
         if (length > 0) {
@@ -398,6 +421,48 @@
           strncat(argument.string, device.string, device.used);
           argument.used = device.used;
         }
+      }
+
+      if (argument.used > 0) {
+        f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+
+        if (f_macro_test_for_allocation_errors(status)) break;
+
+        arguments.array[arguments.used].string = argument.string;
+        arguments.array[arguments.used].size   = argument.size;
+        arguments.array[arguments.used].used   = argument.used;
+        arguments.used++;
+        argument.string = f_null;
+        argument.size   = 0;
+        argument.used   = 0;
+      }
+
+      if (use_protocol) {
+        f_resize_dynamic_string(status, argument, firewall_protocol_command_length);
+        if (f_macro_test_for_allocation_errors(status)) break;
+
+        strncat(argument.string, firewall_protocol_command, firewall_protocol_command_length);
+        argument.used = firewall_protocol_command_length;
+
+        if (argument.used > 0) {
+          f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+
+          if (f_macro_test_for_allocation_errors(status)) break;
+
+          arguments.array[arguments.used].string = argument.string;
+          arguments.array[arguments.used].size   = argument.size;
+          arguments.array[arguments.used].used   = argument.used;
+          arguments.used++;
+          argument.string = f_null;
+          argument.size   = 0;
+          argument.used   = 0;
+        }
+
+        f_resize_dynamic_string(status, argument, protocol.used);
+        if (f_macro_test_for_allocation_errors(status)) break;
+
+        strncat(argument.string, protocol.string, protocol.used);
+        argument.used = protocol.used;
       }
 
       if (argument.used > 0) {
@@ -649,13 +714,13 @@
                       arguments.array[arguments.used].size   = 0;
                       arguments.array[arguments.used].used   = 0;
 
-                      f_delete_dynamic_string(allocation_status, ip_argument);
+                      f_delete_dynamic_string(status2, ip_argument);
                     }
                   }
                 }
 
-                f_delete_dynamic_string(allocation_status, ip_argument);
-                f_delete_dynamic_string(allocation_status, ip_list_action);
+                f_delete_dynamic_string(status2, ip_argument);
+                f_delete_dynamic_string(status2, ip_list_action);
 
                 arguments.used--;
                 arguments.array[arguments.used].string = 0;
@@ -665,10 +730,10 @@
             }
           }
 
-          f_delete_dynamic_string(allocation_status, local_buffer);
-          f_delete_dynamic_string(allocation_status, file_path);
-          f_delete_fss_objects(allocation_status, basic_objects);
-          f_delete_fss_contents(allocation_status, basic_contents);
+          f_delete_dynamic_string(status2, local_buffer);
+          f_delete_dynamic_string(status2, file_path);
+          f_delete_fss_objects(status2, basic_objects);
+          f_delete_fss_contents(status2, basic_contents);
 
           if (status == f_failure || status == f_invalid_parameter) break;
         } else {
@@ -698,10 +763,11 @@
       }
     }
 
-    f_delete_dynamic_string(allocation_status, ip_list);
-    f_delete_dynamic_string(allocation_status, argument);
-    f_delete_dynamic_strings(allocation_status, arguments);
-    f_delete_dynamic_string(allocation_status, device);
+    f_delete_dynamic_string(status2, ip_list);
+    f_delete_dynamic_string(status2, argument);
+    f_delete_dynamic_strings(status2, arguments);
+    f_delete_dynamic_string(status2, device);
+    f_delete_dynamic_string(status2, protocol);
 
     return status;
   }
