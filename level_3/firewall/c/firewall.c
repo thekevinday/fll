@@ -617,16 +617,6 @@ extern "C"{
             firewall_delete_local_data(&local);
           } // for
 
-          // TODO: process each network device here.
-          // process the "main" rule.
-          // process all remaining rules in top-down order, skipping the main rule.
-          // pre-process the "network device" file, storing main location as well as creating&storing each of the custom chains.
-          // process the "main" rule.
-          // process all remaining rules in top-down order, skipping the main rule.
-          // pre-process the "last" file, storing main location as well as creating&storing each of the custom chains.
-          // process the "main" rule.
-          // process all remaining rules in top-down order, skipping the main rule.
-
           status = firewall_buffer_rules(network_path firewall_file_last, f_false, &local, data);
 
           if (f_error_is_error(status)) {
