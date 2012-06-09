@@ -22,7 +22,7 @@
 #include <level_0/strings.h>
 #include <level_0/file.h>
 #include <level_0/console.h>
-#include <level_0/output.h>
+#include <level_0/print.h>
 
 // fll-1 includes
 #include <level_1/colors.h>

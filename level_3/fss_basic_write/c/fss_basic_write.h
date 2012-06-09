@@ -18,7 +18,7 @@
 #include <level_0/types.h>
 #include <level_0/strings.h>
 #include <level_0/console.h>
-#include <level_0/output.h>
+#include <level_0/print.h>
 #include <level_0/pipe.h>
 
 // fll-1 includes

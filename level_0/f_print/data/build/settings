@@ -1,6 +1,6 @@
 # fss-0000
 
-project_name f_output
+project_name f_print
 project_level 0
 
 version_major 0
@@ -8,10 +8,10 @@ version_minor 3
 version_micro 0
 
 build_compiler gcc
-build_libraries -lc 
-build_sources_library output.c
-build_sources_program 
-build_sources_headers output.h
+build_libraries -lc
+build_sources_library print.c
+build_sources_program
+build_sources_headers print.h
 build_shared yes
 
 flags_all -z now

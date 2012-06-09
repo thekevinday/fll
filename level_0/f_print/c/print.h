@@ -5,10 +5,10 @@
  * Programmers:   Kevin Day
  * Documentation:
  *
- * Provides some standard I/O functions not available in a libc
+ * Provides some standard printing functions not available in a libc
  */
-#ifndef _F_output_h
-#define _F_output_h
+#ifndef _F_print_h
+#define _F_print_h
 
 // libc includes
 #include <string.h>
@@ -56,4 +56,4 @@ extern "C"{
 } // extern "C"
 #endif
 
-#endif // _F_output_h
+#endif // _F_print_h
