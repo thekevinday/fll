@@ -102,7 +102,7 @@ extern "C"{
     f_string_lengths  remaining;
     f_bool            process_pipe;
 
-    fll_color_context context;
+    fl_color_context context;
   } fss_basic_read_data;
 
   #define fss_basic_read_data_initialize \
@@ -114,7 +114,7 @@ extern "C"{
       f_file_position_initialize, \
       f_string_lengths_initialize, \
       f_false, \
-      fll_color_context_initialize, \
+      fl_color_context_initialize, \
     }
 #endif // _di_fss_basic_read_data_
 

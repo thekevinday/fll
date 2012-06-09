@@ -124,7 +124,7 @@ extern "C"{
 
     // load colors when not told to show no colors
     if (data->parameters[fss_return_code_parameter_no_color].result == f_console_result_none) {
-      fll_new_color_context(allocation_status, data->context);
+      fl_new_color_context(allocation_status, data->context);
 
       if (f_error_is_error(allocation_status)) {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
@@ -267,7 +267,7 @@ extern "C"{
     } // while
 
     f_delete_string_lengths(status, data->remaining);
-    fll_delete_color_context(status, data->context);
+    fl_delete_color_context(status, data->context);
 
     return f_none;
   }

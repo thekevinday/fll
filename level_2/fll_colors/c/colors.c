@@ -11,7 +11,7 @@ extern "C"{
 #endif
 
 #ifndef _di_fll_colors_load_context_
-  f_return_status fll_colors_load_context(fll_color_context *data, f_bool use_light_colors) {
+  f_return_status fll_colors_load_context(fl_color_context *data, f_bool use_light_colors) {
     #ifndef _di_level_2_parameter_checking_
       if (data == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_

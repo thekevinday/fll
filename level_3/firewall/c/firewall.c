@@ -115,7 +115,7 @@ extern "C"{
 
     // load colors when not told to show no colors
     if (data->parameters[firewall_parameter_no_color].result == f_console_result_none) {
-      fll_new_color_context(status2, data->context);
+      fl_new_color_context(status2, data->context);
 
       if (status2 == f_none) {
         fll_colors_load_context(&data->context, data->parameters[firewall_parameter_light].result == f_console_result_found);
@@ -685,7 +685,7 @@ extern "C"{
     f_delete_string_lengths(status, data->remaining);
     f_delete_dynamic_strings(status, data->devices);
 
-    fll_delete_color_context(status, data->context);
+    fl_delete_color_context(status, data->context);
 
     return f_none;
   }

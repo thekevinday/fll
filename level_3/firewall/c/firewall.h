@@ -253,7 +253,7 @@ extern "C"{
     f_string_lengths  remaining;
     f_dynamic_strings devices;
 
-    fll_color_context context;
+    fl_color_context context;
   } firewall_data;
 
   #define firewall_data_initialize \
@@ -262,7 +262,7 @@ extern "C"{
       f_dynamic_strings_initialize, \
       f_string_lengths_initialize, \
       f_dynamic_strings_initialize, \
-      fll_color_context_initialize, \
+      fl_color_context_initialize, \
     }
 #endif // _di_firewall_data_
 

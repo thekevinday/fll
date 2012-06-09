@@ -92,7 +92,7 @@ extern "C"{
     f_string_lengths remaining;
     f_bool           process_pipe;
 
-    fll_color_context context;
+    fl_color_context context;
   } fss_return_code_data;
 
   #define fss_return_code_data_initialize \
@@ -100,7 +100,7 @@ extern "C"{
       f_console_parameter_initialize_fss_return_code, \
       f_string_lengths_initialize, \
       f_false, \
-      fll_color_context_initialize, \
+      fl_color_context_initialize, \
     }
 #endif // _di_fss_return_code_data_
 
