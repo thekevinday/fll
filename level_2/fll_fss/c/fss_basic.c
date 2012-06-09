@@ -18,7 +18,7 @@ extern "C"{
       if (contents == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status        status       = f_status_initialize;
+    f_status        status       = f_none;
     f_string_length initial_used = objects->used;
     f_bool          found_data   = f_false;
 
@@ -45,7 +45,7 @@ extern "C"{
             objects->used++;
 
             if (contents->array[contents->used].used >= contents->array[contents->used].size) {
-              f_status status = f_status_initialize;
+              f_status status = f_none;
 
               f_resize_fss_content(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
 
@@ -83,7 +83,7 @@ extern "C"{
           found_data = f_true;
 
           if (contents->array[contents->used].used >= contents->array[contents->used].size) {
-            f_status status = f_status_initialize;
+            f_status status = f_none;
 
             f_resize_fss_content(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
 

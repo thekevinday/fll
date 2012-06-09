@@ -114,7 +114,7 @@ enum {
     f_string_length used;   // total number of allocated spaces used
   } f_fss_headers;
 
-  #define f_fss_headers_initialize { 0, f_string_length_initialize, f_string_length_initialize }
+  #define f_fss_headers_initialize { 0, 0, 0 }
 
   #define f_delete_fss_headers(status, headers) \
     f_delete_structure(status, headers, f_fss_header)
@@ -155,7 +155,7 @@ enum {
     f_string_length used;   // total number of allocated spaces used
   } f_fss_objects;
 
-  #define f_fss_objects_initialize { 0, f_string_length_initialize, f_string_length_initialize }
+  #define f_fss_objects_initialize { 0, 0, 0 }
 
   #define f_delete_fss_objects(status, objects) \
     f_delete_structure(status, objects, f_fss_object)
@@ -181,7 +181,7 @@ enum {
     f_array_length   used;   // total number of allocated spaces used
   } f_fss_content;
 
-  #define f_fss_content_initialize { 0, f_array_length_initialize, f_array_length_initialize }
+  #define f_fss_content_initialize { 0, 0, 0 }
 
   #define f_delete_fss_content(status, content) \
     f_delete_structure(status, content, f_string_location)
@@ -204,7 +204,7 @@ enum {
     f_array_length  used;  // total number of allocated spaces used
   } f_fss_contents;
 
-  #define f_fss_contents_initialize { 0, f_array_length_initialize, f_array_length_initialize }
+  #define f_fss_contents_initialize { 0, 0, 0 }
 
   #define f_delete_fss_contents(status, contents) \
     f_delete_structures(status, contents, f_fss_content)

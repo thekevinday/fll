@@ -16,7 +16,7 @@ extern "C"{
       if (data == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = f_status_initialize;
+    f_status status = f_none;
 
     // switch to the appropriate terminal color mode
     {

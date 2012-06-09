@@ -23,7 +23,7 @@ extern "C"{
     #endif // _di_level_2_parameter_checking_
 
     // create a string array that is compatible with execv() calls
-    f_status   status            = f_status_initialize;
+    f_status   status            = f_none;
     f_autochar **arguments_array = 0;
 
     f_string        last_slash   = f_string_initialize;
@@ -50,14 +50,14 @@ extern "C"{
     status = f_new_array((void **) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
 
     if (f_error_is_error(status)) {
-      f_status tmp_status = f_status_initialize;
+      f_status tmp_status = f_none;
 
       f_delete_string(tmp_status, program_name, name_size);
       return status;
     }
 
     {
-      f_string_length counter = f_string_length_initialize;
+      f_string_length counter = 0;
 
       arguments_array[0] = program_name;
       counter++;
@@ -108,7 +108,7 @@ extern "C"{
     #endif // _di_level_2_parameter_checking_
 
     // create a string array that is compatible with execv() calls
-    f_status   status            = f_status_initialize;
+    f_status   status            = f_none;
     f_autochar **arguments_array = 0;
 
     status = f_new_array((void **) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
@@ -116,7 +116,7 @@ extern "C"{
     if (f_error_is_error(status)) return status;
 
     {
-      f_string_length counter = f_string_length_initialize;
+      f_string_length counter = 0;
 
       arguments_array[0] = program_name;
       counter++;

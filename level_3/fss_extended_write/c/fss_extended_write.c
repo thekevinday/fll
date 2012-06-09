@@ -111,8 +111,8 @@ extern "C"{
 
 #ifndef _di_fss_extended_write_main_
   f_return_status fss_extended_write_main(const f_array_length argc, const f_string argv[], fss_extended_write_data *data) {
-    f_status status = f_status_initialize;
-    f_status status2 = f_status_initialize;
+    f_status status = f_none;
+    f_status status2 = f_none;
 
     status = fl_process_parameters(argc, argv, data->parameters, fss_extended_write_total_parameters, &data->remaining);
 
@@ -155,7 +155,7 @@ extern "C"{
     } else if (data->parameters[fss_extended_write_parameter_version].result == f_console_result_found) {
       fss_extended_write_print_version(*data);
     } else {
-      f_array_length counter = f_array_length_initialize;
+      f_array_length counter = 0;
       f_bool         object  = (data->parameters[fss_extended_write_parameter_object].result == f_console_result_found);
 
       f_dynamic_string  buffer   = f_dynamic_string_initialize;
@@ -327,7 +327,7 @@ extern "C"{
 
 #ifndef _di_fss_extended_write_delete_data_
   f_return_status fss_extended_write_delete_data(fss_extended_write_data *data) {
-    f_status status = f_status_initialize;
+    f_status status = f_none;
     f_string_length i = 0;
 
     while (i < fss_extended_write_total_parameters) {

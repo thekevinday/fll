@@ -54,7 +54,7 @@ extern "C"{
 
     // make sure there is enough allocated space, if not, then allocate some more
     if (buffer->size - buffer->used - 1 < string_size) {
-      f_status status = f_status_initialize;
+      f_status status = f_none;
 
       f_resize_dynamic_string(status, (*buffer), buffer->used + string_size + 1); // the additional 1 is the EOS
 

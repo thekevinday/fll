@@ -108,8 +108,8 @@ extern "C"{
 
 #ifndef _di_firewall_main_
   f_return_status firewall_main(const f_s_int argc, const f_string argv[], firewall_data *data) {
-    f_status status  = f_status_initialize;
-    f_status status2 = f_status_initialize;
+    f_status status  = f_none;
+    f_status status2 = f_none;
 
     status = fl_process_parameters(argc, argv, data->parameters, firewall_total_parameters, &data->remaining);
 
@@ -224,7 +224,7 @@ extern "C"{
             show_mangle = f_false;
             show_ports  = f_false;
 
-            f_string_length counter = f_string_length_initialize;
+            f_string_length counter = 0;
 
             for (; counter < data->remaining.used; counter++) {
               if (strncmp("nat", argv[data->remaining.array[counter]], 4) != 0) {
@@ -347,7 +347,7 @@ extern "C"{
               fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_program_name);
               fprintf(f_standard_error, "  ");
 
-              f_string_length i = f_string_length_initialize;
+              f_string_length i = 0;
 
               fl_print_color_code(f_standard_error, data->context.error);
 
@@ -404,7 +404,7 @@ extern "C"{
 
         // remove "lo" (loopback) from the device listing
         {
-          f_string_length i = f_string_length_initialize;
+          f_string_length i = 0;
 
           for (; i < data->devices.used; i++) {
             if (fl_compare_strings((f_string) firewall_device_loop, data->devices.array[i].string, firewall_device_loop_length + 1, data->devices.array[i].used) == f_equal_to) {
@@ -431,8 +431,8 @@ extern "C"{
           }
 
           {
-            f_array_length i = f_array_length_initialize;
-            f_string_length length = f_string_length_initialize;
+            f_array_length i = 0;
+            f_string_length length = 0;
 
             for (; i < local.chain_objects.used; i++) {
               length = local.chain_objects.array[i].stop - local.chain_objects.array[i].start + 1;
@@ -673,7 +673,7 @@ extern "C"{
 
 #ifndef _di_firewall_delete_data_
   f_return_status firewall_delete_data(firewall_data *data) {
-    f_status        status = f_status_initialize;
+    f_status        status = f_none;
     f_string_length i      = 0;
 
     while (i < firewall_total_parameters) {

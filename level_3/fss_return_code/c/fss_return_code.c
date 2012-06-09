@@ -117,8 +117,8 @@ extern "C"{
 
 #ifndef _di_fss_return_code_main_
   f_return_status fss_return_code_main(const f_array_length argc, const f_string argv[], fss_return_code_data *data) {
-    f_status status            = f_status_initialize;
-    f_status allocation_status = f_status_initialize;
+    f_status status            = f_none;
+    f_status allocation_status = f_none;
 
     status = fl_process_parameters(argc, argv, data->parameters, fss_return_code_total_parameters, &data->remaining);
 
@@ -161,9 +161,9 @@ extern "C"{
     } else if (data->parameters[fss_return_code_parameter_version].result == f_console_result_found) {
       fss_return_code_print_version(*data);
     } else if (data->parameters[fss_return_code_parameter_is_error].result == f_console_result_found && data->remaining.used > 0) {
-      f_array_length counter = f_array_length_initialize;
+      f_array_length counter = 0;
 
-      f_status code = f_status_initialize;
+      f_status code = f_none;
 
       for (; counter < data->remaining.used; counter++) {
         code = (f_status) atoll(argv[data->remaining.array[counter]]);
@@ -184,9 +184,9 @@ extern "C"{
       fss_return_code_delete_data(data);
       return f_false;
     } else if (data->parameters[fss_return_code_parameter_is_warning].result == f_console_result_found && data->remaining.used > 0) {
-      f_array_length counter = f_array_length_initialize;
+      f_array_length counter = 0;
 
-      f_status code = f_status_initialize;
+      f_status code = f_none;
 
       for (; counter < data->remaining.used; counter++) {
         code = (f_status) atoll(argv[data->remaining.array[counter]]);
@@ -207,9 +207,9 @@ extern "C"{
       fss_return_code_delete_data(data);
       return f_false;
     } else if (data->parameters[fss_return_code_parameter_is_fine].result == f_console_result_found && data->remaining.used > 0) {
-      f_array_length counter = f_array_length_initialize;
+      f_array_length counter = 0;
 
-      f_status code = f_status_initialize;
+      f_status code = f_none;
 
       for (; counter < data->remaining.used; counter++) {
         code = (f_status) atoll(argv[data->remaining.array[counter]]);
@@ -230,7 +230,7 @@ extern "C"{
       fss_return_code_delete_data(data);
       return f_false;
     } else if (data->remaining.used > 0 || data->process_pipe) {
-      f_array_length counter = f_array_length_initialize;
+      f_array_length counter = 0;
 
       if (data->process_pipe) {
         // TODO: how should this be done?
@@ -258,7 +258,7 @@ extern "C"{
 
 #ifndef _di_fss_return_code_delete_data_
   f_return_status fss_return_code_delete_data(fss_return_code_data *data) {
-    f_status        status = f_status_initialize;
+    f_status        status = f_none;
     f_string_length i      = 0;
 
     while (i < fss_return_code_total_parameters) {

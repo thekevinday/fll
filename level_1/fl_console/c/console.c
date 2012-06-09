@@ -16,7 +16,7 @@ extern "C"{
       if (remaining == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = f_status_initialize;
+    f_status status = f_none;
     f_console_id result = 0;
     f_bool found  = f_false;
 
@@ -61,7 +61,7 @@ extern "C"{
 
                   if (parameters[parameter_counter].has_additional) {
                     if (extra_initiator.used >= extra_initiator.size) {
-                      f_status allocation_status = f_status_initialize;
+                      f_status allocation_status = f_none;
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
                       if (f_error_is_error(allocation_status)) {
@@ -82,7 +82,7 @@ extern "C"{
 
                   if (parameters[parameter_counter].has_additional) {
                     if (extra_initiator.used >= extra_initiator.size) {
-                      f_status allocation_status = f_status_initialize;
+                      f_status allocation_status = f_none;
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
 
@@ -114,7 +114,7 @@ extern "C"{
 
                   if (parameters[parameter_counter].has_additional) {
                     if (extra_initiator.used >= extra_initiator.size) {
-                      f_status allocation_status = f_status_initialize;
+                      f_status allocation_status = f_none;
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
 
@@ -136,7 +136,7 @@ extern "C"{
 
                   if (parameters[parameter_counter].has_additional) {
                     if (extra_initiator.used >= extra_initiator.size) {
-                      f_status allocation_status = f_status_initialize;
+                      f_status allocation_status = f_none;
 
                       f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
 
@@ -164,7 +164,7 @@ extern "C"{
           if (parameters[parameter_counter].type == f_console_type_other) {
             if (parameters[parameter_counter].length > 0 && parameters[parameter_counter].symbol_other != 0) {
               if (strncmp(argv[location], parameters[parameter_counter].symbol_other, parameters[parameter_counter].length + 1) == 0) {
-                f_status allocation_status = f_status_initialize;
+                f_status allocation_status = f_none;
 
                 if (parameters[parameter_counter].additional.used >= parameters[parameter_counter].additional.size) {
                   f_resize_string_lengths(allocation_status, parameters[parameter_counter].additional, parameters[parameter_counter].additional.size + f_console_default_allocation_step);
@@ -190,7 +190,7 @@ extern "C"{
 
         if (!found) {
           if (extra_initiator.used > 0) {
-            f_status allocation_status = f_status_initialize;
+            f_status allocation_status = f_none;
 
             if (parameters[extra_initiator.array[0]].additional.used >= parameters[extra_initiator.array[0]].additional.size) {
                 f_resize_string_lengths(allocation_status, parameters[extra_initiator.array[0]].additional, parameters[extra_initiator.array[0]].additional.size + f_console_default_allocation_step);
@@ -214,7 +214,7 @@ extern "C"{
             }
           } else {
             if (remaining->used >= remaining->size) {
-              f_status allocation_status = f_status_initialize;
+              f_status allocation_status = f_none;
 
               f_resize_string_lengths(allocation_status, (*remaining), remaining->size + f_console_default_allocation_step);
 
@@ -240,7 +240,7 @@ extern "C"{
     }
 
     {
-      f_status allocation_status = f_status_initialize;
+      f_status allocation_status = f_none;
       f_delete_string_lengths(allocation_status, extra_initiator);
     }
 

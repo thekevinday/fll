@@ -109,7 +109,7 @@ extern "C"{
 
     clearerr(file_information->file);
 
-    f_status          status   = f_status_initialize;
+    f_status          status   = f_none;
     f_dynamic_string  buffer   = f_dynamic_string_initialize;
     f_file_position   location = f_file_position_initialize;
 
@@ -152,8 +152,8 @@ f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, const f_string
     if (location.start >= buffer->used) return f_error_set_error(f_invalid_parameter);
   #endif // _di_level_1_parameter_checking_
 
-  f_string_length position = f_string_length_initialize;
-  f_string_length distance = f_string_length_initialize;
+  f_string_length position = 0;
+  f_string_length distance = 0;
 
   position = location.start;
 

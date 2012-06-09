@@ -16,7 +16,7 @@ extern "C" {
       if (serialized == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = f_status_initialize;
+    f_status status = f_none;
 
 
     if (serialized->used + value.used + 1 >= serialized->size) {
@@ -44,7 +44,7 @@ extern "C" {
       if (locations == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = f_status_initialize;
+    f_status status = f_none;
 
     f_array_length i = 0;
     f_array_length start = 0;
@@ -83,7 +83,7 @@ extern "C" {
       if (location == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = f_status_initialize;
+    f_status status = f_none;
 
     f_array_length i = 0;
     f_array_length current = 0;

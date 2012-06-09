@@ -161,7 +161,7 @@ extern "C"{
       if (status != f_none) break; \
     } \
     if (status == f_none) status = f_delete((void **) & structures.array, sizeof(type), structures.size); \
-    if (status == f_none) structures.used = f_string_length_initialize;
+    if (status == f_none) structures.used = 0;
 #endif // _di_f_delete_structures_
 
 #ifndef _di_f_destroy_structures_

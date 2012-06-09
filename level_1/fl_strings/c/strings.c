@@ -24,7 +24,7 @@ extern "C"{
     f_string_length size = position.stop - position.start + 1;
 
     if (size > 0) {
-      f_status status = f_status_initialize;
+      f_status status = f_none;
 
       f_resize_dynamic_string(status, (*results), size);
 
@@ -116,8 +116,8 @@ extern "C"{
       if (length2 <= 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_string_length i1 = f_string_length_initialize;
-    f_string_length i2 = f_string_length_initialize;
+    f_string_length i1 = 0;
+    f_string_length i2 = 0;
 
     f_string_length stop1 = length1;
     f_string_length stop2 = length2;
@@ -150,8 +150,8 @@ extern "C"{
       if (string2.used <= 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_string_length i1 = f_string_length_initialize;
-    f_string_length i2 = f_string_length_initialize;
+    f_string_length i1 = 0;
+    f_string_length i2 = 0;
 
     f_string_length stop1 = string1.used;
     f_string_length stop2 = string2.used;

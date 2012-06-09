@@ -132,8 +132,8 @@ extern "C"{
   f_return_status fss_basic_list_read_main_process_file(const f_array_length argc, const f_string argv[], fss_basic_list_read_data *data, const f_string filename, const f_string_length target) __attribute__((visibility ("internal")));
 
   f_return_status fss_basic_list_read_main(const f_array_length argc, const f_string argv[], fss_basic_list_read_data *data) {
-    f_status status = f_status_initialize;
-    f_status status2 = f_status_initialize;
+    f_status status = f_none;
+    f_status status2 = f_none;
 
     status = fl_process_parameters(argc, argv, data->parameters, fss_basic_list_read_total_parameters, &data->remaining);
 
@@ -176,8 +176,8 @@ extern "C"{
     } else if (data->parameters[fss_basic_list_read_parameter_version].result == f_console_result_found) {
       fss_basic_list_read_print_version(*data);
     } else if (data->remaining.used > 0 || data->process_pipe) {
-      f_string_length counter = f_string_length_initialize;
-      f_string_length target  = f_string_length_initialize;
+      f_string_length counter = 0;
+      f_string_length target  = 0;
       f_string_length original_size = data->file_position.total_elements;
 
       if (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_additional) {
@@ -310,11 +310,11 @@ extern "C"{
   }
 
   f_return_status fss_basic_list_read_main_process_file(const f_array_length argc, const f_string argv[], fss_basic_list_read_data *data, const f_string filename, const f_string_length target) {
-    f_status status = f_status_initialize;
-    f_status status2 = f_status_initialize;
+    f_status status = f_none;
+    f_status status2 = f_none;
 
-    f_string_length current = f_string_length_initialize;
-    f_string_length found = f_string_length_initialize;
+    f_string_length current = 0;
+    f_string_length found = 0;
 
     {
       f_string_location input = f_string_location_initialize;
@@ -444,9 +444,9 @@ extern "C"{
       } else {
         current = 0;
 
-        f_string_length total       = f_string_length_initialize;
-        f_string_length name_length = f_string_length_initialize;
-        f_string_length argv_length = f_string_length_initialize;
+        f_string_length total       = 0;
+        f_string_length name_length = 0;
+        f_string_length argv_length = 0;
 
         if (data->parameters[fss_basic_list_read_parameter_name].result == f_console_result_additional) {
           argv_length = strlen(argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]]);
@@ -572,7 +572,7 @@ extern "C"{
 
 #ifndef _di_fss_basic_list_read_delete_data_
   f_return_status fss_basic_list_read_delete_data(fss_basic_list_read_data *data) {
-    f_status        status = f_status_initialize;
+    f_status        status = f_none;
     f_string_length i      = 0;
 
     while (i < fss_basic_list_read_total_parameters) {

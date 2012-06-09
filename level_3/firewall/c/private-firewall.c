@@ -6,15 +6,15 @@
 
 #ifndef _di_firewall_perform_commands_
   f_return_status firewall_perform_commands(const firewall_local_data local, const firewall_data data) {
-    f_status status = f_status_initialize;
-    f_status status2 = f_status_initialize;
+    f_status status = f_none;
+    f_status status2 = f_none;
 
-    f_string_length i = f_string_length_initialize;
+    f_string_length i = 0;
     f_dynamic_string argument = f_dynamic_string_initialize;
     f_dynamic_strings arguments = f_dynamic_strings_initialize;
 
     f_s_int results = 0;
-    f_string_length length = f_string_length_initialize;
+    f_string_length length = 0;
     f_bool invalid = f_false;
     f_bool is_ip_list = f_false;
     f_dynamic_string ip_list = f_dynamic_string_initialize;
@@ -481,7 +481,7 @@
 
       // last up is the "rule"
       if ((!is_ip_list && local.rule_contents.array[i].used > 0) || (is_ip_list && local.rule_contents.array[i].used > 1)) {
-        f_string_length subcounter = f_string_length_initialize;
+        f_string_length subcounter = 0;
 
         if (is_ip_list) {
           // skip past the direction
@@ -638,8 +638,8 @@
 
                 status = f_error_set_error(status);
               } else {
-                f_string_length  buffer_counter = f_string_length_initialize;
-                f_string_length  ip_length      = f_string_length_initialize;
+                f_string_length  buffer_counter = 0;
+                f_string_length  ip_length      = 0;
                 f_dynamic_string ip_argument    = f_dynamic_string_initialize;
                 f_dynamic_string ip_list_action = f_dynamic_string_initialize;
 
@@ -695,7 +695,7 @@
                         fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "ERROR: Failed to perform requested %s operation:", firewall_program_name);
                         fprintf(f_standard_error, "  ");
 
-                        f_string_length i = f_string_length_initialize;
+                        f_string_length i = 0;
 
                         fl_print_color_code(f_standard_error, data.context.error);
 
@@ -757,7 +757,7 @@
             fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "ERROR: Failed to perform requested %s operation:", firewall_program_name);
             fprintf(f_standard_error, "  ");
 
-            f_string_length i = f_string_length_initialize;
+            f_string_length i = 0;
 
             fl_print_color_code(f_standard_error, data.context.error);
 
@@ -795,10 +795,10 @@
     f_bool new_chain = f_false;
     f_s_int results = 0;
 
-    f_array_length i = f_array_length_initialize;
-    f_array_length j = f_array_length_initialize;
+    f_array_length i = 0;
+    f_array_length j = 0;
 
-    f_string_length length = f_string_length_initialize;
+    f_string_length length = 0;
     f_string_location location = f_string_location_initialize;
     f_dynamic_strings arguments = f_dynamic_strings_initialize;
 
@@ -967,7 +967,7 @@
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_program_name);
             fprintf(f_standard_error, "  ");
 
-            f_string_length i = f_string_length_initialize;
+            f_string_length i = 0;
 
             fl_print_color_code(f_standard_error, data->context.error);
 
@@ -1120,7 +1120,7 @@
 
 #ifndef _di_firewall_delete_local_data_
   f_return_status firewall_delete_local_data(firewall_local_data *local) {
-    f_status status = f_status_initialize;
+    f_status status = f_none;
 
     local->is_global = f_true;
     local->is_main = f_false;

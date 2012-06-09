@@ -77,7 +77,7 @@ extern "C"{
 
       if (buffer->string[input->start] == f_fss_delimit_single_quote || buffer->string[input->start] == f_fss_delimit_double_quote) {
         if (delimits.used >= delimits.size) {
-          f_status allocation_status = f_status_initialize;
+          f_status allocation_status = f_none;
 
            f_resize_string_lengths(allocation_status, delimits, delimits.size + f_fss_default_allocation_step);
 
@@ -145,7 +145,7 @@ extern "C"{
 
             if (slash_count % 2 == 0) {
               if (delimits.used + (slash_count / 2) >= delimits.size) {
-                f_status allocation_status = f_status_initialize;
+                f_status allocation_status = f_none;
 
                 f_resize_string_lengths(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
@@ -181,7 +181,7 @@ extern "C"{
                 fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
                 {
-                  f_status allocation_status = f_status_initialize;
+                  f_status allocation_status = f_none;
 
                   f_delete_string_lengths(allocation_status, delimits);
                 }
@@ -204,7 +204,7 @@ extern "C"{
               return fl_fss_found_object;
             } else {
               if (delimits.used + (slash_count / 2) >= delimits.size) {
-                f_status allocation_status = f_status_initialize;
+                f_status allocation_status = f_none;
 
                 f_resize_string_lengths(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
@@ -251,7 +251,7 @@ extern "C"{
               fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
               {
-                f_status allocation_status = f_status_initialize;
+                f_status allocation_status = f_none;
 
                 f_delete_string_lengths(allocation_status, delimits);
               }
@@ -266,7 +266,7 @@ extern "C"{
           fl_macro_fss_object_delimited_return_on_overflow((*buffer), (*input), (*found), delimits, f_none_on_eos, f_none_on_stop)
         } else if (buffer->string[input->start] == f_eol) {
           {
-            f_status allocation_status = f_status_initialize;
+            f_status allocation_status = f_none;
 
             f_delete_string_lengths(allocation_status, delimits);
           }
@@ -289,7 +289,7 @@ extern "C"{
     fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
     {
-      f_status allocation_status = f_status_initialize;
+      f_status allocation_status = f_none;
 
       f_delete_string_lengths(allocation_status, delimits);
     }
@@ -350,12 +350,12 @@ extern "C"{
       if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = f_status_initialize;
+    f_status status = f_none;
     f_bool   quoted = f_false;
 
     f_string_location buffer_position   = f_string_location_initialize;
     f_string_length   start_position    = f_string_initialize;
-    f_string_length   pre_allocate_size = f_string_length_initialize;
+    f_string_length   pre_allocate_size = 0;
 
     fl_macro_fss_skip_past_delimit_placeholders(object, (*input))
 
@@ -554,11 +554,11 @@ extern "C"{
       if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = f_status_initialize;
+    f_status status = f_none;
 
     f_string_location input_position    = f_string_location_initialize;
     f_string_location buffer_position   = f_string_location_initialize;
-    f_string_length   pre_allocate_size = f_string_length_initialize;
+    f_string_length   pre_allocate_size = 0;
 
     // add an additional 1 to ensure that there is room for the terminating newline.
     pre_allocate_size = buffer->used + (content.used) + 1 + f_fss_default_allocation_step;

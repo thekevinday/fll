@@ -88,7 +88,6 @@ extern "C"{
 #ifndef _di_f_string_length_
   typedef f_u_long f_string_length;
 
-  #define f_string_length_initialize 0
   #define f_string_length_printf string_format_long_unsigned
 
   #define f_new_string_length(status, string, length)   status = f_new_array((void **) & string, sizeof(f_string_length), length)
@@ -109,7 +108,7 @@ extern "C"{
     f_array_length  used;  // total number of allocated spaces used
   } f_string_lengths;
 
-  #define f_string_lengths_initialize { 0, f_array_length_initialize, f_array_length_initialize }
+  #define f_string_lengths_initialize { 0, 0, 0 }
 
   #define f_delete_string_lengths(status, lengths) \
     f_delete_structure(status, lengths, f_string_length)
@@ -153,7 +152,7 @@ extern "C"{
     f_array_length    used;   // total number of allocated spaces used
   } f_string_locations;
 
-  #define f_string_locations_initialize {0, f_array_length_initialize, f_array_length_initialize}
+  #define f_string_locations_initialize {0, 0, 0}
 
   #define f_delete_string_locations(status, locations) \
     f_delete_structure(status, locations, f_string_location)
@@ -177,7 +176,7 @@ extern "C"{
     f_string_length used;   // total number of allocated spaces used
   } f_dynamic_string;
 
-  #define f_dynamic_string_initialize { f_string_initialize, f_string_length_initialize, f_string_length_initialize }
+  #define f_dynamic_string_initialize { f_string_initialize, 0, 0 }
 
   #define f_delete_dynamic_string(status, dynamic) \
     status = f_delete((void **) & dynamic.string, sizeof(f_string), dynamic.size); \
@@ -216,7 +215,7 @@ extern "C"{
     f_string_length  used;   // total number of allocated spaces used
   } f_dynamic_strings;
 
-  #define f_dynamic_strings_initialize { 0, f_string_length_initialize, f_string_length_initialize }
+  #define f_dynamic_strings_initialize { 0, 0, 0 }
 
   #define f_delete_dynamic_strings(status, dynamics) \
     status = f_none; \

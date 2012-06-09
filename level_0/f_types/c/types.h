@@ -111,8 +111,6 @@ extern "C"{
 #ifndef _di_f_status_
   typedef uint16_t f_status;
 
-  #define f_status_initialize  0
-
   // The c language gives warnings about return types of constants, I pretty much hate not being able to forcefully specify that these are not the be changed as that could be a security issue
   // Therefore, I need to remove the const for c, but keep it for c++, thus I define the type f_return_status, which is only for function call declarations & prototypes
   // DO NOT DECLARE THESE FOR THE RETURN DATA TYPES THEMSELVES, USE f_status. ONLY USE THESE FOR FUNCTION PROTOTYPES AND DECLARATIONS
@@ -155,10 +153,6 @@ extern "C"{
   typedef f_u_long      f_array_length;
   typedef f_u_int       f_array_length_short;
   typedef f_u_long_long f_array_length_long;
-
-  #define f_array_length_initialize       0
-  #define f_array_length_short_initialize f_array_length_initialize
-  #define f_array_length_long_initialize  f_array_length_initialize
 #endif // _di_f_array_length_
 
 #ifdef __cplusplus
