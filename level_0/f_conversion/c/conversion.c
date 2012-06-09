@@ -30,6 +30,7 @@ extern "C"{
         return f_false;
     }
 
+    return f_unknown;
   }
 #endif // _di_f_is_digit_
 
