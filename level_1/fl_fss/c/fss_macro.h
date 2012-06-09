@@ -210,7 +210,7 @@ extern "C"{
       f_status status = f_status_initialize; \
       \
       f_resize_fss_content(status, content, content.size + f_fss_default_allocation_step); \
-      if (f_macro_test_for_allocation_errors(status)) { \
+      if (f_error_is_error(status)) { \
         f_status allocation_status = f_status_initialize; \
         f_delete_string_lengths(allocation_status, delimits); \
         \

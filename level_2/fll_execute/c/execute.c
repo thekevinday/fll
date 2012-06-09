@@ -16,10 +16,10 @@ extern "C"{
 #ifndef _di_fll_execute_path_
   f_return_status fll_execute_path(const f_string program_path, const f_dynamic_strings arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
-      if (results == f_null) return f_invalid_parameter;
+      if (results == f_null) return f_error_set_error(f_invalid_parameter);
 
-      if (arguments.used < 0)              return f_invalid_parameter;
-      if (arguments.used > arguments.size) return f_invalid_parameter;
+      if (arguments.used < 0) return f_error_set_error(f_invalid_parameter);
+      if (arguments.used > arguments.size) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
     // create a string array that is compatible with execv() calls
@@ -38,7 +38,7 @@ extern "C"{
       if (name_size > 1) {
         f_new_string(status, program_name, name_size + 1);
 
-        if (f_macro_test_for_allocation_errors(status)) return status;
+        if (f_error_is_error(status)) return status;
 
         memcpy(program_name, last_slash + 1, name_size);
         memset(program_name, name_size, 0);
@@ -49,7 +49,7 @@ extern "C"{
 
     status = f_new_array((void **) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
 
-    if (f_macro_test_for_allocation_errors(status)) {
+    if (f_error_is_error(status)) {
       f_status tmp_status = f_status_initialize;
 
       f_delete_string(tmp_status, program_name, name_size);
@@ -76,7 +76,7 @@ extern "C"{
     process_id = vfork();
 
     if (process_id < 0) {
-      return f_fork_failed;
+      return f_error_set_error(f_fork_failed);
     }
 
     if (process_id == 0) { // child
@@ -92,7 +92,7 @@ extern "C"{
     if (name_size > 0) f_delete_string(status, program_name, name_size);
     f_delete((void **) & arguments_array, sizeof(f_autochar), arguments.used + 2);
 
-    if (*results != 0) return f_failure;
+    if (*results != 0) return f_error_set_error(f_failure);
 
     return f_none;
   }
@@ -101,10 +101,10 @@ extern "C"{
 #ifndef _di_fll_execute_program_
   f_return_status fll_execute_program(const f_string program_name, const f_dynamic_strings arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
-      if (results == f_null) return f_invalid_parameter;
+      if (results == f_null) return f_error_set_error(f_invalid_parameter);
 
-      if (arguments.used < 0)              return f_invalid_parameter;
-      if (arguments.used > arguments.size) return f_invalid_parameter;
+      if (arguments.used < 0) return f_error_set_error(f_invalid_parameter);
+      if (arguments.used > arguments.size) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
     // create a string array that is compatible with execv() calls
@@ -113,7 +113,7 @@ extern "C"{
 
     status = f_new_array((void **) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
 
-    if (f_macro_test_for_allocation_errors(status)) return status;
+    if (f_error_is_error(status)) return status;
 
     {
       f_string_length counter = f_string_length_initialize;
@@ -135,7 +135,7 @@ extern "C"{
     process_id = vfork();
 
     if (process_id < 0) {
-      return f_fork_failed;
+      return f_error_set_error(f_fork_failed);
     }
 
     if (process_id == 0) { // child
@@ -150,7 +150,7 @@ extern "C"{
 
     f_delete((void **) & arguments_array, sizeof(f_autochar), arguments.used + 2);
 
-    if (*results != 0) return f_failure;
+    if (*results != 0) return f_error_set_error(f_failure);
 
     return f_none;
   }

@@ -11,9 +11,9 @@
 #define _FLL_fss_errors_h
 
 // fll-0 includes
-#include <level_0/strings.h>
-#include <level_0/errors.h>
 #include <level_0/types.h>
+#include <level_0/errors.h>
+#include <level_0/strings.h>
 #include <level_0/memory.h>
 #include <level_0/fss.h>
 
@@ -46,11 +46,11 @@ extern "C"{
 #endif // _di_fll_fss_errors_is_warning_
 
 
-#ifndef _di_fll_fss_errors_is_okay_
+#ifndef _di_fll_fss_errors_is_fine_
   // Returns true or false depending on whether the standard context of the error code represents an normal return status and not an error.
-  // Keep in mind that many of the error codes are context-specific and may be reported as "okay" here when it is in fact not okay.
-  extern f_return_status fll_fss_errors_is_okay(const f_status error);
-#endif // _di_fll_fss_errors_is_okay_
+  // Keep in mind that many of the error codes are context-specific and may be reported as "fine" here when it is in fact not fine.
+  extern f_return_status fll_fss_errors_is_fine(const f_status error);
+#endif // _di_fll_fss_errors_is_fine_
 
 #ifdef __cplusplus
 } // extern "C"

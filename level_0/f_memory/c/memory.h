@@ -29,8 +29,8 @@
 #include <malloc.h>
 
 // fll includes
-#include <level_0/errors.h>
 #include <level_0/types.h>
+#include <level_0/errors.h>
 
 #ifdef __cplusplus
 extern "C"{

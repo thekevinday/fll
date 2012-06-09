@@ -23,8 +23,8 @@
 #define _F_conversion_h
 
 // fll includes
-#include <level_0/errors.h>
 #include <level_0/types.h>
+#include <level_0/errors.h>
 #include <level_0/strings.h>
 
 #ifdef __cplusplus

@@ -13,13 +13,13 @@ extern "C"{
 #ifndef _di_fl_fss_extended_object_read_
   f_return_status fl_fss_extended_object_read(f_dynamic_string *buffer, f_string_location *input, f_fss_object *found) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer       == f_null)       return f_invalid_parameter;
-      if (input        == f_null)       return f_invalid_parameter;
-      if (found        == f_null)       return f_invalid_parameter;
-      if (input->start  < 0)            return f_invalid_parameter;
-      if (input->stop   < input->start) return f_invalid_parameter;
-      if (buffer->used <= 0)            return f_invalid_parameter;
-      if (input->start >= buffer->used) return f_invalid_parameter;
+      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
+      if (input == f_null) return f_error_set_error(f_invalid_parameter);
+      if (found == f_null) return f_error_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
+      if (buffer->used <= 0)  return f_error_set_error(f_invalid_parameter);
+      if (input->start >= buffer->used) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     // delimits must only be applied once a valid object is found
@@ -81,7 +81,7 @@ extern "C"{
 
            f_resize_string_lengths(allocation_status, delimits, delimits.size + f_fss_default_allocation_step);
 
-          if (f_macro_test_for_allocation_errors(allocation_status)) {
+          if (f_error_is_error(allocation_status)) {
             f_delete_string_lengths(allocation_status, delimits);
             return allocation_status;
           }
@@ -136,7 +136,7 @@ extern "C"{
             input->start++;
           } // while
 
-          fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+          fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_error_is_warning(f_unterminated_group_on_eos), f_error_is_warning(f_unterminated_group_on_stop))
 
           if (buffer->string[input->start] == quoted) {
             f_string_length location = input->start;
@@ -148,7 +148,7 @@ extern "C"{
 
               f_resize_string_lengths(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-              if (f_macro_test_for_allocation_errors(allocation_status)) {
+              if (f_error_is_error(allocation_status)) {
                 f_delete_string_lengths(allocation_status, delimits);
                 return allocation_status;
               }
@@ -171,7 +171,7 @@ extern "C"{
               input->start = location + 1;
 
               fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*input))
-              fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+              fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_error_is_warning(f_unterminated_group_on_eos), f_error_is_warning(f_unterminated_group_on_stop))
 
               if (isgraph(buffer->string[input->start])) {
                 while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
@@ -202,7 +202,7 @@ extern "C"{
 
                 f_resize_string_lengths(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-                if (f_macro_test_for_allocation_errors(allocation_status)) {
+                if (f_error_is_error(allocation_status)) {
                   f_delete_string_lengths(allocation_status, delimits);
                   return allocation_status;
                 }
@@ -262,7 +262,7 @@ extern "C"{
         input->start++;
       } // while
 
-      fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+      fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_error_is_warning(f_unterminated_group_on_eos), f_error_is_warning(f_unterminated_group_on_stop))
     }
 
     // seek to the end of the line when no valid object is found
@@ -280,13 +280,13 @@ extern "C"{
 #ifndef _di_fl_fss_extended_content_read_
   f_return_status fl_fss_extended_content_read(f_dynamic_string *buffer, f_string_location *input, f_fss_content *found) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer       == f_null)       return f_invalid_parameter;
-      if (input        == f_null)       return f_invalid_parameter;
-      if (found        == f_null)       return f_invalid_parameter;
-      if (input->start  < 0)            return f_invalid_parameter;
-      if (input->stop   < input->start) return f_invalid_parameter;
-      if (buffer->used <= 0)            return f_invalid_parameter;
-      if (input->start >= buffer->used) return f_invalid_parameter;
+      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
+      if (input == f_null) return f_error_set_error(f_invalid_parameter);
+      if (found == f_null) return f_error_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
+      if (buffer->used <= 0)  return f_error_set_error(f_invalid_parameter);
+      if (input->start >= buffer->used) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     // delimits must only be applied once a valid object is found
@@ -316,7 +316,7 @@ extern "C"{
       if (found->used >= found->size) {
         f_resize_fss_content(status, (*found), found->size + f_fss_default_allocation_step);
 
-        if (f_macro_test_for_allocation_errors(status)){
+        if (f_error_is_error(status)){
           f_status allocation_status = f_status_initialize;
           f_delete_string_lengths(allocation_status, delimits);
 
@@ -372,7 +372,7 @@ extern "C"{
 
              f_resize_string_lengths(allocation_status, delimits, delimits.size + f_fss_default_allocation_step);
 
-            if (f_macro_test_for_allocation_errors(allocation_status)) {
+            if (f_error_is_error(allocation_status)) {
               f_delete_string_lengths(allocation_status, delimits);
               return allocation_status;
             }
@@ -428,7 +428,7 @@ extern "C"{
               input->start++;
             } // while
 
-            fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+            fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_error_is_warning(f_unterminated_group_on_eos), f_error_is_warning(f_unterminated_group_on_stop))
 
             if (buffer->string[input->start] == quoted) {
               location     = input->start;
@@ -440,7 +440,7 @@ extern "C"{
 
                   f_resize_string_lengths(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-                  if (f_macro_test_for_allocation_errors(allocation_status)) {
+                  if (f_error_is_error(allocation_status)) {
                     f_delete_string_lengths(allocation_status, delimits);
                     return allocation_status;
                   }
@@ -469,10 +469,10 @@ extern "C"{
                     input->start++;
                   } // while
 
-                  fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+                  fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_error_is_warning(f_unterminated_group_on_eos), f_error_is_warning(f_unterminated_group_on_stop))
 
                   input->start++;
-                  return f_unterminated_group;
+                  return f_error_is_warning(f_unterminated_group);
                 } else if (buffer->string[input->start] == f_eol) {
                   fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
@@ -493,7 +493,7 @@ extern "C"{
 
                   f_resize_string_lengths(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-                  if (f_macro_test_for_allocation_errors(allocation_status)) {
+                  if (f_error_is_error(allocation_status)) {
                     f_delete_string_lengths(allocation_status, delimits);
                     return allocation_status;
                   }
@@ -537,10 +537,10 @@ extern "C"{
                   input->start++;
                 } // while
 
-                fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+                fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_error_is_warning(f_unterminated_group_on_eos), f_error_is_warning(f_unterminated_group_on_stop))
 
                 input->start++;
-                return f_unterminated_group;
+                return f_error_is_warning(f_unterminated_group);
               }
 
               input->start++;
@@ -570,7 +570,7 @@ extern "C"{
           input->start++;
         } // while
 
-        fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_unterminated_group_on_eos, f_unterminated_group_on_stop)
+        fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_error_is_warning(f_unterminated_group_on_eos), f_error_is_warning(f_unterminated_group_on_stop))
       }
 
       if (continue_main_loop) {
@@ -605,7 +605,7 @@ extern "C"{
 #ifndef _di_fl_fss_extended_object_write_
   f_return_status fl_fss_extended_object_write(const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == f_null) return f_invalid_parameter;
+      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_status_initialize;
@@ -631,7 +631,7 @@ extern "C"{
     if (pre_allocate_size > buffer->size) {
       f_resize_dynamic_string(status, (*buffer), pre_allocate_size);
 
-      if (f_macro_test_for_allocation_errors(status)) return status;
+      if (f_error_is_error(status)) return status;
     }
 
     buffer_position.start = buffer->used;
@@ -657,7 +657,7 @@ extern "C"{
         if (pre_allocate_size > buffer->size) {
           f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
 
-          if (f_macro_test_for_allocation_errors(status)) return status;
+          if (f_error_is_error(status)) return status;
         }
 
         buffer->string[buffer_position.stop] = f_fss_delimit_slash;
@@ -671,7 +671,7 @@ extern "C"{
       if (pre_allocate_size > buffer->size) {
         f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
 
-        if (f_macro_test_for_allocation_errors(status)) return status;
+        if (f_error_is_error(status)) return status;
       }
 
       buffer->string[buffer_position.stop] = f_fss_delimit_slash;
@@ -718,7 +718,7 @@ extern "C"{
         if (pre_allocate_size > buffer->size) {
           f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
 
-          if (f_macro_test_for_allocation_errors(status)) return status;
+          if (f_error_is_error(status)) return status;
         }
 
         // restart the loop searching for f_fss_delimit_double_quote.
@@ -738,7 +738,7 @@ extern "C"{
             if (pre_allocate_size > buffer->size) {
               f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
 
-              if (f_macro_test_for_allocation_errors(status)) return status;
+              if (f_error_is_error(status)) return status;
             }
 
             buffer->string[buffer_position.stop] = f_fss_delimit_slash;
@@ -764,7 +764,7 @@ extern "C"{
                 if (pre_allocate_size > buffer->size) {
                   f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
 
-                  if (f_macro_test_for_allocation_errors(status)) return status;
+                  if (f_error_is_error(status)) return status;
                 }
 
                 break;
@@ -825,7 +825,7 @@ extern "C"{
 #ifndef _di_fl_fss_extended_content_write_
   f_return_status fl_fss_extended_content_write(const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == f_null) return f_invalid_parameter;
+      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status   status = f_status_initialize;
@@ -844,7 +844,7 @@ extern "C"{
     if (pre_allocate_size > buffer->size) {
       f_resize_dynamic_string(status, (*buffer), pre_allocate_size);
 
-      if (f_macro_test_for_allocation_errors(status)) return status;
+      if (f_error_is_error(status)) return status;
     }
 
     fl_macro_fss_skip_past_delimit_placeholders(content, (*input))
@@ -894,7 +894,7 @@ extern "C"{
         if (pre_allocate_size > buffer->size) {
           f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
 
-          if (f_macro_test_for_allocation_errors(status)) return status;
+          if (f_error_is_error(status)) return status;
         }
 
         buffer->string[buffer_position.stop] = f_fss_delimit_slash;
@@ -908,7 +908,7 @@ extern "C"{
       if (pre_allocate_size > buffer->size) {
         f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
 
-        if (f_macro_test_for_allocation_errors(status)) return status;
+        if (f_error_is_error(status)) return status;
       }
 
       buffer->string[buffer_position.stop] = f_fss_delimit_slash;
@@ -932,7 +932,7 @@ extern "C"{
         if (pre_allocate_size > buffer->size) {
           f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
 
-          if (f_macro_test_for_allocation_errors(status)) return status;
+          if (f_error_is_error(status)) return status;
         }
 
         input->start = start_position;
@@ -978,7 +978,7 @@ extern "C"{
             if (pre_allocate_size > buffer->size) {
               f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
 
-              if (f_macro_test_for_allocation_errors(status)) return status;
+              if (f_error_is_error(status)) return status;
             }
 
             while (slash_count > 0) {
@@ -1004,7 +1004,7 @@ extern "C"{
           if (pre_allocate_size > buffer->size) {
             f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step);
 
-            if (f_macro_test_for_allocation_errors(status)) return status;
+            if (f_error_is_error(status)) return status;
           }
 
           buffer->string[buffer_position.stop] = f_fss_delimit_slash;

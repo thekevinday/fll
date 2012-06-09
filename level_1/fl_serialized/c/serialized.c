@@ -13,7 +13,7 @@ extern "C" {
 #ifndef _di_fl_serialize_simple_
   f_return_status fl_serialize_simple(const f_dynamic_string value, f_dynamic_string *serialized) {
     #ifndef _di_level_0_parameter_checking_
-      if (serialized == f_null) return f_invalid_parameter;
+      if (serialized == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status status = f_status_initialize;
@@ -22,7 +22,7 @@ extern "C" {
     if (serialized->used + value.used + 1 >= serialized->size) {
       f_resize_dynamic_string(status, (*serialized), serialized->size + value.used + f_serialized_default_allocation_step);
 
-      if (f_macro_test_for_allocation_errors(status)) return status;
+      if (f_error_is_error(status)) return status;
     }
 
     if (serialized->used == 0) {
@@ -41,12 +41,12 @@ extern "C" {
 #ifndef _di_fl_unserialize_simple_
   f_return_status fl_unserialize_simple(const f_dynamic_string serialized, f_string_locations *locations) {
     #ifndef _di_level_0_parameter_checking_
-      if (locations == f_null) return f_invalid_parameter;
+      if (locations == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status status = f_status_initialize;
 
-    f_array_length i     = 0;
+    f_array_length i = 0;
     f_array_length start = 0;
 
     while (i <= serialized.used) {
@@ -54,7 +54,7 @@ extern "C" {
         if (locations->used + 1 >= locations->size) {
           f_resize_string_locations(status, (*locations), locations->size + f_serialized_default_allocation_step);
 
-          if (f_macro_test_for_allocation_errors(status)) return status;
+          if (f_error_is_error(status)) return status;
         }
 
         if (start == i) {
@@ -80,12 +80,12 @@ extern "C" {
 #ifndef _di_fl_unserialize_simple_get_
   f_return_status fl_unserialize_simple_get(const f_dynamic_string serialized, const f_array_length index, f_string_location *location) {
     #ifndef _di_level_0_parameter_checking_
-      if (location == f_null) return f_invalid_parameter;
+      if (location == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status status = f_status_initialize;
 
-    f_array_length i       = 0;
+    f_array_length i = 0;
     f_array_length current = 0;
 
     location->start = 1;

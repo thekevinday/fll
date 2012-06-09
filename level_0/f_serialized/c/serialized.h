@@ -16,8 +16,8 @@
 #include <string.h>
 
 // fll-0 includes
-#include <level_0/strings.h>
 #include <level_0/types.h>
+#include <level_0/strings.h>
 
 #ifdef __cplusplus
 extern "C"{

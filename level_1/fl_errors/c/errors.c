@@ -16,10 +16,12 @@ extern "C"{
 #ifndef _di_fl_errors_to_string_
   f_return_status fl_errors_to_string(const f_status error, f_string *string) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == f_null) return f_invalid_parameter;
+      if (string == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    switch (error) {
+    f_status umasked_error = f_error_unmask(error);
+
+    switch (umasked_error) {
       #ifndef _di_fl_errors_booleans_
         case f_false:
           *string = "f_false";
@@ -311,7 +313,7 @@ extern "C"{
 
 #ifndef _di_fl_errors_is_error_
   f_return_status fl_errors_is_error(const f_status error) {
-    if (fl_errors_is_okay(error) == f_true) {
+    if (fl_errors_is_fine(error) == f_true) {
       return f_false;
     } else if (fl_errors_is_warning(error) == f_true) {
       return f_false;
@@ -353,10 +355,8 @@ extern "C"{
   }
 #endif // _di_fl_errors_is_warning_
 
-#ifndef _di_fl_errors_is_okay_
-  // Returns true or false depending on whether the standard context of the error code represents an normal return status and not an error.
-  // Keep in mind that many of the error codes are context-specific and may be reported as an "okay" here when it is in fact not okay.
-  f_return_status fl_errors_is_okay(const f_status error) {
+#ifndef _di_fl_errors_is_fine_
+  f_return_status fl_errors_is_fine(const f_status error) {
     switch (error) {
       #ifndef _di_fl_errors_booleans_
         case f_false:
@@ -386,7 +386,7 @@ extern "C"{
 
     return f_false;
   }
-#endif // _di_fl_errors_is_okay_
+#endif // _di_fl_errors_is_fine_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -132,25 +132,27 @@ extern "C"{
   f_return_status fss_basic_list_read_main_process_file(const f_array_length argc, const f_string argv[], fss_basic_list_read_data *data, const f_string filename, const f_string_length target) __attribute__((visibility ("internal")));
 
   f_return_status fss_basic_list_read_main(const f_array_length argc, const f_string argv[], fss_basic_list_read_data *data) {
-    f_status status            = f_status_initialize;
-    f_status allocation_status = f_status_initialize;
+    f_status status = f_status_initialize;
+    f_status status2 = f_status_initialize;
 
     status = fl_process_parameters(argc, argv, data->parameters, fss_basic_list_read_total_parameters, &data->remaining);
 
     // load colors when not told to show no colors
     if (data->parameters[fss_basic_list_read_parameter_no_color].result == f_console_result_none) {
-      fll_new_color_context(allocation_status, data->context);
+      fll_new_color_context(status2, data->context);
 
-      if (allocation_status == f_none) {
-        fll_colors_load_context(&data->context, data->parameters[fss_basic_list_read_parameter_light].result == f_console_result_found);
-      } else {
+      if (f_error_is_error(status2)) {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
         fss_basic_list_read_delete_data(data);
-        return allocation_status;
+        return status2;
+      } else {
+        fll_colors_load_context(&data->context, data->parameters[fss_basic_list_read_parameter_light].result == f_console_result_found);
       }
     }
 
-    if (status != f_none) {
+    if (f_error_is_error(status)) {
+      status = f_error_unmask(status);
+
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // TODO: there is a way to identify which parameter is incorrect
@@ -161,11 +163,11 @@ extern "C"{
       } else if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");
       } else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", status);
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_error_set_error(status));
       }
 
       fss_basic_list_read_delete_data(data);
-      return status;
+      return f_error_set_error(status);
     }
 
     // execute parameter results
@@ -189,7 +191,9 @@ extern "C"{
 
         status = fl_file_read_fifo(file, &data->buffer);
 
-        if (status != f_none) {
+        if (f_error_is_error(status)) {
+          status = f_error_unmask(status);
+
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           } else if (status == f_file_not_found) {
@@ -199,7 +203,7 @@ extern "C"{
           } else if (status == f_file_descriptor_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
           } else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_error_set_error(status));
           }
 
           fss_basic_list_read_delete_data(data);
@@ -208,14 +212,14 @@ extern "C"{
 
         status = fss_basic_list_read_main_process_file(argc, argv, data, "-", target);
 
-        if (status != f_none && status != f_none_on_eof && status != f_none_on_eos) {
+        if (f_error_is_error(status)) {
           return status;
         }
 
         // clear buffers before continuing
-        f_delete_fss_contents(allocation_status, data->contents);
-        f_delete_fss_objects(allocation_status, data->objects);
-        f_delete_dynamic_string(allocation_status, data->buffer);
+        f_delete_fss_contents(status2, data->contents);
+        f_delete_fss_objects(status2, data->objects);
+        f_delete_dynamic_string(status2, data->buffer);
       }
 
       for (; counter < data->remaining.used; counter++) {
@@ -225,7 +229,9 @@ extern "C"{
 
         data->file_position.total_elements = original_size;
 
-        if (status != f_none) {
+        if (f_error_is_error(status)) {
+          status = f_error_unmask(status);
+
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           } else if (status == f_file_not_found) {
@@ -235,14 +241,13 @@ extern "C"{
           } else if (status == f_file_descriptor_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->remaining.array[counter]]);
           } else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_error_set_error(status));
           }
 
           fss_basic_list_read_delete_data(data);
-          return status;
+          return f_error_set_error(status);
         }
 
-        // TODO: this file size set functionality might be turned into an fl_file (or f_file) function
         if (data->file_position.total_elements == 0) {
           fseek(file.file, 0, SEEK_END);
 
@@ -261,7 +266,9 @@ extern "C"{
 
         f_file_close(&file);
 
-        if (status != f_none && status != f_none_on_eof && status != f_none_on_eos) {
+        if (f_error_is_error(status)) {
+          status = f_error_unmask(status);
+
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read()");
           } else if (status == f_overflow) {
@@ -275,27 +282,27 @@ extern "C"{
           } else if (f_macro_test_for_allocation_errors(status)) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
           } else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read()", status);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read()", f_error_set_error(status));
           }
 
           fss_basic_list_read_delete_data(data);
-          return status;
+          return f_error_set_error(status);
         }
 
         status = fss_basic_list_read_main_process_file(argc, argv, data, argv[data->remaining.array[counter]], target);
 
-        if (status != f_none && status != f_none_on_eof && status != f_none_on_eos) {
+        if (f_error_is_error(status)) {
           return status;
         }
 
         // clear buffers before repeating the loop
-        f_delete_fss_contents(allocation_status, data->contents);
-        f_delete_fss_objects(allocation_status, data->objects);
-        f_delete_dynamic_string(allocation_status, data->buffer);
+        f_delete_fss_contents(status2, data->contents);
+        f_delete_fss_objects(status2, data->objects);
+        f_delete_dynamic_string(status2, data->buffer);
       } // for
     } else {
       fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more files");
-      status = f_invalid_parameter;
+      status = f_error_set_error(f_invalid_parameter);
     }
 
     fss_basic_list_read_delete_data(data);
@@ -303,11 +310,11 @@ extern "C"{
   }
 
   f_return_status fss_basic_list_read_main_process_file(const f_array_length argc, const f_string argv[], fss_basic_list_read_data *data, const f_string filename, const f_string_length target) {
-    f_status status            = f_status_initialize;
-    f_status allocation_status = f_status_initialize;
+    f_status status = f_status_initialize;
+    f_status status2 = f_status_initialize;
 
     f_string_length current = f_string_length_initialize;
-    f_string_length found   = f_string_length_initialize;
+    f_string_length found = f_string_length_initialize;
 
     {
       f_string_location input = f_string_location_initialize;
@@ -318,29 +325,26 @@ extern "C"{
       status = fll_fss_basic_list_read(&data->buffer, &input, &data->objects, &data->contents);
     }
 
-    if (status != f_none && status != f_none_on_eos && status != f_none_on_stop && status != fl_fss_found_object_no_content) {
+    if (f_error_is_error(status)) {
+      status = f_error_unmask(status);
+
       if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'", filename);
-
-        fss_basic_list_read_delete_data(data);
-        return status;
-      } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop || status == f_no_data_on_eof) {
-        // not an error in this case
       } else if (f_macro_test_for_allocation_errors(status)) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
-
-        fss_basic_list_read_delete_data(data);
-        return status;
       } else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'", status, filename);
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'", f_error_set_error(status), filename);
       }
 
+      fss_basic_list_read_delete_data(data);
+      return f_error_set_error(status);
+    } else if (f_macro_test_for_no_data_errors(status)) {
       // clear buffers, then attempt the next file
-      f_delete_fss_contents(allocation_status, data->contents);
-      f_delete_fss_objects(allocation_status, data->objects);
-      f_delete_dynamic_string(allocation_status, data->buffer);
+      f_delete_fss_contents(status2, data->contents);
+      f_delete_fss_objects(status2, data->objects);
+      f_delete_dynamic_string(status2, data->buffer);
 
-      return status;
+      return f_error_set_warning(status);
     }
 
     // now that all of the files have been read, process the objects and contents

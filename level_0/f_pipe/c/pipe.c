@@ -19,7 +19,7 @@ extern "C"{
     struct stat st_info;
 
     if (fstat(fileno(f_pipe), &st_info) != 0) {
-      return f_file_stat_error;
+      return f_error_set_error(f_file_stat_error);
     }
 
     if (S_ISFIFO(st_info.st_mode)) {

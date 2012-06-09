@@ -47,13 +47,15 @@ extern "C"{
 #endif // _di_return_code_name_
 
 #ifndef _di_return_code_defines_
-  #define return_code_short_is_okay    "o"
+  #define return_code_short_is_fine    "f"
   #define return_code_short_is_warning "w"
   #define return_code_short_is_error   "e"
+  #define return_code_short_context    "c"
 
-  #define return_code_long_is_okay    "is_okay"
+  #define return_code_long_is_fine    "is_fine"
   #define return_code_long_is_warning "is_warning"
   #define return_code_long_is_error   "is_error"
+  #define return_code_long_context    "context"
 
   enum {
     return_code_parameter_help,
@@ -61,9 +63,10 @@ extern "C"{
     return_code_parameter_no_color,
     return_code_parameter_version,
 
-    return_code_parameter_is_okay,
+    return_code_parameter_is_fine,
     return_code_parameter_is_warning,
     return_code_parameter_is_error,
+    return_code_parameter_context,
   };
 
   #define f_console_parameter_initialize_return_code \
@@ -72,12 +75,13 @@ extern "C"{
       f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(return_code_short_is_okay, return_code_long_is_okay, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(return_code_short_is_fine, return_code_long_is_fine, 0, 0, f_false, f_console_type_normal, 0), \
       f_console_parameter_initialize(return_code_short_is_warning, return_code_long_is_warning, 0, 0, f_false, f_console_type_normal, 0), \
       f_console_parameter_initialize(return_code_short_is_error, return_code_long_is_error, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(return_code_short_context, return_code_long_context, 0, 0, f_false, f_console_type_normal, 0), \
     }
 
-  #define return_code_total_parameters 7
+  #define return_code_total_parameters 8
 #endif // _di_return_code_defines_
 
 #ifndef _di_return_code_data_

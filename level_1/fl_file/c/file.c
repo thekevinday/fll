@@ -13,18 +13,18 @@ extern "C"{
 #ifndef _di_fl_file_read_
   f_return_status fl_file_read(f_file file, const f_file_position position, f_dynamic_string *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == f_null) return f_invalid_parameter;
+      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
 
-      if (position.buffer_start   < 0) return f_invalid_parameter;
-      if (position.file_start     < 0) return f_invalid_parameter;
-      if (position.total_elements < 0) return f_invalid_parameter;
+      if (position.buffer_start < 0) return f_error_set_error(f_invalid_parameter);
+      if (position.file_start < 0) return f_error_set_error(f_invalid_parameter);
+      if (position.total_elements < 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.file == 0) return f_file_not_open;
+    if (file.file == 0) return f_error_set_warning(f_file_not_open);
 
-    f_status        status   = f_status_initialize;
-    f_string_length size     = f_string_length_initialize;
-    f_bool          infinite = f_false;
+    f_status status = f_status_initialize;
+    f_string_length size = f_string_length_initialize;
+    f_bool infinite = f_false;
 
     // when total_elements is 0, this means the file read will until EOF is reached
     if (position.total_elements == 0) {
@@ -39,7 +39,7 @@ extern "C"{
       if (buffer->size <= size) {
         f_resize_dynamic_string(status, (*buffer), size);
 
-        if (f_macro_test_for_allocation_errors(status)) {
+        if (f_error_is_error(status)) {
           return status;
         }
       }
@@ -48,13 +48,13 @@ extern "C"{
 
       if (status == f_none_on_eof) {
         break;
-      } else if (status != f_none) {
+      } else if (f_error_is_error(status)) {
         return status;
       }
 
       if (infinite) {
         if (size + f_file_default_read_size > f_string_max_size) {
-          return f_overflow;
+          return f_error_set_error(f_overflow);
         }
 
         size += f_file_default_read_size;
@@ -68,13 +68,13 @@ extern "C"{
 #ifndef _di_fl_file_read_fifo_
   f_return_status fl_file_read_fifo(f_file file, f_dynamic_string *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == f_null) return f_invalid_parameter;
+      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.file == 0) return f_file_not_open;
+    if (file.file == 0) return f_error_set_warning(f_file_not_open);
 
-    f_status        status = f_status_initialize;
-    f_string_length size   = f_string_length_initialize;
+    f_status status = f_status_initialize;
+    f_string_length size = f_string_length_initialize;
 
     size = f_file_default_read_size;
 
@@ -83,7 +83,7 @@ extern "C"{
       if (buffer->size <= size) {
         f_resize_dynamic_string(status, (*buffer), size);
 
-        if (f_macro_test_for_allocation_errors(status)) {
+        if (f_error_is_error(status)) {
           return status;
         }
       }
@@ -92,12 +92,12 @@ extern "C"{
 
       if (status == f_none_on_eof) {
         break;
-      } else if (status != f_none) {
+      } else if (f_error_is_error(status)) {
         return status;
       }
 
       if (size + f_file_default_read_size > f_string_max_size) {
-        return f_overflow;
+        return f_error_set_error(f_overflow);
       }
 
       size += f_file_default_read_size;
@@ -109,15 +109,15 @@ extern "C"{
 
 #ifndef _di_fl_file_write_
   f_return_status fl_file_write(f_file file, const f_dynamic_string buffer) {
-    if (file.file == 0) return f_file_not_open;
+    if (file.file == 0) return f_error_set_error(f_file_not_open);
 
     f_status status = f_status_initialize;
-    f_size_t size   = 0;
+    f_size_t size = 0;
 
     size = fwrite(buffer.string, file.byte_size, buffer.used, file.file);
 
     if (size < buffer.used * file.byte_size) {
-      return f_file_write_error;
+      return f_error_set_error(f_file_write_error);
     }
 
     return f_none;
@@ -127,20 +127,20 @@ extern "C"{
 #ifndef _di_fl_file_write_partial_
   f_return_status fl_file_write_partial(f_file file, const f_dynamic_string buffer, const f_string_location position) {
     #ifndef _di_level_1_parameter_checking_
-      if (position.start < position.stop) return f_invalid_parameter;
+      if (position.start < position.stop) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.file == 0) return f_file_not_open;
 
     f_status status = f_status_initialize;
-    f_size_t size   = 0;
+    f_size_t size = 0;
 
     f_string_length total = buffer.used - (position.stop - position.start + 1);
 
     size = fwrite(buffer.string + position.start, file.byte_size, total, file.file);
 
     if (size < total * file.byte_size) {
-      return f_file_write_error;
+      return f_error_set_error(f_file_write_error);
     }
 
     return f_none;

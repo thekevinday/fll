@@ -13,11 +13,11 @@ extern "C"{
 #ifndef _di_fl_rip_string_
   f_return_status fl_rip_string(const f_dynamic_string buffer, const f_string_location position, f_dynamic_string *results) {
     #ifndef _di_level_1_parameter_checking_
-      if (results        == f_null)         return f_invalid_parameter;
-      if (position.start  < 0)              return f_invalid_parameter;
-      if (position.stop   < position.start) return f_invalid_parameter;
-      if (buffer.used    <= 0)              return f_invalid_parameter;
-      if (position.start >= buffer.used)    return f_invalid_parameter;
+      if (results == f_null) return f_error_set_error(f_invalid_parameter);
+      if (position.start < 0) return f_error_set_error(f_invalid_parameter);
+      if (position.stop < position.start) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (position.start >= buffer.used) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     // the start and stop point are inclusive locations, and therefore start - stop is actually 1 too few locations
@@ -28,7 +28,7 @@ extern "C"{
 
       f_resize_dynamic_string(status, (*results), size);
 
-      if (f_macro_test_for_allocation_errors(status)) {
+      if (f_error_is_error(status)) {
         return status;
       }
 
@@ -45,11 +45,11 @@ extern "C"{
 #ifndef _di_fl_seek_line_past_non_graph_
   f_return_status fl_seek_line_past_non_graph(const f_dynamic_string buffer, f_string_location *position, const f_autochar placeholder) {
     #ifndef _di_level_1_parameter_checking_
-      if (position        == f_null)          return f_invalid_parameter;
-      if (position->start  < 0)               return f_invalid_parameter;
-      if (position->stop   < position->start) return f_invalid_parameter;
-      if (buffer.used     <= 0)               return f_invalid_parameter;
-      if (position->start >= buffer.used)     return f_invalid_parameter;
+      if (position == f_null) return f_error_set_error(f_invalid_parameter);
+      if (position->start < 0) return f_error_set_error(f_invalid_parameter);
+      if (position->stop < position->start) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (position->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     while (!isgraph(buffer.string[position->start]) || buffer.string[position->start] == placeholder) {
@@ -57,8 +57,8 @@ extern "C"{
 
       ++position->start;
 
-      if (position->start >= buffer.used)    return f_none_on_eos;
-      if (position->start  > position->stop) return f_none_on_stop;
+      if (position->start >= buffer.used) return f_none_on_eos;
+      if (position->start > position->stop) return f_none_on_stop;
     } // while
 
     return f_none;
@@ -68,10 +68,10 @@ extern "C"{
 #ifndef _di_fl_seek_line_until_non_graph_
   f_return_status fl_seek_line_until_non_graph(const f_dynamic_string buffer, f_string_location *position, const f_autochar placeholder) {
     #ifndef _di_level_1_parameter_checking_
-      if (position->start  < 0)               return f_invalid_parameter;
-      if (position->stop   < position->start) return f_invalid_parameter;
-      if (buffer.used     <= 0)               return f_invalid_parameter;
-      if (position->start >= buffer.used)     return f_invalid_parameter;
+      if (position->start < 0) return f_error_set_error(f_invalid_parameter);
+      if (position->stop < position->start) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (position->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     while (isgraph(buffer.string[position->start]) || buffer.string[position->start] == placeholder) {
@@ -79,8 +79,8 @@ extern "C"{
 
       ++position->start;
 
-      if (position->start >= buffer.used)    return f_none_on_eos;
-      if (position->start  > position->stop) return f_none_on_stop;
+      if (position->start >= buffer.used) return f_none_on_eos;
+      if (position->start > position->stop) return f_none_on_stop;
     } // while
 
     return f_none;
@@ -90,10 +90,10 @@ extern "C"{
 #ifndef _di_fl_seek_to_
   f_return_status fl_seek_to(const f_dynamic_string buffer, f_string_location *position, const f_autochar seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
-      if (position->start  < 0)               return f_invalid_parameter;
-      if (position->stop   < position->start) return f_invalid_parameter;
-      if (buffer.used     <= 0)               return f_invalid_parameter;
-      if (position->start >= buffer.used)     return f_invalid_parameter;
+      if (position->start < 0) return f_error_set_error(f_invalid_parameter);
+      if (position->stop < position->start) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (position->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     while (buffer.string[position->start] != seek_to_this) {
@@ -101,8 +101,8 @@ extern "C"{
 
       ++position->start;
 
-      if (position->start >= buffer.used)    return f_none_on_eos;
-      if (position->start  > position->stop) return f_none_on_stop;
+      if (position->start >= buffer.used) return f_none_on_eos;
+      if (position->start > position->stop) return f_none_on_stop;
     } // while
 
     return f_none;
@@ -112,8 +112,8 @@ extern "C"{
 #ifndef _di_fl_compare_strings_
   f_return_status fl_compare_strings(const f_string string1, const f_string string2, const f_string_length length1, const f_string_length length2) {
     #ifndef _di_level_1_parameter_checking_
-      if (length1 <= 0) return f_invalid_parameter;
-      if (length2 <= 0) return f_invalid_parameter;
+      if (length1 <= 0) return f_error_set_error(f_invalid_parameter);
+      if (length2 <= 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length i1 = f_string_length_initialize;
@@ -146,8 +146,8 @@ extern "C"{
 #ifndef _di_fl_compare_dynamic_strings_
   f_return_status fl_compare_dynamic_strings(const f_dynamic_string string1, const f_dynamic_string string2) {
     #ifndef _di_level_1_parameter_checking_
-      if (string1.used <= 0) return f_invalid_parameter;
-      if (string2.used <= 0) return f_invalid_parameter;
+      if (string1.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (string2.used <= 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length i1 = f_string_length_initialize;
@@ -180,14 +180,14 @@ extern "C"{
 #ifndef _di_fl_compare_partial_dynamic_strings_
   f_return_status fl_compare_partial_dynamic_strings(const f_dynamic_string string1, const f_dynamic_string string2, const f_string_location offset1, const f_string_location offset2) {
     #ifndef _di_level_1_parameter_checking_
-      if (string1.used <= 0) return f_invalid_parameter;
-      if (string2.used <= 0) return f_invalid_parameter;
+      if (string1.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (string2.used <= 0) return f_error_set_error(f_invalid_parameter);
 
-      if (offset1.start > offset1.stop) return f_invalid_parameter;
-      if (offset2.start > offset2.stop) return f_invalid_parameter;
+      if (offset1.start > offset1.stop) return f_error_set_error(f_invalid_parameter);
+      if (offset2.start > offset2.stop) return f_error_set_error(f_invalid_parameter);
 
-      if (string1.used <= offset1.stop) return f_invalid_parameter;
-      if (string2.used <= offset2.stop) return f_invalid_parameter;
+      if (string1.used <= offset1.stop) return f_error_set_error(f_invalid_parameter);
+      if (string2.used <= offset2.stop) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length i1 = offset1.start;

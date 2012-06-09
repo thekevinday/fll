@@ -27,7 +27,6 @@ extern "C"{
   extern f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, f_string_lengths *remaining);
 #endif // _di_fl_process_parameters_
 
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

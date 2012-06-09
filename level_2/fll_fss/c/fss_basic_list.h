@@ -11,9 +11,9 @@
 #define _FLL_fss_basic_list_h
 
 // fll-0 includes
-#include <level_0/strings.h>
-#include <level_0/errors.h>
 #include <level_0/types.h>
+#include <level_0/errors.h>
+#include <level_0/strings.h>
 #include <level_0/memory.h>
 #include <level_0/fss.h>
 

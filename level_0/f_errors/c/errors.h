@@ -136,6 +136,27 @@ extern "C"{
       potential_error == f_unterminated_group_on_stop)
 #endif // _di_f_macro_test_for_unterminated_group_errors_
 
+#ifndef _di_f_error_masks_
+  // f_status is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
+  #define f_error_bit_error     32768
+  #define f_error_bit_warning   16384
+  #define f_error_bit_mask      49152
+  #define f_error_bit_fine      16383
+  #define f_error_bit_not_error 32767
+
+  #define f_error_is_error(status)     status & f_error_bit_error
+  #define f_error_is_warning(status)   status & f_error_bit_warning
+  #define f_error_is_problem(status)   status & f_error_bit_mask    // this is either a warning or an error
+  #define f_error_is_fine(status)      (status & f_error_bit_mask) == 0
+  #define f_error_is_not_error(status) (status & f_error_bit_not_error) == 0
+
+  #define f_error_set_error(status)   status | f_error_bit_error
+  #define f_error_set_warning(status) status | f_error_bit_warning
+
+  // use f_error_unmask to remove the error and warning bits
+  #define f_error_unmask(status) status & f_error_bit_fine
+#endif // _di_f_error_masks_
+
 // use of an enumerator makes more sense here than explicitly defining every error code
 enum {
   #ifndef _di_f_errors_booleans_

@@ -13,8 +13,8 @@ extern "C"{
 #ifndef _di_fl_set_color_
   f_return_status fl_set_color(f_file_type file, const f_colors_format format, const f_autochar *color1, const f_autochar *color2, const f_autochar *color3, const f_autochar *color4, const f_autochar *color5) {
     #ifndef _di_level_1_parameter_checking_
-      if (file   == f_null) return f_invalid_parameter;
-      if (color1 == f_null) return f_invalid_parameter;
+      if (file == f_null) return f_error_set_error(f_invalid_parameter);
+      if (color1 == f_null) return f_error_set_error(f_invalid_parameter);
 
       // make sure all data is in the proper order
       if (color2 == f_null && (color3 != f_null || color4 != f_null || color5 != f_null)) return f_invalid_parameter;
@@ -35,13 +35,13 @@ extern "C"{
 #ifndef _di_fl_save_color_
   f_return_status fl_save_color(f_dynamic_string *buffer, const f_colors_format format, const f_autochar *color1, const f_autochar *color2, const f_autochar *color3, const f_autochar *color4, const f_autochar *color5) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == f_null) return f_invalid_parameter;
-      if (color1 == f_null) return f_invalid_parameter;
+      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
+      if (color1 == f_null) return f_error_set_error(f_invalid_parameter);
 
       // make sure all data is in the proper order
-      if (color2 == f_null && (color3 != f_null || color4 != f_null || color5 != f_null)) return f_invalid_parameter;
-      if (color3 == f_null && (color4 != f_null || color5 != f_null))                     return f_invalid_parameter;
-      if (color4 == f_null && color5 != f_null)                                           return f_invalid_parameter;
+      if (color2 == f_null && (color3 != f_null || color4 != f_null || color5 != f_null)) return f_error_set_error(f_invalid_parameter);
+      if (color3 == f_null && (color4 != f_null || color5 != f_null)) return f_error_set_error(f_invalid_parameter);
+      if (color4 == f_null && color5 != f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length string_size = strnlen(format.begin, f_color_max_size) + strnlen(format.end, f_color_max_size) + 1;
@@ -118,8 +118,8 @@ extern "C"{
 #ifndef _di_fl_print_color_
   f_return_status fl_print_color(f_file_type file, const f_dynamic_string start_color, const f_dynamic_string end_color, const f_autochar *string, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (file   == f_null) return f_invalid_parameter;
-      if (string == f_null) return f_invalid_parameter;
+      if (file == f_null) return f_error_set_error(f_invalid_parameter);
+      if (string == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (start_color.used != 0) {
@@ -145,8 +145,8 @@ extern "C"{
 #ifndef _di_fl_print_color_line_
   f_return_status fl_print_color_line(f_file_type file, const f_dynamic_string start_color, const f_dynamic_string end_color, const f_autochar *string, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (file   == f_null) return f_invalid_parameter;
-      if (string == f_null) return f_invalid_parameter;
+      if (file == f_null) return f_error_set_error(f_invalid_parameter);
+      if (string == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (start_color.used != 0) {

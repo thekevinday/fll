@@ -14,8 +14,8 @@ extern "C"{
 #ifndef _di_fl_fss_identify_
   f_return_status fl_fss_identify(const f_dynamic_string buffer, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
-      if (header      == f_null) return f_invalid_parameter;
-      if (buffer.used <= 0)      return f_invalid_parameter;
+      if (header == f_null) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     register f_string_length i = 0;
@@ -51,7 +51,7 @@ extern "C"{
                           i++;
                           header->length = i;
 
-                          return fl_fss_accepted_but_invalid;
+                          return f_error_is_warning(fl_fss_accepted_but_invalid);
                         }
                       }
                     }
@@ -80,7 +80,7 @@ extern "C"{
 
                       header->length = i + 1;
 
-                      return fl_fss_accepted_but_invalid;
+                      return f_error_is_warning(fl_fss_accepted_but_invalid);
                     }
                   }
                 }
@@ -101,10 +101,10 @@ extern "C"{
 #ifndef _di_fl_fss_identify_file_
   f_return_status fl_fss_identify_file(f_file *file_information, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
-      if (file_information               == f_null) return f_invalid_parameter;
-      if (header                         == f_null) return f_invalid_parameter;
-      if (file_information->file         == 0)      return f_file_not_open;
-      if (ferror(file_information->file) != 0)      return f_file_error;
+      if (file_information == f_null) return f_error_set_error(f_invalid_parameter);
+      if (header == f_null) return f_error_set_error(f_invalid_parameter);
+      if (file_information->file == 0) return f_file_not_open;
+      if (ferror(file_information->file) != 0) return f_file_error;
     #endif // _di_level_1_parameter_checking_
 
     clearerr(file_information->file);
@@ -125,14 +125,14 @@ extern "C"{
 
     f_adjust_dynamic_string(status, buffer, location.total_elements + 1);
 
-    if (f_macro_test_for_allocation_errors(status)) {
+    if (f_error_is_error(status)) {
       return status;
     }
 
     // 2: buffer the file
     status = f_file_read(file_information, &buffer, location);
 
-    if (f_macro_test_for_basic_errors(status) || f_macro_test_for_file_errors(status)) {
+    if (f_error_is_error(status)) {
       return status;
     }
 
@@ -146,10 +146,10 @@ extern "C"{
 #ifndef _di_fl_fss_shift_delimiters_
 f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, const f_string_location location) {
   #ifndef _di_level_1_parameter_checking_
-    if (buffer->used   <= 0)              return f_invalid_parameter;
-    if (location.start  < 0)              return f_invalid_parameter;
-    if (location.stop   < location.start) return f_invalid_parameter;
-    if (location.start >= buffer->used)   return f_invalid_parameter;
+    if (buffer->used <= 0) return f_error_set_error(f_invalid_parameter);
+    if (location.start < 0) return f_error_set_error(f_invalid_parameter);
+    if (location.stop < location.start) return f_error_set_error(f_invalid_parameter);
+    if (location.start >= buffer->used) return f_error_set_error(f_invalid_parameter);
   #endif // _di_level_1_parameter_checking_
 
   f_string_length position = f_string_length_initialize;

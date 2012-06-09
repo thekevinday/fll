@@ -69,7 +69,7 @@ extern "C"{
 #ifndef _di_f_character_to_digit_
   f_return_status f_character_to_digit(const f_autochar character, f_u_long *digit) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit == f_null) return f_invalid_parameter;
+      if (digit == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -94,7 +94,7 @@ extern "C"{
 #ifndef _di_f_character_to_hexdigit_
   f_return_status f_character_to_hexdigit(const f_autochar character, f_u_long *digit) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit == f_null) return f_invalid_parameter;
+      if (digit == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -131,15 +131,15 @@ extern "C"{
 #ifndef _di_f_string_to_digit_
   f_return_status f_string_to_digit(const f_string string, f_u_long *digit, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit          == f_null)         return f_invalid_parameter;
-      if (location.start  < 0)              return f_invalid_parameter;
-      if (location.stop  <= location.start) return f_invalid_parameter;
-      if (string         == 0)              return f_invalid_parameter;
+      if (digit == f_null) return f_error_set_error(f_invalid_parameter);
+      if (location.start < 0) return f_error_set_error(f_invalid_parameter);
+      if (location.stop <= location.start) return f_error_set_error(f_invalid_parameter);
+      if (string == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_string_length current_location = location.start;
-    f_u_long        scale            = 0;
-    f_u_long        temp_digit       = 0;
+    f_u_long scale = 0;
+    f_u_long temp_digit = 0;
 
     while (current_location < location.stop) {
       if (f_character_to_digit(string[current_location], &temp_digit) == f_none) {
@@ -166,15 +166,15 @@ extern "C"{
 #ifndef _di_f_string_to_hexdigit_
   f_return_status f_string_to_hexdigit(const f_string string, f_u_long *digit, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit          == f_null)         return f_invalid_parameter;
-      if (location.start  < 0)              return f_invalid_parameter;
-      if (location.stop  <= location.start) return f_invalid_parameter;
-      if (string         == 0)              return f_invalid_parameter;
+      if (digit == f_null) return f_error_set_error(f_invalid_parameter);
+      if (location.start < 0) return f_error_set_error(f_invalid_parameter);
+      if (location.stop <= location.start) return f_error_set_error(f_invalid_parameter);
+      if (string == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_string_length current_location = location.start;
-    f_u_long        scale            = 0;
-    f_u_long        temp_digit       = 0;
+    f_u_long scale = 0;
+    f_u_long temp_digit = 0;
 
     while (current_location < location.stop) {
       if (f_character_to_hexdigit(string[current_location], &temp_digit) == f_none) {

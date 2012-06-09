@@ -12,9 +12,9 @@
 #include <ctype.h>
 
 // fll-0 includes
-#include <level_0/strings.h>
-#include <level_0/errors.h>
 #include <level_0/types.h>
+#include <level_0/errors.h>
+#include <level_0/strings.h>
 #include <level_0/fss.h>
 #include <level_0/file.h>
 #include <level_0/conversion.h>

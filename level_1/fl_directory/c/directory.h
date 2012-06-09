@@ -19,9 +19,9 @@
 #include <errno.h>
 
 // fll-0 includes
-#include <level_0/strings.h>
 #include <level_0/types.h>
 #include <level_0/errors.h>
+#include <level_0/strings.h>
 #include <level_0/memory.h>
 
 #ifdef __cplusplus

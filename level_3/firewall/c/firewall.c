@@ -126,7 +126,9 @@ extern "C"{
       }
     }
 
-    if (status != f_none) {
+    if (f_error_is_error(status)) {
+      status = f_error_unmask(status);
+
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // TODO: there is a way to identify which parameter is incorrect
@@ -134,14 +136,14 @@ extern "C"{
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       } else if (f_macro_test_for_allocation_errors(status)) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
-      } else if (status == f_invalid_parameter) {
+      } else if (f_error_unmask(status) == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");
       } else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", status);
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_error_set_error(status));
       }
 
       firewall_delete_data(data);
-      return status;
+      return f_error_set_error(status);
     }
 
     // execute parameter results
@@ -243,7 +245,7 @@ extern "C"{
 
           f_resize_dynamic_strings(status, arguments, 7);
 
-          if (f_macro_test_for_allocation_errors(status)) {
+          if (f_error_is_error(status)) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
@@ -280,7 +282,7 @@ extern "C"{
             fflush(f_standard_output);
           }
 
-          if (status != f_failure && show_mangle) {
+          if (f_error_is_not_error(status) && show_mangle) {
             fl_print_color(f_standard_output, data->context.standout, data->context.reset, "========================== ");
             fl_print_color(f_standard_output, data->context.title, data->context.reset, "MANGLE");
             fl_print_color_line(f_standard_output, data->context.standout, data->context.reset, " ==========================");
@@ -310,7 +312,7 @@ extern "C"{
             fflush(f_standard_output);
           }
 
-          if (status != f_failure && show_ports) {
+          if (f_error_is_not_error(status) && show_ports) {
             fl_print_color(f_standard_output, data->context.standout, data->context.reset, "========================== ");
             fl_print_color(f_standard_output, data->context.title, data->context.reset, "PORTS");
             fl_print_color_line(f_standard_output, data->context.standout, data->context.reset, " ===========================");
@@ -336,22 +338,28 @@ extern "C"{
             fflush(f_standard_output);
           }
 
-          if (status == f_failure) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_program_name);
-            fprintf(f_standard_error, "  ");
+          if (f_error_is_error(status)) {
+            status = f_error_unmask(status);
 
-            f_string_length i = f_string_length_initialize;
+            if (f_macro_test_for_allocation_errors(status)) {
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+            } else {
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_program_name);
+              fprintf(f_standard_error, "  ");
 
-            fl_print_color_code(f_standard_error, data->context.error);
+              f_string_length i = f_string_length_initialize;
 
-            for (; i < arguments.used; i++) {
-              fprintf(f_standard_error, "%s ", arguments.array[i].string);
+              fl_print_color_code(f_standard_error, data->context.error);
+
+              for (; i < arguments.used; i++) {
+                fprintf(f_standard_error, "%s ", arguments.array[i].string);
+              }
+
+              fl_print_color_code(f_standard_error, data->context.reset);
+              fprintf(f_standard_error, "\n");
             }
 
-            fl_print_color_code(f_standard_error, data->context.reset);
-            fprintf(f_standard_error, "\n");
-          } else if (f_macro_test_for_allocation_errors(status)) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+            status = f_error_set_error(status);
           }
 
           arguments.array[0].string = 0;
@@ -372,27 +380,26 @@ extern "C"{
           f_delete_dynamic_strings(status, arguments);
           firewall_delete_local_data(&local);
           firewall_delete_data(data);
-          return f_none;
+          return status;
         }
 
         // load all network devices
         status = fl_directory_list((f_string) network_devices, &data->devices);
 
-        if (f_macro_test_for_allocation_errors(status)) {
-          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+        if (f_error_is_error(status)) {
+          status = f_error_unmask(status);
+
+          if (f_macro_test_for_allocation_errors(status)) {
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+          } else if (status == f_no_data) {
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: could not find any network devices");
+          } else if (status == f_failure) {
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: failed to read the device directory '%s'", network_devices);
+          }
+
           firewall_delete_local_data(&local);
           firewall_delete_data(data);
-          return status;
-        } else if (status == f_no_data) {
-          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: could not find any network devices");
-          firewall_delete_local_data(&local);
-          firewall_delete_data(data);
-          return status;
-        } else if (status == f_failure) {
-          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: failed to read the device directory '%s'", network_devices);
-          firewall_delete_local_data(&local);
-          firewall_delete_data(data);
-          return status;
+          return f_error_set_error(status);
         }
 
         // remove "lo" (loopback) from the device listing
@@ -417,7 +424,7 @@ extern "C"{
         if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart || command == firewall_parameter_command_lock) {
           status = firewall_buffer_rules(network_path firewall_file_other, f_false, &local, data);
 
-          if (status != f_none && status != f_none_on_eof && status != f_none_on_eos && status != f_none_on_stop && status != fl_fss_found_object_no_content) {
+          if (f_error_is_error(status)) {
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
             return status;
@@ -477,7 +484,7 @@ extern "C"{
 
               status = firewall_process_rules(&input, &local, data);
 
-              if (status != f_none || command == firewall_parameter_command_stop) {
+              if (f_error_is_error(status) || command == firewall_parameter_command_stop) {
                 firewall_delete_local_data(&local);
                 firewall_delete_data(data);
                 return status;
@@ -497,7 +504,7 @@ extern "C"{
         if (command == firewall_parameter_command_start || command == firewall_parameter_command_restart) {
           status = firewall_buffer_rules(network_path firewall_file_first, f_false, &local, data);
 
-          if (status != f_none && status != f_none_on_eof && status != f_none_on_eos && status != f_none_on_stop && status != fl_fss_found_object_no_content) {
+          if (f_error_is_error(status)) {
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
             return status;
@@ -505,7 +512,7 @@ extern "C"{
 
           status = firewall_create_custom_chains(&reserved, &local, data);
 
-          if (status != f_none) {
+          if (f_error_is_error(status)) {
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
             return status;
@@ -526,7 +533,7 @@ extern "C"{
 
             status = firewall_process_rules(&input, &local, data);
 
-            if ((status != f_none && status != f_no_data && status != f_no_data_on_stop) || command == firewall_parameter_command_stop) {
+            if (f_error_is_error(status) || command == firewall_parameter_command_stop) {
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
               return status;
@@ -545,8 +552,8 @@ extern "C"{
 
               f_resize_dynamic_string(status, file_path, network_path_length + data->devices.array[i].used  + firewall_file_suffix_length + 1);
 
-              if (f_macro_test_for_allocation_errors(status)) {
-                fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.", status);
+              if (f_error_is_error(status)) {
+                fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
                 firewall_delete_local_data(&local);
                 firewall_delete_data(data);
                 return status;
@@ -563,20 +570,23 @@ extern "C"{
               f_delete_dynamic_string(status2, file_path);
             }
 
-            if (status != f_none && status != f_none_on_eof && status != f_none_on_eos && status != f_none_on_stop) {
+            if (f_error_is_error(status)) {
+              status = f_error_unmask(status);
+
               firewall_delete_local_data(&local);
 
               if (status == f_file_not_found || status == f_file_open_error || status == f_file_descriptor_error || status == fl_fss_found_object_no_content) {
+                status = f_error_set_error(status);
                 continue;
               }
 
               firewall_delete_data(data);
-              return status;
+              return f_error_set_error(status);
             }
 
             status = firewall_create_custom_chains(&reserved, &local, data);
 
-            if (status != f_none) {
+            if (f_error_is_error(status)) {
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
               return status;
@@ -597,7 +607,7 @@ extern "C"{
 
               status = firewall_process_rules(&input, &local, data);
 
-              if ((status != f_none && status != f_no_data && status != f_no_data_on_stop) || command == firewall_parameter_command_stop) {
+              if (f_error_is_error(status) || command == firewall_parameter_command_stop) {
                 firewall_delete_local_data(&local);
                 firewall_delete_data(data);
                 return status;
@@ -619,7 +629,7 @@ extern "C"{
 
           status = firewall_buffer_rules(network_path firewall_file_last, f_false, &local, data);
 
-          if (status != f_none && status != f_none_on_eof && status != f_none_on_eos && status != f_none_on_stop && status != fl_fss_found_object_no_content) {
+          if (f_error_is_error(status)) {
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
             return status;
@@ -627,7 +637,7 @@ extern "C"{
 
           status = firewall_create_custom_chains(&reserved, &local, data);
 
-          if (status != f_none) {
+          if (f_error_is_error(status)) {
             firewall_macro_delete_fss_buffers(status2, local.buffer, local.chain_objects, local.chain_contents)
             firewall_delete_data(data);
             return status;
@@ -648,7 +658,7 @@ extern "C"{
 
             status = firewall_process_rules(&input, &local, data);
 
-            if (status != f_none || command == firewall_parameter_command_stop) {
+            if (f_error_is_error(status) || command == firewall_parameter_command_stop) {
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
               return status;
@@ -662,7 +672,7 @@ extern "C"{
         firewall_delete_local_data(&local);
       } else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: You did not pass a command");
-        status = f_invalid_parameter;
+        status = f_error_set_error(f_invalid_parameter);
       }
     }
 

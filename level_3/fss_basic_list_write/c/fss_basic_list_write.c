@@ -104,25 +104,27 @@ extern "C"{
 
 #ifndef _di_fss_basic_list_write_main_
   f_return_status fss_basic_list_write_main(const f_array_length argc, const f_string argv[], fss_basic_list_write_data *data) {
-    f_status status            = f_status_initialize;
-    f_status allocation_status = f_status_initialize;
+    f_status status = f_status_initialize;
+    f_status status2 = f_status_initialize;
 
     status = fl_process_parameters(argc, argv, data->parameters, fss_basic_list_write_total_parameters, &data->remaining);
 
     // load colors when not told to show no colors
     if (data->parameters[fss_basic_list_write_parameter_no_color].result == f_console_result_none) {
-      fll_new_color_context(allocation_status, data->context);
+      fll_new_color_context(status2, data->context);
 
-      if (allocation_status == f_none) {
-        fll_colors_load_context(&data->context, data->parameters[fss_basic_list_write_parameter_light].result == f_console_result_found);
-      } else {
+      if (f_error_is_error(status2)) {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
         fss_basic_list_write_delete_data(data);
-        return allocation_status;
+        return status2;
+      } else {
+        fll_colors_load_context(&data->context, data->parameters[fss_basic_list_write_parameter_light].result == f_console_result_found);
       }
     }
 
-    if (status != f_none) {
+    if (f_error_is_error(status)) {
+      status = f_error_unmask(status);
+
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // TODO: there is a way to identify which parameter is incorrect
@@ -133,11 +135,11 @@ extern "C"{
       } else if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
       } else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", status);
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", f_error_set_error(status));
       }
 
       fss_basic_list_write_delete_data(data);
-      return status;
+      return f_error_set_error(status);
     }
 
     // execute parameter results
@@ -160,7 +162,9 @@ extern "C"{
 
         status = fl_file_read_fifo(file, &input);
 
-        if (status != f_none) {
+        if (f_error_is_error(status)) {
+          status = f_error_unmask(status);
+
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           } else if (status == f_file_not_found) {
@@ -170,12 +174,12 @@ extern "C"{
           } else if (status == f_file_descriptor_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
           } else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_error_set_error(status));
           }
 
-          f_delete_dynamic_string(status, input);
+          f_delete_dynamic_string(status2, input);
           fss_basic_list_write_delete_data(data);
-          return status;
+          return f_error_set_error(status);
         }
 
         location.start = 0;
@@ -184,14 +188,14 @@ extern "C"{
         if (object) {
           status = fl_fss_basic_list_object_write(input, &location, &buffer);
 
-          if (f_macro_test_for_no_data_errors(status)) {
-            return status;
+          if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
+            return f_error_set_error(status);
           }
         } else {
           status = fl_fss_basic_list_content_write(input, &location, &buffer);
 
-          if (f_macro_test_for_no_data_errors(status)) {
-            return status;
+          if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
+            return f_error_set_error(status);
           }
         }
 
@@ -208,14 +212,14 @@ extern "C"{
         if (object) {
           status = fl_fss_basic_list_object_write(input, &location, &buffer);
 
-          if (f_macro_test_for_no_data_errors(status)) {
-            return status;
+          if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
+            return f_error_set_error(status);
           }
         } else {
           status = fl_fss_basic_list_content_write(input, &location, &buffer);
 
-          if (f_macro_test_for_no_data_errors(status)) {
-            return status;
+          if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
+            return f_error_set_error(status);
           }
         }
 
@@ -228,7 +232,9 @@ extern "C"{
         output.mode = f_file_write_append;
         status = f_file_open(&output, argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
 
-        if (status != f_none) {
+        if (f_error_is_error(status)) {
+          status = f_error_unmask(status);
+
           f_file_close(&output);
 
           if (status == f_invalid_parameter) {
@@ -240,27 +246,29 @@ extern "C"{
           } else if (status == f_file_descriptor_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
           } else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_error_set_error(status));
           }
 
           fss_basic_list_write_delete_data(data);
-          return status;
+          return f_error_set_error(status);
         }
 
         status = fl_file_write(output, buffer);
         f_file_close(&output);
 
-        if (status != f_none) {
+        if (f_error_is_error(status)) {
+          status = f_error_unmask(status);
+
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");
           } else if (status == f_file_write_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
           } else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", status);
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", f_error_set_error(status));
           }
 
           fss_basic_list_write_delete_data(data);
-          return status;
+          return f_error_set_error(status);
         }
       } else {
         f_print_dynamic_string(f_standard_output, buffer);
@@ -274,8 +282,8 @@ extern "C"{
 
 #ifndef _di_fss_basic_list_write_delete_data_
   f_return_status fss_basic_list_write_delete_data(fss_basic_list_write_data *data) {
-    f_status        status = f_status_initialize;
-    f_string_length i      = 0;
+    f_status status = f_status_initialize;
+    f_string_length i = 0;
 
     while (i < fss_basic_list_write_total_parameters) {
       f_delete_string_lengths(status, data->parameters[i].additional);

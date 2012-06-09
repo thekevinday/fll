@@ -45,36 +45,36 @@ extern "C"{
 
   #define fll_new_color_context(status, color_context) \
     f_resize_dynamic_string(status, color_context.reset, f_color_max_size + 1); \
-    if (status == f_none) f_resize_dynamic_string(status, color_context.warning,      f_color_max_size + 1); \
-    if (status == f_none) f_resize_dynamic_string(status, color_context.error,        f_color_max_size + 1); \
-    if (status == f_none) f_resize_dynamic_string(status, color_context.title,        f_color_max_size + 1); \
-    if (status == f_none) f_resize_dynamic_string(status, color_context.notable,      f_color_max_size + 1); \
-    if (status == f_none) f_resize_dynamic_string(status, color_context.important,    f_color_max_size + 1); \
-    if (status == f_none) f_resize_dynamic_string(status, color_context.standout,     f_color_max_size + 1); \
-    if (status == f_none) f_resize_dynamic_string(status, color_context.normal,       f_color_max_size + 1); \
-    if (status == f_none) f_resize_dynamic_string(status, color_context.normal_reset, f_color_max_size + 1);
+    if (f_error_is_not_error(status)) f_resize_dynamic_string(status, color_context.warning,      f_color_max_size + 1); \
+    if (f_error_is_not_error(status)) f_resize_dynamic_string(status, color_context.error,        f_color_max_size + 1); \
+    if (f_error_is_not_error(status)) f_resize_dynamic_string(status, color_context.title,        f_color_max_size + 1); \
+    if (f_error_is_not_error(status)) f_resize_dynamic_string(status, color_context.notable,      f_color_max_size + 1); \
+    if (f_error_is_not_error(status)) f_resize_dynamic_string(status, color_context.important,    f_color_max_size + 1); \
+    if (f_error_is_not_error(status)) f_resize_dynamic_string(status, color_context.standout,     f_color_max_size + 1); \
+    if (f_error_is_not_error(status)) f_resize_dynamic_string(status, color_context.normal,       f_color_max_size + 1); \
+    if (f_error_is_not_error(status)) f_resize_dynamic_string(status, color_context.normal_reset, f_color_max_size + 1);
 
   #define fll_delete_color_context(status, color_context) \
     f_delete_dynamic_string(status, color_context.reset); \
-    if (status == f_none) f_delete_dynamic_string(status, color_context.warning); \
-    if (status == f_none) f_delete_dynamic_string(status, color_context.error); \
-    if (status == f_none) f_delete_dynamic_string(status, color_context.title); \
-    if (status == f_none) f_delete_dynamic_string(status, color_context.notable); \
-    if (status == f_none) f_delete_dynamic_string(status, color_context.important); \
-    if (status == f_none) f_delete_dynamic_string(status, color_context.standout); \
-    if (status == f_none) f_delete_dynamic_string(status, color_context.normal); \
-    if (status == f_none) f_delete_dynamic_string(status, color_context.normal_reset);
+    if (f_error_is_not_error(status)) f_delete_dynamic_string(status, color_context.warning); \
+    if (f_error_is_not_error(status)) f_delete_dynamic_string(status, color_context.error); \
+    if (f_error_is_not_error(status)) f_delete_dynamic_string(status, color_context.title); \
+    if (f_error_is_not_error(status)) f_delete_dynamic_string(status, color_context.notable); \
+    if (f_error_is_not_error(status)) f_delete_dynamic_string(status, color_context.important); \
+    if (f_error_is_not_error(status)) f_delete_dynamic_string(status, color_context.standout); \
+    if (f_error_is_not_error(status)) f_delete_dynamic_string(status, color_context.normal); \
+    if (f_error_is_not_error(status)) f_delete_dynamic_string(status, color_context.normal_reset);
 
   #define fll_destroy_color_context(status, color_context, size) \
     f_destroy_dynamic_string(status, color_context.reset); \
-    if (status == f_none) f_destroy_dynamic_string(status, color_context.warning, size); \
-    if (status == f_none) f_destroy_dynamic_string(status, color_context.error, size); \
-    if (status == f_none) f_destroy_dynamic_string(status, color_context.title, size); \
-    if (status == f_none) f_destroy_dynamic_string(status, color_context.notable, size); \
-    if (status == f_none) f_destroy_dynamic_string(status, color_context.important, size); \
-    if (status == f_none) f_destroy_dynamic_string(status, color_context.standout, size); \
-    if (status == f_none) f_destroy_dynamic_string(status, color_context.normal); \
-    if (status == f_none) f_destroy_dynamic_string(status, color_context.normal_reset);
+    if (f_error_is_not_error(status)) f_destroy_dynamic_string(status, color_context.warning, size); \
+    if (f_error_is_not_error(status)) f_destroy_dynamic_string(status, color_context.error, size); \
+    if (f_error_is_not_error(status)) f_destroy_dynamic_string(status, color_context.title, size); \
+    if (f_error_is_not_error(status)) f_destroy_dynamic_string(status, color_context.notable, size); \
+    if (f_error_is_not_error(status)) f_destroy_dynamic_string(status, color_context.important, size); \
+    if (f_error_is_not_error(status)) f_destroy_dynamic_string(status, color_context.standout, size); \
+    if (f_error_is_not_error(status)) f_destroy_dynamic_string(status, color_context.normal); \
+    if (f_error_is_not_error(status)) f_destroy_dynamic_string(status, color_context.normal_reset);
 #endif // _di_fll_color_context_
 
 #ifndef _di_fll_colors_load_context_

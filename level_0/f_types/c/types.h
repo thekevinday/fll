@@ -14,6 +14,16 @@
  *   long:      2^128 = 3.40282e38
  *   long long: 2^256 = 1.15792e77
  *
+ * If you need exact size, use one of the following:
+ *   int8_t:   2^8 (signed)
+ *   uint8_t:  2^8 (unsigned)
+ *   int16_t:  2^16 (signed)
+ *   uint16_t: 2^16 (unsigned)
+ *   int32_t:  2^32 (signed)
+ *   uint32_t: 2^32 (unsigned)
+ *   int64_t:  2^64 (signed)
+ *   uint64_t: 2^64 (unsigned)
+ *
  * TODO: Should a range type be implemented? (ie: f_range_short_long -> min=short, max=long)
  */
 #ifndef _F_types_h
@@ -22,6 +32,7 @@
 // libc includes
 #include <sys/stat.h> // contains mode_t, dev_t, gid_t, uid_t, etc..
 #include <signal.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C"{
@@ -98,7 +109,7 @@ extern "C"{
 #endif // _di_f_types_max
 
 #ifndef _di_f_status_
-  typedef f_u_short f_status;
+  typedef uint16_t f_status;
 
   #define f_status_initialize  0
 
