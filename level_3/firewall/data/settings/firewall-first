@@ -67,9 +67,19 @@ main:
   rule -m state --state NEW -j input-udp
 
 
-  # send all tcp packets to the tcp queue
+  # send all ipv4 icmp packets to the icmp queue
+  tool iptables
   direction output
   protocol icmp
+  rule -m state --state NEW -j output-icmp
+
+  direction input
+  rule -m state --state NEW -j input-icmp
+
+  # send all ipv6 icmp packets to the icmp queue
+  tool ip6tables
+  direction output
+  protocol icmpv6
   rule -m state --state NEW -j output-icmp
 
   direction input

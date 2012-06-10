@@ -101,14 +101,12 @@ output-udp:
 
 
 input-icmp:
+  tool iptables
   direction input
   protocol icmp
 
   # allow all icmp input, such as pings
   #rule -m state --state NEW -j ACCEPT
-
-  # ip6tables does not support --icmp-type with its icmp packets
-  tool iptables
 
   # allow icmp: echo reply (outbound ping)
   #rule --icmp-type 0 -m state --state NEW -j ACCEPT
@@ -162,6 +160,199 @@ input-icmp:
 output-icmp:
   direction output
   protocol icmp
+
+  # allow icmp output, such as pings
+  rule -m state --state NEW -j ACCEPT
+
+
+input-icmp:
+  direction input
+
+
+  # ipv4 icmp
+  tool iptables
+  protocol icmp
+
+  # allow all icmp input, such as pings
+  #rule -m state --state NEW -j ACCEPT
+
+  # allow icmp: echo reply (outbound ping)
+  #rule --icmp-type 0 -m state --state NEW -j ACCEPT
+
+  # allow icmp: destination unreachable
+  rule --icmp-type 3 -m state --state NEW -j ACCEPT
+
+  # allow icmp: source quench
+  rule --icmp-type 4 -m state --state NEW -j ACCEPT
+
+  # allow icmp: redirect
+  rule --icmp-type 5 -m state --state NEW -j ACCEPT
+
+  # allow icmp: echo request (inbound ping)
+  rule --icmp-type 8 -m state --state NEW -j ACCEPT
+
+  # allow icmp: router advertisement
+  rule --icmp-type 9 -m state --state NEW -j ACCEPT
+
+  # allow icmp: router Solicitation
+  rule --icmp-type 10 -m state --state NEW -j ACCEPT
+
+  # allow icmp: time exceeded
+  rule --icmp-type 11 -m state --state NEW -j ACCEPT
+
+  # allow icmp: bad ip header
+  rule --icmp-type 12 -m state --state NEW -j ACCEPT
+
+  # allow icmp: timestamp
+  rule --icmp-type 13 -m state --state NEW -j ACCEPT
+
+  # allow icmp: timestamp reply
+  rule --icmp-type 14 -m state --state NEW -j ACCEPT
+
+  # allow icmp: information request
+  rule --icmp-type 15 -m state --state NEW -j ACCEPT
+
+  # allow icmp: information reply
+  rule --icmp-type 16 -m state --state NEW -j ACCEPT
+
+  # allow icmp: address request
+  rule --icmp-type 17 -m state --state NEW -j ACCEPT
+
+  # allow icmp: address reply
+  rule --icmp-type 18 -m state --state NEW -j ACCEPT
+
+  # allow icmp: traceroute
+  #rule --icmp-type 30 -m state --state NEW -j ACCEPT
+
+
+  # ipv6 icmp
+  tool ip6tables
+  protocol icmpv6
+
+  # allow all icmp input
+  #rule -m state --state NEW -j ACCEPT
+
+  # destination uncreachable
+  rule --icmpv6-type 1 -m state --state NEW -j ACCEPT
+
+  # packet too big
+  rule --icmpv6-type 2 -m state --state NEW -j ACCEPT
+
+  # time exceeded
+  rule --icmpv6-type 3 -m state --state NEW -j ACCEPT
+
+  # parameter problem
+  rule --icmpv6-type 4 -m state --state NEW -j ACCEPT
+
+  # Private experimentation
+  #rule --icmpv6-type 100 -m state --state NEW -j ACCEPT
+  #rule --icmpv6-type 101 -m state --state NEW -j ACCEPT
+
+  # echo request
+  rule --icmpv6-type 128 -m state --state NEW -j ACCEPT
+
+  # echo reply
+  #rule --icmpv6-type 129 -m state --state NEW -j ACCEPT
+
+  # multiclass listener
+  rule --icmpv6-type 130 -m state --state NEW -j ACCEPT
+
+  # multiclass listener report
+  rule --icmpv6-type 131 -m state --state NEW -j ACCEPT
+
+  # multiclass listener done
+  rule --icmpv6-type 132 -m state --state NEW -j ACCEPT
+
+  # router solicitation
+  rule --icmpv6-type 133 -m state --state NEW -j ACCEPT
+
+  # router advertisement
+  rule --icmpv6-type 134 -m state --state NEW -j ACCEPT
+
+  # neighbor solicitation
+  rule --icmpv6-type 135 -m state --state NEW -j ACCEPT
+
+  # neighbor advertisement
+  rule --icmpv6-type 136 -m state --state NEW -j ACCEPT
+
+  # redirect messages
+  rule --icmpv6-type 137 -m state --state NEW -j ACCEPT
+
+  # router renumbering
+  rule --icmpv6-type 138 -m state --state NEW -j ACCEPT
+
+  # icmp node information query
+  rule --icmpv6-type 139 -m state --state NEW -j ACCEPT
+
+  # icmp node information response
+  rule --icmpv6-type 140 -m state --state NEW -j ACCEPT
+
+  # inverse neighbor discoverey solicitation message
+  rule --icmpv6-type 141 -m state --state NEW -j ACCEPT
+
+  # inverse neighbor discoverey advertisement message
+  rule --icmpv6-type 142 -m state --state NEW -j ACCEPT
+
+  # multicast listener discovery reports
+  rule --icmpv6-type 143 -m state --state NEW -j ACCEPT
+
+  # home agent address discovery request message
+  rule --icmpv6-type 144 -m state --state NEW -j ACCEPT
+
+  # home agent address discovery reply message
+  rule --icmpv6-type 145 -m state --state NEW -j ACCEPT
+
+  # mobile prefix solicitation
+  rule --icmpv6-type 146 -m state --state NEW -j ACCEPT
+
+  # mobile prefix advertisement
+  rule --icmpv6-type 147 -m state --state NEW -j ACCEPT
+
+  # certification path solicitation
+  rule --icmpv6-type 148 -m state --state NEW -j ACCEPT
+
+  # certification path advertisement
+  rule --icmpv6-type 149 -m state --state NEW -j ACCEPT
+
+  # used by experimental protocol
+  #rule --icmpv6-type 150 -m state --state NEW -j ACCEPT
+
+  # multicast router solicitation
+  rule --icmpv6-type 151 -m state --state NEW -j ACCEPT
+
+  # multicast router advertisement
+  rule --icmpv6-type 152 -m state --state NEW -j ACCEPT
+
+  # multicast router termination
+  rule --icmpv6-type 153 -m state --state NEW -j ACCEPT
+
+  # fmipv6 control messages
+  rule --icmpv6-type 154 -m state --state NEW -j ACCEPT
+
+  # rpl control messages
+  rule --icmpv6-type 155 -m state --state NEW -j ACCEPT
+
+  # private experimentation
+  #rule --icmpv6-type 200 -m state --state NEW -j ACCEPT
+  #rule --icmpv6-type 201 -m state --state NEW -j ACCEPT
+
+
+output-icmp:
+  direction output
+  protocol icmp
+
+
+  # ipv4 icmp
+  tool iptables
+  protocol icmp
+
+  # allow icmp output, such as pings
+  rule -m state --state NEW -j ACCEPT
+
+
+  # ipv6 icmp
+  tool ip6tables
+  protocol icmpv6
 
   # allow icmp output, such as pings
   rule -m state --state NEW -j ACCEPT
