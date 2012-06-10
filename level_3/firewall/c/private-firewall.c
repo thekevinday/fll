@@ -222,7 +222,7 @@
 
           if (f_error_is_error(status)) break;
 
-          if (fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_protocol_none, length, firewall_protocol_none_length) == f_equal_to) {
+          if (fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_protocol_none, length, firewall_protocol_none_length) == f_equal_to) {
             use_protocol = f_false;
           } else {
             strncat(protocol.string, local.buffer.string + local.rule_contents.array[i].array[0].start, length);
