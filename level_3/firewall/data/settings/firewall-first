@@ -1,8 +1,4 @@
 # fss-0002
-# valid direction: input, output, forward, postrouting, postrouting-output, postrouting-input, prerouting, prerouting-output, prerouting-input, none
-# valid device: all, this, (any device name goes here without parenthesis)
-# valid action: append, insert, policy, none
-# valid procotol: none, (any valid iptables protocol type, such as tcp, udp, and icmp)
 
 main:
   # initialize the firewall
@@ -31,8 +27,10 @@ main:
   # the above loopback rules should catch all true loopback connections
   # the following loopback rules will only catch anything if a loopback spoofing is happending
   # therefore, do not allow spoof by DROPing
+  #tool iptables
   #rule -s 127.0.0.1 -j DROP
   #rule -d 127.0.0.1 -j DROP
+  #tool ip46tables
 
 
   # Drop all INVALID packets so they aren't even processed
@@ -94,7 +92,9 @@ input-udp:
   protocol udp
 
   # Allow dhcp client renewals. If these are blocked, you will not be able to renew easily
+  tool iptables
   rule -s 0.0.0.0 --sport 67 -d 255.255.255.255 --dport 68 -j ACCEPT
+  tool ip46tables
 
 
 input-icmp:

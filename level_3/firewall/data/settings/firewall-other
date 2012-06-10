@@ -1,8 +1,4 @@
 # fss-0002
-# valid direction: input, output, forward, postrouting, postrouting-output, postrouting-input, prerouting, prerouting-output, prerouting-input, none
-# valid device: all, this, (any device name goes here without parenthesis)
-# valid action: append, insert, policy, none
-# valid procotol: none, (any valid iptables protocol type, such as tcp, udp, and icmp)
 
 stop:
   action policy
@@ -19,11 +15,18 @@ stop:
   direction none
   action none
   rule --flush
+
+  tool iptables
   rule -t nat --flush
   rule -t mangle --flush
+  tool ip46tables
+
   rule --delete-chain
+
+  tool iptables
   rule -t nat --delete-chain
   rule -t mangle --delete-chain
+  tool ip46tables
 
 lock:
   action policy
@@ -40,15 +43,20 @@ lock:
   direction none
   action none
   rule --flush
+
+  tool iptables
   rule -t nat --flush
   rule -t mangle --flush
+  tool ip46tables
+
   rule --delete-chain
+
+  tool iptables
   rule -t nat --delete-chain
   rule -t mangle --delete-chain
+  tool ip46tables
 
   action insert
   direction input
   device lo
   rule -j ACCEPT
-
-  direction output

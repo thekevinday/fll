@@ -61,7 +61,6 @@ extern "C"{
   #define firewall_file_last    "firewall-last"
   #define firewall_file_other   "firewall-other"
   #define firewall_file_suffix  "-firewall"
-  #define firewall_program_name "iptables"
 
   #define network_path_length          13
   #define network_devices_length       15
@@ -69,7 +68,6 @@ extern "C"{
   #define firewall_file_last_length    13
   #define firewall_file_other_length   14
   #define firewall_file_suffix_length  9
-  #define firewall_program_name_length 8
 #endif // _di_firewall_paths_
 
 #ifndef _di_firewall_default_allocation_step_
@@ -77,6 +75,18 @@ extern "C"{
 #endif // _di_firewall_default_allocation_step_
 
 #ifndef _di_firewall_defines_
+  #define firewall_tool            "tool"
+  #define firewall_tool_iptables   "iptables"
+  #define firewall_tool_ip6tables  "ip6tables"
+  #define firewall_tool_ip46tables "ip46tables"
+  #define firewall_tool_ipset      "ipset"
+
+  #define firewall_tool_length            4
+  #define firewall_tool_iptables_length   8
+  #define firewall_tool_ip6tables_length  9
+  #define firewall_tool_ip46tables_length 10
+  #define firewall_tool_ipset_length      5
+
   #define firewall_group_stop "stop"
   #define firewall_group_lock "lock"
   #define firewall_group_main "main"
@@ -206,6 +216,13 @@ extern "C"{
   #define firewall_chain_create_command_length 2
   #define firewall_chain_unchain_command_length 2
 
+  enum {
+    firewall_program_none,
+    firewall_program_iptables,
+    firewall_program_ip6tables,
+    firewall_program_ip46tables,
+    firewall_program_ipset,
+  };
 
   enum {
     firewall_parameter_help,

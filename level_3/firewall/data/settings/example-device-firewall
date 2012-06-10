@@ -1,4 +1,9 @@
 # fss-0002
+# valid tool: iptables, ip6tables, ip46tables (ip46tables = both ip4 and ip6 tables, which is the default)
+# valid direction: input, output, forward, postrouting, postrouting-output, postrouting-input, prerouting, prerouting-output, prerouting-input, none
+# valid device: all, this, (any device name goes here without parenthesis)
+# valid action: append, insert, policy, none
+# valid procotol: none, (any valid iptables protocol type, such as tcp, udp, and icmp)
 
 main:
   device this
@@ -21,8 +26,10 @@ input-tcp:
   #rule --dport 80 -m state --state NEW -j ACCEPT
 
   ## Http / Web redirect to Https / Secure Web
+  #tool iptables
   #direction prerouting-input
   #rule -t nat --dport 80 -m state --state NEW -j REDIRECT --to-port 443
+  #tool ip46tables
   #direction input
 
   ## Https / Secure Web

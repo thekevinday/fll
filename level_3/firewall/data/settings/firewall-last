@@ -1,8 +1,4 @@
 # fss-0002
-# valid direction: input, output, forward, postrouting, postrouting-output, postrouting-input, prerouting, prerouting-output, prerouting-input, none
-# valid device: all, this, (any device name goes here without parenthesis)
-# valid action: append, insert, policy, none
-# valid procotol: none, (any valid iptables protocol type, such as tcp, udp, and icmp)
 
 main:
   direction input
@@ -110,6 +106,9 @@ input-icmp:
 
   # allow all icmp input, such as pings
   #rule -m state --state NEW -j ACCEPT
+
+  # ip6tables does not support --icmp-type with its icmp packets
+  tool iptables
 
   # allow icmp: echo reply (outbound ping)
   #rule --icmp-type 0 -m state --state NEW -j ACCEPT

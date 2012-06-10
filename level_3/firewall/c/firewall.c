@@ -260,7 +260,7 @@ extern "C"{
 
             arguments.used = 7;
 
-            arguments.array[0].string = (f_string) firewall_program_name;
+            arguments.array[0].string = (f_string) firewall_tool_iptables;
             arguments.array[1].string = (f_string) "-x";
             arguments.array[2].string = (f_string) "-v";
             arguments.array[3].string = (f_string) "-t";
@@ -268,7 +268,7 @@ extern "C"{
             arguments.array[5].string = (f_string) "--numeric";
             arguments.array[6].string = (f_string) "--list";
 
-            arguments.array[0].used = firewall_program_name_length;
+            arguments.array[0].used = firewall_tool_iptables_length;
             arguments.array[1].used = 2;
             arguments.array[2].used = 2;
             arguments.array[3].used = 2;
@@ -276,7 +276,7 @@ extern "C"{
             arguments.array[5].used = 9;
             arguments.array[6].used = 6;
 
-            status = fll_execute_program((f_string) firewall_program_name, arguments, &results);
+            status = fll_execute_program((f_string) firewall_tool_iptables, arguments, &results);
 
             fprintf(f_standard_output, "\n");
             fflush(f_standard_output);
@@ -290,7 +290,7 @@ extern "C"{
 
             arguments.used = 7;
 
-            arguments.array[0].string = (f_string) firewall_program_name;
+            arguments.array[0].string = (f_string) firewall_tool_iptables;
             arguments.array[1].string = (f_string) "-x";
             arguments.array[2].string = (f_string) "-v";
             arguments.array[3].string = (f_string) "-t";
@@ -298,7 +298,7 @@ extern "C"{
             arguments.array[5].string = (f_string) "--numeric";
             arguments.array[6].string = (f_string) "--list";
 
-            arguments.array[0].used = firewall_program_name_length;
+            arguments.array[0].used = firewall_tool_iptables_length;
             arguments.array[1].used = 2;
             arguments.array[2].used = 2;
             arguments.array[3].used = 2;
@@ -306,7 +306,7 @@ extern "C"{
             arguments.array[5].used = 9;
             arguments.array[6].used = 6;
 
-            status = fll_execute_program((f_string) firewall_program_name, arguments, &results);
+            status = fll_execute_program((f_string) firewall_tool_iptables, arguments, &results);
 
             fprintf(f_standard_output, "\n");
             fflush(f_standard_output);
@@ -320,19 +320,19 @@ extern "C"{
 
             arguments.used = 5;
 
-            arguments.array[0].string = (f_string) firewall_program_name;
+            arguments.array[0].string = (f_string) firewall_tool_iptables;
             arguments.array[1].string = (f_string) "-x";
             arguments.array[2].string = (f_string) "-v";
             arguments.array[3].string = (f_string) "--numeric";
             arguments.array[4].string = (f_string) "--list";
 
-            arguments.array[0].used = firewall_program_name_length;
+            arguments.array[0].used = firewall_tool_iptables_length;
             arguments.array[1].used = 2;
             arguments.array[2].used = 2;
             arguments.array[3].used = 9;
             arguments.array[4].used = 6;
 
-            status = fll_execute_program((f_string) firewall_program_name, arguments, &results);
+            status = fll_execute_program((f_string) firewall_tool_iptables, arguments, &results);
 
             fprintf(f_standard_output, "\n");
             fflush(f_standard_output);
@@ -344,7 +344,7 @@ extern "C"{
             if (f_macro_test_for_allocation_errors(status)) {
               fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
             } else {
-              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_program_name);
+              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_tool_iptables);
               fprintf(f_standard_error, "  ");
 
               f_string_length i = 0;
