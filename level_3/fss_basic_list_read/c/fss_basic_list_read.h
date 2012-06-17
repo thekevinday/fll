@@ -87,7 +87,7 @@ extern "C"{
       f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_false, f_console_type_normal, 0), \
       f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
-      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_inverse, 0), \
       f_console_parameter_initialize(fss_basic_list_read_short_name, fss_basic_list_read_long_name, 0, 0, f_true, f_console_type_normal, 0), \
       f_console_parameter_initialize(fss_basic_list_read_short_count, fss_basic_list_read_long_count, 0, 0, f_true, f_console_type_normal, 0), \
       f_console_parameter_initialize(fss_basic_list_read_short_total, fss_basic_list_read_long_total, 0, 0, f_false, f_console_type_normal, 0), \

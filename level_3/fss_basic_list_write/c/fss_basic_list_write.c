@@ -52,10 +52,10 @@ extern "C"{
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_no_color);
     printf("  Do not output in color");
 
-    printf("\n  %s", f_console_symbol_short_enable);
+    printf("\n  %s", f_console_symbol_short_disable);
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_version);
 
-    printf(", %s", f_console_symbol_long_enable);
+    printf(", %s", f_console_symbol_long_disable);
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
     printf("   Print only the version number");
 
