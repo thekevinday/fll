@@ -758,7 +758,7 @@
 
                           break;
                         } else if (status == f_invalid_parameter) {
-                          fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_execute_path()");
+                          fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_execute_path()");
 
                           arguments.used--;
                           arguments.array[arguments.used].string = 0;
@@ -815,7 +815,7 @@
 
               break;
             } else if (status == f_invalid_parameter) {
-              fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_execute_path()");
+              fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_execute_path()");
               break;
             }
           }
@@ -1041,7 +1041,7 @@
             fl_print_color_code(f_standard_error, data->context.reset);
             fprintf(f_standard_error, "\n");
           } else if (status == f_invalid_parameter) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_execute_path()");
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_execute_path()");
           } else {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_execute_program()", f_error_set_error(status));
           }
