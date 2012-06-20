@@ -1,5 +1,6 @@
 # fss-0002
 
+
 main:
   # initialize the firewall
   direction none
@@ -7,8 +8,11 @@ main:
 
   rule -F
   rule -Z
+
+  tool iptables
   rule -t nat -F
   rule -t mangle -F
+  tool ip46tables
 
   # setup initial operations
   direction input
