@@ -428,6 +428,10 @@ extern "C"{
                   }
 
                   if (data->parameters[fss_extended_read_parameter_count].result == f_console_result_additional) {
+                    if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
+                      total = data->contents.array[current].used;
+                    }
+
                     if (found == target) {
                       break;
                     } else {
@@ -438,7 +442,7 @@ extern "C"{
               }
             } // for
 
-            if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found && data->parameters[fss_extended_read_parameter_count].result == f_console_result_none) {
+            if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
               fprintf(f_standard_output, f_string_length_printf "\n", total);
             }
           } else {
