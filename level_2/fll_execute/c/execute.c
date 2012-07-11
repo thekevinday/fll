@@ -28,7 +28,7 @@ extern "C"{
 
     f_string        last_slash   = f_string_initialize;
     f_string        program_name = f_string_initialize;
-    f_string_length name_size    = program_path;
+    f_string_length name_size    = 0;
 
     last_slash = strrchr(program_path, '/');
 
