@@ -76,6 +76,9 @@ extern "C"{
     process_id = vfork();
 
     if (process_id < 0) {
+      if (name_size > 0) f_delete_string(status, program_name, name_size);
+      f_delete((void **) & arguments_array, sizeof(f_autochar), arguments.used + 2);
+
       return f_error_set_error(f_fork_failed);
     }
 
@@ -135,6 +138,8 @@ extern "C"{
     process_id = vfork();
 
     if (process_id < 0) {
+      f_delete((void **) & arguments_array, sizeof(f_autochar), arguments.used + 2);
+
       return f_error_set_error(f_fork_failed);
     }
 
