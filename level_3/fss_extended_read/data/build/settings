@@ -4,8 +4,8 @@ project_name fss_extended_read
 project_level 3
 
 version_major 0
-version_minor 3
-version_micro 1
+version_minor 4
+version_micro 0
 
 build_compiler gcc
 build_libraries -lc -lf_memory -lf_console -lf_conversion -lf_print -lf_file -lfl_fss -lfl_console -lfl_file -lfl_strings -lfl_colors -lfl_directory -lfll_execute -lfll_fss -lfll_colors -lf_pipe
