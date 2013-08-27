@@ -2,7 +2,7 @@
 # license: lgpl-2.1
 # programmer: Kevin Day
 #
-# The purpose of this script is to provide a simple bootstrap tool to compile and install any part of the FLL project.
+# The purpose of this script is to provide a simple bootstrap tool to compile any part of the FLL project.
 # The dependencies of this script are: bash, grep, and sed.
 
 generate_main(){
@@ -361,8 +361,6 @@ generate_cleanup(){
   unset generate_load_settings
   unset generate_prepare_build
   unset generate_operation_build
-  unset generate_operation_install
-  unset generate_operation_uninstall
   unset generate_operation_clean
   unset generate_cleanup
 }
