@@ -121,6 +121,16 @@ generate_main(){
 
       generate_operation_build
     fi
+  elif [[ $operation == "build_alt" ]] ; then
+    if [[ -f ${path_build}.built ]] ; then
+      echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
+    else
+      if [[ ! -f ${path_build}.prepared ]] ; then
+        generate_prepare_build alt
+      fi
+
+      generate_operation_build alt
+    fi
   elif [[ $operation == "clean" ]] ; then
     generate_operation_clean
   elif [[ $operation == "fail-multiple" ]] ; then
@@ -159,8 +169,9 @@ generate_help(){
   echo -e " ${c_notice}Version $version$c_reset"
   echo
   echo -e "$c_highlight$system_name$c_reset $c_notice<${c_reset}operation$c_notice>$c_reset"
-  echo -e " ${c_important}build${c_reset}  Build or compile the code"
-  echo -e " ${c_important}clean${c_reset}  Delete all build files"
+  echo -e " ${c_important}build${c_reset}      Build or compile the code"
+  echo -e " ${c_important}build_alt${c_reset}  Build or compile the code (workaround for certain systems)"
+  echo -e " ${c_important}clean${c_reset}      Delete all build files"
   echo
   echo -e "${c_highlight}Options:$c_reset"
   echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen"
@@ -226,6 +237,7 @@ generate_load_settings(){
 generate_prepare_build(){
   local failure=
   local level=${variables[$(generate_id project_level)]}
+  local alt=$1
 
   mkdir -vp ${path_build}{includes,programs,libraries,settings} || failure=1
 
@@ -267,7 +279,9 @@ generate_operation_build(){
   local sources_headers=${variables[$(generate_id build_sources_headers)]}
   local sources_settings=${variables[$(generate_id build_sources_settings)]}
   local sources=
+  local sources_alt=
   local i=
+  local alt=$1
 
   if [[ $sources_settings != "" ]] ; then
     for i in $sources_settings ; do
@@ -283,12 +297,20 @@ generate_operation_build(){
 
   if [[ $failure == "" && $shared == "yes" ]] ; then
     if [[ $sources_library != "" ]] ; then
-      for i in $sources_library ; do
-        sources="$sources$path_c$i "
-      done
+      sources=
+      sources_alt=
+      if [[ $alt == "alt" ]] ; then
+        for i in $sources_library ; do
+          sources_alt="$sources_alt$path_c$i "
+        done
+      else
+        for i in $sources_library ; do
+          sources="$sources$path_c$i "
+        done
+      fi
 
-      echo $compiler $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]} $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/lib$name.so.$major.$minor.$micro
-      $compiler $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]} $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/lib$name.so.$major.$minor.$micro || failure=1
+      echo $compiler $sources_alt $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]} $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/lib$name.so.$major.$minor.$micro
+      $compiler $sources_alt $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]} $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/lib$name.so.$major.$minor.$micro || failure=1
 
       if [[ $failure == "" ]] ; then
         ln -vsf lib$name.so.$major.$minor.$micro ${path_build}libraries/lib$name.so.$major || failure=1
@@ -298,31 +320,53 @@ generate_operation_build(){
 
     if [[ $failure == "" && $sources_program != "" ]] ; then
       sources=
-      for i in $sources_program ; do
-        sources="$sources$path_c$i "
-      done
+      sources_alt=
+      if [[ $alt == "alt" ]] ; then
+        for i in $sources_program ; do
+          sources_alt="$sources_alt$path_c$i "
+        done
+      else
+        for i in $sources_program ; do
+          sources="$sources$path_c$i "
+        done
+      fi
 
-      echo $compiler $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]} $sources -o ${path_build}programs/$name
-      $compiler $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]} $sources -o ${path_build}programs/$name || failure=1
+      echo $compiler $sources_alt $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]} $sources -o ${path_build}programs/$name
+      $compiler $sources_alt $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]} $sources -o ${path_build}programs/$name || failure=1
     fi
   elif [[ $failure == "" ]] ; then
+    sources=
+    sources_alt=
     if [[ $sources_library != "" ]] ; then
-      for i in $sources_library ; do
-        sources="$sources$path_c$i "
-      done
+      if [[ $alt == "alt" ]] ; then
+        for i in $sources_library ; do
+          sources_alt="$sources_alt$path_c$i "
+        done
+      else
+        for i in $sources_library ; do
+          sources="$sources$path_c$i "
+        done
+      fi
 
-      echo $compiler $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} $sources -static -o ${path_build}libraries/lib$name.a
-      $compiler $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} $sources -static -o ${path_build}libraries/lib$name.a || failure=1
+      echo $compiler $sources_alt $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} $sources -static -o ${path_build}libraries/lib$name.a
+      $compiler $sources_alt $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} $sources -static -o ${path_build}libraries/lib$name.a || failure=1
     fi
 
     if [[ $failure == "" && $sources_program != "" ]] ; then
       sources=
-      for i in $sources_program ; do
-        sources="$sources$path_c$i "
-      done
+      sources_alt=
+      if [[ $alt == "alt" ]] ; then
+        for i in $sources_program ; do
+          sources_alt="$sources_alt$path_c$i "
+        done
+      else
+        for i in $sources_library ; do
+          sources="$sources$path_c$i "
+        done
+      fi
 
-      echo $compiler $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} $sources -static -o ${path_build}programs/$name
-      $compiler $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} $sources -static -o ${path_build}programs/$name || failure=1
+      echo $compiler $sources_alt $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} $sources -static -o ${path_build}programs/$name
+      $compiler $sources_alt $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} $sources -static -o ${path_build}programs/$name || failure=1
     fi
   fi
 
