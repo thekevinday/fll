@@ -308,7 +308,7 @@ generate_operation_build(){
   elif [[ $failure == "" ]] ; then
     if [[ $sources_library != "" ]] ; then
       for i in $sources_library ; do
-        sources="{sources$path_c$i "
+        sources="$sources$path_c$i "
       done
 
       echo $compiler $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} $sources -static -o ${path_build}libraries/lib$name.a
