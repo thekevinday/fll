@@ -1,6 +1,6 @@
 # FLL - Level 0
 # Project: Errors
-# Version: 0.4.x
+# Version: 0.4.2
 # Licenses: flll, lgplv2.1
 # Programmers: Kevin Day
 # Documentation: Provides error codes

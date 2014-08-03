@@ -1,6 +1,6 @@
 /* FLL - Level 3
  * Project:       Firewall
- * Version:       0.4.x
+ * Version:       0.4.2
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -44,8 +44,8 @@ extern "C"{
 
 #ifndef _di_firewall_version_
   #define firewall_major_version "0"
-  #define firewall_minor_version "3"
-  #define firewall_micro_version "0"
+  #define firewall_minor_version "4"
+  #define firewall_micro_version "2"
   #define firewall_version firewall_major_version "." firewall_minor_version "." firewall_micro_version
 #endif // _di_firewall_version_
 
