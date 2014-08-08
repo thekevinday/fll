@@ -8,7 +8,7 @@ version_minor 4
 version_micro 2
 
 build_compiler gcc
-build_libraries -lc -lf_file
+build_libraries -lc -lf_file -lf_memory
 build_sources_library file.c
 build_sources_program 
 build_sources_headers file.h
