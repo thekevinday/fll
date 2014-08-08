@@ -1,4 +1,4 @@
-# FLL - Level 0
+# FLL - Level 1
 # Project: Errors
 # Version: 0.4.2
 # Licenses: flll, lgplv2.1
