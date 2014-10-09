@@ -8,6 +8,7 @@ version_minor 4
 version_micro 2
 
 build_compiler gcc
+build_linker ar
 build_libraries -lc -lf_memory -lf_console -lfl_console -lf_conversion -lf_pipe -lf_print -lf_file -lfl_colors -lfll_colors -lfl_errors -lfl_fss -lfll_fss -lfl_file
 build_sources_library fss_basic_write.c
 build_sources_program main.c
