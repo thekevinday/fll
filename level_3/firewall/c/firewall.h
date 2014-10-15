@@ -284,19 +284,19 @@ extern "C"{
 #endif // _di_firewall_data_
 
 #ifndef _di_firewall_print_version_
-  extern f_return_status firewall_print_version(const firewall_data data);
+  f_extern f_return_status firewall_print_version(const firewall_data data);
 #endif // _di_firewall_print_version_
 
 #ifndef _di_firewall_print_help_
-  extern f_return_status firewall_print_help(const firewall_data data);
+  f_extern f_return_status firewall_print_help(const firewall_data data);
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
-  extern f_return_status firewall_main(const f_s_int argc, const f_string argv[], firewall_data *data);
+  f_extern f_return_status firewall_main(const f_s_int argc, const f_string argv[], firewall_data *data);
 #endif // _di_firewall_main_
 
 #ifndef _di_firewall_delete_data_
-  extern f_return_status firewall_delete_data(firewall_data *data);
+  f_extern f_return_status firewall_delete_data(firewall_data *data);
 #endif // _di_firewall_delete_data_
 
 #ifdef __cplusplus

@@ -198,27 +198,27 @@ extern "C"{
 #ifndef _di_f_file_open_
   // open a particular file and save its stream
   // filename = name of the file
-  extern f_return_status f_file_open(f_file *file_information, const f_string filename);
+  f_extern f_return_status f_file_open(f_file *file_information, const f_string filename);
 #endif // _di_f_file_open_
 
 #ifndef _di_f_file_close_
   // close file
-  extern f_return_status f_file_close(f_file *file_information);
+  f_extern f_return_status f_file_close(f_file *file_information);
 #endif // _di_f_file_close_
 
 #ifndef _di_f_file_flush_
   // flush file
-  extern f_return_status f_file_flush(f_file *file_information);
+  f_extern f_return_status f_file_flush(f_file *file_information);
 #endif // _di_f_file_flush_
 
 #ifndef _di_f_file_read_
   // read a given amount of data from the buffer, will auto-seek to where
-  extern f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location);
+  f_extern f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location);
 #endif // _di_f_file_read_
 
 #ifndef _di_f_file_read_fifo_
   // read a given amount of data from the buffer, will not auto seek
-  extern f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer);
+  f_extern f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer);
 #endif // _di_f_file_read_fifo_
 
 #ifdef __cplusplus

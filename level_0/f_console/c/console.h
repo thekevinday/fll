@@ -110,7 +110,7 @@ extern "C"{
 #ifndef _di_f_console_identify_
   // This is used to help standardize a single method of handling command line option parsing.
   // This should allow for every single command line program to use the same form of syntax for command line options.
-  extern f_return_status f_console_identify(const f_string input, f_console_id *result);
+  f_extern f_return_status f_console_identify(const f_string input, f_console_id *result);
 #endif // _di_f_console_identify_
 
 // perform checks against short & long options to see if the string is one of them (normal)

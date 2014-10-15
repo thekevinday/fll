@@ -68,6 +68,7 @@ extern "C"{
   #define f_fpos_t         fpos_t
   #define f_file_type      FILE *
   #define f_null           NULL
+  #define f_extern         extern
 #endif // _di_f_types_normal
 
 // The minimal types represent to the system admin or whomever else handles compilation that the data type should NOT be smaller than the specified size, but can be any size larger.

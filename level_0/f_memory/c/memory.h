@@ -67,32 +67,32 @@ extern "C"{
 #ifndef _di_f_new_
   // Create some dynamically allocated array of some length
   #define f_new(pointer,type) f_new_array(pointer, type, 1)
-  extern f_return_status f_new_array(void **pointer, const f_memory_size_t type, const f_memory_length length);
+  f_extern f_return_status f_new_array(void **pointer, const f_memory_size_t type, const f_memory_length length);
 #endif // _di_f_new_
 
 #if ! ( defined (_di_f_delete_) || defined (_f_memory_FORCE_secure_memory_) )
   // deletes some dynamically allocated data
   // f_delete, will not change any of the data to 0 prior to deallocation
   // type and length are not used by this function normally but must be provided for the cases when f_delete is swapped with f_destroy (or vice-versa)
-  extern f_return_status f_delete(void **pointer, const f_memory_size_t type, const f_memory_length length);
+  f_extern f_return_status f_delete(void **pointer, const f_memory_size_t type, const f_memory_length length);
 #endif // ! ( defined (_di_f_delete_) || defined (_f_memory_FORCE_secure_memory_) )
 
 #if ! ( defined (_di_f_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
   // securely deletes some dynamically allocated data
   // f_destroy, will change all data to 0 prior to deallocation
-  extern f_return_status f_destroy(void **pointer, const f_memory_size_t type, const f_memory_length length);
+  f_extern f_return_status f_destroy(void **pointer, const f_memory_size_t type, const f_memory_length length);
 #endif // ! ( defined (_di_f_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
 
 #if ! ( defined (_di_f_resize_) || defined (_f_memory_FORCE_secure_memory_) )
   // resizes some dynamically allocated data
   // f_resize, will not change any of the data prior to deallocation
-  extern f_return_status f_resize(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
+  f_extern f_return_status f_resize(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
 #endif // ! ( defined (_di_f_resize_) || defined (_f_memory_FORCE_secure_memory_) )
 
 #if ! ( defined (_di_f_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
   // securely resizes some dynamically allocated data
   // f_adjust, will change all data to 0 prior to deallocation
-  extern f_return_status f_adjust(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
+  f_extern f_return_status f_adjust(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
 #endif // _di_f_adjust_
 
 

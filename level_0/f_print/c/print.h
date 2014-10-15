@@ -30,7 +30,7 @@ extern "C"{
   // will not stop at \0
   // will not print \0
   // This implementation will not proces special characters, such as %s in the same way as printf functions, I am undecided whether or not to add this capability
-  extern f_return_status f_print_string(f_file_type output, const f_string string, const f_string_length length);
+  f_extern f_return_status f_print_string(f_file_type output, const f_string string, const f_string_length length);
 #endif // _di_f_print_string_
 
 #ifndef _di_f_print_dynamic_string_
@@ -39,7 +39,7 @@ extern "C"{
   // will not print \0
   // will print the entire dynamic string
   // This implementation will not proces special characters, such as %s in the same way as printf functions, I am undecided whether or not to add this capability
-  extern f_return_status f_print_dynamic_string(f_file_type output, const f_dynamic_string buffer);
+  f_extern f_return_status f_print_dynamic_string(f_file_type output, const f_dynamic_string buffer);
 #endif // _di_f_print_dynamic_string_
 
 
@@ -49,7 +49,7 @@ extern "C"{
   // will not print \0
   // will print the only the buffer range specified by location
   // This implementation will not proces special characters, such as %s in the same way as printf functions, I am undecided whether or not to add this capability
-  extern f_return_status f_print_partial_dynamic_string(f_file_type output, const f_dynamic_string buffer, const f_string_location location);
+  f_extern f_return_status f_print_partial_dynamic_string(f_file_type output, const f_dynamic_string buffer, const f_string_location location);
 #endif // _di_f_print_partial_dynamic_string_
 
 #ifdef __cplusplus

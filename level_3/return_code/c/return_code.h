@@ -104,19 +104,19 @@ extern "C"{
 #endif // _di_return_code_data_
 
 #ifndef _di_return_code_print_version_
-  extern f_return_status return_code_print_version(const return_code_data data);
+  f_extern f_return_status return_code_print_version(const return_code_data data);
 #endif // _di_return_code_print_version_
 
 #ifndef _di_return_code_print_help_
-  extern f_return_status return_code_print_help(const return_code_data data);
+  f_extern f_return_status return_code_print_help(const return_code_data data);
 #endif // _di_return_code_print_help_
 
 #ifndef _di_return_code_main_
-  extern f_return_status return_code_main(const f_array_length argc, const f_string argv[], return_code_data *data);
+  f_extern f_return_status return_code_main(const f_array_length argc, const f_string argv[], return_code_data *data);
 #endif // _di_return_code_main_
 
 #ifndef _di_return_code_delete_data_
-  extern f_return_status return_code_delete_data(return_code_data *data);
+  f_extern f_return_status return_code_delete_data(return_code_data *data);
 #endif // _di_return_code_delete_data_
 
 #ifdef __cplusplus

@@ -29,7 +29,7 @@ extern "C"{
 
 #ifndef _di_f_pipe_exists_
   // returns f_true if the standard input contains piped data.
-  extern f_return_status f_pipe_exists();
+  f_extern f_return_status f_pipe_exists();
 #endif // _di_f_pipe_exists_
 
 #ifdef __cplusplus
