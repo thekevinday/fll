@@ -34,7 +34,6 @@ generate_main(){
   local path_build=build/
   local path_c=sources/c/
   local path_bash=sources/bash/
-  local path_settings=data/settings/
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -61,8 +60,6 @@ generate_main(){
           grab_next=path_bash
         elif [[ $p == "-c" || $p == "--c_path" ]] ; then
           grab_next=path_c
-        elif [[ $p == "-S" || $p == "--settings_path" ]] ; then
-          grab_next=path_settings
         elif [[ $operation == "" ]] ; then
           operation=$p
         else
@@ -77,8 +74,6 @@ generate_main(){
           path_bash=$(echo $p | sed -e 's|/*$|/|')
         elif [[ $grab_next == "path_c" ]] ; then
           path_c=$(echo $p | sed -e 's|/*$|/|')
-        elif [[ $grab_next == "path_settings" ]] ; then
-          path_settings=$(echo $p | sed -e 's|/*$|/|')
         fi
 
         grab_next=
@@ -184,7 +179,6 @@ generate_help(){
   echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}       Specify a custom build settings file"
   echo -e " -${c_important}B$c_reset, --${c_important}bash_path${c_reset}      Specify a custom path to the bash source files"
   echo -e " -${c_important}c$c_reset, --${c_important}c_path${c_reset}         Specify a custom path to the c source files"
-  echo -e " -${c_important}S$c_reset, --${c_important}settings_path${c_reset}  Specify a custom path to the settings files"
   echo
 }
 
