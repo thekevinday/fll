@@ -34,6 +34,7 @@ generate_main(){
   local path_build=build/
   local path_c=sources/c/
   local path_bash=sources/bash/
+  local project_built=
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -60,6 +61,8 @@ generate_main(){
           grab_next=path_bash
         elif [[ $p == "-c" || $p == "--c_path" ]] ; then
           grab_next=path_c
+        elif [[ $p == "-p" || $p == "--project" ]] ; then
+          grab_next=project_built
         elif [[ $operation == "" ]] ; then
           operation=$p
         else
@@ -74,6 +77,8 @@ generate_main(){
           path_bash=$(echo $p | sed -e 's|/*$|/|')
         elif [[ $grab_next == "path_c" ]] ; then
           path_c=$(echo $p | sed -e 's|/*$|/|')
+        elif [[ $grab_next == "project_built" ]] ; then
+          project_built="-$(echo $p | sed -e 's|/*$||')"
         fi
 
         grab_next=
@@ -107,20 +112,20 @@ generate_main(){
   fi
 
   if [[ $operation == "build" ]] ; then
-    if [[ -f ${path_build}.built ]] ; then
+    if [[ -f ${path_build}.built$project_built ]] ; then
       echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
     else
-      if [[ ! -f ${path_build}.prepared ]] ; then
+      if [[ ! -f ${path_build}.prepared$project_built ]] ; then
         generate_prepare_build
       fi
 
       generate_operation_build
     fi
   elif [[ $operation == "build_alt" ]] ; then
-    if [[ -f ${path_build}.built ]] ; then
+    if [[ -f ${path_build}.built$project_built ]] ; then
       echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
     else
-      if [[ ! -f ${path_build}.prepared ]] ; then
+      if [[ ! -f ${path_build}.prepared$project_built ]] ; then
         generate_prepare_build alt
       fi
 
@@ -179,6 +184,7 @@ generate_help(){
   echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}       Specify a custom build settings file"
   echo -e " -${c_important}B$c_reset, --${c_important}bash_path${c_reset}      Specify a custom path to the bash source files"
   echo -e " -${c_important}c$c_reset, --${c_important}c_path${c_reset}         Specify a custom path to the c source files"
+  echo -e " -${c_important}p$c_reset, --${c_important}project${c_reset}        Specify a project name for storing built status"
   echo
 }
 
@@ -227,6 +233,12 @@ generate_load_settings(){
   for i in project_name project_level version_major version_minor version_micro build_compiler build_linker build_libraries build_sources_library build_sources_program build_sources_headers build_sources_settings build_shared flags_all flags_shared flags_static flags_library flags_program ; do
     variables[$(generate_id $i)]=$(grep -s -o "^[[:space:]]*$i\>.*$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
+
+  if [[ $project_name == "" ]] ; then
+    if [[ $variables['project_name'] != "" ]] ; then
+      project_built="-${variables['project_name']}"
+    fi
+  fi
 }
 
 generate_prepare_build(){
@@ -256,7 +268,7 @@ generate_prepare_build(){
     exit $failure
   fi
 
-  touch ${path_build}.prepared
+  touch ${path_build}.prepared$project_built
 }
 
 generate_operation_build(){
@@ -414,7 +426,7 @@ generate_operation_build(){
     exit $failure
   fi
 
-  touch ${path_build}.built
+  touch ${path_build}.built$project_built
 }
 
 generate_operation_clean(){
@@ -426,12 +438,12 @@ generate_operation_clean(){
     fi
   done
 
-  if [[ -f ${path_build}.prepared ]] ; then
-    rm -vf ${path_build}.prepared
+  if [[ -f ${path_build}.prepared$project_built ]] ; then
+    rm -vf ${path_build}.prepared$project_built
   fi
 
-  if [[ -f ${path_build}.built ]] ; then
-    rm -vf ${path_build}.built
+  if [[ -f ${path_build}.built$project_built ]] ; then
+    rm -vf ${path_build}.built$project_built
   fi
 }
 
