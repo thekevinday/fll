@@ -159,7 +159,7 @@ extern "C"{
 // use of an enumerator makes more sense here than explicitly defining every error code
 enum {
   #ifndef _di_f_errors_booleans_
-    f_false,
+    f_false = 0,
     f_true,
   #endif // _di_f_errors_booleans_
 
