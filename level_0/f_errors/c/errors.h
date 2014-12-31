@@ -163,8 +163,42 @@ enum {
     f_true,
   #endif // _di_f_errors_booleans_
 
+  #ifndef _di_f_errors_signals_
+    f_signal_hangup = 1,
+    f_signal_interrupt,
+    f_signal_quit,
+    f_signal_illegal,
+    f_signal_trap,
+    f_signal_abort,
+    f_signal_bus_error,
+    f_signal_floating_point_exception,
+    f_signal_kill, // unblockable
+    f_signal_user_1,
+    f_signal_segmentation_fault,
+    f_signal_user_2,
+    f_signal_broken_pipe,
+    f_signal_alarm_clock,
+    f_signal_termination,
+    f_signal_stack_fault,
+    f_signal_child,
+    f_signal_continue,
+    f_signal_stop, // unblockable
+    f_signal_keyboard_stop,
+    f_signal_tty_in,
+    f_signal_tty_out,
+    f_signal_urgent,
+    f_signal_cpu_limit,
+    f_signal_file_size_limit,
+    f_signal_virtual_alarm_clock,
+    f_signal_profile_alarm_clock,
+    f_signal_window_size_change,
+    f_signal_pollable_event,
+    f_signal_power_failure,
+    f_signal_bad_system_call,
+  #endif // _di_f_errors_signals_
+
   #ifndef _di_f_errors_basic_
-    f_none = 131,        // start at 131 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
+    f_none = 166,        // start at 166 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
     f_dummy,             // to only be used as a placeholder
     f_warn,              // warning
     f_critical,
