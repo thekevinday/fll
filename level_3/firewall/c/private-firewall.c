@@ -605,7 +605,7 @@
             }
 
             if (f_error_is_error(status)) {
-              status = f_error_unmask(status);
+              status = f_error_set_fine(status);
 
               if (status == f_invalid_parameter) {
                 fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
@@ -640,7 +640,7 @@
               f_file_close(&file);
 
               if (f_error_is_error(status)) {
-                status = f_error_unmask(status);
+                status = f_error_set_fine(status);
 
                 if (status == f_invalid_parameter) {
                   fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read()");
@@ -669,7 +669,7 @@
                 }
 
                 if (f_error_set_error(status)) {
-                  status = f_error_unmask(status);
+                  status = f_error_set_fine(status);
 
                   if (status == f_invalid_parameter) {
                     fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_read() for the file '%s'", file_path.string);
@@ -1019,7 +1019,7 @@
         }
 
         if (f_error_is_error(status)) {
-          status = f_error_unmask(status);
+          status = f_error_set_fine(status);
 
           if (status == f_failure) {
             if (tool == firewall_program_iptables) {
@@ -1068,7 +1068,7 @@
     status = f_file_open(&file, filename);
 
     if (f_error_is_error(status)) {
-      status = f_error_unmask(status);
+      status = f_error_set_fine(status);
 
       if (optional) {
         if (status == f_invalid_parameter) {
@@ -1101,7 +1101,7 @@
     f_file_close(&file);
 
     if (f_error_is_error(status)) {
-      status = f_error_unmask(status);
+      status = f_error_set_fine(status);
 
       if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read().");
@@ -1129,7 +1129,7 @@
     }
 
     if (f_error_is_error(status)) {
-      status = f_error_unmask(status);
+      status = f_error_set_fine(status);
 
       if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", filename);
@@ -1159,7 +1159,7 @@
       status = firewall_perform_commands(*local, *data);
 
       if (f_error_is_error(status)) {
-        status = f_error_unmask(status);
+        status = f_error_set_fine(status);
 
         if (f_macro_test_for_allocation_errors(status)) {
           fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");

@@ -130,7 +130,7 @@ extern "C"{
     }
 
     if (f_error_is_error(status)) {
-      status = f_error_unmask(status);
+      status = f_error_set_fine(status);
 
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
@@ -170,7 +170,7 @@ extern "C"{
         status = fl_file_read_fifo(file, &input);
 
         if (f_error_is_error(status)) {
-          status = f_error_unmask(status);
+          status = f_error_set_fine(status);
 
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
@@ -278,7 +278,7 @@ extern "C"{
         status = f_file_open(&output, argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
 
         if (f_error_is_error(status)) {
-          status = f_error_unmask(status);
+          status = f_error_set_fine(status);
 
           f_file_close(&output);
 
@@ -302,7 +302,7 @@ extern "C"{
         f_file_close(&output);
 
         if (f_error_is_error(status)) {
-          status = f_error_unmask(status);
+          status = f_error_set_fine(status);
 
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");

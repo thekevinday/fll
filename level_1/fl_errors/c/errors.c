@@ -19,7 +19,7 @@ extern "C"{
       if (string == f_null) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status umasked_error = f_error_unmask(error);
+    f_status umasked_error = f_error_set_fine(error);
 
     switch (umasked_error) {
       #ifndef _di_fl_errors_booleans_

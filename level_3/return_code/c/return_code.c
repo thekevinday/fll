@@ -136,7 +136,7 @@ extern "C"{
     }
 
     if (f_error_is_error(status)) {
-      status = f_error_unmask(status);
+      status = f_error_set_fine(status);
 
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");

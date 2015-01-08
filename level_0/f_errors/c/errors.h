@@ -142,18 +142,25 @@ extern "C"{
   #define f_error_bit_warning  16384
   #define f_error_bit_mask     49152
   #define f_error_bit_fine     16383
+  #define f_error_bit_signal   49152
 
-  #define f_error_is_error(status)     status & f_error_bit_error
-  #define f_error_is_warning(status)   status & f_error_bit_warning
-  #define f_error_is_problem(status)   status & f_error_bit_mask    // this is either a warning or an error
-  #define f_error_is_fine(status)      (status & f_error_bit_mask) == 0
-  #define f_error_is_not_error(status) (status & f_error_bit_error) == 0
+  #define f_error_is_error(status)       status & f_error_bit_error
+  #define f_error_is_warning(status)     status & f_error_bit_warning
+  #define f_error_is_problem(status)     status & f_error_bit_mask
+  #define f_error_is_fine(status)        (status & f_error_bit_mask) == 0
+  #define f_error_is_not_error(status)   (status & f_error_bit_error) == 0
+  #define f_error_is_not_warning(status) (status & f_error_bit_warning) == 0
+  #define f_error_is_not_signal(status)  (status & f_error_bit_signal) == 0
+
+  // use both error and warning bits to designate that the response is a signal.
+  #define f_error_is_signal(status) (status & f_error_bit_signal) == f_error_bit_signal
 
   #define f_error_set_error(status)   status | f_error_bit_error
   #define f_error_set_warning(status) status | f_error_bit_warning
+  #define f_error_set_signal(status) status | f_error_bit_signal
 
-  // use f_error_unmask to remove the error and warning bits
-  #define f_error_unmask(status) status & f_error_bit_fine
+  // use f_error_set_fine to remove the error, warning, and signal bits
+  #define f_error_set_fine(status) status & f_error_bit_fine
 #endif // _di_f_error_masks_
 
 // use of an enumerator makes more sense here than explicitly defining every error code
@@ -195,10 +202,45 @@ enum {
     f_signal_pollable_event,
     f_signal_power_failure,
     f_signal_bad_system_call,
+
+    // these will be renamed if new names are given for the remaining system calls (up to 64).
+    f_signal_reserved_32,
+    f_signal_reserved_33,
+    f_signal_reserved_34,
+    f_signal_reserved_35,
+    f_signal_reserved_36,
+    f_signal_reserved_37,
+    f_signal_reserved_38,
+    f_signal_reserved_39,
+    f_signal_reserved_40,
+    f_signal_reserved_41,
+    f_signal_reserved_42,
+    f_signal_reserved_43,
+    f_signal_reserved_44,
+    f_signal_reserved_45,
+    f_signal_reserved_46,
+    f_signal_reserved_47,
+    f_signal_reserved_48,
+    f_signal_reserved_49,
+    f_signal_reserved_50,
+    f_signal_reserved_51,
+    f_signal_reserved_52,
+    f_signal_reserved_53,
+    f_signal_reserved_54,
+    f_signal_reserved_55,
+    f_signal_reserved_56,
+    f_signal_reserved_57,
+    f_signal_reserved_58,
+    f_signal_reserved_59,
+    f_signal_reserved_60,
+    f_signal_reserved_61,
+    f_signal_reserved_62,
+    f_signal_reserved_63,
+    f_signal_reserved_64,
   #endif // _di_f_errors_signals_
 
   #ifndef _di_f_errors_basic_
-    f_none = 166,        // start at 166 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
+    f_none = 197,        // start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
     f_dummy,             // to only be used as a placeholder
     f_warn,              // warning
     f_critical,

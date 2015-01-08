@@ -127,7 +127,7 @@ extern "C"{
     }
 
     if (f_error_is_error(status)) {
-      status = f_error_unmask(status);
+      status = f_error_set_fine(status);
 
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
@@ -136,7 +136,7 @@ extern "C"{
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       } else if (f_macro_test_for_allocation_errors(status)) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
-      } else if (f_error_unmask(status) == f_invalid_parameter) {
+      } else if (f_error_set_fine(status) == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");
       } else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_error_set_error(status));
@@ -339,7 +339,7 @@ extern "C"{
           }
 
           if (f_error_is_error(status)) {
-            status = f_error_unmask(status);
+            status = f_error_set_fine(status);
 
             if (f_macro_test_for_allocation_errors(status)) {
               fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
@@ -387,7 +387,7 @@ extern "C"{
         status = fl_directory_list((f_string) network_devices, &data->devices);
 
         if (f_error_is_error(status)) {
-          status = f_error_unmask(status);
+          status = f_error_set_fine(status);
 
           if (f_macro_test_for_allocation_errors(status)) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
@@ -571,7 +571,7 @@ extern "C"{
             }
 
             if (f_error_is_error(status)) {
-              status = f_error_unmask(status);
+              status = f_error_set_fine(status);
 
               firewall_delete_local_data(&local);
 
