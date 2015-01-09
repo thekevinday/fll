@@ -9,7 +9,7 @@ version_micro 2
 
 build_compiler gcc
 build_linker ar
-build_libraries -lc -lf_file -lf_memory
+build_libraries -lf_memory -lf_file -lc
 build_sources_library file.c
 build_sources_program 
 build_sources_headers file.h
