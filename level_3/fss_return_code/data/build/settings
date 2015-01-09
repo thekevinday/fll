@@ -9,7 +9,7 @@ version_micro 2
 
 build_compiler gcc
 build_linker ar
-build_libraries -lc -lf_memory -lf_console -lfl_console -lf_conversion -lf_pipe -lf_print -lfl_colors -lfll_colors -lfl_errors -lfl_fss -lfll_fss
+build_libraries -lc -lf_memory -lf_console -lf_conversion -lf_pipe -lf_print -lfl_console -lfl_colors -lfl_errors -lfl_fss -lfll_fss -lfll_colors
 build_sources_library fss_return_code.c
 build_sources_program main.c
 build_sources_headers fss_return_code.h
