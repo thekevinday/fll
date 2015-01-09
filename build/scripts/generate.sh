@@ -327,7 +327,6 @@ generate_operation_build(){
     if [[ $sources_library != "" ]] ; then
       for i in $sources_library ; do
         sources="$sources${path_build}libraries/$i.o "
-        sources_alt="$sources_alt$sources "
 
         echo $compiler $path_c$i -c -static -o ${path_build}libraries/$i.o $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} 
         $compiler $path_c$i -c -static -o ${path_build}libraries/$i.o $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} || failure=1
@@ -338,38 +337,25 @@ generate_operation_build(){
       done
 
       if [[ $failure == "" ]] ; then
-        echo $linker rcs ${path_build}libraries/lib$name.a $sources_alt
-        $linker rcs ${path_build}libraries/lib$name.a $sources_alt || failure=1
+        echo $linker rcs ${path_build}libraries/lib$name.a $sources
+        $linker rcs ${path_build}libraries/lib$name.a $sources || failure=1
       fi
     fi
 
     if [[ $failure == "" && $sources_program != "" ]] ; then
       sources=
-      sources_alt=
-      if [[ $alt == "alt" ]] ; then
-        if [[ $sources_library != "" ]] ; then
-          for i in $sources_library ; do
-            sources_alt="$sources_alt$path_c$i "
-          done
-        fi
-
-        for i in $sources_program ; do
-          sources_alt="$sources_alt$path_c$i "
-        done
-      else
-        if [[ $sources_library != "" ]] ; then
-          for i in $sources_library ; do
-            sources="$sources$path_c$i "
-          done
-        fi
-
-        for i in $sources_program ; do
+      if [[ $sources_library != "" ]] ; then
+        for i in $sources_library ; do
           sources="$sources$path_c$i "
         done
       fi
 
-      echo $compiler $sources -static -o ${path_build}programs/$name $sources_alt $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]}
-      $compiler $sources -static -o ${path_build}programs/$name $sources_alt $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} || failure=1
+      for i in $sources_program ; do
+        sources="$sources$path_c$i "
+      done
+
+      echo $compiler -static -o ${path_build}programs/$name $sources $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]}
+      $compiler -static -o ${path_build}programs/$name $sources $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} || failure=1
     fi
   fi
 
