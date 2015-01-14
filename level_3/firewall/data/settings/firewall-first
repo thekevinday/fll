@@ -1,6 +1,5 @@
 # fss-0002
 
-
 main:
   # initialize the firewall
   direction none
@@ -17,7 +16,6 @@ main:
   # setup initial operations
   direction input
   action append
-
 
   # Enable ALL local connections (loopback)
   device lo
@@ -45,12 +43,25 @@ main:
   rule -m state --state INVALID -j DROP
 
 
-  # Allow ALL input&output connections that have already been established by this host
+  # Drop multicasts and broadcasts, they should not exist for a router and in most cases should be avoided.
+  direction output
+  rule -m pkttype --pkt-type broadcast -j output-casting
+  rule -m pkttype --pkt-type multicast -j output-casting
+  rule -m pkttype --pkt-type unicast -j output-casting
+  direction input
+  rule -m pkttype --pkt-type broadcast -j input-casting
+  rule -m pkttype --pkt-type multicast -j input-casting
+  rule -m pkttype --pkt-type unicast -j input-casting
+
+
+  # Allow ALL input&output connections that have already been established by this host (using conntrack might be more efficient)
   direction output
   rule -m state --state ESTABLISHED,RELATED -j ACCEPT
+  #rule -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
   direction input
   rule -m state --state ESTABLISHED,RELATED -j ACCEPT
+  #rule -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
 
   # send all tcp packets to the tcp queue
@@ -105,7 +116,7 @@ input-udp:
   direction input
   protocol udp
 
-  # Allow dhcp client renewals. If these are blocked, you will not be able to renew easily
+  # Allow dhcp client renewals (from server to client). If these are blocked, you will not be able to renew easily
   tool iptables
   rule -s 0.0.0.0 --sport 67 -d 255.255.255.255 --dport 68 -j ACCEPT
   tool ip46tables
@@ -129,3 +140,39 @@ output-udp:
 output-icmp:
   direction output
   protocol icmp
+
+
+input-casting:
+  # pre-process broadcasts and multicasts.
+  direction input
+  protocol none
+  tool ip46tables
+
+  # do not auto-drop dhcp messages sent from a dhcp server.
+  # dhcp offer/acknowledge (the source address must be the routers address, so do not allow 0.0.0.0/0)
+  protocol udp
+  tool iptables
+  rule ! -s 0.0.0.0 --sport 67 -d 255.255.255.255 --dport 68 -j RETURN
+  protocol none
+  tool ip46tables
+
+  # drop all remaining broadcasts and multicasts
+  rule -j DROP
+
+
+output-casting:
+  # pre-process broadcasts and multicasts.
+  direction output
+  protocol none
+  tool ip46tables
+
+  # do not auto-drop dhcp messages sent to a dhcp server.
+  # dhcp discover/request (for the request, the dhcp server ip address is known but for some reason the dhcp standard states tat the src is 0.0.0.0.
+  protocol udp
+  tool iptables
+  rule -s 0.0.0.0 --sport 68 -d 255.255.255.255 --dport 67 -j RETURN
+  protocol none
+  tool ip46tables
+
+  # drop all remaining broadcasts and multicasts
+  rule -j DROP

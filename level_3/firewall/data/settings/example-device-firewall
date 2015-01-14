@@ -1,19 +1,62 @@
 # fss-0002
-# valid tool: iptables, ip6tables, ip46tables (ip46tables = both ip4 and ip6 tables, which is the default)
-# valid direction: input, output, forward, postrouting, postrouting-output, postrouting-input, prerouting, prerouting-output, prerouting-input, none
-# valid device: all, this, (any device name goes here without parenthesis)
-# valid action: append, insert, policy, none
-# valid procotol: none, (any valid iptables protocol type, such as tcp, udp, and icmp)
+# valid tool: iptables, ip6tables, ip46tables (ip46tables = both ip4 and ip6 tables, which is the default).
+# valid direction: input, output, forward, postrouting, postrouting-output, postrouting-input, prerouting, prerouting-output, prerouting-input, none.
+# valid device: all, this, (any device name goes here without parenthesis).
+# valid action: append, insert, policy, none.
+# valid procotol: none, (any valid iptables protocol type, such as tcp, udp, and icmp).
+# some options for -j: ACCEPT, REJECT, DROP, RETURN, LOG, AUDIT, CHECKSUM, CLASSIFY, CLUSTERIP, CONNMARK, CONNSECMARK, CT, DNAT, DNPT, DSCP, ECN, HL, HMARK, IDLETIMER, LED, MARK, MASQUERADE, MIRROR, NETMAP, NFLOG, NFQUEUE, NOTRACK, RATETEST, REDIRECT, SAME, SECMARK, SET, SNAT, SNPT, TCPMSS,TCPOPTSTRIP, TEE, TOS, TPROXY, TRACE, TTL, ULOG.
+# some options for -t: nat, mangle, filter, raw, security (filter is the default).
+# some options for --state: NEW, ESTABLISHED, RELATED, INVALID, UNTRACKED, SNAT, DNAT.
+# some options for --ctstatus: NONE, EXPECTED, SEEN_REPLY, ASSURED, CONFIRMED.
 
 main:
   device this
   direction input
 
   # Define a blacklist and a whitelist, put ip addresses in the file named 'example-device-whitelist' separated by whitespace to whitelist an ip address
+  # (ip_list might be removed in the future once I figure out how ipset works and confirm if ipset can replace my ip_list.)
   #ip_list source example-device-whitelist -j ACCEPT
   #ip_list source example-device-blacklist -j REJECT
   #ip_list destination example-device-whitelist -j ACCEPT
   #ip_list destination example-device-blacklist -j REJECT
+
+  # Connection marking for vlans or QoS (via: tc).
+  #direction prerouting
+  #rule -t mangle -j CONNMARK --restore-mark
+  #direction input
+
+  # save markings that have been restored (prerouting).
+  #direction prerouting
+  #rule -t mangle -m mark --mark 2 -j CONNMARK --save-mark
+  #rule -t mangle -m mark --mark 3 -j CONNMARK --save-mark
+  #direction input
+
+  # example rate limit using marking for port 22
+  #protocol tcp
+  #direction output
+  #rule -t mangle --sport 22 -j MARK --set-mark 2
+  #direction input
+  #rule -t mangle --dport 22 -j MARK --set-mark 2
+
+  # rate limit when there are 8 or more connections from a single host.
+  #protocol tcp
+  #direction output
+  #rule -t mangle -m connlimit --connlimit-above 7 -j MARK --set-mark 3
+  #direction input
+  #rule -t mangle -m connlimit --connlimit-above 7 -j MARK --set-mark 3
+
+  # save markings that have been assigned (postrouting).
+  #protocol none
+  #direction postrouting
+  #rule -t mangle -m mark --mark 2 -j CONNMARK --save-mark
+  #rule -t mangle -m mark --mark 3 -j CONNMARK --save-mark
+  #direction input
+
+
+  # randomly trigger the rule (51% of the time) and then the reset of the time go to the second rule.
+  # this can be very useful in distributing connections between different devices or servers.
+  #rule -m random --average 51 -j example_rule_1
+  #rule -j example_rule_2
 
 
 input-tcp:
@@ -35,6 +78,12 @@ input-tcp:
   ## Https / Secure Web
   #rule --dport 443 -m state --state NEW -j LOG --log-prefix "TRAFFIC:WEB "
   #rule --dport 443 -m state --state NEW -j ACCEPT
+
+  ## Http / Https / Web throttle connections that occur too often.
+  #rule --dport 80 --sync -m recent --name http_throttle --set
+  #rule --dport 80 --sync -m recent --name http_throttle --update --seconds 3 --hitcount 10 -j DROP
+  #rule --dport 443 --sync -m recent --name http_throttle --set
+  #rule --dport 443 --sync -m recent --name http_throttle --update --seconds 3 --hitcount 10 -j DROP
 
   ## MySQL
   #rule --dport 3306 -m state --state NEW -j ACCEPT
@@ -72,6 +121,14 @@ input-tcp:
 
   ## Git Daemon
   #rule --dport 9418 -m state --state NEW -j ACCEPT
+
+  ## Ldap Server
+  #rule --dport 389 -j ACCEPT
+  #rule --dport 636 -j ACCEPT
+  #rule --dport 1636 -j ACCEPT
+
+  ## Mail Server (25 = SMTP, 465 = SMTPS, 993 = IMAP, 995 = POP)
+  #rule --dport 25 -j ACCEPT
 
 
 input-udp:
