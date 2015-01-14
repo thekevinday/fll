@@ -54,14 +54,16 @@ extern "C"{
 // create some standard command line parameter options required by the kevux/fss/fll specifications
 #ifndef _di_f_standard_console_parameters_
   #define f_console_standard_short_help     "h"
-  #define f_console_standard_short_light    "l" // usage: +l
-  #define f_console_standard_short_no_color "n" // usage: +n
+  #define f_console_standard_short_light    "l"
+  #define f_console_standard_short_no_color "n"
   #define f_console_standard_short_version  "v"
+  #define f_console_standard_short_debug    "d"
 
   #define f_console_standard_long_help     "help"
   #define f_console_standard_long_light    "light"
   #define f_console_standard_long_no_color "no_color"
   #define f_console_standard_long_version  "version"
+  #define f_console_standard_long_debug    "debug"
 #endif // _di_f_standard_console_parameters_
 
 // the maximum size for a single parameter (this should be hellishly more than enough)
