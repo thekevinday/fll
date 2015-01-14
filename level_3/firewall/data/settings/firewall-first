@@ -44,14 +44,15 @@ main:
 
 
   # Drop multicasts and broadcasts, they should not exist for a router and in most cases should be avoided.
+  # unicasts are the normal behavior and blocking them would be very unusual.
   direction output
   rule -m pkttype --pkt-type broadcast -j output-casting
   rule -m pkttype --pkt-type multicast -j output-casting
-  rule -m pkttype --pkt-type unicast -j output-casting
+  #rule -m pkttype --pkt-type unicast -j output-casting
   direction input
   rule -m pkttype --pkt-type broadcast -j input-casting
   rule -m pkttype --pkt-type multicast -j input-casting
-  rule -m pkttype --pkt-type unicast -j input-casting
+  #rule -m pkttype --pkt-type unicast -j input-casting
 
 
   # Allow ALL input&output connections that have already been established by this host (using conntrack might be more efficient)
