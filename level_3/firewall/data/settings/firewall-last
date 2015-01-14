@@ -1,26 +1,28 @@
 # fss-0002
 
 main:
-  direction input
+  chain INPUT
+  device all
+  direction none
 
   # Log everything else (input)
   # everything that reaches this point without being accepted, reject, or otherwise handled will be logged
   rule -m state --state NEW -j LOG --log-prefix "FIREWALL:INPUT "
 
-  direction output
+  chain OUTPUT
 
   ## Log everything else (output)
   #rule -j LOG --log-prefix "FIREWALL:OUTPUT "
 
   # the catch-all policies
   action policy
-  direction input
+  chain INPUT
   rule DROP
 
-  direction output
+  chain OUTPUT
   rule DROP
 
-  direction forward
+  chain FORWARD
   rule DROP
 
 

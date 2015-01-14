@@ -122,47 +122,31 @@ extern "C"{
   #define firewall_rule        "rule"
   #define firewall_rule_length 4
 
-  #define firewall_direction             "direction"
-  #define firewall_direction_input       "input"
-  #define firewall_direction_output      "output"
-  #define firewall_direction_forward     "forward"
-  #define firewall_direction_postrouting "postrouting"
-  #define firewall_direction_prerouting  "prerouting"
-  #define firewall_direction_none        "none"
+  #define firewall_chain             "chain"
+  #define firewall_chain_forward     "FORWARD"
+  #define firewall_chain_input       "INPUT"
+  #define firewall_chain_none        "none"
+  #define firewall_chain_output      "OUTPUT"
+  #define firewall_chain_postrouting "POSTROUTING"
+  #define firewall_chain_prerouting  "PREROUTING"
 
-  #define firewall_direction_length             9
-  #define firewall_direction_input_length       5
-  #define firewall_direction_output_length      6
-  #define firewall_direction_forward_length     7
-  #define firewall_direction_postrouting_length 12
-  #define firewall_direction_prerouting_length  11
-  #define firewall_direction_none_length        4
+  #define firewall_chain_length             5
+  #define firewall_chain_forward_length     7
+  #define firewall_chain_input_length       5
+  #define firewall_chain_none_length        4
+  #define firewall_chain_output_length      6
+  #define firewall_chain_postrouting_length 12
+  #define firewall_chain_prerouting_length  11
 
-  #define firewall_direction_forward_input      "forward-input"
-  #define firewall_direction_forward_output     "forward-output"
-  #define firewall_direction_postrouting_input  "postrouting-input"
-  #define firewall_direction_postrouting_output "postrouting-output"
-  #define firewall_direction_prerouting_input   "prerouting-input"
-  #define firewall_direction_prerouting_output  "prerouting-output"
+  #define firewall_direction        "direction"
+  #define firewall_direction_input  "input"
+  #define firewall_direction_output "output"
+  #define firewall_direction_none   "none"
 
-  #define firewall_direction_forward_input_length      13
-  #define firewall_direction_forward_output_length     14
-  #define firewall_direction_postrouting_input_length  17
-  #define firewall_direction_postrouting_output_length 18
-  #define firewall_direction_prerouting_input_length   16
-  #define firewall_direction_prerouting_output_length  17
-
-  #define firewall_direction_input_command       "INPUT"
-  #define firewall_direction_output_command      "OUTPUT"
-  #define firewall_direction_forward_command     "FORWARD"
-  #define firewall_direction_postrouting_command "POSTROUTING"
-  #define firewall_direction_prerouting_command  "PREROUTING"
-
-  #define firewall_direction_input_command_length       5
-  #define firewall_direction_output_command_length      6
-  #define firewall_direction_forward_command_length     7
-  #define firewall_direction_postrouting_command_length 11
-  #define firewall_direction_prerouting_command_length  10
+  #define firewall_direction_length        9
+  #define firewall_direction_input_length  5
+  #define firewall_direction_output_length 6
+  #define firewall_direction_none_length   4
 
   #define firewall_action        "action"
   #define firewall_action_append "append"
@@ -206,14 +190,13 @@ extern "C"{
   #define firewall_protocol_length      8
   #define firewall_protocol_none_length 4
 
-  #define firewall_protocol_command "-p"
-
+  #define firewall_protocol_command       "-p"
   #define firewall_protocol_command_length 2
 
   #define firewall_chain_create_command  "-N"
-  #define firewall_chain_unchain_command  "-X"
+  #define firewall_chain_unchain_command "-X"
 
-  #define firewall_chain_create_command_length 2
+  #define firewall_chain_create_command_length  2
   #define firewall_chain_unchain_command_length 2
 
   enum {
@@ -229,16 +212,24 @@ extern "C"{
     firewall_parameter_light,
     firewall_parameter_no_color,
     firewall_parameter_version,
+    firewall_parameter_debug,
     firewall_parameter_command_start,
     firewall_parameter_command_stop,
     firewall_parameter_command_restart,
     firewall_parameter_command_lock,
     firewall_parameter_command_show,
 
-    firewall_direction_forward_id,
-    firewall_direction_postrouting_id,
-    firewall_direction_prerouting_id,
+    firewall_direction_input_id,
+    firewall_direction_output_id,
     firewall_direction_none_id,
+
+    firewall_chain_forward_id,
+    firewall_chain_custom_id,
+    firewall_chain_input_id,
+    firewall_chain_none_id,
+    firewall_chain_output_id,
+    firewall_chain_postrouting_id,
+    firewall_chain_prerouting_id,
 
     firewall_action_append_id,
     firewall_action_insert_id,
@@ -246,20 +237,38 @@ extern "C"{
     firewall_action_none_id,
   };
 
-  #define f_console_parameter_initialize_firewall \
-    { \
-      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
-      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
-      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_inverse, 0), \
-      f_console_parameter_initialize(0, 0, 0, firewall_command_start, f_false, f_console_type_other, firewall_command_start_length), \
-      f_console_parameter_initialize(0, 0, 0, firewall_command_stop, f_false, f_console_type_other, firewall_command_stop_length), \
-      f_console_parameter_initialize(0, 0, 0, firewall_command_restart, f_false, f_console_type_other, firewall_command_restart_length), \
-      f_console_parameter_initialize(0, 0, 0, firewall_command_lock, f_false, f_console_type_other, firewall_command_lock_length), \
-      f_console_parameter_initialize(0, 0, 0, firewall_command_show, f_false, f_console_type_other, firewall_command_show_length), \
-    }
+  #ifdef _en_firewall_debug_
+    #define f_console_parameter_initialize_firewall \
+      { \
+        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_false, f_console_type_normal, 0), \
+        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
+        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
+        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_inverse, 0), \
+        f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_false, f_console_type_inverse, 0), \
+        f_console_parameter_initialize(0, 0, 0, firewall_command_start, f_false, f_console_type_other, firewall_command_start_length), \
+        f_console_parameter_initialize(0, 0, 0, firewall_command_stop, f_false, f_console_type_other, firewall_command_stop_length), \
+        f_console_parameter_initialize(0, 0, 0, firewall_command_restart, f_false, f_console_type_other, firewall_command_restart_length), \
+        f_console_parameter_initialize(0, 0, 0, firewall_command_lock, f_false, f_console_type_other, firewall_command_lock_length), \
+        f_console_parameter_initialize(0, 0, 0, firewall_command_show, f_false, f_console_type_other, firewall_command_show_length), \
+      }
 
-  #define firewall_total_parameters 9
+    #define firewall_total_parameters 10
+  #else
+    #define f_console_parameter_initialize_firewall \
+      { \
+        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_false, f_console_type_normal, 0), \
+        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
+        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
+        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_inverse, 0), \
+        f_console_parameter_initialize(0, 0, 0, firewall_command_start, f_false, f_console_type_other, firewall_command_start_length), \
+        f_console_parameter_initialize(0, 0, 0, firewall_command_stop, f_false, f_console_type_other, firewall_command_stop_length), \
+        f_console_parameter_initialize(0, 0, 0, firewall_command_restart, f_false, f_console_type_other, firewall_command_restart_length), \
+        f_console_parameter_initialize(0, 0, 0, firewall_command_lock, f_false, f_console_type_other, firewall_command_lock_length), \
+        f_console_parameter_initialize(0, 0, 0, firewall_command_show, f_false, f_console_type_other, firewall_command_show_length), \
+      }
+
+    #define firewall_total_parameters 9
+  #endif // _en_firewall_debug_
 #endif // _di_firewall_defines_
 
 #ifndef _di_firewall_data_

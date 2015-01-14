@@ -14,91 +14,86 @@ main:
   tool ip46tables
 
   # setup initial operations
+  chain INPUT
   direction input
   action append
 
   # Enable ALL local connections (loopback)
   device lo
+  chain OUTPUT
   direction output
   rule -j ACCEPT
 
+  chain INPUT
   direction input
   rule -j ACCEPT
   device all
 
-  # the above loopback rules should catch all true loopback connections
-  # the following loopback rules will only catch anything if a loopback spoofing is happending
-  # therefore, do not allow spoof by DROPing
-  #tool iptables
-  #rule -s 127.0.0.1 -j DROP
-  #rule -d 127.0.0.1 -j DROP
-  #tool ip46tables
-
 
   # Drop all INVALID packets so they aren't even processed
-  direction output
+  chain OUTPUT
   rule -m state --state INVALID -j DROP
 
-  direction input
+  chain INPUT
   rule -m state --state INVALID -j DROP
 
 
   # Drop multicasts and broadcasts, they should not exist for a router and in most cases should be avoided.
   # unicasts are the normal behavior and blocking them would be very unusual.
-  direction output
+  chain OUTPUT
   rule -m pkttype --pkt-type broadcast -j output-casting
   rule -m pkttype --pkt-type multicast -j output-casting
   #rule -m pkttype --pkt-type unicast -j output-casting
-  direction input
+  chain INPUT
   rule -m pkttype --pkt-type broadcast -j input-casting
   rule -m pkttype --pkt-type multicast -j input-casting
   #rule -m pkttype --pkt-type unicast -j input-casting
 
 
   # Allow ALL input&output connections that have already been established by this host (using conntrack might be more efficient)
-  direction output
+  chain OUTPUT
   rule -m state --state ESTABLISHED,RELATED -j ACCEPT
   #rule -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
-  direction input
+  chain INPUT
   rule -m state --state ESTABLISHED,RELATED -j ACCEPT
   #rule -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
 
   # send all tcp packets to the tcp queue
-  direction output
+  chain OUTPUT
   protocol tcp
   rule -m state --state NEW -j output-tcp
 
-  direction input
+  chain INPUT
   rule -m state --state NEW -j input-tcp
 
 
   # send all udp packets to the udp queue
-  direction output
+  chain OUTPUT
   protocol udp
   rule -m state --state NEW -j output-udp
 
-  direction input
+  chain INPUT
   rule -m state --state NEW -j input-udp
 
 
   # send all ipv4 icmp packets to the icmp queue
   tool iptables
-  direction output
+  chain OUTPUT
   protocol icmp
   rule -m state --state NEW -j output-icmp
 
-  direction input
+  chain INPUT
   rule -m state --state NEW -j input-icmp
 
-  # send all ipv6 icmp packets to the icmp queue
+  # send all ipv6 icmp packets to the icmp queue (alternatively put this in its own chain, such as input-icmpv6 and output-icmpv6)
   tool ip6tables
-  direction output
+  chain OUTPUT
   protocol icmpv6
   rule -m state --state NEW -j output-icmp
 
-  direction input
+  chain INPUT
   rule -m state --state NEW -j input-icmp
 
 
@@ -149,11 +144,11 @@ input-casting:
   protocol none
   tool ip46tables
 
-  # do not auto-drop dhcp messages sent from a dhcp server.
+  # do not auto-drop dhcp messages sent from a dhcp server to a local dhcp client.
   # dhcp offer/acknowledge (the source address must be the routers address, so do not allow 0.0.0.0/0)
   protocol udp
   tool iptables
-  rule ! -s 0.0.0.0 --sport 67 -d 255.255.255.255 --dport 68 -j RETURN
+  rule --sport 67 -d 255.255.255.255 --dport 68 -j RETURN
   protocol none
   tool ip46tables
 
@@ -167,11 +162,11 @@ output-casting:
   protocol none
   tool ip46tables
 
-  # do not auto-drop dhcp messages sent to a dhcp server.
+  # do not auto-drop dhcp client messages sent to a dhcp server.
   # dhcp discover/request (for the request, the dhcp server ip address is known but for some reason the dhcp standard states tat the src is 0.0.0.0.
   protocol udp
   tool iptables
-  rule -s 0.0.0.0 --sport 68 -d 255.255.255.255 --dport 67 -j RETURN
+  rule --sport 68 -d 255.255.255.255 --dport 67 -j RETURN
   protocol none
   tool ip46tables
 

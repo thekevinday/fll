@@ -3,18 +3,19 @@
 stop:
   action policy
 
-  direction input
+  chain INPUT
   rule ACCEPT
 
-  direction output
+  chain OUTPUT
   rule ACCEPT
 
-  direction forward
+  chain FORWARD
   rule ACCEPT
 
+  chain none
   direction none
   action none
-  rule --flush
+  rule -t filter --flush
 
   tool iptables
   rule -t nat --flush
@@ -27,19 +28,21 @@ stop:
   rule -t nat --delete-chain
   rule -t mangle --delete-chain
   tool ip46tables
+
 
 lock:
   action policy
 
-  direction input
+  chain INPUT
   rule DROP
 
-  direction output
+  chain OUTPUT
   rule DROP
 
-  direction forward
+  chain FORWARD
   rule DROP
 
+  chain none
   direction none
   action none
   rule --flush
@@ -56,7 +59,11 @@ lock:
   rule -t mangle --delete-chain
   tool ip46tables
 
-  action insert
-  direction input
   device lo
+  action insert
+  direction output
+  chain OUTPUT
+  rule -j ACCEPT
+  direction input
+  chain INPUT
   rule -j ACCEPT

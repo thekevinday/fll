@@ -20,12 +20,11 @@
     f_dynamic_string ip_list = f_dynamic_string_initialize;
 
     // iptables command arguments
-    f_bool direction_input = f_true;
-    f_bool direction_output = f_false;
     f_bool device_all = f_false;
     f_bool ip_list_direction = f_false; // false = source, true = destination
     f_bool use_protocol = f_false;
     uint8_t tool = firewall_program_ip46tables;
+    uint8_t chain = firewall_chain_none_id;
 
     f_array_length repeat = 2;
     f_array_length r = 0;
@@ -53,6 +52,11 @@
       device.used = data.devices.array[local.device].used;
     }
 
+    // for custom chains, the chain command may not be specified.
+    if (!(local.is_main || local.is_stop || local.is_lock)) {
+      chain = firewall_chain_custom_id;
+    }
+
     for (; i < local.rule_objects.used; i++) {
       length  = (local.rule_objects.array[i].stop - local.rule_objects.array[i].start) + 1;
       invalid = f_false;
@@ -62,89 +66,68 @@
 
       f_delete_dynamic_string(status2, ip_list);
 
-      if (length >= firewall_direction_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_direction, length, firewall_direction_length) == f_equal_to) {
+      // process chain rule
+      if (length >= firewall_chain_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_chain, length, firewall_chain_length) == f_equal_to) {
+        if (chain == firewall_chain_custom_id) {
+          // custom chains can only apply to themselves, so silently ignore chain commands specified within a custom chain.
+          fprintf(f_standard_warning, "WARNING: At line %u, the chain option is meaningless inside of a custom chain.", (unsigned int) i);
+          continue;
+        }
+
         length = (local.rule_contents.array[i].array[0].stop - local.rule_contents.array[i].array[0].start) + 1;
 
         if (local.rule_contents.array[i].used <= 0 || local.rule_contents.array[i].used > 1) {
           invalid = f_true;
-        } else {
-          if (length < firewall_direction_input_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_input, length, firewall_direction_input_length) == f_not_equal_to) {
-            if (length < firewall_direction_output_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_output, length, firewall_direction_output_length) == f_not_equal_to) {
-              if (length < firewall_direction_forward_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_forward, length, firewall_direction_forward_length) == f_not_equal_to) {
-                if (length < firewall_direction_postrouting_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_postrouting, length, firewall_direction_postrouting_length) == f_not_equal_to) {
-                  if (length < firewall_direction_prerouting_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_prerouting, length, firewall_direction_prerouting_length) == f_not_equal_to) {
-                    if (length < firewall_direction_none_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_none, length, firewall_direction_none_length) == f_not_equal_to) {
-                      if (length < firewall_direction_forward_input_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_forward_input, length, firewall_direction_forward_input_length) == f_not_equal_to) {
-                        if (length < firewall_direction_forward_output_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_forward_output, length, firewall_direction_forward_output_length) == f_not_equal_to) {
-                          if (length < firewall_direction_postrouting_input_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_postrouting_input, length, firewall_direction_postrouting_input_length) == f_not_equal_to) {
-                            if (length < firewall_direction_postrouting_output_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_postrouting_output, length, firewall_direction_postrouting_output_length) == f_not_equal_to) {
-                              if (length < firewall_direction_prerouting_input_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_prerouting_input, length, firewall_direction_prerouting_input_length) == f_not_equal_to) {
-                                if (length < firewall_direction_prerouting_output_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_prerouting_output, length, firewall_direction_prerouting_output_length) == f_not_equal_to) {
-                                  invalid = f_true;
-                                } else {
-                                  direction_input  = f_false;
-                                  direction_output = f_true;
-                                  direction        = firewall_direction_prerouting_id;
-                                }
-                              } else {
-                                direction_input  = f_true;
-                                direction_output = f_false;
-                                direction        = firewall_direction_prerouting_id;
-                              }
-                            } else {
-                              direction_input  = f_false;
-                              direction_output = f_true;
-                              direction        = firewall_direction_postrouting_id;
-                            }
-                          } else {
-                            direction_input  = f_true;
-                            direction_output = f_false;
-                            direction        = firewall_direction_postrouting_id;
-                          }
-                        } else {
-                          direction_input  = f_false;
-                          direction_output = f_true;
-                          direction        = firewall_direction_forward_id;
-                        }
-                      } else {
-                        direction_input  = f_true;
-                        direction_output = f_false;
-                        direction        = firewall_direction_forward_id;
-                      }
-                    } else {
-                      direction_input  = f_false;
-                      direction_output = f_false;
-                      direction        = firewall_direction_none_id;
-                    }
-                  } else {
-                    direction_input  = f_false;
-                    direction_output = f_false;
-                    direction        = firewall_direction_postrouting_id;
-                  }
-                } else {
-                  direction_input  = f_false;
-                  direction_output = f_false;
-                  direction        = firewall_direction_prerouting_id;
-                }
-              } else {
-                direction_input  = f_false;
-                direction_output = f_false;
-                direction        = firewall_direction_forward_id;
-              }
-            } else {
-              direction_input  = f_false;
-              direction_output = f_true;
-              direction        = firewall_direction_none_id;
-            }
-          } else {
-            direction_input  = f_true;
-            direction_output = f_false;
-            direction        = firewall_direction_none_id;
-          }
+        }
+        else if (length >= firewall_chain_input_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_input, length, firewall_chain_input_length) == f_equal_to) {
+          chain = firewall_chain_input_id;
+        }
+        else if (length >= firewall_chain_output_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_output, length, firewall_chain_output_length) == f_equal_to) {
+          chain = firewall_chain_output_id;
+        }
+        else if (length >= firewall_chain_forward_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_forward, length, firewall_chain_forward_length) == f_equal_to) {
+          chain = firewall_chain_forward_id;
+        }
+        else if (length >= firewall_chain_postrouting_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_postrouting, length, firewall_chain_postrouting_length) == f_equal_to) {
+          chain = firewall_chain_postrouting_id;
+        }
+        else if (length >= firewall_chain_prerouting_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_prerouting, length, firewall_chain_prerouting_length) == f_equal_to) {
+          chain = firewall_chain_prerouting_id;
+        }
+        else if (length >= firewall_chain_none_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_none, length, firewall_chain_none_length) == f_equal_to) {
+          chain = firewall_chain_none_id;
+        }
+        else {
+          invalid = f_true;
         }
 
         if (!invalid) continue;
-      } else if (length >= firewall_device_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_device, length, firewall_device_length) == f_equal_to) {
+      }
+      // process direction rule
+      else if (length >= firewall_direction_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_direction, length, firewall_direction_length) == f_equal_to) {
+        length = (local.rule_contents.array[i].array[0].stop - local.rule_contents.array[i].array[0].start) + 1;
+
+        if (local.rule_contents.array[i].used <= 0 || local.rule_contents.array[i].used > 1) {
+          invalid = f_true;
+        }
+        else if (length >= firewall_direction_input_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_input, length, firewall_direction_input_length) == f_equal_to) {
+          direction = firewall_direction_input_id;
+        }
+        else if (length >= firewall_direction_output_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_output, length, firewall_direction_output_length) == f_equal_to) {
+          direction = firewall_direction_output_id;
+        }
+        else if (length >= firewall_direction_none_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_none, length, firewall_direction_none_length) == f_equal_to) {
+          direction = firewall_direction_none_id;
+        }
+        else {
+          // direction must be specified, and no custom directions are allowed.
+          invalid = f_true;
+        }
+
+        if (!invalid) continue;
+      }
+      // process device rule.
+      else if (length >= firewall_device_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_device, length, firewall_device_length) == f_equal_to) {
         length = (local.rule_contents.array[i].array[0].stop - local.rule_contents.array[i].array[0].start) + 1;
 
         if (local.rule_contents.array[i].used <= 0 || local.rule_contents.array[i].used > 1) {
@@ -172,35 +155,38 @@
           if (f_error_is_error(status)) break;
 
           strncat(device.string, local.buffer.string + local.rule_contents.array[i].array[0].start, length);
-          device.used  = length;
+          device.used = length;
           device_all  = f_false;
           continue;
         }
-      } else if (length >= firewall_action_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_action, length, firewall_action_length) == f_equal_to) {
+      }
+      // process action rule.
+      else if (length >= firewall_action_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_action, length, firewall_action_length) == f_equal_to) {
         length = (local.rule_contents.array[i].array[0].stop - local.rule_contents.array[i].array[0].start) + 1;
 
         if (local.rule_contents.array[i].used <= 0 || local.rule_contents.array[i].used > 1) {
           invalid = f_true;
-        } else if (length < firewall_action_append_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_append, length, firewall_action_append_length) == f_not_equal_to) {
-          if (length < firewall_action_insert_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_insert, length, firewall_action_insert_length) == f_not_equal_to) {
-            if (length < firewall_action_policy_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_policy, length, firewall_action_policy_length) == f_not_equal_to) {
-              if (length < firewall_action_none_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_none, length, firewall_action_none_length) == f_not_equal_to) {
-                invalid = f_true;
-              } else {
-                action = firewall_action_none_id;
-              }
-            } else {
-              action = firewall_action_policy_id;
-            }
-          } else {
-            action = firewall_action_insert_id;
-          }
-        } else {
+        }
+        else if (length >= firewall_action_append_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_append, length, firewall_action_append_length) == f_equal_to) {
           action = firewall_action_append_id;
+        }
+        else if (length >= firewall_action_insert_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_insert, length, firewall_action_insert_length) == f_equal_to) {
+          action = firewall_action_insert_id;
+        }
+        else if (length >= firewall_action_policy_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_policy, length, firewall_action_policy_length) == f_equal_to) {
+          action = firewall_action_policy_id;
+        }
+        else if (length >= firewall_action_none_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_none, length, firewall_action_none_length) == f_equal_to) {
+          action = firewall_action_none_id;
+        }
+        else {
+          invalid = f_true;
         }
 
         if (!invalid) continue;
-      } else if (length >= firewall_ip_list_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_ip_list, length, firewall_ip_list_length) == f_equal_to) {
+      }
+      // process ip_list rule.
+      else if (length >= firewall_ip_list_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_ip_list, length, firewall_ip_list_length) == f_equal_to) {
         length = (local.rule_contents.array[i].array[0].stop - local.rule_contents.array[i].array[0].start) + 1;
         is_ip_list = f_true;
 
@@ -232,7 +218,9 @@
 
           continue;
         }
-      } else if (length >= firewall_tool_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_tool, length, firewall_tool_length) == f_equal_to) {
+      }
+      // process tool rule.
+      else if (length >= firewall_tool_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_tool, length, firewall_tool_length) == f_equal_to) {
         length = (local.rule_contents.array[i].array[0].stop - local.rule_contents.array[i].array[0].start) + 1;
 
         if (local.rule_contents.array[i].used <= 0 || local.rule_contents.array[i].used > 1) {
@@ -259,7 +247,9 @@
 
           if (!invalid) continue;
         }
-      } else if (length < firewall_rule_length || fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_rule, length, firewall_rule_length) == f_not_equal_to) {
+      }
+      // process rule rule, if the remaining rule does not match as firewall_rule, then it is an invalid rule.
+      else if (length < firewall_rule_length || fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_rule, length, firewall_rule_length) == f_not_equal_to) {
         if (length > 0) {
           fl_print_color_code(f_standard_warning, data.context.warning);
           fprintf(f_standard_warning, "WARNING: At line %u, the object '", (unsigned int) i);
@@ -329,120 +319,30 @@
         // FIXME: (this issue is probably everywhere) Implement an strncat function for dynamic strings or if I already have one implement, make sure it is used in every applicable place
         //        (this way I can automatically handle updating the used buffer)
         //        also look into auto-allocated space if necessary with the said function
-        if (action == firewall_action_append_id) {
-          f_resize_dynamic_string(status, argument, firewall_action_append_command_length);
 
-          if (f_error_is_error(status)) break;
-
-          strncat(argument.string, firewall_action_append_command, firewall_action_append_command_length);
-          argument.used = firewall_action_append_command_length;
-        } else if (action == firewall_action_insert_id) {
-          f_resize_dynamic_string(status, argument, firewall_action_insert_command_length);
-
-          if (f_error_is_error(status)) break;
-
-          strncat(argument.string, firewall_action_insert_command, firewall_action_insert_command_length);
-          argument.used = firewall_action_insert_command_length;
-        } else if (action == firewall_action_policy_id) {
-          f_resize_dynamic_string(status, argument, firewall_action_policy_command_length);
-
-          if (f_error_is_error(status)) break;
-
-          strncat(argument.string, firewall_action_policy_command, firewall_action_policy_command_length);
-          argument.used = firewall_action_policy_command_length;
-        }
-
-        if (argument.used > 0) {
-          f_resize_dynamic_strings(status, arguments, arguments.used + 1);
-
-          if (f_error_is_error(status)) break;
-
-          arguments.array[arguments.used].string = argument.string;
-          arguments.array[arguments.used].size   = argument.size;
-          arguments.array[arguments.used].used   = argument.used;
-          arguments.used++;
-          argument.string = f_null;
-          argument.size   = 0;
-          argument.used   = 0;
-        }
-
-
-        if (action != firewall_action_none_id) {
-          if (!(local.is_main || local.is_stop || local.is_lock)) {
-            f_resize_dynamic_string(status, argument, data.chains.array[local.chain_ids.array[local.chain]].used);
+        // process the action when a non-none chain is specified.
+        if (chain != firewall_chain_none_id && action != firewall_action_none_id) {
+          if (action == firewall_action_append_id) {
+            f_resize_dynamic_string(status, argument, firewall_action_append_command_length);
 
             if (f_error_is_error(status)) break;
 
-            strncat(argument.string, data.chains.array[local.chain_ids.array[local.chain]].string, data.chains.array[local.chain_ids.array[local.chain]].used);
-            argument.used = data.chains.array[local.chain].used;
-
-          } else if (direction == firewall_direction_forward_id) {
-            f_resize_dynamic_string(status, argument, firewall_direction_forward_command_length);
-
-            if (f_error_is_error(status)) break;
-
-            strncat(argument.string, firewall_direction_forward_command, firewall_direction_forward_command_length);
-            argument.used = firewall_direction_forward_command_length;
-          } else if (direction == firewall_direction_postrouting_id) {
-            f_resize_dynamic_string(status, argument, firewall_direction_postrouting_command_length);
+            strncat(argument.string, firewall_action_append_command, firewall_action_append_command_length);
+            argument.used = firewall_action_append_command_length;
+          } else if (action == firewall_action_insert_id) {
+            f_resize_dynamic_string(status, argument, firewall_action_insert_command_length);
 
             if (f_error_is_error(status)) break;
 
-            strncat(argument.string, firewall_direction_postrouting_command, firewall_direction_postrouting_command_length);
-            argument.used += firewall_direction_postrouting_command_length;
-          } else if (direction == firewall_direction_prerouting_id) {
-            f_resize_dynamic_string(status, argument, firewall_direction_prerouting_command_length);
+            strncat(argument.string, firewall_action_insert_command, firewall_action_insert_command_length);
+            argument.used = firewall_action_insert_command_length;
+          } else if (action == firewall_action_policy_id) {
+            f_resize_dynamic_string(status, argument, firewall_action_policy_command_length);
 
             if (f_error_is_error(status)) break;
 
-            strncat(argument.string, firewall_direction_prerouting_command, firewall_direction_prerouting_command_length);
-            argument.used = firewall_direction_prerouting_command_length;
-          } else if (direction_input) {
-            f_resize_dynamic_string(status, argument, firewall_direction_input_command_length);
-
-            if (f_error_is_error(status)) break;
-
-            strncat(argument.string, firewall_direction_input_command, firewall_direction_input_command_length);
-            argument.used = firewall_direction_input_command_length;
-          } else if (direction_output) {
-            f_resize_dynamic_string(status, argument, firewall_direction_output_command_length);
-
-            if (f_error_is_error(status)) break;
-
-            strncat(argument.string, firewall_direction_output_command, firewall_direction_output_command_length);
-            argument.used = firewall_direction_output_command_length;
-          }
-        }
-
-        if (argument.used > 0) {
-          f_resize_dynamic_strings(status, arguments, arguments.used + 1);
-
-          if (f_error_is_error(status)) break;
-
-          arguments.array[arguments.used].string = argument.string;
-          arguments.array[arguments.used].size   = argument.size;
-          arguments.array[arguments.used].used   = argument.used;
-          arguments.used++;
-          argument.string = f_null;
-          argument.size   = 0;
-          argument.used   = 0;
-        }
-
-        if (device.used > 0) {
-          if (length < firewall_device_all_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_device_all, length, firewall_device_all_length) == f_not_equal_to) {
-            if (direction_input) {
-              f_resize_dynamic_string(status, argument, firewall_device_input_command_length);
-              if (f_error_is_error(status)) break;
-
-              strncat(argument.string, firewall_device_input_command, firewall_device_input_command_length);
-              argument.used = firewall_device_input_command_length;
-            } else if (direction_output) {
-              f_resize_dynamic_string(status, argument, firewall_device_output_command_length);
-              if (f_error_is_error(status)) break;
-
-              strncat(argument.string, firewall_device_output_command, firewall_device_output_command_length);
-              argument.used = firewall_device_output_command_length;
-            }
+            strncat(argument.string, firewall_action_policy_command, firewall_action_policy_command_length);
+            argument.used = firewall_action_policy_command_length;
           }
 
           if (argument.used > 0) {
@@ -457,29 +357,115 @@
             argument.string = f_null;
             argument.size   = 0;
             argument.used   = 0;
-          }
 
-          if (direction_input || direction_output) {
-            f_resize_dynamic_string(status, argument, device.used);
-            if (f_error_is_error(status)) break;
+            // process the chain, which is required by the action.
+            if (chain == firewall_chain_custom_id) {
+              f_resize_dynamic_string(status, argument, data.chains.array[local.chain_ids.array[local.chain]].used);
+              if (f_error_is_error(status)) break;
 
-            strncat(argument.string, device.string, device.used);
-            argument.used = device.used;
+              strncat(argument.string, data.chains.array[local.chain_ids.array[local.chain]].string, data.chains.array[local.chain_ids.array[local.chain]].used);
+              argument.used = data.chains.array[local.chain].used;
+            } else if (chain == firewall_chain_forward_id) {
+              f_resize_dynamic_string(status, argument, firewall_chain_forward_length);
+              if (f_error_is_error(status)) break;
+
+              strncat(argument.string, firewall_chain_forward, firewall_chain_forward_length);
+              argument.used = firewall_chain_forward_length;
+            } else if (chain == firewall_chain_postrouting_id) {
+              f_resize_dynamic_string(status, argument, firewall_chain_postrouting_length);
+              if (f_error_is_error(status)) break;
+
+              strncat(argument.string, firewall_chain_postrouting, firewall_chain_postrouting_length);
+              argument.used += firewall_chain_postrouting_length;
+            } else if (chain == firewall_chain_prerouting_id) {
+              f_resize_dynamic_string(status, argument, firewall_chain_prerouting_length);
+              if (f_error_is_error(status)) break;
+
+              strncat(argument.string, firewall_chain_prerouting, firewall_chain_prerouting_length);
+              argument.used = firewall_chain_prerouting_length;
+            } else if (chain == firewall_chain_input_id) {
+              f_resize_dynamic_string(status, argument, firewall_chain_input_length);
+              if (f_error_is_error(status)) break;
+
+              strncat(argument.string, firewall_chain_input, firewall_chain_input_length);
+              argument.used = firewall_chain_input_length;
+            } else if (chain == firewall_chain_output_id) {
+              f_resize_dynamic_string(status, argument, firewall_chain_output_length);
+              if (f_error_is_error(status)) break;
+
+              strncat(argument.string, firewall_chain_output, firewall_chain_output_length);
+              argument.used = firewall_chain_output_length;
+            }
+
+            if (argument.used > 0) {
+              f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+
+              if (f_error_is_error(status)) break;
+
+              arguments.array[arguments.used].string = argument.string;
+              arguments.array[arguments.used].size   = argument.size;
+              arguments.array[arguments.used].used   = argument.used;
+              arguments.used++;
+              argument.string = f_null;
+              argument.size   = 0;
+              argument.used   = 0;
+            }
           }
         }
 
-        if (argument.used > 0) {
-          f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+        // add the device if and only if a non-none direction is specified.
+        if (device.used > 0 && (direction == firewall_direction_input_id || direction == firewall_direction_output_id)) {
+          if (length < firewall_device_all_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_device_all, length, firewall_device_all_length) == f_not_equal_to) {
+            if (direction == firewall_direction_input_id) {
+              f_resize_dynamic_string(status, argument, firewall_device_input_command_length);
+              if (f_error_is_error(status)) break;
 
+              strncat(argument.string, firewall_device_input_command, firewall_device_input_command_length);
+              argument.used = firewall_device_input_command_length;
+            }
+            else if (direction == firewall_direction_output_id) {
+              f_resize_dynamic_string(status, argument, firewall_device_output_command_length);
+              if (f_error_is_error(status)) break;
+
+              strncat(argument.string, firewall_device_output_command, firewall_device_output_command_length);
+              argument.used = firewall_device_output_command_length;
+            }
+
+            if (argument.used > 0) {
+              f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+
+              if (f_error_is_error(status)) break;
+
+              arguments.array[arguments.used].string = argument.string;
+              arguments.array[arguments.used].size   = argument.size;
+              arguments.array[arguments.used].used   = argument.used;
+              arguments.used++;
+              argument.string = f_null;
+              argument.size   = 0;
+              argument.used   = 0;
+            }
+          }
+
+          // add the device.
+          f_resize_dynamic_string(status, argument, device.used);
           if (f_error_is_error(status)) break;
 
-          arguments.array[arguments.used].string = argument.string;
-          arguments.array[arguments.used].size   = argument.size;
-          arguments.array[arguments.used].used   = argument.used;
-          arguments.used++;
-          argument.string = f_null;
-          argument.size   = 0;
-          argument.used   = 0;
+          strncat(argument.string, device.string, device.used);
+          argument.used = device.used;
+
+          if (argument.used > 0) {
+            f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+
+            if (f_error_is_error(status)) break;
+
+            arguments.array[arguments.used].string = argument.string;
+            arguments.array[arguments.used].size   = argument.size;
+            arguments.array[arguments.used].used   = argument.used;
+            arguments.used++;
+            argument.string = f_null;
+            argument.size   = 0;
+            argument.used   = 0;
+          }
         }
 
         if (use_protocol) {
@@ -491,7 +477,6 @@
 
           if (argument.used > 0) {
             f_resize_dynamic_strings(status, arguments, arguments.used + 1);
-
             if (f_error_is_error(status)) break;
 
             arguments.array[arguments.used].string = argument.string;
@@ -508,20 +493,20 @@
 
           strncat(argument.string, protocol.string, protocol.used);
           argument.used = protocol.used;
-        }
 
-        if (argument.used > 0) {
-          f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+          if (argument.used > 0) {
+            f_resize_dynamic_strings(status, arguments, arguments.used + 1);
 
-          if (f_error_is_error(status)) break;
+            if (f_error_is_error(status)) break;
 
-          arguments.array[arguments.used].string = argument.string;
-          arguments.array[arguments.used].size   = argument.size;
-          arguments.array[arguments.used].used   = argument.used;
-          arguments.used++;
-          argument.string = f_null;
-          argument.size   = 0;
-          argument.used   = 0;
+            arguments.array[arguments.used].string = argument.string;
+            arguments.array[arguments.used].size   = argument.size;
+            arguments.array[arguments.used].used   = argument.used;
+            arguments.used++;
+            argument.string = f_null;
+            argument.size   = 0;
+            argument.used   = 0;
+          }
         }
 
         // last up is the "rule"
@@ -529,7 +514,7 @@
           f_string_length subcounter = 0;
 
           if (is_ip_list) {
-            // skip past the direction
+            // skip past the chain
             subcounter++;
 
             length = (local.rule_contents.array[i].array[subcounter].stop - local.rule_contents.array[i].array[subcounter].start) + 1;
@@ -583,6 +568,7 @@
           break;
         }
 
+        // now execute the generated commands.
         if (arguments.used > 1) {
           if (is_ip_list) {
             f_file           file          = f_file_initialize;
@@ -734,6 +720,19 @@
                         arguments.array[arguments.used].used   = ip_argument.used;
                         arguments.used++;
 
+                        // print command when debugging.
+                        #ifdef _en_firewall_debug_
+                          if (data.parameters[firewall_parameter_debug].result == f_console_result_found) {
+                            f_string_length i = 0;
+
+                            fprintf(f_standard_output, "DEBUG: ");
+                            for (; i < arguments.used; i++) {
+                              fprintf(f_standard_output, "%s ", arguments.array[i].string);
+                            }
+                            fprintf(f_standard_output, "\n");
+                          }
+                        #endif // _en_firewall_debug_
+
                         status = fll_execute_program((f_string) current_tool, arguments, &results);
 
                         if (status == f_failure) {
@@ -796,6 +795,19 @@
 
             if (status == f_failure || status == f_invalid_parameter) break;
           } else {
+            // print command when debugging.
+            #ifdef _en_firewall_debug_
+              if (data.parameters[firewall_parameter_debug].result == f_console_result_found) {
+                f_string_length i = 0;
+
+                fprintf(f_standard_output, "DEBUG: ");
+                for (; i < arguments.used; i++) {
+                  fprintf(f_standard_output, "%s ", arguments.array[i].string);
+                }
+                fprintf(f_standard_output, "\n");
+              }
+            #endif // _en_firewall_debug_
+
             status = fll_execute_program(current_tool, arguments, &results);
 
             if (status == f_failure) {
@@ -819,9 +831,9 @@
               break;
             }
           }
-        } // for
-      }
-    }
+        }
+      } // for
+    } // for
 
     f_delete_dynamic_string(status2, ip_list);
     f_delete_dynamic_string(status2, argument);
@@ -1005,6 +1017,19 @@
           return status;
         }
 
+        // print command when debugging.
+        #ifdef _en_firewall_debug_
+          if (data->parameters[firewall_parameter_debug].result == f_console_result_found) {
+            f_string_length i = 0;
+
+            fprintf(f_standard_output, "DEBUG: ");
+            for (; i < arguments.used; i++) {
+              fprintf(f_standard_output, "%s ", arguments.array[i].string);
+            }
+            fprintf(f_standard_output, "\n");
+          }
+        #endif // _en_firewall_debug_
+
         tool = firewall_program_iptables;
         status = fll_execute_program((f_string) firewall_tool_iptables, arguments, &results);
 
@@ -1013,6 +1038,19 @@
           strncat(arguments.array[0].string, firewall_tool_iptables, firewall_tool_ip6tables_length);
           arguments.array[0].used = firewall_tool_ip6tables_length;
           arguments.used = 3;
+
+          // print command when debugging.
+          #ifdef _en_firewall_debug_
+            if (data->parameters[firewall_parameter_debug].result == f_console_result_found) {
+              f_string_length i = 0;
+
+              fprintf(f_standard_output, "DEBUG: ");
+              for (; i < arguments.used; i++) {
+                fprintf(f_standard_output, "%s ", arguments.array[i].string);
+              }
+              fprintf(f_standard_output, "\n");
+            }
+          #endif // _en_firewall_debug_
 
           tool = firewall_program_ip6tables;
           status = fll_execute_program((f_string) firewall_tool_ip6tables, arguments, &results);

@@ -59,6 +59,13 @@ extern "C"{
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
     printf("   Print only the version number");
 
+    printf("\n  %s", f_console_symbol_short_disable);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_debug);
+
+    printf(", %s", f_console_symbol_long_disable);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_debug);
+    printf("   Enable debugging");
+
     printf("\n\n");
     fl_print_color(f_standard_output, data.context.important, data.context.reset, " Available Commands: ");
 
@@ -132,7 +139,7 @@ extern "C"{
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // TODO: there is a way to identify which parameter is incorrect
-        //       to do this, one must look for any "has_additional" and then see if the "additiona" location is set to 0
+        //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       } else if (f_macro_test_for_allocation_errors(status)) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
