@@ -37,11 +37,9 @@ input-tcp:
   #rule --dport 1024:49151 -m state --state NEW -j ACCEPT
 
   ## allow all other ports: 49152-61000
-  ## For ease of the uneducated, enable these by default
   #rule --dport 49152:61000 -m state --state NEW -j ACCEPT
 
   ## allow all other ports: 61001-65535
-  ## For ease of the uneducated, enable these by default
   #rule --dport 61001:65535 -m state --state NEW -j ACCEPT
 
 
@@ -56,11 +54,9 @@ output-tcp:
   rule --dport 1024:49151 -m state --state NEW -j ACCEPT
 
   # allow all other ports: 49152-61000
-  # For ease of the uneducated, enable these by default
   rule --dport 49152:61000 -m state --state NEW -j ACCEPT
 
   # allow all other ports: 61001-65535
-  # For ease of the uneducated, enable these by default
   rule --dport 61001:65535 -m state --state NEW -j ACCEPT
 
 
@@ -75,11 +71,9 @@ input-udp:
   #rule --dport 1024:49151 -m state --state NEW -j ACCEPT
 
   ## allow all other ports: 49152-61000
-  ## For ease of the uneducated, enable these by default
   #rule --dport 49152:61000 -m state --state NEW -j ACCEPT
 
   ## allow all other ports: 61001-65535
-  ## For ease of the uneducated, enable these by default
   #rule --dport 61001:65535 -m state --state NEW -j ACCEPT
 
 
@@ -94,11 +88,9 @@ output-udp:
   rule --dport 1024:49151 -m state --state NEW -j ACCEPT
 
   # allow all other ports: 49152-61000
-  # For ease of the uneducated, enable these by default
   rule --dport 49152:61000 -m state --state NEW -j ACCEPT
 
   # allow all other ports: 61001-65535
-  # For ease of the uneducated, enable these by default
   rule --dport 61001:65535 -m state --state NEW -j ACCEPT
 
 
@@ -119,11 +111,17 @@ input-icmp:
   # allow icmp: destination unreachable
   rule --icmp-type 3 -m state --state NEW -j ACCEPT
 
-  # allow icmp: source quench
-  rule --icmp-type 4 -m state --state NEW -j ACCEPT
+  # deny icmp: source quench (deprecated and should be blocked.)
+  rule --icmp-type 4 -m state --state NEW -j DROP
 
   # allow icmp: redirect
   rule --icmp-type 5 -m state --state NEW -j ACCEPT
+
+  # deny icmp: Alternate Host Address (deprecated and should be blocked.)
+  rule --icmp-type 6 -m state --state NEW -j DROP
+
+  # deny icmp: unknown
+  rule --icmp-type 7 -m state --state NEW -j DROP
 
   # allow icmp: echo request (inbound ping)
   rule --icmp-type 8 -m state --state NEW -j ACCEPT
@@ -146,20 +144,26 @@ input-icmp:
   # allow icmp: timestamp reply
   rule --icmp-type 14 -m state --state NEW -j ACCEPT
 
-  # allow icmp: information request
-  rule --icmp-type 15 -m state --state NEW -j ACCEPT
+  # deny icmp: information request (deprecated and should be blocked.)
+  rule --icmp-type 15 -m state --state NEW -j DROP
 
-  # allow icmp: information reply
-  rule --icmp-type 16 -m state --state NEW -j ACCEPT
+  # deny icmp: information reply (deprecated and should be blocked.)
+  rule --icmp-type 16 -m state --state NEW -j DROP
 
-  # allow icmp: address request
-  rule --icmp-type 17 -m state --state NEW -j ACCEPT
+  # deny icmp: address request (deprecated and should be blocked.)
+  rule --icmp-type 17 -m state --state NEW -j DROP
 
-  # allow icmp: address reply
-  rule --icmp-type 18 -m state --state NEW -j ACCEPT
+  # deny icmp: address reply (deprecated and should be blocked.)
+  rule --icmp-type 18 -m state --state NEW -j DROP
+
+  # deny icmp: unknown (19 throught 29)
+  #rule --icmp-type 19 -m state --state NEW -j DROP
 
   # allow icmp: traceroute
   #rule --icmp-type 30 -m state --state NEW -j ACCEPT
+
+  # deny icmp: unknown (31 throught 39) (deprecated and should be blocked.)
+  rule --icmp-type 31 -m state --state NEW -j DROP
 
 
   # ipv6 icmp
