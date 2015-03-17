@@ -302,7 +302,7 @@
       for (r = repeat; r > 0; r--) {
         // first add the program name
         f_delete_dynamic_strings(status, arguments);
-        f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+        f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step);
 
         if (f_error_is_error(status)) break;
 
@@ -362,7 +362,7 @@
           }
 
           if (argument.used > 0) {
-            f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+            f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step);
 
             if (f_error_is_error(status)) break;
 
@@ -417,7 +417,7 @@
             }
 
             if (argument.used > 0) {
-              f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+              f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step);
 
               if (f_error_is_error(status)) break;
 
@@ -451,7 +451,7 @@
             }
 
             if (argument.used > 0) {
-              f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+              f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step);
 
               if (f_error_is_error(status)) break;
 
@@ -476,7 +476,7 @@
           argument.used = device.used;
 
           if (argument.used > 0) {
-            f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+            f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step);
 
             if (f_error_is_error(status)) break;
 
@@ -498,7 +498,8 @@
           argument.used = firewall_protocol_command_length;
 
           if (argument.used > 0) {
-            f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+            f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step);
+
             if (f_error_is_error(status)) break;
 
             arguments.array[arguments.used].string = argument.string;
@@ -520,7 +521,7 @@
           argument.used = protocol.used;
 
           if (argument.used > 0) {
-            f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+            f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step);
 
             if (f_error_is_error(status)) break;
 
@@ -545,7 +546,7 @@
             length = (local.rule_contents.array[i].array[subcounter].stop - local.rule_contents.array[i].array[subcounter].start) + 1;
 
             if (length > 0) {
-              f_resize_dynamic_string(status, ip_list, length);
+              f_resize_dynamic_string(status, ip_list, (local.rule_contents.array[i].array[subcounter].stop - local.rule_contents.array[i].array[subcounter].start) + firewall_default_allocation_step);
 
               if (f_error_is_error(status)) {
                 subcounter = local.rule_contents.array[i].used;
@@ -562,7 +563,7 @@
             length = (local.rule_contents.array[i].array[subcounter].stop - local.rule_contents.array[i].array[subcounter].start) + 1;
 
             if (length > 0) {
-              f_resize_dynamic_string(status, argument, length);
+              f_resize_dynamic_string(status, argument, (local.rule_contents.array[i].array[subcounter].stop - local.rule_contents.array[i].array[subcounter].start) + firewall_default_allocation_step);
 
               if (f_error_is_error(status)) break;
 
@@ -572,7 +573,7 @@
             argument.used = length;
 
             if (length > 0) {
-              f_resize_dynamic_strings(status, arguments, arguments.used + 1);
+              f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step);
 
               if (f_error_is_error(status)) break;
 
@@ -609,7 +610,7 @@
             f_fss_objects  basic_objects  = f_fss_objects_initialize;
             f_fss_contents basic_contents = f_fss_objects_initialize;
 
-            f_resize_dynamic_string(status, file_path, network_path_length + ip_list.used + 1);
+            f_resize_dynamic_string(status, file_path, network_path_length + ip_list.used + firewall_default_allocation_step);
 
             if (status == f_none) {
               strncat(file_path.string, network_path, network_path_length);
@@ -705,10 +706,10 @@
                   f_dynamic_string ip_list_action = f_dynamic_string_initialize;
 
                   if (ip_list_direction) {
-                    f_resize_dynamic_string(status, ip_list_action, firewall_ip_list_destination_action_length + 1);
+                    f_resize_dynamic_string(status, ip_list_action, firewall_ip_list_destination_action_length + firewall_default_allocation_step);
                     strncat(ip_list_action.string, firewall_ip_list_destination_action, firewall_ip_list_destination_action_length);
                   } else {
-                    f_resize_dynamic_string(status, ip_list_action, firewall_ip_list_source_action_length + 1);
+                    f_resize_dynamic_string(status, ip_list_action, firewall_ip_list_source_action_length + firewall_default_allocation_step);
                     strncat(ip_list_action.string, firewall_ip_list_source_action, firewall_ip_list_source_action_length);
                   }
 
@@ -734,7 +735,7 @@
                       for (; buffer_counter < basic_objects.used; buffer_counter++) {
                         ip_length = (basic_objects.array[buffer_counter].stop - basic_objects.array[buffer_counter].start) + 1;
 
-                        f_resize_dynamic_string(status, ip_argument, ip_length);
+                        f_resize_dynamic_string(status, ip_argument, (basic_objects.array[buffer_counter].stop - basic_objects.array[buffer_counter].start) + firewall_default_allocation_step);
 
                         if (f_error_is_error(status)) {
                           fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory");
@@ -994,7 +995,7 @@
         length = local->chain_objects.array[i].stop - local->chain_objects.array[i].start + 1;
 
         if (data->chains.used >= data->chains.size) {
-          f_resize_dynamic_strings(status, data->chains, data->chains.used + firewall_default_allocation_step);
+          f_resize_dynamic_strings(status, data->chains, (local->chain_objects.array[i].stop - local->chain_objects.array[i].start + firewall_default_allocation_step);
 
           if (f_error_is_error(status)) {
             f_delete_dynamic_strings(status2, arguments);
