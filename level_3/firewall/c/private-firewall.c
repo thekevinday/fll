@@ -40,15 +40,18 @@
     if (local.is_global) {
       device_all = f_true;
     } else {
-      f_resize_dynamic_string(status, device, data.devices.array[local.device].used);
+      if (data.devices.array[local.device].used > 0) {
+        f_resize_dynamic_string(status, device, data.devices.array[local.device].used);
 
-      if (f_error_is_error(status)) {
-        f_delete_dynamic_string(status2, device);
+        if (f_error_is_error(status)) {
+          f_delete_dynamic_string(status2, device);
 
-        return status;
+          return status;
+        }
+
+        strncat(device.string, data.devices.array[local.device].string, data.devices.array[local.device].used);
       }
 
-      strncat(device.string, data.devices.array[local.device].string, data.devices.array[local.device].used);
       device.used = data.devices.array[local.device].used;
     }
 
@@ -138,11 +141,15 @@
           continue;
         } else if (length >= firewall_device_this_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_device_this, length, firewall_device_this_length) == f_equal_to) {
           f_delete_dynamic_string(status, device);
-          f_resize_dynamic_string(status, device, data.devices.array[local.device].used);
 
-          if (f_error_is_error(status)) break;
+          if (data.devices.array[local.device].used > 0) {
+            f_resize_dynamic_string(status, device, data.devices.array[local.device].used);
 
-          strncat(device.string, data.devices.array[local.device].string, data.devices.array[local.device].used);
+            if (f_error_is_error(status)) break;
+
+            strncat(device.string, data.devices.array[local.device].string, data.devices.array[local.device].used);
+          }
+
           device.used = data.devices.array[local.device].used;
           device_all  = f_false;
           continue;
@@ -150,11 +157,15 @@
 
         if (!invalid) {
           f_delete_dynamic_string(status, device);
-          f_resize_dynamic_string(status, device, length);
 
-          if (f_error_is_error(status)) break;
+          if (length > 0) {
+            f_resize_dynamic_string(status, device, length);
 
-          strncat(device.string, local.buffer.string + local.rule_contents.array[i].array[0].start, length);
+            if (f_error_is_error(status)) break;
+
+            strncat(device.string, local.buffer.string + local.rule_contents.array[i].array[0].start, length);
+          }
+
           device.used = length;
           device_all  = f_false;
           continue;
@@ -204,14 +215,19 @@
           invalid = f_true;
         } else {
           f_delete_dynamic_string(status, protocol);
-          f_resize_dynamic_string(status, protocol, length);
 
-          if (f_error_is_error(status)) break;
+          if (length > 0) {
+            f_resize_dynamic_string(status, protocol, length);
+
+            if (f_error_is_error(status)) break;
+          }
 
           if (fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_protocol_none, length, firewall_protocol_none_length) == f_equal_to) {
             use_protocol = f_false;
           } else {
-            strncat(protocol.string, local.buffer.string + local.rule_contents.array[i].array[0].start, length);
+            if (length > 0) {
+              strncat(protocol.string, local.buffer.string + local.rule_contents.array[i].array[0].start, length);
+            }
             protocol.used = length;
             use_protocol = f_true;
           }
@@ -360,10 +376,13 @@
 
             // process the chain, which is required by the action.
             if (chain == firewall_chain_custom_id) {
-              f_resize_dynamic_string(status, argument, data.chains.array[local.chain_ids.array[local.chain]].used);
-              if (f_error_is_error(status)) break;
+              if (data.chains.array[local.chain_ids.array[local.chain]].used > 0) {
+                f_resize_dynamic_string(status, argument, data.chains.array[local.chain_ids.array[local.chain]].used);
 
-              strncat(argument.string, data.chains.array[local.chain_ids.array[local.chain]].string, data.chains.array[local.chain_ids.array[local.chain]].used);
+                if (f_error_is_error(status)) break;
+
+                strncat(argument.string, data.chains.array[local.chain_ids.array[local.chain]].string, data.chains.array[local.chain_ids.array[local.chain]].used);
+              }
               argument.used = data.chains.array[local.chain].used;
             } else if (chain == firewall_chain_forward_id) {
               f_resize_dynamic_string(status, argument, firewall_chain_forward_length);
@@ -447,10 +466,13 @@
           }
 
           // add the device.
-          f_resize_dynamic_string(status, argument, device.used);
-          if (f_error_is_error(status)) break;
+          if (device.used > 0) {
+            f_resize_dynamic_string(status, argument, device.used);
+            if (f_error_is_error(status)) break;
 
-          strncat(argument.string, device.string, device.used);
+            strncat(argument.string, device.string, device.used);
+          }
+
           argument.used = device.used;
 
           if (argument.used > 0) {
@@ -488,10 +510,13 @@
             argument.used   = 0;
           }
 
-          f_resize_dynamic_string(status, argument, protocol.used);
-          if (f_error_is_error(status)) break;
+          if (protocol.used > 0) {
+            f_resize_dynamic_string(status, argument, protocol.used);
+            if (f_error_is_error(status)) break;
 
-          strncat(argument.string, protocol.string, protocol.used);
+            strncat(argument.string, protocol.string, protocol.used);
+          }
+
           argument.used = protocol.used;
 
           if (argument.used > 0) {
@@ -519,26 +544,31 @@
 
             length = (local.rule_contents.array[i].array[subcounter].stop - local.rule_contents.array[i].array[subcounter].start) + 1;
 
-            f_resize_dynamic_string(status, ip_list, length);
+            if (length > 0) {
+              f_resize_dynamic_string(status, ip_list, length);
 
-            if (f_error_is_error(status)) {
-              subcounter = local.rule_contents.array[i].used;
-            } else {
-              strncat(ip_list.string, local.buffer.string + local.rule_contents.array[i].array[subcounter].start, length);
-              ip_list.used = length;
+              if (f_error_is_error(status)) {
+                subcounter = local.rule_contents.array[i].used;
+              } else {
+                strncat(ip_list.string, local.buffer.string + local.rule_contents.array[i].array[subcounter].start, length);
+                ip_list.used = length;
 
-              subcounter++;
+                subcounter++;
+              }
             }
           }
 
           for (; subcounter < local.rule_contents.array[i].used; subcounter++) {
             length = (local.rule_contents.array[i].array[subcounter].stop - local.rule_contents.array[i].array[subcounter].start) + 1;
 
-            f_resize_dynamic_string(status, argument, length);
+            if (length > 0) {
+              f_resize_dynamic_string(status, argument, length);
 
-            if (f_error_is_error(status)) break;
+              if (f_error_is_error(status)) break;
 
-            strncat(argument.string, local.buffer.string + local.rule_contents.array[i].array[subcounter].start, length);
+              strncat(argument.string, local.buffer.string + local.rule_contents.array[i].array[subcounter].start, length);
+            }
+
             argument.used = length;
 
             if (length > 0) {
