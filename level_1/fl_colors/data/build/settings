@@ -14,6 +14,7 @@ build_sources_library colors.c
 build_sources_program 
 build_sources_headers colors.h
 build_shared yes
+build_static yes
 
 flags_all -z now
 flags_shared

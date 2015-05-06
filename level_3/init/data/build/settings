@@ -1,6 +1,6 @@
 # fss-0000
 
-project_name fss_basic_list_read
+project_name init
 project_level 3
 
 version_major 0
@@ -10,14 +10,15 @@ version_micro 2
 build_compiler gcc
 build_linker ar
 build_libraries -lfll_colors -lfll_fss -lfll_execute -lfl_directory -lfl_colors -lfl_strings -lfl_file -lfl_console -lfl_fss -lf_pipe -lf_file -lf_print -lf_conversion -lf_console -lf_memory -lc
-build_sources_library fss_basic_list_read.c
+build_sources_library init.c private-init.c
 build_sources_program main.c
-build_sources_headers fss_basic_list_read.h
+build_sources_headers init.h
 build_shared yes
+build_static yes
 build_static yes
 
 flags_all -z now
 flags_shared
 flags_static
 flags_library -fPIC
-flags_program -fPIE -lfss_basic_list_read
+flags_program -fPIE -lfirewall

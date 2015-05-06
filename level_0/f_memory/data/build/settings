@@ -14,6 +14,7 @@ build_sources_library memory.c
 build_sources_program 
 build_sources_headers memory.h
 build_shared yes
+build_static yes
 
 flags_all -z now
 flags_shared
