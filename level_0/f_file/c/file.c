@@ -1,6 +1,6 @@
 /* FLL - Level 0
  * Project:       File
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -11,13 +11,13 @@
 #include <level_0/file.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_file_open_
-  f_return_status f_file_open(f_file *file_information, const f_string filename) {
+  f_return_status f_file_open(f_file *file_information, f_const f_string filename) {
     #ifndef _di_level_0_parameter_checking_
-      if (file_information == f_null) return f_error_set_error(f_invalid_parameter);
+      if (file_information == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // if file->mode is unset, then this may cause a segfault, depending on whether or not the libc will handle this appropriately
@@ -39,7 +39,7 @@ extern "C"{
 #ifndef _di_f_file_close_
   f_return_status f_file_close(f_file *file_information) {
     #ifndef _di_level_0_parameter_checking_
-      if (file_information == f_null) return f_error_set_error(f_invalid_parameter);
+      if (file_information == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file_information->file == 0) return f_error_set_error(f_file_not_open);
@@ -61,7 +61,7 @@ extern "C"{
 #ifndef _di_f_file_flush_
   f_return_status f_file_flush(f_file *file_information) {
     #ifndef _di_level_0_parameter_checking_
-      if (file_information == f_null) return f_error_set_error(f_invalid_parameter);
+      if (file_information == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file_information->file == 0) return f_error_set_error(f_file_not_open);
@@ -72,9 +72,9 @@ extern "C"{
 #endif // _di_f_file_flush_
 
 #ifndef _di_f_file_read_
-  f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location) {
+  f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, f_const f_file_position location) {
     #ifndef _di_level_0_parameter_checking_
-      if (file_information == f_null) return f_error_set_error(f_invalid_parameter);
+      if (file_information == 0) return f_error_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_error_set_error(f_invalid_parameter);
 
       if (location.buffer_start < 0) return f_error_set_error(f_invalid_parameter);
@@ -136,7 +136,7 @@ extern "C"{
 #ifndef _di_f_file_read_fifo_
   f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (file_information == f_null) return f_error_set_error(f_invalid_parameter);
+      if (file_information == 0) return f_error_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -160,6 +160,88 @@ extern "C"{
     return f_none;
   }
 #endif // _di_f_file_read_fifo_
+
+#ifndef _di_f_file_stat_
+  f_return_status f_file_stat(f_const f_string file, f_stat *stat) {
+    if (stat != 0) {
+      return f_none;
+    }
+
+    f_int result = 0;
+
+    result = stat(file, stat);
+    if (result < 0) {
+      if (errno == ENAMETOOLONG || errno == EFAULT) {
+        return f_error_set_error(f_invalid_parameter);
+      }
+      else if (errno == ENOMEM) {
+        return f_error_set_error(f_out_of_memory);
+      }
+      else if (errno == EOVERFLOW) {
+        return f_error_set_error(f_overflow);
+      }
+      else if (errno == ENOTDIR) {
+        return f_error_set_error(f_invalid_directory);
+      }
+      else if (errno == ENOENT) {
+        return f_file_not_found;
+      }
+      else if (errno == EACCESS) {
+        return f_error_set_error(f_access_denied);
+      }
+      else if (errno == ELOOP) {
+        return f_error_set_error(f_loop);
+      }
+
+      return f_error_set_error(f_file_stat_error);
+    }
+
+    return f_none;
+  }
+#endif // _di_f_file_stat_
+
+#ifndef _di_f_file_stat_by_id_
+  f_return_status f_file_stat_by_id(f_const f_s_int file_id, f_stat *stat) {
+    #ifndef _di_level_0_parameter_checking_
+      if (file_id <= 0) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (stat != 0) {
+      return f_none;
+    }
+
+    f_int result = 0;
+
+    result = stat(file, stat);
+    if (result < 0) {
+      if (errno == ENAMETOOLONG || errno == EFAULT) {
+        return f_error_set_error(f_invalid_parameter);
+      }
+      else if (errno == ENOMEM) {
+        return f_error_set_error(f_out_of_memory);
+      }
+      else if (errno == EOVERFLOW) {
+        return f_error_set_error(f_overflow);
+      }
+      else if (errno == ENOTDIR) {
+        return f_error_set_error(f_invalid_directory);
+      }
+      else if (errno == ENOENT) {
+        return f_file_not_found;
+      }
+      else if (errno == EACCESS) {
+        return f_error_set_error(f_access_denied);
+      }
+      else if (errno == ELOOP) {
+        return f_error_set_error(f_loop);
+      }
+
+      return f_error_set_error(f_file_stat_error);
+    }
+
+    return f_none;
+  }
+#endif // _di_f_file_stat_by_id_
 
 #ifdef __cplusplus
 } // extern "C"

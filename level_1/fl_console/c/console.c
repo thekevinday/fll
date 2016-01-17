@@ -1,19 +1,19 @@
 /* FLL - Level 1
  * Project:       Console
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_1/console.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fl_process_parameters_
-  f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, f_string_lengths *remaining) {
+  f_return_status fl_process_parameters(f_const f_array_length argc, f_const f_string argv[], f_console_parameter parameters[], f_const f_array_length total_parameters, f_string_lengths *remaining) {
     #ifndef _di_level_1_parameter_checking_
-      if (remaining == f_null) return f_error_set_error(f_invalid_parameter);
+      if (remaining == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;

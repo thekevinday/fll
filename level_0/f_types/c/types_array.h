@@ -1,6 +1,6 @@
 /* FLL - Level 0
  * Project:       Types Array
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -19,7 +19,7 @@
 #include <level_0/memory.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_array_lengths_

@@ -1,17 +1,17 @@
 /* FLL - Level 0
  * Project:       Output
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_0/print.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_print_string_
-  f_return_status f_print_string(f_file_type output, const f_string string, const f_string_length length) {
+  f_return_status f_print_string(f_file_p output, f_const f_string string, f_const f_string_length length) {
     register f_string_length i = 0;
 
     for (; i < length; i++) {
@@ -25,7 +25,7 @@ extern "C"{
 #endif // _di_f_print_string_
 
 #ifndef _di_f_print_dynamic_string_
-  f_return_status f_print_dynamic_string(f_file_type output, const f_dynamic_string buffer) {
+  f_return_status f_print_dynamic_string(f_file_p output, f_const f_dynamic_string buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used <= 0) return f_invalid_parameter;
     #endif // _di_level_0_parameter_checking_
@@ -43,7 +43,7 @@ extern "C"{
 #endif // _di_f_print_dynamic_string_
 
 #ifndef _di_f_print_partial_dynamic_string_
-  f_return_status f_print_partial_dynamic_string(f_file_type output, const f_dynamic_string buffer, const f_string_location location) {
+  f_return_status f_print_partial_dynamic_string(f_file_p output, f_const f_dynamic_string buffer, f_const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (location.start < 0) return f_error_set_error(f_invalid_parameter);
       if (location.stop < location.start) return f_error_set_error(f_invalid_parameter);

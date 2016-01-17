@@ -1,6 +1,6 @@
 /* FLL - Level 0
  * Project:       FSS
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -19,7 +19,7 @@
 #include <level_0/strings.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_fss_types_
@@ -136,15 +136,15 @@ enum {
   typedef f_string_location f_fss_object;
   #define f_fss_object_initialize f_string_location_initialize
 
-  #define f_new_fss_object(status, object, length)   status = f_new_array((void **) & object, sizeof(f_fss_object), length)
-  #define f_delete_fss_object(status, object)        status = f_delete((void **) & object)
-  #define f_destroy_fss_object(status, object, size) status = f_destroy((void **) & object, sizeof(f_fss_object), size)
+  #define f_new_fss_object(status, object, length)   status = f_new_array((f_void_p *) & object, sizeof(f_fss_object), length)
+  #define f_delete_fss_object(status, object)        status = f_delete((f_void_p *) & object)
+  #define f_destroy_fss_object(status, object, size) status = f_destroy((f_void_p *) & object, sizeof(f_fss_object), size)
 
   #define f_resize_fss_object(status, object, old_length, new_length) \
-    status = f_resize((void **) & object, sizeof(f_fss_object), old_length, new_length)
+    status = f_resize((f_void_p *) & object, sizeof(f_fss_object), old_length, new_length)
 
   #define f_adjust_fss_object(status, object, old_length, new_length) \
-    status = f_adjust((void **) & object, sizeof(f_fss_object), old_length, new_length)
+    status = f_adjust((f_void_p *) & object, sizeof(f_fss_object), old_length, new_length)
 #endif // _di_fss_object_
 
 // This holds an array of fss_object

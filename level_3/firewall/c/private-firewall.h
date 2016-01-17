@@ -6,7 +6,7 @@
 #define _PRIVATE_firewall_h
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_firewall_local_data_
@@ -77,23 +77,23 @@ extern "C"{
 #endif // _di_firewall_macro_private_
 
 #ifndef _di_firewall_perform_commands_
-  f_return_status firewall_perform_commands(const firewall_local_data local, const firewall_data data) __attribute__((visibility("internal")));
+  f_return_status firewall_perform_commands(f_const firewall_local_data local, f_const firewall_data data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_perform_commands_
 
 #ifndef _di_firewall_create_custom_chains_
-  f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved, firewall_local_data *local, firewall_data *data) __attribute__((visibility("internal")));
+  f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_create_custom_chains_
 
 #ifndef _di_firewall_buffer_rules_
-  f_return_status firewall_buffer_rules(const f_string filename, const f_bool optional, firewall_local_data *local, firewall_data *data) __attribute__((visibility("internal")));
+  f_return_status firewall_buffer_rules(f_const f_string filename, f_const f_bool optional, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_buffer_rules_
 
 #ifndef _di_firewall_process_rules_
-  f_return_status firewall_process_rules(f_string_location *input, firewall_local_data *local, firewall_data *data) __attribute__((visibility("internal")));
+  f_return_status firewall_process_rules(f_string_location *input, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_process_rules_
 
 #ifndef _di_firewall_delete_local_data_
-  f_return_status firewall_delete_local_data(firewall_local_data *local) __attribute__((visibility("internal")));
+  f_return_status firewall_delete_local_data(firewall_local_data *local) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_delete_local_data_
 
 #ifdef __cplusplus

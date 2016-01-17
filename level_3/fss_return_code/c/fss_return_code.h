@@ -1,6 +1,6 @@
 /* FLL - Level 3
  * Project:       FSS
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -32,13 +32,13 @@
 #include <level_2/fss_errors.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fss_return_code_version_
   #define fss_return_code_major_version "0"
-  #define fss_return_code_minor_version "4"
-  #define fss_return_code_micro_version "2"
+  #define fss_return_code_minor_version "5"
+  #define fss_return_code_micro_version "0"
   #define fss_return_code_version fss_return_code_major_version "." fss_return_code_minor_version "." fss_return_code_micro_version
 #endif // _di_fss_return_code_version_
 
@@ -105,15 +105,15 @@ extern "C"{
 #endif // _di_fss_return_code_data_
 
 #ifndef _di_fss_return_code_print_version_
-  f_extern f_return_status fss_return_code_print_version(const fss_return_code_data data);
+  f_extern f_return_status fss_return_code_print_version(f_const fss_return_code_data data);
 #endif // _di_fss_return_code_print_version_
 
 #ifndef _di_fss_return_code_print_help_
-  f_extern f_return_status fss_return_code_print_help(const fss_return_code_data data);
+  f_extern f_return_status fss_return_code_print_help(f_const fss_return_code_data data);
 #endif // _di_fss_return_code_print_help_
 
 #ifndef _di_fss_return_code_main_
-  f_extern f_return_status fss_return_code_main(const f_array_length argc, const f_string argv[], fss_return_code_data *data);
+  f_extern f_return_status fss_return_code_main(f_const f_array_length argc, f_const f_string argv[], fss_return_code_data *data);
 #endif // _di_fss_return_code_main_
 
 #ifndef _di_fss_return_code_delete_data_

@@ -1,6 +1,6 @@
 /* FLL - Level 0
  * Project:       Paths
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -16,7 +16,7 @@
 #include <level_0/filesystem_paths.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 // TODO: don't forget to completely restructure the paths layout before 0.1.0 is released

@@ -1,6 +1,6 @@
 /* FLL - Level 2
  * Project:       Execute
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -10,13 +10,13 @@
 #include <level_2/execute.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fll_execute_path_
-  f_return_status fll_execute_path(const f_string program_path, const f_dynamic_strings arguments, f_s_int *results) {
+  f_return_status fll_execute_path(f_const f_string program_path, f_const f_dynamic_strings arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
-      if (results == f_null) return f_error_set_error(f_invalid_parameter);
+      if (results == 0) return f_error_set_error(f_invalid_parameter);
 
       if (arguments.used < 0) return f_error_set_error(f_invalid_parameter);
       if (arguments.used > arguments.size) return f_error_set_error(f_invalid_parameter);
@@ -32,7 +32,7 @@ extern "C"{
 
     last_slash = strrchr(program_path, '/');
 
-    if (last_slash != f_null) {
+    if (last_slash != 0) {
       name_size = strnlen(last_slash, PATH_MAX);
 
       if (name_size > 1) {
@@ -47,7 +47,7 @@ extern "C"{
       }
     }
 
-    status = f_new_array((void **) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
+    status = f_new_array((f_void_p *) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
 
     if (f_error_is_error(status)) {
       f_status tmp_status = f_none;
@@ -77,7 +77,7 @@ extern "C"{
 
     if (process_id < 0) {
       if (name_size > 0) f_delete_string(status, program_name, name_size);
-      f_delete((void **) & arguments_array, sizeof(f_autochar), arguments.used + 2);
+      f_delete((f_void_p *) & arguments_array, sizeof(f_autochar), arguments.used + 2);
 
       return f_error_set_error(f_fork_failed);
     }
@@ -93,7 +93,7 @@ extern "C"{
     waitpid(process_id, results, 0);
 
     if (name_size > 0) f_delete_string(status, program_name, name_size);
-    f_delete((void **) & arguments_array, sizeof(f_autochar), arguments.used + 2);
+    f_delete((f_void_p *) & arguments_array, sizeof(f_autochar), arguments.used + 2);
 
     if (*results != 0) return f_error_set_error(f_failure);
 
@@ -102,9 +102,9 @@ extern "C"{
 #endif // _di_fll_execute_path_
 
 #ifndef _di_fll_execute_program_
-  f_return_status fll_execute_program(const f_string program_name, const f_dynamic_strings arguments, f_s_int *results) {
+  f_return_status fll_execute_program(f_const f_string program_name, f_const f_dynamic_strings arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
-      if (results == f_null) return f_error_set_error(f_invalid_parameter);
+      if (results == 0) return f_error_set_error(f_invalid_parameter);
 
       if (arguments.used < 0) return f_error_set_error(f_invalid_parameter);
       if (arguments.used > arguments.size) return f_error_set_error(f_invalid_parameter);
@@ -114,7 +114,7 @@ extern "C"{
     f_status   status            = f_none;
     f_autochar **arguments_array = 0;
 
-    status = f_new_array((void **) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
+    status = f_new_array((f_void_p *) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
 
     if (f_error_is_error(status)) return status;
 
@@ -138,7 +138,7 @@ extern "C"{
     process_id = vfork();
 
     if (process_id < 0) {
-      f_delete((void **) & arguments_array, sizeof(f_autochar), arguments.used + 2);
+      f_delete((f_void_p *) & arguments_array, sizeof(f_autochar), arguments.used + 2);
 
       return f_error_set_error(f_fork_failed);
     }
@@ -153,7 +153,7 @@ extern "C"{
     // have the parent wait for the child process to finish
     waitpid(process_id, results, 0);
 
-    f_delete((void **) & arguments_array, sizeof(f_autochar), arguments.used + 2);
+    f_delete((f_void_p *) & arguments_array, sizeof(f_autochar), arguments.used + 2);
 
     if (*results != 0) return f_error_set_error(f_failure);
 

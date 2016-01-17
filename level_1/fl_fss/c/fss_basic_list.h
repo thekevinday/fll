@@ -1,6 +1,6 @@
 /* FLL - Level 1
  * Project:       FSS
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -28,7 +28,7 @@
 #include <level_1/fss_errors.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_list_object_read_
@@ -43,12 +43,12 @@ extern "C"{
 
 #ifndef _di_fl_fss_basic_list_object_write_
   // write an fss-0002 object
-  f_extern f_return_status fl_fss_basic_list_object_write(const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer);
+  f_extern f_return_status fl_fss_basic_list_object_write(f_const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer);
 #endif // _di_fl_fss_basic_list_object_write_
 
 #ifndef _di_fl_fss_basic_list_content_write_
   // write an fss-0002 content
-  f_extern f_return_status fl_fss_basic_list_content_write(const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer);
+  f_extern f_return_status fl_fss_basic_list_content_write(f_const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer);
 #endif // _di_fl_fss_basic_list_content_write_
 
 #ifdef __cplusplus

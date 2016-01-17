@@ -1,18 +1,18 @@
 /* FLL - Level 3
  * Project:       FSS
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_3/fss_basic_list_write.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 // version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
 #ifndef _di_fss_basic_list_write_print_version_
-  f_return_status fss_basic_list_write_print_version(const fss_basic_list_write_data data) {
+  f_return_status fss_basic_list_write_print_version(f_const fss_basic_list_write_data data) {
     printf("%s\n", fss_basic_list_write_version);
 
     return f_none;
@@ -20,7 +20,7 @@ extern "C"{
 #endif // _fss_basic_list_write_print_version_
 
 #ifndef _di_fss_basic_list_write_print_help_
-  f_return_status fss_basic_list_write_print_help(const fss_basic_list_write_data data) {
+  f_return_status fss_basic_list_write_print_help(f_const fss_basic_list_write_data data) {
     printf("\n");
     fl_print_color(f_standard_output, data.context.title, data.context.reset, " %s", fss_basic_list_write_name_long);
 
@@ -103,7 +103,7 @@ extern "C"{
 #endif // _di_fss_basic_list_write_print_help_
 
 #ifndef _di_fss_basic_list_write_main_
-  f_return_status fss_basic_list_write_main(const f_array_length argc, const f_string argv[], fss_basic_list_write_data *data) {
+  f_return_status fss_basic_list_write_main(f_const f_array_length argc, f_const f_string argv[], fss_basic_list_write_data *data) {
     f_status status = f_none;
     f_status status2 = f_none;
 

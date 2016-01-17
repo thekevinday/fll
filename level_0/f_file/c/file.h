@@ -1,6 +1,6 @@
 /* FLL - Level 0
  * Project:       File
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -24,7 +24,7 @@
 #include <level_0/strings.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_file_types_
@@ -54,7 +54,7 @@ extern "C"{
 #ifndef _di_f_file_
   typedef struct {
     f_file_id    id;        // file descriptor
-    f_file_type  file;      // the file data type
+    f_file_p     file;      // the file data type
     f_file_mode  mode;      // how the file is to be accessed (or is being accessed)
     f_size_t     byte_size; // how many bytes to use on each read/write (for normal string handling this should be sizeof(f_string)
   } f_file;
@@ -198,7 +198,7 @@ extern "C"{
 #ifndef _di_f_file_open_
   // open a particular file and save its stream
   // filename = name of the file
-  f_extern f_return_status f_file_open(f_file *file_information, const f_string filename);
+  f_extern f_return_status f_file_open(f_file *file_information, f_const f_string filename);
 #endif // _di_f_file_open_
 
 #ifndef _di_f_file_close_
@@ -213,13 +213,21 @@ extern "C"{
 
 #ifndef _di_f_file_read_
   // read a given amount of data from the buffer, will auto-seek to where
-  f_extern f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location);
+  f_extern f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, f_const f_file_position location);
 #endif // _di_f_file_read_
 
 #ifndef _di_f_file_read_fifo_
   // read a given amount of data from the buffer, will not auto seek
   f_extern f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer);
 #endif // _di_f_file_read_fifo_
+
+#ifndef _di_f_file_stat_
+  f_extern f_return_status f_file_stat(f_const f_string file, f_stat *stat);
+#endif // _di_f_file_stat_
+
+#ifndef _di_f_file_stat_by_id_
+  f_extern f_return_status f_file_stat_by_id(f_const f_s_int file_id, f_stat *stat);
+#endif // _di_f_file_stat_by_id_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -1,6 +1,6 @@
 /* FLL - Level 3
  * Project:       Firewall
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
@@ -8,12 +8,12 @@
 #include "private-firewall.h"
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 // version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
 #ifndef _di_firewall_print_version_
-  f_return_status firewall_print_version(const firewall_data data) {
+  f_return_status firewall_print_version(f_const firewall_data data) {
     printf("%s\n", firewall_version);
 
     return f_none;
@@ -21,7 +21,7 @@ extern "C"{
 #endif // _firewall_print_version_
 
 #ifndef _di_firewall_print_help_
-  f_return_status firewall_print_help(const firewall_data data) {
+  f_return_status firewall_print_help(f_const firewall_data data) {
     printf("\n");
     fl_print_color(f_standard_output, data.context.title, data.context.reset, " %s", firewall_name_long);
 
@@ -114,7 +114,7 @@ extern "C"{
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
-  f_return_status firewall_main(const f_s_int argc, const f_string argv[], firewall_data *data) {
+  f_return_status firewall_main(f_const f_s_int argc, f_const f_string argv[], firewall_data *data) {
     f_status status  = f_none;
     f_status status2 = f_none;
 

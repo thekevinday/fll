@@ -1,56 +1,56 @@
 /* FLL - Level 1
  * Project:       Colors
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_1/colors.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fl_set_color_
-  f_return_status fl_set_color(f_file_type file, const f_colors_format format, const f_autochar *color1, const f_autochar *color2, const f_autochar *color3, const f_autochar *color4, const f_autochar *color5) {
+  f_return_status fl_set_color(f_file_p file, f_const f_colors_format format, f_const f_autochar *color1, f_const f_autochar *color2, f_const f_autochar *color3, f_const f_autochar *color4, f_const f_autochar *color5) {
     #ifndef _di_level_1_parameter_checking_
-      if (file == f_null) return f_error_set_error(f_invalid_parameter);
-      if (color1 == f_null) return f_error_set_error(f_invalid_parameter);
+      if (file == 0) return f_error_set_error(f_invalid_parameter);
+      if (color1 == 0) return f_error_set_error(f_invalid_parameter);
 
       // make sure all data is in the proper order
-      if (color2 == f_null && (color3 != f_null || color4 != f_null || color5 != f_null)) return f_invalid_parameter;
-      if (color3 == f_null && (color4 != f_null || color5 != f_null))                     return f_invalid_parameter;
-      if (color4 == f_null && color5 != f_null)                                           return f_invalid_parameter;
+      if (color2 == 0 && (color3 != 0 || color4 != 0 || color5 != 0)) return f_invalid_parameter;
+      if (color3 == 0 && (color4 != 0 || color5 != 0))                return f_invalid_parameter;
+      if (color4 == 0 && color5 != 0)                                 return f_invalid_parameter;
     #endif // _di_level_1_parameter_checking_
 
-    if      (color2 == f_null) fprintf(file, "%s%s%s",                 format.begin, color1, format.end);
-    else if (color3 == f_null) fprintf(file, "%s%s%s%s%s",             format.begin, color1, format.medium, color2, format.end);
-    else if (color4 == f_null) fprintf(file, "%s%s%s%s%s%s%s",         format.begin, color1, format.medium, color2, format.medium, color3, format.end);
-    else if (color5 == f_null) fprintf(file, "%s%s%s%s%s%s%s%s%s",     format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.end);
-    else                       fprintf(file, "%s%s%s%s%s%s%s%s%s%s%s", format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.medium, color5, format.end);
+    if      (color2 == 0) fprintf(file, "%s%s%s",                 format.begin, color1, format.end);
+    else if (color3 == 0) fprintf(file, "%s%s%s%s%s",             format.begin, color1, format.medium, color2, format.end);
+    else if (color4 == 0) fprintf(file, "%s%s%s%s%s%s%s",         format.begin, color1, format.medium, color2, format.medium, color3, format.end);
+    else if (color5 == 0) fprintf(file, "%s%s%s%s%s%s%s%s%s",     format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.end);
+    else                  fprintf(file, "%s%s%s%s%s%s%s%s%s%s%s", format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.medium, color5, format.end);
 
     return f_none;
   }
 #endif // _di_fl_set_color_
 
 #ifndef _di_fl_save_color_
-  f_return_status fl_save_color(f_dynamic_string *buffer, const f_colors_format format, const f_autochar *color1, const f_autochar *color2, const f_autochar *color3, const f_autochar *color4, const f_autochar *color5) {
+  f_return_status fl_save_color(f_dynamic_string *buffer, f_const f_colors_format format, f_const f_autochar *color1, f_const f_autochar *color2, f_const f_autochar *color3, f_const f_autochar *color4, f_const f_autochar *color5) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
-      if (color1 == f_null) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
+      if (color1 == 0) return f_error_set_error(f_invalid_parameter);
 
       // make sure all data is in the proper order
-      if (color2 == f_null && (color3 != f_null || color4 != f_null || color5 != f_null)) return f_error_set_error(f_invalid_parameter);
-      if (color3 == f_null && (color4 != f_null || color5 != f_null)) return f_error_set_error(f_invalid_parameter);
-      if (color4 == f_null && color5 != f_null) return f_error_set_error(f_invalid_parameter);
+      if (color2 == 0 && (color3 != 0 || color4 != 0 || color5 != 0)) return f_error_set_error(f_invalid_parameter);
+      if (color3 == 0 && (color4 != 0 || color5 != 0)) return f_error_set_error(f_invalid_parameter);
+      if (color4 == 0 && color5 != 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length string_size = strnlen(format.begin, f_color_max_size) + strnlen(format.end, f_color_max_size) + 1;
 
-    if      (color2 == f_null) string_size += strnlen(color1, f_color_max_size);
-    else if (color3 == f_null) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size);
-    else if (color4 == f_null) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size);
-    else if (color5 == f_null) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size) + strnlen(color4, f_color_max_size);
-    else                       string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size) + strnlen(color4, f_color_max_size) + strnlen(color5, f_color_max_size);
+    if      (color2 == 0) string_size += strnlen(color1, f_color_max_size);
+    else if (color3 == 0) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size);
+    else if (color4 == 0) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size);
+    else if (color5 == 0) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size) + strnlen(color4, f_color_max_size);
+    else                  string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size) + strnlen(color4, f_color_max_size) + strnlen(color5, f_color_max_size);
 
     // make sure there is enough allocated space, if not, then allocate some more
     if (buffer->size - buffer->used - 1 < string_size) {
@@ -63,17 +63,17 @@ extern "C"{
       }
     }
 
-    if (color2 == f_null) {
+    if (color2 == 0) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.end, f_color_max_size);
-    } else if (color3 == f_null) {
+    } else if (color3 == 0) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.medium, f_color_max_size);
       strncat(buffer->string, color2, f_color_max_size);
       strncat(buffer->string, format.end, f_color_max_size);
-    } else if (color4 == f_null) {
+    } else if (color4 == 0) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.medium, f_color_max_size);
@@ -81,7 +81,7 @@ extern "C"{
       strncat(buffer->string, format.medium, f_color_max_size);
       strncat(buffer->string, color3, f_color_max_size);
       strncat(buffer->string, format.end, f_color_max_size);
-    } else if (color5 == f_null) {
+    } else if (color5 == 0) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.medium, f_color_max_size);
@@ -116,10 +116,10 @@ extern "C"{
 #endif // _di_fl_save_color_
 
 #ifndef _di_fl_print_color_
-  f_return_status fl_print_color(f_file_type file, const f_dynamic_string start_color, const f_dynamic_string end_color, const f_autochar *string, ...) {
+  f_return_status fl_print_color(f_file_p file, f_const f_dynamic_string start_color, f_const f_dynamic_string end_color, f_const f_autochar *string, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (file == f_null) return f_error_set_error(f_invalid_parameter);
-      if (string == f_null) return f_error_set_error(f_invalid_parameter);
+      if (file == 0) return f_error_set_error(f_invalid_parameter);
+      if (string == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (start_color.used != 0) {
@@ -143,10 +143,10 @@ extern "C"{
 #endif // _di_fl_print_color_
 
 #ifndef _di_fl_print_color_line_
-  f_return_status fl_print_color_line(f_file_type file, const f_dynamic_string start_color, const f_dynamic_string end_color, const f_autochar *string, ...) {
+  f_return_status fl_print_color_line(f_file_p file, f_const f_dynamic_string start_color, f_const f_dynamic_string end_color, f_const f_autochar *string, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (file == f_null) return f_error_set_error(f_invalid_parameter);
-      if (string == f_null) return f_error_set_error(f_invalid_parameter);
+      if (file == 0) return f_error_set_error(f_invalid_parameter);
+      if (string == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (start_color.used != 0) {
@@ -173,7 +173,7 @@ extern "C"{
 #endif // _di_fl_print_color_line_
 
 #ifndef _di_fl_print_color_code_
-  f_return_status fl_print_color_code(f_file_type file, const f_dynamic_string color) {
+  f_return_status fl_print_color_code(f_file_p file, f_const f_dynamic_string color) {
     if (color.used != 0) {
       fprintf(file, "%s", color.string);
     }

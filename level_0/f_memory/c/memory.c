@@ -1,6 +1,6 @@
 /* FLL - Level 0
  * Project:       Memory
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -10,11 +10,11 @@
 #include <level_0/memory.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_new_
-  f_return_status f_new_array(void **pointer, const f_memory_size_t type, const f_memory_length length) {
+  f_return_status f_new_array(f_void_p *pointer, f_const f_memory_size_t type, f_const f_memory_length length) {
     #ifndef _di_level_0_parameter_checking_
       if (type <= 0) return f_error_set_error(f_invalid_parameter);
       if (pointer == 0) return f_error_set_error(f_invalid_parameter);
@@ -37,7 +37,7 @@ extern "C"{
 #endif // _di_f_new_
 
 #if ! ( defined (_di_f_delete_) || defined (_f_memory_FORCE_secure_memory_) )
-  f_return_status f_delete(void **pointer, const f_memory_size_t type, const f_memory_length length) {
+  f_return_status f_delete(f_void_p *pointer, f_const f_memory_size_t type, f_const f_memory_length length) {
     #ifndef _di_level_0_parameter_checking_
       if (pointer == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -55,7 +55,7 @@ extern "C"{
 #endif // ! ( defined (_di_f_delete_) || defined (_f_memory_FORCE_secure_memory_) )
 
 #if ! ( defined (_di_f_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
-  f_return_status f_destroy(void **pointer, const f_memory_size_t type, const f_memory_length length) {
+  f_return_status f_destroy(f_void_p *pointer, f_const f_memory_size_t type, f_const f_memory_length length) {
     #ifndef _di_level_0_parameter_checking_
       if (length <  0) return f_error_set_error(f_invalid_parameter);
       if (type <= 0) return f_error_set_error(f_invalid_parameter);
@@ -79,7 +79,7 @@ extern "C"{
 #endif // ! ( defined (_di_f_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
 
 #if ! ( defined (_di_f_resize_) || defined (_f_memory_FORCE_secure_memory_) )
-  f_return_status f_resize(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length) {
+  f_return_status f_resize(f_void_p *pointer, f_const f_memory_size_t type, f_const f_memory_length old_length, f_const f_memory_length new_length) {
     #ifndef _di_level_0_parameter_checking_
       if (type <= 0) return f_error_set_error(f_invalid_parameter);
       if (old_length < 0) return f_error_set_error(f_invalid_parameter);
@@ -91,7 +91,7 @@ extern "C"{
     if (old_length == new_length) return f_none;
 
     if (*pointer != 0) {
-      void *new_pointer = 0;
+      f_void_p new_pointer = 0;
 
       // allocate new space
       if (new_length > 0) {
@@ -109,7 +109,7 @@ extern "C"{
         if (new_pointer != *pointer) {
           if (new_length > old_length) {
             // bool * is of a data type size of 1, casting it to bool should result in a single-length increment
-            // this is done to avoid problems with (void *) having arithmetic issues
+            // this is done to avoid problems with (f_void_p) having arithmetic issues
             memset(((char *) new_pointer) + (type * old_length), 0, type * (new_length - old_length));
           }
 
@@ -133,7 +133,7 @@ extern "C"{
 #endif // ! ( defined (_di_f_resize_) || defined (_f_memory_FORCE_secure_memory_) )
 
 #if ! ( defined (_di_f_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
-  f_return_status f_adjust(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length) {
+  f_return_status f_adjust(f_void_p *pointer, f_const f_memory_size_t type, f_const f_memory_length old_length, f_const f_memory_length new_length) {
     #ifndef _di_level_0_parameter_checking_
       if (type <= 0) return f_error_set_error(f_invalid_parameter);
       if (old_length < 0) return f_error_set_error(f_invalid_parameter);
@@ -145,12 +145,12 @@ extern "C"{
     if (old_length == new_length) return f_none;
 
     if (*pointer != 0) {
-      void *new_pointer = 0;
+      f_void_p new_pointer = 0;
 
       if (old_length > 0) {
         if (new_length < old_length) {
           // bool * is of a data type size of 1, casting it to bool should result in a single-length increment
-          // this is done to avoid problems with (void *) having arithmetic issues
+          // this is done to avoid problems with (f_void_p) having arithmetic issues
           memset(((char *)*pointer) + new_length, 0, type * (old_length - new_length));
         }
       }
@@ -171,7 +171,7 @@ extern "C"{
         if (new_pointer != *pointer) {
           if (new_length > old_length) {
             // char * is of a data type size of 1, casting it to bool should result in a single-length increment
-            // this is done to avoid problems with (void *) having arithmetic issues
+            // this is done to avoid problems with (f_void_p) having arithmetic issues
             memset(((char *)new_pointer) + (type * old_length), 0, type * (new_length - old_length));
           }
 

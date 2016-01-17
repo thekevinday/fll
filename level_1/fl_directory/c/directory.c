@@ -1,6 +1,6 @@
 /* FLL - Level 1
  * Project:       Directory
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -8,14 +8,14 @@
 #include <level_1/directory.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fl_directory_list_
   // put the names of each file and/or directory inside the names parameter
-  f_return_status fl_directory_list(const f_string directory_path, f_dynamic_strings *names) {
+  f_return_status fl_directory_list(f_const f_string directory_path, f_dynamic_strings *names) {
     #ifndef _di_level_1_parameter_checking_
-      if (names == f_null) return f_error_set_error(f_invalid_parameter);
+      if (names == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     struct dirent **listing = 0;
@@ -50,11 +50,11 @@ extern "C"{
         }
 
         // FIXME: the second and third paramater are probably wrong
-        f_delete((void **) & listing[counter], sizeof(struct dirent), 0);
+        f_delete((f_void_p *) & listing[counter], sizeof(struct dirent), 0);
     }
 
     // FIXME: the second and third paramater are probably wrong
-    f_delete((void **) & listing, sizeof(struct dirent *), 0);
+    f_delete((f_void_p *) & listing, sizeof(struct dirent *), 0);
 
     if (length == 0) {
       // an empty directory

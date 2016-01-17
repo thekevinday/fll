@@ -1,6 +1,6 @@
 /* FLL - Level 1
  * Project:       Directory
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -25,7 +25,7 @@
 #include <level_0/memory.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fl_directory_limitations_
@@ -34,7 +34,7 @@ extern "C"{
 
 #ifndef _di_fl_directory_list_
   // put the names of each file and/or directory inside the names parameter
-  f_extern f_return_status fl_directory_list(const f_string directory_path, f_dynamic_strings *names);
+  f_extern f_return_status fl_directory_list(f_const f_string directory_path, f_dynamic_strings *names);
 #endif // _di_fl_directory_list_
 
 #ifdef __cplusplus

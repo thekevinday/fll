@@ -1,19 +1,19 @@
 /* FLL - Level 2
  * Project:       FSS
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_2/fss_errors.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fll_fss_errors_to_string_
-  f_return_status fll_fss_errors_to_string(const f_status error, f_string *string) {
+  f_return_status fll_fss_errors_to_string(f_const f_status error, f_string *string) {
     #ifndef _di_level_2_parameter_checking_
-      if (string == f_null) return f_error_set_error(f_invalid_parameter);
+      if (string == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status unmasked_error = f_error_set_fine(error);
@@ -69,7 +69,7 @@ extern "C"{
 #endif // _di_fll_errors_to_string_
 
 #ifndef _di_fll_fss_errors_is_error_
-  f_return_status fll_fss_errors_is_error(const f_status error) {
+  f_return_status fll_fss_errors_is_error(f_const f_status error) {
     if (fll_fss_errors_is_fine(error) == f_true) {
       return f_false;
     } else if (fll_fss_errors_is_warning(error) == f_true) {
@@ -81,7 +81,7 @@ extern "C"{
 #endif // _di_fll_fss_errors_is_error_
 
 #ifndef _di_fll_fss_errors_is_warning_
-  f_return_status fll_fss_errors_is_warning(const f_status error) {
+  f_return_status fll_fss_errors_is_warning(f_const f_status error) {
     switch (error) {
       #ifndef _di_fll_fss_errors_basic_
         case f_no_data:
@@ -109,7 +109,7 @@ extern "C"{
 #endif // _di_fll_fss_errors_is_warning_
 
 #ifndef _di_fll_fss_errors_is_fine_
-  f_return_status fll_fss_errors_is_fine(const f_status error) {
+  f_return_status fll_fss_errors_is_fine(f_const f_status error) {
     switch (error) {
       #ifndef _di_fll_fss_errors_booleans_
         case f_false:

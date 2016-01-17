@@ -1,17 +1,17 @@
 /* FLL - Level 0
  * Project:       Conversion
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_0/conversion.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_is_digit_
-  f_return_status f_is_digit(const f_autochar character) {
+  f_return_status f_is_digit(f_const f_autochar character) {
 
     // at this point, it seems that it would incur more overhead to use the libc isdigit here, so just use one less call and test it here
     switch (character) {
@@ -35,7 +35,7 @@ extern "C"{
 #endif // _di_f_is_digit_
 
 #ifndef _di_f_is_hexdigit_
-  f_return_status f_is_hexdigit(const f_autochar character) {
+  f_return_status f_is_hexdigit(f_const f_autochar character) {
 
     switch (character) {
       case '0':
@@ -68,9 +68,9 @@ extern "C"{
 #endif // _di_f_is_hexdigit_
 
 #ifndef _di_f_character_to_digit_
-  f_return_status f_character_to_digit(const f_autochar character, f_u_long *digit) {
+  f_return_status f_character_to_digit(f_const f_autochar character, f_u_long *digit) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit == f_null) return f_error_set_error(f_invalid_parameter);
+      if (digit == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -93,9 +93,9 @@ extern "C"{
 #endif // _di_f_character_to_digit_
 
 #ifndef _di_f_character_to_hexdigit_
-  f_return_status f_character_to_hexdigit(const f_autochar character, f_u_long *digit) {
+  f_return_status f_character_to_hexdigit(f_const f_autochar character, f_u_long *digit) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit == f_null) return f_error_set_error(f_invalid_parameter);
+      if (digit == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -130,9 +130,9 @@ extern "C"{
 #endif // _di_f_character_to_hexdigit_
 
 #ifndef _di_f_string_to_digit_
-  f_return_status f_string_to_digit(const f_string string, f_u_long *digit, const f_string_location location) {
+  f_return_status f_string_to_digit(f_const f_string string, f_u_long *digit, f_const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit == f_null) return f_error_set_error(f_invalid_parameter);
+      if (digit == 0) return f_error_set_error(f_invalid_parameter);
       if (location.start < 0) return f_error_set_error(f_invalid_parameter);
       if (location.stop <= location.start) return f_error_set_error(f_invalid_parameter);
       if (string == 0) return f_error_set_error(f_invalid_parameter);
@@ -165,9 +165,9 @@ extern "C"{
 #endif // _di_f_string_to_digit_
 
 #ifndef _di_f_string_to_hexdigit_
-  f_return_status f_string_to_hexdigit(const f_string string, f_u_long *digit, const f_string_location location) {
+  f_return_status f_string_to_hexdigit(f_const f_string string, f_u_long *digit, f_const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit == f_null) return f_error_set_error(f_invalid_parameter);
+      if (digit == 0) return f_error_set_error(f_invalid_parameter);
       if (location.start < 0) return f_error_set_error(f_invalid_parameter);
       if (location.stop <= location.start) return f_error_set_error(f_invalid_parameter);
       if (string == 0) return f_error_set_error(f_invalid_parameter);

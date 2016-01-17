@@ -1,6 +1,6 @@
 /* FLL - Level 0
  * Project:       Types
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -35,7 +35,7 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_types_normal
@@ -66,32 +66,38 @@ extern "C"{
   #define f_nlink_t        nlink_t
   #define f_off_t          off_t
   #define f_fpos_t         fpos_t
-  #define f_file_type      FILE *
-  #define f_null           NULL
+  #define f_pid_t          pid_t
+  #define f_sigset_t       sigset_t
+  #define f_siginfo_t      siginfo_t
+  #define f_file_t         FILE
+  #define f_file_p         FILE *
+  #define f_void_t         void
+  #define f_void_p         void *
   #define f_extern         extern
+  #define f_const          f_const
+  #define f_stat           struct stat
 #endif // _di_f_types_normal
 
 // The minimal types represent to the system admin or whomever else handles compilation that the data type should NOT be smaller than the specified size, but can be any size larger.
-// TODO: Should min_char be implemented?
 #ifndef _di_f_types_min
   #define f_min_s_int          f_s_int
   #define f_min_s_short        f_s_short
   #define f_min_s_long         f_s_long
-  #define f_min_s_short_short  f_s_short_short
+  #define f_min_s_short_short  f_t_s_short_short
   #define f_min_s_long_long    f_s_long_long
-  #define f_min_s_double       f_s_double
+  #define f_min_s_double       f_t_s_double
   #define f_min_s_long_double  f_s_long_double
   #define f_min_u_int          f_u_int
-  #define f_min_u_short        f_u_short
+  #define f_min_u_short        f_t_u_short
   #define f_min_u_long         f_u_long
-  #define f_min_u_short_short  f_u_short_short
+  #define f_min_u_short_short  f_t_u_short_short
   #define f_min_u_long_long    f_u_long_long
-  #define f_min_u_double       f_u_double
+  #define f_min_u_double       f_t_u_double
   #define f_min_u_long_double  f_u_long_double
+  #define f_min_char           f_char
 #endif // _di_f_types_min
 
 // The maximum types represent to the system admin or whomever else handles compilation that the data type should NOT be larger than the specified size, but can be any size smaller.
-// TODO: Should max_char be implemented?
 #ifndef _di_f_types_max
   #define f_max_s_int          f_s_int
   #define f_max_s_short        f_s_short
@@ -107,16 +113,17 @@ extern "C"{
   #define f_max_u_long_long    f_u_long_long
   #define f_max_u_double       f_u_double
   #define f_max_u_long_double  f_u_long_double
+  #define f_max_char           f_wchar
 #endif // _di_f_types_max
 
 #ifndef _di_f_status_
   typedef uint16_t f_status;
 
   // The c language gives warnings about return types of constants, I pretty much hate not being able to forcefully specify that these are not the be changed as that could be a security issue
-  // Therefore, I need to remove the const for c, but keep it for c++, thus I define the type f_return_status, which is only for function call declarations & prototypes
+  // Therefore, I need to remove the f_const for c, but keep it for c++, thus I define the type f_return_status, which is only for function call declarations & prototypes
   // DO NOT DECLARE THESE FOR THE RETURN DATA TYPES THEMSELVES, USE f_status. ONLY USE THESE FOR FUNCTION PROTOTYPES AND DECLARATIONS
   #ifdef __cplusplus
-    #define f_return_status const f_status
+    #define f_return_status f_const f_status
   #else
     #define f_return_status f_status
   #endif // __cplusplus
@@ -151,10 +158,14 @@ extern "C"{
 
 // Defines a variable to be used by arrays.
 #ifndef _di_f_array_length_
-  typedef f_u_long      f_array_length;
-  typedef f_u_int       f_array_length_short;
-  typedef f_u_long_long f_array_length_long;
+  typedef f_u_long      f_t_array_length;
+  typedef f_u_int       f_t_array_length_short;
+  typedef f_u_long_long f_t_array_length_long;
 #endif // _di_f_array_length_
+
+#ifndef _di_f_gcc_specific_
+#define f_gcc_attribute_visibility_internal __attribute__((visibility("internal")))
+#endif // _di_f_gcc_specific_
 
 #ifdef __cplusplus
 } // extern "C"

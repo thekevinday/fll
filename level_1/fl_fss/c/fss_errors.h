@@ -1,6 +1,6 @@
 /* FLL - Level 1
  * Project:       FSS
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  *
@@ -15,7 +15,7 @@
 #include <level_0/errors.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fl_macro_test_for_fss_errors_

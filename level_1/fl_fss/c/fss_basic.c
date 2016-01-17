@@ -1,21 +1,21 @@
 /* FLL - Level 1
  * Project:       FSS
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_1/fss_basic.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_object_read_
   f_return_status fl_fss_basic_object_read(f_dynamic_string *buffer, f_string_location *input, f_fss_object *found) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
-      if (input == f_null) return f_error_set_error(f_invalid_parameter);
-      if (found == f_null) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
+      if (input == 0) return f_error_set_error(f_invalid_parameter);
+      if (found == 0) return f_error_set_error(f_invalid_parameter);
       if (input->start < 0) return f_error_set_error(f_invalid_parameter);
       if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
       if (buffer->used <= 0)  return f_error_set_error(f_invalid_parameter);
@@ -302,9 +302,9 @@ extern "C"{
 #ifndef _di_fl_fss_basic_content_read_
   f_return_status fl_fss_basic_content_read(f_dynamic_string *buffer, f_string_location *input, f_fss_content *found) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
-      if (input == f_null) return f_error_set_error(f_invalid_parameter);
-      if (found == f_null) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
+      if (input == 0) return f_error_set_error(f_invalid_parameter);
+      if (found == 0) return f_error_set_error(f_invalid_parameter);
       if (input->start < 0) return f_error_set_error(f_invalid_parameter);
       if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
       if (buffer->used <= 0)  return f_error_set_error(f_invalid_parameter);
@@ -345,9 +345,9 @@ extern "C"{
 #endif // _di_fl_fss_basic_content_read_
 
 #ifndef _di_fl_fss_basic_object_write_
-  f_return_status fl_fss_basic_object_write(const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer) {
+  f_return_status fl_fss_basic_object_write(f_dynamic_string *buffer, f_const f_dynamic_string object, f_string_location *input) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
@@ -549,9 +549,9 @@ extern "C"{
 #endif // _di_fl_fss_basic_object_write_
 
 #ifndef _di_fl_fss_basic_content_write_
-  f_return_status fl_fss_basic_content_write(const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer) {
+  f_return_status fl_fss_basic_content_write(f_dynamic_string *buffer, f_const f_dynamic_string content, f_string_location *input) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;

@@ -5,7 +5,7 @@
 #include "private-firewall.h"
 
 #ifndef _di_firewall_perform_commands_
-  f_return_status firewall_perform_commands(const firewall_local_data local, const firewall_data data) {
+  f_return_status firewall_perform_commands(f_const firewall_local_data local, f_const firewall_data data) {
     f_status status = f_none;
     f_status status2 = f_none;
 
@@ -327,7 +327,7 @@
         arguments.array[arguments.used].size   = argument.size;
         arguments.array[arguments.used].used   = argument.used;
         arguments.used++;
-        argument.string = f_null;
+        argument.string = 0;
         argument.size   = 0;
         argument.used   = 0;
 
@@ -370,7 +370,7 @@
             arguments.array[arguments.used].size   = argument.size;
             arguments.array[arguments.used].used   = argument.used;
             arguments.used++;
-            argument.string = f_null;
+            argument.string = 0;
             argument.size   = 0;
             argument.used   = 0;
 
@@ -425,7 +425,7 @@
               arguments.array[arguments.used].size   = argument.size;
               arguments.array[arguments.used].used   = argument.used;
               arguments.used++;
-              argument.string = f_null;
+              argument.string = 0;
               argument.size   = 0;
               argument.used   = 0;
             }
@@ -459,7 +459,7 @@
               arguments.array[arguments.used].size   = argument.size;
               arguments.array[arguments.used].used   = argument.used;
               arguments.used++;
-              argument.string = f_null;
+              argument.string = 0;
               argument.size   = 0;
               argument.used   = 0;
             }
@@ -484,7 +484,7 @@
             arguments.array[arguments.used].size   = argument.size;
             arguments.array[arguments.used].used   = argument.used;
             arguments.used++;
-            argument.string = f_null;
+            argument.string = 0;
             argument.size   = 0;
             argument.used   = 0;
           }
@@ -506,7 +506,7 @@
             arguments.array[arguments.used].size   = argument.size;
             arguments.array[arguments.used].used   = argument.used;
             arguments.used++;
-            argument.string = f_null;
+            argument.string = 0;
             argument.size   = 0;
             argument.used   = 0;
           }
@@ -529,7 +529,7 @@
             arguments.array[arguments.used].size   = argument.size;
             arguments.array[arguments.used].used   = argument.used;
             arguments.used++;
-            argument.string = f_null;
+            argument.string = 0;
             argument.size   = 0;
             argument.used   = 0;
           }
@@ -581,7 +581,7 @@
               arguments.array[arguments.used].size   = argument.size;
               arguments.array[arguments.used].used   = argument.used;
               arguments.used++;
-              argument.string = f_null;
+              argument.string = 0;
               argument.size   = 0;
               argument.used   = 0;
             }
@@ -972,7 +972,7 @@
       }
 
       // nullify the static string
-      static_string.string = f_null;
+      static_string.string = 0;
       static_string.used = 0;
 
       if (new_chain) {
@@ -1129,8 +1129,8 @@
   }
 #endif // _di_firewall_create_custom_chains_
 
-#ifndef _di_firewall_process_rules_
-  f_return_status firewall_buffer_rules(const f_string filename, const f_bool optional, firewall_local_data *local, firewall_data *data) {
+#ifndef _di_firewall_buffer_rules_
+  f_return_status firewall_buffer_rules(f_const f_string filename, f_const f_bool optional, firewall_local_data *local, firewall_data *data) {
     f_file file = f_file_initialize;
     f_status status = f_none;
 

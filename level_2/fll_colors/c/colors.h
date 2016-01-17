@@ -1,6 +1,6 @@
 /* FLL - Level 2
  * Project:       Colors
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -23,7 +23,7 @@
 #include <level_1/colors.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fll_colors_load_context_

@@ -1,19 +1,19 @@
 /* FLL - Level 1
  * Project:       Strings
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_1/strings.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fl_rip_string_
-  f_return_status fl_rip_string(const f_dynamic_string buffer, const f_string_location position, f_dynamic_string *results) {
+  f_return_status fl_rip_string(f_const f_dynamic_string buffer, f_const f_string_location position, f_dynamic_string *results) {
     #ifndef _di_level_1_parameter_checking_
-      if (results == f_null) return f_error_set_error(f_invalid_parameter);
+      if (results == 0) return f_error_set_error(f_invalid_parameter);
       if (position.start < 0) return f_error_set_error(f_invalid_parameter);
       if (position.stop < position.start) return f_error_set_error(f_invalid_parameter);
       if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
@@ -43,9 +43,9 @@ extern "C"{
 #endif // _di_fl_rip_string_
 
 #ifndef _di_fl_seek_line_past_non_graph_
-  f_return_status fl_seek_line_past_non_graph(const f_dynamic_string buffer, f_string_location *position, const f_autochar placeholder) {
+  f_return_status fl_seek_line_past_non_graph(f_const f_dynamic_string buffer, f_string_location *position, f_const f_autochar placeholder) {
     #ifndef _di_level_1_parameter_checking_
-      if (position == f_null) return f_error_set_error(f_invalid_parameter);
+      if (position == 0) return f_error_set_error(f_invalid_parameter);
       if (position->start < 0) return f_error_set_error(f_invalid_parameter);
       if (position->stop < position->start) return f_error_set_error(f_invalid_parameter);
       if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
@@ -66,7 +66,7 @@ extern "C"{
 #endif // _di_fl_seek_line_past_non_graph_
 
 #ifndef _di_fl_seek_line_until_non_graph_
-  f_return_status fl_seek_line_until_non_graph(const f_dynamic_string buffer, f_string_location *position, const f_autochar placeholder) {
+  f_return_status fl_seek_line_until_non_graph(f_const f_dynamic_string buffer, f_string_location *position, f_const f_autochar placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (position->start < 0) return f_error_set_error(f_invalid_parameter);
       if (position->stop < position->start) return f_error_set_error(f_invalid_parameter);
@@ -88,7 +88,7 @@ extern "C"{
 #endif // _di_fl_seek_line_until_non_graph_
 
 #ifndef _di_fl_seek_to_
-  f_return_status fl_seek_to(const f_dynamic_string buffer, f_string_location *position, const f_autochar seek_to_this) {
+  f_return_status fl_seek_to(f_const f_dynamic_string buffer, f_string_location *position, f_const f_autochar seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (position->start < 0) return f_error_set_error(f_invalid_parameter);
       if (position->stop < position->start) return f_error_set_error(f_invalid_parameter);
@@ -110,7 +110,7 @@ extern "C"{
 #endif // _di_fl_seek_to_
 
 #ifndef _di_fl_compare_strings_
-  f_return_status fl_compare_strings(const f_string string1, const f_string string2, const f_string_length length1, const f_string_length length2) {
+  f_return_status fl_compare_strings(f_const f_string string1, f_const f_string string2, f_const f_string_length length1, f_const f_string_length length2) {
     #ifndef _di_level_1_parameter_checking_
       if (length1 <= 0) return f_error_set_error(f_invalid_parameter);
       if (length2 <= 0) return f_error_set_error(f_invalid_parameter);
@@ -144,7 +144,7 @@ extern "C"{
 #endif // _di_fl_compare_strings_
 
 #ifndef _di_fl_compare_dynamic_strings_
-  f_return_status fl_compare_dynamic_strings(const f_dynamic_string string1, const f_dynamic_string string2) {
+  f_return_status fl_compare_dynamic_strings(f_const f_dynamic_string string1, f_const f_dynamic_string string2) {
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= 0) return f_error_set_error(f_invalid_parameter);
       if (string2.used <= 0) return f_error_set_error(f_invalid_parameter);
@@ -178,7 +178,7 @@ extern "C"{
 #endif // _di_fl_compare_dynamic_strings_
 
 #ifndef _di_fl_compare_partial_dynamic_strings_
-  f_return_status fl_compare_partial_dynamic_strings(const f_dynamic_string string1, const f_dynamic_string string2, const f_string_location offset1, const f_string_location offset2) {
+  f_return_status fl_compare_partial_dynamic_strings(f_const f_dynamic_string string1, f_const f_dynamic_string string2, f_const f_string_location offset1, f_const f_string_location offset2) {
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= 0) return f_error_set_error(f_invalid_parameter);
       if (string2.used <= 0) return f_error_set_error(f_invalid_parameter);

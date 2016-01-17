@@ -1,22 +1,22 @@
 /* FLL - Level 0
  * Project:       Console
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_0/console.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_console_identify_
-  f_return_status f_console_identify(const f_string input, f_console_id *result) {
+  f_return_status f_console_identify(f_const f_string input, f_console_id *result) {
     #ifndef _di_level_0_parameter_checking_
-      if (result == f_null) return f_error_set_error(f_invalid_parameter);
+      if (result == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const f_string_length length = strnlen(input, 4);
+    f_const f_string_length length = strnlen(input, 4);
 
     if (length == 0) {
       *result = f_console_none;

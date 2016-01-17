@@ -1,18 +1,18 @@
 /* FLL - Level 3
  * Project:       FSS
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_3/return_code.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 // version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
 #ifndef _di_return_code_print_version_
-  f_return_status return_code_print_version(const return_code_data data) {
+  f_return_status return_code_print_version(f_const return_code_data data) {
     printf("%s\n", return_code_version);
 
     return f_none;
@@ -20,7 +20,7 @@ extern "C"{
 #endif // _return_code_print_version_
 
 #ifndef _di_return_code_print_help_
-  f_return_status return_code_print_help(const return_code_data data) {
+  f_return_status return_code_print_help(f_const return_code_data data) {
     printf("\n");
     fl_print_color(f_standard_output, data.context.title, data.context.reset, " %s", return_code_name_long);
 
@@ -116,7 +116,7 @@ extern "C"{
 #endif // _di_return_code_print_help_
 
 #ifndef _di_return_code_main_
-  f_return_status return_code_main(const f_array_length argc, const f_string argv[], return_code_data *data) {
+  f_return_status return_code_main(f_const f_array_length argc, f_const f_string argv[], return_code_data *data) {
     f_status status            = f_none;
     f_status allocation_status = f_none;
 
@@ -239,7 +239,7 @@ extern "C"{
       if (data->remaining.used > 0) {
         for (; counter < data->remaining.used; counter++) {
           f_status code   = (f_status) atoll(argv[data->remaining.array[counter]]);
-          f_string string = f_null;
+          f_string string = 0;
 
           if (fl_errors_to_string(code, &string) == f_none) {
             printf("%s\n", string);

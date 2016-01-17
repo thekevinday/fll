@@ -1,6 +1,6 @@
 /* FLL - Level 0
  * Project:       Console
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -19,7 +19,7 @@
 #include <level_0/strings.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 // result values that represent the type of command found
@@ -93,13 +93,13 @@ extern "C"{
 
 #ifndef _di_f_console_parameter_
   typedef struct {
-    const f_autochar *symbol_short;
-    const f_autochar *symbol_long;
-    const f_autochar *symbol_extra;
-    const f_autochar *symbol_other;
+    f_const f_autochar *symbol_short;
+    f_const f_autochar *symbol_long;
+    f_const f_autochar *symbol_extra;
+    f_const f_autochar *symbol_other;
 
-    const f_bool    has_additional;
-    const f_u_int   type;
+    f_const f_bool    has_additional;
+    f_const f_u_int   type;
     f_u_int         result;
     f_string_lengths additional;
     f_string_length length;
@@ -112,7 +112,7 @@ extern "C"{
 #ifndef _di_f_console_identify_
   // This is used to help standardize a single method of handling command line option parsing.
   // This should allow for every single command line program to use the same form of syntax for command line options.
-  f_extern f_return_status f_console_identify(const f_string input, f_console_id *result);
+  f_extern f_return_status f_console_identify(f_const f_string input, f_console_id *result);
 #endif // _di_f_console_identify_
 
 // perform checks against short & long options to see if the string is one of them (normal)

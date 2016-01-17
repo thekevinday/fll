@@ -1,6 +1,6 @@
 #include <level_3/fss_extended_read.h>
 
-int main(const f_array_length argc, const f_string argv[]) {
+int main(f_const f_array_length argc, f_const f_string argv[]) {
   fss_extended_read_data data = fss_extended_read_data_initialize;
 
   if (f_pipe_exists()) {

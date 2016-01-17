@@ -1,21 +1,21 @@
 /* FLL - Level 2
  * Project:       FSS
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
 #include <level_2/fss_extended.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fll_fss_extended_read_
   f_return_status fll_fss_extended_read(f_dynamic_string *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents) {
     #ifndef _di_level_2_parameter_checking_
-      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
-      if (objects == f_null) return f_error_set_error(f_invalid_parameter);
-      if (contents == f_null) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
+      if (objects == 0) return f_error_set_error(f_invalid_parameter);
+      if (contents == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status        status       = f_none;
@@ -135,9 +135,9 @@ extern "C"{
 #endif // _di_fll_fss_extended_read_
 
 #ifndef _di_fll_fss_extended_write_
-  f_return_status fll_fss_extended_write(const f_dynamic_string object, const f_dynamic_strings contents, f_dynamic_string *buffer) {
+  f_return_status fll_fss_extended_write(f_const f_dynamic_string object, f_const f_dynamic_strings contents, f_dynamic_string *buffer) {
     #ifndef _di_level_2_parameter_checking_
-      if (buffer == f_null) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
       if (contents.used  > contents.size) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 

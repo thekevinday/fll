@@ -1,6 +1,6 @@
 /* FLL - Level 0
  * Project:       Errors
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -12,8 +12,11 @@
 #ifndef _F_errors_h
 #define _F_errors_h
 
+// libc includes
+#include <errno.h>
+
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_macro_test_for_basic_errors_
@@ -240,20 +243,63 @@ enum {
   #endif // _di_f_errors_signals_
 
   #ifndef _di_f_errors_basic_
-    f_none = 197,        // start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
-    f_dummy,             // to only be used as a placeholder
-    f_warn,              // warning
+    f_none = 197,          // start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
+    f_dummy,               // to only be used as a placeholder
+    f_warn,                // warning
     f_critical,
-    f_unknown,           // For the "code should never get here" errors. (this is an EMERGENCY error)
+    f_unknown,             // For the "code should never get here" errors. (this is an EMERGENCY error)
     f_unsupported,
+    f_no_data,             // warning
+    f_out_of_memory,
+    f_input_error,
+    f_output_error,
+    f_input_output_error,
+    f_does_not_exist,
+    f_not_connected,
+    f_failure,
+    f_interrupted,         // usually by a signal.
+    f_loop,                // such as infinite recursion.
+  #endif // _di_f_errors_basic_
+
+  #ifndef _di_f_errors_invalid_
+    f_invalid,
     f_invalid_parameter,
     f_invalid_syntax,
     f_invalid_data,
-    f_no_data,           // warning
-    f_output_error,
-    f_does_not_exist,
-    f_failure,
-  #endif // _di_f_errors_basic_
+    f_invalid_file,
+    f_invalid_directory,
+    f_invalid_socket,
+    f_invalid_device,
+    f_invalid_link,
+    f_invalid_pipe,
+    f_invalid_address,
+    f_invalid_port,
+    f_invalid_value,      // similar to f_invalid_parameter, but the parameter value is invalid (example: an integer value representing aboolean and having a 3 as a value).
+    f_invalid_buffer,
+    f_invalid_process,
+  #endif // _di_f_errors_invalid_
+
+  #ifndef _di_f_errors_busy_
+    f_busy,          // such as address in use, or port in use.
+    f_busy_address,
+    f_busy_port,
+    f_busy_socket,
+    f_busy_device,
+    f_busy_pipe,
+    f_busy_buffer,
+    f_busy_process,
+  #endif // _di_f_errors_busy_
+
+  #ifndef _di_f_errors_unavailable_
+    f_unavailable,
+    f_unavailable_address,
+    f_unavailable_port,
+    f_unavailable_socket,
+    f_unavailable_device,
+    f_unavailable_pipe,
+    f_unavailable_buffer,
+    f_unavailable_process,
+  #endif // _di_f_errors_unavailable_
 
   #ifndef _di_f_errors_digits_
     f_underflow,
@@ -265,14 +311,14 @@ enum {
   #endif // _di_f_errors_digits_
 
   #ifndef _di_f_errors_buffers_
-    f_no_data_on_eof,            // warning
-    f_no_data_on_eol,            // warning
-    f_no_data_on_eos,            // warning
-    f_no_data_on_stop,           // warning
-    f_none_on_eof,               // warning
-    f_none_on_eol,               // warning
-    f_none_on_eos,               // warning
-    f_none_on_stop,              // "stop" location was reached
+    f_no_data_on_eof,             // warning
+    f_no_data_on_eol,             // warning
+    f_no_data_on_eos,             // warning
+    f_no_data_on_stop,            // warning
+    f_none_on_eof,                // warning
+    f_none_on_eol,                // warning
+    f_none_on_eos,                // warning
+    f_none_on_stop,               // "stop" location was reached
     f_error_on_eof,
     f_error_on_eol,
     f_error_on_eos,
@@ -300,6 +346,7 @@ enum {
 
   #ifndef _di_f_errors_fork_
     f_fork_failed,
+    f_too_many_processes,
   #endif // _di_f_errors_fork_
 
   #ifndef _di_f_errors_file_
@@ -313,6 +360,7 @@ enum {
     f_file_synchronize_error,
     f_file_descriptor_error,
     f_file_not_found,
+    f_file_found,
     f_file_is_empty,
     f_file_not_open,
     f_file_allocation_error,
@@ -339,12 +387,30 @@ enum {
     f_directory_error,
   #endif // _di_f_errors_directory_
 
+  #ifndef _di_f_errors_socket_
+    f_socket_connection_client_error,
+    f_socket_connection_target_error,
+    f_socket_receive_error,
+    f_socket_send_error,
+  #endif // _di_f_errors_socket_
+
   #ifndef _di_f_errors_non_
     f_less_than,
     f_equal_to,
     f_not_equal_to,
     f_greater_than,
   #endif // _di_f_errors_non_
+
+  #ifndef _di_f_errors_access_denied_
+    f_access_denied,
+    f_access_denied_user,
+    f_access_denied_group,
+    f_access_denied_world,
+    f_access_denied_read,
+    f_access_denied_write,
+    f_access_denied_execute,
+    f_access_denied_super,    // not super user (aka: not root).
+  #endif // _di_f_errors_access_denied_
 
   // required
   f_last_error_code

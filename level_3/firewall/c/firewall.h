@@ -1,6 +1,6 @@
 /* FLL - Level 3
  * Project:       Firewall
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -39,13 +39,13 @@
 #include <level_2/colors.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_firewall_version_
   #define firewall_major_version "0"
-  #define firewall_minor_version "4"
-  #define firewall_micro_version "2"
+  #define firewall_minor_version "5"
+  #define firewall_micro_version "0"
   #define firewall_version firewall_major_version "." firewall_minor_version "." firewall_micro_version
 #endif // _di_firewall_version_
 
@@ -293,15 +293,15 @@ extern "C"{
 #endif // _di_firewall_data_
 
 #ifndef _di_firewall_print_version_
-  f_extern f_return_status firewall_print_version(const firewall_data data);
+  f_extern f_return_status firewall_print_version(f_const firewall_data data);
 #endif // _di_firewall_print_version_
 
 #ifndef _di_firewall_print_help_
-  f_extern f_return_status firewall_print_help(const firewall_data data);
+  f_extern f_return_status firewall_print_help(f_const firewall_data data);
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
-  f_extern f_return_status firewall_main(const f_s_int argc, const f_string argv[], firewall_data *data);
+  f_extern f_return_status firewall_main(f_const f_s_int argc, f_const f_string argv[], firewall_data *data);
 #endif // _di_firewall_main_
 
 #ifndef _di_firewall_delete_data_

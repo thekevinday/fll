@@ -1,6 +1,6 @@
 /* FLL - Level 1
  * Project:       Console
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -20,11 +20,11 @@
 #include <level_0/console.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fl_process_parameters_
-  f_extern f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, f_string_lengths *remaining);
+  f_extern f_return_status fl_process_parameters(f_const f_array_length argc, f_const f_string argv[], f_console_parameter parameters[], f_const f_array_length total_parameters, f_string_lengths *remaining);
 #endif // _di_fl_process_parameters_
 
 #ifdef __cplusplus

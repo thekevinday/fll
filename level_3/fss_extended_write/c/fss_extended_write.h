@@ -1,6 +1,6 @@
 /* FLL - Level 3
  * Project:       FSS
- * Version:       0.4.2
+ * Version:       0.5.0
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
@@ -32,13 +32,13 @@
 #include <level_2/fss_errors.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_fss_extended_write_version_
   #define fss_extended_write_major_version "0"
-  #define fss_extended_write_minor_version "4"
-  #define fss_extended_write_micro_version "2"
+  #define fss_extended_write_minor_version "5"
+  #define fss_extended_write_micro_version "0"
   #define fss_extended_write_version fss_extended_write_major_version "." fss_extended_write_minor_version "." fss_extended_write_micro_version
 #endif // _di_fss_extended_write_version_
 
@@ -105,15 +105,15 @@ extern "C"{
 #endif // _di_fss_extended_write_data_
 
 #ifndef _di_fss_extended_write_print_version_
-  f_extern f_return_status fss_extended_write_print_version(const fss_extended_write_data data);
+  f_extern f_return_status fss_extended_write_print_version(f_const fss_extended_write_data data);
 #endif // _di_fss_extended_write_print_version_
 
 #ifndef _di_fss_extended_write_print_help_
-  f_extern f_return_status fss_extended_write_print_help(const fss_extended_write_data data);
+  f_extern f_return_status fss_extended_write_print_help(f_const fss_extended_write_data data);
 #endif // _di_fss_extended_write_print_help_
 
 #ifndef _di_fss_extended_write_main_
-  f_extern f_return_status fss_extended_write_main(const f_array_length argc, const f_string argv[], fss_extended_write_data *data);
+  f_extern f_return_status fss_extended_write_main(f_const f_array_length argc, f_const f_string argv[], fss_extended_write_data *data);
 #endif // _di_fss_extended_write_main_
 
 #ifndef _di_fss_extended_write_delete_data_
