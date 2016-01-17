@@ -1,0 +1,8 @@
+# fss-0002
+
+main:
+  name target-dbus
+
+target:
+  start dbus-daemon --system --fork
+  pid target /run/dbus/dbus.pid

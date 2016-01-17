@@ -1,0 +1,9 @@
+# fss-0002
+
+main:
+  name target/logger
+
+target:
+  start metalog -B -p /run/logger/logger.pid -C /etc/logger.conf
+  pid target /run/logger/logger.pid
+

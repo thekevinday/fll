@@ -1,0 +1,52 @@
+# fss-0002
+# the first list to be executed, will be called 'main' and is broken up into the following fss-0000 or fss-0001 content.
+#   name = an identifier that this rule represents. The first rule with this identifier name to be successfully executed will cease all other uses of this list.
+#   need = all of the rule identifiers that represent rules required to be executed (and succeed) before this starts.
+#   want = all of the rule identifiers that represent rules required to be executed (but not succeed) before this starts.
+#   wish = all of the rule identifiers that represents rules that would be prefered to be executed before this starts.
+#   variable [variable name] [filename] [file format] [count number] = a variable to be loaded and used by lists in this rule.
+#     [variable name] = name of the variable in both the file and in the rule
+#     [filename] = name of the file stored in.
+#     [file format] = the format to read the file and load the variable. Supported formats: raw, fss-0000, fss-0001, fss-0002, fss-0003.
+#     [count number] = select a specific occurance of the [variable name] within the [filename].
+#
+# each list, following the 'main' list will have a name that represents how it gets executed.
+#   'command' represents a list with the single-line fss-0000 rules 'start', 'stop', 'restart', and 'reload' that get directly passed.
+#     not providing restart means that a 'start' and then 'stop' is used.
+#     not providing reload makes reload do nothing.
+#     providing 'start', 'stop', 'restart', or 'reload' but having no values means that the command will not be provided.
+#
+#   'script' represents a list broken up into multiple fss-0003 lists: 'start', 'stop', 'restart', and 'reload'.
+#     not providing restart means thata 'start' and then 'stop' is used.
+#     not providing reload makes reload do nothing.
+#     providing 'start', 'stop', 'restart', or 'reload' but having no values means that the command will not be provided.
+#
+#   'target' represents a 'command' list that expects a given pid file to be created by the program or created by this program.
+#     example pid line: 'pid program /run/program/name.pid' or: 'pid init /run/program/name.pid', such that 'program' tells the init program to expect the target to create the pid file and 'init' to expect this program to create the pid file.
+#     not providing stop will result in the init program reading the pid file and terminating the process by the pid.
+#     not providing restart means that a 'start' and then 'stop' is used.
+#     not providing reload makes reload do nothing.
+#     not providing start will result in no action on start.
+#     providing a 'stop' that is blank will result in no action on stop.
+#
+#     'timeout' [start|stop|kill] represents an amount of time to wait for pid file before considering the start, stop, or kill as problematic.
+#       providing a blank start or stop will result in an indefinite wait.
+#       kill will be called after stop fails and process is still running.
+#       providing a blank kill will result in kill not being executed when stop fails.
+#
+# each list, except for main, will be executed in a top down order (synchronously).
+#
+# each script, command, and target will support the following settings:
+#   'user' the user id to switch to before executing/processing.
+#   'group' the group id to switch to before executing/processing.
+
+main:
+  name boot-filesystem
+
+command:
+  start mount -a -O no_netdev
+  stop umount -arf -O no_netdev
+
+command:
+  start swapon -a
+  stop swapoff -a
