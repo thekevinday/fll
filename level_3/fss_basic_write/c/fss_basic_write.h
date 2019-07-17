@@ -24,6 +24,7 @@
 // fll-1 includes
 #include <level_1/colors.h>
 #include <level_1/console.h>
+#include <level_1/file.h>
 #include <level_1/strings.h>
 #include <level_1/errors.h>
 
