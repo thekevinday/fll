@@ -5,13 +5,13 @@ project_level 0
 
 version_major 0
 version_minor 4
-version_micro 2
+version_micro 3
 
 build_compiler gcc
 build_linker ar
-build_libraries -lc 
-build_sources_library 
-build_sources_program 
+build_libraries -lc
+build_sources_library
+build_sources_program
 build_sources_headers errors.h
 build_shared yes
 build_static yes
