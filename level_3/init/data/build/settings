@@ -15,7 +15,6 @@ build_sources_program main.c
 build_sources_headers init.h
 build_shared yes
 build_static yes
-build_static yes
 
 flags_all -z now
 flags_shared

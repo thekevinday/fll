@@ -14,6 +14,7 @@ build_sources_library colors.c execute.c fss_basic.c fss_basic_list.c fss_extend
 build_sources_program
 build_sources_headers colors.h execute.h fss_basic.h fss_basic_list.h fss_extended.h fss_errors.h
 build_shared yes
+build_static yes
 
 flags_all -z now
 flags_shared

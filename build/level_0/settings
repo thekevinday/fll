@@ -14,6 +14,7 @@ build_sources_library console.c conversion.c file.c memory.c pipe.c print.c
 build_sources_program
 build_sources_headers colors.h console.h conversion.h errors.h file.h fss.h memory.h fll_paths.h filesystem_paths.h pipe.h print.h serialized.h strings.h types.h types_array.h
 build_shared yes
+build_static yes
 
 flags_all -z now
 flags_shared
