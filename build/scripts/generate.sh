@@ -206,6 +206,7 @@ generate_id(){
 generate_load_settings(){
   local failure=
   local i=
+  local key=
 
   if [[ $settings_file == "" ]] ; then
     echo -e "${c_error}ERROR: no settings file has been defined.$c_reset"
@@ -225,8 +226,9 @@ generate_load_settings(){
   done
 
   if [[ $project_name == "" ]] ; then
-    if [[ $variables['project_name'] != "" ]] ; then
-      project_built="-${variables['project_name']}"
+    key="project_name"
+    if [[ ${variables[$key]} != "" ]] ; then
+      project_built="-${variables[$key]}"
     fi
   fi
 }
