@@ -238,7 +238,7 @@ generate_prepare_build(){
   local level=${variables[$(generate_id project_level)]}
   local alt=$1
 
-  mkdir -vp ${path_build}{includes,programs/{shared,static},libraries/{shared,static},settings} || failure=1
+  mkdir -vp ${path_build}{includes,programs/{shared,static},libraries/{shared,static},objects,settings} || failure=1
 
   if [[ $failure == "" && $level != "" ]] ; then
     mkdir -vp ${path_build}includes/level_$level || failure=1
@@ -339,10 +339,10 @@ generate_operation_build(){
     sources=
     if [[ $sources_library != "" ]] ; then
       for i in $sources_library ; do
-        sources="$sources${path_build}libraries/$i.o "
+        sources="$sources${path_build}objects/$i.o "
 
-        echo $compiler $path_c$i -c -static -o ${path_build}libraries/static/$i.o $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]}
-        $compiler $path_c$i -c -static -o ${path_build}libraries/static/$i.o $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} || failure=1
+        echo $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]}
+        $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} || failure=1
 
         if [[ $failure == "1" ]] ; then
           break;
