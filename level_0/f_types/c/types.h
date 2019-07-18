@@ -158,9 +158,9 @@ extern "C" {
 
 // Defines a variable to be used by arrays.
 #ifndef _di_f_array_length_
-  typedef f_u_long      f_t_array_length;
-  typedef f_u_int       f_t_array_length_short;
-  typedef f_u_long_long f_t_array_length_long;
+  typedef f_s_long      f_array_length;
+  typedef f_s_int       f_array_length_short;
+  typedef f_s_long_long f_array_length_long;
 #endif // _di_f_array_length_
 
 #ifndef _di_f_gcc_specific_

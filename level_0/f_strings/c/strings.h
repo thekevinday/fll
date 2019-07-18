@@ -62,16 +62,16 @@ extern "C" {
 #endif // _di_string_format_pointers_
 
 #ifndef _di_f_array_length_printf_
-  #define f_array_length_printf       string_format_unsigned
-  #define f_array_length_short_printf string_format_long_unsigned
-  #define f_array_length_long_printf  string_format_long_long_unsigned
+  #define f_array_length_printf       string_format_integer
+  #define f_array_length_short_printf string_format_short_integer
+  #define f_array_length_long_printf  string_format_long_integer
 #endif // _di_f_array_length_printf_
 
 // define the basic string type
 #ifndef _di_f_have_string_
   typedef f_autochar *f_string;
 
-  #define f_string_max_size   f_unsigned_long_size
+  #define f_string_max_size   f_signed_long_size
   #define f_string_initialize f_eos
 
   #define f_new_string(status, string, length)   status = f_new_array((f_void_p *) & string, sizeof(f_string), length)
@@ -88,7 +88,7 @@ extern "C" {
 #ifndef _di_f_string_length_
   typedef f_u_long f_string_length;
 
-  #define f_string_length_printf string_format_long_unsigned
+  #define f_string_length_printf string_format_long_integer
 
   #define f_new_string_length(status, string, length)   status = f_new_array((f_void_p *) & string, sizeof(f_string_length), length)
   #define f_delete_string_length(status, string)        status = f_delete((f_void_p *) & string)
