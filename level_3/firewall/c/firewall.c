@@ -59,12 +59,14 @@ extern "C" {
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
     printf("   Print only the version number");
 
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_debug);
+    #ifdef _en_firewall_debug_
+      printf("\n  %s", f_console_symbol_short_disable);
+      fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_debug);
 
-    printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_debug);
-    printf("   Enable debugging");
+      printf(", %s", f_console_symbol_long_disable);
+      fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_debug);
+      printf("     Enable debugging");
+    #endif // _en_firewall_debug_
 
     printf("\n\n");
     fl_print_color(f_standard_output, data.context.important, data.context.reset, " Available Commands: ");
