@@ -995,7 +995,7 @@
         length = local->chain_objects.array[i].stop - local->chain_objects.array[i].start + 1;
 
         if (data->chains.used >= data->chains.size) {
-          f_resize_dynamic_strings(status, data->chains, (local->chain_objects.array[i].stop - local->chain_objects.array[i].start + firewall_default_allocation_step);
+          f_resize_dynamic_strings(status, data->chains, (local->chain_objects.array[i].stop - local->chain_objects.array[i].start) + firewall_default_allocation_step);
 
           if (f_error_is_error(status)) {
             f_delete_dynamic_strings(status2, arguments);
