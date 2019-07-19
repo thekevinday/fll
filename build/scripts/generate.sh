@@ -311,8 +311,8 @@ generate_operation_build(){
         sources="$sources$path_c$i "
       done
 
-      echo $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments $arguments_shared ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]}
-      $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments $arguments_shared ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]} || failure=1
+      echo $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]}
+      $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]} || failure=1
 
       if [[ $failure == "" ]] ; then
         ln -vsf lib$name.so.$major.$minor.$micro ${path_build}libraries/shared/lib$name.so.$major || failure=1
@@ -332,8 +332,8 @@ generate_operation_build(){
         sources="$sources$path_c$i "
       done
 
-      echo $compiler $sources -o ${path_build}programs/shared/$name $arguments $arguments_shared ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]}
-      $compiler $sources -o ${path_build}programs/shared/$name $arguments $arguments_shared ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]} || failure=1
+      echo $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]}
+      $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]} || failure=1
     fi
   fi
 
@@ -343,8 +343,8 @@ generate_operation_build(){
       for i in $sources_library ; do
         sources="$sources${path_build}objects/$i.o "
 
-        echo $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments $arguments_static ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]}
-        $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments $arguments_static ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} || failure=1
+        echo $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]}
+        $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} || failure=1
 
         if [[ $failure == "1" ]] ; then
           break;
@@ -369,8 +369,8 @@ generate_operation_build(){
         sources="$sources$path_c$i "
       done
 
-      echo $compiler -static -o ${path_build}programs/static/$name $sources $arguments $arguments_static ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]}
-      $compiler -static -o ${path_build}programs/static/$name $sources $arguments $arguments_static ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} || failure=1
+      echo $compiler -static -o ${path_build}programs/static/$name $sources $arguments_static $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]}
+      $compiler -static -o ${path_build}programs/static/$name $sources $arguments_static $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} || failure=1
     fi
   fi
 
