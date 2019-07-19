@@ -212,7 +212,11 @@ extern "C"{
     firewall_parameter_light,
     firewall_parameter_no_color,
     firewall_parameter_version,
-    firewall_parameter_debug,
+
+    #ifdef _en_firewall_debug_
+      firewall_parameter_debug,
+    #endif // _en_firewall_debug_
+
     firewall_parameter_command_start,
     firewall_parameter_command_stop,
     firewall_parameter_command_restart,
