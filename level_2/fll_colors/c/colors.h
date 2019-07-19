@@ -1,6 +1,6 @@
 /* FLL - Level 2
  * Project:       Colors
- * Version:       0.4.2
+ * Version:       0.4.3
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  * Documentation:
