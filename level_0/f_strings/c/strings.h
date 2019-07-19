@@ -86,7 +86,7 @@ extern "C" {
 #endif // _di_f_have_string_
 
 #ifndef _di_f_string_length_
-  typedef f_u_long f_string_length;
+  typedef f_s_long f_string_length;
 
   #define f_string_length_printf string_format_long_integer
 
