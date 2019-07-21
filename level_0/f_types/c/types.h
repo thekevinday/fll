@@ -154,6 +154,7 @@ extern "C" {
   #define f_standard_output  stdout
   #define f_standard_error   stderr
   #define f_standard_warning stdout // I still hope for a separate pipe for warnings
+  #define f_standard_debug   stdout // I still hope for a separate pipe for debug
 #endif // _di_f_types_standard_output_
 
 // Defines a variable to be used by arrays.
