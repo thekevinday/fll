@@ -188,7 +188,7 @@ extern "C" {
   #define f_dynamic_string_initialize { f_string_initialize, 0, 0 }
 
   #define f_clear_dynamic_string(dynamic) \
-    dynamic.string = f_null; \
+    dynamic.string = 0; \
     dynamic.size = 0; \
     dynamic.used = 0;
 
