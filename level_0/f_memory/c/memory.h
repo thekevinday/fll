@@ -96,7 +96,30 @@ extern "C" {
 #endif // _di_f_adjust_
 
 
-// the delete, destroy, resize, and adjust structure defines are mean to centralize allocation for all FLL structures that follow the size+used approach.
+// centralize allocation for all FLL structures that follow the size+used approach.
+#ifndef _di_f_clear_structure_
+  // structure:  the structure to operate on
+  #define f_clear_structure(structure) \
+    structure.array = 0; \
+    structure.size = 0; \
+    structure.used = 0;
+#endif // _di_f_clear_structure_
+
+#ifndef _di_f_new_structure_
+  // status:     the status to return
+  // structure:  the structure to operate on
+  // type:       the structure type
+  #define f_new_structure(status, structure, type, length) \
+    structure.array = 0; \
+    structure.size = 0; \
+    structure.used = 0; \
+    status = f_new_array((void **) & structure.array, sizeof(type), length); \
+    if (status == f_none) { \
+      structure.size = length; \
+      structure.used = 0; \
+    }
+#endif // _di_f_new_structure_
+
 // improper use of these defines can lead to memory leaks and compilation errors
 #ifndef _di_f_delete_structure_
   // status:     the status to return
@@ -146,9 +169,32 @@ extern "C" {
     }
 #endif // _di_f_adjust_structure_
 
-// the delete, destroy, resize, and adjust structures defines function in the same way that the delete, destroy, resize, and adjust structure defines do
+// Structures defines function in the same way that the structure defines do
 // however, these hold an array of structure
 // improper use of these defines can lead to memory leaks and compilation errors
+#ifndef _di_f_clear_structures_
+  // structure:  the structure to operate on
+  #define f_clear_structures(structures) \
+    structures.array = 0; \
+    structures.size = 0; \
+    structures.used = 0;
+#endif // _di_f_clear_structures_
+
+#ifndef _di_f_new_structures_
+  // status:     the status to return
+  // structures: the structure to operate on
+  // type:       the structure type
+  #define f_new_structures(status, structures, type, new_length) \
+    structures.array = 0; \
+    structures.size = 0; \
+    structures.used = 0; \
+    status = f_new_array((void **) & structures.array, sizeof(type), new_length); \
+    if (status == f_none) { \
+      structures.size = new_length; \
+      structures.used = 0; \
+    }
+#endif // _di_f_new_structures_
+
 #ifndef _di_f_delete_structures_
   // status:     the status to return
   // structures: the structure to operate on

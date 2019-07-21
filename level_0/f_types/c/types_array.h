@@ -31,6 +31,9 @@ extern "C" {
 
   #define f_array_lengths_initialize { 0, 0, 0 }
 
+  #define f_new_array_lengths(status, lengths, length) \
+    f_new_structure(status, lengths, f_array_length, length)
+
   #define f_delete_array_lengths(status, lengths) \
     f_delete_structure(status, lengths, f_array_length)
 
