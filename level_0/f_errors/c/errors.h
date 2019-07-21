@@ -157,7 +157,7 @@ extern "C"{
 
   #define f_error_set_error(status)   status | f_error_bit_error
   #define f_error_set_warning(status) status | f_error_bit_warning
-  #define f_error_set_signal(status) status | f_error_bit_signal
+  #define f_error_set_signal(status)  status | f_error_bit_signal
 
   // use f_error_set_fine to remove the error, warning, and signal bits
   #define f_error_set_fine(status) status & f_error_bit_fine
