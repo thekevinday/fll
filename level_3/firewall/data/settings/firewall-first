@@ -2,8 +2,10 @@
 
 main:
   # initialize the firewall
-  direction none
   action none
+  direction none
+  protocol none
+  chain none
 
   rule -F
   rule -Z
@@ -13,170 +15,268 @@ main:
   rule -t mangle -F
   tool ip46tables
 
-  # setup initial operations
-  chain INPUT
+
+INPUT:
+  # main input chain, expect this to act as the final RETURN handler.
   direction input
-  action append
+  protocol none
 
-
-  # Process all loopback connections and filter out (and log) invalid connections.
-  # Valid connections will return and follow all remaining rules below.
+  # handle local (loopback) connections.
   device lo
-  chain OUTPUT
-  direction output
-  rule -j output-loopback
-
-  chain INPUT
-  direction input
-  rule -j input-loopback
+  rule -j input-loop
   device all
 
-
-  # Handle all packets parked INVALID in separate chains.
-  chain OUTPUT
-  #rule -m state --state INVALID -j output-invalid
-  rule -m conntrack --ctstate INVALID -j output-invalid
-
-  chain INPUT
-  #rule -m state --state INVALID -j input-invalid
+  # Drop all INVALID packets so they aren't even processed
   rule -m conntrack --ctstate INVALID -j input-invalid
 
+  # Allow ALL connections that have already been established by this host
+  #rule -m state --state ESTABLISHED,RELATED -j ACCEPT
+  rule -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+  # send to whitelist and blacklist, which should return here.
+  rule -j input-blacklist
+  rule -j input-whitelist
 
   # Drop multicasts and broadcasts, they should not exist for a router and in most cases should be avoided.
   # unicasts are the normal behavior and blocking them would be very unusual.
-  chain OUTPUT
-  rule -m pkttype --pkt-type broadcast -j output-casting
-  rule -m pkttype --pkt-type multicast -j output-casting
-  #rule -m pkttype --pkt-type unicast -j output-casting
-
-  chain INPUT
   rule -m pkttype --pkt-type broadcast -j input-casting
   rule -m pkttype --pkt-type multicast -j input-casting
   #rule -m pkttype --pkt-type unicast -j input-casting
 
-
-  # handle tcp-security before accepting established or related packets.
+  # send all tcp packets to the tcp queue
   protocol tcp
-  rule -j input-tcp-security
-  rule -j output-tcp-security
+  rule -m state --state NEW -j input-tcp
+
+  # send all udp packets to the udp queue
+  protocol udp
+  rule -m state --state NEW -j input-udp
+
+  # send all icmp packets to the icmp queue
+  protocol icmp
+  rule -m state --state NEW -j input-icmp
+
+  # send all icmpv6 packets to the icmpv6 queue
+  protocol icmpv6
+  rule -m state --state NEW -j input-icmpv6
+
+  # load custom device-specific rules
+  rule -j input-devices
+
+  # remaining packets
+  rule -j DROP
+
+
+input-invalid:
+  direction input
+  protocol none
+
+  # silently drop invalid RST tcp packets instead of sending a RST back.
+  protocol tcp
+  rule --tcp-flags RST RST -j DROP
+
+  # invalid FIN,ACK (server is wanting a FIN response), silently DROP it, send RST back, or send a FIN back.
+  #rule --tcp-flags ALL ACK,FIN -j DROP
+  #rule --tcp-flags ALL ACK,FIN -j REJECT --reject-with tcp-reset
+  rule --tcp-flags ALL ACK,FIN -j ACCEPT
+
+
+  # remaining packets
+  protocol none
+  rule -j DROP
+
+
+input-invalid-stream:
+  direction input
+  protocol tcp
+
+  # remaining packets
+  rule -j REJECT --reject-with tcp-reset
+
+
+input-loop:
+  direction input
+  protocol none
+
+  # allow cups via loopback.
+  protocol tcp
+  tool iptables
+  rule --sport 631 -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
+  rule --dport 631 -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
+
+  # allow local dns server
+  #protocol udp
+  #rule --dport 53 -s 127.0.0.0/8 -d 127.0.1.1 -j ACCEPT
+
+  # this is the localhost address, valid localhost are allowed to return to the previous chain.
+  protocol none
+  rule -s 127.0.0.0/8 -d 127.0.0.0/8 -j RETURN
+
+  # it may be necessay to add a return for individual ips because there are some cases that result in non-localhost addresses going through loopback.
+  #rule -s 192.168.0.1 -d 192.168.0.1 -j RETURN
+  tool ip46tables
+
+  # remaining packets
+  rule -j DROP
+
+
+input-blacklist:
+  direction input
   protocol none
 
 
-  # Allow ALL input and output connections that have already been established by this host (and made it this far in the chain process).
-  chain OUTPUT
-  #rule -m state --state ESTABLISHED,RELATED -j ACCEPT
-  rule -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-
-  chain INPUT
-  #rule -m state --state ESTABLISHED,RELATED -j ACCEPT
-  rule -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+input-whitelist:
+  direction input
+  protocol none
 
 
-  # send all tcp packets to the tcp queue.
-  chain OUTPUT
-  protocol tcp
-  rule -m state --state NEW -j output-tcp
+input-devices:
+  direction input
+  protocol none
 
-  chain INPUT
-  rule -m state --state NEW -j input-tcp
-
-
-  # send all udp packets to the udp queue
-  chain OUTPUT
-  protocol udp
-  rule -m state --state NEW -j output-udp
-
-  chain INPUT
-  rule -m state --state NEW -j input-udp
-
-
-  # send all ipv4 icmp packets to the icmp queue.
-  tool iptables
-  chain OUTPUT
-  protocol icmp
-  rule -m state --state NEW -j output-icmp
-
-  chain INPUT
-  rule -m state --state NEW -j input-icmp
-
-  # send all ipv6 icmp packets to the icmp queue (alternatively put this in its own chain, such as input-icmpv6 and output-icmpv6).
-  tool ip6tables
-  chain OUTPUT
-  protocol icmpv6
-  rule -m state --state NEW -j output-icmp
-
-  chain INPUT
-  rule -m state --state NEW -j input-icmp
-
-
-  # send all remaining packets to the unknown queue
-  chain OUTPUT
-  protocol udp
-  rule -m state --state NEW -j output-unknown
-
-  chain INPUT
-  rule -m state --state NEW -j input-unknown
-
-
-output-tcp:
-  direction output
-  protocol tcp
+  # add device-specific rules here.
 
 
 input-tcp:
   direction input
   protocol tcp
 
-  # Prevent an XMAS attack
-  rule --tcp-flags ALL ALL -j DROP
+  # Resist TCP sequence number spoof attacks.
+  rule --tcp-flags SYN,ACK SYN,ACK -m conntrack --ctstate NEW -j input-invalid
+
+  # TCP streams must always start with SYN, all others are invalid and may be an attack.
+  rule ! --syn -m conntrack --ctstate NEW -j input-invalid-stream
+
+  # Prevent an XMAS attacks
+  rule --tcp-flags ALL FIN,URG,PSH -j input-invalid
+  rule --tcp-flags ALL ALL -j input-invalid
+  rule --tcp-flags ALL SYN,RST,ACK,FIN,URG -j input-invalid
 
   # Prevent NULL attack
-  rule --tcp-flags ALL NONE -j DROP
+  rule --tcp-flags ALL NONE -j input-invalid
 
+  # Prevent Sync Reset Attacks
+  rule --tcp-flags SYN,RST SYN,RST -j input-invalid
+  rule --tcp-flags SYN,FIN SYN,FIN -j input-invalid
 
-output-udp:
-  direction output
-  protocol udp
+  # Postgresql standard port
+  #rule --dport 5432 -j ACCEPT
+
+  # Mysql standard port
+  #rule --dport 5432 -j ACCEPT
+
+  # Oracle standard port
+  #rule --dport 1521 -j ACCEPT
+
+  # Web standard ports
+  #rule -m multiport --dports 80,443,8080,8181,8443,8099,9000 -j ACCEPT
+
+  # ldap standard ports
+  #rule -m multiport --dports 389,636,1636 -j ACCEPT
+
+  # mail standard ports
+  #rule -m multiport --dports 25,465,993 -j ACCEPT
+
+  # ssh standard port
+  #rule --dport 22 -j ACCEPT
+
+  # common chef ssh ports
+  #rule --dport 2200:2210 -j ACCEPT
+
+  # gpg standard port
+  #rule --dport 9050 -j ACCEPT
+
+  # ftp standard port
+  #rule --dport 21 -j ACCEPT
+
+  # dns standard port (via tcp)
+  #rule --dport 53 -j ACCEPT
+
+  # rdp standard port
+  #rule --dport 3389 -j ACCEPT
+
+  # spice standard ports
+  #rule -m multiport --dports 5900:5905 -j ACCEPT
+
+  # allow high ports
+  #rule -m multiport --dports 49152:65535 -j ACCEPT
+
+  # accept all loopback
+  tool iptables
+  rule -d 127.0.0.0/8 -j ACCEPT
+  tool ip6tables
+  rule -d ::1 -j ACCEPT
+  tool ip46tables
 
 
 input-udp:
   direction input
   protocol udp
 
-  # Allow dhcp client renewals (from server to client). If these are blocked, you will not be able to renew easily.
+  # openvpn standard port
+  #rule --dport 1194 -j ACCEPT
+
+  # dns standard port
+  #rule --dport 53 -j ACCEPT
+
+  # mdns standard port
+  #rule --dport 5353 -j ACCEPT
+
+  # dhcp standard port
+  rule --sport 67:68 --dport 67:68 -j ACCEPT
+
+  # ntp standard port
+  #rule --dport 123 -j ACCEPT
+
+  # teeworlds game server and client
+  #rule --dport 8300:8310 -j ACCEPT
+
+  # allow high ports
+  #rule -m multiport --dports 49152:65535 -j ACCEPT
+
+  # accept all loopback
   tool iptables
-  rule -s 0.0.0.0 --sport 67 -d 255.255.255.255 --dport 68 -j ACCEPT
+  rule -d 127.0.0.0/8 -j ACCEPT
+  tool ip6tables
+  rule -d ::1 -j ACCEPT
   tool ip46tables
-
-
-output-icmp:
-  direction output
-  protocol icmp
 
 
 input-icmp:
   direction input
   protocol icmp
+  tool iptables
+
+  # destination unreachable
+  rule --icmp-type 3 -j ACCEPT
+
+  # redirect
+  rule --icmp-type 5 -j ACCEPT
+
+  # (outgoing) ping
+  rule --icmp-type 0 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+  # time exceeded
+  rule --icmp-type 11 -j ACCEPT
+
+  # parameter problem
+  rule --icmp-type 12 -j ACCEPT
+
+  # all loopback ICMP traffic
+  tool iptables
+  rule -i lo -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
+  tool ip46tables
+
+  # remaining packets
+  rule -j DROP
 
 
-output-unkown:
-  direction output
-  protocol none
-
-  # drop unknown packets.
-  #rule -j DROP
-
-
-input-unkown:
+input-icmpv6:
   direction input
-  protocol none
-
-  # drop unknown packets.
-  #rule -j DROP
+  protocol icmp
+  tool ip6tables
 
 
 input-casting:
-  # pre-process broadcasts and multicasts.
   direction input
   protocol none
   tool ip46tables
@@ -193,8 +293,285 @@ input-casting:
   rule -j DROP
 
 
+OUTPUT:
+  # main output chain, expect this to act as the final RETURN handler.
+  direction output
+  protocol none
+
+  # handle local (loopback) connections.
+  device lo
+  rule -j output-loop
+  device all
+
+  # Drop all INVALID packets so they aren't even processed
+  rule -m conntrack --ctstate INVALID -j output-invalid
+
+  # Allow ALL connections that have already been established by this host
+  #rule -m state --state ESTABLISHED,RELATED -j ACCEPT
+  rule -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+  # send to whitelist and blacklist, which should return here.
+  rule -j input-blacklist
+  rule -j input-whitelist
+
+  # Drop multicasts and broadcasts, they should not exist for a router and in most cases should be avoided.
+  # unicasts are the normal behavior and blocking them would be very unusual.
+  rule -m pkttype --pkt-type broadcast -j output-casting
+  rule -m pkttype --pkt-type multicast -j output-casting
+  #rule -m pkttype --pkt-type unicast -j output-casting
+
+  # send all tcp packets to the tcp queue
+  protocol tcp
+  rule -m state --state NEW -j output-tcp
+
+  # send all udp packets to the udp queue
+  protocol udp
+  rule -m state --state NEW -j output-udp
+
+  # send all icmp packets to the icmp queue
+  protocol icmp
+  rule -m state --state NEW -j output-icmp
+
+  # send all icmpv6 packets to the icmpv6 queue
+  protocol icmpv6
+  rule -m state --state NEW -j output-icmpv6
+
+  # load custom device-specific rules
+  rule -j input-devices
+
+  # remaining packets
+  rule -j DROP
+
+
+output-invalid:
+  direction output
+  protocol none
+
+  # remaining packets
+  rule -j DROP
+
+
+output-invalid-stream:
+  direction input
+  protocol tcp
+
+  # remaining packets
+  rule -j REJECT --reject-with tcp-reset
+
+
+output-loop:
+  direction output
+  protocol none
+
+  # allow cups via loopback.
+  protocol tcp
+  tool iptables
+  rule --sport 631 -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
+  rule --dport 631 -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
+
+  # allow local dns server
+  #protocol udp
+  #rule --sport 53 -s 127.0.1.1 -d 127.0.0.0/8 -j ACCEPT
+
+  # this is the localhost address, valid localhost are allowed to return to the previous chain.
+  protocol none
+  rule -s 127.0.0.0/8 -d 127.0.0.0/8 -j RETURN
+
+  # it may be necessay to add a return for individual ips because there are some cases that result in non-localhost addresses going through loopback.
+  #rule -s 192.168.0.1 -d 192.168.0.1 -j RETURN
+  tool ip46tables
+
+  # remaining packets
+  rule -j DROP
+
+
+output-blacklist:
+  direction output
+  protocol none
+
+
+output-whitelist:
+  direction output
+  protocol none
+
+
+output-devices:
+  direction output
+  protocol none
+
+  # add device-specific rules here.
+
+
+output-tcp:
+  direction output
+  protocol tcp
+
+  # allow sending TCP RST even when there is no valid local connection
+  protocol tcp
+  rule --tcp-flags RST RST -j ACCEPT
+
+  # allow sending ACK,PSH,FIN even when there is no valid local connection.
+  # the connection may already be closed locally by the time this packet goes out and it could improperly be marked as invalid before it leaves the system.
+  # allowing this ensures that the client gets the final disconnect acknowledgment.
+  rule --tcp-flags ALL ACK,FIN -j ACCEPT
+  rule --tcp-flags ALL ACK,PSH,FIN -j ACCEPT
+
+  # Resist TCP sequence number spoof attacks.
+  rule --tcp-flags SYN,ACK SYN,ACK -m conntrack --ctstate NEW -j input-invalid
+
+  # TCP streams must always start with SYN, all others are invalid and may be an attack.
+  rule ! --syn -m conntrack --ctstate NEW -j output-invalid-stream
+
+  # Prevent an XMAS attacks
+  rule --tcp-flags ALL FIN,URG,PSH -j output-invalid
+  rule --tcp-flags ALL ALL -j output-invalid
+  rule --tcp-flags ALL SYN,RST,ACK,FIN,URG -j output-invalid
+
+  # Prevent NULL attack
+  rule --tcp-flags ALL NONE -j output-invalid
+
+  # Prevent Sync Reset Attacks
+  rule --tcp-flags SYN,RST SYN,RST -j output-invalid
+  rule --tcp-flags SYN,FIN SYN,FIN -j output-invalid
+
+  # Postgresql standard port
+  #rule --sport 5432 -j ACCEPT
+
+  # Mysql standard port
+  #rule --sport 5432 -j ACCEPT
+
+  # Oracle standard port
+  #rule --sport 1521 -j ACCEPT
+
+  # Web standard ports
+  rule -m multiport --dports 80,443,8080,8181,8443,8099,9000 -j ACCEPT
+  #rule -m multiport --sports 80,443,8080,8181,8443,8099,9000 -j ACCEPT
+
+  # ldap standard ports
+  rule -m multiport --dports 389,636,1636 -j ACCEPT
+  #rule -m multiport --sports 389,636,1636 -j ACCEPT
+
+  # mail standard ports
+  rule -m multiport --dports 25,465,993 -j ACCEPT
+  #rule -m multiport --sports 25,465,993 -j ACCEPT
+
+  # ssh standard port
+  rule --dport 22 -j ACCEPT
+  #rule --sport 22 -j ACCEPT
+
+  # common chef ssh ports
+  #rule --dport 2200:2210 -j ACCEPT
+  #rule --sport 2200:2210 -j ACCEPT
+
+  # gpg standard port
+  rule --dport 9050 -j ACCEPT
+  #rule --sport 9050 -j ACCEPT
+
+  # pgp keyserver port
+  rule --dport 11371 -j ACCEPT
+
+  # ftp standard port
+  rule --dport 21 -j ACCEPT
+  #rule --sport 21 -j ACCEPT
+
+  # dns standard port (via tcp)
+  rule --dport 53 -j ACCEPT
+  #rule --sport 53 -j ACCEPT
+
+  # rdp standard port
+  rule --dport 3389 -j ACCEPT
+  #rule --sport 3389 -j ACCEPT
+
+  # spice standard ports
+  rule -m multiport --dports 5900:5905 -j ACCEPT
+  #rule -m multiport --sports 5900:5905 -j ACCEPT
+
+  # allow high ports
+  rule -m multiport --sports 49152:65535 -j ACCEPT
+  #rule -m multiport --dports 49152:65535 -j ACCEPT
+
+  # accept all loopback
+  tool iptables
+  rule -s 127.0.0.0/8 -j ACCEPT
+  tool ip6tables
+  rule -d ::1 -j ACCEPT
+  tool ip46tables
+
+
+output-udp:
+  direction output
+  protocol udp
+
+  # openvpn standard port
+  rule --dport 1194 -j ACCEPT
+  #rule --sport 1194 -j ACCEPT
+
+  # dns standard port
+  rule --dport 53 -j ACCEPT
+  #rule --sport 53 -j ACCEPT
+
+  # mdns standard port
+  #rule --dport 5353 -j ACCEPT
+  #rule --sport 5353 -j ACCEPT
+
+  # allow high ports
+  rule -m multiport --sports 49152:65535 -j ACCEPT
+  #rule -m multiport --dports 49152:65535 -j ACCEPT
+
+  # dhcp standard port
+  rule --sport 67:68 --dport 67:68 -j ACCEPT
+
+  # ntp standard port
+  rule --dport 123 -j ACCEPT
+  #rule --sport 123 -j ACCEPT
+
+  # teeworlds game server and client
+  #rule --dport 8300:8310 -j ACCEPT
+
+  # accept all loopback
+  tool iptables
+  rule -s 127.0.0.0/8 -j ACCEPT
+  tool ip6tables
+  rule -d ::1 -j ACCEPT
+  tool ip46tables
+
+
+output-icmp:
+  direction output
+  protocol icmp
+  tool iptables
+
+  # destination unreachable
+  rule --icmp-type 3 -j ACCEPT
+
+  # redirect
+  rule --icmp-type 5 -j ACCEPT
+
+  # (outgoing) ping
+  rule --icmp-type 8 -m conntrack --ctstate NEW,ESTABLISHED,RELATED -j ACCEPT
+
+  # time exceeded
+  rule --icmp-type 11 -j ACCEPT
+
+  # parameter problem
+  rule --icmp-type 12 -j ACCEPT
+
+  # all loopback ICMP traffic
+  tool iptables
+  rule -o lo -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
+  tool ip46tables
+
+  # remaining packets
+  rule -j DROP
+
+
+output-icmpv6:
+  direction output
+  protocol icmp
+  tool ip6tables
+
+
 output-casting:
-  # pre-process broadcasts and multicasts.
   direction output
   protocol none
   tool ip46tables
@@ -211,133 +588,12 @@ output-casting:
   rule -j DROP
 
 
-input-loopback:
-  direction input
-  protocol none
+FORWARD:
 
-  # send all valid loopback connections back to the main tree so that the remainder firewall rules apply.
-  tool iptables
-  rule -s 127.0.0.0/8 -d 127.0.0.0/8 -j RETURN
-  tool ip6tables
-  rule -s ::1/128 -d ::1/128 -j RETURN
-
-  # this is a link-local address.
-  rule -s fe80::/10 -d fe80::/10 -j RETURN
-  tool ip46tables
+  # load custom device-specific rules
+  rule -j forward-devices
 
 
-  # all packets to a known ethernet devices ip address are (incorrectly) sent to loopback by applications like apache.
-  # these specific rules may need to be allowed despite the ip address being incorrect.
-  # specifically, only 127.0.0.0/8 ip address should ever been sent to the loopback.
-  # this is an example rule using an example ip address.
-  #tool iptables
-  #rule -s 192.168.0.1 -d 192.168.0.1 -j RETURN
-  #tool ip46tables
+forward-devices:
 
-  # the remaining loopback packets are therefore invalid, log them and then drop them. (these options might be handy: --log-uid --log-tcp-options --log-ip-options)
-  rule -j LOG --log-prefix "INVALID:INPUT:LOOP "
-  rule -j DROP
-
-
-output-loopback:
-  direction output
-  protocol none
-
-  # send all valid loopback connections back to the main tree so that the remainder firewall rules apply.
-  tool iptables
-  rule -s 127.0.0.0/8 -d 127.0.0.0/8 -j RETURN
-  tool ip6tables
-  rule -s ::1/128 -d ::1/128 -j RETURN
-
-  # this is a link-local address.
-  rule -s fe80::/10 -d fe80::/10 -j RETURN
-  tool ip46tables
-
-
-  # all packets to a known ethernet devices ip address are (incorrectly) sent to loopback by applications like apache.
-  # these specific rules may need to be allowed despite the ip address being incorrect.
-  # specifically, only 127.0.0.0/8 ip address should ever been sent to the loopback.
-  # this is an example rule using an example ip address.
-  #tool iptables
-  #rule -s 192.168.0.1 -d 192.168.0.1 -j RETURN
-  #tool ip46tables
-
-  # the remaining loopback packets are therefore invalid, log them and then drop them. (these options might be handy: --log-uid --log-tcp-options --log-ip-options)
-  rule -j LOG --log-prefix "INVALID:OUTPUT:LOOP "
-  rule -j DROP
-
-
-input-invalid:
-  direction input
-  protocol tcp
-
-  # silently drop invalid RST tcp packets instead of sending a RST back.
-  rule --tcp-flags RST RST -j DROP
-
-  # Reject all remaining invalid tcp packets.
-  rule -j REJECT --reject-with tcp-reset
-
-  # Drop all remaining protocols with invalid data.
-  protocol none
-  rule -j DROP
-
-
-output-invalid:
-  direction output
-  protocol tcp
-
-  # Allow sending TCP RST even when there is no valid local connection.
-  rule --tcp-flags RST RST -j ACCEPT
-
-  # Reject all remaining invalid tcp packets.
-  rule -j REJECT --reject-with tcp-reset
-
-  # Drop all remaining protocols with invalid data.
-  protocol none
-  rule -j DROP
-
-
-input-tcp-security:
-  direction input
-  protocol tcp
-
-  # Resist TCP sequence number spoof attacks (see: http://www.linuxtopia.org/Linux_Firewall_iptables/x6231.html).
-  rule --tcp-flags SYN,ACK SYN,ACK -m conntrack --ctstate NEW -j input-invalid
-
-  # TCP streams must always start with SYN, all others are invalid and may be an attack (see: http://www.linuxtopia.org/Linux_Firewall_iptables/x6193.html).
-  rule ! --syn -m conntrack --ctstate NEW -j input-invalid
-
-  # Prevent an XMAS-type attacks (drop packets).
-  rule --tcp-flags ALL FIN,URG,PSH -j DROP
-  rule --tcp-flags ALL ALL -j DROP
-  rule --tcp-flags ALL SYN,RST,ACK,FIN,URG -j DROP
-
-  # Prevent NULL attack (drop packets).
-  rule --tcp-flags ALL NONE -j DROP
-
-  # Prevent Sync Reset Attacks (drop packets).
-  rule --tcp-flags SYN,RST SYN,RST -j DROP
-  rule --tcp-flags SYN,FIN SYN,FIN -j DROP
-
-
-output-tcp-security:
-  direction output
-  protocol tcp
-
-  # Resist TCP sequence number spoof attacks (see: http://www.linuxtopia.org/Linux_Firewall_iptables/x6231.html).
-  rule --tcp-flags SYN,ACK SYN,ACK -m conntrack --ctstate NEW -j output-invalid
-
-  # TCP streams must always start with SYN, all others are invalid and may be an attack (see: http://www.linuxtopia.org/Linux_Firewall_iptables/x6193.html).
-  rule ! --syn -m conntrack --ctstate NEW -j output-invalid
-
-  # Prevent an XMAS-type attacks (drop packets).
-  rule --tcp-flags ALL FIN,URG,PSH -j DROP
-  rule --tcp-flags ALL ALL -j DROP
-  rule --tcp-flags ALL SYN,RST,ACK,FIN,URG -j DROP
-
-  # Prevent NULL attack (drop packets).
-  rule --tcp-flags ALL NONE -j DROP
-
-  # Prevent Sync Reset Attacks (drop packets).
-  rule --tcp-flags SYN,RST SYN,RST -j DROP
-  rule --tcp-flags SYN,FIN SYN,FIN -j DROP
+  # add device-specific rules here.
