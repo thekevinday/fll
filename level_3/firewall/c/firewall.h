@@ -190,14 +190,14 @@ extern "C"{
   #define firewall_protocol_length      8
   #define firewall_protocol_none_length 4
 
-  #define firewall_protocol_command       "-p"
+  #define firewall_protocol_command        "-p"
   #define firewall_protocol_command_length 2
 
-  #define firewall_chain_create_command  "-N"
-  #define firewall_chain_unchain_command "-X"
+  #define firewall_chain_create_command "-N"
+  #define firewall_chain_delete_command "-X"
 
-  #define firewall_chain_create_command_length  2
-  #define firewall_chain_unchain_command_length 2
+  #define firewall_chain_create_command_length 2
+  #define firewall_chain_delete_command_length 2
 
   enum {
     firewall_program_none,

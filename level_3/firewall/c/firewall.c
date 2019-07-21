@@ -267,23 +267,21 @@ extern "C"{
             fl_print_color_line(f_standard_output, data->context.standout, data->context.reset, " ============================");
             fflush(f_standard_output);
 
-            arguments.used = 7;
+            arguments.used = 6;
 
-            arguments.array[0].string = (f_string) firewall_tool_iptables;
-            arguments.array[1].string = (f_string) "-x";
-            arguments.array[2].string = (f_string) "-v";
-            arguments.array[3].string = (f_string) "-t";
-            arguments.array[4].string = (f_string) "nat";
-            arguments.array[5].string = (f_string) "--numeric";
-            arguments.array[6].string = (f_string) "--list";
+            arguments.array[0].string = (f_string) "-x";
+            arguments.array[1].string = (f_string) "-v";
+            arguments.array[2].string = (f_string) "-t";
+            arguments.array[3].string = (f_string) "nat";
+            arguments.array[4].string = (f_string) "--numeric";
+            arguments.array[5].string = (f_string) "--list";
 
-            arguments.array[0].used = firewall_tool_iptables_length;
+            arguments.array[0].used = 2;
             arguments.array[1].used = 2;
             arguments.array[2].used = 2;
-            arguments.array[3].used = 2;
-            arguments.array[4].used = 3;
-            arguments.array[5].used = 9;
-            arguments.array[6].used = 6;
+            arguments.array[3].used = 3;
+            arguments.array[4].used = 9;
+            arguments.array[5].used = 6;
 
             status = fll_execute_program((f_string) firewall_tool_iptables, arguments, &results);
 
@@ -297,23 +295,21 @@ extern "C"{
             fl_print_color_line(f_standard_output, data->context.standout, data->context.reset, " ==========================");
             fflush(f_standard_output);
 
-            arguments.used = 7;
+            arguments.used = 6;
 
-            arguments.array[0].string = (f_string) firewall_tool_iptables;
-            arguments.array[1].string = (f_string) "-x";
-            arguments.array[2].string = (f_string) "-v";
-            arguments.array[3].string = (f_string) "-t";
-            arguments.array[4].string = (f_string) "mangle";
-            arguments.array[5].string = (f_string) "--numeric";
-            arguments.array[6].string = (f_string) "--list";
+            arguments.array[0].string = (f_string) "-x";
+            arguments.array[1].string = (f_string) "-v";
+            arguments.array[2].string = (f_string) "-t";
+            arguments.array[3].string = (f_string) "mangle";
+            arguments.array[4].string = (f_string) "--numeric";
+            arguments.array[5].string = (f_string) "--list";
 
-            arguments.array[0].used = firewall_tool_iptables_length;
+            arguments.array[0].used = 2;
             arguments.array[1].used = 2;
             arguments.array[2].used = 2;
-            arguments.array[3].used = 2;
-            arguments.array[4].used = 3;
-            arguments.array[5].used = 9;
-            arguments.array[6].used = 6;
+            arguments.array[3].used = 6;
+            arguments.array[4].used = 9;
+            arguments.array[5].used = 6;
 
             status = fll_execute_program((f_string) firewall_tool_iptables, arguments, &results);
 
@@ -327,19 +323,17 @@ extern "C"{
             fl_print_color_line(f_standard_output, data->context.standout, data->context.reset, " ===========================");
             fflush(f_standard_output);
 
-            arguments.used = 5;
+            arguments.used = 4;
 
-            arguments.array[0].string = (f_string) firewall_tool_iptables;
-            arguments.array[1].string = (f_string) "-x";
-            arguments.array[2].string = (f_string) "-v";
-            arguments.array[3].string = (f_string) "--numeric";
-            arguments.array[4].string = (f_string) "--list";
+            arguments.array[0].string = (f_string) "-x";
+            arguments.array[1].string = (f_string) "-v";
+            arguments.array[2].string = (f_string) "--numeric";
+            arguments.array[3].string = (f_string) "--list";
 
-            arguments.array[0].used = firewall_tool_iptables_length;
+            arguments.array[0].used = 2;
             arguments.array[1].used = 2;
-            arguments.array[2].used = 2;
-            arguments.array[3].used = 9;
-            arguments.array[4].used = 6;
+            arguments.array[2].used = 9;
+            arguments.array[3].used = 6;
 
             status = fll_execute_program((f_string) firewall_tool_iptables, arguments, &results);
 
@@ -458,6 +452,14 @@ extern "C"{
 
           if (command == firewall_parameter_command_lock) {
             if (reserved.has_lock) {
+              status = firewall_delete_chains(*data);
+
+              if (f_error_is_error(status)) {
+                firewall_delete_local_data(&local);
+                firewall_delete_data(data);
+                return status;
+              }
+
               local.is_main = f_false;
               local.is_stop = f_false;
               local.is_lock = f_true;
@@ -471,7 +473,8 @@ extern "C"{
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
               return status;
-            } else {
+            }
+            else {
               fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform lock request because the lock instructions are missing from: %s.", network_path firewall_file_other);
 
               firewall_delete_local_data(&local);
@@ -482,6 +485,14 @@ extern "C"{
 
           if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart) {
             if (reserved.has_stop) {
+              status = firewall_delete_chains(*data);
+
+              if (f_error_is_error(status)) {
+                firewall_delete_local_data(&local);
+                firewall_delete_data(data);
+                return status;
+              }
+
               local.is_global = f_true;
               local.is_main = f_false;
               local.is_stop = f_true;
@@ -498,7 +509,8 @@ extern "C"{
                 firewall_delete_data(data);
                 return status;
               }
-            } else {
+            }
+            else {
               fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform stop request because the lock instructions are missing from: %s.", network_path firewall_file_other);
 
               firewall_delete_local_data(&local);
@@ -518,6 +530,16 @@ extern "C"{
             firewall_delete_data(data);
             return status;
           };
+
+          if (command == firewall_parameter_command_start) {
+            status = firewall_delete_chains(*data);
+
+            if (f_error_is_error(status)) {
+              firewall_delete_local_data(&local);
+              firewall_delete_data(data);
+              return status;
+            }
+          }
 
           status = firewall_create_custom_chains(&reserved, &local, data);
 
@@ -559,7 +581,7 @@ extern "C"{
             {
               f_dynamic_string file_path = f_dynamic_string_initialize;
 
-              f_resize_dynamic_string(status, file_path, network_path_length + data->devices.array[i].used  + firewall_file_suffix_length + 1);
+              f_resize_dynamic_string(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
 
               if (f_error_is_error(status)) {
                 fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
@@ -568,10 +590,11 @@ extern "C"{
                 return status;
               }
 
-              strncat(file_path.string, network_path, network_path_length);
-              strncat(file_path.string + network_path_length, data->devices.array[i].string, data->devices.array[i].used);
-              strncat(file_path.string, firewall_file_suffix, firewall_file_suffix_length);
-              file_path.used = file_path.size;
+              memcpy((void *)file_path.string, network_path, sizeof(f_autochar) * network_path_length);
+              memcpy((void *)(file_path.string + network_path_length), data->devices.array[i].string, sizeof(f_autochar) * data->devices.array[i].used);
+              memcpy((void *)(file_path.string + network_path_length + data->devices.array[i].used), firewall_file_suffix, sizeof(f_autochar) * firewall_file_suffix_length);
+
+              file_path.used = network_path_length + data->devices.array[i].used + firewall_file_suffix_length;
               file_path.string[file_path.used] = 0;
 
               status = firewall_buffer_rules(file_path.string, f_true, &local, data);
