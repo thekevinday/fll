@@ -22,13 +22,17 @@ extern "C" {
       if (arguments.used > arguments.size) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    // create a string array that is compatible with execv() calls
-    f_status   status            = f_none;
-    f_autochar **arguments_array = 0;
+    // create a string array that is compatible with execv() calls.
+    f_string fixed_arguments[arguments.used + 2];
 
-    f_string        last_slash   = f_string_initialize;
-    f_string        program_name = f_string_initialize;
-    f_string_length name_size    = 0;
+    f_string last_slash   = f_string_initialize;
+    f_string program_name = f_string_initialize;
+
+    f_string_length name_size = 0;
+
+    f_status status = f_none;
+
+    memset(&fixed_arguments, 0, sizeof(f_string) * (arguments.used + 2));
 
     last_slash = strrchr(program_path, '/');
 
@@ -40,35 +44,41 @@ extern "C" {
 
         if (f_error_is_error(status)) return status;
 
-        memcpy(program_name, last_slash + 1, name_size);
+        memcpy(program_name, last_slash + 1, sizeof(f_string_length) * name_size);
         memset(program_name, name_size, 0);
       } else {
         name_size = 0;
       }
     }
 
-    status = f_new_array((f_void_p *) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
-
-    if (f_error_is_error(status)) {
-      f_status tmp_status = f_none;
-
-      f_delete_string(tmp_status, program_name, name_size);
-      return status;
+    if (name_size == 0) {
+      fixed_arguments[0] = f_eos;
+    }
+    else {
+      fixed_arguments[0] = program_name;
     }
 
-    {
-      f_string_length counter = 0;
+    for (f_string_length i = 0; i < arguments.used; i++) {
+      f_new_string(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
 
-      arguments_array[0] = program_name;
-      counter++;
+      if (f_error_is_error(status)) {
+        f_status status2 = f_none;
 
-      for (; counter < arguments.used; counter++) {
-        arguments_array[counter] = arguments.array[counter].string;
+        if (name_size > 0) f_delete_string(status, program_name, name_size);
+
+        for (f_string_length j = 0; j < i; j++) {
+          f_delete_string(status2, fixed_arguments[i + 1], arguments.array[j].used + 1);
+        }
+
+        return status;
       }
 
-      // insert the required array terminated
-      arguments_array[arguments.used + 1] = 0;
+      memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(f_autochar) * arguments.array[i].used);
+      fixed_arguments[i + 1][arguments.array[i].used] = f_eos;
     }
+
+    // insert the required array terminated
+    fixed_arguments[arguments.used + 2] = 0;
 
     // TODO: validate that the file at program_path actually exists before attempting to fork and execute
     f_s_int process_id = 0;
@@ -76,14 +86,20 @@ extern "C" {
     process_id = vfork();
 
     if (process_id < 0) {
+      f_status status2 = f_none;
+
       if (name_size > 0) f_delete_string(status, program_name, name_size);
-      f_delete((f_void_p *) & arguments_array, sizeof(f_autochar), arguments.used + 2);
+
+      for (f_string_length i = 0; i < arguments.used; i++) {
+        f_delete_string(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
+      }
 
       return f_error_set_error(f_fork_failed);
     }
 
-    if (process_id == 0) { // child
-      execv(program_path, arguments_array);
+    // child
+    if (process_id == 0) {
+      execv(program_path, fixed_arguments);
 
       // according to manpages, calling _exit() is safer and should be called here instead of exit()
       _exit(-1);
@@ -93,7 +109,14 @@ extern "C" {
     waitpid(process_id, results, 0);
 
     if (name_size > 0) f_delete_string(status, program_name, name_size);
-    f_delete((f_void_p *) & arguments_array, sizeof(f_autochar), arguments.used + 2);
+
+    {
+      f_status status2 = f_none;
+
+      for (f_string_length i = 0; i < arguments.used; i++) {
+        f_delete_string(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
+      }
+    }
 
     if (*results != 0) return f_error_set_error(f_failure);
 
@@ -110,27 +133,32 @@ extern "C" {
       if (arguments.used > arguments.size) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    // create a string array that is compatible with execv() calls
-    f_status   status            = f_none;
-    f_autochar **arguments_array = 0;
+    // create a string array that is compatible with execv() calls.
+    f_string fixed_arguments[arguments.used + 2];
 
-    status = f_new_array((f_void_p *) & arguments_array, sizeof(f_autochar **), arguments.used + 2);
+    memset(&fixed_arguments, 0, sizeof(f_string) * (arguments.used + 2));
+    fixed_arguments[0] = program_name;
 
-    if (f_error_is_error(status)) return status;
+    f_status status = f_none;
+    for (f_string_length i = 0; i < arguments.used; i++) {
+      f_new_string(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
 
-    {
-      f_string_length counter = 0;
+      if (f_error_is_error(status)) {
+        f_status status2 = f_none;
 
-      arguments_array[0] = program_name;
-      counter++;
+        for (f_string_length j = 0; j < i; j++) {
+          f_delete_string(status2, fixed_arguments[i + 1], arguments.array[j].used + 1);
+        }
 
-      for (; counter < arguments.used; counter++) {
-        arguments_array[counter] = arguments.array[counter].string;
+        return status;
       }
 
-      // insert the required array terminated
-      arguments_array[arguments.used + 1] = 0;
+      memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(f_autochar) * arguments.array[i].used);
+      fixed_arguments[i + 1][arguments.array[i].used] = f_eos;
     }
+
+    // insert the required array terminated
+    fixed_arguments[arguments.used + 2] = 0;
 
     // TODO: validate that the file at program_path actually exists before attempting to fork and execute
     f_s_int process_id = 0;
@@ -138,13 +166,18 @@ extern "C" {
     process_id = vfork();
 
     if (process_id < 0) {
-      f_delete((f_void_p *) & arguments_array, sizeof(f_autochar), arguments.used + 2);
+      f_status status2 = f_none;
+
+      for (f_string_length i = 0; i < arguments.used; i++) {
+        f_delete_string(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
+      }
 
       return f_error_set_error(f_fork_failed);
     }
 
-    if (process_id == 0) { // child
-      execvp(program_name, arguments_array);
+    // child
+    if (process_id == 0) {
+      execvp(program_name, fixed_arguments);
 
       // according to manpages, calling _exit() is safer and should be called here instead of exit()
       _exit(-1);
@@ -153,7 +186,13 @@ extern "C" {
     // have the parent wait for the child process to finish
     waitpid(process_id, results, 0);
 
-    f_delete((f_void_p *) & arguments_array, sizeof(f_autochar), arguments.used + 2);
+    {
+      f_status status2 = f_none;
+
+      for (f_string_length i = 0; i < arguments.used; i++) {
+        f_delete_string(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
+      }
+    }
 
     if (*results != 0) return f_error_set_error(f_failure);
 
