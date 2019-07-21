@@ -24,9 +24,9 @@ extern "C" {
 
 // BUG: for whatever reason strnlen is considered not included with -Wall, even with __USE_GNU defined
 //      therefore this gets defined here
-#ifndef _di_BUG_strnlen_
+#ifdef _en_BUG_strnlen_
   f_extern size_t strnlen (f_const char *string, size_t max_length);
-#endif // _di_BUG_strnlen_
+#endif // _en_BUG_strnlen_
 
 // Define the end of string character
 #ifndef _di_f_have_eos_
