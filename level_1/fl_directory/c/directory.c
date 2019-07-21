@@ -44,7 +44,7 @@ extern "C"{
             return status;
           }
 
-          strncat(names->array[names->used].string, listing[counter]->d_name, size);
+          memcpy(names->array[names->used].string, listing[counter]->d_name, sizeof(f_autochar) * size);
           names->array[names->used].used = size;
           names->used++;
         }
