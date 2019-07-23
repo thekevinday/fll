@@ -31,10 +31,15 @@ generate_main(){
   local variables=
   local settings_file=data/build/settings
   local operation=
+  local operation_failure=
   local path_build=build/
   local path_c=sources/c/
+  local path_s=data/settings/
   local path_bash=sources/bash/
   local project_built=
+
+  local enable_shared=
+  local enable_static=
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -61,22 +66,34 @@ generate_main(){
           grab_next=path_bash
         elif [[ $p == "-c" || $p == "--c_path" ]] ; then
           grab_next=path_c
+        elif [[ $p == "-S" || $p == "--s_path" ]] ; then
+          grab_next=path_s
         elif [[ $p == "-p" || $p == "--project" ]] ; then
           grab_next=project_built
+        elif [[ $p == "--enable-shared" ]] ; then
+          enable_shared="yes"
+        elif [[ $p == "--disable-shared" ]] ; then
+          enable_shared="no"
+        elif [[ $p == "--enable-static" ]] ; then
+          enable_static="yes"
+        elif [[ $p == "--disable-static" ]] ; then
+          enable_static="no"
         elif [[ $operation == "" ]] ; then
-          operation=$p
-        else
-          operation=fail-multiple
+          operation="$p"
+        elif [[ $operation_failure == "" ]] ; then
+          operation_failure=fail-multiple
         fi
       else
         if [[ $grab_next == "path_build" ]] ; then
           path_build=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "settings_file" ]] ; then
-          settings_file=$(echo $p | sed -e 's|^//*|/|')
+          settings_file=$(echo $p | sed -e 's|^//*|/|' -e 's|^//*|/|')
         elif [[ $grab_next == "path_bash" ]] ; then
-          path_bash=$(echo $p | sed -e 's|/*$|/|')
+          path_bash=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "path_c" ]] ; then
-          path_c=$(echo $p | sed -e 's|/*$|/|')
+          path_c=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+        elif [[ $grab_next == "path_s" ]] ; then
+          path_s=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "project_built" ]] ; then
           project_built="-$(echo $p | sed -e 's|/*$||')"
         fi
@@ -111,7 +128,9 @@ generate_main(){
     exit 0
   fi
 
-  if [[ $operation == "build" ]] ; then
+  if [[ $operation_failure == "fail-multiple" ]] ; then
+    echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
+  elif [[ $operation == "build" ]] ; then
     if [[ -f ${path_build}.built$project_built ]] ; then
       echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
     else
@@ -123,8 +142,6 @@ generate_main(){
     fi
   elif [[ $operation == "clean" ]] ; then
     generate_operation_clean
-  elif [[ $operation == "fail-multiple" ]] ; then
-    echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
   elif [[ $operation == "" ]] ; then
     echo -e "${c_error}ERROR: no operation was given.$c_reset"
   else
@@ -159,8 +176,8 @@ generate_help(){
   echo -e " ${c_notice}Version $version$c_reset"
   echo
   echo -e "$c_highlight$system_name$c_reset $c_notice<${c_reset}operation$c_notice>$c_reset"
-  echo -e " ${c_important}build${c_reset}      Build or compile the code"
-  echo -e " ${c_important}clean${c_reset}      Delete all build files"
+  echo -e " ${c_important}build${c_reset}  Build or compile the code"
+  echo -e " ${c_important}clean${c_reset}  Delete all build files"
   echo
   echo -e "${c_highlight}Options:$c_reset"
   echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen"
@@ -169,11 +186,18 @@ generate_help(){
   echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program"
   echo
   echo -e "${c_highlight}Generate Options:$c_reset"
-  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}          Specify a custom build directory"
-  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}       Specify a custom build settings file"
-  echo -e " -${c_important}B$c_reset, --${c_important}bash_path${c_reset}      Specify a custom path to the bash source files"
-  echo -e " -${c_important}c$c_reset, --${c_important}c_path${c_reset}         Specify a custom path to the c source files"
-  echo -e " -${c_important}p$c_reset, --${c_important}project${c_reset}        Specify a project name for storing built status"
+  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}      Specify a custom build directory"
+  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}   Specify a custom build settings file"
+  echo -e " -${c_important}B$c_reset, --${c_important}bash_path${c_reset}  Specify a custom path to the bash source files"
+  echo -e " -${c_important}c$c_reset, --${c_important}c_path${c_reset}     Specify a custom path to the c source files"
+  echo -e " -${c_important}S$c_reset, --${c_important}s_path${c_reset}     Specify a custom path to the settings files"
+  echo -e " -${c_important}p$c_reset, --${c_important}project${c_reset}    Specify a project name for storing built status"
+  echo
+  echo -e "${c_highlight}Special Options:$c_reset"
+  echo -e " --${c_important}enable-shared${c_reset}   Forcibly do install shared files"
+  echo -e " --${c_important}disable-shared${c_reset}  Forcibly do not install shared files"
+  echo -e " --${c_important}enable-static${c_reset}   Forcibly do install static files"
+  echo -e " --${c_important}disable-static${c_reset}  Forcibly do not install static files"
   echo
 }
 
@@ -285,6 +309,17 @@ generate_operation_build(){
   local i=
   local alt=$1
 
+  if [[ $enable_shared == "yes" ]] ; then
+    shared="yes"
+  elif [[ $enable_shared == "no" ]] ; then
+    shared="no"
+  fi
+
+  if [[ $enable_static == "yes" ]] ; then
+    static="yes"
+  elif [[ $enable_static == "no" ]] ; then
+    static="no"
+  fi
 
   if [[ $shared != "yes" && $static != "yes" ]] ;then
     echo -e "${c_error}ERROR: Cannot Build, either build_shared or build_static must be set to 'yes'.$c_reset"
@@ -294,7 +329,7 @@ generate_operation_build(){
 
   if [[ $sources_settings != "" ]] ; then
     for i in $sources_settings ; do
-      cp -vf $path_c$i ${path_build}settings/ || failure=1
+      cp -vR $path_s$i ${path_build}settings/ || failure=1
     done
   fi
 
