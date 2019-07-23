@@ -13,6 +13,7 @@ build_libraries -lfll_colors -lfll_fss -lfll_execute -lfl_directory -lfl_colors 
 build_sources_library firewall.c private-firewall.c
 build_sources_program main.c
 build_sources_headers firewall.h
+build_sources_settings default-blacklist default-whitelist example-device-firewall firewall-first firewall-last firewall-other
 build_shared yes
 build_static yes
 
