@@ -319,8 +319,8 @@ extern "C" {
 
           if (f_error_is_not_error(status) && show_ports) {
             fl_print_color(f_standard_output, data->context.standout, data->context.reset, "========================== ");
-            fl_print_color(f_standard_output, data->context.title, data->context.reset, "PORTS");
-            fl_print_color_line(f_standard_output, data->context.standout, data->context.reset, " ===========================");
+            fl_print_color(f_standard_output, data->context.title, data->context.reset, "FILTER");
+            fl_print_color_line(f_standard_output, data->context.standout, data->context.reset, " ==========================");
             fflush(f_standard_output);
 
             arguments.used = 4;
