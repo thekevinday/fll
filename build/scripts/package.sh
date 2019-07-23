@@ -31,6 +31,7 @@ package_main(){
 
   local variables=
   local operation=
+  local operation_failure=
   local mode_individual=
   local mode_level=
   local mode_monolithic=
@@ -71,17 +72,18 @@ package_main(){
         elif [[ $p == "-s" || $p == "--sources" ]] ; then
           grab_next=path_sources
         elif [[ $operation == "" ]] ; then
-          operation=$p
-        else
-          operation=fail-multiple
+          operation="$p"
+        elif [[ $operation_failure == "" ]] ; then
+          operation_failure=fail-multiple
+          operation="$p"
         fi
       else
         if [[ $grab_next == "path_build" ]] ; then
           path_build=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "path_destination" ]] ; then
-          path_destination=$(echo $p | sed -e 's|/*$|/|')
+          path_destination=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "path_sources" ]] ; then
-          path_sources=$(echo $p | sed -e 's|/*$|/|')
+          path_sources=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         fi
 
         grab_next=
@@ -137,7 +139,9 @@ package_main(){
     exit 1
   fi
 
-  if [[ $operation == "build" ]] ; then
+  if [[ $operation_failure == "fail-multiple" ]] ; then
+    echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
+  elif [[ $operation == "build" ]] ; then
     if [[ $mode_individual == "" && $mode_level == "" && $mode_monolithic == "" && $mode_program == "" ]] ; then
       mode_individual="yes"
     fi
@@ -159,8 +163,6 @@ package_main(){
     fi
   elif [[ $operation == "clean" ]] ; then
     package_operation_clean
-  elif [[ $operation == "fail-multiple" ]] ; then
-    echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
   elif [[ $operation == "" ]] ; then
     echo -e "${c_error}ERROR: no operation was given.$c_reset"
   else
@@ -195,8 +197,8 @@ package_help(){
   echo -e " ${c_notice}Version $version$c_reset"
   echo
   echo -e "$c_highlight$system_name$c_reset $c_notice<${c_reset}operation$c_notice>$c_reset"
-  echo -e " ${c_important}build${c_reset}      Build the package"
-  echo -e " ${c_important}clean${c_reset}      Delete all built packages"
+  echo -e " ${c_important}build${c_reset}  Build the package"
+  echo -e " ${c_important}clean${c_reset}  Delete all built packages"
   echo
   echo -e "${c_highlight}Options:$c_reset"
   echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen"
@@ -204,7 +206,7 @@ package_help(){
   echo -e " +${c_important}n$c_reset, ++${c_important}no_color$c_reset  Do not use color"
   echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program"
   echo
-  echo -e "${c_highlight}Generate Options:$c_reset"
+  echo -e "${c_highlight}Package Options:$c_reset"
   echo -e " -${c_important}d$c_reset, --${c_important}destination${c_reset}  Specify a custom package destination directory"
   echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}        Specify a custom build directory"
   echo -e " -${c_important}i$c_reset, --${c_important}individual${c_reset}   Build packages by individual package (levels 0. 1. and 2)"
@@ -269,11 +271,29 @@ package_create_base_files() {
       failure=1
     fi
 
-    if [[ $failire == "" ]] ; then
+    if [[ $failure == "" ]] ; then
       chmod ugo+x ${package}generate.sh
 
       if [[ $? -ne 0 ]] ; then
         echo -e "${c_error}ERROR: failed to set executable permissions on script $c_notice${package}generate.sh$c_error.$c_reset"
+        failure=1
+      fi
+    fi
+
+    if [[ $failure == "" ]] ; then
+      cp -vR ${path_build}scripts/install.sh $package
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to copy script $c_notice${path_build}install.sh$c_error to $c_notice$package$c_error.$c_reset"
+        failure=1
+      fi
+    fi
+
+    if [[ $failure == "" ]] ; then
+      chmod ugo+x ${package}install.sh
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to set executable permissions on script $c_notice${package}install.sh$c_error.$c_reset"
         failure=1
       fi
     fi
@@ -323,7 +343,8 @@ package_operation_individual(){
     name="$(echo $directory | sed -e "s|${path_sources}level_0/||" -e "s|${path_sources}level_1/||" -e "s|${path_sources}level_2/||")"
     package="${path_destination}individual/${name}-${version}/"
 
-    echo -e "${c_important}Processing Package $c_reset$c_notice$package$c_reset${c_important}.$c_reset"
+    echo
+    echo -e "${c_highlight}Processing Package$c_reset (individual) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
 
     package_create_base_files
 
@@ -362,7 +383,8 @@ package_operation_level(){
     name="fll-$level"
     package="${path_destination}level/${name}-${version}/"
 
-    echo -e "${c_important}Processing Package $c_reset$c_notice$package$c_reset${c_important}.$c_reset"
+    echo
+    echo -e "${c_highlight}Processing Package$c_reset (level) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
 
     if [[ ! -d $path_build$level ]] ; then
       echo -e "${c_error}ERROR: build settings directory $c_notice$path_build$level$c_error is invalid or missing.$c_reset"
@@ -485,7 +507,8 @@ package_operation_program(){
     name="$(echo $directory | sed -e "s|${path_sources}level_3/||")"
     package="${path_destination}program/${name}-${version}/"
 
-    echo -e "${c_important}Processing Package $c_reset$c_notice$package$c_reset${c_important}.$c_reset"
+    echo
+    echo -e "${c_highlight}Processing Package$c_reset (program) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
 
     package_create_base_files
 
