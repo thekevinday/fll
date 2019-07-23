@@ -354,6 +354,7 @@ extern "C" {
 
               fl_print_color_code(f_standard_error, data->context.error);
 
+              fprintf(f_standard_error, "%s ", firewall_tool_iptables);
               for (; i < arguments.used; i++) {
                 fprintf(f_standard_error, "%s ", arguments.array[i].string);
               }
