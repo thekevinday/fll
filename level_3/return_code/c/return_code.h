@@ -37,7 +37,7 @@ extern "C"{
 #ifndef _di_return_code_version_
   #define return_code_major_version "0"
   #define return_code_minor_version "4"
-  #define return_code_micro_version "2"
+  #define return_code_micro_version "3"
   #define return_code_version return_code_major_version "." return_code_minor_version "." return_code_micro_version
 #endif // _di_return_code_version_
 

@@ -40,7 +40,7 @@ extern "C"{
 #ifndef _di_fss_basic_list_write_version_
   #define fss_basic_list_write_major_version "0"
   #define fss_basic_list_write_minor_version "4"
-  #define fss_basic_list_write_micro_version "2"
+  #define fss_basic_list_write_micro_version "3"
   #define fss_basic_list_write_version fss_basic_list_write_major_version "." fss_basic_list_write_minor_version "." fss_basic_list_write_micro_version
 #endif // _di_fss_basic_list_write_version_
 
