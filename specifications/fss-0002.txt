@@ -1,0 +1,45 @@
+Featureless Settings Specification: 0002 - Basic List
+
+Each Object starts at the beginning of a line and whitespace to the left of the Object is not treated as an object.
+A colon followed by any whitespace until a newline terminates a valid Object.
+Non-whitespace may not follow the colon of a valid Object.
+
+Content exists on every line following a valid object until the end of file (or string) or until the next valid Object is found.
+Any content that could be interpreted as a valid Object must have the colon delimited.
+
+There is no single-quote or double-quote delimitation in this specification.
+Only the colon that would result in a valid Object can be delimited.
+
+Key:
+  \s = whitespace, except newline.
+  \o = any printable character, except unescaped ':'.
+  \l = any printable character or whitespace, except unescaped ':'.
+  \c = either whitespace or printable, including newline, that not interpretable as an Object.
+  \n = newline.
+  * = 0 or more occurrences.
+
+Structure:
+  \s*\o\l*:\s*\n\c*\n*
+
+Example:
+  # fss-0002
+  # valid comments are ignored.
+  "The Object":
+    Does not need to be quoted.
+    This: does not need to be delimited.
+    This Does\:
+  Second:
+    Continues until EOS/EOF.
+    All whitespace, including newline (and leading whitespace) is part of content.
+    # Valid comments are still ignored.
+
+Objects would be:
+  1) "The Object"
+  2) Second
+
+Contents would be:
+  1.1)  Does not need to be quoted.
+        This: does not need to be delimited.
+        This Does:
+  2.1)  Continues until EOS/EOF.
+        All whitespace, including newline (and leading whitespace) is part of content.

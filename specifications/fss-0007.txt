@@ -1,0 +1,5 @@
+Featureless Settings Specification: 0007 - Very Extended List
+
+This is a fss-0003 Extended List whose Content is then processed as fss-0001 Extended.
+
+TODO: further document this.
