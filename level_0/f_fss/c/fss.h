@@ -72,7 +72,7 @@ enum {
   f_fss_embeded_list,
   f_fss_reverse_mapping,
   f_fss_extended_reverse_mapping,
-  f_fss_advanced_reverse_mapping,
+  f_fss_simple_json,
   f_fss_simple_list,
 };
 #endif // _di_f_fss_codes_
