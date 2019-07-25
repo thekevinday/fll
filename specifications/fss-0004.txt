@@ -1,0 +1,5 @@
+Featureless Settings Specification: 0004 - Very Basic List
+
+This is a fss-0002 Basic List whose Content is then processed as fss-0000 Basic.
+
+TODO: further document this.
