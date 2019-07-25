@@ -28,7 +28,6 @@ extern "C"{
     *pointer = calloc(type, length);
 
     if (*pointer) {
-      //memset(*pointer, 0, type * length);
       return f_none;
     }
 
@@ -108,7 +107,7 @@ extern "C"{
       if (new_pointer) {
         if (new_pointer != *pointer) {
           if (new_length > old_length) {
-            // bool * is of a data type size of 1, casting it to bool should result in a single-length increment
+            // char * is of a data type size of 1, casting it to char should result in a single-length increment
             // this is done to avoid problems with (void *) having arithmetic issues
             memset(((char *) new_pointer) + (type * old_length), 0, type * (new_length - old_length));
           }
@@ -149,7 +148,7 @@ extern "C"{
 
       if (old_length > 0) {
         if (new_length < old_length) {
-          // bool * is of a data type size of 1, casting it to bool should result in a single-length increment
+          // char * is of a data type size of 1, casting it to char should result in a single-length increment
           // this is done to avoid problems with (void *) having arithmetic issues
           memset(((char *)*pointer) + new_length, 0, type * (old_length - new_length));
         }
