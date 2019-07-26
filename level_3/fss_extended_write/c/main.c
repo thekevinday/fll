@@ -7,5 +7,9 @@ int main(f_const f_array_length argc, f_const f_string argv[]) {
     data.process_pipe = f_true;
   }
 
-  return fss_extended_write_main(argc, argv, &data);
+  if (f_error_is_error(fss_extended_write_main(argc, argv, &data))) {
+    return 1;
+  }
+
+  return 0;
 }
