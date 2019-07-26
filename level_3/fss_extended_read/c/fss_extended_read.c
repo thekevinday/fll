@@ -12,7 +12,7 @@ extern "C" {
 
 // version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
 #ifndef _di_fss_extended_read_print_version_
-  f_return_status fss_extended_read_print_version(f_const fss_extended_read_data data) {
+  f_return_status fss_extended_read_print_version(const fss_extended_read_data data) {
     printf("%s\n", fss_extended_read_version);
 
     return f_none;
@@ -20,7 +20,7 @@ extern "C" {
 #endif // _fss_extended_read_print_version_
 
 #ifndef _di_fss_extended_read_print_help_
-  f_return_status fss_extended_read_print_help(f_const fss_extended_read_data data) {
+  f_return_status fss_extended_read_print_help(const fss_extended_read_data data) {
     printf("\n");
     fl_print_color(f_standard_output, data.context.title, data.context.reset, " %s", fss_extended_read_name_long);
 
@@ -122,9 +122,9 @@ extern "C" {
 #endif // _di_fss_extended_read_print_help_
 
 #ifndef _di_fss_extended_read_main_
-  f_return_status fss_extended_read_main_process_file(f_const f_array_length argc, f_const f_string argv[], fss_extended_read_data *data, f_const f_string filename, f_const f_string_length target, f_const f_string_length select) f_gcc_attribute_visibility_internal;
+  f_return_status fss_extended_read_main_process_file(const f_array_length argc, const f_string argv[], fss_extended_read_data *data, const f_string filename, const f_string_length target, const f_string_length select) f_gcc_attribute_visibility_internal;
 
-  f_return_status fss_extended_read_main(f_const f_array_length argc, f_const f_string argv[], fss_extended_read_data *data) {
+  f_return_status fss_extended_read_main(const f_array_length argc, const f_string argv[], fss_extended_read_data *data) {
     f_status status = f_none;
     f_status status2 = f_none;
 
@@ -315,7 +315,7 @@ extern "C" {
     return status;
   }
 
-  f_return_status fss_extended_read_main_process_file(f_const f_array_length argc, f_const f_string argv[], fss_extended_read_data *data, f_const f_string filename, f_const f_string_length target, f_const f_string_length select) {
+  f_return_status fss_extended_read_main_process_file(const f_array_length argc, const f_string argv[], fss_extended_read_data *data, const f_string filename, const f_string_length target, const f_string_length select) {
     f_status status = f_none;
     f_status status2 = f_none;
 

@@ -50,7 +50,7 @@ extern "C" {
     }
 
     // handle quote support
-    f_autochar quoted = f_eos;
+    char quoted = f_eos;
 
     // identify where the object begins
     if (buffer->string[input->start] == f_fss_delimit_slash) {
@@ -303,7 +303,7 @@ extern "C" {
 
     f_status   status      = f_none;
     f_bool     has_delimit = f_false;
-    f_autochar quoted      = f_eos;
+    char quoted      = f_eos;
 
     f_bool continue_main_loop = f_false;
 
@@ -603,7 +603,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_content_read_
 
 #ifndef _di_fl_fss_extended_object_write_
-  f_return_status fl_fss_extended_object_write(f_const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer) {
+  f_return_status fl_fss_extended_object_write(const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -823,13 +823,13 @@ extern "C" {
 #endif // _di_fl_fss_extended_object_write_
 
 #ifndef _di_fl_fss_extended_content_write_
-  f_return_status fl_fss_extended_content_write(f_const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer) {
+  f_return_status fl_fss_extended_content_write(const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status   status = f_none;
-    f_autochar quoted = f_eos;
+    char quoted = f_eos;
 
     f_string_location buffer_position   = f_string_location_initialize;
     f_string_length   start_position    = 0;

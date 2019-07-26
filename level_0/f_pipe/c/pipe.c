@@ -16,7 +16,7 @@ extern "C" {
 #ifndef _di_f_pipe_exists_
   // returns f_true if the standard input contains piped data.
   f_return_status f_pipe_exists() {
-    f_stat st_info;
+    struct stat st_info;
 
     if (fstat(fileno(f_pipe), &st_info) != 0) {
       return f_error_set_error(f_file_stat_error);

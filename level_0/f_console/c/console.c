@@ -11,12 +11,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_console_identify_
-  f_return_status f_console_identify(f_const f_string input, f_console_id *result) {
+  f_return_status f_console_identify(const f_string input, f_console_id *result) {
     #ifndef _di_level_0_parameter_checking_
       if (result == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_const f_string_length length = strnlen(input, 4);
+    const f_string_length length = strnlen(input, 4);
 
     if (length == 0) {
       *result = f_console_none;

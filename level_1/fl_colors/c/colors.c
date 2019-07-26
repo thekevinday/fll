@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_set_color_
-  f_return_status fl_set_color(f_file_p file, f_const f_colors_format format, f_const f_autochar *color1, f_const f_autochar *color2, f_const f_autochar *color3, f_const f_autochar *color4, f_const f_autochar *color5) {
+  f_return_status fl_set_color(FILE *file, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_error_set_error(f_invalid_parameter);
       if (color1 == 0) return f_error_set_error(f_invalid_parameter);
@@ -33,7 +33,7 @@ extern "C" {
 #endif // _di_fl_set_color_
 
 #ifndef _di_fl_save_color_
-  f_return_status fl_save_color(f_dynamic_string *buffer, f_const f_colors_format format, f_const f_autochar *color1, f_const f_autochar *color2, f_const f_autochar *color3, f_const f_autochar *color4, f_const f_autochar *color5) {
+  f_return_status fl_save_color(f_dynamic_string *buffer, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_error_set_error(f_invalid_parameter);
       if (color1 == 0) return f_error_set_error(f_invalid_parameter);
@@ -116,7 +116,7 @@ extern "C" {
 #endif // _di_fl_save_color_
 
 #ifndef _di_fl_print_color_
-  f_return_status fl_print_color(f_file_p file, f_const f_dynamic_string start_color, f_const f_dynamic_string end_color, f_const f_autochar *string, ...) {
+  f_return_status fl_print_color(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_error_set_error(f_invalid_parameter);
       if (string == 0) return f_error_set_error(f_invalid_parameter);
@@ -143,7 +143,7 @@ extern "C" {
 #endif // _di_fl_print_color_
 
 #ifndef _di_fl_print_color_line_
-  f_return_status fl_print_color_line(f_file_p file, f_const f_dynamic_string start_color, f_const f_dynamic_string end_color, f_const f_autochar *string, ...) {
+  f_return_status fl_print_color_line(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_error_set_error(f_invalid_parameter);
       if (string == 0) return f_error_set_error(f_invalid_parameter);
@@ -173,7 +173,7 @@ extern "C" {
 #endif // _di_fl_print_color_line_
 
 #ifndef _di_fl_print_color_code_
-  f_return_status fl_print_color_code(f_file_p file, f_const f_dynamic_string color) {
+  f_return_status fl_print_color_code(FILE *file, const f_dynamic_string color) {
     if (color.used != 0) {
       fprintf(file, "%s", color.string);
     }

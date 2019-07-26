@@ -14,7 +14,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_errors_to_string_
-  f_return_status fl_errors_to_string(f_const f_status error, f_string *string) {
+  f_return_status fl_errors_to_string(const f_status error, f_string *string) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -312,7 +312,7 @@ extern "C" {
 #endif // _di_fl_errors_to_string_
 
 #ifndef _di_fl_errors_is_error_
-  f_return_status fl_errors_is_error(f_const f_status error) {
+  f_return_status fl_errors_is_error(const f_status error) {
     if (fl_errors_is_fine(error) == f_true) {
       return f_false;
     } else if (fl_errors_is_warning(error) == f_true) {
@@ -324,7 +324,7 @@ extern "C" {
 #endif // _di_fl_errors_is_error_
 
 #ifndef _di_fl_errors_is_warning_
-  f_return_status fl_errors_is_warning(f_const f_status error) {
+  f_return_status fl_errors_is_warning(const f_status error) {
     switch (error) {
       #ifndef _di_fl_errors_basic_
         case f_no_data:
@@ -356,7 +356,7 @@ extern "C" {
 #endif // _di_fl_errors_is_warning_
 
 #ifndef _di_fl_errors_is_fine_
-  f_return_status fl_errors_is_fine(f_const f_status error) {
+  f_return_status fl_errors_is_fine(const f_status error) {
     switch (error) {
       #ifndef _di_fl_errors_booleans_
         case f_false:

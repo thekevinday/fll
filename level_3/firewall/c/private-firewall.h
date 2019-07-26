@@ -76,7 +76,7 @@ extern "C" {
     f_delete_fss_contents(status, contents);
 
   #define firewall_macro_concat_string(destination, source, length) \
-    memcpy((void *)(destination), source, sizeof(f_autochar) * length);
+    memcpy((void *)(destination), source, sizeof(char) * length);
 
   #define firewall_macro_rule_contents_has_incorrect_items(index, total_items) \
     local.rule_contents.array[index].used <= 0 || local.rule_contents.array[index].used > total_items
@@ -107,7 +107,7 @@ extern "C" {
 #endif // _di_firewall_macro_private_
 
 #ifndef _di_firewall_perform_commands_
-  f_return_status firewall_perform_commands(f_const firewall_local_data local, f_const firewall_data data) f_gcc_attribute_visibility_internal;
+  f_return_status firewall_perform_commands(const firewall_local_data local, const firewall_data data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_perform_commands_
 
 #ifndef _di_firewall_create_custom_chains_
@@ -119,7 +119,7 @@ extern "C" {
 #endif // _di_firewall_delete_chains_
 
 #ifndef _di_firewall_buffer_rules_
-  f_return_status firewall_buffer_rules(f_const f_string filename, f_const f_bool optional, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
+  f_return_status firewall_buffer_rules(const f_string filename, const f_bool optional, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_buffer_rules_
 
 #ifndef _di_firewall_process_rules_

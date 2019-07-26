@@ -20,7 +20,7 @@ extern "C" {
 
     // switch to the appropriate terminal color mode
     {
-      f_autochar *environment = getenv("TERM");
+      char *environment = getenv("TERM");
 
       if (!environment || strncmp(environment, "linux", 6) == 0) {
         data->color_list = f_colors_linux;

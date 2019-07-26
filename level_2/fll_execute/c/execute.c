@@ -14,7 +14,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_execute_path_
-  f_return_status fll_execute_path(f_const f_string program_path, f_const f_dynamic_strings arguments, f_s_int *results) {
+  f_return_status fll_execute_path(const f_string program_path, const f_dynamic_strings arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
       if (results == 0) return f_error_set_error(f_invalid_parameter);
 
@@ -73,7 +73,7 @@ extern "C" {
         return status;
       }
 
-      memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(f_autochar) * arguments.array[i].used);
+      memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(char) * arguments.array[i].used);
       fixed_arguments[i + 1][arguments.array[i].used] = f_eos;
     }
 
@@ -125,7 +125,7 @@ extern "C" {
 #endif // _di_fll_execute_path_
 
 #ifndef _di_fll_execute_program_
-  f_return_status fll_execute_program(f_const f_string program_name, f_const f_dynamic_strings arguments, f_s_int *results) {
+  f_return_status fll_execute_program(const f_string program_name, const f_dynamic_strings arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
       if (results == 0) return f_error_set_error(f_invalid_parameter);
 
@@ -153,7 +153,7 @@ extern "C" {
         return status;
       }
 
-      memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(f_autochar) * arguments.array[i].used);
+      memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(char) * arguments.array[i].used);
       fixed_arguments[i + 1][arguments.array[i].used] = f_eos;
     }
 

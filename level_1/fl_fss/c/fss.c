@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_identify_
-  f_return_status fl_fss_identify(f_const f_dynamic_string buffer, f_fss_header *header) {
+  f_return_status fl_fss_identify(const f_dynamic_string buffer, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
       if (header == 0) return f_error_set_error(f_invalid_parameter);
       if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
@@ -144,7 +144,7 @@ extern "C" {
 #endif // _di_fl_fss_identify_file_
 
 #ifndef _di_fl_fss_shift_delimiters_
-f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, f_const f_string_location location) {
+f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, const f_string_location location) {
   #ifndef _di_level_1_parameter_checking_
     if (buffer->used <= 0) return f_error_set_error(f_invalid_parameter);
     if (location.start < 0) return f_error_set_error(f_invalid_parameter);

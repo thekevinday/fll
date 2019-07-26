@@ -30,8 +30,6 @@
 #define _F_types_h
 
 // libc includes
-#include <sys/stat.h> // contains mode_t, dev_t, gid_t, uid_t, etc..
-#include <signal.h>
 #include <stdint.h>
 
 #ifdef __cplusplus
@@ -53,29 +51,7 @@ extern "C" {
   #define f_u_long_long    unsigned long long
   #define f_u_double       double
   #define f_u_long_double  long double
-  #define f_char           char                 // should ONLY be char
-  #define f_wchar          wchar                // should ONLY be wchar
-  #define f_autochar       char                 // can be wchar or char
-  #define f_size_t         size_t
   #define f_bool           unsigned short
-  #define f_mode_t         mode_t
-  #define f_dev_t          dev_t
-  #define f_uid_t          uid_t
-  #define f_gid_t          gid_t
-  #define f_ino_t          ino_t
-  #define f_nlink_t        nlink_t
-  #define f_off_t          off_t
-  #define f_fpos_t         fpos_t
-  #define f_pid_t          pid_t
-  #define f_sigset_t       sigset_t
-  #define f_siginfo_t      siginfo_t
-  #define f_file_t         FILE
-  #define f_file_p         FILE *
-  #define f_void_t         void
-  #define f_void_p         void *
-  #define f_extern         extern
-  #define f_const          f_const
-  #define f_stat           struct stat
 #endif // _di_f_types_normal
 
 // The minimal types represent to the system admin or whomever else handles compilation that the data type should NOT be smaller than the specified size, but can be any size larger.
@@ -83,18 +59,17 @@ extern "C" {
   #define f_min_s_int          f_s_int
   #define f_min_s_short        f_s_short
   #define f_min_s_long         f_s_long
-  #define f_min_s_short_short  f_t_s_short_short
+  #define f_min_s_short_short  f_s_short_short
   #define f_min_s_long_long    f_s_long_long
-  #define f_min_s_double       f_t_s_double
+  #define f_min_s_double       f_s_double
   #define f_min_s_long_double  f_s_long_double
   #define f_min_u_int          f_u_int
-  #define f_min_u_short        f_t_u_short
+  #define f_min_u_short        f_u_short
   #define f_min_u_long         f_u_long
-  #define f_min_u_short_short  f_t_u_short_short
+  #define f_min_u_short_short  f_u_short_short
   #define f_min_u_long_long    f_u_long_long
-  #define f_min_u_double       f_t_u_double
+  #define f_min_u_double       f_u_double
   #define f_min_u_long_double  f_u_long_double
-  #define f_min_char           f_char
 #endif // _di_f_types_min
 
 // The maximum types represent to the system admin or whomever else handles compilation that the data type should NOT be larger than the specified size, but can be any size smaller.
@@ -113,17 +88,16 @@ extern "C" {
   #define f_max_u_long_long    f_u_long_long
   #define f_max_u_double       f_u_double
   #define f_max_u_long_double  f_u_long_double
-  #define f_max_char           f_wchar
 #endif // _di_f_types_max
 
 #ifndef _di_f_status_
   typedef uint16_t f_status;
 
   // The c language gives warnings about return types of constants, I pretty much hate not being able to forcefully specify that these are not the be changed as that could be a security issue
-  // Therefore, I need to remove the f_const for c, but keep it for c++, thus I define the type f_return_status, which is only for function call declarations & prototypes
+  // Therefore, I need to remove the const for c, but keep it for c++, thus I define the type f_return_status, which is only for function call declarations & prototypes
   // DO NOT DECLARE THESE FOR THE RETURN DATA TYPES THEMSELVES, USE f_status. ONLY USE THESE FOR FUNCTION PROTOTYPES AND DECLARATIONS
   #ifdef __cplusplus
-    #define f_return_status f_const f_status
+    #define f_return_status const f_status
   #else
     #define f_return_status f_status
   #endif // __cplusplus

@@ -15,6 +15,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <dirent.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -30,7 +31,7 @@ extern "C" {
 #ifndef _di_f_file_types_
   typedef f_s_int  f_file_id;
   typedef f_string f_file_mode;
-  typedef f_mode_t f_file_mask;
+  typedef mode_t f_file_mask;
 
   #define f_file_default_read_size 4096 // default to 4k read sizes
   #define f_file_max_path_length   1024
@@ -54,12 +55,12 @@ extern "C" {
 #ifndef _di_f_file_
   typedef struct {
     f_file_id    id;        // file descriptor
-    f_file_p     file;      // the file data type
+    FILE *    file;      // the file data type
     f_file_mode  mode;      // how the file is to be accessed (or is being accessed)
-    f_size_t     byte_size; // how many bytes to use on each read/write (for normal string handling this should be sizeof(f_string)
+    size_t     byte_size; // how many bytes to use on each read/write (for normal string handling this should be sizeof(f_string)
   } f_file;
 
-  #define f_file_initialize { 0, 0, (f_file_mode) f_file_read_only, sizeof(f_autochar) }
+  #define f_file_initialize { 0, 0, (f_file_mode) f_file_read_only, sizeof(char) }
 #endif // _di_f_file_
 
 #ifndef _di_f_file_position_
@@ -198,35 +199,35 @@ extern "C" {
 #ifndef _di_f_file_open_
   // open a particular file and save its stream
   // filename = name of the file
-  f_extern f_return_status f_file_open(f_file *file_information, f_const f_string filename);
+  extern f_return_status f_file_open(f_file *file_information, const f_string filename);
 #endif // _di_f_file_open_
 
 #ifndef _di_f_file_close_
   // close file
-  f_extern f_return_status f_file_close(f_file *file_information);
+  extern f_return_status f_file_close(f_file *file_information);
 #endif // _di_f_file_close_
 
 #ifndef _di_f_file_flush_
   // flush file
-  f_extern f_return_status f_file_flush(f_file *file_information);
+  extern f_return_status f_file_flush(f_file *file_information);
 #endif // _di_f_file_flush_
 
 #ifndef _di_f_file_read_
   // read a given amount of data from the buffer, will auto-seek to where
-  f_extern f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, f_const f_file_position location);
+  extern f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location);
 #endif // _di_f_file_read_
 
 #ifndef _di_f_file_read_fifo_
   // read a given amount of data from the buffer, will not auto seek
-  f_extern f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer);
+  extern f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer);
 #endif // _di_f_file_read_fifo_
 
 #ifndef _di_f_file_stat_
-  f_extern f_return_status f_file_stat(f_const f_string file, f_stat *stat);
+  extern f_return_status f_file_stat(const f_string file, struct stat *file_stat);
 #endif // _di_f_file_stat_
 
 #ifndef _di_f_file_stat_by_id_
-  f_extern f_return_status f_file_stat_by_id(f_const f_s_int file_id, f_stat *stat);
+  extern f_return_status f_file_stat_by_id(const f_s_int file_id, struct stat *file_stat);
 #endif // _di_f_file_stat_by_id_
 
 #ifdef __cplusplus

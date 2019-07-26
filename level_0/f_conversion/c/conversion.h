@@ -33,36 +33,36 @@ extern "C" {
 
 #ifndef _di_f_is_digit_
   // convert a single character into the digit that it represents
-  f_extern f_return_status f_is_digit(f_const f_autochar character);
+  extern f_return_status f_is_digit(const char character);
 #endif // _di_f_is_digit_
 
 #ifndef _di_f_is_hexdigit_
   // convert a single character into the hexidecimal digit that it represents
-  f_extern f_return_status f_is_hexdigit(f_const f_autochar character);
+  extern f_return_status f_is_hexdigit(const char character);
 #endif // _di_f_is_hexdigit_
 
 #ifndef _di_f_character_to_digit_
   // convert a single character into the digit that it represents
-  f_extern f_return_status f_character_to_digit(f_const f_autochar character, f_u_long *digit);
+  extern f_return_status f_character_to_digit(const char character, f_u_long *digit);
 #endif // _di_f_character_to_digit_
 
 #ifndef _di_f_character_to_hexdigit_
   // convert a single character into the hexidecimal digit that it represents
-  f_extern f_return_status f_character_to_hexdigit(f_const f_autochar character, f_u_long *digit);
+  extern f_return_status f_character_to_hexdigit(const char character, f_u_long *digit);
 #endif // _di_f_character_to_hexdigit_
 
 #ifndef _di_f_string_to_digit_
   // works like atoi, except there is a start/stop range
   // convert a series of positive numbers into a string, stopping at one of the following: EOS, max_length, or a non-digit
   // will not process signed statuses (+/-)
-  f_extern f_return_status f_string_to_digit(f_const f_string string, f_u_long *digit, f_const f_string_location location);
+  extern f_return_status f_string_to_digit(const f_string string, f_u_long *digit, const f_string_location location);
 #endif // _di_f_string_to_digit_
 
 #ifndef _di_f_string_to_hexdigit_
   // works like atoi, except there is a start/stop range and that this is for hexidecimal digits
   // convert a series of positive  numbers into a string, stopping at one of the following: EOS, max_length, or a non-hexdigit
   // will not process signed statuses (+/-)
-  f_extern f_return_status f_string_to_hexdigit(f_const f_string string, f_u_long *digit, f_const f_string_location location);
+  extern f_return_status f_string_to_hexdigit(const f_string string, f_u_long *digit, const f_string_location location);
 #endif // _di_f_string_to_hexdigit_
 
 #ifdef __cplusplus

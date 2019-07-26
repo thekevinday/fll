@@ -13,7 +13,7 @@ extern "C" {
 
 #ifndef _di_fl_directory_list_
   // put the names of each file and/or directory inside the names parameter
-  f_return_status fl_directory_list(f_const f_string directory_path, f_dynamic_strings *names) {
+  f_return_status fl_directory_list(const f_string directory_path, f_dynamic_strings *names) {
     #ifndef _di_level_1_parameter_checking_
       if (names == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -44,17 +44,17 @@ extern "C" {
             return status;
           }
 
-          memcpy(names->array[names->used].string, listing[counter]->d_name, sizeof(f_autochar) * size);
+          memcpy(names->array[names->used].string, listing[counter]->d_name, sizeof(char) * size);
           names->array[names->used].used = size;
           names->used++;
         }
 
         // FIXME: the second and third paramater are probably wrong
-        f_delete((f_void_p *) & listing[counter], sizeof(struct dirent), 0);
+        f_delete((void **) & listing[counter], sizeof(struct dirent), 0);
     }
 
     // FIXME: the second and third paramater are probably wrong
-    f_delete((f_void_p *) & listing, sizeof(struct dirent *), 0);
+    f_delete((void **) & listing, sizeof(struct dirent *), 0);
 
     if (length == 0) {
       // an empty directory

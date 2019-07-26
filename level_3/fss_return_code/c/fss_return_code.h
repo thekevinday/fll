@@ -105,19 +105,19 @@ extern "C" {
 #endif // _di_fss_return_code_data_
 
 #ifndef _di_fss_return_code_print_version_
-  f_extern f_return_status fss_return_code_print_version(f_const fss_return_code_data data);
+  extern f_return_status fss_return_code_print_version(const fss_return_code_data data);
 #endif // _di_fss_return_code_print_version_
 
 #ifndef _di_fss_return_code_print_help_
-  f_extern f_return_status fss_return_code_print_help(f_const fss_return_code_data data);
+  extern f_return_status fss_return_code_print_help(const fss_return_code_data data);
 #endif // _di_fss_return_code_print_help_
 
 #ifndef _di_fss_return_code_main_
-  f_extern f_return_status fss_return_code_main(f_const f_array_length argc, f_const f_string argv[], fss_return_code_data *data);
+  extern f_return_status fss_return_code_main(const f_array_length argc, const f_string argv[], fss_return_code_data *data);
 #endif // _di_fss_return_code_main_
 
 #ifndef _di_fss_return_code_delete_data_
-  f_extern f_return_status fss_return_code_delete_data(fss_return_code_data *data);
+  extern f_return_status fss_return_code_delete_data(fss_return_code_data *data);
 #endif // _di_fss_return_code_delete_data_
 
 #ifdef __cplusplus

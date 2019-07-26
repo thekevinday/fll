@@ -33,22 +33,22 @@ extern "C" {
 
 #ifndef _di_fl_fss_basic_list_object_read_
   // read an fss-0002 object
-  f_extern f_return_status fl_fss_basic_list_object_read(f_dynamic_string *buffer, f_string_location *input, f_fss_object *found);
+  extern f_return_status fl_fss_basic_list_object_read(f_dynamic_string *buffer, f_string_location *input, f_fss_object *found);
 #endif // _di_fl_fss_basic_list_object_read_
 
 #ifndef _di_fl_fss_basic_list_content_read_
   // read an fss-0002 content
-  f_extern f_return_status fl_fss_basic_list_content_read(f_dynamic_string *buffer, f_string_location *input, f_fss_content *found);
+  extern f_return_status fl_fss_basic_list_content_read(f_dynamic_string *buffer, f_string_location *input, f_fss_content *found);
 #endif // _di_fl_fss_basic_list_content_read_
 
 #ifndef _di_fl_fss_basic_list_object_write_
   // write an fss-0002 object
-  f_extern f_return_status fl_fss_basic_list_object_write(f_const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer);
+  extern f_return_status fl_fss_basic_list_object_write(const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer);
 #endif // _di_fl_fss_basic_list_object_write_
 
 #ifndef _di_fl_fss_basic_list_content_write_
   // write an fss-0002 content
-  f_extern f_return_status fl_fss_basic_list_content_write(f_const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer);
+  extern f_return_status fl_fss_basic_list_content_write(const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer);
 #endif // _di_fl_fss_basic_list_content_write_
 
 #ifdef __cplusplus

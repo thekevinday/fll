@@ -60,39 +60,39 @@ extern "C" {
 #endif // _di_f_memory_default_allocation_step_
 
 #ifndef _di_f_memory_types_
-  #define f_memory_size_t f_size_t
-  #define f_memory_length f_size_t
+  #define f_memory_size_t size_t
+  #define f_memory_length size_t
 #endif // _di_f_memory_types_
 
 #ifndef _di_f_new_
   // Create some dynamically allocated array of some length
   #define f_new(pointer,type) f_new_array(pointer, type, 1)
-  f_extern f_return_status f_new_array(f_void_p *pointer, f_const f_memory_size_t type, f_const f_memory_length length);
+  extern f_return_status f_new_array(void **pointer, const f_memory_size_t type, const f_memory_length length);
 #endif // _di_f_new_
 
 #if ! ( defined (_di_f_delete_) || defined (_f_memory_FORCE_secure_memory_) )
   // deletes some dynamically allocated data
   // f_delete, will not change any of the data to 0 prior to deallocation
   // type and length are not used by this function normally but must be provided for the cases when f_delete is swapped with f_destroy (or vice-versa)
-  f_extern f_return_status f_delete(f_void_p *pointer, f_const f_memory_size_t type, f_const f_memory_length length);
+  extern f_return_status f_delete(void **pointer, const f_memory_size_t type, const f_memory_length length);
 #endif // ! ( defined (_di_f_delete_) || defined (_f_memory_FORCE_secure_memory_) )
 
 #if ! ( defined (_di_f_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
   // securely deletes some dynamically allocated data
   // f_destroy, will change all data to 0 prior to deallocation
-  f_extern f_return_status f_destroy(f_void_p *pointer, f_const f_memory_size_t type, f_const f_memory_length length);
+  extern f_return_status f_destroy(void **pointer, const f_memory_size_t type, const f_memory_length length);
 #endif // ! ( defined (_di_f_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
 
 #if ! ( defined (_di_f_resize_) || defined (_f_memory_FORCE_secure_memory_) )
   // resizes some dynamically allocated data
   // f_resize, will not change any of the data prior to deallocation
-  f_extern f_return_status f_resize(f_void_p *pointer, f_const f_memory_size_t type, f_const f_memory_length old_length, f_const f_memory_length new_length);
+  extern f_return_status f_resize(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
 #endif // ! ( defined (_di_f_resize_) || defined (_f_memory_FORCE_secure_memory_) )
 
 #if ! ( defined (_di_f_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
   // securely resizes some dynamically allocated data
   // f_adjust, will change all data to 0 prior to deallocation
-  f_extern f_return_status f_adjust(f_void_p *pointer, f_const f_memory_size_t type, f_const f_memory_length old_length, f_const f_memory_length new_length);
+  extern f_return_status f_adjust(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
 #endif // _di_f_adjust_
 
 
@@ -126,7 +126,7 @@ extern "C" {
   // structure:  the structure to operate on
   // type:       the structure type
   #define f_delete_structure(status, structure, type) \
-    status = f_delete((f_void_p *) & structure.array, sizeof(type), structure.size); \
+    status = f_delete((void **) & structure.array, sizeof(type), structure.size); \
     if (status == f_none) { \
       structure.size = 0; \
       structure.used = 0; \
@@ -138,7 +138,7 @@ extern "C" {
   // structure:  the structure to operate on
   // type:       the structure type
   #define f_destroy_structure(status, structure, type) \
-    status = f_destroy((f_void_p *) & structure.array, sizeof(type), structure.size); \
+    status = f_destroy((void **) & structure.array, sizeof(type), structure.size); \
     if (status == f_none) { \
       structure.size = 0; \
       structure.used = 0; \
@@ -150,7 +150,7 @@ extern "C" {
   // structure:  the structure to operate on
   // type:       the structure type
   #define f_resize_structure(status, structure, type, new_length) \
-    status = f_resize((f_void_p *) & structure.array, sizeof(type), structure.size, new_length); \
+    status = f_resize((void **) & structure.array, sizeof(type), structure.size, new_length); \
     if (status == f_none) { \
       structure.size = new_length; \
       if (structure.used > structure.size) structure.used = new_length; \
@@ -162,7 +162,7 @@ extern "C" {
   // structure:  the structure to operate on
   // type:       the structure type
   #define f_adjust_structure(status, structure, type, new_length) \
-    status = f_adjust((f_void_p *) & structure.array, sizeof(type), structure.size, new_length); \
+    status = f_adjust((void **) & structure.array, sizeof(type), structure.size, new_length); \
     if (status == f_none) { \
       structure.size = new_length; \
       if (structure.used > structure.size) structure.used = new_length; \
@@ -206,7 +206,7 @@ extern "C" {
       f_delete_structure(status, structures.array[structures.size], type); \
       if (status != f_none) break; \
     } \
-    if (status == f_none) status = f_delete((f_void_p *) & structures.array, sizeof(type), structures.size); \
+    if (status == f_none) status = f_delete((void **) & structures.array, sizeof(type), structures.size); \
     if (status == f_none) structures.used = 0;
 #endif // _di_f_delete_structures_
 
@@ -221,7 +221,7 @@ extern "C" {
       f_destroy_structure(status, structures.array[structures.size], type); \
       if (status != f_none) break; \
     } \
-    if (status == f_none) status = f_destroy((f_void_p *) & structures.array, sizeof(type), structures.size); \
+    if (status == f_none) status = f_destroy((void **) & structures.array, sizeof(type), structures.size); \
     if (status == f_none) structures.used = 0;
 #endif // _di_f_destroy_structures_
 
@@ -238,7 +238,7 @@ extern "C" {
         if (status != f_none) break; \
       } \
     } \
-    if (status == f_none) status = f_resize((f_void_p *) & structures.array, sizeof(type), structures.size, new_length); \
+    if (status == f_none) status = f_resize((void **) & structures.array, sizeof(type), structures.size, new_length); \
     if (status == f_none) { \
       if (new_length > structures.size) { \
         length_variable i = structures.size; \
@@ -264,7 +264,7 @@ extern "C" {
         if (status != f_none) break; \
       } \
     } \
-    if (status == f_none) status = f_adjust((f_void_p *) & structures.array, sizeof(type), structures.size, new_length); \
+    if (status == f_none) status = f_adjust((void **) & structures.array, sizeof(type), structures.size, new_length); \
     if (status == f_none) { \
       if (new_length > structures.size) { \
         length_variable i = structures.size; \

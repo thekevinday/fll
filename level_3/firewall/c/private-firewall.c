@@ -5,7 +5,7 @@
 #include "private-firewall.h"
 
 #ifndef _di_firewall_perform_commands_
-  f_return_status firewall_perform_commands(f_const firewall_local_data local, f_const firewall_data data) {
+  f_return_status firewall_perform_commands(const firewall_local_data local, const firewall_data data) {
     f_status status = f_none;
     f_status status2 = f_none;
 
@@ -1243,7 +1243,7 @@
 #endif // _di_firewall_delete_chains_
 
 #ifndef _di_firewall_process_rules_
-  f_return_status firewall_buffer_rules(f_const f_string filename, f_const f_bool optional, firewall_local_data *local, firewall_data *data) {
+  f_return_status firewall_buffer_rules(const f_string filename, const f_bool optional, firewall_local_data *local, firewall_data *data) {
     f_file file = f_file_initialize;
     f_status status = f_none;
 

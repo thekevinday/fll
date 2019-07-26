@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_serialize_simple_
-  f_return_status fl_serialize_simple(f_const f_dynamic_string value, f_dynamic_string *serialized) {
+  f_return_status fl_serialize_simple(const f_dynamic_string value, f_dynamic_string *serialized) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -26,11 +26,11 @@ extern "C" {
     }
 
     if (serialized->used == 0) {
-      memcpy(serialized->string + serialized->used, value.string, sizeof(f_autochar) * value.used);
+      memcpy(serialized->string + serialized->used, value.string, sizeof(char) * value.used);
       serialized->used += value.used;
     } else {
-      memcpy(serialized->string + serialized->used, f_serialized_simple_splitter_string, sizeof(f_autochar));
-      memcpy(serialized->string + serialized->used + 1, value.string, sizeof(f_autochar) * value.used);
+      memcpy(serialized->string + serialized->used, f_serialized_simple_splitter_string, sizeof(char));
+      memcpy(serialized->string + serialized->used + 1, value.string, sizeof(char) * value.used);
       serialized->used += value.used + 1;
     }
 
@@ -39,7 +39,7 @@ extern "C" {
 #endif // _di_fl_serialize_simple_
 
 #ifndef _di_fl_unserialize_simple_
-  f_return_status fl_unserialize_simple(f_const f_dynamic_string serialized, f_string_locations *locations) {
+  f_return_status fl_unserialize_simple(const f_dynamic_string serialized, f_string_locations *locations) {
     #ifndef _di_level_0_parameter_checking_
       if (locations == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -78,7 +78,7 @@ extern "C" {
 #endif // _di_fl_unserialize_simple_
 
 #ifndef _di_fl_unserialize_simple_get_
-  f_return_status fl_unserialize_simple_get(f_const f_dynamic_string serialized, f_const f_array_length index, f_string_location *location) {
+  f_return_status fl_unserialize_simple_get(const f_dynamic_string serialized, const f_array_length index, f_string_location *location) {
     #ifndef _di_level_0_parameter_checking_
       if (location == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_

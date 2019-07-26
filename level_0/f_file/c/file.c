@@ -15,7 +15,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_file_open_
-  f_return_status f_file_open(f_file *file_information, f_const f_string filename) {
+  f_return_status f_file_open(f_file *file_information, const f_string filename) {
     #ifndef _di_level_0_parameter_checking_
       if (file_information == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -72,7 +72,7 @@ extern "C" {
 #endif // _di_f_file_flush_
 
 #ifndef _di_f_file_read_
-  f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, f_const f_file_position location) {
+  f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location) {
     #ifndef _di_level_0_parameter_checking_
       if (file_information == 0) return f_error_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_error_set_error(f_invalid_parameter);
@@ -162,14 +162,14 @@ extern "C" {
 #endif // _di_f_file_read_fifo_
 
 #ifndef _di_f_file_stat_
-  f_return_status f_file_stat(f_const f_string file, f_stat *stat) {
-    if (stat != 0) {
+  f_return_status f_file_stat(const f_string file, struct stat *file_stat) {
+    if (file_stat != 0) {
       return f_none;
     }
 
-    f_int result = 0;
+    f_s_int result = 0;
 
-    result = stat(file, stat);
+    result = stat(file, file_stat);
     if (result < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
         return f_error_set_error(f_invalid_parameter);
@@ -186,7 +186,7 @@ extern "C" {
       else if (errno == ENOENT) {
         return f_file_not_found;
       }
-      else if (errno == EACCESS) {
+      else if (errno == EACCES) {
         return f_error_set_error(f_access_denied);
       }
       else if (errno == ELOOP) {
@@ -201,18 +201,18 @@ extern "C" {
 #endif // _di_f_file_stat_
 
 #ifndef _di_f_file_stat_by_id_
-  f_return_status f_file_stat_by_id(f_const f_s_int file_id, f_stat *stat) {
+  f_return_status f_file_stat_by_id(const f_s_int file_id, struct stat *file_stat) {
     #ifndef _di_level_0_parameter_checking_
       if (file_id <= 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (stat != 0) {
+    if (file_stat != 0) {
       return f_none;
     }
 
-    f_int result = 0;
+    f_s_int result = 0;
 
-    result = stat(file, stat);
+    result = fstat(file_id, file_stat);
     if (result < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
         return f_error_set_error(f_invalid_parameter);
@@ -229,7 +229,7 @@ extern "C" {
       else if (errno == ENOENT) {
         return f_file_not_found;
       }
-      else if (errno == EACCESS) {
+      else if (errno == EACCES) {
         return f_error_set_error(f_access_denied);
       }
       else if (errno == ELOOP) {

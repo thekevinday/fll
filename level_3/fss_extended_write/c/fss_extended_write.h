@@ -107,19 +107,19 @@ extern "C" {
 #endif // _di_fss_extended_write_data_
 
 #ifndef _di_fss_extended_write_print_version_
-  f_extern f_return_status fss_extended_write_print_version(f_const fss_extended_write_data data);
+  extern f_return_status fss_extended_write_print_version(const fss_extended_write_data data);
 #endif // _di_fss_extended_write_print_version_
 
 #ifndef _di_fss_extended_write_print_help_
-  f_extern f_return_status fss_extended_write_print_help(f_const fss_extended_write_data data);
+  extern f_return_status fss_extended_write_print_help(const fss_extended_write_data data);
 #endif // _di_fss_extended_write_print_help_
 
 #ifndef _di_fss_extended_write_main_
-  f_extern f_return_status fss_extended_write_main(f_const f_array_length argc, f_const f_string argv[], fss_extended_write_data *data);
+  extern f_return_status fss_extended_write_main(const f_array_length argc, const f_string argv[], fss_extended_write_data *data);
 #endif // _di_fss_extended_write_main_
 
 #ifndef _di_fss_extended_write_delete_data_
-  f_extern f_return_status fss_extended_write_delete_data(fss_extended_write_data *data);
+  extern f_return_status fss_extended_write_delete_data(fss_extended_write_data *data);
 #endif // _di_fss_extended_write_delete_data_
 
 #ifdef __cplusplus

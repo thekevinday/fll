@@ -12,7 +12,7 @@ extern "C" {
 
 // version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
 #ifndef _di_fss_return_code_print_version_
-  f_return_status fss_return_code_print_version(f_const fss_return_code_data data) {
+  f_return_status fss_return_code_print_version(const fss_return_code_data data) {
     printf("%s\n", fss_return_code_version);
 
     return f_none;
@@ -20,7 +20,7 @@ extern "C" {
 #endif // _fss_return_code_print_version_
 
 #ifndef _di_fss_return_code_print_help_
-  f_return_status fss_return_code_print_help(f_const fss_return_code_data data) {
+  f_return_status fss_return_code_print_help(const fss_return_code_data data) {
     printf("\n");
     fl_print_color(f_standard_output, data.context.title, data.context.reset, " %s", fss_return_code_name_long);
 
@@ -116,7 +116,7 @@ extern "C" {
 #endif // _di_fss_return_code_print_help_
 
 #ifndef _di_fss_return_code_main_
-  f_return_status fss_return_code_main(f_const f_array_length argc, f_const f_string argv[], fss_return_code_data *data) {
+  f_return_status fss_return_code_main(const f_array_length argc, const f_string argv[], fss_return_code_data *data) {
     f_status status            = f_none;
     f_status allocation_status = f_none;
 
