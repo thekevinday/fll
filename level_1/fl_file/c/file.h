@@ -1,10 +1,11 @@
-/* FLL - Level 1
- * Project:       File
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
- *   File Operations
+/**
+ * FLL - Level 1
+ *
+ * Project: File
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * File Operations.
  */
 #ifndef _FL_file_h
 #define _FL_file_h

@@ -1,9 +1,3 @@
-/* FLL - Level 1
- * Project:       Serialized
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- */
 #include <level_1/serialized.h>
 
 #ifdef __cplusplus

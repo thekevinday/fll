@@ -1,13 +1,13 @@
-/* FLL - Level 3
- * Project:       Firewall
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 3
+ *
+ * Project: Firewall
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * This is the Kevux Operating System Firewall program.
  * This program utilizes the Featureless Linux Library.
- * This program processes firewall commands and passes them to iptables from netfiler.org
+ * This program processes firewall commands and passes them to iptables from netfiler.org.
  */
 #ifndef _firewall_h
 

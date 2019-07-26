@@ -1,12 +1,3 @@
-/* FLL - Level 2
- * Project:       Execute
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
- *
- * Provides program execution operations similart to system().
- */
 #include <level_2/execute.h>
 
 #ifdef __cplusplus

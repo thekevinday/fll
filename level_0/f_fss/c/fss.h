@@ -1,14 +1,14 @@
-/* FLL - Level 0
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
  *
- * Defines all datatypes to be used for/by project fss
+ * Project: FSS
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
- * The purpose of compression is not to compression the entire file's contents but only and individual objects content, so the file is still partially readable
- * NOTE: all start/stop locations must be defined as a (start < stop) and not (start <= stop), therefore if (start == stop) then stop
+ * Defines all datatypes to be used for/by project fss.
+ *
+ * The purpose of compression is not to compression the entire file's contents but only and individual objects content, so the file is still partially readable.
+ * NOTE: all start/stop locations must be defined as a (start < stop) and not (start <= stop), therefore if (start == stop) then stop.
  */
 #ifndef _F_fss_h
 #define _F_fss_h

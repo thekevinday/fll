@@ -1,6 +1,3 @@
-/**
- * Private source file for firewall.c.
- */
 #include <level_3/firewall.h>
 #include "private-firewall.h"
 

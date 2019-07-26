@@ -1,11 +1,11 @@
-/* FLL - Level 1
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 1
  *
- * This is the fss-0000 implementation
+ * Project: FSS
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * This is the fss-0000 implementation.
  */
 #ifndef _FL_fss_basic_h
 #define _FL_fss_basic_h

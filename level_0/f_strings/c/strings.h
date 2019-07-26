@@ -1,11 +1,11 @@
-/* FLL - Level 0
- * Project:       Strings
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
  *
- * Provides string capabilities
+ * Project: Strings
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Provides string capabilities.
  */
 #ifndef _F_strings_h
 #define _F_strings_h

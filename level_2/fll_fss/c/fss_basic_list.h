@@ -1,11 +1,11 @@
-/* FLL - Level 2
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 2
  *
- * This is the fss-0002 implementation
+ * Project: FSS
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * This is the fss-0002 implementation.
  */
 #ifndef _FLL_fss_basic_list_h
 #define _FLL_fss_basic_list_h

@@ -1,11 +1,11 @@
-/* FLL - Level 1
- * Project:       Console
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 1
  *
- *  Some console input/output commands
+ * Project: Console
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Some console input/output commands.
  */
 #ifndef _FL_console_h
 #define _FL_console_h

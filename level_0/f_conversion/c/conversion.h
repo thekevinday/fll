@@ -1,13 +1,13 @@
-/* FLL - Level 0
- * Project:       Conversion
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
  *
- * Provide means to convert one data type to another, such as a string to an integer
- * Provide means to identify a digit or a hexadecimal digit (hexdigit)
- * In the future this will have to link to locale support, due to interpeting strings
+ * Project: Conversion
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Provide means to convert one data type to another, such as a string to an integer.
+ * Provide means to identify a digit or a hexadecimal digit (hexdigit).
+ * In the future this will have to link to locale support, due to interpeting strings.
  *
  * Possible error values on return:
  *   f_warn               - a possible problem, but not an error (warning)

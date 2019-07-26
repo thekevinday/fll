@@ -1,9 +1,3 @@
-/* FLL - Level 0
- * Project:       Output
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- */
 #include <level_0/print.h>
 
 #ifdef __cplusplus

@@ -1,11 +1,11 @@
-/* FLL - Level 0
- * Project:       Output
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
  *
- * Provides some standard printing functions not available in a libc
+ * Project: Output
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Provides some standard printing functions not available in a libc.
  */
 #ifndef _F_print_h
 #define _F_print_h

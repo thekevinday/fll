@@ -1,9 +1,9 @@
-/* FLL - Level 0
- * Project:       Memory
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
+ *
+ * Project: Memory
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * Provide means to use memory routines, with error checking.
  *

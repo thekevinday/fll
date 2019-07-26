@@ -1,12 +1,3 @@
-/* FLL - Level 0
- * Project:       Memory
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
- *
- * Provide means to use memory routines, with error checking.
- */
 #include <level_0/memory.h>
 
 #ifdef __cplusplus

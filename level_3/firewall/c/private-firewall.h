@@ -1,7 +1,10 @@
 /**
- * Private include file for firewall.c.
+ * FLL - Level 3
+ *
+ * Project: Firewall
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  */
-
 #ifndef _PRIVATE_firewall_h
 #define _PRIVATE_firewall_h
 

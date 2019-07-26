@@ -1,14 +1,14 @@
-/* FLL - Level 0
- * Project:       Paths
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
+ *
+ * Project: Paths
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * Provide locations to all fll-specific paths
  * It is planned to have this file auto-generated from a single /etc/fll file such that one file can be used for all supported languages.
  *
- * FIXME: this is very outdated due to numerous structural changes while I was developing turtle kevux
+ * FIXME: this is very outdated due to numerous structural changes while I was developing turtle kevux.
  */
 #ifndef _F_fll_paths_h
 #define _F_fll_paths_h

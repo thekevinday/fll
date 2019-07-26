@@ -1,10 +1,3 @@
-/* FLL - Level 1
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
- */
 #include <level_1/fss.h>
 
 #ifdef __cplusplus

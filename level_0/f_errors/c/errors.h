@@ -1,9 +1,9 @@
-/* FLL - Level 0
- * Project:       Errors
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
+ *
+ * Project: Errors
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * Provides error definitions.
  *

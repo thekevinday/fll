@@ -1,9 +1,3 @@
-/* FLL - Level 2
- * Project:       Colors
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- */
 #include <level_2/colors.h>
 
 #ifdef __cplusplus

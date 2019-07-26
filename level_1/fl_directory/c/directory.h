@@ -1,11 +1,11 @@
-/* FLL - Level 1
- * Project:       Directory
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 1
  *
- *  Provides operations for directory handling
+ * Project: Directory
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Provides operations for directory handling.
  */
 #ifndef _FL_directory_h
 #define _FL_directory_h

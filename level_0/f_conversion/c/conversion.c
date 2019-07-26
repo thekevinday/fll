@@ -1,9 +1,3 @@
-/* FLL - Level 0
- * Project:       Conversion
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- */
 #include <level_0/conversion.h>
 
 #ifdef __cplusplus

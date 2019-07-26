@@ -1,9 +1,9 @@
-/* FLL - Level 0
- * Project:       Types Array
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
+ *
+ * Project: Types
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * Provides datatypes that are arrays of some sort and require memory operations.
  */

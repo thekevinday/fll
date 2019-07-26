@@ -1,11 +1,11 @@
-/* FLL - Level 2
- * Project:       Execute
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 2
  *
- * Provides program execution operations similar to system()
+ * Project: Execute
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Provides program execution operations similar to system().
  */
 #ifndef _FLL_execute_h
 #define _FLL_execute_h

@@ -1,9 +1,9 @@
-/* FLL - Level 0
- * Project:       Socket
- * Version:       0.4.2
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
+ *
+ * Project: Socket
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * Provide means to connect to and use sockets.
  */

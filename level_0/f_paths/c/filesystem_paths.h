@@ -1,13 +1,13 @@
-/* FLL - Level 0
- * Project:       Paths
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
+ *
+ * Project: Paths
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * Provide locations to all filesystem paths, for low level hardcoding
  *
- * FIXME: this is very outdated due to numerous structural changes while I was developing turtle kevux
+ * FIXME: this is very outdated due to numerous structural changes while I was developing turtle kevux.
  */
 #ifndef _F_filesystem_paths_h
 #define _F_filesystem_paths_h

@@ -1,12 +1,11 @@
-/* FLL - Level 0
- * Project:       Pipe
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
+ *
+ * Project: Pipe
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * Provides pipe functionality.
- *
  */
 #ifndef _F_pipe_h
 #define _F_pipe_h

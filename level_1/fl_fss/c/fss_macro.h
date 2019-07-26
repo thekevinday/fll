@@ -1,11 +1,11 @@
-/* FLL - Level 1
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 1
  *
- * Provides generic functionality shared between and used by different fss processing functions
+ * Project: FSS
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Provides generic functionality shared between and used by different fss processing functions.
  */
 #ifndef _FL_fss_macro_h
 #define _FL_fss_macro_h

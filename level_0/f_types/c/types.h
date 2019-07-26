@@ -1,9 +1,9 @@
-/* FLL - Level 0
- * Project:       Types
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
+ *
+ * Project: Types
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * Provides datatype re-definitions
  * If your compiler lacks the ability to produce such, simply re-define them as needed
@@ -23,8 +23,6 @@
  *   uint32_t: 2^32 (unsigned)
  *   int64_t:  2^64 (signed)
  *   uint64_t: 2^64 (unsigned)
- *
- * TODO: Should a range type be implemented? (ie: f_range_short_long -> min=short, max=long)
  */
 #ifndef _F_types_h
 #define _F_types_h

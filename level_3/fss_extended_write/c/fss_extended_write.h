@@ -1,9 +1,9 @@
-/* FLL - Level 3
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 3
+ *
+ * Project: FSS
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * This program provides fss basic write functionality.
  */

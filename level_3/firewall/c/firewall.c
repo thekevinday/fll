@@ -1,8 +1,8 @@
-/* FLL - Level 3
- * Project:       Firewall
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
+/**
+ * FLL - Level 3
+ * Project: Firewall
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  */
 #include <level_3/firewall.h>
 #include "private-firewall.h"

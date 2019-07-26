@@ -1,11 +1,9 @@
-/* FLL - Level 3
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 3
  *
- * This program provides error code to string translation.
+ * Project: Return Code
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  */
 #ifndef _return_code_h
 

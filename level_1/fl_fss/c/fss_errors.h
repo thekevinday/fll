@@ -1,8 +1,9 @@
-/* FLL - Level 1
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
+/**
+ * FLL - Level 1
+ *
+ * Project: Strings
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * Provides fss-specific error definitions.
  *

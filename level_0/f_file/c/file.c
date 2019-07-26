@@ -1,12 +1,12 @@
-/* FLL - Level 0
- * Project:       File
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
  *
- *  Provides structures and data types for a file I/O.
- *  Provides operations for opening/closing files
+ * Project: File
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Provides structures and data types for a file I/O.
+ * Provides operations for opening/closing files.
  */
 #include <level_0/file.h>
 

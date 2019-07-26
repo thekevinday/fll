@@ -1,11 +1,11 @@
-/* FLL - Level 1
- * Project:       Strings
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 1
  *
- * Provides basic string manipulation and processing capabilities
+ * Project: Strings
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Provides basic string manipulation and processing capabilities.
  */
 #ifndef _FL_strings_h
 #define _FL_strings_h

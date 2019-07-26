@@ -1,11 +1,11 @@
-/* FLL - Level 0
- * Project:       Colors
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 0
  *
- * Provide basic color output support (linux & xterm)
+ * Project: Colors
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Provide basic color output support (linux & xterm).
  * This is the Featureless LINUX Library, so there is no support for non-linux colors at this time.
  */
 #ifndef _F_colors_h

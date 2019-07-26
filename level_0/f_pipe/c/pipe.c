@@ -1,12 +1,3 @@
-/* FLL - Level 0
- * Project:       Pipe
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
- *
- * Provides pipe functionality.
- */
 #include <level_0/pipe.h>
 
 #ifdef __cplusplus

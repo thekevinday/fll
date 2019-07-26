@@ -1,13 +1,13 @@
-/* FLL - Level 3
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 3
+ *
+ * Project: FSS
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * This is the FSS Basic Read program
  * This program utilizes the Featureless Linux Library.
- * This program processes files or other input in fss format and stores the results in the fss_extended_read_data
+ * This program processes files or other input in fss format and stores the results in the fss_extended_read_data.
  */
 #ifndef _fss_extended_read_h
 

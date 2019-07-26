@@ -1,11 +1,11 @@
-/* FLL - Level 2
- * Project:       Colors
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 2
  *
- * Provide standard color handling
+ * Project: Colors
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * Provide standard color handling.
  */
 #ifndef _FLL_colors_h
 #define _FLL_colors_h

@@ -1,13 +1,13 @@
-/* FLL - Level 1
- * Project:       Serialized
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
+/**
+ * FLL - Level 1
+ *
+ * Project: Serialized
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  *
  * Provides string processing functionality for what is to be defined as a serialized string.
  * Serialized strings are strings that can hold multiple values in a single variable.
- * An example of serialized content is the PATH environment variable where ':" separates data."
+ * An example of serialized content is the PATH environment variable where ":" separates data.
  */
 #ifndef _FL_serialized_h
 #define _FL_serialized_h

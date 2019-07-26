@@ -1,8 +1,9 @@
-/* FLL - Level 1
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
+/**
+ * FLL - Level 1
+ *
+ * Project: FSS
+ * API Version: 0.5
+ * Licenses: lgplv2.1
  */
 #ifndef _FL_fss_h
 #define _FL_fss_h

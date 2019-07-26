@@ -1,12 +1,3 @@
-/* FLL - Level 1
- * Project:       Errors
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- * Documentation:
- *
- * Provides error functions, such as those that translate error codes into strings.
- */
 #include <level_1/errors.h>
 
 #ifdef __cplusplus

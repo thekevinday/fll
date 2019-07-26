@@ -1,9 +1,3 @@
-/* FLL - Level 3
- * Project:       FSS
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
- */
 #include <level_3/fss_extended_read.h>
 
 #ifdef __cplusplus
