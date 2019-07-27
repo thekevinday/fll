@@ -15,8 +15,8 @@
 
 // fll includes
 #include <level_0/errors.h>
-#include <level_0/types.h>
 #include <level_0/strings.h>
+#include <level_0/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -96,22 +96,32 @@ enum {
   #define f_adjust_fss_delimits(status, array, new_length) f_adjust_string_location_array(status, array, new_length)
 #endif // _di_f_fss_delimits_
 
-// stores information about a particular fss file, otherwise know as its header
+/**
+ * stores information about a particular fss file, otherwise know as its header.
+ *
+ * type: the kind of fss file is this.
+ * length: Total length of the header.
+ */
 #ifndef _di_f_fss_header_
   typedef struct {
-    f_fss_id            type;   // what kind of fss file is this?
-    f_fss_header_length length; // Total length of the header
+    f_fss_id            type;
+    f_fss_header_length length;
   } f_fss_header;
 
   #define f_fss_header_initialize { f_fss_id_initialize, f_fss_header_length_initialize }
 #endif // _di_f_fss_header_
 
-// This holds an array of fss_headers
+/**
+ * This holds an array of fss_headers.
+ *
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
 #ifndef _di_f_fss_headers_
   typedef struct {
-    f_fss_header    *array; // the array of fss headers
-    f_string_length size;   // total amount of allocated space
-    f_string_length used;   // total number of allocated spaces used
+    f_fss_header    *array;
+    f_string_length size;
+    f_string_length used;
   } f_fss_headers;
 
   #define f_fss_headers_initialize { 0, 0, 0 }
@@ -131,7 +141,9 @@ enum {
 #endif // _di_f_fss_headers_
 
 
-// This is a location that represents an object
+/**
+ * This is a location that represents an object.
+ */
 #ifndef _di_fss_object_
   typedef f_string_location f_fss_object;
   #define f_fss_object_initialize f_string_location_initialize
@@ -147,12 +159,17 @@ enum {
     status = f_adjust((void **) & object, sizeof(f_fss_object), old_length, new_length)
 #endif // _di_fss_object_
 
-// This holds an array of fss_object
+/**
+ * This holds an array of fss_object.
+ *
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
 #ifndef _di_fss_objects_
   typedef struct {
-    f_fss_object    *array; // the array of fss objects
-    f_string_length size;   // total amount of allocated space
-    f_string_length used;   // total number of allocated spaces used
+    f_fss_object    *array;
+    f_string_length size;
+    f_string_length used;
   } f_fss_objects;
 
   #define f_fss_objects_initialize { 0, 0, 0 }
@@ -170,15 +187,20 @@ enum {
     f_destroy_structure(status, objects, f_fss_object, new_length)
 #endif // _di_fss_objects_
 
-// This holds an array of string locations that represent the content
-// The very first string location will represent the outmost content
-// All of the following string locations will represent the first level of nesting of all sub-content
-// There will be no nesting beyond the first level recorded in this structure
+/**
+ * This holds an array of string locations that represent the content.
+ * The very first string location will represent the outmost content.
+ * All of the following string locations will represent the first level of nesting of all sub-content.
+ * There will be no nesting beyond the first level recorded in this structure.
+ *
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
 #ifndef _di_fss_content_
   typedef struct {
     f_string_location *array; // the array of locations
-    f_array_length   size;   // total amount of allocated space
-    f_array_length   used;   // total number of allocated spaces used
+    f_array_length    size;   // total amount of allocated space
+    f_array_length    used;   // total number of allocated spaces used
   } f_fss_content;
 
   #define f_fss_content_initialize { 0, 0, 0 }
@@ -196,12 +218,17 @@ enum {
     f_adjust_structure(status, content, f_string_location, new_length)
 #endif // _di_fss_content_
 
-// This holds an array of fss_content
+/**
+ * This holds an array of fss_content.
+ *
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
 #ifndef _di_f_fss_contents_
   typedef struct {
-    f_fss_content   *array; // the array of fss content
-    f_array_length  size;  // total amount of allocated space
-    f_array_length  used;  // total number of allocated spaces used
+    f_fss_content  *array;
+    f_array_length size;
+    f_array_length used;
   } f_fss_contents;
 
   #define f_fss_contents_initialize { 0, 0, 0 }

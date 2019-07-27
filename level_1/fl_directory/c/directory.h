@@ -11,18 +11,18 @@
 #define _FL_directory_h
 
 // libc includes
-#include <string.h>
-#include <stdio.h>
 #include <dirent.h>
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <errno.h>
 
 // fll-0 includes
-#include <level_0/types.h>
 #include <level_0/errors.h>
-#include <level_0/strings.h>
 #include <level_0/memory.h>
+#include <level_0/strings.h>
+#include <level_0/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,7 +33,9 @@ extern "C" {
 #endif // _di_fl_directory_limitations_
 
 #ifndef _di_fl_directory_list_
-  // put the names of each file and/or directory inside the names parameter
+  /**
+   * put the names of each file and/or directory inside the names parameter.
+   */
   extern f_return_status fl_directory_list(const f_string directory_path, f_dynamic_strings *names);
 #endif // _di_fl_directory_list_
 

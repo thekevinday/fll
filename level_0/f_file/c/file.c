@@ -97,7 +97,8 @@ extern "C" {
 
     if (current_file_position > location.file_start) {
       result = f_file_seek_from_current(file_information->file, file_information->byte_size * (0 - (current_file_position - location.file_start)));
-    } else if (current_file_position < location.file_start) {
+    }
+    else if (current_file_position < location.file_start) {
       result = f_file_seek_from_current(file_information->file, file_information->byte_size * (location.file_start - current_file_position));
     }
 
@@ -106,7 +107,8 @@ extern "C" {
     // now do the actual read
     if (location.total_elements == 0) {
       result = fread(buffer->string + location.buffer_start, file_information->byte_size, buffer->size - buffer->used - 1, file_information->file);
-    } else {
+    }
+    else {
       result = fread(buffer->string + location.buffer_start, file_information->byte_size, location.total_elements, file_information->file);
     }
 

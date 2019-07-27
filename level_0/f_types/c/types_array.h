@@ -10,23 +10,23 @@
 #ifndef _F_types_array_h
 #define _F_types_array_h
 
-// libc includes
-#include <sys/stat.h> // contains mode_t, dev_t, gid_t, uid_t, etc..
-#include <signal.h>
-
 // fll includes
-#include <level_0/types.h>
 #include <level_0/memory.h>
+#include <level_0/types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/**
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
 #ifndef _di_f_array_lengths_
   typedef struct {
     f_array_length *array;
-    f_array_length  size;  // total amount of allocated space
-    f_array_length  used;  // total number of allocated spaces used
+    f_array_length size;
+    f_array_length used;
   } f_array_lengths;
 
   #define f_array_lengths_initialize { 0, 0, 0 }

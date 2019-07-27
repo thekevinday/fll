@@ -19,23 +19,23 @@
 extern "C" {
 #endif
 
-// TODO: don't forget to completely restructure the paths layout before 0.1.0 is released
+// TODO: don't forget to completely restructure the paths layout before 1.0.0 is released
 #ifndef _di_fll_paths_
-  #define f_path_fll_base       f_path_system_settings "/fll" // directory
-  #define f_path_fll_settings   "settings"  // directory
-  #define f_path_fll_packages   "packages"  // directory
-  #define f_path_fll_patches    "patches"   // directory
-  #define f_path_fll_archive    "archive"   // directory
-  #define f_path_fll_groups     "groups"    // directory
-  #define f_path_fll_licenses   "licenses"  // directory
-  #define f_path_fll_global     "global"    // file
-  #define f_path_fll_paths      "paths"     // file
-  #define f_path_fll_listing    "listing"   // file
-  #define f_path_fll_headers    "headers"   // file
-  #define f_path_fll_libraries  "libraries" // file
-  #define f_path_fll_programs   "programs"  // file
-  #define f_path_fll_scripts    "scripts"   // file
-  #define f_path_fll_fakefile   "fakefile"  // file
+  #define f_path_fll_base      f_path_system_settings "/fll" // directory
+  #define f_path_fll_settings  "settings"  // directory
+  #define f_path_fll_packages  "packages"  // directory
+  #define f_path_fll_patches   "patches"   // directory
+  #define f_path_fll_archive   "archive"   // directory
+  #define f_path_fll_groups    "groups"    // directory
+  #define f_path_fll_licenses  "licenses"  // directory
+  #define f_path_fll_global    "global"    // file
+  #define f_path_fll_paths     "paths"     // file
+  #define f_path_fll_listing   "listing"   // file
+  #define f_path_fll_headers   "headers"   // file
+  #define f_path_fll_libraries "libraries" // file
+  #define f_path_fll_programs  "programs"  // file
+  #define f_path_fll_scripts   "scripts"   // file
+  #define f_path_fll_fakefile  "fakefile"  // file
 #endif // _di_fll_paths_
 
 #ifndef _di_fll_file_endings_

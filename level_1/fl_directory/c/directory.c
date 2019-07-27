@@ -52,7 +52,8 @@ extern "C" {
     if (length == 0) {
       // an empty directory
       return f_no_data;
-    } else if (length == -1) {
+    }
+    else if (length == -1) {
       if (errno == ENOMEM) return f_error_set_error(f_allocation_error);
       else return f_error_set_error(f_failure);
     }

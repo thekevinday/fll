@@ -111,7 +111,7 @@ extern "C" {
 
 #ifndef _di_fss_return_code_main_
   f_return_status fss_return_code_main(const f_array_length argc, const f_string argv[], fss_return_code_data *data) {
-    f_status status            = f_none;
+    f_status status = f_none;
     f_status allocation_status = f_none;
 
     status = fl_process_parameters(argc, argv, data->parameters, fss_return_code_total_parameters, &data->remaining);
@@ -137,11 +137,14 @@ extern "C" {
         // TODO: there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
-      } else if (f_macro_test_for_allocation_errors(status)) {
+      }
+      else if (f_macro_test_for_allocation_errors(status)) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
-      } else if (status == f_invalid_parameter) {
+      }
+      else if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
-      } else {
+      }
+      else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", status);
       }
 
@@ -152,9 +155,11 @@ extern "C" {
     // execute parameter results
     if (data->parameters[fss_return_code_parameter_help].result == f_console_result_found) {
       fss_return_code_print_help(*data);
-    } else if (data->parameters[fss_return_code_parameter_version].result == f_console_result_found) {
+    }
+    else if (data->parameters[fss_return_code_parameter_version].result == f_console_result_found) {
       fss_return_code_print_version(*data);
-    } else if (data->parameters[fss_return_code_parameter_is_error].result == f_console_result_found && data->remaining.used > 0) {
+    }
+    else if (data->parameters[fss_return_code_parameter_is_error].result == f_console_result_found && data->remaining.used > 0) {
       f_array_length counter = 0;
 
       f_status code = f_none;
@@ -167,17 +172,19 @@ extern "C" {
             fss_return_code_delete_data(data);
             return f_true;
           }
-        } else {
+        }
+        else {
           if (f_error_is_error(code)) {
             fss_return_code_delete_data(data);
             return f_true;
           }
         }
-      }
+      } // for
 
       fss_return_code_delete_data(data);
       return f_false;
-    } else if (data->parameters[fss_return_code_parameter_is_warning].result == f_console_result_found && data->remaining.used > 0) {
+    }
+    else if (data->parameters[fss_return_code_parameter_is_warning].result == f_console_result_found && data->remaining.used > 0) {
       f_array_length counter = 0;
 
       f_status code = f_none;
@@ -190,17 +197,19 @@ extern "C" {
             fss_return_code_delete_data(data);
             return f_true;
           }
-        } else {
+        }
+        else {
           if (f_error_is_warning(code)) {
             fss_return_code_delete_data(data);
             return f_true;
           }
         }
-      }
+      } // for
 
       fss_return_code_delete_data(data);
       return f_false;
-    } else if (data->parameters[fss_return_code_parameter_is_fine].result == f_console_result_found && data->remaining.used > 0) {
+    }
+    else if (data->parameters[fss_return_code_parameter_is_fine].result == f_console_result_found && data->remaining.used > 0) {
       f_array_length counter = 0;
 
       f_status code = f_none;
@@ -213,17 +222,19 @@ extern "C" {
             fss_return_code_delete_data(data);
             return f_true;
           }
-        } else {
+        }
+        else {
           if (f_error_is_fine(code)) {
             fss_return_code_delete_data(data);
             return f_true;
           }
         }
-      }
+      } // for
 
       fss_return_code_delete_data(data);
       return f_false;
-    } else if (data->remaining.used > 0 || data->process_pipe) {
+    }
+    else if (data->remaining.used > 0 || data->process_pipe) {
       f_array_length counter = 0;
 
       if (data->process_pipe) {
@@ -232,7 +243,7 @@ extern "C" {
 
       if (data->remaining.used > 0) {
         for (; counter < data->remaining.used; counter++) {
-          f_status code   = (f_status) atoll(argv[data->remaining.array[counter]]);
+          f_status code = (f_status) atoll(argv[data->remaining.array[counter]]);
           f_string string = 0;
 
           if (fll_fss_errors_to_string(code, &string) == f_none) {
@@ -240,7 +251,8 @@ extern "C" {
           }
         } // for
       }
-    } else {
+    }
+    else {
       fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an error code.");
       status = f_error_set_error(f_invalid_parameter);
     }
@@ -252,8 +264,8 @@ extern "C" {
 
 #ifndef _di_fss_return_code_delete_data_
   f_return_status fss_return_code_delete_data(fss_return_code_data *data) {
-    f_status        status = f_none;
-    f_string_length i      = 0;
+    f_status status = f_none;
+    f_string_length i = 0;
 
     while (i < fss_return_code_total_parameters) {
       f_delete_string_lengths(status, data->parameters[i].additional);
@@ -266,7 +278,6 @@ extern "C" {
     return f_none;
   }
 #endif // _di_fss_return_code_delete_data_
-
 
 #ifdef __cplusplus
 } // extern "C"

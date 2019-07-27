@@ -12,17 +12,17 @@
 #define _F_file_h
 
 // libc includes
-#include <string.h>
-#include <stdio.h>
 #include <dirent.h>
-#include <sys/types.h>
+#include <stdio.h>
+#include <string.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 // fll-0 includes
-#include <level_0/types.h>
 #include <level_0/errors.h>
 #include <level_0/strings.h>
+#include <level_0/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,20 +54,22 @@ extern "C" {
 
 #ifndef _di_f_file_
   typedef struct {
-    f_file_id    id;        // file descriptor
-    FILE *    file;      // the file data type
-    f_file_mode  mode;      // how the file is to be accessed (or is being accessed)
-    size_t     byte_size; // how many bytes to use on each read/write (for normal string handling this should be sizeof(f_string)
+    f_file_id   id;        // file descriptor
+    size_t      byte_size; // how many bytes to use on each read/write (for normal string handling this should be sizeof(f_string)
+    FILE *      file;      // the file data type
+    f_file_mode mode;      // how the file is to be accessed (or is being accessed)
   } f_file;
 
-  #define f_file_initialize { 0, 0, (f_file_mode) f_file_read_only, sizeof(char) }
+  #define f_file_initialize { 0, sizeof(char), 0, (f_file_mode) f_file_read_only }
 #endif // _di_f_file_
 
 #ifndef _di_f_file_position_
-  // buffer_start designate where to start writing to the buffer
-  // file_start is the positions where to begin reading the file
-  // total_elements is the total number of elements to read from the file into the buffer
-  // if total_elements is set to 0, then this means to buffer the entire file no matter how big it is (crazy?)
+  /**
+   * buffer_start designate where to start writing to the buffer.
+   * file_start is the positions where to begin reading the file.
+   * total_elements is the total number of elements to read from the file into the buffer.
+   * if total_elements is set to 0, then this means to buffer the entire file no matter how big it is (crazy?).
+   */
   typedef struct {
     f_string_length buffer_start;
     f_string_length file_start;
@@ -197,36 +199,52 @@ extern "C" {
 #endif // _di_f_macro_file_reset_position_
 
 #ifndef _di_f_file_open_
-  // open a particular file and save its stream
-  // filename = name of the file
+  /**
+   * open a particular file and save its stream.
+   * filename = name of the file.
+   */
   extern f_return_status f_file_open(f_file *file_information, const f_string filename);
 #endif // _di_f_file_open_
 
 #ifndef _di_f_file_close_
-  // close file
+  /**
+   * close file.
+   */
   extern f_return_status f_file_close(f_file *file_information);
 #endif // _di_f_file_close_
 
 #ifndef _di_f_file_flush_
-  // flush file
+  /**
+   * flush file.
+   */
   extern f_return_status f_file_flush(f_file *file_information);
 #endif // _di_f_file_flush_
 
 #ifndef _di_f_file_read_
-  // read a given amount of data from the buffer, will auto-seek to where
+  /**
+   * read a given amount of data from the buffer, will auto-seek to where.
+   */
   extern f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location);
 #endif // _di_f_file_read_
 
 #ifndef _di_f_file_read_fifo_
-  // read a given amount of data from the buffer, will not auto seek
+  /**
+   * read a given amount of data from the buffer, will not auto seek.
+   */
   extern f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer);
 #endif // _di_f_file_read_fifo_
 
 #ifndef _di_f_file_stat_
+  /**
+   * read file statistics.
+   */
   extern f_return_status f_file_stat(const f_string file, struct stat *file_stat);
 #endif // _di_f_file_stat_
 
 #ifndef _di_f_file_stat_by_id_
+  /**
+   * read file statistics by file id.
+   */
   extern f_return_status f_file_stat_by_id(const f_s_int file_id, struct stat *file_stat);
 #endif // _di_f_file_stat_by_id_
 

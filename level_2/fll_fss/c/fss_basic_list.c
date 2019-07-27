@@ -12,9 +12,9 @@ extern "C" {
       if (contents == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status        status       = f_none;
+    f_status status = f_none;
     f_string_length initial_used = objects->used;
-    f_bool          found_data   = f_false;
+    f_bool found_data = f_false;
 
     do {
       if (objects->used >= objects->size) {
@@ -59,7 +59,8 @@ extern "C" {
             }
 
             return f_none_on_stop;
-          } else {
+          }
+          else {
             if (input->start >= buffer->used) {
                return f_no_data_on_eos;
             }
@@ -70,10 +71,11 @@ extern "C" {
 
         if (status == fl_fss_found_object) {
           found_data = f_true;
-          status     = fl_fss_basic_list_content_read(buffer, input, &contents->array[contents->used]);
+          status = fl_fss_basic_list_content_read(buffer, input, &contents->array[contents->used]);
 
           break;
-        } else if (status == fl_fss_found_object_no_content) {
+        }
+        else if (status == fl_fss_found_object_no_content) {
           found_data = f_true;
 
           if (contents->array[contents->used].used >= contents->array[contents->used].size) {
@@ -95,19 +97,22 @@ extern "C" {
         objects->used++;
         contents->used++;
         return status;
-      } else if (status == f_no_data_on_eos || status == f_no_data_on_stop) {
+      }
+      else if (status == f_no_data_on_eos || status == f_no_data_on_stop) {
 
         // if at least some valid object was found, then return f_none equivalents
         if (objects->used > initial_used) {
-          if (status == f_no_data_on_eos)  return f_none_on_eos;
+          if (status == f_no_data_on_eos) return f_none_on_eos;
           if (status == f_no_data_on_stop) return f_none_on_stop;
         }
 
         return status;
-      } else if (status != fl_fss_found_object && status != fl_fss_found_content && status != fl_fss_found_no_content && status != fl_fss_found_object_no_content) {
+      }
+      else if (status != fl_fss_found_object && status != fl_fss_found_content && status != fl_fss_found_no_content && status != fl_fss_found_object_no_content) {
         return status;
+      }
       // when content is found, the input->start is incremented, if content is found at input->stop, then input->start will be > input.stop
-      } else if (input->start >= input->stop || input->start >= buffer->used) {
+      else if (input->start >= input->stop || input->start >= buffer->used) {
         if (status == fl_fss_found_object || status == fl_fss_found_content || status == fl_fss_found_no_content || status == fl_fss_found_object_no_content) {
           objects->used++;
           contents->used++;
@@ -135,8 +140,8 @@ extern "C" {
       if (contents.used > contents.size) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status          status   = 0;
-    f_array_length    current  = 0;
+    f_status status = 0;
+    f_array_length current = 0;
     f_string_location location = f_string_location_initialize;
 
     location.start = 0;
@@ -157,7 +162,8 @@ extern "C" {
         if (f_macro_test_for_no_data_errors(status)) {
           return status;
         }
-      } else {
+      }
+      else {
         if (buffer->used >= buffer->size) {
           f_resize_dynamic_string(status, (*buffer), buffer->size + f_fss_default_allocation_step);
           if (f_error_is_error(status)) return status;

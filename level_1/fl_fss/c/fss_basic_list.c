@@ -116,7 +116,8 @@ extern "C" {
         }
 
         continue;
-      } else if (buffer->string[input->start] == f_fss_basic_list_open) {
+      }
+      else if (buffer->string[input->start] == f_fss_basic_list_open) {
         f_string_length stop_point = input->start - 1;
 
         input->start++;
@@ -179,8 +180,8 @@ extern "C" {
     fl_macro_fss_allocate_content_if_necessary((*found), delimits);
     found->array[found->used].start = input->start;
 
-    f_string_length last_newline  = input->start;
-    f_bool          found_newline = f_false;
+    f_string_length last_newline = input->start;
+    f_bool found_newline = f_false;
 
     // identify where the content ends
     while (input->start < buffer->used && input->start <= input->stop) {
@@ -207,7 +208,8 @@ extern "C" {
 
         if (found_newline) {
           fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*input), (*found), delimits, f_none_on_eos, f_none_on_stop)
-        } else {
+        }
+        else {
           fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
         }
 
@@ -226,7 +228,8 @@ extern "C" {
 
           if (found_newline) {
             fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*input), (*found), delimits, f_none_on_eos, f_none_on_stop)
-          } else {
+          }
+          else {
             fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
           }
 
@@ -280,7 +283,8 @@ extern "C" {
         }
 
         continue;
-      } else if (buffer->string[input->start] == f_fss_basic_list_open) {
+      }
+      else if (buffer->string[input->start] == f_fss_basic_list_open) {
         input->start++;
 
         while (input->start < buffer->used && input->start <= input->stop) {
@@ -293,7 +297,8 @@ extern "C" {
 
         if (found_newline) {
           fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*input), (*found), delimits, f_none_on_eos, f_none_on_stop)
-        } else {
+        }
+        else {
           fl_macro_fss_content_return_on_overflow((*buffer), (*input), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
         }
 
@@ -347,16 +352,17 @@ extern "C" {
 
     f_status status = f_none;
 
-    f_string_location buffer_position   = f_string_location_initialize;
-    f_string_length   start_position    = f_string_initialize;
-    f_string_length   pre_allocate_size = 0;
-    f_string_length   start_buffer      = 0;
+    f_string_location buffer_position = f_string_location_initialize;
+    f_string_length start_position = f_string_initialize;
+    f_string_length pre_allocate_size = 0;
+    f_string_length start_buffer = 0;
 
     fl_macro_fss_skip_past_delimit_placeholders(object, (*input))
 
     if (input->start > input->stop) {
       return f_no_data_on_stop;
-    } else if (input->start >= object.used) {
+    }
+    else if (input->start >= object.used) {
       return f_no_data_on_eos;
     }
 
@@ -378,7 +384,8 @@ extern "C" {
       if (object.string[input->start] == f_fss_comment) {
         // comments are not allowed and this format has no way of "wrapping" a comment.
         return f_invalid_data;
-      } else if (isgraph(object.string[input->start])) {
+      }
+      else if (isgraph(object.string[input->start])) {
         break;
       }
 
@@ -453,7 +460,8 @@ extern "C" {
 
     if (input->start > input->stop) {
       return f_none_on_stop;
-    } else if (input->start >= object.used) {
+    }
+    else if (input->start >= object.used) {
       return f_none_on_eos;
     }
 
@@ -467,19 +475,20 @@ extern "C" {
       if (buffer == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status     = f_none;
-    f_bool   is_comment = f_false;
-    f_bool   has_graph  = f_false;
+    f_status status = f_none;
+    f_bool is_comment = f_false;
+    f_bool has_graph = f_false;
 
-    f_string_location buffer_position   = f_string_location_initialize;
-    f_string_length   start_position    = f_string_initialize;
-    f_string_length   pre_allocate_size = 0;
+    f_string_location buffer_position = f_string_location_initialize;
+    f_string_length start_position = f_string_initialize;
+    f_string_length pre_allocate_size = 0;
 
     fl_macro_fss_skip_past_delimit_placeholders(content, (*input))
 
     if (input->start > input->stop) {
       return f_no_data_on_stop;
-    } else if (input->start >= content.used) {
+    }
+    else if (input->start >= content.used) {
       return f_no_data_on_eos;
     }
 
@@ -511,7 +520,8 @@ extern "C" {
           if (content.string[input->start] == f_fss_delimit_placeholder) {
             input->start++;
             continue;
-          } else if (content.string[input->start] != f_fss_delimit_slash) {
+          }
+          else if (content.string[input->start] != f_fss_delimit_slash) {
             break;
           }
 
@@ -560,7 +570,8 @@ extern "C" {
           input->start = location + 1;
           continue;
         }
-      } else if (content.string[input->start] == f_fss_basic_list_open && !is_comment) {
+      }
+      else if (content.string[input->start] == f_fss_basic_list_open && !is_comment) {
         f_string_length location = input->start;
 
         has_graph = f_true;
@@ -593,12 +604,15 @@ extern "C" {
         buffer_position.stop++;
         input->start = location + 1;
         continue;
-      } else if (content.string[input->start] == f_fss_comment && !has_graph) {
+      }
+      else if (content.string[input->start] == f_fss_comment && !has_graph) {
         is_comment = f_true;
-      } else if (content.string[input->start] == f_eol) {
+      }
+      else if (content.string[input->start] == f_eol) {
         has_graph = f_false;
         is_comment = f_false;
-      } else if (isgraph(content.string[input->start])) {
+      }
+      else if (isgraph(content.string[input->start])) {
         has_graph = f_true;
       }
 
@@ -615,7 +629,8 @@ extern "C" {
 
     if (input->start > input->stop) {
       return f_none_on_stop;
-    } else if (input->start >= content.used) {
+    }
+    else if (input->start >= content.used) {
       return f_none_on_eos;
     }
 

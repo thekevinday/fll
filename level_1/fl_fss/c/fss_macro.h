@@ -70,7 +70,8 @@ extern "C" {
       \
       found.stop = buffer.used - 1; \
       return eos_status; \
-    } else if (input.start > input.stop) { \
+    } \
+    else if (input.start > input.stop) { \
       f_status allocation_status = f_none; \
       f_delete_string_lengths(allocation_status, delimits); \
       \
@@ -93,7 +94,8 @@ extern "C" {
       \
       found.stop = buffer.used - 1; \
       return eos_status; \
-    } else if (input.start > input.stop) { \
+    } \
+    else if (input.start > input.stop) { \
       f_status allocation_status = f_none; \
       f_string_length i = 0; \
       \
@@ -116,7 +118,8 @@ extern "C" {
       \
       found.array[found.used].stop = buffer.used - 1; \
       return eos_status; \
-    } else if (input.start > input.stop) { \
+    } \
+    else if (input.start > input.stop) { \
       f_status allocation_status = f_none; \
       f_delete_string_lengths(allocation_status, delimits); \
       \
@@ -139,7 +142,8 @@ extern "C" {
       \
       found.array[found.used].stop = buffer.used - 1; \
       return eos_status; \
-    } else if (input.start > input.stop) { \
+    } \
+    else if (input.start > input.stop) { \
       f_status allocation_status = f_none; \
       f_string_length i = 0; \
       \
@@ -163,7 +167,8 @@ extern "C" {
       input.start = set_stop; \
       found.array[found.used].stop = set_stop; \
       return eos_status; \
-    } else if (input.start > input.stop) { \
+    } \
+    else if (input.start > input.stop) { \
       f_status allocation_status = f_none; \
       f_delete_string_lengths(allocation_status, delimits); \
       \
@@ -188,7 +193,8 @@ extern "C" {
       input.start = set_stop; \
       found.array[found.used].stop = set_stop; \
       return eos_status; \
-    } else if (input.start > input.stop) { \
+    } \
+    else if (input.start > input.stop) { \
       f_status allocation_status = f_none; \
       f_string_length i = 0; \
       \

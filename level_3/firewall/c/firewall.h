@@ -12,31 +12,31 @@
 #ifndef _firewall_h
 
 // libc includes
+#include <dirent.h>
 #include <stdio.h>
 #include <string.h>
-#include <dirent.h>
 
 // fll-0 includes
+#include <level_0/console.h>
+#include <level_0/file.h>
+#include <level_0/print.h>
+#include <level_0/strings.h>
 #include <level_0/types.h>
 #include <level_0/types_array.h>
-#include <level_0/strings.h>
-#include <level_0/file.h>
-#include <level_0/console.h>
-#include <level_0/print.h>
 
 // fll-1 includes
 #include <level_1/colors.h>
 #include <level_1/console.h>
+#include <level_1/directory.h>
 #include <level_1/file.h>
 #include <level_1/strings.h>
-#include <level_1/directory.h>
 
 // fll-2 includes
+#include <level_2/colors.h>
 #include <level_2/execute.h>
 #include <level_2/fss_basic.h>
 #include <level_2/fss_basic_list.h>
 #include <level_2/fss_extended.h>
-#include <level_2/colors.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -50,7 +50,7 @@ extern "C" {
 #endif // _di_firewall_version_
 
 #ifndef _di_firewall_name_
-  #define firewall_name "firewall"
+  #define firewall_name      "firewall"
   #define firewall_name_long "Kevux Firewall Manager"
 #endif // _di_firewall_name_
 
@@ -280,7 +280,7 @@ extern "C" {
     f_console_parameter parameters[firewall_total_parameters];
 
     f_dynamic_strings chains;
-    f_string_lengths  remaining;
+    f_string_lengths remaining;
     f_dynamic_strings devices;
 
     fl_color_context context;
@@ -297,18 +297,30 @@ extern "C" {
 #endif // _di_firewall_data_
 
 #ifndef _di_firewall_print_version_
+  /**
+   * Print version.
+   */
   extern f_return_status firewall_print_version(const firewall_data data);
 #endif // _di_firewall_print_version_
 
 #ifndef _di_firewall_print_help_
+  /**
+   * Print help.
+   */
   extern f_return_status firewall_print_help(const firewall_data data);
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
+  /**
+   * Main.
+   */
   extern f_return_status firewall_main(const f_s_int argc, const f_string argv[], firewall_data *data);
 #endif // _di_firewall_main_
 
 #ifndef _di_firewall_delete_data_
+  /**
+   * Deallocate data.
+   */
   extern f_return_status firewall_delete_data(firewall_data *data);
 #endif // _di_firewall_delete_data_
 

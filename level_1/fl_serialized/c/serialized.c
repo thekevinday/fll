@@ -22,7 +22,8 @@ extern "C" {
     if (serialized->used == 0) {
       memcpy(serialized->string + serialized->used, value.string, sizeof(char) * value.used);
       serialized->used += value.used;
-    } else {
+    }
+    else {
       memcpy(serialized->string + serialized->used, f_serialized_simple_splitter_string, sizeof(char));
       memcpy(serialized->string + serialized->used + 1, value.string, sizeof(char) * value.used);
       serialized->used += value.used + 1;
@@ -53,11 +54,12 @@ extern "C" {
 
         if (start == i) {
           locations->array[locations->used].start = 1;
-          locations->array[locations->used].stop  = 0;
+          locations->array[locations->used].stop = 0;
           locations->used++;
-        } else {
+        }
+        else {
           locations->array[locations->used].start = start;
-          locations->array[locations->used].stop  = i - 1;
+          locations->array[locations->used].stop = i - 1;
           locations->used++;
         }
 
@@ -83,13 +85,13 @@ extern "C" {
     f_array_length current = 0;
 
     location->start = 1;
-    location->stop  = 0;
+    location->stop = 0;
 
     while (i < serialized.used) {
       if (current == index) {
         if (location->start > location->stop) {
           location->start = i;
-          location->stop  = i;
+          location->stop = i;
         }
 
         if (serialized.string[i] == f_serialized_simple_splitter) {

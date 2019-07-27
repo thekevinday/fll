@@ -12,7 +12,7 @@ extern "C" {
 
     f_status status = f_none;
     f_console_id result = 0;
-    f_bool found  = f_false;
+    f_bool found = f_false;
 
     f_array_length location = 1; // parameter 0 represents the program name so skip it
     f_string_length sub_location = 0;
@@ -31,16 +31,19 @@ extern "C" {
 
       // process the current parameter
       if (result == f_console_short_enable || result == f_console_short_disable) {
-        increments   = 1;
+        increments = 1;
         sub_location = 1;
-      } else if (result == f_console_long_enable || result == f_console_long_disable) {
-        increments   = string_length;
+      }
+      else if (result == f_console_long_enable || result == f_console_long_disable) {
+        increments = string_length;
         sub_location = 2;
-      } else if (result == f_console_extra_enable || result == f_console_extra_disable) {
-        increments   = string_length;
+      }
+      else if (result == f_console_extra_enable || result == f_console_extra_disable) {
+        increments = string_length;
         sub_location = 3;
-      } else {
-        increments   = 1;
+      }
+      else {
+        increments = 1;
         sub_location = 0;
       }
 
@@ -92,13 +95,14 @@ extern "C" {
                 }
               }
             }
-          } // for()
+          } // for
 
           sub_location += increments;
         } // while
 
       // now handle the inverse commands
-      } else if (argv[location][0] == f_console_symbol_disable) {
+      }
+      else if (argv[location][0] == f_console_symbol_disable) {
         while (sub_location < string_length) {
           for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++) {
             if (parameters[parameter_counter].type == f_console_type_inverse) {
@@ -146,11 +150,12 @@ extern "C" {
                 }
               }
             }
-          } // for()
+          } // for
 
           sub_location += increments;
         } // while
-      } else {
+      }
+      else {
         // use found to determine if the remaining parameter should be populated
         found = f_false;
 
@@ -180,20 +185,20 @@ extern "C" {
               }
             }
           }
-        } // for()
+        } // for
 
         if (!found) {
           if (extra_initiator.used > 0) {
             f_status allocation_status = f_none;
 
             if (parameters[extra_initiator.array[0]].additional.used >= parameters[extra_initiator.array[0]].additional.size) {
-                f_resize_string_lengths(allocation_status, parameters[extra_initiator.array[0]].additional, parameters[extra_initiator.array[0]].additional.size + f_console_default_allocation_step);
-              }
+              f_resize_string_lengths(allocation_status, parameters[extra_initiator.array[0]].additional, parameters[extra_initiator.array[0]].additional.size + f_console_default_allocation_step);
+            }
 
-              if (f_error_is_error(allocation_status)) {
-                f_delete_string_lengths(status, extra_initiator);
-                return f_error_set_error(allocation_status);
-              }
+            if (f_error_is_error(allocation_status)) {
+              f_delete_string_lengths(status, extra_initiator);
+              return f_error_set_error(allocation_status);
+            }
 
             parameters[extra_initiator.array[0]].result = f_console_result_additional;
             parameters[extra_initiator.array[0]].additional.array[parameters[extra_initiator.array[0]].additional.used] = location;
@@ -205,8 +210,9 @@ extern "C" {
 
             for (; i < extra_initiator.used; i++) {
               extra_initiator.array[i] = extra_initiator.array[i + 1];
-            }
-          } else {
+            } // for
+          }
+          else {
             if (remaining->used >= remaining->size) {
               f_status allocation_status = f_none;
 
@@ -229,7 +235,8 @@ extern "C" {
 
     if (extra_initiator.used > 0) {
       status = f_no_data;
-    } else {
+    }
+    else {
       status = f_none;
     }
 

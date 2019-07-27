@@ -111,7 +111,8 @@ extern "C" {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
         fss_basic_list_write_delete_data(data);
         return status2;
-      } else {
+      }
+      else {
         fll_colors_load_context(&data->context, data->parameters[fss_basic_list_write_parameter_light].result == f_console_result_found);
       }
     }
@@ -124,11 +125,14 @@ extern "C" {
         // TODO: there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
-      } else if (f_macro_test_for_allocation_errors(status)) {
+      }
+      else if (f_macro_test_for_allocation_errors(status)) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
-      } else if (status == f_invalid_parameter) {
+      }
+      else if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
-      } else {
+      }
+      else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", f_error_set_error(status));
       }
 
@@ -139,17 +143,19 @@ extern "C" {
     // execute parameter results
     if (data->parameters[fss_basic_list_write_parameter_help].result == f_console_result_found) {
       fss_basic_list_write_print_help(*data);
-    } else if (data->parameters[fss_basic_list_write_parameter_version].result == f_console_result_found) {
+    }
+    else if (data->parameters[fss_basic_list_write_parameter_version].result == f_console_result_found) {
       fss_basic_list_write_print_version(*data);
-    } else {
+    }
+    else {
       f_array_length counter = 0;
-      f_bool         object  = (data->parameters[fss_basic_list_write_parameter_object].result == f_console_result_found);
+      f_bool object = (data->parameters[fss_basic_list_write_parameter_object].result == f_console_result_found);
 
-      f_dynamic_string  buffer   = f_dynamic_string_initialize;
+      f_dynamic_string buffer = f_dynamic_string_initialize;
       f_string_location location = f_string_location_initialize;
 
       if (data->process_pipe) {
-        f_file           file  = f_file_initialize;
+        f_file file  = f_file_initialize;
         f_dynamic_string input = f_dynamic_string_initialize;
 
         file.file = f_pipe;
@@ -161,13 +167,17 @@ extern "C" {
 
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
-          } else if (status == f_file_not_found) {
+          }
+          else if (status == f_file_not_found) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", "-");
-          } else if (status == f_file_open_error) {
+          }
+          else if (status == f_file_open_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", "-");
-          } else if (status == f_file_descriptor_error) {
+          }
+          else if (status == f_file_descriptor_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
-          } else {
+          }
+          else {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_error_set_error(status));
           }
 
@@ -185,7 +195,8 @@ extern "C" {
           if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
             return f_error_set_error(status);
           }
-        } else {
+        }
+        else {
           status = fl_fss_basic_list_content_write(input, &location, &buffer);
 
           if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
@@ -194,7 +205,8 @@ extern "C" {
         }
 
         f_delete_dynamic_string(status, input);
-      } else if (data->parameters[fss_basic_list_write_parameter_string].result == f_console_result_additional) {
+      }
+      else if (data->parameters[fss_basic_list_write_parameter_string].result == f_console_result_additional) {
         f_dynamic_string input = f_dynamic_string_initialize;
 
         input.string = argv[data->parameters[fss_basic_list_write_parameter_string].additional.array[0]];
@@ -209,7 +221,8 @@ extern "C" {
           if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
             return f_error_set_error(status);
           }
-        } else {
+        }
+        else {
           status = fl_fss_basic_list_content_write(input, &location, &buffer);
 
           if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
@@ -233,13 +246,17 @@ extern "C" {
 
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
-          } else if (status == f_file_not_found) {
+          }
+          else if (status == f_file_not_found) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
-          } else if (status == f_file_open_error) {
+          }
+          else if (status == f_file_open_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
-          } else if (status == f_file_descriptor_error) {
+          }
+          else if (status == f_file_descriptor_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
-          } else {
+          }
+          else {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_error_set_error(status));
           }
 
@@ -255,16 +272,19 @@ extern "C" {
 
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");
-          } else if (status == f_file_write_error) {
+          }
+          else if (status == f_file_write_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
-          } else {
+          }
+          else {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", f_error_set_error(status));
           }
 
           fss_basic_list_write_delete_data(data);
           return f_error_set_error(status);
         }
-      } else {
+      }
+      else {
         f_print_dynamic_string(f_standard_output, buffer);
       }
     }
@@ -290,7 +310,6 @@ extern "C" {
     return f_none;
   }
 #endif // _di_fss_basic_list_write_delete_data_
-
 
 #ifdef __cplusplus
 } // extern "C"

@@ -306,7 +306,8 @@ extern "C" {
   f_return_status fl_errors_is_error(const f_status error) {
     if (fl_errors_is_fine(error) == f_true) {
       return f_false;
-    } else if (fl_errors_is_warning(error) == f_true) {
+    }
+    else if (fl_errors_is_warning(error) == f_true) {
       return f_false;
     }
 

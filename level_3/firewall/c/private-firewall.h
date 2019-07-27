@@ -24,12 +24,12 @@ extern "C" {
     f_array_length device;
 
     f_dynamic_string buffer;
-    f_array_length   chain;
-    f_array_lengths  chain_ids;
-    f_fss_objects    chain_objects;
-    f_fss_contents   chain_contents;
-    f_fss_objects    rule_objects;
-    f_fss_contents   rule_contents;
+    f_array_length chain;
+    f_array_lengths chain_ids;
+    f_fss_objects chain_objects;
+    f_fss_contents chain_contents;
+    f_fss_objects rule_objects;
+    f_fss_contents rule_contents;
   } firewall_local_data;
 
   #define firewall_local_data_initialize \
@@ -110,26 +110,44 @@ extern "C" {
 #endif // _di_firewall_macro_private_
 
 #ifndef _di_firewall_perform_commands_
+  /**
+   * Perform commands.
+   */
   f_return_status firewall_perform_commands(const firewall_local_data local, const firewall_data data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_perform_commands_
 
 #ifndef _di_firewall_create_custom_chains_
+  /**
+   * Create custom chains.
+   */
   f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_create_custom_chains_
 
 #ifndef _di_firewall_delete_chains_
+  /**
+   * Deallocate chains.
+   */
   f_return_status firewall_delete_chains(const firewall_data data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_delete_chains_
 
 #ifndef _di_firewall_buffer_rules_
+  /**
+   * Buffer firewall rules.
+   */
   f_return_status firewall_buffer_rules(const f_string filename, const f_bool optional, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_buffer_rules_
 
 #ifndef _di_firewall_process_rules_
+  /**
+   * Process buffered rules.
+   */
   f_return_status firewall_process_rules(f_string_location *input, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_process_rules_
 
 #ifndef _di_firewall_delete_local_data_
+  /**
+   * Delete allocated data.
+   */
   f_return_status firewall_delete_local_data(firewall_local_data *local) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_delete_local_data_
 

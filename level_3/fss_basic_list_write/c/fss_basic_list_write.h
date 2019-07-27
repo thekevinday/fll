@@ -11,23 +11,23 @@
 
 // libc includes
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 // fll-0 includes
-#include <level_0/types.h>
-#include <level_0/strings.h>
 #include <level_0/console.h>
-#include <level_0/print.h>
 #include <level_0/pipe.h>
+#include <level_0/print.h>
+#include <level_0/strings.h>
+#include <level_0/types.h>
 
 // fll-1 includes
 #include <level_1/colors.h>
 #include <level_1/console.h>
+#include <level_1/errors.h>
 #include <level_1/file.h>
 #include <level_1/fss_basic_list.h>
 #include <level_1/strings.h>
-#include <level_1/errors.h>
 
 // fll-2 includes
 #include <level_2/colors.h>
@@ -45,7 +45,7 @@ extern "C" {
 #endif // _di_fss_basic_list_write_version_
 
 #ifndef _di_fss_basic_list_write_name_
-  #define fss_basic_list_write_name "fss_basic_list_write"
+  #define fss_basic_list_write_name      "fss_basic_list_write"
   #define fss_basic_list_write_name_long "FSS Basic List Write"
 #endif // _di_fss_basic_list_write_name_
 
@@ -88,7 +88,7 @@ extern "C" {
     f_console_parameter parameters[fss_basic_list_write_total_parameters];
 
     f_string_lengths remaining;
-    f_bool           process_pipe;
+    f_bool process_pipe;
 
     fl_color_context context;
   } fss_basic_list_write_data;
@@ -103,18 +103,30 @@ extern "C" {
 #endif // _di_fss_basic_list_write_data_
 
 #ifndef _di_fss_basic_list_write_print_version_
+  /**
+   * Print version.
+   */
   extern f_return_status fss_basic_list_write_print_version(const fss_basic_list_write_data data);
 #endif // _di_fss_basic_list_write_print_version_
 
 #ifndef _di_fss_basic_list_write_print_help_
+  /**
+   * Print help.
+   */
   extern f_return_status fss_basic_list_write_print_help(const fss_basic_list_write_data data);
 #endif // _di_fss_basic_list_write_print_help_
 
 #ifndef _di_fss_basic_list_write_main_
+  /**
+   * Main.
+   */
   extern f_return_status fss_basic_list_write_main(const f_array_length argc, const f_string argv[], fss_basic_list_write_data *data);
 #endif // _di_fss_basic_list_write_main_
 
 #ifndef _di_fss_basic_list_write_delete_data_
+  /**
+   * Deallocate data.
+   */
   extern f_return_status fss_basic_list_write_delete_data(fss_basic_list_write_data *data);
 #endif // _di_fss_basic_list_write_delete_data_
 

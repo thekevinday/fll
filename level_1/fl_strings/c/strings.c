@@ -121,7 +121,7 @@ extern "C" {
       while (i2 < stop2 && string2[i2] == f_eos) i2++;
 
       if (string1[i1] != string2[i2]) return f_not_equal_to;
-    } // for()
+    } // for
 
     while (i1 < stop1) {
       if (string1[i1] != f_eos) return f_not_equal_to;
@@ -155,7 +155,7 @@ extern "C" {
       while (i2 < stop2 && string2.string[i2] == f_eos) i2++;
 
       if (string1.string[i1] != string2.string[i2]) return f_not_equal_to;
-    } // for()
+    } // for
 
     while (i1 < stop1) {
       if (string1.string[i1] != f_eos) return f_not_equal_to;
@@ -195,7 +195,7 @@ extern "C" {
       while (i2 < stop2 && string2.string[i2] == f_eos) i2++;
 
       if (string1.string[i1] != string2.string[i2]) return f_not_equal_to;
-    } // for()
+    } // for
 
     while (i1 < stop1) {
       if (string1.string[i1] != f_eos) return f_not_equal_to;

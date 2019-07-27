@@ -16,11 +16,11 @@
 #include <string.h>
 
 // fll-0 includes
-#include <level_0/types.h>
-#include <level_0/errors.h>
-#include <level_0/strings.h>
-#include <level_0/file.h>
 #include <level_0/colors.h>
+#include <level_0/errors.h>
+#include <level_0/file.h>
+#include <level_0/strings.h>
+#include <level_0/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,7 +28,7 @@ extern "C" {
 
 #ifndef _di_fl_color_context_
   typedef struct {
-    f_colors         color_list;
+    f_colors color_list;
     f_colors_format  color_format;
     f_dynamic_string reset;
     f_dynamic_string warning;
@@ -78,7 +78,9 @@ extern "C" {
 #endif // _di_fl_color_context_
 
 #ifndef _di_fl_set_color_
-  // this will accept some file or standard io, and push color information to that file or standard io
+  /**
+   * this will accept some file or standard io, and push color information to that file or standard io.
+   */
   extern f_return_status fl_set_color(FILE *file, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5);
 
   #define fl_set_color1(file, format, color1)                                 fl_set_color(file, format, color1, 0, 0, 0, 0)
@@ -90,7 +92,9 @@ extern "C" {
 
 
 #ifndef _di_fl_save_color_
-  // this will place all appropriate color effects into a string, handling any necessary allocations
+  /**
+   * this will place all appropriate color effects into a string, handling any necessary allocations.
+   */
   extern f_return_status fl_save_color(f_dynamic_string *buffer, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5);
 
   #define fl_save_color1(buffer, format, color1)                                 fl_save_color(buffer, format, color1, 0, 0, 0, 0)
@@ -101,20 +105,26 @@ extern "C" {
 #endif // _di_fl_save_color_
 
 #ifndef _di_fl_print_color_
-  // this will wrap the passed text in the passed start and end colors
-  // this will work like fprintf with the variable arguments
-  // if the colors strings have nothing used in them, then this will only print the string
+  /**
+   * this will wrap the passed text in the passed start and end colors.
+   * this will work like fprintf with the variable arguments.
+   * if the colors strings have nothing used in them, then this will only print the string.
+   */
   extern f_return_status fl_print_color(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...);
 #endif // _di_fl_print_color_
 
 #ifndef _di_fl_print_color_line_
-  // this is identical to fl_print_color, but also prints a trailing newline
+  /**
+   * this is identical to fl_print_color, but also prints a trailing newline.
+   */
   extern f_return_status fl_print_color_line(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...);
 #endif // _di_fl_print_color_line_
 
 #ifndef _di_fl_print_color_code_
-  // this will print a single color code so that all print commands following this command will print in color (or not..)
-  // do not forget to print the color reset when done
+  /**
+   * this will print a single color code so that all print commands following this command will print in color (or not..).
+   * do not forget to print the color reset when done.
+   */
   extern f_return_status fl_print_color_code(FILE *file, const f_dynamic_string color);
 #endif // _di_fl_print_color_code_
 

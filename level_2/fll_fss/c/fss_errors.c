@@ -66,7 +66,8 @@ extern "C" {
   f_return_status fll_fss_errors_is_error(const f_status error) {
     if (fll_fss_errors_is_fine(error) == f_true) {
       return f_false;
-    } else if (fll_fss_errors_is_warning(error) == f_true) {
+    }
+    else if (fll_fss_errors_is_warning(error) == f_true) {
       return f_false;
     }
 

@@ -14,27 +14,33 @@
 #include <string.h>
 
 // fll includes
-#include <level_0/types.h>
 #include <level_0/errors.h>
 #include <level_0/memory.h>
+#include <level_0/types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// BUG: for whatever reason strnlen is considered not included with -Wall, even with __USE_GNU defined
-//      therefore this gets defined here
+/**
+ * BUG: for whatever reason strnlen is considered not included with -Wall, even with __USE_GNU defined.
+ *      therefore this gets defined here.
+ */
 #ifdef _en_BUG_strnlen_
   extern size_t strnlen (const char *string, size_t max_length);
 #endif // _en_BUG_strnlen_
 
-// Define the end of string character
+/**
+ * Define the end of string character.
+ */
 #ifndef _di_f_have_eos_
   #define f_eos '\0'
 #endif // _di_f_have_eos_
 
-// Define the end of line character
-// FLL forbids '\r' and '\r\n' as end of line characters, \r will be silently ignored
+/**
+ * Define the end of line character.
+ * FLL forbids '\r' and '\r\n' as end of line characters, \r will be silently ignored.
+ */
 #ifndef _di_f_have_eol_
   #define f_eol '\n'
 #endif // _di_f_have_eol_
@@ -67,7 +73,9 @@ extern "C" {
   #define f_array_length_long_printf  string_format_long_integer
 #endif // _di_f_array_length_printf_
 
-// define the basic string type
+/**
+ * define the basic string type.
+ */
 #ifndef _di_f_have_string_
   typedef char *f_string;
 
@@ -101,11 +109,15 @@ extern "C" {
     status = f_adjust((void **) & length, sizeof(f_string_length), old_length, new_length)
 #endif // _di_f_string_length_
 
+/**
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
 #ifndef _di_f_string_lengths_
   typedef struct {
     f_string_length *array;
-    f_array_length  size;  // total amount of allocated space
-    f_array_length  used;  // total number of allocated spaces used
+    f_array_length  size;
+    f_array_length  used;
   } f_string_lengths;
 
   #define f_string_lengths_initialize { 0, 0, 0 }
@@ -126,8 +138,10 @@ extern "C" {
     f_adjust_structure(status, lengths, f_string_length, new_length)
 #endif // _di_f_string_lengths_
 
-// designates a start and stop position that represents a sub-string inside of some parent string
-// use this to avoid resizing, restructuring, and reallocating the parent string to separate the sub-string
+/**
+ * designates a start and stop position that represents a sub-string inside of some parent string.
+ * use this to avoid resizing, restructuring, and reallocating the parent string to separate the sub-string.
+ */
 #ifndef _di_f_string_location_
   typedef struct {
     f_string_length start;
@@ -147,12 +161,17 @@ extern "C" {
     status = f_adjust((void **) & string_location, sizeof(f_string_location), old_length, new_length)
 #endif // _di_f_string_location_
 
-// an array of string locations
+/**
+ * an array of string locations.
+ *
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
 #ifndef _di_f_string_locations_
   typedef struct {
-    f_string_location *array; // the array of string locations
-    f_array_length    size;   // total amount of allocated space
-    f_array_length    used;   // total number of allocated spaces used
+    f_string_location *array;
+    f_array_length    size;
+    f_array_length    used;
   } f_string_locations;
 
   #define f_string_locations_initialize {0, 0, 0}
@@ -176,13 +195,18 @@ extern "C" {
     f_adjust_structure(status, locations, f_string_location, new_length)
 #endif // _di_f_string_locations_
 
-// a string that supports contains a size attribute to handle dynamic allocations and deallocations
-// save the string size along with the string, so that strlen(..) commands can be avoided as much as possible
+/**
+ * a string that supports contains a size attribute to handle dynamic allocations and deallocations.
+ * save the string size along with the string, so that strlen(..) commands can be avoided as much as possible.
+ *
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
 #ifndef _di_f_dynamic_string_
   typedef struct {
-    f_string        string; // the string itself
-    f_string_length size;   // total amount of allocated space
-    f_string_length used;   // total number of allocated spaces used
+    f_string        string;
+    f_string_length size;
+    f_string_length used;
   } f_dynamic_string;
 
   #define f_dynamic_string_initialize { f_string_initialize, 0, 0 }
@@ -229,12 +253,17 @@ extern "C" {
     }
 #endif // _di_f_dynamic_string_
 
-// an array of dynamic strings
+/**
+ * an array of dynamic strings.
+ *
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
 #ifndef _di_f_dynamic_strings_
   typedef struct {
-    f_dynamic_string *array; // the array of dynamic strings
-    f_string_length  size;   // total amount of allocated space
-    f_string_length  used;   // total number of allocated spaces used
+    f_dynamic_string *array;
+    f_string_length  size;
+    f_string_length  used;
   } f_dynamic_strings;
 
   #define f_dynamic_strings_initialize { 0, 0, 0 }

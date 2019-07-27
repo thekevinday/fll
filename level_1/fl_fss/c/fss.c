@@ -28,7 +28,7 @@ extern "C" {
                         f_string_location location = f_string_location_initialize;
 
                         location.start = i - 4;
-                        location.stop  = i;
+                        location.stop = i;
 
                         // 1: A possibly valid header type was found, now convert it into its proper format and save the header type
                         f_string_to_hexdigit(buffer.string, &header->type, location);
@@ -39,7 +39,8 @@ extern "C" {
                           header->length = i;
 
                           return f_none;
-                        } else {
+                        }
+                        else {
                           // if "# fss-0000" is there, regardless of whats next, we can guess this to be of fss-0000, even if its fss-00001 (this is a guess afterall)
                           i++;
                           header->length = i;
@@ -55,7 +56,8 @@ extern "C" {
           }
         }
       // people can miss spaces, so lets accept in an attempt to interpret the file anyway, but return values at this point are to be flagged as invalid
-      } else if        (buffer.string[i] == f_fss_type_header_part2) { i++;
+      }
+      else if          (buffer.string[i] == f_fss_type_header_part2) { i++;
         if             (buffer.string[i] == f_fss_type_header_part3) { i++;
           if           (buffer.string[i] == f_fss_type_header_part4) { i++;
             if         (buffer.string[i] == f_fss_type_header_part5) { i++;
@@ -67,7 +69,7 @@ extern "C" {
                       f_string_location location = f_string_location_initialize;
 
                       location.start = i - 4;
-                      location.stop  = i;
+                      location.stop = i;
 
                       f_string_to_hexdigit(buffer.string, &header->type, location);
 
@@ -102,9 +104,9 @@ extern "C" {
 
     clearerr(file_information->file);
 
-    f_status          status   = f_none;
-    f_dynamic_string  buffer   = f_dynamic_string_initialize;
-    f_file_position   location = f_file_position_initialize;
+    f_status         status = f_none;
+    f_dynamic_string buffer = f_dynamic_string_initialize;
+    f_file_position  location = f_file_position_initialize;
 
     // make sure we are in the proper location in the file
     {

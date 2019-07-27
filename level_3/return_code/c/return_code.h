@@ -9,21 +9,21 @@
 
 // libc includes
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 // fll-0 includes
-#include <level_0/types.h>
-#include <level_0/strings.h>
 #include <level_0/console.h>
-#include <level_0/print.h>
 #include <level_0/pipe.h>
+#include <level_0/print.h>
+#include <level_0/strings.h>
+#include <level_0/types.h>
 
 // fll-1 includes
 #include <level_1/colors.h>
 #include <level_1/console.h>
-#include <level_1/strings.h>
 #include <level_1/errors.h>
+#include <level_1/strings.h>
 
 // fll-2 includes
 #include <level_2/colors.h>
@@ -40,7 +40,7 @@ extern "C" {
 #endif // _di_return_code_version_
 
 #ifndef _di_return_code_name_
-  #define return_code_name "return_code"
+  #define return_code_name      "return_code"
   #define return_code_name_long "Error Code"
 #endif // _di_return_code_name_
 
@@ -87,7 +87,7 @@ extern "C" {
     f_console_parameter parameters[return_code_total_parameters];
 
     f_string_lengths remaining;
-    f_bool           process_pipe;
+    f_bool process_pipe;
 
     fl_color_context context;
   } return_code_data;
@@ -102,18 +102,30 @@ extern "C" {
 #endif // _di_return_code_data_
 
 #ifndef _di_return_code_print_version_
+  /**
+   * Print version.
+   */
   extern f_return_status return_code_print_version(const return_code_data data);
 #endif // _di_return_code_print_version_
 
 #ifndef _di_return_code_print_help_
+  /**
+   * Print help.
+   */
   extern f_return_status return_code_print_help(const return_code_data data);
 #endif // _di_return_code_print_help_
 
 #ifndef _di_return_code_main_
+  /**
+   * Main.
+   */
   extern f_return_status return_code_main(const f_array_length argc, const f_string argv[], return_code_data *data);
 #endif // _di_return_code_main_
 
 #ifndef _di_return_code_delete_data_
+  /**
+   * Deallocate data.
+   */
   extern f_return_status return_code_delete_data(return_code_data *data);
 #endif // _di_return_code_delete_data_
 

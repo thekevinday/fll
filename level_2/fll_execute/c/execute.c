@@ -16,7 +16,7 @@ extern "C" {
     // create a string array that is compatible with execv() calls.
     f_string fixed_arguments[arguments.used + 2];
 
-    f_string last_slash   = f_string_initialize;
+    f_string last_slash = f_string_initialize;
     f_string program_name = f_string_initialize;
 
     f_string_length name_size = 0;
@@ -37,7 +37,8 @@ extern "C" {
 
         memcpy(program_name, last_slash + 1, sizeof(f_string_length) * name_size);
         memset(program_name, name_size, 0);
-      } else {
+      }
+      else {
         name_size = 0;
       }
     }
@@ -66,7 +67,7 @@ extern "C" {
 
       memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(char) * arguments.array[i].used);
       fixed_arguments[i + 1][arguments.array[i].used] = f_eos;
-    }
+    } // for
 
     // insert the required array terminated
     fixed_arguments[arguments.used + 2] = 0;
@@ -83,7 +84,7 @@ extern "C" {
 
       for (f_string_length i = 0; i < arguments.used; i++) {
         f_delete_string(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
-      }
+      } // for
 
       return f_error_set_error(f_fork_failed);
     }
@@ -106,7 +107,7 @@ extern "C" {
 
       for (f_string_length i = 0; i < arguments.used; i++) {
         f_delete_string(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
-      }
+      } // for
     }
 
     if (*results != 0) return f_error_set_error(f_failure);
@@ -146,7 +147,7 @@ extern "C" {
 
       memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(char) * arguments.array[i].used);
       fixed_arguments[i + 1][arguments.array[i].used] = f_eos;
-    }
+    } // for
 
     // insert the required array terminated
     fixed_arguments[arguments.used + 2] = 0;
@@ -161,7 +162,7 @@ extern "C" {
 
       for (f_string_length i = 0; i < arguments.used; i++) {
         f_delete_string(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
-      }
+      } // for
 
       return f_error_set_error(f_fork_failed);
     }

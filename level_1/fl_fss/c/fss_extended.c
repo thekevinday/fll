@@ -55,11 +55,13 @@ extern "C" {
         if (buffer->string[input->start] == f_fss_delimit_placeholder) {
           input->start++;
           continue;
-        } else if (!isgraph(buffer->string[input->start])) {
+        }
+        else if (!isgraph(buffer->string[input->start])) {
           found->stop = input->start - 1;
           input->start++;
           return fl_fss_found_object;
-        } else if (buffer->string[input->start] != f_fss_delimit_slash) {
+        }
+        else if (buffer->string[input->start] != f_fss_delimit_slash) {
           break;
         }
 
@@ -85,7 +87,8 @@ extern "C" {
         delimits.used++;
         input->start++;
       }
-    } else if (buffer->string[input->start] == f_fss_delimit_single_quote || buffer->string[input->start] == f_fss_delimit_double_quote) {
+    }
+    else if (buffer->string[input->start] == f_fss_delimit_single_quote || buffer->string[input->start] == f_fss_delimit_double_quote) {
       quoted = buffer->string[input->start];
       input->start++;
       found->start = input->start;
@@ -111,7 +114,8 @@ extern "C" {
         input->start++;
         return fl_fss_found_object;
       }
-    } else {
+    }
+    else {
       while (input->start <= input->stop && input->start < buffer->used) {
         if (buffer->string[input->start] == f_fss_delimit_slash) {
           f_string_length first_slash = input->start;
@@ -122,7 +126,8 @@ extern "C" {
             if (buffer->string[input->start] == f_fss_delimit_placeholder) {
               input->start++;
               continue;
-            } else if (buffer->string[input->start] != f_fss_delimit_slash) {
+            }
+            else if (buffer->string[input->start] != f_fss_delimit_slash) {
               break;
             }
 
@@ -176,7 +181,8 @@ extern "C" {
 
                 input->start++;
                 return fl_fss_found_no_object;
-              } else if (buffer->string[input->start] == f_eol) {
+              }
+              else if (buffer->string[input->start] == f_eol) {
                 fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
                 found->stop = location - 1;
@@ -190,7 +196,8 @@ extern "C" {
               found->stop = location - 1;
               input->start++;
               return fl_fss_found_object;
-            } else {
+            }
+            else {
               if (delimits.used + (slash_count / 2) >= delimits.size) {
                 f_status allocation_status = f_none;
 
@@ -218,7 +225,8 @@ extern "C" {
               input->start = location;
             }
           }
-        } else if (buffer->string[input->start] == quoted) {
+        }
+        else if (buffer->string[input->start] == quoted) {
           found->stop = input->start - 1;
           input->start++;
 
@@ -228,12 +236,14 @@ extern "C" {
 
               input->start++;
               return fl_fss_found_object_no_content;
-            } else if (isspace(buffer->string[input->start])) {
+            }
+            else if (isspace(buffer->string[input->start])) {
               fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
               input->start++;
               return fl_fss_found_object;
-            } else if (buffer->string[input->start] != f_fss_delimit_placeholder) {
+            }
+            else if (buffer->string[input->start] != f_fss_delimit_placeholder) {
               while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
                 input->start++;
               } // while
@@ -248,7 +258,8 @@ extern "C" {
           } // while
 
           fl_macro_fss_object_delimited_return_on_overflow((*buffer), (*input), (*found), delimits, f_none_on_eos, f_none_on_stop)
-        } else if (buffer->string[input->start] == f_eol) {
+        }
+        else if (buffer->string[input->start] == f_eol) {
           input->start++;
           return fl_fss_found_no_object;
         }
@@ -295,14 +306,14 @@ extern "C" {
       return fl_fss_found_no_content;
     }
 
-    f_status   status      = f_none;
-    f_bool     has_delimit = f_false;
-    char quoted      = f_eos;
+    f_status status = f_none;
+    f_bool has_delimit = f_false;
+    char quoted = f_eos;
 
     f_bool continue_main_loop = f_false;
 
-    f_string_length location     = 0;
-    f_array_length  already_used = found->used;
+    f_string_length location = 0;
+    f_array_length already_used = found->used;
 
     while (input->start <= input->stop && input->start < buffer->used) {
       quoted = f_eos;
@@ -332,7 +343,8 @@ extern "C" {
           if (buffer->string[input->start] == f_fss_delimit_placeholder) {
             input->start++;
             continue;
-          } else if (!isgraph(buffer->string[input->start])) {
+          }
+          else if (!isgraph(buffer->string[input->start])) {
             found->array[found->used].stop = input->start - 1;
             input->start++;
             found->used++;
@@ -345,7 +357,8 @@ extern "C" {
 
             continue_main_loop = f_true;
             break;
-          } else if (buffer->string[input->start] != f_fss_delimit_slash) {
+          }
+          else if (buffer->string[input->start] != f_fss_delimit_slash) {
             break;
           }
 
@@ -376,7 +389,8 @@ extern "C" {
           delimits.used++;
           input->start++;
         }
-      } else if (buffer->string[input->start] == f_fss_delimit_single_quote || buffer->string[input->start] == f_fss_delimit_double_quote) {
+      }
+      else if (buffer->string[input->start] == f_fss_delimit_single_quote || buffer->string[input->start] == f_fss_delimit_double_quote) {
         quoted = buffer->string[input->start];
         input->start++;
         found->array[found->used].start = input->start;
@@ -403,7 +417,8 @@ extern "C" {
           input->start++;
           continue;
         }
-      } else {
+      }
+      else {
         while (input->start <= input->stop && input->start < buffer->used) {
           if (buffer->string[input->start] == f_fss_delimit_slash) {
             f_string_length first_slash = input->start;
@@ -414,7 +429,8 @@ extern "C" {
               if (buffer->string[input->start] == f_fss_delimit_placeholder) {
                 input->start++;
                 continue;
-              } else if (buffer->string[input->start] != f_fss_delimit_slash) {
+              }
+              else if (buffer->string[input->start] != f_fss_delimit_slash) {
                 break;
               }
 
@@ -467,7 +483,8 @@ extern "C" {
 
                   input->start++;
                   return f_error_is_warning(f_unterminated_group);
-                } else if (buffer->string[input->start] == f_eol) {
+                }
+                else if (buffer->string[input->start] == f_eol) {
                   fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
                   found->array[found->used].stop = location - 1;
@@ -481,7 +498,8 @@ extern "C" {
                 input->start++;
                 found->used++;
                 continue;
-              } else {
+              }
+              else {
                 if (delimits.used + (slash_count / 2) >= delimits.size) {
                   f_status allocation_status = f_none;
 
@@ -509,7 +527,8 @@ extern "C" {
                 input->start = location;
               }
             }
-          } else if (buffer->string[input->start] == quoted) {
+          }
+          else if (buffer->string[input->start] == quoted) {
             found->array[found->used].stop = input->start - 1;
             input->start++;
 
@@ -521,12 +540,14 @@ extern "C" {
                 found->used++;
 
                 return fl_fss_found_content;
-              } else if (isspace(buffer->string[input->start])) {
+              }
+              else if (isspace(buffer->string[input->start])) {
                 input->start++;
                 found->used++;
                 continue_main_loop = f_true;
                 break;
-              } else if (buffer->string[input->start] != f_fss_delimit_placeholder) {
+              }
+              else if (buffer->string[input->start] != f_fss_delimit_placeholder) {
                 while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
                   input->start++;
                 } // while
@@ -545,12 +566,14 @@ extern "C" {
             }
 
             fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*input), (*found), delimits, f_none_on_eos, f_none_on_stop)
-          } else if (buffer->string[input->start] == f_eol) {
+          }
+          else if (buffer->string[input->start] == f_eol) {
 
             if (found->used == already_used) {
               input->start++;
               return fl_fss_found_no_content;
-            } else {
+            }
+            else {
               fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
               found->array[found->used].stop = input->start - 1;
@@ -603,17 +626,18 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    f_bool   quoted = f_false;
+    f_bool quoted = f_false;
 
-    f_string_location buffer_position   = f_string_location_initialize;
-    f_string_length   start_position    = f_string_initialize;
-    f_string_length   pre_allocate_size = 0;
+    f_string_location buffer_position = f_string_location_initialize;
+    f_string_length start_position = f_string_initialize;
+    f_string_length pre_allocate_size = 0;
 
     fl_macro_fss_skip_past_delimit_placeholders(object, (*input))
 
     if (input->start > input->stop) {
       return f_no_data_on_stop;
-    } else if (input->start >= object.used) {
+    }
+    else if (input->start >= object.used) {
       return f_no_data_on_eos;
     }
 
@@ -659,7 +683,8 @@ extern "C" {
         buffer_position.stop += 2;
         input->start++;
       }
-    } else if (object.string[input->start] == f_fss_delimit_single_quote || object.string[input->start] == f_fss_delimit_double_quote) {
+    }
+    else if (object.string[input->start] == f_fss_delimit_single_quote || object.string[input->start] == f_fss_delimit_double_quote) {
       pre_allocate_size++;
 
       if (pre_allocate_size > buffer->size) {
@@ -672,7 +697,8 @@ extern "C" {
       buffer->string[buffer_position.stop + 1] = object.string[input->start];
       buffer_position.stop += 2;
       input->start++;
-    } else if (object.string[input->start] == f_fss_comment) {
+    }
+    else if (object.string[input->start] == f_fss_comment) {
       quoted = f_true;
     }
 
@@ -680,7 +706,8 @@ extern "C" {
       if (object.string[input->start] == f_fss_delimit_placeholder) {
         input->start++;
         continue;
-      } else if (object.string[input->start] == f_eol) {
+      }
+      else if (object.string[input->start] == f_eol) {
         if (quoted) {
           buffer->string[buffer_position.stop] = f_fss_delimit_double_quote;
           buffer_position.stop++;
@@ -690,7 +717,8 @@ extern "C" {
         buffer->used = buffer_position.stop + 1;
 
         return f_none_on_eol;
-      } else if (isspace(object.string[input->start]) || quoted) {
+      }
+      else if (isspace(object.string[input->start]) || quoted) {
         f_string_length first_space = input->start;
 
         if (!quoted) {
@@ -726,7 +754,8 @@ extern "C" {
           if (object.string[input->start] == f_fss_delimit_placeholder) {
             input->start++;
             continue;
-          } else if (object.string[input->start] == f_fss_delimit_double_quote) {
+          }
+          else if (object.string[input->start] == f_fss_delimit_double_quote) {
             pre_allocate_size++;
 
             if (pre_allocate_size > buffer->size) {
@@ -737,7 +766,8 @@ extern "C" {
 
             buffer->string[buffer_position.stop] = f_fss_delimit_slash;
             buffer_position.stop++;
-          } else if (object.string[input->start] == f_fss_delimit_slash) {
+          }
+          else if (object.string[input->start] == f_fss_delimit_slash) {
             f_string_length slash_count = 0;
 
             do {
@@ -762,7 +792,8 @@ extern "C" {
                 }
 
                 break;
-              } else if (object.string[input->start] != f_fss_delimit_slash) {
+              }
+              else if (object.string[input->start] != f_fss_delimit_slash) {
                 slash_count = 0;
                 break;
               }
@@ -775,7 +806,8 @@ extern "C" {
             } // while
 
             continue;
-          } else if (object.string[input->start] == f_eol) {
+          }
+          else if (object.string[input->start] == f_eol) {
             buffer->string[buffer_position.stop] = f_fss_delimit_double_quote;
             buffer_position.stop++;
 
@@ -808,7 +840,8 @@ extern "C" {
 
     if (input->start > input->stop) {
       return f_none_on_stop;
-    } else if (input->start >= object.used) {
+    }
+    else if (input->start >= object.used) {
       return f_none_on_eos;
     }
 
@@ -822,18 +855,18 @@ extern "C" {
       if (buffer == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status   status = f_none;
+    f_status status = f_none;
     char quoted = f_eos;
 
-    f_string_location buffer_position   = f_string_location_initialize;
-    f_string_length   start_position    = 0;
-    f_string_length   pre_allocate_size = 0;
+    f_string_location buffer_position = f_string_location_initialize;
+    f_string_length start_position = 0;
+    f_string_length pre_allocate_size = 0;
 
     // add an additional 1 to ensure that there is room for the terminating newline.
     pre_allocate_size = buffer->used + (content.used) + 1 + f_fss_default_allocation_step;
 
     buffer_position.start = buffer->used;
-    buffer_position.stop  = buffer->used;
+    buffer_position.stop = buffer->used;
 
     if (pre_allocate_size > buffer->size) {
       f_resize_dynamic_string(status, (*buffer), pre_allocate_size);
@@ -845,7 +878,8 @@ extern "C" {
 
     if (input->start > input->stop) {
       return f_no_data_on_stop;
-    } else if (input->start >= content.used) {
+    }
+    else if (input->start >= content.used) {
       return f_no_data_on_eos;
     }
 
@@ -876,7 +910,8 @@ extern "C" {
         buffer->string[buffer_position.stop] = ' ';
         buffer->used = buffer_position.stop + 1;
         return f_none_on_stop;
-      } else if (input->start >= content.used) {
+      }
+      else if (input->start >= content.used) {
         buffer->string[buffer_position.stop] = ' ';
         buffer->used = buffer_position.stop + 1;
         return f_none_on_eos;
@@ -896,7 +931,8 @@ extern "C" {
         buffer_position.stop += 2;
         input->start++;
       }
-    } else if (content.string[input->start] == f_fss_delimit_single_quote || content.string[input->start] == f_fss_delimit_double_quote) {
+    }
+    else if (content.string[input->start] == f_fss_delimit_single_quote || content.string[input->start] == f_fss_delimit_double_quote) {
       pre_allocate_size++;
 
       if (pre_allocate_size > buffer->size) {
@@ -988,11 +1024,13 @@ extern "C" {
             buffer->string[buffer_position.stop] = f_fss_delimit_slash;
             buffer->string[buffer_position.stop + 1] = quoted;
             buffer_position.stop += 2;
-          } else {
+          }
+          else {
             buffer->string[buffer_position.stop] = content.string[input->start];
             buffer_position.stop++;
           }
-        } else if (content.string[input->start] == quoted) {
+        }
+        else if (content.string[input->start] == quoted) {
           pre_allocate_size++;
 
           if (pre_allocate_size > buffer->size) {
@@ -1004,12 +1042,14 @@ extern "C" {
           buffer->string[buffer_position.stop] = f_fss_delimit_slash;
           buffer->string[buffer_position.stop + 1] = quoted;
           buffer_position.stop += 2;
-        } else if (content.string[input->start] == f_eol) {
+        }
+        else if (content.string[input->start] == f_eol) {
           buffer->string[buffer_position.stop] = quoted;
           buffer->string[buffer_position.stop + 1] = ' ';
           buffer->used = buffer_position.stop + 2;
           return f_none_on_eol;
-        } else if (content.string[input->start] != f_fss_delimit_placeholder) {
+        }
+        else if (content.string[input->start] != f_fss_delimit_placeholder) {
           buffer->string[buffer_position.stop] = content.string[input->start];
           buffer_position.stop++;
         }
@@ -1026,7 +1066,8 @@ extern "C" {
 
     if (input->start > input->stop) {
       return f_none_on_stop;
-    } else if (input->start >= content.used) {
+    }
+    else if (input->start >= content.used) {
       return f_none_on_eos;
     }
 

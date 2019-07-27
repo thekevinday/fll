@@ -11,11 +11,11 @@
 #define _FLL_fss_basic_h
 
 // fll-0 includes
-#include <level_0/types.h>
 #include <level_0/errors.h>
-#include <level_0/strings.h>
-#include <level_0/memory.h>
 #include <level_0/fss.h>
+#include <level_0/memory.h>
+#include <level_0/strings.h>
+#include <level_0/types.h>
 
 // fll-1 includes
 #include <level_1/fss.h>
@@ -28,12 +28,16 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_basic_read_
-  // read an fss-0000 object and then content
+  /**
+   * read an fss-0000 object and then content.
+   */
   extern f_return_status fll_fss_basic_read(f_dynamic_string *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents);
 #endif // _di_fll_fss_basic_read_
 
 #ifndef _di_fll_fss_basic_write_
-  // write an fss-0000 object and then content
+  /**
+   * write an fss-0000 object and then content.
+   */
   extern f_return_status fll_fss_basic_write(const f_dynamic_string object, const f_dynamic_strings contents, f_dynamic_string *buffer);
 #endif // _di_fll_fss_basic_write_
 

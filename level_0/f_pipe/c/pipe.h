@@ -15,8 +15,8 @@
 #include <sys/stat.h>
 
 // fll includes
-#include <level_0/types.h>
 #include <level_0/errors.h>
+#include <level_0/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,7 +27,9 @@ extern "C" {
 #endif // _di_f_pipe_
 
 #ifndef _di_f_pipe_exists_
-  // returns f_true if the standard input contains piped data.
+  /**
+   * returns f_true if the standard input contains piped data.
+   */
   extern f_return_status f_pipe_exists();
 #endif // _di_f_pipe_exists_
 

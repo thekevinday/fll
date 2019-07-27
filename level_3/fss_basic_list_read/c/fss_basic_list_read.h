@@ -12,30 +12,30 @@
 #ifndef _fss_basic_list_read_h
 
 // libc includes
-#include <stdio.h>
-#include <string.h>
 #include <dirent.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // fll-0 includes
-#include <level_0/types.h>
-#include <level_0/strings.h>
-#include <level_0/file.h>
 #include <level_0/console.h>
-#include <level_0/print.h>
+#include <level_0/file.h>
 #include <level_0/pipe.h>
+#include <level_0/print.h>
+#include <level_0/strings.h>
+#include <level_0/types.h>
 
 // fll-1 includes
 #include <level_1/colors.h>
 #include <level_1/console.h>
+#include <level_1/directory.h>
 #include <level_1/file.h>
 #include <level_1/strings.h>
-#include <level_1/directory.h>
 
 // fll-2 includes
-#include <level_2/fss_basic_list.h>
 #include <level_2/colors.h>
 #include <level_2/execute.h>
+#include <level_2/fss_basic_list.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,7 +49,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_version_
 
 #ifndef _di_fss_basic_list_read_name_
-  #define fss_basic_list_read_name "fss_basic_list_read"
+  #define fss_basic_list_read_name      "fss_basic_list_read"
   #define fss_basic_list_read_name_long "FSS Basic List Read"
 #endif // _di_fss_basic_list_read_name_
 
@@ -103,12 +103,12 @@ extern "C" {
   typedef struct {
     f_console_parameter parameters[fss_basic_list_read_total_parameters];
 
-    f_dynamic_string  buffer;
-    f_fss_objects     objects;
-    f_fss_contents    contents;
-    f_file_position   file_position;
-    f_string_lengths  remaining;
-    f_bool            process_pipe;
+    f_dynamic_string buffer;
+    f_fss_objects objects;
+    f_fss_contents contents;
+    f_file_position file_position;
+    f_string_lengths remaining;
+    f_bool process_pipe;
 
     fl_color_context context;
   } fss_basic_list_read_data;
@@ -127,18 +127,30 @@ extern "C" {
 #endif // _di_fss_basic_list_read_data_
 
 #ifndef _di_fss_basic_list_read_print_version_
+  /**
+   * Print version.
+   */
   extern f_return_status fss_basic_list_read_print_version(const fss_basic_list_read_data data);
 #endif // _di_fss_basic_list_read_print_version_
 
 #ifndef _di_fss_basic_list_read_print_help_
+  /**
+   * Print help.
+   */
   extern f_return_status fss_basic_list_read_print_help(const fss_basic_list_read_data data);
 #endif // _di_fss_basic_list_read_print_help_
 
 #ifndef _di_fss_basic_list_read_main_
+  /**
+   * Main
+   */
   extern f_return_status fss_basic_list_read_main(const f_array_length argc, const f_string argv[], fss_basic_list_read_data *data);
 #endif // _di_fss_basic_list_read_main_
 
 #ifndef _di_fss_basic_list_read_delete_data_
+  /**
+   * Deallocate data.
+   */
   extern f_return_status fss_basic_list_read_delete_data(fss_basic_list_read_data *data);
 #endif // _di_fss_basic_list_read_delete_data_
 

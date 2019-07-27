@@ -18,7 +18,8 @@ extern "C" {
 
       if (!environment || strncmp(environment, "linux", 6) == 0) {
         data->color_list = f_colors_linux;
-      } else {
+      }
+      else {
         data->color_list = f_colors_xterminal;
       }
     }
@@ -33,7 +34,8 @@ extern "C" {
       if (f_error_is_not_error(status)) status = fl_save_color1(&data->notable,   data->color_format, data->color_list.bold);
       if (f_error_is_not_error(status)) status = fl_save_color1(&data->important, data->color_format, data->color_list.blue);
       if (f_error_is_not_error(status)) status = fl_save_color1(&data->standout,  data->color_format, data->color_list.purple);
-    } else {
+    }
+    else {
       status = fl_save_color1(&data->reset, data->color_format, data->color_list.reset);
 
       if (f_error_is_not_error(status)) status = fl_save_color1(&data->warning,   data->color_format, data->color_list.yellow);

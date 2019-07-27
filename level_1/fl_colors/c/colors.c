@@ -61,13 +61,15 @@ extern "C" {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.end, f_color_max_size);
-    } else if (color3 == 0) {
+    }
+    else if (color3 == 0) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.medium, f_color_max_size);
       strncat(buffer->string, color2, f_color_max_size);
       strncat(buffer->string, format.end, f_color_max_size);
-    } else if (color4 == 0) {
+    }
+    else if (color4 == 0) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.medium, f_color_max_size);
@@ -75,7 +77,8 @@ extern "C" {
       strncat(buffer->string, format.medium, f_color_max_size);
       strncat(buffer->string, color3, f_color_max_size);
       strncat(buffer->string, format.end, f_color_max_size);
-    } else if (color5 == 0) {
+    }
+    else if (color5 == 0) {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.medium, f_color_max_size);
@@ -85,7 +88,8 @@ extern "C" {
       strncat(buffer->string, format.medium, f_color_max_size);
       strncat(buffer->string, color4, f_color_max_size);
       strncat(buffer->string, format.end, f_color_max_size);
-    } else {
+    }
+    else {
       strncat(buffer->string, format.begin, f_color_max_size);
       strncat(buffer->string, color1, f_color_max_size);
       strncat(buffer->string, format.medium, f_color_max_size);

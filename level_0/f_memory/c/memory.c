@@ -86,7 +86,8 @@ extern "C" {
       // allocate new space
       if (new_length > 0) {
         new_pointer = realloc(*pointer, type * new_length);
-      } else {
+      }
+      else {
         free(*pointer);
 
         // it has been deallocated, so reset the pointer
@@ -108,13 +109,15 @@ extern "C" {
 
         return f_none;
       }
-    } else if (new_length > 0) {
+    }
+    else if (new_length > 0) {
       *pointer = calloc(type, new_length);
 
       if (*pointer) {
         return f_none;
       }
-    } else {
+    }
+    else {
       return f_none;
     }
 
@@ -148,7 +151,8 @@ extern "C" {
       // allocate new space
       if (new_length > 0) {
         new_pointer = realloc(*pointer, type * new_length);
-      } else {
+      }
+      else {
         free(*pointer);
 
         // it has been deallocated, so reset the pointer
@@ -170,13 +174,15 @@ extern "C" {
 
         return f_none;
       }
-    } else if (new_length > 0) {
+    }
+    else if (new_length > 0) {
       *pointer = calloc(type, new_length);
 
       if (*pointer) {
         return f_none;
       }
-    } else {
+    }
+    else {
       return f_none;
     }
 

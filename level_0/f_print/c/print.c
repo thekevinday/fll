@@ -10,7 +10,9 @@ extern "C" {
 
     for (; i < length; i++) {
       if (string[i] != f_eos) {
-        if (fputc(string[i], output) == 0) return f_error_set_error(f_output_error);
+        if (fputc(string[i], output) == 0) {
+          return f_error_set_error(f_output_error);
+        }
       }
     }
 
@@ -28,7 +30,9 @@ extern "C" {
 
     for (; i < buffer.used; i++) {
       if (buffer.string[i] != f_eos) {
-        if (fputc(buffer.string[i], output) == 0) return f_error_set_error(f_output_error);
+        if (fputc(buffer.string[i], output) == 0) {
+          return f_error_set_error(f_output_error);
+        }
       }
     }
 
@@ -50,7 +54,9 @@ extern "C" {
 
     for (; i <= location.stop; i++) {
       if (buffer.string[i] != f_eos) {
-        if (fputc(buffer.string[i], output) == 0) return f_error_set_error(f_output_error);
+        if (fputc(buffer.string[i], output) == 0) {
+          return f_error_set_error(f_output_error);
+        }
       }
     }
 

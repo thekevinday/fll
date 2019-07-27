@@ -12,8 +12,8 @@
 #define _F_colors_h
 
 // fll-0 includes
-#include <level_0/types.h>
 #include <level_0/strings.h>
+#include <level_0/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,58 +31,74 @@ extern "C" {
   #define f_color_xterminal 1
 #endif // _di_f_color_types_
 
-// the purpose behind these data types are not to dynamically allocate data
-// instead, they are intended to only point to existing data, so these should neither be allocated nor deallocated
+/**
+ * The purpose behind these data types are not to dynamically allocate data.
+ * instead, they are intended to only point to existing data, so these should neither be allocated nor deallocated.
+ */
 #ifndef _di_f_color_control_
   typedef struct f_color_control {
-    const char *bold;
-    const char *underline;
     const char *blink;
-    const char *reverse;
+    const char *bold;
     const char *conceal;
+    const char *reverse;
+    const char *underline;
   } f_color_control;
 
-  #define f_color_control_names_initialize { "bold", "underline", "blink", "reverse", "conceal" }
+  #define f_color_control_names_initialize { "blink", "bold", "conceal", "reverse", "underline" }
 #endif // _di_f_color_control_
 
+/**
+ * strong represents emphasis.
+ */
 #ifndef _di_f_color_standard_io_
   typedef struct {
+    const char *error;
     const char *message;
     const char *warning;
-    const char *error;
-    const char *strong_message; // an emphasized message
-    const char *strong_warning; // an emphasized warning
-    const char *strong_error;   // an emphasized error
+    const char *strong_error;
+    const char *strong_message;
+    const char *strong_warning;
   } f_color_standard_io;
 
-  #define f_color_standard_io_names_initialize { "message", "warning", "error", "strong_message", "strong_warning", "strong_error" }
+  #define f_color_standard_io_names_initialize { "error", "message", "warning", "strong_error", "strong_message", "strong_warning" }
 #endif // _di_f_color_standard_io_
 
+/**
+ * alert = some form of alert such as 'Not Implemented Yet'.
+ * command = color for a specific command, such as '-h'.
+ * comment = not quite important text, but still should be seen.
+ * emphasize = make sure something stands out to emphasize it.
+ * standard = the normal text color.
+ * syntax = color for syntax, such as '[' and '<'.
+ * title = name printed.
+ * topic = topic such as 'Usage'.
+ * version = version printed.
+ */
 #ifndef _di_f_color_help_
   typedef struct {
-    const char *title;     // name printed
-    const char *version;   // version printed
-    const char *topic;     // topic such as 'Usage'
-    const char *command;   // color for a specific command, such as '-h'
-    const char *syntax;    // color for syntax, such as '[' and '<'
-    const char *alert;     // some form of alert such as 'Not Implemented Yet'
-    const char *comment;   // not quite important text, but still should be seen
-    const char *standard;  // the normal text color
-    const char *emphasize; // make sure something stands out to emphasize it
+    const char *alert;
+    const char *command;
+    const char *comment;
+    const char *emphasize;
+    const char *standard;
+    const char *syntax;
+    const char *title;
+    const char *topic;
+    const char *version;
   } f_color_help;
 
-  #define f_color_help_names_initialize { "title", "version", "topic", "command", "syntax", "alert", "comment", "standard", "emphasize" }
+  #define f_color_help_names_initialize { "alert", "command", "comment", "emphasize", "standard", "syntax", "title", "topic", "version" }
 #endif // _di_f_color_help_
 
 #ifndef _di_f_colors_format_
   typedef struct {
     const char *begin;
-    const char *medium;
     const char *end;
+    const char *medium;
   } f_colors_format;
 
-  #define f_colors_format_initialize_linux     { "\033[", ";", "m" }
-  #define f_colors_format_initialize_xterminal { "\033[", ";", "m" }
+  #define f_colors_format_initialize_linux     { "\033[", "m", ";" }
+  #define f_colors_format_initialize_xterminal { "\033[", "m", ";" }
 #endif // _di_f_colors_format_
 
 #ifndef _di_f_colors_
@@ -134,8 +150,9 @@ extern "C" {
 #ifndef _di_f_default_colors_
   static const f_colors_format f_colors_format_linux     = f_colors_format_initialize_linux;
   static const f_colors_format f_colors_format_xterminal = f_colors_format_initialize_xterminal;
-  static const f_colors        f_colors_linux            = f_colors_initialize_linux;
-  static const f_colors        f_colors_xterminal        = f_colors_initialize_xterminal;
+
+  static const f_colors f_colors_linux     = f_colors_initialize_linux;
+  static const f_colors f_colors_xterminal = f_colors_initialize_xterminal;
 #endif // _di_f_default_colors_
 
 #ifdef __cplusplus

@@ -22,28 +22,34 @@ extern "C" {
         if (input[1] == f_console_symbol_enable) {
           if (length > 2) {
             if (input[2] == f_console_symbol_enable) {
-              if (length > 3) {
-                     *result = f_console_extra_enable;
-              } else *result = f_console_empty_extra_enable;
-            } else   *result = f_console_long_enable;
-          } else     *result = f_console_empty_long_enable;
-        } else       *result = f_console_short_enable;
-      } else         *result = f_console_empty_short_enable;
-    } else if (input[0] == f_console_symbol_disable) {
+              if (length > 3) *result = f_console_extra_enable;
+              else *result = f_console_empty_extra_enable;
+            }
+            else *result = f_console_long_enable;
+          }
+          else *result = f_console_empty_long_enable;
+        }
+        else *result = f_console_short_enable;
+      }
+      else *result = f_console_empty_short_enable;
+    }
+    else if (input[0] == f_console_symbol_disable) {
       if (length > 1) {
         if (input[1] == f_console_symbol_disable) {
           if (length > 2) {
             if (input[2] == f_console_symbol_disable) {
-              if (length > 3) {
-                     *result = f_console_extra_disable;
-              } else *result = f_console_empty_extra_disable;
-            } else   *result = f_console_long_disable;
-          } else     *result = f_console_empty_long_disable;
-        } else       *result = f_console_short_disable;
-      } else         *result = f_console_empty_short_disable;
-    } else {
-      *result = f_console_none;
+              if (length > 3) *result = f_console_extra_disable;
+              else *result = f_console_empty_extra_disable;
+            }
+            else *result = f_console_long_disable;
+          }
+          else *result = f_console_empty_long_disable;
+        }
+        else *result = f_console_short_disable;
+      }
+      else *result = f_console_empty_short_disable;
     }
+    else *result = f_console_none;
 
     return f_none;
   }

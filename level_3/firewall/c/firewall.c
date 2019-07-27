@@ -117,7 +117,7 @@ extern "C" {
 
 #ifndef _di_firewall_main_
   f_return_status firewall_main(const f_s_int argc, const f_string argv[], firewall_data *data) {
-    f_status status  = f_none;
+    f_status status = f_none;
     f_status status2 = f_none;
 
     status = fl_process_parameters(argc, argv, data->parameters, firewall_total_parameters, &data->remaining);
@@ -128,7 +128,8 @@ extern "C" {
 
       if (status2 == f_none) {
         fll_colors_load_context(&data->context, data->parameters[firewall_parameter_light].result == f_console_result_found);
-      } else {
+      }
+      else {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
         firewall_delete_data(data);
         return status2;
@@ -143,11 +144,14 @@ extern "C" {
         // TODO: there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
-      } else if (f_macro_test_for_allocation_errors(status)) {
+      }
+      else if (f_macro_test_for_allocation_errors(status)) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
-      } else if (f_error_set_fine(status) == f_invalid_parameter) {
+      }
+      else if (f_error_set_fine(status) == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");
-      } else {
+      }
+      else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_error_set_error(status));
       }
 
@@ -158,15 +162,17 @@ extern "C" {
     // execute parameter results
     if (data->parameters[firewall_parameter_help].result == f_console_result_found) {
       firewall_print_help(*data);
-    } else if (data->parameters[firewall_parameter_version].result == f_console_result_found) {
+    }
+    else if (data->parameters[firewall_parameter_version].result == f_console_result_found) {
       firewall_print_version(*data);
-    } else {
+    }
+    else {
       // now determine which command was placed first
-      f_bool  found_command = f_false;
-      f_u_int command       = 0;
+      f_bool found_command = f_false;
+      f_u_int command = 0;
 
       if (data->parameters[firewall_parameter_command_start].result == f_console_result_found) {
-        command       = firewall_parameter_command_start;
+        command = firewall_parameter_command_start;
         found_command = f_true;
       }
 
@@ -175,8 +181,9 @@ extern "C" {
           if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_stop].additional.array[0]) {
             command = firewall_parameter_command_stop;
           }
-        } else {
-          command       = firewall_parameter_command_stop;
+        }
+        else {
+          command = firewall_parameter_command_stop;
           found_command = f_true;
         }
       }
@@ -186,8 +193,9 @@ extern "C" {
           if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_restart].additional.array[0]) {
             command = firewall_parameter_command_restart;
           }
-        } else {
-          command       = firewall_parameter_command_restart;
+        }
+        else {
+          command = firewall_parameter_command_restart;
           found_command = f_true;
         }
       }
@@ -197,8 +205,9 @@ extern "C" {
           if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_lock].additional.array[0]) {
             command = firewall_parameter_command_lock;
           }
-        } else {
-          command       = firewall_parameter_command_lock;
+        }
+        else {
+          command = firewall_parameter_command_lock;
           found_command = f_true;
         }
       }
@@ -208,8 +217,9 @@ extern "C" {
           if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_show].additional.array[0]) {
             command = firewall_parameter_command_show;
           }
-        } else {
-          command       = firewall_parameter_command_show;
+        }
+        else {
+          command = firewall_parameter_command_show;
           found_command = f_true;
         }
       }
@@ -221,17 +231,17 @@ extern "C" {
 
         if (command == firewall_parameter_command_show) {
           // Warning: these are hardcoded print commands (I am not certain how I am going to implement external 'show' rules as the default-firewall setting file is the wrong place to put this)
-          f_bool show_nat    = f_true;
+          f_bool show_nat = f_true;
           f_bool show_mangle = f_true;
-          f_bool show_ports  = f_true;
+          f_bool show_ports = f_true;
 
           f_dynamic_strings arguments = f_dynamic_strings_initialize;
-          f_s_int           results   = 0;
+          f_s_int results = 0;
 
           if (data->remaining.used > 0) {
-            show_nat    = f_false;
+            show_nat = f_false;
             show_mangle = f_false;
-            show_ports  = f_false;
+            show_ports = f_false;
 
             f_string_length counter = 0;
 
@@ -240,13 +250,16 @@ extern "C" {
                 if (strncmp("mangle",  argv[data->remaining.array[counter]], 7) != 0) {
                   if (strncmp("ports",  argv[data->remaining.array[counter]], 6) != 0) {
                     fl_print_color_line(f_standard_warning, data->context.warning, data->context.reset, "WARNING: '%s' is not a valid show option", argv[data->remaining.array[counter]]);
-                  } else {
+                  }
+                  else {
                     show_ports = f_true;
                   }
-                } else {
+                }
+                else {
                   show_mangle = f_true;
                 }
-              } else {
+              }
+              else {
                 show_nat = f_true;
               }
             } // for
@@ -346,7 +359,8 @@ extern "C" {
 
             if (f_macro_test_for_allocation_errors(status)) {
               fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
-            } else {
+            }
+            else {
               fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_tool_iptables);
               fprintf(f_standard_error, "  ");
 
@@ -357,7 +371,7 @@ extern "C" {
               fprintf(f_standard_error, "%s ", firewall_tool_iptables);
               for (; i < arguments.used; i++) {
                 fprintf(f_standard_error, "%s ", arguments.array[i].string);
-              }
+              } // for
 
               fl_print_color_code(f_standard_error, data->context.reset);
               fprintf(f_standard_error, "\n");
@@ -395,9 +409,11 @@ extern "C" {
 
           if (f_macro_test_for_allocation_errors(status)) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
-          } else if (status == f_no_data) {
+          }
+          else if (status == f_no_data) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: could not find any network devices");
-          } else if (status == f_failure) {
+          }
+          else if (status == f_failure) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: failed to read the device directory '%s'", network_devices);
           }
 
@@ -418,11 +434,11 @@ extern "C" {
 
               for (; i < data->devices.used; i++) {
                 data->devices.array[i] = data->devices.array[i+1];
-              }
+              } // for
 
               data->devices.array[data->devices.used] = swap_string;
             }
-          }
+          } // for
         }
 
         if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart || command == firewall_parameter_command_lock) {
@@ -444,7 +460,8 @@ extern "C" {
               if (!reserved.has_stop && fl_compare_strings((f_string) firewall_group_stop, local.buffer.string + local.chain_objects.array[i].start, firewall_group_stop_length, length) == f_equal_to) {
                 reserved.stop_at = i;
                 reserved.has_stop = f_true;
-              } else if (!reserved.has_lock && fl_compare_strings((f_string) firewall_group_lock, local.buffer.string + local.chain_objects.array[i].start, firewall_group_lock_length, length) == f_equal_to) {
+              }
+              else if (!reserved.has_lock && fl_compare_strings((f_string) firewall_group_lock, local.buffer.string + local.chain_objects.array[i].start, firewall_group_lock_length, length) == f_equal_to) {
                 reserved.lock_at = i;
                 reserved.has_lock = f_true;
               }
@@ -530,7 +547,7 @@ extern "C" {
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
             return status;
-          };
+          }
 
           if (command == firewall_parameter_command_start) {
             status = firewall_delete_chains(*data);
@@ -693,7 +710,8 @@ extern "C" {
 
         // cleanup
         firewall_delete_local_data(&local);
-      } else {
+      }
+      else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: You did not pass a command");
         status = f_error_set_error(f_invalid_parameter);
       }
@@ -706,8 +724,8 @@ extern "C" {
 
 #ifndef _di_firewall_delete_data_
   f_return_status firewall_delete_data(firewall_data *data) {
-    f_status        status = f_none;
-    f_string_length i      = 0;
+    f_status status = f_none;
+    f_string_length i = 0;
 
     while (i < firewall_total_parameters) {
       f_delete_string_lengths(status, data->parameters[i].additional);

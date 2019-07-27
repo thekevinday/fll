@@ -24,7 +24,8 @@ extern "C" {
     if (position.total_elements == 0) {
       infinite = f_true;
       size = f_file_default_read_size;
-    } else {
+    }
+    else {
       size = position.total_elements;
     }
 
@@ -42,7 +43,8 @@ extern "C" {
 
       if (status == f_none_on_eof) {
         break;
-      } else if (f_error_is_error(status)) {
+      }
+      else if (f_error_is_error(status)) {
         return status;
       }
 
@@ -86,7 +88,8 @@ extern "C" {
 
       if (status == f_none_on_eof) {
         break;
-      } else if (f_error_is_error(status)) {
+      }
+      else if (f_error_is_error(status)) {
         return status;
       }
 

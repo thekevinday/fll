@@ -143,11 +143,13 @@ extern "C" {
         if (scale > 0) {
           *digit = 10 * *digit;
           *digit += temp_digit;
-        } else {
+        }
+        else {
           scale = 1;
           *digit = temp_digit;
         }
-      } else {
+      }
+      else {
         break;
       }
 
@@ -178,11 +180,13 @@ extern "C" {
         if (scale > 0) {
           *digit <<= 4;
           *digit += temp_digit;
-        } else {
+        }
+        else {
           scale = 1;
           *digit = temp_digit;
         }
-      } else {
+      }
+      else {
         break;
       }
 

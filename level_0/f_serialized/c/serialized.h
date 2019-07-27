@@ -16,20 +16,20 @@
 #include <string.h>
 
 // fll-0 includes
-#include <level_0/types.h>
 #include <level_0/strings.h>
+#include <level_0/types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #ifndef _di_f_serialized_splitters_
-  #define f_serialized_simple_splitter ':'
-  #define f_serialized_delimited_splitter '\''
+  #define f_serialized_simple_splitter     ':'
+  #define f_serialized_delimited_splitter  '\''
   #define f_serialized_delimited_delimiter '\\'
 
-  #define f_serialized_simple_splitter_string ":"
-  #define f_serialized_delimited_splitter_string "'"
+  #define f_serialized_simple_splitter_string     ":"
+  #define f_serialized_delimited_splitter_string  "'"
   #define f_serialized_delimited_delimiter_string "\\"
 #endif // _di_f_serialized_splitters_
 
