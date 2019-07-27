@@ -455,6 +455,10 @@ extern "C"{
             if (reserved.has_lock) {
               status = firewall_delete_chains(*data);
 
+              if (f_error_is_not_error(status)) {
+                status = firewall_default_lock(*data);
+              }
+
               if (f_error_is_error(status)) {
                 firewall_delete_local_data(&local);
                 firewall_delete_data(data);
@@ -487,6 +491,10 @@ extern "C"{
           if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart) {
             if (reserved.has_stop) {
               status = firewall_delete_chains(*data);
+
+              if (f_error_is_not_error(status)) {
+                status = firewall_default_lock(*data);
+              }
 
               if (f_error_is_error(status)) {
                 firewall_delete_local_data(&local);
@@ -534,6 +542,10 @@ extern "C"{
 
           if (command == firewall_parameter_command_start) {
             status = firewall_delete_chains(*data);
+
+            if (f_error_is_not_error(status)) {
+              status = firewall_default_lock(*data);
+            }
 
             if (f_error_is_error(status)) {
               firewall_delete_local_data(&local);

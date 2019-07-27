@@ -118,6 +118,10 @@ extern "C"{
   f_return_status firewall_delete_chains(const firewall_data data) __attribute__((visibility("internal")));
 #endif // _di_firewall_delete_chains_
 
+#ifndef _di_firewall_default_lock_
+  f_return_status firewall_default_lock(const firewall_data data) __attribute__((visibility("internal")));
+#endif // _di_firewall_default_lock
+
 #ifndef _di_firewall_buffer_rules_
   f_return_status firewall_buffer_rules(const f_string filename, const f_bool optional, firewall_local_data *local, firewall_data *data) __attribute__((visibility("internal")));
 #endif // _di_firewall_buffer_rules_

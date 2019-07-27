@@ -1199,9 +1199,9 @@
           fl_print_color_code(f_standard_debug, data.context.warning);
           fprintf(f_standard_debug, "DEBUG: %s ", tools[i]);
 
-          for (f_string_length i = 0; i < arguments.used; i++) {
-            fprintf(f_standard_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-          }
+          for (f_string_length j = 0; j < arguments.used; j++) {
+            fprintf(f_standard_debug, "%.*s ", arguments.array[j].used, arguments.array[j].string);
+          } // for
 
           fl_print_color_code(f_standard_debug, data.context.reset);
           fprintf(f_standard_debug, "\n");
@@ -1220,9 +1220,9 @@
           fl_print_color_code(f_standard_error, data.context.error);
 
           fprintf(f_standard_error, "%s ", tools[i]);
-          for (f_string_length i = 0; i < arguments.used; i++) {
-            fprintf(f_standard_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-          }
+          for (f_string_length j = 0; j < arguments.used; j++) {
+            fprintf(f_standard_error, "%.*s ", arguments.array[j].used, arguments.array[j].string);
+          } // for
 
           fl_print_color_code(f_standard_error, data.context.reset);
           fprintf(f_standard_error, "\n");
@@ -1236,11 +1236,93 @@
 
         return status;
       }
-    }
+    } // for
 
     return status;
   }
 #endif // _di_firewall_delete_chains_
+
+#ifndef _di_firewall_default_lock_
+  f_return_status firewall_default_lock(const firewall_data data) {
+    const f_string chains[3] = { firewall_chain_input, firewall_chain_output, firewall_chain_forward };
+    const f_string tools[2] = { firewall_tool_iptables, firewall_tool_ip6tables };
+
+    const f_string_length lengths[3] = { firewall_chain_input_length, firewall_chain_output_length, firewall_chain_forward_length };
+
+    f_status status = f_none;
+
+    for (f_string_length i = 0; i < 3; i++) {
+      f_dynamic_strings arguments = f_dynamic_strings_initialize;
+      f_dynamic_string argument[3];
+
+      arguments.array = argument;
+      arguments.used = 3;
+      arguments.size = arguments.used;
+
+      arguments.array[0].string = (f_string) firewall_action_policy_command;
+      arguments.array[1].string = (f_string) chains[i];
+      arguments.array[2].string = (f_string) "DROP";
+
+      arguments.array[0].used = firewall_action_append_command_length;
+      arguments.array[1].used = lengths[i];
+      arguments.array[2].used = 4;
+
+      arguments.array[0].size = arguments.array[0].used;
+      arguments.array[1].size = arguments.array[1].used;
+      arguments.array[2].size = arguments.array[2].used;
+
+      for (f_string_length j = 0; j < 2; j++) {
+        f_s_int results = 0;
+
+        // print command when debugging.
+        #ifdef _en_firewall_debug_
+          if (data.parameters[firewall_parameter_debug].result == f_console_result_found) {
+            fl_print_color_code(f_standard_debug, data.context.warning);
+            fprintf(f_standard_debug, "DEBUG: %s ", tools[j]);
+
+            for (f_string_length k = 0; k < arguments.used; k++) {
+              fprintf(f_standard_debug, "%.*s ", arguments.array[k].used, arguments.array[k].string);
+            } // for
+
+            fl_print_color_code(f_standard_debug, data.context.reset);
+            fprintf(f_standard_debug, "\n");
+          }
+        #endif // _en_firewall_debug_
+
+        status = fll_execute_program(tools[j], arguments, &results);
+
+        if (f_error_is_error(status)) {
+          status = f_error_set_fine(status);
+
+          if (status == f_failure) {
+            fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "ERROR: Failed to perform requested %s operation:", tools[j]);
+
+            fprintf(f_standard_error, "  ");
+            fl_print_color_code(f_standard_error, data.context.error);
+
+            fprintf(f_standard_error, "%s ", tools[j]);
+            for (f_string_length k = 0; k < arguments.used; k++) {
+              fprintf(f_standard_error, "%.*s ", arguments.array[k].used, arguments.array[k].string);
+            } // for
+
+            fl_print_color_code(f_standard_error, data.context.reset);
+            fprintf(f_standard_error, "\n");
+          }
+          else if (status == f_invalid_parameter) {
+            fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_execute_program()");
+          }
+          else {
+            fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_execute_program()", f_error_set_error(status));
+          }
+
+          return status;
+        }
+      } // for
+    } // for
+
+    return status;
+  }
+#endif // _di_firewall_default_lock
 
 #ifndef _di_firewall_process_rules_
   f_return_status firewall_buffer_rules(const f_string filename, const f_bool optional, firewall_local_data *local, firewall_data *data) {
