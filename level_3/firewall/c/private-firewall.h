@@ -130,6 +130,10 @@ extern "C" {
   f_return_status firewall_delete_chains(const firewall_data data) f_gcc_attribute_visibility_internal;
 #endif // _di_firewall_delete_chains_
 
+#ifndef _di_firewall_default_lock_
+  f_return_status firewall_default_lock(const firewall_data data) f_gcc_attribute_visibility_internal;
+#endif // _di_firewall_default_lock
+
 #ifndef _di_firewall_buffer_rules_
   /**
    * Buffer firewall rules.
