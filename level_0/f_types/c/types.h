@@ -102,22 +102,19 @@ extern "C" {
 #endif // _di_f_status_
 
 // Defines the maximum size to be supported
-// I hope these don't get optimized away and are detected at runtime as a result of the bitwise operator
 #ifndef _di_f_types_sizes_
-  #define f_unsigned_char_size        (~(unsigned char) 0)
-  #define f_unsigned_short_size       (~(unsigned short) 0)
-  #define f_unsigned_int_size         (~(unsigned int) 0)
-  #define f_unsigned_long_size        (~(unsigned long) 0)
-  #define f_unsigned_long_long_size   (~(unsigned long long) 0)
-  #define f_unsigned_double_size      (~(unsigned double) 0)
-  #define f_unsigned_long_double_size (~(unsigned double) 0)
-  #define f_signed_char_size          ((~(unsigned char) 0) / 2)
-  #define f_signed_short_size         ((~(unsigned short) 0) / 2)
-  #define f_signed_int_size           ((~(unsigned int) 0) / 2)
-  #define f_signed_long_size          ((~(unsigned long) 0) / 2)
-  #define f_signed_long_long_size     ((~(unsigned long long) 0) / 2)
-  #define f_signed_double_size        ((~(unsigned double) 0) / 2)
-  #define f_signed_long_double_size   ((~(unsigned double) 0) / 2)
+  #define f_unsigned_char_size        ((unsigned char) -1)
+  #define f_unsigned_short_size       ((unsigned short) -1)
+  #define f_unsigned_int_size         ((unsigned int) -1)
+  #define f_unsigned_long_size        ((unsigned long) -1)
+  #define f_unsigned_long_long_size   ((unsigned long long) -1)
+  #define f_unsigned_double_size      ((unsigned double) -1)
+  #define f_unsigned_long_double_size ((unsigned double) -1)
+  #define f_signed_char_size          (((unsigned char) -1) / 2)
+  #define f_signed_short_size         (((unsigned short) -1) / 2)
+  #define f_signed_int_size           (((unsigned int) -1) / 2)
+  #define f_signed_long_size          (((unsigned long) -1) / 2)
+  #define f_signed_long_long_size     (((unsigned long long) -1) / 2)
 #endif // _di_f_types_sizes_
 
 // These should define some types use by stdio
