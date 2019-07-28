@@ -9,7 +9,7 @@ version_micro 3
 
 build_compiler gcc
 build_linker ar
-build_libraries -lc -lf_memory -lfl_colors -lf_file -lf_conversion -lfl_fss -lfl_errors
+build_libraries -lc -lfll_0 -lfll_1
 build_sources_library colors.c execute.c fss_basic.c fss_basic_list.c fss_extended.c fss_errors.c
 build_sources_program
 build_sources_headers colors.h execute.h fss_basic.h fss_basic_list.h fss_extended.h fss_errors.h
