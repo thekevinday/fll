@@ -125,6 +125,7 @@ install_main(){
 
   if [[ $operation_failure == "fail-unsupported" ]] ; then
     echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
+    exit 1
   else
     if [[ $prefix == "" && ! -d $path_build ]] ; then
       echo -e "${c_error}ERROR: the build path $c_notice$path_build$c_error is not a valid directory.$c_reset"
