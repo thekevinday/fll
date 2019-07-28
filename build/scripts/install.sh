@@ -78,9 +78,9 @@ install_main(){
         elif [[ $p == "-B" || $p == "--bindir" ]] ; then
           grab_next=bindir
         elif [[ $p == "-I" || $p == "--includedir" ]] ; then
-          grab_next=includes
+          grab_next=includedir
         elif [[ $p == "-L" || $p == "--libdir" ]] ; then
-          grab_next=libraries
+          grab_next=libdir
         elif [[ $p == "--enable-shared" ]] ; then
           enable_shared="yes"
         elif [[ $p == "--disable-shared" ]] ; then
@@ -138,10 +138,6 @@ install_main(){
     fi
 
     if [[ $destination_prefix != "" ]] ; then
-      if [[ $(echo $destination_prefix | grep -o '^/') == "" ]] ; then
-        destination_prefix="$destination_prefix$destination_prefix"
-      fi
-
       if [[ $(echo $destination_programs | grep -o '^/') == "" ]] ; then
         destination_programs="$destination_prefix$destination_programs"
       fi
