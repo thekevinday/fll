@@ -141,6 +141,7 @@ package_main(){
 
   if [[ $operation_failure == "fail-multiple" ]] ; then
     echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
+    exit 1
   elif [[ $operation == "build" ]] ; then
     if [[ $mode_individual == "" && $mode_level == "" && $mode_monolithic == "" && $mode_program == "" ]] ; then
       mode_individual="yes"
@@ -165,8 +166,10 @@ package_main(){
     package_operation_clean
   elif [[ $operation == "" ]] ; then
     echo -e "${c_error}ERROR: no operation was given.$c_reset"
+    exit 1
   else
     echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
+    exit 1
   fi
 }
 

@@ -125,11 +125,12 @@ generate_main(){
   if [[ ! -d $path_c && ( ${variables[$(generate_id build_sources_library)]} != "" || ${variables[$(generate_id build_sources_program)]} != "" || ${variables[$(generate_id build_sources_headers)]} != "" ) ]] ; then
     echo -e "${c_error}ERROR: the c path of '$c_notice$path_c$c_error' is invalid.$c_reset"
     generate_cleanup
-    exit 0
+    exit 1
   fi
 
   if [[ $operation_failure == "fail-multiple" ]] ; then
     echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
+    exit 1
   elif [[ $operation == "build" ]] ; then
     if [[ -f ${path_build}.built$project_built ]] ; then
       echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
@@ -144,8 +145,10 @@ generate_main(){
     generate_operation_clean
   elif [[ $operation == "" ]] ; then
     echo -e "${c_error}ERROR: no operation was given.$c_reset"
+    exit 1
   else
     echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
+    exit 1
   fi
 }
 
