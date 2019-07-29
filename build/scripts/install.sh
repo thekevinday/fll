@@ -48,6 +48,12 @@ install_main(){
   local destination_programs=bin/
   local destination_includes=include/
   local destination_libraries=lib/
+  local destination_libraries_static=
+  local destination_libraries_shared=
+  local destination_programs_static=
+  local destination_programs_shared=
+
+  local work_directory=
 
   local enable_shared=
   local enable_static=
@@ -81,6 +87,8 @@ install_main(){
           grab_next=includedir
         elif [[ $p == "-L" || $p == "--libdir" ]] ; then
           grab_next=libdir
+        elif [[ $p == "-w" || $p == "--work_directory" ]] ; then
+          grab_next=work_directory
         elif [[ $p == "--enable-shared" ]] ; then
           enable_shared="yes"
         elif [[ $p == "--disable-shared" ]] ; then
@@ -89,6 +97,14 @@ install_main(){
           enable_static="yes"
         elif [[ $p == "--disable-static" ]] ; then
           enable_static="no"
+        elif [[ $p == "--libraries-static" ]] ; then
+          grab_next="destination_libraries_static"
+        elif [[ $p == "--libraries-shared" ]] ; then
+          grab_next="destination_libraries_shared"
+        elif [[ $p == "--programs-static" ]] ; then
+          grab_next="destination_programs_static"
+        elif [[ $p == "--programs-shared" ]] ; then
+          grab_next="destination_programs_shared"
         elif [[ $operation_failure == "" ]] ; then
           operation="$p"
           operation_failure=fail-unsupported
@@ -106,6 +122,16 @@ install_main(){
           destination_includes=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "libdir" ]] ; then
           destination_libraries=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+        elif [[ $grab_next == "work_directory" ]] ; then
+          work_directory=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+        elif [[ $grab_next == "destination_libraries_static" ]] ; then
+          destination_libraries_static=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+        elif [[ $grab_next == "destination_libraries_shared" ]] ; then
+          destination_libraries_shared=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+        elif [[ $grab_next == "destination_programs_static" ]] ; then
+          destination_programs_static=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+        elif [[ $grab_next == "destination_programs_shared" ]] ; then
+          destination_programs_shared=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         fi
 
         grab_next=
@@ -126,50 +152,102 @@ install_main(){
   if [[ $operation_failure == "fail-unsupported" ]] ; then
     echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
     exit 1
-  else
-    if [[ $prefix == "" && ! -d $path_build ]] ; then
-      echo -e "${c_error}ERROR: the build path $c_notice$path_build$c_error is not a valid directory.$c_reset"
-      exit 1
-    fi
-
-    if [[ $destination_prefix != "" && ! -d $destination_prefix ]] ; then
-      echo -e "${c_error}ERROR: the destination prefix $c_notice$destination_prefix$c_error is not a valid directory.$c_reset"
-      exit 1
-    fi
-
-    if [[ $destination_prefix != "" ]] ; then
-      if [[ $(echo $destination_programs | grep -o '^/') == "" ]] ; then
-        destination_programs="$destination_prefix$destination_programs"
-      fi
-
-      if [[ $(echo $destination_includes | grep -o '^/') == "" ]] ; then
-        destination_includes="$destination_prefix$destination_includes"
-      fi
-
-      if [[ $(echo $destination_libraries | grep -o '^/') == "" ]] ; then
-        destination_libraries="$destination_prefix$destination_libraries"
-      fi
-    fi
-
-    if [[ ! -d $destination_programs ]] ; then
-      echo -e "${c_error}ERROR: the destination bindir $c_notice$destination_programs$c_error is not a valid directory.$c_reset"
-      exit 1
-    fi
-
-    if [[ ! -d $destination_includes ]] ; then
-      echo -e "${c_error}ERROR: the destination incluedir $c_notice$destination_includes$c_error is not a valid directory.$c_reset"
-      exit 1
-    fi
-
-    if [[ ! -d $destination_libraries ]] ; then
-      echo -e "${c_error}ERROR: the destination libdir $c_notice$destination_libraries$c_error is not a valid directory.$c_reset"
-      exit 1
-    fi
-
-    install_load_settings
-
-    install_perform_install
   fi
+
+  if [[ $prefix == "" && ! -d $path_build ]] ; then
+    echo -e "${c_error}ERROR: the build path $c_notice$path_build$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
+
+  if [[ $destination_prefix != "" && ! -d $destination_prefix ]] ; then
+    echo -e "${c_error}ERROR: the destination prefix $c_notice$destination_prefix$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
+
+  if [[ $destination_prefix != "" ]] ; then
+    if [[ $(echo $destination_programs | grep -o '^/') == "" ]] ; then
+      destination_programs="$destination_prefix$destination_programs"
+    fi
+
+    if [[ $(echo $destination_includes | grep -o '^/') == "" ]] ; then
+      destination_includes="$destination_prefix$destination_includes"
+    fi
+
+    if [[ $(echo $destination_libraries | grep -o '^/') == "" ]] ; then
+      destination_libraries="$destination_prefix$destination_libraries"
+    fi
+  fi
+
+  if [[ $destination_libraries_static != "" ]] ; then
+    if [[ $(echo $destination_libraries_static | grep -o '^/') == "" ]] ; then
+      destination_libraries_static=$destination_libraries$destination_libraries_static
+    fi
+  else
+    destination_libraries_static=$destination_libraries
+  fi
+
+  if [[ $destination_libraries_shared != "" ]] ; then
+    if [[ $(echo $destination_libraries_shared | grep -o '^/') == "" ]] ; then
+      destination_libraries_shared=$destination_libraries$destination_libraries_shared
+    fi
+  else
+    destination_libraries_shared=$destination_libraries
+  fi
+
+  if [[ $destination_programs_static != "" ]] ; then
+    if [[ $(echo $destination_programs_static | grep -o '^/') == "" ]] ; then
+      destination_programs_static=$destination_programs$destination_programs_static
+    fi
+  else
+    destination_programs_static=$destination_programs
+  fi
+
+  if [[ $destination_programs_shared != "" ]] ; then
+    if [[ $(echo $destination_programs_shared | grep -o '^/') == "" ]] ; then
+      destination_programs_shared=$destination_programs$destination_programs_shared
+    fi
+  else
+    destination_programs_shared=$destination_programs
+  fi
+
+  if [[ $work_directory != "" && ! -d $work_directory ]] ; then
+    echo -e "${c_error}ERROR: the work directory $c_notice$work_directory$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
+
+  if [[ ! -d $destination_programs ]] ; then
+    echo -e "${c_error}ERROR: the destination bindir $c_notice$destination_programs$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
+
+  if [[ ! -d $destination_programs_static ]] ; then
+    echo -e "${c_error}ERROR: the destination (static) bindir $c_notice$destination_programs_static$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
+
+  if [[ ! -d $destination_programs_shared ]] ; then
+    echo -e "${c_error}ERROR: the destination (shared) bindir $c_notice$destination_programs_shared$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
+
+  if [[ ! -d $destination_includes ]] ; then
+    echo -e "${c_error}ERROR: the destination incluedir $c_notice$destination_includes$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
+
+  if [[ ! -d $destination_libraries_static ]] ; then
+    echo -e "${c_error}ERROR: the destination (static) libdir $c_notice$destination_libraries_static$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
+
+  if [[ ! -d $destination_libraries_shared ]] ; then
+    echo -e "${c_error}ERROR: the destination (shared) libdir $c_notice$destination_libraries_shared$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
+
+  install_load_settings
+
+  install_perform_install
 }
 
 install_handle_colors(){
@@ -207,18 +285,23 @@ install_help(){
   echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program"
   echo
   echo -e "${c_highlight}Install Options:$c_reset"
-  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}       Specify a custom build directory"
-  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}    Specify a custom build settings file"
-  echo -e " -${c_important}P$c_reset, --${c_important}prefix${c_reset}      Specify a custom destination prefix"
-  echo -e " -${c_important}B$c_reset, --${c_important}bindir${c_reset}      Specify a custom destination bin/ directory"
-  echo -e " -${c_important}I$c_reset, --${c_important}includedir${c_reset}  Specify a custom destination include/ directory"
-  echo -e " -${c_important}L$c_reset, --${c_important}libdir${c_reset}      Specify a custom destination lib/ directory"
+  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}           Custom build directory"
+  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}        Custom build settings file"
+  echo -e " -${c_important}P$c_reset, --${c_important}prefix${c_reset}          Custom destination prefix"
+  echo -e " -${c_important}B$c_reset, --${c_important}bindir${c_reset}          Custom destination bin/ directory"
+  echo -e " -${c_important}I$c_reset, --${c_important}includedir${c_reset}      Custom destination include/ directory"
+  echo -e " -${c_important}L$c_reset, --${c_important}libdir${c_reset}          Custom destination lib/ directory"
+  echo -e " -${c_important}w$c_reset, --${c_important}work_directory${c_reset}  Install to this directory instead of system"
   echo
   echo -e "${c_highlight}Special Options:$c_reset"
-  echo -e " --${c_important}enable-shared${c_reset}   Forcibly do install shared files"
-  echo -e " --${c_important}disable-shared${c_reset}  Forcibly do not install shared files"
-  echo -e " --${c_important}enable-static${c_reset}   Forcibly do install static files"
-  echo -e " --${c_important}disable-static${c_reset}  Forcibly do not install static files"
+  echo -e " --${c_important}enable-shared${c_reset}     Forcibly do install shared files"
+  echo -e " --${c_important}disable-shared${c_reset}    Forcibly do not install shared files"
+  echo -e " --${c_important}enable-static${c_reset}     Forcibly do install static files"
+  echo -e " --${c_important}disable-static${c_reset}    Forcibly do not install static files"
+  echo -e " --${c_important}libraries-static${c_reset}  Custom destination for static libraries"
+  echo -e " --${c_important}libraries-shared${c_reset}  Custom destination for shared libraries"
+  echo -e " --${c_important}programs-static${c_reset}   Custom destination for static programs"
+  echo -e " --${c_important}programs-shared${c_reset}   Custom destination for shared programs"
   echo
 }
 
@@ -278,7 +361,83 @@ install_perform_install(){
     build_static="no"
   fi
 
-  if [[ $build_sources_headers != "" ]] ; then
+  if [[ $work_directory != "" ]] ; then
+    if [[ ! -d ${work_directory}programs ]] ; then
+      mkdir -v ${work_directory}programs
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}programs$c_error.$c_reset"
+        failure=1
+      fi
+    fi
+
+    if [[ ! -d ${work_directory}programs/shared ]] ; then
+      mkdir -v ${work_directory}programs/shared
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}programs/shared$c_error.$c_reset"
+        failure=1
+      fi
+    fi
+
+    if [[ ! -d ${work_directory}programs/static ]] ; then
+      mkdir -v ${work_directory}programs/static
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}programs/static$c_error.$c_reset"
+        failure=1
+      fi
+    fi
+
+    if [[ ! -d ${work_directory}libraries ]] ; then
+      mkdir -v ${work_directory}libraries
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}libraries$c_error.$c_reset"
+        failure=1
+      fi
+    fi
+
+    if [[ ! -d ${work_directory}libraries/shared ]] ; then
+      mkdir -v ${work_directory}libraries/shared
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}libraries/shared$c_error.$c_reset"
+        failure=1
+      fi
+    fi
+
+    if [[ ! -d ${work_directory}libraries/static ]] ; then
+      mkdir -v ${work_directory}libraries/static
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}libraries/static$c_error.$c_reset"
+        failure=1
+      fi
+    fi
+
+    if [[ ! -d ${work_directory}includes ]] ; then
+      mkdir -v ${work_directory}includes
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}includes$c_error.$c_reset"
+        failure=1
+      fi
+    fi
+
+    if [[ $failure == "" ]] ; then
+      destination_prefix=$work_directory
+      destination_programs=${work_directory}programs/
+      destination_programs_static=${destination_programs}static/
+      destination_programs_shared=${destination_programs}shared/
+      destination_includes=${work_directory}includes/
+      destination_libraries=${work_directory}libraries/
+      destination_libraries_static=${destination_libraries}static/
+      destination_libraries_shared=${destination_libraries}shared/
+    fi
+  fi
+
+  if [[ $failure == "" && $build_sources_headers != "" ]] ; then
     echo
     echo -e "${c_highlight}Installing Includes to: $c_reset$c_notice$destination_includes$c_reset${c_highlight}.$c_reset"
     cp -vR $path_build${path_includes}* $destination_includes
@@ -292,22 +451,22 @@ install_perform_install(){
   if [[ $failure == "" && ( $build_sources_library != "" || $build_sources_program != "" ) ]] ; then
     if [[ $build_static == "yes" ]] ; then
       echo
-      echo -e "${c_highlight}Installing (static) Libraries to: $c_reset$c_notice$destination_libraries$c_reset${c_highlight}.$c_reset"
-      cp -vR $path_build$path_libraries${path_static}* $destination_libraries
+      echo -e "${c_highlight}Installing (static) Libraries to: $c_reset$c_notice$destination_libraries_static$c_reset${c_highlight}.$c_reset"
+      cp -vR $path_build$path_libraries${path_static}* $destination_libraries_static
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to copy (static) library files from $c_notice$path_build$path_libraries$path_static$c_error to $c_notice$destination_libraries$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to copy (static) library files from $c_notice$path_build$path_libraries$path_static$c_error to $c_notice$destination_libraries_static$c_error.$c_reset"
         failure=1
       fi
     fi
 
     if [[ $failure == "" && $build_shared == "yes" ]] ; then
       echo
-      echo -e "${c_highlight}Installing (shared) Libraries to: $c_reset$c_notice$destination_libraries$c_reset${c_highlight}.$c_reset"
-      cp -vR $path_build$path_libraries${path_shared}* $destination_libraries
+      echo -e "${c_highlight}Installing (shared) Libraries to: $c_reset$c_notice$destination_libraries_shared$c_reset${c_highlight}.$c_reset"
+      cp -vR $path_build$path_libraries${path_shared}* $destination_libraries_shared
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to copy (shared) library files from $c_notice$path_build$path_libraries$build_shared$c_error to $c_notice$destination_libraries$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to copy (shared) library files from $c_notice$path_build$path_libraries$build_shared$c_error to $c_notice$destination_libraries_shared$c_error.$c_reset"
         failure=1
       fi
     fi
@@ -316,22 +475,22 @@ install_perform_install(){
   if [[ $failure == "" && $build_sources_program != "" ]] ; then
     if [[ $build_static == "yes" ]] ; then
       echo
-      echo -e "${c_highlight}Installing (static) Programs to: $c_reset$c_notice$destination_programs$c_reset${c_highlight}.$c_reset"
-      cp -vR $path_build$path_programs${path_static}* $destination_programs
+      echo -e "${c_highlight}Installing (static) Programs to: $c_reset$c_notice$destination_programs_static$c_reset${c_highlight}.$c_reset"
+      cp -vR $path_build$path_programs${path_static}* $destination_programs_static
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to copy (static) library files from $c_notice$path_build$path_programs$path_static$c_error to $c_notice$destination_programs$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to copy (static) library files from $c_notice$path_build$path_programs$path_static$c_error to $c_notice$destination_programs_static$c_error.$c_reset"
         failure=1
       fi
     fi
 
     if [[ $failure == "" && $build_shared == "yes" ]] ; then
       echo
-      echo -e "${c_highlight}Installing (shared) Programs to: $c_reset$c_notice$destination_programs$c_reset${c_highlight}.$c_reset"
-      cp -vR $path_build$path_programs${path_shared}* $destination_programs
+      echo -e "${c_highlight}Installing (shared) Programs to: $c_reset$c_notice$destination_programs_shared$c_reset${c_highlight}.$c_reset"
+      cp -vR $path_build$path_programs${path_shared}* $destination_programs_shared
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to copy (shared) library files from $c_notice$path_build$path_programs$build_shared$c_error to $c_notice$destination_programs$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to copy (shared) library files from $c_notice$path_build$path_programs$build_shared$c_error to $c_notice$destination_programs_shared$c_error.$c_reset"
         failure=1
       fi
     fi
