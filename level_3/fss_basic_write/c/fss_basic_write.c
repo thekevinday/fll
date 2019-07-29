@@ -4,15 +4,6 @@
 extern "C" {
 #endif
 
-// version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
-#ifndef _di_fss_basic_write_print_version_
-  f_return_status fss_basic_write_print_version(const fss_basic_write_data data) {
-    printf("%s\n", fss_basic_write_version);
-
-    return f_none;
-  }
-#endif // _fss_basic_write_print_version_
-
 #ifndef _di_fss_basic_write_print_help_
   f_return_status fss_basic_write_print_help(const fss_basic_write_data data) {
     printf("\n");
@@ -145,7 +136,7 @@ extern "C" {
       fss_basic_write_print_help(*data);
     }
     else if (data->parameters[fss_basic_write_parameter_version].result == f_console_result_found) {
-      fss_basic_write_print_version(*data);
+      fl_program_print_version(fss_basic_write_version);
     }
     else {
       f_array_length counter = 0;

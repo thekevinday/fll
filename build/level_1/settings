@@ -10,9 +10,9 @@ version_micro 2
 build_compiler gcc
 build_linker ar
 build_libraries -lc -lfll_0
-build_sources_library colors.c console.c directory.c errors.c file.c fss.c fss_basic.c fss_basic_list.c fss_extended.c serialized.c strings.c
+build_sources_library colors.c console.c directory.c errors.c file.c fss.c fss_basic.c fss_basic_list.c fss_extended.c program.c serialized.c strings.c
 build_sources_program 
-build_sources_headers colors.h console.h directory.h errors.h file.h fss.h fss_basic.h fss_basic_list.h fss_errors.h fss_extended.h fss_macro.h serialized.h strings.h
+build_sources_headers colors.h console.h directory.h errors.h file.h fss.h fss_basic.h fss_basic_list.h fss_errors.h fss_extended.h fss_macro.h program.h serialized.h strings.h
 build_shared yes
 build_static yes
 

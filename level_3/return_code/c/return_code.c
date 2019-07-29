@@ -4,15 +4,6 @@
 extern "C" {
 #endif
 
-// version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
-#ifndef _di_return_code_print_version_
-  f_return_status return_code_print_version(const return_code_data data) {
-    printf("%s\n", return_code_version);
-
-    return f_none;
-  }
-#endif // _return_code_print_version_
-
 #ifndef _di_return_code_print_help_
   f_return_status return_code_print_help(const return_code_data data) {
     printf("\n");
@@ -157,7 +148,7 @@ extern "C" {
       return_code_print_help(*data);
     }
     else if (data->parameters[return_code_parameter_version].result == f_console_result_found) {
-      return_code_print_version(*data);
+      fl_program_print_version(return_code_version);
     }
     else if (data->parameters[return_code_parameter_is_error].result == f_console_result_found && data->remaining.used > 0) {
       f_array_length counter = 0;

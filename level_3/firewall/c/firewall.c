@@ -11,15 +11,6 @@
 extern "C" {
 #endif
 
-// version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
-#ifndef _di_firewall_print_version_
-  f_return_status firewall_print_version(const firewall_data data) {
-    printf("%s\n", firewall_version);
-
-    return f_none;
-  }
-#endif // _firewall_print_version_
-
 #ifndef _di_firewall_print_help_
   f_return_status firewall_print_help(const firewall_data data) {
     printf("\n");
@@ -164,7 +155,7 @@ extern "C" {
       firewall_print_help(*data);
     }
     else if (data->parameters[firewall_parameter_version].result == f_console_result_found) {
-      firewall_print_version(*data);
+      fl_program_print_version(firewall_version);
     }
     else {
       // now determine which command was placed first

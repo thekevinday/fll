@@ -1,11 +1,12 @@
-f_types
+f_console
 f_errors
-f_strings
 f_pipe
 f_print
-f_console
+f_strings
+f_types
+fl_colors
 fl_console
 fl_file
+fl_program
 fl_strings
-fl_colors
 fll_colors

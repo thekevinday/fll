@@ -27,6 +27,7 @@
 #include <level_1/errors.h>
 #include <level_1/file.h>
 #include <level_1/fss_extended.h>
+#include <level_1/program.h>
 #include <level_1/strings.h>
 
 // fll-2 includes
@@ -105,13 +106,6 @@ extern "C" {
       fl_color_context_initialize, \
     }
 #endif // _di_fss_extended_write_data_
-
-#ifndef _di_fss_extended_write_print_version_
-  /**
-   * Print version.
-   */
-  extern f_return_status fss_extended_write_print_version(const fss_extended_write_data data);
-#endif // _di_fss_extended_write_print_version_
 
 #ifndef _di_fss_extended_write_print_help_
   /**
