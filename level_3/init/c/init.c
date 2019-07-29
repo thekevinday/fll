@@ -13,7 +13,7 @@ extern "C" {
 
 // version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
 #ifndef _di_init_print_version_
-  f_return_status init_print_version(f_const init_argument argument) {
+  f_return_status init_print_version(const init_argument argument) {
     printf("%s\n", init_version);
 
     return f_none;
@@ -21,7 +21,7 @@ extern "C" {
 #endif // _di_init_print_version_
 
 #ifndef _di_init_print_help_
-  f_return_status init_print_help(f_const init_argument argument) {
+  f_return_status init_print_help(const init_argument argument) {
     printf("\n");
     fl_print_color(f_standard_output, argument.context.title, argument.context.reset, " %s", init_name_long);
 
@@ -99,7 +99,7 @@ extern "C" {
 #endif // _di_init_print_help_
 
 #ifndef _di_init_main_
-  f_return_status init_main(f_const f_s_int argc, f_const f_string argv[], init_argument *argument) {
+  f_return_status init_main(const f_s_int argc, const f_string argv[], init_argument *argument) {
     f_status status  = f_none;
     f_status status2 = f_none;
     f_autochar run_level[init_kernel_runlevel_buffer];

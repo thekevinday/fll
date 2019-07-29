@@ -212,15 +212,15 @@ extern "C" {
 #endif // _di_init_argument_
 
 #ifndef _di_init_print_version_
-  f_extern f_return_status init_print_version(f_const init_argument data);
+  f_extern f_return_status init_print_version(const init_argument data);
 #endif // _di_init_print_version_
 
 #ifndef _di_init_print_help_
-  f_extern f_return_status init_print_help(f_const init_argument data);
+  f_extern f_return_status init_print_help(const init_argument data);
 #endif // _di_init_print_help_
 
 #ifndef _di_init_main_
-  f_extern f_return_status init_main(f_const f_s_int argc, f_const f_string argv[], init_argument *data);
+  f_extern f_return_status init_main(const f_s_int argc, const f_string argv[], init_argument *data);
 #endif // _di_init_main_
 
 #ifdef __cplusplus

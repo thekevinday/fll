@@ -1,6 +1,6 @@
 #include <level_3/fss_basic_read.h>
 
-int main(f_const f_array_length argc, f_const f_string argv[]) {
+int main(const f_array_length argc, const f_string argv[]) {
   fss_basic_read_data data = fss_basic_read_data_initialize;
 
   if (f_pipe_exists()) {

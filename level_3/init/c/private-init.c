@@ -5,7 +5,7 @@
 #include "private-init.h"
 
 #ifndef _di_init_rule_buffer_
-  f_return_status init_rule_buffer(f_const f_string filename, f_dynamic_string *buffer, f_fss_objects *objects, f_fss_contents *contents) {
+  f_return_status init_rule_buffer(const f_string filename, f_dynamic_string *buffer, f_fss_objects *objects, f_fss_contents *contents) {
     f_file file = f_file_initialize;
     f_status status = f_none;
     f_file_position file_position = f_file_position_initialize;
@@ -94,7 +94,7 @@
 #endif // _di_init_rule_buffer_
 
 #ifndef _di_init_rules_process_main_
-  f_return_status init_rules_process_main(f_const init_data) {
+  f_return_status init_rules_process_main(const init_data) {
     f_status status  = f_none;
     f_status status2 = f_none;
 

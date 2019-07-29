@@ -324,7 +324,7 @@ typedef struct {
 #define init_path_processes_mounts   init_paths_processes "mounts"
 
 #ifndef _di_init_rule_buffer_
-  f_return_status init_rule_buffer(f_const f_string filename, f_dynamic_string *buffer, f_fss_objects *objects, f_fss_contents *contents) f_gcc_attribute_visibility_internal;
+  f_return_status init_rule_buffer(const f_string filename, f_dynamic_string *buffer, f_fss_objects *objects, f_fss_contents *contents) f_gcc_attribute_visibility_internal;
 #endif // _di_init_rule_buffer_
 
 #ifndef _di_init_handler_child_services_
