@@ -4,8 +4,8 @@ project_name fl_serialized
 project_level 1
 
 version_major 0
-version_minor 4
-version_micro 2
+version_minor 5
+version_micro 0
 
 build_compiler gcc
 build_linker ar

@@ -1,6 +1,6 @@
 # FLL - Level 1
 # Project: Colors
-# Version: 0.4.2
+# Version: 0.5.0
 # Licenses: flll, lgplv2.1
 # Programmers: Kevin Day
 # Documentation: Provide basic color output support (linux & xterm)

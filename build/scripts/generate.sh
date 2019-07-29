@@ -9,7 +9,7 @@ generate_main(){
   local public_name="Simple FLL Project Make Script"
   local system_name=generate
   local called_name=$(basename $0)
-  local version=0.4.2
+  local version=0.5.0
 
   local grab_next=
   local do_color=normal
