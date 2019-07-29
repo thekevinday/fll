@@ -37,6 +37,7 @@ generate_main(){
   local path_s=data/settings/
   local path_bash=sources/bash/
   local project_built=
+  local work_directory=
 
   local enable_shared=
   local enable_static=
@@ -70,6 +71,8 @@ generate_main(){
           grab_next=path_s
         elif [[ $p == "-p" || $p == "--project" ]] ; then
           grab_next=project_built
+        elif [[ $p == "-w" || $p == "--work_directory" ]] ; then
+          grab_next=work_directory
         elif [[ $p == "--enable-shared" ]] ; then
           enable_shared="yes"
         elif [[ $p == "--disable-shared" ]] ; then
@@ -96,6 +99,8 @@ generate_main(){
           path_s=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "project_built" ]] ; then
           project_built="-$(echo $p | sed -e 's|/*$||')"
+        elif [[ $grab_next == "work_directory" ]] ; then
+          work_directory=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         fi
 
         grab_next=
@@ -121,6 +126,11 @@ generate_main(){
   #  generate_cleanup
   #  exit 0
   #fi
+
+  if [[ $work_directory != "" && ! -d $work_directory ]] ; then
+    echo -e "${c_error}ERROR: the work directory $c_notice$work_directory$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
 
   if [[ ! -d $path_c && ( ${variables[$(generate_id build_sources_library)]} != "" || ${variables[$(generate_id build_sources_program)]} != "" || ${variables[$(generate_id build_sources_headers)]} != "" ) ]] ; then
     echo -e "${c_error}ERROR: the c path of '$c_notice$path_c$c_error' is invalid.$c_reset"
@@ -189,12 +199,13 @@ generate_help(){
   echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program"
   echo
   echo -e "${c_highlight}Generate Options:$c_reset"
-  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}      Specify a custom build directory"
-  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}   Specify a custom build settings file"
-  echo -e " -${c_important}B$c_reset, --${c_important}bash_path${c_reset}  Specify a custom path to the bash source files"
-  echo -e " -${c_important}c$c_reset, --${c_important}c_path${c_reset}     Specify a custom path to the c source files"
-  echo -e " -${c_important}S$c_reset, --${c_important}s_path${c_reset}     Specify a custom path to the settings files"
-  echo -e " -${c_important}p$c_reset, --${c_important}project${c_reset}    Specify a project name for storing built status"
+  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}           Custom build directory"
+  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}        Custom build settings file"
+  echo -e " -${c_important}B$c_reset, --${c_important}bash_path${c_reset}       Custom path to the bash source files"
+  echo -e " -${c_important}c$c_reset, --${c_important}c_path${c_reset}          Custom path to the c source files"
+  echo -e " -${c_important}S$c_reset, --${c_important}s_path${c_reset}          Custom path to the settings files"
+  echo -e " -${c_important}p$c_reset, --${c_important}project${c_reset}         Project name for storing built status"
+  echo -e " -${c_important}w$c_reset, --${c_important}work_directory${c_reset}  Use includes/libraries from this directory instead of system"
   echo
   echo -e "${c_highlight}Special Options:$c_reset"
   echo -e " --${c_important}enable-shared${c_reset}   Forcibly do install shared files"
@@ -299,7 +310,8 @@ generate_operation_build(){
   local micro=${variables[$(generate_id version_micro)]}
   local compiler=${variables[$(generate_id build_compiler)]}
   local linker=${variables[$(generate_id build_linker)]}
-  local arguments="-I${path_build}includes ${variables[$(generate_id flags_all)]} ${variables[$(generate_id build_libraries)]}"
+  local arguments="${variables[$(generate_id build_libraries)]}"
+  local arguments_include="-I${path_build}includes"
   local arguments_shared="-L${path_build}libraries/shared"
   local arguments_static="-L${path_build}libraries/static"
   local shared=${variables[$(generate_id build_shared)]}
@@ -309,8 +321,19 @@ generate_operation_build(){
   local sources_headers=${variables[$(generate_id build_sources_headers)]}
   local sources_settings=${variables[$(generate_id build_sources_settings)]}
   local sources=
+  local flags_all=${variables[$(generate_id flags_all)]}
+  local flags_shared=${variables[$(generate_id flags_shared)]}
+  local flags_static=${variables[$(generate_id flags_static)]}
+  local flags_library=${variables[$(generate_id flags_library)]}
+  local flags_program=${variables[$(generate_id flags_program)]}
   local i=
   local alt=$1
+
+  if [[ $work_directory != "" ]] ; then
+    flags_all="-I${work_directory}includes/ $flags_all"
+    flags_shared="-L${work_directory}libraries/shared/ $flags_shared"
+    flags_static="-L${work_directory}libraries/static/ $flags_static"
+  fi
 
   if [[ $enable_shared == "yes" ]] ; then
     shared="yes"
@@ -349,8 +372,8 @@ generate_operation_build(){
         sources="$sources$path_c$i "
       done
 
-      echo $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]}
-      $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_library)]} || failure=1
+      echo $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $flags_all $arguments $flags_shared $flags_library
+      $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $flags_all $arguments $flags_shared $flags_library || failure=1
 
       if [[ $failure == "" ]] ; then
         ln -vsf lib$name.so.$major.$minor.$micro ${path_build}libraries/shared/lib$name.so.$major || failure=1
@@ -370,8 +393,8 @@ generate_operation_build(){
         sources="$sources$path_c$i "
       done
 
-      echo $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]}
-      $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments ${variables[$(generate_id flags_shared)]} ${variables[$(generate_id flags_program)]} || failure=1
+      echo $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $flags_all $arguments $flags_shared $flags_program
+      $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $flags_all $arguments $flags_shared $flags_program || failure=1
     fi
   fi
 
@@ -381,8 +404,8 @@ generate_operation_build(){
       for i in $sources_library ; do
         sources="$sources${path_build}objects/$i.o "
 
-        echo $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]}
-        $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_library)]} || failure=1
+        echo $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments_include $flags_all $arguments $flags_static $flags_library
+        $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments_include $flags_all $arguments $flags_static $flags_library || failure=1
 
         if [[ $failure == "1" ]] ; then
           break;
@@ -407,8 +430,8 @@ generate_operation_build(){
         sources="$sources$path_c$i "
       done
 
-      echo $compiler -static -o ${path_build}programs/static/$name $sources $arguments_static $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]}
-      $compiler -static -o ${path_build}programs/static/$name $sources $arguments_static $arguments ${variables[$(generate_id flags_static)]} ${variables[$(generate_id flags_program)]} || failure=1
+      echo $compiler -static -o ${path_build}programs/static/$name $sources $arguments_static $arguments_include $flags_all $arguments $flags_static $flags_program
+      $compiler -static -o ${path_build}programs/static/$name $sources $arguments_static $arguments_include $flags_all $arguments $flags_static $flags_program || failure=1
     fi
   fi
 
