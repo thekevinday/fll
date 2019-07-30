@@ -9,7 +9,8 @@ version_micro 3
 
 build_compiler gcc
 build_linker ar
-build_libraries -lf_memory -lc
+build_libraries -lc
+build_libraries_fll -lf_memory
 build_sources_library serialized.c
 build_sources_program
 build_sources_headers serialized.h

@@ -227,17 +227,18 @@ generate_id(){
     "build_compiler") echo -n 5;;
     "build_linker") echo -n 6;;
     "build_libraries") echo -n 7;;
-    "build_sources_library") echo -n 8;;
-    "build_sources_program") echo -n 9;;
-    "build_sources_headers") echo -n 10;;
-    "build_sources_settings") echo -n 11;;
-    "build_shared") echo -n 12;;
-    "build_static") echo -n 13;;
-    "flags_all") echo -n 14;;
-    "flags_shared") echo -n 15;;
-    "flags_static") echo -n 16;;
-    "flags_library") echo -n 17;;
-    "flags_program") echo -n 18;;
+    "build_libraries_fll") echo -n 8;;
+    "build_sources_library") echo -n 9;;
+    "build_sources_program") echo -n 10;;
+    "build_sources_headers") echo -n 11;;
+    "build_sources_settings") echo -n 12;;
+    "build_shared") echo -n 13;;
+    "build_static") echo -n 14;;
+    "flags_all") echo -n 15;;
+    "flags_shared") echo -n 16;;
+    "flags_static") echo -n 17;;
+    "flags_library") echo -n 18;;
+    "flags_program") echo -n 19;;
   esac
 }
 
@@ -259,7 +260,7 @@ generate_load_settings(){
     exit $failure
   fi
 
-  for i in project_name project_level version_major version_minor version_micro build_compiler build_linker build_libraries build_sources_library build_sources_program build_sources_headers build_sources_settings build_shared build_static flags_all flags_shared flags_static flags_library flags_program ; do
+  for i in project_name project_level version_major version_minor version_micro build_compiler build_linker build_libraries build_libraries_fll build_sources_library build_sources_program build_sources_headers build_sources_settings build_shared build_static flags_all flags_shared flags_static flags_library flags_program ; do
     variables[$(generate_id $i)]=$(grep -s -o "^[[:space:]]*$i\>.*$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 
@@ -310,7 +311,7 @@ generate_operation_build(){
   local micro=${variables[$(generate_id version_micro)]}
   local compiler=${variables[$(generate_id build_compiler)]}
   local linker=${variables[$(generate_id build_linker)]}
-  local arguments="${variables[$(generate_id build_libraries)]}"
+  local arguments="${variables[$(generate_id build_libraries_fll)]} ${variables[$(generate_id build_libraries)]}"
   local arguments_include="-I${path_build}includes"
   local arguments_shared="-L${path_build}libraries/shared"
   local arguments_static="-L${path_build}libraries/static"

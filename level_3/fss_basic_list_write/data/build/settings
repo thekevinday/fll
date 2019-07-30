@@ -9,7 +9,10 @@ version_micro 3
 
 build_compiler gcc
 build_linker ar
-build_libraries -lfll_colors -lfll_fss  -lfl_fss -lfl_file -lfl_errors -lfl_colors -lfl_console -lf_file -lf_print -lf_pipe -lf_conversion -lf_console -lf_memory -lc
+build_libraries -lc
+build_libraries_fll -lfll_colors -lfll_fss -lfl_fss -lfl_file -lfl_errors -lfl_colors -lfl_console -lf_file -lf_print -lf_pipe -lf_conversion -lf_console -lf_memory
+#build_libraries_fll-level -lfll_2 -lfll_1 -lfll_0
+#build_libraries_fll-monolithic -lfll
 build_sources_library fss_basic_list_write.c
 build_sources_program main.c
 build_sources_headers fss_basic_list_write.h

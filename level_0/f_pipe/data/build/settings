@@ -10,6 +10,7 @@ version_micro 3
 build_compiler gcc
 build_linker ar
 build_libraries -lc
+build_libraries_fll
 build_sources_library pipe.c
 build_sources_program
 build_sources_headers pipe.h
