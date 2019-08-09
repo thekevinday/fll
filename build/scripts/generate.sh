@@ -29,15 +29,18 @@ generate_main(){
   local c_prefix="\\"
 
   local variables=
-  local settings_file=data/build/settings
+  local settings_file=
+  local settings_defines=
   local operation=
   local operation_failure=
   local path_build=build/
+  local path_build_settings=
   local path_c=sources/c/
-  local path_s=data/settings/
+  local path_settings=data/settings/
   local path_bash=sources/bash/
   local project_built=
   local work_directory=
+  local defines_override=
 
   local enable_shared=
   local enable_static=
@@ -62,17 +65,19 @@ generate_main(){
         elif [[ $p == "-b" || $p == "--build" ]] ; then
           grab_next=path_build
         elif [[ $p == "-s" || $p == "--settings" ]] ; then
-          grab_next=settings_file
-        elif [[ $p == "-B" || $p == "--bash_path" ]] ; then
+          grab_next=build_settings
+        elif [[ $p == "-B" || $p == "--path_bash" ]] ; then
           grab_next=path_bash
-        elif [[ $p == "-c" || $p == "--c_path" ]] ; then
+        elif [[ $p == "-c" || $p == "--path_c" ]] ; then
           grab_next=path_c
-        elif [[ $p == "-S" || $p == "--s_path" ]] ; then
-          grab_next=path_s
+        elif [[ $p == "-S" || $p == "--path_settings" ]] ; then
+          grab_next=path_settings
         elif [[ $p == "-p" || $p == "--project" ]] ; then
           grab_next=project_built
         elif [[ $p == "-w" || $p == "--work_directory" ]] ; then
           grab_next=work_directory
+        elif [[ $p == "-d" || $p == "--defines" ]] ; then
+          grab_next=defines_override
         elif [[ $p == "--enable-shared" ]] ; then
           enable_shared="yes"
         elif [[ $p == "--disable-shared" ]] ; then
@@ -89,18 +94,20 @@ generate_main(){
       else
         if [[ $grab_next == "path_build" ]] ; then
           path_build=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
-        elif [[ $grab_next == "settings_file" ]] ; then
-          settings_file=$(echo $p | sed -e 's|^//*|/|' -e 's|^//*|/|')
+        elif [[ $grab_next == "build_settings" ]] ; then
+          path_build_settings=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "path_bash" ]] ; then
           path_bash=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "path_c" ]] ; then
           path_c=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
-        elif [[ $grab_next == "path_s" ]] ; then
-          path_s=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+        elif [[ $grab_next == "path_settings" ]] ; then
+          path_settings=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "project_built" ]] ; then
           project_built="-$(echo $p | sed -e 's|/*$||')"
         elif [[ $grab_next == "work_directory" ]] ; then
           work_directory=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+        elif [[ $grab_next == "defines_override" ]] ; then
+          defines_override="$p"
         fi
 
         grab_next=
@@ -109,6 +116,13 @@ generate_main(){
 
     p=
   fi
+
+  if [[ $path_build_settings == "" ]] ; then
+    path_build_settings=data/build/
+  fi
+
+  settings_file=${path_build_settings}settings
+  settings_defines=${path_build_settings}defines
 
   generate_handle_colors
 
@@ -129,6 +143,11 @@ generate_main(){
 
   if [[ $work_directory != "" && ! -d $work_directory ]] ; then
     echo -e "${c_error}ERROR: the work directory $c_notice$work_directory$c_error is not a valid directory.$c_reset"
+    exit 1
+  fi
+
+  if [[ $defines_override != "" && $(echo "$defines_override" | grep -s -o "[^_[:alnum:][:space:]]") != "" ]] ; then
+    echo -e "${c_error}ERROR: the defines override $c_notice$defines_override$c_error includes invalid characters, only alphanumeric, whitespace, and underscore are allowed.$c_reset"
     exit 1
   fi
 
@@ -200,12 +219,13 @@ generate_help(){
   echo
   echo -e "${c_highlight}Generate Options:$c_reset"
   echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}           Custom build directory"
-  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}        Custom build settings file"
-  echo -e " -${c_important}B$c_reset, --${c_important}bash_path${c_reset}       Custom path to the bash source files"
-  echo -e " -${c_important}c$c_reset, --${c_important}c_path${c_reset}          Custom path to the c source files"
-  echo -e " -${c_important}S$c_reset, --${c_important}s_path${c_reset}          Custom path to the settings files"
+  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}        Custom build settings directory"
+  echo -e " -${c_important}B$c_reset, --${c_important}path_bash${c_reset}       Custom path to the bash source files"
+  echo -e " -${c_important}c$c_reset, --${c_important}path_c${c_reset}          Custom path to the c source files"
+  echo -e " -${c_important}S$c_reset, --${c_important}path_settings${c_reset}   Custom path to the settings files"
   echo -e " -${c_important}p$c_reset, --${c_important}project${c_reset}         Project name for storing built status"
   echo -e " -${c_important}w$c_reset, --${c_important}work_directory${c_reset}  Use includes/libraries from this directory instead of system"
+  echo -e " -${c_important}d$c_reset, --${c_important}defines${c_reset}         Override custom defines with these defines"
   echo
   echo -e "${c_highlight}Special Options:$c_reset"
   echo -e " --${c_important}enable-shared${c_reset}   Forcibly do install shared files"
@@ -234,11 +254,14 @@ generate_id(){
     "build_sources_settings") echo -n 12;;
     "build_shared") echo -n 13;;
     "build_static") echo -n 14;;
-    "flags_all") echo -n 15;;
-    "flags_shared") echo -n 16;;
-    "flags_static") echo -n 17;;
-    "flags_library") echo -n 18;;
-    "flags_program") echo -n 19;;
+    "defines_all") echo -n 15;;
+    "defines_shared") echo -n 16;;
+    "defines_static") echo -n 17;;
+    "flags_all") echo -n 18;;
+    "flags_shared") echo -n 19;;
+    "flags_static") echo -n 20;;
+    "flags_library") echo -n 21;;
+    "flags_program") echo -n 22;;
   esac
 }
 
@@ -247,8 +270,8 @@ generate_load_settings(){
   local i=
   local key=
 
-  if [[ $settings_file == "" ]] ; then
-    echo -e "${c_error}ERROR: no settings file has been defined.$c_reset"
+  if [[ ! -d $path_build_settings ]] ; then
+    echo -e "${c_error}ERROR: no build settings directory $c_notice$path_build_settings$c_error could not be found or is not a valid directory.$c_reset"
     failure=1
   elif [[ ! -f $settings_file ]] ; then
     echo -e "${c_error}ERROR: no settings file $c_notice$settings_file$c_error could not be found or is not a valid file.$c_reset"
@@ -260,7 +283,7 @@ generate_load_settings(){
     exit $failure
   fi
 
-  for i in project_name project_level version_major version_minor version_micro build_compiler build_linker build_libraries build_libraries_fll build_sources_library build_sources_program build_sources_headers build_sources_settings build_shared build_static flags_all flags_shared flags_static flags_library flags_program ; do
+  for i in project_name project_level version_major version_minor version_micro build_compiler build_linker build_libraries build_libraries_fll build_sources_library build_sources_program build_sources_headers build_sources_settings build_shared build_static defines_all defines_shared defines_static flags_all flags_shared flags_static flags_library flags_program ; do
     variables[$(generate_id $i)]=$(grep -s -o "^[[:space:]]*$i\>.*$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 
@@ -322,6 +345,9 @@ generate_operation_build(){
   local sources_headers=${variables[$(generate_id build_sources_headers)]}
   local sources_settings=${variables[$(generate_id build_sources_settings)]}
   local sources=
+  local defines=${variables[$(generate_id defines_all)]}
+  local defines_shared=${variables[$(generate_id defines_shared)]}
+  local defines_static=${variables[$(generate_id defines_static)]}
   local flags_all=${variables[$(generate_id flags_all)]}
   local flags_shared=${variables[$(generate_id flags_shared)]}
   local flags_static=${variables[$(generate_id flags_static)]}
@@ -334,6 +360,33 @@ generate_operation_build(){
     flags_all="-I${work_directory}includes/ $flags_all"
     flags_shared="-L${work_directory}libraries/shared/ $flags_shared"
     flags_static="-L${work_directory}libraries/static/ $flags_static"
+  fi
+
+  if [[ $defines_override != "" ]] ; then
+    defines="$defines_override"
+    defines_shared=
+    defines_static=
+  fi
+
+  if [[ $defines != "" ]] ; then
+    flags_all="$flags_all "
+    for i in $defines ; do
+      flags_all="${flags_all}-D$i "
+    done
+  fi
+
+  if [[ $defines_shared != "" ]] ; then
+    flags_shared="$flags_shared "
+    for i in $defines_shared ; do
+      flags_shared="${flags_shared}-D$i "
+    done
+  fi
+
+  if [[ $defines_static != "" ]] ; then
+    flags_static="$flags_static "
+    for i in $defines_static ; do
+      flags_static="${flags_static}-D$i "
+    done
   fi
 
   if [[ $enable_shared == "yes" ]] ; then
@@ -356,7 +409,7 @@ generate_operation_build(){
 
   if [[ $sources_settings != "" ]] ; then
     for i in $sources_settings ; do
-      cp -vR $path_s$i ${path_build}settings/ || failure=1
+      cp -vR $path_settings$i ${path_build}settings/ || failure=1
     done
   fi
 

@@ -20,6 +20,10 @@ build_sources_settings default-blacklist default-whitelist example-device-firewa
 build_shared yes
 build_static yes
 
+defines_all _en_firewall_debug_
+defines_static
+defines_shared
+
 flags_all -z now
 flags_shared
 flags_static

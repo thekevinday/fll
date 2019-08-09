@@ -1,0 +1,3 @@
+# fss-0000
+
+_en_BUG_strnlen_ (deprecated) work-around bug where strnlen is not defined on some systems.
