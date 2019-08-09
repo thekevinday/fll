@@ -20,6 +20,10 @@ build_sources_headers return_code.h
 build_shared yes
 build_static yes
 
+defines_all
+defines_static
+defines_shared
+
 flags_all -z now
 flags_shared
 flags_static

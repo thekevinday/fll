@@ -17,6 +17,10 @@ build_sources_headers fss_basic.h fss_basic_list.h fss_extended.h fss_errors.h
 build_shared yes
 build_static yes
 
+defines_all
+defines_static
+defines_shared
+
 flags_all -z now
 flags_shared
 flags_static
