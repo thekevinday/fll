@@ -736,7 +736,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
                     #ifdef _en_firewall_debug_
                       if (data.parameters[firewall_parameter_debug].result == f_console_result_found) {
                         fl_print_color_code(f_standard_debug, data.context.warning);
-                        fprintf(f_standard_debug, "DEBUG: %s ", current_tool);
+                        fprintf(f_standard_debug, "%s ", current_tool);
 
                         for (f_string_length i = 0; i < arguments.used; i++) {
                           fprintf(f_standard_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
@@ -806,7 +806,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
           #ifdef _en_firewall_debug_
             if (data.parameters[firewall_parameter_debug].result == f_console_result_found) {
               fl_print_color_code(f_standard_debug, data.context.warning);
-              fprintf(f_standard_debug, "DEBUG: %s ", current_tool);
+              fprintf(f_standard_debug, "%s ", current_tool);
 
               for (f_string_length i = 0; i < arguments.used; i++) {
                 fprintf(f_standard_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
@@ -1047,7 +1047,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
         #ifdef _en_firewall_debug_
           if (data->parameters[firewall_parameter_debug].result == f_console_result_found) {
             fl_print_color_code(f_standard_debug, data->context.warning);
-            fprintf(f_standard_debug, "DEBUG: %s ", firewall_tool_iptables);
+            fprintf(f_standard_debug, "%s ", firewall_tool_iptables);
 
             for (f_string_length i = 0; i < arguments.used; i++) {
               fprintf(f_standard_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
@@ -1066,7 +1066,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
           #ifdef _en_firewall_debug_
             if (data->parameters[firewall_parameter_debug].result == f_console_result_found) {
               fl_print_color_code(f_standard_debug, data->context.warning);
-              fprintf(f_standard_debug, "DEBUG: %s ", firewall_tool_ip6tables);
+              fprintf(f_standard_debug, "%s ", firewall_tool_ip6tables);
 
               for (f_string_length i = 0; i < arguments.used; i++) {
                 fprintf(f_standard_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
@@ -1153,7 +1153,7 @@ f_return_status firewall_delete_chains(const firewall_data data) {
     #ifdef _en_firewall_debug_
       if (data.parameters[firewall_parameter_debug].result == f_console_result_found) {
         fl_print_color_code(f_standard_debug, data.context.warning);
-        fprintf(f_standard_debug, "DEBUG: %s ", tools[i]);
+        fprintf(f_standard_debug, "%s ", tools[i]);
 
         for (f_string_length i = 0; i < arguments.used; i++) {
           fprintf(f_standard_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
@@ -1211,7 +1211,7 @@ f_return_status firewall_delete_chains(const firewall_data data) {
     #ifdef _en_firewall_debug_
       if (data.parameters[firewall_parameter_debug].result == f_console_result_found) {
         fl_print_color_code(f_standard_debug, data.context.warning);
-        fprintf(f_standard_debug, "DEBUG: %s ", tools[i]);
+        fprintf(f_standard_debug, "%s ", tools[i]);
 
         for (f_string_length j = 0; j < arguments.used; j++) {
           fprintf(f_standard_debug, "%.*s ", arguments.array[j].used, arguments.array[j].string);
@@ -1290,7 +1290,7 @@ f_return_status firewall_default_lock(const firewall_data data) {
       #ifdef _en_firewall_debug_
         if (data.parameters[firewall_parameter_debug].result == f_console_result_found) {
           fl_print_color_code(f_standard_debug, data.context.warning);
-          fprintf(f_standard_debug, "DEBUG: %s ", tools[j]);
+          fprintf(f_standard_debug, "%s ", tools[j]);
 
           for (f_string_length k = 0; k < arguments.used; k++) {
             fprintf(f_standard_debug, "%.*s ", arguments.array[k].used, arguments.array[k].string);
