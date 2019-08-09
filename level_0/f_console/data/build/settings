@@ -14,6 +14,7 @@ build_libraries_fll
 build_sources_library console.c
 build_sources_program
 build_sources_headers console.h
+build_sources_bash
 build_shared yes
 build_static yes
 

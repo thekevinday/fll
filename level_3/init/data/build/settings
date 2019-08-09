@@ -16,6 +16,7 @@ build_libraries_fll -lfll_colors -lfll_fss -lfll_execute -lfl_directory -lfl_col
 build_sources_library init.c private-init.c
 build_sources_program main.c
 build_sources_headers init.h
+build_sources_bash
 build_shared yes
 build_static yes
 

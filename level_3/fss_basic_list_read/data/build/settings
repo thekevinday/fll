@@ -16,6 +16,7 @@ build_libraries_fll -lfll_colors -lfll_fss -lfll_execute -lfl_directory -lfl_col
 build_sources_library fss_basic_list_read.c
 build_sources_program main.c
 build_sources_headers fss_basic_list_read.h
+build_sources_bash
 build_shared yes
 build_static yes
 
