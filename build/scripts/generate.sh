@@ -510,7 +510,7 @@ generate_operation_build(){
 generate_operation_clean(){
   local i=
 
-  for i in ${path_build}{includes,programs,libraries,bash,settings} ; do
+  for i in ${path_build}{includes,programs,libraries,objects,bash,settings} ; do
     if [[ -e $i ]] ; then
       rm -vRf $i
     fi
