@@ -15,6 +15,7 @@ build_sources_library
 build_sources_program 
 build_sources_headers strings.h
 build_sources_bash
+build_sources_settings
 build_shared yes
 build_static yes
 

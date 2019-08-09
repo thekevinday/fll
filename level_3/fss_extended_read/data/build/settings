@@ -17,6 +17,7 @@ build_sources_library fss_extended_read.c
 build_sources_program main.c
 build_sources_headers fss_extended_read.h
 build_sources_bash
+build_sources_settings
 build_shared yes
 build_static yes
 

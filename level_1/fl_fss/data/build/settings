@@ -15,6 +15,7 @@ build_sources_library fss.c fss_basic.c fss_basic_list.c fss_extended.c
 build_sources_program 
 build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_errors.h fss_extended.h fss_macro.h
 build_sources_bash
+build_sources_settings
 build_shared yes
 build_static yes
 
