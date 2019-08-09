@@ -17,6 +17,7 @@ build_sources_library return_code.c
 build_sources_library return_code.c
 build_sources_program main.c
 build_sources_headers return_code.h
+build_sources_bash
 build_shared yes
 build_static yes
 

@@ -16,6 +16,7 @@ build_libraries_fll -lfll_colors -lfll_fss -lfl_fss -lfl_errors -lfl_colors -lfl
 build_sources_library fss_return_code.c
 build_sources_program main.c
 build_sources_headers fss_return_code.h
+build_sources_bash
 build_shared yes
 build_static yes
 

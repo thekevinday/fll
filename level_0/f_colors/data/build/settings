@@ -11,9 +11,10 @@ build_compiler gcc
 build_linker ar
 build_libraries -lc 
 build_libraries_fll
-build_sources_library 
-build_sources_program 
-build_sources_headers colors.h 
+build_sources_library
+build_sources_program
+build_sources_headers colors.h
+build_sources_bash
 build_shared yes
 build_static yes
 

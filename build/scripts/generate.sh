@@ -37,7 +37,7 @@ generate_main(){
   local path_build_settings=
   local path_c=sources/c/
   local path_settings=data/settings/
-  local path_bash=sources/bash/
+  local path_bash=
   local project_built=
   local work_directory=
   local defines_override=
@@ -134,12 +134,13 @@ generate_main(){
 
   generate_load_settings
 
-  # TODO: enable when bash support is implemented
-  #if [[ ! -d $path_bash ]] ; then
-  #  echo -e "${c_error}ERROR: the bash path of $c_notice$path_bash$c_error is invalid.$c_reset"
-  #  generate_cleanup
-  #  exit 0
-  #fi
+  if [[ $path_bash == "" ]] ; then
+    path_bash=sources/bash/
+  elif [[ ! -d $path_bash ]] ; then
+    echo -e "${c_error}ERROR: the bash path of $c_notice$path_bash$c_error is not a valid directory.$c_reset"
+    generate_cleanup
+    exit 0
+  fi
 
   if [[ $work_directory != "" && ! -d $work_directory ]] ; then
     echo -e "${c_error}ERROR: the work directory $c_notice$work_directory$c_error is not a valid directory.$c_reset"
@@ -251,17 +252,18 @@ generate_id(){
     "build_sources_library") echo -n 9;;
     "build_sources_program") echo -n 10;;
     "build_sources_headers") echo -n 11;;
-    "build_sources_settings") echo -n 12;;
-    "build_shared") echo -n 13;;
-    "build_static") echo -n 14;;
-    "defines_all") echo -n 15;;
-    "defines_shared") echo -n 16;;
-    "defines_static") echo -n 17;;
-    "flags_all") echo -n 18;;
-    "flags_shared") echo -n 19;;
-    "flags_static") echo -n 20;;
-    "flags_library") echo -n 21;;
-    "flags_program") echo -n 22;;
+    "build_sources_bash") echo -n 12;;
+    "build_sources_settings") echo -n 13;;
+    "build_shared") echo -n 14;;
+    "build_static") echo -n 15;;
+    "defines_all") echo -n 16;;
+    "defines_shared") echo -n 17;;
+    "defines_static") echo -n 18;;
+    "flags_all") echo -n 19;;
+    "flags_shared") echo -n 20;;
+    "flags_static") echo -n 21;;
+    "flags_library") echo -n 22;;
+    "flags_program") echo -n 23;;
   esac
 }
 
@@ -300,7 +302,7 @@ generate_prepare_build(){
   local level=${variables[$(generate_id project_level)]}
   local alt=$1
 
-  mkdir -vp ${path_build}{includes,programs/{shared,static},libraries/{shared,static},objects,settings} || failure=1
+  mkdir -vp ${path_build}{includes,programs/{shared,static},libraries/{shared,static},objects,bash,settings} || failure=1
 
   if [[ $failure == "" && $level != "" ]] ; then
     mkdir -vp ${path_build}includes/level_$level || failure=1
@@ -343,6 +345,7 @@ generate_operation_build(){
   local sources_library=${variables[$(generate_id build_sources_library)]}
   local sources_program=${variables[$(generate_id build_sources_program)]}
   local sources_headers=${variables[$(generate_id build_sources_headers)]}
+  local sources_bash=${variables[$(generate_id build_sources_bash)]}
   local sources_settings=${variables[$(generate_id build_sources_settings)]}
   local sources=
   local defines=${variables[$(generate_id defines_all)]}
@@ -489,6 +492,12 @@ generate_operation_build(){
     fi
   fi
 
+  if [[ $failure == "" && $sources_bash != "" ]] ; then
+    for i in $sources_bash ; do
+      cp -vf $path_bash$i ${path_build}bash/ || failure=1
+    done
+  fi
+
   if [[ $failure != "" ]] ; then
     echo -e "${c_error}ERROR: failed to build.$c_reset"
     generate_cleanup
@@ -501,7 +510,7 @@ generate_operation_build(){
 generate_operation_clean(){
   local i=
 
-  for i in ${path_build}{includes,programs,libraries,settings} ; do
+  for i in ${path_build}{includes,programs,libraries,bash,settings} ; do
     if [[ -e $i ]] ; then
       rm -vRf $i
     fi
