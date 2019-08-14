@@ -7,7 +7,7 @@
  *
  * Provides error definitions.
  *
- * Warning: changing error codes will break abi, so recompile every file that includes and uses these error codes when this gets changed.
+ * Warning: changing error codes will break ABI, so recompile every file that includes and uses these error codes when this gets changed.
  */
 #ifndef _F_errors_h
 #define _F_errors_h
@@ -167,12 +167,16 @@ extern "C" {
   #define f_error_set_fine(status) status & f_error_bit_fine
 #endif // _di_f_error_masks_
 
-// use of an enumerator makes more sense here than explicitly defining every error code
+// use of an enumerator makes more sense here than explicitly defining every error code (or return code).
 enum {
   #ifndef _di_f_errors_booleans_
     f_false = 0,
     f_true,
   #endif // _di_f_errors_booleans_
+
+  #ifndef _di_f_errors_maybe_
+    f_maybe = 2,
+  #endif // _di_f_errors_maybe_
 
   #ifndef _di_f_errors_signals_
     f_signal_hangup = 1,
@@ -278,6 +282,7 @@ enum {
     f_invalid_value,      // similar to f_invalid_parameter, but the parameter value is invalid (example: an integer value representing aboolean and having a 3 as a value).
     f_invalid_buffer,
     f_invalid_process,
+    f_invalid_utf,
   #endif // _di_f_errors_invalid_
 
   #ifndef _di_f_errors_busy_
@@ -368,6 +373,7 @@ enum {
     f_file_reallocation_error,
     f_file_stat_error,
     f_file_error,
+    f_file_not_utf,
   #endif // _di_f_errors_file_
 
   // most of these are a guess until I get around to researching & implementing linux directory I/O
@@ -386,6 +392,7 @@ enum {
     f_directory_allocation_error,
     f_directory_reallocation_error,
     f_directory_error,
+    f_directory_not_utf,
   #endif // _di_f_errors_directory_
 
   #ifndef _di_f_errors_socket_
