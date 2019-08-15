@@ -183,7 +183,29 @@ extern "C" {
 #endif // _di_f_utf_substitute_
 
 /**
+ * Check to see if the entire byte block of the character is a UTF-8 BOM.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by maxWidth.
+ * @param maxWidth
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   f_true if a UTF-8 whitespace or substitute.
+ *   f_false if not a UTF-8 whitespace or substitute.
+ *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_is_bom_
+  extern f_return_status f_utf_is_bom(const f_string character, const f_u_short maxWidth);
+#endif // _di_f_utf_is_bom_
+
+/**
  * Check to see if the entire byte block of the character is a UTF-8 whitespace or substitute character.
+ *
+ * This will also return TRUE for the UTF-8 BOM.
  *
  * This does not check non-UTF-8 whitespace.
  *
@@ -195,7 +217,7 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 whitespace or substitute.
+ *   f_true if a UTF-8 whitespace, substitute, or UTF-8 BOM.
  *   f_false if not a UTF-8 whitespace or substitute.
  *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.

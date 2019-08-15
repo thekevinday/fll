@@ -4,6 +4,32 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_utf_is_bom_
+  f_return_status f_utf_is_bom(const f_string character, const f_u_short maxWidth) {
+    #ifndef _di_level_0_parameter_checking_
+      if (maxWidth < 1) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_u_short width = f_macro_utf_byte_width(*character);
+
+    if (width == 1) {
+      return f_false;
+    }
+
+    if (width > maxWidth) {
+      return f_error_set_error(f_maybe);
+    }
+
+    if (width == 3) {
+      if (!memcmp(character, f_utf_bom, width)) {
+        return f_true;
+      }
+    }
+
+    return f_false;
+  }
+#endif // _di_f_utf_is_bom_
+
 #ifndef _di_f_utf_is_space_
   f_return_status f_utf_is_space(const f_string character, const f_u_short maxWidth) {
     #ifndef _di_level_0_parameter_checking_
@@ -126,6 +152,10 @@ extern "C" {
       }
 
       if (!memcmp(character, f_utf_substitute_open_box_shouldered, width)) {
+        return f_true;
+      }
+
+      if (!memcmp(character, f_utf_bom, width)) {
         return f_true;
       }
 
