@@ -4,7 +4,7 @@
 #
 # The purpose of this script is to create release directories from the project source.
 # These release directories can then be used to compile the project or to package the project.
-# The dependencies of this script are: bash, chmod, grep, and sed.
+# The dependencies of this script are: basename, bash, chmod, grep, and sed.
 
 package_main(){
   local public_name="Simple FLL Project Package Script"
@@ -407,8 +407,8 @@ package_operation_level(){
       fi
     fi
 
-    if [[ -d ${package}data/build ]] ; then
-      cp -vR $path_build$level ${package}data
+    if [[ -d $path_build${level}/build ]] ; then
+      cp -vR $path_build${level}/build ${package}data/
     else
       cp -vR $path_build$level ${package}data/build
     fi
@@ -463,7 +463,7 @@ package_operation_level(){
       fi
     done
 
-    if [[ $falure != "" ]] ; then
+    if [[ $failure != "" ]] ; then
       break;
     fi
   done
@@ -477,13 +477,136 @@ package_operation_level(){
 package_operation_monolithic(){
   local failure=
   local name=
+  local level=
   local directory=
+  local subdirectory=
+  local pathname=
 
-  echo -e "${c_error}ERROR: monolithic build is not implemented.$c_reset"
-  package_cleanup
-  exit $failure
+  name="fll"
+  package="${path_destination}monolithic/${name}-${version}/"
 
-  # TODO
+  echo
+  echo -e "${c_highlight}Processing Package$c_reset (monolithic) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
+
+  if [[ ! -d ${path_build}monolithic ]] ; then
+    echo -e "${c_error}ERROR: build settings directory $c_notice${path_build}monolithic$c_error is invalid or missing.$c_reset"
+    package_cleanup
+    exit 1
+  fi
+
+  package_create_base_files
+
+  if [[ ! -d ${package}data/ ]] ; then
+    mkdir -v ${package}data/
+
+    if [[ $? -ne 0 ]] ; then
+      echo -e "${c_error}ERROR: failed to create directory $c_notice${package}data$c_error.$c_reset"
+      package_cleanup
+      exit 1
+    fi
+  fi
+
+  if [[ -d ${path_build}monolithic/build ]] ; then
+    cp -vR ${path_build}monolithic/build ${package}data
+  else
+    cp -vR ${path_build}monolithic ${package}data/build
+  fi
+
+  if [[ $? -ne 0 ]] ; then
+    echo -e "${c_error}ERROR: failed to move the directory $c_notice$path_build$level$c_error as $c_notice$path_build${level}build$c_error.$c_reset"
+    package_cleanup
+    exit 1
+  fi
+
+  if [[ ! -d ${package}sources/ ]] ; then
+    mkdir -v ${package}sources/
+
+    if [[ $? -ne 0 ]] ; then
+      echo -e "${c_error}ERROR: failed to create directory $c_notice${package}sources$c_error.$c_reset"
+      package_cleanup
+      exit 1
+    fi
+  fi
+
+  for level in level_0 level_1 level_2 ; do
+    for directory in $path_sources${level}/* ; do
+      for subdirectory in $directory/* ; do
+        pathname="$(basename $subdirectory)"
+
+        if [[ $pathname == "data" ]] ; then
+          if [[ ! -d ${package}data/$level ]] ; then
+            mkdir -vp ${package}data/$level
+
+            if [[ $? -ne 0 ]] ; then
+              echo -e "${c_error}ERROR: failed to create package data directory $c_notice${package}data/$level$c_error.$c_reset"
+              failure=1
+              break
+            fi
+          fi
+
+          cp -vR $subdirectory ${package}sources/data
+
+          if [[ $? -ne 0 ]] ; then
+            echo -e "${c_error}ERROR: failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/data$level$c_error.$c_reset"
+            failure=1
+            break
+          fi
+
+          rm -vRf ${package}sources/data/build/
+
+          if [[ $? -ne 0 ]] ; then
+            echo -e "${c_error}ERROR: failed to remove directory $c_notice${package}sources/data/build$c_error.$c_reset"
+            failure=1
+            break
+          fi
+
+          if [[ "$(ls ${package}sources/data)" != "" ]] ; then
+            cp -vR ${package}sources/data/* ${package}data/$level
+
+            if [[ $? -ne 0 ]] ; then
+              echo -e "${c_error}ERROR: failed to copy the data directory $c_notice${package}sources/data/$level/data$c_error to $c_notice${package}data/$level$c_error.$c_reset"
+              failure=1
+              break
+            fi
+          fi
+
+          rm -vRf ${package}sources/data
+
+          if [[ $? -ne 0 ]] ; then
+            echo -e "${c_error}ERROR: failed to remove directory $c_notice${package}sources/data$c_error.$c_reset"
+            failure=1
+            break
+          fi
+        else
+          if [[ ! -d ${package}sources/$pathname/$level ]] ; then
+            mkdir -vp ${package}sources/$pathname/$level
+
+            if [[ $? -ne 0 ]] ; then
+              echo -e "${c_error}ERROR: failed to create package sources directory $c_notice${package}sources/$pathname/$level$c_error.$c_reset"
+              failure=1
+              break
+            fi
+          fi
+
+          cp -vR $subdirectory/* ${package}sources/$pathname/$level
+
+          if [[ $? -ne 0 ]] ; then
+            echo -e "${c_error}ERROR: failed to copy files from sources directory $c_notice$subdirectory$c_error to $c_notice${package}sources/$pathname/$level$c_error.$c_reset"
+            failure=1
+            break
+          fi
+        fi
+      done
+
+      if [[ $failure != "" ]] ; then
+        break;
+      fi
+    done
+
+    if [[ $failure != "" ]] ; then
+      break;
+    fi
+  done
 
   if [[ $failure != "" ]] ; then
     package_cleanup

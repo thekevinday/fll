@@ -3,7 +3,7 @@
 # programmer: Kevin Day
 #
 # The purpose of this script is to provide a simple bootstrap tool to compile any part of the FLL project.
-# The dependencies of this script are: bash, grep, and sed.
+# The dependencies of this script are: bash, dirname, grep, and sed.
 
 generate_main(){
   local public_name="Simple FLL Project Make Script"
@@ -358,6 +358,7 @@ generate_operation_build(){
   local flags_program=${variables[$(generate_id flags_program)]}
   local i=
   local alt=$1
+  local directory=
 
   if [[ $work_directory != "" ]] ; then
     flags_all="-I${work_directory}includes/ $flags_all"
@@ -404,22 +405,88 @@ generate_operation_build(){
     static="no"
   fi
 
-  if [[ $shared != "yes" && $static != "yes" ]] ;then
+  if [[ $shared != "yes" && $static != "yes" ]] ; then
     echo -e "${c_error}ERROR: Cannot Build, either build_shared or build_static must be set to 'yes'.$c_reset"
     generate_cleanup
     exit -1
   fi
 
+  for i in $sources_library ; do
+    if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
+      echo -e "${c_error}ERROR: Cannot Build, invalid source_library path provided: '$i'.$c_reset"
+      generate_cleanup
+      exit -1
+    fi
+  done
+
+  for i in $sources_program ; do
+    if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
+      echo -e "${c_error}ERROR: Cannot Build, invalid sources_program path provided: '$i'.$c_reset"
+      generate_cleanup
+      exit -1
+    fi
+  done
+
+  for i in $sources_headers ; do
+    if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
+      echo -e "${c_error}ERROR: Cannot Build, invalid sources_headers path provided: '$i'.$c_reset"
+      generate_cleanup
+      exit -1
+    fi
+  done
+
+  for i in $sources_bash ; do
+    if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
+      echo -e "${c_error}ERROR: Cannot Build, invalid sources_bash path provided: '$i'.$c_reset"
+      generate_cleanup
+      exit -1
+    fi
+  done
+
+  for i in $sources_settings ; do
+    if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
+      echo -e "${c_error}ERROR: Cannot Build, invalid sources_settings path provided: '$i'.$c_reset"
+      generate_cleanup
+      exit -1
+    fi
+  done
+
   if [[ $sources_settings != "" ]] ; then
     for i in $sources_settings ; do
-      cp -vR $path_settings$i ${path_build}settings/ || failure=1
+      directory=$(dirname $i)
+
+      if [[ $directory == "." ]] ; then
+        cp -vR $path_settings$i ${path_build}settings/ || failure=1
+      else
+        mkdir -vp ${path_build}settings/$directory || failure=1
+
+        if [[ $failure == "" ]] ; then
+          cp -vR $path_settings$i ${path_build}settings/${directory}/ || failure=1
+        fi
+      fi
     done
   fi
 
   if [[ $failure == "" && $sources_headers != "" ]] ; then
-    for i in $sources_headers ; do
-      cp -vf $path_c$i ${path_build}includes/level_$level/ || failure=1
-    done
+    if [[ $level == "" ]] ; then
+      for i in $sources_headers ; do
+        directory=$(dirname $i)
+
+        if [[ $directory == "." ]] ; then
+          cp -vf $path_c$i ${path_build}includes/ || failure=1
+        else
+          mkdir -vp ${path_build}includes/$directory || failure=1
+
+          if [[ $failure == "" ]] ; then
+            cp -vf $path_c$i ${path_build}includes/$i || failure=1
+          fi
+        fi
+      done
+    else
+      for i in $sources_headers ; do
+        cp -vf $path_c$i ${path_build}includes/level_$level/ || failure=1
+      done
+    fi
   fi
 
   if [[ $failure == "" && $shared == "yes" ]] ; then
@@ -459,6 +526,17 @@ generate_operation_build(){
     sources=
     if [[ $sources_library != "" ]] ; then
       for i in $sources_library ; do
+        directory=$(dirname $i)
+
+        if [[ $directory != "." && ! -d ${path_build}objects/$directory ]] ; then
+          mkdir -vp ${path_build}objects/$directory
+
+          if [[ $? -ne 0 ]] ; then
+            failure=1
+            break;
+          fi
+        fi
+
         sources="$sources${path_build}objects/$i.o "
 
         echo $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments_include $flags_all $arguments $flags_static $flags_library
@@ -494,7 +572,17 @@ generate_operation_build(){
 
   if [[ $failure == "" && $sources_bash != "" ]] ; then
     for i in $sources_bash ; do
-      cp -vf $path_bash$i ${path_build}bash/ || failure=1
+      directory=$(dirname $i)
+
+      if [[ $directory == "." ]] ; then
+        cp -vf $path_bash$i ${path_build}bash/ || failure=1
+      else
+        mkdir -vp ${path_build}bash/$directory || failure=1
+
+        if [[ $failure == "" ]] ; then
+          cp -vf $path_bash$i ${path_build}bash/${directory}/ || failure=1
+        fi
+      fi
     done
   fi
 
