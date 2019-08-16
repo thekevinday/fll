@@ -7,19 +7,23 @@
  *
  * Provide means to connect to and use sockets.
  */
-#ifndef _F_socket_h
-#define _F_socket_h
+#ifndef _FL_socket_h
+#define _FL_socket_h
 
 // libc includes
 #include <malloc.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/un.h>
+#include <unistd.h>
 
 // fll includes
 #include <level_0/errors.h>
 #include <level_0/strings.h>
 #include <level_0/types.h>
+#include <level_0/socket.h>
 
 #ifdef __cplusplus
 extern "C"{
@@ -29,7 +33,7 @@ extern "C"{
   /**
    * bind a socket.
    */
-  extern f_return_status fl_socket_file_bind(const f_string socket_path, f_socket_id *socket_id, f_socket_address *socket_address);
+  extern f_return_status fl_socket_file_bind(const f_string socket_path, f_socket_id *socket_id, struct sockaddr_un *socket_address);
 #endif // _di_fl_socket_file_bind_
 
 #ifndef _di_fl_socket_listen_
@@ -52,4 +56,4 @@ extern "C"{
 } // extern "C"
 #endif
 
-#endif // _F_socket_h
+#endif // _FL_socket_h

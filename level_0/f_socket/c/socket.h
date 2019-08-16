@@ -14,7 +14,6 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
 
 // fll includes
 #include <level_0/errors.h>
@@ -26,7 +25,6 @@ extern "C"{
 #endif
 
 #ifndef _di_f_socket_types_
-  #define f_socket_address  struct sockaddr_un
   #define f_socket_id       f_s_int
   #define f_socket_close_id f_u_short
 

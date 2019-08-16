@@ -1,16 +1,16 @@
-#include <level_0/socket.h>
+#include <level_1/socket.h>
 
 #ifdef __cplusplus
 extern "C"{
 #endif
 
 #ifndef _di_fl_socket_file_bind_
-  f_return_status fl_socket_file_bind(const f_string socket_path, f_socket_id *socket_id, f_socket_address *socket_address) {
-    memset(&socket_address, 0, structure_socket_length);
-    socket_address.sun_family = SOCKET_FAMILY;
-    strncpy(socket_address.sun_path, socket_path, sizeof(socket_address.sun_path) - 1);
+  f_return_status fl_socket_file_bind(const f_string socket_path, f_socket_id *socket_id, struct sockaddr_un *socket_address) {
+    memset(&socket_address, 0, sizeof(struct sockaddr_un));
+    socket_address->sun_family = AF_UNIX;
+    strncpy(socket_address->sun_path, socket_path, sizeof(socket_address->sun_path) - 1);
 
-    if (bind(*socket_id, (f_socket_address *) socket_address, structure_socket_length) < 0) {
+    if (bind(*socket_id, (struct sockaddr *) socket_address, sizeof(struct sockaddr_un)) < 0) {
       if (errno == EACCES) {
         return f_access_denied;
       }
@@ -77,7 +77,7 @@ extern "C"{
 
 #ifndef _di_fl_socket_close_client_
   // terminate a socket connection.
-  f_return_status fl_socket_close_client(const f_socket_id socket_id_client, const f_socket_close_id close_action = f_socket_close_fast) {
+  f_return_status fl_socket_close_client(const f_socket_id socket_id_client, const f_socket_close_id close_action) {
     f_u_int error_code = 0;
 
     if (close_action == f_socket_close_fast) {
@@ -98,22 +98,22 @@ extern "C"{
     }
 
     if (error_code > 0) {
-      if (result == EBADF) {
+      if (error_code == EBADF) {
         return f_file_descriptor_error;
       }
-      else if (result == EINVAL) {
+      else if (error_code == EINVAL) {
         return f_invalid_value;
       }
-      else if (result == ENOTCONN) {
+      else if (error_code == ENOTCONN) {
         return f_not_connected;
       }
-      else if (result == ENOTSOCK) {
+      else if (error_code == ENOTSOCK) {
         return f_invalid_socket;
       }
-      else if (result == EINTR) {
+      else if (error_code == EINTR) {
         return f_interrupted;
       }
-      else if (result == EBADF) {
+      else if (error_code == EBADF) {
         return f_input_output_error;
       }
 
