@@ -72,6 +72,8 @@ extern "C" {
  * The f_macro_utf_byte_is_* macros are used to determine a width of the character (either 1, 2, 3, or 4, respectively).
  *
  * The f_macro_utf_byte_width macro determines a width of the character.
+ *
+ * The f_macro_utf_byte_width_is is identical to f_macro_utf_byte_width, except it returns 0 when character is not UTF-8.
  */
 #ifndef _di_f_utf_byte_
   #define f_utf_byte_1 0x80 // 1000 0000
@@ -91,7 +93,8 @@ extern "C" {
   #define f_macro_utf_byte_is_3(character) ((character & f_utf_byte_off_3) == f_utf_byte_3) // (1110 xxxx & 1111 0000) == 1110 0000
   #define f_macro_utf_byte_is_4(character) ((character & f_utf_byte_off_4) == f_utf_byte_4) // (1111 0xxx & 1111 1000) == 1111 0000
 
-  #define f_macro_utf_byte_width(character) (!f_macro_utf_byte_is(character) || f_macro_utf_byte_is_1(character)) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4))
+  #define f_macro_utf_byte_width(character)    (!f_macro_utf_byte_is(character) || f_macro_utf_byte_is_1(character)) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4))
+  #define f_macro_utf_byte_width_is(character) (f_macro_utf_byte_is(character) ? (f_macro_utf_byte_is_1(character) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4))) : 0)
 #endif // _di_f_utf_byte_
 
 /**
@@ -187,8 +190,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by maxWidth.
- * @param maxWidth
+ *   There must be enough space allocated to compare against, as limited by max_width.
+ * @param max_width
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -199,31 +202,29 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_bom_
-  extern f_return_status f_utf_is_bom(const f_string character, const f_u_short maxWidth);
+  extern f_return_status f_utf_is_bom(const f_string character, const f_u_short max_width);
 #endif // _di_f_utf_is_bom_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 whitespace or substitute character.
  *
- * This will also return TRUE for the UTF-8 BOM.
- *
  * This does not check non-UTF-8 whitespace.
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by maxWidth.
- * @param maxWidth
+ *   There must be enough space allocated to compare against, as limited by max_width.
+ * @param max_width
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 whitespace, substitute, or UTF-8 BOM.
+ *   f_true if a UTF-8 whitespace or substitute.
  *   f_false if not a UTF-8 whitespace or substitute.
  *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_space_
-  extern f_return_status f_utf_is_space(const f_string character, const f_u_short maxWidth);
+  extern f_return_status f_utf_is_space(const f_string character, const f_u_short max_width);
 #endif // _di_f_utf_is_space_
 
 /**
@@ -233,8 +234,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by maxWidth.
- * @param maxWidth
+ *   There must be enough space allocated to compare against, as limited by max_width.
+ * @param max_width
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -245,7 +246,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_substitute_
-  extern f_return_status f_utf_is_substitute(const f_string character, const f_u_short maxWidth);
+  extern f_return_status f_utf_is_substitute(const f_string character, const f_u_short max_width);
 #endif // _di_f_utf_is_substitute_
 
 /**
@@ -255,8 +256,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by maxWidth.
- * @param maxWidth
+ *   There must be enough space allocated to compare against, as limited by max_width.
+ * @param max_width
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -267,7 +268,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_whitespace_
-  extern f_return_status f_utf_is_whitespace(const f_string character, const f_u_short maxWidth);
+  extern f_return_status f_utf_is_whitespace(const f_string character, const f_u_short max_width);
 #endif // _di_f_utf_is_whitespace_
 
 #ifdef __cplusplus

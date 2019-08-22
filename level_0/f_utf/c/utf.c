@@ -5,9 +5,9 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_is_bom_
-  f_return_status f_utf_is_bom(const f_string character, const f_u_short maxWidth) {
+  f_return_status f_utf_is_bom(const f_string character, const f_u_short max_width) {
     #ifndef _di_level_0_parameter_checking_
-      if (maxWidth < 1) return f_error_set_error(f_invalid_parameter);
+      if (max_width < 1) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_u_short width = f_macro_utf_byte_width(*character);
@@ -16,7 +16,7 @@ extern "C" {
       return f_false;
     }
 
-    if (width > maxWidth) {
+    if (width > max_width) {
       return f_error_set_error(f_maybe);
     }
 
@@ -31,9 +31,9 @@ extern "C" {
 #endif // _di_f_utf_is_bom_
 
 #ifndef _di_f_utf_is_space_
-  f_return_status f_utf_is_space(const f_string character, const f_u_short maxWidth) {
+  f_return_status f_utf_is_space(const f_string character, const f_u_short max_width) {
     #ifndef _di_level_0_parameter_checking_
-      if (maxWidth < 1) return f_error_set_error(f_invalid_parameter);
+      if (max_width < 1) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_u_short width = f_macro_utf_byte_width(*character);
@@ -42,7 +42,7 @@ extern "C" {
       return f_false;
     }
 
-    if (width > maxWidth) {
+    if (width > max_width) {
       return f_error_set_error(f_maybe);
     }
 
@@ -155,10 +155,6 @@ extern "C" {
         return f_true;
       }
 
-      if (!memcmp(character, f_utf_bom, width)) {
-        return f_true;
-      }
-
       return f_false;
     }
 
@@ -167,9 +163,9 @@ extern "C" {
 #endif // _di_f_utf_is_space_
 
 #ifndef _di_f_utf_is_substitute_
-  f_return_status f_utf_is_substitute(const f_string character, const f_u_short maxWidth) {
+  f_return_status f_utf_is_substitute(const f_string character, const f_u_short max_width) {
     #ifndef _di_level_0_parameter_checking_
-      if (maxWidth < 1) return f_error_set_error(f_invalid_parameter);
+      if (max_width < 1) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_u_short width = f_macro_utf_byte_width(*character);
@@ -178,7 +174,7 @@ extern "C" {
       return f_false;
     }
 
-    if (width > maxWidth) {
+    if (width > max_width) {
       return f_error_set_error(f_maybe);
     }
 
@@ -215,9 +211,9 @@ extern "C" {
 #endif // _di_f_utf_is_substitute_
 
 #ifndef _di_f_utf_is_whitespace_
-  f_return_status f_utf_is_whitespace(const f_string character, const f_u_short maxWidth) {
+  f_return_status f_utf_is_whitespace(const f_string character, const f_u_short max_width) {
     #ifndef _di_level_0_parameter_checking_
-      if (maxWidth < 1) return f_error_set_error(f_invalid_parameter);
+      if (max_width < 1) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_u_short width = f_macro_utf_byte_width(*character);
@@ -226,7 +222,7 @@ extern "C" {
       return f_false;
     }
 
-    if (width > maxWidth) {
+    if (width > max_width) {
       return f_error_set_error(f_maybe);
     }
 
