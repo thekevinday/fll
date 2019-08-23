@@ -61,6 +61,28 @@ extern "C" {
 #endif // _di_f_utf_bom_
 
 /**
+ * Provide a basic UTF-8 character.
+ *
+ * This is intended to be used so that a single path parameter can be passed to a function instead of an array of characters.
+ */
+#ifndef _di_f_utf_character_
+  typedef struct {
+    char byte_1;
+    char byte_2;
+    char byte_3;
+    char byte_4;
+  } f_utf_character;
+
+  #define f_utf_character_initialize \
+  { \
+    '\0', \
+    '\0', \
+    '\0', \
+    '\0', \
+  }
+#endif // _di_f_utf_char_
+
+/**
  * Define the UTF-8 bytes.
  *
  * The bytes are for checking a single 8-bit character value (specifically, checking the first bits).
@@ -93,7 +115,7 @@ extern "C" {
   #define f_macro_utf_byte_is_3(character) ((character & f_utf_byte_off_3) == f_utf_byte_3) // (1110 xxxx & 1111 0000) == 1110 0000
   #define f_macro_utf_byte_is_4(character) ((character & f_utf_byte_off_4) == f_utf_byte_4) // (1111 0xxx & 1111 1000) == 1111 0000
 
-  #define f_macro_utf_byte_width(character)    (!f_macro_utf_byte_is(character) || f_macro_utf_byte_is_1(character)) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4))
+  #define f_macro_utf_byte_width(character)    ((!f_macro_utf_byte_is(character) || f_macro_utf_byte_is_1(character)) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4)))
   #define f_macro_utf_byte_width_is(character) (f_macro_utf_byte_is(character) ? (f_macro_utf_byte_is_1(character) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4))) : 0)
 #endif // _di_f_utf_byte_
 
@@ -201,9 +223,31 @@ extern "C" {
  *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_utf_is_bom_
-  extern f_return_status f_utf_is_bom(const f_string character, const f_u_short max_width);
-#endif // _di_f_utf_is_bom_
+#ifndef _di_f_utf_is_bom_string_
+  extern f_return_status f_utf_is_bom_string(const f_string character, const f_u_short max_width);
+#endif // _di_f_utf_is_bom_string_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 printable character.
+ *
+ * This does not check non-UTF-8 graph.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by max_width.
+ * @param max_width
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   f_true if a UTF-8 graph.
+ *   f_false if not a UTF-8 graph.
+ *   f_maybe (with error bit) if this could be a graph but width is not long enough.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_is_graph_string_
+  extern f_return_status f_utf_is_graph_string(const f_string character, const f_u_short max_width);
+#endif // _di_f_utf_is_graph_string_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 whitespace or substitute character.
@@ -223,9 +267,9 @@ extern "C" {
  *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_utf_is_space_
-  extern f_return_status f_utf_is_space(const f_string character, const f_u_short max_width);
-#endif // _di_f_utf_is_space_
+#ifndef _di_f_utf_is_space_string_
+  extern f_return_status f_utf_is_space_string(const f_string character, const f_u_short max_width);
+#endif // _di_f_utf_is_space_string_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 whitespace substitute character.
@@ -245,9 +289,9 @@ extern "C" {
  *   f_maybe (with error bit) if this could be a substitute but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_utf_is_substitute_
-  extern f_return_status f_utf_is_substitute(const f_string character, const f_u_short max_width);
-#endif // _di_f_utf_is_substitute_
+#ifndef _di_f_utf_is_substitute_string_
+  extern f_return_status f_utf_is_substitute_string(const f_string character, const f_u_short max_width);
+#endif // _di_f_utf_is_substitute_string_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 general whitespace character.
@@ -267,9 +311,117 @@ extern "C" {
  *   f_maybe (with error bit) if this could be a whitespace but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_utf_is_whitespace_
-  extern f_return_status f_utf_is_whitespace(const f_string character, const f_u_short max_width);
-#endif // _di_f_utf_is_whitespace_
+#ifndef _di_f_utf_is_whitespace_string_
+  extern f_return_status f_utf_is_whitespace_string(const f_string character, const f_u_short max_width);
+#endif // _di_f_utf_is_whitespace_string_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 BOM.
+ *
+ * @param character
+ *   The UTF-8 character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 whitespace or substitute.
+ *   f_false if not a UTF-8 whitespace or substitute.
+ *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_is_bom_character_
+  extern f_return_status f_utf_is_bom_character(const f_utf_character character);
+#endif // _di_f_utf_is_bom_character_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 printable character.
+ *
+ * This does not check non-UTF-8 graph.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 graph.
+ *   f_false if not a UTF-8 graph.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_is_graph_character_
+  extern f_return_status f_utf_is_graph_character(const f_utf_character character);
+#endif // _di_f_utf_is_graph_character_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 whitespace or substitute character.
+ *
+ * This does not check non-UTF-8 whitespace.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 whitespace or substitute.
+ *   f_false if not a UTF-8 whitespace or substitute.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_is_space_character_
+  extern f_return_status f_utf_is_space_character(const f_utf_character character);
+#endif // _di_f_utf_is_space_character_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 whitespace substitute character.
+ *
+ * This does not check non-UTF-8 whitespace.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 substitute.
+ *   f_false if not a UTF-8 substitute.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_is_substitute_character_
+  extern f_return_status f_utf_is_substitute_character(const f_utf_character character);
+#endif // _di_f_utf_is_substitute_character_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 general whitespace character.
+ *
+ * This does not check non-UTF-8 whitespace.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 whitespace.
+ *   f_false if not a UTF-8 whitespace.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_is_whitespace_character_
+  extern f_return_status f_utf_is_whitespace_character(const f_utf_character character);
+#endif // _di_f_utf_is_whitespace_character_
+
+/**
+ * Convert a UTF-8 character, stored as a string (character buffer), to the specialized f_utf_character type.
+ *
+ * This will also convert ASCII characters.
+ *
+ * @param character_string
+ *   The character string to be converted to the f_utf_character type.
+ *   There must be enough space allocated to convert against, as limited by max_width.
+ * @param max_width
+ *   The maximum width available for converting.
+ *   Can be anything greater than 0.
+ * @param utf_character
+ *   The generated character of type f_utf_character.
+ *   This value may be cleared, even on error.
+ *
+ * @return
+ *   f_none if conversion was successful.
+ *   f_failure (with error bit) if width is not long enough to convert.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_string_to_character_
+  extern f_return_status f_utf_string_to_character(const f_string character_string, const f_u_short max_width, f_utf_character *utf_character);
+#endif // _di_f_utf_string_to_character_
 
 #ifdef __cplusplus
 } // extern "C"

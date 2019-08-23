@@ -6,6 +6,11 @@ extern "C" {
 
 #ifndef _di_f_print_string_
   f_return_status f_print_string(FILE *output, const f_string string, const f_string_length length) {
+    #ifndef _di_level_0_parameter_checking_
+      if (string == 0) return f_error_set_error(f_invalid_parameter);
+      if (length < 1) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     register f_string_length i = 0;
 
     for (; i < length; i++) {
@@ -23,7 +28,7 @@ extern "C" {
 #ifndef _di_f_print_dynamic_string_
   f_return_status f_print_dynamic_string(FILE *output, const f_dynamic_string buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used <= 0) return f_invalid_parameter;
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     register f_string_length i = 0;

@@ -4,6 +4,40 @@
 extern "C" {
 #endif
 
+#ifndef _di_fl_fss_decrement_buffer_
+  f_return_status fl_fss_decrement_buffer(const f_dynamic_string buffer, f_string_location *input, const f_string_length step) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
+      if (input->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (step < 1) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (input->start < 1) return f_none_on_eos;
+
+    f_string_length i = 0;
+    f_u_short width = 0;
+
+    do {
+      width = f_macro_utf_byte_width(buffer.string[input->start - 1]);
+
+      if (width > input->start) {
+        if (width > 1) {
+          return f_error_set_error(f_incomplete_utf_on_eos);
+        }
+
+        return f_none_on_eos;
+      }
+
+      i++;
+      input->start -= width;
+    } while (i < step);
+
+    return f_none;
+  }
+#endif // _di_fl_fss_decrement_buffer_
+
 #ifndef _di_fl_fss_identify_
   f_return_status fl_fss_identify(const f_dynamic_string buffer, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
@@ -13,17 +47,61 @@ extern "C" {
 
     register f_string_length i = 0;
 
-    // If this correctly follows the FSS specification, then this should be all that needs to be done (as well as atoh for ascii to hex)
-    if                   (buffer.string[i] == f_fss_type_header_open) {  i++;
-      if                 (buffer.string[i] == f_fss_type_header_part1) { i++;
-        if               (buffer.string[i] == f_fss_type_header_part2) { i++;
-          if             (buffer.string[i] == f_fss_type_header_part3) { i++;
-            if           (buffer.string[i] == f_fss_type_header_part4) { i++;
-              if         (buffer.string[i] == f_fss_type_header_part5) { i++;
-                if       (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
-                  if     (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
-                    if   (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
-                      if (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
+    // A single UTF-8 BOM is allowed to exist before the valid FSS identifier.
+    if (buffer.used > 3) {
+      f_status status = f_utf_is_bom_string(buffer.string, 4);
+
+      if (f_error_is_error(status)) {
+        return f_error_set_error(fl_fss_no_header);
+      }
+
+      if (status == f_true) {
+        i = f_utf_bom_length;
+
+        if (buffer.used < 10 + f_utf_bom_length) {
+          return fl_fss_no_header;
+        }
+      }
+      else if (buffer.used < 10) {
+        // "# fss-0000" without UTF-8 BOM is always 10 characters.
+        return fl_fss_no_header;
+      }
+    }
+    else {
+      return fl_fss_no_header;
+    }
+
+    // If this correctly follows the FSS specification, then this should be all that needs to be done (as well as atoh for ascii to hex).
+    // All characters used in the identifier are only in the ascii equivalents of the characters, any similarly looking character or number representing in UTF-8 is considered invalid.
+    if (buffer.string[i] == f_fss_type_header_open) {
+      i++;
+
+      if (buffer.string[i] == f_fss_type_header_part1) {
+        i++;
+
+        if (buffer.string[i] == f_fss_type_header_part2) {
+          i++;
+
+          if (buffer.string[i] == f_fss_type_header_part3) {
+            i++;
+
+            if (buffer.string[i] == f_fss_type_header_part4) {
+              i++;
+
+              if (buffer.string[i] == f_fss_type_header_part5) {
+                i++;
+
+                if (f_is_hexdigit(buffer.string[i]) == f_true) {
+                  i++;
+
+                  if (f_is_hexdigit(buffer.string[i]) == f_true) {
+                    i++;
+
+                    if (f_is_hexdigit(buffer.string[i]) == f_true) {
+                      i++;
+
+                      if (f_is_hexdigit(buffer.string[i]) == f_true) {
+                        i++;
 
                         f_string_location location = f_string_location_initialize;
 
@@ -55,16 +133,31 @@ extern "C" {
             }
           }
         }
-      // people can miss spaces, so lets accept in an attempt to interpret the file anyway, but return values at this point are to be flagged as invalid
       }
-      else if          (buffer.string[i] == f_fss_type_header_part2) { i++;
-        if             (buffer.string[i] == f_fss_type_header_part3) { i++;
-          if           (buffer.string[i] == f_fss_type_header_part4) { i++;
-            if         (buffer.string[i] == f_fss_type_header_part5) { i++;
-              if       (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
-                if     (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
-                  if   (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
-                    if (f_is_hexdigit(buffer.string[i]) == f_true) {   i++;
+      // people can miss spaces, so lets accept in an attempt to interpret the file anyway, but return values at this point are to be flagged as invalid
+      else if (buffer.string[i] == f_fss_type_header_part2) {
+        i++;
+
+        if (buffer.string[i] == f_fss_type_header_part3) {
+          i++;
+
+          if (buffer.string[i] == f_fss_type_header_part4) {
+            i++;
+
+            if (buffer.string[i] == f_fss_type_header_part5) {
+              i++;
+
+              if (f_is_hexdigit(buffer.string[i]) == f_true) {
+                i++;
+
+                if (f_is_hexdigit(buffer.string[i]) == f_true) {
+                  i++;
+
+                  if (f_is_hexdigit(buffer.string[i]) == f_true) {
+                    i++;
+
+                    if (f_is_hexdigit(buffer.string[i]) == f_true) {
+                      i++;
 
                       f_string_location location = f_string_location_initialize;
 
@@ -98,8 +191,8 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (file_information == 0) return f_error_set_error(f_invalid_parameter);
       if (header == 0) return f_error_set_error(f_invalid_parameter);
-      if (file_information->file == 0) return f_file_not_open;
-      if (ferror(file_information->file) != 0) return f_file_error;
+      if (file_information->file == 0) return f_error_set_error(f_file_not_open);
+      if (ferror(file_information->file) != 0) return f_error_set_error(f_file_error);
     #endif // _di_level_1_parameter_checking_
 
     clearerr(file_information->file);
@@ -112,7 +205,7 @@ extern "C" {
     {
       f_s_int seek_result = f_file_seek_from_beginning(file_information->file, 0);
 
-      if (seek_result != 0) return f_file_seek_error;
+      if (seek_result != 0) return f_error_set_error(f_file_seek_error);
     }
 
     // 1: Prepare the buffer to handle a size of f_fss_max_header_length
@@ -138,47 +231,251 @@ extern "C" {
   }
 #endif // _di_fl_fss_identify_file_
 
+#ifndef _di_fl_fss_increment_buffer_
+  f_return_status fl_fss_increment_buffer(const f_dynamic_string buffer, f_string_location *input, const f_string_length step) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
+      if (input->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (step < 1) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_string_length i = 0;
+    f_u_short width = 0;
+
+    do {
+      width = f_macro_utf_byte_width(buffer.string[input->start]);
+
+      if (input->start + width > input->stop) {
+        if (width > 1) {
+          return f_error_set_error(f_incomplete_utf_on_stop);
+        }
+
+        input->start += width;
+        return f_none_on_stop;
+      }
+      else if (input->start + width >= buffer.used) {
+        if (width > 1) {
+          return f_error_set_error(f_incomplete_utf_on_eos);
+        }
+
+        input->start += width;
+        return f_none_on_eos;
+      }
+
+      i++;
+      input->start += width;
+    } while (i < step);
+
+    return f_none;
+  }
+#endif // _di_fl_fss_increment_buffer_
+
+#ifndef _di_fl_fss_is_graph_
+  f_return_status fl_fss_is_graph(const f_dynamic_string buffer, const f_string_location input) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (input.start < 0) return f_error_set_error(f_invalid_parameter);
+      if (input.stop < input.start) return f_error_set_error(f_invalid_parameter);
+      if (input.start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_u_short utf_width = f_macro_utf_byte_width_is(buffer.string[input.start]);
+
+    if (utf_width == 0) {
+      if (isgraph(buffer.string[input.start])) {
+        return f_true;
+      }
+
+      return f_false;
+    }
+
+    f_string_length max_width = (input.stop - input.start) + 1;
+
+    if (max_width > buffer.used - input.start) {
+      max_width = buffer.used - input.start;
+    }
+
+    f_status status = f_utf_is_space_string(buffer.string + input.start, max_width);
+
+    if (f_error_is_error(status)) {
+      return status;
+    }
+
+    if (status == f_true) {
+      return f_false;
+    }
+
+    return f_true;
+  }
+#endif // _di_fl_fss_is_graph_
+
+#ifndef _di_fl_fss_is_space_
+  f_return_status fl_fss_is_space(const f_dynamic_string buffer, const f_string_location input) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (input.start < 0) return f_error_set_error(f_invalid_parameter);
+      if (input.stop < input.start) return f_error_set_error(f_invalid_parameter);
+      if (input.start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_u_short utf_width = f_macro_utf_byte_width_is(buffer.string[input.start]);
+
+    if (utf_width == 0) {
+      if (isspace(buffer.string[input.start])) {
+        return f_true;
+      }
+
+      return f_false;
+    }
+
+    f_string_length max_width = (input.stop - input.start) + 1;
+
+    if (max_width > buffer.used - input.start) {
+      max_width = buffer.used - input.start;
+    }
+
+    f_status status = f_utf_is_space_string(buffer.string + input.start, max_width);
+
+    if (f_error_is_error(status)) {
+      return status;
+    }
+
+    if (status == f_true) {
+      return f_true;
+    }
+
+    return f_false;
+  }
+#endif // _di_fl_fss_is_space_
+
+#ifndef _di_fl_fss_skip_past_whitespace_
+  f_return_status fl_fss_skip_past_whitespace(const f_dynamic_string buffer, f_string_location *input) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
+      if (input->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = f_none;
+    f_u_short max_width = 0;
+
+    while (input->start < buffer.used && input->start > input->stop) {
+      if (isgraph(buffer.string[input->start])) break;
+
+      if (buffer.string[input->start] == f_eol) break;
+
+      if (buffer.string[input->start] != f_fss_delimit_placeholder) {
+        max_width = (input->stop - input->start) + 1;
+
+        if (f_utf_is_space_string(buffer.string +input->start, max_width) != f_true) {
+          if (f_utf_is_bom_string(buffer.string + input->start, max_width) != f_true) {
+            break;
+          }
+        }
+      }
+
+      input->start++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_fss_skip_past_whitespace_
+
+#ifndef _di_fl_fss_skip_past_all_whitespace_
+  f_return_status fl_fss_skip_past_all_whitespace(const f_dynamic_string buffer, f_string_location *input) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
+      if (input->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = f_none;
+    f_u_short max_width = 0;
+
+    while (input->start < buffer.used && input->start > input->stop) {
+      if (isgraph(buffer.string[input->start])) break;
+
+      if (buffer.string[input->start] != f_fss_delimit_placeholder) {
+        max_width = (input->stop - input->start) + 1;
+
+        if (f_utf_is_space_string(buffer.string + input->start, max_width) != f_true) {
+          if (f_utf_is_bom_string(buffer.string + input->start, max_width) != f_true) {
+            break;
+          }
+        }
+      }
+
+      input->start++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_fss_skip_past_all_whitespace_
+
 #ifndef _di_fl_fss_shift_delimiters_
-f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, const f_string_location location) {
-  #ifndef _di_level_1_parameter_checking_
-    if (buffer->used <= 0) return f_error_set_error(f_invalid_parameter);
-    if (location.start < 0) return f_error_set_error(f_invalid_parameter);
-    if (location.stop < location.start) return f_error_set_error(f_invalid_parameter);
-    if (location.start >= buffer->used) return f_error_set_error(f_invalid_parameter);
-  #endif // _di_level_1_parameter_checking_
+  f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, const f_string_location input) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer->used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (input.start < 0) return f_error_set_error(f_invalid_parameter);
+      if (input.stop < input.start) return f_error_set_error(f_invalid_parameter);
+      if (input.start >= buffer->used) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
 
-  f_string_length position = 0;
-  f_string_length distance = 0;
+    f_string_length position = 0;
+    f_string_length distance = 0;
+    f_u_short utf_width = 0;
+    f_u_short i = 0;
 
-  position = location.start;
+    position = input.start;
 
-  while (position < buffer->used && position <= location.stop) {
-    if (buffer->string[position] == f_fss_delimit_placeholder) {
-      distance++;
+    while (position < buffer->used && position <= input.stop) {
+      if (buffer->string[position] == f_fss_delimit_placeholder) {
+        distance++;
+      }
+
+      // do not waste time trying to process what is only going to be replaced with a delimit placeholder
+      if (position + distance >= buffer->used || position + distance > input.stop) {
+        break;
+      }
+
+      utf_width = f_macro_utf_byte_width_is(buffer->string[position]);
+      if (utf_width > 1) {
+        // not enough space in buffer or in input range to process UTF-8 character.
+        if (position + utf_width >= buffer->used || position + utf_width > input.stop) {
+          return f_error_set_error(f_invalid_utf);
+        }
+
+        if (distance > 0) {
+          while (utf_width > 0) {
+            buffer->string[position] = buffer->string[position + distance];
+            utf_width--;
+            position++;
+          }
+        }
+      }
+      else {
+        // shift everything down one for each placeholder found
+        if (distance > 0) {
+          buffer->string[position] = buffer->string[position + distance];
+        }
+
+        position++;
+      }
     }
 
-    // do not waste time trying to process what is only going to be replaced with a delimit placeholder
-    if (position + distance >= buffer->used || position + distance > location.stop) {
-      break;
-    }
-
-    // shift everything down one for each placeholder found
     if (distance > 0) {
-      buffer->string[position] = buffer->string[position + distance];
+      while (position < buffer->used + distance && position <= input.stop) {
+        buffer->string[position] = f_fss_delimit_placeholder;
+        ++position;
+      }
     }
 
-    ++position;
+    return f_none;
   }
-
-  if (distance > 0) {
-    while (position < buffer->used + distance && position <= location.stop) {
-      buffer->string[position] = f_fss_delimit_placeholder;
-      ++position;
-    }
-  }
-
-  return f_none;
-}
 #endif // _di_fl_fss_shift_delimiters_
 
 #ifdef __cplusplus

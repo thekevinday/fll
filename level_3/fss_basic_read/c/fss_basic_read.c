@@ -323,31 +323,37 @@ extern "C" {
       input.stop  = data->buffer.used - 1;
 
       status = fll_fss_basic_read(&data->buffer, &input, &data->objects, &data->contents);
-    }
 
-    if (f_error_is_error(status)) {
-      status = f_error_set_fine(status);
+      if (f_error_is_error(status)) {
+        status = f_error_set_fine(status);
 
-      if (status == f_invalid_parameter) {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'", filename);
+        if (status == f_invalid_parameter) {
+          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'", filename);
+        }
+        else if (f_macro_test_for_allocation_errors(status)) {
+          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+        }
+        else if (status == f_incomplete_utf_on_stop) {
+          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occured on invalid UTF-8 character at stop position (at %d).", input.start);
+        }
+        else if (status == f_incomplete_utf_on_eos) {
+          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occured on invalid UTF-8 character at end of string (at %d).", input.start);
+        }
+        else {
+          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'", f_error_set_error(status), filename);
+        }
+
+        fss_basic_read_delete_data(data);
+        return f_error_set_error(status);
       }
-      else if (f_macro_test_for_allocation_errors(status)) {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
-      }
-      else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'", f_error_set_error(status), filename);
-      }
+      else if (f_macro_test_for_no_data_errors(status)) {
+        // clear buffers, then attempt the next file
+        f_delete_fss_contents(status2, data->contents);
+        f_delete_fss_objects(status2, data->objects);
+        f_delete_dynamic_string(status2, data->buffer);
 
-      fss_basic_read_delete_data(data);
-      return f_error_set_error(status);
-    }
-    else if (f_macro_test_for_no_data_errors(status)) {
-      // clear buffers, then attempt the next file
-      f_delete_fss_contents(status2, data->contents);
-      f_delete_fss_objects(status2, data->objects);
-      f_delete_dynamic_string(status2, data->buffer);
-
-      return f_error_set_warning(status);
+        return f_error_set_warning(status);
+      }
     }
 
     // now that the file has been read, process the objects and contents

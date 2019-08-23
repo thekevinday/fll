@@ -10,7 +10,7 @@ version_micro 0
 build_compiler gcc
 build_linker ar
 build_libraries -lc
-build_libraries_fll -lfl_errors -lfl_fss -lf_conversion -lf_file -lf_memory
+build_libraries_fll -lfl_errors -lfl_fss -lf_conversion -lf_file -lf_memory -lf_utf
 build_sources_library fss_basic.c fss_basic_list.c fss_extended.c fss_errors.c
 build_sources_program
 build_sources_headers fss_basic.h fss_basic_list.h fss_extended.h fss_errors.h

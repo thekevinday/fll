@@ -83,6 +83,9 @@ enum {
 
 #ifndef _di_f_fss_default_allocation_step_
   #define f_fss_default_allocation_step f_memory_default_allocation_step
+
+  // set to 4 to be UTF-8 friendlier.
+  #define f_fss_default_allocation_step_string 4
 #endif // _di_f_fss_default_allocation_step_
 
 #ifndef _di_f_fss_delimits_

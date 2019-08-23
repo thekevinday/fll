@@ -141,30 +141,29 @@ extern "C" {
 
 #ifndef _di_f_error_masks_
   // f_status is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
-  #define f_error_bit_error   32768
-  #define f_error_bit_fine    16383
-  #define f_error_bit_mask    49152
-  #define f_error_bit_signal  49152
-  #define f_error_bit_warning 16384
+  #define f_error_bit_error   0x8000 // 1000 0000 0000 0000
+  #define f_error_bit_signal  0xc000 // 1100 0000 0000 0000
+  #define f_error_bit_warning 0x4000 // 0100 0000 0000 0000
 
-  #define f_error_is_error(status)   status & f_error_bit_error
-  #define f_error_is_fine(status)    (status & f_error_bit_mask) == 0
-  #define f_error_is_problem(status) status & f_error_bit_mask
-  #define f_error_is_warning(status) status & f_error_bit_warning
+  #define f_error_mask_fine 0x3fff // 0011 1111 1111 1111
+  #define f_error_mask_code 0xc000 // 1100 0000 0000 0000
 
-  #define f_error_is_not_error(status)   (status & f_error_bit_error) == 0
-  #define f_error_is_not_signal(status)  (status & f_error_bit_signal) == 0
-  #define f_error_is_not_warning(status) (status & f_error_bit_warning) == 0
+  #define f_error_is_error(status)   (status & f_error_bit_error)
+  #define f_error_is_fine(status)    ((status & f_error_mask_code) == 0)
+  #define f_error_is_problem(status) ((status & f_error_bit_error) || (status & f_error_bit_warning))
+  #define f_error_is_signal(status)  (status & f_error_bit_signal)
+  #define f_error_is_warning(status) (status & f_error_bit_warning)
 
-  // use both error and warning bits to designate that the response is a signal.
-  #define f_error_is_signal(status) (status & f_error_bit_signal) == f_error_bit_signal
+  #define f_error_is_not_error(status)   ((status & f_error_bit_error) == 0)
+  #define f_error_is_not_signal(status)  ((status & f_error_bit_signal) == 0)
+  #define f_error_is_not_warning(status) ((status & f_error_bit_warning) == 0)
 
-  #define f_error_set_error(status)   status | f_error_bit_error
-  #define f_error_set_signal(status)  status | f_error_bit_signal
-  #define f_error_set_warning(status) status | f_error_bit_warning
+  #define f_error_set_error(status)   (status | f_error_bit_error)
+  #define f_error_set_signal(status)  (status | f_error_bit_signal)
+  #define f_error_set_warning(status) (status | f_error_bit_warning)
 
   // use f_error_set_fine to remove the error, warning, and signal bits
-  #define f_error_set_fine(status) status & f_error_bit_fine
+  #define f_error_set_fine(status) (status & f_error_mask_fine)
 #endif // _di_f_error_masks_
 
 // use of an enumerator makes more sense here than explicitly defining every error code (or return code).
@@ -173,10 +172,6 @@ enum {
     f_false = 0,
     f_true,
   #endif // _di_f_errors_booleans_
-
-  #ifndef _di_f_errors_maybe_
-    f_maybe = 2,
-  #endif // _di_f_errors_maybe_
 
   #ifndef _di_f_errors_signals_
     f_signal_hangup = 1,
@@ -249,6 +244,7 @@ enum {
 
   #ifndef _di_f_errors_basic_
     f_none = 197,          // start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
+    f_maybe,
     f_dummy,               // to only be used as a placeholder
     f_warn,                // warning
     f_critical,
@@ -343,6 +339,8 @@ enum {
     f_unterminated_group_on_eol,
     f_unterminated_group_on_eos,
     f_unterminated_group_on_stop,
+    f_incomplete_utf_on_eos,
+    f_incomplete_utf_on_stop,
   #endif // _di_f_errors_buffers_
 
   #ifndef _di_f_errors_allocation_

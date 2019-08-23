@@ -4,6 +4,8 @@
 extern "C" {
 #endif
 
+// TODO: this file needs to be rewriten with UTF-8 support.
+
 #ifndef _di_fl_rip_string_
   f_return_status fl_rip_string(const f_dynamic_string buffer, const f_string_location position, f_dynamic_string *results) {
     #ifndef _di_level_1_parameter_checking_

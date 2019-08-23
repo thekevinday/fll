@@ -203,7 +203,7 @@ extern "C" {
 
           if (data->parameters[fss_extended_write_parameter_partial].result == f_console_result_none) {
             if (buffer.used >= buffer.size) {
-              f_resize_dynamic_string(status, buffer, buffer.used + f_fss_default_allocation_step);
+              f_resize_dynamic_string(status, buffer, buffer.used + f_fss_default_allocation_step_string);
 
               if (f_error_is_error(status)) {
                 return status;
@@ -254,7 +254,7 @@ extern "C" {
 
           if (data->parameters[fss_extended_write_parameter_partial].result == f_console_result_none) {
             if (buffer.used >= buffer.size) {
-              f_resize_dynamic_string(status, buffer, buffer.used + f_fss_default_allocation_step);
+              f_resize_dynamic_string(status, buffer, buffer.used + f_fss_default_allocation_step_string);
 
               if (f_error_is_error(status)) {
                 return status;

@@ -19,6 +19,7 @@
 #include <level_0/memory.h>
 #include <level_0/strings.h>
 #include <level_0/types.h>
+#include <level_0/utf.h>
 
 #ifdef __cplusplus
 extern "C" {
