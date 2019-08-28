@@ -12,9 +12,8 @@ extern "C" {
 
     f_status status = f_none;
 
-
     if (serialized->used + value.used + 1 >= serialized->size) {
-      f_resize_dynamic_string(status, (*serialized), serialized->size + value.used + f_serialized_default_allocation_step);
+      f_resize_dynamic_string(status, (*serialized), serialized->size + value.used + 1);
 
       if (f_error_is_error(status)) return status;
     }
@@ -33,8 +32,8 @@ extern "C" {
   }
 #endif // _di_fl_serialize_simple_
 
-#ifndef _di_fl_unserialize_simple_
-  f_return_status fl_unserialize_simple(const f_dynamic_string serialized, f_string_locations *locations) {
+#ifndef _di_fl_unserialize_simple_map_
+  f_return_status fl_unserialize_simple_map(const f_dynamic_string serialized, f_string_locations *locations) {
     #ifndef _di_level_0_parameter_checking_
       if (locations == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -44,15 +43,20 @@ extern "C" {
     f_array_length i = 0;
     f_array_length start = 0;
 
-    while (i <= serialized.used) {
+    f_u_short width = 0;
+
+    while (i < serialized.used) {
+      width = f_macro_utf_byte_width(serialized.string[i]);
+
       if (serialized.string[i] == f_serialized_simple_splitter || i == serialized.used) {
-        if (locations->used + 1 >= locations->size) {
+        if (locations->used + width >= locations->size) {
           f_resize_string_locations(status, (*locations), locations->size + f_serialized_default_allocation_step);
 
           if (f_error_is_error(status)) return status;
         }
 
         if (start == i) {
+          // provide an invalid start to stop range to communicate that there is no data.
           locations->array[locations->used].start = 1;
           locations->array[locations->used].stop = 0;
           locations->used++;
@@ -63,18 +67,25 @@ extern "C" {
           locations->used++;
         }
 
-        start = i + 1;
+        if (i + width > serialized.used) {
+          return f_error_set_error(f_incomplete_utf_on_eos);
+        }
+
+        start = i + width;
+      }
+      else if (i + width > serialized.used) {
+        return f_error_set_error(f_incomplete_utf_on_eos);
       }
 
-      i++;
+      i += width;
     } // while
 
     return f_none;
   }
-#endif // _di_fl_unserialize_simple_
+#endif // _di_fl_unserialize_simple_map_
 
-#ifndef _di_fl_unserialize_simple_get_
-  f_return_status fl_unserialize_simple_get(const f_dynamic_string serialized, const f_array_length index, f_string_location *location) {
+#ifndef _di_fl_unserialize_simple_find_
+  f_return_status fl_unserialize_simple_find(const f_dynamic_string serialized, const f_array_length index, f_string_location *location) {
     #ifndef _di_level_0_parameter_checking_
       if (location == 0) return f_error_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -82,33 +93,51 @@ extern "C" {
     f_status status = f_none;
 
     f_array_length i = 0;
+    f_array_length start = 0;
     f_array_length current = 0;
 
-    location->start = 1;
-    location->stop = 0;
+    f_u_short width = 0;
 
     while (i < serialized.used) {
-      if (current == index) {
-        if (location->start > location->stop) {
-          location->start = i;
-          location->stop = i;
+      width = f_macro_utf_byte_width(serialized.string[i]);
+
+      if (serialized.string[i] == f_serialized_simple_splitter) {
+        if (current == index) {
+          if (start == i) {
+            // provide an invalid start to stop range to communicate that there is no data.
+            location->start = 1;
+            location->stop = 0;
+          }
+          else {
+            location->start = start;
+            location->stop = i - 1;
+          }
+
+          return f_none;
         }
 
-        if (serialized.string[i] == f_serialized_simple_splitter) {
-          location->stop = i - 1;
-          break;
-        }
-      }
-      else if (serialized.string[i] == f_serialized_simple_splitter) {
+        start = i + width;
         current++;
       }
+      else if (i == serialized.used) {
+        if (current == index) {
+          location->start = start;
+          location->stop = i - 1;
+        }
 
-      i++;
+        return f_none_on_eos;
+      }
+
+      if (i + width > serialized.used) {
+        return f_error_set_error(f_incomplete_utf_on_eos);
+      }
+
+      i += width;
     } // while
 
-    return f_none;
+    return f_no_data_on_eos;
   }
-#endif // _di_fl_unserialize_simple_get_
+#endif // _di_fl_unserialize_simple_find_
 
 #ifdef __cplusplus
 } // extern "C"

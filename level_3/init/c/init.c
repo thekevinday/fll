@@ -217,7 +217,7 @@ extern "C" {
 
 
       // sit and wait for signals.
-      while (1) {
+      for (;;) {
         signal_result = sigwaitinfo(&signal_mask, &signal_information);
 
         if (signal_result < 0) {
@@ -266,7 +266,7 @@ extern "C" {
 
         memset(&signal_information, 0, sizeof(siginfo_t));
         continue;
-      }
+      } // for
     }
 
     init_delete_argument((*argument));

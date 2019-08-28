@@ -49,7 +49,7 @@ extern "C" {
 
     // A single UTF-8 BOM is allowed to exist before the valid FSS identifier.
     if (buffer.used > 3) {
-      f_status status = f_utf_is_bom_string(buffer.string, 4);
+      f_status status = f_utf_is_bom(buffer.string, 4);
 
       if (f_error_is_error(status)) {
         return f_error_set_error(fl_fss_no_header);
@@ -297,7 +297,7 @@ extern "C" {
       max_width = buffer.used - input.start;
     }
 
-    f_status status = f_utf_is_space_string(buffer.string + input.start, max_width);
+    f_status status = f_utf_is_space(buffer.string + input.start, max_width);
 
     if (f_error_is_error(status)) {
       return status;
@@ -336,7 +336,7 @@ extern "C" {
       max_width = buffer.used - input.start;
     }
 
-    f_status status = f_utf_is_space_string(buffer.string + input.start, max_width);
+    f_status status = f_utf_is_space(buffer.string + input.start, max_width);
 
     if (f_error_is_error(status)) {
       return status;
@@ -370,8 +370,8 @@ extern "C" {
       if (buffer.string[input->start] != f_fss_delimit_placeholder) {
         max_width = (input->stop - input->start) + 1;
 
-        if (f_utf_is_space_string(buffer.string +input->start, max_width) != f_true) {
-          if (f_utf_is_bom_string(buffer.string + input->start, max_width) != f_true) {
+        if (f_utf_is_space(buffer.string +input->start, max_width) != f_true) {
+          if (f_utf_is_bom(buffer.string + input->start, max_width) != f_true) {
             break;
           }
         }
@@ -402,8 +402,8 @@ extern "C" {
       if (buffer.string[input->start] != f_fss_delimit_placeholder) {
         max_width = (input->stop - input->start) + 1;
 
-        if (f_utf_is_space_string(buffer.string + input->start, max_width) != f_true) {
-          if (f_utf_is_bom_string(buffer.string + input->start, max_width) != f_true) {
+        if (f_utf_is_space(buffer.string + input->start, max_width) != f_true) {
+          if (f_utf_is_bom(buffer.string + input->start, max_width) != f_true) {
             break;
           }
         }

@@ -435,7 +435,7 @@ extern "C" {
       ++input->start;
     } while (f_true);
 
-    // Save the stop point
+    // Save the stop location
     found->array[found->used].stop = input->start - 1;
     found->used++;
 

@@ -6,6 +6,7 @@ f_pipe
 f_print
 f_strings
 f_types
+f_utf
 fl_colors
 fl_console
 fl_directory

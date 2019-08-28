@@ -61,28 +61,6 @@ extern "C" {
 #endif // _di_f_utf_bom_
 
 /**
- * Provide a basic UTF-8 character.
- *
- * This is intended to be used so that a single path parameter can be passed to a function instead of an array of characters.
- */
-#ifndef _di_f_utf_character_
-  typedef struct {
-    char byte_1;
-    char byte_2;
-    char byte_3;
-    char byte_4;
-  } f_utf_character;
-
-  #define f_utf_character_initialize \
-  { \
-    '\0', \
-    '\0', \
-    '\0', \
-    '\0', \
-  }
-#endif // _di_f_utf_char_
-
-/**
  * Define the UTF-8 bytes.
  *
  * The bytes are for checking a single 8-bit character value (specifically, checking the first bits).
@@ -94,7 +72,6 @@ extern "C" {
  * The f_macro_utf_byte_is_* macros are used to determine a width of the character (either 1, 2, 3, or 4, respectively).
  *
  * The f_macro_utf_byte_width macro determines a width of the character.
- *
  * The f_macro_utf_byte_width_is is identical to f_macro_utf_byte_width, except it returns 0 when character is not UTF-8.
  */
 #ifndef _di_f_utf_byte_
@@ -118,6 +95,53 @@ extern "C" {
   #define f_macro_utf_byte_width(character)    ((!f_macro_utf_byte_is(character) || f_macro_utf_byte_is_1(character)) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4)))
   #define f_macro_utf_byte_width_is(character) (f_macro_utf_byte_is(character) ? (f_macro_utf_byte_is_1(character) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4))) : 0)
 #endif // _di_f_utf_byte_
+
+/**
+ * Provide a basic UTF-8 character as a single 4-byte variable.
+ *
+ * This is intended to be used when a single variable is desired to represent a 1-byte, 2-byte, 3-byte, or even 4-byte character.
+ *
+ * The byte structure is intended to be read left to right.
+ *
+ * The f_macro_utf_character_mask_byte_* are used to get the entire character set fo a given width.
+ *
+ * The f_macro_utf_character_mask_char_* are used to get a specific UTF-8 block as a single character range.
+ *
+ * The f_macro_utf_character_to_char_* are used to convert a f_utf_character into a char, for a given 8-bit block.
+ *
+ * The f_macro_utf_character_from_char_* are used to convert a char into part of a f_utf_character, for a given 8-bit block.
+ *
+ * The f_macro_utf_character_width is used to determine the width of the UTF-8 character based on f_macro_utf_byte_width.
+ * The f_macro_utf_character_width_is is used to determine the width of the UTF-8 character based on f_macro_utf_byte_width_is.
+ */
+#ifndef _di_f_utf_character_
+  typedef uint32_t f_utf_character;
+
+  #define f_macro_utf_character_mask_bom 0xefbbbf00 // 1110 1111, 1011 1011, 1011 1111, 0000 0000
+
+  #define f_macro_utf_character_mask_byte_1 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
+  #define f_macro_utf_character_mask_byte_2 0xffff0000 // 1111 1111, 1111 1111, 0000 0000, 0000 0000
+  #define f_macro_utf_character_mask_byte_3 0xffffff00 // 1111 1111, 1111 1111, 1111 1111, 0000 0000
+  #define f_macro_utf_character_mask_byte_4 0xffffffff // 1111 1111, 1111 1111, 1111 1111, 1111 1111
+
+  #define f_macro_utf_character_mask_char_1 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
+  #define f_macro_utf_character_mask_char_2 0x00ff0000 // 0000 0000, 1111 1111, 0000 0000, 0000 0000
+  #define f_macro_utf_character_mask_char_3 0x0000ff00 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
+  #define f_macro_utf_character_mask_char_4 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
+
+  #define f_macro_utf_character_to_char_1(character) ((f_macro_utf_character_mask_char_1 & character) >> 24) // grab first byte.
+  #define f_macro_utf_character_to_char_2(character) ((f_macro_utf_character_mask_char_2 & character) >> 16) // grab second byte.
+  #define f_macro_utf_character_to_char_3(character) ((f_macro_utf_character_mask_char_3 & character) >> 8) // grab third byte.
+  #define f_macro_utf_character_to_char_4(character) (f_macro_utf_character_mask_char_4 & character) // grab fourth byte.
+
+  #define f_macro_utf_character_from_char_1(character) (character << 24) // shift the first byte.
+  #define f_macro_utf_character_from_char_2(character) (character << 16) // shift the second byte.
+  #define f_macro_utf_character_from_char_3(character) (character << 8) // shift the third byte.
+  #define f_macro_utf_character_from_char_4(character) (character) // shift the fourth byte.
+
+  #define f_macro_utf_character_width(character) (f_macro_utf_byte_width(f_macro_utf_character_to_char_1(character)))
+  #define f_macro_utf_character_width_is(character) (f_macro_utf_byte_width_is(f_macro_utf_character_to_char_1(character)))
+#endif // _di_f_utf_character_
 
 /**
  * Define the UTF-8 general whitespace codes.
@@ -223,9 +247,9 @@ extern "C" {
  *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_utf_is_bom_string_
-  extern f_return_status f_utf_is_bom_string(const f_string character, const f_u_short max_width);
-#endif // _di_f_utf_is_bom_string_
+#ifndef _di_f_utf_is_bom_
+  extern f_return_status f_utf_is_bom(const f_string character, const f_u_short max_width);
+#endif // _di_f_utf_is_bom_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 printable character.
@@ -245,9 +269,9 @@ extern "C" {
  *   f_maybe (with error bit) if this could be a graph but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_utf_is_graph_string_
-  extern f_return_status f_utf_is_graph_string(const f_string character, const f_u_short max_width);
-#endif // _di_f_utf_is_graph_string_
+#ifndef _di_f_utf_is_graph_
+  extern f_return_status f_utf_is_graph(const f_string character, const f_u_short max_width);
+#endif // _di_f_utf_is_graph_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 whitespace or substitute character.
@@ -267,9 +291,9 @@ extern "C" {
  *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_utf_is_space_string_
-  extern f_return_status f_utf_is_space_string(const f_string character, const f_u_short max_width);
-#endif // _di_f_utf_is_space_string_
+#ifndef _di_f_utf_is_space_
+  extern f_return_status f_utf_is_space(const f_string character, const f_u_short max_width);
+#endif // _di_f_utf_is_space_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 whitespace substitute character.
@@ -289,9 +313,9 @@ extern "C" {
  *   f_maybe (with error bit) if this could be a substitute but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_utf_is_substitute_string_
-  extern f_return_status f_utf_is_substitute_string(const f_string character, const f_u_short max_width);
-#endif // _di_f_utf_is_substitute_string_
+#ifndef _di_f_utf_is_substitute_
+  extern f_return_status f_utf_is_substitute(const f_string character, const f_u_short max_width);
+#endif // _di_f_utf_is_substitute_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 general whitespace character.
@@ -311,9 +335,9 @@ extern "C" {
  *   f_maybe (with error bit) if this could be a whitespace but width is not long enough.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_utf_is_whitespace_string_
-  extern f_return_status f_utf_is_whitespace_string(const f_string character, const f_u_short max_width);
-#endif // _di_f_utf_is_whitespace_string_
+#ifndef _di_f_utf_is_whitespace_
+  extern f_return_status f_utf_is_whitespace(const f_string character, const f_u_short max_width);
+#endif // _di_f_utf_is_whitespace_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 BOM.
@@ -404,7 +428,7 @@ extern "C" {
  *
  * This will also convert ASCII characters.
  *
- * @param character_string
+ * @param character
  *   The character string to be converted to the f_utf_character type.
  *   There must be enough space allocated to convert against, as limited by max_width.
  * @param max_width
@@ -419,9 +443,9 @@ extern "C" {
  *   f_failure (with error bit) if width is not long enough to convert.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_utf_string_to_character_
-  extern f_return_status f_utf_string_to_character(const f_string character_string, const f_u_short max_width, f_utf_character *utf_character);
-#endif // _di_f_utf_string_to_character_
+#ifndef _di_f_utf_char_to_character_
+  extern f_return_status f_utf_char_to_character(const f_string character, const f_u_short max_width, f_utf_character *utf_character);
+#endif // _di_f_utf_char_to_character_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -7,7 +7,7 @@
  *
  * Provides string processing functionality for what is to be defined as a serialized string.
  * Serialized strings are strings that can hold multiple values in a single variable.
- * An example of serialized content is the PATH environment variable where ":" separates data..
+ * An example of serialized content is the PATH environment variable where ":" separates data.
  */
 #ifndef _F_serialized_h
 #define _F_serialized_h
@@ -34,7 +34,8 @@ extern "C" {
 #endif // _di_f_serialized_splitters_
 
 #ifndef _di_f_serialized_default_allocation_step_
-  #define f_serialized_default_allocation_step f_memory_default_allocation_step
+  // provide a UTF-8 friendly allocation step.
+  #define f_serialized_default_allocation_step 4
 #endif // _di_f_serialized_default_allocation_step_
 
 #ifdef __cplusplus

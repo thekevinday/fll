@@ -47,10 +47,10 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_none_on_stop if the stop point is reached before all steps are completed.
+ *   f_none_on_stop if the stop location is reached before all steps are completed.
  *   f_none_on_eos if the end of buffer is reached before all steps are completed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_incomplete_utf_on_stop (with error bit) if the stop point is reached before the complete UTF-8 character can be processed.
+ *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  */
 #ifndef _di_fl_fss_decrement_buffer_
@@ -118,10 +118,10 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_none_on_stop if the stop point is reached before all steps are completed.
+ *   f_none_on_stop if the stop location is reached before all steps are completed.
  *   f_none_on_eos if the end of buffer is reached before all steps are completed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_incomplete_utf_on_stop (with error bit) if the stop point is reached before the complete UTF-8 character can be processed.
+ *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  */
 #ifndef _di_fl_fss_increment_buffer_

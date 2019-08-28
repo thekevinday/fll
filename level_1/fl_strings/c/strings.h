@@ -25,61 +25,254 @@
 extern "C" {
 #endif
 
+/**
+ * Allocated a new string from the provided range in the buffer.
+ *
+ * @param buffer
+ *   The buffer to rip from.
+ * @param location
+ *   A range within the buffer representing the string to rip.
+ * @param result
+ *   The new string, which will be allocated or reallocated as necessary.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if nothing to rip, no allocations or reallocations are performed.
+ *   f_incomplete_utf_on_eos if end of sting is reached before a complete UTF-8 character can be processed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_allocation_error (with error bit) on memory allocation error.
+ *   f_reallocation_error (with error bit) on memory reallocation error.
+ */
 #ifndef _di_fl_rip_string_
-  /**
-   * given a start and stop position, this will return a new string based from the supplied buffer, based on the passed positions.
-   * this will replace/overwrite existing information inside of the results variable.
-   */
-  extern f_return_status fl_rip_string(const f_dynamic_string buffer, const f_string_location position, f_dynamic_string *results);
+  extern f_return_status fl_rip_string(const f_dynamic_string buffer, const f_string_location location, f_dynamic_string *result);
 #endif // _di_fl_rip_string_
 
-#ifndef _di_fl_seek_line_past_non_graph_
-  /**
-   * given a dynamic string and a string location, seek past all non-graph characters until a graph is reached.
-   * will ignore the given placeholder.
-   */
-  extern f_return_status fl_seek_line_past_non_graph(const f_dynamic_string buffer, f_string_location *position, const char placeholder);
-#endif // _di_fl_seek_line_past_non_graph_
+/**
+ * Increment buffer location until a graph character (including UTF-8) or an EOL is matched.
+ *
+ * This will ignore the UTF-8 BOM.
+ *
+ * @param buffer
+ *   The buffer to traverse.
+ * @param location
+ *   A range within the buffer representing the start and stop locations.
+ * @param placeholder
+ *   A single-width character representing a placeholder to ignore (may be NULL).
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_eol on success, but stopped at EOL.
+ *   f_none_on_eos on success, but stopped at end of buffer.
+ *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_allocation_error (with error bit) on memory allocation error.
+ *   f_reallocation_error (with error bit) on memory reallocation error.
+ */
+#ifndef _di_fl_seek_line_until_graph_
+  extern f_return_status fl_seek_line_until_graph(const f_dynamic_string buffer, f_string_location *location, const char placeholder);
+#endif // _di_fl_seek_line_until_graph_
 
+/**
+ * Increment buffer location until a non-graph character (including UTF-8) or an EOL is matched.
+ *
+ * This will ignore the UTF-8 BOM.
+ *
+ * @param buffer
+ *   The buffer to traverse.
+ * @param location
+ *   A range within the buffer representing the start and stop locations.
+ * @param placeholder
+ *   A single-width character representing a placeholder to ignore (may be NULL).
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_eol on success, but stopped at EOL.
+ *   f_none_on_eos on success, but stopped at end of buffer.
+ *   f_none_on_stop on success, but stopped stop location.
+ *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_allocation_error (with error bit) on memory allocation error.
+ *   f_reallocation_error (with error bit) on memory reallocation error.
+ */
 #ifndef _di_fl_seek_line_until_non_graph_
-  /**
-   * given a dynamic string and a string location, seek past all graph characters until a non-graph is reached.
-   * will ignore the given placeholder.
-   */
-  extern f_return_status fl_seek_line_until_non_graph(const f_dynamic_string buffer, f_string_location *position, const char placeholder);
+  extern f_return_status fl_seek_line_until_non_graph(const f_dynamic_string buffer, f_string_location *location, const char placeholder);
 #endif // _di_fl_seek_line_until_non_graph_
 
+/**
+ * Seek the buffer location forward until the character (1-byte wide) or EOL is reached.
+ *
+ * @param buffer
+ *   The buffer to traverse.
+ * @param location
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ * @param seek_to_this
+ *   A single-width character representing a character to seek to.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_eol on success, but stopped at EOL.
+ *   f_none_on_eos on success, but stopped at end of buffer.
+ *   f_none_on_stop on success, but stopped stop location.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see: fl_seek_line_to_character()
+ */
+#ifndef _di_fl_seek_line_to_
+  extern f_return_status fl_seek_line_to(const f_dynamic_string buffer, f_string_location *location, const char seek_to_this);
+#endif // _di_fl_seek_line_to_
+
+/**
+ * Seek the buffer location forward until the character (up to 4-byte wide) or EOL is reached.
+ *
+ * @param buffer
+ *   The buffer to traverse.
+ * @param location
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ * @param seek_to_this
+ *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_eol on success, but stopped at EOL.
+ *   f_none_on_eos on success, but stopped at end of buffer.
+ *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see: fl_seek_line_to()
+ */
+#ifndef _di_fl_seek_line_to_character_
+  extern f_return_status fl_seek_line_to_character(const f_dynamic_string buffer, f_string_location *location, const f_utf_character seek_to_this);
+#endif // _di_fl_seek_line_to_character_
+
+/**
+ * Seek the buffer location forward until the character (1-byte wide) is reached.
+ *
+ * @param buffer
+ *   The buffer to traverse.
+ * @param location
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ * @param seek_to_this
+ *   A single-width character representing a character to seek to.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_eos on success, but stopped at end of buffer.
+ *   f_none_on_stop on success, but stopped stop location.
+ *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see: fl_seek_to_character()
+ */
 #ifndef _di_fl_seek_to_
-  /**
-   * given a dynamic string and a string location, seek past all characters until the given character is reached.
-   */
-  extern f_return_status fl_seek_to(const f_dynamic_string buffer, f_string_location *position, const char seek_to_this);
+  extern f_return_status fl_seek_to(const f_dynamic_string buffer, f_string_location *location, const char seek_to_this);
 #endif // _di_fl_seek_to_
 
+/**
+ * Seek the buffer location forward until the character (up to 4-byte wide) is reached.
+ *
+ * @param buffer
+ *   The buffer to traverse.
+ * @param location
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ * @param seek_to_this
+ *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_eos on success, but stopped at end of buffer.
+ *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see: fl_seek_to()
+ */
+#ifndef _di_fl_seek_to_character_
+  extern f_return_status fl_seek_to_character(const f_dynamic_string buffer, f_string_location *location, const f_utf_character seek_to_this);
+#endif // _di_fl_seek_to_character_
+
+/**
+ * Compare two strings, similar to strncmp().
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param length1
+ *   Length of string1.
+ * @param length2
+ *   Length of string2.
+ *
+ * @return
+ *   f_equal_to when both strings equal.
+ *   f_not_equal_to when both strings do not equal.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see: fl_compare_dynamic_strings()
+ * @see: fl_compare_dynamic_strings_partial()
+ */
 #ifndef _di_fl_compare_strings_
-  /**
-   * this compares two strings and works similar to that of strncmp(..) but has significant differences to strncmp(..).
-   * given two strings, this will return either f_equal_to or f_not_equal_to.
-   * this does not stop on f_eos and f_eos will be ignored as if it were not taking up any space, therefor a 5 character string could return f_equal_to if the 5 character string contains an f_eos anywhere within it.
-   */
   extern f_return_status fl_compare_strings(const f_string string1, const f_string string2, const f_string_length length1, const f_string_length length2);
 #endif // _di_fl_compare_strings_
 
+/**
+ * Compare two strings, similar to strncmp().
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ *
+ * @return
+ *   f_equal_to when both strings equal.
+ *   f_not_equal_to when both strings do not equal.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see: fl_compare_strings()
+ * @see: fl_compare_dynamic_strings_partial()
+ */
 #ifndef _di_fl_compare_dynamic_strings_
-  /**
-   * this compares two dynamic strings and works similar to that of strncmp(..) but has significant differences to strncmp(..).
-   * given two strings, this will return either f_equal_to or f_not_equal_to.
-   * this is far safer than fl_compare_strings(..) as dynamic string contain size information within them.
-   * this does not stop on f_eos and f_eos will be ignored as if it were not taking up any space, therefor a 5 character string could return f_equal_to if the 5 character string contains an f_eos anywhere within it.
-   */
   extern f_return_status fl_compare_dynamic_strings(const f_dynamic_string string1, const f_dynamic_string string2);
 #endif // _di_fl_compare_dynamic_strings_
 
+/**
+ * Compare two strings, similar to strncmp(), but restricted to the given ranges.
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param offset1
+ *   A range within the string1 to restrict the comparison to.
+ * @param offset2
+ *   A range within the string2 to restrict the comparison to.
+ *
+ * @return
+ *   f_equal_to when both strings equal.
+ *   f_not_equal_to when both strings do not equal.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see: fl_compare_strings()
+ * @see: fl_compare_dynamic_strings()
+ */
 #ifndef _di_fl_compare_partial_dynamic_strings_
-  /**
-   * this functions identical to fl_compare_dynamic_strings, but uses offsets for both strings.
-   */
-  extern f_return_status fl_compare_partial_dynamic_strings(const f_dynamic_string string1, const f_dynamic_string string2, const f_string_location offset1, const f_string_location offset2);
+  extern f_return_status fl_compare_dynamic_strings_partial(const f_dynamic_string string1, const f_dynamic_string string2, const f_string_location offset1, const f_string_location offset2);
 #endif // _di_fl_compare_partial_dynamic_strings_
 
 #ifdef __cplusplus
