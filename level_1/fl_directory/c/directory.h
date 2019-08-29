@@ -30,6 +30,8 @@ extern "C" {
 
 #ifndef _di_fl_directory_limitations_
   #define fl_directory_default_allocation_step f_memory_default_allocation_step
+
+  #define fl_directory_name_max 255
 #endif // _di_fl_directory_limitations_
 
 #ifndef _di_fl_directory_list_

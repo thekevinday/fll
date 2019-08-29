@@ -20,7 +20,7 @@ extern "C" {
     length = scandir(directory_path, &listing, 0, alphasort);
 
     for (; counter < length; counter++) {
-        size = strnlen(listing[counter]->d_name, 256); // as far as I can tell 256 is the max directory name length
+        size = strnlen(listing[counter]->d_name, fl_directory_name_max);
 
         // there is no reason to include "." and ".." in the directory listing
         if (strncmp(listing[counter]->d_name, "..", 3) != 0 && strncmp(listing[counter]->d_name, ".", 2) != 0) {
