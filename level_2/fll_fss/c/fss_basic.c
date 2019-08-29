@@ -149,17 +149,17 @@ extern "C" {
 
     status = fl_fss_basic_object_write(buffer, object, &location);
 
-    if (f_macro_test_for_no_data_errors(status)) {
+    if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
       return status;
     }
 
-    if (f_macro_test_for_none_errors(status)) {
+    if (status == f_none || status == f_none_on_stop || status == f_none_on_eos || status == f_none_on_eol) {
       if (contents.used > 0) {
         location.start = 0;
         location.stop = contents.array[0].used - 1;
         status = fl_fss_basic_content_write(buffer, contents.array[0], &location);
 
-        if (f_macro_test_for_no_data_errors(status)) {
+        if (f_error_is_error(status)) {
           return status;
         }
       }

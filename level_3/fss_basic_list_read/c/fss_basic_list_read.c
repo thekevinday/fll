@@ -145,7 +145,7 @@ extern "C" {
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       }
-      else if (f_macro_test_for_allocation_errors(status)) {
+      else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
       }
       else if (status == f_invalid_parameter) {
@@ -283,7 +283,7 @@ extern "C" {
           else if (status == f_file_read_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A read error occurred while accessing the file '%s'", argv[data->remaining.array[counter]]);
           }
-          else if (f_macro_test_for_allocation_errors(status)) {
+          else if (status == f_allocation_error || status == f_reallocation_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
           }
           else {
@@ -336,7 +336,7 @@ extern "C" {
         if (status == f_invalid_parameter) {
           fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'", filename);
         }
-        else if (f_macro_test_for_allocation_errors(status)) {
+        else if (status == f_allocation_error || status == f_reallocation_error) {
           fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
         }
         else if (status == f_incomplete_utf_on_stop) {
@@ -352,7 +352,7 @@ extern "C" {
         fss_basic_list_read_delete_data(data);
         return f_error_set_error(status);
       }
-      else if (f_macro_test_for_no_data_errors(status)) {
+      else if (status == f_no_data_on_stop || status == f_no_data_on_eos) {
         // clear buffers, then attempt the next file
         f_delete_fss_contents(status2, data->contents);
         f_delete_fss_objects(status2, data->objects);

@@ -58,7 +58,7 @@
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A seek error occurred while accessing the file '%s'.", filename);
       } else if (status == f_file_read_error) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A read error occurred while accessing the file '%s'.", filename);
-      } else if (f_macro_test_for_allocation_errors(status)) {
+      } else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       } else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read().", f_error_set_error(status));
@@ -80,7 +80,7 @@
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", filename);
       } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: No relevant data was found within the file '%s'.", filename);
-      } else if (f_macro_test_for_allocation_errors(status)) {
+      } else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       } else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_error_set_error(status), filename);
@@ -107,7 +107,7 @@
       if (f_error_is_error(status)) {
         status = f_error_set_fine(status);
 
-        if (f_macro_test_for_allocation_errors(status)) {
+        if (status == f_allocation_error || status == f_reallocation_error) {
           fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
         } else if (status == f_failure) {
           // the error message has already been displayed.
@@ -499,7 +499,7 @@
         fl_print_color_line(f_standard_error, argument.context.error, argument.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", init_rule_core_file);
       } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop) {
         fl_print_color_line(f_standard_error, argument.context.error, argument.context.reset, "ERROR: No relevant data was found within the file '%s'.", init_rule_core_file);
-      } else if (f_macro_test_for_allocation_errors(status)) {
+      } else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, argument.context.error, argument.context.reset, "CRITICAL ERROR: unable to allocate memory.");
       } else {
         fl_print_color_line(f_standard_error, argument.context.error, argument.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_error_set_error(status), init_rule_core_file);
@@ -526,7 +526,7 @@
     status = fll_fss_extended_read(&buffer, &location, &objects, &contents);
 
     if (f_error_is_error(status_process)) {
-      if (f_macro_test_for_allocation_errors(status)) {
+      if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, argument->context.error, argument->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       }
       else {
@@ -553,7 +553,7 @@
       if (f_error_is_error(status)) {
         status = f_error_set_fine(status);
 
-        if (f_macro_test_for_allocation_errors(status)) {
+        if (status == f_allocation_error || status == f_reallocation_error) {
           fl_print_color_line(f_standard_error, data->context.error, context.reset, "CRITICAL ERROR: unable to allocate memory.");
         } else if (status == f_failure) {
           // the error message has already been displayed.
@@ -567,7 +567,7 @@
       }
     }
     else {
-      if (f_macro_test_for_allocation_errors(status)) {
+      if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, context.error, context.reset, "CRITICAL ERROR: unable to allocate memory.");
       }
       else {

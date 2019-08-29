@@ -124,7 +124,7 @@ extern "C" {
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       }
-      else if (f_macro_test_for_allocation_errors(status)) {
+      else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       }
       else if (status == f_invalid_parameter) {
@@ -190,14 +190,14 @@ extern "C" {
         if (object) {
           status = fl_fss_extended_object_write(input, &location, &buffer);
 
-          if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
+          if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
             return f_error_set_error(status);
           }
         }
         else {
           status = fl_fss_extended_content_write(input, &location, &buffer);
 
-          if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
+          if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
             return f_error_set_error(status);
           }
 
@@ -229,7 +229,7 @@ extern "C" {
 
           status = fl_fss_extended_object_write(input, &location, &buffer);
 
-          if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
+          if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
             return f_error_set_error(status);
           }
         }
@@ -245,7 +245,7 @@ extern "C" {
 
             status = fl_fss_extended_content_write(input, &location, &buffer);
 
-            if (f_error_is_error(status) || f_macro_test_for_no_data_errors(status)) {
+            if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
               return f_error_set_error(status);
             }
 

@@ -132,7 +132,7 @@ extern "C" {
         // TODO: there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
-      } else if (f_macro_test_for_allocation_errors(status)) {
+      } else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, argument->context.error, argument->context.reset, "CRITICAL ERROR: unable to allocate memory");
       } else if (f_error_set_fine(status) == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, argument->context.error, argument->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");

@@ -596,7 +596,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
             else if (status == f_file_descriptor_error) {
               fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "ERROR: File descriptor error while trying to open the file '%.*s'", file_path.used, file_path.string);
             }
-            else if (f_macro_test_for_allocation_errors(status)) {
+            else if (status == f_allocation_error || status == f_reallocation_error) {
               fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory");
             }
             else {
@@ -638,7 +638,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
               else if (status == f_file_read_error) {
                 fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "ERROR: A read error occurred while accessing the file '%.*s'", file_path.used, file_path.string);
               }
-              else if (f_macro_test_for_allocation_errors(status)) {
+              else if (status == f_allocation_error || status == f_reallocation_error) {
                 fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory");
               }
               else {
@@ -665,7 +665,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
                 else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop) {
                   // empty files are to be silently ignored
                 }
-                else if (f_macro_test_for_allocation_errors(status)) {
+                else if (status == f_allocation_error || status == f_reallocation_error) {
                   fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory");
                 }
                 else {
@@ -1397,7 +1397,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const f_bool opti
     else if (status == f_file_read_error) {
       fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A read error occurred while accessing the file '%s'.", filename);
     }
-    else if (f_macro_test_for_allocation_errors(status)) {
+    else if (status == f_allocation_error || status == f_reallocation_error) {
       fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
     }
     else {
@@ -1423,7 +1423,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const f_bool opti
     else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop) {
       fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: No relevant data was found within the file '%s'.", filename);
     }
-    else if (f_macro_test_for_allocation_errors(status)) {
+    else if (status == f_allocation_error || status == f_reallocation_error) {
       fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
     }
     else {
@@ -1448,7 +1448,7 @@ f_return_status firewall_process_rules(f_string_location *input, firewall_local_
     if (f_error_is_error(status)) {
       status = f_error_set_fine(status);
 
-      if (f_macro_test_for_allocation_errors(status)) {
+      if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       }
       else if (status == f_failure) {

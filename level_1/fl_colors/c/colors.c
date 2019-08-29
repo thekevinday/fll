@@ -52,7 +52,7 @@ extern "C" {
 
       f_resize_dynamic_string(status, (*buffer), buffer->used + string_size + 1); // the additional 1 is the EOS
 
-      if (f_macro_test_for_allocation_errors(status)) {
+      if (f_error_is_error(status)) {
         return status;
       }
     }

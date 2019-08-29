@@ -19,15 +19,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fl_macro_test_for_fss_errors_
-  #define fl_macro_test_for_fss_errors(potential_error) \
-    ( !f_macro_test_for_non_errors(potential_error)  && \
-      potential_error != fl_fss_no_header            && \
-      potential_error != fl_fss_no_header_eos        && \
-      potential_error != fl_fss_accepted_but_invalid && \
-      potential_error != fl_fss_accepted_but_invalid_eos )
-#endif // _di_fl_macro_test_for_fss_errors_
-
 enum {
   fl_fss_error_start = f_last_error_code,
 
