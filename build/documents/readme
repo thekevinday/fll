@@ -11,11 +11,11 @@ Build Example:
 
 Install Example:
   cp -vR build/includes/* /usr/include/
-  cp -vR build/libaries/* /usr/lib/
-  cp -vR build/programs/* /usr/bin/
+  cp -vR build/libaries/shared/* /usr/lib/
+  cp -vR build/programs/shared/* /usr/bin/
   cp -vR build/settings/* /etc/
   
-If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successfull build, then there are no files of that type to install.
+If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successful build, then there are no files of that type to install.
 
 Build Tree Structure Example (using the return_code-0.3.0 project):
   build/
@@ -30,5 +30,20 @@ Build Tree Structure Example (using the return_code-0.3.0 project):
   |   `-- return_code
   `-- settings
 
+The FLL project is broken up into 3 diffeent levels: level_0, level_1, and level_2.
+A third pseudo-level also exists for common programs built using this project, called level_3.
 
-See: data/build/dependencies for dependencies of this project.
+With an exception of a few projects within level_0, each level should only depend on a project from a lower level.
+Therefore, a level_1 project can only depend on level_0 projects and a level_2 project can depend on only level_0 and level_1 projects.
+
+A few projects in level_0 are essentially required by everything and are depended on by virtually all projects, regardless of the level.
+These level_0 projects are:
+- f_types: provides core typedef, #define, and similar structures for the entire set of FLL projects.
+- f_errors: provides error codes and other status codes to be used by the entire set of FLL projects.
+- f_memory: provides common memory allocation/deallocation to be used by the entire set of FLL projects.
+- f_string: provides common string management to be used by the entire set of the FLL projects.
+
+The above projects should be installed first, and in the provided order (f_types, then f_errors, then f_memory, and finally f_string).
+No other level_0 project should depend on another and can be installed in any order (future designs may add f_utf to this list).
+
+See: data/build/dependencies for specific dependencies of this project.
