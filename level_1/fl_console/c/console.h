@@ -23,10 +23,25 @@
 extern "C" {
 #endif
 
+/**
+ * Process console parameters.
+ *
+ * @param argc
+ *   The number of parameters passed to the process.
+ * @param argv
+ *   The parameters passed to the process.
+ * @param parameters
+ *   The console parameters to look for.
+ * @param total_parameters
+ *   The used size of the parameters array.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if no "extra" parameters were found.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_reallocation_error (with error bit) on memory reallocation error.
+ */
 #ifndef _di_fl_process_parameters_
-  /**
-   * Process console parameters.
-   */
   extern f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, f_string_lengths *remaining);
 #endif // _di_fl_process_parameters_
 

@@ -85,7 +85,8 @@ extern "C" {
 #endif // _di_f_console_max_size_
 
 #ifndef _di_f_console_default_allocation_step_
-  #define f_console_default_allocation_step f_memory_default_allocation_step
+  // provide a UTF-8 friendly allocation step.
+  #define f_console_default_allocation_step 4
 #endif // _di_f_console_default_allocation_step_
 
 #ifndef _di_f_console_types_
@@ -94,7 +95,7 @@ extern "C" {
   /**
    * none: parameter not found.
    * found: parameter found.
-   * additional: parameter found, extra data exists (such as '-f filename', filename would be the extra data).
+   * additional: parameter found, extra data exists (such as '-f filename', 'filename' would be the extra data).
    */
   enum {
     f_console_result_none,
@@ -146,8 +147,8 @@ extern "C" {
    * perform checks against short & long options to see if the string is one of them (normal).
    */
   #define f_console_is_enable(result, string, short_option, long_option, max_length) \
-          ((result == f_console_short_enable && strncmp(string, short_option, 1) == 0) || \
-          (result == f_console_long_enable && strncmp(string, long_option,  max_length) == 0))
+          ((result == f_console_short_enable && strncmp(string, short_option, max_length) == 0) || \
+          (result == f_console_long_enable && strncmp(string, long_option, max_length) == 0))
 #endif // _di_f_console_is_enable_
 
 #ifndef _di_f_console_is_disable_
@@ -155,8 +156,8 @@ extern "C" {
    * perform checks against short & long options to see if the string is one of them (inverse).
    */
   #define f_console_is_disable(result, string, short_option, long_option, max_length) \
-          ((result == f_console_short_disable && strncmp(string, short_option, 1) == 0) || \
-          (result == f_console_long_disable && strncmp(string, long_option,  max_length) == 0))
+          ((result == f_console_short_disable && strncmp(string, short_option, max_length) == 0) || \
+          (result == f_console_long_disable && strncmp(string, long_option, max_length) == 0))
 #endif // _di_f_console_is_disable_
 
 #ifndef _di_f_console_is_extra_enable_
