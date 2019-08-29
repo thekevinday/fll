@@ -1,6 +1,6 @@
 # fss-0000
 
-project_name f_errors
+project_name f_status
 project_level 0
 
 version_major 0
@@ -13,7 +13,7 @@ build_libraries -lc
 build_libraries_fll
 build_sources_library 
 build_sources_program 
-build_sources_headers errors.h
+build_sources_headers status.h
 build_sources_bash
 build_sources_settings
 build_shared yes

@@ -7,10 +7,10 @@ extern "C" {
 #ifndef _di_fl_rip_string_
   f_return_status fl_rip_string(const f_dynamic_string buffer, const f_string_location location, f_dynamic_string *result) {
     #ifndef _di_level_1_parameter_checking_
-      if (location.start < 0) return f_error_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_error_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (location.start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     // the start and stop point are inclusive locations, and therefore start - stop is actually 1 too few locations
@@ -26,7 +26,7 @@ extern "C" {
         f_resize_dynamic_string(status, (*result), size);
       }
 
-      if (f_error_is_error(status)) {
+      if (f_status_is_error(status)) {
         return status;
       }
 
@@ -43,11 +43,11 @@ extern "C" {
 #ifndef _di_fl_seek_line_until_graph_
   f_return_status fl_seek_line_until_graph(const f_dynamic_string buffer, f_string_location *location, const char placeholder) {
     #ifndef _di_level_1_parameter_checking_
-      if (location == 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (location->stop < location->start) return f_error_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (location == 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location->stop < location->start) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
@@ -65,8 +65,8 @@ extern "C" {
       width = f_macro_utf_byte_width(buffer.string[location->start]);
 
       if (width > 1) {
-        if (location->start + width >= buffer.used) return f_error_set_error(f_incomplete_utf_on_eos);
-        if (location->start + width > location->stop) return f_error_set_error(f_incomplete_utf_on_stop);
+        if (location->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
+        if (location->start + width > location->stop) return f_status_set_error(f_incomplete_utf_on_stop);
       }
 
       location->start += width;
@@ -81,7 +81,7 @@ extern "C" {
       }
     } // while
 
-    if (f_error_is_error(status)) {
+    if (f_status_is_error(status)) {
       return status;
     }
 
@@ -92,11 +92,11 @@ extern "C" {
 #ifndef _di_fl_seek_line_until_non_graph_
   f_return_status fl_seek_line_until_non_graph(const f_dynamic_string buffer, f_string_location *location, const char placeholder) {
     #ifndef _di_level_1_parameter_checking_
-      if (location == 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (location->stop < location->start) return f_error_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (location == 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location->stop < location->start) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
@@ -114,8 +114,8 @@ extern "C" {
       width = f_macro_utf_byte_width(buffer.string[location->start]);
 
       if (width > 1) {
-        if (location->start + width >= buffer.used) return f_error_set_error(f_incomplete_utf_on_eos);
-        if (location->start + width > location->stop) return f_error_set_error(f_incomplete_utf_on_stop);
+        if (location->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
+        if (location->start + width > location->stop) return f_status_set_error(f_incomplete_utf_on_stop);
       }
 
       location->start += width;
@@ -130,7 +130,7 @@ extern "C" {
       }
     } // while
 
-    if (f_error_is_error(status)) {
+    if (f_status_is_error(status)) {
       return status;
     }
 
@@ -141,11 +141,11 @@ extern "C" {
 #ifndef _di_fl_seek_line_to_
   f_return_status fl_seek_line_to(const f_dynamic_string buffer, f_string_location *location, const char seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
-      if (location == 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (location->stop < location->start) return f_error_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (location == 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location->stop < location->start) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     while (buffer.string[location->start] != seek_to_this) {
@@ -164,11 +164,11 @@ extern "C" {
 #ifndef _di_fl_seek_line_to_character_
   f_return_status fl_seek_line_to_character(const f_dynamic_string buffer, f_string_location *location, const f_utf_character seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
-      if (location == 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (location->stop < location->start) return f_error_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (location == 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location->stop < location->start) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     const f_u_short seek_width = f_macro_utf_character_width(seek_to_this);
@@ -196,14 +196,14 @@ extern "C" {
         }
       }
       else {
-        if (location->start + width >= buffer.used) return f_error_set_error(f_incomplete_utf_on_eos);
-        if (location->start + width > location->stop) return f_error_set_error(f_incomplete_utf_on_stop);
+        if (location->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
+        if (location->start + width > location->stop) return f_status_set_error(f_incomplete_utf_on_stop);
 
         if (width == seek_width) {
           f_utf_character character = 0;
           status = f_utf_char_to_character(buffer.string + location->start, max_width, &character);
 
-          if (f_error_is_error(status)) {
+          if (f_status_is_error(status)) {
             return status;
           }
 
@@ -225,11 +225,11 @@ extern "C" {
 #ifndef _di_fl_seek_to_
   f_return_status fl_seek_to(const f_dynamic_string buffer, f_string_location *location, const char seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
-      if (location == 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (location->stop < location->start) return f_error_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (location == 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location->stop < location->start) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     while (buffer.string[location->start] != seek_to_this) {
@@ -246,11 +246,11 @@ extern "C" {
 #ifndef _di_fl_seek_to_character_
   f_return_status fl_seek_to_character(const f_dynamic_string buffer, f_string_location *location, const f_utf_character seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
-      if (location == 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (location->stop < location->start) return f_error_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (location->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (location == 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location->stop < location->start) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (location->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     const f_u_short seek_width = f_macro_utf_character_width(seek_to_this);
@@ -276,14 +276,14 @@ extern "C" {
         }
       }
       else {
-        if (location->start + width >= buffer.used) return f_error_set_error(f_incomplete_utf_on_eos);
-        if (location->start + width > location->stop) return f_error_set_error(f_incomplete_utf_on_stop);
+        if (location->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
+        if (location->start + width > location->stop) return f_status_set_error(f_incomplete_utf_on_stop);
 
         if (width == seek_width) {
           f_utf_character character = 0;
           status = f_utf_char_to_character(buffer.string + location->start, max_width, &character);
 
-          if (f_error_is_error(status)) {
+          if (f_status_is_error(status)) {
             return status;
           }
 
@@ -305,8 +305,8 @@ extern "C" {
 #ifndef _di_fl_compare_strings_
   f_return_status fl_compare_strings(const f_string string1, const f_string string2, const f_string_length length1, const f_string_length length2) {
     #ifndef _di_level_1_parameter_checking_
-      if (length1 <= 0) return f_error_set_error(f_invalid_parameter);
-      if (length2 <= 0) return f_error_set_error(f_invalid_parameter);
+      if (length1 <= 0) return f_status_set_error(f_invalid_parameter);
+      if (length2 <= 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length i1 = 0;
@@ -342,8 +342,8 @@ extern "C" {
 #ifndef _di_fl_compare_dynamic_strings_
   f_return_status fl_compare_dynamic_strings(const f_dynamic_string string1, const f_dynamic_string string2) {
     #ifndef _di_level_1_parameter_checking_
-      if (string1.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (string2.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (string1.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (string2.used <= 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length i1 = 0;
@@ -379,14 +379,14 @@ extern "C" {
 #ifndef _di_fl_compare_partial_dynamic_strings_
   f_return_status fl_compare_dynamic_strings_partial(const f_dynamic_string string1, const f_dynamic_string string2, const f_string_location offset1, const f_string_location offset2) {
     #ifndef _di_level_1_parameter_checking_
-      if (string1.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (string2.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (string1.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (string2.used <= 0) return f_status_set_error(f_invalid_parameter);
 
-      if (offset1.start > offset1.stop) return f_error_set_error(f_invalid_parameter);
-      if (offset2.start > offset2.stop) return f_error_set_error(f_invalid_parameter);
+      if (offset1.start > offset1.stop) return f_status_set_error(f_invalid_parameter);
+      if (offset2.start > offset2.stop) return f_status_set_error(f_invalid_parameter);
 
-      if (string1.used <= offset1.stop) return f_error_set_error(f_invalid_parameter);
-      if (string2.used <= offset2.stop) return f_error_set_error(f_invalid_parameter);
+      if (string1.used <= offset1.stop) return f_status_set_error(f_invalid_parameter);
+      if (string2.used <= offset2.stop) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length i1 = offset1.start;

@@ -98,7 +98,7 @@ extern "C" {
     if (data->parameters[fss_basic_write_parameter_no_color].result == f_console_result_none) {
       fl_new_color_context(status2, data->context);
 
-      if (f_error_is_error(status2)) {
+      if (f_status_is_error(status2)) {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
         fss_basic_write_delete_data(data);
         return status2;
@@ -108,8 +108,8 @@ extern "C" {
       }
     }
 
-    if (f_error_is_error(status)) {
-      status = f_error_set_fine(status);
+    if (f_status_is_error(status)) {
+      status = f_status_set_fine(status);
 
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
@@ -124,11 +124,11 @@ extern "C" {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
       }
       else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", f_error_set_error(status));
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", f_status_set_error(status));
       }
 
       fss_basic_write_delete_data(data);
-      return f_error_set_error(status);
+      return f_status_set_error(status);
     }
 
     // execute parameter results
@@ -153,8 +153,8 @@ extern "C" {
 
         status = fl_file_read_fifo(file, &input);
 
-        if (f_error_is_error(status)) {
-          status = f_error_set_fine(status);
+        if (f_status_is_error(status)) {
+          status = f_status_set_fine(status);
 
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
@@ -169,12 +169,12 @@ extern "C" {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
           }
           else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_error_set_error(status));
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
           }
 
           f_delete_dynamic_string(status2, input);
           fss_basic_write_delete_data(data);
-          return f_error_set_error(status);
+          return f_status_set_error(status);
         }
 
         location.start = 0;
@@ -183,15 +183,15 @@ extern "C" {
         if (object) {
           status = fl_fss_basic_object_write(&buffer, input, &location);
 
-          if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
-            return f_error_set_error(status);
+          if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
+            return f_status_set_error(status);
           }
         }
         else {
           status = fl_fss_basic_content_write(&buffer, input, &location);
 
-          if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
-            return f_error_set_error(status);
+          if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
+            return f_status_set_error(status);
           }
         }
 
@@ -209,15 +209,15 @@ extern "C" {
         if (object) {
           status = fl_fss_basic_object_write(&buffer, input, &location);
 
-          if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
-            return f_error_set_error(status);
+          if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
+            return f_status_set_error(status);
           }
         }
         else {
           status = fl_fss_basic_content_write(&buffer, input, &location);
 
-          if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
-            return f_error_set_error(status);
+          if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
+            return f_status_set_error(status);
           }
         }
 
@@ -230,8 +230,8 @@ extern "C" {
         output.mode = f_file_write_append;
         status = f_file_open(&output, argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
 
-        if (f_error_is_error(status)) {
-          status = f_error_set_fine(status);
+        if (f_status_is_error(status)) {
+          status = f_status_set_fine(status);
 
           f_file_close(&output);
 
@@ -248,7 +248,7 @@ extern "C" {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
           }
           else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_error_set_error(status));
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
           }
 
           fss_basic_write_delete_data(data);
@@ -258,8 +258,8 @@ extern "C" {
         status = fl_file_write(output, buffer);
         f_file_close(&output);
 
-        if (f_error_is_error(status)) {
-          status = f_error_set_fine(status);
+        if (f_status_is_error(status)) {
+          status = f_status_set_fine(status);
 
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");
@@ -268,11 +268,11 @@ extern "C" {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
           }
           else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", f_error_set_error(status));
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", f_status_set_error(status));
           }
 
           fss_basic_write_delete_data(data);
-          return f_error_set_error(status);
+          return f_status_set_error(status);
         }
       }
       else {

@@ -1,5 +1,5 @@
 f_console
-f_errors
+f_status
 f_pipe
 f_print
 f_strings
@@ -9,5 +9,6 @@ fl_console
 fl_file
 fl_program
 fl_strings
+fl_status
 fll_colors
-fll_errors
+fll_status

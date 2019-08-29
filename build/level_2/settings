@@ -11,9 +11,9 @@ build_compiler gcc
 build_linker ar
 build_libraries -lc
 build_libraries_fll -lfll_0 -lfll_1
-build_sources_library level_2/colors.c level_2/execute.c level_2/fss_basic.c level_2/fss_basic_list.c level_2/fss_extended.c level_2/fss_errors.c
+build_sources_library level_2/colors.c level_2/execute.c level_2/status.c level_2/fss_basic.c level_2/fss_basic_list.c level_2/fss_extended.c level_2/fss_status.c
 build_sources_program 
-build_sources_headers level_2/colors.h level_2/execute.h level_2/fss_basic.h level_2/fss_basic_list.h level_2/fss_extended.h level_2/fss_errors.h
+build_sources_headers level_2/colors.h level_2/execute.h level_2/status.h level_2/fss_basic.h level_2/fss_basic_list.h level_2/fss_extended.h level_2/fss_status.h
 build_shared yes
 build_static yes
 

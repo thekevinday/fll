@@ -7,9 +7,9 @@ extern "C" {
 #ifndef _di_fll_fss_extended_read_
   f_return_status fll_fss_extended_read(f_dynamic_string *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents) {
     #ifndef _di_level_2_parameter_checking_
-      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
-      if (objects == 0) return f_error_set_error(f_invalid_parameter);
-      if (contents == 0) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_status_set_error(f_invalid_parameter);
+      if (objects == 0) return f_status_set_error(f_invalid_parameter);
+      if (contents == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status status = f_none;
@@ -20,13 +20,13 @@ extern "C" {
       if (objects->used >= objects->size) {
         f_resize_fss_objects(status, (*objects), objects->used + f_fss_default_allocation_step);
 
-        if (f_error_is_error(status)) {
+        if (f_status_is_error(status)) {
           return status;
         }
 
         f_resize_fss_contents(status, (*contents), contents->used + f_fss_default_allocation_step);
 
-        if (f_error_is_error(status)) {
+        if (f_status_is_error(status)) {
           return status;
         }
       }
@@ -43,7 +43,7 @@ extern "C" {
 
               f_resize_fss_content(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
 
-              if (f_error_is_error(status)) {
+              if (f_status_is_error(status)) {
                 return status;
               }
             }
@@ -83,7 +83,7 @@ extern "C" {
 
             f_resize_fss_content(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
 
-            if (f_error_is_error(status)) {
+            if (f_status_is_error(status)) {
               return status;
             }
           }
@@ -135,8 +135,8 @@ extern "C" {
 #ifndef _di_fll_fss_extended_write_
   f_return_status fll_fss_extended_write(const f_dynamic_string object, const f_dynamic_strings contents, f_dynamic_string *buffer) {
     #ifndef _di_level_2_parameter_checking_
-      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
-      if (contents.used > contents.size) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_status_set_error(f_invalid_parameter);
+      if (contents.used > contents.size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status status = 0;
@@ -148,7 +148,7 @@ extern "C" {
 
     status = fl_fss_extended_object_write(object, &location, buffer);
 
-    if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
+    if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
       return status;
     }
 
@@ -158,7 +158,7 @@ extern "C" {
         location.stop = contents.array[current].used - 1;
         status = fl_fss_extended_content_write(contents.array[current], &location, buffer);
 
-        if (f_error_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
+        if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
           return status;
         }
 

@@ -16,7 +16,7 @@
 #include <string.h>
 
 // fll includes
-#include <level_0/errors.h>
+#include <level_0/status.h>
 #include <level_0/strings.h>
 #include <level_0/types.h>
 

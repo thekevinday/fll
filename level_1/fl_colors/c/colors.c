@@ -7,8 +7,8 @@ extern "C" {
 #ifndef _di_fl_set_color_
   f_return_status fl_set_color(FILE *file, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
     #ifndef _di_level_1_parameter_checking_
-      if (file == 0) return f_error_set_error(f_invalid_parameter);
-      if (color1 == 0) return f_error_set_error(f_invalid_parameter);
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
+      if (color1 == 0) return f_status_set_error(f_invalid_parameter);
 
       // make sure all data is in the proper order
       if (color2 == 0 && (color3 != 0 || color4 != 0 || color5 != 0)) return f_invalid_parameter;
@@ -29,13 +29,13 @@ extern "C" {
 #ifndef _di_fl_save_color_
   f_return_status fl_save_color(f_dynamic_string *buffer, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
-      if (color1 == 0) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_status_set_error(f_invalid_parameter);
+      if (color1 == 0) return f_status_set_error(f_invalid_parameter);
 
       // make sure all data is in the proper order
-      if (color2 == 0 && (color3 != 0 || color4 != 0 || color5 != 0)) return f_error_set_error(f_invalid_parameter);
-      if (color3 == 0 && (color4 != 0 || color5 != 0)) return f_error_set_error(f_invalid_parameter);
-      if (color4 == 0 && color5 != 0) return f_error_set_error(f_invalid_parameter);
+      if (color2 == 0 && (color3 != 0 || color4 != 0 || color5 != 0)) return f_status_set_error(f_invalid_parameter);
+      if (color3 == 0 && (color4 != 0 || color5 != 0)) return f_status_set_error(f_invalid_parameter);
+      if (color4 == 0 && color5 != 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length string_size = strnlen(format.begin, f_color_max_size) + strnlen(format.end, f_color_max_size) + 1;
@@ -52,7 +52,7 @@ extern "C" {
 
       f_resize_dynamic_string(status, (*buffer), buffer->used + string_size + 1); // the additional 1 is the EOS
 
-      if (f_error_is_error(status)) {
+      if (f_status_is_error(status)) {
         return status;
       }
     }
@@ -116,8 +116,8 @@ extern "C" {
 #ifndef _di_fl_print_color_
   f_return_status fl_print_color(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (file == 0) return f_error_set_error(f_invalid_parameter);
-      if (string == 0) return f_error_set_error(f_invalid_parameter);
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
+      if (string == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (start_color.used != 0) {
@@ -143,8 +143,8 @@ extern "C" {
 #ifndef _di_fl_print_color_line_
   f_return_status fl_print_color_line(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (file == 0) return f_error_set_error(f_invalid_parameter);
-      if (string == 0) return f_error_set_error(f_invalid_parameter);
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
+      if (string == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (start_color.used != 0) {

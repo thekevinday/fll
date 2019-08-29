@@ -93,7 +93,7 @@ typedef struct {
   if (arguments.used >= arguments.size) { \
     f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step); \
     \
-    if (f_error_is_error(status)) break; \
+    if (f_status_is_error(status)) break; \
   } \
   \
   arguments.array[arguments.used].string = argument.string; \

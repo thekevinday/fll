@@ -8,7 +8,7 @@ extern "C" {
   // put the names of each file and/or directory inside the names parameter
   f_return_status fl_directory_list(const f_string directory_path, f_dynamic_strings *names) {
     #ifndef _di_level_1_parameter_checking_
-      if (names == 0) return f_error_set_error(f_invalid_parameter);
+      if (names == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     struct dirent **listing = 0;
@@ -27,13 +27,13 @@ extern "C" {
           if (names->used >= names->size) {
             f_resize_dynamic_strings(status, (*names), names->used + fl_directory_default_allocation_step);
 
-            if (f_error_is_error(status)) {
+            if (f_status_is_error(status)) {
               return status;
             }
           }
 
           f_resize_dynamic_string(status, names->array[names->used], size);
-          if (f_error_is_error(status)) {
+          if (f_status_is_error(status)) {
             return status;
           }
 
@@ -54,8 +54,8 @@ extern "C" {
       return f_no_data;
     }
     else if (length == -1) {
-      if (errno == ENOMEM) return f_error_set_error(f_allocation_error);
-      else return f_error_set_error(f_failure);
+      if (errno == ENOMEM) return f_status_set_error(f_allocation_error);
+      else return f_status_set_error(f_failure);
     }
 
     return f_none;

@@ -64,7 +64,7 @@ extern "C" {
 #ifndef _di_f_character_to_digit_
   f_return_status f_character_to_digit(const char character, f_u_long *digit) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit == 0) return f_error_set_error(f_invalid_parameter);
+      if (digit == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -89,7 +89,7 @@ extern "C" {
 #ifndef _di_f_character_to_hexdigit_
   f_return_status f_character_to_hexdigit(const char character, f_u_long *digit) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit == 0) return f_error_set_error(f_invalid_parameter);
+      if (digit == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -126,10 +126,10 @@ extern "C" {
 #ifndef _di_f_string_to_digit_
   f_return_status f_string_to_digit(const f_string string, f_u_long *digit, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit == 0) return f_error_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_error_set_error(f_invalid_parameter);
-      if (location.stop <= location.start) return f_error_set_error(f_invalid_parameter);
-      if (string == 0) return f_error_set_error(f_invalid_parameter);
+      if (digit == 0) return f_status_set_error(f_invalid_parameter);
+      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location.stop <= location.start) return f_status_set_error(f_invalid_parameter);
+      if (string == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_string_length current_location = location.start;
@@ -163,10 +163,10 @@ extern "C" {
 #ifndef _di_f_string_to_hexdigit_
   f_return_status f_string_to_hexdigit(const f_string string, f_u_long *digit, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
-      if (digit == 0) return f_error_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_error_set_error(f_invalid_parameter);
-      if (location.stop <= location.start) return f_error_set_error(f_invalid_parameter);
-      if (string == 0) return f_error_set_error(f_invalid_parameter);
+      if (digit == 0) return f_status_set_error(f_invalid_parameter);
+      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location.stop <= location.start) return f_status_set_error(f_invalid_parameter);
+      if (string == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_string_length current_location = location.start;

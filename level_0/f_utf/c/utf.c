@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_f_utf_is_bom_
   f_return_status f_utf_is_bom(const f_string character, const f_u_short max_width) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_error_set_error(f_invalid_parameter);
+      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_u_short width = f_macro_utf_byte_width(*character);
@@ -17,7 +17,7 @@ extern "C" {
     }
 
     if (width > max_width) {
-      return f_error_set_error(f_maybe);
+      return f_status_set_error(f_maybe);
     }
 
     if (width == 3) {
@@ -33,7 +33,7 @@ extern "C" {
 #ifndef _di_f_utf_is_graph_
   f_return_status f_utf_is_graph(const f_string character, const f_u_short max_width) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_error_set_error(f_invalid_parameter);
+      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_u_short width = f_macro_utf_byte_width_is(*character);
@@ -43,7 +43,7 @@ extern "C" {
     }
 
     if (width > max_width) {
-      return f_error_set_error(f_maybe);
+      return f_status_set_error(f_maybe);
     }
 
     // for now, just assume that any non-whitespace, non-substitute utf-8 character is a graph.
@@ -63,7 +63,7 @@ extern "C" {
 #ifndef _di_f_utf_is_space_
   f_return_status f_utf_is_space(const f_string character, const f_u_short max_width) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_error_set_error(f_invalid_parameter);
+      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_u_short width = f_macro_utf_byte_width(*character);
@@ -73,7 +73,7 @@ extern "C" {
     }
 
     if (width > max_width) {
-      return f_error_set_error(f_maybe);
+      return f_status_set_error(f_maybe);
     }
 
     if (width == 2) {
@@ -195,7 +195,7 @@ extern "C" {
 #ifndef _di_f_utf_is_substitute_
   f_return_status f_utf_is_substitute(const f_string character, const f_u_short max_width) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_error_set_error(f_invalid_parameter);
+      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_u_short width = f_macro_utf_byte_width(*character);
@@ -205,7 +205,7 @@ extern "C" {
     }
 
     if (width > max_width) {
-      return f_error_set_error(f_maybe);
+      return f_status_set_error(f_maybe);
     }
 
     if (width == 2) {
@@ -243,7 +243,7 @@ extern "C" {
 #ifndef _di_f_utf_is_whitespace_
   f_return_status f_utf_is_whitespace(const f_string character, const f_u_short max_width) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_error_set_error(f_invalid_parameter);
+      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_u_short width = f_macro_utf_byte_width(*character);
@@ -253,7 +253,7 @@ extern "C" {
     }
 
     if (width > max_width) {
-      return f_error_set_error(f_maybe);
+      return f_status_set_error(f_maybe);
     }
 
     if (width == 2) {
@@ -667,8 +667,8 @@ extern "C" {
 #ifndef _di_f_utf_char_to_character_
   f_return_status f_utf_char_to_character(const f_string character, const f_u_short max_width, f_utf_character *utf_character) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_error_set_error(f_invalid_parameter);
-      if (utf_character == 0) return f_error_set_error(f_invalid_parameter);
+      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
+      if (utf_character == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_u_short width = f_macro_utf_byte_width(*character);
@@ -679,7 +679,7 @@ extern "C" {
     }
 
     if (width > max_width) {
-      return f_error_set_error(f_failure);
+      return f_status_set_error(f_failure);
     }
 
     memset(utf_character, 0, sizeof(f_utf_character));

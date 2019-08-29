@@ -7,11 +7,11 @@ extern "C" {
 #ifndef _di_fl_fss_decrement_buffer_
   f_return_status fl_fss_decrement_buffer(const f_dynamic_string buffer, f_string_location *input, const f_string_length step) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
-      if (input->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
-      if (step < 1) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_status_set_error(f_invalid_parameter);
+      if (input->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (step < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (input->start < 1) return f_none_on_eos;
@@ -24,7 +24,7 @@ extern "C" {
 
       if (width > input->start) {
         if (width > 1) {
-          return f_error_set_error(f_incomplete_utf_on_eos);
+          return f_status_set_error(f_incomplete_utf_on_eos);
         }
 
         return f_none_on_eos;
@@ -41,8 +41,8 @@ extern "C" {
 #ifndef _di_fl_fss_identify_
   f_return_status fl_fss_identify(const f_dynamic_string buffer, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
-      if (header == 0) return f_error_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
+      if (header == 0) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     register f_string_length i = 0;
@@ -51,8 +51,8 @@ extern "C" {
     if (buffer.used > 3) {
       f_status status = f_utf_is_bom(buffer.string, 4);
 
-      if (f_error_is_error(status)) {
-        return f_error_set_error(fl_fss_no_header);
+      if (f_status_is_error(status)) {
+        return f_status_set_error(fl_fss_no_header);
       }
 
       if (status == f_true) {
@@ -123,7 +123,7 @@ extern "C" {
                           i++;
                           header->length = i;
 
-                          return f_error_is_warning(fl_fss_accepted_but_invalid);
+                          return f_status_is_warning(fl_fss_accepted_but_invalid);
                         }
                       }
                     }
@@ -168,7 +168,7 @@ extern "C" {
 
                       header->length = i + 1;
 
-                      return f_error_is_warning(fl_fss_accepted_but_invalid);
+                      return f_status_is_warning(fl_fss_accepted_but_invalid);
                     }
                   }
                 }
@@ -189,10 +189,10 @@ extern "C" {
 #ifndef _di_fl_fss_identify_file_
   f_return_status fl_fss_identify_file(f_file *file_information, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
-      if (file_information == 0) return f_error_set_error(f_invalid_parameter);
-      if (header == 0) return f_error_set_error(f_invalid_parameter);
-      if (file_information->file == 0) return f_error_set_error(f_file_not_open);
-      if (ferror(file_information->file) != 0) return f_error_set_error(f_file_error);
+      if (file_information == 0) return f_status_set_error(f_invalid_parameter);
+      if (header == 0) return f_status_set_error(f_invalid_parameter);
+      if (file_information->file == 0) return f_status_set_error(f_file_not_open);
+      if (ferror(file_information->file) != 0) return f_status_set_error(f_file_error);
     #endif // _di_level_1_parameter_checking_
 
     clearerr(file_information->file);
@@ -205,7 +205,7 @@ extern "C" {
     {
       f_s_int seek_result = f_file_seek_from_beginning(file_information->file, 0);
 
-      if (seek_result != 0) return f_error_set_error(f_file_seek_error);
+      if (seek_result != 0) return f_status_set_error(f_file_seek_error);
     }
 
     // 1: Prepare the buffer to handle a size of f_fss_max_header_length
@@ -213,14 +213,14 @@ extern "C" {
 
     f_adjust_dynamic_string(status, buffer, location.total_elements + 1);
 
-    if (f_error_is_error(status)) {
+    if (f_status_is_error(status)) {
       return status;
     }
 
     // 2: buffer the file
     status = f_file_read(file_information, &buffer, location);
 
-    if (f_error_is_error(status)) {
+    if (f_status_is_error(status)) {
       return status;
     }
 
@@ -234,11 +234,11 @@ extern "C" {
 #ifndef _di_fl_fss_increment_buffer_
   f_return_status fl_fss_increment_buffer(const f_dynamic_string buffer, f_string_location *input, const f_string_length step) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
-      if (input->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
-      if (step < 1) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_status_set_error(f_invalid_parameter);
+      if (input->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (step < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length i = 0;
@@ -249,7 +249,7 @@ extern "C" {
 
       if (input->start + width > input->stop) {
         if (width > 1) {
-          return f_error_set_error(f_incomplete_utf_on_stop);
+          return f_status_set_error(f_incomplete_utf_on_stop);
         }
 
         input->start += width;
@@ -257,7 +257,7 @@ extern "C" {
       }
       else if (input->start + width >= buffer.used) {
         if (width > 1) {
-          return f_error_set_error(f_incomplete_utf_on_eos);
+          return f_status_set_error(f_incomplete_utf_on_eos);
         }
 
         input->start += width;
@@ -275,10 +275,10 @@ extern "C" {
 #ifndef _di_fl_fss_is_graph_
   f_return_status fl_fss_is_graph(const f_dynamic_string buffer, const f_string_location input) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (input.start < 0) return f_error_set_error(f_invalid_parameter);
-      if (input.stop < input.start) return f_error_set_error(f_invalid_parameter);
-      if (input.start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (input.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (input.stop < input.start) return f_status_set_error(f_invalid_parameter);
+      if (input.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_u_short utf_width = f_macro_utf_byte_width_is(buffer.string[input.start]);
@@ -299,7 +299,7 @@ extern "C" {
 
     f_status status = f_utf_is_space(buffer.string + input.start, max_width);
 
-    if (f_error_is_error(status)) {
+    if (f_status_is_error(status)) {
       return status;
     }
 
@@ -314,10 +314,10 @@ extern "C" {
 #ifndef _di_fl_fss_is_space_
   f_return_status fl_fss_is_space(const f_dynamic_string buffer, const f_string_location input) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (input.start < 0) return f_error_set_error(f_invalid_parameter);
-      if (input.stop < input.start) return f_error_set_error(f_invalid_parameter);
-      if (input.start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (input.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (input.stop < input.start) return f_status_set_error(f_invalid_parameter);
+      if (input.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_u_short utf_width = f_macro_utf_byte_width_is(buffer.string[input.start]);
@@ -338,7 +338,7 @@ extern "C" {
 
     f_status status = f_utf_is_space(buffer.string + input.start, max_width);
 
-    if (f_error_is_error(status)) {
+    if (f_status_is_error(status)) {
       return status;
     }
 
@@ -353,10 +353,10 @@ extern "C" {
 #ifndef _di_fl_fss_skip_past_whitespace_
   f_return_status fl_fss_skip_past_whitespace(const f_dynamic_string buffer, f_string_location *input) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
-      if (input->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_status_set_error(f_invalid_parameter);
+      if (input->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
@@ -387,10 +387,10 @@ extern "C" {
 #ifndef _di_fl_fss_skip_past_all_whitespace_
   f_return_status fl_fss_skip_past_all_whitespace(const f_dynamic_string buffer, f_string_location *input) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer.used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
-      if (input->start >= buffer.used) return f_error_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_status_set_error(f_invalid_parameter);
+      if (input->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
@@ -419,10 +419,10 @@ extern "C" {
 #ifndef _di_fl_fss_shift_delimiters_
   f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, const f_string_location input) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer->used <= 0) return f_error_set_error(f_invalid_parameter);
-      if (input.start < 0) return f_error_set_error(f_invalid_parameter);
-      if (input.stop < input.start) return f_error_set_error(f_invalid_parameter);
-      if (input.start >= buffer->used) return f_error_set_error(f_invalid_parameter);
+      if (buffer->used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (input.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (input.stop < input.start) return f_status_set_error(f_invalid_parameter);
+      if (input.start >= buffer->used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length position = 0;
@@ -446,7 +446,7 @@ extern "C" {
       if (utf_width > 1) {
         // not enough space in buffer or in input range to process UTF-8 character.
         if (position + utf_width >= buffer->used || position + utf_width > input.stop) {
-          return f_error_set_error(f_invalid_utf);
+          return f_status_set_error(f_invalid_utf);
         }
 
         if (distance > 0) {

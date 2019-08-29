@@ -7,10 +7,10 @@ extern "C" {
 #ifndef _di_fll_execute_path_
   f_return_status fll_execute_path(const f_string program_path, const f_dynamic_strings arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
-      if (results == 0) return f_error_set_error(f_invalid_parameter);
+      if (results == 0) return f_status_set_error(f_invalid_parameter);
 
-      if (arguments.used < 0) return f_error_set_error(f_invalid_parameter);
-      if (arguments.used > arguments.size) return f_error_set_error(f_invalid_parameter);
+      if (arguments.used < 0) return f_status_set_error(f_invalid_parameter);
+      if (arguments.used > arguments.size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
     // create a string array that is compatible with execv() calls.
@@ -33,7 +33,7 @@ extern "C" {
       if (name_size > 1) {
         f_new_string(status, program_name, name_size + 1);
 
-        if (f_error_is_error(status)) return status;
+        if (f_status_is_error(status)) return status;
 
         memcpy(program_name, last_slash + 1, sizeof(f_string_length) * name_size);
         memset(program_name, name_size, 0);
@@ -53,7 +53,7 @@ extern "C" {
     for (f_string_length i = 0; i < arguments.used; i++) {
       f_new_string(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
 
-      if (f_error_is_error(status)) {
+      if (f_status_is_error(status)) {
         f_status status2 = f_none;
 
         if (name_size > 0) f_delete_string(status, program_name, name_size);
@@ -86,7 +86,7 @@ extern "C" {
         f_delete_string(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
       } // for
 
-      return f_error_set_error(f_fork_failed);
+      return f_status_set_error(f_fork_failed);
     }
 
     // child
@@ -110,7 +110,7 @@ extern "C" {
       } // for
     }
 
-    if (*results != 0) return f_error_set_error(f_failure);
+    if (*results != 0) return f_status_set_error(f_failure);
 
     return f_none;
   }
@@ -119,10 +119,10 @@ extern "C" {
 #ifndef _di_fll_execute_program_
   f_return_status fll_execute_program(const f_string program_name, const f_dynamic_strings arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
-      if (results == 0) return f_error_set_error(f_invalid_parameter);
+      if (results == 0) return f_status_set_error(f_invalid_parameter);
 
-      if (arguments.used < 0) return f_error_set_error(f_invalid_parameter);
-      if (arguments.used > arguments.size) return f_error_set_error(f_invalid_parameter);
+      if (arguments.used < 0) return f_status_set_error(f_invalid_parameter);
+      if (arguments.used > arguments.size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
 
     // create a string array that is compatible with execv() calls.
@@ -135,7 +135,7 @@ extern "C" {
     for (f_string_length i = 0; i < arguments.used; i++) {
       f_new_string(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
 
-      if (f_error_is_error(status)) {
+      if (f_status_is_error(status)) {
         f_status status2 = f_none;
 
         for (f_string_length j = 0; j < i; j++) {
@@ -164,7 +164,7 @@ extern "C" {
         f_delete_string(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
       } // for
 
-      return f_error_set_error(f_fork_failed);
+      return f_status_set_error(f_fork_failed);
     }
 
     // child
@@ -186,7 +186,7 @@ extern "C" {
       }
     }
 
-    if (*results != 0) return f_error_set_error(f_failure);
+    if (*results != 0) return f_status_set_error(f_failure);
 
     return f_none;
   }

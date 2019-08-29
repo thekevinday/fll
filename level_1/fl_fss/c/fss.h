@@ -14,7 +14,7 @@
 
 // fll-0 includes
 #include <level_0/conversion.h>
-#include <level_0/errors.h>
+#include <level_0/status.h>
 #include <level_0/file.h>
 #include <level_0/fss.h>
 #include <level_0/strings.h>
@@ -22,7 +22,7 @@
 #include <level_0/utf.h>
 
 // fll-1 includes
-#include <level_1/fss_errors.h>
+#include <level_1/fss_status.h>
 
 #ifdef __cplusplus
 extern "C" {

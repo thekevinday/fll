@@ -1,7 +1,7 @@
 # fss-0000
 
-project_name fll_errors
-project_level 2
+project_name fl_status
+project_level 1
 
 version_major 0
 version_minor 5
@@ -10,10 +10,10 @@ version_micro 0
 build_compiler gcc
 build_linker ar
 build_libraries -lc
-build_libraries_fll -lfl_errors -lfl_strings -lf_memory -lf_utf
-build_sources_library errors.c
+build_libraries_fll
+build_sources_library status.c
 build_sources_program
-build_sources_headers errors.h
+build_sources_headers status.h
 build_sources_bash
 build_sources_settings
 build_shared yes

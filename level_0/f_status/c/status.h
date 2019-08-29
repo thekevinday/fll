@@ -1,16 +1,16 @@
 /**
  * FLL - Level 0
  *
- * Project: Errors
+ * Project: Status
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * Provides error definitions.
+ * Provides status code definitions.
  *
  * Warning: changing error codes will break ABI, so recompile every file that includes and uses these error codes when this gets changed.
  */
-#ifndef _F_errors_h
-#define _F_errors_h
+#ifndef _F_status_h
+#define _F_status_h
 
 // libc includes
 #include <errno.h>
@@ -19,41 +19,41 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_error_masks_
+#ifndef _di_f_status_masks_
   // f_status is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
-  #define f_error_bit_error   0x8000 // 1000 0000 0000 0000
-  #define f_error_bit_signal  0xc000 // 1100 0000 0000 0000
-  #define f_error_bit_warning 0x4000 // 0100 0000 0000 0000
+  #define f_status_bit_error   0x8000 // 1000 0000 0000 0000
+  #define f_status_bit_signal  0xc000 // 1100 0000 0000 0000
+  #define f_status_bit_warning 0x4000 // 0100 0000 0000 0000
 
-  #define f_error_mask_fine 0x3fff // 0011 1111 1111 1111
-  #define f_error_mask_code 0xc000 // 1100 0000 0000 0000
+  #define f_status_mask_fine 0x3fff // 0011 1111 1111 1111
+  #define f_status_mask_code 0xc000 // 1100 0000 0000 0000
 
-  #define f_error_is_error(status)   (status & f_error_bit_error)
-  #define f_error_is_fine(status)    ((status & f_error_mask_code) == 0)
-  #define f_error_is_problem(status) ((status & f_error_bit_error) || (status & f_error_bit_warning))
-  #define f_error_is_signal(status)  (status & f_error_bit_signal)
-  #define f_error_is_warning(status) (status & f_error_bit_warning)
+  #define f_status_is_error(status)   (status & f_status_bit_error)
+  #define f_status_is_fine(status)    ((status & f_status_mask_code) == 0)
+  #define f_status_is_problem(status) ((status & f_status_bit_error) || (status & f_status_bit_warning))
+  #define f_status_is_signal(status)  (status & f_status_bit_signal)
+  #define f_status_is_warning(status) (status & f_status_bit_warning)
 
-  #define f_error_is_not_error(status)   ((status & f_error_bit_error) == 0)
-  #define f_error_is_not_signal(status)  ((status & f_error_bit_signal) == 0)
-  #define f_error_is_not_warning(status) ((status & f_error_bit_warning) == 0)
+  #define f_status_is_not_error(status)   ((status & f_status_bit_error) == 0)
+  #define f_status_is_not_signal(status)  ((status & f_status_bit_signal) == 0)
+  #define f_status_is_not_warning(status) ((status & f_status_bit_warning) == 0)
 
-  #define f_error_set_error(status)   (status | f_error_bit_error)
-  #define f_error_set_signal(status)  (status | f_error_bit_signal)
-  #define f_error_set_warning(status) (status | f_error_bit_warning)
+  #define f_status_set_error(status)   (status | f_status_bit_error)
+  #define f_status_set_signal(status)  (status | f_status_bit_signal)
+  #define f_status_set_warning(status) (status | f_status_bit_warning)
 
-  // use f_error_set_fine to remove the error, warning, and signal bits
-  #define f_error_set_fine(status) (status & f_error_mask_fine)
-#endif // _di_f_error_masks_
+  // use f_status_set_fine to remove the error, warning, and signal bits
+  #define f_status_set_fine(status) (status & f_status_mask_fine)
+#endif // _di_f_status_masks_
 
 // use of an enumerator makes more sense here than explicitly defining every error code (or return code).
 enum {
-  #ifndef _di_f_errors_booleans_
+  #ifndef _di_f_status_booleans_
     f_false = 0,
     f_true,
-  #endif // _di_f_errors_booleans_
+  #endif // _di_f_status_booleans_
 
-  #ifndef _di_f_errors_signals_
+  #ifndef _di_f_status_signals_
     f_signal_hangup = 1,
     f_signal_interrupt,
     f_signal_quit,
@@ -118,9 +118,9 @@ enum {
     f_signal_reserved_62,
     f_signal_reserved_63,
     f_signal_reserved_64,
-  #endif // _di_f_errors_signals_
+  #endif // _di_f_status_signals_
 
-  #ifndef _di_f_errors_basic_
+  #ifndef _di_f_status_basic_
     f_none = 197,          // start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
     f_maybe,
     f_dummy,               // to only be used as a placeholder
@@ -138,9 +138,9 @@ enum {
     f_failure,
     f_interrupted,         // usually by a signal.
     f_loop,                // such as infinite recursion.
-  #endif // _di_f_errors_basic_
+  #endif // _di_f_status_basic_
 
-  #ifndef _di_f_errors_invalid_
+  #ifndef _di_f_status_invalid_
     f_invalid,
     f_invalid_parameter,
     f_invalid_syntax,
@@ -161,9 +161,9 @@ enum {
     f_invalid_on_eol,
     f_invalid_on_eos,
     f_invalid_on_stop,
-  #endif // _di_f_errors_invalid_
+  #endif // _di_f_status_invalid_
 
-  #ifndef _di_f_errors_busy_
+  #ifndef _di_f_status_busy_
     f_busy,          // such as address in use, or port in use.
     f_busy_address,
     f_busy_port,
@@ -172,9 +172,9 @@ enum {
     f_busy_pipe,
     f_busy_buffer,
     f_busy_process,
-  #endif // _di_f_errors_busy_
+  #endif // _di_f_status_busy_
 
-  #ifndef _di_f_errors_unavailable_
+  #ifndef _di_f_status_unavailable_
     f_unavailable,
     f_unavailable_address,
     f_unavailable_port,
@@ -183,18 +183,18 @@ enum {
     f_unavailable_pipe,
     f_unavailable_buffer,
     f_unavailable_process,
-  #endif // _di_f_errors_unavailable_
+  #endif // _di_f_status_unavailable_
 
-  #ifndef _di_f_errors_digits_
+  #ifndef _di_f_status_digits_
     f_underflow,
     f_overflow,
     f_divide_by_zero,
     f_cannot_be_negative,
     f_cannot_be_positive,
     f_cannot_be_zero,
-  #endif // _di_f_errors_digits_
+  #endif // _di_f_status_digits_
 
-  #ifndef _di_f_errors_buffers_
+  #ifndef _di_f_status_buffers_
     f_no_data_on_eof,             // warning
     f_no_data_on_eol,             // warning
     f_no_data_on_eos,             // warning
@@ -223,19 +223,19 @@ enum {
     f_unterminated_group_on_stop,
     f_incomplete_utf_on_eos,
     f_incomplete_utf_on_stop,
-  #endif // _di_f_errors_buffers_
+  #endif // _di_f_status_buffers_
 
-  #ifndef _di_f_errors_allocation_
+  #ifndef _di_f_status_allocation_
     f_allocation_error,
     f_reallocation_error,
-  #endif // _di_f_errors_allocation_
+  #endif // _di_f_status_allocation_
 
-  #ifndef _di_f_errors_fork_
+  #ifndef _di_f_status_fork_
     f_fork_failed,
     f_too_many_processes,
-  #endif // _di_f_errors_fork_
+  #endif // _di_f_status_fork_
 
-  #ifndef _di_f_errors_file_
+  #ifndef _di_f_status_file_
     f_file_seek_error,
     f_file_read_error,
     f_file_write_error,
@@ -254,10 +254,10 @@ enum {
     f_file_stat_error,
     f_file_error,
     f_file_not_utf,
-  #endif // _di_f_errors_file_
+  #endif // _di_f_status_file_
 
   // most of these are a guess until I get around to researching & implementing linux directory I/O
-  #ifndef _di_f_errors_directory_
+  #ifndef _di_f_status_directory_
     f_directory_read_error,
     f_directory_write_error,
     f_directory_flush_error,
@@ -273,23 +273,23 @@ enum {
     f_directory_reallocation_error,
     f_directory_error,
     f_directory_not_utf,
-  #endif // _di_f_errors_directory_
+  #endif // _di_f_status_directory_
 
-  #ifndef _di_f_errors_socket_
+  #ifndef _di_f_status_socket_
     f_socket_connection_client_error,
     f_socket_connection_target_error,
     f_socket_receive_error,
     f_socket_send_error,
-  #endif // _di_f_errors_socket_
+  #endif // _di_f_status_socket_
 
-  #ifndef _di_f_errors_non_
+  #ifndef _di_f_status_non_
     f_less_than,
     f_equal_to,
     f_not_equal_to,
     f_greater_than,
-  #endif // _di_f_errors_non_
+  #endif // _di_f_status_non_
 
-  #ifndef _di_f_errors_access_denied_
+  #ifndef _di_f_status_access_denied_
     f_access_denied,
     f_access_denied_user,
     f_access_denied_group,
@@ -298,14 +298,14 @@ enum {
     f_access_denied_write,
     f_access_denied_execute,
     f_access_denied_super,    // not super user (aka: not root).
-  #endif // _di_f_errors_access_denied_
+  #endif // _di_f_status_access_denied_
 
   // required
-  f_last_error_code
+  f_last_status_code
 }; // enum
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _F_errors_h
+#endif // _F_status_h

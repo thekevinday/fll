@@ -127,8 +127,8 @@ extern "C" {
       }
     }
 
-    if (f_error_is_error(status)) {
-      status = f_error_set_fine(status);
+    if (f_status_is_error(status)) {
+      status = f_status_set_fine(status);
 
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
@@ -139,15 +139,15 @@ extern "C" {
       else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
       }
-      else if (f_error_set_fine(status) == f_invalid_parameter) {
+      else if (f_status_set_fine(status) == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");
       }
       else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_error_set_error(status));
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_status_set_error(status));
       }
 
       firewall_delete_data(data);
-      return f_error_set_error(status);
+      return f_status_set_error(status);
     }
 
     // execute parameter results
@@ -258,7 +258,7 @@ extern "C" {
 
           f_resize_dynamic_strings(status, arguments, 7);
 
-          if (f_error_is_error(status)) {
+          if (f_status_is_error(status)) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
@@ -293,7 +293,7 @@ extern "C" {
             fflush(f_standard_output);
           }
 
-          if (f_error_is_not_error(status) && show_mangle) {
+          if (f_status_is_not_error(status) && show_mangle) {
             fl_print_color(f_standard_output, data->context.standout, data->context.reset, "========================== ");
             fl_print_color(f_standard_output, data->context.title, data->context.reset, "MANGLE");
             fl_print_color_line(f_standard_output, data->context.standout, data->context.reset, " ==========================");
@@ -321,7 +321,7 @@ extern "C" {
             fflush(f_standard_output);
           }
 
-          if (f_error_is_not_error(status) && show_ports) {
+          if (f_status_is_not_error(status) && show_ports) {
             fl_print_color(f_standard_output, data->context.standout, data->context.reset, "========================== ");
             fl_print_color(f_standard_output, data->context.title, data->context.reset, "FILTER");
             fl_print_color_line(f_standard_output, data->context.standout, data->context.reset, " ==========================");
@@ -345,8 +345,8 @@ extern "C" {
             fflush(f_standard_output);
           }
 
-          if (f_error_is_error(status)) {
-            status = f_error_set_fine(status);
+          if (f_status_is_error(status)) {
+            status = f_status_set_fine(status);
 
             if (status == f_allocation_error || status == f_reallocation_error) {
               fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
@@ -368,7 +368,7 @@ extern "C" {
               fprintf(f_standard_error, "\n");
             }
 
-            status = f_error_set_error(status);
+            status = f_status_set_error(status);
           }
 
           arguments.array[0].string = 0;
@@ -395,8 +395,8 @@ extern "C" {
         // load all network devices
         status = fl_directory_list((f_string) network_devices, &data->devices);
 
-        if (f_error_is_error(status)) {
-          status = f_error_set_fine(status);
+        if (f_status_is_error(status)) {
+          status = f_status_set_fine(status);
 
           if (status == f_allocation_error || status == f_reallocation_error) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
@@ -410,7 +410,7 @@ extern "C" {
 
           firewall_delete_local_data(&local);
           firewall_delete_data(data);
-          return f_error_set_error(status);
+          return f_status_set_error(status);
         }
 
         // remove "lo" (loopback) from the device listing
@@ -435,7 +435,7 @@ extern "C" {
         if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart || command == firewall_parameter_command_lock) {
           status = firewall_buffer_rules(network_path firewall_file_other, f_false, &local, data);
 
-          if (f_error_is_error(status)) {
+          if (f_status_is_error(status)) {
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
             return status;
@@ -463,11 +463,11 @@ extern "C" {
             if (reserved.has_lock) {
               status = firewall_delete_chains(*data);
 
-              if (f_error_is_not_error(status)) {
+              if (f_status_is_not_error(status)) {
                 status = firewall_default_lock(*data);
               }
 
-              if (f_error_is_error(status)) {
+              if (f_status_is_error(status)) {
                 firewall_delete_local_data(&local);
                 firewall_delete_data(data);
                 return status;
@@ -500,11 +500,11 @@ extern "C" {
             if (reserved.has_stop) {
               status = firewall_delete_chains(*data);
 
-              if (f_error_is_not_error(status)) {
+              if (f_status_is_not_error(status)) {
                 status = firewall_default_lock(*data);
               }
 
-              if (f_error_is_error(status)) {
+              if (f_status_is_error(status)) {
                 firewall_delete_local_data(&local);
                 firewall_delete_data(data);
                 return status;
@@ -521,7 +521,7 @@ extern "C" {
 
               status = firewall_process_rules(&input, &local, data);
 
-              if (f_error_is_error(status) || command == firewall_parameter_command_stop) {
+              if (f_status_is_error(status) || command == firewall_parameter_command_stop) {
                 firewall_delete_local_data(&local);
                 firewall_delete_data(data);
                 return status;
@@ -542,7 +542,7 @@ extern "C" {
         if (command == firewall_parameter_command_start || command == firewall_parameter_command_restart) {
           status = firewall_buffer_rules(network_path firewall_file_first, f_false, &local, data);
 
-          if (f_error_is_error(status)) {
+          if (f_status_is_error(status)) {
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
             return status;
@@ -551,11 +551,11 @@ extern "C" {
           if (command == firewall_parameter_command_start) {
             status = firewall_delete_chains(*data);
 
-            if (f_error_is_not_error(status)) {
+            if (f_status_is_not_error(status)) {
               status = firewall_default_lock(*data);
             }
 
-            if (f_error_is_error(status)) {
+            if (f_status_is_error(status)) {
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
               return status;
@@ -564,7 +564,7 @@ extern "C" {
 
           status = firewall_create_custom_chains(&reserved, &local, data);
 
-          if (f_error_is_error(status)) {
+          if (f_status_is_error(status)) {
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
             return status;
@@ -585,7 +585,7 @@ extern "C" {
 
             status = firewall_process_rules(&input, &local, data);
 
-            if (f_error_is_error(status) || command == firewall_parameter_command_stop) {
+            if (f_status_is_error(status) || command == firewall_parameter_command_stop) {
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
               return status;
@@ -604,7 +604,7 @@ extern "C" {
 
               f_resize_dynamic_string(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
 
-              if (f_error_is_error(status)) {
+              if (f_status_is_error(status)) {
                 fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
                 firewall_delete_local_data(&local);
                 firewall_delete_data(data);
@@ -623,23 +623,23 @@ extern "C" {
               f_delete_dynamic_string(status2, file_path);
             }
 
-            if (f_error_is_error(status)) {
-              status = f_error_set_fine(status);
+            if (f_status_is_error(status)) {
+              status = f_status_set_fine(status);
 
               firewall_delete_local_data(&local);
 
               if (status == f_file_not_found || status == f_file_open_error || status == f_file_descriptor_error || status == fl_fss_found_object_no_content) {
-                status = f_error_set_error(status);
+                status = f_status_set_error(status);
                 continue;
               }
 
               firewall_delete_data(data);
-              return f_error_set_error(status);
+              return f_status_set_error(status);
             }
 
             status = firewall_create_custom_chains(&reserved, &local, data);
 
-            if (f_error_is_error(status)) {
+            if (f_status_is_error(status)) {
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
               return status;
@@ -660,7 +660,7 @@ extern "C" {
 
               status = firewall_process_rules(&input, &local, data);
 
-              if (f_error_is_error(status) || command == firewall_parameter_command_stop) {
+              if (f_status_is_error(status) || command == firewall_parameter_command_stop) {
                 firewall_delete_local_data(&local);
                 firewall_delete_data(data);
                 return status;
@@ -672,7 +672,7 @@ extern "C" {
 
           status = firewall_buffer_rules(network_path firewall_file_last, f_false, &local, data);
 
-          if (f_error_is_error(status)) {
+          if (f_status_is_error(status)) {
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
             return status;
@@ -680,7 +680,7 @@ extern "C" {
 
           status = firewall_create_custom_chains(&reserved, &local, data);
 
-          if (f_error_is_error(status)) {
+          if (f_status_is_error(status)) {
             firewall_macro_delete_fss_buffers(status2, local.buffer, local.chain_objects, local.chain_contents)
             firewall_delete_data(data);
             return status;
@@ -701,7 +701,7 @@ extern "C" {
 
             status = firewall_process_rules(&input, &local, data);
 
-            if (f_error_is_error(status) || command == firewall_parameter_command_stop) {
+            if (f_status_is_error(status) || command == firewall_parameter_command_stop) {
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
               return status;
@@ -716,7 +716,7 @@ extern "C" {
       }
       else {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: You did not pass a command");
-        status = f_error_set_error(f_invalid_parameter);
+        status = f_status_set_error(f_invalid_parameter);
       }
     }
 

@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fl_serialize_simple_
   f_return_status fl_serialize_simple(const f_dynamic_string value, f_dynamic_string *serialized) {
     #ifndef _di_level_0_parameter_checking_
-      if (serialized == 0) return f_error_set_error(f_invalid_parameter);
+      if (serialized == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status status = f_none;
@@ -15,7 +15,7 @@ extern "C" {
     if (serialized->used + value.used + 1 >= serialized->size) {
       f_resize_dynamic_string(status, (*serialized), serialized->size + value.used + 1);
 
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
     }
 
     if (serialized->used == 0) {
@@ -35,7 +35,7 @@ extern "C" {
 #ifndef _di_fl_unserialize_simple_map_
   f_return_status fl_unserialize_simple_map(const f_dynamic_string serialized, f_string_locations *locations) {
     #ifndef _di_level_0_parameter_checking_
-      if (locations == 0) return f_error_set_error(f_invalid_parameter);
+      if (locations == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status status = f_none;
@@ -52,7 +52,7 @@ extern "C" {
         if (locations->used + width >= locations->size) {
           f_resize_string_locations(status, (*locations), locations->size + f_serialized_default_allocation_step);
 
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
         }
 
         if (start == i) {
@@ -68,13 +68,13 @@ extern "C" {
         }
 
         if (i + width > serialized.used) {
-          return f_error_set_error(f_incomplete_utf_on_eos);
+          return f_status_set_error(f_incomplete_utf_on_eos);
         }
 
         start = i + width;
       }
       else if (i + width > serialized.used) {
-        return f_error_set_error(f_incomplete_utf_on_eos);
+        return f_status_set_error(f_incomplete_utf_on_eos);
       }
 
       i += width;
@@ -87,7 +87,7 @@ extern "C" {
 #ifndef _di_fl_unserialize_simple_find_
   f_return_status fl_unserialize_simple_find(const f_dynamic_string serialized, const f_array_length index, f_string_location *location) {
     #ifndef _di_level_0_parameter_checking_
-      if (location == 0) return f_error_set_error(f_invalid_parameter);
+      if (location == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status status = f_none;
@@ -129,7 +129,7 @@ extern "C" {
       }
 
       if (i + width > serialized.used) {
-        return f_error_set_error(f_incomplete_utf_on_eos);
+        return f_status_set_error(f_incomplete_utf_on_eos);
       }
 
       i += width;

@@ -7,13 +7,13 @@ extern "C" {
 #ifndef _di_fl_fss_basic_list_object_read_
   f_return_status fl_fss_basic_list_object_read(f_dynamic_string *buffer, f_string_location *input, f_fss_object *found) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
-      if (input == 0) return f_error_set_error(f_invalid_parameter);
-      if (found == 0) return f_error_set_error(f_invalid_parameter);
-      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
-      if (buffer->used <= 0)  return f_error_set_error(f_invalid_parameter);
-      if (input->start >= buffer->used) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_status_set_error(f_invalid_parameter);
+      if (input == 0) return f_status_set_error(f_invalid_parameter);
+      if (found == 0) return f_status_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used <= 0)  return f_status_set_error(f_invalid_parameter);
+      if (input->start >= buffer->used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
@@ -27,7 +27,7 @@ extern "C" {
     // return found nothing if this line only contains whitespace and delimit placeholders
     if (buffer->string[input->start] == f_eol) {
       status = fl_fss_increment_buffer(*buffer, input, 1);
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
 
       return fl_fss_found_no_object;
     }
@@ -40,7 +40,7 @@ extern "C" {
       fl_macro_fss_object_seek_till_newline((*buffer), (*input), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
       status = fl_fss_increment_buffer(*buffer, input, 1);
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
 
       return fl_fss_found_no_object;
     }
@@ -52,7 +52,7 @@ extern "C" {
         f_string_length slash_count = 1;
 
         status = fl_fss_increment_buffer(*buffer, input, 1);
-        if (f_error_is_error(status)) return status;
+        if (f_status_is_error(status)) return status;
 
         while (input->start < buffer->used && input->start <= input->stop && (buffer->string[input->start] == f_fss_delimit_placeholder || buffer->string[input->start] == f_fss_delimit_slash)) {
           if (buffer->string[input->start] == f_fss_delimit_slash) {
@@ -60,7 +60,7 @@ extern "C" {
           }
 
           status = fl_fss_increment_buffer(*buffer, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
         } // while
 
         fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
@@ -69,17 +69,17 @@ extern "C" {
           f_string_length stop_point = input->start - 1;
 
           status = fl_fss_increment_buffer(*buffer, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
 
           while (input->start < buffer->used && input->start <= input->stop) {
             if (buffer->string[input->start] == f_eol || (status = fl_fss_is_graph(*buffer, *input)) == f_true) {
               break;
             }
 
-            if (f_error_is_error(status)) return status;
+            if (f_status_is_error(status)) return status;
 
             status = fl_fss_increment_buffer(*buffer, input, 1);
-            if (f_error_is_error(status)) return status;
+            if (f_status_is_error(status)) return status;
           } // while
 
           fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
@@ -94,7 +94,7 @@ extern "C" {
 
               f_resize_string_lengths(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-              if (f_error_is_error(allocation_status)) {
+              if (f_status_is_error(allocation_status)) {
                 f_delete_string_lengths(allocation_status, delimits);
                 return allocation_status;
               }
@@ -112,7 +112,7 @@ extern "C" {
                 }
 
                 status = fl_fss_increment_buffer(*buffer, input, 1);
-                if (f_error_is_error(status)) return status;
+                if (f_status_is_error(status)) return status;
               } // while
 
               fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
@@ -134,17 +134,17 @@ extern "C" {
         f_string_length stop_point = input->start - 1;
 
         status = fl_fss_increment_buffer(*buffer, input, 1);
-        if (f_error_is_error(status)) return status;
+        if (f_status_is_error(status)) return status;
 
         while (input->start < buffer->used && input->start <= input->stop) {
           if (buffer->string[input->start] == f_eol || (status = fl_fss_is_graph(*buffer, *input)) == f_true) {
             break;
           }
 
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
 
           status = fl_fss_increment_buffer(*buffer, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
         } // while
 
         fl_macro_fss_object_delimited_return_on_overflow((*buffer), (*input), (*found), delimits, f_none_on_eos, f_none_on_stop)
@@ -155,7 +155,7 @@ extern "C" {
           found->stop = stop_point;
 
           status = fl_fss_increment_buffer(*buffer, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
 
           return fl_fss_found_object;
         }
@@ -164,19 +164,19 @@ extern "C" {
       }
 
       status = fl_fss_increment_buffer(*buffer, input, 1);
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
     } // while
 
     // seek to the end of the line when no valid object is found
     while (input->start < buffer->used && input->start <= input->stop && buffer->string[input->start] != f_eol) {
       status = fl_fss_increment_buffer(*buffer, input, 1);
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
     } // while
 
     fl_macro_fss_object_return_on_overflow((*buffer), (*input), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
     status = fl_fss_increment_buffer(*buffer, input, 1);
-    if (f_error_is_error(status)) return status;
+    if (f_status_is_error(status)) return status;
 
     return fl_fss_found_no_object;
   }
@@ -185,13 +185,13 @@ extern "C" {
 #ifndef _di_fl_fss_basic_list_content_read_
   f_return_status fl_fss_basic_list_content_read(f_dynamic_string *buffer, f_string_location *input, f_fss_content *found) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
-      if (input == 0) return f_error_set_error(f_invalid_parameter);
-      if (found == 0) return f_error_set_error(f_invalid_parameter);
-      if (input->start < 0) return f_error_set_error(f_invalid_parameter);
-      if (input->stop < input->start) return f_error_set_error(f_invalid_parameter);
-      if (buffer->used <= 0)  return f_error_set_error(f_invalid_parameter);
-      if (input->start >= buffer->used) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_status_set_error(f_invalid_parameter);
+      if (input == 0) return f_status_set_error(f_invalid_parameter);
+      if (found == 0) return f_status_set_error(f_invalid_parameter);
+      if (input->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (input->stop < input->start) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used <= 0)  return f_status_set_error(f_invalid_parameter);
+      if (input->start >= buffer->used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
@@ -215,7 +215,7 @@ extern "C" {
         last_newline = input->start;
 
         status = fl_fss_increment_buffer(*buffer, input, 1);
-        if (f_error_is_error(status)) return status;
+        if (f_status_is_error(status)) return status;
 
         fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*input), (*found), delimits, f_none_on_eos, f_none_on_stop)
 
@@ -227,7 +227,7 @@ extern "C" {
         f_string_length slash_count = 1;
 
         status = fl_fss_increment_buffer(*buffer, input, 1);
-        if (f_error_is_error(status)) return status;
+        if (f_status_is_error(status)) return status;
 
         while (input->start < buffer->used && input->start <= input->stop && (buffer->string[input->start] == f_fss_delimit_placeholder || buffer->string[input->start] == f_fss_delimit_slash)) {
           if (buffer->string[input->start] == f_fss_delimit_slash) {
@@ -235,7 +235,7 @@ extern "C" {
           }
 
           status = fl_fss_increment_buffer(*buffer, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
         } // while
 
         if (found_newline) {
@@ -249,17 +249,17 @@ extern "C" {
           f_string_length stop_point = input->start - 1;
 
           status = fl_fss_increment_buffer(*buffer, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
 
           while (input->start < buffer->used && input->start <= input->stop) {
             if (buffer->string[input->start] == f_eol || (status = fl_fss_is_graph(*buffer, *input)) == f_true) {
               break;
             }
 
-            if (f_error_is_error(status)) return status;
+            if (f_status_is_error(status)) return status;
 
             status = fl_fss_increment_buffer(*buffer, input, 1);
-            if (f_error_is_error(status)) return status;
+            if (f_status_is_error(status)) return status;
           } // while
 
           if (found_newline) {
@@ -294,7 +294,7 @@ extern "C" {
 
               f_resize_string_lengths(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-              if (f_error_is_error(allocation_status)) {
+              if (f_status_is_error(allocation_status)) {
                 f_delete_string_lengths(allocation_status, delimits);
                 return allocation_status;
               }
@@ -311,7 +311,7 @@ extern "C" {
               }
 
               status = fl_fss_increment_buffer(*buffer, input, 1);
-              if (f_error_is_error(status)) return status;
+              if (f_status_is_error(status)) return status;
             } // while
 
             found_newline = f_true;
@@ -323,17 +323,17 @@ extern "C" {
       }
       else if (buffer->string[input->start] == f_fss_basic_list_open) {
         status = fl_fss_increment_buffer(*buffer, input, 1);
-        if (f_error_is_error(status)) return status;
+        if (f_status_is_error(status)) return status;
 
         while (input->start < buffer->used && input->start <= input->stop) {
           if (buffer->string[input->start] == f_eol || (status = fl_fss_is_graph(*buffer, *input)) == f_true) {
             break;
           }
 
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
 
           status = fl_fss_increment_buffer(*buffer, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
         } // while
 
         if (found_newline) {
@@ -365,7 +365,7 @@ extern "C" {
       }
 
       status = fl_fss_increment_buffer(*buffer, input, 1);
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
     } // while
 
     if (found_newline) {
@@ -389,7 +389,7 @@ extern "C" {
 #ifndef _di_fl_fss_basic_list_object_write_
   f_return_status fl_fss_basic_list_object_write(const f_dynamic_string object, f_string_location *input, f_dynamic_string *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
@@ -416,7 +416,7 @@ extern "C" {
     if (pre_allocate_size > buffer->size) {
       f_resize_dynamic_string(status, (*buffer), pre_allocate_size);
 
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
     }
 
     buffer_position.start = buffer->used;
@@ -430,7 +430,7 @@ extern "C" {
       else if ((status = fl_fss_is_graph(object, *input)) == f_true) {
         break;
       }
-      else if (f_error_is_error(status)) {
+      else if (f_status_is_error(status)) {
         return status;
       }
 
@@ -440,7 +440,7 @@ extern "C" {
       }
 
       status = fl_fss_increment_buffer(object, input, 1);
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
     } // while
 
     while (input->start <= input->stop && input->start < object.used) {
@@ -451,12 +451,12 @@ extern "C" {
         buffer_position.stop++;
 
         status = fl_fss_increment_buffer(object, input, 1);
-        if (f_error_is_error(status)) return status;
+        if (f_status_is_error(status)) return status;
 
         while (input->start <= input->stop && input->start < object.used) {
           if (object.string[input->start] == f_fss_delimit_placeholder) {
             status = fl_fss_increment_buffer(object, input, 1);
-            if (f_error_is_error(status)) return status;
+            if (f_status_is_error(status)) return status;
 
             continue;
           } else if (object.string[input->start] != f_fss_delimit_slash) {
@@ -467,7 +467,7 @@ extern "C" {
           buffer_position.stop++;
 
           status = fl_fss_increment_buffer(object, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
 
           slash_count++;
         } // while
@@ -478,7 +478,7 @@ extern "C" {
           if (pre_allocate_size > buffer->size) {
             f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
 
-            if (f_error_is_error(status)) return status;
+            if (f_status_is_error(status)) return status;
           }
 
           while (slash_count > 0) {
@@ -504,7 +504,7 @@ extern "C" {
       }
 
       status = fl_fss_increment_buffer(object, input, 1);
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
     } // while
 
     buffer->string[buffer_position.stop] = f_fss_basic_list_open;
@@ -525,7 +525,7 @@ extern "C" {
 #ifndef _di_fl_fss_basic_list_content_write_
   f_return_status fl_fss_basic_list_content_write(const f_dynamic_string content, f_string_location *input, f_dynamic_string *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == 0) return f_error_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
@@ -553,7 +553,7 @@ extern "C" {
     if (pre_allocate_size > buffer->size) {
       f_resize_dynamic_string(status, (*buffer), pre_allocate_size);
 
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
     }
 
     buffer_position.start = buffer->used;
@@ -568,12 +568,12 @@ extern "C" {
 
         has_graph = f_true;
         status = fl_fss_increment_buffer(content, input, 1);
-        if (f_error_is_error(status)) return status;
+        if (f_status_is_error(status)) return status;
 
         while (input->start <= input->stop && input->start < content.used) {
           if (content.string[input->start] == f_fss_delimit_placeholder) {
             status = fl_fss_increment_buffer(content, input, 1);
-            if (f_error_is_error(status)) return status;
+            if (f_status_is_error(status)) return status;
 
             continue;
           }
@@ -585,7 +585,7 @@ extern "C" {
           buffer_position.stop++;
 
           status = fl_fss_increment_buffer(content, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
 
           slash_count++;
         } // while
@@ -594,17 +594,17 @@ extern "C" {
           f_string_length location = input->start;
 
           status = fl_fss_increment_buffer(content, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
 
           while (input->start < content.used && input->start <= input->stop) {
             if (content.string[input->start] == f_eol || (status = fl_fss_is_graph(content, *input)) == f_true) {
               break;
             }
 
-            if (f_error_is_error(status)) return status;
+            if (f_status_is_error(status)) return status;
 
             status = fl_fss_increment_buffer(content, input, 1);
-            if (f_error_is_error(status)) return status;
+            if (f_status_is_error(status)) return status;
           } // while
 
           if (content.string[input->start] == f_eol || input->start >= content.used || input->start > input->stop) {
@@ -613,7 +613,7 @@ extern "C" {
             if (pre_allocate_size > buffer->size) {
               f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
 
-              if (f_error_is_error(status)) return status;
+              if (f_status_is_error(status)) return status;
             }
 
             while (slash_count > 0) {
@@ -640,17 +640,17 @@ extern "C" {
         has_graph = f_true;
 
         status = fl_fss_increment_buffer(content, input, 1);
-        if (f_error_is_error(status)) return status;
+        if (f_status_is_error(status)) return status;
 
         while (input->start < content.used && input->start <= input->stop) {
           if (content.string[input->start] == f_eol || (status = fl_fss_is_graph(content, *input)) == f_true) {
             break;
           }
 
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
 
           status = fl_fss_increment_buffer(content, input, 1);
-          if (f_error_is_error(status)) return status;
+          if (f_status_is_error(status)) return status;
         } // while
 
         if (content.string[input->start] == f_eol || input->start >= content.used || input->start > input->stop) {
@@ -659,7 +659,7 @@ extern "C" {
           if (pre_allocate_size > buffer->size) {
             f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
 
-            if (f_error_is_error(status)) return status;
+            if (f_status_is_error(status)) return status;
           }
 
           buffer->string[buffer_position.stop] = f_fss_delimit_slash;
@@ -683,7 +683,7 @@ extern "C" {
       else if ((status = fl_fss_is_graph(content, *input)) == f_true) {
         has_graph = f_true;
       }
-      else if (f_error_is_error(status)) {
+      else if (f_status_is_error(status)) {
         return status;
       }
 
@@ -693,7 +693,7 @@ extern "C" {
       }
 
       status = fl_fss_increment_buffer(content, input, 1);
-      if (f_error_is_error(status)) return status;
+      if (f_status_is_error(status)) return status;
     } // while
 
     buffer->string[buffer_position.stop] = f_eol;

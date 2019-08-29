@@ -119,7 +119,7 @@ extern "C" {
     if (data->parameters[fss_extended_read_parameter_no_color].result == f_console_result_none) {
       fl_new_color_context(status2, data->context);
 
-      if (f_error_is_error(status2)) {
+      if (f_status_is_error(status2)) {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
         fss_extended_read_delete_data(data);
         return status2;
@@ -129,8 +129,8 @@ extern "C" {
       }
     }
 
-    if (f_error_is_error(status)) {
-      status = f_error_set_fine(status);
+    if (f_status_is_error(status)) {
+      status = f_status_set_fine(status);
 
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
@@ -145,11 +145,11 @@ extern "C" {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");
       }
       else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_error_set_error(status));
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_status_set_error(status));
       }
 
       fss_extended_read_delete_data(data);
-      return f_error_set_error(status);
+      return f_status_set_error(status);
     }
 
     // execute parameter results
@@ -180,8 +180,8 @@ extern "C" {
 
         status = fl_file_read_fifo(file, &data->buffer);
 
-        if (f_error_is_error(status)) {
-          status = f_error_set_fine(status);
+        if (f_status_is_error(status)) {
+          status = f_status_set_fine(status);
 
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
@@ -196,17 +196,17 @@ extern "C" {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
           }
           else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_error_set_error(status));
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
           }
 
           fss_extended_read_delete_data(data);
-          return f_error_set_error(status);
+          return f_status_set_error(status);
         }
 
         status = fss_extended_read_main_process_file(argc, argv, data, "-", target, select);
 
 
-        if (f_error_is_error(status)) {
+        if (f_status_is_error(status)) {
           return status;
         }
 
@@ -223,8 +223,8 @@ extern "C" {
 
         data->file_position.total_elements = original_size;
 
-        if (f_error_is_error(status)) {
-          status = f_error_set_fine(status);
+        if (f_status_is_error(status)) {
+          status = f_status_set_fine(status);
 
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
@@ -239,11 +239,11 @@ extern "C" {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->remaining.array[counter]]);
           }
           else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_error_set_error(status));
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
           }
 
           fss_extended_read_delete_data(data);
-          return f_error_set_error(status);
+          return f_status_set_error(status);
         }
 
         if (data->file_position.total_elements == 0) {
@@ -264,8 +264,8 @@ extern "C" {
 
         f_file_close(&file);
 
-        if (f_error_is_error(status)) {
-          status = f_error_set_fine(status);
+        if (f_status_is_error(status)) {
+          status = f_status_set_fine(status);
 
           if (status == f_invalid_parameter) {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read()");
@@ -286,16 +286,16 @@ extern "C" {
             fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
           }
           else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read()", f_error_set_error(status));
+            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read()", f_status_set_error(status));
           }
 
           fss_extended_read_delete_data(data);
-          return f_error_set_error(status);
+          return f_status_set_error(status);
         }
 
         status = fss_extended_read_main_process_file(argc, argv, data, argv[data->remaining.array[counter]], target, select);
 
-        if (f_error_is_error(status)) {
+        if (f_status_is_error(status)) {
           return status;
         }
 
@@ -307,7 +307,7 @@ extern "C" {
     }
     else {
       fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more files");
-      status = f_error_set_error(f_invalid_parameter);
+      status = f_status_set_error(f_invalid_parameter);
     }
 
     fss_extended_read_delete_data(data);
@@ -329,8 +329,8 @@ extern "C" {
 
       status = fll_fss_extended_read(&data->buffer, &input, &data->objects, &data->contents);
 
-      if (f_error_is_error(status)) {
-        status = f_error_set_fine(status);
+      if (f_status_is_error(status)) {
+        status = f_status_set_fine(status);
 
         if (status == f_invalid_parameter) {
           fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_extended_read() for the file '%s'", filename);
@@ -345,11 +345,11 @@ extern "C" {
           fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occured on invalid UTF-8 character at end of string (at %d).", input.start);
         }
         else {
-          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_extended_read() for the file '%s'", f_error_set_error(status), filename);
+          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_extended_read() for the file '%s'", f_status_set_error(status), filename);
         }
 
         fss_extended_read_delete_data(data);
-        return f_error_set_error(status);
+        return f_status_set_error(status);
       }
       else if (status == f_no_data_on_stop || status == f_no_data_on_eos) {
         // clear buffers, then attempt the next file
@@ -357,7 +357,7 @@ extern "C" {
         f_delete_fss_objects(status2, data->objects);
         f_delete_dynamic_string(status2, data->buffer);
 
-        return f_error_set_warning(status);
+        return f_status_set_warning(status);
       }
     }
 

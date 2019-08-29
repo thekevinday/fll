@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fl_process_parameters_
   f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, f_string_lengths *remaining) {
     #ifndef _di_level_1_parameter_checking_
-      if (remaining == 0) return f_error_set_error(f_invalid_parameter);
+      if (remaining == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
@@ -63,9 +63,9 @@ extern "C" {
                     f_status allocation_status = f_none;
 
                     f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
-                    if (f_error_is_error(allocation_status)) {
+                    if (f_status_is_error(allocation_status)) {
                       f_delete_string_lengths(status, extra_initiator);
-                      return f_error_set_error(allocation_status);
+                      return f_status_set_error(allocation_status);
                     }
                   }
 
@@ -85,9 +85,9 @@ extern "C" {
 
                     f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
 
-                    if (f_error_is_error(allocation_status)) {
+                    if (f_status_is_error(allocation_status)) {
                       f_delete_string_lengths(status, extra_initiator);
-                      return f_error_set_error(allocation_status);
+                      return f_status_set_error(allocation_status);
                     }
                   }
 
@@ -117,9 +117,9 @@ extern "C" {
 
                     f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
 
-                    if (f_error_is_error(allocation_status)) {
+                    if (f_status_is_error(allocation_status)) {
                       f_delete_string_lengths(status, extra_initiator);
-                      return f_error_set_error(allocation_status);
+                      return f_status_set_error(allocation_status);
                     }
                   }
 
@@ -139,9 +139,9 @@ extern "C" {
 
                     f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
 
-                    if (f_error_is_error(allocation_status)) {
+                    if (f_status_is_error(allocation_status)) {
                       f_delete_string_lengths(status, extra_initiator);
-                      return f_error_set_error(allocation_status);
+                      return f_status_set_error(allocation_status);
                     }
                   }
 
@@ -170,9 +170,9 @@ extern "C" {
                 f_resize_string_lengths(allocation_status, parameters[parameter_counter].additional, parameters[parameter_counter].additional.size + f_console_default_allocation_step);
               }
 
-              if (f_error_is_error(allocation_status)) {
+              if (f_status_is_error(allocation_status)) {
                 f_delete_string_lengths(status, extra_initiator);
-                return f_error_set_error(allocation_status);
+                return f_status_set_error(allocation_status);
               }
 
               parameters[parameter_counter].result = f_console_result_found;
@@ -195,9 +195,9 @@ extern "C" {
               f_resize_string_lengths(allocation_status, parameters[extra_initiator.array[0]].additional, parameters[extra_initiator.array[0]].additional.size + f_console_default_allocation_step);
             }
 
-            if (f_error_is_error(allocation_status)) {
+            if (f_status_is_error(allocation_status)) {
               f_delete_string_lengths(status, extra_initiator);
-              return f_error_set_error(allocation_status);
+              return f_status_set_error(allocation_status);
             }
 
             parameters[extra_initiator.array[0]].result = f_console_result_additional;
@@ -218,9 +218,9 @@ extern "C" {
 
               f_resize_string_lengths(allocation_status, (*remaining), remaining->size + f_console_default_allocation_step);
 
-              if (f_error_is_error(allocation_status)) {
+              if (f_status_is_error(allocation_status)) {
                 f_delete_string_lengths(status, extra_initiator);
-                return f_error_set_error(allocation_status);
+                return f_status_set_error(allocation_status);
               }
             }
 

@@ -118,7 +118,7 @@ extern "C" {
     if (data->parameters[status_code_parameter_no_color].result == f_console_result_none) {
       fl_new_color_context(allocation_status, data->context);
 
-      if (f_error_is_error(allocation_status)) {
+      if (f_status_is_error(allocation_status)) {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
         status_code_delete_data(data);
         return allocation_status;
@@ -127,8 +127,8 @@ extern "C" {
       fll_colors_load_context(&data->context, data->parameters[status_code_parameter_light].result == f_console_result_found);
     }
 
-    if (f_error_is_error(status)) {
-      status = f_error_set_fine(status);
+    if (f_status_is_error(status)) {
+      status = f_status_set_fine(status);
 
       if (status == f_no_data) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
@@ -147,7 +147,7 @@ extern "C" {
       }
 
       status_code_delete_data(data);
-      return f_error_set_error(status);
+      return f_status_set_error(status);
     }
 
     // execute parameter results
@@ -166,13 +166,13 @@ extern "C" {
           code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
           if (data->parameters[status_code_parameter_context].result == f_console_result_found) {
-            if (fl_errors_is_error(code)) {
+            if (fl_status_is_error(code)) {
               status_code_delete_data(data);
               return f_true;
             }
           }
           else {
-            if (f_error_is_error(code)) {
+            if (f_status_is_error(code)) {
               status_code_delete_data(data);
               return f_true;
             }
@@ -192,13 +192,13 @@ extern "C" {
           code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
           if (data->parameters[status_code_parameter_context].result == f_console_result_found) {
-            if (fl_errors_is_warning(code)) {
+            if (fl_status_is_warning(code)) {
               status_code_delete_data(data);
               return f_true;
             }
           }
           else {
-            if (f_error_is_warning(code)) {
+            if (f_status_is_warning(code)) {
               status_code_delete_data(data);
               return f_true;
             }
@@ -218,13 +218,13 @@ extern "C" {
           code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
           if (data->parameters[status_code_parameter_context].result == f_console_result_found) {
-            if (fl_errors_is_fine(code)) {
+            if (fl_status_is_fine(code)) {
               status_code_delete_data(data);
               return f_true;
             }
           }
           else {
-            if (f_error_is_fine(code)) {
+            if (f_status_is_fine(code)) {
               status_code_delete_data(data);
               return f_true;
             }
@@ -241,8 +241,8 @@ extern "C" {
         f_status code = f_none;
 
         for (; counter < data->remaining.used; counter++) {
-          status = fll_errors_from_string(argv[data->remaining.array[counter]], &code);
-          if (f_error_is_error(status)) {
+          status = fll_status_from_string(argv[data->remaining.array[counter]], &code);
+          if (f_status_is_error(status)) {
             break;
           }
           else {
@@ -271,7 +271,7 @@ extern "C" {
           f_status code = (f_status) atoll(argv[data->remaining.array[counter]]);
           f_string string = 0;
 
-          if (fl_errors_to_string(code, &string) == f_none) {
+          if (fl_status_to_string(code, &string) == f_none) {
             printf("%s\n", string);
           }
         } // for
@@ -279,7 +279,7 @@ extern "C" {
     }
     else {
       fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an error code.");
-      status = f_error_set_error(f_invalid_parameter);
+      status = f_status_set_error(f_invalid_parameter);
     }
 
     status_code_delete_data(data);

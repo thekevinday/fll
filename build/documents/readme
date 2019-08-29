@@ -17,18 +17,27 @@ Install Example:
   
 If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successful build, then there are no files of that type to install.
 
-Build Tree Structure Example (using the return_code-0.3.0 project):
-  build/
-  |-- includes
-  |   `-- level_3
-  |       `-- return_code.h
-  |-- libraries
-  |   |-- libreturn_code.so -> libreturn_code.so.0
-  |   |-- libreturn_code.so.0 -> libreturn_code.so.0.3.0
-  |   `-- libreturn_code.so.0.3.0
-  |-- programs
-  |   `-- return_code
-  `-- settings
+Build Tree Structure Example (using the status_code-0.5.0 project):
+build/
+├── bash
+├── includes
+│   └── level_3
+│       └── status_code.h
+├── libraries
+│   ├── shared
+│   │   ├── libstatus_code.so -> libstatus_code.so.0
+│   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.5.0
+│   │   └── libstatus_code.so.0.5.0
+│   └── static
+│       └── libstatus_code.a
+├── objects
+│   └── status_code.c.o
+├── programs
+│   ├── shared
+│   │   └── status_code
+│   └── static
+│       └── status_code
+└── settings
 
 The FLL project is broken up into 3 diffeent levels: level_0, level_1, and level_2.
 A third pseudo-level also exists for common programs built using this project, called level_3.
@@ -39,11 +48,11 @@ Therefore, a level_1 project can only depend on level_0 projects and a level_2 p
 A few projects in level_0 are essentially required by everything and are depended on by virtually all projects, regardless of the level.
 These level_0 projects are:
 - f_types: provides core typedef, #define, and similar structures for the entire set of FLL projects.
-- f_errors: provides error codes and other status codes to be used by the entire set of FLL projects.
+- f_status: provides status codes and other status codes to be used by the entire set of FLL projects.
 - f_memory: provides common memory allocation/deallocation to be used by the entire set of FLL projects.
 - f_string: provides common string management to be used by the entire set of the FLL projects.
 
-The above projects should be installed first, and in the provided order (f_types, then f_errors, then f_memory, and finally f_string).
+The above projects should be installed first, and in the provided order (f_types, then f_status, then f_memory, and finally f_string).
 No other level_0 project should depend on another and can be installed in any order (future designs may add f_utf to this list).
 
 See: data/build/dependencies for specific dependencies of this project.

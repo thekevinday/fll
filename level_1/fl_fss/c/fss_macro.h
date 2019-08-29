@@ -195,7 +195,7 @@ extern "C" {
       f_status status = f_none; \
       \
       f_resize_fss_content(status, content, content.size + f_fss_default_allocation_step); \
-      if (f_error_is_error(status)) { \
+      if (f_status_is_error(status)) { \
         f_status allocation_status = f_none; \
         f_delete_string_lengths(allocation_status, delimits); \
         \

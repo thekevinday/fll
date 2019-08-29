@@ -1,8 +1,8 @@
 f_types
-f_errors
+f_status
 f_strings
 f_memory
 f_fss
 fl_fss
-fl_errors
+fl_status
 fl_strings

@@ -14,7 +14,7 @@
 #include <string.h>
 
 // fll includes
-#include <level_0/errors.h>
+#include <level_0/status.h>
 #include <level_0/memory.h>
 #include <level_0/types.h>
 

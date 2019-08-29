@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_f_console_identify_
   f_return_status f_console_identify(const f_string input, f_console_id *result) {
     #ifndef _di_level_0_parameter_checking_
-      if (result == 0) return f_error_set_error(f_invalid_parameter);
+      if (result == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     const f_string_length length = strnlen(input, 4);

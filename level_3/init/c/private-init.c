@@ -12,14 +12,14 @@
 
     status = f_file_open(&file, filename);
 
-    if (f_error_is_error(status)) {
-      status = f_error_set_fine(status);
+    if (f_status_is_error(status)) {
+      status = f_status_set_fine(status);
 
       if (optional) {
         if (status == f_invalid_parameter) {
           fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open().");
         } else if (status != f_file_not_found && status != f_file_open_error && status != f_file_descriptor_error) {
-          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", f_error_set_error(status));
+          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", f_status_set_error(status));
         }
       } else {
         if (status == f_invalid_parameter) {
@@ -31,11 +31,11 @@
         } else if (status == f_file_descriptor_error) {
           fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'.", filename);
         } else {
-          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", f_error_set_error(status));
+          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", f_status_set_error(status));
         }
       }
 
-      return f_error_set_error(status);
+      return f_status_set_error(status);
     }
 
     f_macro_file_reset_position(file_position, file)
@@ -45,8 +45,8 @@
 
     f_file_close(&file);
 
-    if (f_error_is_error(status)) {
-      status = f_error_set_fine(status);
+    if (f_status_is_error(status)) {
+      status = f_status_set_fine(status);
 
       if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read().");
@@ -61,10 +61,10 @@
       } else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       } else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read().", f_error_set_error(status));
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read().", f_status_set_error(status));
       }
 
-      return f_error_set_error(status);
+      return f_status_set_error(status);
     } else {
       f_string_location input = f_string_location_initialize;
 
@@ -73,8 +73,8 @@
       status = fll_fss_basic_list_read(buffer, &input, objects, contents);
     }
 
-    if (f_error_is_error(status)) {
-      status = f_error_set_fine(status);
+    if (f_status_is_error(status)) {
+      status = f_status_set_fine(status);
 
       if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", filename);
@@ -83,10 +83,10 @@
       } else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       } else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_error_set_error(status), filename);
+        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_status_set_error(status), filename);
       }
 
-      return f_error_set_error(status);
+      return f_status_set_error(status);
     }
 
     return status;
@@ -101,23 +101,23 @@
     // @todo: resume replacing code below.
     status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents);
 
-    if (f_error_is_not_error(status)) {
+    if (f_status_is_not_error(status)) {
       status = firewall_perform_commands(*local, *data);
 
-      if (f_error_is_error(status)) {
-        status = f_error_set_fine(status);
+      if (f_status_is_error(status)) {
+        status = f_status_set_fine(status);
 
         if (status == f_allocation_error || status == f_reallocation_error) {
           fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
         } else if (status == f_failure) {
           // the error message has already been displayed.
         } else {
-          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", f_error_set_error(status));
+          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", f_status_set_error(status));
         }
 
         f_delete_fss_objects(status2, local->rule_objects);
         f_delete_fss_contents(status2, local->rule_contents);
-        return f_error_set_error(status);
+        return f_status_set_error(status);
       }
     }
 
@@ -199,7 +199,7 @@
     // create the required directories if they do not already exist and then perform appropriate mount.
     status = f_file_stat(init_paths_devices, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_devices);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -208,7 +208,7 @@
 
     status = f_file_stat(init_paths_system, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_system);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -217,7 +217,7 @@
 
     status = f_file_stat(init_paths_devices_pts, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_devices_pts);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -226,7 +226,7 @@
 
     status = f_file_stat(init_paths_log, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_log);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -235,7 +235,7 @@
 
     status = f_file_stat(var_run_path, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " var_run_path);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -244,7 +244,7 @@
 
     status = f_file_stat(mnt_path, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " mnt_path);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -253,7 +253,7 @@
 
     status = f_file_stat(tmp_path, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " tmp_path);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -262,7 +262,7 @@
 
     status = f_file_stat(init_paths_processes, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_processes);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -346,7 +346,7 @@
 
     // create the required directories if they do not already exist and then perform appropriate mount.
     status = f_file_stat(init_paths_devices, &stat);
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_devices);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -355,7 +355,7 @@
 
     status = f_file_stat(init_paths_system, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_system);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -364,7 +364,7 @@
 
     status = f_file_stat(init_paths_devices_pts, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_devices_pts);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -373,7 +373,7 @@
 
     status = f_file_stat(init_paths_log, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_log);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -382,7 +382,7 @@
 
     status = f_file_stat(var_run_path, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " var_run_path);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -391,7 +391,7 @@
 
     status = f_file_stat(mnt_path, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " mnt_path);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -400,7 +400,7 @@
 
     status = f_file_stat(tmp_path, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " tmp_path);
       memset(&stat, 0, sizeof(f_stat));
     }
@@ -436,7 +436,7 @@
 
     status = f_file_stat(init_paths_init_run, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_init_run);
       system(init_program_chgrp " " init_group_init_run " " init_paths_init_run);
       memset(&stat, 0, sizeof(f_stat));
@@ -444,7 +444,7 @@
 
     status = f_file_stat(init_paths_init_settings, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_init_settings);
       system(init_program_chgrp " " init_group_init_settings " " init_paths_init_settings);
       memset(&stat, 0, sizeof(f_stat));
@@ -452,7 +452,7 @@
 
     status = f_file_stat(init_paths_init_socket, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_init_socket);
       system(init_program_chgrp " " init_group_init_socket " " init_paths_init_socket);
       memset(&stat, 0, sizeof(f_stat));
@@ -460,7 +460,7 @@
 
     status = f_file_stat(init_paths_init_process, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_init_process);
       system(init_program_chgrp " " init_group_init_process " " init_paths_init_process);
       memset(&stat, 0, sizeof(f_stat));
@@ -468,7 +468,7 @@
 
     status = f_file_stat(init_paths_init_log, &stat);
 
-    if (status == f_file_not_found || status == f_error_set_error(f_invalid_directory)) {
+    if (status == f_file_not_found || status == f_status_set_error(f_invalid_directory)) {
       system(init_program_mkdir " -p " init_paths_init_log);
       system(init_program_chgrp " " init_group_init_log " " init_paths_init_log);
       memset(&stat, 0, sizeof(f_stat));
@@ -492,8 +492,8 @@
     // load the main file into memory.
     status = init_rule_buffer(init_rule_core_file, &buffer, &objects, &contents);
 
-    if (f_error_is_error(status)) {
-      status = f_error_set_fine(status);
+    if (f_status_is_error(status)) {
+      status = f_status_set_fine(status);
 
       if (status == f_invalid_parameter) {
         fl_print_color_line(f_standard_error, argument.context.error, argument.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", init_rule_core_file);
@@ -502,7 +502,7 @@
       } else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, argument.context.error, argument.context.reset, "CRITICAL ERROR: unable to allocate memory.");
       } else {
-        fl_print_color_line(f_standard_error, argument.context.error, argument.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_error_set_error(status), init_rule_core_file);
+        fl_print_color_line(f_standard_error, argument.context.error, argument.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_status_set_error(status), init_rule_core_file);
       }
 
       f_delete_dynamic_string(buffer);
@@ -525,12 +525,12 @@
     /*
     status = fll_fss_extended_read(&buffer, &location, &objects, &contents);
 
-    if (f_error_is_error(status_process)) {
+    if (f_status_is_error(status_process)) {
       if (status == f_allocation_error || status == f_reallocation_error) {
         fl_print_color_line(f_standard_error, argument->context.error, argument->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       }
       else {
-        fl_print_color_line(f_standard_error, argument->context.error, argument->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling init_load_main_rule().", f_error_set_error(status));
+        fl_print_color_line(f_standard_error, argument->context.error, argument->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling init_load_main_rule().", f_status_set_error(status));
       }
 
       init_delete_argument((*argument));
@@ -546,24 +546,24 @@
 
     status = fll_fss_extended_read(buffer, location, objects, contents);
 
-    if (f_error_is_not_error(status)) {
+    if (f_status_is_not_error(status)) {
       // @todo: process objects and contents.
       // execute individual processes.
 
-      if (f_error_is_error(status)) {
-        status = f_error_set_fine(status);
+      if (f_status_is_error(status)) {
+        status = f_status_set_fine(status);
 
         if (status == f_allocation_error || status == f_reallocation_error) {
           fl_print_color_line(f_standard_error, data->context.error, context.reset, "CRITICAL ERROR: unable to allocate memory.");
         } else if (status == f_failure) {
           // the error message has already been displayed.
         } else {
-          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", f_error_set_error(status));
+          fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", f_status_set_error(status));
         }
 
         f_delete_fss_objects(status2, (*rule_objects));
         f_delete_fss_contents(status2, (*rule_contents));
-        return f_error_set_error(status);
+        return f_status_set_error(status);
       }
     }
     else {
@@ -571,7 +571,7 @@
         fl_print_color_line(f_standard_error, context.error, context.reset, "CRITICAL ERROR: unable to allocate memory.");
       }
       else {
-        fl_print_color_line(f_standard_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling init_load_main_rule().", f_error_set_error(status));
+        fl_print_color_line(f_standard_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling init_load_main_rule().", f_status_set_error(status));
       }
     }
 

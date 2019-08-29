@@ -11,7 +11,7 @@
 #define _FLL_fss_basic_list_h
 
 // fll-0 includes
-#include <level_0/errors.h>
+#include <level_0/status.h>
 #include <level_0/fss.h>
 #include <level_0/memory.h>
 #include <level_0/strings.h>
@@ -20,7 +20,7 @@
 // fll-1 includes
 #include <level_1/fss.h>
 #include <level_1/fss_basic_list.h>
-#include <level_1/fss_errors.h>
+#include <level_1/fss_status.h>
 #include <level_1/fss_macro.h>
 
 #ifdef __cplusplus
