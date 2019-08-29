@@ -354,7 +354,7 @@ extern "C" {
 
 #ifndef _di_f_utf_is_bom_character_
   f_return_status f_utf_is_bom_character(const f_utf_character character) {
-    if (character == f_macro_utf_character_mask_bom) {
+    if (character == f_utf_character_mask_bom) {
       return f_true;
     }
 

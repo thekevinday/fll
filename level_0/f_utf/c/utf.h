@@ -117,22 +117,22 @@ extern "C" {
 #ifndef _di_f_utf_character_
   typedef uint32_t f_utf_character;
 
-  #define f_macro_utf_character_mask_bom 0xefbbbf00 // 1110 1111, 1011 1011, 1011 1111, 0000 0000
+  #define f_utf_character_mask_bom 0xefbbbf00 // 1110 1111, 1011 1011, 1011 1111, 0000 0000
 
-  #define f_macro_utf_character_mask_byte_1 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
-  #define f_macro_utf_character_mask_byte_2 0xffff0000 // 1111 1111, 1111 1111, 0000 0000, 0000 0000
-  #define f_macro_utf_character_mask_byte_3 0xffffff00 // 1111 1111, 1111 1111, 1111 1111, 0000 0000
-  #define f_macro_utf_character_mask_byte_4 0xffffffff // 1111 1111, 1111 1111, 1111 1111, 1111 1111
+  #define f_utf_character_mask_byte_1 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
+  #define f_utf_character_mask_byte_2 0xffff0000 // 1111 1111, 1111 1111, 0000 0000, 0000 0000
+  #define f_utf_character_mask_byte_3 0xffffff00 // 1111 1111, 1111 1111, 1111 1111, 0000 0000
+  #define f_utf_character_mask_byte_4 0xffffffff // 1111 1111, 1111 1111, 1111 1111, 1111 1111
 
-  #define f_macro_utf_character_mask_char_1 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
-  #define f_macro_utf_character_mask_char_2 0x00ff0000 // 0000 0000, 1111 1111, 0000 0000, 0000 0000
-  #define f_macro_utf_character_mask_char_3 0x0000ff00 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
-  #define f_macro_utf_character_mask_char_4 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
+  #define f_utf_character_mask_char_1 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
+  #define f_utf_character_mask_char_2 0x00ff0000 // 0000 0000, 1111 1111, 0000 0000, 0000 0000
+  #define f_utf_character_mask_char_3 0x0000ff00 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
+  #define f_utf_character_mask_char_4 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
 
-  #define f_macro_utf_character_to_char_1(character) ((f_macro_utf_character_mask_char_1 & character) >> 24) // grab first byte.
-  #define f_macro_utf_character_to_char_2(character) ((f_macro_utf_character_mask_char_2 & character) >> 16) // grab second byte.
-  #define f_macro_utf_character_to_char_3(character) ((f_macro_utf_character_mask_char_3 & character) >> 8) // grab third byte.
-  #define f_macro_utf_character_to_char_4(character) (f_macro_utf_character_mask_char_4 & character) // grab fourth byte.
+  #define f_macro_utf_character_to_char_1(character) ((f_utf_character_mask_char_1 & character) >> 24) // grab first byte.
+  #define f_macro_utf_character_to_char_2(character) ((f_utf_character_mask_char_2 & character) >> 16) // grab second byte.
+  #define f_macro_utf_character_to_char_3(character) ((f_utf_character_mask_char_3 & character) >> 8) // grab third byte.
+  #define f_macro_utf_character_to_char_4(character) (f_utf_character_mask_char_4 & character) // grab fourth byte.
 
   #define f_macro_utf_character_from_char_1(character) (character << 24) // shift the first byte.
   #define f_macro_utf_character_from_char_2(character) (character << 16) // shift the second byte.
