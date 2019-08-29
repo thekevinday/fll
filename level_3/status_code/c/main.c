@@ -1,13 +1,13 @@
-#include <level_3/return_code.h>
+#include <level_3/status_code.h>
 
 int main(const f_array_length argc, const f_string argv[]) {
-  return_code_data data = return_code_data_initialize;
+  status_code_data data = status_code_data_initialize;
 
   if (f_pipe_exists()) {
     data.process_pipe = f_true;
   }
 
-  if (f_error_is_error(return_code_main(argc, argv, &data))) {
+  if (f_error_is_error(status_code_main(argc, argv, &data))) {
     return 1;
   }
 

@@ -1,6 +1,6 @@
 # fss-0000
 
-project_name fss_return_code
+project_name status_code
 project_level 3
 
 version_major 0
@@ -10,12 +10,12 @@ version_micro 0
 build_compiler gcc
 build_linker ar
 build_libraries -lc
-build_libraries_fll -lfll_colors -lfll_errors -lfll_fss -lfl_fss -lfl_errors -lfl_colors -lfl_console -lfl_program -lfl_strings -lf_print -lf_pipe -lf_conversion -lf_console -lf_memory -lf_utf
+build_libraries_fll -lfll_colors -lfll_errors -lfl_errors -lfl_colors -lfl_console -lfl_program -lfl_strings -lf_print -lf_pipe -lf_conversion -lf_console -lf_memory -lf_utf
 #build_libraries_fll-level -lfll_2 -lfll_1 -lfll_0
 #build_libraries_fll-monolithic -lfll
-build_sources_library fss_return_code.c
+build_sources_library status_code.c
 build_sources_program main.c
-build_sources_headers fss_return_code.h
+build_sources_headers status_code.h
 build_sources_bash
 build_sources_settings
 build_shared yes
@@ -29,4 +29,4 @@ flags_all -z now
 flags_shared
 flags_static
 flags_library -fPIC
-flags_program -fPIE -lfss_return_code
+flags_program -fPIE -lstatus_code
