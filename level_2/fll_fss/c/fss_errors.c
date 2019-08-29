@@ -4,6 +4,85 @@
 extern "C" {
 #endif
 
+#ifndef _di_fll_fss_errors_from_string_
+  f_return_status fll_fss_errors_from_string(const f_string string, f_status *error) {
+    #ifndef _di_level_1_parameter_checking_
+      if (error == 0) return f_error_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = f_none;
+    f_string_length length = strlen(string);
+
+    #ifndef _di_fll_fss_errors_error_
+      if (fl_compare_strings(string, fll_fss_errors_string_invalid_format, length, fll_fss_errors_string_invalid_format_length) == f_equal_to) {
+        *error = fl_fss_invalid_format;
+        return f_none;
+      }
+
+      if (fl_compare_strings(string, fll_fss_errors_string_invalid_format_eos, length, fll_fss_errors_string_invalid_format_eos_length) == f_equal_to) {
+        *error = fl_fss_invalid_format_eos;
+        return f_none;
+      }
+    #endif // _di_fll_fss_errors_error_
+
+    #ifndef _di_fll_fss_errors_warning_
+      if (fl_compare_strings(string, fll_fss_errors_string_no_header, length, fll_fss_errors_string_no_header_length) == f_equal_to) {
+        *error = fl_fss_no_header;
+        return f_none;
+      }
+
+      if (fl_compare_strings(string, fll_fss_errors_string_accepted_but_invalid, length, fll_fss_errors_string_accepted_but_invalid_length) == f_equal_to) {
+        *error = fl_fss_accepted_but_invalid;
+        return f_none;
+      }
+
+      if (fl_compare_strings(string, fll_fss_errors_string_no_header_eos, length, fll_fss_errors_string_no_header_eos_length) == f_equal_to) {
+        *error = fl_fss_no_header_eos;
+        return f_none;
+      }
+
+      if (fl_compare_strings(string, fll_fss_errors_string_accepted_but_invalid_eos, length, fll_fss_errors_string_accepted_but_invalid_eos_length) == f_equal_to) {
+        *error = fl_fss_accepted_but_invalid_eos;
+        return f_none;
+      }
+    #endif // _di_fll_fss_errors_warning_
+
+    #ifndef _di_fll_fss_errors_success_
+      if (fl_compare_strings(string, fll_fss_errors_string_found_object, length, fll_fss_errors_string_found_object_length) == f_equal_to) {
+        *error = fl_fss_found_object;
+        return f_none;
+      }
+
+      if (fl_compare_strings(string, fll_fss_errors_string_found_content, length, fll_fss_errors_string_found_content_length) == f_equal_to) {
+        *error = fl_fss_found_content;
+        return f_none;
+      }
+
+      if (fl_compare_strings(string, fll_fss_errors_string_found_no_object, length, fll_fss_errors_string_found_no_object_length) == f_equal_to) {
+        *error = fl_fss_found_no_object;
+        return f_none;
+      }
+
+      if (fl_compare_strings(string, fll_fss_errors_string_found_no_content, length, fll_fss_errors_string_found_no_content_length) == f_equal_to) {
+        *error = fl_fss_found_no_content;
+        return f_none;
+      }
+
+      if (fl_compare_strings(string, fll_fss_errors_string_found_object_no_content, length, fll_fss_errors_string_found_object_no_content_length) == f_equal_to) {
+        *error = fl_fss_found_object_no_content;
+        return f_none;
+      }
+    #endif // _di_fll_fss_errors_success_
+
+    if (fl_compare_strings(string, fll_fss_errors_string_last_error_code, length, fll_fss_errors_string_last_error_code_length) == f_equal_to) {
+      *error = f_last_error_code;
+      return f_none;
+    }
+
+    return f_invalid_data;
+  }
+#endif // _di_fll_fss_errors_from_string_
+
 #ifndef _di_fll_fss_errors_to_string_
   f_return_status fll_fss_errors_to_string(const f_status error, f_string *string) {
     #ifndef _di_level_2_parameter_checking_
@@ -15,45 +94,49 @@ extern "C" {
     switch (unmasked_error) {
       #ifndef _di_fll_fss_errors_error_
         case fl_fss_invalid_format:
-          *string = "fl_fss_invalid_format";
+          *string = fll_fss_errors_string_invalid_format;
           break;
         case fl_fss_invalid_format_eos:
-          *string = "fl_fss_invalid_format_eos";
+          *string = fll_fss_errors_string_invalid_format_eos;
           break;
       #endif // _di_fll_fss_errors_error_
 
       #ifndef _di_fll_fss_errors_warning_
         case fl_fss_no_header:
-          *string = "fl_fss_no_header";
+          *string = fll_fss_errors_string_no_header;
           break;
         case fl_fss_accepted_but_invalid:
-          *string = "fl_fss_accepted_but_invalid";
+          *string = fll_fss_errors_string_accepted_but_invalid;
           break;
         case fl_fss_no_header_eos:
-          *string = "fl_fss_no_header_eos";
+          *string = fll_fss_errors_string_no_header_eos;
           break;
         case fl_fss_accepted_but_invalid_eos:
-          *string = "fl_fss_accepted_but_invalid_eos";
+          *string = fll_fss_errors_string_accepted_but_invalid_eos;
           break;
       #endif // _di_fll_fss_errors_warning_
 
       #ifndef _di_fll_fss_errors_success_
         case fl_fss_found_object:
-          *string = "fl_fss_found_object";
+          *string = fll_fss_errors_string_found_object;
           break;
         case fl_fss_found_content:
-          *string = "fl_fss_found_content";
+          *string = fll_fss_errors_string_found_content;
           break;
         case fl_fss_found_no_object:
-          *string = "fl_fss_found_no_object";
+          *string = fll_fss_errors_string_found_no_object;
           break;
         case fl_fss_found_no_content:
-          *string = "fl_fss_found_no_content";
+          *string = fll_fss_errors_string_found_no_content;
           break;
         case fl_fss_found_object_no_content:
-          *string = "fl_fss_found_object_no_content";
+          *string = fll_fss_errors_string_found_object_no_content;
           break;
       #endif // _di_fll_fss_errors_success_
+
+      case fl_fss_last_error_code:
+        *string = fll_fss_errors_string_last_error_code;
+        break;
     default:
         return fl_errors_to_string(error, string);
     }

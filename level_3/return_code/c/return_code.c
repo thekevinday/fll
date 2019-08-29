@@ -74,6 +74,13 @@ extern "C" {
     fl_print_color(f_standard_output, data.context.standout, data.context.reset, return_code_long_context);
     printf("     Guess error state from context of error (ignores masks).");
 
+    printf("\n  %s", f_console_symbol_short_enable);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, return_code_short_number);
+
+    printf(", %s", f_console_symbol_long_enable);
+    fl_print_color(f_standard_output, data.context.standout, data.context.reset, return_code_long_number);
+    printf("      Convert status code name to number.");
+
 
     printf("\n\n");
     fl_print_color(f_standard_output, data.context.important, data.context.reset, " Usage: ");
@@ -150,80 +157,107 @@ extern "C" {
     else if (data->parameters[return_code_parameter_version].result == f_console_result_found) {
       fl_program_print_version(return_code_version);
     }
-    else if (data->parameters[return_code_parameter_is_error].result == f_console_result_found && data->remaining.used > 0) {
-      f_array_length counter = 0;
+    else if (data->parameters[return_code_parameter_is_error].result == f_console_result_found) {
+      if (data->remaining.used > 0) {
+        f_array_length counter = 0;
+        f_status code = f_none;
 
-      f_status code = f_none;
+        for (; counter < data->remaining.used; counter++) {
+          code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
-      for (; counter < data->remaining.used; counter++) {
-        code = (f_status) atoll(argv[data->remaining.array[counter]]);
-
-        if (data->parameters[return_code_parameter_context].result == f_console_result_found) {
-          if (fl_errors_is_error(code)) {
-            return_code_delete_data(data);
-            return f_true;
+          if (data->parameters[return_code_parameter_context].result == f_console_result_found) {
+            if (fl_errors_is_error(code)) {
+              return_code_delete_data(data);
+              return f_true;
+            }
           }
-        }
-        else {
-          if (f_error_is_error(code)) {
-            return_code_delete_data(data);
-            return f_true;
+          else {
+            if (f_error_is_error(code)) {
+              return_code_delete_data(data);
+              return f_true;
+            }
           }
-        }
-      } // for
+        } // for
+      }
 
       return_code_delete_data(data);
       return f_false;
     }
-    else if (data->parameters[return_code_parameter_is_warning].result == f_console_result_found && data->remaining.used > 0) {
-      f_array_length counter = 0;
+    else if (data->parameters[return_code_parameter_is_warning].result == f_console_result_found) {
+      if (data->remaining.used > 0) {
+        f_array_length counter = 0;
+        f_status code = f_none;
 
-      f_status code = f_none;
+        for (; counter < data->remaining.used; counter++) {
+          code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
-      for (; counter < data->remaining.used; counter++) {
-        code = (f_status) atoll(argv[data->remaining.array[counter]]);
-
-        if (data->parameters[return_code_parameter_context].result == f_console_result_found) {
-          if (fl_errors_is_warning(code)) {
-            return_code_delete_data(data);
-            return f_true;
+          if (data->parameters[return_code_parameter_context].result == f_console_result_found) {
+            if (fl_errors_is_warning(code)) {
+              return_code_delete_data(data);
+              return f_true;
+            }
           }
-        }
-        else {
-          if (f_error_is_warning(code)) {
-            return_code_delete_data(data);
-            return f_true;
+          else {
+            if (f_error_is_warning(code)) {
+              return_code_delete_data(data);
+              return f_true;
+            }
           }
-        }
-      } // for
+        } // for
+      }
 
       return_code_delete_data(data);
       return f_false;
     }
-    else if (data->parameters[return_code_parameter_is_fine].result == f_console_result_found && data->remaining.used > 0) {
-      f_array_length counter = 0;
+    else if (data->parameters[return_code_parameter_is_fine].result == f_console_result_found) {
+      if (data->remaining.used > 0) {
+        f_array_length counter = 0;
+        f_status code = f_none;
 
-      f_status code = f_none;
+        for (; counter < data->remaining.used; counter++) {
+          code = (f_status) atoll(argv[data->remaining.array[counter]]);
 
-      for (; counter < data->remaining.used; counter++) {
-        code = (f_status) atoll(argv[data->remaining.array[counter]]);
-
-        if (data->parameters[return_code_parameter_context].result == f_console_result_found) {
-          if (fl_errors_is_fine(code)) {
-            return_code_delete_data(data);
-            return f_true;
+          if (data->parameters[return_code_parameter_context].result == f_console_result_found) {
+            if (fl_errors_is_fine(code)) {
+              return_code_delete_data(data);
+              return f_true;
+            }
           }
-        }
-        else {
-          if (f_error_is_fine(code)) {
-            return_code_delete_data(data);
-            return f_true;
+          else {
+            if (f_error_is_fine(code)) {
+              return_code_delete_data(data);
+              return f_true;
+            }
           }
-        }
-      } // for
+        } // for
+      }
 
       return_code_delete_data(data);
       return f_false;
+    }
+    else if (data->parameters[return_code_parameter_number].result == f_console_result_found) {
+      if (data->remaining.used > 0) {
+        f_array_length counter = 0;
+        f_status code = f_none;
+
+        for (; counter < data->remaining.used; counter++) {
+          status = fll_errors_from_string(argv[data->remaining.array[counter]], &code);
+          if (f_error_is_error(status)) {
+            break;
+          }
+          else {
+            status = f_true;
+          }
+
+          printf("%u\n", code);
+        } // for
+      }
+      else {
+        status = f_false;
+      }
+
+      return_code_delete_data(data);
+      return status;
     }
     else if (data->remaining.used > 0 || data->process_pipe) {
       f_array_length counter = 0;

@@ -30,6 +30,7 @@
 
 // fll-2 includes
 #include <level_2/colors.h>
+#include <level_2/errors.h>
 #include <level_2/fss_errors.h>
 
 #ifdef __cplusplus
@@ -45,7 +46,7 @@ extern "C" {
 
 #ifndef _di_fss_return_code_name_
   #define fss_return_code_name "fss_return_code"
-  #define fss_return_code_name_long "FSS Error Code"
+  #define fss_return_code_name_long "FSS Return Code"
 #endif // _di_fss_return_code_name_
 
 #ifndef _di_fss_return_code_defines_
@@ -53,11 +54,13 @@ extern "C" {
   #define fss_return_code_short_is_warning "w"
   #define fss_return_code_short_is_error   "e"
   #define fss_return_code_short_context    "c"
+  #define fss_return_code_short_number     "n"
 
   #define fss_return_code_long_is_fine    "is_fine"
   #define fss_return_code_long_is_warning "is_warning"
   #define fss_return_code_long_is_error   "is_error"
   #define fss_return_code_long_context    "context"
+  #define fss_return_code_long_number     "number"
 
   enum {
     fss_return_code_parameter_help,
@@ -69,6 +72,7 @@ extern "C" {
     fss_return_code_parameter_is_warning,
     fss_return_code_parameter_is_error,
     fss_return_code_parameter_context,
+    fss_return_code_parameter_number,
   };
 
   #define f_console_parameter_initialize_fss_return_code \
@@ -81,9 +85,10 @@ extern "C" {
       f_console_parameter_initialize(fss_return_code_short_is_warning, fss_return_code_long_is_warning, 0, 0, f_false, f_console_type_normal, 0), \
       f_console_parameter_initialize(fss_return_code_short_is_error, fss_return_code_long_is_error, 0, 0, f_false, f_console_type_normal, 0), \
       f_console_parameter_initialize(fss_return_code_short_context, fss_return_code_long_context, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(fss_return_code_short_number, fss_return_code_long_number, 0, 0, f_false, f_console_type_normal, 0), \
     }
 
-  #define fss_return_code_total_parameters 8
+  #define fss_return_code_total_parameters 9
 #endif // _di_fss_return_code_defines_
 
 #ifndef _di_fss_return_code_data_

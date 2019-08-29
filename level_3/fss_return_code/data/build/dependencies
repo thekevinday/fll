@@ -14,5 +14,6 @@ fl_fss
 fl_program
 fl_strings
 fll_colors
+fll_errors
 fll_execute
 fll_fss

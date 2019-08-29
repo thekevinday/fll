@@ -28,6 +28,7 @@
 
 // fll-2 includes
 #include <level_2/colors.h>
+#include <level_2/errors.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -42,7 +43,7 @@ extern "C" {
 
 #ifndef _di_return_code_name_
   #define return_code_name      "return_code"
-  #define return_code_name_long "Error Code"
+  #define return_code_name_long "Return Code"
 #endif // _di_return_code_name_
 
 #ifndef _di_return_code_defines_
@@ -50,11 +51,13 @@ extern "C" {
   #define return_code_short_is_warning "w"
   #define return_code_short_is_error   "e"
   #define return_code_short_context    "c"
+  #define return_code_short_number     "n"
 
   #define return_code_long_is_fine    "is_fine"
   #define return_code_long_is_warning "is_warning"
   #define return_code_long_is_error   "is_error"
   #define return_code_long_context    "context"
+  #define return_code_long_number     "number"
 
   enum {
     return_code_parameter_help,
@@ -66,6 +69,7 @@ extern "C" {
     return_code_parameter_is_warning,
     return_code_parameter_is_error,
     return_code_parameter_context,
+    return_code_parameter_number,
   };
 
   #define f_console_parameter_initialize_return_code \
@@ -78,9 +82,10 @@ extern "C" {
       f_console_parameter_initialize(return_code_short_is_warning, return_code_long_is_warning, 0, 0, f_false, f_console_type_normal, 0), \
       f_console_parameter_initialize(return_code_short_is_error, return_code_long_is_error, 0, 0, f_false, f_console_type_normal, 0), \
       f_console_parameter_initialize(return_code_short_context, return_code_long_context, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(return_code_short_number, return_code_long_number, 0, 0, f_false, f_console_type_normal, 0), \
     }
 
-  #define return_code_total_parameters 8
+  #define return_code_total_parameters 9
 #endif // _di_return_code_defines_
 
 #ifndef _di_return_code_data_

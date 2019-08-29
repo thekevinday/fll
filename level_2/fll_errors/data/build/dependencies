@@ -3,3 +3,5 @@ f_errors
 f_memory
 f_strings
 f_utf
+fl_strings
+fl_errors

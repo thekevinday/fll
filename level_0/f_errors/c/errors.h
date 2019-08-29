@@ -205,8 +205,6 @@ enum {
     f_signal_pollable_event,
     f_signal_power_failure,
     f_signal_bad_system_call,
-
-    // these will be renamed if new names are given for the remaining system calls (up to 64).
     f_signal_reserved_32,
     f_signal_reserved_33,
     f_signal_reserved_34,
@@ -279,6 +277,10 @@ enum {
     f_invalid_buffer,
     f_invalid_process,
     f_invalid_utf,
+    f_invalid_on_eof,
+    f_invalid_on_eol,
+    f_invalid_on_eos,
+    f_invalid_on_stop,
   #endif // _di_f_errors_invalid_
 
   #ifndef _di_f_errors_busy_
