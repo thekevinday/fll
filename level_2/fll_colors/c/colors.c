@@ -26,24 +26,24 @@ extern "C" {
 
     // load the colors
     if (use_light_colors) {
-      status = fl_save_color1(&data->reset, data->color_format, data->color_list.reset);
+      status = fl_macro_color_save_1(&data->reset, data->color_format, data->color_list.reset);
 
-      if (f_status_is_not_error(status)) status = fl_save_color1(&data->warning,   data->color_format, data->color_list.yellow);
-      if (f_status_is_not_error(status)) status = fl_save_color2(&data->error,     data->color_format, data->color_list.bold, data->color_list.red);
-      if (f_status_is_not_error(status)) status = fl_save_color2(&data->title,     data->color_format, data->color_list.bold, data->color_list.blue);
-      if (f_status_is_not_error(status)) status = fl_save_color1(&data->notable,   data->color_format, data->color_list.bold);
-      if (f_status_is_not_error(status)) status = fl_save_color1(&data->important, data->color_format, data->color_list.blue);
-      if (f_status_is_not_error(status)) status = fl_save_color1(&data->standout,  data->color_format, data->color_list.purple);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&data->warning,   data->color_format, data->color_list.yellow);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&data->error,     data->color_format, data->color_list.bold, data->color_list.red);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&data->title,     data->color_format, data->color_list.bold, data->color_list.blue);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&data->notable,   data->color_format, data->color_list.bold);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&data->important, data->color_format, data->color_list.blue);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&data->standout,  data->color_format, data->color_list.purple);
     }
     else {
-      status = fl_save_color1(&data->reset, data->color_format, data->color_list.reset);
+      status = fl_macro_color_save_1(&data->reset, data->color_format, data->color_list.reset);
 
-      if (f_status_is_not_error(status)) status = fl_save_color1(&data->warning,   data->color_format, data->color_list.yellow);
-      if (f_status_is_not_error(status)) status = fl_save_color2(&data->error,     data->color_format, data->color_list.bold, data->color_list.red);
-      if (f_status_is_not_error(status)) status = fl_save_color2(&data->title,     data->color_format, data->color_list.bold, data->color_list.yellow);
-      if (f_status_is_not_error(status)) status = fl_save_color1(&data->notable,   data->color_format, data->color_list.bold);
-      if (f_status_is_not_error(status)) status = fl_save_color2(&data->important, data->color_format, data->color_list.bold, data->color_list.green);
-      if (f_status_is_not_error(status)) status = fl_save_color1(&data->standout,  data->color_format, data->color_list.green);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&data->warning,   data->color_format, data->color_list.yellow);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&data->error,     data->color_format, data->color_list.bold, data->color_list.red);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&data->title,     data->color_format, data->color_list.bold, data->color_list.yellow);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&data->notable,   data->color_format, data->color_list.bold);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&data->important, data->color_format, data->color_list.bold, data->color_list.green);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&data->standout,  data->color_format, data->color_list.green);
     }
 
     return status;

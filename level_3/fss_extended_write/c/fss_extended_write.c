@@ -7,85 +7,85 @@ extern "C" {
 #ifndef _di_fss_extended_write_print_help_
   f_return_status fss_extended_write_print_help(const fss_extended_write_data data) {
     printf("\n");
-    fl_print_color(f_standard_output, data.context.title, data.context.reset, " %s", fss_extended_write_name_long);
+    fl_color_print(f_standard_output, data.context.title, data.context.reset, " %s", fss_extended_write_name_long);
 
     printf("\n");
-    fl_print_color(f_standard_output, data.context.notable, data.context.reset, "  Version %s", fss_extended_write_version);
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "  Version %s", fss_extended_write_version);
 
 
     printf("\n\n");
-    fl_print_color(f_standard_output, data.context.important, data.context.reset, " Available Options: ");
+    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Available Options: ");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_help);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_help);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_help);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_help);
     printf("      Print this help message");
 
     printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_light);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_light);
 
     printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_light);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_light);
     printf("     Output using colors that show up better on light backgrounds");
 
     printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_no_color);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_no_color);
 
     printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_no_color);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_no_color);
     printf("  Do not output in color");
 
     printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_version);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_version);
 
     printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
     printf("   Print only the version number");
 
 
     printf("\n");
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_object);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_object);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_object);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_object);
     printf("   Write an object instead of content.");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_file);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_file);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_file);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_file);
     printf("     Specify a file to send output to.");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_string);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_string);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_string);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_string);
     printf("   Specify a string to convert.");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_partial);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_partial);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_partial);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_partial);
     printf("  For 'content', do not output the end of content character.");
 
 
     printf("\n\n");
-    fl_print_color(f_standard_output, data.context.important, data.context.reset, " Usage: ");
+    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Usage: ");
 
     printf("\n  ");
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_name);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_name);
 
     printf("  ");
-    fl_print_color(f_standard_output, data.context.notable, data.context.reset, "[");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "[");
 
     printf(" options ");
-    fl_print_color(f_standard_output, data.context.notable, data.context.reset, "]");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "]");
 
 
     printf("\n\n");
@@ -119,19 +119,19 @@ extern "C" {
       status = f_status_set_fine(status);
 
       if (status == f_no_data) {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // TODO: there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       }
       else if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       }
       else if (status == f_invalid_parameter) {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
       }
       else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", f_status_set_error(status));
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", f_status_set_error(status));
       }
 
       fss_extended_write_delete_data(data);
@@ -164,19 +164,19 @@ extern "C" {
           status = f_status_set_fine(status);
 
           if (status == f_invalid_parameter) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           }
           else if (status == f_file_not_found) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", "-");
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", "-");
           }
           else if (status == f_file_open_error) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", "-");
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", "-");
           }
           else if (status == f_file_descriptor_error) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
           }
           else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
           }
 
           f_delete_dynamic_string(status2, input);
@@ -281,19 +281,19 @@ extern "C" {
           f_file_close(&output);
 
           if (status == f_invalid_parameter) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           }
           else if (status == f_file_not_found) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           }
           else if (status == f_file_open_error) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           }
           else if (status == f_file_descriptor_error) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           }
           else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
           }
 
           fss_extended_write_delete_data(data);
@@ -307,13 +307,13 @@ extern "C" {
           status = f_status_set_fine(status);
 
           if (status == f_invalid_parameter) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");
           }
           else if (status == f_file_write_error) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           }
           else {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", f_status_set_error(status));
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", f_status_set_error(status));
           }
 
           fss_extended_write_delete_data(data);

@@ -19,7 +19,7 @@ extern "C" {
           return f_status_set_error(f_output_error);
         }
       }
-    }
+    } // for
 
     return f_none;
   }
@@ -39,7 +39,7 @@ extern "C" {
           return f_status_set_error(f_output_error);
         }
       }
-    }
+    } // for
 
     return f_none;
   }
@@ -63,7 +63,7 @@ extern "C" {
           return f_status_set_error(f_output_error);
         }
       }
-    }
+    } // for
 
     return f_none;
   }

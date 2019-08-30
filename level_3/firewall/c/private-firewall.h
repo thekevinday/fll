@@ -88,7 +88,7 @@ typedef struct {
   (structure.array[index].stop - structure.array[index].start) + 1
 
 // TODO: temporarily added, convert this to a function below.
-// TODO: also report: fl_print_color_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory");
+// TODO: also report: fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory");
 #define firewall_macro_append_argument_to_arguments(status, arguments, argument) \
   if (arguments.used >= arguments.size) { \
     f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step); \

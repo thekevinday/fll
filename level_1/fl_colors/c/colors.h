@@ -29,7 +29,7 @@ extern "C" {
 #ifndef _di_fl_color_context_
   typedef struct {
     f_colors color_list;
-    f_colors_format  color_format;
+    f_colors_format color_format;
     f_dynamic_string reset;
     f_dynamic_string warning;
     f_dynamic_string error;
@@ -77,56 +77,144 @@ extern "C" {
     if (f_status_is_not_error(status)) f_destroy_dynamic_string(status, color_context.normal_reset);
 #endif // _di_fl_color_context_
 
-#ifndef _di_fl_set_color_
-  /**
-   * this will accept some file or standard io, and push color information to that file or standard io.
-   */
-  extern f_return_status fl_set_color(FILE *file, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5);
+/**
+ * Given some file or standard io, and push color information to that file or standard io.
+ *
+ * Up to 5 colors may be associted with a single color format block.
+ *
+ * @param file
+ *   The file or standard io.
+ * @param format
+ *   The color format parts.
+ * @param color1
+ *   A color to assign, set to 0 to disable.
+ * @param color2
+ *   A color to assign, set to 0 to disable.
+ * @param color3
+ *   A color to assign, set to 0 to disable.
+ * @param color4
+ *   A color to assign, set to 0 to disable.
+ * @param color5
+ *   A color to assign, set to 0 to disable.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_color_set_
+  extern f_return_status fl_color_set(FILE *file, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5);
 
-  #define fl_set_color1(file, format, color1)                                 fl_set_color(file, format, color1, 0, 0, 0, 0)
-  #define fl_set_color2(file, format, color1, color2)                         fl_set_color(file, format, color1, color2, 0, 0, 0)
-  #define fl_set_color3(file, format, color1, color2, color3)                 fl_set_color(file, format, color1, color2, color3, 0, 0)
-  #define fl_set_color4(file, format, color1, color2, color3, color4)         fl_set_color(file, format, color1, color2, color3, color4, 0)
-  #define fl_set_color5(file, format, color1, color2, color3, color4, color5) fl_set_color(file, format, color1, color2, color3, color4, color5)
-#endif // _di_fl_set_color_
+  #define fl_macro_color_set_1(file, format, color1)                                 fl_color_set(file, format, color1, 0, 0, 0, 0)
+  #define fl_macro_color_set_2(file, format, color1, color2)                         fl_color_set(file, format, color1, color2, 0, 0, 0)
+  #define fl_macro_color_set_3(file, format, color1, color2, color3)                 fl_color_set(file, format, color1, color2, color3, 0, 0)
+  #define fl_macro_color_set_4(file, format, color1, color2, color3, color4)         fl_color_set(file, format, color1, color2, color3, color4, 0)
+  #define fl_macro_color_set_5(file, format, color1, color2, color3, color4, color5) fl_color_set(file, format, color1, color2, color3, color4, color5)
+#endif // _di_fl_color_set_
 
+/**
+ * Save color information to some string.
+ *
+ * Up to 5 colors may be associted with a single color format block.
+ *
+ * @param buffer
+ *   The string to save the colors to.
+ * @param format
+ *   The color format parts.
+ * @param color1
+ *   A color to assign, set to 0 to disable.
+ * @param color2
+ *   A color to assign, set to 0 to disable.
+ * @param color3
+ *   A color to assign, set to 0 to disable.
+ * @param color4
+ *   A color to assign, set to 0 to disable.
+ * @param color5
+ *   A color to assign, set to 0 to disable.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_reallocation_error (with error bit) on memory reallocation error.
+ */
+#ifndef _di_fl_color_save_
+  extern f_return_status fl_color_save(f_dynamic_string *buffer, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5);
 
-#ifndef _di_fl_save_color_
-  /**
-   * this will place all appropriate color effects into a string, handling any necessary allocations.
-   */
-  extern f_return_status fl_save_color(f_dynamic_string *buffer, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5);
+  #define fl_macro_color_save_1(buffer, format, color1)                                 fl_color_save(buffer, format, color1, 0, 0, 0, 0)
+  #define fl_macro_color_save_2(buffer, format, color1, color2)                         fl_color_save(buffer, format, color1, color2, 0, 0, 0)
+  #define fl_macro_color_save_3(buffer, format, color1, color2, color3)                 fl_color_save(buffer, format, color1, color2, color3, 0, 0)
+  #define fl_macro_color_save_4(buffer, format, color1, color2, color3, color4)         fl_color_save(buffer, format, color1, color2, color3, color4, 0)
+  #define fl_macro_color_save_5(buffer, format, color1, color2, color3, color4, color5) fl_color_save(buffer, format, color1, color2, color3, color4, color5)
+#endif // _di_fl_color_save_
 
-  #define fl_save_color1(buffer, format, color1)                                 fl_save_color(buffer, format, color1, 0, 0, 0, 0)
-  #define fl_save_color2(buffer, format, color1, color2)                         fl_save_color(buffer, format, color1, color2, 0, 0, 0)
-  #define fl_save_color3(buffer, format, color1, color2, color3)                 fl_save_color(buffer, format, color1, color2, color3, 0, 0)
-  #define fl_save_color4(buffer, format, color1, color2, color3, color4)         fl_save_color(buffer, format, color1, color2, color3, color4, 0)
-  #define fl_save_color5(buffer, format, color1, color2, color3, color4, color5) fl_save_color(buffer, format, color1, color2, color3, color4, color5)
-#endif // _di_fl_save_color_
+/**
+ * Print a string, wrapped in a given start and stop color.
+ *
+ * If the colors strings have nothing used in them, then this will only print the string.
+ *
+ * @param file
+ *   The file or standard io.
+ * @param format
+ *   The color format parts.
+ * @param start_color
+ *   The color code to place at the beginning of the string, set to 0 to disable.
+ * @param stop_color
+ *   The color code to place at the end of the string, set to 0 to disable.
+ * @param string
+ *   The string to print to the file or standard io.
+ * @param ...
+ *   Variable arguments, processed in the same way fprintf() processes them.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_color_print_
+  extern f_return_status fl_color_print(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...);
+#endif // _di_fl_color_print_
 
-#ifndef _di_fl_print_color_
-  /**
-   * this will wrap the passed text in the passed start and end colors.
-   * this will work like fprintf with the variable arguments.
-   * if the colors strings have nothing used in them, then this will only print the string.
-   */
-  extern f_return_status fl_print_color(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...);
-#endif // _di_fl_print_color_
+/**
+ * Print a string, wrapped in a given start and stop color, and then print an EOL character.
+ *
+ * If the colors strings have nothing used in them, then this will only print the string.
+ *
+ * @param file
+ *   The file or standard io.
+ * @param format
+ *   The color format parts.
+ * @param start_color
+ *   The color code to place at the beginning of the string, set to 0 to disable.
+ * @param stop_color
+ *   The color code to place at the end of the string, set to 0 to disable.
+ * @param string
+ *   The string to print to the file or standard io.
+ * @param ...
+ *   Variable arguments, processed in the same way fprintf() processes them.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_color_print_line_
+  extern f_return_status fl_color_print_line(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...);
+#endif // _di_fl_color_print_line_
 
-#ifndef _di_fl_print_color_line_
-  /**
-   * this is identical to fl_print_color, but also prints a trailing newline.
-   */
-  extern f_return_status fl_print_color_line(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...);
-#endif // _di_fl_print_color_line_
-
-#ifndef _di_fl_print_color_code_
-  /**
-   * this will print a single color code so that all print commands following this command will print in color (or not..).
-   * do not forget to print the color reset when done.
-   */
-  extern f_return_status fl_print_color_code(FILE *file, const f_dynamic_string color);
-#endif // _di_fl_print_color_code_
+/**
+ * Print a single color code to the given file or standard io.
+ *
+ * Try not to forget to print the color reset when done.
+ *
+ * @param file
+ *   The file or standard io.
+ * @param start_color
+ *   The color code to print.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_color_print_code_
+  extern f_return_status fl_color_print_code(FILE *file, const f_dynamic_string color);
+#endif // _di_fl_color_print_code_
 
 #ifdef __cplusplus
 } // extern "C"

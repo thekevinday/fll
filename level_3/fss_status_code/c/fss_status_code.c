@@ -7,98 +7,98 @@ extern "C" {
 #ifndef _di_fss_status_code_print_help_
   f_return_status fss_status_code_print_help(const fss_status_code_data data) {
     printf("\n");
-    fl_print_color(f_standard_output, data.context.title, data.context.reset, " %s", fss_status_code_name_long);
+    fl_color_print(f_standard_output, data.context.title, data.context.reset, " %s", fss_status_code_name_long);
 
     printf("\n");
-    fl_print_color(f_standard_output, data.context.notable, data.context.reset, "  Version %s", fss_status_code_version);
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "  Version %s", fss_status_code_version);
 
 
     printf("\n\n");
-    fl_print_color(f_standard_output, data.context.important, data.context.reset, " Available Options: ");
+    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Available Options: ");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_help);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_help);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_help);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_help);
     printf("      Print this help message");
 
     printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_light);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_light);
 
     printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_light);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_light);
     printf("     Output using colors that show up better on light backgrounds");
 
     printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_no_color);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_no_color);
 
     printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_no_color);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_no_color);
     printf("  Do not output in color");
 
     printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_version);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_version);
 
     printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
     printf("   Print only the version number");
 
 
     printf("\n");
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_short_is_fine);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_short_is_fine);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_long_is_fine);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_long_is_fine);
     printf("     Returns true if the error code is not an error.");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_short_is_warning);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_short_is_warning);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_long_is_warning);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_long_is_warning);
     printf("  Returns true if the error code is a warning.");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_short_is_error);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_short_is_error);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_long_is_error);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_long_is_error);
     printf("    Returns true if the error code is an error.");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_short_context);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_short_context);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_long_context);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_long_context);
     printf("     Guess error state from context of error (ignores masks).");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_short_number);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_short_number);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_long_number);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_long_number);
     printf("      Convert status code name to number.");
 
 
     printf("\n\n");
-    fl_print_color(f_standard_output, data.context.important, data.context.reset, " Usage: ");
+    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Usage: ");
 
     printf("\n  ");
-    fl_print_color(f_standard_output, data.context.standout, data.context.reset, fss_status_code_name);
+    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_status_code_name);
 
     printf("  ");
-    fl_print_color(f_standard_output, data.context.notable, data.context.reset, "[");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "[");
 
     printf(" options ");
-    fl_print_color(f_standard_output, data.context.notable, data.context.reset, "]");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "]");
 
     printf("  ");
-    fl_print_color(f_standard_output, data.context.notable, data.context.reset, "<");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "<");
 
     printf(" error code(s) ");
-    fl_print_color(f_standard_output, data.context.notable, data.context.reset, ">");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, ">");
 
 
     printf("\n\n");
@@ -131,19 +131,19 @@ extern "C" {
       status = f_status_set_fine(status);
 
       if (status == f_no_data) {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // TODO: there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       }
       else if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       }
       else if (status == f_invalid_parameter) {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
       }
       else {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", status);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", status);
       }
 
       fss_status_code_delete_data(data);
@@ -286,7 +286,7 @@ extern "C" {
       }
     }
     else {
-      fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an error code.");
+      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an error code.");
       status = f_status_set_error(f_invalid_parameter);
     }
 

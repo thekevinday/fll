@@ -23,74 +23,74 @@ extern "C" {
 #ifndef _di_init_print_help_
   f_return_status init_print_help(const init_argument argument) {
     printf("\n");
-    fl_print_color(f_standard_output, argument.context.title, argument.context.reset, " %s", init_name_long);
+    fl_color_print(f_standard_output, argument.context.title, argument.context.reset, " %s", init_name_long);
 
     printf("\n");
-    fl_print_color(f_standard_output, argument.context.notable, argument.context.reset, "  Version %s", init_version);
+    fl_color_print(f_standard_output, argument.context.notable, argument.context.reset, "  Version %s", init_version);
 
     printf("\n\n");
-    fl_print_color(f_standard_output, argument.context.important, argument.context.reset, " Available Options: ");
+    fl_color_print(f_standard_output, argument.context.important, argument.context.reset, " Available Options: ");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_help);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_help);
 
     printf(", %s", f_console_symbol_long_enable);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_help);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_help);
     printf("      Print this help message");
 
     printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_light);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_light);
 
     printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_light);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_light);
     printf("     Output using colors that show up better on light backgrounds");
 
     printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_no_color);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_no_color);
 
     printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_no_color);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_no_color);
     printf("  Do not output in color");
 
     printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_version);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_version);
 
     printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_version);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_version);
     printf("   Print only the version number");
 
     printf("\n  %s", f_console_symbol_short_disable);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_debug);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_debug);
 
     printf(", %s", f_console_symbol_long_disable);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_debug);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_debug);
     printf("   Enable debugging");
 
     printf("\n  %s", init_parameter_no_prepare_short_name);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_debug);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_debug);
 
     printf(", %s", init_parameter_no_prepare_long_name);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_debug);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_debug);
     printf("   Do not attempt to process kernel command line or perform any boot-time specific preparations.");
 
     printf("\n  %s", init_parameter_runlevel_short_name);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_debug);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_debug);
 
     printf(", %s", init_parameter_runlevel_long_name);
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_debug);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_debug);
     printf("   Specify a custom run level, ignoring the kernel command line runlevel argument.");
 
     printf("\n\n");
-    fl_print_color(f_standard_output, argument.context.important, argument.context.reset, " Usage: ");
+    fl_color_print(f_standard_output, argument.context.important, argument.context.reset, " Usage: ");
 
     printf("\n  ");
-    fl_print_color(f_standard_output, argument.context.standout, argument.context.reset, init_name);
+    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, init_name);
 
     printf("  ");
-    fl_print_color(f_standard_output, argument.context.notable, argument.context.reset, "[");
+    fl_color_print(f_standard_output, argument.context.notable, argument.context.reset, "[");
 
     printf(" options ");
-    fl_print_color(f_standard_output, argument.context.notable, argument.context.reset, "]");
+    fl_color_print(f_standard_output, argument.context.notable, argument.context.reset, "]");
 
     printf("\n\n");
 
@@ -128,16 +128,16 @@ extern "C" {
       status = f_status_set_fine(status);
 
       if (status == f_no_data) {
-        fl_print_color_line(f_standard_error, argument->context.error, argument->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
+        fl_color_print_line(f_standard_error, argument->context.error, argument->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // TODO: there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       } else if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_print_color_line(f_standard_error, argument->context.error, argument->context.reset, "CRITICAL ERROR: unable to allocate memory");
+        fl_color_print_line(f_standard_error, argument->context.error, argument->context.reset, "CRITICAL ERROR: unable to allocate memory");
       } else if (f_status_set_fine(status) == f_invalid_parameter) {
-        fl_print_color_line(f_standard_error, argument->context.error, argument->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");
+        fl_color_print_line(f_standard_error, argument->context.error, argument->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");
       } else {
-        fl_print_color_line(f_standard_error, argument->context.error, argument->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_status_set_error(status));
+        fl_color_print_line(f_standard_error, argument->context.error, argument->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_status_set_error(status));
       }
 
       init_delete_argument((*argument));
@@ -194,13 +194,13 @@ extern "C" {
       f_pid_t pid_services = clone(init_handler_child_services, stack_memory.services + init_stack_size_services, init_flags_clone, stack_memory.services);
 
       if (pid_services < 0) {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to clone services process (errno = %i).", errno);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to clone services process (errno = %i).", errno);
       }
 
       f_pid_t pid_control_file = clone(init_handler_child_control_file, stack_memory.control_file + init_stack_size_control_file, init_flags_clone, stack_memory.control_file);
 
       if (pid_control_file < 0) {
-        fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to clone control via file process (errno = %i).", errno);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to clone control via file process (errno = %i).", errno);
       }
 
 
@@ -226,11 +226,11 @@ extern "C" {
             continue;
           }
           else if (errno != EINTR) {
-            fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: sigwaitinfo() failed (errno = %i).", errno);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: sigwaitinfo() failed (errno = %i).", errno);
 
             signal_problem_count++;
             if (signal_problem_count > PROBLEM_COUNT_MAX_SIGNAL_SIZE) {
-              fl_print_color_line(f_standard_error, data->context.error, data->context.reset, "ERROR: max signal problem count has been reached, sleeping for a period of time.", errno);
+              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: max signal problem count has been reached, sleeping for a period of time.", errno);
               sleep(init_panic_signal_sleep_seconds);
               signal_problem_count = 0;
             }
