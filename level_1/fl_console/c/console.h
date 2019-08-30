@@ -26,6 +26,28 @@ extern "C" {
 /**
  * Process console parameters.
  *
+ * Short parameters are processed as follows:
+ * - Begin with either '-' or '+'.
+ * - "Empty" parameters are allow, such that '-' or '+' are valid parameters.
+ * - Are one character long.
+ * - May be grouped as a single parameter, such as "tar -xcf" and "tar -x -c -f" are equivalent.
+ * - Additional parameters must immediately follow the parameter or grouped parameters, such as "tar -xfc file.tar.gz" or "tar -x -f file.tar.gz -c".
+ *
+ * Long parameters are processed as follows:
+ * - Begin with either '--' or '++'.
+ * - "Empty" parameters are allow, such that '--' or '++' are valid parameters.
+ * - Are any length long so long as it is less than f_console_max_size.
+ * - May not be grouped and must be separated from any subsequent parameter, such as: "tar --extract --create --file".
+ * - Additional parameters must immediately follow the parameter, such as "tar --extract --file file.tar.gz --create".
+ *
+ * Other parameters are processed as follows:
+ * - Anything that does not begin with '-', '+', '--', or '++'.
+ * - Are any length long so long as it is less than f_console_max_size.
+ * - May not be grouped and must be separated from any subsequent parameter, such as: "tar extract create file".
+ * - Additional parameters must immediately follow the parameter, such as "tar extract file file.tar.gz create".
+ *
+ * The UTF-8 BOM is not allowed in the parameters.
+ *
  * @param argc
  *   The number of parameters passed to the process.
  * @param argv
@@ -37,7 +59,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_no_data if no "extra" parameters were found.
+ *   f_no_data if "additional" parameters were expected but not found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */

@@ -74,15 +74,15 @@ extern "C" {
 
   #define f_console_parameter_initialize_status_code \
     { \
-      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
-      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
-      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_inverse, 0), \
-      f_console_parameter_initialize(status_code_short_is_fine, status_code_long_is_fine, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(status_code_short_is_warning, status_code_long_is_warning, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(status_code_short_is_error, status_code_long_is_error, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(status_code_short_context, status_code_long_context, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(status_code_short_number, status_code_long_number, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
+      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
+      f_console_parameter_initialize(status_code_short_is_fine, status_code_long_is_fine, 0, f_false, f_console_type_normal), \
+      f_console_parameter_initialize(status_code_short_is_warning, status_code_long_is_warning, 0, f_false, f_console_type_normal), \
+      f_console_parameter_initialize(status_code_short_is_error, status_code_long_is_error, 0, f_false, f_console_type_normal), \
+      f_console_parameter_initialize(status_code_short_context, status_code_long_context, 0, f_false, f_console_type_normal), \
+      f_console_parameter_initialize(status_code_short_number, status_code_long_number, 0, f_false, f_console_type_normal), \
     }
 
   #define status_code_total_parameters 9

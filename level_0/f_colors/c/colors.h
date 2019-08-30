@@ -101,6 +101,15 @@ extern "C" {
   #define f_colors_format_initialize_xterminal { "\033[", "m", ";" }
 #endif // _di_f_colors_format_
 
+/**
+ * A structure containing all supported color codes.
+ *
+ * Different system will support a different set.
+ *
+ * Custom initializers are provided for common defaults:
+ * - f_colors_initialize_linux: ideal for linux console.
+ * - f_colors_initialize_xterminal: ideal for linux x-terminal.
+ */
 #ifndef _di_f_colors_
   typedef struct {
     const char *reset;
@@ -147,6 +156,13 @@ extern "C" {
   #define f_colors_initialize_xterminal { "0", "1", "4", "5", "7", "8", "30", "31", "32", "33", "34", "35", "36", "37", "40", "41", "42", "43", "44", "45", "46", "47", "90", "91", "92", "93", "94", "95", "96", "97", "100", "101", "102", "103", "104", "105", "106", "107" }
 #endif // _di_f_colors_
 
+/**
+ * Provide global default global instances of f_colors structures.
+ *
+ * Supported instances:
+ * - f_colors_format_linux: ideal for linux console.
+ * - f_colors_format_xterminal: ideal for linux x-terminal.
+ */
 #ifndef _di_f_default_colors_
   static const f_colors_format f_colors_format_linux     = f_colors_format_initialize_linux;
   static const f_colors_format f_colors_format_xterminal = f_colors_format_initialize_xterminal;

@@ -75,14 +75,14 @@ extern "C" {
 
   #define f_console_parameter_initialize_fss_extended_write \
     { \
-      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
-      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
-      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_inverse, 0), \
-      f_console_parameter_initialize(fss_extended_write_short_object, fss_extended_write_long_object, 0, 0, f_false, f_console_type_normal, 0), \
-      f_console_parameter_initialize(fss_extended_write_short_file, fss_extended_write_long_file, 0, 0, f_true, f_console_type_normal, 0), \
-      f_console_parameter_initialize(fss_extended_write_short_string, fss_extended_write_long_string, 0, 0, f_true, f_console_type_normal, 0), \
-      f_console_parameter_initialize(fss_extended_write_short_partial, fss_extended_write_long_partial, 0, 0, f_false, f_console_type_normal, 0), \
+      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
+      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
+      f_console_parameter_initialize(fss_extended_write_short_object, fss_extended_write_long_object, 0, f_false, f_console_type_normal), \
+      f_console_parameter_initialize(fss_extended_write_short_file, fss_extended_write_long_file, 0, f_true, f_console_type_normal), \
+      f_console_parameter_initialize(fss_extended_write_short_string, fss_extended_write_long_string, 0, f_true, f_console_type_normal), \
+      f_console_parameter_initialize(fss_extended_write_short_partial, fss_extended_write_long_partial, 0, f_false, f_console_type_normal), \
     }
 
   #define fss_extended_write_total_parameters 8

@@ -14,13 +14,17 @@ extern "C" {
     f_console_id result = 0;
     f_bool found = f_false;
 
-    f_array_length location = 1; // parameter 0 represents the program name so skip it
+    f_array_length location = 1; // Parameter 0 represents the program name so skip it.
     f_string_length sub_location = 0;
-    f_string_length increments = 0;
+    f_string_length increment_by = 0;
     f_string_length string_length = 0;
     f_array_length parameter_counter = 0;
 
-    f_string_lengths extra_initiator = f_string_lengths_initialize;
+    f_u_short console_short = f_console_none;
+    f_u_short console_long = f_console_none;
+    f_u_short console_type = f_console_type_normal;
+
+    f_string_lengths needs_additional = f_string_lengths_initialize;
 
     // loop through and read all parameters
     while (location < argc) {
@@ -30,131 +34,117 @@ extern "C" {
 
       // process the current parameter
       if (result == f_console_short_enable || result == f_console_short_disable) {
-        increments = 1;
+        increment_by = 1;
         sub_location = 1;
       }
       else if (result == f_console_long_enable || result == f_console_long_disable) {
-        increments = string_length;
+        increment_by = string_length;
         sub_location = 2;
       }
-      else if (result == f_console_extra_enable || result == f_console_extra_disable) {
-        increments = string_length;
-        sub_location = 3;
-      }
       else {
-        increments = 1;
+        increment_by = string_length;
         sub_location = 0;
       }
 
-      // Now handle the normal commands
-      if (argv[location][0] == f_console_symbol_enable) {
-        if (sub_location < string_length) {
-          for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++) {
-            if (parameters[parameter_counter].type != f_console_type_normal) {
-              continue;
-            }
-
-            if (parameters[parameter_counter].symbol_short != 0 && parameters[parameter_counter].symbol_long != 0) {
-              if (f_console_is_enable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_short, parameters[parameter_counter].symbol_long, string_length + 1)) {
-                parameters[parameter_counter].result = f_console_result_found;
-
-                if (parameters[parameter_counter].has_additional) {
-                  if (extra_initiator.used >= extra_initiator.size) {
-                    f_status allocation_status = f_none;
-
-                    f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
-                    if (f_status_is_error(allocation_status)) {
-                      f_delete_string_lengths(status, extra_initiator);
-                      return f_status_set_error(allocation_status);
-                    }
-                  }
-
-                  extra_initiator.array[extra_initiator.used] = parameter_counter;
-                  extra_initiator.used++;
-                }
-              }
-            }
-
-            if (parameters[parameter_counter].symbol_extra != 0) {
-              if (f_console_is_extra_enable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_extra, string_length + 1)) {
-                parameters[parameter_counter].result = f_console_result_found;
-
-                if (parameters[parameter_counter].has_additional) {
-                  if (extra_initiator.used >= extra_initiator.size) {
-                    f_status allocation_status = f_none;
-
-                    f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
-
-                    if (f_status_is_error(allocation_status)) {
-                      f_delete_string_lengths(status, extra_initiator);
-                      return f_status_set_error(allocation_status);
-                    }
-                  }
-
-                  extra_initiator.array[extra_initiator.used] = parameter_counter;
-                  extra_initiator.used++;
-                }
-              }
-            }
-          } // for
-        }
+      // Handle the normal commands.
+      if (result == f_console_short_enable || result == f_console_long_enable) {
+        console_short = f_console_short_enable;
+        console_long = f_console_long_enable;
+        console_type = f_console_type_normal;
       }
-      // now handle the inverse commands
-      else if (argv[location][0] == f_console_symbol_disable) {
-        if (sub_location < string_length) {
-          for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++) {
-            if (parameters[parameter_counter].type != f_console_type_inverse) {
-              continue;
-            }
-
-            if (parameters[parameter_counter].symbol_short != 0 && parameters[parameter_counter].symbol_long != 0) {
-              if (f_console_is_disable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_short, parameters[parameter_counter].symbol_long, string_length + 1)) {
-                parameters[parameter_counter].result = f_console_result_found;
-
-                if (parameters[parameter_counter].has_additional) {
-                  if (extra_initiator.used >= extra_initiator.size) {
-                    f_status allocation_status = f_none;
-
-                    f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
-
-                    if (f_status_is_error(allocation_status)) {
-                      f_delete_string_lengths(status, extra_initiator);
-                      return f_status_set_error(allocation_status);
-                    }
-                  }
-
-                  extra_initiator.array[extra_initiator.used] = parameter_counter;
-                  extra_initiator.used++;
-                }
-              }
-            }
-
-            if (parameters[parameter_counter].symbol_extra != 0) {
-              if (f_console_is_extra_disable(result, &argv[location][sub_location], parameters[parameter_counter].symbol_extra, string_length + 1)) {
-                parameters[parameter_counter].result = f_console_result_found;
-
-                if (parameters[parameter_counter].has_additional) {
-                  if (extra_initiator.used >= extra_initiator.size) {
-                    f_status allocation_status = f_none;
-
-                    f_resize_string_lengths(allocation_status, extra_initiator, extra_initiator.size + f_console_default_allocation_step);
-
-                    if (f_status_is_error(allocation_status)) {
-                      f_delete_string_lengths(status, extra_initiator);
-                      return f_status_set_error(allocation_status);
-                    }
-                  }
-
-                  extra_initiator.array[extra_initiator.used] = parameter_counter;
-                  extra_initiator.used++;
-                }
-              }
-            }
-          } // for
-        }
+      else if (result == f_console_short_disable || result == f_console_long_disable) {
+        console_short = f_console_short_disable;
+        console_long = f_console_long_disable;
+        console_type = f_console_type_inverse;
       }
       else {
-        // use found to determine if the remaining parameter should be populated
+        console_short = f_console_none;
+      }
+
+      // Additional parameters must always follow what requests them.
+      if (needs_additional.used > 0) {
+        parameter_counter = needs_additional.array[0];
+
+        if (parameters[parameter_counter].additional.used >= parameters[parameter_counter].additional.size) {
+          f_status allocation_status = f_none;
+
+          f_resize_string_lengths(allocation_status, parameters[parameter_counter].additional, parameters[parameter_counter].additional.size + f_console_default_allocation_step);
+
+          if (f_status_is_error(allocation_status)) {
+            f_delete_string_lengths(status, needs_additional);
+            return f_status_set_error(allocation_status);
+          }
+        }
+
+        parameters[parameter_counter].result = f_console_result_additional;
+        parameters[parameter_counter].additional.array[parameters[parameter_counter].additional.used] = location;
+        parameters[parameter_counter].additional.used++;
+
+        needs_additional.used--;
+
+        // Pop the matched parameter off of the top of the needs_additional array.
+        for (f_string_length i = 0; i < needs_additional.used; i++) {
+          needs_additional.array[i] = needs_additional.array[i + 1];
+        } // for
+      }
+      else if (console_short > f_console_none) {
+        // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
+        while (sub_location < string_length) {
+          for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++) {
+            if (parameters[parameter_counter].type != console_type) {
+              continue;
+            }
+
+            if (result == console_short) {
+              if (parameters[parameter_counter].symbol_short == 0) {
+                continue;
+              }
+
+              if (strncmp(&argv[location][sub_location], parameters[parameter_counter].symbol_short, increment_by + 1) != 0) {
+                continue;
+              }
+            }
+            else if (result == console_long) {
+              if (parameters[parameter_counter].symbol_long == 0) {
+                continue;
+              }
+
+              if (strncmp(&argv[location][sub_location], parameters[parameter_counter].symbol_long, increment_by + 1) != 0) {
+                continue;
+              }
+            }
+            else {
+              continue;
+            }
+
+            parameters[parameter_counter].result = f_console_result_found;
+            parameters[parameter_counter].total++;
+
+            if (parameters[parameter_counter].has_additional) {
+              if (needs_additional.used + parameters[parameter_counter].has_additional > needs_additional.size) {
+                f_status allocation_status = f_none;
+
+                f_resize_string_lengths(allocation_status, needs_additional, needs_additional.used + parameters[parameter_counter].has_additional);
+
+                if (f_status_is_error(allocation_status)) {
+                  f_delete_string_lengths(status, needs_additional);
+                  return f_status_set_error(allocation_status);
+                }
+              }
+
+              for (f_array_length additional = 0; additional < parameters[parameter_counter].has_additional; additional++) {
+                needs_additional.array[needs_additional.used] = parameter_counter;
+                needs_additional.used++;
+              } // for
+            }
+
+            break;
+          } // for
+
+          sub_location += increment_by;
+        } // while
+      }
+      else {
         found = f_false;
 
         for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++) {
@@ -162,78 +152,61 @@ extern "C" {
             continue;
           }
 
-          if (parameters[parameter_counter].length > 0 && parameters[parameter_counter].symbol_other != 0) {
-            if (strncmp(argv[location], parameters[parameter_counter].symbol_other, parameters[parameter_counter].length + 1) == 0) {
+          if (parameters[parameter_counter].symbol_other == 0) {
+            continue;
+          }
+
+          if (strncmp(argv[location], parameters[parameter_counter].symbol_other, string_length + 1) != 0) {
+            continue;
+          }
+
+          parameters[parameter_counter].result = f_console_result_found;
+          parameters[parameter_counter].total++;
+
+          if (parameters[parameter_counter].has_additional) {
+            if (needs_additional.used + parameters[parameter_counter].has_additional > needs_additional.size) {
               f_status allocation_status = f_none;
 
-              if (parameters[parameter_counter].additional.used >= parameters[parameter_counter].additional.size) {
-                f_resize_string_lengths(allocation_status, parameters[parameter_counter].additional, parameters[parameter_counter].additional.size + f_console_default_allocation_step);
-              }
+              f_resize_string_lengths(allocation_status, needs_additional, needs_additional.used + parameters[parameter_counter].has_additional);
 
               if (f_status_is_error(allocation_status)) {
-                f_delete_string_lengths(status, extra_initiator);
+                f_delete_string_lengths(status, needs_additional);
                 return f_status_set_error(allocation_status);
               }
-
-              parameters[parameter_counter].result = f_console_result_found;
-
-              // when "other" is supplied, the extra will be recycled to represent the location of the "other" such that ordering can be determined by the caller
-              parameters[parameter_counter].additional.array[parameters[parameter_counter].additional.used] = location;
-              parameters[parameter_counter].additional.used++;
-
-              found = f_true;
-              break;
             }
+
+            for (f_array_length additional = 0; additional < parameters[parameter_counter].has_additional; additional++) {
+              needs_additional.array[needs_additional.used] = parameter_counter;
+              needs_additional.used++;
+            } // for
           }
+
+          found = f_true;
+          break;
         } // for
 
         if (!found) {
-          if (extra_initiator.used > 0) {
+          // populate list of remaining parameters not associated with anything.
+          if (remaining->used >= remaining->size) {
             f_status allocation_status = f_none;
 
-            if (parameters[extra_initiator.array[0]].additional.used >= parameters[extra_initiator.array[0]].additional.size) {
-              f_resize_string_lengths(allocation_status, parameters[extra_initiator.array[0]].additional, parameters[extra_initiator.array[0]].additional.size + f_console_default_allocation_step);
-            }
+            f_resize_string_lengths(allocation_status, (*remaining), remaining->size + f_console_default_allocation_step);
 
             if (f_status_is_error(allocation_status)) {
-              f_delete_string_lengths(status, extra_initiator);
+              f_delete_string_lengths(status, needs_additional);
               return f_status_set_error(allocation_status);
             }
-
-            parameters[extra_initiator.array[0]].result = f_console_result_additional;
-            parameters[extra_initiator.array[0]].additional.array[parameters[extra_initiator.array[0]].additional.used] = location;
-            parameters[extra_initiator.array[0]].additional.used++;
-
-            extra_initiator.used--;
-
-            f_string_length i = 0;
-
-            for (; i < extra_initiator.used; i++) {
-              extra_initiator.array[i] = extra_initiator.array[i + 1];
-            } // for
           }
-          else {
-            if (remaining->used >= remaining->size) {
-              f_status allocation_status = f_none;
 
-              f_resize_string_lengths(allocation_status, (*remaining), remaining->size + f_console_default_allocation_step);
-
-              if (f_status_is_error(allocation_status)) {
-                f_delete_string_lengths(status, extra_initiator);
-                return f_status_set_error(allocation_status);
-              }
-            }
-
-            remaining->array[remaining->used] = location;
-            remaining->used++;
-          }
+          remaining->array[remaining->used] = location;
+          remaining->used++;
         }
       }
 
-      ++location;
+      location++;
     } // while
 
-    if (extra_initiator.used > 0) {
+    if (needs_additional.used > 0) {
       status = f_no_data;
     }
     else {
@@ -242,7 +215,7 @@ extern "C" {
 
     {
       f_status allocation_status = f_none;
-      f_delete_string_lengths(allocation_status, extra_initiator);
+      f_delete_string_lengths(allocation_status, needs_additional);
     }
 
     return status;

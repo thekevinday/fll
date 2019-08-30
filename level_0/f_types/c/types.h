@@ -7,22 +7,22 @@
  *
  * Provides datatype re-definitions
  * If your compiler lacks the ability to produce such, simply re-define them as needed
- * An "ideal" definition for a standard expected size would be (64-bit):
+ * An "ideal" definition for a standard expected size would be:
  *   char:      2^8   = 256
- *   short:     2^32  = 4294967296
- *   int:       2^64  = 1.84467e19
- *   long:      2^128 = 3.40282e38
- *   long long: 2^256 = 1.15792e77
+ *   short:     2^16  = 65536
+ *   int:       2^32  = 4294967296
+ *   long:      2^64  = 1.84467e19
+ *   long long: 2^128 = 3.40282e38
  *
  * If you need exact size, use one of the following:
- *   int8_t:   2^7 (signed)
- *   uint8_t:  2^8 (unsigned)
- *   int16_t:  2^15 (signed)
- *   uint16_t: 2^16 (unsigned)
- *   int32_t:  2^31 (signed)
- *   uint32_t: 2^32 (unsigned)
- *   int64_t:  2^63 (signed)
- *   uint64_t: 2^64 (unsigned)
+ *   int8_t:   2^7  (8-bit  signed)
+ *   uint8_t:  2^8  (8-bit  unsigned)
+ *   int16_t:  2^15 (16-bit signed)
+ *   uint16_t: 2^16 (16-bit unsigned)
+ *   int32_t:  2^31 (32-bit signed)
+ *   uint32_t: 2^32 (32-bit unsigned)
+ *   int64_t:  2^63 (64-bit signed)
+ *   uint64_t: 2^64 (64-bit unsigned)
  */
 #ifndef _F_types_h
 #define _F_types_h

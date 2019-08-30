@@ -164,25 +164,25 @@ extern "C" {
   #ifdef _en_init_debug_
     #define f_console_parameter_initialize_init \
       { \
-        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_false, f_console_type_normal, 0), \
-        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, 0, f_true, f_console_type_normal, 0), \
-        f_console_parameter_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, 0, f_true, f_console_type_normal, 0), \
+        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
+        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, f_true, f_console_type_normal), \
+        f_console_parameter_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, f_true, f_console_type_normal), \
       }
 
     #define init_total_parameters 7
   #else
     #define f_console_parameter_initialize_init \
       { \
-        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_false, f_console_type_normal, 0), \
-        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, 0, f_true, f_console_type_normal, 0), \
-        f_console_parameter_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, 0, f_true, f_console_type_normal, 0), \
+        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
+        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, f_true, f_console_type_normal), \
+        f_console_parameter_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, f_true, f_console_type_normal), \
       }
 
     #define init_total_parameters 6

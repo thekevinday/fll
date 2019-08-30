@@ -102,12 +102,6 @@ extern "C" {
   #define firewall_command_lock    "lock"
   #define firewall_command_show    "show"
 
-  #define firewall_command_start_length   5
-  #define firewall_command_stop_length    4
-  #define firewall_command_restart_length 7
-  #define firewall_command_lock_length    4
-  #define firewall_command_show_length    4
-
   #define firewall_ip_list                    "ip_list"
   #define firewall_ip_list_source             "source"
   #define firewall_ip_list_source_action      "-s"
@@ -245,31 +239,31 @@ extern "C" {
   #ifdef _en_firewall_debug_
     #define f_console_parameter_initialize_firewall \
       { \
-        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_false, f_console_type_normal, 0), \
-        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(0, 0, 0, firewall_command_start, f_false, f_console_type_other, firewall_command_start_length), \
-        f_console_parameter_initialize(0, 0, 0, firewall_command_stop, f_false, f_console_type_other, firewall_command_stop_length), \
-        f_console_parameter_initialize(0, 0, 0, firewall_command_restart, f_false, f_console_type_other, firewall_command_restart_length), \
-        f_console_parameter_initialize(0, 0, 0, firewall_command_lock, f_false, f_console_type_other, firewall_command_lock_length), \
-        f_console_parameter_initialize(0, 0, 0, firewall_command_show, f_false, f_console_type_other, firewall_command_show_length), \
+        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
+        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(0, 0, firewall_command_start, f_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_stop, f_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_restart, f_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_lock, f_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_show, f_false, f_console_type_other), \
       }
 
     #define firewall_total_parameters 10
   #else
     #define f_console_parameter_initialize_firewall \
       { \
-        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_false, f_console_type_normal, 0), \
-        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_false, f_console_type_inverse, 0), \
-        f_console_parameter_initialize(0, 0, 0, firewall_command_start, f_false, f_console_type_other, firewall_command_start_length), \
-        f_console_parameter_initialize(0, 0, 0, firewall_command_stop, f_false, f_console_type_other, firewall_command_stop_length), \
-        f_console_parameter_initialize(0, 0, 0, firewall_command_restart, f_false, f_console_type_other, firewall_command_restart_length), \
-        f_console_parameter_initialize(0, 0, 0, firewall_command_lock, f_false, f_console_type_other, firewall_command_lock_length), \
-        f_console_parameter_initialize(0, 0, 0, firewall_command_show, f_false, f_console_type_other, firewall_command_show_length), \
+        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
+        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(0, 0, firewall_command_start, f_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_stop, f_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_restart, f_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_lock, f_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_show, f_false, f_console_type_other), \
       }
 
     #define firewall_total_parameters 9
