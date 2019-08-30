@@ -120,9 +120,10 @@ extern "C" {
       if (string == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    // @fixme: the string here does not have to be NULL terminated, so this usage is invalid/unsafe!
     if (start_color.used != 0) {
-      fprintf(file, "%s", start_color.string);
+      f_status status = f_print_dynamic_string(file, start_color);
+
+      if (f_status_is_error(status)) return status;
     }
 
     va_list ap;
@@ -133,9 +134,10 @@ extern "C" {
 
     va_end(ap);
 
-    // @fixme: the string here does not have to be NULL terminated, so this usage is invalid/unsafe!
     if (end_color.used != 0) {
-      fprintf(file, "%s", end_color.string);
+      f_status status = f_print_dynamic_string(file, end_color);
+
+      if (f_status_is_error(status)) return status;
     }
 
     return f_none;
@@ -149,9 +151,10 @@ extern "C" {
       if (string == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    // @fixme: the string here does not have to be NULL terminated, so this usage is invalid/unsafe!
     if (start_color.used != 0) {
-      fprintf(file, "%s", start_color.string);
+      f_status status = f_print_dynamic_string(file, start_color);
+
+      if (f_status_is_error(status)) return status;
     }
 
     va_list ap;
@@ -162,9 +165,10 @@ extern "C" {
 
     va_end(ap);
 
-    // @fixme: the string here does not have to be NULL terminated, so this usage is invalid/unsafe!
     if (end_color.used != 0) {
-      fprintf(file, "%s", end_color.string);
+      f_status status = f_print_dynamic_string(file, end_color);
+
+      if (f_status_is_error(status)) return status;
     }
 
     // now print the trailing newline, this is done _after_ ending the colors to avoid color wrapping issues that can happen when a color code follows a newline
@@ -176,9 +180,10 @@ extern "C" {
 
 #ifndef _di_fl_color_print_code_
   f_return_status fl_color_print_code(FILE *file, const f_dynamic_string color) {
-    // @fixme: the string here does not have to be NULL terminated, so this usage is invalid/unsafe!
     if (color.used != 0) {
-      fprintf(file, "%s", color.string);
+      f_status status = f_print_dynamic_string(file, color);
+
+      if (f_status_is_error(status)) return status;
     }
 
     return f_none;

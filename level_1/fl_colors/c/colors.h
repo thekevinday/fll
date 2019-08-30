@@ -21,6 +21,7 @@
 #include <level_0/file.h>
 #include <level_0/strings.h>
 #include <level_0/types.h>
+#include <level_0/print.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -167,6 +168,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_output_error (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_
   extern f_return_status fl_color_print(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...);
@@ -193,6 +195,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_output_error (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_line_
   extern f_return_status fl_color_print_line(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...);
@@ -211,6 +214,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_output_error (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_code_
   extern f_return_status fl_color_print_code(FILE *file, const f_dynamic_string color);
