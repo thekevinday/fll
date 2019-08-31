@@ -62,9 +62,6 @@
 #include <malloc.h>
 #include <stdlib.h>
 
-// private includes
-#include "private-init.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
