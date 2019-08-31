@@ -221,6 +221,9 @@ enum {
     f_unterminated_group_on_eol,
     f_unterminated_group_on_eos,
     f_unterminated_group_on_stop,
+    f_incomplete_utf,
+    f_incomplete_utf_on_eof,
+    f_incomplete_utf_on_eol,
     f_incomplete_utf_on_eos,
     f_incomplete_utf_on_stop,
   #endif // _di_f_status_buffers_

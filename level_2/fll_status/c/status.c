@@ -783,6 +783,21 @@ extern "C" {
         return f_none;
       }
 
+      if (fl_compare_strings(string, fl_status_string_incomplete_utf, length, fl_status_string_incomplete_utf_length) == f_equal_to) {
+        *code = f_incomplete_utf;
+        return f_none;
+      }
+
+      if (fl_compare_strings(string, fl_status_string_incomplete_utf_on_eof, length, fl_status_string_incomplete_utf_on_eof_length) == f_equal_to) {
+        *code = f_incomplete_utf_on_eof;
+        return f_none;
+      }
+
+      if (fl_compare_strings(string, fl_status_string_incomplete_utf_on_eol, length, fl_status_string_incomplete_utf_on_eol_length) == f_equal_to) {
+        *code = f_incomplete_utf_on_eol;
+        return f_none;
+      }
+
       if (fl_compare_strings(string, fl_status_string_incomplete_utf_on_eos, length, fl_status_string_incomplete_utf_on_eos_length) == f_equal_to) {
         *code = f_incomplete_utf_on_eos;
         return f_none;

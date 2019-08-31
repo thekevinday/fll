@@ -10,10 +10,13 @@ extern "C" {
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width(*character);
+    f_u_short width = f_macro_utf_byte_width_is(*character);
 
-    if (width == 1) {
+    if (width == 0) {
       return f_false;
+    }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
     }
 
     if (width > max_width) {
@@ -41,6 +44,14 @@ extern "C" {
     if (width == 0) {
       return f_false;
     }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
+    }
+
+    // Do not operate on UTF-8 fragments that are not the first byte of the character.
+    if (width == 1) {
+      return f_status_set_error(f_incomplete_utf);
+    }
 
     if (width > max_width) {
       return f_status_set_error(f_maybe);
@@ -66,10 +77,13 @@ extern "C" {
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width(*character);
+    f_u_short width = f_macro_utf_byte_width_is(*character);
 
-    if (width == 1) {
+    if (width == 0) {
       return f_false;
+    }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
     }
 
     if (width > max_width) {
@@ -198,10 +212,13 @@ extern "C" {
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width(*character);
+    f_u_short width = f_macro_utf_byte_width_is(*character);
 
-    if (width == 1) {
+    if (width == 0) {
       return f_false;
+    }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
     }
 
     if (width > max_width) {
@@ -246,10 +263,13 @@ extern "C" {
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width(*character);
+    f_u_short width = f_macro_utf_byte_width_is(*character);
 
-    if (width == 1) {
+    if (width == 0) {
       return f_false;
+    }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
     }
 
     if (width > max_width) {
@@ -369,6 +389,9 @@ extern "C" {
     if (width == 0) {
       return f_false;
     }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
+    }
 
     // for now, just assume that any non-whitespace, non-substitute utf-8 character is a graph.
 
@@ -386,10 +409,13 @@ extern "C" {
 
 #ifndef _di_f_utf_is_space_character_
   f_return_status f_utf_is_space_character(const f_utf_character character) {
-    f_u_short width = f_macro_utf_character_width(character);
+    f_u_short width = f_macro_utf_character_width_is(character);
 
-    if (width == 1) {
+    if (width == 0) {
       return f_false;
+    }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
     }
 
     if (width == 2) {
@@ -514,10 +540,13 @@ extern "C" {
 
 #ifndef _di_f_utf_is_substitute_character_
   f_return_status f_utf_is_substitute_character(const f_utf_character character) {
-    f_u_short width = f_macro_utf_character_width(character);
+    f_u_short width = f_macro_utf_character_width_is(character);
 
-    if (width == 1) {
+    if (width == 0) {
       return f_false;
+    }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
     }
 
     if (width == 2) {
@@ -558,10 +587,18 @@ extern "C" {
 
 #ifndef _di_f_utf_is_whitespace_character_
   f_return_status f_utf_is_whitespace_character(const f_utf_character character) {
-    f_u_short width = f_macro_utf_character_width(character);
+    f_u_short width = f_macro_utf_character_width_is(character);
 
-    if (width == 1) {
+    if (width == 0) {
       return f_false;
+    }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
+    }
+
+    // Do not operate on UTF-8 fragments that are not the first byte of the character.
+    if (width == 1) {
+      return f_status_set_error(f_incomplete_utf);
     }
 
     if (width == 2) {
@@ -671,11 +708,14 @@ extern "C" {
       if (utf_character == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width(*character);
+    f_u_short width = f_macro_utf_byte_width_is(*character);
 
-    if (width == 1) {
+    if (width == 0) {
       *utf_character = f_macro_utf_character_from_char_1(character[0]);
       return f_none;
+    }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
     }
 
     if (width > max_width) {

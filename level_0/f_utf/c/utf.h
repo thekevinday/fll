@@ -69,6 +69,9 @@ extern "C" {
  *
  * The f_utf_byte_is method will return non-zero if the character is a UTF-8 character of any width.
  *
+ * The f_utf_byte_1 is specifically used only on UTF-8 fragments.
+ * For example, with the 2-byte-wide UTF-8 character '1100x xxxx 10yy yyyy', the 8-byte block '10yy yyyy' would be a fragment.
+ *
  * The f_macro_utf_byte_is_* macros are used to determine a width of the character (either 1, 2, 3, or 4, respectively).
  *
  * The f_macro_utf_byte_width macro determines a width of the character.
@@ -245,6 +248,7 @@ extern "C" {
  *   f_true if a UTF-8 whitespace or substitute.
  *   f_false if not a UTF-8 whitespace or substitute.
  *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_bom_
@@ -267,6 +271,7 @@ extern "C" {
  *   f_true if a UTF-8 graph.
  *   f_false if not a UTF-8 graph.
  *   f_maybe (with error bit) if this could be a graph but width is not long enough.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_graph_
@@ -289,6 +294,7 @@ extern "C" {
  *   f_true if a UTF-8 whitespace or substitute.
  *   f_false if not a UTF-8 whitespace or substitute.
  *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_space_
@@ -311,6 +317,7 @@ extern "C" {
  *   f_true if a UTF-8 substitute.
  *   f_false if not a UTF-8 substitute.
  *   f_maybe (with error bit) if this could be a substitute but width is not long enough.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_substitute_
@@ -333,6 +340,7 @@ extern "C" {
  *   f_true if a UTF-8 whitespace.
  *   f_false if not a UTF-8 whitespace.
  *   f_maybe (with error bit) if this could be a whitespace but width is not long enough.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_whitespace_
@@ -349,6 +357,7 @@ extern "C" {
  *   f_true if a UTF-8 whitespace or substitute.
  *   f_false if not a UTF-8 whitespace or substitute.
  *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_bom_character_
@@ -366,6 +375,7 @@ extern "C" {
  * @return
  *   f_true if a UTF-8 graph.
  *   f_false if not a UTF-8 graph.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_graph_character_
@@ -383,6 +393,7 @@ extern "C" {
  * @return
  *   f_true if a UTF-8 whitespace or substitute.
  *   f_false if not a UTF-8 whitespace or substitute.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_space_character_
@@ -400,6 +411,7 @@ extern "C" {
  * @return
  *   f_true if a UTF-8 substitute.
  *   f_false if not a UTF-8 substitute.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_substitute_character_
@@ -417,6 +429,7 @@ extern "C" {
  * @return
  *   f_true if a UTF-8 whitespace.
  *   f_false if not a UTF-8 whitespace.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_whitespace_character_
@@ -441,6 +454,7 @@ extern "C" {
  * @return
  *   f_none if conversion was successful.
  *   f_failure (with error bit) if width is not long enough to convert.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_char_to_character_

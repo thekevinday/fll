@@ -62,9 +62,16 @@ extern "C" {
     while (buffer.string[location->start] == placeholder || (!isgraph(buffer.string[location->start]) && (status = f_utf_is_graph(buffer.string + location->start, max_width)) == f_false)) {
       if (buffer.string[location->start] == f_eol) return f_none_on_eol;
 
-      width = f_macro_utf_byte_width(buffer.string[location->start]);
+      width = f_macro_utf_byte_width_is(buffer.string[location->start]);
 
-      if (width > 1) {
+      if (width == 0) {
+        width = 1;
+      }
+      // Do not operate on UTF-8 fragments that are not the first byte of the character.
+      else if (width == 1) {
+        return f_status_set_error(f_incomplete_utf);
+      }
+      else {
         if (location->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
         if (location->start + width > location->stop) return f_status_set_error(f_incomplete_utf_on_stop);
       }
@@ -111,9 +118,16 @@ extern "C" {
     while (buffer.string[location->start] == placeholder || (isgraph(buffer.string[location->start]) && (status = f_utf_is_space(buffer.string + location->start, max_width)) == f_false)) {
       if (buffer.string[location->start] == f_eol) return f_none_on_eol;
 
-      width = f_macro_utf_byte_width(buffer.string[location->start]);
+      width = f_macro_utf_byte_width_is(buffer.string[location->start]);
 
-      if (width > 1) {
+      if (width == 0) {
+        width = 1;
+      }
+      // Do not operate on UTF-8 fragments that are not the first byte of the character.
+      else if (width == 1) {
+        return f_status_set_error(f_incomplete_utf);
+      }
+      else {
         if (location->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
         if (location->start + width > location->stop) return f_status_set_error(f_incomplete_utf_on_stop);
       }
@@ -186,14 +200,20 @@ extern "C" {
         max_width = buffer.used - location->start;
       }
 
-      width = f_macro_utf_byte_width(buffer.string[location->start]);
+      width = f_macro_utf_byte_width_is(buffer.string[location->start]);
 
-      if (width == 1) {
+      if (width == 0) {
+        width = 1;
+
         if (buffer.string[location->start] == f_eol) return f_none_on_eol;
 
         if (seek_width == width) {
           if (buffer.string[location->start] == seek_to_this) return f_none;
         }
+      }
+      // Do not operate on UTF-8 fragments that are not the first byte of the character.
+      else if (width == 1) {
+        return f_status_set_error(f_incomplete_utf);
       }
       else {
         if (location->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
@@ -268,12 +288,18 @@ extern "C" {
         max_width = buffer.used - location->start;
       }
 
-      width = f_macro_utf_byte_width(buffer.string[location->start]);
+      width = f_macro_utf_byte_width_is(buffer.string[location->start]);
 
-      if (width == 1) {
+      if (width == 0) {
+        width = 1;
+
         if (seek_width == width) {
           if (buffer.string[location->start] == seek_to_this) return f_none;
         }
+      }
+      // Do not operate on UTF-8 fragments that are not the first byte of the character.
+      else if (width == 1) {
+        return f_status_set_error(f_incomplete_utf);
       }
       else {
         if (location->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);

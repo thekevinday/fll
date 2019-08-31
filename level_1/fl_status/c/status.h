@@ -489,6 +489,15 @@ extern "C" {
     #define fl_status_string_unterminated_group_on_stop "f_unterminated_group_on_stop"
     #define fl_status_string_unterminated_group_on_stop_length 29
 
+    #define fl_status_string_incomplete_utf "f_incomplete_utf"
+    #define fl_status_string_incomplete_utf_length 17
+
+    #define fl_status_string_incomplete_utf_on_eof "f_incomplete_utf_on_eof"
+    #define fl_status_string_incomplete_utf_on_eof_length 24
+
+    #define fl_status_string_incomplete_utf_on_eol "f_incomplete_utf_on_eol"
+    #define fl_status_string_incomplete_utf_on_eol_length 24
+
     #define fl_status_string_incomplete_utf_on_eos "f_incomplete_utf_on_eos"
     #define fl_status_string_incomplete_utf_on_eos_length 24
 

@@ -38,7 +38,6 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if nothing to rip, no allocations or reallocations are performed.
- *   f_incomplete_utf_on_eos if end of sting is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_allocation_error (with error bit) on memory allocation error.
  *   f_reallocation_error (with error bit) on memory reallocation error.
@@ -63,6 +62,7 @@ extern "C" {
  *   f_none on success.
  *   f_none_on_eol on success, but stopped at EOL.
  *   f_none_on_eos on success, but stopped at end of buffer.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
@@ -90,6 +90,7 @@ extern "C" {
  *   f_none_on_eol on success, but stopped at EOL.
  *   f_none_on_eos on success, but stopped at end of buffer.
  *   f_none_on_stop on success, but stopped stop location.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
@@ -139,6 +140,8 @@ extern "C" {
  *   f_none on success.
  *   f_none_on_eol on success, but stopped at EOL.
  *   f_none_on_eos on success, but stopped at end of buffer.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
@@ -164,6 +167,7 @@ extern "C" {
  *   f_none on success.
  *   f_none_on_eos on success, but stopped at end of buffer.
  *   f_none_on_stop on success, but stopped stop location.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
@@ -188,6 +192,8 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_none_on_eos on success, but stopped at end of buffer.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.

@@ -486,6 +486,15 @@ extern "C" {
         case f_unterminated_group_on_stop:
           *string = fl_status_string_unterminated_group_on_stop;
           break;
+        case f_incomplete_utf:
+          *string = fl_status_string_incomplete_utf;
+          break;
+        case f_incomplete_utf_on_eof:
+          *string = fl_status_string_incomplete_utf_on_eof;
+          break;
+        case f_incomplete_utf_on_eol:
+          *string = fl_status_string_incomplete_utf_on_eol;
+          break;
         case f_incomplete_utf_on_eos:
           *string = fl_status_string_incomplete_utf_on_eos;
           break;
