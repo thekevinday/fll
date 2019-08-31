@@ -4,6 +4,25 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_utf_is_
+  f_return_status f_utf_is(const f_string character, const f_u_short max_width) {
+    #ifndef _di_level_0_parameter_checking_
+      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_u_short width = f_macro_utf_byte_width_is(*character);
+
+    if (width == 0) {
+      return f_false;
+    }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
+    }
+
+    return f_true;
+  }
+#endif // _di_f_utf_is_
+
 #ifndef _di_f_utf_is_bom_
   f_return_status f_utf_is_bom(const f_string character, const f_u_short max_width) {
     #ifndef _di_level_0_parameter_checking_
@@ -32,6 +51,21 @@ extern "C" {
     return f_false;
   }
 #endif // _di_f_utf_is_bom_
+
+#ifndef _di_f_utf_is_character_
+  f_return_status f_utf_is_character(const f_utf_character character) {
+    f_u_short width = f_macro_utf_character_width_is(character);
+
+    if (width == 0) {
+      return f_false;
+    }
+    else if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
+    }
+
+    return f_true;
+  }
+#endif // _di_f_utf_is_
 
 #ifndef _di_f_utf_is_graph_
   f_return_status f_utf_is_graph(const f_string character, const f_u_short max_width) {
