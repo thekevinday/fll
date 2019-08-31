@@ -68,13 +68,6 @@ extern "C" {
     printf("    Returns true if the error code is an error.");
 
     printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_short_context);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_long_context);
-    printf("     Guess error state from context of error (ignores masks).");
-
-    printf("\n  %s", f_console_symbol_short_enable);
     fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_short_number);
 
     printf(", %s", f_console_symbol_long_enable);
@@ -160,92 +153,143 @@ extern "C" {
     else if (data->parameters[status_code_parameter_is_error].result == f_console_result_found) {
       if (data->remaining.used > 0) {
         f_array_length counter = 0;
+
         f_status code = f_none;
+        f_u_short true = 0;
 
         for (; counter < data->remaining.used; counter++) {
-          code = (f_status) atoll(argv[data->remaining.array[counter]]);
+          // only numbers are valid status codes.
+          if (f_is_digit(argv[data->remaining.array[counter]][0]) == f_false) {
+            status = f_false;
+            continue;
+          }
 
-          if (data->parameters[status_code_parameter_context].result == f_console_result_found) {
-            if (fl_status_is_error(code)) {
-              status_code_delete_data(data);
-              return f_true;
-            }
+          long long number = atoll(argv[data->remaining.array[counter]]);
+          if (number >= 0x10000 || number < 0) {
+            status = f_false;
+            continue;
+          }
+
+          code = (f_status) number;
+          true = f_status_is_error(code) && !f_status_is_warning(code);
+
+          if (status == f_none) {
+            status = f_true;
+          }
+
+          if (true) {
+            printf("%s\n", fl_status_string_true);
           }
           else {
-            if (f_status_is_error(code)) {
-              status_code_delete_data(data);
-              return f_true;
-            }
+            printf("%s\n", fl_status_string_false);
           }
         } // for
       }
-
-      status_code_delete_data(data);
-      return f_false;
+      else {
+        status = f_false;
+      }
     }
     else if (data->parameters[status_code_parameter_is_warning].result == f_console_result_found) {
       if (data->remaining.used > 0) {
         f_array_length counter = 0;
+
         f_status code = f_none;
+        f_u_short true = 0;
 
         for (; counter < data->remaining.used; counter++) {
-          code = (f_status) atoll(argv[data->remaining.array[counter]]);
+          // only numbers are valid status codes.
+          if (f_is_digit(argv[data->remaining.array[counter]][0]) == f_false) {
+            status = f_false;
+            continue;
+          }
 
-          if (data->parameters[status_code_parameter_context].result == f_console_result_found) {
-            if (fl_status_is_warning(code)) {
-              status_code_delete_data(data);
-              return f_true;
-            }
+          long long number = atoll(argv[data->remaining.array[counter]]);
+          if (number >= 0x10000 || number < 0) {
+            status = f_false;
+            continue;
+          }
+
+          code = (f_status) number;
+          true = f_status_is_warning(code) && !f_status_is_error(code);
+
+          if (status == f_none) {
+            status = f_true;
+          }
+
+          if (true) {
+            printf("%s\n", fl_status_string_true);
           }
           else {
-            if (f_status_is_warning(code)) {
-              status_code_delete_data(data);
-              return f_true;
-            }
+            printf("%s\n", fl_status_string_false);
           }
         } // for
       }
-
-      status_code_delete_data(data);
-      return f_false;
+      else {
+        status = f_false;
+      }
     }
     else if (data->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
       if (data->remaining.used > 0) {
         f_array_length counter = 0;
+
         f_status code = f_none;
+        f_u_short true = 0;
 
         for (; counter < data->remaining.used; counter++) {
-          code = (f_status) atoll(argv[data->remaining.array[counter]]);
+          // only numbers are valid status codes.
+          if (f_is_digit(argv[data->remaining.array[counter]][0]) == f_false) {
+            status = f_false;
+            continue;
+          }
 
-          if (data->parameters[status_code_parameter_context].result == f_console_result_found) {
-            if (fl_status_is_fine(code)) {
-              status_code_delete_data(data);
-              return f_true;
-            }
+          long long number = atoll(argv[data->remaining.array[counter]]);
+          if (number >= 0x10000 || number < 0) {
+            status = f_false;
+            continue;
+          }
+
+          code = (f_status) number;
+          true = f_status_is_fine(code);
+
+          if (status == f_none) {
+            status = f_true;
+          }
+
+          if (true) {
+            printf("%s\n", fl_status_string_true);
           }
           else {
-            if (f_status_is_fine(code)) {
-              status_code_delete_data(data);
-              return f_true;
-            }
+            printf("%s\n", fl_status_string_false);
           }
         } // for
       }
-
-      status_code_delete_data(data);
-      return f_false;
+      else {
+        status = f_false;
+      }
     }
     else if (data->parameters[status_code_parameter_number].result == f_console_result_found) {
       if (data->remaining.used > 0) {
         f_array_length counter = 0;
         f_status code = f_none;
+        f_status status2 = f_none;
 
         for (; counter < data->remaining.used; counter++) {
-          status = fll_status_from_string(argv[data->remaining.array[counter]], &code);
-          if (f_status_is_error(status)) {
+          // numbers are not valid status code strings.
+          if (f_is_digit(argv[data->remaining.array[counter]][0]) == f_true) {
+            status = f_false;
+            continue;
+          }
+
+          status2 = fll_status_from_string(argv[data->remaining.array[counter]], &code);
+          if (f_status_is_error(status2)) {
+            status = status2;
             break;
           }
-          else {
+          else if (status2 == f_invalid_data) {
+            status = f_false;
+            continue;
+          }
+          else if (status == f_none) {
             status = f_true;
           }
 
@@ -255,9 +299,6 @@ extern "C" {
       else {
         status = f_false;
       }
-
-      status_code_delete_data(data);
-      return status;
     }
     else if (data->remaining.used > 0 || data->process_pipe) {
       f_array_length counter = 0;
@@ -268,13 +309,34 @@ extern "C" {
 
       if (data->remaining.used > 0) {
         for (; counter < data->remaining.used; counter++) {
-          f_status code = (f_status) atoll(argv[data->remaining.array[counter]]);
+          // only numbers are valid status code.
+          if (f_is_digit(argv[data->remaining.array[counter]][0]) == f_false) {
+            status = f_false;
+            continue;
+          }
+
+          long long number = atoll(argv[data->remaining.array[counter]]);
+          if (number >= 0x10000 || number < 0) {
+            status = f_false;
+            continue;
+          }
+          else if (status == f_none) {
+            status = f_true;
+          }
+
+          f_status code = (f_status) number;
           f_string string = 0;
 
           if (fl_status_to_string(code, &string) == f_none) {
             printf("%s\n", string);
           }
+          else {
+            status = f_false;
+          }
         } // for
+      }
+      else {
+        status = f_false;
       }
     }
     else {

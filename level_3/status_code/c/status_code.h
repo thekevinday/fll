@@ -14,6 +14,7 @@
 
 // fll-0 includes
 #include <level_0/console.h>
+#include <level_0/conversion.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
 #include <level_0/strings.h>
@@ -50,13 +51,11 @@ extern "C" {
   #define status_code_short_is_fine    "f"
   #define status_code_short_is_warning "w"
   #define status_code_short_is_error   "e"
-  #define status_code_short_context    "c"
   #define status_code_short_number     "n"
 
   #define status_code_long_is_fine    "is_fine"
   #define status_code_long_is_warning "is_warning"
   #define status_code_long_is_error   "is_error"
-  #define status_code_long_context    "context"
   #define status_code_long_number     "number"
 
   enum {
@@ -68,7 +67,6 @@ extern "C" {
     status_code_parameter_is_fine,
     status_code_parameter_is_warning,
     status_code_parameter_is_error,
-    status_code_parameter_context,
     status_code_parameter_number,
   };
 
@@ -81,7 +79,6 @@ extern "C" {
       f_console_parameter_initialize(status_code_short_is_fine, status_code_long_is_fine, 0, f_false, f_console_type_normal), \
       f_console_parameter_initialize(status_code_short_is_warning, status_code_long_is_warning, 0, f_false, f_console_type_normal), \
       f_console_parameter_initialize(status_code_short_is_error, status_code_long_is_error, 0, f_false, f_console_type_normal), \
-      f_console_parameter_initialize(status_code_short_context, status_code_long_context, 0, f_false, f_console_type_normal), \
       f_console_parameter_initialize(status_code_short_number, status_code_long_number, 0, f_false, f_console_type_normal), \
     }
 

@@ -2,6 +2,8 @@ f_types
 f_status
 f_strings
 f_memory
+f_conversion
+f_utf
 f_fss
 fl_fss
 fl_status

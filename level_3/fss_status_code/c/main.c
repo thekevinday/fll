@@ -7,7 +7,9 @@ int main(const f_array_length argc, const f_string argv[]) {
     data.process_pipe = f_true;
   }
 
-  if (f_status_is_error(fss_status_code_main(argc, argv, &data))) {
+  f_status status = fss_status_code_main(argc, argv, &data);
+
+  if (f_status_is_error(status) || status == f_false) {
     return 1;
   }
 

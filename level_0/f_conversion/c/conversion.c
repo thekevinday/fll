@@ -19,12 +19,12 @@ extern "C" {
       case '7':
       case '8':
       case '9':
-        return f_true;
+        break;
       default:
         return f_false;
     }
 
-    return f_unknown;
+    return f_true;
   }
 #endif // _di_f_is_digit_
 
@@ -54,10 +54,12 @@ extern "C" {
       case 'd':
       case 'e':
       case 'f':
-        return f_true;
+        break;
       default:
         return f_false;
     }
+
+    return f_true;
   }
 #endif // _di_f_is_hexdigit_
 
@@ -68,16 +70,16 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
-      case '0': *digit = 0;  break;
-      case '1': *digit = 1;  break;
-      case '2': *digit = 2;  break;
-      case '3': *digit = 3;  break;
-      case '4': *digit = 4;  break;
-      case '5': *digit = 5;  break;
-      case '6': *digit = 6;  break;
-      case '7': *digit = 7;  break;
-      case '8': *digit = 8;  break;
-      case '9': *digit = 9;  break;
+      case '0': *digit = 0; break;
+      case '1': *digit = 1; break;
+      case '2': *digit = 2; break;
+      case '3': *digit = 3; break;
+      case '4': *digit = 4; break;
+      case '5': *digit = 5; break;
+      case '6': *digit = 6; break;
+      case '7': *digit = 7; break;
+      case '8': *digit = 8; break;
+      case '9': *digit = 9; break;
       default:
         return f_no_data;
     }
@@ -93,16 +95,16 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
-      case '0': *digit = 0;  break;
-      case '1': *digit = 1;  break;
-      case '2': *digit = 2;  break;
-      case '3': *digit = 3;  break;
-      case '4': *digit = 4;  break;
-      case '5': *digit = 5;  break;
-      case '6': *digit = 6;  break;
-      case '7': *digit = 7;  break;
-      case '8': *digit = 8;  break;
-      case '9': *digit = 9;  break;
+      case '0': *digit = 0; break;
+      case '1': *digit = 1; break;
+      case '2': *digit = 2; break;
+      case '3': *digit = 3; break;
+      case '4': *digit = 4; break;
+      case '5': *digit = 5; break;
+      case '6': *digit = 6; break;
+      case '7': *digit = 7; break;
+      case '8': *digit = 8; break;
+      case '9': *digit = 9; break;
       case 'A': *digit = 10; break;
       case 'B': *digit = 11; break;
       case 'C': *digit = 12; break;

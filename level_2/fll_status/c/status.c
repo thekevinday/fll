@@ -13,6 +13,19 @@ extern "C" {
     f_status status = f_none;
     f_string_length length = strlen(string);
 
+    if (length == 0) {
+      return f_no_data;
+    }
+
+    // numbers are not valid status code strings.
+    if ((status = f_is_digit(string[0])) == f_true) {
+      return f_invalid_data;
+    }
+
+    if (f_status_is_error(status)) {
+      return status;
+    }
+
     #ifndef _di_fll_status_booleans_
       if (fl_compare_strings(string, fl_status_string_false, length, fl_status_string_false_length) == f_equal_to) {
         *code = f_false;

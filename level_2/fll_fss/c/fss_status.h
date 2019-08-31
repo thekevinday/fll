@@ -11,6 +11,7 @@
 #define _FLL_fss_status_h
 
 // fll-0 includes
+#include <level_0/conversion.h>
 #include <level_0/status.h>
 #include <level_0/fss.h>
 #include <level_0/memory.h>
@@ -87,6 +88,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
+ *   f_no_data if string is empty.
  *   f_invalid_data if not found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
