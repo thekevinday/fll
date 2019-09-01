@@ -22,7 +22,7 @@
 #include <level_0/file.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 
 // fll-1 includes
@@ -31,7 +31,7 @@
 #include <level_1/directory.h>
 #include <level_1/file.h>
 #include <level_1/program.h>
-#include <level_1/strings.h>
+#include <level_1/string.h>
 
 // fll-2 includes
 #include <level_2/colors.h>
@@ -100,7 +100,7 @@ extern "C" {
   typedef struct {
     f_console_parameter parameters[fss_extended_read_total_parameters];
 
-    f_dynamic_string buffer;
+    f_string_dynamic buffer;
     f_fss_objects objects;
     f_fss_contents contents;
     f_file_position file_position;
@@ -113,7 +113,7 @@ extern "C" {
   #define fss_extended_read_data_initialize \
     { \
       f_console_parameter_initialize_fss_extended_read, \
-      f_dynamic_string_initialize, \
+      f_string_dynamic_initialize, \
       f_fss_objects_initialize, \
       f_fss_contents_initialize, \
       f_file_position_initialize, \

@@ -22,7 +22,7 @@ typedef struct {
 
   f_array_length device;
 
-  f_dynamic_string buffer;
+  f_string_dynamic buffer;
   f_array_length chain;
   f_array_lengths chain_ids;
   f_fss_objects chain_objects;
@@ -39,7 +39,7 @@ typedef struct {
     f_false, \
     f_file_position_initialize, \
     0, \
-    f_dynamic_string_initialize, \
+    f_string_dynamic_initialize, \
     0, \
     f_array_lengths_initialize, \
     f_fss_objects_initialize, \
@@ -80,7 +80,7 @@ typedef struct {
   local.rule_contents.array[index].used <= 0 || local.rule_contents.array[index].used > total_items
 
 // the buffer start to stop points are inclusive such that the size is ((stop - start) + 1).
-#define firewall_macro_dynamic_string_size(structure, index) \
+#define firewall_macro_string_dynamic_size(structure, index) \
   (structure.string[index].stop - structure.string[index].start) + 1
 
 // the buffer start to stop points are inclusive such that the size is ((stop - start) + 1).
@@ -101,7 +101,7 @@ typedef struct {
   arguments.array[arguments.used].used   = argument.used; \
   arguments.used++; \
   \
-  f_clear_dynamic_string(argument);
+  f_clear_string_dynamic(argument);
 
 /**
  * Perform commands.

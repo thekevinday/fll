@@ -31,18 +31,18 @@ extern "C" {
 #ifndef _di_init_rule_
   // rule [directory] [filename (no-extension)] [require] [last] [asynchronous] = execute a rule located in [directory][filename].rule.
   typedef struct {
-    f_dynamic_string name;
-    f_dynamic_string directory;
-    f_dynamic_string file;
+    f_string_dynamic name;
+    f_string_dynamic directory;
+    f_string_dynamic file;
     f_bool require;
     f_bool asynchronous;
   } init_rule;
 
   #define init_rule_initialize \
     { \
-      f_dynamic_string_initialize,
-      f_dynamic_string_initialize,
-      f_dynamic_string_initialize,
+      f_string_dynamic_initialize,
+      f_string_dynamic_initialize,
+      f_string_dynamic_initialize,
       f_bool_initialize,
       f_bool_initialize,
     }
@@ -150,13 +150,13 @@ extern "C" {
 #ifndef _di_init_category_
   // category [name] = execute rules in the specified list called [name].
   typedef struct {
-    f_dynamic_string name;
+    f_string_dynamic name;
     init_rule last;
   } init_category;
 
   #define init_rule_initialize \
     { \
-      f_dynamic_string_initialize,
+      f_string_dynamic_initialize,
       init_rule_initialize,
     }
 
@@ -324,7 +324,7 @@ typedef struct {
 #define init_path_processes_mounts   init_paths_processes "mounts"
 
 #ifndef _di_init_rule_buffer_
-  f_return_status init_rule_buffer(const f_string filename, f_dynamic_string *buffer, f_fss_objects *objects, f_fss_contents *contents) f_gcc_attribute_visibility_internal;
+  f_return_status init_rule_buffer(const f_string filename, f_string_dynamic *buffer, f_fss_objects *objects, f_fss_contents *contents) f_gcc_attribute_visibility_internal;
 #endif // _di_init_rule_buffer_
 
 #ifndef _di_init_handler_child_services_
@@ -354,7 +354,7 @@ typedef struct {
 #endif // _di_init_prepare_init_
 
 #ifndef _di_init_process_main_rule_
-  f_return_status init_process_main_rule(const init_argument argument, f_dynamic_string *buffer, init_data *data) f_gcc_attribute_visibility_internal;
+  f_return_status init_process_main_rule(const init_argument argument, f_string_dynamic *buffer, init_data *data) f_gcc_attribute_visibility_internal;
 #endif // _di_init_process_main_rule_
 
 #ifdef __cplusplus

@@ -72,7 +72,7 @@ extern "C" {
 #endif // _di_f_file_flush_
 
 #ifndef _di_f_file_read_
-  f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location) {
+  f_return_status f_file_read(f_file *file_information, f_string_dynamic *buffer, const f_file_position location) {
     #ifndef _di_level_0_parameter_checking_
       if (file_information == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
@@ -123,7 +123,7 @@ extern "C" {
 
     // append an EOS only when the total elements were set to 0
     if (location.total_elements == 0) {
-      buffer->string[buffer->used] = f_eos;
+      buffer->string[buffer->used] = f_string_eos;
     }
 
     // make sure to communicate that we are done without a problem and the eof was reached
@@ -136,7 +136,7 @@ extern "C" {
 #endif // _di_f_file_read_
 
 #ifndef _di_f_file_read_fifo_
-  f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer) {
+  f_return_status f_file_read_fifo(f_file *file_information, f_string_dynamic *buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (file_information == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);

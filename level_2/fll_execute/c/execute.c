@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_execute_path_
-  f_return_status fll_execute_path(const f_string program_path, const f_dynamic_strings arguments, f_s_int *results) {
+  f_return_status fll_execute_path(const f_string program_path, const f_string_dynamics arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
       if (results == 0) return f_status_set_error(f_invalid_parameter);
 
@@ -31,7 +31,7 @@ extern "C" {
       name_size = strnlen(last_slash, PATH_MAX);
 
       if (name_size > 1) {
-        f_macro_strings_string_new(status, program_name, name_size + 1);
+        f_macro_string_new(status, program_name, name_size + 1);
 
         if (f_status_is_error(status)) return status;
 
@@ -44,29 +44,29 @@ extern "C" {
     }
 
     if (name_size == 0) {
-      fixed_arguments[0] = f_eos;
+      fixed_arguments[0] = f_string_eos;
     }
     else {
       fixed_arguments[0] = program_name;
     }
 
     for (f_string_length i = 0; i < arguments.used; i++) {
-      f_macro_strings_string_new(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
+      f_macro_string_new(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
 
       if (f_status_is_error(status)) {
         f_status status2 = f_none;
 
-        if (name_size > 0) f_macro_strings_string_delete(status, program_name, name_size);
+        if (name_size > 0) f_macro_string_delete(status, program_name, name_size);
 
         for (f_string_length j = 0; j < i; j++) {
-          f_macro_strings_string_delete(status2, fixed_arguments[i + 1], arguments.array[j].used + 1);
+          f_macro_string_delete(status2, fixed_arguments[i + 1], arguments.array[j].used + 1);
         }
 
         return status;
       }
 
       memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(char) * arguments.array[i].used);
-      fixed_arguments[i + 1][arguments.array[i].used] = f_eos;
+      fixed_arguments[i + 1][arguments.array[i].used] = f_string_eos;
     } // for
 
     // insert the required array terminated
@@ -80,10 +80,10 @@ extern "C" {
     if (process_id < 0) {
       f_status status2 = f_none;
 
-      if (name_size > 0) f_macro_strings_string_delete(status, program_name, name_size);
+      if (name_size > 0) f_macro_string_delete(status, program_name, name_size);
 
       for (f_string_length i = 0; i < arguments.used; i++) {
-        f_macro_strings_string_delete(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
+        f_macro_string_delete(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
       } // for
 
       return f_status_set_error(f_fork_failed);
@@ -100,13 +100,13 @@ extern "C" {
     // have the parent wait for the child process to finish
     waitpid(process_id, results, 0);
 
-    if (name_size > 0) f_macro_strings_string_delete(status, program_name, name_size);
+    if (name_size > 0) f_macro_string_delete(status, program_name, name_size);
 
     {
       f_status status2 = f_none;
 
       for (f_string_length i = 0; i < arguments.used; i++) {
-        f_macro_strings_string_delete(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
+        f_macro_string_delete(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
       } // for
     }
 
@@ -117,7 +117,7 @@ extern "C" {
 #endif // _di_fll_execute_path_
 
 #ifndef _di_fll_execute_program_
-  f_return_status fll_execute_program(const f_string program_name, const f_dynamic_strings arguments, f_s_int *results) {
+  f_return_status fll_execute_program(const f_string program_name, const f_string_dynamics arguments, f_s_int *results) {
     #ifndef _di_level_2_parameter_checking_
       if (results == 0) return f_status_set_error(f_invalid_parameter);
 
@@ -133,20 +133,20 @@ extern "C" {
 
     f_status status = f_none;
     for (f_string_length i = 0; i < arguments.used; i++) {
-      f_macro_strings_string_new(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
+      f_macro_string_new(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
 
       if (f_status_is_error(status)) {
         f_status status2 = f_none;
 
         for (f_string_length j = 0; j < i; j++) {
-          f_macro_strings_string_delete(status2, fixed_arguments[i + 1], arguments.array[j].used + 1);
+          f_macro_string_delete(status2, fixed_arguments[i + 1], arguments.array[j].used + 1);
         }
 
         return status;
       }
 
       memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(char) * arguments.array[i].used);
-      fixed_arguments[i + 1][arguments.array[i].used] = f_eos;
+      fixed_arguments[i + 1][arguments.array[i].used] = f_string_eos;
     } // for
 
     // insert the required array terminated
@@ -161,7 +161,7 @@ extern "C" {
       f_status status2 = f_none;
 
       for (f_string_length i = 0; i < arguments.used; i++) {
-        f_macro_strings_string_delete(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
+        f_macro_string_delete(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
       } // for
 
       return f_status_set_error(f_fork_failed);
@@ -182,7 +182,7 @@ extern "C" {
       f_status status2 = f_none;
 
       for (f_string_length i = 0; i < arguments.used; i++) {
-        f_macro_strings_string_delete(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
+        f_macro_string_delete(status2, fixed_arguments[i + 1], arguments.array[i].used + 1);
       }
     }
 

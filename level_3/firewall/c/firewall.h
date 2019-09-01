@@ -20,7 +20,7 @@
 #include <level_0/console.h>
 #include <level_0/file.h>
 #include <level_0/print.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 #include <level_0/types_array.h>
 
@@ -30,7 +30,7 @@
 #include <level_1/directory.h>
 #include <level_1/file.h>
 #include <level_1/program.h>
-#include <level_1/strings.h>
+#include <level_1/string.h>
 
 // fll-2 includes
 #include <level_2/colors.h>
@@ -274,9 +274,9 @@ extern "C" {
   typedef struct {
     f_console_parameter parameters[firewall_total_parameters];
 
-    f_dynamic_strings chains;
+    f_string_dynamics chains;
     f_string_lengths remaining;
-    f_dynamic_strings devices;
+    f_string_dynamics devices;
 
     fl_color_context context;
   } firewall_data;
@@ -284,9 +284,9 @@ extern "C" {
   #define firewall_data_initialize \
     { \
       f_console_parameter_initialize_firewall, \
-      f_dynamic_strings_initialize, \
+      f_string_dynamics_initialize, \
       f_string_lengths_initialize, \
-      f_dynamic_strings_initialize, \
+      f_string_dynamics_initialize, \
       fl_color_context_initialize, \
     }
 #endif // _di_firewall_data_

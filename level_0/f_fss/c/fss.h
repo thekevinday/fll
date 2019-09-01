@@ -15,7 +15,7 @@
 
 // fll includes
 #include <level_0/status.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 
 #ifdef __cplusplus
@@ -44,7 +44,7 @@ extern "C" {
   #define f_fss_type_header_close   '\n'
 
   #define f_fss_id            f_u_long
-  #define f_fss_checksum      f_dynamic_string
+  #define f_fss_checksum      f_string_dynamic
   #define f_fss_header_length f_string_length
 
   #define f_fss_id_initialize            0
@@ -56,7 +56,7 @@ extern "C" {
   #define f_fss_delimit_slash        '\\'
   #define f_fss_delimit_single_quote '\''
   #define f_fss_delimit_double_quote '"'
-  #define f_fss_delimit_placeholder  f_placeholder
+  #define f_fss_delimit_placeholder  f_string_placeholder
 #endif //_di_f_fss_delimiters_
 
 #ifndef _di_f_fss_codes_
@@ -95,12 +95,12 @@ enum {
 
   #define f_macro_fss_delimits_clear(delimits) f_macro_memory_structure_clear(delimits)
 
-  #define f_macro_fss_delimits_new(status, delimits)  f_macro_strings_string_locations_new(status, delimits)
-  #define f_macro_fss_delimits_delete(status, delimits)  f_macro_strings_string_locations_delete(status, delimits)
-  #define f_macro_fss_delimits_destroy(status, delimits) f_macro_strings_string_locations_destroy(status, delimits)
+  #define f_macro_fss_delimits_new(status, delimits)  f_macro_string_locations_new(status, delimits)
+  #define f_macro_fss_delimits_delete(status, delimits)  f_macro_string_locations_delete(status, delimits)
+  #define f_macro_fss_delimits_destroy(status, delimits) f_macro_string_locations_destroy(status, delimits)
 
-  #define f_macro_fss_delimits_resize(status, delimits, new_length) f_macro_strings_string_locations_resize(status, delimits, new_length)
-  #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_strings_string_locations_adjust(status, delimits  , new_length)
+  #define f_macro_fss_delimits_resize(status, delimits, new_length) f_macro_string_locations_resize(status, delimits, new_length)
+  #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_string_locations_adjust(status, delimits  , new_length)
 #endif // _di_f_fss_delimits_
 
 /**

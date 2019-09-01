@@ -2,7 +2,7 @@ f_types
 f_status
 f_memory
 f_conversion
-f_strings
+f_string
 f_utf
-fl_strings
+fl_string
 fl_status

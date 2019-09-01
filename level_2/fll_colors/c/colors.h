@@ -16,7 +16,7 @@
 
 // fll-0 includes
 #include <level_0/colors.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 
 // fll-1 includes

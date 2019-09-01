@@ -355,11 +355,11 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < status_code_total_parameters) {
-      f_macro_strings_string_lengths_delete(status, data->parameters[i].additional);
+      f_macro_string_lengths_delete(status, data->parameters[i].additional);
       i++;
     } // while
 
-    f_macro_strings_string_lengths_delete(status, data->remaining);
+    f_macro_string_lengths_delete(status, data->remaining);
     fl_delete_color_context(status, data->context);
 
     return f_none;

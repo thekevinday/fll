@@ -18,7 +18,7 @@
 
 // fll-0 includes
 #include <level_0/status.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 
 #ifdef __cplusplus
@@ -66,9 +66,9 @@ extern "C" {
  *   f_output_error (with error bit) on failure.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_print_dynamic_string_
-  extern f_return_status f_print_dynamic_string(FILE *output, const f_dynamic_string buffer);
-#endif // _di_f_print_dynamic_string_
+#ifndef _di_f_print_string_dynamic_
+  extern f_return_status f_print_string_dynamic(FILE *output, const f_string_dynamic buffer);
+#endif // _di_f_print_string_dynamic_
 
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
@@ -91,9 +91,9 @@ extern "C" {
  *   f_output_error (with error bit) on failure.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_print_partial_dynamic_string_
-  extern f_return_status f_print_partial_dynamic_string(FILE *output, const f_dynamic_string buffer, const f_string_location location);
-#endif // _di_f_print_partial_dynamic_string_
+#ifndef _di_f_print_string_dynamic_partial_
+  extern f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_location location);
+#endif // _di_f_print_string_dynamic_partial_
 
 #ifdef __cplusplus
 } // extern "C"

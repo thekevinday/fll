@@ -380,7 +380,7 @@ extern "C" {
                   f_string_length size    = 0;
 
                   for (; counter <= data->contents.array[current].array[0].stop; counter++) {
-                    if (data->buffer.string[counter] == f_eol) size++;
+                    if (data->buffer.string[counter] == f_string_eol) size++;
                   } // for
 
                   // the last newline is never present
@@ -409,7 +409,7 @@ extern "C" {
 
                       // explicit use of < instead of <= is done here so that the range.stop will always be accurate
                       for (; counter < data->contents.array[current].array[0].stop; counter++) {
-                        if (data->buffer.string[counter] == f_eol) {
+                        if (data->buffer.string[counter] == f_string_eol) {
                           break;
                         }
                       } // for
@@ -418,19 +418,19 @@ extern "C" {
                       break;
                     }
 
-                    if (data->buffer.string[counter] == f_eol) {
+                    if (data->buffer.string[counter] == f_string_eol) {
                       position++;
                     }
                   } // for
 
                   if (range.start <= range.stop) {
-                    f_print_partial_dynamic_string(f_standard_output, data->buffer, range);
+                    f_print_string_dynamic_partial(f_standard_output, data->buffer, range);
                   }
                 }
               }
               else {
                 if (data->contents.array[current].used > 0) {
-                  f_print_partial_dynamic_string(f_standard_output, data->buffer, data->contents.array[current].array[0]);
+                  f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[current].array[0]);
                   fprintf(f_standard_output, "\n");
                 }
               }
@@ -449,7 +449,7 @@ extern "C" {
         else {
           for (; current < data->objects.used; current++) {
             if (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_additional && found == target)) {
-              f_print_partial_dynamic_string(f_standard_output, data->buffer, data->objects.array[current]);
+              f_print_string_dynamic_partial(f_standard_output, data->buffer, data->objects.array[current]);
               fprintf(f_standard_output, "\n");
             }
 
@@ -479,7 +479,7 @@ extern "C" {
               name_length = data->objects.array[current].stop - data->objects.array[current].start + 1;
 
               if (name_length == argv_length) {
-                if (fl_compare_strings(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
+                if (fl_string_compare(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
 
                   if (data->parameters[fss_basic_list_read_parameter_size].result == f_console_result_found) {
                     if (data->contents.array[current].used > 0) {
@@ -487,7 +487,7 @@ extern "C" {
                       f_string_length size    = 0;
 
                       for (; counter <= data->contents.array[current].array[0].stop; counter++) {
-                        if (data->buffer.string[counter] == f_eol) size++;
+                        if (data->buffer.string[counter] == f_string_eol) size++;
                       } // for
 
                       // the last newline is never present
@@ -516,7 +516,7 @@ extern "C" {
 
                           // explicit use of < instead of <= is done here so that the range.stop will always be accurate
                           for (; counter < data->contents.array[current].array[0].stop; counter++) {
-                            if (data->buffer.string[counter] == f_eol) {
+                            if (data->buffer.string[counter] == f_string_eol) {
                               break;
                             }
                           } // for
@@ -525,13 +525,13 @@ extern "C" {
                           break;
                         }
 
-                        if (data->buffer.string[counter] == f_eol) {
+                        if (data->buffer.string[counter] == f_string_eol) {
                           position++;
                         }
                       } // for
 
                       if (range.start <= range.stop) {
-                        f_print_partial_dynamic_string(f_standard_output, data->buffer, range);
+                        f_print_string_dynamic_partial(f_standard_output, data->buffer, range);
                       }
                     }
                   }
@@ -542,7 +542,7 @@ extern "C" {
                       }
                       else {
                         if (data->contents.array[current].used > 0) {
-                          f_print_partial_dynamic_string(f_standard_output, data->buffer, data->contents.array[current].array[0]);
+                          f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[current].array[0]);
                           fprintf(f_standard_output, "\n");
                         }
                       }
@@ -573,9 +573,9 @@ extern "C" {
                 name_length = data->contents.array[current].array[0].stop - data->contents.array[current].array[0].start + 1;
 
                 if (name_length == argv_length) {
-                  if (fl_compare_strings(data->buffer.string + data->contents.array[current].array[0].start, argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
+                  if (fl_string_compare(data->buffer.string + data->contents.array[current].array[0].start, argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
                     if (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_additional && found == target)) {
-                      f_print_partial_dynamic_string(f_standard_output, data->buffer, data->objects.array[current]);
+                      f_print_string_dynamic_partial(f_standard_output, data->buffer, data->objects.array[current]);
                       fprintf(f_standard_output, "\n");
                     }
 
@@ -606,14 +606,14 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < fss_basic_list_read_total_parameters) {
-      f_macro_strings_string_lengths_delete(status, data->parameters[i].additional);
+      f_macro_string_lengths_delete(status, data->parameters[i].additional);
       i++;
     } // while
 
     f_macro_fss_contents_delete(status, data->contents);
     f_macro_fss_objects_delete(status, data->objects);
     f_macro_string_dynamic_delete(status, data->buffer);
-    f_macro_strings_string_lengths_delete(status, data->remaining);
+    f_macro_string_lengths_delete(status, data->remaining);
 
     fl_delete_color_context(status, data->context);
 

@@ -27,67 +27,67 @@ extern "C" {
     }
 
     #ifndef _di_fll_fss_status_error_
-      if (fl_compare_strings(string, fll_fss_status_string_invalid_format, length, fll_fss_status_string_invalid_format_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_invalid_format, length, fll_fss_status_string_invalid_format_length) == f_equal_to) {
         *error = fl_fss_invalid_format;
         return f_none;
       }
 
-      if (fl_compare_strings(string, fll_fss_status_string_invalid_format_eos, length, fll_fss_status_string_invalid_format_eos_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_invalid_format_eos, length, fll_fss_status_string_invalid_format_eos_length) == f_equal_to) {
         *error = fl_fss_invalid_format_eos;
         return f_none;
       }
     #endif // _di_fll_fss_status_error_
 
     #ifndef _di_fll_fss_status_warning_
-      if (fl_compare_strings(string, fll_fss_status_string_no_header, length, fll_fss_status_string_no_header_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_no_header, length, fll_fss_status_string_no_header_length) == f_equal_to) {
         *error = fl_fss_no_header;
         return f_none;
       }
 
-      if (fl_compare_strings(string, fll_fss_status_string_accepted_but_invalid, length, fll_fss_status_string_accepted_but_invalid_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_accepted_but_invalid, length, fll_fss_status_string_accepted_but_invalid_length) == f_equal_to) {
         *error = fl_fss_accepted_but_invalid;
         return f_none;
       }
 
-      if (fl_compare_strings(string, fll_fss_status_string_no_header_eos, length, fll_fss_status_string_no_header_eos_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_no_header_eos, length, fll_fss_status_string_no_header_eos_length) == f_equal_to) {
         *error = fl_fss_no_header_eos;
         return f_none;
       }
 
-      if (fl_compare_strings(string, fll_fss_status_string_accepted_but_invalid_eos, length, fll_fss_status_string_accepted_but_invalid_eos_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_accepted_but_invalid_eos, length, fll_fss_status_string_accepted_but_invalid_eos_length) == f_equal_to) {
         *error = fl_fss_accepted_but_invalid_eos;
         return f_none;
       }
     #endif // _di_fll_fss_status_warning_
 
     #ifndef _di_fll_fss_status_success_
-      if (fl_compare_strings(string, fll_fss_status_string_found_object, length, fll_fss_status_string_found_object_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_found_object, length, fll_fss_status_string_found_object_length) == f_equal_to) {
         *error = fl_fss_found_object;
         return f_none;
       }
 
-      if (fl_compare_strings(string, fll_fss_status_string_found_content, length, fll_fss_status_string_found_content_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_found_content, length, fll_fss_status_string_found_content_length) == f_equal_to) {
         *error = fl_fss_found_content;
         return f_none;
       }
 
-      if (fl_compare_strings(string, fll_fss_status_string_found_no_object, length, fll_fss_status_string_found_no_object_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_found_no_object, length, fll_fss_status_string_found_no_object_length) == f_equal_to) {
         *error = fl_fss_found_no_object;
         return f_none;
       }
 
-      if (fl_compare_strings(string, fll_fss_status_string_found_no_content, length, fll_fss_status_string_found_no_content_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_found_no_content, length, fll_fss_status_string_found_no_content_length) == f_equal_to) {
         *error = fl_fss_found_no_content;
         return f_none;
       }
 
-      if (fl_compare_strings(string, fll_fss_status_string_found_object_no_content, length, fll_fss_status_string_found_object_no_content_length) == f_equal_to) {
+      if (fl_string_compare(string, fll_fss_status_string_found_object_no_content, length, fll_fss_status_string_found_object_no_content_length) == f_equal_to) {
         *error = fl_fss_found_object_no_content;
         return f_none;
       }
     #endif // _di_fll_fss_status_success_
 
-    if (fl_compare_strings(string, fll_fss_status_string_last_error_code, length, fll_fss_status_string_last_error_code_length) == f_equal_to) {
+    if (fl_string_compare(string, fll_fss_status_string_last_error_code, length, fll_fss_status_string_last_error_code_length) == f_equal_to) {
       *error = f_last_status_code;
       return f_none;
     }

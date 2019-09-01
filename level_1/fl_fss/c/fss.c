@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_decrement_buffer_
-  f_return_status fl_fss_decrement_buffer(const f_dynamic_string buffer, f_string_location *input, const f_string_length step) {
+  f_return_status fl_fss_decrement_buffer(const f_string_dynamic buffer, f_string_location *input, const f_string_length step) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (input->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -39,7 +39,7 @@ extern "C" {
 #endif // _di_fl_fss_decrement_buffer_
 
 #ifndef _di_fl_fss_identify_
-  f_return_status fl_fss_identify(const f_dynamic_string buffer, f_fss_header *header) {
+  f_return_status fl_fss_identify(const f_string_dynamic buffer, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
       if (header == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
@@ -198,7 +198,7 @@ extern "C" {
     clearerr(file_information->file);
 
     f_status         status = f_none;
-    f_dynamic_string buffer = f_dynamic_string_initialize;
+    f_string_dynamic buffer = f_string_dynamic_initialize;
     f_file_position  location = f_file_position_initialize;
 
     // make sure we are in the proper location in the file
@@ -232,7 +232,7 @@ extern "C" {
 #endif // _di_fl_fss_identify_file_
 
 #ifndef _di_fl_fss_increment_buffer_
-  f_return_status fl_fss_increment_buffer(const f_dynamic_string buffer, f_string_location *input, const f_string_length step) {
+  f_return_status fl_fss_increment_buffer(const f_string_dynamic buffer, f_string_location *input, const f_string_length step) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (input->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -273,7 +273,7 @@ extern "C" {
 #endif // _di_fl_fss_increment_buffer_
 
 #ifndef _di_fl_fss_is_graph_
-  f_return_status fl_fss_is_graph(const f_dynamic_string buffer, const f_string_location input) {
+  f_return_status fl_fss_is_graph(const f_string_dynamic buffer, const f_string_location input) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (input.start < 0) return f_status_set_error(f_invalid_parameter);
@@ -292,7 +292,7 @@ extern "C" {
 #endif // _di_fl_fss_is_graph_
 
 #ifndef _di_fl_fss_is_space_
-  f_return_status fl_fss_is_space(const f_dynamic_string buffer, const f_string_location input) {
+  f_return_status fl_fss_is_space(const f_string_dynamic buffer, const f_string_location input) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (input.start < 0) return f_status_set_error(f_invalid_parameter);
@@ -311,7 +311,7 @@ extern "C" {
 #endif // _di_fl_fss_is_space_
 
 #ifndef _di_fl_fss_skip_past_whitespace_
-  f_return_status fl_fss_skip_past_whitespace(const f_dynamic_string buffer, f_string_location *input) {
+  f_return_status fl_fss_skip_past_whitespace(const f_string_dynamic buffer, f_string_location *input) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (input == 0) return f_status_set_error(f_invalid_parameter);
@@ -329,12 +329,12 @@ extern "C" {
       max_width = buffer.used - input->start;
     }
 
-    while (buffer.string[input->start] == f_eos || (status = f_utf_is_graph(buffer.string + input->start, max_width)) == f_false) {
+    while (buffer.string[input->start] == f_string_eos || (status = f_utf_is_graph(buffer.string + input->start, max_width)) == f_false) {
       if (f_status_is_error(status)) {
         return status;
       }
 
-      if (buffer.string[input->start] == f_eol) return f_none_on_eol;
+      if (buffer.string[input->start] == f_string_eol) return f_none_on_eol;
 
       width = f_macro_utf_byte_width_is(buffer.string[input->start]);
 
@@ -371,7 +371,7 @@ extern "C" {
 #endif // _di_fl_fss_skip_past_whitespace_
 
 #ifndef _di_fl_fss_skip_past_all_whitespace_
-  f_return_status fl_fss_skip_past_all_whitespace(const f_dynamic_string buffer, f_string_location *input) {
+  f_return_status fl_fss_skip_past_all_whitespace(const f_string_dynamic buffer, f_string_location *input) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (input == 0) return f_status_set_error(f_invalid_parameter);
@@ -389,7 +389,7 @@ extern "C" {
       max_width = buffer.used - input->start;
     }
 
-    while (buffer.string[input->start] == f_eos || (status = f_utf_is_graph(buffer.string + input->start, max_width)) == f_false) {
+    while (buffer.string[input->start] == f_string_eos || (status = f_utf_is_graph(buffer.string + input->start, max_width)) == f_false) {
       if (f_status_is_error(status)) {
         return status;
       }
@@ -429,7 +429,7 @@ extern "C" {
 #endif // _di_fl_fss_skip_past_all_whitespace_
 
 #ifndef _di_fl_fss_shift_delimiters_
-  f_return_status fl_fss_shift_delimiters(f_dynamic_string *buffer, const f_string_location input) {
+  f_return_status fl_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_location input) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer->used <= 0) return f_status_set_error(f_invalid_parameter);
       if (input.start < 0) return f_status_set_error(f_invalid_parameter);

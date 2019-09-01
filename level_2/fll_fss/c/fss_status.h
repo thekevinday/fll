@@ -15,16 +15,16 @@
 #include <level_0/status.h>
 #include <level_0/fss.h>
 #include <level_0/memory.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 
 // fll-1 includes
-#include <level_1/status.h>
 #include <level_1/fss.h>
 #include <level_1/fss_basic.h>
 #include <level_1/fss_status.h>
 #include <level_1/fss_macro.h>
-#include <level_1/strings.h>
+#include <level_1/status.h>
+#include <level_1/string.h>
 
 #ifdef __cplusplus
 extern "C" {

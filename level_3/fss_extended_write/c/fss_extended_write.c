@@ -149,12 +149,12 @@ extern "C" {
       f_array_length counter = 0;
       f_bool object = (data->parameters[fss_extended_write_parameter_object].result == f_console_result_found);
 
-      f_dynamic_string  buffer = f_dynamic_string_initialize;
+      f_string_dynamic  buffer = f_string_dynamic_initialize;
       f_string_location location = f_string_location_initialize;
 
       if (data->process_pipe) {
         f_file file = f_file_initialize;
-        f_dynamic_string input = f_dynamic_string_initialize;
+        f_string_dynamic input = f_string_dynamic_initialize;
 
         file.file = f_pipe;
 
@@ -218,7 +218,7 @@ extern "C" {
         f_macro_string_dynamic_delete(status, input);
       }
       else if (data->parameters[fss_extended_write_parameter_string].result == f_console_result_additional) {
-        f_dynamic_string input = f_dynamic_string_initialize;
+        f_string_dynamic input = f_string_dynamic_initialize;
 
         if (object) {
           input.string = argv[data->parameters[fss_extended_write_parameter_string].additional.array[0]];
@@ -321,7 +321,7 @@ extern "C" {
         }
       }
       else {
-        f_print_dynamic_string(f_standard_output, buffer);
+        f_print_string_dynamic(f_standard_output, buffer);
       }
     }
 
@@ -336,11 +336,11 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < fss_extended_write_total_parameters) {
-      f_macro_strings_string_lengths_delete(status, data->parameters[i].additional);
+      f_macro_string_lengths_delete(status, data->parameters[i].additional);
       i++;
     } // while
 
-    f_macro_strings_string_lengths_delete(status, data->remaining);
+    f_macro_string_lengths_delete(status, data->remaining);
     fl_delete_color_context(status, data->context);
 
     return f_none;

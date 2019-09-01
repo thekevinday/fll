@@ -19,7 +19,7 @@
 #include <level_0/colors.h>
 #include <level_0/status.h>
 #include <level_0/file.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 #include <level_0/print.h>
 
@@ -31,18 +31,18 @@ extern "C" {
   typedef struct {
     f_colors color_list;
     f_colors_format color_format;
-    f_dynamic_string reset;
-    f_dynamic_string warning;
-    f_dynamic_string error;
-    f_dynamic_string title;
-    f_dynamic_string notable;
-    f_dynamic_string important;
-    f_dynamic_string standout;
-    f_dynamic_string normal;
-    f_dynamic_string normal_reset;
+    f_string_dynamic reset;
+    f_string_dynamic warning;
+    f_string_dynamic error;
+    f_string_dynamic title;
+    f_string_dynamic notable;
+    f_string_dynamic important;
+    f_string_dynamic standout;
+    f_string_dynamic normal;
+    f_string_dynamic normal_reset;
   } fl_color_context;
 
-  #define fl_color_context_initialize { f_colors_initialize_linux, f_colors_format_initialize_linux, f_dynamic_string_initialize, f_dynamic_string_initialize, f_dynamic_string_initialize, f_dynamic_string_initialize, f_dynamic_string_initialize, f_dynamic_string_initialize, f_dynamic_string_initialize, f_dynamic_string_initialize, f_dynamic_string_initialize }
+  #define fl_color_context_initialize { f_colors_initialize_linux, f_colors_format_initialize_linux, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize }
 
   #define fl_new_color_context(status, color_context) \
     f_macro_string_dynamic_resize(status, color_context.reset, f_color_max_size + 1); \
@@ -138,7 +138,7 @@ extern "C" {
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_color_save_
-  extern f_return_status fl_color_save(f_dynamic_string *buffer, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5);
+  extern f_return_status fl_color_save(f_string_dynamic *buffer, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5);
 
   #define fl_macro_color_save_1(buffer, format, color1)                                 fl_color_save(buffer, format, color1, 0, 0, 0, 0)
   #define fl_macro_color_save_2(buffer, format, color1, color2)                         fl_color_save(buffer, format, color1, color2, 0, 0, 0)
@@ -171,7 +171,7 @@ extern "C" {
  *   f_output_error (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_
-  extern f_return_status fl_color_print(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...);
+  extern f_return_status fl_color_print(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const char *string, ...);
 #endif // _di_fl_color_print_
 
 /**
@@ -198,7 +198,7 @@ extern "C" {
  *   f_output_error (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_line_
-  extern f_return_status fl_color_print_line(FILE *file, const f_dynamic_string start_color, const f_dynamic_string end_color, const char *string, ...);
+  extern f_return_status fl_color_print_line(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const char *string, ...);
 #endif // _di_fl_color_print_line_
 
 /**
@@ -217,7 +217,7 @@ extern "C" {
  *   f_output_error (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_code_
-  extern f_return_status fl_color_print_code(FILE *file, const f_dynamic_string color);
+  extern f_return_status fl_color_print_code(FILE *file, const f_string_dynamic color);
 #endif // _di_fl_color_print_code_
 
 #ifdef __cplusplus

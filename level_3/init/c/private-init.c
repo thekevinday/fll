@@ -5,7 +5,7 @@
 #include "private-init.h"
 
 #ifndef _di_init_rule_buffer_
-  f_return_status init_rule_buffer(const f_string filename, f_dynamic_string *buffer, f_fss_objects *objects, f_fss_contents *contents) {
+  f_return_status init_rule_buffer(const f_string filename, f_string_dynamic *buffer, f_fss_objects *objects, f_fss_contents *contents) {
     f_file file = f_file_initialize;
     f_status status = f_none;
     f_file_position file_position = f_file_position_initialize;
@@ -325,7 +325,7 @@
 
       if (kernel_command_line_string) {
         f_status status_free = f_none;
-        f_macro_strings_string_delete(status_free, kernel_command_line_string, string_length);
+        f_macro_string_delete(status_free, kernel_command_line_string, string_length);
       }
     }
 
@@ -481,9 +481,9 @@
 #endif // _di_init_prepare_init_
 
 #ifndef _di_init_process_main_rule_
-  f_return_status init_process_main_rule(const init_argument argument, f_dynamic_string *buffer, init_data *data) {
+  f_return_status init_process_main_rule(const init_argument argument, f_string_dynamic *buffer, init_data *data) {
     f_status status = f_none;
-    f_dynamic_string buffer = f_dynamic_string_initialize;
+    f_string_dynamic buffer = f_string_dynamic_initialize;
     f_string_location location = f_string_location_initialize;
     f_fss_objects objects = f_fss_objects_initialize;
     f_fss_contents contents = f_fss_contents_initialize;

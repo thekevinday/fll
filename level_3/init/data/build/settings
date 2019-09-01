@@ -10,7 +10,7 @@ version_micro 0
 build_compiler gcc
 build_linker ar
 build_libraries -lc
-build_libraries_fll -lfll_colors -lfll_fss -lfll_execute -lfl_directory -lfl_colors -lfl_status -lfl_strings -lfl_file -lfl_console -lfl_program -lfl_fss -lf_pipe -lf_file -lf_print -lf_conversion -lf_console -lf_memory -lf_utf
+build_libraries_fll -lfll_colors -lfll_fss -lfll_execute -lfl_directory -lfl_colors -lfl_status -lfl_string -lfl_file -lfl_console -lfl_program -lfl_fss -lf_pipe -lf_file -lf_print -lf_conversion -lf_console -lf_memory -lf_utf
 #build_libraries_fll-level -lfll_2 -lfll_1 -lfll_0
 #build_libraries_fll-monolithic -lfll
 build_sources_library init.c private-init.c

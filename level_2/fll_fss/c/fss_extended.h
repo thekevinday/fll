@@ -14,7 +14,7 @@
 #include <level_0/status.h>
 #include <level_0/fss.h>
 #include <level_0/memory.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 
 // fll-1 includes
@@ -31,14 +31,14 @@ extern "C" {
   /**
    * read an fss-0001 object and then content.
    */
-  extern f_return_status fll_fss_extended_read(f_dynamic_string *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents);
+  extern f_return_status fll_fss_extended_read(f_string_dynamic *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents);
 #endif // _di_fll_fss_extended_read_
 
 #ifndef _di_fll_fss_extended_write_
   /**
    * write an fss-0000 object and then content.
    */
-  extern f_return_status fll_fss_extended_write(const f_dynamic_string object, const f_dynamic_strings contents, f_dynamic_string *buffer);
+  extern f_return_status fll_fss_extended_write(const f_string_dynamic object, const f_string_dynamics contents, f_string_dynamic *buffer);
 #endif // _di_fll_fss_extended_write_
 
 #ifdef __cplusplus

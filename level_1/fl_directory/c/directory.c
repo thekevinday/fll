@@ -6,7 +6,7 @@ extern "C" {
 
 #ifndef _di_fl_directory_list_
   // put the names of each file and/or directory inside the names parameter
-  f_return_status fl_directory_list(const f_string directory_path, f_dynamic_strings *names) {
+  f_return_status fl_directory_list(const f_string directory_path, f_string_dynamics *names) {
     #ifndef _di_level_1_parameter_checking_
       if (names == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_

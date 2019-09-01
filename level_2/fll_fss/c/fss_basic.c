@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_basic_read_
-  f_return_status fll_fss_basic_read(f_dynamic_string *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents) {
+  f_return_status fll_fss_basic_read(f_string_dynamic *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents) {
     #ifndef _di_level_2_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (objects == 0) return f_status_set_error(f_invalid_parameter);
@@ -134,7 +134,7 @@ extern "C" {
 #endif // _di_fll_fss_basic_read_
 
 #ifndef _di_fll_fss_basic_write_
-  f_return_status fll_fss_basic_write(const f_dynamic_string object, const f_dynamic_strings contents, f_dynamic_string *buffer) {
+  f_return_status fll_fss_basic_write(const f_string_dynamic object, const f_string_dynamics contents, f_string_dynamic *buffer) {
     #ifndef _di_level_2_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (contents.used > contents.size) return f_status_set_error(f_invalid_parameter);
@@ -169,7 +169,7 @@ extern "C" {
           if (f_status_is_error(status)) return status;
         }
 
-        buffer->string[buffer->used] = f_eol;
+        buffer->string[buffer->used] = f_string_eol;
         buffer->used++;
       }
     }

@@ -21,7 +21,7 @@
 
 // fll-0 includes
 #include <level_0/status.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 
 #ifdef __cplusplus
@@ -224,14 +224,14 @@ extern "C" {
   /**
    * read a given amount of data from the buffer, will auto-seek to where.
    */
-  extern f_return_status f_file_read(f_file *file_information, f_dynamic_string *buffer, const f_file_position location);
+  extern f_return_status f_file_read(f_file *file_information, f_string_dynamic *buffer, const f_file_position location);
 #endif // _di_f_file_read_
 
 #ifndef _di_f_file_read_fifo_
   /**
    * read a given amount of data from the buffer, will not auto seek.
    */
-  extern f_return_status f_file_read_fifo(f_file *file_information, f_dynamic_string *buffer);
+  extern f_return_status f_file_read_fifo(f_file *file_information, f_string_dynamic *buffer);
 #endif // _di_f_file_read_fifo_
 
 #ifndef _di_f_file_stat_

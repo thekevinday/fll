@@ -226,7 +226,7 @@ extern "C" {
           f_bool show_mangle = f_true;
           f_bool show_ports = f_true;
 
-          f_dynamic_strings arguments = f_dynamic_strings_initialize;
+          f_string_dynamics arguments = f_string_dynamics_initialize;
           f_s_int results = 0;
 
           if (data->remaining.used > 0) {
@@ -418,8 +418,8 @@ extern "C" {
           f_string_length i = 0;
 
           for (; i < data->devices.used; i++) {
-            if (fl_compare_strings((f_string) firewall_device_loop, data->devices.array[i].string, firewall_device_loop_length + 1, data->devices.array[i].used) == f_equal_to) {
-              f_dynamic_string swap_string = data->devices.array[i];
+            if (fl_string_compare((f_string) firewall_device_loop, data->devices.array[i].string, firewall_device_loop_length + 1, data->devices.array[i].used) == f_equal_to) {
+              f_string_dynamic swap_string = data->devices.array[i];
 
               data->devices.used--;
 
@@ -448,11 +448,11 @@ extern "C" {
             for (; i < local.chain_objects.used; i++) {
               length = local.chain_objects.array[i].stop - local.chain_objects.array[i].start + 1;
 
-              if (!reserved.has_stop && fl_compare_strings((f_string) firewall_group_stop, local.buffer.string + local.chain_objects.array[i].start, firewall_group_stop_length, length) == f_equal_to) {
+              if (!reserved.has_stop && fl_string_compare((f_string) firewall_group_stop, local.buffer.string + local.chain_objects.array[i].start, firewall_group_stop_length, length) == f_equal_to) {
                 reserved.stop_at = i;
                 reserved.has_stop = f_true;
               }
-              else if (!reserved.has_lock && fl_compare_strings((f_string) firewall_group_lock, local.buffer.string + local.chain_objects.array[i].start, firewall_group_lock_length, length) == f_equal_to) {
+              else if (!reserved.has_lock && fl_string_compare((f_string) firewall_group_lock, local.buffer.string + local.chain_objects.array[i].start, firewall_group_lock_length, length) == f_equal_to) {
                 reserved.lock_at = i;
                 reserved.has_lock = f_true;
               }
@@ -600,7 +600,7 @@ extern "C" {
             local.device = i;
 
             {
-              f_dynamic_string file_path = f_dynamic_string_initialize;
+              f_string_dynamic file_path = f_string_dynamic_initialize;
 
               f_macro_string_dynamic_resize(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
 
@@ -731,12 +731,12 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < firewall_total_parameters) {
-      f_macro_strings_string_lengths_delete(status, data->parameters[i].additional);
+      f_macro_string_lengths_delete(status, data->parameters[i].additional);
       i++;
     } // while
 
     f_macro_string_dynamics_delete(status, data->chains);
-    f_macro_strings_string_lengths_delete(status, data->remaining);
+    f_macro_string_lengths_delete(status, data->remaining);
     f_macro_string_dynamics_delete(status, data->devices);
 
     fl_delete_color_context(status, data->context);

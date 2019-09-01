@@ -7,8 +7,8 @@
  *
  * Provides UTF-8 character manipulation and processing capabilities.
  */
-#ifndef _FL_strings_h
-#define _FL_strings_h
+#ifndef _FL_string_h
+#define _FL_string_h
 
 // libc includes
 #include <ctype.h>
@@ -17,34 +17,13 @@
 // fll includes
 #include <level_0/status.h>
 #include <level_0/memory.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 #include <level_0/utf.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * Allocated a new UTF-8 string from the provided range in the buffer.
- *
- * @param buffer
- *   The buffer to rip from.
- * @param location
- *   A range within the buffer representing the string to rip.
- * @param result
- *   The new string, which will be allocated or reallocated as necessary.
- *
- * @return
- *   f_none on success.
- *   f_no_data if nothing to rip, no allocations or reallocations are performed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_allocation_error (with error bit) on memory allocation error.
- *   f_reallocation_error (with error bit) on memory reallocation error.
- */
-#ifndef _di_fl_rip_utf_string_
-  extern f_return_status fl_rip_utf_string(const f_utf_string_dynamic buffer, const f_utf_string_location location, f_utf_string_dynamic *result);
-#endif // _di_fl_rip_utf_string_
 
 /**
  * Increment buffer location until a graph character or an EOL is matched.
@@ -117,6 +96,27 @@ extern "C" {
 #ifndef _di_fl_utf_seek_line_to_
   extern f_return_status fl_utf_seek_line_to(const f_utf_string_dynamic buffer, f_utf_string_location *location, const f_utf_character seek_to_this);
 #endif // _di_fl_utf_seek_line_to_
+
+/**
+ * Allocated a new UTF-8 string from the provided range in the buffer.
+ *
+ * @param buffer
+ *   The buffer to rip from.
+ * @param location
+ *   A range within the buffer representing the string to rip.
+ * @param result
+ *   The new string, which will be allocated or reallocated as necessary.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if nothing to rip, no allocations or reallocations are performed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_allocation_error (with error bit) on memory allocation error.
+ *   f_reallocation_error (with error bit) on memory reallocation error.
+ */
+#ifndef _di_fl_utf_string_rip_
+  extern f_return_status fl_utf_string_rip(const f_utf_string_dynamic buffer, const f_utf_string_location location, f_utf_string_dynamic *result);
+#endif // _di_fl_utf_string_rip_
 
 /**
  * Seek the buffer location forward until the 1-byte wide character or EOL is reached.
@@ -211,7 +211,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_utf_string_dynamic_compare()
- * @see fl_utf_string_compare_dynamic_partial()
+ * @see fl_utf_string_dynamic_partial_compare()
  */
 #ifndef _di_fl_utf_string_compare_
   extern f_return_status fl_utf_string_compare(const f_utf_string string1, const f_utf_string string2, const f_utf_string_length length1, const f_utf_string_length length2);
@@ -234,7 +234,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_utf_string_compare()
- * @see fl_utf_string_compare_dynamic_partial()
+ * @see fl_utf_string_dynamic_partial_compare()
  */
 #ifndef _di_fl_utf_string_dynamic_compare_
   extern f_return_status fl_utf_string_dynamic_compare(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2);
@@ -263,12 +263,12 @@ extern "C" {
  * @see fl_utf_string_compare()
  * @see fl_utf_string_dynamic_compare()
  */
-#ifndef _di_fl_utf_string_compare_dynamic_partial_
-  extern f_return_status fl_utf_string_compare_dynamic_partial(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_location offset1, const f_utf_string_location offset2);
-#endif // _di_fl_utf_string_compare_dynamic_partial_
+#ifndef _di_fl_utf_string_dynamic_partial_compare_
+  extern f_return_status fl_utf_string_dynamic_partial_compare(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_location offset1, const f_utf_string_location offset2);
+#endif // _di_fl_utf_string_dynamic_partial_compare_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _FL_strings_h
+#endif // _FL_string_h

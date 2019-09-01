@@ -6,14 +6,14 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
   f_status status2 = f_none;
 
   f_string_length i = 0;
-  f_dynamic_strings arguments = f_dynamic_strings_initialize;
-  f_dynamic_string argument = f_dynamic_string_initialize;
+  f_string_dynamics arguments = f_string_dynamics_initialize;
+  f_string_dynamic argument = f_string_dynamic_initialize;
 
   f_s_int results = 0;
   f_string_length length = 0;
   f_bool invalid = f_false;
   f_bool is_ip_list = f_false;
-  f_dynamic_string ip_list = f_dynamic_string_initialize;
+  f_string_dynamic ip_list = f_string_dynamic_initialize;
 
   // iptables command arguments
   f_bool device_all = f_false;
@@ -29,9 +29,9 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
   f_string_length current_tool_length = firewall_tool_iptables_length;
 
   f_string_length direction = firewall_direction_none_id;
-  f_dynamic_string device = f_dynamic_string_initialize;
+  f_string_dynamic device = f_string_dynamic_initialize;
   f_string_length action = firewall_action_append_id;
-  f_dynamic_string protocol = f_dynamic_string_initialize;
+  f_string_dynamic protocol = f_string_dynamic_initialize;
 
   if (local.is_global) {
     device_all = f_true;
@@ -66,7 +66,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
     f_macro_string_dynamic_delete(status2, ip_list);
 
     // process chain rule
-    if (length >= firewall_chain_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_chain, length, firewall_chain_length) == f_equal_to) {
+    if (length >= firewall_chain_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_chain, length, firewall_chain_length) == f_equal_to) {
       if (chain == firewall_chain_custom_id) {
         // custom chains can only apply to themselves, so silently ignore chain commands specified within a custom chain.
         fprintf(f_standard_warning, "WARNING: At line %i, the chain option is meaningle ss inside of a custom chain.", i);
@@ -78,22 +78,22 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
       if (firewall_macro_rule_contents_has_incorrect_items(i, 1)) {
         invalid = f_true;
       }
-      else if (length >= firewall_chain_input_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_input, length, firewall_chain_input_length) == f_equal_to) {
+      else if (length >= firewall_chain_input_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_input, length, firewall_chain_input_length) == f_equal_to) {
         chain = firewall_chain_input_id;
       }
-      else if (length >= firewall_chain_output_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_output, length, firewall_chain_output_length) == f_equal_to) {
+      else if (length >= firewall_chain_output_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_output, length, firewall_chain_output_length) == f_equal_to) {
         chain = firewall_chain_output_id;
       }
-      else if (length >= firewall_chain_forward_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_forward, length, firewall_chain_forward_length) == f_equal_to) {
+      else if (length >= firewall_chain_forward_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_forward, length, firewall_chain_forward_length) == f_equal_to) {
         chain = firewall_chain_forward_id;
       }
-      else if (length >= firewall_chain_postrouting_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_postrouting, length, firewall_chain_postrouting_length) == f_equal_to) {
+      else if (length >= firewall_chain_postrouting_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_postrouting, length, firewall_chain_postrouting_length) == f_equal_to) {
         chain = firewall_chain_postrouting_id;
       }
-      else if (length >= firewall_chain_prerouting_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_prerouting, length, firewall_chain_prerouting_length) == f_equal_to) {
+      else if (length >= firewall_chain_prerouting_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_prerouting, length, firewall_chain_prerouting_length) == f_equal_to) {
         chain = firewall_chain_prerouting_id;
       }
-      else if (length >= firewall_chain_none_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_none, length, firewall_chain_none_length) == f_equal_to) {
+      else if (length >= firewall_chain_none_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_chain_none, length, firewall_chain_none_length) == f_equal_to) {
         chain = firewall_chain_none_id;
       }
       else {
@@ -103,19 +103,19 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
       if (!invalid) continue;
     }
     // process direction rule
-    else if (length >= firewall_direction_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_direction, length, firewall_direction_length) == f_equal_to) {
+    else if (length >= firewall_direction_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_direction, length, firewall_direction_length) == f_equal_to) {
       length = firewall_macro_structure_size(local.rule_contents.array[i], 0);
 
       if (firewall_macro_rule_contents_has_incorrect_items(i, 1)) {
         invalid = f_true;
       }
-      else if (length >= firewall_direction_input_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_input, length, firewall_direction_input_length) == f_equal_to) {
+      else if (length >= firewall_direction_input_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_input, length, firewall_direction_input_length) == f_equal_to) {
         direction = firewall_direction_input_id;
       }
-      else if (length >= firewall_direction_output_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_output, length, firewall_direction_output_length) == f_equal_to) {
+      else if (length >= firewall_direction_output_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_output, length, firewall_direction_output_length) == f_equal_to) {
         direction = firewall_direction_output_id;
       }
-      else if (length >= firewall_direction_none_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_none, length, firewall_direction_none_length) == f_equal_to) {
+      else if (length >= firewall_direction_none_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_direction_none, length, firewall_direction_none_length) == f_equal_to) {
         direction = firewall_direction_none_id;
       }
       else {
@@ -126,18 +126,18 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
       if (!invalid) continue;
     }
     // process device rule.
-    else if (length >= firewall_device_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_device, length, firewall_device_length) == f_equal_to) {
+    else if (length >= firewall_device_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_device, length, firewall_device_length) == f_equal_to) {
       length = firewall_macro_structure_size(local.rule_contents.array[i], 0);
 
       if (firewall_macro_rule_contents_has_incorrect_items(i, 1)) {
         invalid = f_true;
       }
-      else if (length >= firewall_device_all_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_device_all, length, firewall_device_all_length) == f_equal_to) {
+      else if (length >= firewall_device_all_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_device_all, length, firewall_device_all_length) == f_equal_to) {
         f_macro_string_dynamic_delete(status, device);
         device_all = f_true;
         continue;
       }
-      else if (length >= firewall_device_this_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_device_this, length, firewall_device_this_length) == f_equal_to) {
+      else if (length >= firewall_device_this_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_device_this, length, firewall_device_this_length) == f_equal_to) {
         if (data.devices.array[local.device].used > 0) {
           if (data.devices.array[local.device].used > device.size) {
             f_macro_string_dynamic_resize(status, device, data.devices.array[local.device].used);
@@ -177,22 +177,22 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
       }
     }
     // process action rule.
-    else if (length >= firewall_action_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_action, length, firewall_action_length) == f_equal_to) {
+    else if (length >= firewall_action_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_action, length, firewall_action_length) == f_equal_to) {
       length = firewall_macro_structure_size(local.rule_contents.array[i], 0);
 
       if (firewall_macro_rule_contents_has_incorrect_items(i, 1)) {
         invalid = f_true;
       }
-      else if (length >= firewall_action_append_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_append, length, firewall_action_append_length) == f_equal_to) {
+      else if (length >= firewall_action_append_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_append, length, firewall_action_append_length) == f_equal_to) {
         action = firewall_action_append_id;
       }
-      else if (length >= firewall_action_insert_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_insert, length, firewall_action_insert_length) == f_equal_to) {
+      else if (length >= firewall_action_insert_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_insert, length, firewall_action_insert_length) == f_equal_to) {
         action = firewall_action_insert_id;
       }
-      else if (length >= firewall_action_policy_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_policy, length, firewall_action_policy_length) == f_equal_to) {
+      else if (length >= firewall_action_policy_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_policy, length, firewall_action_policy_length) == f_equal_to) {
         action = firewall_action_policy_id;
       }
-      else if (length >= firewall_action_none_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_none, length, firewall_action_none_length) == f_equal_to) {
+      else if (length >= firewall_action_none_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_action_none, length, firewall_action_none_length) == f_equal_to) {
         action = firewall_action_none_id;
       }
       else {
@@ -202,28 +202,28 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
       if (!invalid) continue;
     }
     // process ip_list rule.
-    else if (length >= firewall_ip_list_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_ip_list, length, firewall_ip_list_length) == f_equal_to) {
+    else if (length >= firewall_ip_list_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_ip_list, length, firewall_ip_list_length) == f_equal_to) {
       length = firewall_macro_structure_size(local.rule_contents.array[i], 0);
       is_ip_list = f_true;
 
-      if (length >= firewall_ip_list_source_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_ip_list_source, length, firewall_ip_list_source_length) == f_equal_to) {
+      if (length >= firewall_ip_list_source_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_ip_list_source, length, firewall_ip_list_source_length) == f_equal_to) {
         ip_list_direction = f_false;
       }
-      else if (length >= firewall_ip_list_destination_length && fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_ip_list_destination, length, firewall_ip_list_destination_length) == f_equal_to) {
+      else if (length >= firewall_ip_list_destination_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_ip_list_destination, length, firewall_ip_list_destination_length) == f_equal_to) {
         ip_list_direction = f_true;
       }
       else {
         invalid = f_true;
       }
     }
-    else if (length >= firewall_protocol_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_protocol, length, firewall_protocol_length) == f_equal_to) {
+    else if (length >= firewall_protocol_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_protocol, length, firewall_protocol_length) == f_equal_to) {
       length = firewall_macro_structure_size(local.rule_contents.array[i], 0);
 
       if (firewall_macro_rule_contents_has_incorrect_items(i, 1)) {
         invalid = f_true;
       }
       else {
-        if (fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_protocol_none, length, firewall_protocol_none_length) == f_equal_to) {
+        if (fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_protocol_none, length, firewall_protocol_none_length) == f_equal_to) {
           use_protocol = f_false;
         }
         else if (length > 0) {
@@ -244,26 +244,26 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
       }
     }
     // process tool rule.
-    else if (length >= firewall_tool_length && fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_tool, length, firewall_tool_length) == f_equal_to) {
+    else if (length >= firewall_tool_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_tool, length, firewall_tool_length) == f_equal_to) {
       length = firewall_macro_structure_size(local.rule_contents.array[i], 0);
 
       if (firewall_macro_rule_contents_has_incorrect_items(i, 1)) {
         invalid = f_true;
       }
       else {
-        if (fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_tool_iptables, length, firewall_tool_iptables_length) == f_equal_to) {
+        if (fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_tool_iptables, length, firewall_tool_iptables_length) == f_equal_to) {
           tool = firewall_program_iptables;
           current_tool = firewall_tool_iptables;
           current_tool_length = firewall_tool_iptables_length;
           repeat = 1;
         }
-        else if (fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_tool_ip6tables, length, firewall_tool_ip6tables_length) == f_equal_to) {
+        else if (fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_tool_ip6tables, length, firewall_tool_ip6tables_length) == f_equal_to) {
           tool = firewall_program_ip6tables;
           current_tool = firewall_tool_ip6tables;
           current_tool_length = firewall_tool_ip6tables_length;
           repeat = 1;
         }
-        else if (fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_tool_ip46tables, length, firewall_tool_ip46tables_length) == f_equal_to) {
+        else if (fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_tool_ip46tables, length, firewall_tool_ip46tables_length) == f_equal_to) {
           tool = firewall_program_ip46tables;
           current_tool = firewall_tool_iptables;
           current_tool_length = firewall_tool_iptables_length;
@@ -277,7 +277,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
       }
     }
     // process rule rule, if the remaining rule does not match as firewall_rule, then it is an invalid rule.
-    else if (length < firewall_rule_length || fl_compare_strings(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_rule, length, firewall_rule_length) == f_not_equal_to) {
+    else if (length < firewall_rule_length || fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string) firewall_rule, length, firewall_rule_length) == f_not_equal_to) {
       if (length > 0) {
         fl_color_print_code(f_standard_warning, data.context.warning);
         fprintf(f_standard_warning, "WARNING: At line %i, the object '", i);
@@ -432,7 +432,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
 
       // add the device if and only if a non-none direction is specified.
       if (device.used > 0 && (direction == firewall_direction_input_id || direction == firewall_direction_output_id)) {
-        if (length < firewall_device_all_length || fl_compare_strings(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_device_all, length, firewall_device_all_length) == f_not_equal_to) {
+        if (length < firewall_device_all_length || fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string) firewall_device_all, length, firewall_device_all_length) == f_not_equal_to) {
           if (direction == firewall_direction_input_id) {
             f_macro_string_dynamic_new(status, argument, firewall_device_input_command_length);
             if (f_status_is_error(status)) break;
@@ -561,8 +561,8 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
       if (arguments.used > 1) {
         if (is_ip_list) {
           f_file file = f_file_initialize;
-          f_dynamic_string file_path = f_dynamic_string_initialize;
-          f_dynamic_string local_buffer = f_dynamic_string_initialize;
+          f_string_dynamic file_path = f_string_dynamic_initialize;
+          f_string_dynamic local_buffer = f_string_dynamic_initialize;
           f_file_position file_position = f_file_position_initialize;
 
           f_fss_objects basic_objects = f_fss_objects_initialize;
@@ -677,7 +677,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
               else {
                 f_string_length buffer_counter = 0;
                 f_string_length ip_length = 0;
-                f_dynamic_string ip_list_action = f_dynamic_string_initialize;
+                f_string_dynamic ip_list_action = f_string_dynamic_initialize;
 
                 if (ip_list_direction) {
                   f_macro_string_dynamic_resize(status, ip_list_action, firewall_ip_list_destination_action_length);
@@ -707,7 +707,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
                   f_macro_string_dynamic_delete(status2, ip_list_action);
                 }
                 else {
-                  f_dynamic_string ip_argument = f_dynamic_string_initialize;
+                  f_string_dynamic ip_argument = f_string_dynamic_initialize;
 
                   firewall_macro_append_argument_to_arguments(status, arguments, ip_list_action)
                   if (f_status_is_error(status)) {
@@ -866,9 +866,9 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
 
   f_string_length length = 0;
   f_string_location location = f_string_location_initialize;
-  f_dynamic_strings arguments = f_dynamic_strings_initialize;
+  f_string_dynamics arguments = f_string_dynamics_initialize;
 
-  f_dynamic_string fixed_string = f_dynamic_string_initialize;
+  f_string_dynamic fixed_string = f_string_dynamic_initialize;
 
   f_macro_types_array_lengths_delete(status, local->chain_ids);
   f_macro_types_array_lengths_new(status, local->chain_ids, local->chain_objects.used);
@@ -919,7 +919,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
     location.stop = firewall_group_main_length - 1;
     fixed_string.string = firewall_group_main;
     fixed_string.used = firewall_group_main_length;
-    if (fl_compare_dynamic_strings_partial(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
+    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
       new_chain = f_false;
       reserved->has_main = f_true;
       reserved->main_at = i;
@@ -930,7 +930,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
     location.stop = firewall_group_stop_length - 1;
     fixed_string.string = firewall_group_stop;
     fixed_string.used = firewall_group_stop_length;
-    if (fl_compare_dynamic_strings_partial(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
+    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
       new_chain = f_false;
       reserved->has_stop = f_true;
       reserved->stop_at = i;
@@ -941,7 +941,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
     location.stop = firewall_group_lock_length - 1;
     fixed_string.string = firewall_group_lock;
     fixed_string.used = firewall_group_lock_length;
-    if (fl_compare_dynamic_strings_partial(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
+    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
       new_chain = f_false;
       reserved->has_lock = f_true;
       reserved->lock_at = i;
@@ -952,18 +952,18 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
     location.stop = firewall_group_lock_length - 1;
     fixed_string.string = firewall_chain_none;
     fixed_string.used = firewall_chain_none_length;
-    if (fl_compare_dynamic_strings_partial(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
+    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
       new_chain = f_false;
     }
 
-    f_clear_dynamic_string(fixed_string);
+    f_clear_string_dynamic(fixed_string);
 
     if (new_chain) {
       while (j < data->chains.used) {
         location.start = 0;
         location.stop = data->chains.array[j].used - 1;
 
-        if (fl_compare_dynamic_strings_partial(local->buffer, data->chains.array[j], local->chain_objects.array[i], location) == f_equal_to) {
+        if (fl_string_dynamic_partial_compare(local->buffer, data->chains.array[j], local->chain_objects.array[i], location) == f_equal_to) {
           new_chain = f_false;
           local->chain_ids.array[i] = j;
 
@@ -1026,19 +1026,19 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
         j++;
       } // while
 
-      if (fl_compare_strings(arguments.array[1].string, firewall_chain_forward, arguments.array[1].used, firewall_chain_forward_length) == f_equal_to) {
+      if (fl_string_compare(arguments.array[1].string, firewall_chain_forward, arguments.array[1].used, firewall_chain_forward_length) == f_equal_to) {
         create_chain = f_false;
       }
-      else if (fl_compare_strings(arguments.array[1].string, firewall_chain_input, arguments.array[1].used, firewall_chain_input_length) == f_equal_to) {
+      else if (fl_string_compare(arguments.array[1].string, firewall_chain_input, arguments.array[1].used, firewall_chain_input_length) == f_equal_to) {
         create_chain = f_false;
       }
-      else if (fl_compare_strings(arguments.array[1].string, firewall_chain_output, arguments.array[1].used, firewall_chain_output_length) == f_equal_to) {
+      else if (fl_string_compare(arguments.array[1].string, firewall_chain_output, arguments.array[1].used, firewall_chain_output_length) == f_equal_to) {
         create_chain = f_false;
       }
-      else if (fl_compare_strings(arguments.array[1].string, firewall_chain_postrouting, arguments.array[1].used, firewall_chain_postrouting_length) == f_equal_to) {
+      else if (fl_string_compare(arguments.array[1].string, firewall_chain_postrouting, arguments.array[1].used, firewall_chain_postrouting_length) == f_equal_to) {
         create_chain = f_false;
       }
-      else if (fl_compare_strings(arguments.array[1].string, firewall_chain_prerouting, arguments.array[1].used, firewall_chain_prerouting_length) == f_equal_to) {
+      else if (fl_string_compare(arguments.array[1].string, firewall_chain_prerouting, arguments.array[1].used, firewall_chain_prerouting_length) == f_equal_to) {
         create_chain = f_false;
       }
 
@@ -1137,8 +1137,8 @@ f_return_status firewall_delete_chains(const firewall_data data) {
   f_status status = f_none;
 
   for (f_string_length i = 0; i < 2; i++) {
-    f_dynamic_strings arguments = f_dynamic_strings_initialize;
-    f_dynamic_string argument[1] = f_dynamic_string_initialize;
+    f_string_dynamics arguments = f_string_dynamics_initialize;
+    f_string_dynamic argument[1] = f_string_dynamic_initialize;
     f_s_int results = 0;
 
     argument[0].string = (f_string) "-F";
@@ -1195,8 +1195,8 @@ f_return_status firewall_delete_chains(const firewall_data data) {
   } // for
 
   for (f_string_length i = 0; i < 2; i++) {
-    f_dynamic_strings arguments = f_dynamic_strings_initialize;
-    f_dynamic_string argument[1] = f_dynamic_string_initialize;
+    f_string_dynamics arguments = f_string_dynamics_initialize;
+    f_string_dynamic argument[1] = f_string_dynamic_initialize;
     f_s_int results = 0;
 
     argument[0].string = (f_string) firewall_chain_delete_command;
@@ -1264,8 +1264,8 @@ f_return_status firewall_default_lock(const firewall_data data) {
   f_status status = f_none;
 
   for (f_string_length i = 0; i < 3; i++) {
-    f_dynamic_strings arguments = f_dynamic_strings_initialize;
-    f_dynamic_string argument[3];
+    f_string_dynamics arguments = f_string_dynamics_initialize;
+    f_string_dynamic argument[3];
 
     arguments.array = argument;
     arguments.used = 3;

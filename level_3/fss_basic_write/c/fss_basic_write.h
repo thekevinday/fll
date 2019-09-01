@@ -18,7 +18,7 @@
 #include <level_0/console.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 
 // fll-1 includes
@@ -27,7 +27,7 @@
 #include <level_1/status.h>
 #include <level_1/file.h>
 #include <level_1/program.h>
-#include <level_1/strings.h>
+#include <level_1/string.h>
 
 // fll-2 includes
 #include <level_2/colors.h>

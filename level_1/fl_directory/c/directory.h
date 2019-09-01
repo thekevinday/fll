@@ -21,7 +21,7 @@
 // fll-0 includes
 #include <level_0/status.h>
 #include <level_0/memory.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 
 #ifdef __cplusplus
@@ -38,7 +38,7 @@ extern "C" {
   /**
    * put the names of each file and/or directory inside the names parameter.
    */
-  extern f_return_status fl_directory_list(const f_string directory_path, f_dynamic_strings *names);
+  extern f_return_status fl_directory_list(const f_string directory_path, f_string_dynamics *names);
 #endif // _di_fl_directory_list_
 
 #ifdef __cplusplus

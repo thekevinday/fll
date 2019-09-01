@@ -1,7 +1,7 @@
 # fss-0000
 
-project_name fl_strings
-project_level 1
+project_name f_string
+project_level 0
 
 version_major 0
 version_minor 5
@@ -9,11 +9,11 @@ version_micro 0
 
 build_compiler gcc
 build_linker ar
-build_libraries -lc
-build_libraries_fll -lf_memory -lf_utf
-build_sources_library strings.c
-build_sources_program
-build_sources_headers strings.h
+build_libraries -lc 
+build_libraries_fll
+build_sources_library 
+build_sources_program 
+build_sources_headers string.h
 build_sources_bash
 build_sources_settings
 build_shared yes

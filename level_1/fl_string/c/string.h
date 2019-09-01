@@ -1,14 +1,14 @@
 /**
  * FLL - Level 1
  *
- * Project: Strings
+ * Project: String
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
  * Provides basic string manipulation and processing capabilities.
  */
-#ifndef _FL_strings_h
-#define _FL_strings_h
+#ifndef _FL_string_h
+#define _FL_string_h
 
 // libc includes
 #include <ctype.h>
@@ -17,7 +17,7 @@
 // fll includes
 #include <level_0/status.h>
 #include <level_0/memory.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 #include <level_0/utf.h>
 
@@ -42,9 +42,9 @@ extern "C" {
  *   f_allocation_error (with error bit) on memory allocation error.
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
-#ifndef _di_fl_rip_string_
-  extern f_return_status fl_rip_string(const f_dynamic_string buffer, const f_string_location location, f_dynamic_string *result);
-#endif // _di_fl_rip_string_
+#ifndef _di_fl_string_rip_
+  extern f_return_status fl_string_rip(const f_string_dynamic buffer, const f_string_location location, f_string_dynamic *result);
+#endif // _di_fl_string_rip_
 
 /**
  * Increment buffer location until a graph character (including UTF-8) or an EOL is matched.
@@ -69,9 +69,9 @@ extern "C" {
  *   f_allocation_error (with error bit) on memory allocation error.
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
-#ifndef _di_fl_seek_line_until_graph_
-  extern f_return_status fl_seek_line_until_graph(const f_dynamic_string buffer, f_string_location *location, const char placeholder);
-#endif // _di_fl_seek_line_until_graph_
+#ifndef _di_fl_string_seek_line_until_graph_
+  extern f_return_status fl_string_seek_line_until_graph(const f_string_dynamic buffer, f_string_location *location, const char placeholder);
+#endif // _di_fl_string_seek_line_until_graph_
 
 /**
  * Increment buffer location until a non-graph character (including UTF-8) or an EOL is matched.
@@ -97,9 +97,9 @@ extern "C" {
  *   f_allocation_error (with error bit) on memory allocation error.
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
-#ifndef _di_fl_seek_line_until_non_graph_
-  extern f_return_status fl_seek_line_until_non_graph(const f_dynamic_string buffer, f_string_location *location, const char placeholder);
-#endif // _di_fl_seek_line_until_non_graph_
+#ifndef _di_fl_string_seek_line_until_non_graph_
+  extern f_return_status fl_string_seek_line_until_non_graph(const f_string_dynamic buffer, f_string_location *location, const char placeholder);
+#endif // _di_fl_string_seek_line_until_non_graph_
 
 /**
  * Seek the buffer location forward until the character (1-byte wide) or EOL is reached.
@@ -119,11 +119,11 @@ extern "C" {
  *   f_none_on_stop on success, but stopped stop location.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_seek_line_to_utf_character()
+ * @see fl_string_seek_line_to_utf_character()
  */
-#ifndef _di_fl_seek_line_to_
-  extern f_return_status fl_seek_line_to(const f_dynamic_string buffer, f_string_location *location, const char seek_to_this);
-#endif // _di_fl_seek_line_to_
+#ifndef _di_fl_string_seek_line_to_
+  extern f_return_status fl_string_seek_line_to(const f_string_dynamic buffer, f_string_location *location, const char seek_to_this);
+#endif // _di_fl_string_seek_line_to_
 
 /**
  * Seek the buffer location forward until the character (up to 4-byte wide) or EOL is reached.
@@ -146,11 +146,11 @@ extern "C" {
  *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_seek_line_to()
+ * @see fl_string_seek_line_to()
  */
-#ifndef _di_fl_seek_line_to_utf_character_
-  extern f_return_status fl_seek_line_to_utf_character(const f_dynamic_string buffer, f_string_location *location, const f_utf_character seek_to_this);
-#endif // _di_fl_seek_line_to_utf_character_
+#ifndef _di_fl_string_seek_line_to_utf_character_
+  extern f_return_status fl_string_seek_line_to_utf_character(const f_string_dynamic buffer, f_string_location *location, const f_utf_character seek_to_this);
+#endif // _di_fl_string_seek_line_to_utf_character_
 
 /**
  * Seek the buffer location forward until the character (1-byte wide) is reached.
@@ -172,11 +172,11 @@ extern "C" {
  *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_seek_to_utf_character()
+ * @see fl_string_seek_to_utf_character()
  */
-#ifndef _di_fl_seek_to_
-  extern f_return_status fl_seek_to(const f_dynamic_string buffer, f_string_location *location, const char seek_to_this);
-#endif // _di_fl_seek_to_
+#ifndef _di_fl_string_seek_to_
+  extern f_return_status fl_string_seek_to(const f_string_dynamic buffer, f_string_location *location, const char seek_to_this);
+#endif // _di_fl_string_seek_to_
 
 /**
  * Seek the buffer location forward until the UTF-8 character (up to 4-byte wide) is reached.
@@ -199,11 +199,11 @@ extern "C" {
  *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_seek_to()
+ * @see fl_string_seek_to()
  */
-#ifndef _di_fl_seek_to_utf_character_
-  extern f_return_status fl_seek_to_utf_character(const f_dynamic_string buffer, f_string_location *location, const f_utf_character seek_to_this);
-#endif // _di_fl_seek_to_utf_character_
+#ifndef _di_fl_string_seek_to_utf_character_
+  extern f_return_status fl_string_seek_to_utf_character(const f_string_dynamic buffer, f_string_location *location, const f_utf_character seek_to_this);
+#endif // _di_fl_string_seek_to_utf_character_
 
 /**
  * Compare two strings, similar to strncmp().
@@ -225,12 +225,12 @@ extern "C" {
  *   f_not_equal_to when both strings do not equal.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_compare_dynamic_strings()
- * @see fl_compare_dynamic_strings_partial()
+ * @see fl_string_dynamics_compare()
+ * @see fl_string_dynamic_partial_compare()
  */
-#ifndef _di_fl_compare_strings_
-  extern f_return_status fl_compare_strings(const f_string string1, const f_string string2, const f_string_length length1, const f_string_length length2);
-#endif // _di_fl_compare_strings_
+#ifndef _di_fl_string_compare_
+  extern f_return_status fl_string_compare(const f_string string1, const f_string string2, const f_string_length length1, const f_string_length length2);
+#endif // _di_fl_string_compare_
 
 /**
  * Compare two strings, similar to strncmp().
@@ -248,12 +248,12 @@ extern "C" {
  *   f_not_equal_to when both strings do not equal.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_compare_strings()
- * @see fl_compare_dynamic_strings_partial()
+ * @see fl_string_compare()
+ * @see fl_string_dynamic_partial_compare()
  */
-#ifndef _di_fl_compare_dynamic_strings_
-  extern f_return_status fl_compare_dynamic_strings(const f_dynamic_string string1, const f_dynamic_string string2);
-#endif // _di_fl_compare_dynamic_strings_
+#ifndef _di_fl_string_dynamics_compare_
+  extern f_return_status fl_string_dynamics_compare(const f_string_dynamic string1, const f_string_dynamic string2);
+#endif // _di_fl_string_dynamics_compare_
 
 /**
  * Compare two strings, similar to strncmp(), but restricted to the given ranges.
@@ -275,15 +275,15 @@ extern "C" {
  *   f_not_equal_to when both strings do not equal.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_compare_strings()
- * @see fl_compare_dynamic_strings()
+ * @see fl_string_compare()
+ * @see fl_string_dynamics_compare()
  */
-#ifndef _di_fl_compare_partial_dynamic_strings_
-  extern f_return_status fl_compare_dynamic_strings_partial(const f_dynamic_string string1, const f_dynamic_string string2, const f_string_location offset1, const f_string_location offset2);
-#endif // _di_fl_compare_partial_dynamic_strings_
+#ifndef _di_fl_string_dynamic_partial_compare_
+  extern f_return_status fl_string_dynamic_partial_compare(const f_string_dynamic string1, const f_string_dynamic string2, const f_string_location offset1, const f_string_location offset2);
+#endif // _di_fl_string_dynamic_partial_compare_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _FL_strings_h
+#endif // _FL_string_h

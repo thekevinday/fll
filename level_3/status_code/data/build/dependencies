@@ -3,13 +3,13 @@ f_conversion
 f_status
 f_pipe
 f_print
-f_strings
+f_string
 f_types
 fl_colors
 fl_console
 fl_file
 fl_program
-fl_strings
+fl_string
 fl_status
 fll_colors
 fll_status

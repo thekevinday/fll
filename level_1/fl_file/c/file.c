@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_file_read_
-  f_return_status fl_file_read(f_file file, const f_file_position position, f_dynamic_string *buffer) {
+  f_return_status fl_file_read(f_file file, const f_file_position position, f_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
 
@@ -62,7 +62,7 @@ extern "C" {
 #endif // _di_fl_file_read_
 
 #ifndef _di_fl_file_read_fifo_
-  f_return_status fl_file_read_fifo(f_file file, f_dynamic_string *buffer) {
+  f_return_status fl_file_read_fifo(f_file file, f_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -105,7 +105,7 @@ extern "C" {
 #endif // _di_fl_file_read_fifo_
 
 #ifndef _di_fl_file_write_
-  f_return_status fl_file_write(f_file file, const f_dynamic_string buffer) {
+  f_return_status fl_file_write(f_file file, const f_string_dynamic buffer) {
     if (file.file == 0) return f_status_set_error(f_file_not_open);
 
     f_status status = f_none;
@@ -122,7 +122,7 @@ extern "C" {
 #endif // _di_fl_file_write_
 
 #ifndef _di_fl_file_write_partial_
-  f_return_status fl_file_write_partial(f_file file, const f_dynamic_string buffer, const f_string_location position) {
+  f_return_status fl_file_write_partial(f_file file, const f_string_dynamic buffer, const f_string_location position) {
     #ifndef _di_level_1_parameter_checking_
       if (position.start < position.stop) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_

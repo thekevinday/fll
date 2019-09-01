@@ -18,7 +18,7 @@
 // fll-0 includes
 #include <level_0/status.h>
 #include <level_0/serialized.h>
-#include <level_0/strings.h>
+#include <level_0/string.h>
 #include <level_0/types.h>
 #include <level_0/utf.h>
 
@@ -47,7 +47,7 @@ extern "C" {
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_serialize_simple_
-  extern f_return_status fl_serialize_simple(const f_dynamic_string value, f_dynamic_string *serialized);
+  extern f_return_status fl_serialize_simple(const f_string_dynamic value, f_string_dynamic *serialized);
 #endif // _di_fl_serialize_simple_
 
 // @todo: implement fl_unserialize_simple() such that a new array of strings is allocated.
@@ -74,7 +74,7 @@ extern "C" {
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_unserialize_simple_map_
-  extern f_return_status fl_unserialize_simple_map(const f_dynamic_string serialized, f_string_locations *locations);
+  extern f_return_status fl_unserialize_simple_map(const f_string_dynamic serialized, f_string_locations *locations);
 #endif // _di_fl_unserialize_simple_map_
 
 /**
@@ -102,7 +102,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_unserialize_simple_find_
-  extern f_return_status fl_unserialize_simple_find(const f_dynamic_string serialized, const f_array_length index, f_string_location *location);
+  extern f_return_status fl_unserialize_simple_find(const f_string_dynamic serialized, const f_array_length index, f_string_location *location);
 #endif // _di_fl_unserialize_simple_find_
 
 // @todo: implement fl_unserialize_simple_get() such that a new string is allocated, if found.

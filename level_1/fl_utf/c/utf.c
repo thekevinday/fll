@@ -4,42 +4,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fl_rip_utf_string_
-  f_return_status fl_rip_utf_string(const f_utf_string_dynamic buffer, const f_utf_string_location location, f_utf_string_dynamic *result) {
-    #ifndef _di_level_1_parameter_checking_
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    // the start and stop point are inclusive locations, and therefore start - stop is actually 1 too few locations
-    f_utf_string_length size = (location.stop - location.start) + 1;
-
-    if (size > 0) {
-      f_status status = f_none;
-
-      if (result == 0) {
-        f_macro_utf_string_new_dynamic(status, (*result), size);
-      }
-      else {
-        f_macro_utf_string_dynamic_resize(status, (*result), size);
-      }
-
-      if (f_status_is_error(status)) {
-        return status;
-      }
-
-      memcpy(result->string, buffer.string + location.start, sizeof(f_utf_character) * size);
-      result->used = size;
-
-      return f_none;
-    }
-
-    return f_no_data;
-  }
-#endif // _di_fl_rip_utf_string_
-
 #ifndef _di_fl_utf_seek_line_until_graph_
   f_return_status fl_utf_seek_line_until_graph(const f_utf_string_dynamic buffer, f_utf_string_location *location, const f_utf_character placeholder) {
     #ifndef _di_level_1_parameter_checking_
@@ -170,6 +134,42 @@ extern "C" {
   }
 #endif // _di_fl_utf_seek_line_to_character_
 
+#ifndef _di_fl_utf_string_rip_
+  f_return_status fl_utf_string_rip(const f_utf_string_dynamic buffer, const f_utf_string_location location, f_utf_string_dynamic *result) {
+    #ifndef _di_level_1_parameter_checking_
+      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    // the start and stop point are inclusive locations, and therefore start - stop is actually 1 too few locations
+    f_utf_string_length size = (location.stop - location.start) + 1;
+
+    if (size > 0) {
+      f_status status = f_none;
+
+      if (result == 0) {
+        f_macro_utf_string_dynamic_new(status, (*result), size);
+      }
+      else {
+        f_macro_utf_string_dynamic_resize(status, (*result), size);
+      }
+
+      if (f_status_is_error(status)) {
+        return status;
+      }
+
+      memcpy(result->string, buffer.string + location.start, sizeof(f_utf_character) * size);
+      result->used = size;
+
+      return f_none;
+    }
+
+    return f_no_data;
+  }
+#endif // _di_fl_utf_string_rip_
+
 #ifndef _di_fl_utf_string_seek_to_
   f_return_status fl_utf_string_seek_to(const f_utf_string_dynamic buffer, f_utf_string_location *location, const f_utf_character seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
@@ -296,8 +296,8 @@ extern "C" {
   }
 #endif // _di_fl_utf_string_dynamic_compare_
 
-#ifndef _di_fl_compare_partial_dynamic_strings_
-  f_return_status fl_utf_string_compare_dynamic_partial(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_location offset1, const f_utf_string_location offset2) {
+#ifndef _di_fl_string_dynamic_partial_compare_
+  f_return_status fl_utf_string_dynamic_partial_compare(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_location offset1, const f_utf_string_location offset2) {
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (string2.used <= 0) return f_status_set_error(f_invalid_parameter);
@@ -340,7 +340,7 @@ extern "C" {
 
     return f_equal_to;
   }
-#endif // _di_fl_compare_partial_dynamic_strings_
+#endif // _di_fl_string_dynamic_partial_compare_
 
 #ifdef __cplusplus
 } // extern "C"

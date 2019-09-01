@@ -4,7 +4,7 @@ f_fss
 f_memory
 f_pipe
 f_print
-f_strings
+f_string
 f_types
 f_utf
 fl_colors
@@ -13,7 +13,7 @@ fl_directory
 fl_file
 fl_fss
 fl_program
-fl_strings
+fl_string
 fl_status
 fll_colors
 fll_execute
