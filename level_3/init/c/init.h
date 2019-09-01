@@ -83,7 +83,7 @@ extern "C" {
 #endif // _di_init_default_allocation_step_
 
 #ifndef _di_init_paths_
-  // @todo: this will eventually be written to use the f_paths project.
+  // @todo: this will eventually be written to use the f_path project.
   #define init_paths_rootfs         "/"
   #define init_paths_devices        "/dev/"
   #define init_paths_devices_pts    "/dev/pts/"

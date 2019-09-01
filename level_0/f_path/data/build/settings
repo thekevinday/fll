@@ -1,6 +1,6 @@
 # fss-0000
 
-project_name f_paths
+project_name f_path
 project_level 0
 
 version_major 0
@@ -13,7 +13,7 @@ build_libraries
 build_libraries_fll
 build_sources_library 
 build_sources_program 
-build_sources_headers fll_paths.h filesystem_paths.h
+build_sources_headers path_fll.h path_filesystem.h
 build_sources_bash
 build_sources_settings
 build_shared yes

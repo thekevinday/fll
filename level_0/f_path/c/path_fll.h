@@ -1,7 +1,7 @@
 /**
  * FLL - Level 0
  *
- * Project: Paths
+ * Project: Path
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
@@ -10,10 +10,11 @@
  *
  * FIXME: this is very outdated due to numerous structural changes while I was developing turtle kevux.
  */
-#ifndef _F_fll_paths_h
-#define _F_fll_paths_h
+#ifndef _F_path_fll_h
+#define _F_path_fll_h
 
-#include <level_0/filesystem_paths.h>
+// fll-0 includes
+#include <level_0/path_filesystem.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,4 +48,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _F_fll_paths_h
+#endif // _F_path_fll_h

@@ -1,7 +1,7 @@
 /**
  * FLL - Level 0
  *
- * Project: Paths
+ * Project: Path
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
@@ -9,17 +9,17 @@
  *
  * FIXME: this is very outdated due to numerous structural changes while I was developing turtle kevux.
  */
-#ifndef _F_filesystem_paths_h
-#define _F_filesystem_paths_h
+#ifndef _F_path_filesystem_h
+#define _F_path_filesystem_h
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 // KFS Filesystem Paths
-#ifdef _di_kevux_standard_paths_
+#ifdef _di_path_kevux_standard_
   // disable the FHS default paths
-  #define _di_filesystem_hierarch_standard_paths_
+  #define _di_path_filesystem_hierarchy_standard_
 
   // KFS Root Level
   #define f_path_devices   "/devices"
@@ -83,12 +83,12 @@ extern "C" {
   #define f_path_user_data      "data"
   #define f_path_user_temporary "temporary"
   #define f_path_user_shared    "shared"
-#endif // _di_kevux_standard_paths_
+#endif // _di_path_kevux_standard_
 
 // FHS Filesystem Paths
-#ifndef _di_filesystem_hierarch_standard_paths_
+#ifndef _di_path_filesystem_hierarchy_standard_
   // disable the kevux standard default paths
-  #define _di_kevux_standard_paths_
+  #define _di_path_kevux_standard_
 
   // KFS Root Level
   #define f_path_devices   "/"
@@ -152,10 +152,10 @@ extern "C" {
   #define f_path_user_data      ""
   #define f_path_user_temporary ""
   #define f_path_user_shared    ""
-#endif // _di_filesystem_hierarch_standard_paths_
+#endif // _di_path_filesystem_hierarchy_standard_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _F_filesystem_paths_h
+#endif // _F_path_filesystem_h
