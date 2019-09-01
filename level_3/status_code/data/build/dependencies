@@ -4,7 +4,7 @@ f_status
 f_pipe
 f_print
 f_string
-f_types
+f_type
 fl_colors
 fl_console
 fl_file
