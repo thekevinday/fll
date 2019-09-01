@@ -115,14 +115,14 @@
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", f_status_set_error(status));
         }
 
-        f_delete_fss_objects(status2, local->rule_objects);
-        f_delete_fss_contents(status2, local->rule_contents);
+        f_macro_fss_objects_delete(status2, local->rule_objects);
+        f_macro_fss_contents_delete(status2, local->rule_contents);
         return f_status_set_error(status);
       }
     }
 
-    f_delete_fss_objects(status2, local->rule_objects);
-    f_delete_fss_contents(status2, local->rule_contents);
+    f_macro_fss_objects_delete(status2, local->rule_objects);
+    f_macro_fss_contents_delete(status2, local->rule_contents);
     return status;
   }
 #endif // _init_rules_process_main_
@@ -325,7 +325,7 @@
 
       if (kernel_command_line_string) {
         f_status status_free = f_none;
-        f_delete_string(status_free, kernel_command_line_string, string_length);
+        f_macro_strings_string_delete(status_free, kernel_command_line_string, string_length);
       }
     }
 
@@ -505,9 +505,9 @@
         fl_color_print_line(f_standard_error, argument.context.error, argument.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_status_set_error(status), init_rule_core_file);
       }
 
-      f_delete_dynamic_string(buffer);
-      f_delete_fss_objects(objects);
-      f_delete_fss_contents(contents);
+      f_macro_string_dynamic_delete(buffer);
+      f_macro_fss_objects_delete(objects);
+      f_macro_fss_contents_delete(contents);
       return status;
     }
 
@@ -561,8 +561,8 @@
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", f_status_set_error(status));
         }
 
-        f_delete_fss_objects(status2, (*rule_objects));
-        f_delete_fss_contents(status2, (*rule_contents));
+        f_macro_fss_objects_delete(status2, (*rule_objects));
+        f_macro_fss_contents_delete(status2, (*rule_contents));
         return f_status_set_error(status);
       }
     }
@@ -575,13 +575,13 @@
       }
     }
 
-    f_delete_fss_objects(status2, (*rule_objects));
-    f_delete_fss_contents(status2, (*rule_contents));
+    f_macro_fss_objects_delete(status2, (*rule_objects));
+    f_macro_fss_contents_delete(status2, (*rule_contents));
     */
 
-    f_delete_dynamic_string(buffer);
-    f_delete_fss_objects(objects);
-    f_delete_fss_contents(contents);
+    f_macro_string_dynamic_delete(buffer);
+    f_macro_fss_objects_delete(objects);
+    f_macro_fss_contents_delete(contents);
     return status;
   }
 #endif // _di_init_process_main_rule_

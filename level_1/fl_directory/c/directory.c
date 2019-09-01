@@ -25,14 +25,14 @@ extern "C" {
         // there is no reason to include "." and ".." in the directory listing
         if (strncmp(listing[counter]->d_name, "..", 3) != 0 && strncmp(listing[counter]->d_name, ".", 2) != 0) {
           if (names->used >= names->size) {
-            f_resize_dynamic_strings(status, (*names), names->used + fl_directory_default_allocation_step);
+            f_macro_string_dynamics_resize(status, (*names), names->used + fl_directory_default_allocation_step);
 
             if (f_status_is_error(status)) {
               return status;
             }
           }
 
-          f_resize_dynamic_string(status, names->array[names->used], size);
+          f_macro_string_dynamic_resize(status, names->array[names->used], size);
           if (f_status_is_error(status)) {
             return status;
           }

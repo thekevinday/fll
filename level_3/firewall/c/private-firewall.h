@@ -69,9 +69,9 @@ typedef struct {
   }
 
 #define firewall_macro_delete_fss_buffers(status, buffer, objects, contents) \
-  f_delete_dynamic_string(status, buffer); \
-  f_delete_fss_objects(status, objects); \
-  f_delete_fss_contents(status, contents);
+  f_macro_string_dynamic_delete(status, buffer); \
+  f_macro_fss_objects_delete(status, objects); \
+  f_macro_fss_contents_delete(status, contents);
 
 #define firewall_macro_concat_string(destination, source, length) \
   memcpy((void *)(destination), source, sizeof(char) * length);
@@ -91,7 +91,7 @@ typedef struct {
 // TODO: also report: fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory");
 #define firewall_macro_append_argument_to_arguments(status, arguments, argument) \
   if (arguments.used >= arguments.size) { \
-    f_resize_dynamic_strings(status, arguments, arguments.used + firewall_default_allocation_step); \
+    f_macro_string_dynamics_resize(status, arguments, arguments.used + firewall_default_allocation_step); \
     \
     if (f_status_is_error(status)) break; \
   } \

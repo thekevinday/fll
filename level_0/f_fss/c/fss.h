@@ -90,13 +90,17 @@ enum {
 
 #ifndef _di_f_fss_delimits_
   typedef f_string_locations f_fss_delimits;
+
   #define f_fss_delimits_initialize f_string_locations_initialize
 
-  #define f_delete_fss_delimits(status, array)  f_delete_string_location_array(status, array)
-  #define f_destroy_fss_delimits(status, array) f_destroy_string_location_array(status, array)
+  #define f_macro_fss_delimits_clear(delimits) f_macro_memory_structure_clear(delimits)
 
-  #define f_resize_fss_delimits(status, array, new_length) f_resize_string_location_array(status, array, new_length)
-  #define f_adjust_fss_delimits(status, array, new_length) f_adjust_string_location_array(status, array, new_length)
+  #define f_macro_fss_delimits_new(status, delimits)  f_macro_strings_string_locations_new(status, delimits)
+  #define f_macro_fss_delimits_delete(status, delimits)  f_macro_strings_string_locations_delete(status, delimits)
+  #define f_macro_fss_delimits_destroy(status, delimits) f_macro_strings_string_locations_destroy(status, delimits)
+
+  #define f_macro_fss_delimits_resize(status, delimits, new_length) f_macro_strings_string_locations_resize(status, delimits, new_length)
+  #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_strings_string_locations_adjust(status, delimits  , new_length)
 #endif // _di_f_fss_delimits_
 
 /**
@@ -129,18 +133,15 @@ enum {
 
   #define f_fss_headers_initialize { 0, 0, 0 }
 
-  #define f_delete_fss_headers(status, headers) \
-    f_delete_structure(status, headers, f_fss_header)
+  #define f_clear_fss_headers(headers) f_macro_memory_structure_clear(headers)
 
-  #define f_destroy_fss_headers(status, headers) \
-    f_destroy_structure(status, headers, f_fss_header)
+  #define f_macro_fss_headers_new(status, headers, length) f_macro_memory_structure_new(status, headers, f_fss_header, length)
 
-  #define f_resize_fss_headers(status, headers, new_length) \
-    f_resize_structure(status, headers, f_fss_header, new_length)
+  #define f_macro_fss_headers_delete(status, headers) f_macro_memory_structure_delete(status, headers, f_fss_header)
+  #define f_macro_fss_headers_destroy(status, headers) f_macro_memory_structure_destroy(status, headers, f_fss_header)
 
-
-  #define f_adjust_fss_headers(status, headers, new_length) \
-    f_adjust_structure(status, headers, f_fss_header, new_length)
+  #define f_macro_fss_headers_resize(status, headers, new_length) f_macro_memory_structure_resize(status, headers, f_fss_header, new_length)
+  #define f_macro_fss_headers_adjust(status, headers, new_length) f_macro_memory_structure_adjust(status, headers, f_fss_header, new_length)
 #endif // _di_f_fss_headers_
 
 
@@ -151,15 +152,14 @@ enum {
   typedef f_string_location f_fss_object;
   #define f_fss_object_initialize f_string_location_initialize
 
-  #define f_new_fss_object(status, object, length)   status = f_new_array((void **) & object, sizeof(f_fss_object), length)
-  #define f_delete_fss_object(status, object)        status = f_delete((void **) & object)
-  #define f_destroy_fss_object(status, object, size) status = f_destroy((void **) & object, sizeof(f_fss_object), size)
+  #define f_macro_fss_object_new(status, object, length) status = f_new_array((void **) & object, sizeof(f_fss_object), length)
 
-  #define f_resize_fss_object(status, object, old_length, new_length) \
-    status = f_resize((void **) & object, sizeof(f_fss_object), old_length, new_length)
+  #define f_macro_fss_object_delete(status, object) status = f_delete((void **) & object)
+  #define f_macro_fss_object_destroy(status, object, size) status = f_destroy((void **) & object, sizeof(f_fss_object), size)
 
-  #define f_adjust_fss_object(status, object, old_length, new_length) \
-    status = f_adjust((void **) & object, sizeof(f_fss_object), old_length, new_length)
+  #define f_macro_fss_object_resize(status, object, old_length, new_length) status = f_resize((void **) & object, sizeof(f_fss_object), old_length, new_length)
+
+  #define f_macro_fss_object_adjust(status, object, old_length, new_length) status = f_adjust((void **) & object, sizeof(f_fss_object), old_length, new_length)
 #endif // _di_fss_object_
 
 /**
@@ -177,17 +177,15 @@ enum {
 
   #define f_fss_objects_initialize { 0, 0, 0 }
 
-  #define f_delete_fss_objects(status, objects) \
-    f_delete_structure(status, objects, f_fss_object)
+  #define f_macro_fss_objects_clear(objects) f_macro_memory_structure_clear(objects)
 
-  #define f_destroy_fss_objects(status, objects) \
-    f_destroy_structure(status, objects, f_fss_object)
+  #define f_macro_fss_objects_new(status, objects, length) f_macro_memory_structure_new(status, objects, f_fss_object, length)
 
-  #define f_resize_fss_objects(status, objects, new_length) \
-    f_resize_structure(status, objects, f_fss_object, new_length)
+  #define f_macro_fss_objects_delete(status, objects) f_macro_memory_structure_delete(status, objects, f_fss_object)
+  #define f_macro_fss_objects_destroy(status, objects) f_macro_memory_structure_destroy(status, objects, f_fss_object)
 
-  #define f_adjust_fss_objects(status, objects, new_length) \
-    f_destroy_structure(status, objects, f_fss_object, new_length)
+  #define f_macro_fss_objects_resize(status, objects, new_length) f_macro_memory_structure_resize(status, objects, f_fss_object, new_length)
+  #define f_macro_fss_objects_adjust(status, objects, new_length) f_macro_memory_structure_destroy(status, objects, f_fss_object, new_length)
 #endif // _di_fss_objects_
 
 /**
@@ -208,17 +206,15 @@ enum {
 
   #define f_fss_content_initialize { 0, 0, 0 }
 
-  #define f_delete_fss_content(status, content) \
-    f_delete_structure(status, content, f_string_location)
+  #define f_macro_fss_content_clear(content) f_macro_memory_structure_new(content)
 
-  #define f_destroy_fss_content(status, content) \
-    f_destroy_structure(status, content, f_string_location)
+  #define f_macro_fss_content_new(status, content, length) f_macro_memory_structure_new(status, content, f_string_location, length)
 
-  #define f_resize_fss_content(status, content, new_length) \
-    f_resize_structure(status, content, f_string_location, new_length)
+  #define f_macro_fss_content_delete(status, content) f_macro_memory_structure_delete(status, content, f_string_location)
+  #define f_macro_fss_content_destroy(status, content) f_macro_memory_structure_destroy(status, content, f_string_location)
 
-  #define f_adjust_fss_content(status, content, new_length) \
-    f_adjust_structure(status, content, f_string_location, new_length)
+  #define f_macro_fss_content_resize(status, content, new_length) f_macro_memory_structure_resize(status, content, f_string_location, new_length)
+  #define f_macro_fss_content_adjust(status, content, new_length) f_macro_memory_structure_adjust(status, content, f_string_location, new_length)
 #endif // _di_fss_content_
 
 /**
@@ -236,17 +232,15 @@ enum {
 
   #define f_fss_contents_initialize { 0, 0, 0 }
 
-  #define f_delete_fss_contents(status, contents) \
-    f_delete_structures(status, contents, f_fss_content)
+  #define f_macro_fss_contents_clear(contents) f_macro_memory_structures_clear(contents)
 
-  #define f_destroy_fss_contents(status, contents) \
-    f_destroy_structures(status, contents, f_fss_content)
+  #define f_macro_fss_contents_new(status, contents, length) f_macro_memory_structures_delete(status, contents, f_fss_content, length)
 
-  #define f_resize_fss_contents(status, contents, new_length) \
-    f_resize_structures(status, contents, f_fss_content, new_length, f_array_length)
+  #define f_macro_fss_contents_delete(status, contents) f_macro_memory_structures_delete(status, contents, f_fss_content)
+  #define f_macro_fss_contents_destroy(status, contents) f_macro_memory_structures_destroy(status, contents, f_fss_content)
 
-  #define f_adjust_fss_contents(status, contents, new_length) \
-    f_resize_structures(status, contents, f_fss_content, new_length, f_array_length)
+  #define f_macro_fss_contents_resize(status, contents, new_length) f_macro_memory_structures_resize(status, contents, f_fss_content, new_length, f_array_length)
+  #define f_macro_fss_contents_adjust(status, contents, new_length) f_macro_memory_structures_resize(status, contents, f_fss_content, new_length, f_array_length)
 #endif // _di_f_fss_contents_
 
 #ifdef __cplusplus

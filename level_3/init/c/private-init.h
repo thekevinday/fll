@@ -48,12 +48,12 @@ extern "C" {
     }
 
   #define delete_init_rule(status, rule) \
-    f_delete_dynamic_string(status, rule.name); \
+    f_macro_string_dynamic_delete(status, rule.name); \
     if (status == f_none) { \
-      f_delete_dynamic_string(status, rule.directory); \
+      f_macro_string_dynamic_delete(status, rule.directory); \
     } \
     if (status == f_none) { \
-      f_delete_dynamic_string(status, rule.file); \
+      f_macro_string_dynamic_delete(status, rule.file); \
     } \
     if (status == f_none) { \
       rule.require = 0; \
@@ -61,12 +61,12 @@ extern "C" {
     }
 
   #define destroy_init_rule(status, rule) \
-    f_destroy_dynamic_string(status, rule.name); \
+    f_macro_string_dynamic_destroy(status, rule.name); \
     if (status == f_none) { \
-      f_destroy_dynamic_string(status, rule.directory); \
+      f_macro_string_dynamic_destroy(status, rule.directory); \
     } \
     if (status == f_none) { \
-      f_destroy_dynamic_string(status, rule.file); \
+      f_macro_string_dynamic_destroy(status, rule.file); \
     } \
     if (status == f_none) { \
       rule.require = 0; \
@@ -84,7 +84,7 @@ extern "C" {
 
   #define init_rules_initialize { 0, 0, 0 }
 
-  #define f_delete_init_rules(status, rules) \
+  #define f_init_rules_delete(status, rules) \
     status = f_none; \
     while (rules.size > 0) { \
       --rules.size; \
@@ -94,7 +94,7 @@ extern "C" {
     if (status == f_none) status = f_delete((f_void_p *) & rules.array, sizeof(init_rule), rules.size); \
     if (status == f_none) rules.used = 0;
 
-  #define f_destroy_init_rules(status, rules) \
+  #define f_init_rules_destroy(status, rules) \
     status = f_none; \
     while (rules.size > 0) { \
       --rules.size; \
@@ -104,7 +104,7 @@ extern "C" {
     if (status == f_none) status = f_destroy((f_void_p *) & rules.array, sizeof(init_rule), rules.size); \
     if (status == f_none) rules.used = 0;
 
-  #define f_resize_init_rules(status, rules, new_length) \
+  #define f_init_rules_resize(status, rules, new_length) \
     status = f_none; \
     if (new_length < rules.size) { \
       f_string_length i = rules.size - new_length; \
@@ -125,7 +125,7 @@ extern "C" {
       if (rules.used > rules.size) rules.used = new_length; \
     }
 
-  #define f_adjust_init_rules(status, rules, new_length) \
+  #define f_init_rules_adjust(status, rules, new_length) \
     status = f_none; \
     if (new_length < rules.size) { \
       f_string_length i = rules.size - new_length; \
@@ -161,13 +161,13 @@ extern "C" {
     }
 
   #define delete_init_category(status, category) \
-    f_delete_dynamic_string(status, category.name); \
+    f_macro_string_dynamic_delete(status, category.name); \
     if (status == f_none) { \
       delete_init_rule(status, category.last); \
     }
 
   #define destroy_init_category(status, category) \
-    f_destroy_dynamic_string(status, category.name); \
+    f_macro_string_dynamic_destroy(status, category.name); \
     if (status == f_none) { \
       destroy_init_rule(status, category.last); \
     }
@@ -184,7 +184,7 @@ extern "C" {
 
   #define init_categorys_initialize { 0, 0, 0 }
 
-  #define f_delete_init_categorys(status, categorys) \
+  #define f_init_categorys_delete(status, categorys) \
     status = f_none; \
     while (categorys.size > 0) { \
       --categorys.size; \
@@ -194,7 +194,7 @@ extern "C" {
     if (status == f_none) status = f_delete((f_void_p *) & categorys.array, sizeof(init_category), categorys.size); \
     if (status == f_none) categorys.used = 0;
 
-  #define f_destroy_init_categorys(status, categorys) \
+  #define f_init_categorys_destroy(status, categorys) \
     status = f_none; \
     while (categorys.size > 0) { \
       --categorys.size; \
@@ -204,7 +204,7 @@ extern "C" {
     if (status == f_none) status = f_destroy((f_void_p *) & categorys.array, sizeof(init_category), categorys.size); \
     if (status == f_none) categorys.used = 0;
 
-  #define f_resize_init_categorys(status, categorys, new_length) \
+  #define f_init_categorys_resize(status, categorys, new_length) \
     status = f_none; \
     if (new_length < categorys.size) { \
       f_string_length i = categorys.size - new_length; \
@@ -225,7 +225,7 @@ extern "C" {
       if (categorys.used > categorys.size) categorys.used = new_length; \
     }
 
-  #define f_adjust_init_categorys(status, categorys, new_length) \
+  #define f_init_categorys_adjust(status, categorys, new_length) \
     status = f_none; \
     if (new_length < categorys.size) { \
       f_string_length i = categorys.size - new_length; \

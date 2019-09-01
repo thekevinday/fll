@@ -13,7 +13,7 @@ extern "C" {
     f_status status = f_none;
 
     if (serialized->used + value.used + 1 >= serialized->size) {
-      f_resize_dynamic_string(status, (*serialized), serialized->size + value.used + 1);
+      f_macro_string_dynamic_resize(status, (*serialized), serialized->size + value.used + 1);
 
       if (f_status_is_error(status)) return status;
     }
@@ -50,7 +50,7 @@ extern "C" {
 
       if (serialized.string[i] == f_serialized_simple_splitter || i == serialized.used) {
         if (locations->used + width >= locations->size) {
-          f_resize_string_locations(status, (*locations), locations->size + f_serialized_default_allocation_step);
+          f_macro_strings_string_locations_resize(status, (*locations), locations->size + f_serialized_default_allocation_step);
 
           if (f_status_is_error(status)) return status;
         }

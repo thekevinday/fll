@@ -856,7 +856,7 @@ extern "C" {
     f_u_short width = f_macro_utf_character_width_is(utf_character);
 
     if (max_width == 0) {
-      f_new_string(status, *character, width);
+      f_macro_strings_string_new(status, *character, width);
 
       if (f_status_is_error(status)) return status;
 

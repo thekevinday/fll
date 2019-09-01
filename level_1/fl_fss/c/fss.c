@@ -211,7 +211,7 @@ extern "C" {
     // 1: Prepare the buffer to handle a size of f_fss_max_header_length
     location.total_elements = f_fss_max_header_length;
 
-    f_adjust_dynamic_string(status, buffer, location.total_elements + 1);
+    f_macro_string_dynamic_adjust(status, buffer, location.total_elements + 1);
 
     if (f_status_is_error(status)) {
       return status;

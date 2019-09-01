@@ -32,7 +32,7 @@ extern "C" {
     // populate the buffer
     do {
       if (buffer->size <= size) {
-        f_resize_dynamic_string(status, (*buffer), size);
+        f_macro_string_dynamic_resize(status, (*buffer), size);
 
         if (f_status_is_error(status)) {
           return status;
@@ -77,7 +77,7 @@ extern "C" {
     // populate the buffer
     do {
       if (buffer->size <= size) {
-        f_resize_dynamic_string(status, (*buffer), size);
+        f_macro_string_dynamic_resize(status, (*buffer), size);
 
         if (f_status_is_error(status)) {
           return status;

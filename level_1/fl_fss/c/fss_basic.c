@@ -98,10 +98,10 @@ extern "C" {
         if (delimits.used >= delimits.size) {
           f_status allocation_status = f_none;
 
-           f_resize_string_lengths(allocation_status, delimits, delimits.size + f_fss_default_allocation_step);
+           f_macro_strings_string_lengths_resize(allocation_status, delimits, delimits.size + f_fss_default_allocation_step);
 
           if (f_status_is_error(allocation_status)) {
-            f_delete_string_lengths(allocation_status, delimits);
+            f_macro_strings_string_lengths_delete(allocation_status, delimits);
             return allocation_status;
           }
         }
@@ -195,10 +195,10 @@ extern "C" {
               if (delimits.used + (slash_count / 2) >= delimits.size) {
                 f_status allocation_status = f_none;
 
-                f_resize_string_lengths(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
+                f_macro_strings_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
                 if (f_status_is_error(allocation_status)) {
-                  f_delete_string_lengths(allocation_status, delimits);
+                  f_macro_strings_string_lengths_delete(allocation_status, delimits);
                   return allocation_status;
                 }
               }
@@ -234,7 +234,7 @@ extern "C" {
                 {
                   f_status allocation_status = f_none;
 
-                  f_delete_string_lengths(allocation_status, delimits);
+                  f_macro_strings_string_lengths_delete(allocation_status, delimits);
                 }
 
                 status = fl_fss_increment_buffer(*buffer, input, 1);
@@ -270,10 +270,10 @@ extern "C" {
               if (delimits.used + (slash_count / 2) >= delimits.size) {
                 f_status allocation_status = f_none;
 
-                f_resize_string_lengths(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
+                f_macro_strings_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
                 if (f_status_is_error(allocation_status)) {
-                  f_delete_string_lengths(allocation_status, delimits);
+                  f_macro_strings_string_lengths_delete(allocation_status, delimits);
                   return allocation_status;
                 }
               }
@@ -335,7 +335,7 @@ extern "C" {
               {
                 f_status allocation_status = f_none;
 
-                f_delete_string_lengths(allocation_status, delimits);
+                f_macro_strings_string_lengths_delete(allocation_status, delimits);
               }
 
               status = fl_fss_increment_buffer(*buffer, input, 1);
@@ -355,7 +355,7 @@ extern "C" {
           {
             f_status allocation_status = f_none;
 
-            f_delete_string_lengths(allocation_status, delimits);
+            f_macro_strings_string_lengths_delete(allocation_status, delimits);
           }
 
           status = fl_fss_increment_buffer(*buffer, input, 1);
@@ -383,7 +383,7 @@ extern "C" {
     {
       f_status allocation_status = f_none;
 
-      f_delete_string_lengths(allocation_status, delimits);
+      f_macro_strings_string_lengths_delete(allocation_status, delimits);
     }
 
 
@@ -474,7 +474,7 @@ extern "C" {
     pre_allocate_size = buffer->used + (input->stop - input->start) + 3 + f_fss_default_allocation_step_string;
 
     if (pre_allocate_size > buffer->size) {
-      f_resize_dynamic_string(status, (*buffer), pre_allocate_size);
+      f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size);
 
       if (f_status_is_error(status)) return status;
     }
@@ -505,7 +505,7 @@ extern "C" {
         pre_allocate_size++;
 
         if (pre_allocate_size > buffer->size) {
-          f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
+          f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
 
           if (f_status_is_error(status)) return status;
         }
@@ -522,7 +522,7 @@ extern "C" {
       pre_allocate_size++;
 
       if (pre_allocate_size > buffer->size) {
-        f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
+        f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
 
         if (f_status_is_error(status)) return status;
       }
@@ -560,7 +560,7 @@ extern "C" {
         pre_allocate_size++;
 
         if (pre_allocate_size > buffer->size) {
-          f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
+          f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
 
           if (f_status_is_error(status)) return status;
         }
@@ -583,7 +583,7 @@ extern "C" {
             pre_allocate_size++;
 
             if (pre_allocate_size > buffer->size) {
-              f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
+              f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
 
               if (f_status_is_error(status)) return status;
             }
@@ -613,7 +613,7 @@ extern "C" {
                 pre_allocate_size += slash_count;
 
                 if (pre_allocate_size > buffer->size) {
-                  f_resize_dynamic_string(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
+                  f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
 
                   if (f_status_is_error(status)) return status;
                 }
@@ -704,7 +704,7 @@ extern "C" {
     buffer_position.stop = buffer->used;
 
     if (pre_allocate_size > buffer->size) {
-      f_resize_dynamic_string(status, (*buffer), pre_allocate_size);
+      f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size);
 
       if (f_status_is_error(status)) return status;
     }

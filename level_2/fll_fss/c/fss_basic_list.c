@@ -18,13 +18,13 @@ extern "C" {
 
     do {
       if (objects->used >= objects->size) {
-        f_resize_fss_objects(status, (*objects), objects->used + f_fss_default_allocation_step);
+        f_macro_fss_objects_resize(status, (*objects), objects->used + f_fss_default_allocation_step);
 
         if (f_status_is_error(status)) {
           return status;
         }
 
-        f_resize_fss_contents(status, (*contents), contents->used + f_fss_default_allocation_step);
+        f_macro_fss_contents_resize(status, (*contents), contents->used + f_fss_default_allocation_step);
 
         if (f_status_is_error(status)) {
           return status;
@@ -41,7 +41,7 @@ extern "C" {
             if (contents->array[contents->used].used >= contents->array[contents->used].size) {
               f_status status = f_none;
 
-              f_resize_fss_content(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+              f_macro_fss_content_resize(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
 
               if (f_status_is_error(status)) {
                 return status;
@@ -81,7 +81,7 @@ extern "C" {
           if (contents->array[contents->used].used >= contents->array[contents->used].size) {
             f_status status = f_none;
 
-            f_resize_fss_content(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+            f_macro_fss_content_resize(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
 
             if (f_status_is_error(status)) {
               return status;
@@ -165,7 +165,7 @@ extern "C" {
       }
       else {
         if (buffer->used >= buffer->size) {
-          f_resize_dynamic_string(status, (*buffer), buffer->size + f_fss_default_allocation_step_string);
+          f_macro_string_dynamic_resize(status, (*buffer), buffer->size + f_fss_default_allocation_step_string);
           if (f_status_is_error(status)) return status;
         }
 

@@ -50,7 +50,7 @@ extern "C" {
     if (buffer->size - buffer->used - 1 < string_size) {
       f_status status = f_none;
 
-      f_resize_dynamic_string(status, (*buffer), buffer->used + string_size + 1); // the additional 1 is the EOS
+      f_macro_string_dynamic_resize(status, (*buffer), buffer->used + string_size + 1); // the additional 1 is the EOS
 
       if (f_status_is_error(status)) {
         return status;

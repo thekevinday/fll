@@ -256,7 +256,7 @@ extern "C" {
             } // for
           }
 
-          f_resize_dynamic_strings(status, arguments, 7);
+          f_macro_string_dynamics_resize(status, arguments, 7);
 
           if (f_status_is_error(status)) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
@@ -386,7 +386,7 @@ extern "C" {
           arguments.array[5].used = 0;
           arguments.array[6].used = 0;
 
-          f_delete_dynamic_strings(status, arguments);
+          f_macro_string_dynamics_delete(status, arguments);
           firewall_delete_local_data(&local);
           firewall_delete_data(data);
           return status;
@@ -602,7 +602,7 @@ extern "C" {
             {
               f_dynamic_string file_path = f_dynamic_string_initialize;
 
-              f_resize_dynamic_string(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
+              f_macro_string_dynamic_resize(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
 
               if (f_status_is_error(status)) {
                 fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
@@ -620,7 +620,7 @@ extern "C" {
 
               status = firewall_buffer_rules(file_path.string, f_true, &local, data);
 
-              f_delete_dynamic_string(status2, file_path);
+              f_macro_string_dynamic_delete(status2, file_path);
             }
 
             if (f_status_is_error(status)) {
@@ -731,13 +731,13 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < firewall_total_parameters) {
-      f_delete_string_lengths(status, data->parameters[i].additional);
+      f_macro_strings_string_lengths_delete(status, data->parameters[i].additional);
       i++;
     } // while
 
-    f_delete_dynamic_strings(status, data->chains);
-    f_delete_string_lengths(status, data->remaining);
-    f_delete_dynamic_strings(status, data->devices);
+    f_macro_string_dynamics_delete(status, data->chains);
+    f_macro_strings_string_lengths_delete(status, data->remaining);
+    f_macro_string_dynamics_delete(status, data->devices);
 
     fl_delete_color_context(status, data->context);
 

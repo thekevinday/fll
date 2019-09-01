@@ -211,9 +211,9 @@ extern "C" {
         }
 
         // clear buffers before continuing
-        f_delete_fss_contents(status2, data->contents);
-        f_delete_fss_objects(status2, data->objects);
-        f_delete_dynamic_string(status2, data->buffer);
+        f_macro_fss_contents_delete(status2, data->contents);
+        f_macro_fss_objects_delete(status2, data->objects);
+        f_macro_string_dynamic_delete(status2, data->buffer);
       }
 
       for (; counter < data->remaining.used; counter++) {
@@ -300,9 +300,9 @@ extern "C" {
         }
 
         // clear buffers before repeating the loop
-        f_delete_fss_contents(status2, data->contents);
-        f_delete_fss_objects(status2, data->objects);
-        f_delete_dynamic_string(status2, data->buffer);
+        f_macro_fss_contents_delete(status2, data->contents);
+        f_macro_fss_objects_delete(status2, data->objects);
+        f_macro_string_dynamic_delete(status2, data->buffer);
       } // for
     }
     else {
@@ -353,9 +353,9 @@ extern "C" {
       }
       else if (status == f_no_data_on_stop || status == f_no_data_on_eos) {
         // clear buffers, then attempt the next file
-        f_delete_fss_contents(status2, data->contents);
-        f_delete_fss_objects(status2, data->objects);
-        f_delete_dynamic_string(status2, data->buffer);
+        f_macro_fss_contents_delete(status2, data->contents);
+        f_macro_fss_objects_delete(status2, data->objects);
+        f_macro_string_dynamic_delete(status2, data->buffer);
 
         return f_status_set_warning(status);
       }
@@ -503,14 +503,14 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < fss_extended_read_total_parameters) {
-      f_delete_string_lengths(status, data->parameters[i].additional);
+      f_macro_strings_string_lengths_delete(status, data->parameters[i].additional);
       i++;
     } // while
 
-    f_delete_fss_contents(status, data->contents);
-    f_delete_fss_objects(status, data->objects);
-    f_delete_dynamic_string(status, data->buffer);
-    f_delete_string_lengths(status, data->remaining);
+    f_macro_fss_contents_delete(status, data->contents);
+    f_macro_fss_objects_delete(status, data->objects);
+    f_macro_string_dynamic_delete(status, data->buffer);
+    f_macro_strings_string_lengths_delete(status, data->remaining);
 
     fl_delete_color_context(status, data->context);
 

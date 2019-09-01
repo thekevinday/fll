@@ -20,10 +20,10 @@ extern "C" {
       f_status status = f_none;
 
       if (result == 0) {
-        f_new_dynamic_string(status, (*result), size);
+        f_macro_string_dynamic_new(status, (*result), size);
       }
       else {
-        f_resize_dynamic_string(status, (*result), size);
+        f_macro_string_dynamic_resize(status, (*result), size);
       }
 
       if (f_status_is_error(status)) {

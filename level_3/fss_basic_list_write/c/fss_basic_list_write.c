@@ -172,7 +172,7 @@ extern "C" {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
           }
 
-          f_delete_dynamic_string(status2, input);
+          f_macro_string_dynamic_delete(status2, input);
           fss_basic_list_write_delete_data(data);
           return f_status_set_error(status);
         }
@@ -195,7 +195,7 @@ extern "C" {
           }
         }
 
-        f_delete_dynamic_string(status, input);
+        f_macro_string_dynamic_delete(status, input);
       }
       else if (data->parameters[fss_basic_list_write_parameter_string].result == f_console_result_additional) {
         f_dynamic_string input = f_dynamic_string_initialize;
@@ -291,11 +291,11 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < fss_basic_list_write_total_parameters) {
-      f_delete_string_lengths(status, data->parameters[i].additional);
+      f_macro_strings_string_lengths_delete(status, data->parameters[i].additional);
       i++;
     } // while
 
-    f_delete_string_lengths(status, data->remaining);
+    f_macro_strings_string_lengths_delete(status, data->remaining);
     fl_delete_color_context(status, data->context);
 
     return f_none;

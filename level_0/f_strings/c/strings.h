@@ -82,14 +82,14 @@ extern "C" {
   #define f_string_max_size   f_signed_long_size
   #define f_string_initialize f_eos
 
-  #define f_new_string(status, string, length)   status = f_new_array((void **) & string, sizeof(f_string), length)
-  #define f_delete_string(status, string, size)  status = f_delete((void **) & string, sizeof(f_string), size)
-  #define f_destroy_string(status, string, size) status = f_destroy((void **) & string, sizeof(f_string), size)
+  #define f_macro_strings_string_new(status, string, length)   status = f_new_array((void **) & string, sizeof(f_string), length)
+  #define f_macro_strings_string_delete(status, string, size)  status = f_delete((void **) & string, sizeof(f_string), size)
+  #define f_macro_strings_string_destroy(status, string, size) status = f_destroy((void **) & string, sizeof(f_string), size)
 
-  #define f_resize_string(status, string, old_length, new_length) \
+  #define f_macro_strings_string_resize(status, string, old_length, new_length) \
     status = f_resize((void **) & string, sizeof(f_string), old_length, new_length)
 
-  #define f_adjust_string(status, string, old_length, new_length) \
+  #define f_macro_strings_string_adjust(status, string, old_length, new_length) \
     status = f_adjust((void **) & string, sizeof(f_string), old_length, new_length)
 #endif // _di_f_have_string_
 
@@ -98,14 +98,14 @@ extern "C" {
 
   #define f_string_length_printf string_format_long_integer
 
-  #define f_new_string_length(status, string, length)    status = f_new_array((void **) & string, sizeof(f_string_length), length)
-  #define f_delete_string_length(status, string, length) status = f_delete((void **) & string, sizeof(f_string_length), length)
-  #define f_destroy_string_length(status, string, size)  status = f_destroy((f_void_P *) & string, sizeof(f_string_length), size)
+  #define f_macro_strings_string_length_new(status, string, length)    status = f_new_array((void **) & string, sizeof(f_string_length), length)
+  #define f_macro_strings_string_length_delete(status, string, length) status = f_delete((void **) & string, sizeof(f_string_length), length)
+  #define f_macro_strings_string_length_destroy(status, string, size)  status = f_destroy((f_void_P *) & string, sizeof(f_string_length), size)
 
-  #define f_resize_string_length(status, length, old_length, new_length) \
+  #define f_macro_strings_string_length_resize(status, length, old_length, new_length) \
     status = f_resize((void **) & length, sizeof(f_string_length), old_length, new_length)
 
-  #define f_adjust_string_length(status, length, old_length, new_length) \
+  #define f_macro_strings_string_length_adjust(status, length, old_length, new_length) \
     status = f_adjust((void **) & length, sizeof(f_string_length), old_length, new_length)
 #endif // _di_f_string_length_
 
@@ -122,20 +122,20 @@ extern "C" {
 
   #define f_string_lengths_initialize { 0, 0, 0 }
 
-  #define f_new_string_lengths(status, lengths) \
-    f_new_structure(status, lengths, f_string_length)
+  #define f_macro_strings_string_lengths_new(status, lengths) \
+    f_macro_memory_structure_new(status, lengths, f_string_length)
 
-  #define f_delete_string_lengths(status, lengths) \
-    f_delete_structure(status, lengths, f_string_length)
+  #define f_macro_strings_string_lengths_delete(status, lengths) \
+    f_macro_memory_structure_delete(status, lengths, f_string_length)
 
-  #define f_destroy_string_lengths(status, lengths) \
-    f_destroy_structure(status, lengths, f_string_length)
+  #define f_macro_strings_string_lengths_destroy(status, lengths) \
+    f_macro_memory_structure_destroy(status, lengths, f_string_length)
 
-  #define f_resize_string_lengths(status, lengths, new_length) \
-    f_resize_structure(status, lengths, f_string_length, new_length)
+  #define f_macro_strings_string_lengths_resize(status, lengths, new_length) \
+    f_macro_memory_structure_resize(status, lengths, f_string_length, new_length)
 
-  #define f_adjust_string_lengths(status, lengths, new_length) \
-    f_adjust_structure(status, lengths, f_string_length, new_length)
+  #define f_macro_strings_string_lengths_adjust(status, lengths, new_length) \
+    f_macro_memory_structure_adjust(status, lengths, f_string_length, new_length)
 #endif // _di_f_string_lengths_
 
 /**
@@ -150,14 +150,14 @@ extern "C" {
 
   #define f_string_location_initialize { 1, 0 }
 
-  #define f_new_string_location(status, string_location, length)   status = f_new_array((void **) & string_location, sizeof(f_string_location), length)
-  #define f_delete_string_location(status, string_location, size)  status = f_delete((void **) & string_location, sizeof(f_string_location), size)
-  #define f_destroy_string_location(status, string_location, size) status = f_destroy((void **) & string_location, sizeof(f_string_location), size)
+  #define f_macro_strings_string_location_new(status, string_location, length)   status = f_new_array((void **) & string_location, sizeof(f_string_location), length)
+  #define f_macro_strings_string_location_delete(status, string_location, size)  status = f_delete((void **) & string_location, sizeof(f_string_location), size)
+  #define f_macro_strings_string_location_destroy(status, string_location, size) status = f_destroy((void **) & string_location, sizeof(f_string_location), size)
 
-  #define f_resize_string_location(status, string_location, old_length, new_length) \
+  #define f_macro_strings_string_location_resize(status, string_location, old_length, new_length) \
     status = f_resize((void **) & string_location, sizeof(f_string_location), old_length, new_length)
 
-  #define f_adjust_string_location(status, string_location, old_length, new_length) \
+  #define f_macro_strings_string_location_adjust(status, string_location, old_length, new_length) \
     status = f_adjust((void **) & string_location, sizeof(f_string_location), old_length, new_length)
 #endif // _di_f_string_location_
 
@@ -177,22 +177,22 @@ extern "C" {
   #define f_string_locations_initialize {0, 0, 0}
 
   #define f_clear_string_locations(locations) \
-    f_clear_structure(locations)
+    f_macro_memory_structure_clear(locations)
 
-  #define f_new_string_locations(status, locations, length) \
-    f_new_structure(status, locations, f_string_location, length)
+  #define f_macro_strings_string_locations_new(status, locations, length) \
+    f_macro_memory_structure_new(status, locations, f_string_location, length)
 
-  #define f_delete_string_locations(status, locations) \
-    f_delete_structure(status, locations, f_string_location)
+  #define f_macro_strings_string_locations_delete(status, locations) \
+    f_macro_memory_structure_delete(status, locations, f_string_location)
 
-  #define f_destroy_string_locations(status, locations) \
-    f_destroy_structure(status, locations, f_string_location)
+  #define f_macro_strings_string_locations_destroy(status, locations) \
+    f_macro_memory_structure_destroy(status, locations, f_string_location)
 
-  #define f_resize_string_locations(status, locations, new_length) \
-    f_resize_structure(status, locations, f_string_location, new_length)
+  #define f_macro_strings_string_locations_resize(status, locations, new_length) \
+    f_macro_memory_structure_resize(status, locations, f_string_location, new_length)
 
-  #define f_adjust_string_locations(status, locations, new_length) \
-    f_adjust_structure(status, locations, f_string_location, new_length)
+  #define f_macro_strings_string_locations_adjust(status, locations, new_length) \
+    f_macro_memory_structure_adjust(status, locations, f_string_location, new_length)
 #endif // _di_f_string_locations_
 
 /**
@@ -216,7 +216,7 @@ extern "C" {
     dynamic.size = 0; \
     dynamic.used = 0;
 
-  #define f_new_dynamic_string(status, dynamic, new_length) \
+  #define f_macro_string_dynamic_new(status, dynamic, new_length) \
     f_clear_dynamic_string(dynamic) \
     status = f_new_array((void **) & dynamic.string, sizeof(f_string), new_length); \
     if (status == f_none) { \
@@ -224,28 +224,28 @@ extern "C" {
       dynamic.used = 0; \
     }
 
-  #define f_delete_dynamic_string(status, dynamic) \
+  #define f_macro_string_dynamic_delete(status, dynamic) \
     status = f_delete((void **) & dynamic.string, sizeof(f_string), dynamic.size); \
     if (status == f_none) { \
       dynamic.size = 0; \
       dynamic.used = 0; \
     }
 
-  #define f_destroy_dynamic_string(status, dynamic) \
+  #define f_macro_string_dynamic_destroy(status, dynamic) \
     status = f_destroy((void **) & dynamic.string, sizeof(f_string), dynamic.size); \
     if (status == f_none) { \
       dynamic.size = 0; \
       dynamic.used = 0; \
     }
 
-  #define f_resize_dynamic_string(status, dynamic, new_length) \
+  #define f_macro_string_dynamic_resize(status, dynamic, new_length) \
     status = f_resize((void **) & dynamic.string, sizeof(f_string), dynamic.size, new_length); \
     if (status == f_none) { \
       dynamic.size = new_length; \
       if (dynamic.used > dynamic.size) dynamic.used = new_length; \
     }
 
-  #define f_adjust_dynamic_string(status, dynamic, new_length) \
+  #define f_macro_string_dynamic_adjust(status, dynamic, new_length) \
     status = f_adjust((void **) & dynamic.string, sizeof(f_string), dynamic.size, new_length); \
     if (status == f_none) { \
       dynamic.size = new_length; \
@@ -273,7 +273,7 @@ extern "C" {
     dynamics.size = 0; \
     dynamics.used = 0;
 
-  #define f_new_dynamic_strings(status, dynamics, length) \
+  #define f_macro_string_dynamics_new(status, dynamics, length) \
     dynamics.array = 0; \
     dynamics.size = 0; \
     dynamics.used = 0; \
@@ -283,32 +283,32 @@ extern "C" {
       dynamics.used = 0; \
     }
 
-  #define f_delete_dynamic_strings(status, dynamics) \
+  #define f_macro_string_dynamics_delete(status, dynamics) \
     status = f_none; \
     while (dynamics.size > 0) { \
       --dynamics.size; \
-      f_destroy_dynamic_string(status, dynamics.array[dynamics.size]); \
+      f_macro_string_dynamic_destroy(status, dynamics.array[dynamics.size]); \
       if (status != f_none) break; \
     } \
     if (status == f_none) status = f_delete((void **) & dynamics.array, sizeof(f_dynamic_string), dynamics.size); \
     if (status == f_none) dynamics.used = 0;
 
-  #define f_destroy_dynamic_strings(status, dynamics) \
+  #define f_macro_string_dynamics_destroy(status, dynamics) \
     status = f_none; \
     while (dynamics.size > 0) { \
       --dynamics.size; \
-      f_destroy_dynamic_string(status, dynamics.array[dynamics.size]); \
+      f_macro_string_dynamic_destroy(status, dynamics.array[dynamics.size]); \
       if (status != f_none) break; \
     } \
     if (status == f_none) status = f_destroy((void **) & dynamics.array, sizeof(f_dynamic_string), dynamics.size); \
     if (status == f_none) dynamics.used = 0;
 
-  #define f_resize_dynamic_strings(status, dynamics, new_length) \
+  #define f_macro_string_dynamics_resize(status, dynamics, new_length) \
     status = f_none; \
     if (new_length < dynamics.size) { \
       f_string_length i = dynamics.size - new_length; \
       for (; i < dynamics.size; ++i) { \
-        f_destroy_dynamic_string(status, dynamics.array[i]); \
+        f_macro_string_dynamic_destroy(status, dynamics.array[i]); \
         if (status != f_none) break; \
       } \
     } \
@@ -324,12 +324,12 @@ extern "C" {
       if (dynamics.used > dynamics.size) dynamics.used = new_length; \
     }
 
-  #define f_adjust_dynamic_strings(status, dynamics, new_length) \
+  #define f_macro_string_dynamics_adjust(status, dynamics, new_length) \
     status = f_none; \
     if (new_length < dynamics.size) { \
       f_string_length i = dynamics.size - new_length; \
       for (; i < dynamics.size; ++i) { \
-        f_destroy_dynamic_string(status, dynamics.array[i], f_dynamic_string); \
+        f_macro_string_dynamic_destroy(status, dynamics.array[i], f_dynamic_string); \
         if (status != f_none) break; \
       } \
     } \
