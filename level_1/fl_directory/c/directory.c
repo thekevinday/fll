@@ -43,11 +43,11 @@ extern "C" {
         }
 
         // FIXME: the second and third paramater are probably wrong
-        f_delete((void **) & listing[counter], sizeof(struct dirent), 0);
+        f_memory_delete((void **) & listing[counter], sizeof(struct dirent), 0);
     }
 
     // FIXME: the second and third paramater are probably wrong
-    f_delete((void **) & listing, sizeof(struct dirent *), 0);
+    f_memory_delete((void **) & listing, sizeof(struct dirent *), 0);
 
     if (length == 0) {
       // an empty directory
