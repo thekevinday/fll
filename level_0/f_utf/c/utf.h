@@ -35,6 +35,7 @@
 #define _F_utf_h
 
 // libc includes
+#include <ctype.h>
 #include <string.h>
 
 // fll includes
@@ -88,12 +89,12 @@ extern "C" {
   #define f_utf_byte_off_3 0xf0 // 1111 0000
   #define f_utf_byte_off_4 0xf8 // 1111 1000
 
-  #define f_macro_utf_byte_is(character) (character & f_utf_byte_1)
+  #define f_macro_utf_byte_is(character) ((character) & f_utf_byte_1)
 
-  #define f_macro_utf_byte_is_1(character) ((character & f_utf_byte_off_1) == f_utf_byte_1) // (10xx xxxx & 1100 0000) == 1000 0000
-  #define f_macro_utf_byte_is_2(character) ((character & f_utf_byte_off_2) == f_utf_byte_2) // (110x xxxx & 1110 0000) == 1100 0000
-  #define f_macro_utf_byte_is_3(character) ((character & f_utf_byte_off_3) == f_utf_byte_3) // (1110 xxxx & 1111 0000) == 1110 0000
-  #define f_macro_utf_byte_is_4(character) ((character & f_utf_byte_off_4) == f_utf_byte_4) // (1111 0xxx & 1111 1000) == 1111 0000
+  #define f_macro_utf_byte_is_1(character) (((character) & f_utf_byte_off_1) == f_utf_byte_1) // (10xx xxxx & 1100 0000) == 1000 0000
+  #define f_macro_utf_byte_is_2(character) (((character) & f_utf_byte_off_2) == f_utf_byte_2) // (110x xxxx & 1110 0000) == 1100 0000
+  #define f_macro_utf_byte_is_3(character) (((character) & f_utf_byte_off_3) == f_utf_byte_3) // (1110 xxxx & 1111 0000) == 1110 0000
+  #define f_macro_utf_byte_is_4(character) (((character) & f_utf_byte_off_4) == f_utf_byte_4) // (1111 0xxx & 1111 1000) == 1111 0000
 
   #define f_macro_utf_byte_width(character)    ((!f_macro_utf_byte_is(character) || f_macro_utf_byte_is_1(character)) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4)))
   #define f_macro_utf_byte_width_is(character) (f_macro_utf_byte_is(character) ? (f_macro_utf_byte_is_1(character) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4))) : 0)
@@ -103,6 +104,9 @@ extern "C" {
  * Provide a basic UTF-8 character as a single 4-byte variable.
  *
  * This is intended to be used when a single variable is desired to represent a 1-byte, 2-byte, 3-byte, or even 4-byte character.
+ *
+ * This "character" type is stored as a big-endian 4-byte integer (32-bits).
+ * A helper function, f_utf_is_big_endian(), is provided to detect system endianness so that character arrays (char []) can be correctly processed.
  *
  * The byte structure is intended to be read left to right.
  *
@@ -116,6 +120,8 @@ extern "C" {
  *
  * The f_macro_utf_character_width is used to determine the width of the UTF-8 character based on f_macro_utf_byte_width.
  * The f_macro_utf_character_width_is is used to determine the width of the UTF-8 character based on f_macro_utf_byte_width_is.
+ *
+ * @see f_utf_is_big_endian()
  */
 #ifndef _di_f_utf_character_
   typedef uint32_t f_utf_character;
@@ -132,19 +138,305 @@ extern "C" {
   #define f_utf_character_mask_char_3 0x0000ff00 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
   #define f_utf_character_mask_char_4 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
 
-  #define f_macro_utf_character_to_char_1(character) ((f_utf_character_mask_char_1 & character) >> 24) // grab first byte.
-  #define f_macro_utf_character_to_char_2(character) ((f_utf_character_mask_char_2 & character) >> 16) // grab second byte.
-  #define f_macro_utf_character_to_char_3(character) ((f_utf_character_mask_char_3 & character) >> 8) // grab third byte.
-  #define f_macro_utf_character_to_char_4(character) (f_utf_character_mask_char_4 & character) // grab fourth byte.
+  #define f_macro_utf_character_to_char_1(character) (((character) & f_utf_character_mask_char_1) >> 24) // grab first byte.
+  #define f_macro_utf_character_to_char_2(character) (((character) & f_utf_character_mask_char_2) >> 16) // grab second byte.
+  #define f_macro_utf_character_to_char_3(character) (((character) & f_utf_character_mask_char_3) >> 8) // grab third byte.
+  #define f_macro_utf_character_to_char_4(character) ((character) & f_utf_character_mask_char_4) // grab fourth byte.
 
-  #define f_macro_utf_character_from_char_1(character) (character << 24) // shift the first byte.
-  #define f_macro_utf_character_from_char_2(character) (character << 16) // shift the second byte.
-  #define f_macro_utf_character_from_char_3(character) (character << 8) // shift the third byte.
-  #define f_macro_utf_character_from_char_4(character) (character) // shift the fourth byte.
+  #define f_macro_utf_character_from_char_1(character) ((character) << 24) // shift the first byte.
+  #define f_macro_utf_character_from_char_2(character) ((character) << 16) // shift the second byte.
+  #define f_macro_utf_character_from_char_3(character) ((character) << 8) // shift the third byte.
+  #define f_macro_utf_character_from_char_4(character) ((character)) // shift the fourth byte.
 
   #define f_macro_utf_character_width(character) (f_macro_utf_byte_width(f_macro_utf_character_to_char_1(character)))
   #define f_macro_utf_character_width_is(character) (f_macro_utf_byte_width_is(f_macro_utf_character_to_char_1(character)))
 #endif // _di_f_utf_character_
+
+#ifndef _di_f_utf_character_have_eol_
+  #define f_utf_character_eol 0x0a000000 // 0000 1010, 0000 0000, 0000 0000, 0000 0000
+#endif // _di_f_utf_character_have_eol_
+
+#ifndef _di_f_utf_character_have_eos_
+  #define f_utf_character_eos 0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+#endif // _di_f_utf_character_have_eos_
+
+#ifndef _di_f_utf_character_have_placeholder_
+  #define f_utf_character_placeholder 0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+#endif // _di_f_utf_character_have_placeholder_
+
+/**
+ * Provide a UTF-8 characters set to 4-bits wide as a string.
+ */
+#ifndef _di_f_utf_string_
+  typedef f_utf_character *f_utf_string;
+
+  #define f_utf_string_max_size   f_signed_long_size
+  #define f_utf_string_initialize f_eos
+
+  #define f_new_utf_char(status, string, length)   status = f_new_array((void **) & string, sizeof(f_utf_string), length)
+  #define f_delete_utf_char(status, string, size)  status = f_delete((void **) & string, sizeof(f_utf_string), size)
+  #define f_destroy_utf_char(status, string, size) status = f_destroy((void **) & string, sizeof(f_utf_string), size)
+
+  #define f_resize_utf_char(status, string, old_length, new_length) \
+    status = f_resize((void **) & string, sizeof(f_utf_string), old_length, new_length)
+
+  #define f_adjust_utf_char(status, string, old_length, new_length) \
+    status = f_adjust((void **) & string, sizeof(f_utf_string), old_length, new_length)
+#endif // _di_f_utf_string_
+
+/**
+ * Provide a type specifically for UTF-8 strings.
+ */
+#ifndef _di_f_utf_string_length_
+  typedef f_s_long f_utf_string_length;
+
+  #define f_new_utf_string_length(status, string, length)    status = f_new_array((void **) & string, sizeof(f_utf_string_length), length)
+  #define f_delete_utf_string_length(status, string, length) status = f_delete((void **) & string, sizeof(f_utf_string_length), length)
+  #define f_destroy_utf_string_length(status, string, size)  status = f_destroy((f_void_P *) & string, sizeof(f_utf_string_length), size)
+
+  #define f_resize_utf_string_length(status, length, old_length, new_length) \
+    status = f_resize((void **) & length, sizeof(f_utf_string_length), old_length, new_length)
+
+  #define f_adjust_utf_string_length(status, length, old_length, new_length) \
+    status = f_adjust((void **) & length, sizeof(f_utf_string_length), old_length, new_length)
+#endif // _di_f_utf_string_length_
+
+/**
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
+#ifndef _di_f_utf_string_lengths_
+  typedef struct {
+    f_utf_string_length *array;
+    f_array_length  size;
+    f_array_length  used;
+  } f_utf_string_lengths;
+
+  #define f_utf_string_lengths_initialize { 0, 0, 0 }
+
+  #define f_new_utf_string_lengths(status, lengths) \
+    f_new_structure(status, lengths, f_utf_string_length)
+
+  #define f_delete_utf_string_lengths(status, lengths) \
+    f_delete_structure(status, lengths, f_utf_string_length)
+
+  #define f_destroy_utf_string_lengths(status, lengths) \
+    f_destroy_structure(status, lengths, f_utf_string_length)
+
+  #define f_resize_utf_string_lengths(status, lengths, new_length) \
+    f_resize_structure(status, lengths, f_utf_string_length, new_length)
+
+  #define f_adjust_utf_string_lengths(status, lengths, new_length) \
+    f_adjust_structure(status, lengths, f_utf_string_length, new_length)
+#endif // _di_f_utf_string_lengths_
+
+/**
+ * designates a start and stop position that represents a sub-string inside of some parent string.
+ * use this to avoid resizing, restructuring, and reallocating the parent string to separate the sub-string.
+ */
+#ifndef _di_f_utf_string_location_
+  typedef struct {
+    f_utf_string_length start;
+    f_utf_string_length stop;
+  } f_utf_string_location;
+
+  #define f_utf_string_location_initialize { 1, 0 }
+
+  #define f_new_utf_string_location(status, utf_string_location, length)   status = f_new_array((void **) & utf_string_location, sizeof(f_utf_string_location), length)
+  #define f_delete_utf_string_location(status, utf_string_location, size)  status = f_delete((void **) & utf_string_location, sizeof(f_utf_string_location), size)
+  #define f_destroy_utf_string_location(status, utf_string_location, size) status = f_destroy((void **) & utf_string_location, sizeof(f_utf_string_location), size)
+
+  #define f_resize_utf_string_location(status, utf_string_location, old_length, new_length) \
+    status = f_resize((void **) & utf_string_location, sizeof(f_utf_string_location), old_length, new_length)
+
+  #define f_adjust_utf_string_location(status, utf_string_location, old_length, new_length) \
+    status = f_adjust((void **) & utf_string_location, sizeof(f_utf_string_location), old_length, new_length)
+#endif // _di_f_utf_string_location_
+
+/**
+ * an array of string locations.
+ *
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
+#ifndef _di_f_utf_string_locations_
+  typedef struct {
+    f_utf_string_location *array;
+    f_array_length    size;
+    f_array_length    used;
+  } f_utf_string_locations;
+
+  #define f_utf_string_locations_initialize {0, 0, 0}
+
+  #define f_clear_utf_string_locations(locations) \
+    f_clear_structure(locations)
+
+  #define f_new_utf_string_locations(status, locations, length) \
+    f_new_structure(status, locations, f_utf_string_location, length)
+
+  #define f_delete_utf_string_locations(status, locations) \
+    f_delete_structure(status, locations, f_utf_string_location)
+
+  #define f_destroy_utf_string_locations(status, locations) \
+    f_destroy_structure(status, locations, f_utf_string_location)
+
+  #define f_resize_utf_string_locations(status, locations, new_length) \
+    f_resize_structure(status, locations, f_utf_string_location, new_length)
+
+  #define f_adjust_utf_string_locations(status, locations, new_length) \
+    f_adjust_structure(status, locations, f_utf_string_location, new_length)
+#endif // _di_f_utf_string_locations_
+
+/**
+ * a string that supports contains a size attribute to handle dynamic allocations and deallocations.
+ * save the string size along with the string, so that strlen(..) commands can be avoided as much as possible.
+ *
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
+#ifndef _di_f_utf_string_dynamic_
+  typedef struct {
+    f_utf_string        string;
+    f_utf_string_length size;
+    f_utf_string_length used;
+  } f_utf_string_dynamic;
+
+  #define f_utf_string_dynamic_initialize { f_utf_string_initialize, 0, 0 }
+
+  #define f_clear_utf_string_dynamic(dynamic) \
+    dynamic.string = 0; \
+    dynamic.size = 0; \
+    dynamic.used = 0;
+
+  #define f_new_utf_string_dynamic(status, dynamic, new_length) \
+    f_clear_utf_string_dynamic(dynamic) \
+    status = f_new_array((void **) & dynamic.string, sizeof(f_utf_string), new_length); \
+    if (status == f_none) { \
+      dynamic.size = new_length; \
+      dynamic.used = 0; \
+    }
+
+  #define f_delete_utf_string_dynamic(status, dynamic) \
+    status = f_delete((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size); \
+    if (status == f_none) { \
+      dynamic.size = 0; \
+      dynamic.used = 0; \
+    }
+
+  #define f_destroy_utf_string_dynamic(status, dynamic) \
+    status = f_destroy((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size); \
+    if (status == f_none) { \
+      dynamic.size = 0; \
+      dynamic.used = 0; \
+    }
+
+  #define f_resize_utf_string_dynamic(status, dynamic, new_length) \
+    status = f_resize((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size, new_length); \
+    if (status == f_none) { \
+      dynamic.size = new_length; \
+      if (dynamic.used > dynamic.size) dynamic.used = new_length; \
+    }
+
+  #define f_adjust_utf_string_dynamic(status, dynamic, new_length) \
+    status = f_adjust((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size, new_length); \
+    if (status == f_none) { \
+      dynamic.size = new_length; \
+      if (dynamic.used > dynamic.size) dynamic.used = new_length; \
+    }
+#endif // _di_f_utf_string_dynamic_
+
+/**
+ * an array of dynamic utf_strings.
+ *
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
+#ifndef _di_f_utf_string_dynamics_
+  typedef struct {
+    f_utf_string_dynamic *array;
+    f_utf_string_length  size;
+    f_utf_string_length  used;
+  } f_utf_string_dynamics;
+
+  #define f_utf_string_dynamics_initialize { 0, 0, 0 }
+
+  #define f_clear_utf_string_dynamics(dynamics) \
+    dynamics.array = 0; \
+    dynamics.size = 0; \
+    dynamics.used = 0;
+
+  #define f_new_utf_string_dynamics(status, dynamics, length) \
+    dynamics.array = 0; \
+    dynamics.size = 0; \
+    dynamics.used = 0; \
+    status = f_new_array((void **) & dynamics.array, sizeof(f_utf_string_dynamic), length); \
+    if (status == f_none) { \
+      dynamics.size = length; \
+      dynamics.used = 0; \
+    }
+
+  #define f_delete_utf_string_dynamics(status, dynamics) \
+    status = f_none; \
+    while (dynamics.size > 0) { \
+      --dynamics.size; \
+      f_destroy_utf_string_dynamic(status, dynamics.array[dynamics.size]); \
+      if (status != f_none) break; \
+    } \
+    if (status == f_none) status = f_delete((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size); \
+    if (status == f_none) dynamics.used = 0;
+
+  #define f_destroy_utf_string_dynamics(status, dynamics) \
+    status = f_none; \
+    while (dynamics.size > 0) { \
+      --dynamics.size; \
+      f_destroy_utf_string_dynamic(status, dynamics.array[dynamics.size]); \
+      if (status != f_none) break; \
+    } \
+    if (status == f_none) status = f_destroy((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size); \
+    if (status == f_none) dynamics.used = 0;
+
+  #define f_resize_utf_string_dynamics(status, dynamics, new_length) \
+    status = f_none; \
+    if (new_length < dynamics.size) { \
+      f_utf_string_length i = dynamics.size - new_length; \
+      for (; i < dynamics.size; ++i) { \
+        f_destroy_utf_string_dynamic(status, dynamics.array[i]); \
+        if (status != f_none) break; \
+      } \
+    } \
+    if (status == f_none) status = f_resize((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size, new_length); \
+    if (status == f_none) { \
+      if (new_length > dynamics.size) { \
+        f_utf_string_length i = dynamics.size; \
+        for (; i < new_length; ++i) { \
+          memset(&dynamics.array[i], 0, sizeof(f_utf_string_dynamic)); \
+        } \
+      } \
+      dynamics.size = new_length; \
+      if (dynamics.used > dynamics.size) dynamics.used = new_length; \
+    }
+
+  #define f_adjust_utf_string_dynamics(status, dynamics, new_length) \
+    status = f_none; \
+    if (new_length < dynamics.size) { \
+      f_utf_string_length i = dynamics.size - new_length; \
+      for (; i < dynamics.size; ++i) { \
+        f_destroy_utf_string_dynamic(status, dynamics.array[i], f_utf_string_dynamic); \
+        if (status != f_none) break; \
+      } \
+    } \
+    if (status == f_none) status = f_adjust((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size, new_length); \
+    if (status == f_none) { \
+      if (new_length > dynamics.size) { \
+        f_utf_string_length i = dynamics.size; \
+        for (; i < new_length; ++i) { \
+          memset(&dynamics.array[i], 0, sizeof(f_utf_string_dynamic)); \
+        } \
+      } \
+      dynamics.size = new_length; \
+      if (dynamics.used > dynamics.size) dynamics.used = new_length; \
+    }
+#endif // _di_f_utf_string_dynamic_
 
 /**
  * Define the UTF-8 general whitespace codes.
@@ -235,6 +527,18 @@ extern "C" {
 #endif // _di_f_utf_substitute_
 
 /**
+ * Helper function for UTF-8 processing code to determine endianess of the system.
+ *
+ *
+ * @return
+ *   f_true if the system is big-endian.
+ *   f_false if the system is little-endian.
+ */
+#ifndef _di_f_utf_is_big_endian_
+  extern f_return_status f_utf_is_big_endian();
+#endif // _di_f_utf_is_big_endian_
+
+/**
  * Check to see if the entire byte block of the character is a UTF-8 character.
  *
  * @param character
@@ -284,7 +588,7 @@ extern "C" {
  * @return
  *   f_true if a UTF-8 character.
  *   f_false if not a UTF-8 character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   f_invalid_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_
@@ -496,6 +800,34 @@ extern "C" {
 #ifndef _di_f_utf_char_to_character_
   extern f_return_status f_utf_char_to_character(const f_string character, const f_u_short max_width, f_utf_character *utf_character);
 #endif // _di_f_utf_char_to_character_
+
+/**
+ * Convert a specialized f_utf_character type to a char, stored as a string (character buffer).
+ *
+ * This will also convert ASCII characters stored in the utf_character array.
+ *
+ * @param utf_character
+ *   The UTF-8 characterr to convert from.
+ * @param character
+ *   A char representation of the UTF-8 character, stored as a string of width bytes.
+ *   If max_width is 0, then this should not be allocated (set the pointer address to 0).
+ * @param max_width
+ *   The number of bytes the generated character represents.
+ *   If this is set to 0, then the character will be allocated and this will be set to the width of the utf_character.
+ *   If this is set to some value greater than 0 (up to 4), then this represents the size of the character array (no allocations are performed).
+ *   If this is greater than 0, and the utf_character width is larger than this size, then an error is returned.
+ *
+ * @return
+ *   f_none if conversion was successful.
+ *   f_failure (with error bit) if width is not long enough to convert.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_allocation_error (with error bit) on memory allocation error.
+ *   f_failure (with error bit) if width is not long enough to convert.
+ */
+#ifndef _di_f_utf_character_to_char_
+  extern f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, f_u_short *max_width);
+#endif // _di_f_utf_character_to_char_
 
 #ifdef __cplusplus
 } // extern "C"

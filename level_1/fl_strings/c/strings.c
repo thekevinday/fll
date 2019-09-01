@@ -59,7 +59,11 @@ extern "C" {
       max_width = buffer.used - location->start;
     }
 
-    while (buffer.string[location->start] == placeholder || (!isgraph(buffer.string[location->start]) && (status = f_utf_is_graph(buffer.string + location->start, max_width)) == f_false)) {
+    while (buffer.string[location->start] == placeholder || (status = f_utf_is_graph(buffer.string + location->start, max_width)) == f_false) {
+      if (f_status_is_error(status)) {
+        return status;
+      }
+
       if (buffer.string[location->start] == f_eol) return f_none_on_eol;
 
       width = f_macro_utf_byte_width_is(buffer.string[location->start]);
@@ -115,7 +119,11 @@ extern "C" {
       max_width = buffer.used - location->start;
     }
 
-    while (buffer.string[location->start] == placeholder || (isgraph(buffer.string[location->start]) && (status = f_utf_is_space(buffer.string + location->start, max_width)) == f_false)) {
+    while (buffer.string[location->start] == placeholder || (status = f_utf_is_space(buffer.string + location->start, max_width)) == f_false) {
+      if (f_status_is_error(status)) {
+        return status;
+      }
+
       if (buffer.string[location->start] == f_eol) return f_none_on_eol;
 
       width = f_macro_utf_byte_width_is(buffer.string[location->start]);
@@ -175,8 +183,8 @@ extern "C" {
   }
 #endif // _di_fl_seek_line_to_
 
-#ifndef _di_fl_seek_line_to_character_
-  f_return_status fl_seek_line_to_character(const f_dynamic_string buffer, f_string_location *location, const f_utf_character seek_to_this) {
+#ifndef _di_fl_seek_line_to_utf_character_
+  f_return_status fl_seek_line_to_utf_character(const f_dynamic_string buffer, f_string_location *location, const f_utf_character seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (location == 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -240,7 +248,7 @@ extern "C" {
 
     return f_none_on_eos;
   }
-#endif // _di_fl_seek_line_to_character_
+#endif // _di_fl_seek_line_to_utf_character_
 
 #ifndef _di_fl_seek_to_
   f_return_status fl_seek_to(const f_dynamic_string buffer, f_string_location *location, const char seek_to_this) {
@@ -263,8 +271,8 @@ extern "C" {
   }
 #endif // _di_fl_seek_to_
 
-#ifndef _di_fl_seek_to_character_
-  f_return_status fl_seek_to_character(const f_dynamic_string buffer, f_string_location *location, const f_utf_character seek_to_this) {
+#ifndef _di_fl_seek_to_utf_character_
+  f_return_status fl_seek_to_utf_character(const f_dynamic_string buffer, f_string_location *location, const f_utf_character seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (location == 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -326,7 +334,7 @@ extern "C" {
 
     return f_none_on_eos;
   }
-#endif // _di_fl_seek_to_character_
+#endif // _di_fl_seek_to_utf_character_
 
 #ifndef _di_fl_compare_strings_
   f_return_status fl_compare_strings(const f_string string1, const f_string string2, const f_string_length length1, const f_string_length length2) {

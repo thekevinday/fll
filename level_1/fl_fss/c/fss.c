@@ -281,33 +281,13 @@ extern "C" {
       if (input.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_u_short utf_width = f_macro_utf_byte_width_is(buffer.string[input.start]);
-
-    if (utf_width == 0) {
-      if (isgraph(buffer.string[input.start])) {
-        return f_true;
-      }
-
-      return f_false;
-    }
-
     f_string_length max_width = (input.stop - input.start) + 1;
 
     if (max_width > buffer.used - input.start) {
       max_width = buffer.used - input.start;
     }
 
-    f_status status = f_utf_is_space(buffer.string + input.start, max_width);
-
-    if (f_status_is_error(status)) {
-      return status;
-    }
-
-    if (status == f_true) {
-      return f_false;
-    }
-
-    return f_true;
+    return f_utf_is_graph(buffer.string + input.start, max_width);
   }
 #endif // _di_fl_fss_is_graph_
 
@@ -320,33 +300,13 @@ extern "C" {
       if (input.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_u_short utf_width = f_macro_utf_byte_width_is(buffer.string[input.start]);
-
-    if (utf_width == 0) {
-      if (isspace(buffer.string[input.start])) {
-        return f_true;
-      }
-
-      return f_false;
-    }
-
     f_string_length max_width = (input.stop - input.start) + 1;
 
     if (max_width > buffer.used - input.start) {
       max_width = buffer.used - input.start;
     }
 
-    f_status status = f_utf_is_space(buffer.string + input.start, max_width);
-
-    if (f_status_is_error(status)) {
-      return status;
-    }
-
-    if (status == f_true) {
-      return f_true;
-    }
-
-    return f_false;
+    return f_utf_is_space(buffer.string + input.start, max_width);
   }
 #endif // _di_fl_fss_is_space_
 
@@ -354,31 +314,57 @@ extern "C" {
   f_return_status fl_fss_skip_past_whitespace(const f_dynamic_string buffer, f_string_location *input) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (input == 0) return f_status_set_error(f_invalid_parameter);
       if (input->start < 0) return f_status_set_error(f_invalid_parameter);
       if (input->stop < input->start) return f_status_set_error(f_invalid_parameter);
       if (input->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    f_u_short max_width = 0;
+    f_u_short width = 0;
 
-    while (input->start < buffer.used && input->start > input->stop) {
-      if (isgraph(buffer.string[input->start])) break;
+    f_string_length max_width = (input->stop - input->start) + 1;
 
-      if (buffer.string[input->start] == f_eol) break;
+    if (max_width > buffer.used - input->start) {
+      max_width = buffer.used - input->start;
+    }
 
-      if (buffer.string[input->start] != f_fss_delimit_placeholder) {
-        max_width = (input->stop - input->start) + 1;
-
-        if (f_utf_is_space(buffer.string +input->start, max_width) != f_true) {
-          if (f_utf_is_bom(buffer.string + input->start, max_width) != f_true) {
-            break;
-          }
-        }
+    while (buffer.string[input->start] == f_eos || (status = f_utf_is_graph(buffer.string + input->start, max_width)) == f_false) {
+      if (f_status_is_error(status)) {
+        return status;
       }
 
-      input->start++;
+      if (buffer.string[input->start] == f_eol) return f_none_on_eol;
+
+      width = f_macro_utf_byte_width_is(buffer.string[input->start]);
+
+      if (width == 0) {
+        width = 1;
+      }
+      // Do not operate on UTF-8 fragments that are not the first byte of the character.
+      else if (width == 1) {
+        return f_status_set_error(f_incomplete_utf);
+      }
+      else {
+        if (input->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
+        if (input->start + width > input->stop) return f_status_set_error(f_incomplete_utf_on_stop);
+      }
+
+      input->start += width;
+
+      if (input->start >= buffer.used) return f_none_on_eos;
+      if (input->start > input->stop) return f_none_on_stop;
+
+      max_width = (input->stop - input->start) + 1;
+
+      if (max_width > buffer.used - input->start) {
+        max_width = buffer.used - input->start;
+      }
     } // while
+
+    if (f_status_is_error(status)) {
+      return status;
+    }
 
     return f_none;
   }
@@ -388,29 +374,55 @@ extern "C" {
   f_return_status fl_fss_skip_past_all_whitespace(const f_dynamic_string buffer, f_string_location *input) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (input == 0) return f_status_set_error(f_invalid_parameter);
       if (input->start < 0) return f_status_set_error(f_invalid_parameter);
       if (input->stop < input->start) return f_status_set_error(f_invalid_parameter);
       if (input->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    f_u_short max_width = 0;
+    f_u_short width = 0;
 
-    while (input->start < buffer.used && input->start > input->stop) {
-      if (isgraph(buffer.string[input->start])) break;
+    f_string_length max_width = (input->stop - input->start) + 1;
 
-      if (buffer.string[input->start] != f_fss_delimit_placeholder) {
-        max_width = (input->stop - input->start) + 1;
+    if (max_width > buffer.used - input->start) {
+      max_width = buffer.used - input->start;
+    }
 
-        if (f_utf_is_space(buffer.string + input->start, max_width) != f_true) {
-          if (f_utf_is_bom(buffer.string + input->start, max_width) != f_true) {
-            break;
-          }
-        }
+    while (buffer.string[input->start] == f_eos || (status = f_utf_is_graph(buffer.string + input->start, max_width)) == f_false) {
+      if (f_status_is_error(status)) {
+        return status;
       }
 
-      input->start++;
+      width = f_macro_utf_byte_width_is(buffer.string[input->start]);
+
+      if (width == 0) {
+        width = 1;
+      }
+      // Do not operate on UTF-8 fragments that are not the first byte of the character.
+      else if (width == 1) {
+        return f_status_set_error(f_incomplete_utf);
+      }
+      else {
+        if (input->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
+        if (input->start + width > input->stop) return f_status_set_error(f_incomplete_utf_on_stop);
+      }
+
+      input->start += width;
+
+      if (input->start >= buffer.used) return f_none_on_eos;
+      if (input->start > input->stop) return f_none_on_stop;
+
+      max_width = (input->stop - input->start) + 1;
+
+      if (max_width > buffer.used - input->start) {
+        max_width = buffer.used - input->start;
+      }
     } // while
+
+    if (f_status_is_error(status)) {
+      return status;
+    }
 
     return f_none;
   }
