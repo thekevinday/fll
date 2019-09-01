@@ -870,8 +870,8 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
 
   f_string_dynamic fixed_string = f_string_dynamic_initialize;
 
-  f_macro_types_array_lengths_delete(status, local->chain_ids);
-  f_macro_types_array_lengths_new(status, local->chain_ids, local->chain_objects.used);
+  f_macro_array_lengths_delete(status, local->chain_ids);
+  f_macro_array_lengths_new(status, local->chain_ids, local->chain_objects.used);
 
   if (f_status_is_error(status)) {
     return status;
@@ -1485,7 +1485,7 @@ f_return_status firewall_delete_local_data(firewall_local_data *local) {
   local->chain = 0;
 
   f_macro_string_dynamic_delete(status, local->buffer);
-  f_macro_types_array_lengths_delete(status, local->chain_ids);
+  f_macro_array_lengths_delete(status, local->chain_ids);
   f_macro_fss_objects_delete(status, local->chain_objects);
   f_macro_fss_contents_delete(status, local->chain_contents);
   f_macro_fss_objects_delete(status, local->rule_objects);

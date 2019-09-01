@@ -15,7 +15,7 @@
 #include <level_0/fss.h>
 #include <level_0/memory.h>
 #include <level_0/string.h>
-#include <level_0/types.h>
+#include <level_0/type.h>
 
 // fll-1 includes
 #include <level_1/fss.h>

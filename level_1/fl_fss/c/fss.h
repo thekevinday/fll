@@ -18,7 +18,7 @@
 #include <level_0/file.h>
 #include <level_0/fss.h>
 #include <level_0/string.h>
-#include <level_0/types.h>
+#include <level_0/type.h>
 #include <level_0/utf.h>
 
 // fll-1 includes

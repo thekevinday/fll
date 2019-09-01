@@ -1,7 +1,7 @@
 /**
  * FLL - Level 0
  *
- * Project: Types
+ * Project: Type
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
