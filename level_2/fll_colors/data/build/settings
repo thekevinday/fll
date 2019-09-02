@@ -10,7 +10,7 @@ version_micro 0
 build_compiler gcc
 build_linker ar
 build_libraries -lc
-build_libraries_fll -lfl_colors -lf_memory
+build_libraries_fll -lfl_colors -lf_print -lf_file -lf_memory
 build_sources_library colors.c
 build_sources_program 
 build_sources_headers colors.h
