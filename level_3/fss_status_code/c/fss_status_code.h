@@ -85,7 +85,7 @@ extern "C" {
       f_console_parameter_initialize(fss_status_code_short_number, fss_status_code_long_number, 0, f_false, f_console_type_normal), \
     }
 
-  #define fss_status_code_total_parameters 9
+  #define fss_status_code_total_parameters 8
 #endif // _di_fss_status_code_defines_
 
 #ifndef _di_fss_status_code_data_
