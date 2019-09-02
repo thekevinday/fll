@@ -7,14 +7,13 @@ f_fss
 f_pipe
 f_print
 f_utf
-fl_colors
+fl_color
 fl_console
 fl_directory
 fl_file
 fl_fss
-fl_program
 fl_status
 fl_string
-fll_colors
 fll_execute
 fll_fss
+fll_program

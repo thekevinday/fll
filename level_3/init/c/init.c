@@ -22,77 +22,20 @@ extern "C" {
 
 #ifndef _di_init_print_help_
   f_return_status init_print_help(const init_argument argument) {
-    printf("\n");
-    fl_color_print(f_standard_output, argument.context.title, argument.context.reset, " %s", init_name_long);
+    fll_program_print_help_header(data.context, init_name_long, init_version);
 
-    printf("\n");
-    fl_color_print(f_standard_output, argument.context.notable, argument.context.reset, "  Version %s", init_version);
+    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, "    Print this help message.");
+    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, "Do not output in color.");
+    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, " Print only the version number.");
+    fll_program_print_help_option(data.context, f_console_standard_short_debug, f_console_standard_long_debug, " Enable debugging.");
 
-    printf("\n\n");
-    fl_color_print(f_standard_output, argument.context.important, argument.context.reset, " Available Options: ");
+    printf("%c", f_string_eol);
 
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_help);
+    fll_program_print_help_option(data.context, init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, " Do not attempt to process kernel command line or perform any boot-time specific preparations.");
+    fll_program_print_help_option(data.context, init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, " Specify a custom run level, ignoring the kernel command line runlevel argument.");
 
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_help);
-    printf("      Print this help message");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_light);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_light);
-    printf("     Output using colors that show up better on light backgrounds");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_no_color);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_no_color);
-    printf("  Do not output in color");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_version);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_version);
-    printf("   Print only the version number");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_debug);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_debug);
-    printf("   Enable debugging");
-
-    printf("\n  %s", init_parameter_no_prepare_short_name);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_debug);
-
-    printf(", %s", init_parameter_no_prepare_long_name);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_debug);
-    printf("   Do not attempt to process kernel command line or perform any boot-time specific preparations.");
-
-    printf("\n  %s", init_parameter_runlevel_short_name);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_short_debug);
-
-    printf(", %s", init_parameter_runlevel_long_name);
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, f_console_standard_long_debug);
-    printf("   Specify a custom run level, ignoring the kernel command line runlevel argument.");
-
-    printf("\n\n");
-    fl_color_print(f_standard_output, argument.context.important, argument.context.reset, " Usage: ");
-
-    printf("\n  ");
-    fl_color_print(f_standard_output, argument.context.standout, argument.context.reset, init_name);
-
-    printf("  ");
-    fl_color_print(f_standard_output, argument.context.notable, argument.context.reset, "[");
-
-    printf(" options ");
-    fl_color_print(f_standard_output, argument.context.notable, argument.context.reset, "]");
-
-    printf("\n\n");
+    fll_program_print_help_usage(data.context, init_name, "");
 
     return f_none;
   }
@@ -113,10 +56,10 @@ extern "C" {
 
     // load colors when not told to show no colors
     if (argument->parameters[init_parameter_no_color].result == f_console_result_none) {
-      fl_new_color_context(status2, argument->context);
+      fl_macro_color_context_new(status2, argument->context);
 
       if (status2 == f_none) {
-        fll_colors_load_context(&argument->context, argument->parameters[init_parameter_light].result == f_console_result_found);
+        fl_color_load_context(&argument->context, argument->parameters[init_parameter_light].result == f_console_result_found);
       } else {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
         init_delete_argument((*argument));

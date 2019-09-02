@@ -1,11 +1,11 @@
-#include <level_1/colors.h>
+#include <level_1/color.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #ifndef _di_fl_color_set_
-  f_return_status fl_color_set(FILE *file, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
+  f_return_status fl_color_set(FILE *file, const f_color_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (color1 == 0) return f_status_set_error(f_invalid_parameter);
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_fl_color_set_
 
 #ifndef _di_fl_color_save_
-  f_return_status fl_color_save(f_string_dynamic *buffer, const f_colors_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
+  f_return_status fl_color_save(f_string_dynamic *buffer, const f_color_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (color1 == 0) return f_status_set_error(f_invalid_parameter);
@@ -189,6 +189,52 @@ extern "C" {
     return f_none;
   }
 #endif // _di_fl_color_print_code_
+
+#ifndef _di_fl_color_load_context_
+  f_return_status fl_color_load_context(fl_color_context *context, const f_bool use_light_colors) {
+    #ifndef _di_level_1_parameter_checking_
+      if (context == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = f_none;
+
+    // switch to the appropriate terminal color mode
+    {
+      char *environment = getenv("TERM");
+
+      if (!environment || strncmp(environment, "linux", 6) == 0) {
+        context->color_list = f_color_linux;
+      }
+      else {
+        context->color_list = f_color_xterminal;
+      }
+    }
+
+    // load the colors
+    if (use_light_colors) {
+      status = fl_macro_color_save_1(&context->reset, context->color_format, context->color_list.reset);
+
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->warning,   context->color_format, context->color_list.yellow);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&context->error,     context->color_format, context->color_list.bold, context->color_list.red);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&context->title,     context->color_format, context->color_list.bold, context->color_list.blue);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->notable,   context->color_format, context->color_list.bold);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->important, context->color_format, context->color_list.blue);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->standout,  context->color_format, context->color_list.purple);
+    }
+    else {
+      status = fl_macro_color_save_1(&context->reset, context->color_format, context->color_list.reset);
+
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->warning,   context->color_format, context->color_list.yellow);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&context->error,     context->color_format, context->color_list.bold, context->color_list.red);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&context->title,     context->color_format, context->color_list.bold, context->color_list.yellow);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->notable,   context->color_format, context->color_list.bold);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&context->important, context->color_format, context->color_list.bold, context->color_list.green);
+      if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->standout,  context->color_format, context->color_list.green);
+    }
+
+    return status;
+  }
+#endif // _di_fl_color_load_context_
 
 #ifdef __cplusplus
 } // extern "C"

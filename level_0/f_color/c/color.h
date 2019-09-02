@@ -1,15 +1,15 @@
 /**
  * FLL - Level 0
  *
- * Project: Colors
+ * Project: Color
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
  * Provide basic color output support (linux & xterm).
  * This is the Featureless LINUX Library, so there is no support for non-linux colors at this time.
  */
-#ifndef _F_colors_h
-#define _F_colors_h
+#ifndef _F_color_h
+#define _F_color_h
 
 // fll-0 includes
 #include <level_0/string.h>
@@ -27,8 +27,8 @@ extern "C" {
   typedef f_min_u_int f_color_id;
 
   // f_color_id codes
-  #define f_color_linux     0
-  #define f_color_xterminal 1
+  #define f_color_code_linux     0
+  #define f_color_code_xterminal 1
 #endif // _di_f_color_types_
 
 /**
@@ -90,16 +90,16 @@ extern "C" {
   #define f_color_help_names_initialize { "alert", "command", "comment", "emphasize", "standard", "syntax", "title", "topic", "version" }
 #endif // _di_f_color_help_
 
-#ifndef _di_f_colors_format_
+#ifndef _di_f_color_format_
   typedef struct {
     const char *begin;
     const char *end;
     const char *medium;
-  } f_colors_format;
+  } f_color_format;
 
-  #define f_colors_format_initialize_linux     { "\033[", "m", ";" }
-  #define f_colors_format_initialize_xterminal { "\033[", "m", ";" }
-#endif // _di_f_colors_format_
+  #define f_color_format_initialize_linux     { "\033[", "m", ";" }
+  #define f_color_format_initialize_xterminal { "\033[", "m", ";" }
+#endif // _di_f_color_format_
 
 /**
  * A structure containing all supported color codes.
@@ -107,10 +107,10 @@ extern "C" {
  * Different system will support a different set.
  *
  * Custom initializers are provided for common defaults:
- * - f_colors_initialize_linux: ideal for linux console.
- * - f_colors_initialize_xterminal: ideal for linux x-terminal.
+ * - f_color_initialize_linux: ideal for linux console.
+ * - f_color_initialize_xterminal: ideal for linux x-terminal.
  */
-#ifndef _di_f_colors_
+#ifndef _di_f_color_
   typedef struct {
     const char *reset;
     const char *bold;
@@ -150,29 +150,29 @@ extern "C" {
     const char *bright_purple_bg;
     const char *bright_teal_bg;
     const char *bright_white_bg;
-  } f_colors;
+  } f_color;
 
-  #define f_colors_initialize_linux     { "0", "1", "4", "5", "7", "8", "30", "31", "32", "33", "34", "35", "36", "37", "40", "41", "42", "43", "44", "45", "46", "47", "30", "31", "32", "33", "34", "35", "36", "37", "40", "41", "42", "43", "44", "45", "46", "47" }
-  #define f_colors_initialize_xterminal { "0", "1", "4", "5", "7", "8", "30", "31", "32", "33", "34", "35", "36", "37", "40", "41", "42", "43", "44", "45", "46", "47", "90", "91", "92", "93", "94", "95", "96", "97", "100", "101", "102", "103", "104", "105", "106", "107" }
-#endif // _di_f_colors_
+  #define f_color_initialize_linux     { "0", "1", "4", "5", "7", "8", "30", "31", "32", "33", "34", "35", "36", "37", "40", "41", "42", "43", "44", "45", "46", "47", "30", "31", "32", "33", "34", "35", "36", "37", "40", "41", "42", "43", "44", "45", "46", "47" }
+  #define f_color_initialize_xterminal { "0", "1", "4", "5", "7", "8", "30", "31", "32", "33", "34", "35", "36", "37", "40", "41", "42", "43", "44", "45", "46", "47", "90", "91", "92", "93", "94", "95", "96", "97", "100", "101", "102", "103", "104", "105", "106", "107" }
+#endif // _di_f_color_
 
 /**
- * Provide global default global instances of f_colors structures.
+ * Provide global default global instances of f_color structures.
  *
  * Supported instances:
- * - f_colors_format_linux: ideal for linux console.
- * - f_colors_format_xterminal: ideal for linux x-terminal.
+ * - f_color_format_linux: ideal for linux console.
+ * - f_color_format_xterminal: ideal for linux x-terminal.
  */
-#ifndef _di_f_default_colors_
-  static const f_colors_format f_colors_format_linux     = f_colors_format_initialize_linux;
-  static const f_colors_format f_colors_format_xterminal = f_colors_format_initialize_xterminal;
+#ifndef _di_f_color_default_
+  static const f_color_format f_color_format_linux     = f_color_format_initialize_linux;
+  static const f_color_format f_color_format_xterminal = f_color_format_initialize_xterminal;
 
-  static const f_colors f_colors_linux     = f_colors_initialize_linux;
-  static const f_colors f_colors_xterminal = f_colors_initialize_xterminal;
-#endif // _di_f_default_colors_
+  static const f_color f_color_linux     = f_color_initialize_linux;
+  static const f_color f_color_xterminal = f_color_initialize_xterminal;
+#endif // _di_f_color_default_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _F_colors_h
+#endif // _F_color_h

@@ -56,6 +56,8 @@ extern "C" {
  *   The console parameters to look for.
  * @param total_parameters
  *   The used size of the parameters array.
+ * @param remaining
+ *   A list of remaining parameters not associated with anything.
  *
  * @return
  *   f_none on success.

@@ -2,6 +2,6 @@ f_type
 f_status
 f_memory
 f_string
-f_colors
-f_file
-f_print
+f_console
+fl_color
+fl_console

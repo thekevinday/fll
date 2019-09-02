@@ -201,11 +201,11 @@ extern "C" {
 
   #define init_delete_argument(status, argument) \
     memset(&argument.parameters, 0, sizeof(f_console_parameter) * init_total_parameters); \
-    fl_delete_color_context(status, argument.context);
+    fl_macro_color_context_delete(status, argument.context);
 
   #define init_destroy_argument(status, argument) \
     memset(&argument.parameters, 0, sizeof(f_console_parameter) * init_total_parameters); \
-    fl_destroy_color_context(status, argument.context);
+    fl_macro_color_context_destroy(status, argument.context);
 #endif // _di_init_argument_
 
 #ifndef _di_init_print_version_

@@ -13,94 +13,41 @@ extern "C" {
 
 #ifndef _di_firewall_print_help_
   f_return_status firewall_print_help(const firewall_data data) {
-    printf("\n");
-    fl_color_print(f_standard_output, data.context.title, data.context.reset, " %s", firewall_name_long);
+    fll_program_print_help_header(data.context, firewall_name_long, firewall_version);
 
-    printf("\n");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "  Version %s", firewall_version);
-
-    printf("\n\n");
-    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Available Options: ");
-
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_help);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_help);
-    printf("      Print this help message");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_light);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_light);
-    printf("     Output using colors that show up better on light backgrounds");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_no_color);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_no_color);
-    printf("  Do not output in color");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_version);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
-    printf("   Print only the version number");
+    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, "    Print this help message.");
+    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, "Do not output in color.");
+    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, " Print only the version number.");
 
     #ifdef _en_firewall_debug_
-      printf("\n  %s", f_console_symbol_short_disable);
-      fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_debug);
-
-      printf(", %s", f_console_symbol_long_disable);
-      fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_debug);
-      printf("     Enable debugging");
+      fll_program_print_help_option(data.context, f_console_standard_short_debug, f_console_standard_long_debug, "   Enable debugging.");
     #endif // _en_firewall_debug_
 
-    printf("\n\n");
+    printf("%c%c", f_string_eol, f_string_eol);
     fl_color_print(f_standard_output, data.context.important, data.context.reset, " Available Commands: ");
 
-    printf("\n  ");
+    printf("%c  ", f_string_eol);
     fl_color_print(f_standard_output, data.context.standout, data.context.reset, firewall_command_start);
     printf("    Turn on the firewall");
 
-    printf("\n  ");
+    printf("%c  ", f_string_eol);
     fl_color_print(f_standard_output, data.context.standout, data.context.reset, firewall_command_stop);
     printf("     Turn off the firewall");
 
-    printf("\n  ");
+    printf("%c  ", f_string_eol);
     fl_color_print(f_standard_output, data.context.standout, data.context.reset, firewall_command_restart);
     printf("  Turn off and then turn on the firewall");
 
-    printf("\n  ");
+    printf("%c  ", f_string_eol);
     fl_color_print(f_standard_output, data.context.standout, data.context.reset, firewall_command_lock);
     printf("     Prevent all communication");
 
-    printf("\n  ");
+    printf("%c  ", f_string_eol);
     fl_color_print(f_standard_output, data.context.standout, data.context.reset, firewall_command_show);
     printf("     Show active firewall settings");
 
-    printf("\n\n");
-    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Usage: ");
-
-    printf("\n  ");
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, firewall_name);
-
-    printf("  ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "[");
-
-    printf(" options ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "]");
-
-    printf("  ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "[");
-
-    printf(" command ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "]");
-
-    printf("\n\n");
+    fll_program_print_help_usage(data.context, firewall_name, "command");
 
     return f_none;
   }
@@ -115,10 +62,10 @@ extern "C" {
 
     // load colors when not told to show no colors
     if (data->parameters[firewall_parameter_no_color].result == f_console_result_none) {
-      fl_new_color_context(status2, data->context);
+      fl_macro_color_context_new(status2, data->context);
 
       if (status2 == f_none) {
-        fll_colors_load_context(&data->context, data->parameters[firewall_parameter_light].result == f_console_result_found);
+        fl_color_load_context(&data->context, data->parameters[firewall_parameter_light].result == f_console_result_found);
       }
       else {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
@@ -155,7 +102,7 @@ extern "C" {
       firewall_print_help(*data);
     }
     else if (data->parameters[firewall_parameter_version].result == f_console_result_found) {
-      fl_program_print_version(firewall_version);
+      fll_program_print_version(firewall_version);
     }
     else {
       // now determine which command was placed first
@@ -739,7 +686,7 @@ extern "C" {
     f_macro_string_lengths_delete(status, data->remaining);
     f_macro_string_dynamics_delete(status, data->devices);
 
-    fl_delete_color_context(status, data->context);
+    fl_macro_color_context_delete(status, data->context);
 
     return f_none;
   }

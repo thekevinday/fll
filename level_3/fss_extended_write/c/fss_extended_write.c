@@ -6,89 +6,21 @@ extern "C" {
 
 #ifndef _di_fss_extended_write_print_help_
   f_return_status fss_extended_write_print_help(const fss_extended_write_data data) {
-    printf("\n");
-    fl_color_print(f_standard_output, data.context.title, data.context.reset, " %s", fss_extended_write_name_long);
+    fll_program_print_help_header(data.context, fss_extended_write_name_long, fss_extended_write_version);
 
-    printf("\n");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "  Version %s", fss_extended_write_version);
+    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, "    Print this help message.");
+    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, "Do not output in color.");
+    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, " Print only the version number.");
 
+    printf("%c", f_string_eol);
 
-    printf("\n\n");
-    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Available Options: ");
+    fll_program_print_help_option(data.context, fss_extended_write_short_object, fss_extended_write_long_object, "  Write an object instead of content.");
+    fll_program_print_help_option(data.context, fss_extended_write_short_file, fss_extended_write_long_file, "    Specify a file to send output to.");
+    fll_program_print_help_option(data.context, fss_extended_write_short_string, fss_extended_write_long_string, "  Specify a string to convert.");
+    fll_program_print_help_option(data.context, fss_extended_write_short_partial, fss_extended_write_long_partial, " For 'content', do not output the end of content character.");
 
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_help);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_help);
-    printf("      Print this help message");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_light);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_light);
-    printf("     Output using colors that show up better on light backgrounds");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_no_color);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_no_color);
-    printf("  Do not output in color");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_version);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
-    printf("   Print only the version number");
-
-
-    printf("\n");
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_object);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_object);
-    printf("   Write an object instead of content.");
-
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_file);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_file);
-    printf("     Specify a file to send output to.");
-
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_string);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_string);
-    printf("   Specify a string to convert.");
-
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_short_partial);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_long_partial);
-    printf("  For 'content', do not output the end of content character.");
-
-
-    printf("\n\n");
-    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Usage: ");
-
-    printf("\n  ");
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, fss_extended_write_name);
-
-    printf("  ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "[");
-
-    printf(" options ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "]");
-
-
-    printf("\n\n");
+    fll_program_print_help_usage(data.context, fss_extended_write_name, "");
 
     return f_none;
   }
@@ -103,7 +35,7 @@ extern "C" {
 
     // load colors when not told to show no colors
     if (data->parameters[fss_extended_write_parameter_no_color].result == f_console_result_none) {
-      fl_new_color_context(status2, data->context);
+      fl_macro_color_context_new(status2, data->context);
 
       if (f_status_is_error(status2)) {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
@@ -111,7 +43,7 @@ extern "C" {
         return status2;
       }
       else {
-        fll_colors_load_context(&data->context, data->parameters[fss_extended_write_parameter_light].result == f_console_result_found);
+        fl_color_load_context(&data->context, data->parameters[fss_extended_write_parameter_light].result == f_console_result_found);
       }
     }
 
@@ -143,7 +75,7 @@ extern "C" {
       fss_extended_write_print_help(*data);
     }
     else if (data->parameters[fss_extended_write_parameter_version].result == f_console_result_found) {
-      fl_program_print_version(fss_extended_write_version);
+      fll_program_print_version(fss_extended_write_version);
     }
     else {
       f_array_length counter = 0;
@@ -341,7 +273,7 @@ extern "C" {
     } // while
 
     f_macro_string_lengths_delete(status, data->remaining);
-    fl_delete_color_context(status, data->context);
+    fl_macro_color_context_delete(status, data->context);
 
     return f_none;
   }

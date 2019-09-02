@@ -13,7 +13,7 @@ build_libraries -lc
 build_libraries_fll
 build_sources_library console.c conversion.c file.c memory.c pipe.c print.c utf.c
 build_sources_program
-build_sources_headers colors.h console.h conversion.h file.h fss.h memory.h path_fll.h path_filesystem.h pipe.h print.h serialized.h socket.h status.h string.h type.h type_array.h utf.h
+build_sources_headers color.h console.h conversion.h file.h fss.h memory.h path_fll.h path_filesystem.h pipe.h print.h serialized.h socket.h status.h string.h type.h type_array.h utf.h
 build_shared yes
 build_static yes
 

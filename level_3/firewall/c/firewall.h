@@ -25,19 +25,18 @@
 #include <level_0/type_array.h>
 
 // fll-1 includes
-#include <level_1/colors.h>
+#include <level_1/color.h>
 #include <level_1/console.h>
 #include <level_1/directory.h>
 #include <level_1/file.h>
-#include <level_1/program.h>
 #include <level_1/string.h>
 
 // fll-2 includes
-#include <level_2/colors.h>
 #include <level_2/execute.h>
 #include <level_2/fss_basic.h>
 #include <level_2/fss_basic_list.h>
 #include <level_2/fss_extended.h>
+#include <level_2/program.h>
 
 #ifdef __cplusplus
 extern "C" {

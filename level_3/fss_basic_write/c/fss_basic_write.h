@@ -22,16 +22,15 @@
 #include <level_0/type.h>
 
 // fll-1 includes
-#include <level_1/colors.h>
+#include <level_1/color.h>
 #include <level_1/console.h>
 #include <level_1/status.h>
 #include <level_1/file.h>
-#include <level_1/program.h>
 #include <level_1/string.h>
 
 // fll-2 includes
-#include <level_2/colors.h>
 #include <level_2/fss_status.h>
+#include <level_2/program.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -6,95 +6,21 @@ extern "C" {
 
 #ifndef _di_status_code_print_help_
   f_return_status status_code_print_help(const status_code_data data) {
-    printf("\n");
-    fl_color_print(f_standard_output, data.context.title, data.context.reset, " %s", status_code_name_long);
+    fll_program_print_help_header(data.context, status_code_name_long, status_code_version);
 
-    printf("\n");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "  Version %s", status_code_version);
+    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, "    Print this help message.");
+    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, "Do not output in color.");
+    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, " Print only the version number.");
 
+    printf("%c", f_string_eol);
 
-    printf("\n\n");
-    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Available Options: ");
+    fll_program_print_help_option(data.context, status_code_short_is_fine, status_code_long_is_fine, "   Print f_true if the error code is not an error.");
+    fll_program_print_help_option(data.context, status_code_short_is_warning, status_code_long_is_warning, "Print f_true if the error code is a warning.");
+    fll_program_print_help_option(data.context, status_code_short_is_error, status_code_long_is_error, "  Print f_true if the error code is an error.");
+    fll_program_print_help_option(data.context, status_code_short_number, status_code_long_number, "    Convert status code name to number.");
 
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_help);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_help);
-    printf("      Print this help message");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_light);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_light);
-    printf("     Output using colors that show up better on light backgrounds");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_no_color);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_no_color);
-    printf("  Do not output in color");
-
-    printf("\n  %s", f_console_symbol_short_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_short_version);
-
-    printf(", %s", f_console_symbol_long_disable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, f_console_standard_long_version);
-    printf("   Print only the version number");
-
-
-    printf("\n");
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_short_is_fine);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_long_is_fine);
-    printf("     Returns true if the error code is not an error.");
-
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_short_is_warning);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_long_is_warning);
-    printf("  Returns true if the error code is a warning.");
-
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_short_is_error);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_long_is_error);
-    printf("    Returns true if the error code is an error.");
-
-    printf("\n  %s", f_console_symbol_short_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_short_number);
-
-    printf(", %s", f_console_symbol_long_enable);
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_long_number);
-    printf("      Convert status code name to number.");
-
-
-    printf("\n\n");
-    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Usage: ");
-
-    printf("\n  ");
-    fl_color_print(f_standard_output, data.context.standout, data.context.reset, status_code_name);
-
-    printf("  ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "[");
-
-    printf(" options ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "]");
-
-    printf("  ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "<");
-
-    printf(" error code(s) ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, ">");
-
-
-    printf("\n\n");
+    fll_program_print_help_usage(data.context, status_code_name, "status code(s)");
 
     return f_none;
   }
@@ -109,7 +35,7 @@ extern "C" {
 
     // load colors when not told to show no colors
     if (data->parameters[status_code_parameter_no_color].result == f_console_result_none) {
-      fl_new_color_context(allocation_status, data->context);
+      fl_macro_color_context_new(allocation_status, data->context);
 
       if (f_status_is_error(allocation_status)) {
         fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
@@ -117,7 +43,7 @@ extern "C" {
         return allocation_status;
       }
 
-      fll_colors_load_context(&data->context, data->parameters[status_code_parameter_light].result == f_console_result_found);
+      fl_color_load_context(&data->context, data->parameters[status_code_parameter_light].result == f_console_result_found);
     }
 
     if (f_status_is_error(status)) {
@@ -148,7 +74,7 @@ extern "C" {
       status_code_print_help(*data);
     }
     else if (data->parameters[status_code_parameter_version].result == f_console_result_found) {
-      fl_program_print_version(status_code_version);
+      fll_program_print_version(status_code_version);
     }
     else if (data->parameters[status_code_parameter_is_error].result == f_console_result_found) {
       if (data->remaining.used > 0) {
@@ -360,7 +286,7 @@ extern "C" {
     } // while
 
     f_macro_string_lengths_delete(status, data->remaining);
-    fl_delete_color_context(status, data->context);
+    fl_macro_color_context_delete(status, data->context);
 
     return f_none;
   }
