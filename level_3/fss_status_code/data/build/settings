@@ -25,7 +25,7 @@ defines_all
 defines_static
 defines_shared
 
-flags_all -z now
+flags_all -z now -g
 flags_shared
 flags_static
 flags_library -fPIC
