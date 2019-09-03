@@ -31,20 +31,15 @@ extern "C" {
 
   #define f_array_lengths_initialize { 0, 0, 0 }
 
-  #define f_macro_array_lengths_new(status, lengths, length) \
-    f_macro_memory_structure_new(status, lengths, f_array_length, length)
+  #define f_macro_array_lengths_clear(lengths) f_macro_memory_structure_clear(lengths)
 
-  #define f_macro_array_lengths_delete(status, lengths) \
-    f_macro_memory_structure_delete(status, lengths, f_array_length)
+  #define f_macro_array_lengths_new(status, lengths, length) f_macro_memory_structure_new(status, lengths, f_array_length, length)
 
-  #define f_macro_array_lengths_destroy(status, lengths) \
-    f_macro_memory_structure_destroy(status, lengths, f_array_length)
+  #define f_macro_array_lengths_delete(status, lengths) f_macro_memory_structure_delete(status, lengths, f_array_length)
+  #define f_macro_array_lengths_destroy(status, lengths) f_macro_memory_structure_destroy(status, lengths, f_array_length)
 
-  #define f_macro_array_lengths_resize(status, lengths, new_length) \
-    f_macro_memory_structure_resize(status, lengths, f_array_length, new_length)
-
-  #define f_macro_array_lengths_adjust(status, lengths, new_length) \
-    f_macro_memory_structure_adjust(status, lengths, f_array_length, new_length)
+  #define f_macro_array_lengths_resize(status, lengths, new_length) f_macro_memory_structure_resize(status, lengths, f_array_length, new_length)
+  #define f_macro_array_lengths_adjust(status, lengths, new_length) f_macro_memory_structure_adjust(status, lengths, f_array_length, new_length)
 #endif // _di_f_array_lengths_
 
 #ifdef __cplusplus

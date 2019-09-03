@@ -69,6 +69,7 @@ extern "C" {
   enum {
     fss_extended_read_parameter_help,
     fss_extended_read_parameter_light,
+    fss_extended_read_parameter_dark,
     fss_extended_read_parameter_no_color,
     fss_extended_read_parameter_version,
 
@@ -83,6 +84,7 @@ extern "C" {
     { \
       f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
       f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(fss_extended_read_short_name, fss_extended_read_long_name, 0, f_true, f_console_type_normal), \
@@ -92,7 +94,7 @@ extern "C" {
       f_console_parameter_initialize(fss_extended_read_short_select, fss_extended_read_long_select, 0, f_true, f_console_type_normal), \
     }
 
-  #define fss_extended_read_total_parameters 9
+  #define fss_extended_read_total_parameters 10
 #endif // _di_fss_extended_read_defines_
 
 #ifndef _di_fss_extended_read_data_

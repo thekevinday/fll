@@ -122,20 +122,15 @@ extern "C" {
 
   #define f_string_lengths_initialize { 0, 0, 0 }
 
-  #define f_macro_string_lengths_new(status, lengths) \
-    f_macro_memory_structure_new(status, lengths, f_string_length)
+  #define f_macro_string_lengths_clear(lengths) f_macro_memory_structure_clear(lengths)
 
-  #define f_macro_string_lengths_delete(status, lengths) \
-    f_macro_memory_structure_delete(status, lengths, f_string_length)
+  #define f_macro_string_lengths_new(status, lengths, length) f_macro_memory_structure_new(status, lengths, f_string_length, length)
 
-  #define f_macro_string_lengths_destroy(status, lengths) \
-    f_macro_memory_structure_destroy(status, lengths, f_string_length)
+  #define f_macro_string_lengths_delete(status, lengths) f_macro_memory_structure_delete(status, lengths, f_string_length)
+  #define f_macro_string_lengths_destroy(status, lengths) f_macro_memory_structure_destroy(status, lengths, f_string_length)
 
-  #define f_macro_string_lengths_resize(status, lengths, new_length) \
-    f_macro_memory_structure_resize(status, lengths, f_string_length, new_length)
-
-  #define f_macro_string_lengths_adjust(status, lengths, new_length) \
-    f_macro_memory_structure_adjust(status, lengths, f_string_length, new_length)
+  #define f_macro_string_lengths_resize(status, lengths, new_length) f_macro_memory_structure_resize(status, lengths, f_string_length, new_length)
+  #define f_macro_string_lengths_adjust(status, lengths, new_length) f_macro_memory_structure_adjust(status, lengths, f_string_length, new_length)
 #endif // _di_f_string_lengths_
 
 /**
@@ -176,23 +171,15 @@ extern "C" {
 
   #define f_string_locations_initialize {0, 0, 0}
 
-  #define f_clear_string_locations(locations) \
-    f_macro_memory_structure_clear(locations)
+  #define f_clear_string_locations(locations) f_macro_memory_structure_clear(locations)
 
-  #define f_macro_string_locations_new(status, locations, length) \
-    f_macro_memory_structure_new(status, locations, f_string_location, length)
+  #define f_macro_string_locations_new(status, locations, length) f_macro_memory_structure_new(status, locations, f_string_location, length)
 
-  #define f_macro_string_locations_delete(status, locations) \
-    f_macro_memory_structure_delete(status, locations, f_string_location)
+  #define f_macro_string_locations_delete(status, locations) f_macro_memory_structure_delete(status, locations, f_string_location)
+  #define f_macro_string_locations_destroy(status, locations) f_macro_memory_structure_destroy(status, locations, f_string_location)
 
-  #define f_macro_string_locations_destroy(status, locations) \
-    f_macro_memory_structure_destroy(status, locations, f_string_location)
-
-  #define f_macro_string_locations_resize(status, locations, new_length) \
-    f_macro_memory_structure_resize(status, locations, f_string_location, new_length)
-
-  #define f_macro_string_locations_adjust(status, locations, new_length) \
-    f_macro_memory_structure_adjust(status, locations, f_string_location, new_length)
+  #define f_macro_string_locations_resize(status, locations, new_length) f_macro_memory_structure_resize(status, locations, f_string_location, new_length)
+  #define f_macro_string_locations_adjust(status, locations, new_length) f_macro_memory_structure_adjust(status, locations, f_string_location, new_length)
 #endif // _di_f_string_locations_
 
 /**

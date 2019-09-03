@@ -487,7 +487,7 @@
     f_string_location location = f_string_location_initialize;
     f_fss_objects objects = f_fss_objects_initialize;
     f_fss_contents contents = f_fss_contents_initialize;
-    f_string_length position = f_string_length_initialize;
+    f_string_length position = 0;
 
     // load the main file into memory.
     status = init_rule_buffer(init_rule_core_file, &buffer, &objects, &contents);

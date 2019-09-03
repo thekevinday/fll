@@ -204,6 +204,7 @@ extern "C" {
   enum {
     firewall_parameter_help,
     firewall_parameter_light,
+    firewall_parameter_dark,
     firewall_parameter_no_color,
     firewall_parameter_version,
 
@@ -240,6 +241,7 @@ extern "C" {
       { \
         f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
         f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
         f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
         f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
         f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, f_false, f_console_type_inverse), \
@@ -250,12 +252,13 @@ extern "C" {
         f_console_parameter_initialize(0, 0, firewall_command_show, f_false, f_console_type_other), \
       }
 
-    #define firewall_total_parameters 10
+    #define firewall_total_parameters 11
   #else
     #define f_console_parameter_initialize_firewall \
       { \
         f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
         f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
         f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
         f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
         f_console_parameter_initialize(0, 0, firewall_command_start, f_false, f_console_type_other), \
@@ -265,7 +268,7 @@ extern "C" {
         f_console_parameter_initialize(0, 0, firewall_command_show, f_false, f_console_type_other), \
       }
 
-    #define firewall_total_parameters 9
+    #define firewall_total_parameters 10
   #endif // _en_firewall_debug_
 #endif // _di_firewall_defines_
 

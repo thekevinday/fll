@@ -174,14 +174,12 @@ extern "C" {
   #define f_utf_string_initialize f_utf_character_eos
 
   #define f_macro_utf_string_new(status, string, length)   status = f_memory_new((void **) & string, sizeof(f_utf_string), length)
+
   #define f_macro_utf_string_delete(status, string, size)  status = f_memory_delete((void **) & string, sizeof(f_utf_string), size)
   #define f_macro_utf_string_destroy(status, string, size) status = f_memory_destroy((void **) & string, sizeof(f_utf_string), size)
 
-  #define f_macro_utf_string_resize(status, string, old_length, new_length) \
-    status = f_memory_resize((void **) & string, sizeof(f_utf_string), old_length, new_length)
-
-  #define f_macro_utf_string_adjust(status, string, old_length, new_length) \
-    status = f_memory_adjust((void **) & string, sizeof(f_utf_string), old_length, new_length)
+  #define f_macro_utf_string_resize(status, string, old_length, new_length) status = f_memory_resize((void **) & string, sizeof(f_utf_string), old_length, new_length)
+  #define f_macro_utf_string_adjust(status, string, old_length, new_length) status = f_memory_adjust((void **) & string, sizeof(f_utf_string), old_length, new_length)
 #endif // _di_f_utf_string_
 
 /**
@@ -191,14 +189,12 @@ extern "C" {
   typedef f_s_long f_utf_string_length;
 
   #define f_macro_utf_string_length_new(status, string, length)    status = f_memory_new((void **) & string, sizeof(f_utf_string_length), length)
+
   #define f_macro_utf_string_length_delete(status, string, length) status = f_memory_delete((void **) & string, sizeof(f_utf_string_length), length)
   #define f_macro_utf_string_length_destroy(status, string, size)  status = f_memory_destroy((f_void_P *) & string, sizeof(f_utf_string_length), size)
 
-  #define f_macro_utf_string_length_resize(status, length, old_length, new_length) \
-    status = f_memory_resize((void **) & length, sizeof(f_utf_string_length), old_length, new_length)
-
-  #define f_macro_utf_string_length_adjust(status, length, old_length, new_length) \
-    status = f_memory_adjust((void **) & length, sizeof(f_utf_string_length), old_length, new_length)
+  #define f_macro_utf_string_length_resize(status, length, old_length, new_length) status = f_memory_resize((void **) & length, sizeof(f_utf_string_length), old_length, new_length)
+  #define f_macro_utf_string_length_adjust(status, length, old_length, new_length) status = f_memory_adjust((void **) & length, sizeof(f_utf_string_length), old_length, new_length)
 #endif // _di_f_utf_string_length_
 
 /**
@@ -214,20 +210,15 @@ extern "C" {
 
   #define f_utf_string_lengths_initialize { 0, 0, 0 }
 
-  #define f_macro_utf_string_length_news(status, lengths) \
-    f_macro_memory_structure_new(status, lengths, f_utf_string_length)
+  #define f_macro_utf_string_lengths_clear(lengths) f_macro_memory_structure_clear(lengths)
 
-  #define f_macro_utf_string_length_deletes(status, lengths) \
-    f_macro_memory_structure_delete(status, lengths, f_utf_string_length)
+  #define f_macro_utf_string_lengths_new(status, lengths, length) f_macro_memory_structure_new(status, lengths, f_utf_string_length, length)
 
-  #define f_macro_utf_string_length_destroys(status, lengths) \
-    f_macro_memory_structure_destroy(status, lengths, f_utf_string_length)
+  #define f_macro_utf_string_lengths_delete(status, lengths) f_macro_memory_structure_delete(status, lengths, f_utf_string_length)
+  #define f_macro_utf_string_lengths_destroy(status, lengths) f_macro_memory_structure_destroy(status, lengths, f_utf_string_length)
 
-  #define f_macro_utf_string_length_resizes(status, lengths, new_length) \
-    f_macro_memory_structure_resize(status, lengths, f_utf_string_length, new_length)
-
-  #define f_macro_utf_string_length_adjusts(status, lengths, new_length) \
-    f_macro_memory_structure_adjust(status, lengths, f_utf_string_length, new_length)
+  #define f_macro_utf_string_lengths_resize(status, lengths, new_length) f_macro_memory_structure_resize(status, lengths, f_utf_string_length, new_length)
+  #define f_macro_utf_string_lengths_adjust(status, lengths, new_length) f_macro_memory_structure_adjust(status, lengths, f_utf_string_length, new_length)
 #endif // _di_f_utf_string_lengths_
 
 /**
@@ -268,23 +259,15 @@ extern "C" {
 
   #define f_utf_string_locations_initialize {0, 0, 0}
 
-  #define f_clear_utf_string_locations(locations) \
-    f_macro_memory_structure_clear(locations)
+  #define f_clear_utf_string_locations(locations) f_macro_memory_structure_clear(locations)
 
-  #define f_macro_utf_string_location_news(status, locations, length) \
-    f_macro_memory_structure_new(status, locations, f_utf_string_location, length)
+  #define f_macro_utf_string_location_news(status, locations, length) f_macro_memory_structure_new(status, locations, f_utf_string_location, length)
 
-  #define f_macro_utf_string_location_deletes(status, locations) \
-    f_macro_memory_structure_delete(status, locations, f_utf_string_location)
+  #define f_macro_utf_string_location_deletes(status, locations) f_macro_memory_structure_delete(status, locations, f_utf_string_location)
+  #define f_macro_utf_string_location_destroys(status, locations) f_macro_memory_structure_destroy(status, locations, f_utf_string_location)
 
-  #define f_macro_utf_string_location_destroys(status, locations) \
-    f_macro_memory_structure_destroy(status, locations, f_utf_string_location)
-
-  #define f_macro_utf_string_location_resizes(status, locations, new_length) \
-    f_macro_memory_structure_resize(status, locations, f_utf_string_location, new_length)
-
-  #define f_macro_utf_string_location_adjusts(status, locations, new_length) \
-    f_macro_memory_structure_adjust(status, locations, f_utf_string_location, new_length)
+  #define f_macro_utf_string_location_resizes(status, locations, new_length) f_macro_memory_structure_resize(status, locations, f_utf_string_location, new_length)
+  #define f_macro_utf_string_location_adjusts(status, locations, new_length) f_macro_memory_structure_adjust(status, locations, f_utf_string_location, new_length)
 #endif // _di_f_utf_string_locations_
 
 /**

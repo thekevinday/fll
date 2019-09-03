@@ -10,6 +10,7 @@ extern "C" {
 
     fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, "    Print this help message.");
     fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, "    Output using colors that show up better on dark backgrounds.");
     fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, "Do not output in color.");
     fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, " Print only the version number.");
 
@@ -28,46 +29,14 @@ extern "C" {
 
 #ifndef _di_fss_status_code_main_
   f_return_status fss_status_code_main(const f_array_length argc, const f_string argv[], fss_status_code_data *data) {
-    f_status status = f_none;
-    f_status allocation_status = f_none;
-
-    status = fl_process_parameters(argc, argv, data->parameters, fss_status_code_total_parameters, &data->remaining);
-
-    // load colors when not told to show no colors
-    if (data->parameters[fss_status_code_parameter_no_color].result == f_console_result_none) {
-      fl_macro_color_context_new(allocation_status, data->context);
-
-      if (f_status_is_error(allocation_status)) {
-        fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
-        fss_status_code_delete_data(data);
-        return allocation_status;
-      }
-
-      fl_color_load_context(&data->context, data->parameters[fss_status_code_parameter_light].result == f_console_result_found);
-    }
+    f_status status = fll_program_process_parameters(argc, argv, data->parameters, fss_status_code_total_parameters, fss_status_code_parameter_no_color, fss_status_code_parameter_light, fss_status_code_parameter_dark, &data->remaining, &data->context);
 
     if (f_status_is_error(status)) {
-      status = f_status_set_fine(status);
-
-      if (status == f_no_data) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
-        // TODO: there is a way to identify which parameter is incorrect
-        //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
-        //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
-      }
-      else if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
-      }
-      else if (status == f_invalid_parameter) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
-      }
-      else {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", status);
-      }
-
       fss_status_code_delete_data(data);
       return f_status_set_error(status);
     }
+
+    status = f_none;
 
     // execute parameter results
     if (data->parameters[fss_status_code_parameter_help].result == f_console_result_found) {

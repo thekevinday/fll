@@ -60,6 +60,7 @@ extern "C" {
   enum {
     status_code_parameter_help,
     status_code_parameter_light,
+    status_code_parameter_dark,
     status_code_parameter_no_color,
     status_code_parameter_version,
 
@@ -73,6 +74,7 @@ extern "C" {
     { \
       f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
       f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(status_code_short_is_fine, status_code_long_is_fine, 0, f_false, f_console_type_normal), \
@@ -81,7 +83,7 @@ extern "C" {
       f_console_parameter_initialize(status_code_short_number, status_code_long_number, 0, f_false, f_console_type_normal), \
     }
 
-  #define status_code_total_parameters 8
+  #define status_code_total_parameters 9
 #endif // _di_status_code_defines_
 
 #ifndef _di_status_code_data_

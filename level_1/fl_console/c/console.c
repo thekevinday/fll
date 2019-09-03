@@ -118,7 +118,13 @@ extern "C" {
             }
 
             parameters[parameter_counter].result = f_console_result_found;
+            parameters[parameter_counter].location = location;
+            parameters[parameter_counter].location_sub = 0;
             parameters[parameter_counter].total++;
+
+            if (result == console_short) {
+              parameters[parameter_counter].location_sub = sub_location;
+            }
 
             if (parameters[parameter_counter].has_additional) {
               if (needs_additional.used + parameters[parameter_counter].has_additional > needs_additional.size) {
@@ -161,6 +167,8 @@ extern "C" {
           }
 
           parameters[parameter_counter].result = f_console_result_found;
+          parameters[parameter_counter].location = location;
+          parameters[parameter_counter].location_sub = 0;
           parameters[parameter_counter].total++;
 
           if (parameters[parameter_counter].has_additional) {

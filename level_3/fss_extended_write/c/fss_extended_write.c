@@ -10,6 +10,7 @@ extern "C" {
 
     fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, "    Print this help message.");
     fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, "    Output using colors that show up better on dark backgrounds.");
     fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, "Do not output in color.");
     fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, " Print only the version number.");
 
@@ -28,24 +29,14 @@ extern "C" {
 
 #ifndef _di_fss_extended_write_main_
   f_return_status fss_extended_write_main(const f_array_length argc, const f_string argv[], fss_extended_write_data *data) {
-    f_status status = f_none;
-    f_status status2 = f_none;
+    f_status status = fll_program_process_parameters(argc, argv, data->parameters, fss_extended_write_total_parameters, fss_extended_write_parameter_no_color, fss_extended_write_parameter_light, fss_extended_write_parameter_dark, &data->remaining, &data->context);
 
-    status = fl_process_parameters(argc, argv, data->parameters, fss_extended_write_total_parameters, &data->remaining);
-
-    // load colors when not told to show no colors
-    if (data->parameters[fss_extended_write_parameter_no_color].result == f_console_result_none) {
-      fl_macro_color_context_new(status2, data->context);
-
-      if (f_status_is_error(status2)) {
-        fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
-        fss_extended_write_delete_data(data);
-        return status2;
-      }
-      else {
-        fl_color_load_context(&data->context, data->parameters[fss_extended_write_parameter_light].result == f_console_result_found);
-      }
+    if (f_status_is_error(status)) {
+      fss_extended_write_delete_data(data);
+      return f_status_set_error(status);
     }
+
+    status = f_none;
 
     if (f_status_is_error(status)) {
       status = f_status_set_fine(status);
@@ -110,6 +101,8 @@ extern "C" {
           else {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
           }
+
+          f_status status2 = f_none;
 
           f_macro_string_dynamic_delete(status2, input);
           fss_extended_write_delete_data(data);

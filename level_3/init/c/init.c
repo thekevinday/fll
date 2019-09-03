@@ -26,6 +26,7 @@ extern "C" {
 
     fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, "    Print this help message.");
     fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, "    Output using colors that show up better on dark backgrounds.");
     fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, "Do not output in color.");
     fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, " Print only the version number.");
     fll_program_print_help_option(data.context, f_console_standard_short_debug, f_console_standard_long_debug, " Enable debugging.");
@@ -44,7 +45,6 @@ extern "C" {
 #ifndef _di_init_main_
   f_return_status init_main(const f_s_int argc, const f_string argv[], init_argument *argument) {
     f_status status  = f_none;
-    f_status status2 = f_none;
     f_autochar run_level[init_kernel_runlevel_buffer];
 
     memset(run_level, 0, sizeof(f_autochar) * init_kernel_runlevel_buffer);
@@ -52,40 +52,14 @@ extern "C" {
     f_u_short do_socket_file = f_true;
     f_u_short do_socket_port = f_false;
 
-    status = fl_process_parameters(argc, argv, argument->parameters, init_total_parameters, &argument->remaining);
-
-    // load colors when not told to show no colors
-    if (argument->parameters[init_parameter_no_color].result == f_console_result_none) {
-      fl_macro_color_context_new(status2, argument->context);
-
-      if (status2 == f_none) {
-        fl_color_load_context(&argument->context, argument->parameters[init_parameter_light].result == f_console_result_found);
-      } else {
-        fprintf(f_standard_error, "Critical Error: unable to allocate memory\n");
-        init_delete_argument((*argument));
-        return status2;
-      }
-    }
+    status = fll_program_process_parameters(argc, argv, data->parameters, init_total_parameters, init_parameter_no_color, init_parameter_light, init_parameter_dark, &data->remaining, &data->context);
 
     if (f_status_is_error(status)) {
-      status = f_status_set_fine(status);
-
-      if (status == f_no_data) {
-        fl_color_print_line(f_standard_error, argument->context.error, argument->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
-        // TODO: there is a way to identify which parameter is incorrect
-        //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
-        //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
-      } else if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_color_print_line(f_standard_error, argument->context.error, argument->context.reset, "CRITICAL ERROR: unable to allocate memory");
-      } else if (f_status_set_fine(status) == f_invalid_parameter) {
-        fl_color_print_line(f_standard_error, argument->context.error, argument->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters()");
-      } else {
-        fl_color_print_line(f_standard_error, argument->context.error, argument->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters()", f_status_set_error(status));
-      }
-
-      init_delete_argument((*argument));
+      init_delete_data(data);
       return f_status_set_error(status);
     }
+
+    status = f_none;
 
 
     if (argument->parameters[init_parameter_runlevel].result == f_console_result_found) {

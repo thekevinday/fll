@@ -133,7 +133,7 @@ enum {
 
   #define f_fss_headers_initialize { 0, 0, 0 }
 
-  #define f_clear_fss_headers(headers) f_macro_memory_structure_clear(headers)
+  #define f_macro_fss_headers_clear(headers) f_macro_memory_structure_clear(headers)
 
   #define f_macro_fss_headers_new(status, headers, length) f_macro_memory_structure_new(status, headers, f_fss_header, length)
 

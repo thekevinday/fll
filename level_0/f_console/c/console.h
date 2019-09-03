@@ -61,12 +61,14 @@ extern "C" {
  * Create some standard command line parameter options required by the kevux/fss/fll specifications.
  */
 #ifndef _di_f_standard_console_parameters_
-  #define f_console_standard_short_debug    "d"
+  #define f_console_standard_short_dark     "d"
+  #define f_console_standard_short_debug    "D"
   #define f_console_standard_short_help     "h"
   #define f_console_standard_short_light    "l"
   #define f_console_standard_short_no_color "n"
   #define f_console_standard_short_version  "v"
 
+  #define f_console_standard_long_dark     "dark"
   #define f_console_standard_long_debug    "debug"
   #define f_console_standard_long_help     "help"
   #define f_console_standard_long_light    "light"
@@ -89,7 +91,6 @@ extern "C" {
 #ifndef _di_f_console_default_allocation_step_
   #define f_console_default_allocation_step 4
 #endif // _di_f_console_default_allocation_step_
-
 
 /**
  * Provide console type enumerations:
@@ -133,6 +134,8 @@ extern "C" {
  * - type: One of the f_console_type_* codes, defining how this parameter is to be processed.
  * - result: A code representing that the parameter was found and how it was found ('-h' vs '--help').
  * - total: A number representing the total number of times this parameter was found ('-h -h' would result in a total of 2).
+ * - location: The last location in argv[] where this parameter was found.
+ * - location_sub: The last sub-location at location in argv (only used by short parameters, such as -h or +l).
  * - additional: An array of locations representing where in the argv[] the additional arguments are found.
  */
 #ifndef _di_f_console_parameter_
@@ -147,11 +150,12 @@ extern "C" {
     uint8_t result;
     uint8_t total;
 
+    f_string_length  location;
+    f_string_length  location_sub;
     f_string_lengths additional;
   } f_console_parameter;
 
-  #define f_console_parameter_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) \
-    { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, f_string_lengths_initialize }
+  #define f_console_parameter_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_string_lengths_initialize }
 #endif // _di_f_console_parameter_
 
 /**

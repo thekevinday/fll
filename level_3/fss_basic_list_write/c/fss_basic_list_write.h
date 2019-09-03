@@ -61,6 +61,7 @@ extern "C" {
   enum {
     fss_basic_list_write_parameter_help,
     fss_basic_list_write_parameter_light,
+    fss_basic_list_write_parameter_dark,
     fss_basic_list_write_parameter_no_color,
     fss_basic_list_write_parameter_version,
 
@@ -73,6 +74,7 @@ extern "C" {
     { \
       f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
       f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(fss_basic_list_write_short_object, fss_basic_list_write_long_object, 0, f_false, f_console_type_normal), \
@@ -80,7 +82,7 @@ extern "C" {
       f_console_parameter_initialize(fss_basic_list_write_short_string, fss_basic_list_write_long_string, 0, f_true, f_console_type_normal), \
     }
 
-  #define fss_basic_list_write_total_parameters 7
+  #define fss_basic_list_write_total_parameters 8
 #endif // _di_fss_basic_list_write_defines_
 
 #ifndef _di_fss_basic_list_write_data_
