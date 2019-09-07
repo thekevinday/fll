@@ -273,6 +273,9 @@ extern "C" {
         case f_invalid:
           *string = fl_status_string_invalid;
           break;
+        case f_invalid_name:
+          *string = fl_status_string_invalid_name;
+          break;
         case f_invalid_parameter:
           *string = fl_status_string_invalid_parameter;
           break;
@@ -287,6 +290,9 @@ extern "C" {
           break;
         case f_invalid_directory:
           *string = fl_status_string_invalid_directory;
+          break;
+        case f_invalid_descriptor:
+          *string = fl_status_string_invalid_descriptor;
           break;
         case f_invalid_socket:
           *string = fl_status_string_invalid_socket;

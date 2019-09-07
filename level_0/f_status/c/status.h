@@ -142,11 +142,13 @@ enum {
 
   #ifndef _di_f_status_invalid_
     f_invalid,
+    f_invalid_name,
     f_invalid_parameter,
     f_invalid_syntax,
     f_invalid_data,
     f_invalid_file,
     f_invalid_directory,
+    f_invalid_descriptor,
     f_invalid_socket,
     f_invalid_device,
     f_invalid_link,

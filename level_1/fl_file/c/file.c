@@ -14,7 +14,7 @@ extern "C" {
       if (position.total_elements < 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.file == 0) return f_status_set_warning(f_file_not_open);
+    if (file.address == 0) return f_status_set_warning(f_file_not_open);
 
     f_status status = f_none;
     f_string_length size = 0;
@@ -67,7 +67,7 @@ extern "C" {
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.file == 0) return f_status_set_warning(f_file_not_open);
+    if (file.address == 0) return f_status_set_warning(f_file_not_open);
 
     f_status status = f_none;
     f_string_length size = 0;
@@ -106,12 +106,12 @@ extern "C" {
 
 #ifndef _di_fl_file_write_
   f_return_status fl_file_write(f_file file, const f_string_dynamic buffer) {
-    if (file.file == 0) return f_status_set_error(f_file_not_open);
+    if (file.address == 0) return f_status_set_error(f_file_not_open);
 
     f_status status = f_none;
     size_t size = 0;
 
-    size = fwrite(buffer.string, file.byte_size, buffer.used, file.file);
+    size = fwrite(buffer.string, file.byte_size, buffer.used, file.address);
 
     if (size < buffer.used * file.byte_size) {
       return f_status_set_error(f_file_write_error);
@@ -127,14 +127,14 @@ extern "C" {
       if (position.start < position.stop) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.file == 0) return f_file_not_open;
+    if (file.address == 0) return f_file_not_open;
 
     f_status status = f_none;
     size_t size = 0;
 
     f_string_length total = buffer.used - (position.stop - position.start + 1);
 
-    size = fwrite(buffer.string + position.start, file.byte_size, total, file.file);
+    size = fwrite(buffer.string + position.start, file.byte_size, total, file.address);
 
     if (size < total * file.byte_size) {
       return f_status_set_error(f_file_write_error);

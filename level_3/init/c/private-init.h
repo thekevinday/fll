@@ -53,7 +53,7 @@ extern "C" {
       f_macro_string_dynamic_delete(status, rule.directory); \
     } \
     if (status == f_none) { \
-      f_macro_string_dynamic_delete(status, rule.file); \
+      f_macro_string_dynamic_delete(status, rule.address); \
     } \
     if (status == f_none) { \
       rule.require = 0; \
@@ -66,7 +66,7 @@ extern "C" {
       f_macro_string_dynamic_destroy(status, rule.directory); \
     } \
     if (status == f_none) { \
-      f_macro_string_dynamic_destroy(status, rule.file); \
+      f_macro_string_dynamic_destroy(status, rule.address); \
     } \
     if (status == f_none) { \
       rule.require = 0; \

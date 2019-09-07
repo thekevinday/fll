@@ -187,15 +187,15 @@ extern "C" {
 #endif // _di_fl_fss_identify_
 
 #ifndef _di_fl_fss_identify_file_
-  f_return_status fl_fss_identify_file(f_file *file_information, f_fss_header *header) {
+  f_return_status fl_fss_identify_file(f_file *file, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
-      if (file_information == 0) return f_status_set_error(f_invalid_parameter);
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (header == 0) return f_status_set_error(f_invalid_parameter);
-      if (file_information->file == 0) return f_status_set_error(f_file_not_open);
-      if (ferror(file_information->file) != 0) return f_status_set_error(f_file_error);
+      if (file->address == 0) return f_status_set_error(f_file_not_open);
+      if (ferror(file->address) != 0) return f_status_set_error(f_file_error);
     #endif // _di_level_1_parameter_checking_
 
-    clearerr(file_information->file);
+    clearerr(file->address);
 
     f_status         status = f_none;
     f_string_dynamic buffer = f_string_dynamic_initialize;
@@ -203,7 +203,7 @@ extern "C" {
 
     // make sure we are in the proper location in the file
     {
-      f_s_int seek_result = f_file_seek_from_beginning(file_information->file, 0);
+      f_s_int seek_result = f_file_seek_from_beginning(file->address, 0);
 
       if (seek_result != 0) return f_status_set_error(f_file_seek_error);
     }
@@ -218,7 +218,7 @@ extern "C" {
     }
 
     // 2: buffer the file
-    status = f_file_read(file_information, &buffer, location);
+    status = f_file_read(file, &buffer, location);
 
     if (f_status_is_error(status)) {
       return status;

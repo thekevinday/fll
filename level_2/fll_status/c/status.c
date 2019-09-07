@@ -453,6 +453,11 @@ extern "C" {
         return f_none;
       }
 
+      if (fl_string_compare(string, fl_status_string_invalid_name, length, fl_status_string_invalid_name_length) == f_equal_to) {
+        *code = f_invalid_name;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_invalid_parameter, length, fl_status_string_invalid_parameter_length) == f_equal_to) {
         *code = f_invalid_parameter;
         return f_none;
@@ -475,6 +480,11 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_invalid_directory, length, fl_status_string_invalid_directory_length) == f_equal_to) {
         *code = f_invalid_directory;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_invalid_descriptor, length, fl_status_string_invalid_descriptor_length) == f_equal_to) {
+        *code = f_invalid_descriptor;
         return f_none;
       }
 

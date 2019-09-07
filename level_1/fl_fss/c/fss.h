@@ -79,7 +79,7 @@ extern "C" {
 /**
  * Identify FSS type from a file.
  *
- * @param file_information
+ * @param file
  *   The file information.
  * @param header
  *   The header data to populate with results of this function.
@@ -96,7 +96,7 @@ extern "C" {
  * @see fl_fss_identify()
  */
 #ifndef _di_fl_fss_identify_file_
-  extern f_return_status fl_fss_identify_file(f_file *file_information, f_fss_header *header);
+  extern f_return_status fl_fss_identify_file(f_file *file, f_fss_header *header);
 #endif // _di_fl_fss_identify_file_
 
 /**

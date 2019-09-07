@@ -55,7 +55,7 @@ extern "C" {
         f_file file = f_file_initialize;
         f_string_dynamic input = f_string_dynamic_initialize;
 
-        file.file = f_pipe;
+        file.address = f_pipe;
 
         status = fl_file_read_fifo(file, &input);
 

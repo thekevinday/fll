@@ -13,6 +13,8 @@
 
 // libc includes
 #include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -54,10 +56,10 @@ extern "C" {
 
 #ifndef _di_f_file_
   typedef struct {
-    f_file_id   id;        // file descriptor
-    size_t      byte_size; // how many bytes to use on each read/write (for normal string handling this should be sizeof(f_string)
-    FILE *      file;      // the file data type
-    f_file_mode mode;      // how the file is to be accessed (or is being accessed)
+    f_file_id   id;        // file descriptor.
+    size_t      byte_size; // how many bytes to use on each read/write (for normal string handling this should be sizeof(f_string).
+    FILE *      address;   // a pointer to a file (generally opened).
+    f_file_mode mode;      // how the file is to be accessed (or is being accessed).
   } f_file;
 
   #define f_file_initialize { 0, sizeof(char), 0, (f_file_mode) f_file_read_only }
@@ -192,53 +194,101 @@ extern "C" {
 #ifndef _di_f_macro_file_reset_position_
   #define f_macro_file_reset_position(position, file) \
     if (position.total_elements == 0) { \
-      fseek(file.file, 0, SEEK_END); \
-      position.total_elements = ftell(file.file); \
-      fseek(file.file, 0, SEEK_SET); \
+      fseek(file.address, 0, SEEK_END); \
+      position.total_elements = ftell(file.address); \
+      fseek(file.address, 0, SEEK_SET); \
     }
 #endif // _di_f_macro_file_reset_position_
 
 #ifndef _di_f_file_open_
   /**
    * open a particular file and save its stream.
-   * filename = name of the file.
+   * file name = name of the file.
    */
-  extern f_return_status f_file_open(f_file *file_information, const f_string filename);
+  extern f_return_status f_file_open(f_file *file, const f_string filename);
 #endif // _di_f_file_open_
 
 #ifndef _di_f_file_close_
   /**
    * close file.
    */
-  extern f_return_status f_file_close(f_file *file_information);
+  extern f_return_status f_file_close(f_file *file);
 #endif // _di_f_file_close_
+
+/**
+ * Check if a file exists.
+ *
+ * @param file_name
+ *   The file name.
+ *
+ * @return
+ *   f_true if file exists.
+ *   f_false if file does not exist.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_invalid_name (with error bit) if the filename is too long.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_false (with error bit) on unknown/unhandled errors.
+ */
+#ifndef _di_f_file_exists_
+  extern f_return_status f_file_exists(const f_string file_name);
+#endif // _di_f_file_exists_
+
+/**
+ * Check if a file exists at a given directory.
+ *
+ * @param directory_file_descriptor
+ *   The file descriptor of the directory.
+ * @param file_name
+ *   The file name.
+ * @param flags
+ *   Additional flags to pass, such as AT_EACCESS or AT_SYMLINK_NOFOLLOW.
+ *
+ * @return
+ *   f_true if file exists.
+ *   f_false if file does not exist.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_invalid_name (with error bit) if the filename is too long.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_false (with error bit) on unknown/unhandled errors.
+ */
+#ifndef _di_f_file_exists_at_
+  extern f_return_status f_file_exists_at(const int directory_file_descriptor, const f_string file_name, const int flags);
+#endif // _di_f_file_exists_at_
 
 #ifndef _di_f_file_flush_
   /**
    * flush file.
    */
-  extern f_return_status f_file_flush(f_file *file_information);
+  extern f_return_status f_file_flush(f_file *file);
 #endif // _di_f_file_flush_
 
 #ifndef _di_f_file_read_
   /**
    * read a given amount of data from the buffer, will auto-seek to where.
    */
-  extern f_return_status f_file_read(f_file *file_information, f_string_dynamic *buffer, const f_file_position location);
+  extern f_return_status f_file_read(f_file *file, f_string_dynamic *buffer, const f_file_position location);
 #endif // _di_f_file_read_
 
 #ifndef _di_f_file_read_fifo_
   /**
    * read a given amount of data from the buffer, will not auto seek.
    */
-  extern f_return_status f_file_read_fifo(f_file *file_information, f_string_dynamic *buffer);
+  extern f_return_status f_file_read_fifo(f_file *file, f_string_dynamic *buffer);
 #endif // _di_f_file_read_fifo_
 
 #ifndef _di_f_file_stat_
   /**
    * read file statistics.
    */
-  extern f_return_status f_file_stat(const f_string file, struct stat *file_stat);
+  extern f_return_status f_file_stat(const f_string file_name, struct stat *file_stat);
 #endif // _di_f_file_stat_
 
 #ifndef _di_f_file_stat_by_id_

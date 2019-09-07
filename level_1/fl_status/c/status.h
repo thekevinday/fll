@@ -280,6 +280,9 @@ extern "C" {
     #define fl_status_string_invalid "f_invalid"
     #define fl_status_string_invalid_length 10
 
+    #define fl_status_string_invalid_name "f_invalid_name"
+    #define fl_status_string_invalid_name_length 15
+
     #define fl_status_string_invalid_parameter "f_invalid_parameter"
     #define fl_status_string_invalid_parameter_length 20
 
@@ -294,6 +297,9 @@ extern "C" {
 
     #define fl_status_string_invalid_directory "f_invalid_directory"
     #define fl_status_string_invalid_directory_length 20
+
+    #define fl_status_string_invalid_descriptor "f_invalid_descriptor"
+    #define fl_status_string_invalid_descriptor_length 21
 
     #define fl_status_string_invalid_socket "f_invalid_socket"
     #define fl_status_string_invalid_socket_length 17

@@ -611,9 +611,9 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
           }
           else {
             if (file_position.total_elements == 0) {
-              fseek(file.file, 0, SEEK_END);
-              file_position.total_elements = ftell(file.file);
-              fseek(file.file, 0, SEEK_SET);
+              fseek(file.address, 0, SEEK_END);
+              file_position.total_elements = ftell(file.address);
+              fseek(file.address, 0, SEEK_SET);
             }
 
             status = fl_file_read(file, file_position, &local_buffer);

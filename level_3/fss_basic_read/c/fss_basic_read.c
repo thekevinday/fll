@@ -60,7 +60,7 @@ extern "C" {
       if (data->process_pipe) {
         f_file file = f_file_initialize;
 
-        file.file = f_pipe;
+        file.address = f_pipe;
 
         status = fl_file_read_fifo(file, &data->buffer);
 
@@ -137,9 +137,9 @@ extern "C" {
           }
 
           if (data->file_position.total_elements == 0) {
-            fseek(file.file, 0, SEEK_END);
+            fseek(file.address, 0, SEEK_END);
 
-            data->file_position.total_elements = ftell(file.file);
+            data->file_position.total_elements = ftell(file.address);
 
             // skip past empty files
             if (data->file_position.total_elements == 0) {
@@ -147,7 +147,7 @@ extern "C" {
               continue;
             }
 
-            fseek(file.file, 0, SEEK_SET);
+            fseek(file.address, 0, SEEK_SET);
           }
 
           status = fl_file_read(file, data->file_position, &data->buffer);
