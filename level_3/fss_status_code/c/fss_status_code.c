@@ -8,18 +8,18 @@ extern "C" {
   f_return_status fss_status_code_print_help(const fss_status_code_data data) {
     fll_program_print_help_header(data.context, fss_status_code_name_long, fss_status_code_version);
 
-    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, "    Print this help message.");
-    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, "Do not output in color.");
-    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, " Print only the version number.");
+    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol);
 
-    fll_program_print_help_option(data.context, fss_status_code_short_is_fine, fss_status_code_long_is_fine, "   Print f_true if the error code is not an error.");
-    fll_program_print_help_option(data.context, fss_status_code_short_is_warning, fss_status_code_long_is_warning, "Print f_true if the error code is a warning.");
-    fll_program_print_help_option(data.context, fss_status_code_short_is_error, fss_status_code_long_is_error, "  Print f_true if the error code is an error.");
-    fll_program_print_help_option(data.context, fss_status_code_short_number, fss_status_code_long_number, "    Convert status code name to number.");
+    fll_program_print_help_option(data.context, fss_status_code_short_is_fine, fss_status_code_long_is_fine, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print f_true if the error code is not an error.");
+    fll_program_print_help_option(data.context, fss_status_code_short_is_warning, fss_status_code_long_is_warning, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print f_true if the error code is a warning.");
+    fll_program_print_help_option(data.context, fss_status_code_short_is_error, fss_status_code_long_is_error, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print f_true if the error code is an error.");
+    fll_program_print_help_option(data.context, fss_status_code_short_number, fss_status_code_long_number, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Convert status code name to number.");
 
     fll_program_print_help_usage(data.context, fss_status_code_name, "status code(s)");
 

@@ -20,12 +20,12 @@ extern "C" {
 #endif // _di_fll_program_print_help_header_
 
 #ifndef _di_fll_program_print_help_option_
-  f_return_status fll_program_print_help_option(const fl_color_context context, const f_string option_short, const f_string option_long, const f_string description) {
+  f_return_status fll_program_print_help_option(const fl_color_context context, const f_string option_short, const f_string option_long, const f_string symbol_short, const f_string symbol_long, const f_string description) {
     printf("%c", f_string_eol);
-    printf("  %s", f_console_symbol_short_enable);
+    printf("  %s", symbol_short);
     fl_color_print(f_standard_output, context.standout, context.reset, option_short);
 
-    printf(", %s", f_console_symbol_long_enable);
+    printf(", %s", symbol_long);
     fl_color_print(f_standard_output, context.standout, context.reset, option_long);
     printf("  %s", description);
 
@@ -34,9 +34,9 @@ extern "C" {
 #endif // _di_fll_program_print_help_option_
 
 #ifndef _di_fll_program_print_help_option_long_
-  f_return_status fll_program_print_help_option_long(const fl_color_context context, const f_string option_long, const f_string description) {
+  f_return_status fll_program_print_help_option_long(const fl_color_context context, const f_string option_long, const f_string symbol_long, const f_string description) {
     printf("%c", f_string_eol);
-    printf("      %s", f_console_symbol_long_enable);
+    printf("      %s", symbol_long);
     fl_color_print(f_standard_output, context.standout, context.reset, option_long);
     printf("  %s", description);
 

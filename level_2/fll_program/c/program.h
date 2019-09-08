@@ -53,6 +53,10 @@ extern "C" {
  *   The short name of the option.
  * @param option_long
  *   The long name of the option.
+ * @param symbol_short
+ *   The short symbol of the option.
+ * @param symbol_long
+ *   The long symbol of the option.
  * @param description
  *   A desciption associated with the option.
  *
@@ -60,7 +64,7 @@ extern "C" {
  *   f_none on success.
  */
 #ifndef _di_fll_program_print_help_option_
-  extern f_return_status fll_program_print_help_option(const fl_color_context context, const f_string option_short, const f_string option_long, const f_string description);
+  extern f_return_status fll_program_print_help_option(const fl_color_context context, const f_string option_short, const f_string option_long, const f_string symbol_short, const f_string symbol_long, const f_string description);
 #endif // _di_fll_program_print_help_option_
 
 /**
@@ -70,6 +74,8 @@ extern "C" {
  *   The color context.
  * @param option_long
  *   The long name of the option.
+ * @param symbol_long
+ *   The long symbol of the option.
  * @param description
  *   A desciption associated with the option.
  *
@@ -77,7 +83,7 @@ extern "C" {
  *   f_none on success.
  */
 #ifndef _di_fll_program_print_help_option_long_
-  extern f_return_status fll_program_print_help_option_long(const fl_color_context context, const f_string option_long, const f_string description);
+  extern f_return_status fll_program_print_help_option_long(const fl_color_context context, const f_string option_long, const f_string symbol_long, const f_string description);
 #endif // _di_fll_program_print_help_option_long_
 
 /**

@@ -8,19 +8,19 @@ extern "C" {
   f_return_status fss_extended_read_print_help(const fss_extended_read_data data) {
     fll_program_print_help_header(data.context, fss_extended_read_name_long, fss_extended_read_version);
 
-    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, "    Print this help message.");
-    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, "Do not output in color.");
-    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, " Print only the version number.");
+    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol);
 
-    fll_program_print_help_option(data.context, fss_extended_read_short_name, fss_extended_read_long_name, "    Find and print content from this object name.");
-    fll_program_print_help_option(data.context, fss_extended_read_short_count, fss_extended_read_long_count, "   Find a specific occurrence of the object.");
-    fll_program_print_help_option(data.context, fss_extended_read_short_total, fss_extended_read_long_total, "   Print the total number of objects in this file.");
-    fll_program_print_help_option(data.context, fss_extended_read_short_object, fss_extended_read_long_object, "  Print the object instead of the content.");
-    fll_program_print_help_option(data.context, fss_extended_read_short_select, fss_extended_read_long_select, "  Select a specific content to print, default is 0.");
+    fll_program_print_help_option(data.context, fss_extended_read_short_name, fss_extended_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Find and print content from this object name.");
+    fll_program_print_help_option(data.context, fss_extended_read_short_count, fss_extended_read_long_count, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Find a specific occurrence of the object.");
+    fll_program_print_help_option(data.context, fss_extended_read_short_total, fss_extended_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print the total number of objects in this file.");
+    fll_program_print_help_option(data.context, fss_extended_read_short_object, fss_extended_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the object instead of the content.");
+    fll_program_print_help_option(data.context, fss_extended_read_short_select, fss_extended_read_long_select, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Select a specific content to print, default is 0.");
 
     fll_program_print_help_usage(data.context, fss_extended_read_name, "filename(s)");
 

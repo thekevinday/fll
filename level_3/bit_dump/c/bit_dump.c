@@ -9,16 +9,16 @@ extern "C" {
   f_return_status bit_dump_print_help(const bit_dump_data data) {
     fll_program_print_help_header(data.context, bit_dump_name_long, bit_dump_version);
 
-    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, "         Print this help message.");
-    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, "        Output using colors that show up better on light backgrounds");
-    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, "         Output using colors that show up better on dark backgrounds");
-    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, "     Do not output in color.");
-    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, "      Print only the version number.");
+    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "         Print this help message.");
+    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "        Output using colors that show up better on light backgrounds");
+    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "         Output using colors that show up better on dark backgrounds");
+    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "     Do not output in color.");
+    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, "      Print only the version number.");
 
     printf("%c", f_string_eol);
 
-    fll_program_print_help_option(data.context, bit_dump_short_binary, bit_dump_long_binary, "       Display binary representation.");
-    fll_program_print_help_option(data.context, bit_dump_short_hex, bit_dump_long_hex, "          Display hexadecimal representation.");
+    fll_program_print_help_option(data.context, bit_dump_short_binary, bit_dump_long_binary, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Display binary representation.");
+    fll_program_print_help_option(data.context, bit_dump_short_hex, bit_dump_long_hex, f_console_symbol_short_enable, f_console_symbol_long_enable, "          Display hexadecimal representation.");
 
     fll_program_print_help_usage(data.context, bit_dump_name, "filename(s)");
 
