@@ -28,8 +28,8 @@ extern "C" {
 #endif // _di_fss_status_code_print_help_
 
 #ifndef _di_fss_status_code_main_
-  f_return_status fss_status_code_main(const f_array_length argc, const f_string argv[], fss_status_code_data *data) {
-    f_status status = fll_program_process_parameters(argc, argv, data->parameters, fss_status_code_total_parameters, fss_status_code_parameter_no_color, fss_status_code_parameter_light, fss_status_code_parameter_dark, &data->remaining, &data->context);
+  f_return_status fss_status_code_main(const f_console_arguments arguments, fss_status_code_data *data) {
+    f_status status = fll_program_process_parameters(arguments, data->parameters, fss_status_code_total_parameters, fss_status_code_parameter_no_color, fss_status_code_parameter_light, fss_status_code_parameter_dark, &data->remaining, &data->context);
 
     if (f_status_is_error(status)) {
       fss_status_code_delete_data(data);
@@ -54,12 +54,12 @@ extern "C" {
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
-          if (f_is_digit(argv[data->remaining.array[counter]][0]) == f_false) {
+          if (f_is_digit(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
             status = f_false;
             continue;
           }
 
-          long long number = atoll(argv[data->remaining.array[counter]]);
+          long long number = atoll(arguments.argv[data->remaining.array[counter]]);
           if (number >= 0x10000 || number < 0) {
             status = f_false;
             continue;
@@ -93,12 +93,12 @@ extern "C" {
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
-          if (f_is_digit(argv[data->remaining.array[counter]][0]) == f_false) {
+          if (f_is_digit(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
             status = f_false;
             continue;
           }
 
-          long long number = atoll(argv[data->remaining.array[counter]]);
+          long long number = atoll(arguments.argv[data->remaining.array[counter]]);
           if (number >= 0x10000 || number < 0) {
             status = f_false;
             continue;
@@ -132,12 +132,12 @@ extern "C" {
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
-          if (f_is_digit(argv[data->remaining.array[counter]][0]) == f_false) {
+          if (f_is_digit(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
             status = f_false;
             continue;
           }
 
-          long long number = atoll(argv[data->remaining.array[counter]]);
+          long long number = atoll(arguments.argv[data->remaining.array[counter]]);
           if (number >= 0x10000 || number < 0) {
             status = f_false;
             continue;
@@ -170,12 +170,12 @@ extern "C" {
 
         for (; counter < data->remaining.used; counter++) {
           // numbers are not valid status code strings.
-          if (f_is_digit(argv[data->remaining.array[counter]][0]) == f_true) {
+          if (f_is_digit(arguments.argv[data->remaining.array[counter]][0]) == f_true) {
             status = f_false;
             continue;
           }
 
-          status2 = fll_status_from_string(argv[data->remaining.array[counter]], &code);
+          status2 = fll_status_from_string(arguments.argv[data->remaining.array[counter]], &code);
 
           if (f_status_is_error(status2)) {
             status = status2;
@@ -206,12 +206,12 @@ extern "C" {
       if (data->remaining.used > 0) {
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status code.
-          if (f_is_digit(argv[data->remaining.array[counter]][0]) == f_false) {
+          if (f_is_digit(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
             status = f_false;
             continue;
           }
 
-          long long number = atoll(argv[data->remaining.array[counter]]);
+          long long number = atoll(arguments.argv[data->remaining.array[counter]]);
           if (number >= 0x10000 || number < 0) {
             status = f_false;
             continue;

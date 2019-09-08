@@ -219,12 +219,33 @@ extern "C" {
   extern f_return_status init_print_version(const init_argument data);
 #endif // _di_init_print_version_
 
+/**
+ * Print help to standard output.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ */
 #ifndef _di_init_print_help_
   extern f_return_status init_print_help(const init_argument data);
 #endif // _di_init_print_help_
 
+/**
+ * Execute main program.
+ *
+ * @param arguments
+ *   The parameters passed to the process.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
 #ifndef _di_init_main_
-  extern f_return_status init_main(const f_s_int argc, const f_string argv[], init_argument *data);
+  extern f_return_status init_main(const f_console_arguments arguments, init_argument *data);
 #endif // _di_init_main_
 
 #ifdef __cplusplus

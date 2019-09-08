@@ -43,7 +43,7 @@ extern "C" {
 #endif // _di_init_print_help_
 
 #ifndef _di_init_main_
-  f_return_status init_main(const f_s_int argc, const f_string argv[], init_argument *argument) {
+  f_return_status init_main(const f_console_arguments arguments, init_argument *argument) {
     f_status status  = f_none;
     f_autochar run_level[init_kernel_runlevel_buffer];
 
@@ -52,7 +52,7 @@ extern "C" {
     f_u_short do_socket_file = f_true;
     f_u_short do_socket_port = f_false;
 
-    status = fll_program_process_parameters(argc, argv, data->parameters, init_total_parameters, init_parameter_no_color, init_parameter_light, init_parameter_dark, &data->remaining, &data->context);
+    status = fll_program_process_parameters(arguments, data->parameters, init_total_parameters, init_parameter_no_color, init_parameter_light, init_parameter_dark, &data->remaining, &data->context);
 
     if (f_status_is_error(status)) {
       init_delete_data(data);
@@ -63,11 +63,11 @@ extern "C" {
 
 
     if (argument->parameters[init_parameter_runlevel].result == f_console_result_found) {
-      const f_u_int parameter_length = strlen(argv[argument->parameters[init_parameter_runlevel].additional.array[0]]);
+      const f_u_int parameter_length = strlen(arguments.argv[argument->parameters[init_parameter_runlevel].additional.array[0]]);
 
       // if the run_level value is greater than the static buffer size, ignore the entire string rather than process a cut off value.
       if (parameter_length > 0 && parameter_length < init_kernel_runlevel_buffer) {
-        strncpy(&run_level, argv[argument->parameters[init_parameter_runlevel].additional.array[0]], parameter_length);
+        strncpy(&run_level, arguments.argv[argument->parameters[init_parameter_runlevel].additional.array[0]], parameter_length);
       }
     }
 

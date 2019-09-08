@@ -55,8 +55,8 @@ extern "C" {
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
-  f_return_status firewall_main(const f_s_int argc, const f_string argv[], firewall_data *data) {
-    f_status status = fll_program_process_parameters(argc, argv, data->parameters, firewall_total_parameters, firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark, &data->remaining, &data->context);
+  f_return_status firewall_main(const f_console_arguments arguments, firewall_data *data) {
+    f_status status = fll_program_process_parameters(arguments, data->parameters, firewall_total_parameters, firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark, &data->remaining, &data->context);
 
     if (f_status_is_error(status)) {
       firewall_delete_data(data);
@@ -141,7 +141,7 @@ extern "C" {
           f_bool show_mangle = f_true;
           f_bool show_ports = f_true;
 
-          f_string_dynamics arguments = f_string_dynamics_initialize;
+          f_string_dynamics parameters = f_string_dynamics_initialize;
           f_s_int results = 0;
 
           if (data->remaining.used > 0) {
@@ -152,10 +152,10 @@ extern "C" {
             f_string_length counter = 0;
 
             for (; counter < data->remaining.used; counter++) {
-              if (strncmp("nat", argv[data->remaining.array[counter]], 4) != 0) {
-                if (strncmp("mangle",  argv[data->remaining.array[counter]], 7) != 0) {
-                  if (strncmp("ports",  argv[data->remaining.array[counter]], 6) != 0) {
-                    fl_color_print_line(f_standard_warning, data->context.warning, data->context.reset, "WARNING: '%s' is not a valid show option", argv[data->remaining.array[counter]]);
+              if (strncmp("nat", arguments.argv[data->remaining.array[counter]], 4) != 0) {
+                if (strncmp("mangle",  arguments.argv[data->remaining.array[counter]], 7) != 0) {
+                  if (strncmp("ports",  arguments.argv[data->remaining.array[counter]], 6) != 0) {
+                    fl_color_print_line(f_standard_warning, data->context.warning, data->context.reset, "WARNING: '%s' is not a valid show option", arguments.argv[data->remaining.array[counter]]);
                   }
                   else {
                     show_ports = f_true;
@@ -171,7 +171,7 @@ extern "C" {
             } // for
           }
 
-          f_macro_string_dynamics_resize(status, arguments, 7);
+          f_macro_string_dynamics_resize(status, parameters, 7);
 
           if (f_status_is_error(status)) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
@@ -186,23 +186,23 @@ extern "C" {
             fl_color_print_line(f_standard_output, data->context.standout, data->context.reset, " ============================");
             fflush(f_standard_output);
 
-            arguments.used = 6;
+            parameters.used = 6;
 
-            arguments.array[0].string = (f_string) "-x";
-            arguments.array[1].string = (f_string) "-v";
-            arguments.array[2].string = (f_string) "-t";
-            arguments.array[3].string = (f_string) "nat";
-            arguments.array[4].string = (f_string) "--numeric";
-            arguments.array[5].string = (f_string) "--list";
+            parameters.array[0].string = (f_string) "-x";
+            parameters.array[1].string = (f_string) "-v";
+            parameters.array[2].string = (f_string) "-t";
+            parameters.array[3].string = (f_string) "nat";
+            parameters.array[4].string = (f_string) "--numeric";
+            parameters.array[5].string = (f_string) "--list";
 
-            arguments.array[0].used = 2;
-            arguments.array[1].used = 2;
-            arguments.array[2].used = 2;
-            arguments.array[3].used = 3;
-            arguments.array[4].used = 9;
-            arguments.array[5].used = 6;
+            parameters.array[0].used = 2;
+            parameters.array[1].used = 2;
+            parameters.array[2].used = 2;
+            parameters.array[3].used = 3;
+            parameters.array[4].used = 9;
+            parameters.array[5].used = 6;
 
-            status = fll_execute_program((f_string) firewall_tool_iptables, arguments, &results);
+            status = fll_execute_program((f_string) firewall_tool_iptables, parameters, &results);
 
             fprintf(f_standard_output, "\n");
             fflush(f_standard_output);
@@ -214,23 +214,23 @@ extern "C" {
             fl_color_print_line(f_standard_output, data->context.standout, data->context.reset, " ==========================");
             fflush(f_standard_output);
 
-            arguments.used = 6;
+            parameters.used = 6;
 
-            arguments.array[0].string = (f_string) "-x";
-            arguments.array[1].string = (f_string) "-v";
-            arguments.array[2].string = (f_string) "-t";
-            arguments.array[3].string = (f_string) "mangle";
-            arguments.array[4].string = (f_string) "--numeric";
-            arguments.array[5].string = (f_string) "--list";
+            parameters.array[0].string = (f_string) "-x";
+            parameters.array[1].string = (f_string) "-v";
+            parameters.array[2].string = (f_string) "-t";
+            parameters.array[3].string = (f_string) "mangle";
+            parameters.array[4].string = (f_string) "--numeric";
+            parameters.array[5].string = (f_string) "--list";
 
-            arguments.array[0].used = 2;
-            arguments.array[1].used = 2;
-            arguments.array[2].used = 2;
-            arguments.array[3].used = 6;
-            arguments.array[4].used = 9;
-            arguments.array[5].used = 6;
+            parameters.array[0].used = 2;
+            parameters.array[1].used = 2;
+            parameters.array[2].used = 2;
+            parameters.array[3].used = 6;
+            parameters.array[4].used = 9;
+            parameters.array[5].used = 6;
 
-            status = fll_execute_program((f_string) firewall_tool_iptables, arguments, &results);
+            status = fll_execute_program((f_string) firewall_tool_iptables, parameters, &results);
 
             fprintf(f_standard_output, "\n");
             fflush(f_standard_output);
@@ -242,19 +242,19 @@ extern "C" {
             fl_color_print_line(f_standard_output, data->context.standout, data->context.reset, " ==========================");
             fflush(f_standard_output);
 
-            arguments.used = 4;
+            parameters.used = 4;
 
-            arguments.array[0].string = (f_string) "-x";
-            arguments.array[1].string = (f_string) "-v";
-            arguments.array[2].string = (f_string) "--numeric";
-            arguments.array[3].string = (f_string) "--list";
+            parameters.array[0].string = (f_string) "-x";
+            parameters.array[1].string = (f_string) "-v";
+            parameters.array[2].string = (f_string) "--numeric";
+            parameters.array[3].string = (f_string) "--list";
 
-            arguments.array[0].used = 2;
-            arguments.array[1].used = 2;
-            arguments.array[2].used = 9;
-            arguments.array[3].used = 6;
+            parameters.array[0].used = 2;
+            parameters.array[1].used = 2;
+            parameters.array[2].used = 9;
+            parameters.array[3].used = 6;
 
-            status = fll_execute_program((f_string) firewall_tool_iptables, arguments, &results);
+            status = fll_execute_program((f_string) firewall_tool_iptables, parameters, &results);
 
             fprintf(f_standard_output, "\n");
             fflush(f_standard_output);
@@ -275,8 +275,8 @@ extern "C" {
               fl_color_print_code(f_standard_error, data->context.error);
 
               fprintf(f_standard_error, "%s ", firewall_tool_iptables);
-              for (; i < arguments.used; i++) {
-                fprintf(f_standard_error, "%s ", arguments.array[i].string);
+              for (; i < parameters.used; i++) {
+                fprintf(f_standard_error, "%s ", parameters.array[i].string);
               } // for
 
               fl_color_print_code(f_standard_error, data->context.reset);
@@ -286,22 +286,22 @@ extern "C" {
             status = f_status_set_error(status);
           }
 
-          arguments.array[0].string = 0;
-          arguments.array[1].string = 0;
-          arguments.array[2].string = 0;
-          arguments.array[3].string = 0;
-          arguments.array[4].string = 0;
-          arguments.array[5].string = 0;
-          arguments.array[6].string = 0;
-          arguments.array[0].used = 0;
-          arguments.array[1].used = 0;
-          arguments.array[2].used = 0;
-          arguments.array[3].used = 0;
-          arguments.array[4].used = 0;
-          arguments.array[5].used = 0;
-          arguments.array[6].used = 0;
+          parameters.array[0].string = 0;
+          parameters.array[1].string = 0;
+          parameters.array[2].string = 0;
+          parameters.array[3].string = 0;
+          parameters.array[4].string = 0;
+          parameters.array[5].string = 0;
+          parameters.array[6].string = 0;
+          parameters.array[0].used = 0;
+          parameters.array[1].used = 0;
+          parameters.array[2].used = 0;
+          parameters.array[3].used = 0;
+          parameters.array[4].used = 0;
+          parameters.array[5].used = 0;
+          parameters.array[6].used = 0;
 
-          f_macro_string_dynamics_delete(status, arguments);
+          f_macro_string_dynamics_delete(status, parameters);
           firewall_delete_local_data(&local);
           firewall_delete_data(data);
           return status;

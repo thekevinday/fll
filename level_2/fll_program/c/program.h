@@ -120,9 +120,7 @@ extern "C" {
 /**
  * Perform basic parameter loading, including initialization of color context and printing errors.
  *
- * @param argc
- *   The number of parameters passed to the process.
- * @param argv
+ * @param arguments
  *   The parameters passed to the process.
  * @param parameters
  *   The console parameters to look for.
@@ -146,7 +144,7 @@ extern "C" {
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
 #ifndef _di_fll_program_process_parameters_
-  extern f_return_status fll_program_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length parameters_total, const f_array_length parameter_no_color, const f_array_length parameter_light, const f_array_length parameter_dark, f_string_lengths *remaining, fl_color_context *context);
+  extern f_return_status fll_program_process_parameters(const f_console_arguments arguments, f_console_parameter parameters[], const f_array_length parameters_total, const f_array_length parameter_no_color, const f_array_length parameter_light, const f_array_length parameter_dark, f_string_lengths *remaining, fl_color_context *context);
 #endif // _di_fll_program_process_parameters_
 
 #ifdef __cplusplus

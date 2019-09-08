@@ -79,11 +79,11 @@ extern "C" {
 #endif // _di_fll_program_print_version_
 
 #ifndef _di_fll_program_process_parameters_
-  f_return_status fll_program_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length parameters_total, const f_array_length parameter_no_color, const f_array_length parameter_light, const f_array_length parameter_dark, f_string_lengths *remaining, fl_color_context *context) {
+  f_return_status fll_program_process_parameters(const f_console_arguments arguments, f_console_parameter parameters[], const f_array_length parameters_total, const f_array_length parameter_no_color, const f_array_length parameter_light, const f_array_length parameter_dark, f_string_lengths *remaining, fl_color_context *context) {
     f_status status = f_none;
     f_status allocation_status = f_none;
 
-    status = fl_console_parameter_process(argc, argv, parameters, parameters_total, remaining);
+    status = fl_console_parameter_process(arguments, parameters, parameters_total, remaining);
 
     f_console_parameter_ids choices = f_console_parameter_ids_initialize;
     f_console_parameter_id decision = parameter_dark;

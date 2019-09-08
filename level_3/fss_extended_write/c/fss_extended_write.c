@@ -28,8 +28,8 @@ extern "C" {
 #endif // _di_fss_extended_write_print_help_
 
 #ifndef _di_fss_extended_write_main_
-  f_return_status fss_extended_write_main(const f_array_length argc, const f_string argv[], fss_extended_write_data *data) {
-    f_status status = fll_program_process_parameters(argc, argv, data->parameters, fss_extended_write_total_parameters, fss_extended_write_parameter_no_color, fss_extended_write_parameter_light, fss_extended_write_parameter_dark, &data->remaining, &data->context);
+  f_return_status fss_extended_write_main(const f_console_arguments arguments, fss_extended_write_data *data) {
+    f_status status = fll_program_process_parameters(arguments, data->parameters, fss_extended_write_total_parameters, fss_extended_write_parameter_no_color, fss_extended_write_parameter_light, fss_extended_write_parameter_dark, &data->remaining, &data->context);
 
     if (f_status_is_error(status)) {
       fss_extended_write_delete_data(data);
@@ -45,7 +45,7 @@ extern "C" {
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // TODO: there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
-        //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
+        //       nothing can be 0 as that represents the program name, unless arguments.argv[] is improperly created
       }
       else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
@@ -146,7 +146,7 @@ extern "C" {
         f_string_dynamic input = f_string_dynamic_initialize;
 
         if (object) {
-          input.string = argv[data->parameters[fss_extended_write_parameter_string].additional.array[0]];
+          input.string = arguments.argv[data->parameters[fss_extended_write_parameter_string].additional.array[0]];
           input.used = strlen(input.string);
 
           location.start = 0;
@@ -162,7 +162,7 @@ extern "C" {
           f_string_length i = 0;
 
           while (i < data->parameters[fss_extended_write_parameter_string].additional.used) {
-            input.string = argv[data->parameters[fss_extended_write_parameter_string].additional.array[i]];
+            input.string = arguments.argv[data->parameters[fss_extended_write_parameter_string].additional.array[i]];
             input.used = strlen(input.string);
 
             location.start = 0;
@@ -198,7 +198,7 @@ extern "C" {
         f_file output = f_file_initialize;
 
         output.mode = f_file_write_append;
-        status = f_file_open(&output, argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+        status = f_file_open(&output, arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
 
         if (f_status_is_error(status)) {
           status = f_status_set_fine(status);
@@ -209,13 +209,13 @@ extern "C" {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           }
           else if (status == f_file_not_found) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           }
           else if (status == f_file_open_error) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           }
           else if (status == f_file_descriptor_error) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           }
           else {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
@@ -235,7 +235,7 @@ extern "C" {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");
           }
           else if (status == f_file_write_error) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           }
           else {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", f_status_set_error(status));

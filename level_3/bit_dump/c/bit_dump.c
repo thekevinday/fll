@@ -39,8 +39,8 @@ extern "C" {
 #endif // _di_bit_dump_print_help_
 
 #ifndef _di_bit_dump_main_
-  f_return_status bit_dump_main(const f_array_length argc, const f_string argv[], bit_dump_data *data) {
-    f_status status = fll_program_process_parameters(argc, argv, data->parameters, bit_dump_total_parameters, bit_dump_parameter_no_color, bit_dump_parameter_light, bit_dump_parameter_dark, &data->remaining, &data->context);
+  f_return_status bit_dump_main(const f_console_arguments arguments, bit_dump_data *data) {
+    f_status status = fll_program_process_parameters(arguments, data->parameters, bit_dump_total_parameters, bit_dump_parameter_no_color, bit_dump_parameter_light, bit_dump_parameter_dark, &data->remaining, &data->context);
 
     if (f_status_is_error(status)) {
       bit_dump_delete_data(data);
@@ -136,7 +136,7 @@ extern "C" {
         return f_status_set_error(status);
       }
       else if (data->parameters[bit_dump_parameter_width].result == f_console_result_additional) {
-        uint64_t number = atoll(argv[data->parameters[bit_dump_parameter_width].additional.array[0]]);
+        uint64_t number = atoll(arguments.argv[data->parameters[bit_dump_parameter_width].additional.array[0]]);
         if (number < 1 || number >= 0xfb) {
           fl_color_print_line(f_standard_output, data->context.error, data->context.reset, "Width option can only be a number between 0 and 251.");
 
@@ -154,7 +154,7 @@ extern "C" {
         return f_status_set_error(status);
       }
       else if (data->parameters[bit_dump_parameter_first].result == f_console_result_additional) {
-        uint64_t number = atoll(argv[data->parameters[bit_dump_parameter_first].additional.array[0]]);
+        uint64_t number = atoll(arguments.argv[data->parameters[bit_dump_parameter_first].additional.array[0]]);
         if (number < 1 || number >= 0xffffffffffffffff) {
           fl_color_print_line(f_standard_output, data->context.error, data->context.reset, "First option can only be a number between 0 and 18446744073709551615.");
 
@@ -172,7 +172,7 @@ extern "C" {
         return f_status_set_error(status);
       }
       else if (data->parameters[bit_dump_parameter_last].result == f_console_result_additional) {
-        uint64_t number = atoll(argv[data->parameters[bit_dump_parameter_last].additional.array[0]]);
+        uint64_t number = atoll(arguments.argv[data->parameters[bit_dump_parameter_last].additional.array[0]]);
         if (number < 1 || number >= 0xffffffffffffffff) {
           fl_color_print_line(f_standard_output, data->context.error, data->context.reset, "Last option can only be a number between 0 and 18446744073709551615.");
 
@@ -204,13 +204,13 @@ extern "C" {
           f_status missing_files = f_none;
 
           for (f_array_length counter = 0; counter < data->remaining.used; counter++) {
-            status = f_file_exists(argv[data->remaining.array[counter]]);
+            status = f_file_exists(arguments.argv[data->remaining.array[counter]]);
             if (status == f_false || f_status_is_error(status)) {
               if (missing_files == f_none) {
                 missing_files = status;
               }
 
-              bit_dump_print_file_error(data->context, status, "f_file_exists", argv[data->remaining.array[counter]]);
+              bit_dump_print_file_error(data->context, status, "f_file_exists", arguments.argv[data->remaining.array[counter]]);
             }
           } // for
 
@@ -225,18 +225,18 @@ extern "C" {
         for (f_array_length counter = 0; counter < data->remaining.used; counter++) {
           f_file file = f_file_initialize;
 
-          status = f_file_open(&file, argv[data->remaining.array[counter]]);
+          status = f_file_open(&file, arguments.argv[data->remaining.array[counter]]);
           if (f_status_is_error(status)) {
-            bit_dump_print_file_error(data->context, status, "f_file_open", argv[data->remaining.array[counter]]);
+            bit_dump_print_file_error(data->context, status, "f_file_open", arguments.argv[data->remaining.array[counter]]);
             bit_dump_delete_data(data);
             return status;
           }
 
           printf("%c", f_string_eol);
           fl_color_print(f_standard_output, data->context.title, data->context.reset, "Byte Dump of: ");
-          fl_color_print_line(f_standard_output, data->context.notable, data->context.reset, "%s", argv[data->remaining.array[counter]]);
+          fl_color_print_line(f_standard_output, data->context.notable, data->context.reset, "%s", arguments.argv[data->remaining.array[counter]]);
 
-          status = bit_dump_file(*data, argv[data->remaining.array[counter]], file);
+          status = bit_dump_file(*data, arguments.argv[data->remaining.array[counter]], file);
 
           f_file_close(&file);
 

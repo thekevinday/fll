@@ -179,6 +179,20 @@ extern "C" {
 #endif // _di_f_console_parameter_id_
 
 /**
+ * Provide a helper structure for referencing the argc and argv standard main arguments.
+ *
+ * This is intended to only store the argc and argv and should not be treated as dynamic.
+ *
+ * No structure initializer is provided due to the use of constant properties.
+ */
+#ifndef _di_f_console_arguments_
+  typedef struct {
+    const int  argc;
+    const f_string *argv;
+  } f_console_arguments;
+#endif // _di_f_console_arguments_
+
+/**
  * Determine the type code the given input parameter represents.
  *
  * @param input

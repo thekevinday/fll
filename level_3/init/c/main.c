@@ -1,7 +1,8 @@
 #include <level_3/init.h>
 
-int main(const f_s_int argc, const f_string argv[]) {
+int main(const int argc, const f_string *argv) {
+  const f_console_arguments arguments = { argc, argv };
   init_argument data = init_argument_initialize;
 
-  return init_main(argc, argv, &data);
+  return init_main(arguments, &data);
 }

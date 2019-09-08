@@ -48,9 +48,7 @@ extern "C" {
  *
  * The UTF-8 BOM is not allowed in the parameters.
  *
- * @param argc
- *   The number of parameters passed to the process.
- * @param argv
+ * @param arguments
  *   The parameters passed to the process.
  * @param parameters
  *   The console parameters to look for.
@@ -66,7 +64,7 @@ extern "C" {
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_console_parameter_process_
-  extern f_return_status fl_console_parameter_process(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length parameters_total, f_string_lengths *remaining);
+  extern f_return_status fl_console_parameter_process(const f_console_arguments arguments, f_console_parameter parameters[], const f_array_length parameters_total, f_string_lengths *remaining);
 #endif // _di_fl_console_parameter_process_
 
 /**

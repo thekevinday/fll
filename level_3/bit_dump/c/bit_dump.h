@@ -217,9 +217,7 @@ extern "C" {
  *
  * Be sure to call bit_dump_delete_data() after executing this.
  *
- * @param argc
- *   The number of parameters passed to the process.
- * @param argv
+ * @param arguments
  *   The parameters passed to the process.
  * @param data
  *   The program data.
@@ -231,7 +229,7 @@ extern "C" {
  * @see bit_dump_delete_data()
  */
 #ifndef _di_bit_dump_main_
-  extern f_return_status bit_dump_main(const f_array_length argc, const f_string argv[], bit_dump_data *data);
+  extern f_return_status bit_dump_main(const f_console_arguments arguments, bit_dump_data *data);
 #endif // _di_bit_dump_main_
 
 /**

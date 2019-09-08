@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_console_parameter_process_
-  f_return_status fl_console_parameter_process(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length parameters_total, f_string_lengths *remaining) {
+  f_return_status fl_console_parameter_process(const f_console_arguments arguments, f_console_parameter parameters[], const f_array_length parameters_total, f_string_lengths *remaining) {
     #ifndef _di_level_1_parameter_checking_
       if (remaining == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -27,10 +27,10 @@ extern "C" {
     f_string_lengths needs_additional = f_string_lengths_initialize;
 
     // loop through and read all parameters
-    while (location < argc) {
-      f_console_identify(argv[location], &result);
+    while (location < arguments.argc) {
+      f_console_identify(arguments.argv[location], &result);
 
-      string_length = strnlen(argv[location], f_console_max_size);
+      string_length = strnlen(arguments.argv[location], f_console_max_size);
 
       // process the current parameter
       if (result == f_console_short_enable || result == f_console_short_disable) {
@@ -100,7 +100,7 @@ extern "C" {
                 continue;
               }
 
-              if (strncmp(&argv[location][sub_location], parameters[parameter_counter].symbol_short, increment_by + 1) != 0) {
+              if (strncmp(&arguments.argv[location][sub_location], parameters[parameter_counter].symbol_short, increment_by + 1) != 0) {
                 continue;
               }
             }
@@ -109,7 +109,7 @@ extern "C" {
                 continue;
               }
 
-              if (strncmp(&argv[location][sub_location], parameters[parameter_counter].symbol_long, increment_by + 1) != 0) {
+              if (strncmp(&arguments.argv[location][sub_location], parameters[parameter_counter].symbol_long, increment_by + 1) != 0) {
                 continue;
               }
             }
@@ -162,7 +162,7 @@ extern "C" {
             continue;
           }
 
-          if (strncmp(argv[location], parameters[parameter_counter].symbol_other, string_length + 1) != 0) {
+          if (strncmp(arguments.argv[location], parameters[parameter_counter].symbol_other, string_length + 1) != 0) {
             continue;
           }
 

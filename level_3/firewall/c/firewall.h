@@ -293,24 +293,54 @@ extern "C" {
     }
 #endif // _di_firewall_data_
 
+/**
+ * Print help to standard output.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ */
 #ifndef _di_firewall_print_help_
-  /**
-   * Print help.
-   */
   extern f_return_status firewall_print_help(const firewall_data data);
 #endif // _di_firewall_print_help_
 
+/**
+ * Execute main program.
+ *
+ * Be sure to call firewall_delete_data() after executing this.
+ *
+ * @param arguments
+ *   The parameters passed to the process.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ *
+ * @see firewall_delete_data()
+ */
 #ifndef _di_firewall_main_
-  /**
-   * Main.
-   */
-  extern f_return_status firewall_main(const f_s_int argc, const f_string argv[], firewall_data *data);
+  extern f_return_status firewall_main(const f_console_arguments arguments, firewall_data *data);
 #endif // _di_firewall_main_
 
+/**
+ * Deallocate data.
+ *
+ * Be sure to call this after executing firewall_main().
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ *
+ * @see firewall_main()
+ */
 #ifndef _di_firewall_delete_data_
-  /**
-   * Deallocate data.
-   */
   extern f_return_status firewall_delete_data(firewall_data *data);
 #endif // _di_firewall_delete_data_
 

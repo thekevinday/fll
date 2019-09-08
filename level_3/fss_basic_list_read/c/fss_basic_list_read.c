@@ -30,10 +30,10 @@ extern "C" {
 #endif // _di_fss_basic_list_read_print_help_
 
 #ifndef _di_fss_basic_list_read_main_
-  f_return_status fss_basic_list_read_main_process_file(const f_array_length argc, const f_string argv[], fss_basic_list_read_data *data, const f_string filename, const f_string_length target) __attribute__((visibility ("internal")));
+  f_return_status fss_basic_list_read_main_process_file(const f_console_arguments arguments, fss_basic_list_read_data *data, const f_string filename, const f_string_length target) __attribute__((visibility ("internal")));
 
-  f_return_status fss_basic_list_read_main(const f_array_length argc, const f_string argv[], fss_basic_list_read_data *data) {
-    f_status status = fll_program_process_parameters(argc, argv, data->parameters, fss_basic_list_read_total_parameters, fss_basic_list_read_parameter_no_color, fss_basic_list_read_parameter_light, fss_basic_list_read_parameter_dark, &data->remaining, &data->context);
+  f_return_status fss_basic_list_read_main(const f_console_arguments arguments, fss_basic_list_read_data *data) {
+    f_status status = fll_program_process_parameters(arguments, data->parameters, fss_basic_list_read_total_parameters, fss_basic_list_read_parameter_no_color, fss_basic_list_read_parameter_light, fss_basic_list_read_parameter_dark, &data->remaining, &data->context);
 
     if (f_status_is_error(status)) {
       fss_basic_list_read_delete_data(data);
@@ -56,7 +56,7 @@ extern "C" {
       f_string_length original_size = data->file_position.total_elements;
 
       if (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_additional) {
-        target = (f_string_length) atoll(argv[data->parameters[fss_basic_list_read_parameter_count].additional.array[0]]);
+        target = (f_string_length) atoll(arguments.argv[data->parameters[fss_basic_list_read_parameter_count].additional.array[0]]);
       }
 
       if (data->process_pipe) {
@@ -89,7 +89,7 @@ extern "C" {
           return status;
         }
 
-        status = fss_basic_list_read_main_process_file(argc, argv, data, "-", target);
+        status = fss_basic_list_read_main_process_file(arguments, data, "-", target);
 
         if (f_status_is_error(status)) {
           return status;
@@ -104,7 +104,7 @@ extern "C" {
       for (; counter < data->remaining.used; counter++) {
         f_file file = f_file_initialize;
 
-        status = f_file_open(&file, argv[data->remaining.array[counter]]);
+        status = f_file_open(&file, arguments.argv[data->remaining.array[counter]]);
 
         data->file_position.total_elements = original_size;
 
@@ -115,13 +115,13 @@ extern "C" {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           }
           else if (status == f_file_not_found) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", argv[data->remaining.array[counter]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", arguments.argv[data->remaining.array[counter]]);
           }
           else if (status == f_file_open_error) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", argv[data->remaining.array[counter]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", arguments.argv[data->remaining.array[counter]]);
           }
           else if (status == f_file_descriptor_error) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", argv[data->remaining.array[counter]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", arguments.argv[data->remaining.array[counter]]);
           }
           else {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
@@ -156,16 +156,16 @@ extern "C" {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read()");
           }
           else if (status == f_overflow) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'", argv[data->remaining.array[counter]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'", arguments.argv[data->remaining.array[counter]]);
           }
           else if (status == f_file_not_open) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: The file '%s' is no longer open", argv[data->remaining.array[counter]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: The file '%s' is no longer open", arguments.argv[data->remaining.array[counter]]);
           }
           else if (status == f_file_seek_error) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A seek error occurred while accessing the file '%s'", argv[data->remaining.array[counter]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A seek error occurred while accessing the file '%s'", arguments.argv[data->remaining.array[counter]]);
           }
           else if (status == f_file_read_error) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A read error occurred while accessing the file '%s'", argv[data->remaining.array[counter]]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A read error occurred while accessing the file '%s'", arguments.argv[data->remaining.array[counter]]);
           }
           else if (status == f_allocation_error || status == f_reallocation_error) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
@@ -178,7 +178,7 @@ extern "C" {
           return f_status_set_error(status);
         }
 
-        status = fss_basic_list_read_main_process_file(argc, argv, data, argv[data->remaining.array[counter]], target);
+        status = fss_basic_list_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[counter]], target);
 
         if (f_status_is_error(status)) {
           return status;
@@ -199,7 +199,7 @@ extern "C" {
     return status;
   }
 
-  f_return_status fss_basic_list_read_main_process_file(const f_array_length argc, const f_string argv[], fss_basic_list_read_data *data, const f_string filename, const f_string_length target) {
+  f_return_status fss_basic_list_read_main_process_file(const f_console_arguments arguments, fss_basic_list_read_data *data, const f_string filename, const f_string_length target) {
     f_status status = f_none;
     f_status status2 = f_none;
 
@@ -280,7 +280,7 @@ extern "C" {
                 if (data->contents.array[current].used > 0) {
                   f_string_length counter = data->contents.array[current].array[0].start;
                   f_string_length position = 0;
-                  f_string_length target = (f_string_length) atoll(argv[data->parameters[fss_basic_list_read_parameter_line].additional.array[0]]);
+                  f_string_length target = (f_string_length) atoll(arguments.argv[data->parameters[fss_basic_list_read_parameter_line].additional.array[0]]);
                   f_string_location range = f_string_location_initialize;
 
                   // use an invalid range to communicate range not found
@@ -356,14 +356,14 @@ extern "C" {
         f_string_length argv_length = 0;
 
         if (data->parameters[fss_basic_list_read_parameter_name].result == f_console_result_additional) {
-          argv_length = strlen(argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]]);
+          argv_length = strlen(arguments.argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]]);
 
           if (data->parameters[fss_basic_list_read_parameter_object].result == f_console_result_none) {
             for (; current < data->objects.used; current++) {
               name_length = data->objects.array[current].stop - data->objects.array[current].start + 1;
 
               if (name_length == argv_length) {
-                if (fl_string_compare(data->buffer.string + data->objects.array[current].start, argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
+                if (fl_string_compare(data->buffer.string + data->objects.array[current].start, arguments.argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
 
                   if (data->parameters[fss_basic_list_read_parameter_size].result == f_console_result_found) {
                     if (data->contents.array[current].used > 0) {
@@ -387,7 +387,7 @@ extern "C" {
                     if (data->contents.array[current].used > 0) {
                       f_string_length counter = data->contents.array[current].array[0].start;
                       f_string_length position = 0;
-                      f_string_length target = (f_string_length) atoll(argv[data->parameters[fss_basic_list_read_parameter_line].additional.array[0]]);
+                      f_string_length target = (f_string_length) atoll(arguments.argv[data->parameters[fss_basic_list_read_parameter_line].additional.array[0]]);
                       f_string_location range = f_string_location_initialize;
 
                       // use an invalid range to communicate range not found
@@ -457,7 +457,7 @@ extern "C" {
                 name_length = data->contents.array[current].array[0].stop - data->contents.array[current].array[0].start + 1;
 
                 if (name_length == argv_length) {
-                  if (fl_string_compare(data->buffer.string + data->contents.array[current].array[0].start, argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
+                  if (fl_string_compare(data->buffer.string + data->contents.array[current].array[0].start, arguments.argv[data->parameters[fss_basic_list_read_parameter_name].additional.array[0]], name_length, argv_length) == f_equal_to) {
                     if (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_none || (data->parameters[fss_basic_list_read_parameter_count].result == f_console_result_additional && found == target)) {
                       f_print_string_dynamic_partial(f_standard_output, data->buffer, data->objects.array[current]);
                       fprintf(f_standard_output, "\n");

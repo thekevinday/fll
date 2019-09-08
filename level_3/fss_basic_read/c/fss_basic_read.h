@@ -120,24 +120,54 @@ extern "C" {
     }
 #endif // _di_fss_basic_read_data_
 
+/**
+ * Print help to standard output.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ */
 #ifndef _di_fss_basic_read_print_help_
-  /**
-   * Print help.
-   */
   extern f_return_status fss_basic_read_print_help(const fss_basic_read_data data);
 #endif // _di_fss_basic_read_print_help_
 
+/**
+ * Execute main program.
+ *
+ * Be sure to call fss_basic_read_delete_data() after executing this.
+ *
+ * @param arguments
+ *   The parameters passed to the process.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ *
+ * @see fss_basic_read_delete_data()
+ */
 #ifndef _di_fss_basic_read_main_
-  /**
-   * Main.
-   */
-  extern f_return_status fss_basic_read_main(const f_array_length argc, const f_string argv[], fss_basic_read_data *data);
+  extern f_return_status fss_basic_read_main(const f_console_arguments arguments, fss_basic_read_data *data);
 #endif // _di_fss_basic_read_main_
 
+/**
+ * Deallocate data.
+ *
+ * Be sure to call this after executing fss_basic_read_main().
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ *
+ * @see fss_basic_read_main()
+ */
 #ifndef _di_fss_basic_read_delete_data_
-  /**
-   * Deallocate data.
-   */
   extern f_return_status fss_basic_read_delete_data(fss_basic_read_data *data);
 #endif // _di_fss_basic_read_delete_data_
 
