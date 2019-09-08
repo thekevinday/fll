@@ -1,6 +1,6 @@
 # fss-0000
 
-project_name bit_dump
+project_name byte_dump
 project_level 3
 
 version_major 0
@@ -13,9 +13,9 @@ build_libraries -lc
 build_libraries_fll -lfll_program -lfl_utf -lfl_string -lfl_file -lfl_console -lfl_color -lf_utf -lf_print -lf_pipe -lf_file -lf_conversion -lf_console -lf_memory
 #build_libraries_fll-level -lfll_2 -lfll_1 -lfll_0
 #build_libraries_fll-monolithic -lfll
-build_sources_library bit_dump.c private-bit_dump.c
+build_sources_library byte_dump.c private-byte_dump.c
 build_sources_program main.c
-build_sources_headers bit_dump.h
+build_sources_headers byte_dump.h
 build_sources_bash
 build_sources_settings
 build_shared yes
@@ -29,4 +29,4 @@ flags_all -z now -g
 flags_shared
 flags_static
 flags_library -fPIC
-flags_program -fPIE -lbit_dump
+flags_program -fPIE -lbyte_dump

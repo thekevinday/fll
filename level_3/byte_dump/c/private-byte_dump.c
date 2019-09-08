@@ -1,11 +1,11 @@
 /**
  * Private source file for firewall.c.
  */
-#include <level_3/bit_dump.h>
-#include "private-bit_dump.h"
+#include <level_3/byte_dump.h>
+#include "private-byte_dump.h"
 
-#ifndef _di_bit_dump_file_
-  f_return_status bit_dump_file(const bit_dump_data data, const f_string file_name, f_file file) {
+#ifndef _di_byte_dump_file_
+  f_return_status byte_dump_file(const byte_dump_data data, const f_string file_name, f_file file) {
     f_status status = f_none;
 
     uint64_t position = data.first;
@@ -142,22 +142,22 @@
         invalid[character_current] = width_utf;
       }
 
-      if (bit_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous_bytes, &previous_invalid, &column, &row)) {
+      if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous_bytes, &previous_invalid, &column, &row)) {
         character_reset = f_true;
       }
 
       if (width_utf > 1) {
-        if (bit_dump_print_character_fragment(data, characters, invalid, width_utf, 2, &previous_bytes, &previous_invalid, &column, &row) == f_true) {
+        if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 2, &previous_bytes, &previous_invalid, &column, &row) == f_true) {
           character_reset = f_true;
         }
 
         if (width_utf > 2) {
-          if (bit_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous_bytes, &previous_invalid, &column, &row)) {
+          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous_bytes, &previous_invalid, &column, &row)) {
             character_reset = f_true;
           }
 
           if (width_utf > 3) {
-            if (bit_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous_bytes, &previous_invalid, &column, &row)) {
+            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous_bytes, &previous_invalid, &column, &row)) {
               character_reset = f_true;
             }
           }
@@ -176,39 +176,39 @@
       previous_invalid = 0;
 
       while (column < data.width) {
-        if (data.mode == bit_dump_mode_hexidecimal) {
+        if (data.mode == byte_dump_mode_hexidecimal) {
           printf("   ");
         }
-        else if (data.mode == bit_dump_mode_octal) {
+        else if (data.mode == byte_dump_mode_octal) {
           printf("    ");
         }
-        else if (data.mode == bit_dump_mode_binary) {
+        else if (data.mode == byte_dump_mode_binary) {
           printf("         ");
         }
-        else if (data.mode == bit_dump_mode_decimal) {
+        else if (data.mode == byte_dump_mode_decimal) {
           printf("    ");
         }
 
         column++;
 
         if (column < data.width) {
-          if (data.mode == bit_dump_mode_hexidecimal && column % 8 == 0) {
+          if (data.mode == byte_dump_mode_hexidecimal && column % 8 == 0) {
             printf(" ");
           }
-          else if (data.mode == bit_dump_mode_octal && column % 6 == 0) {
+          else if (data.mode == byte_dump_mode_octal && column % 6 == 0) {
             printf(" ");
           }
-          else if (data.mode == bit_dump_mode_binary && column % 4 == 0) {
+          else if (data.mode == byte_dump_mode_binary && column % 4 == 0) {
             printf(" ");
           }
-          else if (data.mode == bit_dump_mode_decimal && column % 6 == 0) {
+          else if (data.mode == byte_dump_mode_decimal && column % 6 == 0) {
             printf(" ");
           }
         }
       } // while
 
-      if (data.parameters[bit_dump_parameter_text].result == f_console_result_found) {
-        bit_dump_print_text(data, characters, invalid, &previous_bytes, &previous_invalid);
+      if (data.parameters[byte_dump_parameter_text].result == f_console_result_found) {
+        byte_dump_print_text(data, characters, invalid, &previous_bytes, &previous_invalid);
       }
       else {
         printf("%c", f_string_eol);
@@ -240,10 +240,10 @@
 
     return status;
   }
-#endif // _di_bit_dump_file_
+#endif // _di_byte_dump_file_
 
-#ifndef _di_bit_dump_print_character_fragment_
-  f_bool bit_dump_print_character_fragment(const bit_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, uint8_t *previous_bytes, uint8_t *previous_invalid, uint8_t *column, uint64_t *row) {
+#ifndef _di_byte_dump_print_character_fragment_
+  f_bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, uint8_t *previous_bytes, uint8_t *previous_invalid, uint8_t *column, uint64_t *row) {
     uint8_t byte = 0;
 
     f_bool reset = f_false;
@@ -267,7 +267,7 @@
       fl_color_print(f_standard_output, data.context.notable, data.context.reset, "%016X ", (uint64_t) *row);
     }
 
-    if (data.mode == bit_dump_mode_hexidecimal) {
+    if (data.mode == byte_dump_mode_hexidecimal) {
       if (invalid[character_current]) {
         fl_color_print(f_standard_output, data.context.error, data.context.reset, " %02x", (uint8_t) byte);
       }
@@ -275,7 +275,7 @@
         printf(" %02x", (uint8_t) byte);
       }
     }
-    else if (data.mode == bit_dump_mode_octal) {
+    else if (data.mode == byte_dump_mode_octal) {
       if (invalid[character_current]) {
         fl_color_print(f_standard_output, data.context.error, data.context.reset, " %03o", (uint8_t) byte);
       }
@@ -283,7 +283,7 @@
         printf(" %03o", (uint8_t) byte);
       }
     }
-    else if (data.mode == bit_dump_mode_binary) {
+    else if (data.mode == byte_dump_mode_binary) {
       char binary_string[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
       binary_string[0] = ((byte >> 7) & 0x01) ? '1' : '0';
@@ -302,7 +302,7 @@
         printf(" %s", binary_string);
       }
     }
-    else if (data.mode == bit_dump_mode_decimal) {
+    else if (data.mode == byte_dump_mode_decimal) {
       if (invalid[character_current]) {
         fl_color_print(f_standard_output, data.context.error, data.context.reset, " %3d", (uint8_t) byte);
       }
@@ -322,8 +322,8 @@
 
       reset = f_true;
 
-      if (data.parameters[bit_dump_parameter_text].result == f_console_result_found) {
-        bit_dump_print_text(data, characters, invalid, previous_bytes, previous_invalid);
+      if (data.parameters[byte_dump_parameter_text].result == f_console_result_found) {
+        byte_dump_print_text(data, characters, invalid, previous_bytes, previous_invalid);
       }
       else {
         printf("%c", f_string_eol);
@@ -341,30 +341,30 @@
         *previous_invalid = invalid[character_current];
       }
     }
-    else if (data.mode == bit_dump_mode_hexidecimal && *column % 8 == 0) {
+    else if (data.mode == byte_dump_mode_hexidecimal && *column % 8 == 0) {
       printf(" ");
     }
-    else if (data.mode == bit_dump_mode_octal && *column % 6 == 0) {
+    else if (data.mode == byte_dump_mode_octal && *column % 6 == 0) {
       printf(" ");
     }
-    else if (data.mode == bit_dump_mode_binary && *column % 4 == 0) {
+    else if (data.mode == byte_dump_mode_binary && *column % 4 == 0) {
       printf(" ");
     }
-    else if (data.mode == bit_dump_mode_decimal && *column % 6 == 0) {
+    else if (data.mode == byte_dump_mode_decimal && *column % 6 == 0) {
       printf(" ");
     }
 
     return reset;
   }
-#endif // _di_bit_dump_print_character_fragment_
+#endif // _di_byte_dump_print_character_fragment_
 
-#ifndef _di_bit_dump_print_text_
-  void bit_dump_print_text(const bit_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], uint8_t *previous_bytes, uint8_t *previous_invalid) {
+#ifndef _di_byte_dump_print_text_
+  void byte_dump_print_text(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], uint8_t *previous_bytes, uint8_t *previous_invalid) {
     uint8_t j = 0;
     uint8_t output = 0;
     uint8_t width_utf = 0;
 
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "  %s ", bit_dump_character_wall);
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "  %s ", byte_dump_character_wall);
 
     // Print placeholders for the remaining fragments of UTF-8 characters printed on previous lines.
     {
@@ -375,13 +375,13 @@
       }
 
       if (*previous_bytes > 0) {
-        if (data.parameters[bit_dump_parameter_placeholder].result == f_console_result_found) {
+        if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
           for (; j < *previous_bytes && j < data.width; j++) {
             if (*previous_invalid) {
-              fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", bit_dump_character_placeholder);
+              fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
             }
             else {
-              fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", bit_dump_character_placeholder);
+              fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
             }
           } // for
         }
@@ -406,116 +406,116 @@
       width_utf = f_macro_utf_byte_width_is(output);
 
       if (invalid[i]) {
-        fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", bit_dump_character_incomplete);
+        fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_incomplete);
       }
       else if (output == 0) {
-        printf("%s", bit_dump_sequence_null);
+        printf("%s", byte_dump_sequence_null);
       }
       else if (output == 1) {
-        printf("%s", bit_dump_sequence_start_of_header);
+        printf("%s", byte_dump_sequence_start_of_header);
       }
       else if (output == 2) {
-        printf("%s", bit_dump_sequence_start_of_text);
+        printf("%s", byte_dump_sequence_start_of_text);
       }
       else if (output == 3) {
-        printf("%s", bit_dump_sequence_end_of_text);
+        printf("%s", byte_dump_sequence_end_of_text);
       }
       else if (output == 4) {
-        printf("%s", bit_dump_sequence_end_of_transmission);
+        printf("%s", byte_dump_sequence_end_of_transmission);
       }
       else if (output == 5) {
-        printf("%s", bit_dump_sequence_end_of_enquiry);
+        printf("%s", byte_dump_sequence_end_of_enquiry);
       }
       else if (output == 6) {
-        printf("%s", bit_dump_sequence_acknowledge);
+        printf("%s", byte_dump_sequence_acknowledge);
       }
       else if (output == 7) {
-        printf("%s", bit_dump_sequence_bell);
+        printf("%s", byte_dump_sequence_bell);
       }
       else if (output == 8) {
-        printf("%s", bit_dump_sequence_backspace);
+        printf("%s", byte_dump_sequence_backspace);
       }
       else if (output == 9) {
-        printf("%s", bit_dump_sequence_tab);
+        printf("%s", byte_dump_sequence_tab);
       }
       else if (output == 10) {
-        printf("%s", bit_dump_sequence_new_line);
+        printf("%s", byte_dump_sequence_new_line);
       }
       else if (output == 11) {
-        printf("%s", bit_dump_sequence_tab_vertical);
+        printf("%s", byte_dump_sequence_tab_vertical);
       }
       else if (output == 12) {
-        printf("%s", bit_dump_sequence_form_feed);
+        printf("%s", byte_dump_sequence_form_feed);
       }
       else if (output == 13) {
-        printf("%s", bit_dump_sequence_carriage_return);
+        printf("%s", byte_dump_sequence_carriage_return);
       }
       else if (output == 14) {
-        printf("%s", bit_dump_sequence_shift_out);
+        printf("%s", byte_dump_sequence_shift_out);
       }
       else if (output == 15) {
-        printf("%s", bit_dump_sequence_shift_in);
+        printf("%s", byte_dump_sequence_shift_in);
       }
       else if (output == 16) {
-        printf("%s", bit_dump_sequence_data_link_escape);
+        printf("%s", byte_dump_sequence_data_link_escape);
       }
       else if (output == 17) {
-        printf("%s", bit_dump_sequence_device_control_1);
+        printf("%s", byte_dump_sequence_device_control_1);
       }
       else if (output == 18) {
-        printf("%s", bit_dump_sequence_device_control_2);
+        printf("%s", byte_dump_sequence_device_control_2);
       }
       else if (output == 19) {
-        printf("%s", bit_dump_sequence_device_control_3);
+        printf("%s", byte_dump_sequence_device_control_3);
       }
       else if (output == 20) {
-        printf("%s", bit_dump_sequence_device_control_4);
+        printf("%s", byte_dump_sequence_device_control_4);
       }
       else if (output == 21) {
-        printf("%s", bit_dump_sequence_negative_acknowledge);
+        printf("%s", byte_dump_sequence_negative_acknowledge);
       }
       else if (output == 22) {
-        printf("%s", bit_dump_sequence_synchronous_idle);
+        printf("%s", byte_dump_sequence_synchronous_idle);
       }
       else if (output == 23) {
-        printf("%s", bit_dump_sequence_end_of_transmission_block);
+        printf("%s", byte_dump_sequence_end_of_transmission_block);
       }
       else if (output == 24) {
-        printf("%s", bit_dump_sequence_cancel);
+        printf("%s", byte_dump_sequence_cancel);
       }
       else if (output == 25) {
-        printf("%s", bit_dump_sequence_end_of_medium);
+        printf("%s", byte_dump_sequence_end_of_medium);
       }
       else if (output == 26) {
-        printf("%s", bit_dump_sequence_substitute);
+        printf("%s", byte_dump_sequence_substitute);
       }
       else if (output == 27) {
-        printf("%s", bit_dump_sequence_escape);
+        printf("%s", byte_dump_sequence_escape);
       }
       else if (output == 28) {
-        printf("%s", bit_dump_sequence_file_separator);
+        printf("%s", byte_dump_sequence_file_separator);
       }
       else if (output == 29) {
-        printf("%s", bit_dump_sequence_group_separator);
+        printf("%s", byte_dump_sequence_group_separator);
       }
       else if (output == 30) {
-        printf("%s", bit_dump_sequence_record_separator);
+        printf("%s", byte_dump_sequence_record_separator);
       }
       else if (output == 31) {
-        printf("%s", bit_dump_sequence_unit_separator);
+        printf("%s", byte_dump_sequence_unit_separator);
       }
       else if (output == 32) {
-        printf("%s", bit_dump_sequence_space);
+        printf("%s", byte_dump_sequence_space);
       }
       else if (output == 127) {
-        printf("%s", bit_dump_sequence_delete);
+        printf("%s", byte_dump_sequence_delete);
       }
       else if (f_utf_is_whitespace_character(characters.string[i]) == f_true) {
-        printf("%s", bit_dump_sequence_space);
+        printf("%s", byte_dump_sequence_space);
       }
       else if (width_utf == 2 && characters.string[i] == 0xc0800000) {
         // This is an "Overlong Null" and is a valid NULL character.
-        printf("%s", bit_dump_sequence_null);
+        printf("%s", byte_dump_sequence_null);
       }
       else if (width_utf == 2 && characters.string[i] >= 0xcc800000 && characters.string[i] <= 0xcdaf0000) {
         // Combining characters should not be combined here, instead display a space.
@@ -580,15 +580,15 @@
         printf(" ");
       }
       else if (characters.string[i] == f_utf_character_mask_bom) {
-        fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", bit_dump_sequence_utf_bom);
+        fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_sequence_utf_bom);
       }
       else if (width_utf == 1) {
         // print invalid placeholder for invalid UTF-8 widths.
         if (invalid[i]) {
-          fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", bit_dump_character_incomplete);
+          fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_incomplete);
         }
         else {
-          fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", bit_dump_character_incomplete);
+          fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_incomplete);
         }
       }
       else if (width_utf > 0) {
@@ -615,12 +615,12 @@
 
       // When using UTF-8 characters, the character columns will not line up, so print placeholders to simulate the bytes that are not printed, if necessary for alignment.
       if (width_utf > 1 && j + 1 < data.width) {
-        if (data.parameters[bit_dump_parameter_placeholder].result == f_console_result_found) {
+        if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
           if (invalid[i]) {
-            fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", bit_dump_character_placeholder);
+            fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
           }
           else {
-            fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", bit_dump_character_placeholder);
+            fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
           }
         }
         else {
@@ -630,12 +630,12 @@
         j++;
 
         if (width_utf > 2 && j + 1 < data.width) {
-          if (data.parameters[bit_dump_parameter_placeholder].result == f_console_result_found) {
+          if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
             if (invalid[i]) {
-              fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", bit_dump_character_placeholder);
+              fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
             }
             else {
-              fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", bit_dump_character_placeholder);
+              fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
             }
           }
           else {
@@ -645,12 +645,12 @@
           j++;
 
           if (width_utf > 3 && j + 1 < data.width) {
-            if (data.parameters[bit_dump_parameter_placeholder].result == f_console_result_found) {
+            if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
               if (invalid[i]) {
-                fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", bit_dump_character_placeholder);
+                fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
               }
               else {
-                fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", bit_dump_character_placeholder);
+                fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
               }
             }
             else {
@@ -664,13 +664,13 @@
     } // for
 
     // Print placeholder for the remaining parts of the line.
-    if (data.parameters[bit_dump_parameter_placeholder].result == f_console_result_found) {
+    if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
       for (; j < data.width; j++) {
         if (invalid[j]) {
-          fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", bit_dump_character_placeholder);
+          fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
         }
         else {
-          fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", bit_dump_character_placeholder);
+          fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
         }
       } // for
     }
@@ -683,10 +683,10 @@
     fl_color_print(f_standard_output, data.context.notable, data.context.reset, " |");
     printf("%c", f_string_eol);
   }
-#endif // _di_bit_dump_file_
+#endif // _di_byte_dump_file_
 
-#ifndef _di_bit_dump_print_file_error_
-  void bit_dump_print_file_error(const fl_color_context context, const f_status status, const f_string function, const f_string file_name) {
+#ifndef _di_byte_dump_print_file_error_
+  void byte_dump_print_file_error(const fl_color_context context, const f_status status, const f_string function, const f_string file_name) {
     f_status error = f_status_set_fine(status);
 
     if (error == f_false) {
@@ -753,4 +753,4 @@
     fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
     fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
   }
-#endif // _di_bit_dump_print_file_error_
+#endif // _di_byte_dump_print_file_error_

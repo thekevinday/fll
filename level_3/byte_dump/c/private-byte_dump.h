@@ -1,12 +1,12 @@
 /**
  * FLL - Level 3
  *
- * Project: Bit Dump
+ * Project: Byte Dump
  * API Version: 0.5
  * Licenses: lgplv2.1
  */
-#ifndef _PRIVATE_bit_dump_h
-#define _PRIVATE_bit_dump_h
+#ifndef _PRIVATE_byte_dump_h
+#define _PRIVATE_byte_dump_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,9 +30,9 @@ extern "C" {
  *   f_none on success.
  *   f_failure (with error bit) on failure, usually when read() fails.
  */
-#ifndef _di_bit_dump_file_
-  extern f_return_status bit_dump_file(const bit_dump_data data, const f_string file_name, f_file file);
-#endif // _di_bit_dump_file_
+#ifndef _di_byte_dump_file_
+  extern f_return_status byte_dump_file(const byte_dump_data data, const f_string file_name, f_file file);
+#endif // _di_byte_dump_file_
 
 /**
  * Print a single character hex code and if the width is reached properly terminate the line.
@@ -59,16 +59,16 @@ extern "C" {
  * @param column
  *   The current column that the character is being printed on.
  *   This value is incremented to represent that the character is printed.
- *   When the max width is reached bit_dump_print_text() is called and this value is reset.
+ *   When the max width is reached byte_dump_print_text() is called and this value is reset.
  * @param row
  *   The current row that the character is being printed on.
- *   When the max width is reached bit_dump_print_text() is called and this value is incremented.
+ *   When the max width is reached byte_dump_print_text() is called and this value is incremented.
  *
- * @see bit_dump_print_text()
+ * @see byte_dump_print_text()
  */
-#ifndef _di_bit_dump_print_character_fragment_
-  extern f_bool bit_dump_print_character_fragment(const bit_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, uint8_t *previous_bytes, uint8_t *previous_invalid, uint8_t *column, uint64_t *row);
-#endif // _di_bit_dump_print_character_fragment_
+#ifndef _di_byte_dump_print_character_fragment_
+  extern f_bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, uint8_t *previous_bytes, uint8_t *previous_invalid, uint8_t *column, uint64_t *row);
+#endif // _di_byte_dump_print_character_fragment_
 
 
 /**
@@ -90,9 +90,9 @@ extern "C" {
  *   The specific invalid value provided representing the overflowed bytes.
  *   This is used to print the placeholders.
  */
-#ifndef _di_bit_dump_print_text_
-  extern void bit_dump_print_text(const bit_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], uint8_t *previous_bytes, uint8_t *previous_invalid);
-#endif // _di_bit_dump_print_text_
+#ifndef _di_byte_dump_print_text_
+  extern void byte_dump_print_text(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], uint8_t *previous_bytes, uint8_t *previous_invalid);
+#endif // _di_byte_dump_print_text_
 
 /**
  * Print error messages related to a file.
@@ -110,8 +110,8 @@ extern "C" {
  *   f_true if error has been printed.
  *   f_false if error has not been printed.
  */
-#ifndef _di_bit_dump_print_file_error_
-  extern void bit_dump_print_file_error(const fl_color_context context, const f_status status, const f_string function, const f_string file_name);
-#endif // _di_bit_dump_print_file_error_
+#ifndef _di_byte_dump_print_file_error_
+  extern void byte_dump_print_file_error(const fl_color_context context, const f_status status, const f_string function, const f_string file_name);
+#endif // _di_byte_dump_print_file_error_
 
-#endif // _PRIVATE_bit_dump_h
+#endif // _PRIVATE_byte_dump_h
