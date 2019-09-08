@@ -60,7 +60,10 @@ extern "C" {
 
     {
       f_console_parameters parameters = { data->parameters, firewall_total_parameters };
-      status = fll_program_process_parameters(arguments, parameters, firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark, &data->remaining, &data->context);
+      f_console_parameter_id ids[3] = { firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark };
+      f_console_parameter_ids choices = { ids, 3 };
+
+      status = fll_program_process_parameters(arguments, parameters, choices, &data->remaining, &data->context);
     }
 
     if (f_status_is_error(status)) {

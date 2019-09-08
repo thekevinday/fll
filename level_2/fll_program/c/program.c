@@ -79,23 +79,18 @@ extern "C" {
 #endif // _di_fll_program_print_version_
 
 #ifndef _di_fll_program_process_parameters_
-  f_return_status fll_program_process_parameters(const f_console_arguments arguments, f_console_parameters parameters, const f_array_length parameter_no_color, const f_array_length parameter_light, const f_array_length parameter_dark, f_string_lengths *remaining, fl_color_context *context) {
+  f_return_status fll_program_process_parameters(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, f_string_lengths *remaining, fl_color_context *context) {
     f_status status = f_none;
     f_status allocation_status = f_none;
 
     status = fl_console_parameter_process(arguments, parameters, remaining);
 
-    f_console_parameter_ids choices = f_console_parameter_ids_initialize;
-    f_console_parameter_id decision = parameter_dark;
-    f_console_parameter_id ids[3] = { parameter_no_color, parameter_light, parameter_dark};
-
-    choices.id = ids;
-    choices.used = 3;
+    f_console_parameter_id decision = choices.id[2];
 
     fl_console_parameter_prioritize(parameters, choices, &decision);
 
     // load colors unless told not to.
-    if (decision != parameter_no_color) {
+    if (decision != choices.id[0]) {
       fl_macro_color_context_new(allocation_status, (*context));
 
       if (f_status_is_error(allocation_status)) {
@@ -103,7 +98,7 @@ extern "C" {
         return allocation_status;
       }
 
-      fl_color_load_context(context, decision == parameter_light);
+      fl_color_load_context(context, decision == choices.id[1]);
     }
 
     if (f_status_is_error(status)) {

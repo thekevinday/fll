@@ -44,7 +44,10 @@ extern "C" {
 
     {
       f_console_parameters parameters = { data->parameters, bit_dump_total_parameters };
-      status = fll_program_process_parameters(arguments, parameters, bit_dump_parameter_no_color, bit_dump_parameter_light, bit_dump_parameter_dark, &data->remaining, &data->context);
+      f_console_parameter_id ids[3] = { bit_dump_parameter_no_color, bit_dump_parameter_light, bit_dump_parameter_dark };
+      f_console_parameter_ids choices = { ids, 3 };
+
+      status = fll_program_process_parameters(arguments, parameters, choices, &data->remaining, &data->context);
     }
 
     if (f_status_is_error(status)) {
