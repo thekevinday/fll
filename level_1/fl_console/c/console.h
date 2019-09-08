@@ -52,8 +52,7 @@ extern "C" {
  *   The parameters passed to the process.
  * @param parameters
  *   The console parameters to look for.
- * @param parameters_total
- *   The used size of the parameters array.
+ *   This will be updated by this function with the results.
  * @param remaining
  *   A list of remaining parameters not associated with anything.
  *
@@ -64,7 +63,7 @@ extern "C" {
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_console_parameter_process_
-  extern f_return_status fl_console_parameter_process(const f_console_arguments arguments, f_console_parameter parameters[], const f_array_length parameters_total, f_string_lengths *remaining);
+  extern f_return_status fl_console_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, f_string_lengths *remaining);
 #endif // _di_fl_console_parameter_process_
 
 /**
@@ -81,8 +80,6 @@ extern "C" {
  *
  * @param parameters
  *   The parameters to process.
- * @param parameters_total
- *   The used size of the parameters array.
  * @param choices
  *   An array of numeric ids, each representing a parameter within the parameters variable.
  *   The order does not matter.
@@ -96,7 +93,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_console_parameter_prioritize__
-  extern f_return_status fl_console_parameter_prioritize(const f_console_parameter parameters[], const f_array_length parameters_total, const f_console_parameter_ids choices, f_console_parameter_id *decision);
+  extern f_return_status fl_console_parameter_prioritize(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision);
 #endif // _di_fl_console_parameter_prioritize__
 
 #ifdef __cplusplus

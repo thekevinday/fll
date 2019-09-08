@@ -29,7 +29,12 @@ extern "C" {
 
 #ifndef _di_status_code_main_
   f_return_status status_code_main(const f_console_arguments arguments, status_code_data *data) {
-    f_status status = fll_program_process_parameters(arguments, data->parameters, status_code_total_parameters, status_code_parameter_no_color, status_code_parameter_light, status_code_parameter_dark, &data->remaining, &data->context);
+    f_status status = f_none;
+
+    {
+      f_console_parameters parameters = { data->parameters, status_code_total_parameters };
+      status = fll_program_process_parameters(arguments, parameters, status_code_parameter_no_color, status_code_parameter_light, status_code_parameter_dark, &data->remaining, &data->context);
+    }
 
     if (f_status_is_error(status)) {
       status_code_delete_data(data);

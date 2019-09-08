@@ -79,20 +79,20 @@ extern "C" {
 #endif // _di_fll_program_print_version_
 
 #ifndef _di_fll_program_process_parameters_
-  f_return_status fll_program_process_parameters(const f_console_arguments arguments, f_console_parameter parameters[], const f_array_length parameters_total, const f_array_length parameter_no_color, const f_array_length parameter_light, const f_array_length parameter_dark, f_string_lengths *remaining, fl_color_context *context) {
+  f_return_status fll_program_process_parameters(const f_console_arguments arguments, f_console_parameters parameters, const f_array_length parameter_no_color, const f_array_length parameter_light, const f_array_length parameter_dark, f_string_lengths *remaining, fl_color_context *context) {
     f_status status = f_none;
     f_status allocation_status = f_none;
 
-    status = fl_console_parameter_process(arguments, parameters, parameters_total, remaining);
+    status = fl_console_parameter_process(arguments, parameters, remaining);
 
     f_console_parameter_ids choices = f_console_parameter_ids_initialize;
     f_console_parameter_id decision = parameter_dark;
     f_console_parameter_id ids[3] = { parameter_no_color, parameter_light, parameter_dark};
 
-    choices.ids = ids;
+    choices.id = ids;
     choices.used = 3;
 
-    fl_console_parameter_prioritize(parameters, parameters_total, choices, &decision);
+    fl_console_parameter_prioritize(parameters, choices, &decision);
 
     // load colors unless told not to.
     if (decision != parameter_no_color) {

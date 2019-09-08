@@ -52,7 +52,10 @@ extern "C" {
     f_u_short do_socket_file = f_true;
     f_u_short do_socket_port = f_false;
 
-    status = fll_program_process_parameters(arguments, data->parameters, init_total_parameters, init_parameter_no_color, init_parameter_light, init_parameter_dark, &data->remaining, &data->context);
+    {
+      f_console_parameters parameters = { data->parameters, init_total_parameters };
+      status = fll_program_process_parameters(arguments, parameters, init_parameter_no_color, init_parameter_light, init_parameter_dark, &data->remaining, &data->context);
+    }
 
     if (f_status_is_error(status)) {
       init_delete_data(data);

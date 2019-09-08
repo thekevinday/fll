@@ -33,7 +33,12 @@ extern "C" {
   f_return_status fss_basic_list_read_main_process_file(const f_console_arguments arguments, fss_basic_list_read_data *data, const f_string filename, const f_string_length target) __attribute__((visibility ("internal")));
 
   f_return_status fss_basic_list_read_main(const f_console_arguments arguments, fss_basic_list_read_data *data) {
-    f_status status = fll_program_process_parameters(arguments, data->parameters, fss_basic_list_read_total_parameters, fss_basic_list_read_parameter_no_color, fss_basic_list_read_parameter_light, fss_basic_list_read_parameter_dark, &data->remaining, &data->context);
+    f_status status = f_none;
+
+    {
+      f_console_parameters parameters = { data->parameters, fss_basic_list_read_total_parameters };
+      status = fll_program_process_parameters(arguments, parameters, fss_basic_list_read_parameter_no_color, fss_basic_list_read_parameter_light, fss_basic_list_read_parameter_dark, &data->remaining, &data->context);
+    }
 
     if (f_status_is_error(status)) {
       fss_basic_list_read_delete_data(data);

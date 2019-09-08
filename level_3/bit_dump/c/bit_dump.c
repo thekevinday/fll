@@ -40,7 +40,12 @@ extern "C" {
 
 #ifndef _di_bit_dump_main_
   f_return_status bit_dump_main(const f_console_arguments arguments, bit_dump_data *data) {
-    f_status status = fll_program_process_parameters(arguments, data->parameters, bit_dump_total_parameters, bit_dump_parameter_no_color, bit_dump_parameter_light, bit_dump_parameter_dark, &data->remaining, &data->context);
+    f_status status = f_none;
+
+    {
+      f_console_parameters parameters = { data->parameters, bit_dump_total_parameters };
+      status = fll_program_process_parameters(arguments, parameters, bit_dump_parameter_no_color, bit_dump_parameter_light, bit_dump_parameter_dark, &data->remaining, &data->context);
+    }
 
     if (f_status_is_error(status)) {
       bit_dump_delete_data(data);

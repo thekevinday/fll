@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_console_parameter_process_
-  f_return_status fl_console_parameter_process(const f_console_arguments arguments, f_console_parameter parameters[], const f_array_length parameters_total, f_string_lengths *remaining) {
+  f_return_status fl_console_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, f_string_lengths *remaining) {
     #ifndef _di_level_1_parameter_checking_
       if (remaining == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -65,10 +65,10 @@ extern "C" {
       if (needs_additional.used > 0) {
         parameter_counter = needs_additional.array[0];
 
-        if (parameters[parameter_counter].additional.used >= parameters[parameter_counter].additional.size) {
+        if (parameters.parameter[parameter_counter].additional.used >= parameters.parameter[parameter_counter].additional.size) {
           f_status allocation_status = f_none;
 
-          f_macro_string_lengths_resize(allocation_status, parameters[parameter_counter].additional, parameters[parameter_counter].additional.size + f_console_default_allocation_step);
+          f_macro_string_lengths_resize(allocation_status, parameters.parameter[parameter_counter].additional, parameters.parameter[parameter_counter].additional.size + f_console_default_allocation_step);
 
           if (f_status_is_error(allocation_status)) {
             f_macro_string_lengths_delete(status, needs_additional);
@@ -76,9 +76,9 @@ extern "C" {
           }
         }
 
-        parameters[parameter_counter].result = f_console_result_additional;
-        parameters[parameter_counter].additional.array[parameters[parameter_counter].additional.used] = location;
-        parameters[parameter_counter].additional.used++;
+        parameters.parameter[parameter_counter].result = f_console_result_additional;
+        parameters.parameter[parameter_counter].additional.array[parameters.parameter[parameter_counter].additional.used] = location;
+        parameters.parameter[parameter_counter].additional.used++;
 
         needs_additional.used--;
 
@@ -90,26 +90,26 @@ extern "C" {
       else if (console_short > f_console_none) {
         // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
         while (sub_location < string_length) {
-          for (parameter_counter = 0; parameter_counter < parameters_total; parameter_counter++) {
-            if (parameters[parameter_counter].type != console_type) {
+          for (parameter_counter = 0; parameter_counter < parameters.used; parameter_counter++) {
+            if (parameters.parameter[parameter_counter].type != console_type) {
               continue;
             }
 
             if (result == console_short) {
-              if (parameters[parameter_counter].symbol_short == 0) {
+              if (parameters.parameter[parameter_counter].symbol_short == 0) {
                 continue;
               }
 
-              if (strncmp(&arguments.argv[location][sub_location], parameters[parameter_counter].symbol_short, increment_by + 1) != 0) {
+              if (strncmp(&arguments.argv[location][sub_location], parameters.parameter[parameter_counter].symbol_short, increment_by + 1) != 0) {
                 continue;
               }
             }
             else if (result == console_long) {
-              if (parameters[parameter_counter].symbol_long == 0) {
+              if (parameters.parameter[parameter_counter].symbol_long == 0) {
                 continue;
               }
 
-              if (strncmp(&arguments.argv[location][sub_location], parameters[parameter_counter].symbol_long, increment_by + 1) != 0) {
+              if (strncmp(&arguments.argv[location][sub_location], parameters.parameter[parameter_counter].symbol_long, increment_by + 1) != 0) {
                 continue;
               }
             }
@@ -117,20 +117,20 @@ extern "C" {
               continue;
             }
 
-            parameters[parameter_counter].result = f_console_result_found;
-            parameters[parameter_counter].location = location;
-            parameters[parameter_counter].location_sub = 0;
-            parameters[parameter_counter].total++;
+            parameters.parameter[parameter_counter].result = f_console_result_found;
+            parameters.parameter[parameter_counter].location = location;
+            parameters.parameter[parameter_counter].location_sub = 0;
+            parameters.parameter[parameter_counter].total++;
 
             if (result == console_short) {
-              parameters[parameter_counter].location_sub = sub_location;
+              parameters.parameter[parameter_counter].location_sub = sub_location;
             }
 
-            if (parameters[parameter_counter].has_additional) {
-              if (needs_additional.used + parameters[parameter_counter].has_additional > needs_additional.size) {
+            if (parameters.parameter[parameter_counter].has_additional) {
+              if (needs_additional.used + parameters.parameter[parameter_counter].has_additional > needs_additional.size) {
                 f_status allocation_status = f_none;
 
-                f_macro_string_lengths_resize(allocation_status, needs_additional, needs_additional.used + parameters[parameter_counter].has_additional);
+                f_macro_string_lengths_resize(allocation_status, needs_additional, needs_additional.used + parameters.parameter[parameter_counter].has_additional);
 
                 if (f_status_is_error(allocation_status)) {
                   f_macro_string_lengths_delete(status, needs_additional);
@@ -138,7 +138,7 @@ extern "C" {
                 }
               }
 
-              for (f_array_length additional = 0; additional < parameters[parameter_counter].has_additional; additional++) {
+              for (f_array_length additional = 0; additional < parameters.parameter[parameter_counter].has_additional; additional++) {
                 needs_additional.array[needs_additional.used] = parameter_counter;
                 needs_additional.used++;
               } // for
@@ -153,29 +153,29 @@ extern "C" {
       else {
         found = f_false;
 
-        for (parameter_counter = 0; parameter_counter < parameters_total; parameter_counter++) {
-          if (parameters[parameter_counter].type != f_console_type_other) {
+        for (parameter_counter = 0; parameter_counter < parameters.used; parameter_counter++) {
+          if (parameters.parameter[parameter_counter].type != f_console_type_other) {
             continue;
           }
 
-          if (parameters[parameter_counter].symbol_other == 0) {
+          if (parameters.parameter[parameter_counter].symbol_other == 0) {
             continue;
           }
 
-          if (strncmp(arguments.argv[location], parameters[parameter_counter].symbol_other, string_length + 1) != 0) {
+          if (strncmp(arguments.argv[location], parameters.parameter[parameter_counter].symbol_other, string_length + 1) != 0) {
             continue;
           }
 
-          parameters[parameter_counter].result = f_console_result_found;
-          parameters[parameter_counter].location = location;
-          parameters[parameter_counter].location_sub = 0;
-          parameters[parameter_counter].total++;
+          parameters.parameter[parameter_counter].result = f_console_result_found;
+          parameters.parameter[parameter_counter].location = location;
+          parameters.parameter[parameter_counter].location_sub = 0;
+          parameters.parameter[parameter_counter].total++;
 
-          if (parameters[parameter_counter].has_additional) {
-            if (needs_additional.used + parameters[parameter_counter].has_additional > needs_additional.size) {
+          if (parameters.parameter[parameter_counter].has_additional) {
+            if (needs_additional.used + parameters.parameter[parameter_counter].has_additional > needs_additional.size) {
               f_status allocation_status = f_none;
 
-              f_macro_string_lengths_resize(allocation_status, needs_additional, needs_additional.used + parameters[parameter_counter].has_additional);
+              f_macro_string_lengths_resize(allocation_status, needs_additional, needs_additional.used + parameters.parameter[parameter_counter].has_additional);
 
               if (f_status_is_error(allocation_status)) {
                 f_macro_string_lengths_delete(status, needs_additional);
@@ -183,7 +183,7 @@ extern "C" {
               }
             }
 
-            for (f_array_length additional = 0; additional < parameters[parameter_counter].has_additional; additional++) {
+            for (f_array_length additional = 0; additional < parameters.parameter[parameter_counter].has_additional; additional++) {
               needs_additional.array[needs_additional.used] = parameter_counter;
               needs_additional.used++;
             } // for
@@ -194,7 +194,7 @@ extern "C" {
         } // for
 
         if (!found) {
-          // populate list of remaining parameters not associated with anything.
+          // populate list of remaining parameters.parameter not associated with anything.
           if (remaining->used >= remaining->size) {
             f_status allocation_status = f_none;
 
@@ -231,11 +231,11 @@ extern "C" {
 #endif // _di_fl_console_parameter_process_
 
 #ifndef _di_fl_console_parameter_prioritize_
-  f_return_status fl_console_parameter_prioritize(const f_console_parameter parameters[], const f_array_length parameters_total, const f_console_parameter_ids choices, f_console_parameter_id *decision) {
+  f_return_status fl_console_parameter_prioritize(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision) {
     #ifndef _di_level_1_parameter_checking_
       if (decision == 0) return f_status_set_error(f_invalid_parameter);
-      if (parameters_total == 0) return f_status_set_error(f_invalid_parameter);
-      if (choices.ids == 0) return f_status_set_error(f_invalid_parameter);
+      if (parameters.used == 0) return f_status_set_error(f_invalid_parameter);
+      if (choices.id == 0) return f_status_set_error(f_invalid_parameter);
       if (choices.used == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
@@ -244,17 +244,17 @@ extern "C" {
     f_console_parameter_id priority = 0;
 
     for (f_array_length i = 0; i < choices.used; i++) {
-      if (choices.ids[i] > parameters_total) return f_status_set_error(f_invalid_parameter);
+      if (choices.id[i] > parameters.used) return f_status_set_error(f_invalid_parameter);
 
-      if (parameters[choices.ids[i]].result == f_console_result_found) {
-        if (parameters[choices.ids[i]].location > location) {
-          location = parameters[choices.ids[i]].location;
-          location_sub = parameters[choices.ids[i]].location_sub;
-          priority = choices.ids[i];
+      if (parameters.parameter[choices.id[i]].result == f_console_result_found) {
+        if (parameters.parameter[choices.id[i]].location > location) {
+          location = parameters.parameter[choices.id[i]].location;
+          location_sub = parameters.parameter[choices.id[i]].location_sub;
+          priority = choices.id[i];
         }
-        else if (parameters[choices.ids[i]].location == location && parameters[choices.ids[i]].location_sub > location_sub) {
-          location_sub = parameters[choices.ids[i]].location_sub;
-          priority = choices.ids[i];
+        else if (parameters.parameter[choices.id[i]].location == location && parameters.parameter[choices.id[i]].location_sub > location_sub) {
+          location_sub = parameters.parameter[choices.id[i]].location_sub;
+          priority = choices.id[i];
         }
       }
     } // for

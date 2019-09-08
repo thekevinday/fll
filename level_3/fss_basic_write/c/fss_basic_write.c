@@ -28,7 +28,12 @@ extern "C" {
 
 #ifndef _di_fss_basic_write_main_
   f_return_status fss_basic_write_main(const f_console_arguments arguments, fss_basic_write_data *data) {
-    f_status status = fll_program_process_parameters(arguments, data->parameters, fss_basic_write_total_parameters, fss_basic_write_parameter_no_color, fss_basic_write_parameter_light, fss_basic_write_parameter_dark, &data->remaining, &data->context);
+    f_status status = f_none;
+
+    {
+      f_console_parameters parameters = { data->parameters, fss_basic_write_total_parameters };
+       status = fll_program_process_parameters(arguments, parameters, fss_basic_write_parameter_no_color, fss_basic_write_parameter_light, fss_basic_write_parameter_dark, &data->remaining, &data->context);
+    }
 
     if (f_status_is_error(status)) {
       fss_basic_write_delete_data(data);
