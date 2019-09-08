@@ -79,79 +79,23 @@ extern "C" {
 #endif // _di_fll_program_print_version_
 
 #ifndef _di_fll_program_process_parameters_
-  f_return_status fll_program_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, const f_array_length parameter_no_color, const f_array_length parameter_light, const f_array_length parameter_dark, f_string_lengths *remaining, fl_color_context *context) {
+  f_return_status fll_program_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length parameters_total, const f_array_length parameter_no_color, const f_array_length parameter_light, const f_array_length parameter_dark, f_string_lengths *remaining, fl_color_context *context) {
     f_status status = f_none;
     f_status allocation_status = f_none;
 
-    status = fl_process_parameters(argc, argv, parameters, total_parameters, remaining);
+    status = fl_console_parameter_process(argc, argv, parameters, parameters_total, remaining);
 
-    f_string_length color_mode = parameter_dark;
+    f_console_parameter_ids choices = f_console_parameter_ids_initialize;
+    f_console_parameter_id decision = parameter_dark;
+    f_console_parameter_id ids[3] = { parameter_no_color, parameter_light, parameter_dark};
 
-    if (parameters[parameter_no_color].result == f_console_result_found) {
-      if (parameters[parameter_light].result == f_console_result_none) {
-        if (parameters[parameter_dark].result == f_console_result_none || parameters[parameter_no_color].location > parameters[parameter_dark].location) {
-          color_mode = parameter_no_color;
-        }
-        else if (parameters[parameter_no_color].location == parameters[parameter_dark].location && parameters[parameter_no_color].location_sub > parameters[parameter_dark].location_sub) {
-          color_mode = parameter_no_color;
-        }
-      }
-      else {
-        if (parameters[parameter_dark].result == f_console_result_none) {
-          if (parameters[parameter_no_color].location > parameters[parameter_light].location) {
-            color_mode = parameter_no_color;
-          }
-          else if (parameters[parameter_no_color].location == parameters[parameter_light].location && parameters[parameter_no_color].location_sub > parameters[parameter_light].location_sub) {
-            color_mode = parameter_no_color;
-          }
-          else {
-            color_mode = parameter_light;
-          }
-        }
-        else if (parameters[parameter_no_color].location > parameters[parameter_dark].location) {
-          if (parameters[parameter_no_color].location > parameters[parameter_light].location) {
-            color_mode = parameter_no_color;
-          }
-          else if (parameters[parameter_no_color].location == parameters[parameter_light].location && parameters[parameter_no_color].location_sub > parameters[parameter_light].location_sub) {
-            color_mode = parameter_no_color;
-          }
-          else {
-            color_mode = parameter_light;
-          }
-        }
-        else if (parameters[parameter_no_color].location == parameters[parameter_dark].location && parameters[parameter_no_color].location_sub > parameters[parameter_dark].location_sub) {
-          if (parameters[parameter_no_color].location > parameters[parameter_light].location) {
-            color_mode = parameter_no_color;
-          }
-          else if (parameters[parameter_no_color].location == parameters[parameter_light].location && parameters[parameter_no_color].location_sub > parameters[parameter_light].location_sub) {
-            color_mode = parameter_no_color;
-          }
-          else {
-            color_mode = parameter_light;
-          }
-        }
-        else if (parameters[parameter_light].location > parameters[parameter_dark].location) {
-          color_mode = parameter_light;
-        }
-        else if (parameters[parameter_light].location == parameters[parameter_dark].location && parameters[parameter_light].location_sub > parameters[parameter_dark].location_sub) {
-          color_mode = parameter_light;
-        }
-      }
-    }
-    else if (parameters[parameter_light].result == f_console_result_found) {
-      if (parameters[parameter_dark].result == f_console_result_none) {
-        color_mode = parameter_light;
-      }
-      else if (parameters[parameter_light].location > parameters[parameter_dark].location) {
-        color_mode = parameter_light;
-      }
-      else if (parameters[parameter_light].location == parameters[parameter_dark].location && parameters[parameter_light].location_sub > parameters[parameter_dark].location_sub) {
-        color_mode = parameter_light;
-      }
-    }
+    choices.ids = ids;
+    choices.used = 3;
+
+    fl_console_parameter_prioritize(parameters, parameters_total, choices, &decision);
 
     // load colors unless told not to.
-    if (color_mode != parameter_no_color) {
+    if (decision != parameter_no_color) {
       fl_macro_color_context_new(allocation_status, (*context));
 
       if (f_status_is_error(allocation_status)) {
@@ -159,7 +103,7 @@ extern "C" {
         return allocation_status;
       }
 
-      fl_color_load_context(context, color_mode == parameter_light);
+      fl_color_load_context(context, decision == parameter_light);
     }
 
     if (f_status_is_error(status)) {
@@ -175,10 +119,10 @@ extern "C" {
         fl_color_print_line(f_standard_error, context->error, context->reset, "CRITICAL ERROR: unable to allocate memory.");
       }
       else if (status == f_invalid_parameter) {
-        fl_color_print_line(f_standard_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling fl_process_parameters().");
+        fl_color_print_line(f_standard_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling fl_console_parameter_process().");
       }
       else {
-        fl_color_print_line(f_standard_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_process_parameters().", status);
+        fl_color_print_line(f_standard_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_console_parameter_process().", status);
       }
 
       return f_status_set_error(status);

@@ -54,7 +54,7 @@ extern "C" {
  *   The parameters passed to the process.
  * @param parameters
  *   The console parameters to look for.
- * @param total_parameters
+ * @param parameters_total
  *   The used size of the parameters array.
  * @param remaining
  *   A list of remaining parameters not associated with anything.
@@ -65,9 +65,41 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
-#ifndef _di_fl_process_parameters_
-  extern f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, f_string_lengths *remaining);
-#endif // _di_fl_process_parameters_
+#ifndef _di_fl_console_parameter_process_
+  extern f_return_status fl_console_parameter_process(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length parameters_total, f_string_lengths *remaining);
+#endif // _di_fl_console_parameter_process_
+
+/**
+ * Given a set of parameter choices, determine which one has the highest priority.
+ *
+ * The priority is determined by viewing the parameters from left to right.
+ * The right-most parameter defined in the set has the priority over others.
+ *
+ * For example, the color context modes override each other, so only one gets priority.
+ * If given, say "+l ++no_color +d", the "+d" would be the right-most parameter "+l" and "++no_color".
+ * The decision would be "+d".
+ *
+ * This also applies to short parameters combined into one, such as "+lnd", the "d" would again be the decision.
+ *
+ * @param parameters
+ *   The parameters to process.
+ * @param parameters_total
+ *   The used size of the parameters array.
+ * @param choices
+ *   An array of numeric ids, each representing a parameter within the parameters variable.
+ *   The order does not matter.
+ * @param decision
+ *   The resulting decision.
+ *   If none of the parameters are found, then this will not be updated (therefore it is safe to have it pre-initialized to the default).
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if no parameters were found.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_console_parameter_prioritize__
+  extern f_return_status fl_console_parameter_prioritize(const f_console_parameter parameters[], const f_array_length parameters_total, const f_console_parameter_ids choices, f_console_parameter_id *decision);
+#endif // _di_fl_console_parameter_prioritize__
 
 #ifdef __cplusplus
 } // extern "C"

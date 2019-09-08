@@ -4,8 +4,8 @@
 extern "C" {
 #endif
 
-#ifndef _di_fl_process_parameters_
-  f_return_status fl_process_parameters(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length total_parameters, f_string_lengths *remaining) {
+#ifndef _di_fl_console_parameter_process_
+  f_return_status fl_console_parameter_process(const f_array_length argc, const f_string argv[], f_console_parameter parameters[], const f_array_length parameters_total, f_string_lengths *remaining) {
     #ifndef _di_level_1_parameter_checking_
       if (remaining == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -90,7 +90,7 @@ extern "C" {
       else if (console_short > f_console_none) {
         // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
         while (sub_location < string_length) {
-          for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++) {
+          for (parameter_counter = 0; parameter_counter < parameters_total; parameter_counter++) {
             if (parameters[parameter_counter].type != console_type) {
               continue;
             }
@@ -153,7 +153,7 @@ extern "C" {
       else {
         found = f_false;
 
-        for (parameter_counter = 0; parameter_counter < total_parameters; parameter_counter++) {
+        for (parameter_counter = 0; parameter_counter < parameters_total; parameter_counter++) {
           if (parameters[parameter_counter].type != f_console_type_other) {
             continue;
           }
@@ -228,7 +228,47 @@ extern "C" {
 
     return status;
   }
-#endif // _di_fl_process_parameters_
+#endif // _di_fl_console_parameter_process_
+
+#ifndef _di_fl_console_parameter_prioritize_
+  f_return_status fl_console_parameter_prioritize(const f_console_parameter parameters[], const f_array_length parameters_total, const f_console_parameter_ids choices, f_console_parameter_id *decision) {
+    #ifndef _di_level_1_parameter_checking_
+      if (decision == 0) return f_status_set_error(f_invalid_parameter);
+      if (parameters_total == 0) return f_status_set_error(f_invalid_parameter);
+      if (choices.ids == 0) return f_status_set_error(f_invalid_parameter);
+      if (choices.used == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_array_length location = 0;
+    f_array_length location_sub = 0;
+    f_console_parameter_id priority = 0;
+
+    for (f_array_length i = 0; i < choices.used; i++) {
+      if (choices.ids[i] > parameters_total) return f_status_set_error(f_invalid_parameter);
+
+      if (parameters[choices.ids[i]].result == f_console_result_found) {
+        if (parameters[choices.ids[i]].location > location) {
+          location = parameters[choices.ids[i]].location;
+          location_sub = parameters[choices.ids[i]].location_sub;
+          priority = choices.ids[i];
+        }
+        else if (parameters[choices.ids[i]].location == location && parameters[choices.ids[i]].location_sub > location_sub) {
+          location_sub = parameters[choices.ids[i]].location_sub;
+          priority = choices.ids[i];
+        }
+      }
+    } // for
+
+    // The first parameter location (argc = 0) is the program name, therefore if the location is 0, then no matches were found.
+    if (location == 0) {
+      return f_no_data;
+    }
+
+    *decision = priority;
+
+    return f_none;
+  }
+#endif // _di_fl_console_parameter_prioritize__
 
 #ifdef __cplusplus
 } // extern "C"

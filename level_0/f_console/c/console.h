@@ -159,6 +159,26 @@ extern "C" {
 #endif // _di_f_console_parameter_
 
 /**
+ * Provide a helper structure for references and processing parameters.
+ *
+ * The f_console_parameter_id is designed to be used for the enums to represent a any given parameter by the ID.
+ *
+ * The f_console_parameter_ids is designed for passing this to a function as a single argument.
+ * The "ids" property is intended to be populated with an aray of f_console_parameter_id whose size is defined by the "used" property.
+ * This follows the idea of f_string_dynamic and has a "used" instead of length, but because this is not intended to be dynamically allocated there is no "size" property.
+ */
+#ifndef _di_f_console_parameter_id_
+  typedef uint16_t f_console_parameter_id;
+
+  typedef struct {
+    f_console_parameter_id *ids;
+    f_array_length         used;
+  } f_console_parameter_ids;
+
+  #define f_console_parameter_ids_initialize { 0, 0 }
+#endif // _di_f_console_parameter_id_
+
+/**
  * Determine the type code the given input parameter represents.
  *
  * @param input
