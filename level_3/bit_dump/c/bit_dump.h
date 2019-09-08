@@ -65,7 +65,7 @@ extern "C" {
     bit_dump_mode_hexidecimal,
     bit_dump_mode_octal,
     bit_dump_mode_binary,
-    bit_dump_mode_digit,
+    bit_dump_mode_decimal,
   };
 
   #define bit_dump_sequence_acknowledge               "␆"
@@ -111,7 +111,8 @@ extern "C" {
   #define bit_dump_character_unused      "�"
 
   #define bit_dump_short_binary      "b"
-  #define bit_dump_short_hex         "x"
+  #define bit_dump_short_decimal     "d"
+  #define bit_dump_short_hexdecimal  "x"
   #define bit_dump_short_octal       "o"
 
   #define bit_dump_short_first       "f"
@@ -121,7 +122,8 @@ extern "C" {
   #define bit_dump_short_placeholder "p"
 
   #define bit_dump_long_binary       "binary"
-  #define bit_dump_long_hex          "hex"
+  #define bit_dump_long_decimal      "decimal"
+  #define bit_dump_long_hexidecimal  "hexidecimal"
   #define bit_dump_long_octal        "octal"
 
   #define bit_dump_long_first        "first"       // first offset byte size.
@@ -139,9 +141,9 @@ extern "C" {
     bit_dump_parameter_version,
 
     bit_dump_parameter_binary,
+    bit_dump_parameter_decimal,
     bit_dump_parameter_hexidecimal,
     bit_dump_parameter_octal,
-    // @todo: add digit print support bit_dump_parameter_digit,
 
     bit_dump_parameter_first,
     bit_dump_parameter_last,
@@ -159,7 +161,8 @@ extern "C" {
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(bit_dump_short_binary, bit_dump_long_binary, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(bit_dump_short_hex, bit_dump_long_hex, 0, 0, f_console_type_normal), \
+      f_console_parameter_initialize(bit_dump_short_decimal, bit_dump_long_decimal, 0, 0, f_console_type_normal), \
+      f_console_parameter_initialize(bit_dump_short_hexdecimal, bit_dump_long_hexidecimal, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(bit_dump_short_octal, bit_dump_long_octal, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(bit_dump_short_first, bit_dump_long_first, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(bit_dump_short_last, bit_dump_long_last, 0, 1, f_console_type_normal), \
@@ -168,7 +171,7 @@ extern "C" {
       f_console_parameter_initialize(bit_dump_short_placeholder, bit_dump_long_placeholder, 0, 0, f_console_type_normal), \
     }
 
-  #define bit_dump_total_parameters 13
+  #define bit_dump_total_parameters 14
 #endif // _di_bit_dump_defines_
 
 #ifndef _di_bit_dump_data_

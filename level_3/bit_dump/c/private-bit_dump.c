@@ -185,8 +185,8 @@
         else if (data.mode == bit_dump_mode_binary) {
           printf("         ");
         }
-        else if (data.mode == bit_dump_mode_digit) {
-          // @todo
+        else if (data.mode == bit_dump_mode_decimal) {
+          printf("    ");
         }
 
         column++;
@@ -201,7 +201,7 @@
           else if (data.mode == bit_dump_mode_binary && column % 4 == 0) {
             printf(" ");
           }
-          else if (data.mode == bit_dump_mode_digit && column % 4 == 0) {
+          else if (data.mode == bit_dump_mode_decimal && column % 6 == 0) {
             printf(" ");
           }
         }
@@ -302,12 +302,12 @@
         printf(" %s", binary_string);
       }
     }
-    else if (data.mode == bit_dump_mode_digit) {
+    else if (data.mode == bit_dump_mode_decimal) {
       if (invalid[character_current]) {
-        fl_color_print(f_standard_output, data.context.error, data.context.reset, " %02d", (uint8_t) byte);
+        fl_color_print(f_standard_output, data.context.error, data.context.reset, " %3d", (uint8_t) byte);
       }
       else {
-        printf(" %02d", (uint8_t) byte);
+        printf(" %3d", (uint8_t) byte);
       }
     }
 
@@ -350,7 +350,7 @@
     else if (data.mode == bit_dump_mode_binary && *column % 4 == 0) {
       printf(" ");
     }
-    else if (data.mode == bit_dump_mode_digit && *column % 4 == 0) {
+    else if (data.mode == bit_dump_mode_decimal && *column % 6 == 0) {
       printf(" ");
     }
 

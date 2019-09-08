@@ -9,16 +9,18 @@ extern "C" {
   f_return_status bit_dump_print_help(const bit_dump_data data) {
     fll_program_print_help_header(data.context, bit_dump_name_long, bit_dump_version);
 
-    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "         Print this help message.");
-    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "        Output using colors that show up better on light backgrounds");
-    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "         Output using colors that show up better on dark backgrounds");
-    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "     Do not output in color.");
-    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, "      Print only the version number.");
+    fll_program_print_help_option(data.context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Print this help message.");
+    fll_program_print_help_option(data.context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "      Output using colors that show up better on light backgrounds");
+    fll_program_print_help_option(data.context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "       Output using colors that show up better on dark backgrounds");
+    fll_program_print_help_option(data.context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Do not output in color.");
+    fll_program_print_help_option(data.context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Print only the version number.");
 
     printf("%c", f_string_eol);
 
-    fll_program_print_help_option(data.context, bit_dump_short_binary, bit_dump_long_binary, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Display binary representation.");
-    fll_program_print_help_option(data.context, bit_dump_short_hex, bit_dump_long_hex, f_console_symbol_short_enable, f_console_symbol_long_enable, "          Display hexadecimal representation.");
+    fll_program_print_help_option(data.context, bit_dump_short_binary, bit_dump_long_binary, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Display binary representation.");
+    fll_program_print_help_option(data.context, bit_dump_short_decimal, bit_dump_long_decimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Display decimal representation.");
+    fll_program_print_help_option(data.context, bit_dump_short_hexdecimal, bit_dump_long_hexidecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Display hexadecimal representation.");
+    fll_program_print_help_option(data.context, bit_dump_short_octal, bit_dump_long_octal, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Display octal representation.");
 
     fll_program_print_help_usage(data.context, bit_dump_name, "filename(s)");
 
@@ -44,87 +46,48 @@ extern "C" {
 
     {
       f_console_parameters parameters = { data->parameters, bit_dump_total_parameters };
-      f_console_parameter_id ids[3] = { bit_dump_parameter_no_color, bit_dump_parameter_light, bit_dump_parameter_dark };
-      f_console_parameter_ids choices = { ids, 3 };
+      f_console_parameter_ids choices = f_console_parameter_ids_initialize;
 
-      status = fll_program_process_parameters(arguments, parameters, choices, &data->remaining, &data->context);
-    }
+      {
+        f_console_parameter_id ids[3] = { bit_dump_parameter_no_color, bit_dump_parameter_light, bit_dump_parameter_dark };
+        choices.id = ids;
+        choices.used = 3;
 
-    if (f_status_is_error(status)) {
-      bit_dump_delete_data(data);
-      return f_status_set_error(status);
-    }
+        status = fll_program_process_parameters(arguments, parameters, choices, &data->remaining, &data->context);
 
-    if (data->parameters[bit_dump_parameter_binary].result == f_console_result_found) {
-      if (data->parameters[bit_dump_parameter_hexidecimal].result == f_console_result_none) {
-        if (data->parameters[bit_dump_parameter_octal].result == f_console_result_none || data->parameters[bit_dump_parameter_binary].location > data->parameters[bit_dump_parameter_octal].location) {
-          data->mode = bit_dump_mode_binary;
-        }
-        else if (data->parameters[bit_dump_parameter_binary].location == data->parameters[bit_dump_parameter_octal].location && data->parameters[bit_dump_parameter_binary].location_sub > data->parameters[bit_dump_parameter_octal].location_sub) {
-          data->mode = bit_dump_mode_binary;
-        }
-        else {
-          data->mode = bit_dump_mode_octal;
+        if (f_status_is_error(status)) {
+          bit_dump_delete_data(data);
+          return f_status_set_error(status);
         }
       }
-      else {
-        if (data->parameters[bit_dump_parameter_octal].result == f_console_result_none) {
-          if (data->parameters[bit_dump_parameter_binary].location > data->parameters[bit_dump_parameter_hexidecimal].location) {
-            data->mode = bit_dump_mode_binary;
-          }
-          else if (data->parameters[bit_dump_parameter_binary].location == data->parameters[bit_dump_parameter_hexidecimal].location && data->parameters[bit_dump_parameter_binary].location_sub > data->parameters[bit_dump_parameter_hexidecimal].location_sub) {
-            data->mode = bit_dump_mode_binary;
-          }
-          else {
-            data->mode = bit_dump_mode_hexidecimal;
-          }
+
+      {
+        f_console_parameter_id ids[4] = { bit_dump_parameter_hexidecimal, bit_dump_parameter_octal, bit_dump_parameter_binary, bit_dump_parameter_decimal };
+        f_console_parameter_id choice = bit_dump_parameter_hexidecimal;
+        choices.id = ids;
+        choices.used = 4;
+
+        status = fl_console_parameter_prioritize(parameters, choices, &choice);
+
+        if (f_status_is_error(status)) {
+          bit_dump_delete_data(data);
+          return f_status_set_error(status);
         }
-        else if (data->parameters[bit_dump_parameter_binary].location > data->parameters[bit_dump_parameter_octal].location) {
-          if (data->parameters[bit_dump_parameter_binary].location > data->parameters[bit_dump_parameter_hexidecimal].location) {
-            data->mode = bit_dump_mode_binary;
-          }
-          else if (data->parameters[bit_dump_parameter_binary].location == data->parameters[bit_dump_parameter_hexidecimal].location && data->parameters[bit_dump_parameter_binary].location_sub > data->parameters[bit_dump_parameter_hexidecimal].location_sub) {
-            data->mode = bit_dump_mode_binary;
-          }
-          else {
-            data->mode = bit_dump_mode_hexidecimal;
-          }
-        }
-        else if (data->parameters[bit_dump_parameter_binary].location == data->parameters[bit_dump_parameter_octal].location && data->parameters[bit_dump_parameter_binary].location_sub > data->parameters[bit_dump_parameter_octal].location_sub) {
-          if (data->parameters[bit_dump_parameter_binary].location > data->parameters[bit_dump_parameter_hexidecimal].location) {
-            data->mode = bit_dump_mode_binary;
-          }
-          else if (data->parameters[bit_dump_parameter_binary].location == data->parameters[bit_dump_parameter_hexidecimal].location && data->parameters[bit_dump_parameter_binary].location_sub > data->parameters[bit_dump_parameter_hexidecimal].location_sub) {
-            data->mode = bit_dump_mode_binary;
-          }
-          else {
-            data->mode = bit_dump_mode_hexidecimal;
-          }
-        }
-        else if (data->parameters[bit_dump_parameter_hexidecimal].location > data->parameters[bit_dump_parameter_octal].location) {
+
+
+        if (choice == bit_dump_parameter_hexidecimal) {
           data->mode = bit_dump_mode_hexidecimal;
         }
-        else if (data->parameters[bit_dump_parameter_hexidecimal].location == data->parameters[bit_dump_parameter_octal].location && data->parameters[bit_dump_parameter_hexidecimal].location_sub > data->parameters[bit_dump_parameter_octal].location_sub) {
-          data->mode = bit_dump_mode_hexidecimal;
-        }
-        else {
+        else if (choice == bit_dump_parameter_octal) {
           data->mode = bit_dump_mode_octal;
         }
+        else if (choice == bit_dump_parameter_binary) {
+          data->mode = bit_dump_mode_binary;
+        }
+        else if (choice == bit_dump_parameter_decimal) {
+          data->mode = bit_dump_mode_decimal;
+        }
       }
-    }
-    else if (data->parameters[bit_dump_parameter_hexidecimal].result == f_console_result_found) {
-      if (data->parameters[bit_dump_parameter_octal].result == f_console_result_none || data->parameters[bit_dump_parameter_hexidecimal].location > data->parameters[bit_dump_parameter_octal].location) {
-        data->mode = bit_dump_mode_hexidecimal;
-      }
-      else if (data->parameters[bit_dump_parameter_hexidecimal].location == data->parameters[bit_dump_parameter_octal].location && data->parameters[bit_dump_parameter_hexidecimal].location_sub > data->parameters[bit_dump_parameter_octal].location_sub) {
-        data->mode = bit_dump_mode_hexidecimal;
-      }
-      else {
-        data->mode = bit_dump_mode_octal;
-      }
-    }
-    else if (data->parameters[bit_dump_parameter_octal].result == f_console_result_found) {
-      data->mode = bit_dump_mode_octal;
     }
 
     status = f_none;
@@ -242,7 +205,23 @@ extern "C" {
 
           printf("%c", f_string_eol);
           fl_color_print(f_standard_output, data->context.title, data->context.reset, "Byte Dump of: ");
-          fl_color_print_line(f_standard_output, data->context.notable, data->context.reset, "%s", arguments.argv[data->remaining.array[counter]]);
+          fl_color_print(f_standard_output, data->context.notable, data->context.reset, "%s", arguments.argv[data->remaining.array[counter]]);
+          fl_color_print(f_standard_output, data->context.title, data->context.reset, " (in ");
+
+          if (data->mode == bit_dump_mode_hexidecimal) {
+            fl_color_print(f_standard_output, data->context.title, data->context.reset, "Hexidecimal");
+          }
+          else if (data->mode == bit_dump_mode_octal) {
+            fl_color_print(f_standard_output, data->context.title, data->context.reset, "Octal");
+          }
+          else if (data->mode == bit_dump_mode_binary) {
+            fl_color_print(f_standard_output, data->context.title, data->context.reset, "Binary");
+          }
+          else if (data->mode == bit_dump_mode_decimal) {
+            fl_color_print(f_standard_output, data->context.title, data->context.reset, "Decimal");
+          }
+
+          fl_color_print_line(f_standard_output, data->context.title, data->context.reset, ")");
 
           status = bit_dump_file(*data, arguments.argv[data->remaining.array[counter]], file);
 
