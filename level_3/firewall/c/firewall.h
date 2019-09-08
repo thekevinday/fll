@@ -19,6 +19,7 @@
 // fll-0 includes
 #include <level_0/console.h>
 #include <level_0/file.h>
+#include <level_0/pipe.h>
 #include <level_0/print.h>
 #include <level_0/string.h>
 #include <level_0/type.h>
@@ -278,6 +279,7 @@ extern "C" {
 
     f_string_dynamics chains;
     f_string_lengths remaining;
+    f_bool process_pipe;
     f_string_dynamics devices;
 
     fl_color_context context;
@@ -288,6 +290,7 @@ extern "C" {
       f_console_parameter_initialize_firewall, \
       f_string_dynamics_initialize, \
       f_string_lengths_initialize, \
+      f_false, \
       f_string_dynamics_initialize, \
       fl_color_context_initialize, \
     }

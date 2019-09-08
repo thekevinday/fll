@@ -8,7 +8,9 @@ int main(const int argc, const f_string *argv) {
     data.process_pipe = f_true;
   }
 
-  if (f_status_is_error(fss_basic_read_main(arguments, &data))) {
+  f_status status = fss_basic_read_main(arguments, &data);
+
+  if (f_status_is_error(status)) {
     return 1;
   }
 
