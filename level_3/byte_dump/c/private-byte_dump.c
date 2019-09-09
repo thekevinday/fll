@@ -137,7 +137,57 @@
         invalid[character_current] = width_utf;
       }
       // The unicode codes U+D800 to U+DFFF are for "UTF-16 surrogate halves" which are not supported in UTF-8.
-      else if (width_utf == 3 && characters.string[character_current] > 0xefbfb000 && characters.string[character_current] <= 0xc0ff0000) {
+      else if (width_utf == 3 && characters.string[character_current] >= 0xeda08000 && characters.string[character_current] <= 0xeda3bf00) {
+        found_invalid_utf = f_true;
+        invalid[character_current] = width_utf;
+      }
+      // Common Indic Number Forms, some codes of which are invalid in UTF-8.
+      else if (width_utf == 3 && characters.string[character_current] >= 0xeaa0ba00 && characters.string[character_current] <= 0xeaa0bf00) {
+        found_invalid_utf = f_true;
+        invalid[character_current] = width_utf;
+      }
+      // U+061D, unsupported in UTF-8.
+      else if (width_utf == 2 && characters.string[character_current] == 0xd89d0000) {
+        found_invalid_utf = f_true;
+        invalid[character_current] = width_utf;
+      }
+      // U+0E00, unsupported in UTF-8.
+      else if (width_utf == 3 && characters.string[character_current] == 0xe0b88000) {
+        found_invalid_utf = f_true;
+        invalid[character_current] = width_utf;
+      }
+      // U+0E3B to U+0E3E, unsupported in UTF-8.
+      else if (width_utf == 3 && characters.string[character_current] >= 0xe0b8bb00 && characters.string[character_current] <= 0xe0b8be00) {
+        found_invalid_utf = f_true;
+        invalid[character_current] = width_utf;
+      }
+      // U+0E5C to U+0E7F, unsupported in UTF-8.
+      else if (width_utf == 3 && characters.string[character_current] >= 0xe0b99c00 && characters.string[character_current] <= 0xe0b9bf00) {
+        found_invalid_utf = f_true;
+        invalid[character_current] = width_utf;
+      }
+      // (Thana) U+07B2 to U+07BF, unsupported in UTF-8.
+      else if (width_utf == 2 && characters.string[character_current] >= 0xdeb20000 && characters.string[character_current] <= 0xdebf0000) {
+        found_invalid_utf = f_true;
+        invalid[character_current] = width_utf;
+      }
+      // (Hebrew) U+0590, unsupported in UTF-8.
+      else if (width_utf == 2 && characters.string[character_current] == 0xd6900000) {
+        found_invalid_utf = f_true;
+        invalid[character_current] = width_utf;
+      }
+      // (Hebrew) U+05C8 to U+05CF, unsupported in UTF-8.
+      else if (width_utf == 2 && characters.string[character_current] >= 0xd7880000 && characters.string[character_current] <= 0xd78f0000) {
+        found_invalid_utf = f_true;
+        invalid[character_current] = width_utf;
+      }
+      // (Hebrew) U+05EB to U+05FF, unsupported in UTF-8.
+      else if (width_utf == 2 && characters.string[character_current] >= 0xd7ab0000 && characters.string[character_current] <= 0xd7bf0000) {
+        found_invalid_utf = f_true;
+        invalid[character_current] = width_utf;
+      }
+      // Unicode supports nothing above this (U+10FFFF).
+      else if (width_utf == 4 && characters.string[character_current] > 0xf48fbfbf) {
         found_invalid_utf = f_true;
         invalid[character_current] = width_utf;
       }
@@ -517,24 +567,8 @@
         // This is an "Overlong Null" and is a valid NULL character.
         printf("%s", byte_dump_sequence_null);
       }
-      else if (width_utf == 2 && characters.string[i] >= 0xcc800000 && characters.string[i] <= 0xcdaf0000) {
-        // Combining characters should not be combined here, instead display a space.
-        printf(" ");
-      }
-      else if (width_utf == 3 && characters.string[i] >= 0xe1aab000 && characters.string[i] <= 0xe1abbf00) {
-        // Combining characters should not be combined here, instead display a space.
-        printf(" ");
-      }
-      else if (width_utf == 3 && characters.string[i] >= 0xe1b78000 && characters.string[i] <= 0xe1b7bf00) {
-        // Combining characters should not be combined here, instead display a space.
-        printf(" ");
-      }
-      else if (width_utf == 3 && characters.string[i] >= 0xe2839000 && characters.string[i] <= 0xe283bf00) {
-        // Combining characters should not be combined here, instead display a space.
-        printf(" ");
-      }
-      else if (width_utf == 2 && characters.string[i] >= 0xd8900000 && characters.string[i] <= 0xd89a0000) {
-        // Combining characters should not be combined here, instead display a space.
+      else if (width_utf == 2 && characters.string[i] == 0xd89d0000) {
+        // U+061C
         printf(" ");
       }
       else if (width_utf == 2 && characters.string[i] >= 0xc2800000 && characters.string[i] <= 0xc29f0000) {
@@ -607,6 +641,39 @@
               printf("%c", (uint8_t) output);
             }
           }
+        }
+
+        // print a space for combining characters to combine into, thereby allowing it to be safely and readably displayed.
+        if (width_utf == 2 && characters.string[i] >= 0xdea60000 && characters.string[i] <= 0xdeb00000) {
+          // Thana combining codes: U+07A6 to U+07B0.
+          printf(" ");
+        }
+        else if (width_utf == 2 && characters.string[i] >= 0xcc800000 && characters.string[i] <= 0xcdaf0000) {
+          printf(" ");
+        }
+        else if (width_utf == 3 && characters.string[i] >= 0xe1aab000 && characters.string[i] <= 0xe1abbf00) {
+          printf(" ");
+        }
+        else if (width_utf == 3 && characters.string[i] >= 0xe1b78000 && characters.string[i] <= 0xe1b7bf00) {
+          printf(" ");
+        }
+        else if (width_utf == 3 && characters.string[i] >= 0xe2839000 && characters.string[i] <= 0xe283bf00) {
+          printf(" ");
+        }
+        else if (width_utf == 2 && characters.string[i] >= 0xd8900000 && characters.string[i] <= 0xd89a0000) {
+          printf(" ");
+        }
+        else if (width_utf == 2 && characters.string[i] >= 0xd98b0000 && characters.string[i] <= 0xd99f0000) {
+          // Arabic, U+064B to U+065F.
+          printf(" ");
+        }
+        else if (width_utf == 2 && characters.string[i] >= 0xdb960000 && characters.string[i] <= 0xdb9c0000) {
+          // Arabic, U+06D6 to U+06DC.
+          printf(" ");
+        }
+        else if (width_utf == 2 && characters.string[i] >= 0xd6910000 && characters.string[i] <= 0xd6bd0000) {
+          // Hebrew, U+0591 to U+05BD.
+          printf(" ");
         }
       }
       else {

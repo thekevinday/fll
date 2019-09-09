@@ -36,6 +36,10 @@ extern "C" {
 
     printf("%c%c", f_string_eol, f_string_eol);
 
+    printf("UTF-8 \"Combining\" characters might have a space appended to allow a proper display but this may cause copy and paste issues.");
+
+    printf("%c%c", f_string_eol, f_string_eol);
+
     return f_none;
   }
 #endif // _di_byte_dump_print_help_
