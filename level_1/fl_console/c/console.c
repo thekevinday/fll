@@ -100,7 +100,7 @@ extern "C" {
                 continue;
               }
 
-              if (strncmp(&arguments.argv[location][sub_location], parameters.parameter[parameter_counter].symbol_short, increment_by + 1) != 0) {
+              if (arguments.argv[location][sub_location] != *parameters.parameter[parameter_counter].symbol_short) {
                 continue;
               }
             }
