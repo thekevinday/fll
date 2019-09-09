@@ -33,7 +33,7 @@ extern "C" {
 #endif // _di_f_is_hexidecimal_
 
 #ifndef _di_f_character_to_digit_
-  f_return_status f_character_to_digit(const char character, f_u_long *digit) {
+  f_return_status f_character_to_digit(const char character, unsigned long *digit) {
     #ifndef _di_level_0_parameter_checking_
       if (digit == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -58,7 +58,7 @@ extern "C" {
 #endif // _di_f_character_to_digit_
 
 #ifndef _di_f_character_to_hexdecimal_
-  f_return_status f_character_to_hexdecimal(const char character, f_u_long *digit) {
+  f_return_status f_character_to_hexdecimal(const char character, unsigned long *digit) {
     #ifndef _di_level_0_parameter_checking_
       if (digit == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -95,7 +95,7 @@ extern "C" {
 #endif // _di_f_character_to_hexdecimal_
 
 #ifndef _di_f_string_to_decimal_
-  f_return_status f_string_to_decimal(const f_string string, f_u_long *digit, const f_string_location location) {
+  f_return_status f_string_to_decimal(const f_string string, unsigned long *digit, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (digit == 0) return f_status_set_error(f_invalid_parameter);
       if (location.start < 0) return f_status_set_error(f_invalid_parameter);
@@ -104,8 +104,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     f_string_length current_location = location.start;
-    f_u_long scale = 0;
-    f_u_long temp_digit = 0;
+    unsigned long scale = 0;
+    unsigned long temp_digit = 0;
 
     while (current_location < location.stop) {
       if (f_character_to_digit(string[current_location], &temp_digit) == f_none) {
@@ -132,7 +132,7 @@ extern "C" {
 #endif // _di_f_string_to_decimal_
 
 #ifndef _di_f_string_to_hexidecimal_
-  f_return_status f_string_to_hexidecimal(const f_string string, f_u_long *digit, const f_string_location location) {
+  f_return_status f_string_to_hexidecimal(const f_string string, unsigned long *digit, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (digit == 0) return f_status_set_error(f_invalid_parameter);
       if (location.start < 0) return f_status_set_error(f_invalid_parameter);
@@ -141,8 +141,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     f_string_length current_location = location.start;
-    f_u_long scale = 0;
-    f_u_long temp_digit = 0;
+    unsigned long scale = 0;
+    unsigned long temp_digit = 0;
 
     while (current_location < location.stop) {
       if (f_character_to_hexdecimal(string[current_location], &temp_digit) == f_none) {

@@ -31,7 +31,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_file_types_
-  typedef f_s_int  f_file_id;
+  typedef int  f_file_id;
   typedef f_string f_file_mode;
   typedef mode_t f_file_mask;
 
@@ -295,7 +295,7 @@ extern "C" {
   /**
    * read file statistics by file id.
    */
-  extern f_return_status f_file_stat_by_id(const f_s_int file_id, struct stat *file_stat);
+  extern f_return_status f_file_stat_by_id(const int file_id, struct stat *file_stat);
 #endif // _di_f_file_stat_by_id_
 
 #ifdef __cplusplus

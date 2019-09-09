@@ -25,8 +25,8 @@ extern "C"{
 #endif
 
 #ifndef _di_f_socket_types_
-  #define f_socket_id       f_s_int
-  #define f_socket_close_id f_u_short
+  #define f_socket_id       int
+  #define f_socket_close_id unsigned short
 
   enum {
     f_socket_close_fast,       // As in close();

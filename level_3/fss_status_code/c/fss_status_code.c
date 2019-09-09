@@ -58,7 +58,7 @@ extern "C" {
         f_array_length counter = 0;
 
         f_status code = f_none;
-        f_u_int true = 0;
+        unsigned int true = 0;
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
@@ -97,7 +97,7 @@ extern "C" {
         f_array_length counter = 0;
 
         f_status code = f_none;
-        f_u_int true = 0;
+        unsigned int true = 0;
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
@@ -136,7 +136,7 @@ extern "C" {
         f_array_length counter = 0;
 
         f_status code = f_none;
-        f_u_int true = 0;
+        unsigned int true = 0;
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.

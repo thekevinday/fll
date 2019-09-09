@@ -9,7 +9,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
   f_string_dynamics arguments = f_string_dynamics_initialize;
   f_string_dynamic argument = f_string_dynamic_initialize;
 
-  f_s_int results = 0;
+  int results = 0;
   f_string_length length = 0;
   f_bool invalid = f_false;
   f_bool is_ip_list = f_false;
@@ -859,7 +859,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
   uint8_t tool = firewall_program_iptables;
   f_bool new_chain = f_false;
   f_bool create_chain = f_false;
-  f_s_int results = 0;
+  int results = 0;
 
   f_array_length i = 0;
   f_array_length j = 0;
@@ -1139,7 +1139,7 @@ f_return_status firewall_delete_chains(const firewall_data data) {
   for (f_string_length i = 0; i < 2; i++) {
     f_string_dynamics arguments = f_string_dynamics_initialize;
     f_string_dynamic argument[1] = f_string_dynamic_initialize;
-    f_s_int results = 0;
+    int results = 0;
 
     argument[0].string = (f_string) "-F";
     argument[0].size = 2;
@@ -1197,7 +1197,7 @@ f_return_status firewall_delete_chains(const firewall_data data) {
   for (f_string_length i = 0; i < 2; i++) {
     f_string_dynamics arguments = f_string_dynamics_initialize;
     f_string_dynamic argument[1] = f_string_dynamic_initialize;
-    f_s_int results = 0;
+    int results = 0;
 
     argument[0].string = (f_string) firewall_chain_delete_command;
     argument[0].size = firewall_chain_delete_command_length;
@@ -1284,7 +1284,7 @@ f_return_status firewall_default_lock(const firewall_data data) {
     arguments.array[2].size = arguments.array[2].used;
 
     for (f_string_length j = 0; j < 2; j++) {
-      f_s_int results = 0;
+      int results = 0;
 
       // print command when debugging.
       #ifdef _en_firewall_debug_

@@ -20,9 +20,9 @@ extern "C" {
     f_string_length string_length = 0;
     f_array_length parameter_counter = 0;
 
-    f_u_short console_short = f_console_none;
-    f_u_short console_long = f_console_none;
-    f_u_short console_type = f_console_type_normal;
+    unsigned short console_short = f_console_none;
+    unsigned short console_long = f_console_none;
+    unsigned short console_type = f_console_type_normal;
 
     f_string_lengths needs_additional = f_string_lengths_initialize;
 

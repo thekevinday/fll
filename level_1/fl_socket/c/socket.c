@@ -53,7 +53,7 @@ extern "C"{
 #endif // _di_fl_socket_file_bind_
 
 #ifndef _di_fl_socket_listen_
-  f_return_status fl_socket_listen(const f_socket_id socket_id, const f_u_int socket_backlog) {
+  f_return_status fl_socket_listen(const f_socket_id socket_id, const unsigned int socket_backlog) {
     if (listen(socket_id, socket_backlog) < 0) {
       if (errno == EADDRINUSE) {
         return f_busy;
@@ -78,7 +78,7 @@ extern "C"{
 #ifndef _di_fl_socket_close_client_
   // terminate a socket connection.
   f_return_status fl_socket_close_client(const f_socket_id socket_id_client, const f_socket_close_id close_action) {
-    f_u_int error_code = 0;
+    unsigned int error_code = 0;
 
     if (close_action == f_socket_close_fast) {
       if (close(socket_id_client) < 0) {

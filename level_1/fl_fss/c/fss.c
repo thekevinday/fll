@@ -17,7 +17,7 @@ extern "C" {
     if (input->start < 1) return f_none_on_eos;
 
     f_string_length i = 0;
-    f_u_short width = 0;
+    unsigned short width = 0;
 
     do {
       width = f_macro_utf_byte_width(buffer.string[input->start - 1]);
@@ -203,7 +203,7 @@ extern "C" {
 
     // make sure we are in the proper location in the file
     {
-      f_s_int seek_result = f_file_seek_from_beginning(file->address, 0);
+      int seek_result = f_file_seek_from_beginning(file->address, 0);
 
       if (seek_result != 0) return f_status_set_error(f_file_seek_error);
     }
@@ -242,7 +242,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_string_length i = 0;
-    f_u_short width = 0;
+    unsigned short width = 0;
 
     do {
       width = f_macro_utf_byte_width(buffer.string[input->start]);
@@ -321,7 +321,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    f_u_short width = 0;
+    unsigned short width = 0;
 
     f_string_length max_width = (input->stop - input->start) + 1;
 
@@ -381,7 +381,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    f_u_short width = 0;
+    unsigned short width = 0;
 
     f_string_length max_width = (input->stop - input->start) + 1;
 
@@ -439,8 +439,8 @@ extern "C" {
 
     f_string_length position = 0;
     f_string_length distance = 0;
-    f_u_short utf_width = 0;
-    f_u_short i = 0;
+    unsigned short utf_width = 0;
+    unsigned short i = 0;
 
     position = input.start;
 

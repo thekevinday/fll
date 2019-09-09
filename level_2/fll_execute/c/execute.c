@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_execute_path_
-  f_return_status fll_execute_path(const f_string program_path, const f_string_dynamics arguments, f_s_int *results) {
+  f_return_status fll_execute_path(const f_string program_path, const f_string_dynamics arguments, int *results) {
     #ifndef _di_level_2_parameter_checking_
       if (results == 0) return f_status_set_error(f_invalid_parameter);
 
@@ -73,7 +73,7 @@ extern "C" {
     fixed_arguments[arguments.used + 2] = 0;
 
     // TODO: validate that the file at program_path actually exists before attempting to fork and execute
-    f_s_int process_id = 0;
+    int process_id = 0;
 
     process_id = vfork();
 
@@ -117,7 +117,7 @@ extern "C" {
 #endif // _di_fll_execute_path_
 
 #ifndef _di_fll_execute_program_
-  f_return_status fll_execute_program(const f_string program_name, const f_string_dynamics arguments, f_s_int *results) {
+  f_return_status fll_execute_program(const f_string program_name, const f_string_dynamics arguments, int *results) {
     #ifndef _di_level_2_parameter_checking_
       if (results == 0) return f_status_set_error(f_invalid_parameter);
 
@@ -153,7 +153,7 @@ extern "C" {
     fixed_arguments[arguments.used + 2] = 0;
 
     // TODO: validate that the file at program_path actually exists before attempting to fork and execute
-    f_s_int process_id = 0;
+    int process_id = 0;
 
     process_id = vfork();
 

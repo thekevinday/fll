@@ -49,8 +49,8 @@ extern "C" {
 
     memset(run_level, 0, sizeof(f_autochar) * init_kernel_runlevel_buffer);
 
-    f_u_short do_socket_file = f_true;
-    f_u_short do_socket_port = f_false;
+    unsigned short do_socket_file = f_true;
+    unsigned short do_socket_port = f_false;
 
     {
       f_console_parameters parameters = { data->parameters, init_total_parameters };
@@ -69,7 +69,7 @@ extern "C" {
 
 
     if (argument->parameters[init_parameter_runlevel].result == f_console_result_found) {
-      const f_u_int parameter_length = strlen(arguments.argv[argument->parameters[init_parameter_runlevel].additional.array[0]]);
+      const unsigned int parameter_length = strlen(arguments.argv[argument->parameters[init_parameter_runlevel].additional.array[0]]);
 
       // if the run_level value is greater than the static buffer size, ignore the entire string rather than process a cut off value.
       if (parameter_length > 0 && parameter_length < init_kernel_runlevel_buffer) {

@@ -186,7 +186,7 @@ extern "C" {
  * Provide a type specifically for UTF-8 strings.
  */
 #ifndef _di_f_utf_string_length_
-  typedef f_s_long f_utf_string_length;
+  typedef long f_utf_string_length;
 
   #define f_macro_utf_string_length_new(status, string, length)    status = f_memory_new((void **) & string, sizeof(f_utf_string_length), length)
 
@@ -538,7 +538,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_
-  extern f_return_status f_utf_is(const f_string character, const f_u_short max_width);
+  extern f_return_status f_utf_is(const f_string character, const unsigned short max_width);
 #endif // _di_f_utf_is_
 
 /**
@@ -559,7 +559,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_bom_
-  extern f_return_status f_utf_is_bom(const f_string character, const f_u_short max_width);
+  extern f_return_status f_utf_is_bom(const f_string character, const unsigned short max_width);
 #endif // _di_f_utf_is_bom_
 
 /**
@@ -598,7 +598,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_graph_
-  extern f_return_status f_utf_is_graph(const f_string character, const f_u_short max_width);
+  extern f_return_status f_utf_is_graph(const f_string character, const unsigned short max_width);
 #endif // _di_f_utf_is_graph_
 
 /**
@@ -621,7 +621,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_space_
-  extern f_return_status f_utf_is_space(const f_string character, const f_u_short max_width);
+  extern f_return_status f_utf_is_space(const f_string character, const unsigned short max_width);
 #endif // _di_f_utf_is_space_
 
 /**
@@ -644,7 +644,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_substitute_
-  extern f_return_status f_utf_is_substitute(const f_string character, const f_u_short max_width);
+  extern f_return_status f_utf_is_substitute(const f_string character, const unsigned short max_width);
 #endif // _di_f_utf_is_substitute_
 
 /**
@@ -667,7 +667,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_whitespace_
-  extern f_return_status f_utf_is_whitespace(const f_string character, const f_u_short max_width);
+  extern f_return_status f_utf_is_whitespace(const f_string character, const unsigned short max_width);
 #endif // _di_f_utf_is_whitespace_
 
 /**
@@ -781,7 +781,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_char_to_character_
-  extern f_return_status f_utf_char_to_character(const f_string character, const f_u_short max_width, f_utf_character *utf_character);
+  extern f_return_status f_utf_char_to_character(const f_string character, const unsigned short max_width, f_utf_character *utf_character);
 #endif // _di_f_utf_char_to_character_
 
 /**
@@ -809,7 +809,7 @@ extern "C" {
  *   f_failure (with error bit) if width is not long enough to convert.
  */
 #ifndef _di_f_utf_character_to_char_
-  extern f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, f_u_short *max_width);
+  extern f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, unsigned short *max_width);
 #endif // _di_f_utf_character_to_char_
 
 #ifdef __cplusplus

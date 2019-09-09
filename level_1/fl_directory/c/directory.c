@@ -12,8 +12,8 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     struct dirent **listing = 0;
-    f_s_int length = 0;
-    f_s_int counter = 0;
+    int length = 0;
+    int counter = 0;
     f_string_length size = 0;
     f_status status = f_none;
 

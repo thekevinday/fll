@@ -51,7 +51,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    f_u_short width = 0;
+    unsigned short width = 0;
 
     f_string_length max_width = (location->stop - location->start) + 1;
 
@@ -111,7 +111,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    f_u_short width = 0;
+    unsigned short width = 0;
 
     f_string_length max_width = (location->stop - location->start) + 1;
 
@@ -193,11 +193,11 @@ extern "C" {
       if (location->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    const f_u_short seek_width = f_macro_utf_character_width(seek_to_this);
+    const unsigned short seek_width = f_macro_utf_character_width(seek_to_this);
 
     f_status status = f_none;
 
-    f_u_short width = 0;
+    unsigned short width = 0;
 
     f_string_length max_width = 0;
 
@@ -281,11 +281,11 @@ extern "C" {
       if (location->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    const f_u_short seek_width = f_macro_utf_character_width(seek_to_this);
+    const unsigned short seek_width = f_macro_utf_character_width(seek_to_this);
 
     f_status status = f_none;
 
-    f_u_short width = 0;
+    unsigned short width = 0;
 
     f_string_length max_width = 0;
 

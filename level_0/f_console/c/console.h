@@ -104,7 +104,7 @@ extern "C" {
  * - other: parameters using neither minus nor plus sign, such as 'build'.
  */
 #ifndef _di_f_console_types_
-  typedef f_min_u_short f_console_id;
+  typedef unsigned short f_console_id;
 
   enum {
     f_console_result_none,

@@ -34,14 +34,14 @@ extern "C" {
   /**
    * This will execute a program given some path + program name (such as "/bin/bash").
    */
-  extern f_return_status fll_execute_path(const f_string program_path, const f_string_dynamics arguments, f_s_int *results);
+  extern f_return_status fll_execute_path(const f_string program_path, const f_string_dynamics arguments, int *results);
 #endif // _di_fll_execute_path_
 
 #ifndef _di_fll_execute_program_
   /**
    * This will find the program based on PATH environment so that static paths do not have to be used as with f_execute_path.
    */
-  extern f_return_status fll_execute_program(const f_string program_name, const f_string_dynamics arguments, f_s_int *results);
+  extern f_return_status fll_execute_program(const f_string program_name, const f_string_dynamics arguments, int *results);
 #endif // _di_fll_execute_program_
 
 #ifdef __cplusplus

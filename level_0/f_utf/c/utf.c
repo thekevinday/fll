@@ -18,12 +18,12 @@ extern "C" {
 #endif // _di_f_utf_is_big_endian_
 
 #ifndef _di_f_utf_is_
-  f_return_status f_utf_is(const f_string character, const f_u_short max_width) {
+  f_return_status f_utf_is(const f_string character, const unsigned short max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width_is(*character);
+    unsigned short width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
       return f_false;
@@ -37,12 +37,12 @@ extern "C" {
 #endif // _di_f_utf_is_
 
 #ifndef _di_f_utf_is_bom_
-  f_return_status f_utf_is_bom(const f_string character, const f_u_short max_width) {
+  f_return_status f_utf_is_bom(const f_string character, const unsigned short max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width_is(*character);
+    unsigned short width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
       return f_false;
@@ -67,7 +67,7 @@ extern "C" {
 
 #ifndef _di_f_utf_is_character_
   f_return_status f_utf_is_character(const f_utf_character character) {
-    f_u_short width = f_macro_utf_character_width_is(character);
+    unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       return f_false;
@@ -81,7 +81,7 @@ extern "C" {
 #endif // _di_f_utf_is_
 
 #ifndef _di_f_utf_is_graph_
-  f_return_status f_utf_is_graph(const f_string character, const f_u_short max_width) {
+  f_return_status f_utf_is_graph(const f_string character, const unsigned short max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -113,12 +113,12 @@ extern "C" {
 #endif // _di_f_utf_is_graph_
 
 #ifndef _di_f_utf_is_space_
-  f_return_status f_utf_is_space(const f_string character, const f_u_short max_width) {
+  f_return_status f_utf_is_space(const f_string character, const unsigned short max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width_is(*character);
+    unsigned short width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
       if (isspace(*character)) {
@@ -252,12 +252,12 @@ extern "C" {
 #endif // _di_f_utf_is_space_
 
 #ifndef _di_f_utf_is_substitute_
-  f_return_status f_utf_is_substitute(const f_string character, const f_u_short max_width) {
+  f_return_status f_utf_is_substitute(const f_string character, const unsigned short max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width_is(*character);
+    unsigned short width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
       // there is no substitute character in ASCII.
@@ -304,12 +304,12 @@ extern "C" {
 #endif // _di_f_utf_is_substitute_
 
 #ifndef _di_f_utf_is_whitespace_
-  f_return_status f_utf_is_whitespace(const f_string character, const f_u_short max_width) {
+  f_return_status f_utf_is_whitespace(const f_string character, const unsigned short max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width_is(*character);
+    unsigned short width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
       if (isspace(*character)) {
@@ -454,7 +454,7 @@ extern "C" {
 
 #ifndef _di_f_utf_is_space_character_
   f_return_status f_utf_is_space_character(const f_utf_character character) {
-    f_u_short width = f_macro_utf_character_width_is(character);
+    unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       char ascii = character >> 24;
@@ -605,7 +605,7 @@ extern "C" {
 
 #ifndef _di_f_utf_is_substitute_character_
   f_return_status f_utf_is_substitute_character(const f_utf_character character) {
-    f_u_short width = f_macro_utf_character_width_is(character);
+    unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       // there is no substitute character in ASCII.
@@ -667,7 +667,7 @@ extern "C" {
 
 #ifndef _di_f_utf_is_whitespace_character_
   f_return_status f_utf_is_whitespace_character(const f_utf_character character) {
-    f_u_short width = f_macro_utf_character_width_is(character);
+    unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       char ascii = character >> 24;
@@ -797,13 +797,13 @@ extern "C" {
 #endif // _di_f_utf_is_whitespace_character_
 
 #ifndef _di_f_utf_char_to_character_
-  f_return_status f_utf_char_to_character(const f_string character, const f_u_short max_width, f_utf_character *utf_character) {
+  f_return_status f_utf_char_to_character(const f_string character, const unsigned short max_width, f_utf_character *utf_character) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
       if (utf_character == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_u_short width = f_macro_utf_byte_width_is(*character);
+    unsigned short width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
       *utf_character = f_macro_utf_character_from_char_1(character[0]);
@@ -843,7 +843,7 @@ extern "C" {
 #endif // _di_f_utf_char_to_character_
 
 #ifndef _di_f_utf_character_to_char_
-  f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, f_u_short *max_width) {
+  f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, unsigned short *max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (utf_character == 0) return f_status_set_error(f_invalid_parameter);
       if (max_width == 0 && *character != 0) return f_status_set_error(f_invalid_parameter);
@@ -853,7 +853,7 @@ extern "C" {
 
     f_status status = f_none;
 
-    f_u_short width = f_macro_utf_character_width_is(utf_character);
+    unsigned short width = f_macro_utf_character_width_is(utf_character);
 
     if (max_width == 0) {
       f_macro_string_new(status, *character, width);

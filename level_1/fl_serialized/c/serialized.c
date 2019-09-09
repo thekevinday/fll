@@ -43,7 +43,7 @@ extern "C" {
     f_array_length i = 0;
     f_array_length start = 0;
 
-    f_u_short width = 0;
+    unsigned short width = 0;
 
     while (i < serialized.used) {
       width = f_macro_utf_byte_width(serialized.string[i]);
@@ -96,7 +96,7 @@ extern "C" {
     f_array_length start = 0;
     f_array_length current = 0;
 
-    f_u_short width = 0;
+    unsigned short width = 0;
 
     while (i < serialized.used) {
       width = f_macro_utf_byte_width(serialized.string[i]);

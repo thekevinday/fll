@@ -24,7 +24,7 @@ extern "C" {
 #endif // _di_f_color_max_size_
 
 #ifndef _di_f_color_types_
-  typedef f_min_u_int f_color_id;
+  typedef unsigned short f_color_id;
 
   // f_color_id codes
   #define f_color_code_linux     0

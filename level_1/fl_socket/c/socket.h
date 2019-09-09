@@ -41,7 +41,7 @@ extern "C"{
    * terminate a socket connection.
    * suggested socket_backlog default setting = 8.
    */
-  extern f_return_status fl_socket_listen(const f_socket_id socket_id, const f_u_int socket_backlog);
+  extern f_return_status fl_socket_listen(const f_socket_id socket_id, const unsigned int socket_backlog);
 #endif // _di_fl_socket_listen_
 
 #ifndef _di_fl_socket_close_client_

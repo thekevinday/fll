@@ -171,10 +171,10 @@ extern "C" {
     if (file->address == 0) return f_status_set_error(f_file_not_open);
 
     // first seek to 'where' we need to begin the read
-    f_u_long current_file_position = ftell(file->address);
-    if (current_file_position == (f_u_long) -1) return f_status_set_error(f_file_seek_error);
+    unsigned long current_file_position = ftell(file->address);
+    if (current_file_position == (unsigned long) -1) return f_status_set_error(f_file_seek_error);
 
-    f_s_int result = 0;
+    int result = 0;
 
     if (current_file_position > location.file_start) {
       result = f_file_seek_from_current(file->address, file->byte_size * (0 - (current_file_position - location.file_start)));
@@ -225,7 +225,7 @@ extern "C" {
 
     if (file->address == 0) return f_status_set_error(f_file_not_open);
 
-    f_s_int result = 0;
+    int result = 0;
 
     // now do the actual read
     result = fread(buffer->string + buffer->used, file->byte_size, buffer->size - buffer->used - 1, file->address);
@@ -281,7 +281,7 @@ extern "C" {
 #endif // _di_f_file_stat_
 
 #ifndef _di_f_file_stat_by_id_
-  f_return_status f_file_stat_by_id(const f_s_int file_id, struct stat *file_stat) {
+  f_return_status f_file_stat_by_id(const int file_id, struct stat *file_stat) {
     #ifndef _di_level_0_parameter_checking_
       if (file_id <= 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -290,7 +290,7 @@ extern "C" {
       return f_none;
     }
 
-    f_s_int result = 0;
+    int result = 0;
 
     result = fstat(file_id, file_stat);
     if (result < 0) {

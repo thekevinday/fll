@@ -43,7 +43,7 @@ extern "C" {
   #define f_fss_type_header_part5   '-'
   #define f_fss_type_header_close   '\n'
 
-  #define f_fss_id            f_u_long
+  #define f_fss_id            unsigned long
   #define f_fss_checksum      f_string_dynamic
   #define f_fss_header_length f_string_length
 

@@ -308,8 +308,8 @@
       if (kernel_command_line_length > 0) {
         regex_t    expression;
         regmatch_t match;
-        f_u_int    reg_result = 0;
-        f_u_int    string_length = 0;
+        unsigned int    reg_result = 0;
+        unsigned int    string_length = 0;
 
         reg_result = do_regex_match(&expression, &match, kernel_command_line_string, init_kernel_runlevel);
 

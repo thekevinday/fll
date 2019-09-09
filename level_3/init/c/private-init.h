@@ -250,13 +250,13 @@ extern "C" {
 #ifndef _di_init_data_
   typedef struct {
     f_string socket_file;
-    f_u_int  socket_port;
-    f_u_int  socket_id_target;
-    f_u_int  socket_id_client;
+    unsigned int  socket_port;
+    unsigned int  socket_id_target;
+    unsigned int  socket_id_client;
 
-    f_u_short timeout_start;
-    f_u_short timeout_stop;
-    f_u_short timeout_kill;
+    unsigned short timeout_start;
+    unsigned short timeout_stop;
+    unsigned short timeout_kill;
 
     init_rules     main_rules;
     init_categorys main_categorys;

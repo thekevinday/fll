@@ -83,7 +83,7 @@ extern "C" {
     else {
       // now determine which command was placed first
       f_bool found_command = f_false;
-      f_u_int command = 0;
+      unsigned int command = 0;
 
       if (data->parameters[firewall_parameter_command_start].result == f_console_result_found) {
         command = firewall_parameter_command_start;
@@ -150,7 +150,7 @@ extern "C" {
           f_bool show_ports = f_true;
 
           f_string_dynamics parameters = f_string_dynamics_initialize;
-          f_s_int results = 0;
+          int results = 0;
 
           if (data->remaining.used > 0) {
             show_nat = f_false;

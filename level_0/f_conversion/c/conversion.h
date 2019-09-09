@@ -52,14 +52,14 @@ extern "C" {
   /**
    * convert a single character into the digit that it represents.
    */
-  extern f_return_status f_character_to_digit(const char character, f_u_long *digit);
+  extern f_return_status f_character_to_digit(const char character, unsigned long *digit);
 #endif // _di_f_character_to_digit_
 
 #ifndef _di_f_character_to_hexdecimal_
   /**
    *convert a single character into the hexidecimal digit that it represents.
    */
-  extern f_return_status f_character_to_hexdecimal(const char character, f_u_long *digit);
+  extern f_return_status f_character_to_hexdecimal(const char character, unsigned long *digit);
 #endif // _di_f_character_to_hexdecimal_
 
 #ifndef _di_f_string_to_decimal_
@@ -68,7 +68,7 @@ extern "C" {
    * convert a series of positive numbers into a string, stopping at one of the following: EOS, max_length, or a non-digit.
    * will not process signed statuses (+/-).
    */
-  extern f_return_status f_string_to_decimal(const f_string string, f_u_long *digit, const f_string_location location);
+  extern f_return_status f_string_to_decimal(const f_string string, unsigned long *digit, const f_string_location location);
 #endif // _di_f_string_to_decimal_
 
 #ifndef _di_f_string_to_hexidecimal_
@@ -78,7 +78,7 @@ extern "C" {
    * convert a series of positive  numbers into a string, stopping at one of the following: EOS, max_length, or a non-hexdigit.
    * will not process signed statuses (+/-).
    */
-  extern f_return_status f_string_to_hexidecimal(const f_string string, f_u_long *digit, const f_string_location location);
+  extern f_return_status f_string_to_hexidecimal(const f_string string, unsigned long *digit, const f_string_location location);
 #endif // _di_f_string_to_hexidecimal_
 
 #ifdef __cplusplus
