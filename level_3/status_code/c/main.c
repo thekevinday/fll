@@ -1,6 +1,6 @@
 #include <level_3/status_code.h>
 
-int main(const int argc, const f_string *argv) {
+int main(const unsigned long argc, const f_string *argv) {
   const f_console_arguments arguments = { argc, argv };
   status_code_data data = status_code_data_initialize;
 

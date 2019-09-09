@@ -74,7 +74,6 @@ extern "C" {
           return f_status_set_error(status);
         }
 
-
         if (choice == byte_dump_parameter_hexidecimal) {
           data->mode = byte_dump_mode_hexidecimal;
         }

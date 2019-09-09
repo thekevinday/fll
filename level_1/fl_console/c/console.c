@@ -14,7 +14,7 @@ extern "C" {
     f_console_id result = 0;
     f_bool found = f_false;
 
-    f_array_length location = 1; // Parameter 0 represents the program name so skip it.
+    unsigned long location = 1; // Parameter 0 represents the program name so skip it.
     f_string_length sub_location = 0;
     f_string_length increment_by = 0;
     f_string_length string_length = 0;
@@ -87,7 +87,7 @@ extern "C" {
           needs_additional.array[i] = needs_additional.array[i + 1];
         } // for
       }
-      else if (console_short > f_console_none) {
+      else if (console_short != f_console_none) {
         // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
         while (sub_location < string_length) {
           for (parameter_counter = 0; parameter_counter < parameters.used; parameter_counter++) {

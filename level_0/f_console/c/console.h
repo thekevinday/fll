@@ -203,8 +203,8 @@ extern "C" {
  */
 #ifndef _di_f_console_arguments_
   typedef struct {
-    const int  argc;
-    const f_string *argv;
+    const unsigned long argc;
+    const f_string      *argv;
   } f_console_arguments;
 #endif // _di_f_console_arguments_
 
