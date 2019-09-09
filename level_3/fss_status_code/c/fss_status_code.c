@@ -62,7 +62,7 @@ extern "C" {
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
-          if (f_is_digit(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
+          if (f_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
             status = f_false;
             continue;
           }
@@ -101,7 +101,7 @@ extern "C" {
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
-          if (f_is_digit(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
+          if (f_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
             status = f_false;
             continue;
           }
@@ -140,7 +140,7 @@ extern "C" {
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
-          if (f_is_digit(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
+          if (f_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
             status = f_false;
             continue;
           }
@@ -178,7 +178,7 @@ extern "C" {
 
         for (; counter < data->remaining.used; counter++) {
           // numbers are not valid status code strings.
-          if (f_is_digit(arguments.argv[data->remaining.array[counter]][0]) == f_true) {
+          if (f_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_true) {
             status = f_false;
             continue;
           }
@@ -214,7 +214,7 @@ extern "C" {
       if (data->remaining.used > 0) {
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status code.
-          if (f_is_digit(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
+          if (f_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
             status = f_false;
             continue;
           }

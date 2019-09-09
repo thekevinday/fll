@@ -18,7 +18,7 @@ extern "C" {
     }
 
     // numbers are not valid status code strings.
-    if ((status = f_is_digit(string[0])) == f_true) {
+    if ((status = f_is_decimal(string[0])) == f_true) {
       return f_invalid_data;
     }
 
