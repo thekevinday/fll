@@ -413,6 +413,7 @@
     uint8_t j = 0;
     uint8_t output = 0;
     uint8_t width_utf = 0;
+    f_bool printed = f_false;
 
     fl_color_print(f_standard_output, data.context.notable, data.context.reset, "  %s ", byte_dump_character_wall);
 
@@ -458,107 +459,117 @@
       if (invalid[i]) {
         fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_incomplete);
       }
-      else if (output == 0) {
-        printf("%s", byte_dump_sequence_null);
-      }
-      else if (output == 1) {
-        printf("%s", byte_dump_sequence_start_of_header);
-      }
-      else if (output == 2) {
-        printf("%s", byte_dump_sequence_start_of_text);
-      }
-      else if (output == 3) {
-        printf("%s", byte_dump_sequence_end_of_text);
-      }
-      else if (output == 4) {
-        printf("%s", byte_dump_sequence_end_of_transmission);
-      }
-      else if (output == 5) {
-        printf("%s", byte_dump_sequence_end_of_enquiry);
-      }
-      else if (output == 6) {
-        printf("%s", byte_dump_sequence_acknowledge);
-      }
-      else if (output == 7) {
-        printf("%s", byte_dump_sequence_bell);
-      }
-      else if (output == 8) {
-        printf("%s", byte_dump_sequence_backspace);
-      }
-      else if (output == 9) {
-        printf("%s", byte_dump_sequence_tab);
-      }
-      else if (output == 10) {
-        printf("%s", byte_dump_sequence_new_line);
-      }
-      else if (output == 11) {
-        printf("%s", byte_dump_sequence_tab_vertical);
-      }
-      else if (output == 12) {
-        printf("%s", byte_dump_sequence_form_feed);
-      }
-      else if (output == 13) {
-        printf("%s", byte_dump_sequence_carriage_return);
-      }
-      else if (output == 14) {
-        printf("%s", byte_dump_sequence_shift_out);
-      }
-      else if (output == 15) {
-        printf("%s", byte_dump_sequence_shift_in);
-      }
-      else if (output == 16) {
-        printf("%s", byte_dump_sequence_data_link_escape);
-      }
-      else if (output == 17) {
-        printf("%s", byte_dump_sequence_device_control_1);
-      }
-      else if (output == 18) {
-        printf("%s", byte_dump_sequence_device_control_2);
-      }
-      else if (output == 19) {
-        printf("%s", byte_dump_sequence_device_control_3);
-      }
-      else if (output == 20) {
-        printf("%s", byte_dump_sequence_device_control_4);
-      }
-      else if (output == 21) {
-        printf("%s", byte_dump_sequence_negative_acknowledge);
-      }
-      else if (output == 22) {
-        printf("%s", byte_dump_sequence_synchronous_idle);
-      }
-      else if (output == 23) {
-        printf("%s", byte_dump_sequence_end_of_transmission_block);
-      }
-      else if (output == 24) {
-        printf("%s", byte_dump_sequence_cancel);
-      }
-      else if (output == 25) {
-        printf("%s", byte_dump_sequence_end_of_medium);
-      }
-      else if (output == 26) {
-        printf("%s", byte_dump_sequence_substitute);
-      }
-      else if (output == 27) {
-        printf("%s", byte_dump_sequence_escape);
-      }
-      else if (output == 28) {
-        printf("%s", byte_dump_sequence_file_separator);
-      }
-      else if (output == 29) {
-        printf("%s", byte_dump_sequence_group_separator);
-      }
-      else if (output == 30) {
-        printf("%s", byte_dump_sequence_record_separator);
-      }
-      else if (output == 31) {
-        printf("%s", byte_dump_sequence_unit_separator);
-      }
-      else if (output == 32) {
-        printf("%s", byte_dump_sequence_space);
-      }
-      else if (output == 127) {
-        printf("%s", byte_dump_sequence_delete);
+      else if (output >= 0 && output <= 32 || output == 127) {
+        if (data.presentation == byte_dump_presentation_normal) {
+          if (output == 0) {
+            printf("%s", byte_dump_sequence_null);
+          }
+          else if (output == 1) {
+            printf("%s", byte_dump_sequence_start_of_header);
+          }
+          else if (output == 2) {
+            printf("%s", byte_dump_sequence_start_of_text);
+          }
+          else if (output == 3) {
+            printf("%s", byte_dump_sequence_end_of_text);
+          }
+          else if (output == 4) {
+            printf("%s", byte_dump_sequence_end_of_transmission);
+          }
+          else if (output == 5) {
+            printf("%s", byte_dump_sequence_end_of_enquiry);
+          }
+          else if (output == 6) {
+            printf("%s", byte_dump_sequence_acknowledge);
+          }
+          else if (output == 7) {
+            printf("%s", byte_dump_sequence_bell);
+          }
+          else if (output == 8) {
+            printf("%s", byte_dump_sequence_backspace);
+          }
+          else if (output == 9) {
+            printf("%s", byte_dump_sequence_tab);
+          }
+          else if (output == 10) {
+            printf("%s", byte_dump_sequence_new_line);
+          }
+          else if (output == 11) {
+            printf("%s", byte_dump_sequence_tab_vertical);
+          }
+          else if (output == 12) {
+            printf("%s", byte_dump_sequence_form_feed);
+          }
+          else if (output == 13) {
+            printf("%s", byte_dump_sequence_carriage_return);
+          }
+          else if (output == 14) {
+            printf("%s", byte_dump_sequence_shift_out);
+          }
+          else if (output == 15) {
+            printf("%s", byte_dump_sequence_shift_in);
+          }
+          else if (output == 16) {
+            printf("%s", byte_dump_sequence_data_link_escape);
+          }
+          else if (output == 17) {
+            printf("%s", byte_dump_sequence_device_control_1);
+          }
+          else if (output == 18) {
+            printf("%s", byte_dump_sequence_device_control_2);
+          }
+          else if (output == 19) {
+            printf("%s", byte_dump_sequence_device_control_3);
+          }
+          else if (output == 20) {
+            printf("%s", byte_dump_sequence_device_control_4);
+          }
+          else if (output == 21) {
+            printf("%s", byte_dump_sequence_negative_acknowledge);
+          }
+          else if (output == 22) {
+            printf("%s", byte_dump_sequence_synchronous_idle);
+          }
+          else if (output == 23) {
+            printf("%s", byte_dump_sequence_end_of_transmission_block);
+          }
+          else if (output == 24) {
+            printf("%s", byte_dump_sequence_cancel);
+          }
+          else if (output == 25) {
+            printf("%s", byte_dump_sequence_end_of_medium);
+          }
+          else if (output == 26) {
+            printf("%s", byte_dump_sequence_substitute);
+          }
+          else if (output == 27) {
+            printf("%s", byte_dump_sequence_escape);
+          }
+          else if (output == 28) {
+            printf("%s", byte_dump_sequence_file_separator);
+          }
+          else if (output == 29) {
+            printf("%s", byte_dump_sequence_group_separator);
+          }
+          else if (output == 30) {
+            printf("%s", byte_dump_sequence_record_separator);
+          }
+          else if (output == 31) {
+            printf("%s", byte_dump_sequence_unit_separator);
+          }
+          else if (output == 32) {
+            printf("%s", byte_dump_sequence_space);
+          }
+          else if (output == 127) {
+            printf("%s", byte_dump_sequence_delete);
+          }
+        }
+        else if (data.presentation == byte_dump_presentation_simple) {
+          printf(" ");
+        }
+        else if (data.presentation == byte_dump_presentation_classic) {
+          printf(".");
+        }
       }
       else if (f_utf_is_whitespace_character(characters.string[i]) == f_true) {
         printf("%s", byte_dump_sequence_space);

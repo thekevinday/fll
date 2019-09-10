@@ -68,6 +68,12 @@ extern "C" {
     byte_dump_mode_decimal,
   };
 
+  enum {
+    byte_dump_presentation_normal,
+    byte_dump_presentation_simple,
+    byte_dump_presentation_classic,
+  };
+
   #define byte_dump_sequence_acknowledge               "␆"
   #define byte_dump_sequence_backspace                 "␈"
   #define byte_dump_sequence_bell                      "␇"
@@ -133,6 +139,10 @@ extern "C" {
   #define byte_dump_long_text         "text"        // display text
   #define byte_dump_long_placeholder  "placeholder" // display (colored) placeholders to signify codes that are UTF-8 fragments.
 
+  #define byte_dump_long_normal       "normal"      // use normal presentation, displaying UTF-8 sequence codes for ASCII special codes.
+  #define byte_dump_long_simple       "simple"      // use simple presentation, displaying spaces for ASCII special codes instead of UTF-8 sequence codes.
+  #define byte_dump_long_classic      "classic"     // use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
+
   enum {
     byte_dump_parameter_help,
     byte_dump_parameter_light,
@@ -151,6 +161,10 @@ extern "C" {
 
     byte_dump_parameter_text,
     byte_dump_parameter_placeholder,
+
+    byte_dump_parameter_normal,
+    byte_dump_parameter_simple,
+    byte_dump_parameter_classic,
   };
 
   #define byte_dump_console_parameter_initialize \
@@ -169,9 +183,12 @@ extern "C" {
       f_console_parameter_initialize(byte_dump_short_width, byte_dump_long_width, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(byte_dump_short_text, byte_dump_long_text, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(byte_dump_short_placeholder, byte_dump_long_placeholder, 0, 0, f_console_type_normal), \
+      f_console_parameter_initialize(0, byte_dump_long_normal, 0, 0, f_console_type_normal), \
+      f_console_parameter_initialize(0, byte_dump_long_simple, 0, 0, f_console_type_normal), \
+      f_console_parameter_initialize(0, byte_dump_long_classic, 0, 0, f_console_type_normal), \
     }
 
-  #define byte_dump_total_parameters 14
+  #define byte_dump_total_parameters 17
 #endif // _di_byte_dump_defines_
 
 #ifndef _di_byte_dump_data_
@@ -185,6 +202,7 @@ extern "C" {
     uint64_t last;
     uint8_t  width;
     uint8_t  mode;
+    uint8_t  presentation;
 
     fl_color_context context;
   } byte_dump_data;
@@ -198,6 +216,7 @@ extern "C" {
       0, \
       8, \
       byte_dump_mode_hexidecimal, \
+      byte_dump_presentation_normal, \
       fl_color_context_initialize, \
     }
 #endif // _di_byte_dump_data_

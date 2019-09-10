@@ -33,6 +33,12 @@ extern "C" {
     fll_program_print_help_option(data.context, byte_dump_short_text, byte_dump_long_text, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Include a column of text when displaying the bytes.");
     fll_program_print_help_option(data.context, byte_dump_short_placeholder, byte_dump_long_placeholder, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use a placeholder character instead of a space for placeholders.");
 
+    printf("%c", f_string_eol);
+
+    fll_program_print_help_option_long(data.context, byte_dump_long_normal, f_console_symbol_long_enable, "Display UTF-8 symbols for ASCII control codes.");
+    fll_program_print_help_option_long(data.context, byte_dump_long_simple, f_console_symbol_long_enable, "Display spaces for ASCII control codes.");
+    fll_program_print_help_option_long(data.context, byte_dump_long_classic, f_console_symbol_long_enable, "Display periods for ASCII control codes.");
+
     fll_program_print_help_usage(data.context, byte_dump_name, "filename(s)");
 
     printf("  When using the ");
@@ -59,6 +65,7 @@ extern "C" {
   f_return_status byte_dump_main(const f_console_arguments arguments, byte_dump_data *data) {
     f_status status = f_none;
 
+    // Identify priority of color parameters.
     {
       f_console_parameters parameters = { data->parameters, byte_dump_total_parameters };
       f_console_parameter_ids choices = f_console_parameter_ids_initialize;
@@ -76,6 +83,7 @@ extern "C" {
         }
       }
 
+      // Identify priority of mode parameters.
       {
         f_console_parameter_id ids[4] = { byte_dump_parameter_hexidecimal, byte_dump_parameter_octal, byte_dump_parameter_binary, byte_dump_parameter_decimal };
         f_console_parameter_id choice = byte_dump_parameter_hexidecimal;
@@ -100,6 +108,31 @@ extern "C" {
         }
         else if (choice == byte_dump_parameter_decimal) {
           data->mode = byte_dump_mode_decimal;
+        }
+      }
+
+      // Identify priority of presentation parameters.
+      {
+        f_console_parameter_id ids[3] = { byte_dump_parameter_normal, byte_dump_parameter_simple, byte_dump_parameter_classic };
+        f_console_parameter_id choice = byte_dump_parameter_normal;
+        choices.id = ids;
+        choices.used = 3;
+
+        status = fl_console_parameter_prioritize(parameters, choices, &choice);
+
+        if (f_status_is_error(status)) {
+          byte_dump_delete_data(data);
+          return f_status_set_error(status);
+        }
+
+        if (choice == byte_dump_parameter_normal) {
+          data->presentation = byte_dump_presentation_normal;
+        }
+        else if (choice == byte_dump_parameter_simple) {
+          data->presentation = byte_dump_presentation_simple;
+        }
+        else if (choice == byte_dump_parameter_classic) {
+          data->presentation = byte_dump_presentation_classic;
         }
       }
     }
