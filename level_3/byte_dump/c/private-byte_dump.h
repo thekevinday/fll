@@ -12,10 +12,6 @@
 extern "C" {
 #endif
 
-#ifdef __cplusplus
-} // extern "C"
-#endif
-
 /**
  * Dump the contents of the file to standard out.
  *
@@ -70,7 +66,6 @@ extern "C" {
   extern f_bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, uint8_t *previous_bytes, uint8_t *previous_invalid, uint8_t *column, uint64_t *row);
 #endif // _di_byte_dump_print_character_fragment_
 
-
 /**
  * Print the text representation alongside the hex display.
  *
@@ -113,5 +108,9 @@ extern "C" {
 #ifndef _di_byte_dump_print_file_error_
   extern void byte_dump_print_file_error(const fl_color_context context, const f_status status, const f_string function, const f_string file_name);
 #endif // _di_byte_dump_print_file_error_
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // _PRIVATE_byte_dump_h
