@@ -203,7 +203,7 @@ extern "C" {
 
     // make sure we are in the proper location in the file
     {
-      int seek_result = f_file_seek_from_beginning(file->address, 0);
+      int seek_result = f_macro_file_seek_begin(file->address, 0);
 
       if (seek_result != 0) return f_status_set_error(f_file_seek_error);
     }
@@ -218,7 +218,7 @@ extern "C" {
     }
 
     // 2: buffer the file
-    status = f_file_read(file, &buffer, location);
+    status = f_file_read_at(file, &buffer, location);
 
     if (f_status_is_error(status)) {
       return status;

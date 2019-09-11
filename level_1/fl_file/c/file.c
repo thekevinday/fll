@@ -39,7 +39,7 @@ extern "C" {
         }
       }
 
-      status = f_file_read(&file, buffer, position);
+      status = f_file_read_at(&file, buffer, position);
 
       if (status == f_none_on_eof) {
         break;
@@ -84,7 +84,7 @@ extern "C" {
         }
       }
 
-      status = f_file_read_fifo(&file, buffer);
+      status = f_file_read(&file, buffer);
 
       if (status == f_none_on_eof) {
         break;
