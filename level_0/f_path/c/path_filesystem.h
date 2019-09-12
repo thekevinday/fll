@@ -16,7 +16,9 @@
 extern "C" {
 #endif
 
-// KFS Filesystem Paths
+/**
+ * KFS Filesystem Paths
+ */
 #ifdef _di_path_kevux_standard_
   // disable the FHS default paths
   #define _di_path_filesystem_hierarchy_standard_

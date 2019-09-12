@@ -20,7 +20,11 @@
 extern "C" {
 #endif
 
-// TODO: don't forget to completely restructure the paths layout before 1.0.0 is released
+/**
+ * FLL Paths
+ *
+ * @todo don't forget to completely restructure the paths layout before 1.0.0 is released
+ */
 #ifndef _di_fll_paths_
   #define f_path_fll_base      f_path_system_settings "/fll" // directory
   #define f_path_fll_settings  "settings"  // directory
