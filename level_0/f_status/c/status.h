@@ -19,6 +19,9 @@
 extern "C" {
 #endif
 
+/**
+ * Status masks.
+ */
 #ifndef _di_f_status_masks_
   // f_status is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
   #define f_status_bit_error   0x8000 // 1000 0000 0000 0000
@@ -46,7 +49,11 @@ extern "C" {
   #define f_status_set_fine(status) (status & f_status_mask_fine)
 #endif // _di_f_status_masks_
 
-// use of an enumerator makes more sense here than explicitly defining every error code (or return code).
+/**
+ * All standard/core status codes.
+ *
+ * The code f_last_status_code is intended to be used as the starting point for anything extending this and povided its own status codes.
+ */
 enum {
   #ifndef _di_f_status_booleans_
     f_false = 0,
