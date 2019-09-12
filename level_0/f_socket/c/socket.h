@@ -24,6 +24,9 @@
 extern "C"{
 #endif
 
+/**
+ * Socket Types.
+ */
 #ifndef _di_f_socket_types_
   #define f_socket_id       int
   #define f_socket_close_id unsigned short
