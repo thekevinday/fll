@@ -14,8 +14,8 @@ extern "C" {
     // prevent double-allocations
     if (*pointer != 0) return f_none;
 
-    // some people use malloc(type * length) to produce the same results
-    // I have noticed this sometimes causes an increase in L1/L2 cache misses (0.02% L1 increase, 0.01% L2 increase)
+    // Some people use malloc(type * length) to produce the same results.
+    // I have noticed this sometimes causes an increase in L1/L2 cache misses (0.02% L1 increase, 0.01% L2 increase).
     *pointer = calloc(type, length);
 
     if (*pointer) {
@@ -32,12 +32,12 @@ extern "C" {
       if (pointer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // prevent double-frees
+    // prevent double-frees.
     if (*pointer == 0) return f_none;
 
     free(*pointer);
 
-    // it has been deallocated, so reset the pointer
+    // it has been deallocated, so reset the pointer.
     if (*pointer != 0) *pointer = 0;
 
     return f_none;
@@ -52,7 +52,7 @@ extern "C" {
       if (pointer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // prevent double-frees
+    // prevent double-frees.
     if (*pointer == 0) return f_none;
 
     if (length > 0) {
@@ -61,7 +61,7 @@ extern "C" {
 
     free(*pointer);
 
-    // it has been deallocated, so reset the pointer
+    // it has been deallocated, so reset the pointer.
     if (*pointer != 0) *pointer = 0;
 
     return f_none;
@@ -77,7 +77,7 @@ extern "C" {
       if (pointer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // don't be wasteful
+    // don't be wasteful.
     if (old_length == new_length) return f_none;
 
     if (*pointer != 0) {
@@ -99,8 +99,8 @@ extern "C" {
       if (new_pointer) {
         if (new_pointer != *pointer) {
           if (new_length > old_length) {
-            // char * is of a data type size of 1, casting it to char should result in a single-length increment
-            // this is done to avoid problems with (void *) having arithmetic issues
+            // char * is of a data type size of 1, casting it to char should result in a single-length increment.
+            // this is done to avoid problems with (void *) having arithmetic issues.
             memset(((char *) new_pointer) + (type * old_length), 0, type * (new_length - old_length));
           }
 
@@ -142,13 +142,13 @@ extern "C" {
 
       if (old_length > 0) {
         if (new_length < old_length) {
-          // char * is of a data type size of 1, casting it to char should result in a single-length increment
-          // this is done to avoid problems with (void *) having arithmetic issues
+          // char * is of a data type size of 1, casting it to char should result in a single-length increment.
+          // this is done to avoid problems with (void *) having arithmetic issues.
           memset(((char *)*pointer) + new_length, 0, type * (old_length - new_length));
         }
       }
 
-      // allocate new space
+      // allocate new space.
       if (new_length > 0) {
         new_pointer = realloc(*pointer, type * new_length);
       }
@@ -164,8 +164,8 @@ extern "C" {
       if (new_pointer) {
         if (new_pointer != *pointer) {
           if (new_length > old_length) {
-            // char * is of a data type size of 1, casting it to bool should result in a single-length increment
-            // this is done to avoid problems with (void *) having arithmetic issues
+            // char * is of a data type size of 1, casting it to bool should result in a single-length increment.
+            // this is done to avoid problems with (void *) having arithmetic issues.
             memset(((char *)new_pointer) + (type * old_length), 0, type * (new_length - old_length));
           }
 

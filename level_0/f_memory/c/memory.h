@@ -7,18 +7,9 @@
  *
  * Provide means to use memory routines, with error checking.
  *
- * Possible error values on return:
- *   f_allocation_error   - an error during the allocation process.
- *   f_critical           - an error.
- *   f_deallocation_error - an error during the deallocation process.
- *   f_invalid_data       - something is wrong with the data sent to this function, error.
- *   f_invalid_parameter  - a parameter sent to this function is invalid, error.
- *   f_invalid_syntax     - syntax for data sent to this is invalid, error.
- *   f_no_data            - something is wrong with the data sent to this function, warning.
- *   f_none               - no errors or warnings.
- *   f_reallocation_error - an error during the reallocation process.
- *   f_unknown            - an unknown error.
- *   f_warn               - a possible problem, but not an error (warning).
+ * @todo consider adding f_memory__scramble() and f_memory__juggle().
+ *       f_memory_scramble() is like f_destroy() but it writes random data instead of 0.
+ *       f_memory_juggle() is like f_adjust() but it writes random data instead of 0.
  */
 #ifndef _F_memory_h
 #define _F_memory_h
@@ -36,6 +27,14 @@
 extern "C" {
 #endif
 
+/**
+ * Provide defines to alter compile time uses of certain memory functions.
+ *
+ * These are not intended as macros but are instead intended as a tool to automatically replace one function call with another (via the macro).
+ *
+ * If _f_memory_FORCE_secure_memory_ is defined, then memory operations are all set to be removed address spaces to 0 before freeing or resizing.
+ * If _f_memory_FORCE_fast_memory_ is defined, then memory operations are all set to not set to be removed address spaces to 0 before freeing or resizing.
+ */
 #ifdef _f_memory_FORCE_secure_memory_
   #define f_memory_delete(the_pointer, the_type, the_length) f_memory_destroy(the_pointer, the_type, the_length)
   #define f_memory_resize(the_pointer, the_type, the_old_length, the_new_length) f_memory_adjust(the_pointer, the_type, the_old_length, the_new_length)
@@ -50,78 +49,167 @@ extern "C" {
   #define f_memory_adjust(the_pointer, the_type, the_old_length, the_new_length) f_memory_resize(the_pointer, the_type, the_old_length, the_new_length)
 #endif // _f_memory_FORCE_fast_memory_
 
-
+/**
+ * Default allocation step.
+ *
+ * Everytime some array needs a single new element, reallocated by this amount.
+ *
+ * Normally, this should be small, but when a large number of singular allocations are made, the overhead can be reduced by not having to reallocate space as often.
+ * The problem then is that the more space allocated beyond what is initially needed will waste precious memory.
+ * Change this if you know your application can afford to reduce the allocation overhead at the cost of more memory.
+ *
+ * Other projects may provide their own values.
+ */
 #ifndef _di_f_memory_default_allocation_step_
-  /**
-   * Everytime some array needs a single new element, reallocated by this amount.
-   * Normally, this should be small, but when a large number of singular allocations are made, the overhead can be reduced by not having to reallocate space as often.
-   * The problem then is that the more space allocated beyond what is initially needed will waste precious memory.
-   * Change this if you know your application can afford to reduce the allocation overhead at the cost of more memory.
-   */
   #define f_memory_default_allocation_step 3
 #endif // _di_f_memory_default_allocation_step_
 
+/**
+ * Memory types.
+ */
 #ifndef _di_f_memory_types_
   #define f_memory_size_t size_t
   #define f_memory_length size_t
 #endif // _di_f_memory_types_
 
+/**
+ * Create some dynamically allocated array of some length.
+ *
+ * @param pointer
+ *   A pointer that will be updated to the address of the newly allocated memory.
+ * @param type
+ *   The block size, in bytes (type * length = allocated size).
+ * @param length
+ *   The total number of blocks to be allocated.
+ *
+ * @return
+ *   f_none on success.
+ *   f_allocation_error (with error bit) on allocation error.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
 #ifndef _di_f_memory_new_
-  // Create some dynamically allocated array of some length
   extern f_return_status f_memory_new(void **pointer, const f_memory_size_t type, const f_memory_length length);
 #endif // _di_f_memory_new_
 
+/**
+ * Delete dynamically allocated data.
+ *
+ * Will not change any of the data to 0 prior to deallocation.
+ *
+ * Type and length are not normally used by this function but must be provided for the cases when f_memory_delete is swapped with f_memory_destroy (or vice-versa).
+ *
+ * @param pointer
+ *   A pointer to the address that will be freed.
+ * @param type
+ *   The block size, in bytes (type * length = allocated size).
+ * @param length
+ *   The total number of blocks to be allocated.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
 #if ! ( defined (_di_f_memory_delete_) || defined (_f_memory_FORCE_secure_memory_) )
-  /**
-   * deletes some dynamically allocated data.
-   * f_memory_delete, will not change any of the data to 0 prior to deallocation.
-   * type and length are not used by this function normally but must be provided for the cases when f_memory_delete is swapped with f_memory_destroy (or vice-versa).
-   */
   extern f_return_status f_memory_delete(void **pointer, const f_memory_size_t type, const f_memory_length length);
 #endif // ! ( defined (_di_f_memory_delete_) || defined (_f_memory_FORCE_secure_memory_) )
 
+/**
+ * Securely deletes some dynamically allocated data.
+ *
+ * Will change all data to 0 prior to deallocation.
+ *
+ * @param pointer
+ *   A pointer to the address that will be freed.
+ * @param type
+ *   The block size, in bytes (type * length = allocated size).
+ * @param length
+ *   The total number of blocks to be allocated.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
 #if ! ( defined (_di_f_memory_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
-  /**
-   * securely deletes some dynamically allocated data.
-   * f_memory_destroy, will change all data to 0 prior to deallocation.
-   */
   extern f_return_status f_memory_destroy(void **pointer, const f_memory_size_t type, const f_memory_length length);
 #endif // ! ( defined (_di_f_memory_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
 
+/**
+ * Resize dynamically allocated data.
+ *
+ * Will not change any of the data prior to deallocation.
+ *
+ * @param pointer
+ *   A pointer to the address that will be resized.
+ * @param type
+ *   The block size, in bytes (type * length = allocated size).
+ * @param old_length
+ *   The total number of blocks representing the length to be resized from.
+ * @param new_length
+ *   The total number of blocks representing the length to be resized to.
+ *
+ * @return
+ *   f_none on success.
+ *   f_reallocation_error (with error bit) on reallocation error.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
 #if ! ( defined (_di_f_memory_resize_) || defined (_f_memory_FORCE_secure_memory_) )
-  /**
-   * resizes some dynamically allocated data.
-   * f_memory_resize, will not change any of the data prior to deallocation.
-   */
   extern f_return_status f_memory_resize(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
 #endif // ! ( defined (_di_f_memory_resize_) || defined (_f_memory_FORCE_secure_memory_) )
 
+/**
+ * Securely resize dynamically allocated data.
+ *
+ * Will change all data to 0 prior to deallocation.
+ *
+ * @param pointer
+ *   A pointer to the address that will be resized.
+ * @param type
+ *   The block size, in bytes (type * length = allocated size).
+ * @param old_length
+ *   The total number of blocks representing the length to be resized from.
+ * @param new_length
+ *   The total number of blocks representing the length to be resized to.
+ *
+ * @return
+ *   f_none on success.
+ *   f_reallocation_error (with error bit) on reallocation error.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
 #if ! ( defined (_di_f_memory_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
-  /**
-   * securely resizes some dynamically allocated data.
-   * f_memory_adjust, will change all data to 0 prior to deallocation.
-   */
   extern f_return_status f_memory_adjust(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
 #endif // _di_f_memory_adjust_
 
-
-// centralize allocation for all FLL structures that follow the size+used approach.
+/**
+ * Reset a generic memory stucture to 0 (clear all values).
+ *
+ * A generic memory structure has the following properties:
+ *   array: Some pointer to an array of values.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * structure: the structure to operate on.
+ */
 #ifndef _di_f_macro_memory_structure_clear_
-  /**
-   * structure: the structure to operate on.
-   */
   #define f_macro_memory_structure_clear(structure) \
     structure.array = 0; \
     structure.size = 0; \
     structure.used = 0;
 #endif // _di_f_macro_memory_structure_clear_
 
+/**
+ * Create a new generic memory structure.
+ *
+ * A generic memory structure has the following properties:
+ *   array: Some pointer to an array of values.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * status:    the status to return.
+ * structure: the structure to operate on.
+ * type:      the structure type.
+ * length:    the new size of the array.
+ */
 #ifndef _di_f_macro_memory_structure_new_
-  /**
-   * status:    the status to return.
-   * structure: the structure to operate on.
-   * type:      the structure type.
-   */
   #define f_macro_memory_structure_new(status, structure, type, length) \
     structure.array = 0; \
     structure.size = 0; \
@@ -133,13 +221,19 @@ extern "C" {
     }
 #endif // _di_f_macro_memory_structure_new_
 
-// improper use of these defines can lead to memory leaks and compilation errors
+/**
+ * Delete a generic memory structure.
+ *
+ * A generic memory structure has the following properties:
+ *   array: Some pointer to an array of values.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * status:    the status to return.
+ * structure: the structure to operate on.
+ * type:      the structure type.
+ */
 #ifndef _di_f_macro_memory_structure_delete_
-  /**
-   * status:    the status to return.
-   * structure: the structure to operate on.
-   * type:      the structure type.
-   */
   #define f_macro_memory_structure_delete(status, structure, type) \
     status = f_memory_delete((void **) & structure.array, sizeof(type), structure.size); \
     if (status == f_none) { \
@@ -148,12 +242,19 @@ extern "C" {
     }
 #endif // _di_f_macro_memory_structure_delete_
 
+/**
+ * Destroy a generic memory structure.
+ *
+ * A generic memory structure has the following properties:
+ *   array: Some pointer to an array of values.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * status:    the status to return.
+ * structure: the structure to operate on.
+ * type:      the structure type.
+ */
 #ifndef _di_f_macro_memory_structure_destroy_
-  /**
-   * status:    the status to return.
-   * structure: the structure to operate on.
-   * type:      the structure type.
-   */
   #define f_macro_memory_structure_destroy(status, structure, type) \
     status = f_memory_destroy((void **) & structure.array, sizeof(type), structure.size); \
     if (status == f_none) { \
@@ -162,12 +263,20 @@ extern "C" {
     }
 #endif // _di_f_macro_memory_structure_destroy_
 
+/**
+ * Resize a generic memory structure.
+ *
+ * A generic memory structure has the following properties:
+ *   array: Some pointer to an array of values.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * status:     the status to return.
+ * structure:  the structure to operate on.
+ * type:       the structure type.
+ * new_length: the new size of the array.
+ */
 #ifndef _di_f_macro_memory_structure_resize_
-  /**
-   * status:    the status to return.
-   * structure: the structure to operate on.
-   * type:      the structure type.
-   */
   #define f_macro_memory_structure_resize(status, structure, type, new_length) \
     status = f_memory_resize((void **) & structure.array, sizeof(type), structure.size, new_length); \
     if (status == f_none) { \
@@ -176,12 +285,20 @@ extern "C" {
     }
 #endif // _di_f_macro_memory_structure_resize_
 
+/**
+ * Adjust a generic memory structure.
+ *
+ * A generic memory structure has the following properties:
+ *   array: Some pointer to an array of values.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * status:     the status to return.
+ * structure:  the structure to operate on.
+ * type:       the structure type.
+ * new_length: the new size of the array.
+ */
 #ifndef _di_f_macro_memory_structure_adjust_
-  /**
-   * status:    the status to return.
-   * structure: the structure to operate on.
-   * type:      the structure type.
-   */
   #define f_macro_memory_structure_adjust(status, structure, type, new_length) \
     status = f_memory_adjust((void **) & structure.array, sizeof(type), structure.size, new_length); \
     if (status == f_none) { \
@@ -190,25 +307,37 @@ extern "C" {
     }
 #endif // _di_f_macro_memory_structure_adjust_
 
-// Structures defines function in the same way that the structure defines do
-// however, these hold an array of structure
-// improper use of these defines can lead to memory leaks and compilation errors
+/**
+ * Create a new generic memory structures.
+ *
+ * A generic memory structures represents an array of structure with the following properties:
+ *   array: Some pointer to an array of structure.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * structures: the structures to operate on.
+ */
 #ifndef _di_f_macro_memory_structures_clear_
-  /**
-   * structure: the structure to operate on.
-   */
   #define f_macro_memory_structures_clear(structures) \
     structures.array = 0; \
     structures.size = 0; \
     structures.used = 0;
 #endif // _di_f_macro_memory_structures_clear_
 
+/**
+ * Create a new generic memory structures.
+ *
+ * A generic memory structures represents an array of structure with the following properties:
+ *   array: Some pointer to an array of structure.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * status:     the status to return.
+ * structures: the structures to operate on.
+ * type:       the structure type.
+ * new_length: the new size of the array.
+ */
 #ifndef _di_f_macro_memory_structures_new_
-  /**
-   * status:     the status to return.
-   * structures: the structure to operate on.
-   * type:       the structure type.
-   */
   #define f_macro_memory_structures_new(status, structures, type, new_length) \
     structures.array = 0; \
     structures.size = 0; \
@@ -220,12 +349,20 @@ extern "C" {
     }
 #endif // _di_f_macro_memory_structures_new_
 
+/**
+ * Delete a generic memory structures.
+ *
+ * A generic memory structures represents an array of structure with the following properties:
+ *   array: Some pointer to an array of structure.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * status:     the status to return.
+ * structures: the structures to operate on.
+ * type:       the structure type.
+ * new_length: the new size of the array.
+ */
 #ifndef _di_f_macro_memory_structures_delete_
-  /**
-   * status:     the status to return.
-   * structures: the structure to operate on.
-   * type:       the structure type.
-   */
   #define f_macro_memory_structures_delete(status, structures, type) \
     status = f_none; \
     while (structures.size > 0) { \
@@ -237,12 +374,20 @@ extern "C" {
     if (status == f_none) structures.used = 0;
 #endif // _di_f_macro_memory_structures_delete_
 
+/**
+ * Destroy a generic memory structures.
+ *
+ * A generic memory structures represents an array of structure with the following properties:
+ *   array: Some pointer to an array of structure.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * status:     the status to return.
+ * structures: the structures to operate on.
+ * type:       the structure type.
+ * new_length: the new size of the array.
+ */
 #ifndef _di_f_macro_memory_structures_destroy_
-  /**
-   * status:     the status to return.
-   * structures: the structure to operate on.
-   * type:       the structure type.
-   */
   #define f_macro_memory_structures_destroy(status, structures, type) \
     status = f_none; \
     while (structures.size > 0) { \
@@ -254,12 +399,20 @@ extern "C" {
     if (status == f_none) structures.used = 0;
 #endif // _di_f_macro_memory_structures_destroy_
 
+/**
+ * Resize a generic memory structures.
+ *
+ * A generic memory structures represents an array of structure with the following properties:
+ *   array: Some pointer to an array of structure.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * status:     the status to return.
+ * structures: the structures to operate on.
+ * type:       the structure type.
+ * new_length: the new size of the array.
+ */
 #ifndef _di_f_macro_memory_structures_resize_
-  /**
-   * status:     the status to return.
-   * structures: the structure to operate on.
-   * type:       the structure type.
-   */
   #define f_macro_memory_structures_resize(status, structures, type, new_length, length_variable) \
     status = f_none; \
     if (new_length < structures.size) { \
@@ -282,12 +435,20 @@ extern "C" {
     }
 #endif // _di_f_macro_memory_structures_resize_
 
+/**
+ * Adjust a generic memory structures.
+ *
+ * A generic memory structures represents an array of structure with the following properties:
+ *   array: Some pointer to an array of structure.
+ *   size:  A number, generally unsigned, representing the size of the above array.
+ *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ *
+ * status:     the status to return.
+ * structures: the structures to operate on.
+ * type:       the structure type.
+ * new_length: the new size of the array.
+ */
 #ifndef _di_f_macro_memory_structures_adjust_
-  /**
-   * status:     the status to return.
-   * structures: the structure to operate on.
-   * type:       the structure type.
-   */
   #define f_macro_memory_structures_adjust(status, structures, type, new_length, length_variable) \
     status = f_none; \
     if (new_length < structures.size) { \
