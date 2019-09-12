@@ -19,8 +19,11 @@ extern "C" {
 #endif
 
 /**
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * An array of array lengths.
+ *
+ * array: An array of array lengths.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_array_lengths_
   typedef struct {

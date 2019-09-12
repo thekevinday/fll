@@ -34,10 +34,16 @@
 extern "C" {
 #endif
 
+/**
+ * Boolean type.
+ */
 #ifndef _di_f_type_bool_
-  typedef unsigned short f_bool;
+  typedef uint8_t f_bool;
 #endif // _di_f_type_bool_
 
+/**
+ * Status type.
+ */
 #ifndef _di_f_type_status_
   typedef uint16_t f_status;
 
@@ -71,14 +77,19 @@ extern "C" {
   #define f_signed_long_long_size     ((((unsigned long long) -1) / 2) - 1)
 #endif // _di_f_type_sizes_
 
-
-#ifndef _di_f_type_standard_output_
+/**
+ * Standard Input/Output types.
+ *
+ * For most systems, there is no standard warning nor is there a standard debug.
+ * Therefore, these will map to standard output.
+ */
+#ifndef _di_f_type_standard_input_output_
   #define f_standard_debug   stdout
   #define f_standard_error   stderr
   #define f_standard_input   stdin
   #define f_standard_output  stdout
   #define f_standard_warning stdout
-#endif // _di_f_type_standard_output_
+#endif // _di_f_type_standard_input_output_
 
 /**
  * Defines a variable to be used by arrays.
@@ -89,8 +100,17 @@ extern "C" {
   typedef long long f_array_length_long;
 #endif // _di_f_array_length_
 
+/**
+ * GCC-specific features.
+ *
+ * Use these macros for GCC-specific tweaks so that if GCC is not supported then they can be easily disabled.
+ *
+ * f_gcc_attribute_visibility_internal provides a way to make some functions effectively private.
+ *
+ * @todo there is probably some sort of macro that GCC likely defines that can be utilized here to automatically enable/disable this.
+ */
 #ifndef _di_f_gcc_specific_
-#define f_gcc_attribute_visibility_internal __attribute__((visibility("internal")))
+  #define f_gcc_attribute_visibility_internal __attribute__((visibility("internal")))
 #endif // _di_f_gcc_specific_
 
 #ifdef __cplusplus
