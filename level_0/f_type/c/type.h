@@ -5,24 +5,7 @@
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * Provides datatype re-definitions
- * If your compiler lacks the ability to produce such, simply re-define them as needed
- * An "ideal" definition for a standard expected size would be:
- *   char:      2^8   = 256
- *   short:     2^16  = 65536
- *   int:       2^32  = 4294967296
- *   long:      2^64  = 1.84467e19
- *   long long: 2^128 = 3.40282e38
- *
- * If you need exact size, use one of the following:
- *   int8_t:   2^7  (8-bit  signed)
- *   uint8_t:  2^8  (8-bit  unsigned)
- *   int16_t:  2^15 (16-bit signed)
- *   uint16_t: 2^16 (16-bit unsigned)
- *   int32_t:  2^31 (32-bit signed)
- *   uint32_t: 2^32 (32-bit unsigned)
- *   int64_t:  2^63 (64-bit signed)
- *   uint64_t: 2^64 (64-bit unsigned)
+ * Provides datatype definitions.
  */
 #ifndef _F_types_h
 #define _F_types_h
@@ -60,21 +43,33 @@ extern "C" {
 /**
  * Defines the maximum size to be supported.
  *
- * The max size is to be the (max supported size - 1) such that that last number can be used for overflow operations.
+ * The size is to be the (max supported size - 1) such that that last number can be used for overflow operations.
+ *
+ * For example, f_type_size_8_unsigned is 2^8, or 0 to 255, therefore the max size here is 255 - 1 or 254.
+ * For example, f_type_size_8_signed is 2^7, or 0 to 127, therefore the max size here is 127 - 1 or 126.
+ *
+ * The max_size is provided for actual max sizes.
+ * For example, f_type_size_8_unsigned is 2^8, or 0 to 255, therefore the max size here is 255.
+ * For example, f_type_size_8_signed is 2^7, or 0 to 127, therefore the max size here is 127.
  */
 #ifndef _di_f_type_sizes_
-  #define f_unsigned_char_size        (((uint8_t) -1) - 1)
-  #define f_unsigned_short_size       (((unsigned short) -1) - 1)
-  #define f_unsigned_int_size         (((unsigned int) -1) - 1)
-  #define f_unsigned_long_size        (((unsigned long) -1) - 1)
-  #define f_unsigned_long_long_size   (((unsigned long long) -1) - 1)
-  #define f_unsigned_double_size      (((unsigned double) -1) - 1)
-  #define f_unsigned_long_double_size (((unsigned double) -1) - 1)
-  #define f_signed_char_size          ((((uint8_t) -1) / 2) - 1)
-  #define f_signed_short_size         ((((unsigned short) -1) / 2) - 1)
-  #define f_signed_int_size           ((((unsigned int) -1) / 2) - 1)
-  #define f_signed_long_size          ((((unsigned long) -1) / 2) - 1)
-  #define f_signed_long_long_size     ((((unsigned long long) -1) / 2) - 1)
+  #define f_type_size_8_unsigned  0xfe
+  #define f_type_size_8_signed    0x7e
+  #define f_type_size_16_unsigned 0xfffe
+  #define f_type_size_16_signed   0x7ffe
+  #define f_type_size_32_unsigned 0xfffffffe
+  #define f_type_size_32_signed   0x7ffffffe
+  #define f_type_size_64_unsigned 0xfffffffffffffffe
+  #define f_type_size_64_signed   0x7ffffffffffffffe
+
+  #define f_type_size_8_unsigned  0xff
+  #define f_type_size_8_signed    0x7f
+  #define f_type_size_16_unsigned 0xffff
+  #define f_type_size_16_signed   0x7fff
+  #define f_type_size_32_unsigned 0xffffffff
+  #define f_type_size_32_signed   0x7fffffff
+  #define f_type_size_64_unsigned 0xffffffffffffffff
+  #define f_type_size_64_signed   0x7fffffffffffffff
 #endif // _di_f_type_sizes_
 
 /**
