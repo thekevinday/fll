@@ -195,7 +195,7 @@ extern "C" {
   #define firewall_chain_delete_command_length 2
 
   enum {
-    firewall_program_none,
+    firewall_program_none = 1,
     firewall_program_iptables,
     firewall_program_ip6tables,
     firewall_program_ip46tables,

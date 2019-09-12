@@ -27,7 +27,7 @@ extern "C" {
  */
 #ifndef _di_f_console_ids_
   enum {
-    f_console_none,
+    f_console_none = 1,
     f_console_short_enable,
     f_console_short_disable,
     f_console_long_enable,
@@ -107,13 +107,13 @@ extern "C" {
   typedef unsigned short f_console_id;
 
   enum {
-    f_console_result_none,
+    f_console_result_none = 1,
     f_console_result_found,
     f_console_result_additional,
   };
 
   enum {
-    f_console_type_normal,
+    f_console_type_normal = 1,
     f_console_type_inverse,
     f_console_type_other,
   };

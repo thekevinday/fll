@@ -61,7 +61,7 @@ extern "C" {
 
 #ifndef _di_f_fss_codes_
 enum {
-  f_fss_basic,
+  f_fss_basic = 1,
   f_fss_extended,
   f_fss_basic_list,
   f_fss_extended_list,

@@ -62,14 +62,14 @@ extern "C" {
 
 #ifndef _di_byte_dump_defines_
   enum {
-    byte_dump_mode_hexidecimal,
+    byte_dump_mode_hexidecimal = 1,
     byte_dump_mode_octal,
     byte_dump_mode_binary,
     byte_dump_mode_decimal,
   };
 
   enum {
-    byte_dump_presentation_normal,
+    byte_dump_presentation_normal = 1,
     byte_dump_presentation_simple,
     byte_dump_presentation_classic,
   };

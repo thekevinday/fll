@@ -29,7 +29,7 @@ extern "C"{
   #define f_socket_close_id unsigned short
 
   enum {
-    f_socket_close_fast,       // As in close();
+    f_socket_close_fast = 1,   // As in close();
     f_socket_close_read,       // As in shutdown(, SHUT_RD);
     f_socket_close_write,      // As in shutdown(, SHUT_WR);
     f_socket_close_read_write, // As in shutdown(, SHUT_RDWR);
