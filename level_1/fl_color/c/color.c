@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_color_set_
-  f_return_status fl_color_set(FILE *file, const f_color_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
+  f_return_status fl_color_set(FILE *file, const f_color_format format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (color1 == 0) return f_status_set_error(f_invalid_parameter);
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_fl_color_set_
 
 #ifndef _di_fl_color_save_
-  f_return_status fl_color_save(f_string_dynamic *buffer, const f_color_format format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
+  f_return_status fl_color_save(f_string_dynamic *buffer, const f_color_format format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (color1 == 0) return f_status_set_error(f_invalid_parameter);
@@ -114,7 +114,7 @@ extern "C" {
 #endif // _di_fl_color_save_
 
 #ifndef _di_fl_color_print_
-  f_return_status fl_color_print(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const char *string, ...) {
+  f_return_status fl_color_print(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const int8_t *string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (string == 0) return f_status_set_error(f_invalid_parameter);
@@ -145,7 +145,7 @@ extern "C" {
 #endif // _di_fl_color_print_
 
 #ifndef _di_fl_color_print_line_
-  f_return_status fl_color_print_line(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const char *string, ...) {
+  f_return_status fl_color_print_line(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const int8_t *string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (string == 0) return f_status_set_error(f_invalid_parameter);
@@ -200,7 +200,7 @@ extern "C" {
 
     // switch to the appropriate terminal color mode
     {
-      char *environment = getenv("TERM");
+      int8_t *environment = getenv("TERM");
 
       if (!environment || strncmp(environment, "linux", 6) == 0) {
         context->color_list = f_color_linux;

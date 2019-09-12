@@ -534,9 +534,9 @@ extern "C" {
                 return status;
               }
 
-              memcpy((void *)file_path.string, network_path, sizeof(char) * network_path_length);
-              memcpy((void *)(file_path.string + network_path_length), data->devices.array[i].string, sizeof(char) * data->devices.array[i].used);
-              memcpy((void *)(file_path.string + network_path_length + data->devices.array[i].used), firewall_file_suffix, sizeof(char) * firewall_file_suffix_length);
+              memcpy((void *)file_path.string, network_path, sizeof(int8_t) * network_path_length);
+              memcpy((void *)(file_path.string + network_path_length), data->devices.array[i].string, sizeof(int8_t) * data->devices.array[i].used);
+              memcpy((void *)(file_path.string + network_path_length + data->devices.array[i].used), firewall_file_suffix, sizeof(int8_t) * firewall_file_suffix_length);
 
               file_path.used = network_path_length + data->devices.array[i].used + firewall_file_suffix_length;
               file_path.string[file_path.used] = 0;

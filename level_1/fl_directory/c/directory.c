@@ -37,7 +37,7 @@ extern "C" {
             return status;
           }
 
-          memcpy(names->array[names->used].string, listing[counter]->d_name, sizeof(char) * size);
+          memcpy(names->array[names->used].string, listing[counter]->d_name, sizeof(int8_t) * size);
           names->array[names->used].used = size;
           names->used++;
         }

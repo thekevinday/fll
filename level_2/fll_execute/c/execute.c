@@ -65,7 +65,7 @@ extern "C" {
         return status;
       }
 
-      memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(char) * arguments.array[i].used);
+      memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(int8_t) * arguments.array[i].used);
       fixed_arguments[i + 1][arguments.array[i].used] = f_string_eos;
     } // for
 
@@ -145,7 +145,7 @@ extern "C" {
         return status;
       }
 
-      memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(char) * arguments.array[i].used);
+      memcpy(fixed_arguments[i + 1], arguments.array[i].string, sizeof(int8_t) * arguments.array[i].used);
       fixed_arguments[i + 1][arguments.array[i].used] = f_string_eos;
     } // for
 

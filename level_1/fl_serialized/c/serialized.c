@@ -19,12 +19,12 @@ extern "C" {
     }
 
     if (serialized->used == 0) {
-      memcpy(serialized->string + serialized->used, value.string, sizeof(char) * value.used);
+      memcpy(serialized->string + serialized->used, value.string, sizeof(int8_t) * value.used);
       serialized->used += value.used;
     }
     else {
-      memcpy(serialized->string + serialized->used, f_serialized_simple_splitter_string, sizeof(char));
-      memcpy(serialized->string + serialized->used + 1, value.string, sizeof(char) * value.used);
+      memcpy(serialized->string + serialized->used, f_serialized_simple_splitter_string, sizeof(int8_t));
+      memcpy(serialized->string + serialized->used + 1, value.string, sizeof(int8_t) * value.used);
       serialized->used += value.used + 1;
     }
 

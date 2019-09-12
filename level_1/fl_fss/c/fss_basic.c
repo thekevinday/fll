@@ -50,7 +50,7 @@ extern "C" {
     }
 
     // handle quote support
-    char quoted = f_string_eos;
+    int8_t quoted = f_string_eos;
 
     // identify where the object begins
     if (buffer->string[input->start] == f_fss_delimit_slash) {

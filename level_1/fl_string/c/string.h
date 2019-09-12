@@ -70,7 +70,7 @@ extern "C" {
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_string_seek_line_until_graph_
-  extern f_return_status fl_string_seek_line_until_graph(const f_string_dynamic buffer, f_string_location *location, const char placeholder);
+  extern f_return_status fl_string_seek_line_until_graph(const f_string_dynamic buffer, f_string_location *location, const int8_t placeholder);
 #endif // _di_fl_string_seek_line_until_graph_
 
 /**
@@ -98,7 +98,7 @@ extern "C" {
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_string_seek_line_until_non_graph_
-  extern f_return_status fl_string_seek_line_until_non_graph(const f_string_dynamic buffer, f_string_location *location, const char placeholder);
+  extern f_return_status fl_string_seek_line_until_non_graph(const f_string_dynamic buffer, f_string_location *location, const int8_t placeholder);
 #endif // _di_fl_string_seek_line_until_non_graph_
 
 /**
@@ -122,7 +122,7 @@ extern "C" {
  * @see fl_string_seek_line_to_utf_character()
  */
 #ifndef _di_fl_string_seek_line_to_
-  extern f_return_status fl_string_seek_line_to(const f_string_dynamic buffer, f_string_location *location, const char seek_to_this);
+  extern f_return_status fl_string_seek_line_to(const f_string_dynamic buffer, f_string_location *location, const int8_t seek_to_this);
 #endif // _di_fl_string_seek_line_to_
 
 /**
@@ -175,7 +175,7 @@ extern "C" {
  * @see fl_string_seek_to_utf_character()
  */
 #ifndef _di_fl_string_seek_to_
-  extern f_return_status fl_string_seek_to(const f_string_dynamic buffer, f_string_location *location, const char seek_to_this);
+  extern f_return_status fl_string_seek_to(const f_string_dynamic buffer, f_string_location *location, const int8_t seek_to_this);
 #endif // _di_fl_string_seek_to_
 
 /**

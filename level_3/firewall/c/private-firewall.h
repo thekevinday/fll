@@ -74,7 +74,7 @@ typedef struct {
   f_macro_fss_contents_delete(status, contents);
 
 #define firewall_macro_concat_string(destination, source, length) \
-  memcpy((void *)(destination), source, sizeof(char) * length);
+  memcpy((void *)(destination), source, sizeof(int8_t) * length);
 
 #define firewall_macro_rule_contents_has_incorrect_items(index, total_items) \
   local.rule_contents.array[index].used <= 0 || local.rule_contents.array[index].used > total_items

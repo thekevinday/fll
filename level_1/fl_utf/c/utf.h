@@ -139,7 +139,7 @@ extern "C" {
  * @see fl_utf_seek_line_to()
  */
 #ifndef _di_fl_utf_string_seek_line_to_char_
-  extern f_return_status fl_utf_seek_line_to_char(const f_utf_string_dynamic buffer, f_utf_string_location *location, const char seek_to_this);
+  extern f_return_status fl_utf_seek_line_to_char(const f_utf_string_dynamic buffer, f_utf_string_location *location, const int8_t seek_to_this);
 #endif // _di_fl_utf_string_seek_line_to_char_
 
 /**
@@ -187,7 +187,7 @@ extern "C" {
  * @see fl_utf_string_seek_to()
  */
 #ifndef _di_fl_utf_string_seek_to_character_
-  extern f_return_status fl_utf_string_seek_to_char(const f_utf_string_dynamic buffer, f_utf_string_location *location, const char seek_to_this);
+  extern f_return_status fl_utf_string_seek_to_char(const f_utf_string_dynamic buffer, f_utf_string_location *location, const int8_t seek_to_this);
 #endif // _di_fl_utf_string_seek_to_character_
 
 /**

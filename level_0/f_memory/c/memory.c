@@ -99,9 +99,9 @@ extern "C" {
       if (new_pointer) {
         if (new_pointer != *pointer) {
           if (new_length > old_length) {
-            // char * is of a data type size of 1, casting it to char should result in a single-length increment.
+            // uint8_t * is of a data type size of 1, casting it to uint8_t should result in a single-length increment.
             // this is done to avoid problems with (void *) having arithmetic issues.
-            memset(((char *) new_pointer) + (type * old_length), 0, type * (new_length - old_length));
+            memset(((uint8_t *) new_pointer) + (type * old_length), 0, type * (new_length - old_length));
           }
 
           *pointer = new_pointer;
@@ -142,9 +142,9 @@ extern "C" {
 
       if (old_length > 0) {
         if (new_length < old_length) {
-          // char * is of a data type size of 1, casting it to char should result in a single-length increment.
+          // uint8_t * is of a data type size of 1, casting it to uint8_t should result in a single-length increment.
           // this is done to avoid problems with (void *) having arithmetic issues.
-          memset(((char *)*pointer) + new_length, 0, type * (old_length - new_length));
+          memset(((uint8_t *)*pointer) + new_length, 0, type * (old_length - new_length));
         }
       }
 
@@ -164,9 +164,9 @@ extern "C" {
       if (new_pointer) {
         if (new_pointer != *pointer) {
           if (new_length > old_length) {
-            // char * is of a data type size of 1, casting it to bool should result in a single-length increment.
+            // uint8_t * is of a data type size of 1, casting it to bool should result in a single-length increment.
             // this is done to avoid problems with (void *) having arithmetic issues.
-            memset(((char *)new_pointer) + (type * old_length), 0, type * (new_length - old_length));
+            memset(((uint8_t *)new_pointer) + (type * old_length), 0, type * (new_length - old_length));
           }
 
           *pointer = new_pointer;

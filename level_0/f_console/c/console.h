@@ -140,9 +140,9 @@ extern "C" {
  */
 #ifndef _di_f_console_parameter_
   typedef struct {
-    const char *symbol_short;
-    const char *symbol_long;
-    const char *symbol_other;
+    const int8_t *symbol_short;
+    const int8_t *symbol_long;
+    const int8_t *symbol_other;
 
     const uint8_t has_additional;
     const uint8_t type;

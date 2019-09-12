@@ -334,7 +334,7 @@
       }
     }
     else if (data.mode == byte_dump_mode_binary) {
-      char binary_string[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+      int8_t binary_string[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
       binary_string[0] = ((byte >> 7) & 0x01) ? '1' : '0';
       binary_string[1] = ((byte >> 6) & 0x01) ? '1' : '0';

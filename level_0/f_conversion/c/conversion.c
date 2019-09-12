@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_is_decimal_
-  f_return_status f_is_decimal(const char character) {
+  f_return_status f_is_decimal(const int8_t character) {
 
     if (character > 0x29 && character < 0x40) {
       return f_true;
@@ -16,7 +16,7 @@ extern "C" {
 #endif // _di_f_is_decimal_
 
 #ifndef _di_f_is_hexidecimal_
-  f_return_status f_is_hexidecimal(const char character) {
+  f_return_status f_is_hexidecimal(const int8_t character) {
 
     if (character > 0x29 && character < 0x40) {
       return f_true;
@@ -33,7 +33,7 @@ extern "C" {
 #endif // _di_f_is_hexidecimal_
 
 #ifndef _di_f_character_to_decimal_
-  f_return_status f_character_to_decimal(const char character, unsigned long *decimal) {
+  f_return_status f_character_to_decimal(const int8_t character, unsigned long *decimal) {
     #ifndef _di_level_0_parameter_checking_
       if (decimal == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -58,7 +58,7 @@ extern "C" {
 #endif // _di_f_character_to_decimal_
 
 #ifndef _di_f_character_to_hexidecimal_
-  f_return_status f_character_to_hexidecimal(const char character, unsigned long *decimal) {
+  f_return_status f_character_to_hexidecimal(const int8_t character, unsigned long *decimal) {
     #ifndef _di_level_0_parameter_checking_
       if (decimal == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_

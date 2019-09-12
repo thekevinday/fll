@@ -33,7 +33,7 @@ extern "C" {
  *   f_false if character is not a decimal.
  */
 #ifndef _di_f_is_decimal_
-  extern f_return_status f_is_decimal(const char character);
+  extern f_return_status f_is_decimal(const int8_t character);
 #endif // _di_f_is_decimal_
 
 /**
@@ -47,7 +47,7 @@ extern "C" {
  *   f_false if character is not a hexidecimal.
  */
 #ifndef _di_f_is_hexidecimal_
-  extern f_return_status f_is_hexidecimal(const char character);
+  extern f_return_status f_is_hexidecimal(const int8_t character);
 #endif // _di_f_is_hexidecimal_
 
 /**
@@ -65,7 +65,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_character_to_decimal_
-  extern f_return_status f_character_to_decimal(const char character, unsigned long *decimal);
+  extern f_return_status f_character_to_decimal(const int8_t character, unsigned long *decimal);
 #endif // _di_f_character_to_decimal_
 
 /**
@@ -83,7 +83,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_character_to_hexidecimal_
-  extern f_return_status f_character_to_hexidecimal(const char character, unsigned long *decimal);
+  extern f_return_status f_character_to_hexidecimal(const int8_t character, unsigned long *decimal);
 #endif // _di_f_character_to_hexidecimal_
 
 /**

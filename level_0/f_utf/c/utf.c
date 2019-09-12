@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_f_utf_is_big_endian_
   f_return_status f_utf_is_big_endian() {
     uint16_t test_int = (0x01 << 8) | 0x02;
-    char test_char[2] = {0x01, 0x02};
+    int8_t test_char[2] = {0x01, 0x02};
 
     if (!memcmp(&test_int, test_char, 2)) {
       return f_true;
@@ -457,7 +457,7 @@ extern "C" {
     unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
-      char ascii = character >> 24;
+      int8_t ascii = character >> 24;
 
       if (isspace(ascii)) {
         return f_true;
@@ -670,7 +670,7 @@ extern "C" {
     unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
-      char ascii = character >> 24;
+      int8_t ascii = character >> 24;
 
       if (isspace(ascii)) {
         return f_true;
@@ -873,7 +873,7 @@ extern "C" {
     *max_width = width;
 
     if (f_utf_is_big_endian()) {
-      memcpy(*character, &utf_character, sizeof(char) * width);
+      memcpy(*character, &utf_character, sizeof(int8_t) * width);
     }
     else {
       uint32_t utf = 0;
@@ -891,7 +891,7 @@ extern "C" {
         utf = (f_macro_utf_character_to_char_4(utf_character) << 24) | (f_macro_utf_character_to_char_3(utf_character) << 16) | (f_macro_utf_character_to_char_2(utf_character) << 8) | f_macro_utf_character_to_char_1(utf_character);
       }
 
-      memcpy(*character, &utf, sizeof(char) * width);
+      memcpy(*character, &utf, sizeof(int8_t) * width);
     }
 
     return f_none;

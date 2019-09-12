@@ -63,14 +63,14 @@ extern "C" {
  * The max size is to be the (max supported size - 1) such that that last number can be used for overflow operations.
  */
 #ifndef _di_f_type_sizes_
-  #define f_unsigned_char_size        (((unsigned char) -1) - 1)
+  #define f_unsigned_char_size        (((uint8_t) -1) - 1)
   #define f_unsigned_short_size       (((unsigned short) -1) - 1)
   #define f_unsigned_int_size         (((unsigned int) -1) - 1)
   #define f_unsigned_long_size        (((unsigned long) -1) - 1)
   #define f_unsigned_long_long_size   (((unsigned long long) -1) - 1)
   #define f_unsigned_double_size      (((unsigned double) -1) - 1)
   #define f_unsigned_long_double_size (((unsigned double) -1) - 1)
-  #define f_signed_char_size          ((((unsigned char) -1) / 2) - 1)
+  #define f_signed_char_size          ((((uint8_t) -1) / 2) - 1)
   #define f_signed_short_size         ((((unsigned short) -1) / 2) - 1)
   #define f_signed_int_size           ((((unsigned int) -1) / 2) - 1)
   #define f_signed_long_size          ((((unsigned long) -1) / 2) - 1)

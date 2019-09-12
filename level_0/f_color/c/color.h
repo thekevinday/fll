@@ -37,11 +37,11 @@ extern "C" {
  */
 #ifndef _di_f_color_control_
   typedef struct f_color_control {
-    const char *blink;
-    const char *bold;
-    const char *conceal;
-    const char *reverse;
-    const char *underline;
+    const int8_t *blink;
+    const int8_t *bold;
+    const int8_t *conceal;
+    const int8_t *reverse;
+    const int8_t *underline;
   } f_color_control;
 
   #define f_color_control_names_initialize { "blink", "bold", "conceal", "reverse", "underline" }
@@ -52,12 +52,12 @@ extern "C" {
  */
 #ifndef _di_f_color_standard_io_
   typedef struct {
-    const char *error;
-    const char *message;
-    const char *warning;
-    const char *strong_error;
-    const char *strong_message;
-    const char *strong_warning;
+    const int8_t *error;
+    const int8_t *message;
+    const int8_t *warning;
+    const int8_t *strong_error;
+    const int8_t *strong_message;
+    const int8_t *strong_warning;
   } f_color_standard_io;
 
   #define f_color_standard_io_names_initialize { "error", "message", "warning", "strong_error", "strong_message", "strong_warning" }
@@ -76,15 +76,15 @@ extern "C" {
  */
 #ifndef _di_f_color_help_
   typedef struct {
-    const char *alert;
-    const char *command;
-    const char *comment;
-    const char *emphasize;
-    const char *standard;
-    const char *syntax;
-    const char *title;
-    const char *topic;
-    const char *version;
+    const int8_t *alert;
+    const int8_t *command;
+    const int8_t *comment;
+    const int8_t *emphasize;
+    const int8_t *standard;
+    const int8_t *syntax;
+    const int8_t *title;
+    const int8_t *topic;
+    const int8_t *version;
   } f_color_help;
 
   #define f_color_help_names_initialize { "alert", "command", "comment", "emphasize", "standard", "syntax", "title", "topic", "version" }
@@ -92,9 +92,9 @@ extern "C" {
 
 #ifndef _di_f_color_format_
   typedef struct {
-    const char *begin;
-    const char *end;
-    const char *medium;
+    const int8_t *begin;
+    const int8_t *end;
+    const int8_t *medium;
   } f_color_format;
 
   #define f_color_format_initialize_linux     { "\033[", "m", ";" }
@@ -112,44 +112,44 @@ extern "C" {
  */
 #ifndef _di_f_color_
   typedef struct {
-    const char *reset;
-    const char *bold;
-    const char *underline;
-    const char *blink;
-    const char *reverse;
-    const char *conceal;
-    const char *black;
-    const char *red;
-    const char *green;
-    const char *yellow;
-    const char *blue;
-    const char *purple;
-    const char *teal;
-    const char *white;
-    const char *black_bg;
-    const char *red_bg;
-    const char *green_bg;
-    const char *yellow_bg;
-    const char *blue_bg;
-    const char *purple_bg;
-    const char *teal_bg;
-    const char *white_bg;
-    const char *bright_black;
-    const char *bright_red;
-    const char *bright_green;
-    const char *bright_yellow;
-    const char *bright_blue;
-    const char *bright_purple;
-    const char *bright_teal;
-    const char *bright_white;
-    const char *bright_black_bg;
-    const char *bright_red_bg;
-    const char *bright_green_bg;
-    const char *bright_yellow_bg;
-    const char *bright_blue_bg;
-    const char *bright_purple_bg;
-    const char *bright_teal_bg;
-    const char *bright_white_bg;
+    const int8_t *reset;
+    const int8_t *bold;
+    const int8_t *underline;
+    const int8_t *blink;
+    const int8_t *reverse;
+    const int8_t *conceal;
+    const int8_t *black;
+    const int8_t *red;
+    const int8_t *green;
+    const int8_t *yellow;
+    const int8_t *blue;
+    const int8_t *purple;
+    const int8_t *teal;
+    const int8_t *white;
+    const int8_t *black_bg;
+    const int8_t *red_bg;
+    const int8_t *green_bg;
+    const int8_t *yellow_bg;
+    const int8_t *blue_bg;
+    const int8_t *purple_bg;
+    const int8_t *teal_bg;
+    const int8_t *white_bg;
+    const int8_t *bright_black;
+    const int8_t *bright_red;
+    const int8_t *bright_green;
+    const int8_t *bright_yellow;
+    const int8_t *bright_blue;
+    const int8_t *bright_purple;
+    const int8_t *bright_teal;
+    const int8_t *bright_white;
+    const int8_t *bright_black_bg;
+    const int8_t *bright_red_bg;
+    const int8_t *bright_green_bg;
+    const int8_t *bright_yellow_bg;
+    const int8_t *bright_blue_bg;
+    const int8_t *bright_purple_bg;
+    const int8_t *bright_teal_bg;
+    const int8_t *bright_white_bg;
   } f_color;
 
   #define f_color_initialize_linux     { "0", "1", "4", "5", "7", "8", "30", "31", "32", "33", "34", "35", "36", "37", "40", "41", "42", "43", "44", "45", "46", "47", "30", "31", "32", "33", "34", "35", "36", "37", "40", "41", "42", "43", "44", "45", "46", "47" }

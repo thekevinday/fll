@@ -50,7 +50,7 @@ extern "C" {
     }
 
     // handle quote support
-    char quoted = f_string_eos;
+    int8_t quoted = f_string_eos;
 
     // identify where the object begins
     if (buffer->string[input->start] == f_fss_delimit_slash) {
@@ -384,7 +384,7 @@ extern "C" {
     }
 
     f_bool has_delimit = f_false;
-    char quoted = f_string_eos;
+    int8_t quoted = f_string_eos;
 
     f_bool continue_main_loop = f_false;
 
@@ -1031,7 +1031,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    char quoted = f_string_eos;
+    int8_t quoted = f_string_eos;
 
     f_string_location buffer_position = f_string_location_initialize;
     f_string_length start_position = 0;

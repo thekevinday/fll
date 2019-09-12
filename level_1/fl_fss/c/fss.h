@@ -42,8 +42,8 @@ extern "C" {
  *   The number of steps to decrement the start position.
  *   The steps refer to characters and not integers.
  *   Essentially this number is considered against the width of every character found.
- *   (For ASCII each step would be (sizeof(char)).
- *   (For UTF-8 character of width 3, each step would be (3 * sizeof(char)).
+ *   (For ASCII each step would be (sizeof(int8_t)).
+ *   (For UTF-8 character of width 3, each step would be (3 * sizeof(int8_t)).
  *
  * @return
  *   f_none on success.
@@ -113,8 +113,8 @@ extern "C" {
  *   The number of steps to increment the start position.
  *   The steps refer to characters and not integers.
  *   Essentially this number is considered against the width of every character found.
- *   (For ASCII each step would be (sizeof(char)).
- *   (For UTF-8 character of width 3, each step would be (3 * sizeof(char)).
+ *   (For ASCII each step would be (sizeof(int8_t)).
+ *   (For UTF-8 character of width 3, each step would be (3 * sizeof(int8_t)).
  *
  * @return
  *   f_none on success.

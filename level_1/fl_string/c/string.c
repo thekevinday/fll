@@ -30,7 +30,7 @@ extern "C" {
         return status;
       }
 
-      memcpy(result->string, buffer.string + location.start, sizeof(char) * size);
+      memcpy(result->string, buffer.string + location.start, sizeof(int8_t) * size);
       result->used = size;
 
       return f_none;
@@ -41,7 +41,7 @@ extern "C" {
 #endif // _di_fl_string_rip_
 
 #ifndef _di_fl_string_seek_line_until_graph_
-  f_return_status fl_string_seek_line_until_graph(const f_string_dynamic buffer, f_string_location *location, const char placeholder) {
+  f_return_status fl_string_seek_line_until_graph(const f_string_dynamic buffer, f_string_location *location, const int8_t placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (location == 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -101,7 +101,7 @@ extern "C" {
 #endif // _di_fl_string_seek_line_until_graph_
 
 #ifndef _di_fl_string_seek_line_until_non_graph_
-  f_return_status fl_string_seek_line_until_non_graph(const f_string_dynamic buffer, f_string_location *location, const char placeholder) {
+  f_return_status fl_string_seek_line_until_non_graph(const f_string_dynamic buffer, f_string_location *location, const int8_t placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (location == 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -161,7 +161,7 @@ extern "C" {
 #endif // _di_fl_string_seek_line_until_non_graph_
 
 #ifndef _di_fl_string_seek_line_to_
-  f_return_status fl_string_seek_line_to(const f_string_dynamic buffer, f_string_location *location, const char seek_to_this) {
+  f_return_status fl_string_seek_line_to(const f_string_dynamic buffer, f_string_location *location, const int8_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (location == 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -251,7 +251,7 @@ extern "C" {
 #endif // _di_fl_string_seek_line_to_utf_character_
 
 #ifndef _di_fl_string_seek_to_
-  f_return_status fl_string_seek_to(const f_string_dynamic buffer, f_string_location *location, const char seek_to_this) {
+  f_return_status fl_string_seek_to(const f_string_dynamic buffer, f_string_location *location, const int8_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (location == 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);

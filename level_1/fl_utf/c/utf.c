@@ -106,7 +106,7 @@ extern "C" {
 #endif // _di_fl_utf_seek_line_to_
 
 #ifndef _di_fl_utf_seek_line_to_char_
-  f_return_status fl_utf_seek_line_to_char(const f_utf_string_dynamic buffer, f_utf_string_location *location, const char seek_to_this) {
+  f_return_status fl_utf_seek_line_to_char(const f_utf_string_dynamic buffer, f_utf_string_location *location, const int8_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (location == 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -196,7 +196,7 @@ extern "C" {
 #endif // _di_fl_utf_string_seek_to_
 
 #ifndef _di_fl_utf_string_seek_to_char_
-  f_return_status fl_utf_string_seek_to_char(const f_utf_string_dynamic buffer, f_utf_string_location *location, const char seek_to_this) {
+  f_return_status fl_utf_string_seek_to_char(const f_utf_string_dynamic buffer, f_utf_string_location *location, const int8_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (location == 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);

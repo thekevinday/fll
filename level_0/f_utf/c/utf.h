@@ -58,7 +58,7 @@ extern "C" {
 #ifndef _di_f_utf_bom_
   #define f_utf_bom_length 3
 
-  const static char f_utf_bom[f_utf_bom_length] = { 0xef, 0xbb, 0xbf }; // 1110 1111, 1011 1011, 1011 1111
+  const static int8_t f_utf_bom[f_utf_bom_length] = { 0xef, 0xbb, 0xbf }; // 1110 1111, 1011 1011, 1011 1111
 #endif // _di_f_utf_bom_
 
 /**
@@ -106,7 +106,7 @@ extern "C" {
  * This is intended to be used when a single variable is desired to represent a 1-byte, 2-byte, 3-byte, or even 4-byte character.
  *
  * This "character" type is stored as a big-endian 4-byte integer (32-bits).
- * A helper function, f_utf_is_big_endian(), is provided to detect system endianness so that character arrays (char []) can be correctly processed.
+ * A helper function, f_utf_is_big_endian(), is provided to detect system endianness so that character arrays (int8_t []) can be correctly processed.
  *
  * The byte structure is intended to be read left to right.
  *
@@ -114,9 +114,9 @@ extern "C" {
  *
  * The f_macro_utf_character_mask_char_* are used to get a specific UTF-8 block as a single character range.
  *
- * The f_macro_utf_character_to_char_* are used to convert a f_utf_character into a char, for a given 8-bit block.
+ * The f_macro_utf_character_to_char_* are used to convert a f_utf_character into a int8_t, for a given 8-bit block.
  *
- * The f_macro_utf_character_from_char_* are used to convert a char into part of a f_utf_character, for a given 8-bit block.
+ * The f_macro_utf_character_from_char_* are used to convert a int8_t into part of a f_utf_character, for a given 8-bit block.
  *
  * The f_macro_utf_character_width is used to determine the width of the UTF-8 character based on f_macro_utf_byte_width.
  * The f_macro_utf_character_width_is is used to determine the width of the UTF-8 character based on f_macro_utf_byte_width_is.
@@ -456,32 +456,32 @@ extern "C" {
   #define f_utf_space_separator_line_length      3
   #define f_utf_space_separator_paragraph_length 3
 
-  const static char f_utf_space_em[f_utf_space_em_length]                     = { 0xe2, 0x80, 0x83 };
-  const static char f_utf_space_em_quad[f_utf_space_em_quad_length]           = { 0xe2, 0x80, 0x81 };
-  const static char f_utf_space_em_per_three[f_utf_space_em_per_three_length] = { 0xe2, 0x80, 0x84 };
-  const static char f_utf_space_em_per_four[f_utf_space_em_per_four_length]   = { 0xe2, 0x80, 0x85 };
-  const static char f_utf_space_em_per_six[f_utf_space_em_per_six_length]     = { 0xe2, 0x80, 0x86 };
+  const static int8_t f_utf_space_em[f_utf_space_em_length]                     = { 0xe2, 0x80, 0x83 };
+  const static int8_t f_utf_space_em_quad[f_utf_space_em_quad_length]           = { 0xe2, 0x80, 0x81 };
+  const static int8_t f_utf_space_em_per_three[f_utf_space_em_per_three_length] = { 0xe2, 0x80, 0x84 };
+  const static int8_t f_utf_space_em_per_four[f_utf_space_em_per_four_length]   = { 0xe2, 0x80, 0x85 };
+  const static int8_t f_utf_space_em_per_six[f_utf_space_em_per_six_length]     = { 0xe2, 0x80, 0x86 };
 
-  const static char f_utf_space_en[f_utf_space_en_length]           = { 0xe2, 0x80, 0x82 };
-  const static char f_utf_space_en_quad[f_utf_space_en_quad_length] = { 0xe2, 0x80, 0x80 };
+  const static int8_t f_utf_space_en[f_utf_space_en_length]           = { 0xe2, 0x80, 0x82 };
+  const static int8_t f_utf_space_en_quad[f_utf_space_en_quad_length] = { 0xe2, 0x80, 0x80 };
 
-  const static char f_utf_space_line_feed_reverse[f_utf_space_line_feed_reverse_length] = { 0xc2, 0x8d };
-  const static char f_utf_space_line_next[f_utf_space_line_next_length]                 = { 0xc2, 0x85 };
+  const static int8_t f_utf_space_line_feed_reverse[f_utf_space_line_feed_reverse_length] = { 0xc2, 0x8d };
+  const static int8_t f_utf_space_line_next[f_utf_space_line_next_length]                 = { 0xc2, 0x85 };
 
-  const static char f_utf_space_medium_mathematical[f_utf_space_medium_mathematical_length] = { 0xe2, 0x81, 0x9f };
+  const static int8_t f_utf_space_medium_mathematical[f_utf_space_medium_mathematical_length] = { 0xe2, 0x81, 0x9f };
 
-  const static char f_utf_space_no_break[f_utf_space_no_break_length]               = { 0xc2, 0xa0 };
-  const static char f_utf_space_no_break_narrow[f_utf_space_no_break_narrow_length] = { 0xe2, 0x80, 0xaf };
+  const static int8_t f_utf_space_no_break[f_utf_space_no_break_length]               = { 0xc2, 0xa0 };
+  const static int8_t f_utf_space_no_break_narrow[f_utf_space_no_break_narrow_length] = { 0xe2, 0x80, 0xaf };
 
-  const static char f_utf_space_ogham[f_utf_space_ogham_length]             = { 0xe1, 0x9a, 0x80 };
-  const static char f_utf_space_figure[f_utf_space_figure_length]           = { 0xe2, 0x80, 0x87 };
-  const static char f_utf_space_punctuation[f_utf_space_punctuation_length] = { 0xe2, 0x80, 0x88 };
-  const static char f_utf_space_thin[f_utf_space_thin_length]               = { 0xe2, 0x80, 0x89 };
-  const static char f_utf_space_hair[f_utf_space_hair_length]               = { 0xe2, 0x80, 0x8a };
-  const static char f_utf_space_ideographic[f_utf_space_ideographic_length] = { 0xe3, 0x80, 0x80 };
+  const static int8_t f_utf_space_ogham[f_utf_space_ogham_length]             = { 0xe1, 0x9a, 0x80 };
+  const static int8_t f_utf_space_figure[f_utf_space_figure_length]           = { 0xe2, 0x80, 0x87 };
+  const static int8_t f_utf_space_punctuation[f_utf_space_punctuation_length] = { 0xe2, 0x80, 0x88 };
+  const static int8_t f_utf_space_thin[f_utf_space_thin_length]               = { 0xe2, 0x80, 0x89 };
+  const static int8_t f_utf_space_hair[f_utf_space_hair_length]               = { 0xe2, 0x80, 0x8a };
+  const static int8_t f_utf_space_ideographic[f_utf_space_ideographic_length] = { 0xe3, 0x80, 0x80 };
 
-  const static char f_utf_space_separator_line[f_utf_space_separator_line_length]           = { 0xe2, 0x80, 0xa8 };
-  const static char f_utf_space_separator_paragraph[f_utf_space_separator_paragraph_length] = { 0xe2, 0x80, 0xa8 };
+  const static int8_t f_utf_space_separator_line[f_utf_space_separator_line_length]           = { 0xe2, 0x80, 0xa8 };
+  const static int8_t f_utf_space_separator_paragraph[f_utf_space_separator_paragraph_length] = { 0xe2, 0x80, 0xa8 };
 #endif // _di_f_utf_space_
 
 /**
@@ -500,13 +500,13 @@ extern "C" {
   #define f_utf_substitute_open_box_length            3
   #define f_utf_substitute_open_box_shouldered_length 3
 
-  const static char f_utf_substitute_symbol_blank[f_utf_substitute_symbol_blank_length] = { 0xe2, 0x90, 0xa2 };
-  const static char f_utf_substitute_symbol_space[f_utf_substitute_symbol_space_length] = { 0xe2, 0x90, 0xa0 };
+  const static int8_t f_utf_substitute_symbol_blank[f_utf_substitute_symbol_blank_length] = { 0xe2, 0x90, 0xa2 };
+  const static int8_t f_utf_substitute_symbol_space[f_utf_substitute_symbol_space_length] = { 0xe2, 0x90, 0xa0 };
 
-  const static char f_utf_substitute_middle_dot[f_utf_substitute_middle_dot_length] = { 0xc2, 0xb7 };
+  const static int8_t f_utf_substitute_middle_dot[f_utf_substitute_middle_dot_length] = { 0xc2, 0xb7 };
 
-  const static char f_utf_substitute_open_box[f_utf_substitute_open_box_length]                       = { 0xe2, 0x90, 0xa3 };
-  const static char f_utf_substitute_open_box_shouldered[f_utf_substitute_open_box_shouldered_length] = { 0xe2, 0x8d, 0xbd };
+  const static int8_t f_utf_substitute_open_box[f_utf_substitute_open_box_length]                       = { 0xe2, 0x90, 0xa3 };
+  const static int8_t f_utf_substitute_open_box_shouldered[f_utf_substitute_open_box_shouldered_length] = { 0xe2, 0x8d, 0xbd };
 #endif // _di_f_utf_substitute_
 
 /**
@@ -785,14 +785,14 @@ extern "C" {
 #endif // _di_f_utf_char_to_character_
 
 /**
- * Convert a specialized f_utf_character type to a char, stored as a string (character buffer).
+ * Convert a specialized f_utf_character type to a int8_t, stored as a string (character buffer).
  *
  * This will also convert ASCII characters stored in the utf_character array.
  *
  * @param utf_character
  *   The UTF-8 characterr to convert from.
  * @param character
- *   A char representation of the UTF-8 character, stored as a string of width bytes.
+ *   A int8_t representation of the UTF-8 character, stored as a string of width bytes.
  *   If max_width is 0, then this should not be allocated (set the pointer address to 0).
  * @param max_width
  *   The number of bytes the generated character represents.
