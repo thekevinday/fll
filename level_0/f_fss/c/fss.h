@@ -22,6 +22,9 @@
 extern "C" {
 #endif
 
+/**
+ * FSS-specific types.
+ */
 #ifndef _di_f_fss_types_
   #define f_fss_comment             '#'
   #define f_fss_space               ' '
@@ -43,15 +46,12 @@ extern "C" {
   #define f_fss_type_header_part5   '-'
   #define f_fss_type_header_close   '\n'
 
-  #define f_fss_id            unsigned long
-  #define f_fss_checksum      f_string_dynamic
-  #define f_fss_header_length f_string_length
-
-  #define f_fss_id_initialize            0
-  #define f_fss_checksum_initialize      0
-  #define f_fss_header_length_initailize 0
+  typedef unsigned long f_fss_id;
 #endif // _di_f_fss_types_
 
+/**
+ * FSS-specific delimiters.
+ */
 #ifndef _di_f_fss_delimiters_
   #define f_fss_delimit_slash        '\\'
   #define f_fss_delimit_single_quote '\''
@@ -59,28 +59,40 @@ extern "C" {
   #define f_fss_delimit_placeholder  f_string_placeholder
 #endif //_di_f_fss_delimiters_
 
+/**
+ * Codes for every FSS standard.
+ */
 #ifndef _di_f_fss_codes_
-enum {
-  f_fss_basic = 1,
-  f_fss_extended,
-  f_fss_basic_list,
-  f_fss_extended_list,
-  f_fss_very_basic_list,
-  f_fss_somewhat_basic_list,
-  f_fss_somewhat_extended_list,
-  f_fss_very_extended_list,
-  f_fss_embeded_list,
-  f_fss_reverse_mapping,
-  f_fss_extended_reverse_mapping,
-  f_fss_simple_json,
-  f_fss_simple_list,
-};
+  enum {
+    f_fss_basic = 1,
+    f_fss_extended,
+    f_fss_basic_list,
+    f_fss_extended_list,
+    f_fss_very_basic_list,
+    f_fss_somewhat_basic_list,
+    f_fss_somewhat_extended_list,
+    f_fss_very_extended_list,
+    f_fss_embeded_list,
+    f_fss_reverse_mapping,
+    f_fss_extended_reverse_mapping,
+    f_fss_simple_json,
+    f_fss_simple_list,
+  };
 #endif // _di_f_fss_codes_
 
+/**
+ * Max size of a FSS header.
+ *
+ * The standard FSS character header is: "# fss-0000\n\0", which is 10 characters + newline + EOS = 12.
+ * This includes the possibility of the first character being a UTF-8 BOM (which is 3-bytes long, which results in a max size of 15 bytes).
+ */
 #ifndef _di_f_fss_max_header_length_
-  #define f_fss_max_header_length 12
+  #define f_fss_max_header_length 15
 #endif // _di_f_fss_max_header_length_
 
+/**
+ * Default allocation steps.
+ */
 #ifndef _di_f_fss_default_allocation_step_
   #define f_fss_default_allocation_step f_memory_default_allocation_step
 
@@ -88,6 +100,9 @@ enum {
   #define f_fss_default_allocation_step_string 4
 #endif // _di_f_fss_default_allocation_step_
 
+/**
+ * An array of string locations representing where a delimit was applied or is to be applied with respect to some string.
+ */
 #ifndef _di_f_fss_delimits_
   typedef f_string_locations f_fss_delimits;
 
@@ -100,29 +115,30 @@ enum {
   #define f_macro_fss_delimits_destroy(status, delimits) f_macro_string_locations_destroy(status, delimits)
 
   #define f_macro_fss_delimits_resize(status, delimits, new_length) f_macro_string_locations_resize(status, delimits, new_length)
-  #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_string_locations_adjust(status, delimits  , new_length)
+  #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_string_locations_adjust(status, delimits, new_length)
 #endif // _di_f_fss_delimits_
 
 /**
- * stores information about a particular fss file, otherwise know as its header.
+ * Stores information about a particular fss file, otherwise known as its header.
  *
  * type: the kind of fss file is this.
  * length: Total length of the header.
  */
 #ifndef _di_f_fss_header_
   typedef struct {
-    f_fss_id            type;
-    f_fss_header_length length;
+    f_fss_id        type;
+    f_string_length length;
   } f_fss_header;
 
-  #define f_fss_header_initialize { f_fss_id_initialize, f_fss_header_length_initialize }
+  #define f_fss_header_initialize { 0, 0 }
 #endif // _di_f_fss_header_
 
 /**
  * This holds an array of fss_headers.
  *
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of headers.
+ * size: Total amount of allocated space.
+ * used: Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_headers_
   typedef struct {
@@ -150,6 +166,7 @@ enum {
  */
 #ifndef _di_fss_object_
   typedef f_string_location f_fss_object;
+
   #define f_fss_object_initialize f_string_location_initialize
 
   #define f_macro_fss_object_new(status, object, length) status = f_memory_new((void **) & object, sizeof(f_fss_object), length)
@@ -165,8 +182,9 @@ enum {
 /**
  * This holds an array of fss_object.
  *
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of objects.
+ * size: Total amount of allocated space.
+ * used: Total number of allocated spaces used.
  */
 #ifndef _di_fss_objects_
   typedef struct {
@@ -190,12 +208,14 @@ enum {
 
 /**
  * This holds an array of string locations that represent the content.
- * The very first string location will represent the outmost content.
+ *
+ * The very first string location will represent the outermost content.
  * All of the following string locations will represent the first level of nesting of all sub-content.
  * There will be no nesting beyond the first level recorded in this structure.
  *
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of content.
+ * size: Total amount of allocated space.
+ * used: Total number of allocated spaces used.
  */
 #ifndef _di_fss_content_
   typedef struct {
@@ -220,8 +240,9 @@ enum {
 /**
  * This holds an array of fss_content.
  *
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of content arrays.
+ * size: Total amount of allocated space.
+ * used: Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_contents_
   typedef struct {
