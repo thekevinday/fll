@@ -129,67 +129,18 @@
       }
 
       // At this point: an ASCII character is collected, the entire UTF-8 character sequence is collected, or an invalid UTF-8 was processed.
-
-      // Handle special case invalid situations, 0xc0 and 0xc1 are used for two-byte encoding of a 7-bit ASCII but are considered invalid by UTF-8.
-      // Does not include 0xc0 0x80 because this is considered a overlong NULL in UTF-8, which is a valid NULL.
-      if (width_utf == 2 && characters.string[character_current] > 0xc0800000 && characters.string[character_current] <= 0xc0ff0000) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // The unicode codes U+D800 to U+DFFF are for "UTF-16 surrogate halves" which are not supported in UTF-8.
-      else if (width_utf == 3 && characters.string[character_current] >= 0xeda08000 && characters.string[character_current] <= 0xeda3bf00) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // Common Indic Number Forms, some codes of which are invalid in UTF-8.
-      else if (width_utf == 3 && characters.string[character_current] >= 0xeaa0ba00 && characters.string[character_current] <= 0xeaa0bf00) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // U+061D, unsupported in UTF-8.
-      else if (width_utf == 2 && characters.string[character_current] == 0xd89d0000) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // U+0E00, unsupported in UTF-8.
-      else if (width_utf == 3 && characters.string[character_current] == 0xe0b88000) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // U+0E3B to U+0E3E, unsupported in UTF-8.
-      else if (width_utf == 3 && characters.string[character_current] >= 0xe0b8bb00 && characters.string[character_current] <= 0xe0b8be00) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // U+0E5C to U+0E7F, unsupported in UTF-8.
-      else if (width_utf == 3 && characters.string[character_current] >= 0xe0b99c00 && characters.string[character_current] <= 0xe0b9bf00) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // (Thana) U+07B2 to U+07BF, unsupported in UTF-8.
-      else if (width_utf == 2 && characters.string[character_current] >= 0xdeb20000 && characters.string[character_current] <= 0xdebf0000) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // (Hebrew) U+0590, unsupported in UTF-8.
-      else if (width_utf == 2 && characters.string[character_current] == 0xd6900000) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // (Hebrew) U+05C8 to U+05CF, unsupported in UTF-8.
-      else if (width_utf == 2 && characters.string[character_current] >= 0xd7880000 && characters.string[character_current] <= 0xd78f0000) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // (Hebrew) U+05EB to U+05FF, unsupported in UTF-8.
-      else if (width_utf == 2 && characters.string[character_current] >= 0xd7ab0000 && characters.string[character_current] <= 0xd7bf0000) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
-      }
-      // Unicode supports nothing above this (U+10FFFF).
-      else if (width_utf == 4 && characters.string[character_current] > 0xf48fbfbf) {
-        found_invalid_utf = f_true;
-        invalid[character_current] = width_utf;
+      if (!found_invalid_utf && width_utf > 1) {
+        if (f_utf_character_is_valid(characters.string[character_current]) == f_false) {
+          found_invalid_utf = f_true;
+          invalid[character_current] = width_utf;
+        }
+        // @todo: remove this check once implemented in f_utf_character_is_valid().
+        // Handle special case invalid situations, 0xc0 and 0xc1 are used for two-byte encoding of a 7-bit ASCII but are considered invalid by UTF-8.
+        // Does not include 0xc0 0x80 because this is considered a overlong NULL in UTF-8, which is a valid NULL.
+        else if (width_utf == 2 && characters.string[character_current] > 0xc0800000 && characters.string[character_current] <= 0xc0ff0000) {
+          found_invalid_utf = f_true;
+          invalid[character_current] = width_utf;
+        }
       }
 
       if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous_bytes, &previous_invalid, &column, &row)) {
@@ -594,18 +545,6 @@
       }
       else if (width_utf == 3 && characters.string[i] >= 0xe290a700 && characters.string[i] <= 0xe290bf00) {
         // Use space to represent Control Pictues codes that are not currently defined but are reserved.
-        printf(" ");
-      }
-      else if (width_utf == 3 && characters.string[i] >= 0xeda08000 && characters.string[i] <= 0xedadbf00) {
-        // Use space to represent High Surrogates codes.
-        printf(" ");
-      }
-      else if (width_utf == 3 && characters.string[i] >= 0xedae8000 && characters.string[i] <= 0xedafbf00) {
-        // Use space to represent High Private Use Surrogates codes.
-        printf(" ");
-      }
-      else if (width_utf == 3 && characters.string[i] >= 0xedb08000 && characters.string[i] <= 0xedbfbf00) {
-        // Use space to represent Low Surrogates codes.
         printf(" ");
       }
       else if (width_utf == 3 && characters.string[i] >= 0xee808000 && characters.string[i] <= 0xefa3bf00) {
