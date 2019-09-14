@@ -306,7 +306,7 @@ extern "C" {
       max_width = buffer.used - input.start;
     }
 
-    return f_utf_is_space(buffer.string + input.start, max_width);
+    return f_utf_is_whitespace(buffer.string + input.start, max_width);
   }
 #endif // _di_fl_fss_is_space_
 

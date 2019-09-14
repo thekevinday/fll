@@ -571,7 +571,7 @@
           printf(".");
         }
       }
-      else if (f_utf_is_whitespace_character(characters.string[i]) == f_true) {
+      else if (f_utf_character_is_whitespace(characters.string[i]) == f_true) {
         printf("%s", byte_dump_sequence_space);
       }
       else if (width_utf == 2 && characters.string[i] == 0xc0800000) {
@@ -616,11 +616,11 @@
         // Use space to represent Vaiation Selectors Supplement codes.
         printf(" ");
       }
-      else if (width_utf == 4 && characters.string[i] >= 0xf09e8080 && characters.string[i] <= 0xf09fbfbf) {
+      else if (width_utf == 4 && characters.string[i] >= 0xf3b08080 && characters.string[i] <= 0xf3bfbfbf) {
         // Use space to represent Supplemental Private Use Area-A codes.
         printf(" ");
       }
-      else if (width_utf == 4 && characters.string[i] >= 0xf0a08080 && characters.string[i] <= 0xf0a1bfbf) {
+      else if (width_utf == 4 && characters.string[i] >= 0xf4808080 && characters.string[i] <= 0xf48fbfbf) {
         // Use space to represent Supplemental Private Use Area-B codes.
         printf(" ");
       }

@@ -119,7 +119,7 @@ extern "C" {
       max_width = buffer.used - location->start;
     }
 
-    while (buffer.string[location->start] == placeholder || (status = f_utf_is_space(buffer.string + location->start, max_width)) == f_false) {
+    while (buffer.string[location->start] == placeholder || (status = f_utf_is_whitespace(buffer.string + location->start, max_width)) == f_false) {
       if (f_status_is_error(status)) {
         return status;
       }
