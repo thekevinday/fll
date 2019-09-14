@@ -35,9 +35,9 @@ extern "C" {
 
     printf("%c", f_string_eol);
 
-    fll_program_print_help_option_long(data.context, byte_dump_long_normal, f_console_symbol_long_enable, "Display UTF-8 symbols for ASCII control codes.");
-    fll_program_print_help_option_long(data.context, byte_dump_long_simple, f_console_symbol_long_enable, "Display spaces for ASCII control codes.");
-    fll_program_print_help_option_long(data.context, byte_dump_long_classic, f_console_symbol_long_enable, "Display periods for ASCII control codes.");
+    fll_program_print_help_option_long(data.context, byte_dump_long_normal, f_console_symbol_long_enable, "     Display UTF-8 symbols for ASCII control codes.");
+    fll_program_print_help_option_long(data.context, byte_dump_long_simple, f_console_symbol_long_enable, "     Display spaces for ASCII control codes.");
+    fll_program_print_help_option_long(data.context, byte_dump_long_classic, f_console_symbol_long_enable, "    Display periods for ASCII control codes.");
 
     fll_program_print_help_usage(data.context, byte_dump_name, "filename(s)");
 
