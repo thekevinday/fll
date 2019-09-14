@@ -62,14 +62,14 @@ extern "C" {
   #define f_type_size_64_unsigned 0xfffffffffffffffe
   #define f_type_size_64_signed   0x7ffffffffffffffe
 
-  #define f_type_size_8_unsigned  0xff
-  #define f_type_size_8_signed    0x7f
-  #define f_type_size_16_unsigned 0xffff
-  #define f_type_size_16_signed   0x7fff
-  #define f_type_size_32_unsigned 0xffffffff
-  #define f_type_size_32_signed   0x7fffffff
-  #define f_type_size_64_unsigned 0xffffffffffffffff
-  #define f_type_size_64_signed   0x7fffffffffffffff
+  #define f_type_size_max_8_unsigned  0xff
+  #define f_type_size_max_8_signed    0x7f
+  #define f_type_size_max_16_unsigned 0xffff
+  #define f_type_size_max_16_signed   0x7fff
+  #define f_type_size_max_32_unsigned 0xffffffff
+  #define f_type_size_max_32_signed   0x7fffffff
+  #define f_type_size_max_64_unsigned 0xffffffffffffffff
+  #define f_type_size_max_64_signed   0x7fffffffffffffff
 #endif // _di_f_type_sizes_
 
 /**

@@ -79,7 +79,7 @@ extern "C" {
 #ifndef _di_f_string_
   typedef char *f_string;
 
-  #define f_string_max_size   f_signed_long_size
+  #define f_string_max_size   f_type_size_32_signed
   #define f_string_initialize f_string_eos
 
   #define f_macro_string_new(status, string, length)   status = f_memory_new((void **) & string, sizeof(f_string), length)
