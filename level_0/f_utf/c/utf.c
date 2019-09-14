@@ -169,44 +169,174 @@ extern "C" {
     uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
     if (width == 2) {
-      if (byte_first == 0xdc) {
+      uint8_t byte = f_macro_utf_character_to_char_2(character);
+
+      if (byte_first == 0xd6) {
+        // Hebrew: U+0590.
+        if (byte == 0x90) {
+          return f_false;
+        }
+      }
+      else if (byte_first == 0xd7) {
+        // Hebrew: U+05C8 to U+05CF.
+        if (byte >= 0x88 && byte <= 0x8F) {
+          return f_false;
+        }
+
+        // Hebrew: U+05EB to U+05EF.
+        if (byte >= 0xab && byte <= 0xaf) {
+          return f_false;
+        }
+
+        // Hebrew: U+05F5 to U+05FF.
+        if (byte >= 0xb5 && byte <= 0xbf) {
+          return f_false;
+        }
+      }
+      else if (byte_first == 0xdc) {
         // Syriac: U+070E.
-        if (character == 0xdc8e0000) {
+        if (byte == 0x8e) {
           return f_false;
         }
       }
       else if (byte_first == 0xdd) {
         // Syriac: U+074B, U+074C.
-        if (character == 0xdd8b0000 || character == 0xdd8c0000) {
+        if (byte == 0x8b || byte == 0x8c) {
           return f_false;
         }
       }
       else if (byte_first == 0xde) {
         // Thaana: U+07B2 to U+07BF.
-        if (character >= 0xdeb20000 && character <= 0xdebf0000) {
+        if (byte >= 0xb2 && byte <= 0xbf) {
           return f_false;
         }
       }
       else if (byte_first == 0xdf) {
         // NKo: U+07FB to U+07FF.
-        if (character >= 0xdfbb0000 && character <= 0xdfbf0000) {
+        if (byte >= 0xbb && byte <= 0xbf) {
           return f_false;
         }
       }
     }
     else if (width == 3) {
+      // @todo: investigate potential performance gains by storing and compararing against the lower 16 bits on the idea that the register size needed for comparrison will be smaller and therefore a faster comparison (16-bit vs 32-bit).
       if (byte_first == 0xe0) {
-        // Oriya: U+0B50, U+0B55.
+        // Kannada: U+0CCE to U+0CD4.
+        if (character >= 0xe0b38e00 && character <= 0xe0b39400) {
+          return f_false;
+        }
+
+        // Kannada: U+0CD7 to U+0CDD.
+        if (character >= 0xe0b39700 && character <= 0xe0b39d00) {
+          return f_false;
+        }
+
+        // Kannada: U+0CF3 to U+0CFF.
+        if (character >= 0xe0b3b300 && character <= 0xe0b3bf00) {
+          return f_false;
+        }
+
+        // Kannada: U+0C84, U+0C8D, U+0C91, U+0CA9.
+        if (character == 0xe0b28400 || character == 0xe0b28d00 || character == 0xe0b29100 || character == 0xe0b2a900) {
+          return f_false;
+        }
+
+        // Kannada: U+0CB4, U+0CBA, U+0CBB, U+0CC5.
+        if (character == 0xe0b28400 || character == 0xe0b2ba00 || character == 0xe0b2bb00 || character == 0xe0b38500) {
+          return f_false;
+        }
+
+        // Kannada: U+0CC9, U+0CDF, U+0CE4, U+0CE5.
+        if (character == 0xe0b38900 || character == 0xe0b39f00 || character == 0xe0b3a400 || character == 0xe0b3a500) {
+          return f_false;
+        }
+
+        // Kannada: U+0CF0.
+        if (character == 0xe0b3b0) {
+          return f_false;
+        }
+
+        // Lao: U+0E90 to U+0E93.
+        if (character >= 0xe0ba9000 && character <= 0xe0ba9300) {
+          return f_false;
+        }
+
+        // Lao: U+0EE0 to U+0EFF.
+        if (character >= 0xe0bba000 && character <= 0xe0bbbf00) {
+          return f_false;
+        }
+
+        // Lao: U+0E80, U+0E83, U+0E85, U+0E86.
+        if (character == 0xe0ba8000 || character == 0xe0ba8300 || character == 0xe0ba8500 || character == 0xe0ba8600) {
+          return f_false;
+        }
+
+        // Lao: U+0E89, U+0E8B, U+0E8C, U+0E8E.
+        if (character == 0xe0ba8900 || character == 0xe0ba8b00 || character == 0xe0ba8c00 || character == 0xe0ba8e00) {
+          return f_false;
+        }
+
+        // Lao: U+0E8F, U+0E98, U+0EA0, U+0EA4.
+        if (character == 0xe0ba8f00 || character == 0xe0ba9800 || character == 0xe0baa000 || character == 0xe0baa400) {
+          return f_false;
+        }
+
+        // Lao: U+0EA6, U+0EA8, U+0EA9, U+0EAC.
+        if (character == 0xe0ba8600 || character == 0xe0ba8800 || character == 0xe0baa900 || character == 0xe0baac00) {
+          return f_false;
+        }
+
+        // Lao: U+0EBA, U+0EBE, U+0EBF, U+0EC5.
+        if (character == 0xe0baba00 || character == 0xe0babe00 || character == 0xe0babf00 || character == 0xe0bb8500) {
+          return f_false;
+        }
+
+        // Lao: U+0EC7, U+0ECE, U+0ECF, U+0EDA.
+        if (character == 0xe0bb8700 || character == 0xe0bb8e00 || character == 0xe0bb8f00 || character == 0xe0bb9a00) {
+          return f_false;
+        }
+
+        // Lao: U+0EDB.
+        if (character == 0xe0bb9b00) {
+          return f_false;
+        }
+
+        // Malayalam: U+0D50 to U+0D53.
+        if (character >= 0xe0b59000 && character <= 0xe0b59300) {
+          return f_false;
+        }
+
+        // Malayalam: U+0D00, U+0D04, U+0D0D, U+0D11.
+        if (character == 0xe0b48000 || character == 0xe0b48400 || character == 0xe0b48d00 || character == 0xe0b49100) {
+          return f_false;
+        }
+
+        // Malayalam: U+0D3B, U+0D3C, U+0D45, U+0D49.
+        if (character == 0xe0b4bb00 || character == 0xe0b4bc00 || character == 0xe0b58500 || character == 0xe0b58900) {
+          return f_false;
+        }
+
+        // Malayalam: U+0D64, U+0D65.
+        if (character == 0xe0b5a400 || character == 0xe0b5a500) {
+          return f_false;
+        }
+
+        // Mandaic: U+085C, U+085D, U+085F.
+        if (character == 0xe0a19c00 || character == 0xe0a19d00 || character == 0xe0a19f00) {
+          return f_false;
+        }
+
+        // Oriya: U+0B50 to U+0B55.
         if (character >= 0xe0ad9000 && character <= 0xe0ad9500) {
           return f_false;
         }
 
-        // Oriya: U+0B58, U+0B5B.
+        // Oriya: U+0B58 to U+0B5B.
         if (character >= 0xe0ad9800 && character <= 0xe0ad9b00) {
           return f_false;
         }
 
-        // Oriya: U+0B78, U+0B7F.
+        // Oriya: U+0B78 to U+0B7F.
         if (character >= 0xe0adb800 && character <= 0xe0adbf00) {
           return f_false;
         }
@@ -427,6 +557,56 @@ extern "C" {
         }
       }
       else if (byte_first == 0xe1) {
+        // Hanunoo: U+1737 to U+173F.
+        if (character >= 0xe19cb700 && character <= 0xe19cbf00) {
+          return f_false;
+        }
+
+        // Khmer: U+17EA to U+17EF.
+        if (character >= 0xe19faa00 && character <= 0xe19faf00) {
+          return f_false;
+        }
+
+        // Khmer: U+17FA to U+17FF.
+        if (character >= 0xe19fba00 && character <= 0xe19fbf00) {
+          return f_false;
+        }
+
+        // Khmer: U+17DE, U+17DF.
+        if (character == 0xe19f9e00 || character == 0xe19f9f00) {
+          return f_false;
+        }
+
+        // Lepcha: U+1C38 to U+1C3A.
+        if (character >= 0xe1b0b800 && character <= 0xe1b0ba00) {
+          return f_false;
+        }
+
+        // Lepcha: U+1C4A to U+1C4C.
+        if (character >= 0xe1b18a00 && character <= 0xe1b18c00) {
+          return f_false;
+        }
+
+        // Limbu: U+192C to U+192F.
+        if (character >= 0xe1a4ac00 && character <= 0xe1a4af00) {
+          return f_false;
+        }
+
+        // Limbu: U+193C to U+193F.
+        if (character >= 0xe1a4bc00 && character <= 0xe1a4bf00) {
+          return f_false;
+        }
+
+        // Limbu: U+1941 to U+1943.
+        if (character >= 0xe1a58100 && character <= 0xe1a58300) {
+          return f_false;
+        }
+
+        // Limbu: U+191F.
+        if (character == 0xe1a49f00) {
+          return f_false;
+        }
+
         // New Tai Lue: U+19AC to U+19AF.
         if (character >= 0xe1a6ac00 && character <= 0xe1a6af00) {
           return f_false;
@@ -522,6 +702,16 @@ extern "C" {
         }
       }
       else if (byte_first == 0xe2) {
+        // Ideographic Description Characters: U+2FFC to U+2FFF.
+        if (character >= 0xe2bfbc00 && character <= 0xe2bfbf00) {
+          return f_false;
+        }
+
+        // Kangxi Radicals: U+2FD6 to U+2FDF.
+        if (character >= 0xe2bf9600 && character <= 0xe2bf9f00) {
+          return f_false;
+        }
+
         // Miscellaneous Symbols and Arrows: U+2BBA to U+2BBC.
         if (character >= 0xe2aeba00 && character <= 0xe2aebc00) {
           return f_false;
@@ -587,7 +777,38 @@ extern "C" {
           return f_false;
         }
       }
+      else if (byte_first == 0xe3) {
+        // Hangul Compatibility Jamo: U+3130, U+318F.
+        if (character == 0xe384b000 || character == 0xe3868f00) {
+          return f_false;
+        }
+
+        // Hiragana: U+3040, U+3097, U+3098.
+        if (character == 0xe3818000 || character == 0xe3829700 || character == 0xe3829800) {
+          return f_false;
+        }
+      }
       else if (byte_first == 0xea) {
+        // Hangul Jamo Extended-A: U+A97D to U+A97F.
+        if (character >= 0xeaa5bd00 && character <= 0xeaa5bf00) {
+          return f_false;
+        }
+
+        // Javanese: U+A9CE, U+A9DA to U+A9DD.
+        if (character == 0xeaa78e00 || character >= 0xeaa79a00 && character <= 0xeaa7a79d) {
+          return f_false;
+        }
+
+        // Latin Extended-D: U+A7AF, U+A7B8 to U+A7F6.
+        if (character == 0xea9eaf00 || character >= 0xea9eb800 && character <= 0xea9fb600) {
+          return f_false;
+        }
+
+        // Latin Extended-E: U+AB66 to U+AB6F.
+        if (character >= 0xeaada600 && character <= 0xeaadaf00) {
+          return f_false;
+        }
+
         // Meetei Mayek: U+ABFA to U+ABFF.
         if (character >= 0xeaafba00 && character <= 0xeaafbf00) {
           return f_false;
@@ -653,6 +874,37 @@ extern "C" {
           return f_false;
         }
       }
+      else if (byte_first == 0xed) {
+        // Hangul Jamo Extended-B: U+D7C7 to U+D7CA.
+        if (character >= 0xed9f8700 && character <= 0xed9f8a00)  {
+          return f_false;
+        }
+
+        // Hangul Jamo Extended-B: U+D7FC to U+D7FF.
+        if (character >= 0xed9fbc00 && character <= 0xed9fbf00)  {
+          return f_false;
+        }
+
+        // Hangul Syllables: U+D7A4 to U+D7AF.
+        if (character >= 0xed9ea400 && character <= 0xed9eaf00)  {
+          return f_false;
+        }
+
+        // Low Surrogates: U+DC00 to U+DFFF.
+        if (character >= 0xedbfb000 && character <= 0xedbfbf00)  {
+          return f_false;
+        }
+
+        // High Surrogates: U+D800 to U+DB7F.
+        if (character >= 0xeda08000 && character <= 0xedadbf00) {
+          return f_false;
+        }
+
+        // High Private Use Surrogates: U+DB80 to U+DBFF.
+        if (character >= 0xedae8000 && character <= 0xedafbf00) {
+          return f_false;
+        }
+      }
       else if (byte_first == 0xee) {
         // consider all private use codes as valid, U+E000 to U+F8FF.
         if (character >= 0xee808000 && character <= 0xefa3bf00) {
@@ -663,6 +915,26 @@ extern "C" {
         // consider all private use codes as valid, U+E000 to U+F8FF.
         if (character >= 0xee808000 && character <= 0xefa3bf00) {
           return f_true;
+        }
+
+        // Halfwidth and Fullwidth Forms: U+FFDD to U+FFDF.
+        if (character >= 0xefbf9d00 && character <= 0xefbf9f00) {
+          return f_false;
+        }
+
+        // Halfwidth and Fullwidth Forms: U+FF00, U+FFBF, U+FFC0, U+FFC1.
+        if (character == 0xefbc8000 || character == 0xefbebf00 || character == 0xefbf8000 || character == 0xefbf8100) {
+          return f_false;
+        }
+
+        // Halfwidth and Fullwidth Forms: U+FFC8, U+FFC9, U+FFD0, U+FFD1.
+        if (character == 0xefbf8800 || character == 0xefbf8900 || character == 0xefbf9000 || character == 0xefbf9100) {
+          return f_false;
+        }
+
+        // Halfwidth and Fullwidth Forms: U+FFD8, U+FFD9, U+FFE7, U+FFEF.
+        if (character == 0xefbf9800 || character == 0xefbf9900 || character == 0xefbfa700 || character == 0xefbfaf00) {
+          return f_false;
         }
 
         // Small Form Variants: U+FE6C to U+FE6F.
@@ -692,11 +964,112 @@ extern "C" {
       }
     }
     else if (width == 4) {
+      // @todo: investigate potential performance gains by storing and compararing against the lower 16 bits on the idea that the register size needed for comparrison will be smaller and therefore a faster comparison (16-bit vs 32-bit).
       // reduce the number of checks by grouping checks by second byte.
       uint8_t byte_second = f_macro_utf_character_to_char_2(character);
 
       if (byte_first == 0xf0) {
         if (byte_second == 0x90) {
+          // Hatran: U+108F3.
+          if (character == 0xf090a3b3) {
+            return f_false;
+          }
+
+          // Hatran: U+108F6 to U+108FA.
+          if (character >= 0xf090a3b6 && character <= 0xf090a3ba) {
+            return f_false;
+          }
+
+          // Imperial Aramaic: U+10856.
+          if (character == 0xf090a196) {
+            return f_false;
+          }
+
+          // Inscriptional Pahlavi: U+10B73 to U+10B77.
+          if (character >= 0xf090adb3 && character <= 0xf090adb7) {
+            return f_false;
+          }
+
+          // Inscriptional Parthian: U+10B56 to U+10B57.
+          if (character >= 0xf090ad96 && character <= 0xf090ad97) {
+            return f_false;
+          }
+
+          // Kharoshthi: U+10A07 to U+10A0B.
+          if (character >= 0xf090a887 && character <= 0xf090a88b) {
+            return f_false;
+          }
+
+          // Kharoshthi: U+10A34 to U+10A37.
+          if (character >= 0xf090a8b4 && character <= 0xf090a8b7) {
+            return f_false;
+          }
+
+          // Kharoshthi: U+10A3B to U+10A3E.
+          if (character >= 0xf090a8bb && character <= 0xf090a8be) {
+            return f_false;
+          }
+
+          // Kharoshthi: U+10A48 to U+10A4F.
+          if (character >= 0xf090a988 && character <= 0xf090a98f) {
+            return f_false;
+          }
+
+          // Kharoshthi: U+10A59 to U+10A5F.
+          if (character >= 0xf090a999 && character <= 0xf090a99f) {
+            return f_false;
+          }
+
+          // Kharoshthi: U+10A04, U+10A14, U+10A18.
+          if (character == 0xf090a884 || character == 0xf090a894 || character == 0xf090a898) {
+            return f_false;
+          }
+
+          // Linear A: U+10737 to U+1073F.
+          if (character >= 0xf0909cb7 && character <= 0xf0909cbf) {
+            return f_false;
+          }
+
+          // Linear A: U+10756 to U+1075F.
+          if (character >= 0xf0909d96 && character <= 0xf0909d9f) {
+            return f_false;
+          }
+
+          // Linear A: U+10768 to U+1077F.
+          if (character >= 0xf0909da8 && character <= 0xf0909dbf) {
+            return f_false;
+          }
+
+          // Linear B Ideograms: U+100FB to U+100FF.
+          if (character >= 0xf09083bb && character <= 0xf09083bf) {
+            return f_false;
+          }
+
+          // Linear B Syllabary: U+1005E to U+1007F.
+          if (character >= 0xf090819e && character <= 0xf09081bf) {
+            return f_false;
+          }
+
+          // Linear B Syllabary: U+1000C, U+10027, U+1003B.
+          if (character == 0xf090808c || character == 0xf09080a7 || character == 0xf09080bb) {
+            return f_false;
+          }
+
+          // Linear B Syllabary: U+1003E, U+1004E, U+1004F.
+          if (character == 0xf09080be || character == 0xf090818e || character == 0xf090818f) {
+            return f_false;
+          }
+
+          // Lycian: U+1029D to U+1029F.
+          if (character >= 0xf0908a9d && character <= 0xf0908a9f) {
+            return f_false;
+          }
+
+          // Lydian: U+1093A to U+1093E.
+          if (character >= 0xf090a4ba && character <= 0xf090a4be) {
+            return f_false;
+          }
+
           // Manichaean: U+10AE7 to U+10AEA.
           if (character >= 0xf090aba7 && character <= 0xf090abaa) {
             return f_false;
@@ -808,6 +1181,36 @@ extern "C" {
           }
         }
         else if (byte_second == 0x91) {
+          // Kaithi: U+110C2 to U+110CF.
+          if (character >= 0xf0918382 && character <= 0xf091838f) {
+            return f_false;
+          }
+
+          // Khojki: U+1123F to U+1124F.
+          if (character >= 0xf09188bf && character <= 0xf091898f) {
+            return f_false;
+          }
+
+          // Khojki: U+11212.
+          if (character == 0xf0918892) {
+            return f_false;
+          }
+
+          // Khudawadi: U+112EB to U+112EF.
+          if (character >= 0xf0918bab && character <= 0xf0918baf) {
+            return f_false;
+          }
+
+          // Khudawadi: U+112FA to U+112FF.
+          if (character >= 0xf0918bba && character <= 0xf0918bbf) {
+            return f_false;
+          }
+
+          // Mahajani: U+11177 to U+1117F.
+          if (character >= 0xf09185b7 && character <= 0xf09185bf) {
+            return f_false;
+          }
+
           // Marchen: U+11CB7 to U+11CBF.
           if (character >= 0xf091b2b7 && character <= 0xf091b2bf) {
             return f_false;
@@ -919,6 +1322,11 @@ extern "C" {
           }
         }
         else if (byte_second == 0x96) {
+          // Ideographic Symbols and Punctuation: U+16FE1 to U+16FFF.
+          if (character >= 0xf096bfa1 && character <= 0xf096bfbf) {
+            return f_false;
+          }
+
           // Miao: U+16F45 to U+16F4F.
           if (character >= 0xf096bd85 && character <= 0xf096bd8f) {
             return f_false;
@@ -955,6 +1363,11 @@ extern "C" {
           }
         }
         else if (byte_second == 0x9b) {
+          // Kana Supplement: U+1B002 to U+1B0FF.
+          if (character >= 0xf09b8082 && character <= 0xf09b83bf) {
+            return f_false;
+          }
+
           // Shorthand Format Controls: U+1BCA4 to U+1BCAF.
           if (character >= 0xf09bb2a4 && character <= 0xf09bb2af) {
             return f_false;
@@ -1028,6 +1441,11 @@ extern "C" {
           }
         }
         else if (byte_second == 0x9f) {
+          // Mahjong Tiles: U+1F02C to U+1F02F.
+          if (character >= 0xf09f80ac && character <= 0xf09f80af) {
+            return f_false;
+          }
+
           // Playing Cards: U+1F0AF, U+1F0C0, U+1F0D0.
           if (character == 0xf09f82af || character == 0xf09f8380 || character == 0xf09f8390) {
             return f_false;
