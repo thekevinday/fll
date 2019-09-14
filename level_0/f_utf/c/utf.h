@@ -170,7 +170,7 @@ extern "C" {
 #ifndef _di_f_utf_string_
   typedef f_utf_character *f_utf_string;
 
-  #define f_utf_string_max_size   f_signed_long_size
+  #define f_utf_string_max_size   f_type_size_32_signed
   #define f_utf_string_initialize f_utf_character_eos
 
   #define f_macro_utf_string_new(status, string, length)   status = f_memory_new((void **) & string, sizeof(f_utf_string), length)

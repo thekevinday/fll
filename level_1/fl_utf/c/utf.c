@@ -53,7 +53,7 @@ extern "C" {
 
     f_status status = f_none;
 
-    while (buffer.string[location->start] == placeholder || (status = f_utf_character_is_space(buffer.string[location->start])) == f_false) {
+    while (buffer.string[location->start] == placeholder || (status = f_utf_character_is_whitespace(buffer.string[location->start])) == f_false) {
       if (f_status_is_error(status)) {
         return status;
       }
