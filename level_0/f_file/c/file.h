@@ -85,7 +85,7 @@ extern "C" {
     f_file_mode mode;
   } f_file;
 
-  #define f_file_initialize { 0, sizeof(int8_t), 0, (f_file_mode) f_file_read_only }
+  #define f_file_initialize { 0, 1, 0, (f_file_mode) f_file_read_only }
 #endif // _di_f_file_
 
 /**

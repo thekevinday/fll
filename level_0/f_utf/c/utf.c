@@ -1633,7 +1633,7 @@ extern "C" {
     *max_width = width;
 
     if (f_utf_is_big_endian()) {
-      memcpy(*character, &utf_character, sizeof(int8_t) * width);
+      memcpy(*character, &utf_character, width);
     }
     else {
       uint32_t utf = 0;
@@ -1651,7 +1651,7 @@ extern "C" {
         utf = (f_macro_utf_character_to_char_4(utf_character) << 24) | (f_macro_utf_character_to_char_3(utf_character) << 16) | (f_macro_utf_character_to_char_2(utf_character) << 8) | f_macro_utf_character_to_char_1(utf_character);
       }
 
-      memcpy(*character, &utf, sizeof(int8_t) * width);
+      memcpy(*character, &utf, width);
     }
 
     return f_none;

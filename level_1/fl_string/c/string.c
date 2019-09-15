@@ -30,7 +30,7 @@ extern "C" {
         return status;
       }
 
-      memcpy(result->string, buffer.string + location.start, sizeof(int8_t) * size);
+      memcpy(result->string, buffer.string + location.start, size);
       result->used = size;
 
       return f_none;
