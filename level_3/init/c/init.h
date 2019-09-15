@@ -50,7 +50,10 @@
  */
 #ifndef _init_h
 
+#define _GNU_SOURCE
+
 // libc includes
+#include <sched.h>
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
@@ -61,6 +64,31 @@
 #include <regex.h>
 #include <malloc.h>
 #include <stdlib.h>
+
+// fll-0 includes
+#include <level_0/console.h>
+#include <level_0/file.h>
+#include <level_0/fss.h>
+#include <level_0/pipe.h>
+#include <level_0/print.h>
+#include <level_0/string.h>
+#include <level_0/type.h>
+
+// fll-1 includes
+#include <level_1/color.h>
+#include <level_1/console.h>
+#include <level_1/directory.h>
+#include <level_1/file.h>
+#include <level_1/fss.h>
+#include <level_1/fss_basic_list.h>
+#include <level_1/fss_extended.h>
+#include <level_1/string.h>
+
+// fll-2 includes
+#include <level_2/execute.h>
+#include <level_2/fss_basic_list.h>
+#include <level_2/fss_extended.h>
+#include <level_2/program.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -193,30 +221,27 @@ extern "C" {
   #endif // _en_init_debug_
 #endif // _di_init_defines_
 
-#ifndef _di_init_argument_
+#ifndef _di_init_data_
   typedef struct {
     f_console_parameter parameters[init_total_parameters];
 
+    f_string_lengths remaining;
+    f_bool process_pipe;
+
     fl_color_context context;
-  } init_argument;
+  } init_data;
 
   #define init_argument_initialize \
     { \
       f_console_parameter_initialize_init, \
+      f_string_lengths_initialize, \
+      f_false, \
       fl_color_context_initialize, \
     }
-
-  #define init_delete_argument(status, argument) \
-    memset(&argument.parameters, 0, sizeof(f_console_parameter) * init_total_parameters); \
-    fl_macro_color_context_delete(status, argument.context);
-
-  #define init_destroy_argument(status, argument) \
-    memset(&argument.parameters, 0, sizeof(f_console_parameter) * init_total_parameters); \
-    fl_macro_color_context_destroy(status, argument.context);
-#endif // _di_init_argument_
+#endif // _di_init_data_
 
 #ifndef _di_init_print_version_
-  extern f_return_status init_print_version(const init_argument data);
+  extern f_return_status init_print_version(const init_data data);
 #endif // _di_init_print_version_
 
 /**
@@ -229,7 +254,7 @@ extern "C" {
  *   f_none on success.
  */
 #ifndef _di_init_print_help_
-  extern f_return_status init_print_help(const init_argument data);
+  extern f_return_status init_print_help(const init_data data);
 #endif // _di_init_print_help_
 
 /**
@@ -245,7 +270,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_init_main_
-  extern f_return_status init_main(const f_console_arguments arguments, init_argument *data);
+  extern f_return_status init_main(const f_console_arguments arguments, init_data *data);
 #endif // _di_init_main_
 
 #ifdef __cplusplus

@@ -3,9 +3,9 @@
  */
 #include <level_3/init.h>
 #include "private-init.h"
-
+/*
 #ifndef _di_init_rule_buffer_
-  f_return_status init_rule_buffer(const f_string filename, f_string_dynamic *buffer, f_fss_objects *objects, f_fss_contents *contents) {
+  f_return_status init_rule_buffer(const init_data data, const f_string filename, f_string_dynamic *buffer, f_fss_objects *objects, f_fss_contents *contents) {
     f_file file = f_file_initialize;
     f_status status = f_none;
     f_file_position file_position = f_file_position_initialize;
@@ -17,21 +17,21 @@
 
       if (optional) {
         if (status == f_invalid_parameter) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open().");
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open().");
         } else if (status != f_file_not_found && status != f_file_open_error && status != f_file_descriptor_error) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", f_status_set_error(status));
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", f_status_set_error(status));
         }
       } else {
         if (status == f_invalid_parameter) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open().");
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open().");
         } else if (status == f_file_not_found) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'.", filename);
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: Unable to find the file '%s'.", filename);
         } else if (status == f_file_open_error) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'.", filename);
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: Unable to open the file '%s'.", filename);
         } else if (status == f_file_descriptor_error) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'.", filename);
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: File descriptor error while trying to open the file '%s'.", filename);
         } else {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", f_status_set_error(status));
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", f_status_set_error(status));
         }
       }
 
@@ -49,19 +49,19 @@
       status = f_status_set_fine(status);
 
       if (status == f_invalid_parameter) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read().");
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read().");
       } else if (status == f_overflow) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'.", filename);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'.", filename);
       } else if (status == f_file_not_open) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: The file '%s' is no longer open.", filename);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: The file '%s' is no longer open.", filename);
       } else if (status == f_file_seek_error) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A seek error occurred while accessing the file '%s'.", filename);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: A seek error occurred while accessing the file '%s'.", filename);
       } else if (status == f_file_read_error) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: A read error occurred while accessing the file '%s'.", filename);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: A read error occurred while accessing the file '%s'.", filename);
       } else if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory.");
       } else {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read().", f_status_set_error(status));
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read().", f_status_set_error(status));
       }
 
       return f_status_set_error(status);
@@ -77,13 +77,13 @@
       status = f_status_set_fine(status);
 
       if (status == f_invalid_parameter) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", filename);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", filename);
       } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: No relevant data was found within the file '%s'.", filename);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: No relevant data was found within the file '%s'.", filename);
       } else if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory.");
       } else {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_status_set_error(status), filename);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_status_set_error(status), filename);
       }
 
       return f_status_set_error(status);
@@ -94,7 +94,7 @@
 #endif // _di_init_rule_buffer_
 
 #ifndef _di_init_rules_process_main_
-  f_return_status init_rules_process_main(const init_data) {
+  f_return_status init_rules_process_main(const init_data data, const f_string filename, f_string_dynamic *buffer, f_fss_objects *objects, f_fss_contents *contents) {
     f_status status  = f_none;
     f_status status2 = f_none;
 
@@ -102,17 +102,17 @@
     status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents);
 
     if (f_status_is_not_error(status)) {
-      status = firewall_perform_commands(*local, *data);
+      //status = init_perform_commands(*local, *data); // @fixme
 
       if (f_status_is_error(status)) {
         status = f_status_set_fine(status);
 
         if (status == f_allocation_error || status == f_reallocation_error) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory.");
         } else if (status == f_failure) {
           // the error message has already been displayed.
         } else {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", f_status_set_error(status));
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", f_status_set_error(status));
         }
 
         f_macro_fss_objects_delete(status2, local->rule_objects);
@@ -128,8 +128,8 @@
 #endif // _init_rules_process_main_
 
 #ifndef _di_init_handler_child_services_
-  f_return_status init_handler_child_services(f_void_p argument) {
-    init_local_data *local_data = (init_local_data *) argument;
+  f_return_status init_handler_child_services(void *data) {
+    init_local_data *local_data = (init_local_data *) data;
 
     // load and process rules.
 
@@ -138,8 +138,8 @@
 #endif // _di_init_handler_child_services_
 
 #ifndef _di_init_handler_child_control_file_
-  f_return_status init_handler_child_control_file(f_void_p argument) {
-    init_local_data *local_data = (init_local_data *) argument;
+  f_return_status init_handler_child_control_file(void *data) {
+    init_local_data *local_data = (init_local_data *) data;
 
     return f_none;
   }
@@ -150,11 +150,11 @@
     stack_memory->services = mmap(0, init_stack_size_small_services, init_stack_protections, init_stack_flags, -1, 0);
     stack_memory->control_file = mmap(0, init_stack_size_small_control_file, init_stack_protections, init_stack_flags, -1, 0);
 
-    if (stack_memory->services == (f_void_p) -1) {
+    if (stack_memory->services == (void *) -1) {
       return f_failure;
     }
 
-    if (stack_memory->control_file == (f_void_p) -1) {
+    if (stack_memory->control_file == (void *) -1) {
       return f_failure;
     }
 
@@ -189,7 +189,7 @@
 #endif // _di_init_delete_stack_memory_
 
 #ifndef _di_init_prepare_system_
-  f_return_status init_prepare_system(f_autochar *run_level) {
+  f_return_status init_prepare_system(int8_t *run_level) {
     f_status status = f_none;
     f_stat stat;
 
@@ -481,7 +481,7 @@
 #endif // _di_init_prepare_init_
 
 #ifndef _di_init_process_main_rule_
-  f_return_status init_process_main_rule(const init_argument argument, f_string_dynamic *buffer, init_data *data) {
+  f_return_status init_process_main_rule(const init_data data, f_string_dynamic *buffer, init_data *settings) {
     f_status status = f_none;
     f_string_dynamic buffer = f_string_dynamic_initialize;
     f_string_location location = f_string_location_initialize;
@@ -490,19 +490,19 @@
     f_string_length position = 0;
 
     // load the main file into memory.
-    status = init_rule_buffer(init_rule_core_file, &buffer, &objects, &contents);
+    status = init_rule_buffer(&data, init_rule_core_file, &buffer, &objects, &contents);
 
     if (f_status_is_error(status)) {
       status = f_status_set_fine(status);
 
       if (status == f_invalid_parameter) {
-        fl_color_print_line(f_standard_error, argument.context.error, argument.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", init_rule_core_file);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", init_rule_core_file);
       } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop) {
-        fl_color_print_line(f_standard_error, argument.context.error, argument.context.reset, "ERROR: No relevant data was found within the file '%s'.", init_rule_core_file);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: No relevant data was found within the file '%s'.", init_rule_core_file);
       } else if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_color_print_line(f_standard_error, argument.context.error, argument.context.reset, "CRITICAL ERROR: unable to allocate memory.");
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory.");
       } else {
-        fl_color_print_line(f_standard_error, argument.context.error, argument.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_status_set_error(status), init_rule_core_file);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", f_status_set_error(status), init_rule_core_file);
       }
 
       f_macro_string_dynamic_delete(buffer);
@@ -527,14 +527,14 @@
 
     if (f_status_is_error(status_process)) {
       if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_color_print_line(f_standard_error, argument->context.error, argument->context.reset, "CRITICAL ERROR: unable to allocate memory.");
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory.");
       }
       else {
-        fl_color_print_line(f_standard_error, argument->context.error, argument->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling init_load_main_rule().", f_status_set_error(status));
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling init_load_main_rule().", f_status_set_error(status));
       }
 
-      init_delete_argument((*argument));
-      init_delete_stack_memory(&stack_memory);
+      // @todo: init_delete_data((*data));
+      // @todo: init_delete_stack_memory(&stack_memory);
       return status_process;
     }
     */
@@ -554,11 +554,11 @@
         status = f_status_set_fine(status);
 
         if (status == f_allocation_error || status == f_reallocation_error) {
-          fl_color_print_line(f_standard_error, data->context.error, context.reset, "CRITICAL ERROR: unable to allocate memory.");
+          fl_color_print_line(f_standard_error, data.context.error, context.reset, "CRITICAL ERROR: unable to allocate memory.");
         } else if (status == f_failure) {
           // the error message has already been displayed.
         } else {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", f_status_set_error(status));
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", f_status_set_error(status));
         }
 
         f_macro_fss_objects_delete(status2, (*rule_objects));
@@ -578,10 +578,11 @@
     f_macro_fss_objects_delete(status2, (*rule_objects));
     f_macro_fss_contents_delete(status2, (*rule_contents));
     */
-
+/*
     f_macro_string_dynamic_delete(buffer);
     f_macro_fss_objects_delete(objects);
     f_macro_fss_contents_delete(contents);
     return status;
   }
 #endif // _di_init_process_main_rule_
+  */

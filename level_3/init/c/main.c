@@ -2,7 +2,7 @@
 
 int main(const unsigned long argc, const f_string *argv) {
   const f_console_arguments arguments = { argc, argv };
-  init_argument data = init_argument_initialize;
+  init_data data = init_argument_initialize;
 
   if (f_pipe_exists()) {
     data.process_pipe = f_true;
