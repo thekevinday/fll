@@ -227,6 +227,12 @@ extern "C" {
           return f_false;
         }
       }
+      else if (byte_first == 0xd8) {
+        // Arabic: U+061D.
+        if (byte == 0x9d) {
+          return f_false;
+        }
+      }
       else if (byte_first == 0xdc) {
         // Syriac: U+070E.
         if (byte == 0x8e) {
@@ -255,6 +261,11 @@ extern "C" {
     else if (width == 3) {
       // @todo: investigate potential performance gains by storing and compararing against the lower 16 bits on the idea that the register size needed for comparrison will be smaller and therefore a faster comparison (16-bit vs 32-bit).
       if (byte_first == 0xe0) {
+        // Arabic Extended-A: U+08B5, U+08BE to U+08D3.
+        if (character == 0xe0a2b500 || character >= 0xe0a2be00 && character <= 0xe0a39300) {
+          return f_false;
+        }
+
         // Bengali: U+09B3 to U+09B5.
         if (character >= 0xe0a6b300 && character <= 0xe0a6b500) {
           return f_false;
@@ -1330,6 +1341,26 @@ extern "C" {
           return f_true;
         }
 
+        // Alphabetic Presentation Forms: U+FB07 to U+FB12.
+        if (character >= 0xefac8700 && character <= 0xefac9200) {
+          return f_false;
+        }
+
+        // Alphabetic Presentation Forms: U+FB18 to U+FB1C.
+        if (character >= 0xefac9800 && character <= 0xefac9c00) {
+          return f_false;
+        }
+
+        // Arabic Presentation Forms: U+FB37, U+FB3D, U+FB3F.
+        if (character == 0xefacb700 || character == 0xefacbd00 || character == 0xefacbf00) {
+          return f_false;
+        }
+
+        // Arabic Presentation Forms: U+FB42, U+FB45.
+        if (character == 0xefad8200 || character == 0xefad8500) {
+          return f_false;
+        }
+
         // Arabic Presentation Forms-A: U+FBC2 to U+FBD2.
         if (character >= 0xefaf8200 && character <= 0xefaf9200) {
           return f_false;
@@ -1418,6 +1449,101 @@ extern "C" {
 
       if (byte_first == 0xf0) {
         if (byte_second == 0x90) {
+          // Aegean Numbers: U+10103 to U+10106.
+          if (character >= 0xf0908483 && character <= 0xf0908486) {
+            return f_false;
+          }
+
+          // Aegean Numbers: U+10134 to U+10136.
+          if (character >= 0xf09084b4 && character <= 0xf09084b6) {
+            return f_false;
+          }
+
+          // Ancient Greek Numbers: U+1018F.
+          if (character == 0xf090868f) {
+            return f_false;
+          }
+
+          // Ancient Symbols: U+1019C to U+1019F.
+          if (character >= 0xf090869c && character <= 0xf090869f) {
+            return f_false;
+          }
+
+          // Ancient Symbols: U+101A1 to U+101CF.
+          if (character >= 0xf09086a1 && character <= 0xf090878f) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE3C to U+1EE41.
+          if (character >= 0xf090b8bc && character <= 0xf090b981) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE43 to U+1EE46.
+          if (character >= 0xf090b983 && character <= 0xf090b986) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE9C to U+1EE9F.
+          if (character >= 0xf090ba9c && character <= 0xf090ba9f) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EEBC to U+1EEEF.
+          if (character >= 0xf090babc && character <= 0xf090bbaf) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EEF2 to U+1EEFF.
+          if (character >= 0xf090bbb2 && character <= 0xf090bbbf) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE04, U+1EE20, U+1EE23, U+1EE25.
+          if (character == 0xf090b884 || character == 0xf090b8a0 || character == 0xf090b8a3 || character == 0xf090b8a5) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE26, U+1EE28, U+1EE33, U+1EE38.
+          if (character == 0xf090b8a6 || character == 0xf090b8a8 || character == 0xf090b8b3 || character == 0xf090b8b8) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE3A, U+1EE48, U+1EE4A, U+1EE4C.
+          if (character == 0xf090b8ba || character == 0xf090b988 || character == 0xf090b98a || character == 0xf090b98c) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE50, U+1EE53, U+1EE55, U+1EE56.
+          if (character == 0xf090b990 || character == 0xf090b993 || character == 0xf090b995 || character == 0xf090b996) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE58, U+1EE5A, U+1EE5C, U+1EE5E.
+          if (character == 0xf090b998 || character == 0xf090b99a || character == 0xf090b99c || character == 0xf090b99e) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE60, U+1EE63, U+1EE65, U+1EE66.
+          if (character == 0xf090b9a0 || character == 0xf090b9a3 || character == 0xf090b9a5 || character == 0xf090b9a6) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE6B, U+1EE73, U+1EE78, U+1EE7D.
+          if (character == 0xf090b9ab || character == 0xf090b9b3 || character == 0xf090b9b8 || character == 0xf090b9bd) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EE7F, U+1EE8A, U+1EEA0, U+1EEA4.
+          if (character == 0xf090b9bf || character == 0xf090ba8a || character == 0xf090baa0 || character == 0xf090baa4) {
+            return f_false;
+          }
+
+          // Arabic Mathematical Alphabetic Symbols: U+1EEAA.
+          if (character == 0xf090baaa) {
+            return f_false;
+          }
+
           // Avestan: U+10B36 to U+10B38.
           if (character >= 0xf090acb6 && character <= 0xf090acb8) {
             return f_false;
@@ -1674,6 +1800,16 @@ extern "C" {
           }
         }
         else if (byte_second == 0x91) {
+          // Ahom: U+1172C to U+1172F.
+          if (character >= 0xf0919cac && character <= 0xf0919caf) {
+            return f_false;
+          }
+
+          // Ahom: U+1171A to U+1171C.
+          if (character >= 0xf0919c9a && character <= 0xf0919c9c) {
+            return f_false;
+          }
+
           // Bhaiksuki: U+11C46 to U+11C4F.
           if (character >= 0xf091b186 && character <= 0xf091b18f) {
             return f_false;
@@ -1911,6 +2047,12 @@ extern "C" {
             return f_false;
           }
         }
+        else if (byte_second == 0x94) {
+          // Anatolian Hieroglyphs: U+14647 to U+1467F.
+          if (character >= 0xf0939987 && character <= 0xf09399bf) {
+            return f_false;
+          }
+        }
         else if (byte_second == 0x96) {
           // Bamum Supplement: U+16A39 to U+16A3F.
           if (character >= 0xf096a8b9 && character <= 0xf096a8bf) {
@@ -1999,6 +2141,11 @@ extern "C" {
           }
         }
         else if (byte_second == 0x9d) {
+          // Ancient Greek Musical Notation: U+1D246 to U+1D24F.
+          if (character >= 0xf09d8986 && character <= 0xf09d898f) {
+            return f_false;
+          }
+
           // Byzantine Musical Symbols: U+1D0F6 to U+1D0FF.
           if (character >= 0xf09d83b6 && character <= 0xf09d83bf) {
             return f_false;
@@ -2065,6 +2212,16 @@ extern "C" {
           }
         }
         else if (byte_second == 0x9e) {
+          // Adlam: U+1E94B to U+1E94F.
+          if (character >= 0xf09ea58b && character <= 0xf09ea58f) {
+            return f_false;
+          }
+
+          // Adlam: U+1E95A to U+1E95D.
+          if (character >= 0xf09ea59a && character <= 0xf09ea59d) {
+            return f_false;
+          }
+
           // Glagolitic Supplement: U+1E02B to U+1E02F.
           if (character >= 0xf09e80ab && character <= 0xf09e80af) {
             return f_false;
@@ -2091,6 +2248,11 @@ extern "C" {
           }
         }
         else if (byte_second == 0x9f) {
+          // Alchemical Symbols: U+1F774 to U+1F77F.
+          if (character >= 0xf09f9db4 && character <= 0xf09f9dbf) {
+            return f_false;
+          }
+
           // Domino Tiles: U+1F094 to U+1F09F.
           if (character >= 0xf09f8294 && character <= 0xf09f829f) {
             return f_false;
