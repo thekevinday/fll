@@ -109,7 +109,6 @@ extern "C" {
   #define byte_dump_sequence_tab                       "␉"
   #define byte_dump_sequence_tab_vertical              "␋"
   #define byte_dump_sequence_unit_separator            "␟"
-  #define byte_dump_sequence_utf_bom                   "␂"
 
   #define byte_dump_character_wall        "|"
   #define byte_dump_character_placeholder "␣" // other likely choices: (substitute form 1: '␚', substitute form 2: '␦').

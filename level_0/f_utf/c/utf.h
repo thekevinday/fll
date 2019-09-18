@@ -48,20 +48,6 @@ extern "C" {
 #endif
 
 /**
- * Define the UTF-8 BOM.
- *
- * The BOM designates that a string is in UTF-8.
- * The BOM must be checked for when processing strings.
- *
- * In many cases, this should be removed such that only one exists in some string block.
- */
-#ifndef _di_f_utf_bom_
-  #define f_utf_bom_length 3
-
-  const static int8_t f_utf_bom[f_utf_bom_length] = { 0xef, 0xbb, 0xbf }; // 1110 1111, 1011 1011, 1011 1111
-#endif // _di_f_utf_bom_
-
-/**
  * Define the UTF-8 bytes.
  *
  * The bytes are for checking a single 8-bit character value (specifically, checking the first bits).
@@ -125,8 +111,6 @@ extern "C" {
  */
 #ifndef _di_f_utf_character_
   typedef uint32_t f_utf_character;
-
-  #define f_utf_character_mask_bom 0xefbbbf00 // 1110 1111, 1011 1011, 1011 1111, 0000 0000
 
   #define f_utf_character_mask_byte_1 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
   #define f_utf_character_mask_byte_2 0xffff0000 // 1111 1111, 1111 1111, 0000 0000, 0000 0000
@@ -531,24 +515,7 @@ extern "C" {
 #endif // _di_f_utf_character_is_
 
 /**
- * Check to see if the entire byte block of the character is a UTF-8 BOM.
- *
- * @param character
- *   The character to validate.
- *
- * @return
- *   f_true if a UTF-8 BOM.
- *   f_false if not a UTF-8 BOM.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
- */
-#ifndef _di_f_utf_character_is_bom_
-  extern f_return_status f_utf_character_is_bom(const f_utf_character character);
-#endif // _di_f_utf_character_is_bom_
-
-/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 control character.
- *
- * The UTF-8 BOM is considered a control character.
  *
  * @param character
  *   The character to validate.
@@ -727,30 +694,7 @@ extern "C" {
 #endif // _di_f_utf_is_
 
 /**
- * Check to see if the entire byte block of the character is a UTF-8 BOM.
- *
- * @param character
- *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by max_width.
- * @param max_width
- *   The maximum width available for checking.
- *   Can be anything greater than 0.
- *
- * @return
- *   f_true if a UTF-8 whitespace or substitute.
- *   f_false if not a UTF-8 whitespace or substitute.
- *   f_maybe (with error bit) if this could be a whitespace or substitute but width is not long enough.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_utf_is_bom_
-  extern f_return_status f_utf_is_bom(const f_string character, const unsigned short max_width);
-#endif // _di_f_utf_is_bom_
-
-/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 control character.
- *
- * The UTF-8 BOM is considered a control character.
  *
  * @param character
  *   The character to validate.
@@ -798,6 +742,17 @@ extern "C" {
  * However, the character could have been cut-off, so whether or not this is actually valid should be determined by the caller.
  *
  * For normal validation functions, try using f_utf_character_is() or f_utf_character_is_valid().
+ *
+ * According to rfc3629, the valid octect sequences for UTF-8 are:
+ *   UTF8-octets = *( UTF8-char )
+ *   UTF8-char   = UTF8-1 / UTF8-2 / UTF8-3 / UTF8-4
+ *   UTF8-1      = %x00-7F
+ *   UTF8-2      = %xC2-DF UTF8-tail
+ *   UTF8-3      = %xE0 %xA0-BF UTF8-tail / %xE1-EC 2( UTF8-tail ) /
+ *                 %xED %x80-9F UTF8-tail / %xEE-EF 2( UTF8-tail )
+ *   UTF8-4      = %xF0 %x90-BF 2( UTF8-tail ) / %xF1-F3 3( UTF8-tail ) /
+ *                 %xF4 %x80-8F 2( UTF8-tail )
+ *   UTF8-tail   = %x80-BF
  *
  * @param character
  *   The character to validate.

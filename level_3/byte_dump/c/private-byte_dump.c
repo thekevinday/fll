@@ -71,21 +71,6 @@
           found_invalid_utf = f_true;
           invalid[character_current] = 1;
         }
-        // UTF-8 characters with width of 4 cannot have any characters of 0x8f as the first byte.
-        else if (width_utf == 4 && byte == 0x8f) {
-          found_invalid_utf = f_true;
-          invalid[character_current] = width_utf;
-        }
-        // These are not defined in Unicode, and so are considered invalid in UTF-8, regardless of their width_utf.
-        else if (byte >= 0xf5) {
-          found_invalid_utf = f_true;
-          invalid[character_current] = width_utf;
-        }
-        // Sequences that start with 0xc1 are invalid because UTF-8 does not support overlong ASCII.
-        else if (byte == 0xc1) {
-          found_invalid_utf = f_true;
-          invalid[character_current] = width_utf;
-        }
         // Process the UTF-8 character.
         else if (width_utf > 1) {
           position++;
@@ -129,21 +114,14 @@
       }
 
       // At this point: an ASCII character is collected, the entire UTF-8 character sequence is collected, or an invalid UTF-8 was processed.
-      if (!found_invalid_utf && width_utf > 1) {
+      if (!invalid[character_current] && width_utf > 1) {
         if (f_utf_character_is_valid(characters.string[character_current]) == f_false) {
-          found_invalid_utf = f_true;
-          invalid[character_current] = width_utf;
-        }
-        // @todo: remove this check once implemented in f_utf_character_is_valid().
-        // Handle special case invalid situations, 0xc0 and 0xc1 are used for two-byte encoding of a 7-bit ASCII but are considered invalid by UTF-8.
-        // Does not include 0xc0 0x80 because this is considered a overlong NULL in UTF-8, which is a valid NULL.
-        else if (width_utf == 2 && characters.string[character_current] > 0xc0800000 && characters.string[character_current] <= 0xc0ff0000) {
           found_invalid_utf = f_true;
           invalid[character_current] = width_utf;
         }
       }
 
-      if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous_bytes, &previous_invalid, &column, &row)) {
+      if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous_bytes, &previous_invalid, &column, &row) == f_true) {
         character_reset = f_true;
       }
 
@@ -153,12 +131,12 @@
         }
 
         if (width_utf > 2) {
-          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous_bytes, &previous_invalid, &column, &row)) {
+          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous_bytes, &previous_invalid, &column, &row) == f_true) {
             character_reset = f_true;
           }
 
           if (width_utf > 3) {
-            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous_bytes, &previous_invalid, &column, &row)) {
+            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous_bytes, &previous_invalid, &column, &row) == f_true) {
               character_reset = f_true;
             }
           }
@@ -525,17 +503,17 @@
       else if (f_utf_character_is_whitespace(characters.string[i]) == f_true) {
         printf("%s", byte_dump_sequence_space);
       }
-      else if (width_utf == 2 && characters.string[i] == 0xc0800000) {
-        // This is an "Overlong Null" and is a valid NULL character.
-        printf("%s", byte_dump_sequence_null);
+      else if (f_utf_character_is_control(characters.string[i]) == f_true) {
+        // print a space (or '.') for control characters.
+        if (data.presentation == byte_dump_presentation_classic) {
+          printf(".");
+        }
+        else {
+          printf(" ");
+        }
       }
       else if (width_utf == 2 && characters.string[i] == 0xd89d0000) {
         // U+061C
-        printf(" ");
-      }
-      else if (width_utf == 2 && characters.string[i] >= 0xc2800000 && characters.string[i] <= 0xc29f0000) {
-        // Use space to represent unprintable Latin-1 supplement control codes.
-        // 0xc2a00000 happens to be the non-breaking space character and is explicitly handled above.
         printf(" ");
       }
       else if (width_utf == 3 && characters.string[i] >= 0xefbfb000 && characters.string[i] <= 0xefbfbc00) {
@@ -562,9 +540,6 @@
       else if (width_utf == 4 && characters.string[i] >= 0xf4808080 && characters.string[i] <= 0xf48fbfbf) {
         // Use space to represent Supplemental Private Use Area-B codes.
         printf(" ");
-      }
-      else if (characters.string[i] == f_utf_character_mask_bom) {
-        fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_sequence_utf_bom);
       }
       else if (width_utf == 1) {
         // print invalid placeholder for invalid UTF-8 widths.
@@ -593,6 +568,7 @@
           }
         }
 
+        // @todo: implement a function in f_utf, such as f_utf_is_combining(), for detecting these combining characters.
         // print a space for combining characters to combine into, thereby allowing it to be safely and readably displayed.
         if (width_utf == 2 && characters.string[i] >= 0xdea60000 && characters.string[i] <= 0xdeb00000) {
           // Thana combining codes: U+07A6 to U+07B0.

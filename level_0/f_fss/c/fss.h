@@ -84,10 +84,14 @@ extern "C" {
  * Max size of a FSS header.
  *
  * The standard FSS character header is: "# fss-0000\n\0", which is 10 characters + newline + EOS = 12.
- * This includes the possibility of the first character being a UTF-8 BOM (which is 3-bytes long, which results in a max size of 15 bytes).
+ *
+ * The UTF-8 BOM is not supported because it is not an actual thing (only a suggestion according to rfc3629).
+ * The UTF-8 BOM sequence is actually a different character called "zero-width non breaking space".
+ * Because it already has use, this project considers the existence of UTF-8 BOM bad practice in all cases.
+ * After all, if your file begins with a "zero-width non breaking space", you may want to actually use a space and not a "BOM".
  */
 #ifndef _di_f_fss_max_header_length_
-  #define f_fss_max_header_length 15
+  #define f_fss_max_header_length 12
 #endif // _di_f_fss_max_header_length_
 
 /**

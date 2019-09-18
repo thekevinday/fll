@@ -20,22 +20,6 @@ extern "C" {
   }
 #endif // _di_f_utf_character_is_
 
-#ifndef _di_f_utf_character_is_bom_
-  f_return_status f_utf_character_is_bom(const f_utf_character character) {
-    if (character == f_utf_character_mask_bom) {
-      return f_true;
-    }
-
-    unsigned short width = f_macro_utf_character_width_is(character);
-
-    if (width == 1) {
-      return f_status_is_error(f_invalid_utf);
-    }
-
-    return f_false;
-  }
-#endif // _di_f_utf_character_is_bom_
-
 #ifndef _di_f_utf_character_is_control_
   f_return_status f_utf_character_is_control(const f_utf_character character) {
     unsigned short width = f_macro_utf_character_width_is(character);
@@ -171,6 +155,11 @@ extern "C" {
     if (width == 2) {
       uint8_t byte = f_macro_utf_character_to_char_2(character);
 
+      if (byte_first < 0xc2 || byte_first > 0xdf) {
+        // Valid UTF-8-2 range = %xC2-DF UTF8-tail.
+        return f_false;
+      }
+
       if (byte_first == 0xcd) {
         // Greek and Coptic: U+0378, U+0379.
         if (byte == 0xb8 || byte == 0xb9) {
@@ -261,7 +250,21 @@ extern "C" {
     else if (width == 3) {
       uint16_t bytes = (uint16_t) ((character & 0x00ffff00) >> 4);
 
+      if (byte_first < 0xe0 || byte_first > 0xef) {
+        // Valid UTF-8-3 ranges = %xE0 %xA0-BF UTF8-tail / %xE1-EC 2( UTF8-tail ) / %xED %x80-9F UTF8-tail / %xEE-EF 2( UTF8-tail )
+        return f_false;
+      }
+
       if (byte_first == 0xe0) {
+        {
+          uint8_t byte_second = f_macro_utf_character_to_char_2(character);
+
+          // Valid UTF-8-3 ranges = %xE0 %xA0-BF UTF8-tail
+          if (byte_second < 0xa0 || byte_second > 0xbf) {
+            return f_false;
+          }
+        }
+
         // Arabic Extended-A: U+08B5, U+08BE to U+08D3.
         if (bytes == 0xa2b5 || bytes >= 0xa2be && bytes <= 0xa393) {
           return f_false;
@@ -1299,6 +1302,15 @@ extern "C" {
         }
       }
       else if (byte_first == 0xed) {
+        {
+          uint8_t byte_second = f_macro_utf_character_to_char_2(character);
+
+          // Valid UTF-8-3 ranges = %xED %x80-9F UTF8-tail
+          if (byte_second < 0x80 || byte_second > 0x9f) {
+            return f_false;
+          }
+        }
+
         // Hangul Jamo Extended-B: U+D7C7 to U+D7CA.
         if (bytes >= 0x9f87 && bytes <= 0x9f8a) {
           return f_false;
@@ -2582,36 +2594,6 @@ extern "C" {
     return f_true;
   }
 #endif // _di_f_utf_is_
-
-#ifndef _di_f_utf_is_bom_
-  f_return_status f_utf_is_bom(const f_string character, const unsigned short max_width) {
-    #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    unsigned short width = f_macro_utf_byte_width_is(*character);
-
-    if (width == 0) {
-      return f_false;
-    }
-
-    if (width == 1) {
-      return f_status_is_error(f_incomplete_utf);
-    }
-
-    if (width > max_width) {
-      return f_status_set_error(f_maybe);
-    }
-
-    if (width == 3) {
-      if (!memcmp(character, f_utf_bom, width)) {
-        return f_true;
-      }
-    }
-
-    return f_false;
-  }
-#endif // _di_f_utf_is_bom_
 
 #ifndef _di_f_utf_is_control_
   f_return_status f_utf_is_control(const f_string character, const unsigned short max_width) {

@@ -47,27 +47,8 @@ extern "C" {
 
     register f_string_length i = 0;
 
-    // A single UTF-8 BOM is allowed to exist before the valid FSS identifier.
-    if (buffer.used > 3) {
-      f_status status = f_utf_is_bom(buffer.string, 4);
-
-      if (f_status_is_error(status)) {
-        return f_status_set_error(fl_fss_no_header);
-      }
-
-      if (status == f_true) {
-        i = f_utf_bom_length;
-
-        if (buffer.used < 10 + f_utf_bom_length) {
-          return fl_fss_no_header;
-        }
-      }
-      else if (buffer.used < 10) {
-        // "# fss-0000" without UTF-8 BOM is always 10 characters.
-        return fl_fss_no_header;
-      }
-    }
-    else {
+    if (buffer.used < 10) {
+      // "# fss-0000" is always 10 characters.
       return fl_fss_no_header;
     }
 

@@ -49,8 +49,6 @@ extern "C" {
 /**
  * Increment buffer location until a graph character (including UTF-8) or an EOL is matched.
  *
- * This will ignore the UTF-8 BOM.
- *
  * @param buffer
  *   The buffer to traverse.
  * @param location
@@ -75,8 +73,6 @@ extern "C" {
 
 /**
  * Increment buffer location until a non-graph character (including UTF-8) or an EOL is matched.
- *
- * This will ignore the UTF-8 BOM.
  *
  * @param buffer
  *   The buffer to traverse.

@@ -60,8 +60,6 @@ extern "C" {
 /**
  * Identify FSS type from a buffered string.
  *
- * The UTF-8 BOM is allowed to exist as the first character of the FSS header, but not anywhere else.
- *
  * @param buffer
  *   The string to process.
  * @param header

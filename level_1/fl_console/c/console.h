@@ -46,8 +46,6 @@ extern "C" {
  * - May not be grouped and must be separated from any subsequent parameter, such as: "tar extract create file".
  * - Additional parameters must immediately follow the parameter, such as "tar extract file file.tar.gz create".
  *
- * The UTF-8 BOM is not allowed in the parameters.
- *
  * @param arguments
  *   The parameters passed to the process.
  * @param parameters

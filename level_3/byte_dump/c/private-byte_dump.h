@@ -60,6 +60,10 @@ extern "C" {
  *   The current row that the character is being printed on.
  *   When the max width is reached byte_dump_print_text() is called and this value is incremented.
  *
+ * @return
+ *   f_true is returned to designate that a reset is needed.
+ *   f_false is returned to designate that a reset is not needed.
+ *
  * @see byte_dump_print_text()
  */
 #ifndef _di_byte_dump_print_character_fragment_
