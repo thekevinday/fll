@@ -680,7 +680,7 @@ extern "C" {
 
       default:
         *string = 0;
-        return f_invalid_data;
+        return f_status_set_error(f_invalid_data);
     }
 
     return f_none;

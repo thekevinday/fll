@@ -700,7 +700,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_invalid_data if there status is unknown.
+ *   f_invalid_data (with error bit) if there status is unknown.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_status_to_string_

@@ -40,7 +40,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if string is empty.
- *   f_invalid_data if not found.
+ *   f_invalid_data (with error bit) if not found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_status_from_string_

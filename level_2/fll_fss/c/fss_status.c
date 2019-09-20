@@ -19,7 +19,7 @@ extern "C" {
 
     // numbers are not valid status code strings.
     if ((status = f_is_decimal(string[0])) == f_true) {
-      return f_invalid_data;
+      return f_status_set_error(f_invalid_data);
     }
 
     if (f_status_is_error(status)) {
@@ -92,7 +92,7 @@ extern "C" {
       return f_none;
     }
 
-    return f_invalid_data;
+    return f_status_set_error(f_invalid_data);
   }
 #endif // _di_fll_fss_status_from_string_
 

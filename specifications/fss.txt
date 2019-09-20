@@ -42,11 +42,19 @@ Unlike this specification, a more traditional delimit process would have the abo
   "Object 1" "This is a single quoted Content." \"Additional unquoted Content\"
   Object_2 This is multiple\" Contents and the trailing quote does not need to be delimited.
 
-All specifications are expected to support or be of the character encoding utf-8; however, there is no imposed restriction on supporting or using any other encoding.
+All specifications are expected to support or be of the character encoding UTF-8; however, there is no imposed restriction on supporting or using any other encoding.
 Those encodings must only support the appropriate characters required by a given standard for differentiating Objects, Contents, and delimits.
 
 Unless explicitly defined, comments are designated by the pound symbol '#' but only if only whitespace is to the left of the pound.
 There is no support for inline comments.
+
+Unless explicitly defined, all designation characters must be in ASCII.
+With designation characters being any character code used to designate how to read a file (such as a colon ':' at the end of a basic list).
+This keeps the processing and logic simple, for UTF-8.
+Whitespace used for designation characters must include support UTF-8 whitespace characters, unless explicitly designate not to.
+Control characters used for designation characters must include support UTF-8 control character support, unless explicitly designate not to.
+
+The UTF-8 BOM is not allowed as a "BOM", instead it must always be treated as the character represented by its code (unless explicitly allowed).
 
 The follow specifications are defined in this project.
 Each of these specifications has a common name associated with the specification number.

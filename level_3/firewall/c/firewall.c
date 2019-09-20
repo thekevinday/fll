@@ -415,7 +415,7 @@ extern "C" {
 
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
-              return f_invalid_data;
+              return f_status_set_error(f_invalid_data);
             }
           }
 
@@ -455,7 +455,7 @@ extern "C" {
 
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
-              return f_invalid_data;
+              return f_status_set_error(f_invalid_data);
             }
           }
 

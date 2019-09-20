@@ -4,8 +4,8 @@
 extern "C" {
 #endif
 
-#ifndef _di_fl_fss_basic_list_object_read_
-  f_return_status fl_fss_basic_list_object_read(f_string_dynamic *buffer, f_string_location *location, f_fss_object *found) {
+#ifndef _di_fl_fss_extended_list_object_read_
+  f_return_status fl_fss_extended_list_object_read(f_string_dynamic *buffer, f_string_location *location, f_fss_object *found) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (location == 0) return f_status_set_error(f_invalid_parameter);
@@ -65,7 +65,7 @@ extern "C" {
 
         fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
-        if (buffer->string[location->start] == f_fss_basic_list_open) {
+        if (buffer->string[location->start] == f_fss_extended_list_open) {
           f_string_length stop_point = location->start - 1;
 
           status = fl_fss_increment_buffer(*buffer, location, 1);
@@ -130,7 +130,7 @@ extern "C" {
 
         continue;
       }
-      else if (buffer->string[location->start] == f_fss_basic_list_open) {
+      else if (buffer->string[location->start] == f_fss_extended_list_open) {
         f_string_length stop_point = location->start - 1;
 
         status = fl_fss_increment_buffer(*buffer, location, 1);
@@ -180,10 +180,10 @@ extern "C" {
 
     return fl_fss_found_no_object;
   }
-#endif // _di_fl_fss_basic_list_object_read_
+#endif // _di_fl_fss_extended_list_object_read_
 
-#ifndef _di_fl_fss_basic_list_content_read_
-  f_return_status fl_fss_basic_list_content_read(f_string_dynamic *buffer, f_string_location *location, f_fss_content *found) {
+#ifndef _di_fl_fss_extended_list_content_read_
+  f_return_status fl_fss_extended_list_content_read(f_string_dynamic *buffer, f_string_location *location, f_fss_content *found) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (location == 0) return f_status_set_error(f_invalid_parameter);
@@ -245,7 +245,7 @@ extern "C" {
           fl_macro_fss_content_return_on_overflow((*buffer), (*location), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
         }
 
-        if (buffer->string[location->start] == f_fss_basic_list_open) {
+        if (buffer->string[location->start] == f_fss_extended_list_open) {
           f_string_length stop_point = location->start - 1;
 
           status = fl_fss_increment_buffer(*buffer, location, 1);
@@ -321,7 +321,7 @@ extern "C" {
 
         continue;
       }
-      else if (buffer->string[location->start] == f_fss_basic_list_open) {
+      else if (buffer->string[location->start] == f_fss_extended_list_open) {
         status = fl_fss_increment_buffer(*buffer, location, 1);
         if (f_status_is_error(status)) return status;
 
@@ -384,10 +384,10 @@ extern "C" {
 
     return fl_fss_found_no_content;
   }
-#endif // _di_fl_fss_basic_list_content_read_
+#endif // _di_fl_fss_extended_list_content_read_
 
-#ifndef _di_fl_fss_basic_list_object_write_
-  f_return_status fl_fss_basic_list_object_write(const f_string_dynamic object, f_string_location *location, f_string_dynamic *buffer) {
+#ifndef _di_fl_fss_extended_list_object_write_
+  f_return_status fl_fss_extended_list_object_write(const f_string_dynamic object, f_string_location *location, f_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -431,6 +431,16 @@ extern "C" {
         break;
       }
       else if (f_status_is_error(status)) {
+        f_status status2 = f_status_set_fine(status);
+
+        if (status2 == f_failure) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        if (status2 == f_failure) {
+          return f_status_set_error(f_incomplete_utf);
+        }
+
         return status;
       }
 
@@ -491,6 +501,7 @@ extern "C" {
         }
       }
       else if (object.string[location->start] == f_string_eol) {
+        // @todo: review what this is doing.
         if (buffer_position.stop == buffer_position.start) {
           return f_no_data_on_eol;
         }
@@ -507,7 +518,7 @@ extern "C" {
       if (f_status_is_error(status)) return status;
     } // while
 
-    buffer->string[buffer_position.stop] = f_fss_basic_list_open;
+    buffer->string[buffer_position.stop] = f_fss_extended_list_open;
     buffer->string[buffer_position.stop + 1] = f_string_eol;
     buffer->used = buffer_position.stop + 2;
 
@@ -520,10 +531,10 @@ extern "C" {
 
     return f_none;
   }
-#endif // _di_fl_fss_basic_list_object_write_
+#endif // _di_fl_fss_extended_list_object_write_
 
-#ifndef _di_fl_fss_basic_list_content_write_
-  f_return_status fl_fss_basic_list_content_write(const f_string_dynamic content, f_string_location *location, f_string_dynamic *buffer) {
+#ifndef _di_fl_fss_extended_list_content_write_
+  f_return_status fl_fss_extended_list_content_write(const f_string_dynamic content, f_string_location *location, f_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -590,7 +601,7 @@ extern "C" {
           slash_count++;
         } // while
 
-        if (content.string[location->start] == f_fss_basic_list_open) {
+        if (content.string[location->start] == f_fss_extended_list_open) {
           f_string_length length = location->start;
 
           status = fl_fss_increment_buffer(content, location, 1);
@@ -628,13 +639,13 @@ extern "C" {
             is_comment = f_false;
           }
 
-          buffer->string[buffer_position.stop] = f_fss_basic_list_open;
+          buffer->string[buffer_position.stop] = f_fss_extended_list_open;
           buffer_position.stop++;
           location->start = length + 1;
           continue;
         }
       }
-      else if (content.string[location->start] == f_fss_basic_list_open && !is_comment) {
+      else if (content.string[location->start] == f_fss_extended_list_open && !is_comment) {
         f_string_length length = location->start;
 
         has_graph = f_true;
@@ -668,7 +679,7 @@ extern "C" {
           is_comment = f_false;
         }
 
-        buffer->string[buffer_position.stop] = f_fss_basic_list_open;
+        buffer->string[buffer_position.stop] = f_fss_extended_list_open;
         buffer_position.stop++;
         location->start = length + 1;
         continue;
@@ -718,7 +729,7 @@ extern "C" {
 
     return f_none;
   }
-#endif // _di_fl_fss_basic_list_content_write_
+#endif // _di_fl_fss_extended_list_content_write_
 
 #ifdef __cplusplus
 } // extern "C"
