@@ -18,13 +18,13 @@ extern "C" {
 
     f_status status = f_none;
 
-    // delimits must only be applied once a valid object is found
+    // delimits must only be applied once a valid object is found.
     f_string_lengths delimits = f_string_lengths_initialize;
 
     fl_fss_skip_past_whitespace(*buffer, location);
     fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
-    // return found nothing if this line only contains whitespace and delimit placeholders
+    // return found nothing if this line only contains whitespace and delimit placeholders.
     if (buffer->string[location->start] == f_string_eol) {
       status = fl_fss_increment_buffer(*buffer, location, 1);
       if (f_status_is_error(status)) return status;
@@ -32,10 +32,10 @@ extern "C" {
       return fl_fss_found_no_object;
     }
 
-    // begin the search
+    // begin the search.
     found->start = location->start;
 
-    // ignore all comment lines
+    // ignore all comment lines.
     if (buffer->string[location->start] == f_fss_comment) {
       fl_macro_fss_object_seek_till_newline((*buffer), (*location), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
@@ -45,7 +45,7 @@ extern "C" {
       return fl_fss_found_no_object;
     }
 
-    // identify where the object ends
+    // identify where the object ends.
     while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol) {
       if (buffer->string[location->start] == f_fss_delimit_slash) {
         f_string_length first_slash = location->start;
@@ -85,7 +85,7 @@ extern "C" {
           fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
           if (buffer->string[location->start] == f_string_eol) {
-            f_string_length length = location->start;
+            f_string_length start = location->start;
 
             location->start = first_slash;
 
@@ -95,7 +95,7 @@ extern "C" {
               f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
               if (f_status_is_error(allocation_status)) {
-                f_macro_string_lengths_delete(allocation_status, delimits);
+                f_macro_string_lengths_delete(status, delimits);
                 return allocation_status;
               }
             }
@@ -118,12 +118,12 @@ extern "C" {
               fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
               found->stop = stop_point;
-              location->start = length + 1;
+              location->start = start + 1;
 
               return fl_fss_found_object;
             }
 
-            location->start = length + 1;
+            location->start = start + 1;
             return fl_fss_found_no_object;
           }
         }
@@ -167,7 +167,7 @@ extern "C" {
       if (f_status_is_error(status)) return status;
     } // while
 
-    // seek to the end of the line when no valid object is found
+    // seek to the end of the line when no valid object is found.
     while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol) {
       status = fl_fss_increment_buffer(*buffer, location, 1);
       if (f_status_is_error(status)) return status;
@@ -270,12 +270,11 @@ extern "C" {
           }
 
           if (buffer->string[location->start] == f_string_eol) {
-            f_string_length length = location->start;
+            f_string_length start = location->start;
 
             location->start = first_slash;
 
             if (slash_count % 2 == 0) {
-              // FIXME: apply delimits??
               if (found_newline) {
                 fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
@@ -295,7 +294,7 @@ extern "C" {
               f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
               if (f_status_is_error(allocation_status)) {
-                f_macro_string_lengths_delete(allocation_status, delimits);
+                f_macro_string_lengths_delete(status, delimits);
                 return allocation_status;
               }
             }
@@ -315,7 +314,7 @@ extern "C" {
             } // while
 
             found_newline = f_true;
-            location->start = length + 1;
+            location->start = start + 1;
           }
         }
 
@@ -425,7 +424,7 @@ extern "C" {
     while (location->start <= location->stop && location->start < object.used) {
       if (object.string[location->start] == f_fss_comment) {
         // comments are not allowed and this format has no way of "wrapping" a comment.
-        return f_status_set_error(f_invalid_data);
+        return f_status_set_error(fl_fss_found_comment);
       }
       else if ((status = fl_fss_is_graph(object, *location)) == f_true) {
         break;
@@ -591,7 +590,7 @@ extern "C" {
         } // while
 
         if (content.string[location->start] == f_fss_basic_list_open) {
-          f_string_length length = location->start;
+          f_string_length start = location->start;
 
           status = fl_fss_increment_buffer(content, location, 1);
           if (f_status_is_error(status)) return status;
@@ -630,12 +629,12 @@ extern "C" {
 
           buffer->string[buffer_position.stop] = f_fss_basic_list_open;
           buffer_position.stop++;
-          location->start = length + 1;
+          location->start = start + 1;
           continue;
         }
       }
       else if (content.string[location->start] == f_fss_basic_list_open && !is_comment) {
-        f_string_length length = location->start;
+        f_string_length start = location->start;
 
         has_graph = f_true;
 
@@ -670,7 +669,7 @@ extern "C" {
 
         buffer->string[buffer_position.stop] = f_fss_basic_list_open;
         buffer_position.stop++;
-        location->start = length + 1;
+        location->start = start + 1;
         continue;
       }
       else if (content.string[location->start] == f_fss_comment && !has_graph) {

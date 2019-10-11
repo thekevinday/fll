@@ -70,6 +70,11 @@ extern "C" {
     #define fll_fss_status_string_found_object_no_content_length 31
   #endif // _di_fll_fss_status_success_
 
+  #ifndef _di_fll_fss_status_codes_
+    #define fll_fss_status_string_found_comment "fl_fss_found_comment"
+    #define fll_fss_status_string_found_comment_length 15
+  #endif // _di_fll_fss_status_codes_
+
   #define fll_fss_status_string_last_error_code "fl_fss_last_error_code"
   #define fll_fss_status_string_last_error_code_length 23
 #endif // _di_fll_fss_status_string_

@@ -86,8 +86,8 @@ extern "C" {
  * The standard FSS character header is: "# fss-0000\n\0", which is 10 characters + newline + EOS = 12.
  *
  * The UTF-8 BOM is not supported because it is not an actual thing (only a suggestion according to rfc3629).
- * The UTF-8 BOM sequence is actually a different character called "zero-width non breaking space".
- * Because it already has use, this project considers the existence of UTF-8 BOM bad practice in all cases.
+ * The UTF-8 BOM sequence is actually a different character called "zero-width non-breaking space".
+ * Because it already has a use, this project considers the existence of UTF-8 BOM bad practice in all cases.
  * After all, if your file begins with a "zero-width non breaking space", you may want to actually use a space and not a "BOM".
  */
 #ifndef _di_f_fss_max_header_length_
@@ -267,6 +267,120 @@ extern "C" {
   #define f_macro_fss_contents_resize(status, contents, new_length) f_macro_memory_structures_resize(status, contents, f_fss_content, new_length, f_array_length)
   #define f_macro_fss_contents_adjust(status, contents, new_length) f_macro_memory_structures_resize(status, contents, f_fss_content, new_length, f_array_length)
 #endif // _di_f_fss_contents_
+
+/**
+ * This holds a object and its associated content.
+ *
+ * To designate that either object or content is non-existent, set start position greater than stop position.
+ * In particular, set start to 1 and stop to 0.
+ *
+ * object: The object.
+ * content: The content associated with the object.
+ * parent: A location referencing a parrent object or content that this object content is nested under.
+ */
+#ifndef _di_fss_content_child_
+  typedef struct {
+    f_fss_object   object;
+    f_fss_content  content;
+    f_array_length parent;
+  } f_fss_content_child;
+
+  #define f_fss_content_child_initialize { f_fss_object_initialize, f_fss_content_initialize, f_array_length_initialize }
+
+  #define f_macro_fss_content_child_clear(object_content) f_macro_memory_structure_new(object_content)
+
+  #define f_macro_fss_content_child_new(status, object_content, length) f_macro_memory_structure_new(status, object_content, f_fss_content_child, length)
+
+  #define f_macro_fss_content_child_delete(status, object_content) f_macro_memory_structure_delete(status, object_content, f_fss_content_child)
+  #define f_macro_fss_content_child_destroy(status, object_content) f_macro_memory_structure_destroy(status, object_content, f_fss_content_child)
+
+  #define f_macro_fss_content_child_resize(status, object_content, new_length) f_macro_memory_structure_resize(status, object_content, f_fss_content_child, new_length)
+  #define f_macro_fss_content_child_adjust(status, object_content, new_length) f_macro_memory_structure_adjust(status, object_content, f_fss_content_child, new_length)
+#endif // _di_fss_content_child_
+
+/**
+ * This holds an array of fss_content_child.
+ *
+ * This is designed to be used as a part of f_fss_content_nest.
+ * Range represents the full range of the particular content set.
+ * Range can exist before the first child and after the last child to represent unnested data within the content.
+ *
+ * For example:
+ *   object {
+ *     fss_basic_content before nested content.
+ *     nested_1 {
+ *        Nested content one.
+ *     }
+ *
+ *     More content in between.
+ *
+ *     nested_2 {
+ *        Nested content two.
+ *        nested_3 {
+ *          Nested content three.
+ *        }
+ *     }
+ *
+ *     More content after.
+ *   }
+ *
+ * range: A location range representing the full start/stop locations of the entire set.
+ * array: The array of objectm their associated content, and their associated parent.
+ * size: Total amount of allocated space.
+ * used: Total number of allocated spaces used.
+ */
+#ifndef _di_fss_content_childs_
+  typedef struct {
+    f_string_location   range;
+    f_fss_content_child *array;
+    f_array_length      size;
+    f_array_length      used;
+  } f_fss_content_childs;
+
+  #define f_fss_content_childs_initialize { f_string_location_initialize, 0, 0, 0 }
+
+  // @todo: f_macro_memory_structure.. might not be usable here, review and confirm/deny this.
+  #define f_macro_fss_content_childs_clear(object_contents) f_macro_memory_structure_new(object_contents)
+
+  #define f_macro_fss_content_childs_new(status, object_contents, length) f_macro_memory_structure_new(status, object_contents, f_fss_content_childs, length)
+
+  #define f_macro_fss_content_childs_delete(status, object_contents) f_macro_memory_structure_delete(status, object_contents, f_fss_content_childs)
+  #define f_macro_fss_content_childs_destroy(status, object_contents) f_macro_memory_structure_destroy(status, object_contents, f_fss_content_childs)
+
+  #define f_macro_fss_content_childs_resize(status, object_contents, new_length) f_macro_memory_structure_resize(status, object_contents, f_fss_content_childs, new_length)
+  #define f_macro_fss_content_childs_adjust(status, object_contents, new_length) f_macro_memory_structure_adjust(status, object_contents, f_fss_content_childs, new_length)
+#endif // _di_fss_content_childs_
+
+/**
+ * This holds an array of f_fss_content_childs.
+ *
+ * Each array row represents the nesting depth.
+ * The top-level will not have any parent, so "parent" must be ignored on anything at index 0.
+ * The parent identifier is expected to reference a position in the nesting depth immediately above it.
+ *
+ * array: an array of child objects.
+ * size: Total amount of allocated space.
+ * used: Total number of allocated spaces used.
+ */
+#ifndef _di_fss_content_nest_
+  typedef struct {
+    f_fss_content_childs *array;
+    f_array_length       size;
+    f_array_length       used;
+  } f_fss_content_nest;
+
+  #define f_fss_content_nest_initialize { 0, 0, 0 }
+
+  #define f_macro_fss_content_nest_clear(object_content_nested) f_macro_memory_structure_new(object_content_nested)
+
+  #define f_macro_fss_content_nest_new(status, object_content_nested, length) f_macro_memory_structure_new(status, object_content_nested, f_fss_content_nest, length)
+
+  #define f_macro_fss_content_nest_delete(status, object_content_nested) f_macro_memory_structure_delete(status, object_content_nested, f_fss_content_nest)
+  #define f_macro_fss_content_nest_destroy(status, object_content_nested) f_macro_memory_structure_destroy(status, object_content_nested, f_fss_content_nest)
+
+  #define f_macro_fss_content_nest_resize(status, object_content_nested, new_length) f_macro_memory_structure_resize(status, object_content_nested, f_fss_content_nest, new_length)
+  #define f_macro_fss_content_nest_adjust(status, object_content_nested, new_length) f_macro_memory_structure_adjust(status, object_content_nested, f_fss_content_nest, new_length)
+#endif // _di_fss_content_nest_
 
 #ifdef __cplusplus
 } // extern "C"

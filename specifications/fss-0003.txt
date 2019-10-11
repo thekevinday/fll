@@ -9,13 +9,15 @@ Any Content that could be interpreted as an end of content must be delimited if 
 Whitespace may follow a valid close-brace but a terminating newline must be present to designate a valid end of content.
 
 There is no single-quote or double-quote delimitation in this specification.
-Only the open-brance that would result in a valid Object or the close-brace that would terminate valid Content can be delimited.
+Only the open-brace that would result in a valid Object or the close-brace that would terminate valid Content can be delimited.
+Each delimit slash in an open-brace is treated as a potential delimit such that two slashes represents a single delimited slash ('\\\{' would represent '\{').
+Only the first delimit slash in a close-brace is treated as a potential delimit ('\\\}' would represent '\\}').
 
 Key:
   \s = whitespace, except newline.
   \o = any printable character, except unescaped '{'.
   \l = any printable character or whitespace, except unescaped '}'.
-  \c = either whitespace or printable, including newline, that not interpretable as an Object.
+  \c = either whitespace or printable, including newline, that is not interpretable as an Object.
   \n = newline.
   * = 0 or more occurrences.
 

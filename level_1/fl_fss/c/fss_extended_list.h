@@ -99,7 +99,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_extended_list_content_read_
-  extern f_return_status fl_fss_extended_list_content_read(f_string_dynamic *buffer, f_string_location *location, f_fss_content *found);
+  extern f_return_status fl_fss_extended_list_content_read(f_string_dynamic *buffer, f_string_location *location, f_fss_content_nest *found);
 #endif // _di_fl_fss_extended_list_content_read_
 
 /**

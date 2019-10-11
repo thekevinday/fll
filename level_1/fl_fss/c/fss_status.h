@@ -42,6 +42,10 @@ enum {
     fl_fss_found_object_no_content, // for the case where an object is found but no content could possibly exist
   #endif // _di_fl_fss_status_success_
 
+  #ifndef _di_fl_fss_status_codes_
+    fl_fss_found_comment,
+  #endif // _di_fl_fss_status_codes_
+
   fl_fss_last_error_code,
 }; // enum
 

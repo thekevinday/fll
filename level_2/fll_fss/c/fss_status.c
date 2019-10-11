@@ -87,6 +87,13 @@ extern "C" {
       }
     #endif // _di_fll_fss_status_success_
 
+    #ifndef _di_fll_fss_status_codes_
+      if (fl_string_compare(string, fll_fss_status_string_found_comment, length, fll_fss_status_string_found_comment_length) == f_equal_to) {
+        *error = fl_fss_found_object;
+        return f_none;
+      }
+    #endif // _di_fll_fss_status_codes_
+
     if (fl_string_compare(string, fll_fss_status_string_last_error_code, length, fll_fss_status_string_last_error_code_length) == f_equal_to) {
       *error = f_last_status_code;
       return f_none;
@@ -147,9 +154,16 @@ extern "C" {
           break;
       #endif // _di_fll_fss_status_success_
 
+      #ifndef _di_fll_fss_status_codes_
+        case fl_fss_found_comment:
+          *string = fll_fss_status_string_found_comment;
+          break;
+      #endif // _di_fll_fss_status_codes_
+
       case fl_fss_last_error_code:
         *string = fll_fss_status_string_last_error_code;
         break;
+
     default:
         return fl_status_to_string(error, string);
     }
