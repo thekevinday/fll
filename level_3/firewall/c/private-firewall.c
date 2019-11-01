@@ -1,6 +1,10 @@
 #include <level_3/firewall.h>
 #include "private-firewall.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 f_return_status firewall_perform_commands(const firewall_local_data local, const firewall_data data) {
   f_status status = f_none;
   f_status status2 = f_none;
@@ -1493,3 +1497,7 @@ f_return_status firewall_delete_local_data(firewall_local_data *local) {
 
   return f_none;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

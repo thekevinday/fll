@@ -125,7 +125,7 @@ extern "C" {
 /**
  * Stores information about a particular fss file, otherwise known as its header.
  *
- * type: the kind of fss file is this.
+ * type:   the kind of fss file is this.
  * length: Total length of the header.
  */
 #ifndef _di_f_fss_header_
@@ -141,8 +141,8 @@ extern "C" {
  * This holds an array of fss_headers.
  *
  * array: The array of headers.
- * size: Total amount of allocated space.
- * used: Total number of allocated spaces used.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_headers_
   typedef struct {
@@ -187,8 +187,8 @@ extern "C" {
  * This holds an array of fss_object.
  *
  * array: The array of objects.
- * size: Total amount of allocated space.
- * used: Total number of allocated spaces used.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_fss_objects_
   typedef struct {
@@ -218,8 +218,8 @@ extern "C" {
  * There will be no nesting beyond the first level recorded in this structure.
  *
  * array: The array of content.
- * size: Total amount of allocated space.
- * used: Total number of allocated spaces used.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_fss_content_
   typedef struct {
@@ -245,8 +245,8 @@ extern "C" {
  * This holds an array of fss_content.
  *
  * array: The array of content arrays.
- * size: Total amount of allocated space.
- * used: Total number of allocated spaces used.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_contents_
   typedef struct {
@@ -269,14 +269,16 @@ extern "C" {
 #endif // _di_f_fss_contents_
 
 /**
- * This holds a object and its associated content.
+ * This holds a child content object and its associated content.
+ *
+ * Child content represents content nested within some other content and never represents the top-most content.
  *
  * To designate that either object or content is non-existent, set start position greater than stop position.
  * In particular, set start to 1 and stop to 0.
  *
- * object: The object.
+ * object:  The object.
  * content: The content associated with the object.
- * parent: A location referencing a parrent object or content that this object content is nested under.
+ * parent:  A location referencing a parrent object or content that this object content is nested under.
  */
 #ifndef _di_fss_content_child_
   typedef struct {
@@ -287,15 +289,81 @@ extern "C" {
 
   #define f_fss_content_child_initialize { f_fss_object_initialize, f_fss_content_initialize, f_array_length_initialize }
 
-  #define f_macro_fss_content_child_clear(object_content) f_macro_memory_structure_new(object_content)
+  /**
+   * Reset a fss content child stucture to 0 (clear all values).
+   *
+   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
+   *
+   * content_child: the f_fss_content_child structure to operate on.
+   */
+  #define f_macro_fss_content_child_clear(content_child) \
+    content_child.object.start = 1; \
+    content_child.object.stop = 0; \
+    f_macro_fss_content_clear(content_child.content); \
+    content_child.parent = 0;
 
-  #define f_macro_fss_content_child_new(status, object_content, length) f_macro_memory_structure_new(status, object_content, f_fss_content_child, length)
+  /**
+   * Create a new fss content child structure.
+   *
+   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
+   *
+   * status:    the status to return.
+   * structure: the structure to operate on.
+   * type:      the structure type.
+   * length:    the new size of the array.
+   */
+  #define f_macro_fss_content_child_new(status, content_child, length) \
+    content_child.object.start = 1; \
+    content_child.object.stop = 0; \
+    f_macro_fss_content_new(status, content_child.content, length) \
+    content_child.parent = 0;
 
-  #define f_macro_fss_content_child_delete(status, object_content) f_macro_memory_structure_delete(status, object_content, f_fss_content_child)
-  #define f_macro_fss_content_child_destroy(status, object_content) f_macro_memory_structure_destroy(status, object_content, f_fss_content_child)
+  /**
+   * Delete a fss content child.
+   *
+   * status:        the status to return.
+   * content_child: the f_fss_content_child structure to operate on.
+   */
+  #define f_macro_fss_content_child_delete(status, content_child) \
+    f_macro_fss_content_delete(status, content_child.content) \
+    if (status == f_none) { \
+      content_child.object.start = 1; \
+      content_child.object.stop = 0; \
+      content_child.parent = 0; \
+    }
 
-  #define f_macro_fss_content_child_resize(status, object_content, new_length) f_macro_memory_structure_resize(status, object_content, f_fss_content_child, new_length)
-  #define f_macro_fss_content_child_adjust(status, object_content, new_length) f_macro_memory_structure_adjust(status, object_content, f_fss_content_child, new_length)
+  /**
+   * Destroy a fss content child.
+   *
+   * status:        the status to return.
+   * content_child: the f_fss_content_child structure to operate on.
+   */
+  #define f_macro_fss_content_child_destroy(status, content_child) \
+    f_macro_fss_content_destroy(status, content_child.content) \
+    if (status == f_none) { \
+      content_child.object.start = 1; \
+      content_child.object.stop = 0; \
+      content_child.parent = 0; \
+    }
+
+  /**
+   * Resize a fss content child.
+   *
+   * status:        the status to return.
+   * content_child: the f_fss_content_child structure to operate on.
+   * new_length:    the new size of the array.
+   */
+  #define f_macro_fss_content_child_resize(status, content_child, new_length) f_macro_fss_content_resize(status, content_child.content, new_length);
+
+  /**
+   * Adjust a fss content child.
+   *
+   * status:        the status to return.
+   * content_child: the f_fss_content_child structure to operate on.
+   * new_length:    the new size of the array.
+   */
+  #define f_macro_fss_content_child_adjust(status, content_child, new_length) f_macro_fss_content_adjust(status, content_child.content, new_length);
+
 #endif // _di_fss_content_child_
 
 /**
@@ -339,16 +407,132 @@ extern "C" {
 
   #define f_fss_content_childs_initialize { f_string_location_initialize, 0, 0, 0 }
 
-  // @todo: f_macro_memory_structure.. might not be usable here, review and confirm/deny this.
-  #define f_macro_fss_content_childs_clear(object_contents) f_macro_memory_structure_new(object_contents)
+  /**
+   * Reset a fss content childs to 0 (clear all values).
+   *
+   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
+   *
+   * content_childs: the f_fss_content_childs structure to operate on.
+   */
+  #define f_macro_fss_content_childs_clear(content_childs) \
+    content_childs.range.start = 1; \
+    content_childs.range_stop = 0; \
+    content_childs.array = 0; \
+    content_childs.size = 0; \
+    content_childs.used = 0;
 
-  #define f_macro_fss_content_childs_new(status, object_contents, length) f_macro_memory_structure_new(status, object_contents, f_fss_content_childs, length)
+  /**
+   * Create a new fss content childs.
+   *
+   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
+   *
+   * status:         the status to return.
+   * content_childs: the f_fss_content_childs structure to operate on.
+   * new_length:     the new size of the array.
+   */
+  #define f_macro_fss_content_childs_new(status, content_childs, length) \
+    content_childs.range.start = 1; \
+    content_childs.range_stop = 0; \
+    content_childs.array = 0; \
+    content_childs.size = 0; \
+    content_childs.used = 0; \
+    status = f_memory_new((void **) & content_childs.array, sizeof(f_fss_content_child), new_length); \
+    if (status == f_none) { \
+      content_childs.size = new_length; \
+      content_childs.used = 0; \
+    }
 
-  #define f_macro_fss_content_childs_delete(status, object_contents) f_macro_memory_structure_delete(status, object_contents, f_fss_content_childs)
-  #define f_macro_fss_content_childs_destroy(status, object_contents) f_macro_memory_structure_destroy(status, object_contents, f_fss_content_childs)
+  /**
+   * Delete a fss content childs.
+   *
+   * status:         the status to return.
+   * content_childs: the f_fss_content_childs structure to operate on.
+   */
+  #define f_macro_fss_content_childs_delete(status, content_childs) \
+    status = f_none; \
+    while (content_childs.size > 0) { \
+      f_macro_fss_content_child_delete(status, content_childs.array[content_childs.size - 1]); \
+      if (status != f_none) break; \
+      content_childs.size--; \
+    } \
+    if (status == f_none) status = f_memory_delete((void **) & content_childs.array, sizeof(f_fss_content_child), content_childs.size); \
+    if (status == f_none) content_childs.used = 0;
 
-  #define f_macro_fss_content_childs_resize(status, object_contents, new_length) f_macro_memory_structure_resize(status, object_contents, f_fss_content_childs, new_length)
-  #define f_macro_fss_content_childs_adjust(status, object_contents, new_length) f_macro_memory_structure_adjust(status, object_contents, f_fss_content_childs, new_length)
+  /**
+   * Destroy a fss content childs.
+   *
+   * status:         the status to return.
+   * content_childs: the f_fss_content_childs structure to operate on.
+   */
+  #define f_macro_fss_content_childs_destroy(status, content_childs) \
+    status = f_none; \
+    while (content_childs.size > 0) { \
+      f_macro_fss_content_child_destroy(status, content_childs.array[content_childs.size - 1]); \
+      if (status != f_none) break; \
+      content_childs.size--; \
+    } \
+    if (status == f_none) status = f_memory_delete((void **) & content_childs.array, sizeof(f_fss_content_child), content_childs.size); \
+    if (status == f_none) content_childs.used = 0;
+
+  /**
+   * Resize a fss content childs.
+   *
+   * status:         the status to return.
+   * content_childs: the f_fss_content_childs structure to operate on.
+   * new_length:     the new size of the array.
+   */
+  #define f_macro_fss_content_childs_resize(status, content_childs, new_length) \
+    status = f_none; \
+    if (new_length < content_childs.size) { \
+      f_array_length i = content_childs.size - new_length; \
+      for (; i < content_childs.size; ++i) { \
+        f_macro_fss_content_child_delete(status, content_childs.array[i]); \
+        if (status != f_none) break; \
+      } \
+    } \
+    if (status == f_none) status = f_memory_resize((void **) & content_childs.array, sizeof(f_fss_content_child), content_childs.size, new_length); \
+    if (status == f_none) { \
+      if (new_length > content_childs.size) { \
+        f_array_length i = content_childs.size; \
+        for (; i < new_length; ++i) { \
+          memset(&content_childs.array[i], 0, sizeof(f_fss_content_child)); \
+        } \
+      } \
+      content_childs.range.start = 1; \
+      content_childs.range.stop = 0; \
+      content_childs.size = new_length; \
+      if (content_childs.used > content_childs.size) content_childs.used = new_length; \
+    }
+
+  /**
+   * Adjust a fss content childs.
+   *
+   * status:         the status to return.
+   * content_childs: the f_fss_content_childs structure to operate on.
+   * new_length:     the new size of the array.
+   */
+  #define f_macro_fss_content_childs_adjust(status, content_childs, new_length) \
+    status = f_none; \
+    if (new_length < content_childs.size) { \
+      length_variable i = content_childs.size - new_length; \
+      for (; i < content_childs.size; ++i) { \
+        f_macro_fss_content_child_destroy(status, content_childs.array[i]); \
+        if (status != f_none) break; \
+      } \
+    } \
+    if (status == f_none) status = f_memory_adjust((void **) & content_childs.array, sizeof(f_fss_content_child), content_childs.size, new_length); \
+    if (status == f_none) { \
+      if (new_length > content_childs.size) { \
+        length_variable i = content_childs.size; \
+        for (; i < new_length; ++i) { \
+          memset(&content_childs.array[i], 0, sizeof(f_fss_content_child)); \
+        } \
+      } \
+      content_childs.range.start = 1; \
+      content_childs.range_stop = 0; \
+      content_childs.size = new_length; \
+      if (content_childs.used > content_childs.size) content_childs.used = new_length; \
+    }
 #endif // _di_fss_content_childs_
 
 /**
@@ -358,7 +542,7 @@ extern "C" {
  * The top-level will not have any parent, so "parent" must be ignored on anything at index 0.
  * The parent identifier is expected to reference a position in the nesting depth immediately above it.
  *
- * array: an array of child objects.
+ * array: an array of f_fss_content_childs objects.
  * size: Total amount of allocated space.
  * used: Total number of allocated spaces used.
  */
@@ -371,16 +555,261 @@ extern "C" {
 
   #define f_fss_content_nest_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_content_nest_clear(object_content_nested) f_macro_memory_structure_new(object_content_nested)
+  /**
+   * Reset a fss content nest to 0 (clear all values).
+   *
+   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
+   *
+   * content_nest: the f_fss_content_nest structure to operate on.
+   */
+  #define f_macro_fss_content_nest_clear(content_nest) \
+    content_nest.array = 0; \
+    content_nest.size = 0; \
+    content_nest.used = 0;
 
-  #define f_macro_fss_content_nest_new(status, object_content_nested, length) f_macro_memory_structure_new(status, object_content_nested, f_fss_content_nest, length)
+  /**
+   * Create a new fss content nest.
+   *
+   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
+   *
+   * status:       the status to return.
+   * content_nest: the f_fss_content_nest structure to operate on.
+   * new_length:   the new size of the array.
+   */
+  #define f_macro_fss_content_nest_new(status, content_nest, length) \
+    content_nest.array = 0; \
+    content_nest.size = 0; \
+    content_nest.used = 0; \
+    status = f_memory_new((void **) & content_nest.array, sizeof(f_fss_content_childs), new_length); \
+    if (status == f_none) { \
+      content_nest.size = new_length; \
+      content_nest.used = 0; \
+    }
 
-  #define f_macro_fss_content_nest_delete(status, object_content_nested) f_macro_memory_structure_delete(status, object_content_nested, f_fss_content_nest)
-  #define f_macro_fss_content_nest_destroy(status, object_content_nested) f_macro_memory_structure_destroy(status, object_content_nested, f_fss_content_nest)
+  /**
+   * Delete a fss content nest.
+   *
+   * status:       the status to return.
+   * content_nest: the f_fss_content_nest structure to operate on.
+   */
+  #define f_macro_fss_content_nest_delete(status, content_nest) \
+    status = f_none; \
+    while (content_nest.size > 0) { \
+      f_macro_fss_content_childs_delete(status, content_nest.array[content_nest.size - 1]); \
+      if (status != f_none) break; \
+      content_nest.size--; \
+    } \
+    if (status == f_none) status = f_memory_delete((void **) & content_nest.array, sizeof(f_fss_content_childs), content_nest.size); \
+    if (status == f_none) content_nest.used = 0;
 
-  #define f_macro_fss_content_nest_resize(status, object_content_nested, new_length) f_macro_memory_structure_resize(status, object_content_nested, f_fss_content_nest, new_length)
-  #define f_macro_fss_content_nest_adjust(status, object_content_nested, new_length) f_macro_memory_structure_adjust(status, object_content_nested, f_fss_content_nest, new_length)
+  /**
+   * Destroy a fss content nest.
+   *
+   * status:       the status to return.
+   * content_nest: the f_fss_content_nest structure to operate on.
+   */
+  #define f_macro_fss_content_nest_destroy(status, content_nest) \
+    status = f_none; \
+    while (content_nest.size > 0) { \
+      f_macro_fss_content_childs_destroy(status, content_nest.array[content_nest.size - 1]); \
+      if (status != f_none) break; \
+      content_nest.size--; \
+    } \
+    if (status == f_none) status = f_memory_delete((void **) & content_nest.array, sizeof(f_fss_content_childs), content_nest.size); \
+    if (status == f_none) content_nest.used = 0;
+
+  /**
+   * Resize a fss content nest.
+   *
+   * status:       the status to return.
+   * content_nest: the f_fss_content_nest structure to operate on.
+   * new_length:   the new size of the array.
+   */
+  #define f_macro_fss_content_nest_resize(status, content_nest, new_length) \
+    status = f_none; \
+    if (new_length < content_nest.size) { \
+      f_array_length i = content_nest.size - new_length; \
+      for (; i < content_nest.size; ++i) { \
+        f_macro_fss_content_childs_delete(status, content_nest.array[i]); \
+        if (status != f_none) break; \
+      } \
+    } \
+    if (status == f_none) status = f_memory_resize((void **) & content_nest.array, sizeof(f_fss_content_childs), content_nest.size, new_length); \
+    if (status == f_none) { \
+      if (new_length > content_nest.size) { \
+        f_array_length i = content_nest.size; \
+        for (; i < new_length; ++i) { \
+          memset(&content_nest.array[i], 0, sizeof(f_fss_content_childs)); \
+        } \
+      } \
+      content_nest.size = new_length; \
+      if (content_nest.used > content_nest.size) content_nest.used = new_length; \
+    }
+
+  /**
+   * Adjust a fss content nest.
+   *
+   * status:       the status to return.
+   * content_nest: the f_fss_content_nest structure to operate on.
+   * new_length:   the new size of the array.
+   */
+  #define f_macro_fss_content_nest_adjust(status, content_nest, new_length) \
+    status = f_none; \
+    if (new_length < content_nest.size) { \
+      f_array_length i = content_nest.size - new_length; \
+      for (; i < content_nest.size; ++i) { \
+        f_macro_fss_content_childs_destroy(status, content_nest.array[i]); \
+        if (status != f_none) break; \
+      } \
+    } \
+    if (status == f_none) status = f_memory_adjust((void **) & content_nest.array, sizeof(f_fss_content_child), content_nest.size, new_length); \
+    if (status == f_none) { \
+      if (new_length > content_nest.size) { \
+        f_array_length i = content_nest.size; \
+        for (; i < new_length; ++i) { \
+          memset(&content_childs.array[i], 0, sizeof(f_fss_content_child)); \
+        } \
+      } \
+      content_nest.size = new_length; \
+      if (content_nest.used > content_nest.size) content_nest.used = new_length; \
+    }
 #endif // _di_fss_content_nest_
+
+/**
+ * This holds an array of f_fss_content_nest.
+ *
+ * array: an array of f_fss_content_nest objects.
+ * size: Total amount of allocated space.
+ * used: Total number of allocated spaces used.
+ */
+#ifndef _di_fss_content_nests_
+  typedef struct {
+    f_fss_content_nest *array;
+    f_array_length     size;
+    f_array_length     used;
+  } f_fss_content_nests;
+
+  #define f_fss_content_nests_initialize { 0, 0, 0 }
+
+  /**
+   * Reset a fss content nests to 0 (clear all values).
+   *
+   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
+   *
+   * content_nests: the f_fss_content_nests structure to operate on.
+   */
+  #define f_macro_fss_content_nests_clear(content_nests) \
+    content_nests.array = 0; \
+    content_nests.size = 0; \
+    content_nests.used = 0;
+
+  /**
+   * Create a new fss content nests.
+   *
+   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
+   *
+   * status:        the status to return.
+   * content_nests: the f_fss_content_nests structure to operate on.
+   * new_length:    the new size of the array.
+   */
+  #define f_macro_fss_content_nests_new(status, content_nests, length) \
+    content_nests.array = 0; \
+    content_nests.size = 0; \
+    content_nests.used = 0; \
+    status = f_memory_new((void **) & content_nests.array, sizeof(f_fss_content_nest), new_length); \
+    if (status == f_none) { \
+      content_nests.size = new_length; \
+      content_nests.used = 0; \
+    }
+
+  /**
+   * Delete a fss content nests.
+   *
+   * status:        the status to return.
+   * content_nests: the f_fss_content_nests structure to operate on.
+   */
+  #define f_macro_fss_content_nests_delete(status, content_nests) \
+    status = f_none; \
+    while (content_nests.size > 0) { \
+      f_macro_fss_content_nest_delete(status, content_nests.array[content_nests.size - 1]); \
+      if (status != f_none) break; \
+      content_nests.size--; \
+    } \
+    if (status == f_none) status = f_memory_delete((void **) & content_nests.array, sizeof(f_fss_content_nest), content_nests.size); \
+    if (status == f_none) content_nests.used = 0;
+
+  /**
+   * Destroy a fss content nests.
+   *
+   * status:        the status to return.
+   * content_nests: the f_fss_content_nests structure to operate on.
+   */
+  #define f_macro_fss_content_nests_destroy(status, content_nests) \
+    status = f_none; \
+    while (content_nests.size > 0) { \
+      f_macro_fss_content_nest_destroy(status, content_nests.array[content_nests.size - 1]); \
+      if (status != f_none) break; \
+      content_nests.size--; \
+    } \
+    if (status == f_none) status = f_memory_delete((void **) & content_nests.array, sizeof(f_fss_content_nest), content_nests.size); \
+    if (status == f_none) content_nests.used = 0;
+
+  /**
+   * Resize a fss content nests.
+   *
+   * status:        the status to return.
+   * content_nests: the f_fss_content_nests structure to operate on.
+   * new_length:    the new size of the array.
+   */
+  #define f_macro_fss_content_nests_resize(status, content_nests, new_length) \
+    status = f_none; \
+    if (new_length < content_nests.size) { \
+      f_array_length i = content_nests.size - new_length; \
+      for (; i < content_nests.size; ++i) { \
+        f_macro_fss_content_nest_delete(status, content_nests.array[i]); \
+        if (status != f_none) break; \
+      } \
+    } \
+    if (status == f_none) status = f_memory_resize((void **) & content_nests.array, sizeof(f_fss_content_nest), content_nests.size, new_length); \
+    if (status == f_none) { \
+      if (new_length > content_nests.size) { \
+        f_array_length i = content_nests.size; \
+        for (; i < new_length; ++i) { \
+          memset(&content_nests.array[i], 0, sizeof(f_fss_content_nest)); \
+        } \
+      } \
+      content_nests.size = new_length; \
+      if (content_nests.used > content_nests.size) content_nests.used = new_length; \
+    }
+
+  /**
+   * Adjust a fss content nests.
+   *
+   * status:        the status to return.
+   * content_nests: the f_fss_content_nests structure to operate on.
+   * new_length:    the new size of the array.
+   */
+  #define f_macro_fss_content_nests_adjust(status, content_nests, new_length) \
+    status = f_none; \
+    if (new_length < content_nests.size) { \
+      f_array_length i = content_nests.size - new_length; \
+      for (; i < content_nests.size; ++i) { \
+        f_macro_fss_content_nest_destroy(status, content_nests.array[i]); \
+        if (status != f_none) break; \
+      } \
+    } \
+    if (status == f_none) status = f_memory_adjust((void **) & content_nests.array, sizeof(f_fss_content_nest), content_nests.size, new_length); \
+    if (status == f_none) { \
+      if (new_length > content_nests.size) { \
+        f_array_length i = content_nests.size; \
+        for (; i < new_length; ++i) { \
+          memset(&content_nests.array[i], 0, sizeof(f_fss_content_nest)); \
+        } \
+      } \
+      content_nests.size = new_length; \
+      if (content_nests.used > content_nests.size) content_nests.used = new_length; \
+    }
+#endif // _di_fss_content_nests_
 
 #ifdef __cplusplus
 } // extern "C"

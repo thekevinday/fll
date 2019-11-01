@@ -8,40 +8,34 @@
  * This is the Kevux Operating System Init program.
  * This program utilizes the Featureless Linux Library.
  *
- * This init program is designed to run with certain paths and if they do not exist, it will attemp to create them.
- * This expects the kevux path permissions structure and naming, so a valid /etc/group file should exist.
+ * This init program is designed to run with certain paths and if they do not exist, it will attempt to create them.
+ * This expects the Kevux path permissions structure and naming, so a valid /etc/group file should exist.
  *
  * This is designed to have different threads handling the following actions:
- *   Thread Group 1 (Signals and Output)
+ *   Thread Group 1 (Signals and Control)
  *   - (parent process) handles/blocks all signals for init program and handles children accordingly.
+ *   - runs as root.
  *
  *   Thread Group 2 (Services)
  *   - Handles starting and stopping of individual services.
  *   - New thread created for each user.
+ *   - Runs as root.
+ *   - Each individual thread runs as a specified user.
  *
- *   Thread Group 3 (Reporting)
+ *   Thread Group 3 (Reporting and Output)
  *   - Handles output to the terminal or any other supported devices.
  *   - No child threads.
+ *   - Runs as init user.
  *
- *   Thread Group 4 (Commands: Time)
- *   - Handles time based processing.
- *   - This is a cron system.
- *   - 2 Child threads:
- *     1) Cron-style behavior.
- *     2) Anacron-style behavior.
- *
- *   Thread Group 5 (Commands: Socket File)
+ *   Thread Group 4 (Commands: Socket File)
  *   - If socket file is enabled, then this thread is created to listen on the socket file and process received commands.
  *   - No child threads.
+ *   - Runs as init user.
  *
- *   Thread Group 6 (Commands: Socket Port)
+ *   Thread Group 5 (Commands: Socket Port)
  *   - If socket port is enabled, then this thread is created to listen on the socket port and process received commands.
  *   - No child threads.
- *
- *
- * Time based (aka: cron) functionality is being implemented here because cron jobs often need to run as specific users.
- * The init program is already root and can already switch users, so give it control.
- * This avoids having yet another program that must have root privileges.
+ *   - Runs as init user.
  *
  * It would be nice to be able to start the init program as a non-root user who has elevated privileges similar to root.
  * - That is, have ability to su to any user (except root).
@@ -125,6 +119,7 @@ extern "C" {
   #define init_paths_init_socket    "/run/init/socket/"
   #define init_paths_init_process   "/run/init/process/"
   #define init_paths_init_log       "/log/init/"
+  #define init_paths_init_log       "/tmp/init/"
   #define init_paths_log            "/log/"
 #endif // _di_init_paths_
 
@@ -162,6 +157,7 @@ extern "C" {
   #define init_group_init_socket      "d_init_socket"
   #define init_group_init_process     "d_init_process"
   #define init_group_init_log         "d_log"
+  #define init_group_init_tmp         "d_init"
   #define init_group_process_null     "p_null"
   #define init_group_process_zero     "p_zero"
   #define init_group_process_console  "p_terminal"
@@ -231,12 +227,48 @@ extern "C" {
     fl_color_context context;
   } init_data;
 
-  #define init_argument_initialize \
+  #define init_data_initialize \
     { \
       f_console_parameter_initialize_init, \
       f_string_lengths_initialize, \
       f_false, \
       fl_color_context_initialize, \
+    }
+
+  typedef struct {
+    uint8_t todo_placeholder;
+  } init_data_thread_control;
+
+  #define init_data_thread_control_initialize \
+    { \
+      0 \
+    }
+
+  typedef struct {
+    uint8_t todo_placeholder;
+  } init_data_thread_service;
+
+  #define init_data_thread_service_initialize \
+    { \
+      0 \
+    }
+
+  typedef struct {
+    uint8_t todo_placeholder;
+  } init_data_thread_socket_file;
+
+  #define init_data_thread_socket_file_initialize \
+    { \
+      0 \
+    }
+
+  typedef struct {
+    uint8_t todo_placeholder;
+  } init_data_thread_socket_port;
+
+  #define init_data_thread_socket_port_initialize \
+    { \
+      0 \
     }
 #endif // _di_init_data_
 
@@ -271,6 +303,22 @@ extern "C" {
  */
 #ifndef _di_init_main_
   extern f_return_status init_main(const f_console_arguments arguments, init_data *data);
+#endif // _di_init_main_
+
+/**
+ * Execute main program.
+ *
+ * @param arguments
+ *   The parameters passed to the process.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_init_main_
+  extern f_return_status init_thread_control(const init_data *data);
 #endif // _di_init_main_
 
 #ifdef __cplusplus

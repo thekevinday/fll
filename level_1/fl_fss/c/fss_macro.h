@@ -18,7 +18,7 @@ extern "C" {
 #ifndef _di_fl_macro_fss_apply_delimit_placeholders_
   #define fl_macro_fss_apply_delimit_placeholders(buffer, delimits) \
   { \
-    f_status allocation_status = f_none; \
+    f_status macro_allocation_status = f_none; \
     \
     f_string_length i = 0; \
     \
@@ -27,7 +27,7 @@ extern "C" {
       i++; \
     } \
     \
-    f_macro_string_lengths_delete(allocation_status, delimits); \
+    f_macro_string_lengths_delete(macro_allocation_status, delimits); \
   }
 #endif // _di_fl_macro_fss_apply_delimit_placeholders_
 
@@ -44,15 +44,15 @@ extern "C" {
 #ifndef _di_fl_macro_fss_object_return_on_overflow_
   #define fl_macro_fss_object_return_on_overflow(buffer, location, found, delimits, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
-      f_status allocation_status = f_none; \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
+      f_status macro_allocation_status = f_none; \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       \
       found.stop = buffer.used - 1; \
       return eos_status; \
     } \
     else if (location.start > location.stop) { \
-      f_status allocation_status = f_none; \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
+      f_status macro_allocation_status = f_none; \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       \
       found.stop = location.stop; \
       return stop_status; \
@@ -62,27 +62,27 @@ extern "C" {
 #ifndef _di_fl_macro_fss_object_delimited_return_on_overflow_
   #define fl_macro_fss_object_delimited_return_on_overflow(buffer, location, found, delimits, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
-      f_status allocation_status = f_none; \
+      f_status macro_allocation_status = f_none; \
       f_string_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         i++; \
       } \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       \
       found.stop = buffer.used - 1; \
       return eos_status; \
     } \
     else if (location.start > location.stop) { \
-      f_status allocation_status = f_none; \
+      f_status macro_allocation_status = f_none; \
       f_string_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         i++; \
       } \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       \
       found.stop = location.stop; \
       return stop_status; \
@@ -92,15 +92,15 @@ extern "C" {
 #ifndef _di_fl_macro_fss_content_return_on_overflow_
   #define fl_macro_fss_content_return_on_overflow(buffer, location, found, delimits, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
-      f_status allocation_status = f_none; \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
+      f_status macro_allocation_status = f_none; \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       \
       found.array[found.used].stop = buffer.used - 1; \
       return eos_status; \
     } \
     else if (location.start > location.stop) { \
-      f_status allocation_status = f_none; \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
+      f_status macro_allocation_status = f_none; \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       \
       found.array[found.used].stop = location.stop; \
       return stop_status; \
@@ -110,27 +110,27 @@ extern "C" {
 #ifndef _di_fl_macro_fss_content_delimited_return_on_overflow_
   #define fl_macro_fss_content_delimited_return_on_overflow(buffer, location, found, delimits, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
-      f_status allocation_status = f_none; \
+      f_status macro_allocation_status = f_none; \
       f_string_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         i++; \
       } \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       \
       found.array[found.used].stop = buffer.used - 1; \
       return eos_status; \
     } \
     else if (location.start > location.stop) { \
-      f_status allocation_status = f_none; \
+      f_status macro_allocation_status = f_none; \
       f_string_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         i++; \
       } \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       \
       found.array[found.used].stop = location.stop; \
       return stop_status; \
@@ -140,19 +140,19 @@ extern "C" {
 #ifndef _di_fl_macro_fss_content_nest_return_on_overflow_
   #define fl_macro_fss_content_nest_return_on_overflow(buffer, location, found, delimits, positions, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
-      f_status allocation_status = f_none; \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
-      f_macro_string_lengths_delete(allocation_status, positions); \
+      f_status macro_allocation_status = f_none; \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
+      f_macro_string_lengths_delete(macro_allocation_status, positions); \
       \
-      found.array[found.used].stop = buffer.used - 1; \
+      /* @todo: found.array[found.used].stop = buffer.used - 1; */ \
       return eos_status; \
     } \
     else if (location.start > location.stop) { \
-      f_status allocation_status = f_none; \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
-      f_macro_string_lengths_delete(allocation_status, positions); \
+      f_status macro_allocation_status = f_none; \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
+      f_macro_string_lengths_delete(macro_allocation_status, positions); \
       \
-      found.array[found.used].stop = location.stop; \
+      /* @todo: found.array[found.used].stop = location.stop; */ \
       return stop_status; \
     }
 #endif // _di_fl_macro_fss_content_nest_return_on_overflow_
@@ -160,33 +160,32 @@ extern "C" {
 #ifndef _di_fl_macro_fss_content_nest_delimited_return_on_overflow_
   #define fl_macro_fss_content_nest_delimited_return_on_overflow(buffer, location, found, delimits, positions, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
-      f_status allocation_status = f_none; \
+      f_status macro_allocation_status = f_none; \
       f_string_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         i++; \
       } \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
-      f_macro_string_lengths_delete(allocation_status, positions); \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
+      f_macro_string_lengths_delete(macro_allocation_status, positions); \
       \
-      found.array[found.used].stop = buffer.used - 1; \
       return eos_status; \
     } \
     else if (location.start > location.stop) { \
-      f_status allocation_status = f_none; \
+      f_status macro_allocation_status = f_none; \
       f_string_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         i++; \
       } \
-      f_macro_string_lengths_delete(allocation_status, delimits); \
-      f_macro_string_lengths_delete(allocation_status, positions); \
+      f_macro_string_lengths_delete(macro_allocation_status, delimits); \
+      f_macro_string_lengths_delete(macro_allocation_status, positions); \
       \
-      found.array[found.used].stop = location.stop; \
       return stop_status; \
     }
+    // @todo: found.array[found.used].stop = location.stop;
 #endif // _di_fl_macro_fss_content_nest_delimited_return_on_overflow_
 
 #ifndef _di_fl_macro_fss_allocate_content_if_necessary_
@@ -196,8 +195,8 @@ extern "C" {
       \
       f_macro_fss_content_resize(status, content, content.size + f_fss_default_allocation_step); \
       if (f_status_is_error(status)) { \
-        f_status allocation_status = f_none; \
-        f_macro_string_lengths_delete(allocation_status, delimits); \
+        f_status macro_allocation_status = f_none; \
+        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
         \
         return status; \
       } \
@@ -209,14 +208,14 @@ extern "C" {
     while (buffer.string[location.start] != f_string_eol) { \
       ++location.start; \
       if (location.start >= buffer.used) { \
-        f_status allocation_status = f_none; \
-        f_macro_string_lengths_delete(allocation_status, delimits); \
+        f_status macro_allocation_status = f_none; \
+        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
         \
         return eos_status; \
       } \
       if (location.start > location.stop) { \
-        f_status allocation_status = f_none; \
-        f_macro_string_lengths_delete(allocation_status, delimits); \
+        f_status macro_allocation_status = f_none; \
+        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
         \
         return stop_status; \
       } \
@@ -228,26 +227,26 @@ extern "C" {
     while (buffer.string[location.start] != f_string_eol) { \
       ++location.start; \
       if (location.start >= buffer.used) { \
-        f_status allocation_status = f_none; \
+        f_status macro_allocation_status = f_none; \
         f_string_length i = 0; \
         \
         while (i < delimits.used) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
           i++; \
         } \
-        f_macro_string_lengths_delete(allocation_status, delimits); \
+        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
         \
         return eos_status; \
       } \
       if (location.start > location.stop) { \
-        f_status allocation_status = f_none; \
+        f_status macro_allocation_status = f_none; \
         f_string_length i = 0; \
         \
         while (i < delimits.used) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
           i++; \
         } \
-        f_macro_string_lengths_delete(allocation_status, delimits); \
+        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
         \
         return stop_status; \
       } \
@@ -259,15 +258,15 @@ extern "C" {
     while (buffer.string[location.start] != f_string_eol) { \
       ++location.start; \
       if (location.start >= buffer.used) { \
-        f_status allocation_status = f_none; \
-        f_macro_string_lengths_delete(allocation_status, delimits); \
+        f_status macro_allocation_status = f_none; \
+        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
         \
         found.array[found.used].stop = location.stop; \
         return eos_status; \
       } \
       if (location.start > location.stop) { \
-        f_status allocation_status = f_none; \
-        f_macro_string_lengths_delete(allocation_status, delimits); \
+        f_status macro_allocation_status = f_none; \
+        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
         \
         found.array[found.used].stop = location.stop; \
         return stop_status; \
@@ -280,27 +279,27 @@ extern "C" {
     while (buffer.string[location.start] != f_string_eol) { \
       ++location.start; \
       if (location.start >= buffer.used) { \
-        f_status allocation_status = f_none; \
+        f_status macro_allocation_status = f_none; \
         f_string_length i = 0; \
         \
         while (i < delimits.used) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
           i++; \
         } \
-        f_macro_string_lengths_delete(allocation_status, delimits); \
+        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
         \
         found.array[found.used].stop = location.stop; \
         return eos_status; \
       } \
       if (location.start > location.stop) { \
-        f_status allocation_status = f_none; \
+        f_status macro_allocation_status = f_none; \
         f_string_length i = 0; \
         \
         while (i < delimits.used) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
           i++; \
         } \
-        f_macro_string_lengths_delete(allocation_status, delimits); \
+        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
         \
         found.array[found.used].stop = location.stop; \
         return stop_status; \

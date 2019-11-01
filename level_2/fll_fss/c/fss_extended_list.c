@@ -1,16 +1,16 @@
-#include <level_2/fss_extended.h>
+#include <level_2/fss_extended_list.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_fll_fss_extended_read_
-  f_return_status fll_fss_extended_read(f_string_dynamic *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents) {
-    #ifndef _di_level_2_parameter_checking_
+#ifndef _di_fll_fss_extended_list_read_
+  f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_location *input, f_fss_objects *objects, f_fss_content_nests *contents) {
+    #ifndef _di_level_3_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (objects == 0) return f_status_set_error(f_invalid_parameter);
       if (contents == 0) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_2_parameter_checking_
+    #endif // _di_level_3_parameter_checking_
 
     f_status status = f_none;
     f_string_length initial_used = objects->used;
@@ -24,7 +24,7 @@ extern "C" {
           return status;
         }
 
-        f_macro_fss_contents_resize(status, (*contents), contents->used + f_fss_default_allocation_step);
+        f_macro_fss_content_nests_resize(status, (*contents), contents->used + f_fss_default_allocation_step);
 
         if (f_status_is_error(status)) {
           return status;
@@ -32,7 +32,7 @@ extern "C" {
       }
 
       do {
-        status = fl_fss_extended_object_read(buffer, input, &objects->array[objects->used]);
+        status = fl_fss_extended_list_object_read(buffer, input, &objects->array[objects->used]);
 
         if (input->start >= input->stop || input->start >= buffer->used) {
           if (status == fl_fss_found_object || status == fl_fss_found_object_no_content) {
@@ -41,7 +41,7 @@ extern "C" {
             if (contents->array[contents->used].used >= contents->array[contents->used].size) {
               f_status status = f_none;
 
-              f_macro_fss_content_resize(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+              f_macro_fss_content_nest_resize(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
 
               if (f_status_is_error(status)) {
                 return status;
@@ -71,7 +71,7 @@ extern "C" {
 
         if (status == fl_fss_found_object) {
           found_data = f_true;
-          status     = fl_fss_extended_content_read(buffer, input, &contents->array[contents->used]);
+          status = fl_fss_extended_list_content_read(buffer, input, &contents->array[contents->used]);
 
           break;
         }
@@ -81,7 +81,7 @@ extern "C" {
           if (contents->array[contents->used].used >= contents->array[contents->used].size) {
             f_status status = f_none;
 
-            f_macro_fss_content_resize(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+            f_macro_fss_content_nest_resize(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
 
             if (f_status_is_error(status)) {
               return status;
@@ -100,7 +100,7 @@ extern "C" {
       }
       else if (status == f_no_data_on_eos || status == f_no_data_on_stop) {
 
-        // if at least some valid object was found, then return f_none equivelents
+        // if at least some valid object was found, then return f_none equivalents
         if (objects->used > initial_used) {
           if (status == f_no_data_on_eos) return f_none_on_eos;
           if (status == f_no_data_on_stop) return f_none_on_stop;
@@ -131,14 +131,15 @@ extern "C" {
 
     return f_status_is_error(f_unknown);
   }
-#endif // _di_fll_fss_extended_read_
+#endif // _di_fll_fss_extended_list_read_
 
-#ifndef _di_fll_fss_extended_write_
-  f_return_status fll_fss_extended_write(const f_string_dynamic object, const f_string_dynamics contents, f_string_dynamic *buffer) {
-    #ifndef _di_level_2_parameter_checking_
+/*
+#ifndef _di_fll_fss_extended_list_write_
+  f_return_status fll_fss_extended_list_write(const f_string_dynamic object, const f_string_dynamics contents, f_string_dynamic *buffer) {
+    #ifndef _di_level_3_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (contents.used > contents.size) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_2_parameter_checking_
+    #endif // _di_level_3_parameter_checking_
 
     f_status status = 0;
     f_array_length current = 0;
@@ -147,32 +148,37 @@ extern "C" {
     location.start = 0;
     location.stop = object.used - 1;
 
-    status = fl_fss_extended_object_write(object, &location, buffer);
+    status = fl_fss_extended_list_object_write(object, &location, buffer);
 
     if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
       return status;
     }
 
     if (status == f_none || status == f_none_on_stop || status == f_none_on_eos || status == f_none_on_eol) {
-      while (current < contents.used) {
+      if (contents.used > 0) {
         location.start = 0;
-        location.stop = contents.array[current].used - 1;
-        status = fl_fss_extended_content_write(contents.array[current], &location, buffer);
+        location.stop = contents.array[0].used - 1;
+        status = fl_fss_extended_list_content_write(contents.array[0], &location, buffer);
 
         if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
           return status;
         }
+      }
+      else {
+        if (buffer->used >= buffer->size) {
+          f_macro_string_dynamic_resize(status, (*buffer), buffer->size + f_fss_default_allocation_step_string);
+          if (f_status_is_error(status)) return status;
+        }
 
-        current++;
-      } // while
-
-      // extended always ends each call with a space, and so the last position should be replaced with an eol.
-      buffer->string[buffer->used - 1] = f_string_eol;
+        buffer->string[buffer->used] = f_string_eol;
+        buffer->used++;
+      }
     }
 
     return f_none;
   }
-#endif // _di_fll_fss_extended_write_
+#endif // _di_fll_fss_extended_list_write_
+*/
 
 #ifdef __cplusplus
 } // extern "C"

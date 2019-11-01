@@ -110,6 +110,9 @@ extern "C" {
 #endif // _di_f_string_length_
 
 /**
+ * A structure containing an array of string lengths.
+ *
+ * array: the array of string lengths.
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
  */
@@ -134,8 +137,16 @@ extern "C" {
 #endif // _di_f_string_lengths_
 
 /**
- * designates a start and stop position that represents a sub-string inside of some parent string.
- * use this to avoid resizing, restructuring, and reallocating the parent string to separate the sub-string.
+ * A structure designating a start and stop position that represents a sub-string inside of some parent string.
+ *
+ * Use this to avoid resizing, restructuring, and reallocating the parent string to separate the sub-string.
+ *
+ * In general, this project uses the start and stop position inclusively, meaning that a range of 0 to 1 would include positions 0 and position 1.
+ * Therefore, 0 to 0 would be a position of 0.
+ * Set start to some value larger than stop to designate no range.
+ *
+ * start: the start position.
+ * stop: the stop position.
  */
 #ifndef _di_f_string_location_
   typedef struct {
@@ -157,8 +168,9 @@ extern "C" {
 #endif // _di_f_string_location_
 
 /**
- * an array of string locations.
+ * An array of string locations.
  *
+ * array: the array of string locations.
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
  */
@@ -183,9 +195,11 @@ extern "C" {
 #endif // _di_f_string_locations_
 
 /**
- * a string that supports contains a size attribute to handle dynamic allocations and deallocations.
- * save the string size along with the string, so that strlen(..) commands can be avoided as much as possible.
+ * A string that supports contains a size attribute to handle dynamic allocations and deallocations.
  *
+ * Save the string size along with the string, so that strlen(..) commands can be avoided as much as possible.
+ *
+ * string: the string.
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
  */
@@ -241,8 +255,9 @@ extern "C" {
 #endif // _di_f_string_dynamic_
 
 /**
- * an array of dynamic strings.
+ * An array of dynamic strings.
  *
+ * array: the array of dynamic strings.
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
  */

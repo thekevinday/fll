@@ -265,7 +265,7 @@ extern "C" {
     init_rule      main_failsafe;
   } init_setting;
 
-  #define init_data_initialize \
+  #define init_setting_initialize \
     { \
       f_string_initialize, \
       0, \
@@ -302,8 +302,8 @@ typedef struct {
     0, \
     0, \
     0, \
-    init_argument_initialize, \
     init_data_initialize, \
+    init_setting_initialize, \
   }
 
 // custom settings to prepare the init process.

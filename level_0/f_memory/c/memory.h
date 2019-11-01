@@ -182,10 +182,7 @@ extern "C" {
 /**
  * Reset a generic memory stucture to 0 (clear all values).
  *
- * A generic memory structure has the following properties:
- *   array: Some pointer to an array of values.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
  *
  * structure: the structure to operate on.
  */
@@ -199,10 +196,7 @@ extern "C" {
 /**
  * Create a new generic memory structure.
  *
- * A generic memory structure has the following properties:
- *   array: Some pointer to an array of values.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
  *
  * status:    the status to return.
  * structure: the structure to operate on.
@@ -224,11 +218,6 @@ extern "C" {
 /**
  * Delete a generic memory structure.
  *
- * A generic memory structure has the following properties:
- *   array: Some pointer to an array of values.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
- *
  * status:    the status to return.
  * structure: the structure to operate on.
  * type:      the structure type.
@@ -245,11 +234,6 @@ extern "C" {
 /**
  * Destroy a generic memory structure.
  *
- * A generic memory structure has the following properties:
- *   array: Some pointer to an array of values.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
- *
  * status:    the status to return.
  * structure: the structure to operate on.
  * type:      the structure type.
@@ -265,11 +249,6 @@ extern "C" {
 
 /**
  * Resize a generic memory structure.
- *
- * A generic memory structure has the following properties:
- *   array: Some pointer to an array of values.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
  *
  * status:     the status to return.
  * structure:  the structure to operate on.
@@ -288,11 +267,6 @@ extern "C" {
 /**
  * Adjust a generic memory structure.
  *
- * A generic memory structure has the following properties:
- *   array: Some pointer to an array of values.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
- *
  * status:     the status to return.
  * structure:  the structure to operate on.
  * type:       the structure type.
@@ -308,12 +282,9 @@ extern "C" {
 #endif // _di_f_macro_memory_structure_adjust_
 
 /**
- * Create a new generic memory structures.
+ * Reset a generic memory stuctures to 0 (clear all values).
  *
- * A generic memory structures represents an array of structure with the following properties:
- *   array: Some pointer to an array of structure.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
  *
  * structures: the structures to operate on.
  */
@@ -327,10 +298,7 @@ extern "C" {
 /**
  * Create a new generic memory structures.
  *
- * A generic memory structures represents an array of structure with the following properties:
- *   array: Some pointer to an array of structure.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
+ * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
  *
  * status:     the status to return.
  * structures: the structures to operate on.
@@ -352,23 +320,17 @@ extern "C" {
 /**
  * Delete a generic memory structures.
  *
- * A generic memory structures represents an array of structure with the following properties:
- *   array: Some pointer to an array of structure.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
- *
  * status:     the status to return.
  * structures: the structures to operate on.
- * type:       the structure type.
- * new_length: the new size of the array.
+ * type:       the structure type..
  */
 #ifndef _di_f_macro_memory_structures_delete_
   #define f_macro_memory_structures_delete(status, structures, type) \
     status = f_none; \
     while (structures.size > 0) { \
-      --structures.size; \
-      f_macro_memory_structure_delete(status, structures.array[structures.size], type); \
+      f_macro_memory_structure_delete(status, structures.array[structures.size - 1], type); \
       if (status != f_none) break; \
+      structures.size--; \
     } \
     if (status == f_none) status = f_memory_delete((void **) & structures.array, sizeof(type), structures.size); \
     if (status == f_none) structures.used = 0;
@@ -377,23 +339,17 @@ extern "C" {
 /**
  * Destroy a generic memory structures.
  *
- * A generic memory structures represents an array of structure with the following properties:
- *   array: Some pointer to an array of structure.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
- *
  * status:     the status to return.
  * structures: the structures to operate on.
  * type:       the structure type.
- * new_length: the new size of the array.
  */
 #ifndef _di_f_macro_memory_structures_destroy_
   #define f_macro_memory_structures_destroy(status, structures, type) \
     status = f_none; \
     while (structures.size > 0) { \
-      --structures.size; \
-      f_macro_memory_structure_destroy(status, structures.array[structures.size], type); \
+      f_macro_memory_structure_destroy(status, structures.array[structures.size - 1], type); \
       if (status != f_none) break; \
+      structures.size--; \
     } \
     if (status == f_none) status = f_memory_destroy((void **) & structures.array, sizeof(type), structures.size); \
     if (status == f_none) structures.used = 0;
@@ -402,15 +358,11 @@ extern "C" {
 /**
  * Resize a generic memory structures.
  *
- * A generic memory structures represents an array of structure with the following properties:
- *   array: Some pointer to an array of structure.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
- *
- * status:     the status to return.
- * structures: the structures to operate on.
- * type:       the structure type.
- * new_length: the new size of the array.
+ * status:          the status to return.
+ * structures:      the structures to operate on.
+ * type:            the structure type.
+ * new_length:      the new size of the array.
+ * length_variable: the data type of the length variable.
  */
 #ifndef _di_f_macro_memory_structures_resize_
   #define f_macro_memory_structures_resize(status, structures, type, new_length, length_variable) \
@@ -438,15 +390,11 @@ extern "C" {
 /**
  * Adjust a generic memory structures.
  *
- * A generic memory structures represents an array of structure with the following properties:
- *   array: Some pointer to an array of structure.
- *   size:  A number, generally unsigned, representing the size of the above array.
- *   used:  A number, generally unsigned, representing how much of the above size is in use in the above array.
- *
- * status:     the status to return.
- * structures: the structures to operate on.
- * type:       the structure type.
- * new_length: the new size of the array.
+ * status:          the status to return.
+ * structures:      the structures to operate on.
+ * type:            the structure type.
+ * new_length:      the new size of the array.
+ * length_variable: the data type of the length variable.
  */
 #ifndef _di_f_macro_memory_structures_adjust_
   #define f_macro_memory_structures_adjust(status, structures, type, new_length, length_variable) \

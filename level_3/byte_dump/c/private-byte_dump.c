@@ -1,8 +1,9 @@
-/**
- * Private source file for firewall.c.
- */
 #include <level_3/byte_dump.h>
 #include "private-byte_dump.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifndef _di_byte_dump_file_
   f_return_status byte_dump_file(const byte_dump_data data, const f_string file_name, f_file file) {
@@ -747,3 +748,7 @@
     fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
   }
 #endif // _di_byte_dump_print_file_error_
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

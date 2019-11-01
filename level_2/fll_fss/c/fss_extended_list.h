@@ -5,10 +5,10 @@
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * This is the fss-0002 implementation.
+ * This is the fss-0003 implementation.
  */
-#ifndef _FLL_fss_basic_list_h
-#define _FLL_fss_basic_list_h
+#ifndef _FLL_fss_extended_list_h
+#define _FLL_fss_extended_list_h
 
 // fll-0 includes
 #include <level_0/status.h>
@@ -19,7 +19,7 @@
 
 // fll-1 includes
 #include <level_1/fss.h>
-#include <level_1/fss_basic_list.h>
+#include <level_1/fss_extended_list.h>
 #include <level_1/fss_status.h>
 #include <level_1/fss_macro.h>
 
@@ -28,7 +28,7 @@ extern "C" {
 #endif
 
 /**
- * Read a buffer expected to be in fss-0002 format, getting all objects and their respective content.
+ * Read a buffer expected to be in fss-0003 format, getting all objects and their respective content.
  *
  * @param buffer
  *   The buffer to read from.
@@ -52,12 +52,12 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_unknown (with error bit) if a (what should be) impossible execution point is reached.
  */
-#ifndef _di_fll_fss_basic_list_read_
-  extern f_return_status fll_fss_basic_list_read(f_string_dynamic *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents);
-#endif // _di_fll_fss_basic_list_read_
+#ifndef _di_fll_fss_extended_list_read_
+  extern f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_location *input, f_fss_objects *objects, f_fss_content_nests *contents);
+#endif // _di_fll_fss_extended_list_read_
 
 /**
- * Write a single object string and content string to a buffer, using fss-0002 format.
+ * Write a single object string and content string to a buffer, using fss-0003 format.
  *
  * @param object
  *   A string representing the object.
@@ -77,12 +77,12 @@ extern "C" {
  *   f_reallocation_error (with error bit) on reallocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fll_fss_basic_list_write_
-  extern f_return_status fll_fss_basic_list_write(const f_string_dynamic object, const f_string_dynamics contents, f_string_dynamic *buffer);
-#endif // _di_fll_fss_basic_list_write_
+#ifndef _di_fll_fss_extended_list_write_
+  //extern f_return_status fll_fss_extended_list_write(const f_string_dynamic object, const f_string_dynamics contents, f_string_dynamic *buffer);
+#endif // _di_fll_fss_extended_list_write_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _FLL_fss_basic_list_h
+#endif // _FLL_fss_extended_list_h

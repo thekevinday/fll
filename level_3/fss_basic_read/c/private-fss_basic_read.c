@@ -1,6 +1,10 @@
 #include <level_3/fss_basic_read.h>
 #include "private-fss_basic_read.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef _di_fss_basic_read_main_process_file_
   f_return_status fss_basic_read_main_process_file(const f_console_arguments arguments, fss_basic_read_data *data, const f_string filename, const f_string_length target) {
     f_status status = f_none;
@@ -181,3 +185,7 @@
     return f_none;
   }
 #endif // _di_fss_basic_read_main_process_file_
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

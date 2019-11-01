@@ -198,15 +198,14 @@ extern "C" {
 
     // delimits must only be applied once a valid object is found.
     f_string_lengths delimits = f_string_lengths_initialize;
+    f_string_lengths positions_start = f_string_lengths_initialize;
 
     fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*location))
-    fl_macro_fss_content_return_on_overflow((*buffer), (*location), (*found), delimits, f_none_on_eos, f_none_on_stop)
+    fl_macro_fss_content_nest_return_on_overflow((*buffer), (*location), (*found), positions_start, delimits, f_none_on_eos, f_none_on_stop)
 
     fl_macro_fss_allocate_content_if_necessary((*found), delimits);
-    found->array[found->used].start = location->start;
 
     f_array_length depth = 0;
-    f_string_lengths positions_start = f_string_lengths_initialize;
     f_string_length position_previous = location->start;
     f_string_length last_newline = location->start;
     f_fss_object object = f_fss_object_initialize;
@@ -351,7 +350,7 @@ extern "C" {
 
             if (is_open) {
               f_bool is_object = f_false;
-              f_string_location location_newline = location->start;
+              f_string_length location_newline = location->start;
 
               if (slash_count % 2 == 0) {
                 is_object = f_true;
@@ -392,7 +391,7 @@ extern "C" {
                 depth++;
 
                 if (depth >= positions_start.size) {
-                  f_macro_string_lengths_resize(status, (*positions_start), positions_start.size + f_fss_default_allocation_step);
+                  f_macro_string_lengths_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
 
                   if (f_status_is_error(status)) {
                     f_status allocation_status = f_none;
@@ -496,7 +495,7 @@ extern "C" {
           depth++;
 
           if (depth >= positions_start.size) {
-            f_macro_string_lengths_resize(status, (*positions_start), positions_start.size + f_fss_default_allocation_step);
+            f_macro_string_lengths_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
 
             if (f_status_is_error(status)) {
               f_status allocation_status = f_none;
@@ -609,8 +608,8 @@ extern "C" {
             }
           }
 
-          if (found->array[depth]->used >= found->array[depth]->size) {
-            f_macro_fss_content_childs_resize(status, found->array[depth], found->array[depth]->size + f_fss_default_allocation_step);
+          if (found->array[depth].used >= found->array[depth].size) {
+            f_macro_fss_content_childs_resize(status, found->array[depth], found->array[depth].size + f_fss_default_allocation_step);
 
             if (f_status_is_error(status)) {
               f_status allocation_status = f_none;
@@ -622,10 +621,10 @@ extern "C" {
             }
           }
 
-          f_array_length position = found->array[depth]->used;
+          f_array_length position = found->array[depth].used;
 
-          if (found->array[depth]->array[position]->used >= found->array[depth]->content[position]->size) {
-            f_macro_fss_contents_resize(status, found->array[depth]->array[position], found->array[depth]->array[position]->size + f_fss_default_allocation_step);
+          if (found->array[depth].array[position].content.used >= found->array[depth].array[position].content.size) {
+            f_macro_fss_content_resize(status, found->array[depth].array[position].content, found->array[depth].array[position].content.size + f_fss_default_allocation_step);
 
             if (f_status_is_error(status)) {
               f_status allocation_status = f_none;
@@ -637,13 +636,13 @@ extern "C" {
             }
           }
 
-          found->array[depth]->range.start = positions_start.array[depth];
-          found->array[depth]->range.stop = last_newline;
-          found->array[depth]->array[position]->object.start = object.start;
-          found->array[depth]->array[position]->object.stop = object.stop;
-          found->array[depth]->array[position]->content[found->array[depth]->array[position]->used].stop = last_newline;
-          found->array[depth]->array[position]->used++;
-          found->array[depth]->used++;
+          found->array[depth].range.start = positions_start.array[depth];
+          found->array[depth].range.stop = last_newline;
+          found->array[depth].array[position].object.start = object.start;
+          found->array[depth].array[position].object.stop = object.stop;
+          found->array[depth].array[position].content.array[found->array[depth].array[position].content.used].stop = last_newline;
+          found->array[depth].array[position].content.used++;
+          found->array[depth].used++;
           found->used = positions_start.used;
 
           if (depth == 0) {
@@ -708,12 +707,12 @@ extern "C" {
       return status;
     }
 
-    found->array[0]->range.start = positions_start.array[0];
-    found->array[0]->range.stop = location->start;
+    found->array[0].range.start = positions_start.array[0];
+    found->array[0].range.stop = location->start;
     location->start = last_newline + 1;
     found->used++;
 
-    fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, f_none_on_eos, f_none_on_stop)
+    fl_macro_fss_content_nest_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_none_on_eos, f_none_on_stop)
 
     f_macro_string_lengths_delete(status, delimits);
     f_macro_string_lengths_delete(status, positions_start);
@@ -874,6 +873,8 @@ extern "C" {
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    // @todo
+    /*
     f_status status = f_none;
     f_bool is_comment = f_false;
     f_bool has_graph = f_false;
@@ -1061,6 +1062,7 @@ extern "C" {
     else if (location->start >= content.used) {
       return f_none_on_eos;
     }
+    */
 
     return f_none;
   }
