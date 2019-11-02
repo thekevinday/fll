@@ -347,10 +347,10 @@ extern "C" {
 
           // this is a valid object open/close that has been delimited, save the slash delimit positions.
           if (buffer->string[location->start] == f_string_eol) {
+            f_string_length location_newline = location->start;
 
             if (is_open) {
               f_bool is_object = f_false;
-              f_string_length location_newline = location->start;
 
               if (slash_count % 2 == 0) {
                 is_object = f_true;
@@ -416,7 +416,6 @@ extern "C" {
               last_newline = location_newline;
             }
             else {
-              last_newline = location->start;
               location->start = slash_last;
 
               if (delimits.used + 1 >= delimits.size) {
@@ -436,7 +435,7 @@ extern "C" {
               delimits.used++;
             }
 
-            location->start = last_newline;
+            location->start = location_newline;
           }
         }
       }
@@ -645,11 +644,9 @@ extern "C" {
           found->array[depth].used++;
           found->used = positions_start.used;
 
-          if (depth == 0) {
-            last_newline = location->start;
-            break;
-          }
+          if (depth == 0) break;
 
+          last_newline = location->start;
           depth--;
         }
         // No valid object close found, seek until EOL.
@@ -679,7 +676,9 @@ extern "C" {
           }
         }
 
-        last_newline = location->start;
+        if (depth > 0) {
+          last_newline = location->start;
+        }
       }
 
       position_previous = location->start;
