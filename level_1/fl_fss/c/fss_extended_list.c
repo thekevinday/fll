@@ -203,7 +203,7 @@ extern "C" {
     fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*location))
     fl_macro_fss_content_nest_return_on_overflow((*buffer), (*location), (*found), positions_start, delimits, f_none_on_eos, f_none_on_stop)
 
-    fl_macro_fss_allocate_content_if_necessary((*found), delimits);
+    fl_macro_fss_allocate_content_nest_if_necessary((*found), delimits);
 
     f_array_length depth = 0;
     f_string_length position_previous = location->start;

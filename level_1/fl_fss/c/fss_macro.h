@@ -137,6 +137,21 @@ extern "C" {
     }
 #endif // _di_fl_macro_fss_content_delimited_return_on_overflow_
 
+#ifndef _di_fl_macro_fss_allocate_content_if_necessary_
+  #define fl_macro_fss_allocate_content_if_necessary(content, delimits) \
+    if (content.used >= content.size) { \
+      f_status status = f_none; \
+      \
+      f_macro_fss_content_resize(status, content, content.size + f_fss_default_allocation_step); \
+      if (f_status_is_error(status)) { \
+        f_status macro_allocation_status = f_none; \
+        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
+        \
+        return status; \
+      } \
+    }
+#endif // _di_fl_macro_fss_allocate_content_if_necessary_
+
 #ifndef _di_fl_macro_fss_content_nest_return_on_overflow_
   #define fl_macro_fss_content_nest_return_on_overflow(buffer, location, found, delimits, positions, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
@@ -188,12 +203,12 @@ extern "C" {
     // @todo: found.array[found.used].stop = location.stop;
 #endif // _di_fl_macro_fss_content_nest_delimited_return_on_overflow_
 
-#ifndef _di_fl_macro_fss_allocate_content_if_necessary_
-  #define fl_macro_fss_allocate_content_if_necessary(content, delimits) \
+#ifndef _di_fl_macro_fss_allocate_content_nest_if_necessary_
+  #define fl_macro_fss_allocate_content_nest_if_necessary(content, delimits) \
     if (content.used >= content.size) { \
       f_status status = f_none; \
       \
-      f_macro_fss_content_resize(status, content, content.size + f_fss_default_allocation_step); \
+      f_macro_fss_content_nest_resize(status, content, content.size + f_fss_default_allocation_step); \
       if (f_status_is_error(status)) { \
         f_status macro_allocation_status = f_none; \
         f_macro_string_lengths_delete(macro_allocation_status, delimits); \
@@ -201,7 +216,7 @@ extern "C" {
         return status; \
       } \
     }
-#endif // _di_fl_macro_fss_allocate_content_if_necessary_
+#endif // _di_fl_macro_fss_allocate_content_nest_if_necessary_
 
 #ifndef _di_fl_macro_fss_object_seek_till_newline_
   #define fl_macro_fss_object_seek_till_newline(buffer, location, delimits, eos_status, stop_status) \

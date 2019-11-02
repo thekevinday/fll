@@ -192,7 +192,7 @@ extern "C" {
         }
 
         // clear buffers before repeating the loop
-        f_macro_fss_contents_delete(status2, data->contents);
+        f_macro_fss_content_nests_delete(status2, data->contents);
         f_macro_fss_objects_delete(status2, data->objects);
         f_macro_string_dynamic_delete(status2, data->buffer);
       } // for
@@ -217,7 +217,7 @@ extern "C" {
       i++;
     } // while
 
-    f_macro_fss_contents_delete(status, data->contents);
+    f_macro_fss_content_nests_delete(status, data->contents);
     f_macro_fss_objects_delete(status, data->objects);
     f_macro_string_dynamic_delete(status, data->buffer);
     f_macro_string_lengths_delete(status, data->remaining);
