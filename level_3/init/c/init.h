@@ -222,7 +222,7 @@ extern "C" {
     f_console_parameter parameters[init_total_parameters];
 
     f_string_lengths remaining;
-    f_bool process_pipe;
+    bool process_pipe;
 
     fl_color_context context;
   } init_data;

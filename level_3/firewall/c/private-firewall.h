@@ -13,10 +13,10 @@ extern "C" {
 #endif
 
 typedef struct {
-  f_bool is_global;
-  f_bool is_main;
-  f_bool is_stop;
-  f_bool is_lock;
+  bool is_global;
+  bool is_main;
+  bool is_stop;
+  bool is_lock;
 
   f_file_position file_position;
 
@@ -49,9 +49,9 @@ typedef struct {
   }
 
 typedef struct {
-  f_bool has_main;
-  f_bool has_stop;
-  f_bool has_lock;
+  bool has_main;
+  bool has_stop;
+  bool has_lock;
 
   f_array_length main_at;
   f_array_length stop_at;
@@ -126,7 +126,7 @@ f_return_status firewall_default_lock(const firewall_data data) f_gcc_attribute_
 /**
  * Buffer firewall rules.
  */
-f_return_status firewall_buffer_rules(const f_string filename, const f_bool optional, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
+f_return_status firewall_buffer_rules(const f_string filename, const bool optional, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 
 /**
  * Process buffered rules.

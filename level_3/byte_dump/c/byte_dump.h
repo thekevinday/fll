@@ -195,7 +195,7 @@ extern "C" {
     f_console_parameter parameters[byte_dump_total_parameters];
 
     f_string_lengths remaining;
-    f_bool process_pipe;
+    bool process_pipe;
 
     uint64_t first;
     uint64_t last;

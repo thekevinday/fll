@@ -67,7 +67,7 @@ extern "C" {
  * @see byte_dump_print_text()
  */
 #ifndef _di_byte_dump_print_character_fragment_
-  extern f_bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, uint8_t *previous_bytes, uint8_t *previous_invalid, uint8_t *column, uint64_t *row);
+  extern bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, uint8_t *previous_bytes, uint8_t *previous_invalid, uint8_t *column, uint64_t *row);
 #endif // _di_byte_dump_print_character_fragment_
 
 /**

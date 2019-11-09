@@ -34,7 +34,7 @@ extern "C" {
 
     // when handling delimits, the only time they should be applied is when a valid object would exist
     // however, the delimits will appear before a valid object, so remember their positions and only apply them after a would be valid object is confirmed
-    f_bool has_delimit = f_false;
+    bool has_delimit = f_false;
 
     // begin the search
     found->start = location->start;
@@ -403,10 +403,10 @@ extern "C" {
       return fl_fss_found_no_content;
     }
 
-    f_bool has_delimit = f_false;
+    bool has_delimit = f_false;
     int8_t quoted = f_string_eos;
 
-    f_bool continue_main_loop = f_false;
+    bool continue_main_loop = f_false;
 
     f_string_length length = 0;
     f_array_length already_used = found->used;
@@ -815,7 +815,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    f_bool quoted = f_false;
+    bool quoted = f_false;
 
     f_string_location buffer_position = f_string_location_initialize;
     f_string_length start_position = f_string_initialize;

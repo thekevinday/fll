@@ -614,7 +614,7 @@ extern "C" {
 #endif // _di_f_utf_character_is_value_
 
 /**
- * Check to see if the entire byte block of the character is an ASCII or UTF-8 general space or control character.
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 general space character.
  *
  * @param character
  *   The character to validate.
@@ -826,7 +826,7 @@ extern "C" {
 #endif // _di_f_utf_is_valid_
 
 /**
- * Check to see if the entire byte block of the character is an ASCII or UTF-8 general space or control character.
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 general space character.
  *
  * @param character
  *   The character to validate.

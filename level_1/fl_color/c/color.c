@@ -191,7 +191,7 @@ extern "C" {
 #endif // _di_fl_color_print_code_
 
 #ifndef _di_fl_color_load_context_
-  f_return_status fl_color_load_context(fl_color_context *context, const f_bool use_light_colors) {
+  f_return_status fl_color_load_context(fl_color_context *context, const bool use_light_colors) {
     #ifndef _di_level_1_parameter_checking_
       if (context == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_

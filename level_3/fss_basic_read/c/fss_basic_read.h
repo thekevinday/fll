@@ -54,15 +54,21 @@ extern "C" {
 #endif // _di_fss_basic_read_name_
 
 #ifndef _di_fss_basic_read_defines_
+  #define fss_basic_read_short_at     "a"
+  #define fss_basic_read_short_depth  "d"
+  #define fss_basic_read_short_line   "l"
   #define fss_basic_read_short_name   "n"
-  #define fss_basic_read_short_count  "c"
-  #define fss_basic_read_short_total  "t"
   #define fss_basic_read_short_object "o"
+  #define fss_basic_read_short_select "s"
+  #define fss_basic_read_short_total  "t"
 
+  #define fss_basic_read_long_at     "at"
+  #define fss_basic_read_long_depth  "depth"
+  #define fss_basic_read_long_line   "line"
   #define fss_basic_read_long_name   "name"
-  #define fss_basic_read_long_count  "count"
-  #define fss_basic_read_long_total  "total"
   #define fss_basic_read_long_object "object"
+  #define fss_basic_read_long_select "select"
+  #define fss_basic_read_long_total  "total"
 
   enum {
     fss_basic_read_parameter_help,
@@ -71,10 +77,13 @@ extern "C" {
     fss_basic_read_parameter_no_color,
     fss_basic_read_parameter_version,
 
+    fss_basic_read_parameter_at,
+    fss_basic_read_parameter_depth,
+    fss_basic_read_parameter_line,
     fss_basic_read_parameter_name,
-    fss_basic_read_parameter_count,
-    fss_basic_read_parameter_total,
     fss_basic_read_parameter_object,
+    fss_basic_read_parameter_select,
+    fss_basic_read_parameter_total,
   };
 
   #define f_console_parameter_initialize_fss_basic_read \
@@ -84,13 +93,16 @@ extern "C" {
       f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
+      f_console_parameter_initialize(fss_basic_read_short_at, fss_basic_read_long_at, 0, f_true, f_console_type_normal), \
+      f_console_parameter_initialize(fss_basic_read_short_depth, fss_basic_read_long_depth, 0, f_true, f_console_type_normal), \
+      f_console_parameter_initialize(fss_basic_read_short_line, fss_basic_read_long_line, 0, f_true, f_console_type_normal), \
       f_console_parameter_initialize(fss_basic_read_short_name, fss_basic_read_long_name, 0, f_true, f_console_type_normal), \
-      f_console_parameter_initialize(fss_basic_read_short_count, fss_basic_read_long_count, 0, f_true, f_console_type_normal), \
-      f_console_parameter_initialize(fss_basic_read_short_total, fss_basic_read_long_total, 0, f_false, f_console_type_normal), \
       f_console_parameter_initialize(fss_basic_read_short_object, fss_basic_read_long_object, 0, f_false, f_console_type_normal), \
+      f_console_parameter_initialize(fss_basic_read_short_select, fss_basic_read_long_select, 0, f_true, f_console_type_normal), \
+      f_console_parameter_initialize(fss_basic_read_short_total, fss_basic_read_long_total, 0, f_false, f_console_type_normal), \
     }
 
-  #define fss_basic_read_total_parameters 9
+  #define fss_basic_read_total_parameters 13
 #endif // _di_fss_basic_read_defines_
 
 #ifndef _di_fss_basic_read_data_
@@ -102,7 +114,7 @@ extern "C" {
     f_fss_contents contents;
     f_file_position file_position;
     f_string_lengths remaining;
-    f_bool process_pipe;
+    bool process_pipe;
 
     fl_color_context context;
   } fss_basic_read_data;

@@ -94,7 +94,7 @@ extern "C" {
 #endif // _di_f_string_
 
 #ifndef _di_f_string_length_
-  typedef long f_string_length;
+  typedef uint64_t f_string_length;
 
   #define f_string_length_printf string_format_long_integer
 
@@ -119,8 +119,8 @@ extern "C" {
 #ifndef _di_f_string_lengths_
   typedef struct {
     f_string_length *array;
-    f_array_length  size;
-    f_array_length  used;
+    f_array_length   size;
+    f_array_length   used;
   } f_string_lengths;
 
   #define f_string_lengths_initialize { 0, 0, 0 }
@@ -183,7 +183,7 @@ extern "C" {
 
   #define f_string_locations_initialize {0, 0, 0}
 
-  #define f_clear_string_locations(locations) f_macro_memory_structure_clear(locations)
+  #define f_macro_string_locations_clear(locations) f_macro_memory_structure_clear(locations)
 
   #define f_macro_string_locations_new(status, locations, length) f_macro_memory_structure_new(status, locations, f_string_location, length)
 

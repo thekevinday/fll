@@ -11,18 +11,12 @@
 #define _F_types_h
 
 // libc includes
+#include <stdbool.h>
 #include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * Boolean type.
- */
-#ifndef _di_f_type_bool_
-  typedef uint8_t f_bool;
-#endif // _di_f_type_bool_
 
 /**
  * Status type.
@@ -41,6 +35,22 @@ extern "C" {
 #endif // _di_f_type_status_
 
 /**
+ * Conditional 128-bit support.
+ *
+ * This should work in GCC, but other compilers this may not be available.
+ * When not supported, these will fallback to 64-bit.
+ */
+#ifndef _di_f_type_int_128_
+  #ifdef __SIZEOF_INT128__
+    typedef __int128_t  f_int_128;
+    typedef __uint128_t f_uint_128;
+  #else
+    typedef int64_t  f_int_128;
+    typedef uint64_t f_uint_128;
+  #endif // __SIZEOF_INT128__
+#endif // _di_f_type_int_128_
+
+/**
  * Defines the maximum size to be supported.
  *
  * The size is to be the (max supported size - 1) such that that last number can be used for overflow operations.
@@ -53,23 +63,27 @@ extern "C" {
  * For example, f_type_size_8_signed is 2^7, or 0 to 127, therefore the max size here is 127.
  */
 #ifndef _di_f_type_sizes_
-  #define f_type_size_8_unsigned  0xfe
-  #define f_type_size_8_signed    0x7e
-  #define f_type_size_16_unsigned 0xfffe
-  #define f_type_size_16_signed   0x7ffe
-  #define f_type_size_32_unsigned 0xfffffffe
-  #define f_type_size_32_signed   0x7ffffffe
-  #define f_type_size_64_unsigned 0xfffffffffffffffe
-  #define f_type_size_64_signed   0x7ffffffffffffffe
+  #define f_type_size_8_unsigned   0xfe
+  #define f_type_size_8_signed     0x7e
+  #define f_type_size_16_unsigned  0xfffe
+  #define f_type_size_16_signed    0x7ffe
+  #define f_type_size_32_unsigned  0xfffffffe
+  #define f_type_size_32_signed    0x7ffffffe
+  #define f_type_size_64_unsigned  0xfffffffffffffffe
+  #define f_type_size_64_signed    0x7ffffffffffffffe
+  //#define f_type_size_128_unsigned 0xfffffffffffffffffffffffe
+  //#define f_type_size_128_signed   0x7ffffffffffffffffffffffe
 
-  #define f_type_size_max_8_unsigned  0xff
-  #define f_type_size_max_8_signed    0x7f
-  #define f_type_size_max_16_unsigned 0xffff
-  #define f_type_size_max_16_signed   0x7fff
-  #define f_type_size_max_32_unsigned 0xffffffff
-  #define f_type_size_max_32_signed   0x7fffffff
-  #define f_type_size_max_64_unsigned 0xffffffffffffffff
-  #define f_type_size_max_64_signed   0x7fffffffffffffff
+  #define f_type_size_max_8_unsigned   0xff
+  #define f_type_size_max_8_signed     0x7f
+  #define f_type_size_max_16_unsigned  0xffff
+  #define f_type_size_max_16_signed    0x7fff
+  #define f_type_size_max_32_unsigned  0xffffffff
+  #define f_type_size_max_32_signed    0x7fffffff
+  #define f_type_size_max_64_unsigned  0xffffffffffffffff
+  #define f_type_size_max_64_signed    0x7fffffffffffffff
+  //#define f_type_size_max_128_unsigned 0xffffffffffffffffffffffff
+  //#define f_type_size_max_128_signed   0x7fffffffffffffffffffffff
 #endif // _di_f_type_sizes_
 
 /**
@@ -90,9 +104,9 @@ extern "C" {
  * Defines a variable to be used by arrays.
  */
 #ifndef _di_f_array_length_
-  typedef long      f_array_length;
-  typedef int       f_array_length_short;
-  typedef long long f_array_length_long;
+  typedef uint64_t f_array_length;
+  typedef uint32_t f_array_length_short;
+  typedef f_int_128 f_array_length_long;
 #endif // _di_f_array_length_
 
 /**

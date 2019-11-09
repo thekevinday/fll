@@ -261,7 +261,7 @@ extern "C" {
  *   f_reallocation_error (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_color_load_context_
-  extern f_return_status fl_color_load_context(fl_color_context *context, const f_bool use_light_colors);
+  extern f_return_status fl_color_load_context(fl_color_context *context, const bool use_light_colors);
 #endif // _di_fl_color_load_context_
 
 #ifdef __cplusplus

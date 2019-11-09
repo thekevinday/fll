@@ -15,14 +15,14 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
 
   int results = 0;
   f_string_length length = 0;
-  f_bool invalid = f_false;
-  f_bool is_ip_list = f_false;
+  bool invalid = f_false;
+  bool is_ip_list = f_false;
   f_string_dynamic ip_list = f_string_dynamic_initialize;
 
   // iptables command arguments
-  f_bool device_all = f_false;
-  f_bool ip_list_direction = f_false; // false = source, true = destination
-  f_bool use_protocol = f_false;
+  bool device_all = f_false;
+  bool ip_list_direction = f_false; // false = source, true = destination
+  bool use_protocol = f_false;
   uint8_t tool = firewall_program_ip46tables;
   uint8_t chain = firewall_chain_none_id;
 
@@ -861,8 +861,8 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
   f_status status2 = f_none;
 
   uint8_t tool = firewall_program_iptables;
-  f_bool new_chain = f_false;
-  f_bool create_chain = f_false;
+  bool new_chain = f_false;
+  bool create_chain = f_false;
   int results = 0;
 
   f_array_length i = 0;
@@ -1339,7 +1339,7 @@ f_return_status firewall_default_lock(const firewall_data data) {
   return status;
 }
 
-f_return_status firewall_buffer_rules(const f_string filename, const f_bool optional, firewall_local_data *local, firewall_data *data) {
+f_return_status firewall_buffer_rules(const f_string filename, const bool optional, firewall_local_data *local, firewall_data *data) {
   f_file file = f_file_initialize;
   f_status status = f_none;
 

@@ -54,7 +54,7 @@ extern "C" {
     }
     else {
       f_array_length counter = 0;
-      f_bool object = (data->parameters[fss_basic_write_parameter_object].result == f_console_result_found);
+      bool object = (data->parameters[fss_basic_write_parameter_object].result == f_console_result_found);
 
       f_string_dynamic buffer = f_string_dynamic_initialize;
       f_string_location location = f_string_location_initialize;
@@ -207,6 +207,7 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < fss_basic_write_total_parameters) {
+      f_macro_string_lengths_delete(status, data->parameters[i].locations);
       f_macro_string_lengths_delete(status, data->parameters[i].additional);
       i++;
     } // while

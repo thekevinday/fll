@@ -34,7 +34,7 @@ extern "C" {
 
     // when handling delimits, the only time they should be applied is when a valid object would exist
     // however, the delimits will appear before a valid object, so remember their positions and only apply them after a would be valid object is confirmed
-    f_bool has_delimit = f_false;
+    bool has_delimit = f_false;
 
     // begin the search
     found->start = location->start;
@@ -463,7 +463,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    f_bool quoted = f_false;
+    bool quoted = f_false;
 
     f_string_location buffer_position = f_string_location_initialize;
     f_string_length start_position = f_string_initialize;

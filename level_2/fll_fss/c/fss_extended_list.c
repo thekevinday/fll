@@ -14,7 +14,7 @@ extern "C" {
 
     f_status status = f_none;
     f_string_length initial_used = objects->used;
-    f_bool found_data = f_false;
+    bool found_data = f_false;
 
     do {
       if (objects->used >= objects->size) {

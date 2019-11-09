@@ -82,7 +82,7 @@ extern "C" {
     }
     else {
       // now determine which command was placed first
-      f_bool found_command = f_false;
+      bool found_command = f_false;
       unsigned int command = 0;
 
       if (data->parameters[firewall_parameter_command_start].result == f_console_result_found) {
@@ -145,9 +145,9 @@ extern "C" {
 
         if (command == firewall_parameter_command_show) {
           // Warning: these are hardcoded print commands (I am not certain how I am going to implement external 'show' rules as the default-firewall setting file is the wrong place to put this)
-          f_bool show_nat = f_true;
-          f_bool show_mangle = f_true;
-          f_bool show_ports = f_true;
+          bool show_nat = f_true;
+          bool show_mangle = f_true;
+          bool show_ports = f_true;
 
           f_string_dynamics parameters = f_string_dynamics_initialize;
           int results = 0;
@@ -657,6 +657,7 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < firewall_total_parameters) {
+      f_macro_string_lengths_delete(status, data->parameters[i].locations);
       f_macro_string_lengths_delete(status, data->parameters[i].additional);
       i++;
     } // while

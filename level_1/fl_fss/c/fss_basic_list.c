@@ -206,7 +206,7 @@ extern "C" {
     found->array[found->used].start = location->start;
 
     f_string_length last_newline = location->start;
-    f_bool found_newline = f_false;
+    bool found_newline = f_false;
 
     // identify where the content ends
     while (location->start < buffer->used && location->start <= location->stop) {
@@ -528,8 +528,8 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    f_bool is_comment = f_false;
-    f_bool has_graph = f_false;
+    bool is_comment = f_false;
+    bool has_graph = f_false;
 
     f_string_location buffer_position = f_string_location_initialize;
     f_string_length start_position = f_string_initialize;

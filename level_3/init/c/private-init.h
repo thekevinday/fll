@@ -36,8 +36,8 @@ extern "C" {
     f_string_dynamic name;
     f_string_dynamic directory;
     f_string_dynamic file;
-    f_bool require;
-    f_bool asynchronous;
+    bool require;
+    bool asynchronous;
   } init_rule;
 
   #define init_rule_initialize \

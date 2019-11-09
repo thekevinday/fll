@@ -130,7 +130,8 @@ extern "C" {
  */
 #ifndef _di_f_fss_header_
   typedef struct {
-    f_fss_id        type;
+    f_fss_id type;
+
     f_string_length length;
   } f_fss_header;
 
@@ -146,7 +147,8 @@ extern "C" {
  */
 #ifndef _di_f_fss_headers_
   typedef struct {
-    f_fss_header    *array;
+    f_fss_header *array;
+
     f_string_length size;
     f_string_length used;
   } f_fss_headers;
@@ -192,7 +194,8 @@ extern "C" {
  */
 #ifndef _di_fss_objects_
   typedef struct {
-    f_fss_object    *array;
+    f_fss_object *array;
+
     f_string_length size;
     f_string_length used;
   } f_fss_objects;
@@ -223,9 +226,10 @@ extern "C" {
  */
 #ifndef _di_fss_content_
   typedef struct {
-    f_string_location *array; // the array of locations
-    f_array_length    size;   // total amount of allocated space
-    f_array_length    used;   // total number of allocated spaces used
+    f_string_location *array;
+
+    f_array_length size;
+    f_array_length used;
   } f_fss_content;
 
   #define f_fss_content_initialize { 0, 0, 0 }
@@ -250,7 +254,8 @@ extern "C" {
  */
 #ifndef _di_f_fss_contents_
   typedef struct {
-    f_fss_content  *array;
+    f_fss_content *array;
+
     f_array_length size;
     f_array_length used;
   } f_fss_contents;

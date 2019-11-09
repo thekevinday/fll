@@ -198,9 +198,11 @@ enum {
     f_underflow,
     f_overflow,
     f_divide_by_zero,
-    f_cannot_be_negative,
-    f_cannot_be_positive,
-    f_cannot_be_zero,
+    f_negative_number,
+    f_positive_number,
+    f_zero_number,
+    f_decimal_number,
+    f_invalid_number,
   #endif // _di_f_status_digits_
 
   #ifndef _di_f_status_buffers_

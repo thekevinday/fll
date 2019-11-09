@@ -113,6 +113,9 @@ extern "C" {
       else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_color_print_line(f_standard_error, context->error, context->reset, "CRITICAL ERROR: unable to allocate memory.");
       }
+      else if (status == f_invalid_utf) {
+        fl_color_print_line(f_standard_error, context->error, context->reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling fl_console_parameter_process().");
+      }
       else if (status == f_invalid_parameter) {
         fl_color_print_line(f_standard_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling fl_console_parameter_process().");
       }

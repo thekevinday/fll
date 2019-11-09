@@ -18,7 +18,7 @@ extern "C" {
     }
 
     // numbers are not valid status code strings.
-    if ((status = f_is_decimal(string[0])) == f_true) {
+    if ((status = f_conversion_character_is_decimal(string[0])) == f_true) {
       return f_status_set_error(f_invalid_data);
     }
 
@@ -659,18 +659,28 @@ extern "C" {
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_cannot_be_negative, length, fl_status_string_cannot_be_negative_length) == f_equal_to) {
-        *code = f_cannot_be_negative;
+      if (fl_string_compare(string, fl_status_string_negative_number, length, fl_status_string_negative_number_length) == f_equal_to) {
+        *code = f_negative_number;
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_cannot_be_positive, length, fl_status_string_cannot_be_positive_length) == f_equal_to) {
-        *code = f_cannot_be_positive;
+      if (fl_string_compare(string, fl_status_string_positive_number, length, fl_status_string_positive_number_length) == f_equal_to) {
+        *code = f_positive_number;
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_cannot_be_zero, length, fl_status_string_cannot_be_zero_length) == f_equal_to) {
-        *code = f_cannot_be_zero;
+      if (fl_string_compare(string, fl_status_string_zero_number, length, fl_status_string_zero_number_length) == f_equal_to) {
+        *code = f_zero_number;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_decimal_number, length, fl_status_string_decimal_number_length) == f_equal_to) {
+        *code = f_decimal_number;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_invalid_number, length, fl_status_string_invalid_number_length) == f_equal_to) {
+        *code = f_invalid_number;
         return f_none;
       }
     #endif // _di_fll_status_digits_

@@ -18,7 +18,7 @@ extern "C" {
 
     f_status status = f_none;
     f_string_length size = 0;
-    f_bool infinite = f_false;
+    bool infinite = f_false;
 
     // when total_elements is 0, this means the file read will until EOF is reached
     if (position.total_elements == 0) {

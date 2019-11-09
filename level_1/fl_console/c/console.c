@@ -12,7 +12,7 @@ extern "C" {
 
     f_status status = f_none;
     f_console_id result = 0;
-    f_bool found = f_false;
+    bool found = f_false;
 
     unsigned long location = 1; // Parameter 0 represents the program name so skip it.
     f_string_length sub_location = 0;
@@ -26,13 +26,15 @@ extern "C" {
 
     f_string_lengths needs_additional = f_string_lengths_initialize;
 
-    // loop through and read all parameters
+    unsigned short width = 0;
+
+    // loop through and read all parameters.
     while (location < arguments.argc) {
       f_console_identify(arguments.argv[location], &result);
 
       string_length = strnlen(arguments.argv[location], f_console_max_size);
 
-      // process the current parameter
+      // process the current parameter.
       if (result == f_console_short_enable || result == f_console_short_disable) {
         increment_by = 1;
         sub_location = 1;
@@ -100,8 +102,40 @@ extern "C" {
                 continue;
               }
 
+              width = f_macro_utf_byte_width_is(arguments.argv[location][sub_location]);
+              if (width > 0) {
+                increment_by = width;
+              }
+
               if (arguments.argv[location][sub_location] != *parameters.parameter[parameter_counter].symbol_short) {
                 continue;
+              }
+
+              if (width > 0) {
+                f_utf_character character_argument_utf = 0;
+                f_utf_character character_console_utf = 0;
+
+                unsigned short max_width = string_length - sub_location;
+
+                status = f_utf_char_to_character(arguments.argv[location] + sub_location, max_width, &character_argument_utf);
+
+                if (status != f_none) {
+                  f_macro_string_lengths_delete(status, needs_additional);
+                  return status;
+                }
+
+                max_width = strlen(parameters.parameter[parameter_counter].symbol_short);
+
+                status = f_utf_char_to_character((f_string) parameters.parameter[parameter_counter].symbol_short, max_width, &character_console_utf);
+
+                if (status != f_none) {
+                  f_macro_string_lengths_delete(status, needs_additional);
+                  return status;
+                }
+
+                if (character_argument_utf != character_console_utf) {
+                  continue;
+                }
               }
             }
             else if (result == console_long) {
@@ -116,6 +150,20 @@ extern "C" {
             else {
               continue;
             }
+
+            if (parameters.parameter[parameter_counter].locations.used >= parameters.parameter[parameter_counter].locations.size) {
+              f_status allocation_status = f_none;
+
+              f_macro_string_lengths_resize(allocation_status, parameters.parameter[parameter_counter].locations, parameters.parameter[parameter_counter].locations.size + f_console_default_allocation_step);
+
+              if (f_status_is_error(allocation_status)) {
+                f_macro_string_lengths_delete(status, needs_additional);
+                return f_status_set_error(allocation_status);
+              }
+            }
+
+            parameters.parameter[parameter_counter].locations.array[parameters.parameter[parameter_counter].locations.used] = location;
+            parameters.parameter[parameter_counter].locations.used++;
 
             parameters.parameter[parameter_counter].result = f_console_result_found;
             parameters.parameter[parameter_counter].location = location;
@@ -165,6 +213,20 @@ extern "C" {
           if (strncmp(arguments.argv[location], parameters.parameter[parameter_counter].symbol_other, string_length + 1) != 0) {
             continue;
           }
+
+          if (parameters.parameter[parameter_counter].locations.used >= parameters.parameter[parameter_counter].locations.size) {
+            f_status allocation_status = f_none;
+
+            f_macro_string_lengths_resize(allocation_status, parameters.parameter[parameter_counter].locations, parameters.parameter[parameter_counter].locations.size + f_console_default_allocation_step);
+
+            if (f_status_is_error(allocation_status)) {
+              f_macro_string_lengths_delete(status, needs_additional);
+              return f_status_set_error(allocation_status);
+            }
+          }
+
+          parameters.parameter[parameter_counter].locations.array[parameters.parameter[parameter_counter].locations.used] = location;
+          parameters.parameter[parameter_counter].locations.used++;
 
           parameters.parameter[parameter_counter].result = f_console_result_found;
           parameters.parameter[parameter_counter].location = location;
@@ -268,7 +330,84 @@ extern "C" {
 
     return f_none;
   }
-#endif // _di_fl_console_parameter_prioritize__
+#endif // _di_fl_console_parameter_prioritize_
+
+#ifndef _fl_console_parameter_to_number_unsigned_
+  f_return_status fl_console_parameter_to_number_unsigned(const f_string argument, uint64_t *number) {
+    #ifndef _di_level_0_parameter_checking_
+      if (argument == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_f
+
+    if (argument[0] == '\0') {
+      return f_no_data;
+    }
+
+    f_string_location location = f_string_location_initialize;
+    location.start = 0;
+    location.stop = strlen(argument) - 1;
+
+    f_status status = f_conversion_string_to_number_unsigned(argument, number, location);
+
+    return status;
+/*
+    errno = 0;
+
+    f_string end = 0;
+    uint64_t converted = (uint64_t) strtoull(argument, &end, 0);
+
+    if (errno == ERANGE) {
+      if (converted == LLONG_MAX) {
+        return f_status_set_error(f_overflow);
+      }
+
+      return f_status_set_error(f_invalid_number);
+    }
+
+    if (*end == '\0') {
+      *number = converted;
+      return f_none;
+    }
+
+    return f_status_set_error(f_invalid_number);
+*/
+  }
+#endif // _fl_console_parameter_to_number_unsigned_
+
+#ifndef _fl_console_parameter_to_number_signed_
+  f_return_status fl_console_parameter_to_number_signed(const f_string argument, int64_t *number) {
+    #ifndef _di_level_0_parameter_checking_
+      if (argument == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_f
+
+    if (argument[0] == '\0') {
+      return f_no_data;
+    }
+
+    errno = 0;
+
+    f_string end = 0;
+    int64_t converted = (int64_t) strtoull(argument, &end, 0);
+
+    if (errno == ERANGE) {
+      if (converted == LLONG_MAX) {
+        return f_status_set_error(f_overflow);
+      }
+
+      if (converted == LLONG_MIN) {
+        return f_status_set_error(f_underflow);
+      }
+
+      return f_status_set_error(f_invalid_number);
+    }
+
+    if (*end == '\0') {
+      *number = converted;
+      return f_none;
+    }
+
+    return f_status_set_error(f_invalid_number);
+  }
+#endif // _fl_console_parameter_to_number_signed_
 
 #ifdef __cplusplus
 } // extern "C"

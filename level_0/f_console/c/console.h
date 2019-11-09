@@ -132,10 +132,13 @@ extern "C" {
  *
  * - has_additional: Designates that a parameter will have a given number of additional arguments, such as 'blue' in '--color blue'.
  * - type: One of the f_console_type_* codes, defining how this parameter is to be processed.
- * - result: A code representing that the parameter was found and how it was found ('-h' vs '--help').
- * - total: A number representing the total number of times this parameter was found ('-h -h' would result in a total of 2).
- * - location: The last location in argv[] where this parameter was found.
+ *
+ * - result: A code representing that the parameter is found and how it is found ('-h' vs '--help').
+ * - total: A number representing the total number of times this parameter is found ('-h -h' would result in a total of 2).
+ *
+ * - location: The last location in argv[] where this parameter is found.
  * - location_sub: The last sub-location at location in argv (only used by short parameters, such as -h or +l).
+ * - locations: All locations within argv where this parameter is found (order is preserved).
  * - additional: An array of locations representing where in the argv[] the additional arguments are found.
  */
 #ifndef _di_f_console_parameter_
@@ -152,18 +155,21 @@ extern "C" {
 
     f_string_length  location;
     f_string_length  location_sub;
+    f_string_lengths locations;
     f_string_lengths additional;
   } f_console_parameter;
 
-  #define f_console_parameter_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_string_lengths_initialize }
+  #define f_console_parameter_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_string_lengths_initialize, f_string_lengths_initialize }
 #endif // _di_f_console_parameter_
 
 /**
  * Provide a helper structure for references and processing parameters.
  *
- * The f_console_parameters is designed for passing this to a function as a single argument.
- * The "parameters" property is intended to be populated with an aray of f_console_parameter_id whose size is defined by the "used" property.
- * This follows the idea of f_string_dynamic and has a "used" instead of length, but because this is not intended to be dynamically allocated there is no "size" property.
+ * Designed for passing this to a function as a single argument.
+ *
+ * parameter: Intended to be populated with an array of f_console_parameter_id whose size is defined by the "used" property.
+ *            This is not intended to be dynamically allocated, so there is no "size" property.
+ * order:
  */
 #ifndef _di_f_console_parameters_
   typedef struct {
@@ -204,7 +210,8 @@ extern "C" {
 #ifndef _di_f_console_arguments_
   typedef struct {
     const unsigned long argc;
-    const f_string      *argv;
+
+    const f_string *argv;
   } f_console_arguments;
 #endif // _di_f_console_arguments_
 

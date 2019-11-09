@@ -72,16 +72,16 @@ extern "C" {
               if (buffer.string[i] == f_fss_type_header_part5) {
                 i++;
 
-                if (f_is_hexidecimal(buffer.string[i]) == f_true) {
+                if (f_conversion_character_is_hexidecimal(buffer.string[i]) == f_true) {
                   i++;
 
-                  if (f_is_hexidecimal(buffer.string[i]) == f_true) {
+                  if (f_conversion_character_is_hexidecimal(buffer.string[i]) == f_true) {
                     i++;
 
-                    if (f_is_hexidecimal(buffer.string[i]) == f_true) {
+                    if (f_conversion_character_is_hexidecimal(buffer.string[i]) == f_true) {
                       i++;
 
-                      if (f_is_hexidecimal(buffer.string[i]) == f_true) {
+                      if (f_conversion_character_is_hexidecimal(buffer.string[i]) == f_true) {
                         i++;
 
                         f_string_location length = f_string_location_initialize;
@@ -90,7 +90,7 @@ extern "C" {
                         length.stop = i;
 
                         // 1: A possibly valid header type was found, now convert it into its proper format and save the header type
-                        f_string_to_hexidecimal(buffer.string, &header->type, length);
+                        f_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, length);
 
                         // 2: At this point, we can still know the proper format for the file and still have a invalid header, handle accordingly
                         if (buffer.string[i] == f_fss_type_header_close) {
@@ -128,16 +128,16 @@ extern "C" {
             if (buffer.string[i] == f_fss_type_header_part5) {
               i++;
 
-              if (f_is_hexidecimal(buffer.string[i]) == f_true) {
+              if (f_conversion_character_is_hexidecimal(buffer.string[i]) == f_true) {
                 i++;
 
-                if (f_is_hexidecimal(buffer.string[i]) == f_true) {
+                if (f_conversion_character_is_hexidecimal(buffer.string[i]) == f_true) {
                   i++;
 
-                  if (f_is_hexidecimal(buffer.string[i]) == f_true) {
+                  if (f_conversion_character_is_hexidecimal(buffer.string[i]) == f_true) {
                     i++;
 
-                    if (f_is_hexidecimal(buffer.string[i]) == f_true) {
+                    if (f_conversion_character_is_hexidecimal(buffer.string[i]) == f_true) {
                       i++;
 
                       f_string_location length = f_string_location_initialize;
@@ -145,7 +145,7 @@ extern "C" {
                       length.start = i - 4;
                       length.stop = i;
 
-                      f_string_to_hexidecimal(buffer.string, &header->type, length);
+                      f_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, length);
 
                       header->length = i + 1;
 

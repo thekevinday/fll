@@ -94,7 +94,7 @@ extern "C" {
     f_console_parameter parameters[fss_extended_write_total_parameters];
 
     f_string_lengths remaining;
-    f_bool process_pipe;
+    bool process_pipe;
 
     fl_color_context context;
   } fss_extended_write_data;

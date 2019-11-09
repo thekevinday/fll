@@ -299,6 +299,7 @@ extern "C" {
     f_status status = f_none;
 
     for (f_string_length i = 0; i < byte_dump_total_parameters; i++) {
+      f_macro_string_lengths_delete(status, data->parameters[i].locations);
       f_macro_string_lengths_delete(status, data->parameters[i].additional);
     } // for
 

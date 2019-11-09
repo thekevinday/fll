@@ -406,14 +406,20 @@ extern "C" {
     #define fl_status_string_divide_by_zero "f_divide_by_zero"
     #define fl_status_string_divide_by_zero_length 17
 
-    #define fl_status_string_cannot_be_negative "f_cannot_be_negative"
-    #define fl_status_string_cannot_be_negative_length 21
+    #define fl_status_string_negative_number "f_negative_number"
+    #define fl_status_string_negative_number_length 18
 
-    #define fl_status_string_cannot_be_positive "f_cannot_be_positive"
-    #define fl_status_string_cannot_be_positive_length 21
+    #define fl_status_string_positive_number "f_positive_number"
+    #define fl_status_string_positive_number_length 18
 
-    #define fl_status_string_cannot_be_zero "f_cannot_be_zero"
-    #define fl_status_string_cannot_be_zero_length 17
+    #define fl_status_string_zero_number "f_zero_number"
+    #define fl_status_string_zero_number_length 14
+
+    #define fl_status_string_decimal_number "f_decimal_number"
+    #define fl_status_string_decimal_number_length 15
+
+    #define fl_status_string_invalid_number "f_invalid_number"
+    #define fl_status_string_invalid_number_length 15
   #endif // _di_fl_status_digits_
 
   #ifndef _di_fl_status_buffers_

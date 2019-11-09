@@ -402,14 +402,20 @@ extern "C" {
         case f_divide_by_zero:
           *string = fl_status_string_divide_by_zero;
           break;
-        case f_cannot_be_negative:
-          *string = fl_status_string_cannot_be_negative;
+        case f_negative_number:
+          *string = fl_status_string_negative_number;
           break;
-        case f_cannot_be_positive:
-          *string = fl_status_string_cannot_be_positive;
+        case f_positive_number:
+          *string = fl_status_string_positive_number;
           break;
-        case f_cannot_be_zero:
-          *string = fl_status_string_cannot_be_zero;
+        case f_zero_number:
+          *string = fl_status_string_zero_number;
+          break;
+        case f_decimal_number:
+          *string = fl_status_string_decimal_number;
+          break;
+        case f_invalid_number:
+          *string = fl_status_string_invalid_number;
           break;
       #endif // _di_fl_status_digits_
 

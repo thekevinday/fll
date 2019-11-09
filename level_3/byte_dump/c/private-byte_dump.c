@@ -24,8 +24,8 @@ extern "C" {
     uint8_t previous_bytes = 0;
     uint8_t previous_invalid = 0;
 
-    f_bool character_reset = 0;
-    f_bool found_invalid_utf = f_false;
+    bool character_reset = 0;
+    bool found_invalid_utf = f_false;
 
     // Store the current character data until it can be printed.
     f_utf_string_dynamic characters = f_utf_string_dynamic_initialize;
@@ -223,10 +223,10 @@ extern "C" {
 #endif // _di_byte_dump_file_
 
 #ifndef _di_byte_dump_print_character_fragment_
-  f_bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, uint8_t *previous_bytes, uint8_t *previous_invalid, uint8_t *column, uint64_t *row) {
+  bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, uint8_t *previous_bytes, uint8_t *previous_invalid, uint8_t *column, uint64_t *row) {
     uint8_t byte = 0;
 
-    f_bool reset = f_false;
+    bool reset = f_false;
 
     f_utf_string_length character_current = characters.used - 1;
 
@@ -343,7 +343,7 @@ extern "C" {
     uint8_t j = 0;
     uint8_t output = 0;
     uint8_t width_utf = 0;
-    f_bool printed = f_false;
+    bool printed = f_false;
 
     fl_color_print(f_standard_output, data.context.notable, data.context.reset, "  %s ", byte_dump_character_wall);
 

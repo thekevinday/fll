@@ -279,7 +279,7 @@ extern "C" {
 
     f_string_dynamics chains;
     f_string_lengths remaining;
-    f_bool process_pipe;
+    bool process_pipe;
     f_string_dynamics devices;
 
     fl_color_context context;

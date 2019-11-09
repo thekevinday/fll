@@ -58,6 +58,9 @@ extern "C" {
       else if (status == f_allocation_error || status == f_reallocation_error) {
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
       }
+      else if (status == f_invalid_utf) {
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling fl_console_parameter_process().");
+      }
       else if (status == f_invalid_parameter) {
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_console_parameter_process().");
       }
@@ -78,7 +81,7 @@ extern "C" {
     }
     else {
       f_array_length counter = 0;
-      f_bool object = (data->parameters[fss_extended_write_parameter_object].result == f_console_result_found);
+      bool object = (data->parameters[fss_extended_write_parameter_object].result == f_console_result_found);
 
       f_string_dynamic  buffer = f_string_dynamic_initialize;
       f_string_location location = f_string_location_initialize;
@@ -269,6 +272,7 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < fss_extended_write_total_parameters) {
+      f_macro_string_lengths_delete(status, data->parameters[i].locations);
       f_macro_string_lengths_delete(status, data->parameters[i].additional);
       i++;
     } // while

@@ -299,7 +299,7 @@ extern "C" {
           location->start++;
         }
         else if (buffer->string[location->start] == f_fss_extended_list_open || buffer->string[location->start] == f_fss_extended_list_close) {
-          f_bool is_open = f_false;
+          bool is_open = f_false;
 
           if (buffer->string[location->start] == f_fss_extended_list_open) {
             is_open = f_true;
@@ -350,7 +350,7 @@ extern "C" {
             f_string_length location_newline = location->start;
 
             if (is_open) {
-              f_bool is_object = f_false;
+              bool is_object = f_false;
 
               if (slash_count % 2 == 0) {
                 is_object = f_true;
@@ -875,8 +875,8 @@ extern "C" {
     // @todo
     /*
     f_status status = f_none;
-    f_bool is_comment = f_false;
-    f_bool has_graph = f_false;
+    bool is_comment = f_false;
+    bool has_graph = f_false;
 
     f_string_location buffer_position = f_string_location_initialize;
     f_string_length start_position = f_string_initialize;
