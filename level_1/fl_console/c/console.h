@@ -27,6 +27,76 @@ extern "C" {
 #endif
 
 /**
+ * Convert a console parameter additional argument to a signed 64-bit integer.
+ *
+ * This will detect based types as follows:
+ * - hexidecimals begin with either '0x' or '0X'.
+ * - duodecimals begin with either '0d' or '0D'.
+ * - octals begin with either '0o' or '0O'.
+ * - binaries begin with either '0b' or '0B'.
+ * - decimal is used for all other cases.
+ *
+ * Leading 0's and whitespace are ignored.
+ * Whitespace after the first digit is considered invalid.
+ *
+ * @param argv
+ *   The argument string expected to be a number.
+ *   This is generally passed from the argv[].
+ * @param number
+ *   The converted number is stored here.
+ *   This only gets modified on success.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data the argument is empty or only contains valid whitespace.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_invalid_number (with error bit) if parameter is not a number.
+ *   f_overflow (with error bit) on integer overflow.
+ *   f_underflow (with error bit) on integer underflow.
+ *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
+ *
+ * @see f_conversion_string_to_number_signed()
+ */
+#ifndef _fl_console_parameter_to_number_signed_
+  f_return_status fl_console_parameter_to_number_signed(const f_string argument, int64_t *number);
+#endif // _fl_console_parameter_to_number_signed_
+
+/**
+ * Convert a console parameter additional argument to an unsigned 64-bit integer.
+ *
+ * This will detect based types as follows:
+ * - hexidecimals begin with either '0x' or '0X'.
+ * - duodecimals begin with either '0d' or '0D'.
+ * - octals begin with either '0o' or '0O'.
+ * - binaries begin with either '0b' or '0B'.
+ * - decimal is used for all other cases.
+ *
+ * Leading 0's and whitespace are ignored.
+ * Whitespace after the first digit is considered invalid.
+ *
+ * @param argv
+ *   The argument string expected to be a number.
+ *   This is generally passed from the argv[].
+ * @param number
+ *   The converted number is stored here.
+ *   This only gets modified on success.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data the argument is empty or only contains valid whitespace.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_invalid_number (with error bit) if parameter is not a number.
+ *   f_negative_number (with error bit) on negative value.
+ *   f_overflow (with error bit) on integer overflow.
+ *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
+ *
+ * @see f_conversion_string_to_number_unsigned()
+ */
+#ifndef _fl_console_parameter_to_number_unsigned_
+  f_return_status fl_console_parameter_to_number_unsigned(const f_string argument, uint64_t *number);
+#endif // _fl_console_parameter_to_number_unsigned_
+
+/**
  * Process console parameters.
  *
  * Short parameters are processed as follows:
@@ -98,80 +168,6 @@ extern "C" {
 #ifndef _di_fl_console_parameter_prioritize__
   extern f_return_status fl_console_parameter_prioritize(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision);
 #endif // _di_fl_console_parameter_prioritize__
-
-/**
- * Convert a console parameter additional argument to an unsigned integer.
- *
- * Unlike strtoull(), this only accepts complete numbers.
- * If the argument has anything else, such as "123abc", this will consider the number to be "123".
- *
- * This accepts base-16, base-10, and base-8.
- * - Base-16 is prefixed with '0x' or '0X'.
- * - Base-10 is not prefixed.
- * - Base-8 is prefixed with '0'.
- *
- * Note: The idea of an octal (base-8) being prefixed with '0' is a horrible mistake.
- *       This is done by strtoull().
- *       In the future, custom code may be used in place of strtoull() to use '0o' for octal.
- *       Furthermore, '0b' for binary should be supported as well.
- *
- * @param argv
- *   The argument string expected to be a number.
- *   This is generally passed from the argv[].
- * @param number
- *   The converted number is stored here.
- *   This only gets modified on success.
- *
- * @return
- *   f_none on success.
- *   f_no_data the argument is empty.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_number (with error bit) if parameter is not a number.
- *   f_negative_number (with error bit) on negative value.
- *   f_overflow (with error bit) on overflow.
- *
- * @see strtoull()
- */
-#ifndef _fl_console_parameter_to_number_unsigned_
-  f_return_status fl_console_parameter_to_number_unsigned(const f_string argument, uint64_t *number);
-#endif // _fl_console_parameter_to_number_unsigned_
-
-/**
- * Convert a console parameter additional argument to a signed integer.
- *
- * Unlike strtoll(), this only accepts complete numbers.
- * If the argument has anything else, such as "123abc", this will consider the number to be "123".
- *
- * This accepts base-16, base-10, and base-8.
- * - Base-16 is prefixed with '0x' or '0X'.
- * - Base-10 is not prefixed.
- * - Base-8 is prefixed with '0'.
- *
- * Note: The idea of an octal (base-8) being prefixed with '0' is a horrible mistake.
- *       This is done by strtoull().
- *       In the future, custom code may be used in place of strtoull() to use '0o'/'0O' for octal.
- *       Furthermore, '0b'/'0B' for binary should be supported as well.
- *
- * @param argv
- *   The argument string expected to be a number.
- *   This is generally passed from the argv[].
- * @param number
- *   The converted number is stored here.
- *   This only gets modified on success.
- *
- * @return
- *   f_none on success.
- *   f_no_data the argument is empty.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_number (with error bit) if parameter is not a number.
- *   f_underflow (with error bit) on underflow.
- *   f_overflow (with error bit) on overflow.
- *
- * @see strtoll()
- */
-#ifndef _fl_console_parameter_to_number_signed_
-  f_return_status fl_console_parameter_to_number_signed(const f_string argument, int64_t *number);
-#endif // _fl_console_parameter_to_number_signed_
 
 #ifdef __cplusplus
 } // extern "C"
