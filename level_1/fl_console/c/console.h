@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 /**
- * Convert a console parameter additional argument to a signed 64-bit integer.
+ * Convert a console parameter additional argument to a signed integer.
  *
  * This will detect based types as follows:
  * - hexidecimals begin with either '0x' or '0X'.
@@ -58,11 +58,11 @@ extern "C" {
  * @see f_conversion_string_to_number_signed()
  */
 #ifndef _fl_console_parameter_to_number_signed_
-  f_return_status fl_console_parameter_to_number_signed(const f_string argument, int64_t *number);
+  f_return_status fl_console_parameter_to_number_signed(const f_string argument, f_number_signed *number);
 #endif // _fl_console_parameter_to_number_signed_
 
 /**
- * Convert a console parameter additional argument to an unsigned 64-bit integer.
+ * Convert a console parameter additional argument to an unsigned integer.
  *
  * This will detect based types as follows:
  * - hexidecimals begin with either '0x' or '0X'.
@@ -93,7 +93,7 @@ extern "C" {
  * @see f_conversion_string_to_number_unsigned()
  */
 #ifndef _fl_console_parameter_to_number_unsigned_
-  f_return_status fl_console_parameter_to_number_unsigned(const f_string argument, uint64_t *number);
+  f_return_status fl_console_parameter_to_number_unsigned(const f_string argument, f_number_unsigned *number);
 #endif // _fl_console_parameter_to_number_unsigned_
 
 /**

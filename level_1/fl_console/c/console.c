@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _fl_console_parameter_to_number_signed_
-  f_return_status fl_console_parameter_to_number_signed(const f_string argument, int64_t *number) {
+  f_return_status fl_console_parameter_to_number_signed(const f_string argument, f_number_signed *number) {
     #ifndef _di_level_0_parameter_checking_
       if (argument == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_f
@@ -23,7 +23,7 @@ extern "C" {
 #endif // _fl_console_parameter_to_number_signed_
 
 #ifndef _fl_console_parameter_to_number_unsigned_
-  f_return_status fl_console_parameter_to_number_unsigned(const f_string argument, uint64_t *number) {
+  f_return_status fl_console_parameter_to_number_unsigned(const f_string argument, f_number_unsigned *number) {
     #ifndef _di_level_0_parameter_checking_
       if (argument == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_f

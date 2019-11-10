@@ -124,15 +124,15 @@ extern "C" {
 
   #define f_macro_utf_character_to_char_1(character) (((character) & f_utf_character_mask_char_1) >> 24) // grab first byte.
   #define f_macro_utf_character_to_char_2(character) (((character) & f_utf_character_mask_char_2) >> 16) // grab second byte.
-  #define f_macro_utf_character_to_char_3(character) (((character) & f_utf_character_mask_char_3) >> 8) // grab third byte.
-  #define f_macro_utf_character_to_char_4(character) ((character) & f_utf_character_mask_char_4) // grab fourth byte.
+  #define f_macro_utf_character_to_char_3(character) (((character) & f_utf_character_mask_char_3) >> 8)  // grab third byte.
+  #define f_macro_utf_character_to_char_4(character) ((character) & f_utf_character_mask_char_4)         // grab fourth byte.
 
   #define f_macro_utf_character_from_char_1(character) ((character) << 24) // shift the first byte.
   #define f_macro_utf_character_from_char_2(character) ((character) << 16) // shift the second byte.
-  #define f_macro_utf_character_from_char_3(character) ((character) << 8) // shift the third byte.
-  #define f_macro_utf_character_from_char_4(character) ((character)) // shift the fourth byte.
+  #define f_macro_utf_character_from_char_3(character) ((character) << 8)  // shift the third byte.
+  #define f_macro_utf_character_from_char_4(character) ((character))       // shift the fourth byte.
 
-  #define f_macro_utf_character_width(character) (f_macro_utf_byte_width(f_macro_utf_character_to_char_1(character)))
+  #define f_macro_utf_character_width(character)    (f_macro_utf_byte_width(f_macro_utf_character_to_char_1(character)))
   #define f_macro_utf_character_width_is(character) (f_macro_utf_byte_width_is(f_macro_utf_character_to_char_1(character)))
 #endif // _di_f_utf_character_
 
@@ -154,7 +154,7 @@ extern "C" {
 #ifndef _di_f_utf_string_
   typedef f_utf_character *f_utf_string;
 
-  #define f_utf_string_max_size   f_type_size_32_signed
+  #define f_utf_string_max_size   f_type_number_size_unsigned
   #define f_utf_string_initialize f_utf_character_eos
 
   #define f_macro_utf_string_new(status, string, length)   status = f_memory_new((void **) & string, sizeof(f_utf_string), length)
@@ -170,7 +170,7 @@ extern "C" {
  * Provide a type specifically for UTF-8 strings.
  */
 #ifndef _di_f_utf_string_length_
-  typedef long f_utf_string_length;
+  typedef f_number_unsigned f_utf_string_length;
 
   #define f_macro_utf_string_length_new(status, string, length)    status = f_memory_new((void **) & string, sizeof(f_utf_string_length), length)
 
@@ -188,8 +188,9 @@ extern "C" {
 #ifndef _di_f_utf_string_lengths_
   typedef struct {
     f_utf_string_length *array;
-    f_array_length  size;
-    f_array_length  used;
+
+    f_array_length size;
+    f_array_length used;
   } f_utf_string_lengths;
 
   #define f_utf_string_lengths_initialize { 0, 0, 0 }
@@ -237,8 +238,9 @@ extern "C" {
 #ifndef _di_f_utf_string_locations_
   typedef struct {
     f_utf_string_location *array;
-    f_array_length    size;
-    f_array_length    used;
+
+    f_array_length size;
+    f_array_length used;
   } f_utf_string_locations;
 
   #define f_utf_string_locations_initialize {0, 0, 0}
@@ -263,7 +265,8 @@ extern "C" {
  */
 #ifndef _di_f_utf_string_dynamic_
   typedef struct {
-    f_utf_string        string;
+    f_utf_string string;
+
     f_utf_string_length size;
     f_utf_string_length used;
   } f_utf_string_dynamic;
@@ -321,8 +324,9 @@ extern "C" {
 #ifndef _di_f_utf_string_dynamics_
   typedef struct {
     f_utf_string_dynamic *array;
-    f_utf_string_length  size;
-    f_utf_string_length  used;
+
+    f_utf_string_length size;
+    f_utf_string_length used;
   } f_utf_string_dynamics;
 
   #define f_utf_string_dynamics_initialize { 0, 0, 0 }

@@ -79,7 +79,7 @@ extern "C" {
 #ifndef _di_f_string_
   typedef char *f_string;
 
-  #define f_string_max_size   f_type_size_32_signed
+  #define f_string_max_size   f_type_number_size_unsigned
   #define f_string_initialize f_string_eos
 
   #define f_macro_string_new(status, string, length)   status = f_memory_new((void **) & string, sizeof(f_string), length)
@@ -94,7 +94,7 @@ extern "C" {
 #endif // _di_f_string_
 
 #ifndef _di_f_string_length_
-  typedef uint64_t f_string_length;
+  typedef f_number_unsigned f_string_length;
 
   #define f_string_length_printf string_format_long_integer
 
@@ -119,8 +119,9 @@ extern "C" {
 #ifndef _di_f_string_lengths_
   typedef struct {
     f_string_length *array;
-    f_array_length   size;
-    f_array_length   used;
+
+    f_array_length size;
+    f_array_length used;
   } f_string_lengths;
 
   #define f_string_lengths_initialize { 0, 0, 0 }
@@ -177,8 +178,9 @@ extern "C" {
 #ifndef _di_f_string_locations_
   typedef struct {
     f_string_location *array;
-    f_array_length    size;
-    f_array_length    used;
+
+    f_array_length size;
+    f_array_length used;
   } f_string_locations;
 
   #define f_string_locations_initialize {0, 0, 0}
@@ -205,7 +207,8 @@ extern "C" {
  */
 #ifndef _di_f_string_dynamic_
   typedef struct {
-    f_string        string;
+    f_string string;
+
     f_string_length size;
     f_string_length used;
   } f_string_dynamic;
@@ -264,8 +267,9 @@ extern "C" {
 #ifndef _di_f_string_dynamics_
   typedef struct {
     f_string_dynamic *array;
-    f_string_length  size;
-    f_string_length  used;
+
+    f_string_length size;
+    f_string_length used;
   } f_string_dynamics;
 
   #define f_string_dynamics_initialize { 0, 0, 0 }

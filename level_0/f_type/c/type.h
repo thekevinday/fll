@@ -55,36 +55,117 @@ extern "C" {
  *
  * The size is to be the (max supported size - 1) such that that last number can be used for overflow operations.
  *
+ * For example, f_type_size_8_negative is 2^7, or -1 to -128, therefore the max size here is -128 - 1 or -127.
+ * For example, f_type_size_8_positive is 2^7, or 0 to 127, therefore the max size here is 127 - 1 or 126.
  * For example, f_type_size_8_unsigned is 2^8, or 0 to 255, therefore the max size here is 255 - 1 or 254.
- * For example, f_type_size_8_signed is 2^7, or 0 to 127, therefore the max size here is 127 - 1 or 126.
  *
  * The max_size is provided for actual max sizes.
+ * For example, f_type_size_8_negative is 2^7, or -1 to -128, therefore the max size here is -128.
+ * For example, f_type_size_8_positive is 2^7, or 0 to 127, therefore the max size here is 127.
  * For example, f_type_size_8_unsigned is 2^8, or 0 to 255, therefore the max size here is 255.
- * For example, f_type_size_8_signed is 2^7, or 0 to 127, therefore the max size here is 127.
  */
 #ifndef _di_f_type_sizes_
-  #define f_type_size_8_unsigned   0xfe
-  #define f_type_size_8_signed     0x7e
-  #define f_type_size_16_unsigned  0xfffe
-  #define f_type_size_16_signed    0x7ffe
-  #define f_type_size_32_unsigned  0xfffffffe
-  #define f_type_size_32_signed    0x7ffffffe
-  #define f_type_size_64_unsigned  0xfffffffffffffffe
-  #define f_type_size_64_signed    0x7ffffffffffffffe
-  //#define f_type_size_128_unsigned 0xfffffffffffffffffffffffe
-  //#define f_type_size_128_signed   0x7ffffffffffffffffffffffe
+  #define f_type_size_8_negative 0x7f
+  #define f_type_size_8_positive 0x7e
+  #define f_type_size_8_unsigned 0xfe
 
-  #define f_type_size_max_8_unsigned   0xff
-  #define f_type_size_max_8_signed     0x7f
-  #define f_type_size_max_16_unsigned  0xffff
-  #define f_type_size_max_16_signed    0x7fff
-  #define f_type_size_max_32_unsigned  0xffffffff
-  #define f_type_size_max_32_signed    0x7fffffff
-  #define f_type_size_max_64_unsigned  0xffffffffffffffff
-  #define f_type_size_max_64_signed    0x7fffffffffffffff
-  //#define f_type_size_max_128_unsigned 0xffffffffffffffffffffffff
-  //#define f_type_size_max_128_signed   0x7fffffffffffffffffffffff
+  #define f_type_size_16_negative 0x7fff
+  #define f_type_size_16_positive 0x7ffe
+  #define f_type_size_16_unsigned 0xfffe
+
+  #define f_type_size_32_negative 0x7fffffff
+  #define f_type_size_32_positive 0x7ffffffe
+  #define f_type_size_32_unsigned 0xfffffffe
+
+  #define f_type_size_64_negative 0x7fffffffffffffff
+  #define f_type_size_64_positive 0x7ffffffffffffffe
+  #define f_type_size_64_unsigned 0xfffffffffffffffe
+
+  #ifndef _di_f_type_int_128_
+    #define f_type_size_128_negative 0x7fffffffffffffffffffffff
+    #define f_type_size_128_positive 0x7ffffffffffffffffffffffe
+    #define f_type_size_128_unsigned 0xfffffffffffffffffffffffe
+  #else
+    #define f_type_size_128_negative f_type_size_64_negative
+    #define f_type_size_128_positive f_type_size_64_positive
+    #define f_type_size_128_unsigned f_type_size_64_unsigned
+  #endif // _di_f_type_int_128_
+
+  #define f_type_size_max_8_negative 0x80
+  #define f_type_size_max_8_positive 0x7f
+  #define f_type_size_max_8_unsigned 0xff
+
+  #define f_type_size_max_16_negative 0x8000
+  #define f_type_size_max_16_positive 0x7fff
+  #define f_type_size_max_16_unsigned 0xffff
+
+  #define f_type_size_max_32_negative 0x80000000
+  #define f_type_size_max_32_positive 0x7fffffff
+  #define f_type_size_max_32_unsigned 0xffffffff
+
+  #define f_type_size_max_64_negative 0x8000000000000000
+  #define f_type_size_max_64_positive 0x7fffffffffffffff
+  #define f_type_size_max_64_unsigned 0xffffffffffffffff
+
+  #ifndef _di_f_type_int_128_
+    #define f_type_size_max_128_negative 0x800000000000000000000000
+    #define f_type_size_max_128_positive 0x7fffffffffffffffffffffff
+    #define f_type_size_max_128_unsigned 0xffffffffffffffffffffffff
+  #else
+    #define f_type_size_max_128_negative f_type_size_max_64_negative
+    #define f_type_size_max_128_positive f_type_size_max_64_positive
+    #define f_type_size_max_128_unsigned f_type_size_max_64_unsigned
+  #endif // _di_f_type_int_128_
 #endif // _di_f_type_sizes_
+
+/**
+ * Custom data type to be used throughout the project to represent general numbers.
+ *
+ * This is intended to be used in buffers, such as strings, and in argument parameters.
+ *
+ * Provides additional custom types so that it can be more easily be overwritten.
+ * Specifically, there is support for using 32-bit, 64-bit or 128-bit lengths.
+ *
+ * 64-bit is the designed default.
+ */
+#ifndef _di_f_type_number_64_
+  typedef int64_t  f_number_signed;
+  typedef uint64_t f_number_unsigned;
+
+  #define f_type_number_size_unsigned f_type_size_64_unsigned
+  #define f_type_number_size_positive f_type_size_64_positive
+  #define f_type_number_size_negative f_type_size_64_negative
+
+  #define f_type_number_size_max_unsigned f_type_size_max_64_unsigned
+  #define f_type_number_size_max_positive f_type_size_max_64_positive
+  #define f_type_number_size_max_negative f_type_size_max_64_negative
+#endif // _di_f_type_number_64_
+
+#ifdef _en_f_type_number_32_
+  typedef int32_t  f_number_signed;
+  typedef uint32_t f_number_unsigned;
+
+  #define f_type_number_size_unsigned f_type_size_32_unsigned
+  #define f_type_number_size_positive f_type_size_32_positive
+  #define f_type_number_size_negative f_type_size_32_negative
+
+  #define f_type_number_size_max_unsigned f_type_size_max_32_unsigned
+  #define f_type_number_size_max_positive f_type_size_max_32_positive
+  #define f_type_number_size_max_negative f_type_size_max_32_negative
+#endif // _en_f_type_number_32_
+
+#ifdef _en_f_type_number_128_
+  typedef f_int_128  f_number_signed;
+  typedef f_uint_128 f_number_unsigned;
+
+  #define f_type_number_size_unsigned f_type_size_128_unsigned
+  #define f_type_number_size_positive f_type_size_128_positive
+  #define f_type_number_size_negative f_type_size_128_negative
+
+  #define f_type_number_size_max_unsigned f_type_size_max_128_unsigned
+  #define f_type_number_size_max_positive f_type_size_max_128_positive
+  #define f_type_number_size_max_negative f_type_size_max_128_negative
+#endif // _en_f_type_number_128_
 
 /**
  * Standard Input/Output types.
@@ -104,9 +185,7 @@ extern "C" {
  * Defines a variable to be used by arrays.
  */
 #ifndef _di_f_array_length_
-  typedef uint64_t f_array_length;
-  typedef uint32_t f_array_length_short;
-  typedef f_int_128 f_array_length_long;
+  typedef f_number_unsigned f_array_length;
 #endif // _di_f_array_length_
 
 /**

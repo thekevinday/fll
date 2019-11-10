@@ -104,7 +104,7 @@ extern "C" {
  * - other: parameters using neither minus nor plus sign, such as 'build'.
  */
 #ifndef _di_f_console_types_
-  typedef unsigned short f_console_id;
+  typedef uint16_t f_console_id;
 
   enum {
     f_console_result_none = 1,
@@ -174,7 +174,8 @@ extern "C" {
 #ifndef _di_f_console_parameters_
   typedef struct {
     f_console_parameter *parameter;
-    f_array_length       used;
+
+    f_array_length used;
   } f_console_parameters;
 
   #define f_console_parameters_initialize { 0, 0 }
@@ -194,7 +195,8 @@ extern "C" {
 
   typedef struct {
     f_console_parameter_id *id;
-    f_array_length         used;
+
+    f_array_length used;
   } f_console_parameter_ids;
 
   #define f_console_parameter_ids_initialize { 0, 0 }
@@ -209,7 +211,7 @@ extern "C" {
  */
 #ifndef _di_f_console_arguments_
   typedef struct {
-    const unsigned long argc;
+    const f_number_unsigned argc;
 
     const f_string *argv;
   } f_console_arguments;

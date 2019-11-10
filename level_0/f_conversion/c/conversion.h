@@ -12,7 +12,6 @@
 
 // libc includes
 #include <ctype.h>
-#include <limits.h>
 #include <stdlib.h>
 
 // fll-0 includes
@@ -24,6 +23,64 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * Provide custom conversion scale limits based on selected type sizes.
+ *
+ * Utilize the f_type_number_* defines to determine the expected sizes to use for the sxcales.
+ *
+ * 64-bit is the designed default.
+ */
+#ifndef _di_f_type_number_64_
+  #define f_conversion_scale_binary_unsigned 64
+  #define f_conversion_scale_binary_signed   63
+
+  #define f_conversion_scale_octal_unsigned 21
+  #define f_conversion_scale_octal_signed   20
+
+  #define f_conversion_scale_decimal_unsigned 19
+  #define f_conversion_scale_decimal_signed   18
+
+  #define f_conversion_scale_duodecimal_unsigned 17
+  #define f_conversion_scale_duodecimal_signed   17
+
+  #define f_conversion_scale_hexidecimal_unsigned 15
+  #define f_conversion_scale_hexidecimal_signed   15
+#endif // _di_f_type_number_64_
+
+#ifdef _en_f_type_number_32_
+  #define f_conversion_scale_binary_unsigned 32
+  #define f_conversion_scale_binary_signed   31
+
+  #define f_conversion_scale_octal_unsigned 10
+  #define f_conversion_scale_octal_signed   10
+
+  #define f_conversion_scale_decimal_unsigned 9
+  #define f_conversion_scale_decimal_signed   9
+
+  #define f_conversion_scale_duodecimal_unsigned 8
+  #define f_conversion_scale_duodecimal_signed   8
+
+  #define f_conversion_scale_hexidecimal_unsigned 7
+  #define f_conversion_scale_hexidecimal_signed   7
+#endif // _en_f_type_number_32_
+
+#ifdef _en_f_type_number_128_
+  #define f_conversion_scale_binary_unsigned 128
+  #define f_conversion_scale_binary_signed   127
+
+  #define f_conversion_scale_octal_unsigned 42
+  #define f_conversion_scale_octal_signed   42
+
+  #define f_conversion_scale_decimal_unsigned 38
+  #define f_conversion_scale_decimal_signed   38
+
+  #define f_conversion_scale_duodecimal_unsigned 35
+  #define f_conversion_scale_duodecimal_signed   35
+
+  #define f_conversion_scale_hexidecimal_unsigned 31
+  #define f_conversion_scale_hexidecimal_signed   31
+#endif // _en_f_type_number_128_
 
 /**
  * Convert a single character into the binary digit that it represents.
@@ -110,7 +167,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_binary_
-  extern f_return_status f_conversion_character_to_binary(const int8_t character, uint64_t *number);
+  extern f_return_status f_conversion_character_to_binary(const int8_t character, f_number_unsigned *number);
 #endif // _di_f_conversion_character_to_binary_
 
 /**
@@ -128,7 +185,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_decimal_
-  extern f_return_status f_conversion_character_to_decimal(const int8_t character, uint64_t *number);
+  extern f_return_status f_conversion_character_to_decimal(const int8_t character, f_number_unsigned *number);
 #endif // _di_f_conversion_character_to_decimal_
 
 /**
@@ -146,7 +203,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_duodecimal_
-  extern f_return_status f_conversion_character_to_duodecimal(const int8_t character, uint64_t *number);
+  extern f_return_status f_conversion_character_to_duodecimal(const int8_t character, f_number_unsigned *number);
 #endif // _di_f_conversion_character_to_duodecimal_
 
 /**
@@ -164,7 +221,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_hexidecimal_
-  extern f_return_status f_conversion_character_to_hexidecimal(const int8_t character, uint64_t *number);
+  extern f_return_status f_conversion_character_to_hexidecimal(const int8_t character, f_number_unsigned *number);
 #endif // _di_f_conversion_character_to_hexidecimal_
 
 /**
@@ -182,11 +239,11 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_octal_
-  extern f_return_status f_conversion_character_to_octal(const int8_t character, uint64_t *number);
+  extern f_return_status f_conversion_character_to_octal(const int8_t character, f_number_unsigned *number);
 #endif // _di_f_conversion_character_to_octal_
 
 /**
- * Convert a series of positive or negative binary number characters into a int64_t.
+ * Convert a series of positive or negative binary number characters into a f_number_signed.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -210,11 +267,11 @@ extern "C" {
  *   f_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_binary_signed_
-  extern f_return_status f_conversion_string_to_binary_signed(const f_string string, int64_t *number, const f_string_location location, const bool negative);
+  extern f_return_status f_conversion_string_to_binary_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
 #endif // _di_f_conversion_string_to_binary_signed_
 
 /**
- * Convert a series of positive binary number characters into a uint64_t.
+ * Convert a series of positive binary number characters into a f_number_unsigned.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -235,11 +292,11 @@ extern "C" {
  *   f_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_binary_unsigned_
-  extern f_return_status f_conversion_string_to_binary_unsigned(const f_string string, uint64_t *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_binary_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
 #endif // _di_f_conversion_string_to_binary_unsigned_
 
 /**
- * Convert a series of positive or negative decimal number characters into an int64_t.
+ * Convert a series of positive or negative decimal number characters into an f_number_signed.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -263,11 +320,11 @@ extern "C" {
  *   f_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_decimal_signed_
-  extern f_return_status f_conversion_string_to_decimal_signed(const f_string string, int64_t *number, const f_string_location location, const bool negative);
+  extern f_return_status f_conversion_string_to_decimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
 #endif // _di_f_conversion_string_to_decimal_signed_
 
 /**
- * Convert a series of positive decimal number characters into an uint64_t.
+ * Convert a series of positive decimal number characters into an f_number_unsigned.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -288,11 +345,11 @@ extern "C" {
  *   f_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_decimal_unsigned_
-  extern f_return_status f_conversion_string_to_decimal_unsigned(const f_string string, uint64_t *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_decimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
 #endif // _di_f_conversion_string_to_decimal_unsigned_
 
 /**
- * Convert a series of positive or negative duodecimal number characters into an int64_t.
+ * Convert a series of positive or negative duodecimal number characters into an f_number_signed.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -316,11 +373,11 @@ extern "C" {
  *   f_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_duodecimal_signed_
-  extern f_return_status f_conversion_string_to_duodecimal_signed(const f_string string, int64_t *number, const f_string_location location, const bool negative);
+  extern f_return_status f_conversion_string_to_duodecimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
 #endif // _di_f_conversion_string_to_duodecimal_signed_
 
 /**
- * Convert a series of positive duodecimal number characters into an uint64_t.
+ * Convert a series of positive duodecimal number characters into an f_number_unsigned.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -341,11 +398,11 @@ extern "C" {
  *   f_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_duodecimal_unsigned_
-  extern f_return_status f_conversion_string_to_duodecimal_unsigned(const f_string string, uint64_t *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_duodecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
 #endif // _di_f_conversion_string_to_duodecimal_unsigned_
 
 /**
- * Convert a series of positive or negative hexidecimal number characters into an int64_t.
+ * Convert a series of positive or negative hexidecimal number characters into an f_number_signed.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -369,11 +426,11 @@ extern "C" {
  *   f_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_hexidecimal_signed_
-  extern f_return_status f_conversion_string_to_hexidecimal_signed(const f_string string, int64_t *number, const f_string_location location, const bool negative);
+  extern f_return_status f_conversion_string_to_hexidecimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
 #endif // _di_f_conversion_string_to_hexidecimal_signed_
 
 /**
- * Convert a series of positive hexidecimal number characters into an uint64_t.
+ * Convert a series of positive hexidecimal number characters into an f_number_unsigned.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -394,11 +451,11 @@ extern "C" {
  *   f_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_hexidecimal_unsigned_
-  extern f_return_status f_conversion_string_to_hexidecimal_unsigned(const f_string string, uint64_t *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_hexidecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
 #endif // _di_f_conversion_string_to_hexidecimal_unsigned_
 
 /**
- * Convert a series of positive or negative octal number characters into an int64_t.
+ * Convert a series of positive or negative octal number characters into an f_number_signed.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -421,11 +478,11 @@ extern "C" {
  *   f_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_octal_signed_
-  extern f_return_status f_conversion_string_to_octal_signed(const f_string string, int64_t *number, const f_string_location location, const bool negative);
+  extern f_return_status f_conversion_string_to_octal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
 #endif // _di_f_conversion_string_to_octal_signed_
 
 /**
- * Convert a series of positive octal number characters into an uint64_t.
+ * Convert a series of positive octal number characters into an f_number_unsigned.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -446,11 +503,11 @@ extern "C" {
  *   f_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_octal_unsigned_
-  extern f_return_status f_conversion_string_to_octal_unsigned(const f_string string, uint64_t *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_octal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
 #endif // _di_f_conversion_string_to_octal_unsigned_
 
 /**
- * Convert a series of positive or negative number characters into an int64_t.
+ * Convert a series of positive or negative number characters into an f_number_signed.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -488,11 +545,11 @@ extern "C" {
  * @see strtoll()
  */
 #ifndef _di_f_conversion_string_to_number_signed_
-  extern f_return_status f_conversion_string_to_number_signed(const f_string string, int64_t *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_number_signed(const f_string string, f_number_signed *number, const f_string_location location);
 #endif // _di_f_conversion_string_to_number_signed_
 
 /**
- * Convert a series of positive number characters into an uint64_t.
+ * Convert a series of positive number characters into an f_number_unsigned.
  *
  * This will stop at one of the following: location.stop or a non-digit.
  * This will ignore NULL values.
@@ -531,7 +588,7 @@ extern "C" {
  * @see strtoull()
  */
 #ifndef _di_f_conversion_string_to_number_unsigned_
-  extern f_return_status f_conversion_string_to_number_unsigned(const f_string string, uint64_t *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_number_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
 #endif // _di_f_conversion_string_to_number_unsigned_
 
 #ifdef __cplusplus

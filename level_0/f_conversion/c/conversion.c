@@ -74,7 +74,7 @@ extern "C" {
 #endif // _di_f_conversion_character_is_octal_
 
 #ifndef _di_f_conversion_character_to_binary_
-  f_return_status f_conversion_character_to_binary(const int8_t character, uint64_t *number) {
+  f_return_status f_conversion_character_to_binary(const int8_t character, f_number_unsigned *number) {
     #ifndef _di_level_0_parameter_checking_
       if (number == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -91,7 +91,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_binary_
 
 #ifndef _di_f_conversion_character_to_decimal_
-  f_return_status f_conversion_character_to_decimal(const int8_t character, uint64_t *number) {
+  f_return_status f_conversion_character_to_decimal(const int8_t character, f_number_unsigned *number) {
     #ifndef _di_level_0_parameter_checking_
       if (number == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -116,7 +116,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_decimal_
 
 #ifndef _di_f_conversion_character_to_duodecimal_
-  f_return_status f_conversion_character_to_duodecimal(const int8_t character, uint64_t *decimal) {
+  f_return_status f_conversion_character_to_duodecimal(const int8_t character, f_number_unsigned *decimal) {
     #ifndef _di_level_0_parameter_checking_
       if (decimal == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -145,7 +145,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_duodecimal_
 
 #ifndef _di_f_conversion_character_to_hexidecimal_
-  f_return_status f_conversion_character_to_hexidecimal(const int8_t character, uint64_t *decimal) {
+  f_return_status f_conversion_character_to_hexidecimal(const int8_t character, f_number_unsigned *decimal) {
     #ifndef _di_level_0_parameter_checking_
       if (decimal == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_hexidecimal_
 
 #ifndef _di_f_conversion_character_to_octal_
-  f_return_status f_conversion_character_to_octal(const int8_t character, uint64_t *number) {
+  f_return_status f_conversion_character_to_octal(const int8_t character, f_number_unsigned *number) {
     #ifndef _di_level_0_parameter_checking_
       if (number == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -205,7 +205,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_octal_
 
 #ifndef _di_f_conversion_string_to_binary_signed_
-  f_return_status f_conversion_string_to_binary_signed(const f_string string, int64_t *number, const f_string_location location, const bool negative) {
+  f_return_status f_conversion_string_to_binary_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -214,20 +214,16 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
-    uint64_t digit = 0;
-    uint64_t converted = 0;
+    f_number_unsigned digit = 0;
+    f_number_unsigned converted = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       if (f_conversion_character_to_binary(string[i], &digit) == f_none) {
         if (scale) {
           scale++;
 
-          if (scale > 63) {
-            return f_status_set_error(f_overflow);
-          }
-
           if (negative) {
-            if (scale > 63) {
+            if (scale > f_conversion_scale_binary_signed) {
               return f_status_set_error(f_underflow);
             }
 
@@ -235,7 +231,7 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (scale > 63) {
+            if (scale > f_conversion_scale_binary_signed) {
               return f_status_set_error(f_overflow);
             }
 
@@ -265,7 +261,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_binary_signed_
 
 #ifndef _di_f_conversion_string_to_binary_unsigned_
-  f_return_status f_conversion_string_to_binary_unsigned(const f_string string, uint64_t *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_binary_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -274,15 +270,15 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
-    uint64_t digit = 0;
-    uint64_t converted = 0;
+    f_number_unsigned digit = 0;
+    f_number_unsigned converted = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       if (f_conversion_character_to_binary(string[i], &digit) == f_none) {
         if (scale) {
           scale++;
 
-          if (scale > 64) {
+          if (scale > f_conversion_scale_binary_unsigned) {
             return f_status_set_error(f_overflow);
           }
 
@@ -305,7 +301,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_binary_unsigned_
 
 #ifndef _di_f_conversion_string_to_decimal_signed_
-  f_return_status f_conversion_string_to_decimal_signed(const f_string string, int64_t *number, const f_string_location location, const bool negative) {
+  f_return_status f_conversion_string_to_decimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -314,8 +310,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
-    uint64_t digit = 0;
-    uint64_t converted = 0;
+    f_number_unsigned digit = 0;
+    f_number_unsigned converted = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       if (f_conversion_character_to_decimal(string[i], &digit) == f_none) {
@@ -324,8 +320,8 @@ extern "C" {
           scale++;
 
           if (negative) {
-            if (scale > 18) {
-              if ((converted * 10) - digit < LLONG_MIN || (converted * 10) - digit > converted) {
+            if (scale > f_conversion_scale_decimal_signed) {
+              if ((converted * 10) - digit < f_type_number_size_negative || (converted * 10) - digit > converted) {
                 return f_status_set_error(f_underflow);
               }
             }
@@ -334,8 +330,8 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (scale > 18) {
-              if ((converted * 10) + digit > LLONG_MAX || (converted * 10) + digit < converted) {
+            if (scale > f_conversion_scale_decimal_signed) {
+              if ((converted * 10) + digit > f_type_number_size_positive || (converted * 10) + digit < converted) {
                 return f_status_set_error(f_overflow);
               }
             }
@@ -366,7 +362,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_decimal_signed_
 
 #ifndef _di_f_conversion_string_to_decimal_unsigned_
-  f_return_status f_conversion_string_to_decimal_unsigned(const f_string string, uint64_t *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_decimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -375,8 +371,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
-    uint64_t digit = 0;
-    uint64_t converted = 0;
+    f_number_unsigned digit = 0;
+    f_number_unsigned converted = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       if (f_conversion_character_to_decimal(string[i], &digit) == f_none) {
@@ -384,8 +380,8 @@ extern "C" {
         if (scale) {
           scale++;
 
-          if (scale > 18) {
-            if ((converted * 10) + digit > ULLONG_MAX || (converted * 10) + digit < converted) {
+          if (scale > f_conversion_scale_decimal_unsigned) {
+            if ((converted * 10) + digit > f_type_number_size_unsigned || (converted * 10) + digit < converted) {
               return f_status_set_error(f_overflow);
             }
           }
@@ -409,7 +405,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_decimal_unsigned_
 
 #ifndef _di_f_conversion_string_to_duodecimal_signed_
-  f_return_status f_conversion_string_to_duodecimal_signed(const f_string string, int64_t *number, const f_string_location location, const bool negative) {
+  f_return_status f_conversion_string_to_duodecimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -418,8 +414,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
-    uint64_t digit = 0;
-    uint64_t converted = 0;
+    f_number_unsigned digit = 0;
+    f_number_unsigned converted = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       if (f_conversion_character_to_duodecimal(string[i], &digit) == f_none) {
@@ -428,8 +424,8 @@ extern "C" {
           scale++;
 
           if (negative) {
-            if (scale > 15) {
-              if ((converted * 12) - digit < LLONG_MIN || (converted * 12) - digit > converted) {
+            if (scale > f_conversion_scale_duodecimal_signed) {
+              if ((converted * 12) - digit < f_type_number_size_negative || (converted * 12) - digit > converted) {
                 return f_status_set_error(f_underflow);
               }
             }
@@ -438,8 +434,8 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (scale > 15) {
-              if ((converted * 12) + digit > LLONG_MAX || (converted * 12) + digit < converted) {
+            if (scale > f_conversion_scale_duodecimal_signed) {
+              if ((converted * 12) + digit > f_type_number_size_positive || (converted * 12) + digit < converted) {
                 return f_status_set_error(f_overflow);
               }
             }
@@ -470,7 +466,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_duodecimal_signed_
 
 #ifndef _di_f_conversion_string_to_duodecimal_unsigned_
-  f_return_status f_conversion_string_to_duodecimal_unsigned(const f_string string, uint64_t *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_duodecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -479,8 +475,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
-    uint64_t digit = 0;
-    uint64_t converted = 0;
+    f_number_unsigned digit = 0;
+    f_number_unsigned converted = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       if (f_conversion_character_to_duodecimal(string[i], &digit) == f_none) {
@@ -488,8 +484,8 @@ extern "C" {
         if (scale) {
           scale++;
 
-          if (scale > 16) {
-            if ((converted * 12) + digit > ULLONG_MAX || (converted * 12) + digit < converted) {
+          if (scale > f_conversion_scale_duodecimal_unsigned) {
+            if ((converted * 12) + digit > f_type_number_size_unsigned || (converted * 12) + digit < converted) {
               return f_status_set_error(f_overflow);
             }
           }
@@ -513,7 +509,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_duodecimal_unsigned_
 
 #ifndef _di_f_conversion_string_to_hexidecimal_signed_
-  f_return_status f_conversion_string_to_hexidecimal_signed(const f_string string, int64_t *number, const f_string_location location, const bool negative) {
+  f_return_status f_conversion_string_to_hexidecimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -522,8 +518,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
-    uint64_t digit = 0;
-    uint64_t converted = 0;
+    f_number_unsigned digit = 0;
+    f_number_unsigned converted = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == f_none) {
@@ -532,8 +528,8 @@ extern "C" {
           scale++;
 
           if (negative) {
-            if (scale > 15) {
-              if ((converted << 4) - digit < LLONG_MIN || (converted << 4) - digit > converted) {
+            if (scale > f_conversion_scale_hexidecimal_signed) {
+              if ((converted << 4) - digit < f_type_number_size_negative || (converted << 4) - digit > converted) {
                 return f_status_set_error(f_underflow);
               }
             }
@@ -542,8 +538,8 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (scale > 15) {
-              if ((converted << 4) + digit > LLONG_MAX || (converted << 4) + digit < converted) {
+            if (scale > f_conversion_scale_hexidecimal_signed) {
+              if ((converted << 4) + digit > f_type_number_size_positive || (converted << 4) + digit < converted) {
                 return f_status_set_error(f_overflow);
               }
             }
@@ -574,7 +570,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_hexidecimal_signed_
 
 #ifndef _di_f_conversion_string_to_hexidecimal_unsigned_
-  f_return_status f_conversion_string_to_hexidecimal_unsigned(const f_string string, uint64_t *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_hexidecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -583,8 +579,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
-    uint64_t digit = 0;
-    uint64_t converted = 0;
+    f_number_unsigned digit = 0;
+    f_number_unsigned converted = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == f_none) {
@@ -592,8 +588,10 @@ extern "C" {
         if (scale) {
           scale++;
 
-          if (scale > 16) {
-            return f_status_set_error(f_overflow);
+          if (scale > f_conversion_scale_hexidecimal_unsigned) {
+            if ((converted << 4) + digit > f_type_number_size_unsigned || (converted << 4) + digit < converted) {
+              return f_status_set_error(f_overflow);
+            }
           }
 
           converted <<= 4;
@@ -615,7 +613,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_hexidecimal_unsigned_
 
 #ifndef _di_f_conversion_string_to_octal_signed_
-  f_return_status f_conversion_string_to_octal_signed(const f_string string, int64_t *number, const f_string_location location, const bool negative) {
+  f_return_status f_conversion_string_to_octal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -624,8 +622,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
-    uint64_t digit = 0;
-    uint64_t converted = 0;
+    f_number_unsigned digit = 0;
+    f_number_unsigned converted = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       if (f_conversion_character_to_octal(string[i], &digit) == f_none) {
@@ -634,8 +632,8 @@ extern "C" {
           scale++;
 
           if (negative) {
-            if (scale > 19) {
-              if ((converted << 3) - digit < LLONG_MIN || (converted << 3) - digit > converted) {
+            if (scale > f_conversion_scale_octal_signed) {
+              if ((converted << 3) - digit < f_type_number_size_negative || (converted << 3) - digit > converted) {
                 return f_status_set_error(f_underflow);
               }
             }
@@ -644,8 +642,8 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (scale > 19) {
-              if ((converted << 3) + digit > LLONG_MAX || (converted << 3) + digit < converted) {
+            if (scale > f_conversion_scale_octal_signed) {
+              if ((converted << 3) + digit > f_type_number_size_positive || (converted << 3) + digit < converted) {
                 return f_status_set_error(f_overflow);
               }
             }
@@ -676,7 +674,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_octal_signed_
 
 #ifndef _di_f_conversion_string_to_octal_unsigned_
-  f_return_status f_conversion_string_to_octal_unsigned(const f_string string, uint64_t *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_octal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -685,8 +683,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
-    uint64_t digit = 0;
-    uint64_t converted = 0;
+    f_number_unsigned digit = 0;
+    f_number_unsigned converted = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       if (f_conversion_character_to_octal(string[i], &digit) == f_none) {
@@ -694,8 +692,8 @@ extern "C" {
         if (scale) {
           scale++;
 
-          if (scale > 20) {
-            if ((converted << 3) + digit > ULLONG_MAX || (converted << 3) + digit < converted) {
+          if (scale > f_conversion_scale_octal_unsigned) {
+            if ((converted << 3) + digit > f_type_number_size_unsigned || (converted << 3) + digit < converted) {
               return f_status_set_error(f_overflow);
             }
           }
@@ -719,7 +717,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_octal_unsigned_
 
 #ifndef _di_f_conversion_string_to_number_signed_
-  f_return_status f_conversion_string_to_number_signed(const f_string string, int64_t *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_number_signed(const f_string string, f_number_signed *number, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -832,7 +830,7 @@ extern "C" {
         break;
       }
 
-      return f_status_set_error(f_negative_number);
+      return f_status_set_error(f_invalid_number);
     } // for
 
     if (mode == 0) {
@@ -864,7 +862,7 @@ extern "C" {
 #endif // _di_f_conversion_string_to_number_signed_
 
 #ifndef _di_f_conversion_string_to_number_unsigned_
-  f_return_status f_conversion_string_to_number_unsigned(const f_string string, uint64_t *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_number_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
@@ -964,7 +962,7 @@ extern "C" {
         break;
       }
 
-      return f_status_set_error(f_negative_number);
+      return f_status_set_error(f_invalid_number);
     } // for
 
     if (mode == 0) {
