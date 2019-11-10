@@ -19,7 +19,8 @@ extern "C" {
 
     fll_program_print_help_option(data.context, byte_dump_short_binary, byte_dump_long_binary, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Display binary representation.");
     fll_program_print_help_option(data.context, byte_dump_short_decimal, byte_dump_long_decimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Display decimal representation.");
-    fll_program_print_help_option(data.context, byte_dump_short_hexdecimal, byte_dump_long_hexidecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Display hexadecimal representation.");
+    fll_program_print_help_option(data.context, byte_dump_short_duodecimal, byte_dump_long_duodecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Display duodecimal representation.");
+    fll_program_print_help_option(data.context, byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Display hexadecimal representation.");
     fll_program_print_help_option(data.context, byte_dump_short_octal, byte_dump_long_octal, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Display octal representation.");
 
     printf("%c", f_string_eol);
@@ -85,10 +86,10 @@ extern "C" {
 
       // Identify priority of mode parameters.
       {
-        f_console_parameter_id ids[4] = { byte_dump_parameter_hexidecimal, byte_dump_parameter_octal, byte_dump_parameter_binary, byte_dump_parameter_decimal };
+        f_console_parameter_id ids[5] = { byte_dump_parameter_hexidecimal, byte_dump_parameter_duodecimal, byte_dump_parameter_octal, byte_dump_parameter_binary, byte_dump_parameter_decimal };
         f_console_parameter_id choice = byte_dump_parameter_hexidecimal;
         choices.id = ids;
-        choices.used = 4;
+        choices.used = 5;
 
         status = fl_console_parameter_prioritize(parameters, choices, &choice);
 
@@ -99,6 +100,9 @@ extern "C" {
 
         if (choice == byte_dump_parameter_hexidecimal) {
           data->mode = byte_dump_mode_hexidecimal;
+        }
+        else if (choice == byte_dump_parameter_duodecimal) {
+          data->mode = byte_dump_mode_duodecimal;
         }
         else if (choice == byte_dump_parameter_octal) {
           data->mode = byte_dump_mode_octal;
@@ -257,6 +261,9 @@ extern "C" {
 
           if (data->mode == byte_dump_mode_hexidecimal) {
             fl_color_print(f_standard_output, data->context.title, data->context.reset, "Hexidecimal");
+          }
+          else if (data->mode == byte_dump_mode_duodecimal) {
+            fl_color_print(f_standard_output, data->context.title, data->context.reset, "Duodecimal");
           }
           else if (data->mode == byte_dump_mode_octal) {
             fl_color_print(f_standard_output, data->context.title, data->context.reset, "Octal");

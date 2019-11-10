@@ -63,6 +63,7 @@ extern "C" {
 #ifndef _di_byte_dump_defines_
   enum {
     byte_dump_mode_hexidecimal = 1,
+    byte_dump_mode_duodecimal,
     byte_dump_mode_octal,
     byte_dump_mode_binary,
     byte_dump_mode_decimal,
@@ -117,7 +118,8 @@ extern "C" {
 
   #define byte_dump_short_binary      "b"
   #define byte_dump_short_decimal     "d"
-  #define byte_dump_short_hexdecimal  "x"
+  #define byte_dump_short_duodecimal  "D"
+  #define byte_dump_short_hexidecimal "x"
   #define byte_dump_short_octal       "o"
 
   #define byte_dump_short_first       "f"
@@ -128,6 +130,7 @@ extern "C" {
 
   #define byte_dump_long_binary       "binary"
   #define byte_dump_long_decimal      "decimal"
+  #define byte_dump_long_duodecimal   "duodecimal"
   #define byte_dump_long_hexidecimal  "hexidecimal"
   #define byte_dump_long_octal        "octal"
 
@@ -151,6 +154,7 @@ extern "C" {
 
     byte_dump_parameter_binary,
     byte_dump_parameter_decimal,
+    byte_dump_parameter_duodecimal,
     byte_dump_parameter_hexidecimal,
     byte_dump_parameter_octal,
 
@@ -175,7 +179,8 @@ extern "C" {
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(byte_dump_short_binary, byte_dump_long_binary, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(byte_dump_short_decimal, byte_dump_long_decimal, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(byte_dump_short_hexdecimal, byte_dump_long_hexidecimal, 0, 0, f_console_type_normal), \
+      f_console_parameter_initialize(byte_dump_short_duodecimal, byte_dump_long_duodecimal, 0, 0, f_console_type_normal), \
+      f_console_parameter_initialize(byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(byte_dump_short_octal, byte_dump_long_octal, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(byte_dump_short_first, byte_dump_long_first, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(byte_dump_short_last, byte_dump_long_last, 0, 1, f_console_type_normal), \
@@ -187,7 +192,7 @@ extern "C" {
       f_console_parameter_initialize(0, byte_dump_long_classic, 0, 0, f_console_type_normal), \
     }
 
-  #define byte_dump_total_parameters 17
+  #define byte_dump_total_parameters 18
 #endif // _di_byte_dump_defines_
 
 #ifndef _di_byte_dump_data_

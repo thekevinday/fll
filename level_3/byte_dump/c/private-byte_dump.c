@@ -159,6 +159,9 @@ extern "C" {
         if (data.mode == byte_dump_mode_hexidecimal) {
           printf("   ");
         }
+        else if (data.mode == byte_dump_mode_duodecimal) {
+          printf("    ");
+        }
         else if (data.mode == byte_dump_mode_octal) {
           printf("    ");
         }
@@ -173,6 +176,9 @@ extern "C" {
 
         if (column < data.width) {
           if (data.mode == byte_dump_mode_hexidecimal && column % 8 == 0) {
+            printf(" ");
+          }
+          else if (data.mode == byte_dump_mode_duodecimal && column % 6 == 0) {
             printf(" ");
           }
           else if (data.mode == byte_dump_mode_octal && column % 6 == 0) {
@@ -255,6 +261,41 @@ extern "C" {
         printf(" %02x", (uint8_t) byte);
       }
     }
+    else if (data.mode == byte_dump_mode_duodecimal) {
+      if (invalid[character_current]) {
+        f_print_string_dynamic(f_standard_output, data.context.error);
+      }
+
+      printf(" %01d", byte / 144);
+
+      uint8_t current = (byte % 144) / 12;
+
+      if (current == 11) {
+        printf("b");
+      }
+      else if (current == 10) {
+        printf("a");
+      }
+      else {
+        printf("%01d", current);
+      }
+
+      current = (byte % 144) % 12;
+
+      if (current == 11) {
+        printf("b");
+      }
+      else if (current == 10) {
+        printf("a");
+      }
+      else {
+        printf("%01d", current);
+      }
+
+      if (invalid[character_current]) {
+        f_print_string_dynamic(f_standard_output, data.context.reset);
+      }
+    }
     else if (data.mode == byte_dump_mode_octal) {
       if (invalid[character_current]) {
         fl_color_print(f_standard_output, data.context.error, data.context.reset, " %03o", (uint8_t) byte);
@@ -322,6 +363,9 @@ extern "C" {
       }
     }
     else if (data.mode == byte_dump_mode_hexidecimal && *column % 8 == 0) {
+      printf(" ");
+    }
+    else if (data.mode == byte_dump_mode_duodecimal && *column % 6 == 0) {
       printf(" ");
     }
     else if (data.mode == byte_dump_mode_octal && *column % 6 == 0) {
