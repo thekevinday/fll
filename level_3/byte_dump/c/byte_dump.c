@@ -19,7 +19,7 @@ extern "C" {
 
     fll_program_print_help_option(data.context, byte_dump_short_binary, byte_dump_long_binary, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Display binary representation.");
     fll_program_print_help_option(data.context, byte_dump_short_decimal, byte_dump_long_decimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Display decimal representation.");
-    fll_program_print_help_option(data.context, byte_dump_short_duodecimal, byte_dump_long_duodecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Display duodecimal representation.");
+    fll_program_print_help_option(data.context, byte_dump_short_duodecimal, byte_dump_long_duodecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, " Display duodecimal representation.");
     fll_program_print_help_option(data.context, byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Display hexadecimal representation.");
     fll_program_print_help_option(data.context, byte_dump_short_octal, byte_dump_long_octal, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Display octal representation.");
 
