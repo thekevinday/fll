@@ -58,7 +58,7 @@ extern "C" {
         f_array_length counter = 0;
 
         f_status code = f_none;
-        unsigned short true = 0;
+        unsigned short is_true = 0;
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
@@ -74,13 +74,13 @@ extern "C" {
           }
 
           code = (f_status) number;
-          true = f_status_is_error(code) && !f_status_is_warning(code);
+          is_true = f_status_is_error(code) && !f_status_is_warning(code);
 
           if (status == f_none) {
             status = f_true;
           }
 
-          if (true) {
+          if (is_true) {
             printf("%s\n", fl_status_string_true);
           }
           else {
@@ -97,7 +97,7 @@ extern "C" {
         f_array_length counter = 0;
 
         f_status code = f_none;
-        unsigned short true = 0;
+        unsigned short is_true = 0;
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
@@ -113,13 +113,13 @@ extern "C" {
           }
 
           code = (f_status) number;
-          true = f_status_is_warning(code) && !f_status_is_error(code);
+          is_true = f_status_is_warning(code) && !f_status_is_error(code);
 
           if (status == f_none) {
             status = f_true;
           }
 
-          if (true) {
+          if (is_true) {
             printf("%s\n", fl_status_string_true);
           }
           else {
@@ -136,7 +136,7 @@ extern "C" {
         f_array_length counter = 0;
 
         f_status code = f_none;
-        unsigned short true = 0;
+        unsigned short is_true = 0;
 
         for (; counter < data->remaining.used; counter++) {
           // only numbers are valid status codes.
@@ -152,13 +152,13 @@ extern "C" {
           }
 
           code = (f_status) number;
-          true = f_status_is_fine(code);
+          is_true = f_status_is_fine(code);
 
           if (status == f_none) {
             status = f_true;
           }
 
-          if (true) {
+          if (is_true) {
             printf("%s\n", fl_status_string_true);
           }
           else {
