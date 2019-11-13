@@ -56,7 +56,7 @@ extern "C" {
         //       nothing can be 0 as that represents the program name, unless arguments.argv[] is improperly created
       }
       else if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       }
       else if (status == f_invalid_utf) {
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling fl_console_parameter_process().");
@@ -65,7 +65,7 @@ extern "C" {
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_console_parameter_process().");
       }
       else {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_console_parameter_process().", f_status_set_error(status));
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_console_parameter_process().", status);
       }
 
       fss_extended_write_delete_data(data);
@@ -110,7 +110,7 @@ extern "C" {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
           }
           else {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
           }
 
           f_status status2 = f_none;
@@ -229,7 +229,7 @@ extern "C" {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           }
           else {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", f_status_set_error(status));
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open()", status);
           }
 
           fss_extended_write_delete_data(data);
@@ -249,7 +249,7 @@ extern "C" {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
           }
           else {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", f_status_set_error(status));
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_write()", status);
           }
 
           fss_extended_write_delete_data(data);

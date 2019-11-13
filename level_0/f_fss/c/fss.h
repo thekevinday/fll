@@ -490,7 +490,7 @@ extern "C" {
     status = f_none; \
     if (new_length < content_childs.size) { \
       f_array_length i = content_childs.size - new_length; \
-      for (; i < content_childs.size; ++i) { \
+      for (; i < content_childs.size; i++) { \
         f_macro_fss_content_child_delete(status, content_childs.array[i]); \
         if (status != f_none) break; \
       } \
@@ -499,7 +499,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > content_childs.size) { \
         f_array_length i = content_childs.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&content_childs.array[i], 0, sizeof(f_fss_content_child)); \
         } \
       } \
@@ -520,7 +520,7 @@ extern "C" {
     status = f_none; \
     if (new_length < content_childs.size) { \
       length_variable i = content_childs.size - new_length; \
-      for (; i < content_childs.size; ++i) { \
+      for (; i < content_childs.size; i++) { \
         f_macro_fss_content_child_destroy(status, content_childs.array[i]); \
         if (status != f_none) break; \
       } \
@@ -529,7 +529,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > content_childs.size) { \
         length_variable i = content_childs.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&content_childs.array[i], 0, sizeof(f_fss_content_child)); \
         } \
       } \
@@ -634,7 +634,7 @@ extern "C" {
     status = f_none; \
     if (new_length < content_nest.size) { \
       f_array_length i = content_nest.size - new_length; \
-      for (; i < content_nest.size; ++i) { \
+      for (; i < content_nest.size; i++) { \
         f_macro_fss_content_childs_delete(status, content_nest.array[i]); \
         if (status != f_none) break; \
       } \
@@ -643,7 +643,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > content_nest.size) { \
         f_array_length i = content_nest.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&content_nest.array[i], 0, sizeof(f_fss_content_childs)); \
         } \
       } \
@@ -662,7 +662,7 @@ extern "C" {
     status = f_none; \
     if (new_length < content_nest.size) { \
       f_array_length i = content_nest.size - new_length; \
-      for (; i < content_nest.size; ++i) { \
+      for (; i < content_nest.size; i++) { \
         f_macro_fss_content_childs_destroy(status, content_nest.array[i]); \
         if (status != f_none) break; \
       } \
@@ -671,7 +671,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > content_nest.size) { \
         f_array_length i = content_nest.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&content_childs.array[i], 0, sizeof(f_fss_content_child)); \
         } \
       } \
@@ -770,7 +770,7 @@ extern "C" {
     status = f_none; \
     if (new_length < content_nests.size) { \
       f_array_length i = content_nests.size - new_length; \
-      for (; i < content_nests.size; ++i) { \
+      for (; i < content_nests.size; i++) { \
         f_macro_fss_content_nest_delete(status, content_nests.array[i]); \
         if (status != f_none) break; \
       } \
@@ -779,7 +779,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > content_nests.size) { \
         f_array_length i = content_nests.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&content_nests.array[i], 0, sizeof(f_fss_content_nest)); \
         } \
       } \
@@ -798,7 +798,7 @@ extern "C" {
     status = f_none; \
     if (new_length < content_nests.size) { \
       f_array_length i = content_nests.size - new_length; \
-      for (; i < content_nests.size; ++i) { \
+      for (; i < content_nests.size; i++) { \
         f_macro_fss_content_nest_destroy(status, content_nests.array[i]); \
         if (status != f_none) break; \
       } \
@@ -807,7 +807,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > content_nests.size) { \
         f_array_length i = content_nests.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&content_nests.array[i], 0, sizeof(f_fss_content_nest)); \
         } \
       } \

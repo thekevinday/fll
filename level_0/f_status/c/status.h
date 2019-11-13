@@ -145,6 +145,7 @@ enum {
     f_failure,
     f_interrupted,         // usually by a signal.
     f_loop,                // such as infinite recursion.
+    f_incomplete,          // incomplete information
   #endif // _di_f_status_basic_
 
   #ifndef _di_f_status_invalid_

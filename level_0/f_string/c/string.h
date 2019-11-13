@@ -313,7 +313,7 @@ extern "C" {
     status = f_none; \
     if (new_length < dynamics.size) { \
       f_string_length i = dynamics.size - new_length; \
-      for (; i < dynamics.size; ++i) { \
+      for (; i < dynamics.size; i++) { \
         f_macro_string_dynamic_destroy(status, dynamics.array[i]); \
         if (status != f_none) break; \
       } \
@@ -322,7 +322,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > dynamics.size) { \
         f_string_length i = dynamics.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&dynamics.array[i], 0, sizeof(f_string_dynamic)); \
         } \
       } \
@@ -334,7 +334,7 @@ extern "C" {
     status = f_none; \
     if (new_length < dynamics.size) { \
       f_string_length i = dynamics.size - new_length; \
-      for (; i < dynamics.size; ++i) { \
+      for (; i < dynamics.size; i++) { \
         f_macro_string_dynamic_destroy(status, dynamics.array[i], f_string_dynamic); \
         if (status != f_none) break; \
       } \
@@ -343,7 +343,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > dynamics.size) { \
         f_string_length i = dynamics.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&dynamics.array[i], 0, sizeof(f_string_dynamic)); \
         } \
       } \

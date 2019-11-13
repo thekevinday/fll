@@ -274,6 +274,9 @@ extern "C" {
 
     #define fl_status_string_loop "f_loop"
     #define fl_status_string_loop_length 7
+
+    #define fl_status_string_incomplete "f_incomplete"
+    #define fl_status_string_incomplete_length 13
   #endif // _di_fl_status_basic_
 
   #ifndef _di_fl_status_invalid_

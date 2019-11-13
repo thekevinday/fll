@@ -369,7 +369,7 @@ extern "C" {
     status = f_none; \
     if (new_length < structures.size) { \
       length_variable i = structures.size - new_length; \
-      for (; i < structures.size; ++i) { \
+      for (; i < structures.size; i++) { \
         f_macro_memory_structure_delete(status, structures.array[i], type); \
         if (status != f_none) break; \
       } \
@@ -378,7 +378,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > structures.size) { \
         length_variable i = structures.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&structures.array[i], 0, sizeof(type)); \
         } \
       } \
@@ -401,7 +401,7 @@ extern "C" {
     status = f_none; \
     if (new_length < structures.size) { \
       length_variable i = structures.size - new_length; \
-      for (; i < structures.size; ++i) { \
+      for (; i < structures.size; i++) { \
         f_macro_memory_structure_destroy(status, structures.array[i], type); \
         if (status != f_none) break; \
       } \
@@ -410,7 +410,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > structures.size) { \
         length_variable i = structures.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&structures.array[i], 0, sizeof(type)); \
         } \
       } \

@@ -267,6 +267,9 @@ extern "C" {
         case f_loop:
           *string = fl_status_string_loop;
           break;
+        case f_incomplete:
+          *string = fl_status_string_incomplete;
+          break;
       #endif // _di_fl_status_basic_
 
       #ifdef _di_fl_status_invalid_

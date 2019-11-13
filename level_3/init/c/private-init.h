@@ -110,7 +110,7 @@ extern "C" {
     status = f_none; \
     if (new_length < rules.size) { \
       f_string_length i = rules.size - new_length; \
-      for (; i < rules.size; ++i) { \
+      for (; i < rules.size; i++) { \
         delete_init_rule(status, rules.array[i]); \
         if (status != f_none) break; \
       } \
@@ -119,7 +119,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > rules.size) { \
         f_string_length i = rules.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&rules.array[i], 0, sizeof(f_string)); \
         } \
       } \
@@ -131,7 +131,7 @@ extern "C" {
     status = f_none; \
     if (new_length < rules.size) { \
       f_string_length i = rules.size - new_length; \
-      for (; i < rules.size; ++i) { \
+      for (; i < rules.size; i++) { \
         destroy_init_rule(status, rules.array[i]); \
         if (status != f_none) break; \
       } \
@@ -140,7 +140,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > rules.size) { \
         f_string_length i = rules.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&rules.array[i], 0, sizeof(init_rule)); \
         } \
       } \
@@ -210,7 +210,7 @@ extern "C" {
     status = f_none; \
     if (new_length < categorys.size) { \
       f_string_length i = categorys.size - new_length; \
-      for (; i < categorys.size; ++i) { \
+      for (; i < categorys.size; i++) { \
         delete_init_category(status, categorys.array[i]); \
         if (status != f_none) break; \
       } \
@@ -219,7 +219,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > categorys.size) { \
         f_string_length i = categorys.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&categorys.array[i], 0, sizeof(f_string)); \
         } \
       } \
@@ -231,7 +231,7 @@ extern "C" {
     status = f_none; \
     if (new_length < categorys.size) { \
       f_string_length i = categorys.size - new_length; \
-      for (; i < categorys.size; ++i) { \
+      for (; i < categorys.size; i++) { \
         destroy_init_category(status, categorys.array[i]); \
         if (status != f_none) break; \
       } \
@@ -240,7 +240,7 @@ extern "C" {
     if (status == f_none) { \
       if (new_length > categorys.size) { \
         f_string_length i = categorys.size; \
-        for (; i < new_length; ++i) { \
+        for (; i < new_length; i++) { \
           memset(&categorys.array[i], 0, sizeof(init_category)); \
         } \
       } \

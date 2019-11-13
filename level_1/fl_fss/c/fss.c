@@ -310,7 +310,7 @@ extern "C" {
       max_width = buffer.used - location->start;
     }
 
-    while (buffer.string[location->start] == f_string_eos || (status = f_utf_is_graph(buffer.string + location->start, max_width)) == f_false) {
+    while (buffer.string[location->start] == f_string_eos || (status = f_utf_is_whitespace(buffer.string + location->start, max_width)) == f_true) {
       if (f_status_is_error(status)) {
         return status;
       }
@@ -463,7 +463,7 @@ extern "C" {
     if (distance > 0) {
       while (position < buffer->used + distance && position <= location.stop) {
         buffer->string[position] = f_fss_delimit_placeholder;
-        ++position;
+        position++;
       }
     }
 

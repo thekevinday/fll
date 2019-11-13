@@ -48,7 +48,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_no_data the argument is empty or only contains valid whitespace.
+ *   f_no_data (with error bit) if string starts wth a null (length is 0).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_invalid_number (with error bit) if parameter is not a number.
  *   f_overflow (with error bit) on integer overflow.
@@ -83,7 +83,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_no_data the argument is empty or only contains valid whitespace.
+ *   f_no_data (with error bit) if string starts wth a null (length is 0).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_invalid_number (with error bit) if parameter is not a number.
  *   f_negative_number (with error bit) on negative value.

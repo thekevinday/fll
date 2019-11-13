@@ -725,6 +725,10 @@ extern "C" {
       if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (string[0] == '\0') {
+      return f_status_set_error(f_no_data);
+    }
+
     uint8_t width = 0;
     uint8_t width_max = 0;
     uint8_t mode = 0;
@@ -834,7 +838,7 @@ extern "C" {
     } // for
 
     if (mode == 0) {
-      return f_no_data;
+      return f_status_set_error(f_invalid_number);
     }
 
     f_string_location location_offset = f_string_location_initialize;
@@ -870,12 +874,17 @@ extern "C" {
       if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (string[0] == '\0') {
+      return f_status_set_error(f_no_data);
+    }
+
     uint8_t width = 0;
     uint8_t width_max = 0;
     uint8_t mode = 0;
     f_string_length j = 0;
     f_string_length offset = 0;
     f_status status = f_none;
+    int8_t sign_found = 0;
 
     for (f_string_length i = location.start; i <= location.stop; i++) {
       width = f_macro_utf_byte_width_is(string[i]);
@@ -947,14 +956,14 @@ extern "C" {
         break;
       }
 
-      // plus sign is not allowed.
       if (string[i] == 0x2b) {
-        return f_status_set_error(f_invalid_number);
+        offset++;
+        sign_found = 1;
       }
 
-      // negative sign is not allowed.
       if (string[i] == 0x2d) {
-        return f_status_set_error(f_negative_number);
+        offset++;
+        sign_found = -1;
       }
 
       if (f_conversion_character_is_decimal(string[i]) == f_true) {
@@ -966,7 +975,7 @@ extern "C" {
     } // for
 
     if (mode == 0) {
-      return f_no_data;
+      return f_status_set_error(f_invalid_number);
     }
 
     f_string_location location_offset = f_string_location_initialize;
@@ -974,22 +983,35 @@ extern "C" {
     location_offset.stop = location.stop;
 
     if (mode == 10) {
-      return f_conversion_string_to_decimal_unsigned(string, number, location_offset);
+      status = f_conversion_string_to_decimal_unsigned(string, number, location_offset);
+    }
+    else if (mode == 16) {
+      status = f_conversion_string_to_hexidecimal_unsigned(string, number, location_offset);
+    }
+    else if (mode == 12) {
+      status = f_conversion_string_to_duodecimal_unsigned(string, number, location_offset);
+    }
+    else if (mode == 8) {
+      status = f_conversion_string_to_octal_unsigned(string, number, location_offset);
+    }
+    else {
+      status = f_conversion_string_to_binary_unsigned(string, number, location_offset);
     }
 
-    if (mode == 16) {
-      return f_conversion_string_to_hexidecimal_unsigned(string, number, location_offset);
+    // +/- signs are not allowed.
+    if (sign_found) {
+      if (status == f_none) {
+        if (sign_found == -1) {
+          return f_status_set_error(f_negative_number);
+        }
+
+        return f_status_set_error(f_positive_number);
+      }
+
+      return f_status_set_error(f_invalid_number);
     }
 
-    if (mode == 12) {
-      return f_conversion_string_to_duodecimal_unsigned(string, number, location_offset);
-    }
-
-    if (mode == 8) {
-      return f_conversion_string_to_octal_unsigned(string, number, location_offset);
-    }
-
-    return f_conversion_string_to_binary_unsigned(string, number, location_offset);
+    return status;
   }
 #endif // _di_f_conversion_string_to_number_unsigned_
 

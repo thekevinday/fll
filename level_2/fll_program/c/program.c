@@ -94,7 +94,7 @@ extern "C" {
       fl_macro_color_context_new(allocation_status, (*context));
 
       if (f_status_is_error(allocation_status)) {
-        fprintf(f_standard_error, "Critical Error: unable to allocate memory.\n");
+        fprintf(f_standard_error, "CRITICAL ERROR: Unable to allocate memory.\n");
         return allocation_status;
       }
 
@@ -111,16 +111,24 @@ extern "C" {
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       }
       else if (status == f_allocation_error || status == f_reallocation_error) {
-        fl_color_print_line(f_standard_error, context->error, context->reset, "CRITICAL ERROR: unable to allocate memory.");
+        fl_color_print_line(f_standard_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory.");
       }
       else if (status == f_invalid_utf) {
-        fl_color_print_line(f_standard_error, context->error, context->reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling fl_console_parameter_process().");
+        fl_color_print(f_standard_error, context->error, context->reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling ");
+        fl_color_print(f_standard_error, context->notable, context->reset, "fl_console_parameter_process()");
+        fl_color_print_line(f_standard_error, context->error, context->reset, ".");
       }
       else if (status == f_invalid_parameter) {
-        fl_color_print_line(f_standard_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling fl_console_parameter_process().");
+        fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling ");
+        fl_color_print(f_standard_error, context->notable, context->reset, "fl_console_parameter_process()");
+        fl_color_print_line(f_standard_error, context->error, context->reset, ".");
       }
       else {
-        fl_color_print_line(f_standard_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_console_parameter_process().", status);
+        fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (");
+        fl_color_print(f_standard_error, context->notable, context->reset, "%u", status);
+        fl_color_print(f_standard_error, context->error, context->reset, ") has occured while calling ");
+        fl_color_print(f_standard_error, context->notable, context->reset, "fl_console_parameter_process()");
+        fl_color_print_line(f_standard_error, context->error, context->reset, ".");
       }
 
       return f_status_set_error(status);

@@ -34,7 +34,7 @@ extern "C" {
 #ifndef _di_fl_macro_fss_skip_past_delimit_placeholders_
   #define fl_macro_fss_skip_past_delimit_placeholders(buffer, location) \
     while (buffer.string[location.start] == f_fss_delimit_placeholder) { \
-      ++location.start;\
+      location.start++;\
       \
       if (location.start >= buffer.used) break; \
       if (location.start  > location.stop) break; \
@@ -221,7 +221,7 @@ extern "C" {
 #ifndef _di_fl_macro_fss_object_seek_till_newline_
   #define fl_macro_fss_object_seek_till_newline(buffer, location, delimits, eos_status, stop_status) \
     while (buffer.string[location.start] != f_string_eol) { \
-      ++location.start; \
+      location.start++; \
       if (location.start >= buffer.used) { \
         f_status macro_allocation_status = f_none; \
         f_macro_string_lengths_delete(macro_allocation_status, delimits); \
@@ -240,7 +240,7 @@ extern "C" {
 #ifndef _di_fl_macro_fss_object_delimited_seek_till_newline_
   #define fl_macro_fss_object_delimited_seek_till_newline(buffer, location, delimits, eos_status, stop_status) \
     while (buffer.string[location.start] != f_string_eol) { \
-      ++location.start; \
+      location.start++; \
       if (location.start >= buffer.used) { \
         f_status macro_allocation_status = f_none; \
         f_string_length i = 0; \
@@ -271,7 +271,7 @@ extern "C" {
 #ifndef _di_fl_macro_fss_content_seek_till_newline_
   #define fl_macro_fss_content_seek_till_newline(buffer, location, found, delimits, eos_status, stop_status) \
     while (buffer.string[location.start] != f_string_eol) { \
-      ++location.start; \
+      location.start++; \
       if (location.start >= buffer.used) { \
         f_status macro_allocation_status = f_none; \
         f_macro_string_lengths_delete(macro_allocation_status, delimits); \
@@ -292,7 +292,7 @@ extern "C" {
 #ifndef _di_fl_macro_fss_content_delimited_seek_till_newline_
   #define fl_macro_fss_content_delimited_seek_till_newline(buffer, location, found, delimits, eos_status, stop_status) \
     while (buffer.string[location.start] != f_string_eol) { \
-      ++location.start; \
+      location.start++; \
       if (location.start >= buffer.used) { \
         f_status macro_allocation_status = f_none; \
         f_string_length i = 0; \

@@ -29,8 +29,8 @@ extern "C" {
   #define fss_basic_list_read_depth_initialize \
     { \
       0, \
-      f_array_length_initialize, \
-      f_array_length_initialize, \
+      0, \
+      0, \
     }
 #endif // _di_fss_basic_list_read_depth_
 

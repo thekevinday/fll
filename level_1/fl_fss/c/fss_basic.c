@@ -125,7 +125,7 @@ extern "C" {
     // identify where the object ends
     if (quoted == f_string_eos) {
       status = f_none;
-      while (buffer->string[location->start] == f_fss_delimit_placeholder || (status = fl_fss_is_graph(*buffer, *location)) == f_true) {
+      while (buffer->string[location->start] == f_fss_delimit_placeholder || (status = fl_fss_is_space(*buffer, *location)) == f_false) {
         status = fl_fss_increment_buffer(*buffer, location, 1);
         if (f_status_is_error(status)) return status;
 
@@ -354,7 +354,6 @@ extern "C" {
               return fl_fss_found_no_object;
             }
 
-
             status = fl_fss_increment_buffer(*buffer, location, 1);
             if (f_status_is_error(status)) return status;
           } // while
@@ -373,7 +372,6 @@ extern "C" {
 
           return fl_fss_found_no_object;
         }
-
 
         status = fl_fss_increment_buffer(*buffer, location, 1);
         if (f_status_is_error(status)) return status;
@@ -395,7 +393,6 @@ extern "C" {
 
       f_macro_string_lengths_delete(allocation_status, delimits);
     }
-
 
     status = fl_fss_increment_buffer(*buffer, location, 1);
     if (f_status_is_error(status)) return status;
@@ -442,7 +439,7 @@ extern "C" {
 
       if (buffer->string[location->start] == f_fss_basic_close) break;
 
-      ++location->start;
+      location->start++;
     } while (f_true);
 
     // Save the stop length

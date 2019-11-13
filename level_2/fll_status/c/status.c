@@ -445,6 +445,11 @@ extern "C" {
         *code = f_loop;
         return f_none;
       }
+
+      if (fl_string_compare(string, fl_status_string_incomplete, length, fl_status_string_incomplete_length) == f_equal_to) {
+        *code = f_incomplete;
+        return f_none;
+      }
     #endif // _di_fll_status_basic_
 
     #ifndef _di_fll_status_invalid_

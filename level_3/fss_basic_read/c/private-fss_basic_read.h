@@ -23,15 +23,20 @@ extern "C" {
   typedef struct {
     f_string_length depth;
 
-    f_array_length parameter;
-    f_array_length position;
+    f_array_length index_at;
+    f_array_length index_name;
+
+    f_number_unsigned value_at;
+    f_string          value_name;
   } fss_basic_read_depth;
 
   #define fss_basic_read_depth_initialize \
     { \
       0, \
-      f_array_length_initialize, \
-      f_array_length_initialize, \
+      0, \
+      0, \
+      0, \
+      f_string_initialize, \
     }
 #endif // _di_fss_basic_read_depth_
 
@@ -54,13 +59,13 @@ extern "C" {
 
   #define macro_fss_basic_read_depths_clear(depths) f_macro_memory_structure_clear(depths)
 
-  #define macro_fss_basic_read_depths_new(status, depths, length) f_macro_memory_structure_new(status, depths, fss_basic_read_depths, length)
+  #define macro_fss_basic_read_depths_new(status, depths, length) f_macro_memory_structure_new(status, depths, fss_basic_read_depth, length)
 
-  #define macro_fss_basic_read_depths_delete(status, depths) f_macro_memory_structure_delete(status, depths, fss_basic_read_depths)
-  #define macro_fss_basic_read_depths_destroy(status, depths) f_macro_memory_structure_destroy(status, depths, fss_basic_read_depths)
+  #define macro_fss_basic_read_depths_delete(status, depths) f_macro_memory_structure_delete(status, depths, fss_basic_read_depth)
+  #define macro_fss_basic_read_depths_destroy(status, depths) f_macro_memory_structure_destroy(status, depths, fss_basic_read_depth)
 
-  #define macro_fss_basic_read_depths_resize(status, depths, new_length) f_macro_memory_structure_resize(status, depths, fss_basic_read_depths, new_length)
-  #define macro_fss_basic_read_depths_adjust(status, depths, new_length) f_macro_memory_structure_adjust(status, depths, fss_basic_read_depths, new_length)
+  #define macro_fss_basic_read_depths_resize(status, depths, new_length) f_macro_memory_structure_resize(status, depths, fss_basic_read_depth, new_length)
+  #define macro_fss_basic_read_depths_adjust(status, depths, new_length) f_macro_memory_structure_adjust(status, depths, fss_basic_read_depth, new_length)
 #endif // _di_fss_basic_read_depths_
 
 /**
@@ -100,10 +105,12 @@ extern "C" {
 /**
  * Pre-process the parameters, parsing out and handling the depth and depth related parameters.
  *
+ * Will handle depth-sensitive parameter conflicts, such as --name being used with --at (which is not allowed).
+ *
  * @param arguments
  *   The console arguments to pre-process.
  * @param data
- *   The Program specific data.
+ *   The program specific data.
  * @param depths
  *   This stores the pre-processed depth parameters.
  *
@@ -115,8 +122,22 @@ extern "C" {
   extern f_return_status fss_basic_read_main_preprocess_depth(const f_console_arguments arguments, const fss_basic_read_data data, fss_basic_read_depths *depths) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_basic_read_main_preprocess_depth_
 
+/**
+ * Process a given file.
+ *
+ * @param arguments
+ *   The console arguments passed to the program.
+ * @param data
+ *   The program specific data.
+ * @param file_name
+ *   The name of the file being processed.
+ * @param depths
+ *   The processed depth parameters.
+ *
+ * @see fss_basic_read_main_preprocess_depth()
+ */
 #ifndef _di_fss_basic_read_main_process_file_
-  extern f_return_status fss_basic_read_main_process_file(const f_console_arguments arguments, fss_basic_read_data *data, const f_string filename, const fss_basic_read_depths depths) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_basic_read_main_process_file(const f_console_arguments arguments, fss_basic_read_data *data, const f_string file_name, const fss_basic_read_depths depths) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_basic_read_main_process_file_
 
 #ifdef __cplusplus

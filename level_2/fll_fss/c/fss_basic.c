@@ -71,7 +71,7 @@ extern "C" {
 
         if (status == fl_fss_found_object) {
           found_data = f_true;
-          status     = fl_fss_basic_content_read(buffer, input, &contents->array[contents->used]);
+          status = fl_fss_basic_content_read(buffer, input, &contents->array[contents->used]);
 
           break;
         }
@@ -100,7 +100,7 @@ extern "C" {
       }
       else if (status == f_no_data_on_eos || status == f_no_data_on_stop) {
 
-        // if at least some valid object was found, then return f_none equivelents
+        // If at least some valid object was found, then return f_none equivelents.
         if (objects->used > initial_used) {
           if (status == f_no_data_on_eos)  return f_none_on_eos;
           if (status == f_no_data_on_stop) return f_none_on_stop;
@@ -111,7 +111,7 @@ extern "C" {
       else if (status != fl_fss_found_object && status != fl_fss_found_content && status != fl_fss_found_no_content && status != fl_fss_found_object_no_content) {
         return status;
       }
-      // when content is found, the input->start is incremented, if content is found at input->stop, then input->start will be > input.stop
+      // When content is found, the input->start is incremented, if content is found at input->stop, then input->start will be > input.stop.
       else if (input->start >= input->stop || input->start >= buffer->used) {
         if (status == fl_fss_found_object || status == fl_fss_found_content || status == fl_fss_found_no_content || status == fl_fss_found_object_no_content) {
           objects->used++;
@@ -127,9 +127,9 @@ extern "C" {
 
       objects->used++;
       contents->used++;
-    } while (f_true);
+    } while (input->start < f_string_max_size);
 
-    return f_unknown;
+    return f_overflow;
   }
 #endif // _di_fll_fss_basic_read_
 

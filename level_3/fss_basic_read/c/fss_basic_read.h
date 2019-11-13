@@ -8,6 +8,8 @@
  * This is the FSS Basic Read program
  * This program utilizes the Featureless Linux Library.
  * This program processes files or other input in fss format and stores the results in the fss_basic_read_data.
+ *
+ * This processes in accordance to the FSS-0000 Basic specification.
  */
 #ifndef _fss_basic_read_h
 

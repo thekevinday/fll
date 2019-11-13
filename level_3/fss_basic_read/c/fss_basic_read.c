@@ -23,7 +23,7 @@ extern "C" {
     fll_program_print_help_option(data.context, fss_basic_read_short_name, fss_basic_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Select object with this name.");
     fll_program_print_help_option(data.context, fss_basic_read_short_object, fss_basic_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the object instead of the content.");
     fll_program_print_help_option(data.context, fss_basic_read_short_select, fss_basic_read_long_select, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Select sub-content at this index.");
-    fll_program_print_help_option(data.context, fss_basic_read_short_total, fss_basic_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print the total number of objects.");
+    fll_program_print_help_option(data.context, fss_basic_read_short_total, fss_basic_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print the total number of lines.");
 
     fll_program_print_help_usage(data.context, fss_basic_read_name, "filename(s)");
 
@@ -75,10 +75,10 @@ extern "C" {
     printf("%c", f_string_eol);
 
     printf("  Specify both ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_total);
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_object);
     printf(" and the ");
     fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_line);
-    printf(" parameters to get the total lines.%c", f_string_eol);
+    printf(" parameters to get the total objects.%c", f_string_eol);
 
     printf("%c", f_string_eol);
 
@@ -132,8 +132,48 @@ extern "C" {
       fll_program_print_version(fss_basic_read_version);
     }
     else if (data->remaining.used > 0 || data->process_pipe) {
+      if (data->parameters[fss_basic_read_parameter_at].result == f_console_result_found) {
+        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_at);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' requires a positive number.");
+
+        return f_status_set_error(f_invalid_parameter);
+      }
+
+      if (data->parameters[fss_basic_read_parameter_depth].result == f_console_result_found) {
+        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_depth);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' requires a positive number.");
+
+        return f_status_set_error(f_invalid_parameter);
+      }
+
+      if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_found) {
+        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_line);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' requires a positive number.");
+
+        return f_status_set_error(f_invalid_parameter);
+      }
+
+      if (data->parameters[fss_basic_read_parameter_name].result == f_console_result_found) {
+        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_name);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' requires a string.");
+
+        return f_status_set_error(f_invalid_parameter);
+      }
+
+      if (data->parameters[fss_basic_read_parameter_select].result == f_console_result_found) {
+        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_select);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' requires a positive number.");
+
+        return f_status_set_error(f_invalid_parameter);
+      }
+
       if (data->parameters[fss_basic_read_parameter_object].result == f_console_result_found) {
-        if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_found) {
+        if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_object);
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "' parameter with the '");
@@ -148,6 +188,18 @@ extern "C" {
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_object);
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "' parameter with the '");
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_select);
+          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' parameter.");
+
+          return f_status_set_error(f_invalid_parameter);
+        }
+      }
+
+      if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
+        if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
+          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_line);
+          fl_color_print(f_standard_error, data->context.error, data->context.reset, "' parameter with the '");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_total);
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' parameter.");
 
           return f_status_set_error(f_invalid_parameter);

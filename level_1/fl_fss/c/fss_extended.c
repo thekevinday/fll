@@ -66,7 +66,7 @@ extern "C" {
 
           continue;
         }
-        else if ((status = fl_fss_is_graph(*buffer, *location)) == f_false) {
+        else if ((status = fl_fss_is_space(*buffer, *location)) == f_true) {
           found->stop = location->start - 1;
 
           status = fl_fss_increment_buffer(*buffer, location, 1);
@@ -444,7 +444,7 @@ extern "C" {
 
             continue;
           }
-          else if ((status = fl_fss_is_graph(*buffer, *location)) == f_false) {
+          else if ((status = fl_fss_is_space(*buffer, *location)) == f_true) {
             found->array[found->used].stop = location->start - 1;
 
             status = fl_fss_increment_buffer(*buffer, location, 1);
@@ -1179,7 +1179,7 @@ extern "C" {
         return f_none_on_eol;
       }
 
-      if (content.string[location->start] != f_fss_delimit_placeholder && (status = fl_fss_is_graph(*buffer, *location)) == f_false) {
+      if (content.string[location->start] != f_fss_delimit_placeholder && (status = fl_fss_is_space(*buffer, *location)) == f_true) {
         quoted = f_fss_delimit_double_quote;
 
         pre_allocate_size += 2;

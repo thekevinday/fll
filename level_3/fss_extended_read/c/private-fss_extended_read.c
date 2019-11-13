@@ -54,7 +54,7 @@ extern "C" {
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
     else if (status == f_allocation_error || status == f_reallocation_error) {
-      fl_color_print_line(f_standard_error, context.error, context.reset, "CRITICAL ERROR: unable to allocate memory.");
+      fl_color_print_line(f_standard_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory.");
     }
     else {
       fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (");
@@ -75,7 +75,7 @@ extern "C" {
       macro_fss_extended_read_depths_new(status, (*depths), data.parameters[fss_extended_read_parameter_depth].locations.used);
       if (f_status_is_error(status)) {
         f_status status2 = f_none;
-        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory.");
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
 
         macro_fss_extended_read_depths_delete(status2, (*depths));
         return f_status_set_error(f_invalid_parameter);
@@ -189,7 +189,7 @@ extern "C" {
 
         macro_fss_extended_read_depths_new(status, (*depths), 1);
         if (f_status_is_error(status)) {
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory.");
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
           return f_status_set_error(f_invalid_parameter);
         }
 
@@ -201,7 +201,7 @@ extern "C" {
       else if (data.parameters[fss_extended_read_parameter_name].result == f_console_result_additional) {
         macro_fss_extended_read_depths_new(status, (*depths), 1);
         if (f_status_is_error(status)) {
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: unable to allocate memory.");
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
           return f_status_set_error(f_invalid_parameter);
         }
 
@@ -239,7 +239,7 @@ extern "C" {
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_extended_read() for the file '%s'", filename);
         }
         else if (status == f_allocation_error || status == f_reallocation_error) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory");
         }
         else if (status == f_incomplete_utf_on_stop) {
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occured on invalid UTF-8 character at stop position (at %d).", input.start);
@@ -248,7 +248,7 @@ extern "C" {
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occured on invalid UTF-8 character at end of string (at %d).", input.start);
         }
         else {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_extended_read() for the file '%s'", f_status_set_error(status), filename);
+          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_extended_read() for the file '%s'", status, filename);
         }
 
         fss_extended_read_delete_data(data);

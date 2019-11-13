@@ -751,7 +751,7 @@ extern "C" {
     }
 
     if (error == f_out_of_memory) {
-      fl_color_print(f_standard_error, context.error, context.reset, "CRITICAL ERROR: unable to allocate memory, while trying to access file '");
+      fl_color_print(f_standard_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory, while trying to access file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       return;

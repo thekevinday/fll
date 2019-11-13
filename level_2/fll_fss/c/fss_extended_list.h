@@ -50,7 +50,7 @@ extern "C" {
  *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *   f_reallocation_error (with error bit) on reallocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_unknown (with error bit) if a (what should be) impossible execution point is reached.
+ *   f_overflow (with error bit) if the maximimum buffer size is reached.
  */
 #ifndef _di_fll_fss_extended_list_read_
   extern f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_location *input, f_fss_objects *objects, f_fss_content_nests *contents);

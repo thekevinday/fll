@@ -535,7 +535,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_no_data is returned if string only contains valid whitespace.
+ *   f_no_data (with error bit) if string starts with a null (length is 0).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_invalid_number (with error bit) if parameter is not a number.
  *   f_overflow (with error bit) on integer overflow.
@@ -578,10 +578,11 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_no_data is returned if string only contains valid whitespace.
+ *   f_no_data (with error bit) if string starts with a null (length is 0).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_invalid_number (with error bit) if parameter is not a number.
  *   f_negative_number (with error bit) on negative value.
+ *   f_positive_number (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).
  *   f_overflow (with error bit) on integer overflow.
  *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *

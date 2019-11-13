@@ -182,7 +182,7 @@ extern "C" {
           f_macro_string_dynamics_resize(status, parameters, 7);
 
           if (f_status_is_error(status)) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory");
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
             return status;
@@ -272,7 +272,7 @@ extern "C" {
             status = f_status_set_fine(status);
 
             if (status == f_allocation_error || status == f_reallocation_error) {
-              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory");
             }
             else {
               fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_tool_iptables);
@@ -322,7 +322,7 @@ extern "C" {
           status = f_status_set_fine(status);
 
           if (status == f_allocation_error || status == f_reallocation_error) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory");
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory");
           }
           else if (status == f_no_data) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: could not find any network devices");
@@ -528,7 +528,7 @@ extern "C" {
               f_macro_string_dynamic_resize(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
 
               if (f_status_is_error(status)) {
-                fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: unable to allocate memory.");
+                fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
                 firewall_delete_local_data(&local);
                 firewall_delete_data(data);
                 return status;

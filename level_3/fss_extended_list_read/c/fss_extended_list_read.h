@@ -8,6 +8,8 @@
  * This is the FSS Basic List Read program
  * This program utilizes the Featureless Linux Library.
  * This program processes files or other input in fss format and stores the results in the fss_extended_list_read_data.
+ *
+ * This processes in accordance to the FSS-0003 Extended List specification.
  */
 #ifndef _fss_extended_list_read_h
 

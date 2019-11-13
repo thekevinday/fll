@@ -127,9 +127,9 @@ extern "C" {
 
       objects->used++;
       contents->used++;
-    } while (f_true);
+    } while (input->start < f_string_max_size);
 
-    return f_status_is_error(f_unknown);
+    return f_status_is_error(f_overflow);
   }
 #endif // _di_fll_fss_extended_read_
 

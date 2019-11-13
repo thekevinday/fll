@@ -11,7 +11,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_f
 
     if (argument[0] == '\0') {
-      return f_no_data;
+      return f_status_set_error(f_no_data);
     }
 
     f_string_location location = f_string_location_initialize;
@@ -29,7 +29,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_f
 
     if (argument[0] == '\0') {
-      return f_no_data;
+      return f_status_set_error(f_no_data);
     }
 
     f_string_location location = f_string_location_initialize;
