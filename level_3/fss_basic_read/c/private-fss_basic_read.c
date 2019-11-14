@@ -134,62 +134,111 @@ extern "C" {
   f_return_status fss_basic_read_main_preprocess_depth(const f_console_arguments arguments, const fss_basic_read_data data, fss_basic_read_depths *depths) {
     f_status status = f_none;
 
-    macro_fss_basic_read_depths_new(status, (*depths), 1);
-    if (f_status_is_error(status)) {
-      fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
-      return status;
-    }
+    {
+      f_array_length depth_size = 1;
 
-    depths->array[0].depth = 0;
-    depths->array[0].index_at = 0;
-    depths->array[0].index_name = 0;
-    depths->array[0].value_at = 0;
-    depths->array[0].value_name = f_string_eos;
-    depths->used = 1;
+      if (data.parameters[fss_basic_read_parameter_depth].result == f_console_result_additional) {
+        depth_size = data.parameters[fss_basic_read_parameter_depth].additional.used;
+      }
 
-    // @todo: walk through all depth parameters and build the loop, get and validate all --at and --name parameters on a per depth basis.
-    if (data.parameters[fss_basic_read_parameter_depth].result == f_console_result_additional) {
-      f_array_length depth_position = data.parameters[fss_basic_read_parameter_depth].additional.array[data.parameters[fss_basic_read_parameter_depth].additional.used - 1];
-
-      status = fl_console_parameter_to_number_unsigned(arguments.argv[depth_position], &depths->array[0].depth);
-
+      macro_fss_basic_read_depths_new(status, (*depths), depth_size);
       if (f_status_is_error(status)) {
-        fss_basic_read_print_number_argument_error(data.context, "fl_console_parameter_to_number_unsigned", fss_basic_read_long_depth, arguments.argv[depth_position], f_status_set_fine(status));
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
         return status;
       }
     }
-    else {
-      // @todo: walk though each --at and --name parameter, validating them (consider warning for multiple values because only the last one will be used).
+
+    depths->used = data.parameters[fss_basic_read_parameter_depth].additional.used;
+
+    f_array_length position_depth = 0;
+    f_array_length position_at = 0;
+    f_array_length position_name = 0;
+
+    for (f_array_length i = 0; i < depths->used; i++) {
+      depths->array[i].depth = 0;
+      depths->array[i].index_at = 0;
+      depths->array[i].index_name = 0;
+      depths->array[i].value_at = 0;
+      depths->array[i].value_name = f_string_eos;
+
+      position_depth = data.parameters[fss_basic_read_parameter_depth].additional.array[i];
+
+      status = fl_console_parameter_to_number_unsigned(arguments.argv[position_depth], &depths->array[i].depth);
+
+      if (f_status_is_error(status)) {
+        fss_basic_read_print_number_argument_error(data.context, "fl_console_parameter_to_number_unsigned", fss_basic_read_long_depth, arguments.argv[position_depth], f_status_set_fine(status));
+        return status;
+      }
+
       if (data.parameters[fss_basic_read_parameter_at].result == f_console_result_additional) {
-        depths->array[0].index_at = data.parameters[fss_basic_read_parameter_at].additional.array[data.parameters[fss_basic_read_parameter_at].additional.used - 1];
+        for (; position_at < data.parameters[fss_basic_read_parameter_at].additional.used; position_at++) {
+          if (data.parameters[fss_basic_read_parameter_at].additional.array[position_at] < position_depth) {
+            continue;
+          }
 
-        status = fl_console_parameter_to_number_unsigned(arguments.argv[depths->array[0].index_at], &depths->array[0].value_at);
+          if (i + 1 < depths->used && data.parameters[fss_basic_read_parameter_at].additional.array[position_at] > data.parameters[fss_basic_read_parameter_depth].additional.array[i + 1]) {
+            break;
+          }
 
-        if (f_status_is_error(status)) {
-          fss_basic_read_print_number_argument_error(data.context, "fl_console_parameter_to_number_unsigned", fss_basic_read_long_at, arguments.argv[depths->array[0].index_at], f_status_set_fine(status));
-          return status;
-        }
+          depths->array[i].index_at = data.parameters[fss_basic_read_parameter_at].additional.array[position_at];
+
+          status = fl_console_parameter_to_number_unsigned(arguments.argv[depths->array[i].index_at], &depths->array[i].value_at);
+
+          if (f_status_is_error(status)) {
+            fss_basic_read_print_number_argument_error(data.context, "fl_console_parameter_to_number_unsigned", fss_basic_read_long_at, arguments.argv[depths->array[i].index_at], f_status_set_fine(status));
+            return status;
+          }
+        } // for
       }
 
       if (data.parameters[fss_basic_read_parameter_name].result == f_console_result_additional) {
-        macro_fss_basic_read_depths_new(status, (*depths), 1);
-        if (f_status_is_error(status)) {
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
-          return status;
-        }
+        for (; position_name < data.parameters[fss_basic_read_parameter_name].additional.used; position_name++) {
+          if (data.parameters[fss_basic_read_parameter_name].additional.array[position_name] < position_depth) {
+            continue;
+          }
 
-        depths->array[0].index_name = data.parameters[fss_basic_read_parameter_name].additional.array[data.parameters[fss_basic_read_parameter_name].additional.used - 1];
-        depths->array[0].value_name = arguments.argv[depths->array[0].index_name];
+          if (i + 1 < depths->used && data.parameters[fss_basic_read_parameter_name].additional.array[position_name] > data.parameters[fss_basic_read_parameter_depth].additional.array[i + 1]) {
+            break;
+          }
 
-        if (depths->array[0].value_name[0] == '\0') {
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_name);
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' must not be an empty string.");
+          depths->array[i].index_name = data.parameters[fss_basic_read_parameter_name].additional.array[position_name];
+          depths->array[i].value_name = arguments.argv[depths->array[i].index_name];
+
+          if (depths->array[i].value_name[0] == '\0') {
+            fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The '");
+            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_name);
+            fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' must not be an empty string.");
+
+            return f_status_set_error(f_invalid_parameter);
+          }
+        } // for
+      }
+    } // for
+
+    for (f_array_length i = 0; i < depths->used; i++) {
+      for (f_array_length j = i + 1; j < depths->used; j++) {
+        if (depths->array[i].depth == depths->array[j].depth) {
+          fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The value '");
+          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%llu", depths->array[i].depth);
+          fl_color_print(f_standard_error, data.context.error, data.context.reset, "' may only be specified once for the parameter '");
+          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_depth);
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "'.");
 
           return f_status_set_error(f_invalid_parameter);
         }
-      }
-    }
+        else if (depths->array[i].depth > depths->array[j].depth) {
+          fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The parameter '");
+          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_depth);
+          fl_color_print(f_standard_error, data.context.error, data.context.reset, "' may not have the value '");
+          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%llu", depths->array[i].depth);
+          fl_color_print(f_standard_error, data.context.error, data.context.reset, "' before the value '");
+          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%llu", depths->array[j].depth);
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "'.");
+
+          return f_status_set_error(f_invalid_parameter);
+        }
+      } // for
+    } // for
 
     return f_none;
   }

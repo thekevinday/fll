@@ -104,7 +104,7 @@ extern "C" {
       f_console_parameter_initialize(fss_basic_read_short_total, fss_basic_read_long_total, 0, f_false, f_console_type_normal), \
     }
 
-  #define fss_basic_read_total_parameters 13
+  #define fss_basic_read_total_parameters 12
 #endif // _di_fss_basic_read_defines_
 
 #ifndef _di_fss_basic_read_data_

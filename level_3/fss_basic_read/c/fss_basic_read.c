@@ -27,6 +27,10 @@ extern "C" {
 
     fll_program_print_help_usage(data.context, fss_basic_read_name, "filename(s)");
 
+    fl_color_print(f_standard_output, data.context.important, data.context.reset, " Notes:");
+
+    printf("%c", f_string_eol, f_string_eol);
+
     printf("  This program will print the content associated with the given object and content data based on the FSS-0000 Basic standard.%c", f_string_eol);
 
     printf("%c", f_string_eol);
@@ -53,17 +57,9 @@ extern "C" {
 
     printf("  The parameter ");
     fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_depth);
-    printf(" should be in numeric order, but values in between may be skipped.%c", f_string_eol);
+    printf(" must be in numeric order, but values in between may be skipped.%c", f_string_eol);
     printf("    ('-d 0 -a 1 -d 2 -a 2' would specify index 1 at depth 0, any index at depth 1, and index 2 at depth 2.)%c", f_string_eol);
     printf("    ('-d 2 -a 1 -d 0 -a 2' would be invalid because depth 2 is before depth 1.)%c", f_string_eol);
-
-    printf("%c", f_string_eol);
-
-    printf("  The parameter ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_at);
-    printf(" cannot be used with the parameter ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_name);
-    printf(" at the same depth.%c", f_string_eol);
 
     printf("%c", f_string_eol);
 
@@ -77,7 +73,7 @@ extern "C" {
     printf("  Specify both ");
     fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_object);
     printf(" and the ");
-    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_line);
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_basic_read_long_total);
     printf(" parameters to get the total objects.%c", f_string_eol);
 
     printf("%c", f_string_eol);
@@ -234,21 +230,6 @@ extern "C" {
         fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_select);
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' parameter requires a positive number.");
         return f_status_set_error(f_invalid_parameter);
-      }
-
-      // This standard does not support nesting, so it can be determined that --name is in use with --total and --object, which is not allowed.
-      if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
-        if (data->parameters[fss_basic_read_parameter_object].result == f_console_result_found && data->parameters[fss_basic_read_parameter_name].result == f_console_result_found) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_parameter_total);
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "' parameter, the '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_object);
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "' parameter, and the '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_basic_read_long_line);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' parameter together.");
-
-          return f_status_set_error(f_invalid_parameter);
-        }
       }
 
       if (data->process_pipe) {
