@@ -58,6 +58,7 @@ extern "C" {
 #ifndef _di_fss_basic_read_defines_
   #define fss_basic_read_short_at     "a"
   #define fss_basic_read_short_depth  "d"
+  #define fss_basic_read_short_empty  "e"
   #define fss_basic_read_short_line   "l"
   #define fss_basic_read_short_name   "n"
   #define fss_basic_read_short_object "o"
@@ -66,6 +67,7 @@ extern "C" {
 
   #define fss_basic_read_long_at     "at"
   #define fss_basic_read_long_depth  "depth"
+  #define fss_basic_read_long_empty  "empty"
   #define fss_basic_read_long_line   "line"
   #define fss_basic_read_long_name   "name"
   #define fss_basic_read_long_object "object"
@@ -81,6 +83,7 @@ extern "C" {
 
     fss_basic_read_parameter_at,
     fss_basic_read_parameter_depth,
+    fss_basic_read_parameter_empty,
     fss_basic_read_parameter_line,
     fss_basic_read_parameter_name,
     fss_basic_read_parameter_object,
@@ -97,6 +100,7 @@ extern "C" {
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(fss_basic_read_short_at, fss_basic_read_long_at, 0, f_true, f_console_type_normal), \
       f_console_parameter_initialize(fss_basic_read_short_depth, fss_basic_read_long_depth, 0, f_true, f_console_type_normal), \
+      f_console_parameter_initialize(fss_basic_read_short_empty, fss_basic_read_long_empty, 0, f_false, f_console_type_normal), \
       f_console_parameter_initialize(fss_basic_read_short_line, fss_basic_read_long_line, 0, f_true, f_console_type_normal), \
       f_console_parameter_initialize(fss_basic_read_short_name, fss_basic_read_long_name, 0, f_true, f_console_type_normal), \
       f_console_parameter_initialize(fss_basic_read_short_object, fss_basic_read_long_object, 0, f_false, f_console_type_normal), \
@@ -104,7 +108,7 @@ extern "C" {
       f_console_parameter_initialize(fss_basic_read_short_total, fss_basic_read_long_total, 0, f_false, f_console_type_normal), \
     }
 
-  #define fss_basic_read_total_parameters 12
+  #define fss_basic_read_total_parameters 13
 #endif // _di_fss_basic_read_defines_
 
 #ifndef _di_fss_basic_read_data_

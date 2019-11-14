@@ -19,6 +19,7 @@ extern "C" {
 
     fll_program_print_help_option(data.context, fss_basic_read_short_at, fss_basic_read_long_at, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Select object at this numeric index.");
     fll_program_print_help_option(data.context, fss_basic_read_short_depth, fss_basic_read_long_depth, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Select object at this numeric depth.");
+    fll_program_print_help_option(data.context, fss_basic_read_short_empty, fss_basic_read_long_empty, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Include empty content when processing.");
     fll_program_print_help_option(data.context, fss_basic_read_short_line, fss_basic_read_long_line, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print only the content at the given line.");
     fll_program_print_help_option(data.context, fss_basic_read_short_name, fss_basic_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Select object with this name.");
     fll_program_print_help_option(data.context, fss_basic_read_short_object, fss_basic_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the object instead of the content.");
