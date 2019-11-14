@@ -776,12 +776,12 @@ extern "C" {
       if (string[i] == 0x30) {
         j = i + 1;
 
-        // immediate next value must be either '0', 'x', 'X', 'd', 'D', 'o', 'O', 'b', or 'B'.
+        // Immediate next value must be either a number, 'x', 'X', 'd', 'D', 'o', 'O', 'b', or 'B'.
         if (j > location.stop) {
           *number = 0;
           return f_none;
         }
-        else if (string[j] == 0x30) {
+        else if (string[j] > 0x29 || string[j] < 0x3a) {
           mode = 10;
         }
         else if (string[j] == 0x78 || string[j] == 0x58) {
@@ -925,12 +925,12 @@ extern "C" {
       if (string[i] == 0x30) {
         j = i + 1;
 
-        // immediate next value must be either '0', 'x', 'X', 'd', 'D', 'o', 'O', 'b', or 'B'.
+        // Immediate next value must be either a number, 'x', 'X', 'd', 'D', 'o', 'O', 'b', or 'B'.
         if (j > location.stop) {
           *number = 0;
           return f_none;
         }
-        else if (string[j] == 0x30) {
+        else if (string[j] > 0x29 || string[j] < 0x3a) {
           mode = 10;
         }
         else if (string[j] == 0x78 || string[j] == 0x58) {
