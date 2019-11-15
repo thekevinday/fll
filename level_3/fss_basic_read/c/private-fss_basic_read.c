@@ -146,9 +146,9 @@ extern "C" {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
         return status;
       }
-    }
 
-    depths->used = data.parameters[fss_basic_read_parameter_depth].additional.used;
+      depths->used = depth_size;
+    }
 
     f_array_length position_depth = 0;
     f_array_length position_at = 0;
@@ -161,13 +161,18 @@ extern "C" {
       depths->array[i].value_at = 0;
       depths->array[i].value_name = f_string_eos;
 
-      position_depth = data.parameters[fss_basic_read_parameter_depth].additional.array[i];
+      if (data.parameters[fss_basic_read_parameter_depth].additional.used == 0) {
+        position_depth = 0;
+      }
+      else {
+        position_depth = data.parameters[fss_basic_read_parameter_depth].additional.array[i];
 
-      status = fl_console_parameter_to_number_unsigned(arguments.argv[position_depth], &depths->array[i].depth);
+        status = fl_console_parameter_to_number_unsigned(arguments.argv[position_depth], &depths->array[i].depth);
 
-      if (f_status_is_error(status)) {
-        fss_basic_read_print_number_argument_error(data.context, "fl_console_parameter_to_number_unsigned", fss_basic_read_long_depth, arguments.argv[position_depth], f_status_set_fine(status));
-        return status;
+        if (f_status_is_error(status)) {
+          fss_basic_read_print_number_argument_error(data.context, "fl_console_parameter_to_number_unsigned", fss_basic_read_long_depth, arguments.argv[position_depth], f_status_set_fine(status));
+          return status;
+        }
       }
 
       if (data.parameters[fss_basic_read_parameter_at].result == f_console_result_additional) {
