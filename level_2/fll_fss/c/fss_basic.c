@@ -102,7 +102,7 @@ extern "C" {
 
         // If at least some valid object was found, then return f_none equivelents.
         if (objects->used > initial_used) {
-          if (status == f_no_data_on_eos)  return f_none_on_eos;
+          if (status == f_no_data_on_eos) return f_none_on_eos;
           if (status == f_no_data_on_stop) return f_none_on_stop;
         }
 
@@ -129,7 +129,7 @@ extern "C" {
       contents->used++;
     } while (input->start < f_string_max_size);
 
-    return f_overflow;
+    return f_status_is_error(f_overflow);
   }
 #endif // _di_fll_fss_basic_read_
 
