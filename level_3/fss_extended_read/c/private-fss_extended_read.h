@@ -11,6 +11,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 /**
  * A structure of parameters applied at some depth.
  *
@@ -22,8 +23,11 @@ extern "C" {
   typedef struct {
     f_string_length depth;
 
-    f_array_length parameter;
-    f_array_length position;
+    f_array_length index_at;
+    f_array_length index_name;
+
+    f_number_unsigned value_at;
+    f_string          value_name;
   } fss_extended_read_depth;
 
   #define fss_extended_read_depth_initialize \
@@ -31,6 +35,8 @@ extern "C" {
       0, \
       0, \
       0, \
+      0, \
+      f_string_initialize, \
     }
 #endif // _di_fss_extended_read_depth_
 
@@ -53,13 +59,13 @@ extern "C" {
 
   #define macro_fss_extended_read_depths_clear(depths) f_macro_memory_structure_clear(depths)
 
-  #define macro_fss_extended_read_depths_new(status, depths, length) f_macro_memory_structure_new(status, depths, fss_extended_read_depths, length)
+  #define macro_fss_extended_read_depths_new(status, depths, length) f_macro_memory_structure_new(status, depths, fss_extended_read_depth, length)
 
-  #define macro_fss_extended_read_depths_delete(status, depths) f_macro_memory_structure_delete(status, depths, fss_extended_read_depths)
-  #define macro_fss_extended_read_depths_destroy(status, depths) f_macro_memory_structure_destroy(status, depths, fss_extended_read_depths)
+  #define macro_fss_extended_read_depths_delete(status, depths) f_macro_memory_structure_delete(status, depths, fss_extended_read_depth)
+  #define macro_fss_extended_read_depths_destroy(status, depths) f_macro_memory_structure_destroy(status, depths, fss_extended_read_depth)
 
-  #define macro_fss_extended_read_depths_resize(status, depths, new_length) f_macro_memory_structure_resize(status, depths, fss_extended_read_depths, new_length)
-  #define macro_fss_extended_read_depths_adjust(status, depths, new_length) f_macro_memory_structure_adjust(status, depths, fss_extended_read_depths, new_length)
+  #define macro_fss_extended_read_depths_resize(status, depths, new_length) f_macro_memory_structure_resize(status, depths, fss_extended_read_depth, new_length)
+  #define macro_fss_extended_read_depths_adjust(status, depths, new_length) f_macro_memory_structure_adjust(status, depths, fss_extended_read_depth, new_length)
 #endif // _di_fss_extended_read_depths_
 
 /**
@@ -79,12 +85,32 @@ extern "C" {
 #endif // _di_fss_extended_read_print_file_error_
 
 /**
+ * Print number parameter argument error messages.
+ *
+ * @param context
+ *   The color context information to use when printing.
+ * @param function_name
+ *   The name of the function responsible for the error.
+ * @param parameter_name
+ *   The name of the parameter responsible for the error.
+ * @param argument
+ *   The value of the argument that is invalid.
+ * @param status
+ *   The status code representing the error.
+ */
+#ifndef _di_fss_extended_read_print_number_argument_error_
+  extern void fss_extended_read_print_number_argument_error(const fl_color_context context, const f_string function_name, const f_string parameter_name, const f_string argument, const f_status status) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_read_print_number_argument_error_
+
+/**
  * Pre-process the parameters, parsing out and handling the depth and depth related parameters.
+ *
+ * Will handle depth-sensitive parameter conflicts, such as --name being used with --at (which is not allowed).
  *
  * @param arguments
  *   The console arguments to pre-process.
  * @param data
- *   The Program specific data.
+ *   The program specific data.
  * @param depths
  *   This stores the pre-processed depth parameters.
  *
@@ -96,8 +122,22 @@ extern "C" {
   extern f_return_status fss_extended_read_main_preprocess_depth(const f_console_arguments arguments, const fss_extended_read_data data, fss_extended_read_depths *depths) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_read_main_preprocess_depth_
 
+/**
+ * Process a given file.
+ *
+ * @param arguments
+ *   The console arguments passed to the program.
+ * @param data
+ *   The program specific data.
+ * @param file_name
+ *   The name of the file being processed.
+ * @param depths
+ *   The processed depth parameters.
+ *
+ * @see fss_extended_read_main_preprocess_depth()
+ */
 #ifndef _di_fss_extended_read_main_process_file_
-  extern f_return_status fss_extended_read_main_process_file(const f_console_arguments arguments, fss_extended_read_data *data, const f_string filename, const f_string_length target, const f_string_length select) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_extended_read_main_process_file(const f_console_arguments arguments, fss_extended_read_data *data, const f_string file_name, const fss_extended_read_depths depths) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_read_main_process_file_
 
 #ifdef __cplusplus
