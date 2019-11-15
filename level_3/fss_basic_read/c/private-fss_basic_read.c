@@ -261,25 +261,39 @@ extern "C" {
         status = f_status_set_fine(status);
 
         if (status == f_invalid_parameter) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'", filename);
+          fl_color_print(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "fll_fss_basic_list_read()");
+          fl_color_print(f_standard_error, data->context.error, data->context.reset, " for the file '");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", filename);
+          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");
         }
         else if (status == f_allocation_error || status == f_reallocation_error) {
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory");
         }
         else if (status == f_incomplete_utf_on_stop) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occured on invalid UTF-8 character at stop position (at %d).", input.start);
+          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occured on invalid UTF-8 character at stop position (at ");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%d", input.start);
+          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ").");
         }
         else if (status == f_incomplete_utf_on_eos) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occured on invalid UTF-8 character at end of string (at %d).", input.start);
+          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occured on invalid UTF-8 character at end of string (at ");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%d", input.start);
+          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ").");
         }
         else {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'", status, filename);
+          fl_color_print(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%u", status);
+          fl_color_print(f_standard_error, data->context.error, data->context.reset, ") has occured while calling ");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "fll_fss_basic_list_read()");
+          fl_color_print(f_standard_error, data->context.error, data->context.reset, " for the file '");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", filename);
+          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");
         }
 
         return f_status_set_error(status);
       }
       else if (status == f_no_data_on_stop || status == f_no_data_on_eos) {
-        // clear buffers, then attempt the next file.
+        // Clear buffers, then attempt the next file.
         f_macro_fss_contents_delete(status2, data->contents);
         f_macro_fss_objects_delete(status2, data->objects);
         f_macro_string_dynamic_delete(status2, data->buffer);
@@ -298,7 +312,7 @@ extern "C" {
         return status;
       }
 
-      // this standard does not support multiple content groups.
+      // This standard does not support multiple content groups.
       if (select > 0) {
         return f_none;
       }
