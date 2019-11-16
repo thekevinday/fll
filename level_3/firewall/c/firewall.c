@@ -73,7 +73,7 @@ extern "C" {
 
     status = f_none;
 
-    // execute parameter results
+    // Execute parameter results.
     if (data->parameters[firewall_parameter_help].result == f_console_result_found) {
       firewall_print_help(*data);
     }

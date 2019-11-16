@@ -72,7 +72,7 @@ extern "C" {
       return f_status_set_error(status);
     }
 
-    // execute parameter results
+    // Execute parameter results.
     if (data->parameters[fss_extended_write_parameter_help].result == f_console_result_found) {
       fss_extended_write_print_help(*data);
     }

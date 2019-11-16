@@ -46,7 +46,7 @@ extern "C" {
 
     status = f_none;
 
-    // execute parameter results
+    // Execute parameter results.
     if (data->parameters[status_code_parameter_help].result == f_console_result_found) {
       status_code_print_help(*data);
     }

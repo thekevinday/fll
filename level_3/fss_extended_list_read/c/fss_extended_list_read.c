@@ -126,7 +126,7 @@ extern "C" {
 
     f_status status2 = f_none;
 
-    // execute parameter results
+    // Execute parameter results.
     if (data->parameters[fss_extended_list_read_parameter_help].result == f_console_result_found) {
       fss_extended_list_read_print_help(*data);
     }
@@ -190,7 +190,7 @@ extern "C" {
           return status;
         }
 
-        // clear buffers before continuing
+        // Clear buffers before continuing.
         f_macro_fss_contents_delete(status2, data->contents);
         f_macro_fss_objects_delete(status2, data->objects);
         f_macro_string_dynamic_delete(status2, data->buffer);
@@ -214,7 +214,7 @@ extern "C" {
 
           data->file_position.total_elements = ftell(file.address);
 
-          // skip past empty files
+          // Skip past empty files.
           if (data->file_position.total_elements == 0) {
             f_file_close(&file);
             continue;
@@ -239,7 +239,7 @@ extern "C" {
           return status;
         }
 
-        // clear buffers before repeating the loop
+        // Clear buffers before repeating the loop.
         f_macro_fss_content_nests_delete(status2, data->contents);
         f_macro_fss_objects_delete(status2, data->objects);
         f_macro_string_dynamic_delete(status2, data->buffer);
