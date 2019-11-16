@@ -177,13 +177,13 @@ extern "C" {
         f_status status2 = f_none;
 
         for (; counter < data->remaining.used; counter++) {
-          // numbers are not valid status code strings.
+          // Numbers are not valid status code strings.
           if (f_conversion_character_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_true) {
             status = f_false;
             continue;
           }
 
-          status2 = fll_status_from_string(arguments.argv[data->remaining.array[counter]], &code);
+          status2 = fll_fss_status_from_string(arguments.argv[data->remaining.array[counter]], &code);
 
           if (f_status_is_error(status2)) {
             status = status2;

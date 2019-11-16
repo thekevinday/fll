@@ -52,7 +52,7 @@ extern "C" {
 /**
  * All standard/core status codes.
  *
- * The code f_last_status_code is intended to be used as the starting point for anything extending this and povided its own status codes.
+ * The code f_status_code_last is intended to be used as the starting point for anything extending this and povided its own status codes.
  */
 enum {
   #ifndef _di_f_status_booleans_
@@ -316,7 +316,7 @@ enum {
   #endif // _di_f_status_access_denied_
 
   // required
-  f_last_status_code
+  f_status_code_last
 }; // enum
 
 #ifdef __cplusplus

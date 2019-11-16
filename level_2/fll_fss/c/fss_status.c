@@ -94,8 +94,13 @@ extern "C" {
       }
     #endif // _di_fll_fss_status_codes_
 
-    if (fl_string_compare(string, fll_fss_status_string_last_error_code, length, fll_fss_status_string_last_error_code_length) == f_equal_to) {
-      *error = f_last_status_code;
+    if (fl_string_compare(string, fll_fss_status_string_status_code_first, length, fll_fss_status_string_status_code_first_length) == f_equal_to) {
+      *error = fl_fss_status_code_first;
+      return f_none;
+    }
+
+    if (fl_string_compare(string, fll_fss_status_string_status_code_last, length, fll_fss_status_string_status_code_last_length) == f_equal_to) {
+      *error = fl_fss_status_code_last;
       return f_none;
     }
 
@@ -160,11 +165,15 @@ extern "C" {
           break;
       #endif // _di_fll_fss_status_codes_
 
-      case fl_fss_last_error_code:
-        *string = fll_fss_status_string_last_error_code;
+      case fl_fss_status_code_first:
+        *string = fll_fss_status_string_status_code_first;
         break;
 
-    default:
+      case fl_fss_status_code_last:
+        *string = fll_fss_status_string_status_code_last;
+        break;
+
+      default:
         return fl_status_to_string(error, string);
     }
 

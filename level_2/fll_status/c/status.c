@@ -17,7 +17,7 @@ extern "C" {
       return f_no_data;
     }
 
-    // numbers are not valid status code strings.
+    // Numbers are not valid status code strings.
     if ((status = f_conversion_character_is_decimal(string[0])) == f_true) {
       return f_status_set_error(f_invalid_data);
     }
@@ -1126,8 +1126,8 @@ extern "C" {
       }
     #endif // _di_fll_status_access_denied_
 
-    if (fl_string_compare(string, fl_status_string_last_status_code, length, fl_status_string_last_error_code_length) == f_equal_to) {
-      *code = f_last_status_code;
+    if (fl_string_compare(string, fl_status_string_status_code_last, length, fl_status_string_status_code_last_length) == f_equal_to) {
+      *code = f_status_code_last;
       return f_none;
     }
 

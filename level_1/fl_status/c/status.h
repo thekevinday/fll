@@ -693,8 +693,8 @@ extern "C" {
     #define fl_status_string_access_denied_super_length 22
   #endif // _di_fl_status_access_denied_
 
-  #define fl_status_string_last_status_code "f_last_status_code"
-  #define fl_status_string_last_error_code_length 18
+  #define fl_status_string_status_code_last "f_status_code_last"
+  #define fl_status_string_status_code_last_length 18
 #endif // _di_fl_status_string_
 
 /**

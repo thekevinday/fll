@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 enum {
-  fl_fss_status_start = f_last_status_code,
+  fl_fss_status_code_first = f_status_code_last + 1,
 
   #ifndef _di_fl_fss_status_error_
     fl_fss_invalid_format,
@@ -46,7 +46,7 @@ enum {
     fl_fss_found_comment,
   #endif // _di_fl_fss_status_codes_
 
-  fl_fss_last_error_code,
+  fl_fss_status_code_last,
 }; // enum
 
 #ifdef __cplusplus

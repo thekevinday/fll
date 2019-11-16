@@ -683,8 +683,8 @@ extern "C" {
           break;
       #endif // _di_fl_status_access_denied_
 
-      case f_last_status_code:
-        *string = fl_status_string_last_status_code;
+      case f_status_code_last:
+        *string = fl_status_string_status_code_last;
         break;
 
       default:
