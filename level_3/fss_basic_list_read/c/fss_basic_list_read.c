@@ -32,7 +32,7 @@ extern "C" {
 
     printf("%c", f_string_eol, f_string_eol);
 
-    printf("  This program will print the content associated with the given object and content data based on the FSS-0000 Basic standard.%c", f_string_eol);
+    printf("  This program will print the content associated with the given object and content data based on the FSS-0002 Basic List standard.%c", f_string_eol);
 
     printf("%c", f_string_eol);
 
