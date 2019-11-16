@@ -79,6 +79,18 @@ extern "C" {
 
     printf("%c", f_string_eol);
 
+    printf("  When both ");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_extended_read_long_at);
+    printf(" and ");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_extended_read_long_name);
+    printf(" parameters are specified (at the same depth), the ");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_extended_read_long_at);
+    printf(" parameter value will be treated as a position relative to the specified ");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_extended_read_long_name);
+    printf(" parameter value.%c", f_string_eol);
+
+    printf("%c", f_string_eol);
+
     printf("  This program may support parameters, such as ");
     fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_extended_read_long_depth);
     printf(" or ");
