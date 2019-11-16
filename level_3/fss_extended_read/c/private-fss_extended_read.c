@@ -449,8 +449,6 @@ extern "C" {
                     if (select < data->contents.array[i].used) {
                       f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[select]);
                       fprintf(f_standard_output, "%c", f_string_eol);
-                    } else if (include_empty) {
-                      fprintf(f_standard_output, "%c", f_string_eol);
                     }
                   }
                   else {
@@ -466,7 +464,14 @@ extern "C" {
                   }
                 }
                 else if (include_empty) {
-                  fprintf(f_standard_output, "%c", f_string_eol);
+                  if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
+                    if (select == 0) {
+                      fprintf(f_standard_output, "%c", f_string_eol);
+                    }
+                  }
+                  else {
+                    fprintf(f_standard_output, "%c", f_string_eol);
+                  }
                 }
               }
 
@@ -479,8 +484,6 @@ extern "C" {
               if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                 if (select < data->contents.array[i].used) {
                   f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[select]);
-                  fprintf(f_standard_output, "%c", f_string_eol);
-                } else if (include_empty) {
                   fprintf(f_standard_output, "%c", f_string_eol);
                 }
               }
@@ -497,7 +500,14 @@ extern "C" {
               }
             }
             else if (include_empty) {
-              fprintf(f_standard_output, "%c", f_string_eol);
+              if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
+                if (select == 0) {
+                  fprintf(f_standard_output, "%c", f_string_eol);
+                }
+              }
+              else {
+                fprintf(f_standard_output, "%c", f_string_eol);
+              }
             }
 
             break;
@@ -557,8 +567,6 @@ extern "C" {
             if (select < data->contents.array[i].used) {
               f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[select]);
               fprintf(f_standard_output, "%c", f_string_eol);
-            } else if (include_empty) {
-              fprintf(f_standard_output, "%c", f_string_eol);
             }
           }
           else {
@@ -591,7 +599,7 @@ extern "C" {
       }
 
       if (data->contents.array[i].used == 0) {
-        if (include_empty) {
+        if (include_empty && select == 0) {
           fprintf(f_standard_output, "%c", f_string_eol);
         }
 
@@ -601,8 +609,6 @@ extern "C" {
       if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
         if (select < data->contents.array[i].used) {
           f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[select]);
-          fprintf(f_standard_output, "%c", f_string_eol);
-        } else if (include_empty) {
           fprintf(f_standard_output, "%c", f_string_eol);
         }
       }
