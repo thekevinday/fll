@@ -781,7 +781,7 @@ extern "C" {
           *number = 0;
           return f_none;
         }
-        else if (string[j] > 0x29 || string[j] < 0x3a) {
+        else if (string[j] > 0x29 && string[j] < 0x3a) {
           mode = 10;
         }
         else if (string[j] == 0x78 || string[j] == 0x58) {
@@ -930,7 +930,7 @@ extern "C" {
           *number = 0;
           return f_none;
         }
-        else if (string[j] > 0x29 || string[j] < 0x3a) {
+        else if (string[j] > 0x29 && string[j] < 0x3a) {
           mode = 10;
         }
         else if (string[j] == 0x78 || string[j] == 0x58) {
