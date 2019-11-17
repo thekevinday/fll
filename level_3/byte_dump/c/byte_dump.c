@@ -249,7 +249,37 @@ extern "C" {
       }
 
       if (data->process_pipe) {
-        // TODO: how should this be done?
+        f_file file = f_file_initialize;
+
+        file.address = f_pipe;
+
+        printf("%c", f_string_eol);
+        fl_color_print(f_standard_output, data->context.title, data->context.reset, "Piped Byte Dump: (in ");
+
+        if (data->mode == byte_dump_mode_hexidecimal) {
+          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Hexidecimal");
+        }
+        else if (data->mode == byte_dump_mode_duodecimal) {
+          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Duodecimal");
+        }
+        else if (data->mode == byte_dump_mode_octal) {
+          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Octal");
+        }
+        else if (data->mode == byte_dump_mode_binary) {
+          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Binary");
+        }
+        else if (data->mode == byte_dump_mode_decimal) {
+          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Decimal");
+        }
+
+        fl_color_print_line(f_standard_output, data->context.title, data->context.reset, ")");
+
+        status = byte_dump_file(*data, "-", file);
+
+        if (f_status_is_error(status)) {
+          byte_dump_delete_data(data);
+          return status;
+        }
       }
 
       if (data->remaining.used > 0) {
@@ -264,7 +294,7 @@ extern "C" {
                 missing_files = status;
               }
 
-              byte_dump_print_file_error(data->context, status, "f_file_exists", arguments.argv[data->remaining.array[counter]]);
+              byte_dump_print_file_error(data->context, "f_file_exists", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
             }
           } // for
 
@@ -281,7 +311,7 @@ extern "C" {
 
           status = f_file_open(&file, arguments.argv[data->remaining.array[counter]]);
           if (f_status_is_error(status)) {
-            byte_dump_print_file_error(data->context, status, "f_file_open", arguments.argv[data->remaining.array[counter]]);
+            byte_dump_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
             byte_dump_delete_data(data);
             return status;
           }

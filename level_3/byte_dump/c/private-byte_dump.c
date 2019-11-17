@@ -788,17 +788,15 @@ extern "C" {
 #endif // _di_byte_dump_file_
 
 #ifndef _di_byte_dump_print_file_error_
-  void byte_dump_print_file_error(const fl_color_context context, const f_status status, const f_string function, const f_string file_name) {
-    f_status error = f_status_set_fine(status);
-
-    if (error == f_false) {
+  void byte_dump_print_file_error(const fl_color_context context, const f_string function, const f_string file_name, const f_status status) {
+    if (status == f_false) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: failed to find file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (error == f_invalid_parameter) {
+    if (status == f_invalid_parameter) {
       fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ", function, file_name);
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", function);
       fl_color_print(f_standard_error, context.error, context.reset, "() for the file '");
@@ -807,42 +805,42 @@ extern "C" {
       return;
     }
 
-    if (error == f_invalid_name) {
+    if (status == f_invalid_name) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Invalid filename '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (error == f_out_of_memory) {
+    if (status == f_out_of_memory) {
       fl_color_print(f_standard_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory, while trying to access file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (error == f_overflow) {
+    if (status == f_overflow) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Overflow while trying to access file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (error == f_invalid_directory) {
+    if (status == f_invalid_directory) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Invalid directory while trying to access file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (error == f_access_denied) {
+    if (status == f_access_denied) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Access denied while trying to access file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (error == f_loop) {
+    if (status == f_loop) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Loop while trying to access file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
@@ -850,7 +848,7 @@ extern "C" {
     }
 
     fl_color_print(f_standard_error, context.error, context.reset, "UNKNOWN ERROR: (");
-    fl_color_print(f_standard_error, context.notable, context.reset, "%d", error);
+    fl_color_print(f_standard_error, context.notable, context.reset, "%d", status);
     fl_color_print(f_standard_error, context.error, context.reset, ") occurred for file '");
     fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
     fl_color_print_line(f_standard_error, context.error, context.reset, "'.");

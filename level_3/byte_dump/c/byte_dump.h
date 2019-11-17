@@ -23,6 +23,7 @@
 // fll-0 includes
 #include <level_0/console.h>
 #include <level_0/conversion.h>
+#include <level_0/file.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
 #include <level_0/status.h>

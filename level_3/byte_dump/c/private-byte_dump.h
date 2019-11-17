@@ -147,13 +147,15 @@ extern "C" {
  *   The name of the function that failed.
  * @param file_name
  *   The name of the file related to the error.
+ * @param status
+ *   The status code representing the error.
  *
  * @param
  *   f_true if error has been printed.
  *   f_false if error has not been printed.
  */
 #ifndef _di_byte_dump_print_file_error_
-  extern void byte_dump_print_file_error(const fl_color_context context, const f_status status, const f_string function, const f_string file_name);
+  extern void byte_dump_print_file_error(const fl_color_context context, const f_string function, const f_string file_name, const f_status status);
 #endif // _di_byte_dump_print_file_error_
 
 #ifdef __cplusplus
