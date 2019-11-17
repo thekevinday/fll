@@ -219,11 +219,11 @@ extern "C" {
         f_number_unsigned number = 0;
         status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_last].additional.array[data->parameters[byte_dump_parameter_last].additional.used - 1]], &number);
 
-        if (f_status_is_error(status) || number > f_type_number_size_unsigned) {
+        if (f_status_is_error(status) || number < 1 || number > f_type_number_size_unsigned) {
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", byte_dump_long_last);
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "' value can only be a number (inclusively) between ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "0");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "1");
           fl_color_print(f_standard_error, data->context.error, data->context.reset, " and ");
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%llu", f_type_number_size_unsigned);
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
