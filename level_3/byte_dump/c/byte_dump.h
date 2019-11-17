@@ -56,7 +56,7 @@ extern "C" {
 #endif // _di_byte_dump_name_
 
 #ifndef _di_byte_dump_default_allocation_step_
-  // provide a UTF-8 friendly allocation step.
+  // Set to at least 4 to provide a UTF-8 friendly allocation step.
   #define byte_dump_default_allocation_step 4
 #endif // _di_byte_dump_default_allocation_step_
 
@@ -128,22 +128,22 @@ extern "C" {
   #define byte_dump_short_width       "w"
   #define byte_dump_short_placeholder "p"
 
-  #define byte_dump_long_binary       "binary"
-  #define byte_dump_long_decimal      "decimal"
-  #define byte_dump_long_duodecimal   "duodecimal"
-  #define byte_dump_long_hexidecimal  "hexidecimal"
-  #define byte_dump_long_octal        "octal"
+  #define byte_dump_long_binary      "binary"
+  #define byte_dump_long_decimal     "decimal"
+  #define byte_dump_long_duodecimal  "duodecimal"
+  #define byte_dump_long_hexidecimal "hexidecimal"
+  #define byte_dump_long_octal       "octal"
 
-  #define byte_dump_long_first        "first"       // first offset byte size.
-  #define byte_dump_long_last         "last"        // last offset byte size.
-  #define byte_dump_long_width        "width"       // number of characters to display per row.
+  #define byte_dump_long_first "first" // first offset byte size.
+  #define byte_dump_long_last  "last"  // last offset byte size.
+  #define byte_dump_long_width "width" // number of characters to display per row.
 
-  #define byte_dump_long_text         "text"        // display text
-  #define byte_dump_long_placeholder  "placeholder" // display (colored) placeholders to signify codes that are UTF-8 fragments.
+  #define byte_dump_long_text        "text"        // display text
+  #define byte_dump_long_placeholder "placeholder" // display (colored) placeholders to signify codes that are UTF-8 fragments.
 
-  #define byte_dump_long_normal       "normal"      // use normal presentation, displaying UTF-8 sequence codes for ASCII special codes.
-  #define byte_dump_long_simple       "simple"      // use simple presentation, displaying spaces for ASCII special codes instead of UTF-8 sequence codes.
-  #define byte_dump_long_classic      "classic"     // use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
+  #define byte_dump_long_normal  "normal"  // use normal presentation, displaying UTF-8 sequence codes for ASCII special codes.
+  #define byte_dump_long_simple  "simple"  // use simple presentation, displaying spaces for ASCII special codes instead of UTF-8 sequence codes.
+  #define byte_dump_long_classic "classic" // use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
 
   enum {
     byte_dump_parameter_help,
