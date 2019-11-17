@@ -235,15 +235,17 @@ extern "C" {
         data->last = number;
       }
 
-      if (data->first > data->last) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", byte_dump_long_first);
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "' value cannot be greater than the parameter '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", byte_dump_long_last);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' value.");
+      if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional && data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
+        if (data->first > data->last) {
+            fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", byte_dump_long_first);
+            fl_color_print(f_standard_error, data->context.error, data->context.reset, "' value cannot be greater than the parameter '");
+            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", byte_dump_long_last);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' value.");
 
-          byte_dump_delete_data(data);
-          return f_status_set_error(status);
+            byte_dump_delete_data(data);
+            return f_status_set_error(status);
+        }
       }
 
       if (data->process_pipe) {
