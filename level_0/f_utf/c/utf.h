@@ -207,7 +207,7 @@ extern "C" {
 #endif // _di_f_utf_string_lengths_
 
 /**
- * designates a start and stop position that represents a sub-string inside of some parent string.
+ * Designates a start and stop position that represents a sub-string inside of some parent string.
  * use this to avoid resizing, restructuring, and reallocating the parent string to separate the sub-string.
  */
 #ifndef _di_f_utf_string_location_
@@ -230,7 +230,7 @@ extern "C" {
 #endif // _di_f_utf_string_location_
 
 /**
- * an array of string locations.
+ * An array of string locations.
  *
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
@@ -257,7 +257,7 @@ extern "C" {
 #endif // _di_f_utf_string_locations_
 
 /**
- * a string that supports contains a size attribute to handle dynamic allocations and deallocations.
+ * A string that supports contains a size attribute to handle dynamic allocations and deallocations.
  * save the string size along with the string, so that strlen(..) commands can be avoided as much as possible.
  *
  * size: total amount of allocated space.
@@ -316,7 +316,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_
 
 /**
- * an array of dynamic utf_strings.
+ * An array of dynamic utf_strings.
  *
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
