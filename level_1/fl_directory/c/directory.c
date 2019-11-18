@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_directory_list_
-  f_return_status fl_directory_list(const f_string directory_path, f_string_dynamics *names) {
+  f_return_status fl_directory_list(const f_string directory_path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics *names) {
     #ifndef _di_level_1_parameter_checking_
       if (names == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -16,7 +16,7 @@ extern "C" {
     f_string_length size = 0;
     f_status status = f_none;
 
-    length = scandir(directory_path, &listing, 0, alphasort);
+    length = scandir(directory_path, &listing, filter, sort);
 
     for (; i < length; i++) {
       size = strnlen(listing[i]->d_name, fl_directory_name_max);

@@ -37,8 +37,17 @@ extern "C" {
 /**
  * Print the names of each file and/or directory inside the given directory.
  *
+ * Allows specifying a custom filter and custom sort.
+ *
  * @param directory_path
  *   Filesystem path to the directory.
+ * @param filter
+ *   A filter function of the form: int xxx(const struct direct *).
+ *   Set to 0 to not use (NULL).
+ * @param sort
+ *   A sort function of the form: int xxx(const struct direct *, const struct direct *).
+ *   Set to 0 to not use (NULL).
+ *   There are two pre-made libc functions available for this: alphasort() and versionsort().
  * @param names
  *   Will be populated with the names of each file and/or directory inside the names parameter.
  *
@@ -48,9 +57,11 @@ extern "C" {
  *   f_failure (with error bit) if failed to read directory information.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_reallocation_error (with error bit) on memory reallocation error.
+ *
+ * @see scandir()
  */
 #ifndef _di_fl_directory_list_
-  extern f_return_status fl_directory_list(const f_string directory_path, f_string_dynamics *names);
+  extern f_return_status fl_directory_list(const f_string directory_path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics *names);
 #endif // _di_fl_directory_list_
 
 #ifdef __cplusplus
