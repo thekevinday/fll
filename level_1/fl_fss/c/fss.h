@@ -67,7 +67,7 @@ extern "C" {
  *
  * @return
  *   fl_fss_no_header if no header is found.
- *   fl_fss_no_header (with error bit) if the an error occured prior to identifying a valid header.
+ *   fl_fss_no_header (with error bit) if the an error occurred prior to identifying a valid header.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_identify_

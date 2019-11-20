@@ -19,7 +19,7 @@
         if (status == f_invalid_parameter) {
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open().");
         } else if (status != f_file_not_found && status != f_file_error_open && status != f_file_error_descriptor) {
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", status);
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open().", status);
         }
       } else {
         if (status == f_invalid_parameter) {
@@ -31,7 +31,7 @@
         } else if (status == f_file_error_descriptor) {
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: File descriptor error while trying to open the file '%s'.", filename);
         } else {
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", status);
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open().", status);
         }
       }
 
@@ -61,7 +61,7 @@
       } else if (status == f_error_allocation || status == f_error_reallocation) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       } else {
-        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read().", status);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fl_file_read().", status);
       }
 
       return f_status_set_error(status);
@@ -83,7 +83,7 @@
       } else if (status == f_error_allocation || status == f_error_reallocation) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       } else {
-        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", status, filename);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fll_fss_basic_list_read() for the file '%s'.", status, filename);
       }
 
       return f_status_set_error(status);
@@ -112,7 +112,7 @@
         } else if (status == f_failure) {
           // the error message has already been displayed.
         } else {
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", status);
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling firewall_perform_commands().", status);
         }
 
         f_macro_fss_objects_delete(status2, local->rule_objects);
@@ -502,7 +502,7 @@
       } else if (status == f_error_allocation || status == f_error_reallocation) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       } else {
-        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", status, init_rule_core_file);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fll_fss_basic_list_read() for the file '%s'.", status, init_rule_core_file);
       }
 
       f_macro_string_dynamic_delete(buffer);
@@ -530,7 +530,7 @@
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       }
       else {
-        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling init_load_main_rule().", status);
+        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling init_load_main_rule().", status);
       }
 
       // @todo: init_delete_data((*data));
@@ -558,7 +558,7 @@
         } else if (status == f_failure) {
           // the error message has already been displayed.
         } else {
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling firewall_perform_commands().", status);
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling firewall_perform_commands().", status);
         }
 
         f_macro_fss_objects_delete(status2, (*rule_objects));
@@ -571,7 +571,7 @@
         fl_color_print_line(f_standard_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       }
       else {
-        fl_color_print_line(f_standard_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling init_load_main_rule().", status);
+        fl_color_print_line(f_standard_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling init_load_main_rule().", status);
       }
     }
 

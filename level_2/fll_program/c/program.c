@@ -126,7 +126,7 @@ extern "C" {
       else {
         fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (");
         fl_color_print(f_standard_error, context->notable, context->reset, "%u", status);
-        fl_color_print(f_standard_error, context->error, context->reset, ") has occured while calling ");
+        fl_color_print(f_standard_error, context->error, context->reset, ") has occurred while calling ");
         fl_color_print(f_standard_error, context->notable, context->reset, "f_console_parameter_process()");
         fl_color_print_line(f_standard_error, context->error, context->reset, ".");
       }
