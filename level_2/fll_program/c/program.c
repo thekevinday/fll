@@ -83,11 +83,11 @@ extern "C" {
     f_status status = f_none;
     f_status allocation_status = f_none;
 
-    status = fl_console_parameter_process(arguments, parameters, remaining);
+    status = f_console_parameter_process(arguments, parameters, remaining);
 
     f_console_parameter_id decision = choices.id[2];
 
-    fl_console_parameter_prioritize(parameters, choices, &decision);
+    f_console_parameter_prioritize(parameters, choices, &decision);
 
     // load colors unless told not to.
     if (decision != choices.id[0]) {
@@ -115,19 +115,19 @@ extern "C" {
       }
       else if (status == f_invalid_utf) {
         fl_color_print(f_standard_error, context->error, context->reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "fl_console_parameter_process()");
+        fl_color_print(f_standard_error, context->notable, context->reset, "f_console_parameter_process()");
         fl_color_print_line(f_standard_error, context->error, context->reset, ".");
       }
       else if (status == f_invalid_parameter) {
         fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "fl_console_parameter_process()");
+        fl_color_print(f_standard_error, context->notable, context->reset, "f_console_parameter_process()");
         fl_color_print_line(f_standard_error, context->error, context->reset, ".");
       }
       else {
         fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (");
         fl_color_print(f_standard_error, context->notable, context->reset, "%u", status);
         fl_color_print(f_standard_error, context->error, context->reset, ") has occured while calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "fl_console_parameter_process()");
+        fl_color_print(f_standard_error, context->notable, context->reset, "f_console_parameter_process()");
         fl_color_print_line(f_standard_error, context->error, context->reset, ".");
       }
 

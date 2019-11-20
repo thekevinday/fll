@@ -4,6 +4,8 @@
  * Project: Status Code
  * API Version: 0.5
  * Licenses: lgplv2.1
+ *
+ * This program provides status code to/from string translation.
  */
 #ifndef _status_code_h
 
@@ -13,10 +15,11 @@
 #include <string.h>
 
 // fll-0 includes
-#include <level_0/console.h>
 #include <level_0/conversion.h>
+#include <level_0/console.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
+#include <level_0/status.h>
 #include <level_0/string.h>
 #include <level_0/type.h>
 
@@ -27,8 +30,8 @@
 #include <level_1/string.h>
 
 // fll-2 includes
-#include <level_2/status.h>
 #include <level_2/program.h>
+#include <level_2/status.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -42,8 +45,8 @@ extern "C" {
 #endif // _di_status_code_version_
 
 #ifndef _di_status_code_name_
-  #define status_code_name      "status_code"
-  #define status_code_name_long "Status Code"
+  #define status_code_name "status_code"
+  #define status_code_name_long "FSS Status Code"
 #endif // _di_status_code_name_
 
 #ifndef _di_status_code_defines_

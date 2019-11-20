@@ -24,9 +24,11 @@ extern "C" {
 #ifndef _di_f_type_status_
   typedef uint16_t f_status;
 
-  // The c language gives warnings about return types of constants.
-  // Remove the const for c, but keep it for c++, which is only for function call declarations & prototypes.
-  // Do not declare these for the return data types themselves, instead use f_status; only use these for function prototypes and declarations.
+  /**
+   * The c language gives warnings about return types of constants.
+   * Remove the const for c, but keep it for c++, which is only for function call declarations & prototypes.
+   * Do not declare these for the return data types themselves, instead use f_status; only use these for function prototypes and declarations.
+   */
   #ifdef __cplusplus
     #define f_return_status const f_status
   #else

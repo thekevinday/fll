@@ -419,10 +419,13 @@ extern "C" {
     #define fl_status_string_zero_number_length 14
 
     #define fl_status_string_decimal_number "f_decimal_number"
-    #define fl_status_string_decimal_number_length 15
+    #define fl_status_string_decimal_number_length 17
+
+    #define fl_status_string_whole_number "f_whole_number"
+    #define fl_status_string_whole_number_length 15
 
     #define fl_status_string_invalid_number "f_invalid_number"
-    #define fl_status_string_invalid_number_length 15
+    #define fl_status_string_invalid_number_length 17
   #endif // _di_fl_status_digits_
 
   #ifndef _di_fl_status_buffers_
@@ -526,6 +529,9 @@ extern "C" {
 
     #define fl_status_string_reallocation_error "f_reallocation_error"
     #define fl_status_string_reallocation_error_length 21
+
+    #define fl_status_string_deallocation_error "f_deallocation_error"
+    #define fl_status_string_deallocation_error_length 21
   #endif // _di_fl_status_allocation_
 
   #ifndef _di_fl_status_fork_
@@ -581,6 +587,9 @@ extern "C" {
 
     #define fl_status_string_file_reallocation_error "f_file_reallocation_error"
     #define fl_status_string_file_reallocation_error_length 26
+
+    #define fl_status_string_file_deallocation_error "f_file_deallocation_error"
+    #define fl_status_string_file_deallocation_error_length 26
 
     #define fl_status_string_file_stat_error "f_file_stat_error"
     #define fl_status_string_file_stat_error_length 18

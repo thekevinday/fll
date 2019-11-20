@@ -1,4 +1,5 @@
 #include <level_3/status_code.h>
+#include "private-status_code.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,9 +17,9 @@ extern "C" {
 
     printf("%c", f_string_eol);
 
-    fll_program_print_help_option(data.context, status_code_short_is_fine, status_code_long_is_fine, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print f_true if the error code is not an error.");
-    fll_program_print_help_option(data.context, status_code_short_is_warning, status_code_long_is_warning, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print f_true if the error code is a warning.");
-    fll_program_print_help_option(data.context, status_code_short_is_error, status_code_long_is_error, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print f_true if the error code is an error.");
+    fll_program_print_help_option(data.context, status_code_short_is_fine, status_code_long_is_fine, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print f_true if the error code is not an error, f_false otherwise.");
+    fll_program_print_help_option(data.context, status_code_short_is_warning, status_code_long_is_warning, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print f_true if the error code is a warning, f_false otherwise.");
+    fll_program_print_help_option(data.context, status_code_short_is_error, status_code_long_is_error, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print f_true if the error code is an error, f_false otherwise.");
     fll_program_print_help_option(data.context, status_code_short_number, status_code_long_number, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Convert status code name to number.");
 
     fll_program_print_help_usage(data.context, status_code_name, "status code(s)");
@@ -44,207 +45,104 @@ extern "C" {
       return f_status_set_error(status);
     }
 
+    f_status status2 = f_none;
     status = f_none;
 
-    // Execute parameter results.
     if (data->parameters[status_code_parameter_help].result == f_console_result_found) {
       status_code_print_help(*data);
+      status_code_delete_data(data);
+      return f_none;
     }
     else if (data->parameters[status_code_parameter_version].result == f_console_result_found) {
       fll_program_print_version(status_code_version);
+      status_code_delete_data(data);
+      return f_none;
     }
-    else if (data->parameters[status_code_parameter_is_error].result == f_console_result_found) {
-      if (data->remaining.used > 0) {
-        f_array_length counter = 0;
 
-        f_status code = f_none;
-        unsigned short is_true = 0;
+    if (data->parameters[status_code_parameter_is_error].result == f_console_result_found) {
+      if (data->parameters[status_code_parameter_is_warning].result == f_console_result_found) {
+        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", status_code_long_is_error);
+        fl_color_print(f_standard_error, data->context.error, data->context.reset, "' cannot be used with the parameter ");
+        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", status_code_long_is_warning);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
 
-        for (; counter < data->remaining.used; counter++) {
-          // only numbers are valid status codes.
-          if (f_conversion_character_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
-            status = f_false;
-            continue;
-          }
-
-          long long number = atoll(arguments.argv[data->remaining.array[counter]]);
-          if (number >= 0x10000 || number < 0) {
-            status = f_false;
-            continue;
-          }
-
-          code = (f_status) number;
-          is_true = f_status_is_error(code) && !f_status_is_warning(code);
-
-          if (status == f_none) {
-            status = f_true;
-          }
-
-          if (is_true) {
-            printf("%s\n", fl_status_string_true);
-          }
-          else {
-            printf("%s\n", fl_status_string_false);
-          }
-        } // for
+        status_code_delete_data(data);
+        return f_status_set_error(status);
       }
-      else {
-        status = f_false;
+      else if (data->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
+        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", status_code_long_is_error);
+        fl_color_print(f_standard_error, data->context.error, data->context.reset, "' cannot be used with the parameter ");
+        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", status_code_long_is_fine);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
+
+        status_code_delete_data(data);
+        return f_status_set_error(status);
       }
     }
-    else if (data->parameters[status_code_parameter_is_warning].result == f_console_result_found) {
-      if (data->remaining.used > 0) {
-        f_array_length counter = 0;
+    else if (data->parameters[status_code_parameter_is_warning].result == f_console_result_found && data->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
+      fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+      fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", status_code_long_is_warning);
+      fl_color_print(f_standard_error, data->context.error, data->context.reset, "' cannot be used with the parameter ");
+      fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", status_code_long_is_fine);
+      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
 
-        f_status code = f_none;
-        unsigned short is_true = 0;
-
-        for (; counter < data->remaining.used; counter++) {
-          // only numbers are valid status codes.
-          if (f_conversion_character_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
-            status = f_false;
-            continue;
-          }
-
-          long long number = atoll(arguments.argv[data->remaining.array[counter]]);
-          if (number >= 0x10000 || number < 0) {
-            status = f_false;
-            continue;
-          }
-
-          code = (f_status) number;
-          is_true = f_status_is_warning(code) && !f_status_is_error(code);
-
-          if (status == f_none) {
-            status = f_true;
-          }
-
-          if (is_true) {
-            printf("%s\n", fl_status_string_true);
-          }
-          else {
-            printf("%s\n", fl_status_string_false);
-          }
-        } // for
-      }
-      else {
-        status = f_false;
-      }
+      status_code_delete_data(data);
+      return f_status_set_error(status);
     }
-    else if (data->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
+
+    if (data->remaining.used == 0 && !data->process_pipe) {
+      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an error code.");
+
+      status_code_delete_data(data);
+      return f_status_set_error(f_invalid_parameter);
+    }
+
+    if (data->parameters[status_code_parameter_is_error].result == f_console_result_found || data->parameters[status_code_parameter_is_warning].result == f_console_result_found || data->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
+      if (data->process_pipe) {
+        // @todo: call status_code_process_check() here for all data from pipe that is space separated.
+      }
+
       if (data->remaining.used > 0) {
-        f_array_length counter = 0;
+        for (f_array_length i = 0; i < data->remaining.used; i++) {
+          status2 = status_code_process_check(*data, arguments.argv[data->remaining.array[i]]);
 
-        f_status code = f_none;
-        unsigned short is_true = 0;
-
-        for (; counter < data->remaining.used; counter++) {
-          // only numbers are valid status codes.
-          if (f_conversion_character_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
-            status = f_false;
-            continue;
-          }
-
-          long long number = atoll(arguments.argv[data->remaining.array[counter]]);
-          if (number >= 0x10000 || number < 0) {
-            status = f_false;
-            continue;
-          }
-
-          code = (f_status) number;
-          is_true = f_status_is_fine(code);
-
-          if (status == f_none) {
-            status = f_true;
-          }
-
-          if (is_true) {
-            printf("%s\n", fl_status_string_true);
-          }
-          else {
-            printf("%s\n", fl_status_string_false);
+          if (f_status_is_error(status2) && status == f_none) {
+            status = status2;
           }
         } // for
-      }
-      else {
-        status = f_false;
       }
     }
     else if (data->parameters[status_code_parameter_number].result == f_console_result_found) {
-      if (data->remaining.used > 0) {
-        f_array_length counter = 0;
-        f_status code = f_none;
-        f_status status2 = f_none;
-
-        for (; counter < data->remaining.used; counter++) {
-          // Numbers are not valid status code strings.
-          if (f_conversion_character_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_true) {
-            status = f_false;
-            continue;
-          }
-
-          status2 = fll_status_from_string(arguments.argv[data->remaining.array[counter]], &code);
-          if (f_status_is_error(status2)) {
-            status = status2;
-            break;
-          }
-          else if (status2 == f_invalid_data) {
-            status = f_false;
-            continue;
-          }
-          else if (status == f_none) {
-            status = f_true;
-          }
-
-          printf("%u\n", code);
-        } // for
-      }
-      else {
-        status = f_false;
-      }
-    }
-    else if (data->remaining.used > 0 || data->process_pipe) {
-      f_array_length counter = 0;
-
       if (data->process_pipe) {
-        // TODO: how should this be done?
+        // @todo: call status_code_process_number() here for all data from pipe that is space separated.
       }
 
       if (data->remaining.used > 0) {
-        for (; counter < data->remaining.used; counter++) {
-          // only numbers are valid status code.
-          if (f_conversion_character_is_decimal(arguments.argv[data->remaining.array[counter]][0]) == f_false) {
-            status = f_false;
-            continue;
-          }
+        for (f_array_length i = 0; i < data->remaining.used; i++) {
+          status2 = status_code_process_number(*data, arguments.argv[data->remaining.array[i]]);
 
-          long long number = atoll(arguments.argv[data->remaining.array[counter]]);
-          if (number >= 0x10000 || number < 0) {
-            status = f_false;
-            continue;
-          }
-          else if (status == f_none) {
-            status = f_true;
-          }
-
-          f_status code = (f_status) number;
-          f_string string = 0;
-
-          if (fl_status_to_string(code, &string) == f_none) {
-            printf("%s\n", string);
-          }
-          else {
-            status = f_false;
+          if (f_status_is_error(status2) && status == f_none) {
+            status = status2;
           }
         } // for
-      }
-      else {
-        status = f_false;
       }
     }
     else {
-      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an error code.");
-      status = f_status_set_error(f_invalid_parameter);
+      if (data->process_pipe) {
+        // @todo: call status_code_process_normal() here for all data from pipe that is space separated.
+      }
+
+      if (data->remaining.used > 0) {
+        for (f_array_length i = 0; i < data->remaining.used; i++) {
+          status2 = status_code_process_normal(*data, arguments.argv[data->remaining.array[i]]);
+
+          if (f_status_is_error(status2) && status == f_none) {
+            status = status2;
+          }
+        } // for
+      }
     }
 
     status_code_delete_data(data);

@@ -133,7 +133,6 @@ extern "C" {
       status = f_none;
     }
 
-    // Execute parameter results.
     if (data->parameters[fss_basic_read_parameter_help].result == f_console_result_found) {
       fss_basic_read_print_help(*data);
     }

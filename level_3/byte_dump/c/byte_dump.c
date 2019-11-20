@@ -91,7 +91,7 @@ extern "C" {
         choices.id = ids;
         choices.used = 5;
 
-        status = fl_console_parameter_prioritize(parameters, choices, &choice);
+        status = f_console_parameter_prioritize(parameters, choices, &choice);
 
         if (f_status_is_error(status)) {
           byte_dump_delete_data(data);
@@ -122,7 +122,7 @@ extern "C" {
         choices.id = ids;
         choices.used = 3;
 
-        status = fl_console_parameter_prioritize(parameters, choices, &choice);
+        status = f_console_parameter_prioritize(parameters, choices, &choice);
 
         if (f_status_is_error(status)) {
           byte_dump_delete_data(data);
@@ -143,7 +143,6 @@ extern "C" {
 
     status = f_none;
 
-    // Execute parameter results.
     if (data->parameters[byte_dump_parameter_help].result == f_console_result_found) {
       byte_dump_print_help(*data);
     }

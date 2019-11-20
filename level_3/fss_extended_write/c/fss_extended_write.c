@@ -59,20 +59,19 @@ extern "C" {
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       }
       else if (status == f_invalid_utf) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling fl_console_parameter_process().");
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling f_console_parameter_process().");
       }
       else if (status == f_invalid_parameter) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_console_parameter_process().");
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_console_parameter_process().");
       }
       else {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_console_parameter_process().", status);
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_console_parameter_process().", status);
       }
 
       fss_extended_write_delete_data(data);
       return f_status_set_error(status);
     }
 
-    // Execute parameter results.
     if (data->parameters[fss_extended_write_parameter_help].result == f_console_result_found) {
       fss_extended_write_print_help(*data);
     }

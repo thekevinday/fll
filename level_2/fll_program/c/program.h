@@ -21,7 +21,6 @@
 
 // fll-1 includes
 #include <level_1/color.h>
-#include <level_1/console.h>
 
 #ifdef __cplusplus
 extern "C" {

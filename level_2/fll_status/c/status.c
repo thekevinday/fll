@@ -684,6 +684,11 @@ extern "C" {
         return f_none;
       }
 
+      if (fl_string_compare(string, fl_status_string_whole_number, length, fl_status_string_whole_number_length) == f_equal_to) {
+        *code = f_whole_number;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_invalid_number, length, fl_status_string_invalid_number_length) == f_equal_to) {
         *code = f_invalid_number;
         return f_none;
@@ -857,6 +862,11 @@ extern "C" {
         *code = f_reallocation_error;
         return f_none;
       }
+
+      if (fl_string_compare(string, fl_status_string_deallocation_error, length, fl_status_string_deallocation_error_length) == f_equal_to) {
+        *code = f_deallocation_error;
+        return f_none;
+      }
     #endif // _di_fll_status_allocation_
 
     #ifndef _di_fll_status_fork_
@@ -944,6 +954,11 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_file_reallocation_error, length, fl_status_string_file_reallocation_error_length) == f_equal_to) {
         *code = f_file_reallocation_error;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_deallocation_error, length, fl_status_string_file_deallocation_error_length) == f_equal_to) {
+        *code = f_file_deallocation_error;
         return f_none;
       }
 

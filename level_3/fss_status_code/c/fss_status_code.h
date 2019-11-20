@@ -19,6 +19,7 @@
 #include <level_0/console.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
+#include <level_0/status.h>
 #include <level_0/string.h>
 #include <level_0/type.h>
 

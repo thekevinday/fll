@@ -32,11 +32,11 @@ extern "C" {
 
 #ifndef _di_fll_fss_status_string_
   #ifndef _di_fll_fss_status_error_
-    #define fll_fss_status_string_invalid_format "invalid_format"
-    #define fll_fss_status_string_invalid_format_length 15
+    #define fll_fss_status_string_invalid_format "fl_fss_invalid_format"
+    #define fll_fss_status_string_invalid_format_length 22
 
-    #define fll_fss_status_string_invalid_format_eos "invalid_format_eos"
-    #define fll_fss_status_string_invalid_format_eos_length 19
+    #define fll_fss_status_string_invalid_format_eos "fl_fss_invalid_format_eos"
+    #define fll_fss_status_string_invalid_format_eos_length 26
   #endif // _di_fll_fss_status_error_
 
   #ifndef _di_fll_fss_status_warning_
@@ -85,56 +85,56 @@ extern "C" {
 /**
  * Convert FSS status codes from their string equivalents to a status code.
  *
- * Error, warning, and signal flags will not be assigned to the error.
+ * Error, warning, and signal flags will not be assigned to the code.
  *
  * This process the string until either a match or NULL is reached.
  *
  * @param string
- *   The error name to process.
- * @param error
- *   The error code a matched string represents.
+ *   The code name to process.
+ * @param code
+ *   The code code a matched string represents.
  *
  * @return
  *   f_none on success.
  *   f_no_data if string is empty.
- *   f_invalid_data if not found.
+ *   f_invalid_data (with error bit) if not found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
  * @see fll_status_from_string
  */
 #ifndef _di_fll_fss_status_from_string_
-  extern f_return_status fll_fss_status_from_string(const f_string string, f_status *error);
+  extern f_return_status fll_fss_status_from_string(const f_string string, f_status *code);
 #endif // _di_fll_fss_status_to_string_
 
 #ifndef _di_fll_fss_status_to_string_
   /**
-   * Convert error codes to their string equivalents.
+   * Convert code codes to their string equivalents.
    */
-  extern f_return_status fll_fss_status_to_string(const f_status error, f_string *string);
+  extern f_return_status fll_fss_status_to_string(const f_status code, f_string *string);
 #endif // _di_fll_status_to_string_
 
 #ifndef _di_fll_fss_status_is_error_
   /**
-   * Returns true or false depending on whether the standard context of the error code represents an error.
-   * Keep in mind that many of the error codes are context-specific and may be reported as an error here when it is in fact not an error.
+   * Returns true or false depending on whether the standard context of the code code represents an code.
+   * Keep in mind that many of the code codes are context-specific and may be reported as an code here when it is in fact not an code.
    */
-  extern f_return_status fll_fss_status_is_error(const f_status error);
+  extern f_return_status fll_fss_status_is_error(const f_status code);
 #endif // _di_fll_fss_status_is_error_
 
 #ifndef _di_fll_fss_status_is_warning_
   /**
-   * Returns true or false depending on whether the standard context of the error code represents a warning.
-   * Keep in mind that many of the error codes are context-specific and may be reported as a warning here when it is in fact not a warning.
+   * Returns true or false depending on whether the standard context of the code code represents a warning.
+   * Keep in mind that many of the code codes are context-specific and may be reported as a warning here when it is in fact not a warning.
    */
-  extern f_return_status fll_fss_status_is_warning(const f_status error);
+  extern f_return_status fll_fss_status_is_warning(const f_status code);
 #endif // _di_fll_fss_status_is_warning_
 
 #ifndef _di_fll_fss_status_is_fine_
   /**
-   * Returns true or false depending on whether the standard context of the error code represents an normal return status and not an error.
-   * Keep in mind that many of the error codes are context-specific and may be reported as "fine" here when it is in fact not fine.
+   * Returns true or false depending on whether the standard context of the code code represents an normal return status and not an code.
+   * Keep in mind that many of the code codes are context-specific and may be reported as "fine" here when it is in fact not fine.
    */
-  extern f_return_status fll_fss_status_is_fine(const f_status error);
+  extern f_return_status fll_fss_status_is_fine(const f_status code);
 #endif // _di_fll_fss_status_is_fine_
 
 #ifdef __cplusplus

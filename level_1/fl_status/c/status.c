@@ -10,9 +10,9 @@ extern "C" {
       if (string == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status umasked_error = f_status_set_fine(code);
+    f_status unmasked_code = f_status_set_fine(code);
 
-    switch (umasked_error) {
+    switch (unmasked_code) {
       #ifndef _di_fl_status_booleans_
         case f_false:
           *string = fl_status_string_false;
@@ -272,7 +272,7 @@ extern "C" {
           break;
       #endif // _di_fl_status_basic_
 
-      #ifdef _di_fl_status_invalid_
+      #ifndef _di_fl_status_invalid_
         case f_invalid:
           *string = fl_status_string_invalid;
           break;
@@ -417,6 +417,9 @@ extern "C" {
         case f_decimal_number:
           *string = fl_status_string_decimal_number;
           break;
+        case f_whole_number:
+          *string = fl_status_string_whole_number;
+          break;
         case f_invalid_number:
           *string = fl_status_string_invalid_number;
           break;
@@ -525,6 +528,9 @@ extern "C" {
         case f_reallocation_error:
           *string = fl_status_string_reallocation_error;
           break;
+        case f_deallocation_error:
+          *string = fl_status_string_deallocation_error;
+          break;
       #endif // _di_fl_status_allocation_
 
       #ifndef _di_fl_status_fork_
@@ -581,6 +587,9 @@ extern "C" {
           break;
         case f_file_reallocation_error:
           *string = fl_status_string_file_reallocation_error;
+          break;
+        case f_file_deallocation_error:
+          *string = fl_status_string_file_deallocation_error;
           break;
         case f_file_stat_error:
           *string = fl_status_string_file_stat_error;
@@ -640,6 +649,21 @@ extern "C" {
           *string = fl_status_string_directory_not_utf;
           break;
       #endif // _di_fl_status_directory_
+
+      #ifndef _di_fl_status_socket_
+        case f_socket_connection_client_error:
+          *string = fl_status_string_socket_connection_client_error;
+          break;
+        case f_socket_connection_target_error:
+          *string = fl_status_string_socket_connection_target_error;
+          break;
+        case f_socket_receive_error:
+          *string = fl_status_string_socket_receive_error;
+          break;
+        case f_socket_send_error:
+          *string = fl_status_string_socket_send_error;
+          break;
+      #endif // _di_fl_status_socket_
 
       #ifndef _di_fll_error_non_
         case f_less_than:

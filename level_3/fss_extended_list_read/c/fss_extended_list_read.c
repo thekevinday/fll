@@ -126,7 +126,6 @@ extern "C" {
 
     f_status status2 = f_none;
 
-    // Execute parameter results.
     if (data->parameters[fss_extended_list_read_parameter_help].result == f_console_result_found) {
       fss_extended_list_read_print_help(*data);
     }
