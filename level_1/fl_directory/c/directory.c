@@ -77,7 +77,7 @@ extern "C" {
     }
     else if (length == -1) {
       if (errno == ENOMEM) {
-        return f_status_set_error(f_allocation_error);
+        return f_status_set_error(f_error_allocation);
       }
       else {
         return f_status_set_error(f_failure);

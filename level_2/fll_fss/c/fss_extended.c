@@ -129,7 +129,7 @@ extern "C" {
       contents->used++;
     } while (input->start < f_string_max_size);
 
-    return f_status_is_error(f_overflow);
+    return f_status_is_error(f_number_overflow);
   }
 #endif // _di_fll_fss_extended_read_
 

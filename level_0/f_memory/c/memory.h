@@ -84,7 +84,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_allocation_error (with error bit) on allocation error.
+ *   f_error_allocation (with error bit) on allocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_memory_new_
@@ -149,7 +149,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_reallocation_error (with error bit) on reallocation error.
+ *   f_error_reallocation (with error bit) on reallocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #if ! ( defined (_di_f_memory_resize_) || defined (_f_memory_FORCE_secure_memory_) )
@@ -172,7 +172,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_reallocation_error (with error bit) on reallocation error.
+ *   f_error_reallocation (with error bit) on reallocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #if ! ( defined (_di_f_memory_adjust_) || defined (_f_memory_FORCE_fast_memory_) )

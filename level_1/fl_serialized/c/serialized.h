@@ -44,7 +44,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_reallocation_error (with error bit) on memory reallocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_serialize_simple_
   extern f_return_status fl_serialize_simple(const f_string_dynamic value, f_string_dynamic *serialized);
@@ -71,7 +71,7 @@ extern "C" {
  *   f_none on success.
  *   f_incomplete_utf_on_eos if end of sting is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_reallocation_error (with error bit) on memory reallocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_unserialize_simple_map_
   extern f_return_status fl_unserialize_simple_map(const f_string_dynamic serialized, f_string_locations *locations);

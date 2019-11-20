@@ -16,7 +16,7 @@ extern "C" {
     for (; i < length; i++) {
       if (string[i] != f_string_eos) {
         if (fputc(string[i], output) == 0) {
-          return f_status_set_error(f_output_error);
+          return f_status_set_error(f_error_output);
         }
       }
     } // for
@@ -36,7 +36,7 @@ extern "C" {
     for (; i < buffer.used; i++) {
       if (buffer.string[i] != f_string_eos) {
         if (fputc(buffer.string[i], output) == 0) {
-          return f_status_set_error(f_output_error);
+          return f_status_set_error(f_error_output);
         }
       }
     } // for
@@ -60,7 +60,7 @@ extern "C" {
     for (; i <= location.stop; i++) {
       if (buffer.string[i] != f_string_eos) {
         if (fputc(buffer.string[i], output) == 0) {
-          return f_status_set_error(f_output_error);
+          return f_status_set_error(f_error_output);
         }
       }
     } // for

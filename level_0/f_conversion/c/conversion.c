@@ -83,7 +83,7 @@ extern "C" {
       case 0x30: *number = 0; break;
       case 0x31: *number = 1; break;
       default:
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
     }
 
     return f_none;
@@ -108,7 +108,7 @@ extern "C" {
       case 0x38: *number = 8; break;
       case 0x39: *number = 9; break;
       default:
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
     }
 
     return f_none;
@@ -137,7 +137,7 @@ extern "C" {
       case 0x61: *decimal = 10; break;
       case 0x62: *decimal = 11; break;
       default:
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
     }
 
     return f_none;
@@ -174,7 +174,7 @@ extern "C" {
       case 0x65: *decimal = 14; break;
       case 0x66: *decimal = 15; break;
       default:
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
     }
 
     return f_none;
@@ -197,7 +197,7 @@ extern "C" {
       case 0x36: *number = 6; break;
       case 0x37: *number = 7; break;
       default:
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
     }
 
     return f_none;
@@ -224,7 +224,7 @@ extern "C" {
 
           if (negative) {
             if (scale > f_conversion_scale_binary_signed) {
-              return f_status_set_error(f_underflow);
+              return f_status_set_error(f_number_underflow);
             }
 
             converted <<= 1;
@@ -232,7 +232,7 @@ extern "C" {
           }
           else {
             if (scale > f_conversion_scale_binary_signed) {
-              return f_status_set_error(f_overflow);
+              return f_status_set_error(f_number_overflow);
             }
 
             converted <<= 1;
@@ -251,7 +251,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
     } // for
 
@@ -279,7 +279,7 @@ extern "C" {
           scale++;
 
           if (scale > f_conversion_scale_binary_unsigned) {
-            return f_status_set_error(f_overflow);
+            return f_status_set_error(f_number_overflow);
           }
 
           converted <<= 1;
@@ -291,7 +291,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
     } // for
 
@@ -322,7 +322,7 @@ extern "C" {
           if (negative) {
             if (scale > f_conversion_scale_decimal_signed) {
               if ((converted * 10) - digit < f_type_number_size_negative || (converted * 10) - digit > converted) {
-                return f_status_set_error(f_underflow);
+                return f_status_set_error(f_number_underflow);
               }
             }
 
@@ -332,7 +332,7 @@ extern "C" {
           else {
             if (scale > f_conversion_scale_decimal_signed) {
               if ((converted * 10) + digit > f_type_number_size_positive || (converted * 10) + digit < converted) {
-                return f_status_set_error(f_overflow);
+                return f_status_set_error(f_number_overflow);
               }
             }
 
@@ -352,7 +352,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
     } // for
 
@@ -382,7 +382,7 @@ extern "C" {
 
           if (scale > f_conversion_scale_decimal_unsigned) {
             if ((converted * 10) + digit > f_type_number_size_unsigned || (converted * 10) + digit < converted) {
-              return f_status_set_error(f_overflow);
+              return f_status_set_error(f_number_overflow);
             }
           }
 
@@ -395,7 +395,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
     } // for
 
@@ -426,7 +426,7 @@ extern "C" {
           if (negative) {
             if (scale > f_conversion_scale_duodecimal_signed) {
               if ((converted * 12) - digit < f_type_number_size_negative || (converted * 12) - digit > converted) {
-                return f_status_set_error(f_underflow);
+                return f_status_set_error(f_number_underflow);
               }
             }
 
@@ -436,7 +436,7 @@ extern "C" {
           else {
             if (scale > f_conversion_scale_duodecimal_signed) {
               if ((converted * 12) + digit > f_type_number_size_positive || (converted * 12) + digit < converted) {
-                return f_status_set_error(f_overflow);
+                return f_status_set_error(f_number_overflow);
               }
             }
 
@@ -456,7 +456,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
     } // for
 
@@ -486,7 +486,7 @@ extern "C" {
 
           if (scale > f_conversion_scale_duodecimal_unsigned) {
             if ((converted * 12) + digit > f_type_number_size_unsigned || (converted * 12) + digit < converted) {
-              return f_status_set_error(f_overflow);
+              return f_status_set_error(f_number_overflow);
             }
           }
 
@@ -499,7 +499,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
     } // for
 
@@ -530,7 +530,7 @@ extern "C" {
           if (negative) {
             if (scale > f_conversion_scale_hexidecimal_signed) {
               if ((converted << 4) - digit < f_type_number_size_negative || (converted << 4) - digit > converted) {
-                return f_status_set_error(f_underflow);
+                return f_status_set_error(f_number_underflow);
               }
             }
 
@@ -540,7 +540,7 @@ extern "C" {
           else {
             if (scale > f_conversion_scale_hexidecimal_signed) {
               if ((converted << 4) + digit > f_type_number_size_positive || (converted << 4) + digit < converted) {
-                return f_status_set_error(f_overflow);
+                return f_status_set_error(f_number_overflow);
               }
             }
 
@@ -560,7 +560,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
     } // for
 
@@ -590,7 +590,7 @@ extern "C" {
 
           if (scale > f_conversion_scale_hexidecimal_unsigned) {
             if ((converted << 4) + digit > f_type_number_size_unsigned || (converted << 4) + digit < converted) {
-              return f_status_set_error(f_overflow);
+              return f_status_set_error(f_number_overflow);
             }
           }
 
@@ -603,7 +603,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
     } // for
 
@@ -634,7 +634,7 @@ extern "C" {
           if (negative) {
             if (scale > f_conversion_scale_octal_signed) {
               if ((converted << 3) - digit < f_type_number_size_negative || (converted << 3) - digit > converted) {
-                return f_status_set_error(f_underflow);
+                return f_status_set_error(f_number_underflow);
               }
             }
 
@@ -644,7 +644,7 @@ extern "C" {
           else {
             if (scale > f_conversion_scale_octal_signed) {
               if ((converted << 3) + digit > f_type_number_size_positive || (converted << 3) + digit < converted) {
-                return f_status_set_error(f_overflow);
+                return f_status_set_error(f_number_overflow);
               }
             }
 
@@ -664,7 +664,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
     } // for
 
@@ -694,7 +694,7 @@ extern "C" {
 
           if (scale > f_conversion_scale_octal_unsigned) {
             if ((converted << 3) + digit > f_type_number_size_unsigned || (converted << 3) + digit < converted) {
-              return f_status_set_error(f_overflow);
+              return f_status_set_error(f_number_overflow);
             }
           }
 
@@ -707,7 +707,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
     } // for
 
@@ -747,7 +747,7 @@ extern "C" {
             continue;
           }
 
-          return f_status_set_error(f_invalid_number);
+          return f_status_set_error(f_number_invalid);
         }
       }
       else {
@@ -770,7 +770,7 @@ extern "C" {
           }
         }
 
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
 
       if (string[i] == 0x30) {
@@ -801,7 +801,7 @@ extern "C" {
           offset += 2;
         }
         else {
-          return f_status_set_error(f_invalid_number);
+          return f_status_set_error(f_number_invalid);
         }
 
         break;
@@ -814,7 +814,7 @@ extern "C" {
           offset++;
         }
         else {
-          return f_status_set_error(f_invalid_number);
+          return f_status_set_error(f_number_invalid);
         }
       }
 
@@ -825,7 +825,7 @@ extern "C" {
           offset++;
         }
         else {
-          return f_status_set_error(f_invalid_number);
+          return f_status_set_error(f_number_invalid);
         }
       }
 
@@ -834,11 +834,11 @@ extern "C" {
         break;
       }
 
-      return f_status_set_error(f_invalid_number);
+      return f_status_set_error(f_number_invalid);
     } // for
 
     if (mode == 0) {
-      return f_status_set_error(f_invalid_number);
+      return f_status_set_error(f_number_invalid);
     }
 
     f_string_location location_offset = f_string_location_initialize;
@@ -896,7 +896,7 @@ extern "C" {
             continue;
           }
 
-          return f_status_set_error(f_invalid_number);
+          return f_status_set_error(f_number_invalid);
         }
       }
       else {
@@ -919,7 +919,7 @@ extern "C" {
           }
         }
 
-        return f_status_set_error(f_invalid_number);
+        return f_status_set_error(f_number_invalid);
       }
 
       if (string[i] == 0x30) {
@@ -950,7 +950,7 @@ extern "C" {
           offset += 2;
         }
         else {
-          return f_status_set_error(f_invalid_number);
+          return f_status_set_error(f_number_invalid);
         }
 
         break;
@@ -971,11 +971,11 @@ extern "C" {
         break;
       }
 
-      return f_status_set_error(f_invalid_number);
+      return f_status_set_error(f_number_invalid);
     } // for
 
     if (mode == 0) {
-      return f_status_set_error(f_invalid_number);
+      return f_status_set_error(f_number_invalid);
     }
 
     f_string_location location_offset = f_string_location_initialize;
@@ -1002,13 +1002,13 @@ extern "C" {
     if (sign_found) {
       if (status == f_none) {
         if (sign_found == -1) {
-          return f_status_set_error(f_negative_number);
+          return f_status_set_error(f_number_negative);
         }
 
-        return f_status_set_error(f_positive_number);
+        return f_status_set_error(f_number_positive);
       }
 
-      return f_status_set_error(f_invalid_number);
+      return f_status_set_error(f_number_invalid);
     }
 
     return status;

@@ -134,7 +134,7 @@ extern "C" {
     }
 
     if (f_status_is_error(status)) {
-      if (f_status_set_fine(status) == f_negative_number) {
+      if (f_status_set_fine(status) == f_number_negative) {
         fl_color_print_line(f_standard_output, data.context.error, data.context.reset, "out of range");
       }
       else {

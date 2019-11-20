@@ -116,8 +116,8 @@ extern "C" {
  *   f_none on success.
  *   f_no_data if nothing to rip, no allocations or reallocations are performed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_allocation_error (with error bit) on memory allocation error.
- *   f_reallocation_error (with error bit) on memory reallocation error.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_string_rip_
   extern f_return_status fl_string_rip(const f_string_dynamic buffer, const f_string_location location, f_string_dynamic *result);
@@ -192,8 +192,8 @@ extern "C" {
  *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_allocation_error (with error bit) on memory allocation error.
- *   f_reallocation_error (with error bit) on memory reallocation error.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_string_seek_line_until_graph_
   extern f_return_status fl_string_seek_line_until_graph(const f_string_dynamic buffer, f_string_location *location, const int8_t placeholder);
@@ -218,8 +218,8 @@ extern "C" {
  *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_allocation_error (with error bit) on memory allocation error.
- *   f_reallocation_error (with error bit) on memory reallocation error.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_string_seek_line_until_non_graph_
   extern f_return_status fl_string_seek_line_until_non_graph(const f_string_dynamic buffer, f_string_location *location, const int8_t placeholder);

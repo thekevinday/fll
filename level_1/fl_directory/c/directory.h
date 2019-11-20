@@ -56,7 +56,7 @@ extern "C" {
  *   f_no_data if directory is empty (@fixme: unlikely due to '.' and '..' probably always being returned.).
  *   f_failure (with error bit) if failed to read directory information.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_reallocation_error (with error bit) on memory reallocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
  *
  * @see scandir()
  */

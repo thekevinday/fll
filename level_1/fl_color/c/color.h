@@ -157,7 +157,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_reallocation_error (with error bit) on memory reallocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_color_save_
   extern f_return_status fl_color_save(f_string_dynamic *buffer, const f_color_format format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
@@ -190,7 +190,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_output_error (with error bit) on output error.
+ *   f_error_output (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_
   extern f_return_status fl_color_print(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const int8_t *string, ...);
@@ -217,7 +217,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_output_error (with error bit) on output error.
+ *   f_error_output (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_line_
   extern f_return_status fl_color_print_line(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const int8_t *string, ...);
@@ -236,7 +236,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_output_error (with error bit) on output error.
+ *   f_error_output (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_code_
   extern f_return_status fl_color_print_code(FILE *file, const f_string_dynamic color);
@@ -258,7 +258,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_reallocation_error (with error bit) on memory reallocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_color_load_context_
   extern f_return_status fl_color_load_context(fl_color_context *context, const bool use_light_colors);

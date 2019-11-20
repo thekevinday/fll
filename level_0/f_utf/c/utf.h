@@ -653,7 +653,7 @@ extern "C" {
  *   f_failure (with error bit) if width is not long enough to convert.
  *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_allocation_error (with error bit) on memory allocation error.
+ *   f_error_allocation (with error bit) on memory allocation error.
  *   f_failure (with error bit) if width is not long enough to convert.
  */
 #ifndef _di_f_utf_character_to_char_

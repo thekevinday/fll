@@ -22,7 +22,7 @@ extern "C" {
       return f_none;
     }
 
-    return f_status_set_error(f_allocation_error);
+    return f_status_set_error(f_error_allocation);
   }
 #endif // _di_f_memory_new_
 
@@ -121,7 +121,7 @@ extern "C" {
       return f_none;
     }
 
-    return f_status_set_error(f_reallocation_error);
+    return f_status_set_error(f_error_reallocation);
   }
 #endif // ! ( defined (_di_f_memory_resize_) || defined (_f_memory_FORCE_secure_memory_) )
 
@@ -186,7 +186,7 @@ extern "C" {
       return f_none;
     }
 
-    return f_status_set_error(f_reallocation_error);
+    return f_status_set_error(f_error_reallocation);
   }
 #endif // ! ( defined (_di_f_memory_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
 

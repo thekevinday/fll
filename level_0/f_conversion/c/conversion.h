@@ -163,7 +163,7 @@ extern "C" {
  *
  * @return
  *   f_none if character was converted to a binary.
- *   f_invalid_number (with error bit) if no conversion was made due to non-binary values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_binary_
@@ -181,7 +181,7 @@ extern "C" {
  *
  * @return
  *   f_none if character was converted to a decimal.
- *   f_invalid_number (with error bit) if no conversion was made due to non-decimal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_decimal_
@@ -199,7 +199,7 @@ extern "C" {
  *
  * @return
  *   f_none if character was converted to a duodecimal.
- *   f_invalid_number (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_duodecimal_
@@ -217,7 +217,7 @@ extern "C" {
  *
  * @return
  *   f_none if character was converted to a hexidecimal.
- *   f_invalid_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_hexidecimal_
@@ -235,7 +235,7 @@ extern "C" {
  *
  * @return
  *   f_none if character was converted to a hexidecimal.
- *   f_invalid_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_octal_
@@ -261,10 +261,10 @@ extern "C" {
  *
  * @return
  *   f_none if the binary string was converted to an signed long.
- *   f_invalid_number (with error bit) if no conversion was made due to non-binary values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) on integer overflow.
- *   f_underflow (with error bit) on integer underflow.
+ *   f_number_overflow (with error bit) on integer overflow.
+ *   f_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_binary_signed_
   extern f_return_status f_conversion_string_to_binary_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
@@ -287,9 +287,9 @@ extern "C" {
  *
  * @return
  *   f_none if the binary string was converted to an unsigned long.
- *   f_invalid_number (with error bit) if no conversion was made due to non-binary values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) on integer overflow.
+ *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_binary_unsigned_
   extern f_return_status f_conversion_string_to_binary_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
@@ -314,10 +314,10 @@ extern "C" {
  *
  * @return
  *   f_none if the decimal string was converted to an signed long.
- *   f_invalid_number (with error bit) if no conversion was made due to non-decimal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) on integer overflow.
- *   f_underflow (with error bit) on integer underflow.
+ *   f_number_overflow (with error bit) on integer overflow.
+ *   f_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_decimal_signed_
   extern f_return_status f_conversion_string_to_decimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
@@ -340,9 +340,9 @@ extern "C" {
  *
  * @return
  *   f_none if the decimal string was converted to an unsigned long.
- *   f_invalid_number (with error bit) if no conversion was made due to non-decimal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) on integer overflow.
+ *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_decimal_unsigned_
   extern f_return_status f_conversion_string_to_decimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
@@ -367,10 +367,10 @@ extern "C" {
  *
  * @return
  *   f_none if the duodecimal string was converted to an signed long.
- *   f_invalid_number (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) on integer overflow.
- *   f_underflow (with error bit) on integer underflow.
+ *   f_number_overflow (with error bit) on integer overflow.
+ *   f_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_duodecimal_signed_
   extern f_return_status f_conversion_string_to_duodecimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
@@ -393,9 +393,9 @@ extern "C" {
  *
  * @return
  *   f_none if the duodecimal string was converted to an unsigned long.
- *   f_invalid_number (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) on integer overflow.
+ *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_duodecimal_unsigned_
   extern f_return_status f_conversion_string_to_duodecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
@@ -420,10 +420,10 @@ extern "C" {
  *
  * @return
  *   f_none if the hexidecimal string was converted to an signed long.
- *   f_invalid_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) on integer overflow.
- *   f_underflow (with error bit) on integer underflow.
+ *   f_number_overflow (with error bit) on integer overflow.
+ *   f_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_hexidecimal_signed_
   extern f_return_status f_conversion_string_to_hexidecimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
@@ -446,9 +446,9 @@ extern "C" {
  *
  * @return
  *   f_none if the hexidecimal string was converted to an unsigned long.
- *   f_invalid_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) on integer overflow.
+ *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_hexidecimal_unsigned_
   extern f_return_status f_conversion_string_to_hexidecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
@@ -473,9 +473,9 @@ extern "C" {
  *
  * @return
  *   f_none if the octal string was converted to an signed long.
- *   f_invalid_number (with error bit) if no conversion was made due to non-octal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-octal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) on integer overflow.
+ *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_octal_signed_
   extern f_return_status f_conversion_string_to_octal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
@@ -498,9 +498,9 @@ extern "C" {
  *
  * @return
  *   f_none if the octal string was converted to an unsigned long.
- *   f_invalid_number (with error bit) if no conversion was made due to non-octal values being found.
+ *   f_number_invalid (with error bit) if no conversion was made due to non-octal values being found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) on integer overflow.
+ *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_octal_unsigned_
   extern f_return_status f_conversion_string_to_octal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
@@ -537,9 +537,9 @@ extern "C" {
  *   f_none on success.
  *   f_no_data (with error bit) if string starts with a null (length is 0).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_number (with error bit) if parameter is not a number.
- *   f_overflow (with error bit) on integer overflow.
- *   f_underflow (with error bit) on integer underflow.
+ *   f_number_invalid (with error bit) if parameter is not a number.
+ *   f_number_overflow (with error bit) on integer overflow.
+ *   f_number_underflow (with error bit) on integer underflow.
  *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *
  * @see strtoll()
@@ -580,10 +580,10 @@ extern "C" {
  *   f_none on success.
  *   f_no_data (with error bit) if string starts with a null (length is 0).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_number (with error bit) if parameter is not a number.
- *   f_negative_number (with error bit) on negative value.
- *   f_positive_number (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).
- *   f_overflow (with error bit) on integer overflow.
+ *   f_number_invalid (with error bit) if parameter is not a number.
+ *   f_number_negative (with error bit) on negative value.
+ *   f_number_positive (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).
+ *   f_number_overflow (with error bit) on integer overflow.
  *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *
  * @see strtoull()

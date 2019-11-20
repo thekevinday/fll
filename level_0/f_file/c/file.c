@@ -26,11 +26,11 @@ extern "C" {
     file->address = fopen(file_name, file->mode);
 
     if (file->address == 0) return f_status_set_error(f_file_not_found);
-    if (ferror(file->address) != 0) return f_status_set_error(f_file_open_error);
+    if (ferror(file->address) != 0) return f_status_set_error(f_file_error_open);
 
     file->id = fileno(file->address);
 
-    if (file->id == -1) return f_status_set_error(f_file_descriptor_error);
+    if (file->id == -1) return f_status_set_error(f_file_error_descriptor);
 
     return f_none;
   }
@@ -47,7 +47,7 @@ extern "C" {
     // if we were given a file descriptor as well, make sure to flush all changes to the disk that are not flushed by the 'fflush()' command
     if (file->id) {
       // make sure all unfinished data gets completed.
-      if (fsync(file->id) != 0) return f_status_set_error(f_file_synchronize_error);
+      if (fsync(file->id) != 0) return f_status_set_error(f_file_error_synchronize);
     }
 
     if (fclose(file->address) == 0) {
@@ -55,7 +55,7 @@ extern "C" {
       return f_none;
     }
 
-    return f_status_set_error(f_file_close_error);
+    return f_status_set_error(f_file_error_close);
   }
 #endif // _di_f_file_close_
 
@@ -77,7 +77,7 @@ extern "C" {
         return f_status_set_error(f_out_of_memory);
       }
       else if (errno == EOVERFLOW) {
-        return f_status_set_error(f_overflow);
+        return f_status_set_error(f_number_overflow);
       }
       else if (errno == ENOTDIR) {
         return f_status_set_error(f_invalid_directory);
@@ -115,7 +115,7 @@ extern "C" {
         return f_status_set_error(f_out_of_memory);
       }
       else if (errno == EOVERFLOW) {
-        return f_status_set_error(f_overflow);
+        return f_status_set_error(f_number_overflow);
       }
       else if (errno == ENOTDIR) {
         return f_status_set_error(f_invalid_directory);
@@ -150,7 +150,7 @@ extern "C" {
 
     if (fflush(file->address) == 0) return f_none;
 
-    return f_status_set_error(f_file_flush_error);
+    return f_status_set_error(f_file_error_flush);
   }
 #endif // _di_f_file_flush_
 
@@ -165,8 +165,8 @@ extern "C" {
 
     int result = fread(buffer->string + buffer->used, file->byte_size, buffer->size - buffer->used - 1, file->address);
 
-    if (file->address == 0) return f_status_set_error(f_file_read_error);
-    if (ferror(file->address) != 0) return f_status_set_error(f_file_read_error);
+    if (file->address == 0) return f_status_set_error(f_file_error_read);
+    if (ferror(file->address) != 0) return f_status_set_error(f_file_error_read);
 
     buffer->used += (result / file->byte_size);
 
@@ -204,8 +204,8 @@ extern "C" {
       result = fread(buffer->string + buffer_start, file->byte_size, total_elements, file->address);
     }
 
-    if (file->address == 0) return f_status_set_error(f_file_read_error);
-    if (ferror(file->address) != 0) return f_status_set_error(f_file_read_error);
+    if (file->address == 0) return f_status_set_error(f_file_error_read);
+    if (ferror(file->address) != 0) return f_status_set_error(f_file_error_read);
 
     // Save how much of our allocated buffer is actually used.
     if (buffer_start + result > buffer->used) {
@@ -247,7 +247,7 @@ extern "C" {
     // first seek to 'where' we need to begin the read
     unsigned long current_file_position = ftell(file->address);
 
-    if (current_file_position == (unsigned long) -1) return f_status_set_error(f_file_seek_error);
+    if (current_file_position == (unsigned long) -1) return f_status_set_error(f_file_error_seek);
 
     int result = 0;
 
@@ -258,7 +258,7 @@ extern "C" {
       result = f_macro_file_seek_to(file->address, file->byte_size * (position.file_start - current_file_position));
     }
 
-    if (result != 0) return f_status_set_error(f_file_seek_error);
+    if (result != 0) return f_status_set_error(f_file_error_seek);
 
     // now do the actual read
     if (position.total_elements == 0) {
@@ -268,8 +268,8 @@ extern "C" {
       result = fread(buffer->string + position.buffer_start, file->byte_size, position.total_elements, file->address);
     }
 
-    if (file->address == 0) return f_status_set_error(f_file_read_error);
-    if (ferror(file->address) != 0) return f_status_set_error(f_file_read_error);
+    if (file->address == 0) return f_status_set_error(f_file_error_read);
+    if (ferror(file->address) != 0) return f_status_set_error(f_file_error_read);
 
     // now save how much of our allocated buffer is actually used
     // also make sure that we aren't making used space vanish
@@ -304,7 +304,7 @@ extern "C" {
         return f_status_set_error(f_out_of_memory);
       }
       else if (errno == EOVERFLOW) {
-        return f_status_set_error(f_overflow);
+        return f_status_set_error(f_number_overflow);
       }
       else if (errno == ENOTDIR) {
         return f_status_set_error(f_invalid_directory);
@@ -319,7 +319,7 @@ extern "C" {
         return f_status_set_error(f_loop);
       }
 
-      return f_status_set_error(f_file_stat_error);
+      return f_status_set_error(f_file_error_stat);
     }
 
     return f_none;
@@ -345,7 +345,7 @@ extern "C" {
         return f_status_set_error(f_out_of_memory);
       }
       else if (errno == EOVERFLOW) {
-        return f_status_set_error(f_overflow);
+        return f_status_set_error(f_number_overflow);
       }
       else if (errno == ENOTDIR) {
         return f_status_set_error(f_invalid_directory);
@@ -360,7 +360,7 @@ extern "C" {
         return f_status_set_error(f_loop);
       }
 
-      return f_status_set_error(f_file_stat_error);
+      return f_status_set_error(f_file_error_stat);
     }
 
     return f_none;
@@ -386,7 +386,7 @@ extern "C" {
         return f_status_set_error(f_out_of_memory);
       }
       else if (errno == EOVERFLOW) {
-        return f_status_set_error(f_overflow);
+        return f_status_set_error(f_number_overflow);
       }
       else if (errno == ENOTDIR) {
         return f_status_set_error(f_invalid_directory);
@@ -401,7 +401,7 @@ extern "C" {
         return f_status_set_error(f_loop);
       }
 
-      return f_status_set_error(f_file_stat_error);
+      return f_status_set_error(f_file_error_stat);
     }
 
     return f_none;

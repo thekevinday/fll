@@ -243,13 +243,13 @@ extern "C" {
         case f_out_of_memory:
           *string = fl_status_string_out_of_memory;
           break;
-        case f_input_error:
+        case f_error_input:
           *string = fl_status_string_input_error;
           break;
-        case f_output_error:
+        case f_error_output:
           *string = fl_status_string_output_error;
           break;
-        case f_input_output_error:
+        case f_error_input_output:
           *string = fl_status_string_input_output_error;
           break;
         case f_does_not_exist:
@@ -396,31 +396,31 @@ extern "C" {
       #endif // _di_fl_status_unavailable_
 
       #ifndef _di_fl_status_digits_
-        case f_underflow:
+        case f_number_underflow:
           *string = fl_status_string_underflow;
           break;
-        case f_overflow:
+        case f_number_overflow:
           *string = fl_status_string_overflow;
           break;
-        case f_divide_by_zero:
+        case f_number_divide_by_zero:
           *string = fl_status_string_divide_by_zero;
           break;
-        case f_negative_number:
+        case f_number_negative:
           *string = fl_status_string_negative_number;
           break;
-        case f_positive_number:
+        case f_number_positive:
           *string = fl_status_string_positive_number;
           break;
-        case f_zero_number:
+        case f_number_zero:
           *string = fl_status_string_zero_number;
           break;
-        case f_decimal_number:
+        case f_number_decimal:
           *string = fl_status_string_decimal_number;
           break;
-        case f_whole_number:
+        case f_number_whole:
           *string = fl_status_string_whole_number;
           break;
-        case f_invalid_number:
+        case f_number_invalid:
           *string = fl_status_string_invalid_number;
           break;
       #endif // _di_fl_status_digits_
@@ -522,13 +522,13 @@ extern "C" {
       #endif // _di_fl_status_buffers_
 
       #ifndef _di_fl_status_allocation_
-        case f_allocation_error:
+        case f_error_allocation:
           *string = fl_status_string_allocation_error;
           break;
-        case f_reallocation_error:
+        case f_error_reallocation:
           *string = fl_status_string_reallocation_error;
           break;
-        case f_deallocation_error:
+        case f_error_deallocation:
           *string = fl_status_string_deallocation_error;
           break;
       #endif // _di_fl_status_allocation_
@@ -543,31 +543,31 @@ extern "C" {
       #endif // _di_fl_status_fork_
 
       #ifndef _di_fl_status_file_
-        case f_file_seek_error:
+        case f_file_error_seek:
           *string = fl_status_string_file_seek_error;
           break;
-        case f_file_read_error:
+        case f_file_error_read:
           *string = fl_status_string_file_read_error;
           break;
-        case f_file_write_error:
+        case f_file_error_write:
           *string = fl_status_string_file_write_error;
           break;
-        case f_file_flush_error:
+        case f_file_error_flush:
           *string = fl_status_string_file_flush_error;
           break;
-        case f_file_purge_error:
+        case f_file_error_purge:
           *string = fl_status_string_file_purge_error;
           break;
-        case f_file_open_error:
+        case f_file_error_open:
           *string = fl_status_string_file_open_error;
           break;
-        case f_file_close_error:
+        case f_file_error_close:
           *string = fl_status_string_file_close_error;
           break;
-        case f_file_synchronize_error:
+        case f_file_error_synchronize:
           *string = fl_status_string_file_synchronize_error;
           break;
-        case f_file_descriptor_error:
+        case f_file_error_descriptor:
           *string = fl_status_string_file_descriptor_error;
           break;
         case f_file_not_found:
@@ -582,16 +582,16 @@ extern "C" {
         case f_file_not_open:
           *string = fl_status_string_file_not_open;
           break;
-        case f_file_allocation_error:
+        case f_file_error_allocation:
           *string = fl_status_string_file_allocation_error;
           break;
-        case f_file_reallocation_error:
+        case f_file_error_reallocation:
           *string = fl_status_string_file_reallocation_error;
           break;
-        case f_file_deallocation_error:
+        case f_file_error_deallocation:
           *string = fl_status_string_file_deallocation_error;
           break;
-        case f_file_stat_error:
+        case f_file_error_stat:
           *string = fl_status_string_file_stat_error;
           break;
         case f_file_error:
@@ -603,28 +603,28 @@ extern "C" {
       #endif // _di_fl_status_file_
 
       #ifndef _di_fl_status_directory_
-        case f_directory_read_error:
+        case f_directory_error_read:
           *string = fl_status_string_directory_read_error;
           break;
-        case f_directory_write_error:
+        case f_directory_error_write:
           *string = fl_status_string_directory_write_error;
           break;
-        case f_directory_flush_error:
+        case f_directory_error_flush:
           *string = fl_status_string_directory_flush_error;
           break;
-        case f_directory_purge_error:
+        case f_directory_error_purge:
           *string = fl_status_string_directory_purge_error;
           break;
-        case f_directory_open_error:
+        case f_directory_error_open:
           *string = fl_status_string_directory_open_error;
           break;
-        case f_directory_close_error:
+        case f_directory_error_close:
           *string = fl_status_string_directory_close_error;
           break;
-        case f_directory_synchronize_error:
+        case f_directory_error_synchronize:
           *string = fl_status_string_directory_synchronize_error;
           break;
-        case f_directory_descriptor_error:
+        case f_directory_error_descriptor:
           *string = fl_status_string_directory_descriptor_error;
           break;
         case f_directory_not_found:
@@ -636,10 +636,10 @@ extern "C" {
         case f_directory_not_open:
           *string = fl_status_string_directory_not_open;
           break;
-        case f_directory_allocation_error:
+        case f_directory_error_allocation:
           *string = fl_status_string_directory_allocation_error;
           break;
-        case f_directory_reallocation_error:
+        case f_directory_error_reallocation:
           *string = fl_status_string_directory_reallocation_error;
           break;
         case f_directory_error:
@@ -651,16 +651,16 @@ extern "C" {
       #endif // _di_fl_status_directory_
 
       #ifndef _di_fl_status_socket_
-        case f_socket_connection_client_error:
+        case f_socket_error_connection_client:
           *string = fl_status_string_socket_connection_client_error;
           break;
-        case f_socket_connection_target_error:
+        case f_socket_error_connection_target:
           *string = fl_status_string_socket_connection_target_error;
           break;
-        case f_socket_receive_error:
+        case f_socket_error_receive:
           *string = fl_status_string_socket_receive_error;
           break;
-        case f_socket_send_error:
+        case f_socket_error_send:
           *string = fl_status_string_socket_send_error;
           break;
       #endif // _di_fl_status_socket_

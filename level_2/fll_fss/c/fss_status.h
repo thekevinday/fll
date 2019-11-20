@@ -43,13 +43,13 @@ extern "C" {
     #define fll_fss_status_string_no_header "fl_fss_no_header"
     #define fll_fss_status_string_no_header_length 17
 
-    #define fll_fss_status_string_accepted_but_invalid "fl_fss_accepted_but_invalid"
+    #define fll_fss_status_string_accepted_but_invalid "fl_fss_invalid_but_accepted"
     #define fll_fss_status_string_accepted_but_invalid_length 28
 
     #define fll_fss_status_string_no_header_eos "fl_fss_no_header_eos"
     #define fll_fss_status_string_no_header_eos_length 21
 
-    #define fll_fss_status_string_accepted_but_invalid_eos "fl_fss_accepted_but_invalid_eos"
+    #define fll_fss_status_string_accepted_but_invalid_eos "fl_fss_invalid_but_accepted_eos"
     #define fll_fss_status_string_accepted_but_invalid_eos_length 32
   #endif // _di_fll_fss_status_warning_
 

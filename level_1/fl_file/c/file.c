@@ -50,7 +50,7 @@ extern "C" {
 
       if (infinite) {
         if (size + f_file_default_read_size > f_string_max_size) {
-          return f_status_set_error(f_overflow);
+          return f_status_set_error(f_number_overflow);
         }
 
         size += f_file_default_read_size;
@@ -94,7 +94,7 @@ extern "C" {
       }
 
       if (size + f_file_default_read_size > f_string_max_size) {
-        return f_status_set_error(f_overflow);
+        return f_status_set_error(f_number_overflow);
       }
 
       size += f_file_default_read_size;
@@ -114,7 +114,7 @@ extern "C" {
     size = fwrite(buffer.string, file.byte_size, buffer.used, file.address);
 
     if (size < buffer.used * file.byte_size) {
-      return f_status_set_error(f_file_write_error);
+      return f_status_set_error(f_file_error_write);
     }
 
     return f_none;
@@ -137,7 +137,7 @@ extern "C" {
     size = fwrite(buffer.string + position.start, file.byte_size, total, file.address);
 
     if (size < total * file.byte_size) {
-      return f_status_set_error(f_file_write_error);
+      return f_status_set_error(f_file_error_write);
     }
 
     return f_none;

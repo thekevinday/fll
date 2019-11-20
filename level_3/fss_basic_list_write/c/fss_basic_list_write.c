@@ -75,10 +75,10 @@ extern "C" {
           else if (status == f_file_not_found) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", "-");
           }
-          else if (status == f_file_open_error) {
+          else if (status == f_file_error_open) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", "-");
           }
-          else if (status == f_file_descriptor_error) {
+          else if (status == f_file_error_descriptor) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
           }
           else {
@@ -156,10 +156,10 @@ extern "C" {
           else if (status == f_file_not_found) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", arguments.argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
           }
-          else if (status == f_file_open_error) {
+          else if (status == f_file_error_open) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", arguments.argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
           }
-          else if (status == f_file_descriptor_error) {
+          else if (status == f_file_error_descriptor) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", arguments.argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
           }
           else {
@@ -179,7 +179,7 @@ extern "C" {
           if (status == f_invalid_parameter) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");
           }
-          else if (status == f_file_write_error) {
+          else if (status == f_file_error_write) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", arguments.argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
           }
           else {

@@ -135,7 +135,7 @@ extern "C" {
  *   f_none on success.
  *   f_no_data if "additional" parameters were expected but not found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_reallocation_error (with error bit) on memory reallocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fll_program_process_parameters_
   extern f_return_status fll_program_process_parameters(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, f_string_lengths *remaining, fl_color_context *context);

@@ -45,7 +45,7 @@ extern "C" {
       }
 
       if (fl_string_compare(string, fll_fss_status_string_accepted_but_invalid, length, fll_fss_status_string_accepted_but_invalid_length) == f_equal_to) {
-        *code = fl_fss_accepted_but_invalid;
+        *code = fl_fss_invalid_but_accepted;
         return f_none;
       }
 
@@ -55,7 +55,7 @@ extern "C" {
       }
 
       if (fl_string_compare(string, fll_fss_status_string_accepted_but_invalid_eos, length, fll_fss_status_string_accepted_but_invalid_eos_length) == f_equal_to) {
-        *code = fl_fss_accepted_but_invalid_eos;
+        *code = fl_fss_invalid_but_accepted_eos;
         return f_none;
       }
     #endif // _di_fll_fss_status_warning_
@@ -130,13 +130,13 @@ extern "C" {
         case fl_fss_no_header:
           *string = fll_fss_status_string_no_header;
           break;
-        case fl_fss_accepted_but_invalid:
+        case fl_fss_invalid_but_accepted:
           *string = fll_fss_status_string_accepted_but_invalid;
           break;
         case fl_fss_no_header_eos:
           *string = fll_fss_status_string_no_header_eos;
           break;
-        case fl_fss_accepted_but_invalid_eos:
+        case fl_fss_invalid_but_accepted_eos:
           *string = fll_fss_status_string_accepted_but_invalid_eos;
           break;
       #endif // _di_fll_fss_status_warning_

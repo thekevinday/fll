@@ -9,7 +9,7 @@ extern "C" {
     struct stat st_info;
 
     if (fstat(fileno(f_pipe), &st_info) != 0) {
-      return f_status_set_error(f_file_stat_error);
+      return f_status_set_error(f_file_error_stat);
     }
 
     if (S_ISFIFO(st_info.st_mode)) {
@@ -25,7 +25,7 @@ extern "C" {
     struct stat st_info;
 
     if (fstat(fileno(f_pipe_warning), &st_info) != 0) {
-      return f_status_set_error(f_file_stat_error);
+      return f_status_set_error(f_file_error_stat);
     }
 
     if (S_ISFIFO(st_info.st_mode)) {
@@ -41,7 +41,7 @@ extern "C" {
     struct stat st_info;
 
     if (fstat(fileno(f_pipe_error), &st_info) != 0) {
-      return f_status_set_error(f_file_stat_error);
+      return f_status_set_error(f_file_error_stat);
     }
 
     if (S_ISFIFO(st_info.st_mode)) {
@@ -57,7 +57,7 @@ extern "C" {
     struct stat st_info;
 
     if (fstat(fileno(f_pipe_debug), &st_info) != 0) {
-      return f_status_set_error(f_file_stat_error);
+      return f_status_set_error(f_file_error_stat);
     }
 
     if (S_ISFIFO(st_info.st_mode)) {

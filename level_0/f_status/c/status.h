@@ -133,24 +133,24 @@ extern "C" {
     #endif // _di_f_status_signals_
 
     #ifndef _di_f_status_basic_
-      f_none = 197,          // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
-      f_maybe,
-      f_dummy,               // To only be used as a placeholder.
-      f_warn,                // Warning.
+      f_none = 197, // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
       f_critical,
-      f_unknown,             // For the "code should never get here" errors. (this is an EMERGENCY error).
-      f_unsupported,
-      f_no_data,             // Warning.
-      f_out_of_memory,
-      f_input_error,
-      f_output_error,
-      f_input_output_error,
       f_does_not_exist,
-      f_not_connected,
+      f_dummy,
+      f_error_input,
+      f_error_output,
+      f_error_input_output,
       f_failure,
-      f_interrupted,         // Usually by a signal.
-      f_loop,                // Such as infinite recursion.
-      f_incomplete,          // Incomplete information.
+      f_incomplete,
+      f_interrupted,
+      f_loop,
+      f_maybe,
+      f_not_connected,
+      f_no_data,
+      f_out_of_memory,
+      f_unknown,
+      f_unsupported,
+      f_warn,
     #endif // _di_f_status_basic_
 
     #ifndef _di_f_status_invalid_
@@ -181,75 +181,75 @@ extern "C" {
     #ifndef _di_f_status_busy_
       f_busy,
       f_busy_address,
-      f_busy_port,
-      f_busy_socket,
+      f_busy_buffer,
       f_busy_device,
       f_busy_pipe,
-      f_busy_buffer,
+      f_busy_port,
       f_busy_process,
+      f_busy_socket,
     #endif // _di_f_status_busy_
 
     #ifndef _di_f_status_unavailable_
       f_unavailable,
       f_unavailable_address,
-      f_unavailable_port,
-      f_unavailable_socket,
+      f_unavailable_buffer,
       f_unavailable_device,
       f_unavailable_pipe,
-      f_unavailable_buffer,
+      f_unavailable_port,
       f_unavailable_process,
+      f_unavailable_socket,
     #endif // _di_f_status_unavailable_
 
     #ifndef _di_f_status_digits_
-      f_underflow,
-      f_overflow,
-      f_divide_by_zero,
-      f_negative_number,
-      f_positive_number,
-      f_zero_number,
-      f_decimal_number,
-      f_whole_number,
-      f_invalid_number,
+      f_number_decimal,
+      f_number_divide_by_zero,
+      f_number_invalid,
+      f_number_negative,
+      f_number_overflow,
+      f_number_positive,
+      f_number_underflow,
+      f_number_whole,
+      f_number_zero,
     #endif // _di_f_status_digits_
 
     #ifndef _di_f_status_buffers_
-      f_no_data_on_eof,
-      f_no_data_on_eol,
-      f_no_data_on_eos,
-      f_no_data_on_stop,
-      f_none_on_eof,
-      f_none_on_eol,
-      f_none_on_eos,
-      f_none_on_stop,
+      f_buffer_too_small,
+      f_buffer_too_large,
       f_error_on_eof,
       f_error_on_eol,
       f_error_on_eos,
       f_error_on_stop,
-      f_buffer_too_small,
-      f_buffer_too_large,
-      f_string_too_small,
-      f_string_too_large,
-      f_unterminated_nest,
-      f_unterminated_nest_on_eof,
-      f_unterminated_nest_on_eol,
-      f_unterminated_nest_on_eos,
-      f_unterminated_nest_on_stop,
-      f_unterminated_group,
-      f_unterminated_group_on_eof,
-      f_unterminated_group_on_eol,
-      f_unterminated_group_on_eos,
-      f_unterminated_group_on_stop,
       f_incomplete_utf,
       f_incomplete_utf_on_eof,
       f_incomplete_utf_on_eol,
       f_incomplete_utf_on_eos,
       f_incomplete_utf_on_stop,
+      f_none_on_eof,
+      f_none_on_eol,
+      f_none_on_eos,
+      f_none_on_stop,
+      f_no_data_on_eof,
+      f_no_data_on_eol,
+      f_no_data_on_eos,
+      f_no_data_on_stop,
+      f_string_too_small,
+      f_string_too_large,
+      f_unterminated_group,
+      f_unterminated_group_on_eof,
+      f_unterminated_group_on_eol,
+      f_unterminated_group_on_eos,
+      f_unterminated_group_on_stop,
+      f_unterminated_nest,
+      f_unterminated_nest_on_eof,
+      f_unterminated_nest_on_eol,
+      f_unterminated_nest_on_eos,
+      f_unterminated_nest_on_stop,
     #endif // _di_f_status_buffers_
 
     #ifndef _di_f_status_allocation_
-      f_allocation_error,
-      f_reallocation_error,
-      f_deallocation_error,
+      f_error_allocation,
+      f_error_deallocation,
+      f_error_reallocation,
     #endif // _di_f_status_allocation_
 
     #ifndef _di_f_status_fork_
@@ -258,51 +258,51 @@ extern "C" {
     #endif // _di_f_status_fork_
 
     #ifndef _di_f_status_file_
-      f_file_seek_error,
-      f_file_read_error,
-      f_file_write_error,
-      f_file_flush_error,
-      f_file_purge_error,
-      f_file_open_error,
-      f_file_close_error,
-      f_file_synchronize_error,
-      f_file_descriptor_error,
-      f_file_not_found,
+      f_file_error,
+      f_file_error_allocation,
+      f_file_error_close,
+      f_file_error_deallocation,
+      f_file_error_descriptor,
+      f_file_error_flush,
+      f_file_error_open,
+      f_file_error_purge,
+      f_file_error_read,
+      f_file_error_reallocation,
+      f_file_error_seek,
+      f_file_error_stat,
+      f_file_error_synchronize,
+      f_file_error_write,
       f_file_found,
       f_file_is_empty,
+      f_file_not_found,
       f_file_not_open,
-      f_file_allocation_error,
-      f_file_reallocation_error,
-      f_file_deallocation_error,
-      f_file_stat_error,
-      f_file_error,
       f_file_not_utf,
     #endif // _di_f_status_file_
 
     // Most of these are a guess until I get around to researching & implementing linux directory I/O.
     #ifndef _di_f_status_directory_
-      f_directory_read_error,
-      f_directory_write_error,
-      f_directory_flush_error,
-      f_directory_purge_error,
-      f_directory_open_error,
-      f_directory_close_error,
-      f_directory_synchronize_error,
-      f_directory_descriptor_error,
-      f_directory_not_found,
-      f_directory_is_empty,
-      f_directory_not_open,
-      f_directory_allocation_error,
-      f_directory_reallocation_error,
       f_directory_error,
+      f_directory_error_allocation,
+      f_directory_error_close,
+      f_directory_error_descriptor,
+      f_directory_error_flush,
+      f_directory_error_open,
+      f_directory_error_purge,
+      f_directory_error_read,
+      f_directory_error_reallocation,
+      f_directory_error_synchronize,
+      f_directory_error_write,
+      f_directory_is_empty,
+      f_directory_not_found,
+      f_directory_not_open,
       f_directory_not_utf,
     #endif // _di_f_status_directory_
 
     #ifndef _di_f_status_socket_
-      f_socket_connection_client_error,
-      f_socket_connection_target_error,
-      f_socket_receive_error,
-      f_socket_send_error,
+      f_socket_error_connection_client,
+      f_socket_error_connection_target,
+      f_socket_error_receive,
+      f_socket_error_send,
     #endif // _di_f_status_socket_
 
     #ifndef _di_f_status_non_
@@ -314,13 +314,13 @@ extern "C" {
 
     #ifndef _di_f_status_access_denied_
       f_access_denied,
-      f_access_denied_user,
-      f_access_denied_group,
-      f_access_denied_world,
-      f_access_denied_read,
-      f_access_denied_write,
       f_access_denied_execute,
-      f_access_denied_super, // Not super user (aka: not root).
+      f_access_denied_group,
+      f_access_denied_read,
+      f_access_denied_super, // "super" as in super user (root user).
+      f_access_denied_user,
+      f_access_denied_world,
+      f_access_denied_write,
     #endif // _di_f_status_access_denied_
 
     // Required.

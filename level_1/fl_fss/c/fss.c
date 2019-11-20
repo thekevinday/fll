@@ -104,7 +104,7 @@ extern "C" {
                           i++;
                           header->length = i;
 
-                          return f_status_is_warning(fl_fss_accepted_but_invalid);
+                          return f_status_is_warning(fl_fss_invalid_but_accepted);
                         }
                       }
                     }
@@ -149,7 +149,7 @@ extern "C" {
 
                       header->length = i + 1;
 
-                      return f_status_is_warning(fl_fss_accepted_but_invalid);
+                      return f_status_is_warning(fl_fss_invalid_but_accepted);
                     }
                   }
                 }
@@ -186,7 +186,7 @@ extern "C" {
     {
       int seek_result = f_macro_file_seek_begin(file->address, 0);
 
-      if (seek_result != 0) return f_status_set_error(f_file_seek_error);
+      if (seek_result != 0) return f_status_set_error(f_file_error_seek);
     }
 
     // 1: Prepare the buffer to handle a size of f_fss_max_header_length

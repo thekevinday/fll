@@ -110,7 +110,7 @@ extern "C" {
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       }
-      else if (status == f_allocation_error || status == f_reallocation_error) {
+      else if (status == f_error_allocation || status == f_error_reallocation) {
         fl_color_print_line(f_standard_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory.");
       }
       else if (status == f_invalid_utf) {

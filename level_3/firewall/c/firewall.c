@@ -270,7 +270,7 @@ extern "C" {
           if (f_status_is_error(status)) {
             status = f_status_set_fine(status);
 
-            if (status == f_allocation_error || status == f_reallocation_error) {
+            if (status == f_error_allocation || status == f_error_reallocation) {
               fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory");
             }
             else {
@@ -320,7 +320,7 @@ extern "C" {
         if (f_status_is_error(status)) {
           status = f_status_set_fine(status);
 
-          if (status == f_allocation_error || status == f_reallocation_error) {
+          if (status == f_error_allocation || status == f_error_reallocation) {
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory");
           }
           else if (status == f_no_data) {
@@ -551,7 +551,7 @@ extern "C" {
 
               firewall_delete_local_data(&local);
 
-              if (status == f_file_not_found || status == f_file_open_error || status == f_file_descriptor_error || status == fl_fss_found_object_no_content) {
+              if (status == f_file_not_found || status == f_file_error_open || status == f_file_error_descriptor || status == fl_fss_found_object_no_content) {
                 status = f_status_set_error(status);
                 continue;
               }

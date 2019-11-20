@@ -18,7 +18,7 @@
       if (optional) {
         if (status == f_invalid_parameter) {
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open().");
-        } else if (status != f_file_not_found && status != f_file_open_error && status != f_file_descriptor_error) {
+        } else if (status != f_file_not_found && status != f_file_error_open && status != f_file_error_descriptor) {
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", status);
         }
       } else {
@@ -26,9 +26,9 @@
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open().");
         } else if (status == f_file_not_found) {
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: Unable to find the file '%s'.", filename);
-        } else if (status == f_file_open_error) {
+        } else if (status == f_file_error_open) {
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: Unable to open the file '%s'.", filename);
-        } else if (status == f_file_descriptor_error) {
+        } else if (status == f_file_error_descriptor) {
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: File descriptor error while trying to open the file '%s'.", filename);
         } else {
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling f_file_open().", status);
@@ -50,15 +50,15 @@
 
       if (status == f_invalid_parameter) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read().");
-      } else if (status == f_overflow) {
+      } else if (status == f_number_overflow) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'.", filename);
       } else if (status == f_file_not_open) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: The file '%s' is no longer open.", filename);
-      } else if (status == f_file_seek_error) {
+      } else if (status == f_file_error_seek) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: A seek error occurred while accessing the file '%s'.", filename);
-      } else if (status == f_file_read_error) {
+      } else if (status == f_file_error_read) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: A read error occurred while accessing the file '%s'.", filename);
-      } else if (status == f_allocation_error || status == f_reallocation_error) {
+      } else if (status == f_error_allocation || status == f_error_reallocation) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       } else {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fl_file_read().", status);
@@ -80,7 +80,7 @@
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", filename);
       } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: No relevant data was found within the file '%s'.", filename);
-      } else if (status == f_allocation_error || status == f_reallocation_error) {
+      } else if (status == f_error_allocation || status == f_error_reallocation) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       } else {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", status, filename);
@@ -107,7 +107,7 @@
       if (f_status_is_error(status)) {
         status = f_status_set_fine(status);
 
-        if (status == f_allocation_error || status == f_reallocation_error) {
+        if (status == f_error_allocation || status == f_error_reallocation) {
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
         } else if (status == f_failure) {
           // the error message has already been displayed.
@@ -499,7 +499,7 @@
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", init_rule_core_file);
       } else if (status == f_no_data_on_eos || status == f_no_data || status == f_no_data_on_stop) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: No relevant data was found within the file '%s'.", init_rule_core_file);
-      } else if (status == f_allocation_error || status == f_reallocation_error) {
+      } else if (status == f_error_allocation || status == f_error_reallocation) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       } else {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occured while calling fll_fss_basic_list_read() for the file '%s'.", status, init_rule_core_file);
@@ -526,7 +526,7 @@
     status = fll_fss_extended_read(&buffer, &location, &objects, &contents);
 
     if (f_status_is_error(status_process)) {
-      if (status == f_allocation_error || status == f_reallocation_error) {
+      if (status == f_error_allocation || status == f_error_reallocation) {
         fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       }
       else {
@@ -553,7 +553,7 @@
       if (f_status_is_error(status)) {
         status = f_status_set_fine(status);
 
-        if (status == f_allocation_error || status == f_reallocation_error) {
+        if (status == f_error_allocation || status == f_error_reallocation) {
           fl_color_print_line(f_standard_error, data.context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory.");
         } else if (status == f_failure) {
           // the error message has already been displayed.
@@ -567,7 +567,7 @@
       }
     }
     else {
-      if (status == f_allocation_error || status == f_reallocation_error) {
+      if (status == f_error_allocation || status == f_error_reallocation) {
         fl_color_print_line(f_standard_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory.");
       }
       else {

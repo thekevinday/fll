@@ -40,7 +40,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_output_error (with error bit) on failure.
+ *   f_error_output (with error bit) on failure.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_print_string_
@@ -63,7 +63,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_output_error (with error bit) on failure.
+ *   f_error_output (with error bit) on failure.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_print_string_dynamic_
@@ -88,7 +88,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_output_error (with error bit) on failure.
+ *   f_error_output (with error bit) on failure.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_print_string_dynamic_partial_

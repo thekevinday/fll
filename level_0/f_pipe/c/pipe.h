@@ -38,7 +38,7 @@ extern "C" {
  * @return
  *   f_true if there is piped data.
  *   f_false if there is no piped data.
- *   f_file_stat_error (with error bit) on stat() error.
+ *   f_file_error_stat (with error bit) on stat() error.
  *
  * @see stat()
  */
@@ -54,7 +54,7 @@ extern "C" {
  * @return
  *   f_true if there is piped data.
  *   f_false if there is no piped data.
- *   f_file_stat_error (with error bit) on stat() error.
+ *   f_file_error_stat (with error bit) on stat() error.
  *
  * @see stat()
  */
@@ -68,7 +68,7 @@ extern "C" {
  * @return
  *   f_true if there is piped data.
  *   f_false if there is no piped data.
- *   f_file_stat_error (with error bit) on stat() error.
+ *   f_file_error_stat (with error bit) on stat() error.
  *
  * @see stat()
  */
@@ -84,7 +84,7 @@ extern "C" {
  * @return
  *   f_true if there is piped data.
  *   f_false if there is no piped data.
- *   f_file_stat_error (with error bit) on stat() error.
+ *   f_file_error_stat (with error bit) on stat() error.
  *
  * @see stat()
  */

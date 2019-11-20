@@ -50,9 +50,9 @@ extern "C" {
  *   f_none on success.
  *   f_no_data (with error bit) if string starts wth a null (length is 0).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_number (with error bit) if parameter is not a number.
- *   f_overflow (with error bit) on integer overflow.
- *   f_underflow (with error bit) on integer underflow.
+ *   f_number_invalid (with error bit) if parameter is not a number.
+ *   f_number_overflow (with error bit) on integer overflow.
+ *   f_number_underflow (with error bit) on integer underflow.
  *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *
  * @see f_conversion_string_to_number_signed()
@@ -85,9 +85,9 @@ extern "C" {
  *   f_none on success.
  *   f_no_data (with error bit) if string starts wth a null (length is 0).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_number (with error bit) if parameter is not a number.
- *   f_negative_number (with error bit) on negative value.
- *   f_overflow (with error bit) on integer overflow.
+ *   f_number_invalid (with error bit) if parameter is not a number.
+ *   f_number_negative (with error bit) on negative value.
+ *   f_number_overflow (with error bit) on integer overflow.
  *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *
  * @see f_conversion_string_to_number_unsigned()

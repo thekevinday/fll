@@ -251,13 +251,13 @@ extern "C" {
     #define fl_status_string_out_of_memory "f_out_of_memory"
     #define fl_status_string_out_of_memory_length 16
 
-    #define fl_status_string_input_error "f_input_error"
+    #define fl_status_string_input_error "f_error_input"
     #define fl_status_string_input_error_length 14
 
-    #define fl_status_string_output_error "f_output_error"
+    #define fl_status_string_output_error "f_error_output"
     #define fl_status_string_output_error_length 15
 
-    #define fl_status_string_input_output_error "f_input_output_error"
+    #define fl_status_string_input_output_error "f_error_input_output"
     #define fl_status_string_input_output_error_length 21
 
     #define fl_status_string_does_not_exist "f_does_not_exist"
@@ -400,31 +400,31 @@ extern "C" {
   #endif // _di_fl_status_unavailable_
 
   #ifndef _di_fl_status_digits_
-    #define fl_status_string_underflow "f_underflow"
-    #define fl_status_string_underflow_length 12
+    #define fl_status_string_underflow "f_number_underflow"
+    #define fl_status_string_underflow_length 19
 
-    #define fl_status_string_overflow "f_overflow"
-    #define fl_status_string_overflow_length 11
+    #define fl_status_string_overflow "f_number_overflow"
+    #define fl_status_string_overflow_length 18
 
-    #define fl_status_string_divide_by_zero "f_divide_by_zero"
-    #define fl_status_string_divide_by_zero_length 17
+    #define fl_status_string_divide_by_zero "f_number_divide_by_zero"
+    #define fl_status_string_divide_by_zero_length 24
 
-    #define fl_status_string_negative_number "f_negative_number"
+    #define fl_status_string_negative_number "f_number_negative"
     #define fl_status_string_negative_number_length 18
 
-    #define fl_status_string_positive_number "f_positive_number"
+    #define fl_status_string_positive_number "f_number_positive"
     #define fl_status_string_positive_number_length 18
 
-    #define fl_status_string_zero_number "f_zero_number"
+    #define fl_status_string_zero_number "f_number_zero"
     #define fl_status_string_zero_number_length 14
 
-    #define fl_status_string_decimal_number "f_decimal_number"
+    #define fl_status_string_decimal_number "f_number_decimal"
     #define fl_status_string_decimal_number_length 17
 
-    #define fl_status_string_whole_number "f_whole_number"
+    #define fl_status_string_whole_number "f_number_whole"
     #define fl_status_string_whole_number_length 15
 
-    #define fl_status_string_invalid_number "f_invalid_number"
+    #define fl_status_string_invalid_number "f_number_invalid"
     #define fl_status_string_invalid_number_length 17
   #endif // _di_fl_status_digits_
 
@@ -524,13 +524,13 @@ extern "C" {
   #endif // _di_fl_status_buffers_
 
   #ifndef _di_fl_status_allocation_
-    #define fl_status_string_allocation_error "f_allocation_error"
+    #define fl_status_string_allocation_error "f_error_allocation"
     #define fl_status_string_allocation_error_length 19
 
-    #define fl_status_string_reallocation_error "f_reallocation_error"
+    #define fl_status_string_reallocation_error "f_error_reallocation"
     #define fl_status_string_reallocation_error_length 21
 
-    #define fl_status_string_deallocation_error "f_deallocation_error"
+    #define fl_status_string_deallocation_error "f_error_deallocation"
     #define fl_status_string_deallocation_error_length 21
   #endif // _di_fl_status_allocation_
 
@@ -543,31 +543,31 @@ extern "C" {
   #endif // _di_fl_status_fork_
 
   #ifndef _di_fl_status_file_
-    #define fl_status_string_file_seek_error "f_file_seek_error"
+    #define fl_status_string_file_seek_error "f_file_error_seek"
     #define fl_status_string_file_seek_error_length 18
 
-    #define fl_status_string_file_read_error "f_file_read_error"
+    #define fl_status_string_file_read_error "f_file_error_read"
     #define fl_status_string_file_read_error_length 18
 
-    #define fl_status_string_file_write_error "f_file_write_error"
+    #define fl_status_string_file_write_error "f_file_error_write"
     #define fl_status_string_file_write_error_length 19
 
-    #define fl_status_string_file_flush_error "f_file_flush_error"
+    #define fl_status_string_file_flush_error "f_file_error_flush"
     #define fl_status_string_file_flush_error_length 19
 
-    #define fl_status_string_file_purge_error "f_file_purge_error"
+    #define fl_status_string_file_purge_error "f_file_error_purge"
     #define fl_status_string_file_purge_error_length 19
 
-    #define fl_status_string_file_open_error "f_file_open_error"
+    #define fl_status_string_file_open_error "f_file_error_open"
     #define fl_status_string_file_open_error_length 18
 
-    #define fl_status_string_file_close_error "f_file_close_error"
+    #define fl_status_string_file_close_error "f_file_error_close"
     #define fl_status_string_file_close_error_length 19
 
-    #define fl_status_string_file_synchronize_error "f_file_synchronize_error"
+    #define fl_status_string_file_synchronize_error "f_file_error_synchronize"
     #define fl_status_string_file_synchronize_error_length 25
 
-    #define fl_status_string_file_descriptor_error "f_file_descriptor_error"
+    #define fl_status_string_file_descriptor_error "f_file_error_descriptor"
     #define fl_status_string_file_descriptor_error_length 24
 
     #define fl_status_string_file_not_found "f_file_not_found"
@@ -582,16 +582,16 @@ extern "C" {
     #define fl_status_string_file_not_open "f_file_not_open"
     #define fl_status_string_file_not_open_length 16
 
-    #define fl_status_string_file_allocation_error "f_file_allocation_error"
+    #define fl_status_string_file_allocation_error "f_file_error_allocation"
     #define fl_status_string_file_allocation_error_length 24
 
-    #define fl_status_string_file_reallocation_error "f_file_reallocation_error"
+    #define fl_status_string_file_reallocation_error "f_file_error_reallocation"
     #define fl_status_string_file_reallocation_error_length 26
 
-    #define fl_status_string_file_deallocation_error "f_file_deallocation_error"
+    #define fl_status_string_file_deallocation_error "f_file_error_deallocation"
     #define fl_status_string_file_deallocation_error_length 26
 
-    #define fl_status_string_file_stat_error "f_file_stat_error"
+    #define fl_status_string_file_stat_error "f_file_error_stat"
     #define fl_status_string_file_stat_error_length 18
 
     #define fl_status_string_file_error "f_file_error"
@@ -602,28 +602,28 @@ extern "C" {
   #endif // _di_fl_status_file_
 
   #ifndef _di_fl_status_directory_
-    #define fl_status_string_directory_read_error "f_directory_read_error"
+    #define fl_status_string_directory_read_error "f_directory_error_read"
     #define fl_status_string_directory_read_error_length 23
 
-    #define fl_status_string_directory_write_error "f_directory_write_error"
+    #define fl_status_string_directory_write_error "f_directory_error_write"
     #define fl_status_string_directory_write_error_length 24
 
-    #define fl_status_string_directory_flush_error "f_directory_flush_error"
+    #define fl_status_string_directory_flush_error "f_directory_error_flush"
     #define fl_status_string_directory_flush_error_length 24
 
-    #define fl_status_string_directory_purge_error "f_directory_purge_error"
+    #define fl_status_string_directory_purge_error "f_directory_error_purge"
     #define fl_status_string_directory_purge_error_length 24
 
-    #define fl_status_string_directory_open_error "f_directory_open_error"
+    #define fl_status_string_directory_open_error "f_directory_error_open"
     #define fl_status_string_directory_open_error_length 23
 
-    #define fl_status_string_directory_close_error "f_directory_close_error"
+    #define fl_status_string_directory_close_error "f_directory_error_close"
     #define fl_status_string_directory_close_error_length 24
 
-    #define fl_status_string_directory_synchronize_error "f_directory_synchronize_error"
+    #define fl_status_string_directory_synchronize_error "f_directory_error_synchronize"
     #define fl_status_string_directory_synchronize_error_length 30
 
-    #define fl_status_string_directory_descriptor_error "f_directory_descriptor_error"
+    #define fl_status_string_directory_descriptor_error "f_directory_error_descriptor"
     #define fl_status_string_directory_descriptor_error_length 29
 
     #define fl_status_string_directory_not_found "f_directory_not_found"
@@ -635,10 +635,10 @@ extern "C" {
     #define fl_status_string_directory_not_open "f_directory_not_open"
     #define fl_status_string_directory_not_open_length 21
 
-    #define fl_status_string_directory_allocation_error "f_directory_allocation_error"
+    #define fl_status_string_directory_allocation_error "f_directory_error_allocation"
     #define fl_status_string_directory_allocation_error_length 29
 
-    #define fl_status_string_directory_reallocation_error "f_directory_reallocation_error"
+    #define fl_status_string_directory_reallocation_error "f_directory_error_reallocation"
     #define fl_status_string_directory_reallocation_error_length 31
 
     #define fl_status_string_directory_error "f_directory_error"
@@ -649,16 +649,16 @@ extern "C" {
   #endif // _di_fl_status_directory_
 
   #ifndef _di_fl_status_socket_
-    #define fl_status_string_socket_connection_client_error "f_socket_connection_client_error"
+    #define fl_status_string_socket_connection_client_error "f_socket_error_connection_client"
     #define fl_status_string_socket_connection_client_error_length 33
 
-    #define fl_status_string_socket_connection_target_error "f_socket_connection_target_error"
+    #define fl_status_string_socket_connection_target_error "f_socket_error_connection_target"
     #define fl_status_string_socket_connection_target_error_length 33
 
-    #define fl_status_string_socket_receive_error "f_socket_receive_error"
+    #define fl_status_string_socket_receive_error "f_socket_error_receive"
     #define fl_status_string_socket_receive_error_length 23
 
-    #define fl_status_string_socket_send_error "f_socket_send_error"
+    #define fl_status_string_socket_send_error "f_socket_error_send"
     #define fl_status_string_socket_send_error_length 20
   #endif // _di_fl_status_socket_
 

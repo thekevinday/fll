@@ -49,9 +49,9 @@ extern "C" {
  *   f_no_data_on_eol if there is no data to write and EOL was reached (@todo: review related code and detemine what this is doing).
  *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_reallocation_error (with error bit) on reallocation error.
+ *   f_error_reallocation (with error bit) on reallocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_overflow (with error bit) if the maximimum buffer size is reached.
+ *   f_number_overflow (with error bit) if the maximimum buffer size is reached.
  */
 #ifndef _di_fll_fss_basic_read_
   extern f_return_status fll_fss_basic_read(f_string_dynamic *buffer, f_string_location *input, f_fss_objects *objects, f_fss_contents *contents);
@@ -75,7 +75,7 @@ extern "C" {
  *   f_no_data_on_eos no data to write due start location being greater than or equal to buffer size.
  *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_reallocation_error (with error bit) on reallocation error.
+ *   f_error_reallocation (with error bit) on reallocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_fss_basic_write_

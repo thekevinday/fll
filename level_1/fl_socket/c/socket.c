@@ -59,7 +59,7 @@ extern "C"{
         return f_busy;
       }
       else if (errno == EBADF) {
-        return f_file_descriptor_error;
+        return f_file_error_descriptor;
       }
       else if (errno == ENOTSOCK) {
         return f_invalid_socket;
@@ -99,7 +99,7 @@ extern "C"{
 
     if (error_code > 0) {
       if (error_code == EBADF) {
-        return f_file_descriptor_error;
+        return f_file_error_descriptor;
       }
       else if (error_code == EINVAL) {
         return f_invalid_value;
@@ -114,7 +114,7 @@ extern "C"{
         return f_interrupted;
       }
       else if (error_code == EBADF) {
-        return f_input_output_error;
+        return f_error_input_output;
       }
 
       return f_failure;

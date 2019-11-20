@@ -250,8 +250,8 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_file_not_found (with error bit) if the file was not found.
- *   f_file_open_error (with error bit) if the file is already open.
- *   f_file_descriptor_error (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
+ *   f_file_error_open (with error bit) if the file is already open.
+ *   f_file_error_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_file_open_
@@ -269,8 +269,8 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_file_not_open (with error bit) if the file is not open.
- *   f_file_synchronize_error (with error bit) on fsync() failure.
- *   f_file_close_error (with error bit) if fclose() failed.
+ *   f_file_error_synchronize (with error bit) on fsync() failure.
+ *   f_file_error_close (with error bit) if fclose() failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
  * @see fsync()
@@ -292,7 +292,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_invalid_name (with error bit) if the filename is too long.
  *   f_out_of_memory (with error bit) if out of memory.
- *   f_overflow (with error bit) on overflow error.
+ *   f_number_overflow (with error bit) on overflow error.
  *   f_invalid_directory (with error bit) on invalid directory.
  *   f_access_denied (with error bit) on access denied.
  *   f_loop (with error bit) on loop error.
@@ -318,7 +318,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_invalid_name (with error bit) if the filename is too long.
  *   f_out_of_memory (with error bit) if out of memory.
- *   f_overflow (with error bit) on overflow error.
+ *   f_number_overflow (with error bit) on overflow error.
  *   f_invalid_directory (with error bit) on invalid directory.
  *   f_access_denied (with error bit) on access denied.
  *   f_loop (with error bit) on loop error.
@@ -339,7 +339,7 @@ extern "C" {
  * @return
  *   f_none is returned on success.
  *   f_file_not_open (with error bit) if the file is not open.
- *   f_file_flush_error (with error bit) if the flush failed.
+ *   f_file_error_flush (with error bit) if the flush failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
  * @see fflush()
@@ -360,7 +360,7 @@ extern "C" {
  *   f_none on success.
  *   f_none_on_eof on success and EOF was reached.
  *   f_file_not_open (with error bit) if file is not open.
- *   f_file_read_error (with error bit) if file read failed.
+ *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_file_read_
@@ -385,7 +385,7 @@ extern "C" {
  *   f_none is returned if file_stat has a non-zero address.
  *   f_none_on_eof on success and EOF was reached.
  *   f_file_not_open (with error bit) if file is not open.
- *   f_file_read_error (with error bit) if file read failed.
+ *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_file_read_range_
@@ -410,8 +410,8 @@ extern "C" {
  *   f_none is returned if file_stat has a non-zero address.
  *   f_none_on_eof on success and EOF was reached.
  *   f_file_not_open (with error bit) if file is not open.
- *   f_file_seek_error (with error bit) if file seek failed.
- *   f_file_read_error (with error bit) if file read failed.
+ *   f_file_error_seek (with error bit) if file seek failed.
+ *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_file_read_at_
@@ -440,7 +440,7 @@ extern "C" {
  *   f_none is returned if file_stat has a non-zero address.
  *   f_invalid_name (with error bit) if the name is somehow invalid.
  *   f_out_of_memory (with error bit) if out of memory.
- *   f_overflow (with error bit) on overflow error.
+ *   f_number_overflow (with error bit) on overflow error.
  *   f_invalid_directory (with error bit) on invalid directory.
  *   f_file_not_found (with error bit) if the file was not found.
  *   f_access_denied (with error bit) if access to the file was denied.
@@ -470,7 +470,7 @@ extern "C" {
  *   f_none on success.
  *   f_invalid_name (with error bit) if the name is somehow invalid.
  *   f_out_of_memory (with error bit) if out of memory.
- *   f_overflow (with error bit) on overflow error.
+ *   f_number_overflow (with error bit) on overflow error.
  *   f_invalid_directory (with error bit) on invalid directory.
  *   f_file_not_found (with error bit) if the file was not found.
  *   f_access_denied (with error bit) if access to the file was denied.
@@ -500,7 +500,7 @@ extern "C" {
  *   f_none on success.
  *   f_invalid_name (with error bit) if the name is somehow invalid.
  *   f_out_of_memory (with error bit) if out of memory.
- *   f_overflow (with error bit) on overflow error.
+ *   f_number_overflow (with error bit) on overflow error.
  *   f_invalid_directory (with error bit) on invalid directory.
  *   f_file_not_found (with error bit) if the file was not found.
  *   f_access_denied (with error bit) if access to the file was denied.

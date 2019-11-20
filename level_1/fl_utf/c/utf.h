@@ -107,8 +107,8 @@ extern "C" {
  *   f_none on success.
  *   f_no_data if nothing to rip, no allocations or reallocations are performed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_allocation_error (with error bit) on memory allocation error.
- *   f_reallocation_error (with error bit) on memory reallocation error.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_utf_string_rip_
   extern f_return_status fl_utf_string_rip(const f_utf_string_dynamic buffer, const f_utf_string_location location, f_utf_string_dynamic *result);

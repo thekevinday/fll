@@ -13,7 +13,7 @@ extern "C" {
       fl_color_print(f_standard_error, context.notable, context.reset, "%s()", function_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, ".");
     }
-    else if (status == f_overflow) {
+    else if (status == f_number_overflow) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Integer overflow while trying to buffer the file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
@@ -23,12 +23,12 @@ extern "C" {
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "' is no longer open.");
     }
-    else if (status == f_file_seek_error) {
+    else if (status == f_file_error_seek) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: A seek error occurred while accessing the file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
-    else if (status == f_file_read_error) {
+    else if (status == f_file_error_read) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: A read error occurred while accessing the file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
@@ -38,22 +38,22 @@ extern "C" {
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
-    else if (status == f_file_open_error) {
+    else if (status == f_file_error_open) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Unable to open the file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
-    else if (status == f_file_descriptor_error) {
+    else if (status == f_file_error_descriptor) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: File descriptor error while trying to open the file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
-    else if (status == f_overflow) {
+    else if (status == f_number_overflow) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Integer overflow while trying to buffer the file '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
-    else if (status == f_allocation_error || status == f_reallocation_error) {
+    else if (status == f_error_allocation || status == f_error_reallocation) {
       fl_color_print_line(f_standard_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory.");
     }
     else {
@@ -238,7 +238,7 @@ extern "C" {
         if (status == f_invalid_parameter) {
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_extended_list_read() for the file '%s'", filename);
         }
-        else if (status == f_allocation_error || status == f_reallocation_error) {
+        else if (status == f_error_allocation || status == f_error_reallocation) {
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory");
         }
         else if (status == f_incomplete_utf_on_stop) {

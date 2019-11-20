@@ -60,7 +60,7 @@ extern "C" {
  *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_reallocation_error (with error bit) on reallocation error.
+ *   f_error_reallocation (with error bit) on reallocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_basic_list_object_read_
@@ -95,7 +95,7 @@ extern "C" {
  *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_reallocation_error (with error bit) on reallocation error.
+ *   f_error_reallocation (with error bit) on reallocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_basic_list_content_read_
@@ -126,7 +126,7 @@ extern "C" {
  *   f_no_data_on_eol if there is no data to write and EOL was reached (@todo: review related code and detemine what this is doing).
  *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_reallocation_error (with error bit) on reallocation error.
+ *   f_error_reallocation (with error bit) on reallocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_basic_list_object_write_
@@ -155,7 +155,7 @@ extern "C" {
  *   f_no_data_on_eos no data to write due start location being greater than or equal to buffer size.
  *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_reallocation_error (with error bit) on reallocation error.
+ *   f_error_reallocation (with error bit) on reallocation error.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_basic_list_content_write_
