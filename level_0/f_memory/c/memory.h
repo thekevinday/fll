@@ -248,6 +248,34 @@ extern "C" {
 #endif // _di_f_macro_memory_structure_destroy_
 
 /**
+ * Delete a generic memory structure.
+ *
+ * structure: the structure to operate on.
+ * type:      the structure type.
+ */
+#ifndef _di_f_macro_memory_structure_delete_simple_
+  #define f_macro_memory_structure_delete_simple(structure, type) \
+    if (f_memory_delete((void **) & structure.array, sizeof(type), structure.size) == f_none) { \
+      structure.size = 0; \
+      structure.used = 0; \
+    }
+#endif // _di_f_macro_memory_structure_delete_simple_
+
+/**
+ * Destroy a generic memory structure.
+ *
+ * structure: the structure to operate on.
+ * type:      the structure type.
+ */
+#ifndef _di_f_macro_memory_structure_destroy_simple_
+  #define f_macro_memory_structure_destroy_simple(structure, type) \
+    if (f_memory_destroy((void **) & structure.array, sizeof(type), structure.size) == f_none) { \
+      structure.size = 0; \
+      structure.used = 0; \
+    }
+#endif // _di_f_macro_memory_structure_destroy_simple_
+
+/**
  * Resize a generic memory structure.
  *
  * status:     the status to return.
@@ -327,13 +355,14 @@ extern "C" {
 #ifndef _di_f_macro_memory_structures_delete_
   #define f_macro_memory_structures_delete(status, structures, type) \
     status = f_none; \
-    while (structures.size > 0) { \
-      f_macro_memory_structure_delete(status, structures.array[structures.size - 1], type); \
+    structures.used = structures.size; \
+    while (structures.used > 0) { \
+      structures.used--; \
+      f_macro_memory_structure_delete(status, structures.array[structures.used], type); \
       if (status != f_none) break; \
-      structures.size--; \
     } \
     if (status == f_none) status = f_memory_delete((void **) & structures.array, sizeof(type), structures.size); \
-    if (status == f_none) structures.used = 0;
+    if (status == f_none) structures.size = 0;
 #endif // _di_f_macro_memory_structures_delete_
 
 /**
@@ -346,14 +375,56 @@ extern "C" {
 #ifndef _di_f_macro_memory_structures_destroy_
   #define f_macro_memory_structures_destroy(status, structures, type) \
     status = f_none; \
-    while (structures.size > 0) { \
-      f_macro_memory_structure_destroy(status, structures.array[structures.size - 1], type); \
+    structures.used = structures.size; \
+    while (structures.used > 0) { \
+      structures.used--; \
+      f_macro_memory_structure_destroy(status, structures.array[structures.used], type); \
       if (status != f_none) break; \
-      structures.size--; \
     } \
     if (status == f_none) status = f_memory_destroy((void **) & structures.array, sizeof(type), structures.size); \
-    if (status == f_none) structures.used = 0;
+    if (status == f_none) structures.size = 0;
 #endif // _di_f_macro_memory_structures_destroy_
+
+/**
+ * Delete a generic memory structures.
+ *
+ * structures: the structures to operate on.
+ * type:       the structure type..
+ */
+#ifndef _di_f_macro_memory_structures_delete_simple_
+  #define f_macro_memory_structures_delete_simple(structures, type) \
+    structures.used = structures.size; \
+    while (structures.used > 0) { \
+      structures.used--; \
+      f_macro_memory_structure_delete_simple(structures.array[structures.used], type); \
+      if (structures.used == 0) { \
+        if (f_memory_delete((void **) & structures.array, sizeof(type), structures.size)) { \
+          structures.size = 0; \
+        } \
+      } \
+    }
+#endif // _di_f_macro_memory_structures_delete_simple_
+
+/**
+ * Destroy a generic memory structures.
+ *
+ * structures: the structures to operate on.
+ * type:       the structure type.
+ */
+#ifndef _di_f_macro_memory_structures_destroy_simple_
+  #define f_macro_memory_structures_destroy_simple(structures, type) \
+    structures.used = structures.size; \
+    while (structures.used > 0) { \
+      structures.used--; \
+      f_macro_memory_structure_destroy_simple(structures.array[structures.used], type); \
+      if (structures.used == 0) { \
+        if (f_memory_destroy((void **) & structures.array, sizeof(type), structures.size)) { \
+          structures.size = 0; \
+        } \
+      } \
+    }
+#endif // _di_f_macro_memory_structures_destroy_simple_
+
 
 /**
  * Resize a generic memory structures.

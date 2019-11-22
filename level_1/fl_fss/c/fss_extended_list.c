@@ -90,13 +90,11 @@ extern "C" {
             location->start = first_slash;
 
             if (delimits.used + (slash_count / 2) >= delimits.size) {
-              f_status allocation_status = f_none;
+              f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-              f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
-
-              if (f_status_is_error(allocation_status)) {
-                f_macro_string_lengths_delete(allocation_status, delimits);
-                return allocation_status;
+              if (f_status_is_error(status)) {
+                f_macro_string_lengths_delete_simple(delimits);
+                return status;
               }
             }
 
@@ -212,7 +210,7 @@ extern "C" {
 
     f_macro_string_lengths_new(status, positions_start, f_fss_default_allocation_step);
     if (f_status_is_error(status)) {
-      f_macro_string_lengths_delete(status, delimits);
+      f_macro_string_lengths_delete_simple(delimits);
 
       return status;
     }
@@ -229,10 +227,8 @@ extern "C" {
         position_previous = location->start;
         status = fl_fss_increment_buffer(*buffer, location, 1);
         if (f_status_is_error(status)) {
-          f_status allocation_status = f_none;
-
-          f_macro_string_lengths_delete(allocation_status, delimits);
-          f_macro_string_lengths_delete(allocation_status, positions_start);
+          f_macro_string_lengths_delete_simple(delimits);
+          f_macro_string_lengths_delete_simple(positions_start);
 
           return status;
         }
@@ -255,10 +251,8 @@ extern "C" {
         position_previous = location->start;
         status = fl_fss_increment_buffer(*buffer, location, 1);
         if (f_status_is_error(status)) {
-          f_status allocation_status = f_none;
-
-          f_macro_string_lengths_delete(allocation_status, delimits);
-          f_macro_string_lengths_delete(allocation_status, positions_start);
+          f_macro_string_lengths_delete_simple(delimits);
+          f_macro_string_lengths_delete_simple(positions_start);
 
           return status;
         }
@@ -272,10 +266,8 @@ extern "C" {
               slash_count++;
             }
 
-            f_status allocation_status = f_none;
-
-            f_macro_string_lengths_delete(allocation_status, delimits);
-            f_macro_string_lengths_delete(allocation_status, positions_start);
+            f_macro_string_lengths_delete_simple(delimits);
+            f_macro_string_lengths_delete_simple(positions_start);
 
             return status;
           }
@@ -318,10 +310,8 @@ extern "C" {
             }
 
             if (f_status_is_error(status)) {
-              f_status allocation_status = f_none;
-
-              f_macro_string_lengths_delete(allocation_status, delimits);
-              f_macro_string_lengths_delete(allocation_status, positions_start);
+              f_macro_string_lengths_delete_simple(delimits);
+              f_macro_string_lengths_delete_simple(positions_start);
 
               return status;
             }
@@ -329,10 +319,8 @@ extern "C" {
             position_previous = location->start;
             status = fl_fss_increment_buffer(*buffer, location, 1);
             if (f_status_is_error(status)) {
-              f_status allocation_status = f_none;
-
-              f_macro_string_lengths_delete(allocation_status, delimits);
-              f_macro_string_lengths_delete(allocation_status, positions_start);
+              f_macro_string_lengths_delete_simple(delimits);
+              f_macro_string_lengths_delete_simple(positions_start);
 
               return status;
             }
@@ -359,15 +347,13 @@ extern "C" {
               location->start = slash_first;
 
               if (delimits.used + (slash_count / 2) >= delimits.size) {
-                f_status allocation_status = f_none;
+                f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-                f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
+                if (f_status_is_error(status)) {
+                  f_macro_string_lengths_delete_simple(delimits);
+                  f_macro_string_lengths_delete_simple(positions_start);
 
-                if (f_status_is_error(allocation_status)) {
-                  f_macro_string_lengths_delete(status, delimits);
-                  f_macro_string_lengths_delete(status, positions_start);
-
-                  return allocation_status;
+                  return status;
                 }
               }
 
@@ -394,10 +380,8 @@ extern "C" {
                   f_macro_string_lengths_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
 
                   if (f_status_is_error(status)) {
-                    f_status allocation_status = f_none;
-
-                    f_macro_string_lengths_delete(allocation_status, delimits);
-                    f_macro_string_lengths_delete(allocation_status, positions_start);
+                    f_macro_string_lengths_delete_simple(delimits);
+                    f_macro_string_lengths_delete_simple(positions_start);
 
                     return status;
                   }
@@ -419,15 +403,13 @@ extern "C" {
               location->start = slash_last;
 
               if (delimits.used + 1 >= delimits.size) {
-                f_status allocation_status = f_none;
+                f_macro_string_lengths_resize(status, delimits, delimits.size + f_fss_default_allocation_step);
 
-                f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + f_fss_default_allocation_step);
+                if (f_status_is_error(status)) {
+                  f_macro_string_lengths_delete_simple(delimits);
+                  f_macro_string_lengths_delete_simple(positions_start);
 
-                if (f_status_is_error(allocation_status)) {
-                  f_macro_string_lengths_delete(status, delimits);
-                  f_macro_string_lengths_delete(status, positions_start);
-
-                  return allocation_status;
+                  return status;
                 }
               }
 
@@ -445,10 +427,8 @@ extern "C" {
         position_previous = location->start;
         status = fl_fss_increment_buffer(*buffer, location, 1);
         if (f_status_is_error(status)) {
-          f_status allocation_status = f_none;
-
-          f_macro_string_lengths_delete(allocation_status, delimits);
-          f_macro_string_lengths_delete(allocation_status, positions_start);
+          f_macro_string_lengths_delete_simple(delimits);
+          f_macro_string_lengths_delete_simple(positions_start);
 
           return status;
         }
@@ -463,10 +443,8 @@ extern "C" {
           }
 
           if (f_status_is_error(status)) {
-            f_status allocation_status = f_none;
-
-            f_macro_string_lengths_delete(allocation_status, delimits);
-            f_macro_string_lengths_delete(allocation_status, positions_start);
+            f_macro_string_lengths_delete_simple(delimits);
+            f_macro_string_lengths_delete_simple(positions_start);
 
             return status;
           }
@@ -474,10 +452,8 @@ extern "C" {
           position_previous = location->start;
           status = fl_fss_increment_buffer(*buffer, location, 1);
           if (f_status_is_error(status)) {
-            f_status allocation_status = f_none;
-
-            f_macro_string_lengths_delete(allocation_status, delimits);
-            f_macro_string_lengths_delete(allocation_status, positions_start);
+            f_macro_string_lengths_delete_simple(delimits);
+            f_macro_string_lengths_delete_simple(positions_start);
 
             return status;
           }
@@ -497,10 +473,8 @@ extern "C" {
             f_macro_string_lengths_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
 
             if (f_status_is_error(status)) {
-              f_status allocation_status = f_none;
-
-              f_macro_string_lengths_delete(allocation_status, delimits);
-              f_macro_string_lengths_delete(allocation_status, positions_start);
+              f_macro_string_lengths_delete_simple(delimits);
+              f_macro_string_lengths_delete_simple(positions_start);
 
               return status;
             }
@@ -525,10 +499,8 @@ extern "C" {
             position_previous = location->start;
             status = fl_fss_increment_buffer(*buffer, location, 1);
             if (f_status_is_error(status)) {
-              f_status allocation_status = f_none;
-
-              f_macro_string_lengths_delete(allocation_status, delimits);
-              f_macro_string_lengths_delete(allocation_status, positions_start);
+              f_macro_string_lengths_delete_simple(delimits);
+              f_macro_string_lengths_delete_simple(positions_start);
 
               return status;
             }
@@ -548,10 +520,8 @@ extern "C" {
         position_previous = location->start;
         status = fl_fss_increment_buffer(*buffer, location, 1);
         if (f_status_is_error(status)) {
-          f_status allocation_status = f_none;
-
-          f_macro_string_lengths_delete(allocation_status, delimits);
-          f_macro_string_lengths_delete(allocation_status, positions_start);
+          f_macro_string_lengths_delete_simple(delimits);
+          f_macro_string_lengths_delete_simple(positions_start);
 
           return status;
         }
@@ -566,10 +536,8 @@ extern "C" {
           }
 
           if (f_status_is_error(status)) {
-            f_status allocation_status = f_none;
-
-            f_macro_string_lengths_delete(allocation_status, delimits);
-            f_macro_string_lengths_delete(allocation_status, positions_start);
+            f_macro_string_lengths_delete_simple(delimits);
+            f_macro_string_lengths_delete_simple(positions_start);
 
             return status;
           }
@@ -577,10 +545,8 @@ extern "C" {
           position_previous = location->start;
           status = fl_fss_increment_buffer(*buffer, location, 1);
           if (f_status_is_error(status)) {
-            f_status allocation_status = f_none;
-
-            f_macro_string_lengths_delete(allocation_status, delimits);
-            f_macro_string_lengths_delete(allocation_status, positions_start);
+            f_macro_string_lengths_delete_simple(delimits);
+            f_macro_string_lengths_delete_simple(positions_start);
 
             return status;
           }
@@ -598,10 +564,8 @@ extern "C" {
             f_macro_fss_content_nest_resize(status, (*found), found->size + f_fss_default_allocation_step);
 
             if (f_status_is_error(status)) {
-              f_status allocation_status = f_none;
-
-              f_macro_string_lengths_delete(allocation_status, delimits);
-              f_macro_string_lengths_delete(allocation_status, positions_start);
+              f_macro_string_lengths_delete_simple(delimits);
+              f_macro_string_lengths_delete_simple(positions_start);
 
               return status;
             }
@@ -611,10 +575,8 @@ extern "C" {
             f_macro_fss_content_childs_resize(status, found->array[depth], found->array[depth].size + f_fss_default_allocation_step);
 
             if (f_status_is_error(status)) {
-              f_status allocation_status = f_none;
-
-              f_macro_string_lengths_delete(allocation_status, delimits);
-              f_macro_string_lengths_delete(allocation_status, positions_start);
+              f_macro_string_lengths_delete_simple(delimits);
+              f_macro_string_lengths_delete_simple(positions_start);
 
               return status;
             }
@@ -626,10 +588,8 @@ extern "C" {
             f_macro_fss_content_resize(status, found->array[depth].array[position].content, found->array[depth].array[position].content.size + f_fss_default_allocation_step);
 
             if (f_status_is_error(status)) {
-              f_status allocation_status = f_none;
-
-              f_macro_string_lengths_delete(allocation_status, delimits);
-              f_macro_string_lengths_delete(allocation_status, positions_start);
+              f_macro_string_lengths_delete_simple(delimits);
+              f_macro_string_lengths_delete_simple(positions_start);
 
               return status;
             }
@@ -659,10 +619,8 @@ extern "C" {
             position_previous = location->start;
             status = fl_fss_increment_buffer(*buffer, location, 1);
             if (f_status_is_error(status)) {
-              f_status allocation_status = f_none;
-
-              f_macro_string_lengths_delete(allocation_status, delimits);
-              f_macro_string_lengths_delete(allocation_status, positions_start);
+              f_macro_string_lengths_delete_simple(delimits);
+              f_macro_string_lengths_delete_simple(positions_start);
 
               return status;
             }
@@ -684,10 +642,8 @@ extern "C" {
       position_previous = location->start;
       status = fl_fss_increment_buffer(*buffer, location, 1);
       if (f_status_is_error(status)) {
-        f_status allocation_status = f_none;
-
-        f_macro_string_lengths_delete(allocation_status, delimits);
-        f_macro_string_lengths_delete(allocation_status, positions_start);
+        f_macro_string_lengths_delete_simple(delimits);
+        f_macro_string_lengths_delete_simple(positions_start);
 
         return status;
       }
@@ -698,10 +654,8 @@ extern "C" {
     location->start = last_newline;
     status = fl_fss_decrement_buffer(*buffer, location, 1);
     if (f_status_is_error(status)) {
-      f_status allocation_status = f_none;
-
-      f_macro_string_lengths_delete(allocation_status, delimits);
-      f_macro_string_lengths_delete(allocation_status, positions_start);
+      f_macro_string_lengths_delete_simple(delimits);
+      f_macro_string_lengths_delete_simple(positions_start);
 
       return status;
     }
@@ -713,8 +667,8 @@ extern "C" {
 
     fl_macro_fss_content_nest_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_none_on_eos, f_none_on_stop)
 
-    f_macro_string_lengths_delete(status, delimits);
-    f_macro_string_lengths_delete(status, positions_start);
+    f_macro_string_lengths_delete_simple(delimits);
+    f_macro_string_lengths_delete_simple(positions_start);
 
     return fl_fss_found_content;
   }

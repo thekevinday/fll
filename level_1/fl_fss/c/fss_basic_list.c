@@ -90,13 +90,11 @@ extern "C" {
             location->start = first_slash;
 
             if (delimits.used + (slash_count / 2) >= delimits.size) {
-              f_status allocation_status = f_none;
+              f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-              f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
-
-              if (f_status_is_error(allocation_status)) {
-                f_macro_string_lengths_delete(status, delimits);
-                return allocation_status;
+              if (f_status_is_error(status)) {
+                f_macro_string_lengths_delete_simple(delimits);
+                return status;
               }
             }
 
@@ -289,13 +287,11 @@ extern "C" {
             }
 
             if (delimits.used + (slash_count / 2) >= delimits.size) {
-              f_status allocation_status = f_none;
+              f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-              f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
-
-              if (f_status_is_error(allocation_status)) {
-                f_macro_string_lengths_delete(status, delimits);
-                return allocation_status;
+              if (f_status_is_error(status)) {
+                f_macro_string_lengths_delete_simple(delimits);
+                return status;
               }
             }
 

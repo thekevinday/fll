@@ -96,7 +96,6 @@
 #ifndef _di_init_rules_process_main_
   f_return_status init_rules_process_main(const init_data data, const f_string filename, f_string_dynamic *buffer, f_fss_objects *objects, f_fss_contents *contents) {
     f_status status  = f_none;
-    f_status status2 = f_none;
 
     // @todo: resume replacing code below.
     status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents);
@@ -115,14 +114,14 @@
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling firewall_perform_commands().", status);
         }
 
-        f_macro_fss_objects_delete(status2, local->rule_objects);
-        f_macro_fss_contents_delete(status2, local->rule_contents);
+        f_macro_fss_objects_delete_simple(local->rule_objects);
+        f_macro_fss_contents_delete_simple(local->rule_contents);
         return f_status_set_error(status);
       }
     }
 
-    f_macro_fss_objects_delete(status2, local->rule_objects);
-    f_macro_fss_contents_delete(status2, local->rule_contents);
+    f_macro_fss_objects_delete_simple(local->rule_objects);
+    f_macro_fss_contents_delete_simple(local->rule_contents);
     return status;
   }
 #endif // _init_rules_process_main_
@@ -542,7 +541,6 @@
 
     /*
     f_status status  = f_none;
-    f_status status2 = f_none;
 
     status = fll_fss_extended_read(buffer, location, objects, contents);
 
@@ -561,8 +559,8 @@
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling firewall_perform_commands().", status);
         }
 
-        f_macro_fss_objects_delete(status2, (*rule_objects));
-        f_macro_fss_contents_delete(status2, (*rule_contents));
+        f_macro_fss_objects_delete_simple((*rule_objects));
+        f_macro_fss_contents_delete_simple((*rule_contents));
         return f_status_set_error(status);
       }
     }
@@ -575,8 +573,8 @@
       }
     }
 
-    f_macro_fss_objects_delete(status2, (*rule_objects));
-    f_macro_fss_contents_delete(status2, (*rule_contents));
+    f_macro_fss_objects_delete_simple((*rule_objects));
+    f_macro_fss_contents_delete_simple((*rule_contents));
     */
 /*
     f_macro_string_dynamic_delete(buffer);

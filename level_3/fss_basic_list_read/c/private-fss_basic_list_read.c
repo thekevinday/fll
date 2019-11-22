@@ -204,7 +204,6 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_main_process_file_
   f_return_status fss_basic_list_read_main_process_file(const f_console_arguments arguments, fss_basic_list_read_data *data, const f_string filename, const fss_basic_list_read_depths depths) {
     f_status status = f_none;
-    f_status status2 = f_none;
 
     {
       f_string_location input = f_string_location_initialize;
@@ -251,9 +250,9 @@ extern "C" {
       }
       else if (status == f_no_data_on_stop || status == f_no_data_on_eos) {
         // Clear buffers, then attempt the next file.
-        f_macro_fss_contents_delete(status2, data->contents);
-        f_macro_fss_objects_delete(status2, data->objects);
-        f_macro_string_dynamic_delete(status2, data->buffer);
+        f_macro_fss_contents_delete_simple(data->contents);
+        f_macro_fss_objects_delete_simple(data->objects);
+        f_macro_string_dynamic_delete_simple(data->buffer);
 
         return f_status_set_warning(status);
       }
@@ -295,7 +294,7 @@ extern "C" {
       f_string_length name_length = 0;
 
       for (f_string_length i = 0; i < data->objects.used; i++) {
-        name_length = data->objects.array[i].stop - data->objects.array[i].start + 1;
+        name_length = (data->objects.array[i].stop - data->objects.array[i].start) + 1;
 
         if (name_length == argv_length) {
           if (fl_string_compare(data->buffer.string + data->objects.array[i].start, depths.array[0].value_name, name_length, argv_length) == f_equal_to) {

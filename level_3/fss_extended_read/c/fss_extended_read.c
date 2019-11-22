@@ -215,20 +215,19 @@ extern "C" {
       }
 
       fss_extended_read_depths depths = fss_extended_read_depths_initialize;
-      f_status status2 = f_none;
 
       f_string_length counter = 0;
       f_string_length original_size = data->file_position.total_elements;
 
       status = fss_extended_read_main_preprocess_depth(arguments, *data, &depths);
       if (f_status_is_error(status)) {
-        macro_fss_extended_read_depths_delete(status2, depths);
+        macro_fss_extended_read_depths_delete_simple(depths);
         fss_extended_read_delete_data(data);
         return status;
       }
 
       // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
-      if (depths.used > 0 && depths.array[0].depth > 0) {
+      if (depths.array[0].depth > 0) {
         if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
           fprintf(f_standard_output, "0%c", f_string_eol);
           return f_none;
@@ -253,7 +252,7 @@ extern "C" {
 
         if (f_status_is_error(status)) {
           fss_extended_read_print_file_error(data->context, "fl_file_read_fifo", "-", f_status_set_fine(status));
-          macro_fss_extended_read_depths_delete(status2, depths);
+          macro_fss_extended_read_depths_delete_simple(depths);
           fss_extended_read_delete_data(data);
           return status;
         }
@@ -261,15 +260,15 @@ extern "C" {
         status = fss_extended_read_main_process_file(arguments, data, "-", depths);
 
         if (f_status_is_error(status)) {
-          macro_fss_extended_read_depths_delete(status2, depths);
+          macro_fss_extended_read_depths_delete_simple(depths);
           fss_extended_read_delete_data(data);
           return status;
         }
 
         // Clear buffers before continuing.
-        f_macro_fss_contents_delete(status2, data->contents);
-        f_macro_fss_objects_delete(status2, data->objects);
-        f_macro_string_dynamic_delete(status2, data->buffer);
+        f_macro_fss_contents_delete_simple(data->contents);
+        f_macro_fss_objects_delete_simple(data->objects);
+        f_macro_string_dynamic_delete_simple(data->buffer);
       }
 
       if (data->remaining.used > 0) {
@@ -282,7 +281,7 @@ extern "C" {
 
           if (f_status_is_error(status)) {
             fss_extended_read_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
-            macro_fss_extended_read_depths_delete(status2, depths);
+            macro_fss_extended_read_depths_delete_simple(depths);
             fss_extended_read_delete_data(data);
             return status;
           }
@@ -307,7 +306,7 @@ extern "C" {
 
           if (f_status_is_error(status)) {
             fss_extended_read_print_file_error(data->context, "fl_file_read", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
-            macro_fss_extended_read_depths_delete(status2, depths);
+            macro_fss_extended_read_depths_delete_simple(depths);
             fss_extended_read_delete_data(data);
             return status;
           }
@@ -315,19 +314,19 @@ extern "C" {
           status = fss_extended_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[counter]], depths);
 
           if (f_status_is_error(status)) {
-            macro_fss_extended_read_depths_delete(status2, depths);
+            macro_fss_extended_read_depths_delete_simple(depths);
             fss_extended_read_delete_data(data);
             return status;
           }
 
           // Clear buffers before repeating the loop.
-          f_macro_fss_contents_delete(status2, data->contents);
-          f_macro_fss_objects_delete(status2, data->objects);
-          f_macro_string_dynamic_delete(status2, data->buffer);
+          f_macro_fss_contents_delete_simple(data->contents);
+          f_macro_fss_objects_delete_simple(data->objects);
+          f_macro_string_dynamic_delete_simple(data->buffer);
         } // for
       }
 
-      macro_fss_extended_read_depths_delete(status2, depths);
+      macro_fss_extended_read_depths_delete_simple(depths);
     }
     else {
       fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more files.");
@@ -345,17 +344,17 @@ extern "C" {
     f_string_length i = 0;
 
     while (i < fss_extended_read_total_parameters) {
-      f_macro_string_lengths_delete(status, data->parameters[i].locations);
-      f_macro_string_lengths_delete(status, data->parameters[i].additional);
+      f_macro_string_lengths_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_delete_simple(data->parameters[i].additional);
       i++;
     } // while
 
-    f_macro_fss_contents_delete(status, data->contents);
-    f_macro_fss_objects_delete(status, data->objects);
-    f_macro_string_dynamic_delete(status, data->buffer);
-    f_macro_string_lengths_delete(status, data->remaining);
+    f_macro_fss_contents_delete_simple(data->contents);
+    f_macro_fss_objects_delete_simple(data->objects);
+    f_macro_string_dynamic_delete_simple(data->buffer);
+    f_macro_string_lengths_delete_simple(data->remaining);
 
-    fl_macro_color_context_delete(status, data->context);
+    fl_macro_color_context_delete_simple(data->context);
 
     return f_none;
   }

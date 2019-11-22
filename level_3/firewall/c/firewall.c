@@ -308,7 +308,7 @@ extern "C" {
           parameters.array[5].used = 0;
           parameters.array[6].used = 0;
 
-          f_macro_string_dynamics_delete(status, parameters);
+          f_macro_string_dynamics_delete_simple( parameters);
           firewall_delete_local_data(&local);
           firewall_delete_data(data);
           return status;
@@ -542,8 +542,7 @@ extern "C" {
 
               status = firewall_buffer_rules(file_path.string, f_true, &local, data);
 
-              f_status status2 = f_none;
-              f_macro_string_dynamic_delete(status2, file_path);
+              f_macro_string_dynamic_delete_simple(file_path);
             }
 
             if (f_status_is_error(status)) {
@@ -652,20 +651,19 @@ extern "C" {
 
 #ifndef _di_firewall_delete_data_
   f_return_status firewall_delete_data(firewall_data *data) {
-    f_status status = f_none;
     f_string_length i = 0;
 
     while (i < firewall_total_parameters) {
-      f_macro_string_lengths_delete(status, data->parameters[i].locations);
-      f_macro_string_lengths_delete(status, data->parameters[i].additional);
+      f_macro_string_lengths_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_delete_simple(data->parameters[i].additional);
       i++;
     } // while
 
-    f_macro_string_dynamics_delete(status, data->chains);
-    f_macro_string_lengths_delete(status, data->remaining);
-    f_macro_string_dynamics_delete(status, data->devices);
+    f_macro_string_dynamics_delete_simple(data->chains);
+    f_macro_string_lengths_delete_simple(data->remaining);
+    f_macro_string_dynamics_delete_simple(data->devices);
 
-    fl_macro_color_context_delete(status, data->context);
+    fl_macro_color_context_delete_simple(data->context);
 
     return f_none;
   }

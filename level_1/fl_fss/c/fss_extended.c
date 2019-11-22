@@ -101,13 +101,11 @@ extern "C" {
 
       if (buffer->string[location->start] == f_fss_delimit_single_quote || buffer->string[location->start] == f_fss_delimit_double_quote) {
         if (delimits.used >= delimits.size) {
-          f_status allocation_status = f_none;
+          f_macro_string_lengths_resize(status, delimits, delimits.size + f_fss_default_allocation_step);
 
-           f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + f_fss_default_allocation_step);
-
-          if (f_status_is_error(allocation_status)) {
-            f_macro_string_lengths_delete(allocation_status, delimits);
-            return allocation_status;
+          if (f_status_is_error(status)) {
+            f_macro_string_lengths_delete_simple(delimits);
+            return status;
           }
         }
 
@@ -194,13 +192,11 @@ extern "C" {
             location->start = first_slash;
 
             if (delimits.used + (slash_count / 2) >= delimits.size) {
-              f_status allocation_status = f_none;
+              f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-              f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
-
-              if (f_status_is_error(allocation_status)) {
-                f_macro_string_lengths_delete(allocation_status, delimits);
-                return allocation_status;
+              if (f_status_is_error(status)) {
+                f_macro_string_lengths_delete_simple(delimits);
+                return status;
               }
             }
 
@@ -272,13 +268,11 @@ extern "C" {
             }
             else {
               if (delimits.used + (slash_count / 2) >= delimits.size) {
-                f_status allocation_status = f_none;
+                f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-                f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
-
-                if (f_status_is_error(allocation_status)) {
-                  f_macro_string_lengths_delete(allocation_status, delimits);
-                  return allocation_status;
+                if (f_status_is_error(status)) {
+                  f_macro_string_lengths_delete_simple(delimits);
+                  return status;
                 }
               }
 
@@ -418,8 +412,7 @@ extern "C" {
         f_macro_fss_content_resize(status, (*found), found->size + f_fss_default_allocation_step);
 
         if (f_status_is_error(status)){
-          f_status allocation_status = f_none;
-          f_macro_string_lengths_delete(allocation_status, delimits);
+          f_macro_string_lengths_delete_simple(delimits);
 
           return status;
         }
@@ -493,13 +486,11 @@ extern "C" {
 
         if (buffer->string[location->start] == f_fss_delimit_single_quote || buffer->string[location->start] == f_fss_delimit_double_quote) {
           if (delimits.used >= delimits.size) {
-            f_status allocation_status = f_none;
+            f_macro_string_lengths_resize(status, delimits, delimits.size + f_fss_default_allocation_step);
 
-             f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + f_fss_default_allocation_step);
-
-            if (f_status_is_error(allocation_status)) {
-              f_macro_string_lengths_delete(allocation_status, delimits);
-              return allocation_status;
+            if (f_status_is_error(status)) {
+              f_macro_string_lengths_delete_simple(delimits);
+              return status;
             }
           }
 
@@ -587,13 +578,11 @@ extern "C" {
 
               if (slash_count % 2 == 0) {
                 if (delimits.used + (slash_count / 2) >= delimits.size) {
-                  f_status allocation_status = f_none;
+                  f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-                  f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
-
-                  if (f_status_is_error(allocation_status)) {
-                    f_macro_string_lengths_delete(allocation_status, delimits);
-                    return allocation_status;
+                  if (f_status_is_error(status)) {
+                    f_macro_string_lengths_delete_simple(delimits);
+                    return status;
                   }
                 }
 
@@ -665,13 +654,11 @@ extern "C" {
               }
               else {
                 if (delimits.used + (slash_count / 2) >= delimits.size) {
-                  f_status allocation_status = f_none;
+                  f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-                  f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
-
-                  if (f_status_is_error(allocation_status)) {
-                    f_macro_string_lengths_delete(allocation_status, delimits);
-                    return allocation_status;
+                  if (f_status_is_error(status)) {
+                    f_macro_string_lengths_delete_simple(delimits);
+                    return status;
                   }
                 }
 

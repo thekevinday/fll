@@ -96,13 +96,11 @@ extern "C" {
 
       if (buffer->string[location->start] == f_fss_delimit_single_quote || buffer->string[location->start] == f_fss_delimit_double_quote) {
         if (delimits.used >= delimits.size) {
-          f_status allocation_status = f_none;
+           f_macro_string_lengths_resize(status, delimits, delimits.size + f_fss_default_allocation_step);
 
-           f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + f_fss_default_allocation_step);
-
-          if (f_status_is_error(allocation_status)) {
-            f_macro_string_lengths_delete(allocation_status, delimits);
-            return allocation_status;
+          if (f_status_is_error(status)) {
+            f_macro_string_lengths_delete_simple(delimits);
+            return status;
           }
         }
 
@@ -193,13 +191,11 @@ extern "C" {
 
             if (slash_count % 2 == 0) {
               if (delimits.used + (slash_count / 2) >= delimits.size) {
-                f_status allocation_status = f_none;
+                f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-                f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
-
-                if (f_status_is_error(allocation_status)) {
-                  f_macro_string_lengths_delete(allocation_status, delimits);
-                  return allocation_status;
+                if (f_status_is_error(status)) {
+                  f_macro_string_lengths_delete_simple(delimits);
+                  return status;
                 }
               }
 
@@ -231,11 +227,7 @@ extern "C" {
 
                 fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
-                {
-                  f_status allocation_status = f_none;
-
-                  f_macro_string_lengths_delete(allocation_status, delimits);
-                }
+                f_macro_string_lengths_delete_simple(delimits);
 
                 status = fl_fss_increment_buffer(*buffer, location, 1);
                 if (f_status_is_error(status)) return status;
@@ -278,13 +270,11 @@ extern "C" {
             }
             else {
               if (delimits.used + (slash_count / 2) >= delimits.size) {
-                f_status allocation_status = f_none;
+                f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
-                f_macro_string_lengths_resize(allocation_status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
-
-                if (f_status_is_error(allocation_status)) {
-                  f_macro_string_lengths_delete(allocation_status, delimits);
-                  return allocation_status;
+                if (f_status_is_error(status)) {
+                  f_macro_string_lengths_delete_simple(delimits);
+                  return status;
                 }
               }
 
@@ -342,11 +332,7 @@ extern "C" {
 
               fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
-              {
-                f_status allocation_status = f_none;
-
-                f_macro_string_lengths_delete(allocation_status, delimits);
-              }
+              f_macro_string_lengths_delete_simple(delimits);
 
               status = fl_fss_increment_buffer(*buffer, location, 1);
               if (f_status_is_error(status)) return status;
@@ -361,11 +347,7 @@ extern "C" {
           fl_macro_fss_object_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, f_none_on_eos, f_none_on_stop)
         }
         else if (buffer->string[location->start] == f_string_eol) {
-          {
-            f_status allocation_status = f_none;
-
-            f_macro_string_lengths_delete(allocation_status, delimits);
-          }
+          f_macro_string_lengths_delete_simple(delimits);
 
           status = fl_fss_increment_buffer(*buffer, location, 1);
           if (f_status_is_error(status)) return status;
@@ -388,11 +370,7 @@ extern "C" {
 
     fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
-    {
-      f_status allocation_status = f_none;
-
-      f_macro_string_lengths_delete(allocation_status, delimits);
-    }
+    f_macro_string_lengths_delete_simple(delimits);
 
     status = fl_fss_increment_buffer(*buffer, location, 1);
     if (f_status_is_error(status)) return status;

@@ -15,6 +15,7 @@
 
 // fll-0 includes
 #include <level_0/status.h>
+#include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/type.h>
 
@@ -114,9 +115,12 @@ extern "C" {
 
   #define f_macro_fss_delimits_clear(delimits) f_macro_memory_structure_clear(delimits)
 
-  #define f_macro_fss_delimits_new(status, delimits)  f_macro_string_locations_new(status, delimits)
+  #define f_macro_fss_delimits_new(status, delimits)     f_macro_string_locations_new(status, delimits)
   #define f_macro_fss_delimits_delete(status, delimits)  f_macro_string_locations_delete(status, delimits)
   #define f_macro_fss_delimits_destroy(status, delimits) f_macro_string_locations_destroy(status, delimits)
+
+  #define f_macro_fss_delimits_delete_simple(delimits)  f_macro_string_locations_delete_simple(delimits)
+  #define f_macro_fss_delimits_destroy_simple(delimits) f_macro_string_locations_destroy_simple(delimits)
 
   #define f_macro_fss_delimits_resize(status, delimits, new_length) f_macro_string_locations_resize(status, delimits, new_length)
   #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_string_locations_adjust(status, delimits, new_length)
@@ -159,8 +163,11 @@ extern "C" {
 
   #define f_macro_fss_headers_new(status, headers, length) f_macro_memory_structure_new(status, headers, f_fss_header, length)
 
-  #define f_macro_fss_headers_delete(status, headers) f_macro_memory_structure_delete(status, headers, f_fss_header)
+  #define f_macro_fss_headers_delete(status, headers)  f_macro_memory_structure_delete(status, headers, f_fss_header)
   #define f_macro_fss_headers_destroy(status, headers) f_macro_memory_structure_destroy(status, headers, f_fss_header)
+
+  #define f_macro_fss_headers_delete_simple(headers)  f_macro_memory_structure_delete_simple(headers, f_fss_header)
+  #define f_macro_fss_headers_destroy_simple(headers) f_macro_memory_structure_destroy_simple(headers, f_fss_header)
 
   #define f_macro_fss_headers_resize(status, headers, new_length) f_macro_memory_structure_resize(status, headers, f_fss_header, new_length)
   #define f_macro_fss_headers_adjust(status, headers, new_length) f_macro_memory_structure_adjust(status, headers, f_fss_header, new_length)
@@ -177,8 +184,11 @@ extern "C" {
 
   #define f_macro_fss_object_new(status, object, length) status = f_memory_new((void **) & object, sizeof(f_fss_object), length)
 
-  #define f_macro_fss_object_delete(status, object) status = f_memory_delete((void **) & object)
-  #define f_macro_fss_object_destroy(status, object, size) status = f_memory_destroy((void **) & object, sizeof(f_fss_object), size)
+  #define f_macro_fss_object_delete(status, object)          status = f_memory_delete((void **) & object)
+  #define f_macro_fss_object_destroy(status, object, length) status = f_memory_destroy((void **) & object, sizeof(f_fss_object), length)
+
+  #define f_macro_fss_object_delete_simple(object)          f_memory_delete((void **) & object)
+  #define f_macro_fss_object_destroy_simple(object, length) f_memory_destroy((void **) & object, sizeof(f_fss_object), length)
 
   #define f_macro_fss_object_resize(status, object, old_length, new_length) status = f_memory_resize((void **) & object, sizeof(f_fss_object), old_length, new_length)
 
@@ -206,8 +216,11 @@ extern "C" {
 
   #define f_macro_fss_objects_new(status, objects, length) f_macro_memory_structure_new(status, objects, f_fss_object, length)
 
-  #define f_macro_fss_objects_delete(status, objects) f_macro_memory_structure_delete(status, objects, f_fss_object)
+  #define f_macro_fss_objects_delete(status, objects)  f_macro_memory_structure_delete(status, objects, f_fss_object)
   #define f_macro_fss_objects_destroy(status, objects) f_macro_memory_structure_destroy(status, objects, f_fss_object)
+
+  #define f_macro_fss_objects_delete_simple(objects)  f_macro_memory_structure_delete_simple(objects, f_fss_object)
+  #define f_macro_fss_objects_destroy_simple(objects) f_macro_memory_structure_destroy_simple(objects, f_fss_object)
 
   #define f_macro_fss_objects_resize(status, objects, new_length) f_macro_memory_structure_resize(status, objects, f_fss_object, new_length)
   #define f_macro_fss_objects_adjust(status, objects, new_length) f_macro_memory_structure_destroy(status, objects, f_fss_object, new_length)
@@ -238,8 +251,11 @@ extern "C" {
 
   #define f_macro_fss_content_new(status, content, length) f_macro_memory_structure_new(status, content, f_string_location, length)
 
-  #define f_macro_fss_content_delete(status, content) f_macro_memory_structure_delete(status, content, f_string_location)
+  #define f_macro_fss_content_delete(status, content)  f_macro_memory_structure_delete(status, content, f_string_location)
   #define f_macro_fss_content_destroy(status, content) f_macro_memory_structure_destroy(status, content, f_string_location)
+
+  #define f_macro_fss_content_delete_simple(content)  f_macro_memory_structure_delete_simple(content, f_string_location)
+  #define f_macro_fss_content_destroy_simple(content) f_macro_memory_structure_destroy_simple(content, f_string_location)
 
   #define f_macro_fss_content_resize(status, content, new_length) f_macro_memory_structure_resize(status, content, f_string_location, new_length)
   #define f_macro_fss_content_adjust(status, content, new_length) f_macro_memory_structure_adjust(status, content, f_string_location, new_length)
@@ -266,8 +282,11 @@ extern "C" {
 
   #define f_macro_fss_contents_new(status, contents, length) f_macro_memory_structures_delete(status, contents, f_fss_content, length)
 
-  #define f_macro_fss_contents_delete(status, contents) f_macro_memory_structures_delete(status, contents, f_fss_content)
+  #define f_macro_fss_contents_delete(status, contents)  f_macro_memory_structures_delete(status, contents, f_fss_content)
   #define f_macro_fss_contents_destroy(status, contents) f_macro_memory_structures_destroy(status, contents, f_fss_content)
+
+  #define f_macro_fss_contents_delete_simple(contents)  f_macro_memory_structures_delete_simple(contents, f_fss_content)
+  #define f_macro_fss_contents_destroy_simple(contents) f_macro_memory_structures_destroy_simple(contents, f_fss_content)
 
   #define f_macro_fss_contents_resize(status, contents, new_length) f_macro_memory_structures_resize(status, contents, f_fss_content, new_length, f_array_length)
   #define f_macro_fss_contents_adjust(status, contents, new_length) f_macro_memory_structures_resize(status, contents, f_fss_content, new_length, f_array_length)
@@ -352,6 +371,28 @@ extern "C" {
     }
 
   /**
+   * Delete a fss content child.
+   *
+   * content_child: the f_fss_content_child structure to operate on.
+   */
+  #define f_macro_fss_content_child_delete_simple(content_child) \
+    f_macro_fss_content_delete_simple(content_child.content); \
+    content_child.object.start = 1; \
+    content_child.object.stop = 0; \
+    content_child.parent = 0;
+
+  /**
+   * Destroy a fss content child.
+   *
+   * content_child: the f_fss_content_child structure to operate on.
+   */
+  #define f_macro_fss_content_child_destroy_simple(content_child) \
+    f_macro_fss_content_destroy_simple(content_child.content); \
+    content_child.object.start = 1; \
+    content_child.object.stop = 0; \
+    content_child.parent = 0;
+
+  /**
    * Resize a fss content child.
    *
    * status:        the status to return.
@@ -398,7 +439,7 @@ extern "C" {
  *   }
  *
  * range: A location range representing the full start/stop locations of the entire set.
- * array: The array of objectm their associated content, and their associated parent.
+ * array: The array of object, their associated content, and their associated parent.
  * size: Total amount of allocated space.
  * used: Total number of allocated spaces used.
  */
@@ -455,13 +496,14 @@ extern "C" {
    */
   #define f_macro_fss_content_childs_delete(status, content_childs) \
     status = f_none; \
-    while (content_childs.size > 0) { \
-      f_macro_fss_content_child_delete(status, content_childs.array[content_childs.size - 1]); \
+    content_childs.used = content_childs.size; \
+    while (content_childs.used > 0) { \
+      content_childs.used--; \
+      f_macro_fss_content_child_delete(status, content_childs.array[content_childs.used]); \
       if (status != f_none) break; \
-      content_childs.size--; \
     } \
     if (status == f_none) status = f_memory_delete((void **) & content_childs.array, sizeof(f_fss_content_child), content_childs.size); \
-    if (status == f_none) content_childs.used = 0;
+    if (status == f_none) content_childs.size = 0;
 
   /**
    * Destroy a fss content childs.
@@ -471,13 +513,48 @@ extern "C" {
    */
   #define f_macro_fss_content_childs_destroy(status, content_childs) \
     status = f_none; \
-    while (content_childs.size > 0) { \
-      f_macro_fss_content_child_destroy(status, content_childs.array[content_childs.size - 1]); \
+    content_childs.used = content_childs.size; \
+    while (content_childs.used > 0) { \
+      content_childs.used--; \
+      f_macro_fss_content_child_destroy(status, content_childs.array[content_childs.used]); \
       if (status != f_none) break; \
-      content_childs.size--; \
     } \
     if (status == f_none) status = f_memory_delete((void **) & content_childs.array, sizeof(f_fss_content_child), content_childs.size); \
-    if (status == f_none) content_childs.used = 0;
+    if (status == f_none) content_childs.size = 0;
+
+  /**
+   * Delete a fss content childs.
+   *
+   * content_childs: the f_fss_content_childs structure to operate on.
+   */
+  #define f_macro_fss_content_childs_delete_simple(content_childs) \
+    content_childs.used = content_childs.size; \
+    while (content_childs.used > 0) { \
+      content_childs.used--; \
+      f_macro_fss_content_child_delete(content_childs.array[content_childs.used]); \
+      if (content_childs.used == 0) { \
+        if (f_memory_delete((void **) & content_childs.array, sizeof(f_fss_content_child), content_childs.size)) { \
+          content_childs.size = 0; \
+        } \
+      } \
+    }
+
+  /**
+   * Destroy a fss content childs.
+   *
+   * content_childs: the f_fss_content_childs structure to operate on.
+   */
+  #define f_macro_fss_content_childs_destroy_simple(content_childs) \
+    content_childs.used = content_childs.size; \
+    while (content_childs.used > 0) { \
+      content_childs.used--; \
+      f_macro_fss_content_child_destroy(status, content_childs.array[content_childs.used]); \
+      if (content_childs.used == 0) { \
+        if (f_memory_destroy((void **) & content_childs.array, sizeof(f_fss_content_child), content_childs.size)) { \
+          content_childs.size = 0; \
+        } \
+      } \
+    }
 
   /**
    * Resize a fss content childs.
@@ -599,13 +676,14 @@ extern "C" {
    */
   #define f_macro_fss_content_nest_delete(status, content_nest) \
     status = f_none; \
-    while (content_nest.size > 0) { \
-      f_macro_fss_content_childs_delete(status, content_nest.array[content_nest.size - 1]); \
+    content_nest.used = content_nest.size; \
+    while (content_nest.used > 0) { \
+      content_nest.used--; \
+      f_macro_fss_content_childs_delete(status, content_nest.array[content_nest.used]); \
       if (status != f_none) break; \
-      content_nest.size--; \
     } \
     if (status == f_none) status = f_memory_delete((void **) & content_nest.array, sizeof(f_fss_content_childs), content_nest.size); \
-    if (status == f_none) content_nest.used = 0;
+    if (status == f_none) content_nest.size = 0;
 
   /**
    * Destroy a fss content nest.
@@ -615,13 +693,48 @@ extern "C" {
    */
   #define f_macro_fss_content_nest_destroy(status, content_nest) \
     status = f_none; \
-    while (content_nest.size > 0) { \
-      f_macro_fss_content_childs_destroy(status, content_nest.array[content_nest.size - 1]); \
+    content_nest.used = content_nest.size; \
+    while (content_nest.used > 0) { \
+      content_nest.used--; \
+      f_macro_fss_content_childs_destroy(status, content_nest.array[content_nest.used]); \
       if (status != f_none) break; \
-      content_nest.size--; \
     } \
     if (status == f_none) status = f_memory_delete((void **) & content_nest.array, sizeof(f_fss_content_childs), content_nest.size); \
-    if (status == f_none) content_nest.used = 0;
+    if (status == f_none) content_nest.size = 0;
+
+  /**
+   * Delete a fss content nest.
+   *
+   * content_nest: the f_fss_content_nest structure to operate on.
+   */
+  #define f_macro_fss_content_nest_delete_simple(content_nest) \
+    content_nest.used = content_nest.size; \
+    while (content_nest.used > 0) { \
+      content_nest.used--; \
+      f_macro_fss_content_childs_delete_simple(content_nest.array[content_nest.used]); \
+      if (content_nest.used == 0) { \
+        if (f_memory_delete((void **) & content_nest.array, sizeof(f_fss_content_childs), content_nest.size)) { \
+          content_nest.size = 0; \
+        } \
+      } \
+    }
+
+  /**
+   * Destroy a fss content nest.
+   *
+   * content_nest: the f_fss_content_nest structure to operate on.
+   */
+  #define f_macro_fss_content_nest_destroy_simple(content_nest) \
+    content_nest.used = content_nest.size; \
+    while (content_nest.used > 0) { \
+      content_nest.used--; \
+      f_macro_fss_content_childs_destroy_simple(content_nest.array[content_nest.used]); \
+      if (content_nest.used == 0) { \
+        if (f_memory_destroy((void **) & content_nest.array, sizeof(f_fss_content_childs), content_nest.size)) { \
+          content_nest.size = 0; \
+        } \
+      } \
+    }
 
   /**
    * Resize a fss content nest.
@@ -733,15 +846,16 @@ extern "C" {
    * status:        the status to return.
    * content_nests: the f_fss_content_nests structure to operate on.
    */
-  #define f_macro_fss_content_nests_delete(status, content_nests) \
+  #define f_macro_fss_content_nests_delete(content_nests) \
     status = f_none; \
-    while (content_nests.size > 0) { \
-      f_macro_fss_content_nest_delete(status, content_nests.array[content_nests.size - 1]); \
+    content_nests.used = content_nests.size; \
+    while (content_nests.used > 0) { \
+      content_nests.used--; \
+      f_macro_fss_content_nest_delete(status, content_nests.array[content_nests.used]); \
       if (status != f_none) break; \
-      content_nests.size--; \
     } \
     if (status == f_none) status = f_memory_delete((void **) & content_nests.array, sizeof(f_fss_content_nest), content_nests.size); \
-    if (status == f_none) content_nests.used = 0;
+    if (status == f_none) content_nests.size = 0;
 
   /**
    * Destroy a fss content nests.
@@ -749,15 +863,50 @@ extern "C" {
    * status:        the status to return.
    * content_nests: the f_fss_content_nests structure to operate on.
    */
-  #define f_macro_fss_content_nests_destroy(status, content_nests) \
+  #define f_macro_fss_content_nests_destroy(content_nests) \
     status = f_none; \
-    while (content_nests.size > 0) { \
-      f_macro_fss_content_nest_destroy(status, content_nests.array[content_nests.size - 1]); \
+    content_nests.used = content_nests.size; \
+    while (content_nests.used > 0) { \
+      content_nests.used--; \
+      f_macro_fss_content_nest_destroy(status, content_nests.array[content_nests.used]); \
       if (status != f_none) break; \
-      content_nests.size--; \
     } \
-    if (status == f_none) status = f_memory_delete((void **) & content_nests.array, sizeof(f_fss_content_nest), content_nests.size); \
-    if (status == f_none) content_nests.used = 0;
+    if (status == f_none) status = f_memory_destroy((void **) & content_nests.array, sizeof(f_fss_content_nest), content_nests.size); \
+    if (status == f_none) content_nests.size = 0;
+
+  /**
+   * Delete a fss content nests.
+   *
+   * content_nests: the f_fss_content_nests structure to operate on.
+   */
+  #define f_macro_fss_content_nests_delete_simple(content_nests) \
+    content_nests.used = content_nests.size; \
+    while (content_nests.used > 0) { \
+      content_nests.used--; \
+      f_macro_fss_content_nest_delete_simple(content_nests.array[content_nests.used]); \
+      if (content_nests.used == 0) { \
+        if (f_memory_delete((void **) & content_nests.array, sizeof(f_fss_content_nest), content_nests.size)) { \
+          content_nests.size = 0; \
+        } \
+      } \
+    }
+
+  /**
+   * Destroy a fss content nests.
+   *
+   * content_nests: the f_fss_content_nests structure to operate on.
+   */
+  #define f_macro_fss_content_nests_destroy_simple(content_nests) \
+    content_nests.used = content_nests.size; \
+    while (content_nests.used > 0) { \
+      content_nests.used--; \
+      f_macro_fss_content_nest_destroy_simple(content_nests.array[content_nests.used]); \
+      if (content_nests.used == 0) { \
+        if (f_memory_destroy((void **) & content_nests.array, sizeof(f_fss_content_nest), content_nests.size)) { \
+          content_nests.size = 0; \
+        } \
+      } \
+    }
 
   /**
    * Resize a fss content nests.

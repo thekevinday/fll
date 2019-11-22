@@ -77,6 +77,28 @@ extern "C" {
     if (f_status_is_not_error(status)) f_macro_string_dynamic_destroy(status, color_context.normal); \
     if (f_status_is_not_error(status)) f_macro_string_dynamic_destroy(status, color_context.normal_reset);
 
+  #define fl_macro_color_context_delete_simple(color_context) \
+    f_macro_string_dynamic_delete_simple(color_context.reset); \
+    f_macro_string_dynamic_delete_simple(color_context.warning); \
+    f_macro_string_dynamic_delete_simple(color_context.error); \
+    f_macro_string_dynamic_delete_simple(color_context.title); \
+    f_macro_string_dynamic_delete_simple(color_context.notable); \
+    f_macro_string_dynamic_delete_simple(color_context.important); \
+    f_macro_string_dynamic_delete_simple(color_context.standout); \
+    f_macro_string_dynamic_delete_simple(color_context.normal); \
+    f_macro_string_dynamic_delete_simple(color_context.normal_reset);
+
+  #define fl_macro_color_context_destroy_simple(color_context, size) \
+    f_macro_string_dynamic_destroy_simple(color_context.reset); \
+    f_macro_string_dynamic_destroy_simple(color_context.warning, size); \
+    f_macro_string_dynamic_destroy_simple(color_context.error, size); \
+    f_macro_string_dynamic_destroy_simple(color_context.title, size); \
+    f_macro_string_dynamic_destroy_simple(color_context.notable, size); \
+    f_macro_string_dynamic_destroy_simple(color_context.important, size); \
+    f_macro_string_dynamic_destroy_simple(color_context.standout, size); \
+    f_macro_string_dynamic_destroy_simple(color_context.normal); \
+    f_macro_string_dynamic_destroy_simple(color_context.normal_reset);
+
   #define fl_macro_color_context_resize(status, color_context) \
     f_macro_string_dynamic_resize(status, color_context.reset, f_color_max_size + 1); \
     if (f_status_is_not_error(status)) f_macro_string_dynamic_resize(status, color_context.warning,      f_color_max_size + 1); \

@@ -31,13 +31,11 @@ extern "C" {
         f_macro_string_dynamics_resize(status, (*names), names->size + fl_directory_default_allocation_step);
 
         if (f_status_is_error(status)) {
-          f_status status2 = f_none;
-
           for (int j = i; j < length; j++) {
             f_memory_delete((void **) & listing[i], sizeof(char *), 1);
-          }
+          } // for
 
-          f_macro_string_dynamics_delete(status2, (*names));
+          f_macro_string_dynamics_delete_simple((*names));
           f_memory_delete((void **) & listing, sizeof(struct dirent *), 1);
 
           return status;
@@ -47,13 +45,11 @@ extern "C" {
       f_macro_string_dynamic_new(status, names->array[names->used], size);
 
       if (f_status_is_error(status)) {
-        f_status status2 = f_none;
-
         for (int j = i; j < length; j++) {
           f_memory_delete((void **) & listing[i], sizeof(char *), 1);
-        }
+        } // for
 
-        f_macro_string_dynamics_delete(status2, (*names));
+        f_macro_string_dynamics_delete_simple((*names));
         f_memory_delete((void **) & listing, sizeof(struct dirent *), 1);
 
         return status;

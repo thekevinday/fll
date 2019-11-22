@@ -364,15 +364,14 @@ extern "C" {
 
 #ifndef _di_byte_dump_delete_data_
   f_return_status byte_dump_delete_data(byte_dump_data *data) {
-    f_status status = f_none;
 
     for (f_string_length i = 0; i < byte_dump_total_parameters; i++) {
-      f_macro_string_lengths_delete(status, data->parameters[i].locations);
-      f_macro_string_lengths_delete(status, data->parameters[i].additional);
+      f_macro_string_lengths_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_delete_simple(data->parameters[i].additional);
     } // for
 
-    f_macro_string_lengths_delete(status, data->remaining);
-    fl_macro_color_context_delete(status, data->context);
+    f_macro_string_lengths_delete_simple(data->remaining);
+    fl_macro_color_context_delete_simple(data->context);
 
     return f_none;
   }

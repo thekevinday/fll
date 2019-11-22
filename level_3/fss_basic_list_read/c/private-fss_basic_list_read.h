@@ -16,8 +16,12 @@ extern "C" {
  * A structure of parameters applied at some depth.
  *
  * depth: the depth number in which this is to be processed at.
- * parameter: the index representing the parameter enum of either the "at" parameter or the "name" parameter.
- * position: the parameter position index within the argv representing the value associated with the designated parameter.
+ *
+ * index_at: position of the "--at" parameter value in the argv list, when 0 there is no parameter.
+ * index_name: position of the "--name" parameter value in the argv list, when 0 there is no parameter.
+ *
+ * value_at: the value of the "--at" parameter, already processed and ready to use, only when index_at > 0.
+ * value_name: the value of the "--name" parameter, already processed and ready to use, only when index_name > 0.
  */
 #ifndef _di_fss_basic_list_read_depth_
   typedef struct {
@@ -61,8 +65,11 @@ extern "C" {
 
   #define macro_fss_basic_list_read_depths_new(status, depths, length) f_macro_memory_structure_new(status, depths, fss_basic_list_read_depth, length)
 
-  #define macro_fss_basic_list_read_depths_delete(status, depths) f_macro_memory_structure_delete(status, depths, fss_basic_list_read_depth)
+  #define macro_fss_basic_list_read_depths_delete(status, depths)  f_macro_memory_structure_delete(status, depths, fss_basic_list_read_depth)
   #define macro_fss_basic_list_read_depths_destroy(status, depths) f_macro_memory_structure_destroy(status, depths, fss_basic_list_read_depth)
+
+  #define macro_fss_basic_list_read_depths_delete_simple(depths)  f_macro_memory_structure_delete_simple(depths, fss_basic_list_read_depth)
+  #define macro_fss_basic_list_read_depths_destroy_simple(depths) f_macro_memory_structure_destroy_simple(depths, fss_basic_list_read_depth)
 
   #define macro_fss_basic_list_read_depths_resize(status, depths, new_length) f_macro_memory_structure_resize(status, depths, fss_basic_list_read_depth, new_length)
   #define macro_fss_basic_list_read_depths_adjust(status, depths, new_length) f_macro_memory_structure_adjust(status, depths, fss_basic_list_read_depth, new_length)

@@ -111,13 +111,11 @@ extern "C" {
         parameter_counter = needs_additional.array[0];
 
         if (parameters.parameter[parameter_counter].additional.used >= parameters.parameter[parameter_counter].additional.size) {
-          f_status allocation_status = f_none;
+          f_macro_string_lengths_resize(status, parameters.parameter[parameter_counter].additional, parameters.parameter[parameter_counter].additional.size + f_console_default_allocation_step);
 
-          f_macro_string_lengths_resize(allocation_status, parameters.parameter[parameter_counter].additional, parameters.parameter[parameter_counter].additional.size + f_console_default_allocation_step);
-
-          if (f_status_is_error(allocation_status)) {
-            f_macro_string_lengths_delete(status, needs_additional);
-            return f_status_set_error(allocation_status);
+          if (f_status_is_error(status)) {
+            f_macro_string_lengths_delete_simple(needs_additional);
+            return status;
           }
         }
 
@@ -163,7 +161,7 @@ extern "C" {
                 status = f_utf_char_to_character(arguments.argv[location] + sub_location, max_width, &character_argument_utf);
 
                 if (status != f_none) {
-                  f_macro_string_lengths_delete(status, needs_additional);
+                  f_macro_string_lengths_delete_simple(needs_additional);
                   return status;
                 }
 
@@ -172,7 +170,7 @@ extern "C" {
                 status = f_utf_char_to_character((f_string) parameters.parameter[parameter_counter].symbol_short, max_width, &character_console_utf);
 
                 if (status != f_none) {
-                  f_macro_string_lengths_delete(status, needs_additional);
+                  f_macro_string_lengths_delete_simple(needs_additional);
                   return status;
                 }
 
@@ -195,13 +193,11 @@ extern "C" {
             }
 
             if (parameters.parameter[parameter_counter].locations.used >= parameters.parameter[parameter_counter].locations.size) {
-              f_status allocation_status = f_none;
+              f_macro_string_lengths_resize(status, parameters.parameter[parameter_counter].locations, parameters.parameter[parameter_counter].locations.size + f_console_default_allocation_step);
 
-              f_macro_string_lengths_resize(allocation_status, parameters.parameter[parameter_counter].locations, parameters.parameter[parameter_counter].locations.size + f_console_default_allocation_step);
-
-              if (f_status_is_error(allocation_status)) {
-                f_macro_string_lengths_delete(status, needs_additional);
-                return f_status_set_error(allocation_status);
+              if (f_status_is_error(status)) {
+                f_macro_string_lengths_delete_simple(needs_additional);
+                return status;
               }
             }
 
@@ -219,13 +215,11 @@ extern "C" {
 
             if (parameters.parameter[parameter_counter].has_additional) {
               if (needs_additional.used + parameters.parameter[parameter_counter].has_additional > needs_additional.size) {
-                f_status allocation_status = f_none;
+                f_macro_string_lengths_resize(status, needs_additional, needs_additional.used + parameters.parameter[parameter_counter].has_additional);
 
-                f_macro_string_lengths_resize(allocation_status, needs_additional, needs_additional.used + parameters.parameter[parameter_counter].has_additional);
-
-                if (f_status_is_error(allocation_status)) {
-                  f_macro_string_lengths_delete(status, needs_additional);
-                  return f_status_set_error(allocation_status);
+                if (f_status_is_error(status)) {
+                  f_macro_string_lengths_delete_simple(needs_additional);
+                  return status;
                 }
               }
 
@@ -258,13 +252,11 @@ extern "C" {
           }
 
           if (parameters.parameter[parameter_counter].locations.used >= parameters.parameter[parameter_counter].locations.size) {
-            f_status allocation_status = f_none;
+            f_macro_string_lengths_resize(status, parameters.parameter[parameter_counter].locations, parameters.parameter[parameter_counter].locations.size + f_console_default_allocation_step);
 
-            f_macro_string_lengths_resize(allocation_status, parameters.parameter[parameter_counter].locations, parameters.parameter[parameter_counter].locations.size + f_console_default_allocation_step);
-
-            if (f_status_is_error(allocation_status)) {
-              f_macro_string_lengths_delete(status, needs_additional);
-              return f_status_set_error(allocation_status);
+            if (f_status_is_error(status)) {
+              f_macro_string_lengths_delete_simple(needs_additional);
+              return status;
             }
           }
 
@@ -278,13 +270,11 @@ extern "C" {
 
           if (parameters.parameter[parameter_counter].has_additional) {
             if (needs_additional.used + parameters.parameter[parameter_counter].has_additional > needs_additional.size) {
-              f_status allocation_status = f_none;
+              f_macro_string_lengths_resize(status, needs_additional, needs_additional.used + parameters.parameter[parameter_counter].has_additional);
 
-              f_macro_string_lengths_resize(allocation_status, needs_additional, needs_additional.used + parameters.parameter[parameter_counter].has_additional);
-
-              if (f_status_is_error(allocation_status)) {
-                f_macro_string_lengths_delete(status, needs_additional);
-                return f_status_set_error(allocation_status);
+              if (f_status_is_error(status)) {
+                f_macro_string_lengths_delete_simple(needs_additional);
+                return status;
               }
             }
 
@@ -301,13 +291,11 @@ extern "C" {
         if (!found) {
           // populate list of remaining parameters.parameter not associated with anything.
           if (remaining->used >= remaining->size) {
-            f_status allocation_status = f_none;
+            f_macro_string_lengths_resize(status, (*remaining), remaining->size + f_console_default_allocation_step);
 
-            f_macro_string_lengths_resize(allocation_status, (*remaining), remaining->size + f_console_default_allocation_step);
-
-            if (f_status_is_error(allocation_status)) {
-              f_macro_string_lengths_delete(status, needs_additional);
-              return f_status_set_error(allocation_status);
+            if (f_status_is_error(status)) {
+              f_macro_string_lengths_delete_simple(needs_additional);
+              return status;
             }
           }
 
@@ -326,10 +314,7 @@ extern "C" {
       status = f_none;
     }
 
-    {
-      f_status allocation_status = f_none;
-      f_macro_string_lengths_delete(allocation_status, needs_additional);
-    }
+    f_macro_string_lengths_delete_simple(needs_additional);
 
     return status;
   }
