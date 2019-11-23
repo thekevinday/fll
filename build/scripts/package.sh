@@ -63,9 +63,15 @@ package_main(){
           grab_next=path_destination
         elif [[ $p == "-i" || $p == "--individual" ]] ; then
           mode_individual="yes"
+          mode_level=
+          mode_monolithic=
         elif [[ $p == "-l" || $p == "--level" ]] ; then
+          mode_individual=
           mode_level="yes"
+          mode_monolithic=
         elif [[ $p == "-m" || $p == "--monolithic" ]] ; then
+          mode_individual=
+          mode_level=
           mode_monolithic="yes"
         elif [[ $p == "-p" || $p == "--program" ]] ; then
           mode_program="yes"

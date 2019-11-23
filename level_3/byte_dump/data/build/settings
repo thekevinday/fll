@@ -11,8 +11,8 @@ build_compiler gcc
 build_linker ar
 build_libraries -lc
 build_libraries_fll -lfll_program -lfl_utf -lfl_string -lfl_file -lfl_console -lfl_color -lf_utf -lf_print -lf_pipe -lf_file -lf_conversion -lf_console -lf_memory
-#build_libraries_fll-level -lfll_2 -lfll_1 -lfll_0
-#build_libraries_fll-monolithic -lfll
+build_libraries_fll-level -lfll_2 -lfll_1 -lfll_0
+build_libraries_fll-monolithic -lfll
 build_sources_library byte_dump.c private-byte_dump.c
 build_sources_program main.c
 build_sources_headers byte_dump.h

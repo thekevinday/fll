@@ -28,6 +28,7 @@ generate_main(){
   local c_subtle="\\033[1;30m"
   local c_prefix="\\"
 
+  local build_libraries_fll="build_libraries_fll"
   local variables=
   local settings_file=
   local settings_defines=
@@ -78,6 +79,10 @@ generate_main(){
           grab_next=work_directory
         elif [[ $p == "-d" || $p == "--defines" ]] ; then
           grab_next=defines_override
+        elif [[ $p == "-l" || $p == "--level" ]] ; then
+          build_libraries_fll="build_libraries_fll-level"
+        elif [[ $p == "-m" || $p == "--monolithic" ]] ; then
+          build_libraries_fll="build_libraries_fll-monolithic"
         elif [[ $p == "--enable-shared" ]] ; then
           enable_shared="yes"
         elif [[ $p == "--disable-shared" ]] ; then
@@ -227,6 +232,8 @@ generate_help(){
   echo -e " -${c_important}p$c_reset, --${c_important}project${c_reset}         Project name for storing built status"
   echo -e " -${c_important}w$c_reset, --${c_important}work_directory${c_reset}  Use includes/libraries from this directory instead of system"
   echo -e " -${c_important}d$c_reset, --${c_important}defines${c_reset}         Override custom defines with these defines"
+  echo -e " -${c_important}l$c_reset, --${c_important}level${c_reset}           Use FLL dependencies by level (-lfll_0, -lfll_1, -lfll_2)"
+  echo -e " -${c_important}m$c_reset, --${c_important}monolithic${c_reset}      Use FLL dependencies by monolithic (-lfll)"
   echo
   echo -e "${c_highlight}Special Options:$c_reset"
   echo -e " --${c_important}enable-shared${c_reset}   Forcibly do install shared files"
@@ -248,7 +255,7 @@ generate_id(){
     "build_compiler") echo -n 5;;
     "build_linker") echo -n 6;;
     "build_libraries") echo -n 7;;
-    "build_libraries_fll") echo -n 8;;
+    "$build_libraries_fll") echo -n 8;;
     "build_sources_library") echo -n 9;;
     "build_sources_program") echo -n 10;;
     "build_sources_headers") echo -n 11;;
@@ -285,8 +292,8 @@ generate_load_settings(){
     exit $failure
   fi
 
-  for i in project_name project_level version_major version_minor version_micro build_compiler build_linker build_libraries build_libraries_fll build_sources_library build_sources_program build_sources_headers build_sources_settings build_shared build_static defines_all defines_shared defines_static flags_all flags_shared flags_static flags_library flags_program ; do
-    variables[$(generate_id $i)]=$(grep -s -o "^[[:space:]]*$i\>.*$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
+  for i in project_name project_level version_major version_minor version_micro build_compiler build_linker build_libraries $build_libraries_fll build_sources_library build_sources_program build_sources_headers build_sources_settings build_shared build_static defines_all defines_shared defines_static flags_all flags_shared flags_static flags_library flags_program ; do
+    variables[$(generate_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 
   if [[ $project_name == "" ]] ; then
@@ -336,7 +343,7 @@ generate_operation_build(){
   local micro=${variables[$(generate_id version_micro)]}
   local compiler=${variables[$(generate_id build_compiler)]}
   local linker=${variables[$(generate_id build_linker)]}
-  local arguments="${variables[$(generate_id build_libraries_fll)]} ${variables[$(generate_id build_libraries)]}"
+  local arguments="${variables[$(generate_id "$build_libraries_fll")]} ${variables[$(generate_id build_libraries)]}"
   local arguments_include="-I${path_build}includes"
   local arguments_shared="-L${path_build}libraries/shared"
   local arguments_static="-L${path_build}libraries/static"
