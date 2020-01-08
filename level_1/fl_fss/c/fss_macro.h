@@ -152,8 +152,8 @@ extern "C" {
     }
 #endif // _di_fl_macro_fss_allocate_content_if_necessary_
 
-#ifndef _di_fl_macro_fss_content_nest_return_on_overflow_
-  #define fl_macro_fss_content_nest_return_on_overflow(buffer, location, found, delimits, positions, eos_status, stop_status) \
+#ifndef _di_fl_macro_fss_nest_return_on_overflow_
+  #define fl_macro_fss_nest_return_on_overflow(buffer, location, found, delimits, positions, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
       f_status macro_allocation_status = f_none; \
       f_macro_string_lengths_delete(macro_allocation_status, delimits); \
@@ -170,10 +170,10 @@ extern "C" {
       /* @todo: found.array[found.used].stop = location.stop; */ \
       return stop_status; \
     }
-#endif // _di_fl_macro_fss_content_nest_return_on_overflow_
+#endif // _di_fl_macro_fss_nest_return_on_overflow_
 
-#ifndef _di_fl_macro_fss_content_nest_delimited_return_on_overflow_
-  #define fl_macro_fss_content_nest_delimited_return_on_overflow(buffer, location, found, delimits, positions, eos_status, stop_status) \
+#ifndef _di_fl_macro_fss_nest_delimited_return_on_overflow_
+  #define fl_macro_fss_nest_delimited_return_on_overflow(buffer, location, found, delimits, positions, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
       f_status macro_allocation_status = f_none; \
       f_string_length i = 0; \
@@ -201,22 +201,7 @@ extern "C" {
       return stop_status; \
     }
     // @todo: found.array[found.used].stop = location.stop;
-#endif // _di_fl_macro_fss_content_nest_delimited_return_on_overflow_
-
-#ifndef _di_fl_macro_fss_allocate_content_nest_if_necessary_
-  #define fl_macro_fss_allocate_content_nest_if_necessary(content, delimits) \
-    if (content.used >= content.size) { \
-      f_status status = f_none; \
-      \
-      f_macro_fss_content_nest_resize(status, content, content.size + f_fss_default_allocation_step); \
-      if (f_status_is_error(status)) { \
-        f_status macro_allocation_status = f_none; \
-        f_macro_string_lengths_delete(macro_allocation_status, delimits); \
-        \
-        return status; \
-      } \
-    }
-#endif // _di_fl_macro_fss_allocate_content_nest_if_necessary_
+#endif // _di_fl_macro_fss_nest_delimited_return_on_overflow_
 
 #ifndef _di_fl_macro_fss_object_seek_till_newline_
   #define fl_macro_fss_object_seek_till_newline(buffer, location, delimits, eos_status, stop_status) \

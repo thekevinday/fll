@@ -73,6 +73,10 @@ extern "C" {
  * This will update the buffer at the given range with any placeholders to unescape any escaped data.
  * Calling this more than once on the same buffer range could result in multiple unescaping.
  *
+ * This operates on the assumption that found.array[0].array[found.array[0].used].content is the current content being processed.
+ * Therefore the object for this content will also need to be found.array[0].array[found.array[0].used].object.
+ * The object at depth 0 will not be populated, but all nested objects will be populated at their respective depth along with the content.
+ *
  * @param buffer
  *   The buffer to read from.
  *   This will be updated with delimit placeholders as it is being processed.
@@ -99,7 +103,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_extended_list_content_read_
-  extern f_return_status fl_fss_extended_list_content_read(f_string_dynamic *buffer, f_string_location *location, f_fss_content_nest *found);
+  extern f_return_status fl_fss_extended_list_content_read(f_string_dynamic *buffer, f_string_location *location, f_fss_nest *found);
 #endif // _di_fl_fss_extended_list_content_read_
 
 /**

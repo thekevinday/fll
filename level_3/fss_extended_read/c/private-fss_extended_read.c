@@ -218,13 +218,13 @@ extern "C" {
 
         if (status == f_invalid_parameter) {
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "fll_fss_extended_list_read()");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "fll_fss_extended_read()");
           fl_color_print(f_standard_error, data->context.error, data->context.reset, " for the file '");
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", filename);
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");
         }
         else if (status == f_error_allocation || status == f_error_reallocation) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory");
+          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
         }
         else if (status == f_incomplete_utf_on_stop) {
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
@@ -240,7 +240,7 @@ extern "C" {
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (");
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%u", status);
           fl_color_print(f_standard_error, data->context.error, data->context.reset, ") has occurred while calling ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "fll_fss_extended_list_read()");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "fll_fss_extended_read()");
           fl_color_print(f_standard_error, data->context.error, data->context.reset, " for the file '");
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", filename);
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");

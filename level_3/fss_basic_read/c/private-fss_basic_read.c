@@ -224,7 +224,7 @@ extern "C" {
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");
         }
         else if (status == f_error_allocation || status == f_error_reallocation) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory");
+          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
         }
         else if (status == f_incomplete_utf_on_stop) {
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");

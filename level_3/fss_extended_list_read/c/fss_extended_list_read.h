@@ -59,6 +59,7 @@ extern "C" {
 #ifndef _di_fss_extended_list_read_defines_
   #define fss_extended_list_read_short_at     "a"
   #define fss_extended_list_read_short_depth  "d"
+  #define fss_extended_list_read_short_empty  "e"
   #define fss_extended_list_read_short_line   "l"
   #define fss_extended_list_read_short_name   "n"
   #define fss_extended_list_read_short_object "o"
@@ -67,6 +68,7 @@ extern "C" {
 
   #define fss_extended_list_read_long_at     "at"
   #define fss_extended_list_read_long_depth  "depth"
+  #define fss_extended_list_read_long_empty  "empty"
   #define fss_extended_list_read_long_line   "line"
   #define fss_extended_list_read_long_name   "name"
   #define fss_extended_list_read_long_object "object"
@@ -82,6 +84,7 @@ extern "C" {
 
     fss_extended_list_read_parameter_at,
     fss_extended_list_read_parameter_depth,
+    fss_extended_list_read_parameter_empty,
     fss_extended_list_read_parameter_line,
     fss_extended_list_read_parameter_name,
     fss_extended_list_read_parameter_object,
@@ -98,6 +101,7 @@ extern "C" {
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
       f_console_parameter_initialize(fss_extended_list_read_short_at, fss_extended_list_read_long_at, 0, f_true, f_console_type_normal), \
       f_console_parameter_initialize(fss_extended_list_read_short_depth, fss_extended_list_read_long_depth, 0, f_true, f_console_type_normal), \
+      f_console_parameter_initialize(fss_extended_list_read_short_empty, fss_extended_list_read_long_empty, 0, f_false, f_console_type_normal), \
       f_console_parameter_initialize(fss_extended_list_read_short_line, fss_extended_list_read_long_line, 0, f_true, f_console_type_normal), \
       f_console_parameter_initialize(fss_extended_list_read_short_name, fss_extended_list_read_long_name, 0, f_true, f_console_type_normal), \
       f_console_parameter_initialize(fss_extended_list_read_short_object, fss_extended_list_read_long_object, 0, f_false, f_console_type_normal), \
@@ -113,8 +117,7 @@ extern "C" {
     f_console_parameter parameters[fss_extended_list_read_total_parameters];
 
     f_string_dynamic buffer;
-    f_fss_objects objects;
-    f_fss_content_nests contents;
+    f_fss_nest nest;
     f_file_position file_position;
     f_string_lengths remaining;
     bool process_pipe;
@@ -126,8 +129,7 @@ extern "C" {
     { \
       f_console_parameter_initialize_fss_extended_list_read, \
       f_string_dynamic_initialize, \
-      f_fss_objects_initialize, \
-      f_fss_content_nests_initialize, \
+      f_fss_nest_initialize, \
       f_file_position_initialize, \
       f_string_lengths_initialize, \
       f_false, \

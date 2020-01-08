@@ -34,10 +34,8 @@ extern "C" {
  *   The buffer to read from.
  * @param location
  *   The location within the buffer that is currently being read.
- * @param objects
- *   This will be populated with all valid objects found.
- * @param contents
- *   This will be populated with all valid contents found.
+ * @param nest
+ *   An nested set of all objects and content.
  *
  * @return
  *   f_none on success.
@@ -53,7 +51,7 @@ extern "C" {
  *   f_number_overflow (with error bit) if the maximimum buffer size is reached.
  */
 #ifndef _di_fll_fss_extended_list_read_
-  extern f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_location *input, f_fss_objects *objects, f_fss_content_nests *contents);
+  extern f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_location *input, f_fss_nest *nest);
 #endif // _di_fll_fss_extended_list_read_
 
 /**
