@@ -600,7 +600,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
               fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: File descriptor error while trying to open the file '%.*s'", file_path.used, file_path.string);
             }
             else if (status == f_error_allocation || status == f_error_reallocation) {
-              fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory");
+              fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
             }
             else {
               fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
@@ -642,7 +642,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
                 fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: A read error occurred while accessing the file '%.*s'", file_path.used, file_path.string);
               }
               else if (status == f_error_allocation || status == f_error_reallocation) {
-                fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory");
+                fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
               }
               else {
                 fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fl_file_read()", status);
@@ -669,7 +669,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
                   // empty files are to be silently ignored
                 }
                 else if (status == f_error_allocation || status == f_error_reallocation) {
-                  fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory");
+                  fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
                 }
                 else {
                   fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fll_fss_basic_read() for the file '%.*s'", status, file_path.used, file_path.string);
@@ -705,7 +705,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
                 }
 
                 if (f_status_is_error(status)) {
-                  fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory");
+                  fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
 
                   f_macro_string_dynamic_delete_simple(ip_list_action);
                 }
@@ -725,7 +725,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
                     f_macro_string_dynamic_new(status, ip_argument, ip_length);
 
                     if (f_status_is_error(status)) {
-                      fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory");
+                      fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
                       break;
                     }
 
