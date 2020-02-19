@@ -776,28 +776,28 @@ extern "C" {
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_unterminated_nest, length, fl_status_string_unterminated_nest_length) == f_equal_to) {
-        *code = f_unterminated_nest;
+      if (fl_string_compare(string, fl_status_string_unterminated, length, fl_status_string_unterminated_length) == f_equal_to) {
+        *code = f_unterminated;
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_unterminated_nest_on_eof, length, fl_status_string_unterminated_nest_on_eof_length) == f_equal_to) {
-        *code = f_unterminated_nest_on_eof;
+      if (fl_string_compare(string, fl_status_string_unterminated_on_eof, length, fl_status_string_unterminated_on_eof_length) == f_equal_to) {
+        *code = f_unterminated_on_eof;
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_unterminated_nest_on_eol, length, fl_status_string_unterminated_nest_on_eol_length) == f_equal_to) {
-        *code = f_unterminated_nest_on_eol;
+      if (fl_string_compare(string, fl_status_string_unterminated_on_eol, length, fl_status_string_unterminated_on_eol_length) == f_equal_to) {
+        *code = f_unterminated_on_eol;
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_unterminated_nest_on_eos, length, fl_status_string_unterminated_nest_on_eos_length) == f_equal_to) {
-        *code = f_unterminated_nest_on_eos;
+      if (fl_string_compare(string, fl_status_string_unterminated_on_eos, length, fl_status_string_unterminated_on_eos_length) == f_equal_to) {
+        *code = f_unterminated_on_eos;
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_unterminated_nest_on_stop, length, fl_status_string_unterminated_nest_on_stop_length) == f_equal_to) {
-        *code = f_unterminated_nest_on_stop;
+      if (fl_string_compare(string, fl_status_string_unterminated_on_stop, length, fl_status_string_unterminated_on_stop_length) == f_equal_to) {
+        *code = f_unterminated_on_stop;
         return f_none;
       }
 
@@ -823,6 +823,31 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_unterminated_group_on_stop, length, fl_status_string_unterminated_group_on_stop_length) == f_equal_to) {
         *code = f_unterminated_group_on_stop;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_unterminated_nest, length, fl_status_string_unterminated_nest_length) == f_equal_to) {
+        *code = f_unterminated_nest;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_unterminated_nest_on_eof, length, fl_status_string_unterminated_nest_on_eof_length) == f_equal_to) {
+        *code = f_unterminated_nest_on_eof;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_unterminated_nest_on_eol, length, fl_status_string_unterminated_nest_on_eol_length) == f_equal_to) {
+        *code = f_unterminated_nest_on_eol;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_unterminated_nest_on_eos, length, fl_status_string_unterminated_nest_on_eos_length) == f_equal_to) {
+        *code = f_unterminated_nest_on_eos;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_unterminated_nest_on_stop, length, fl_status_string_unterminated_nest_on_stop_length) == f_equal_to) {
+        *code = f_unterminated_nest_on_stop;
         return f_none;
       }
 

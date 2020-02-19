@@ -474,20 +474,20 @@ extern "C" {
         case f_string_too_large:
           *string = fl_status_string_string_too_large;
           break;
-        case f_unterminated_nest:
-          *string = fl_status_string_unterminated_nest;
+        case f_unterminated:
+          *string = fl_status_string_unterminated;
           break;
-        case f_unterminated_nest_on_eof:
-          *string = fl_status_string_unterminated_nest_on_eof;
+        case f_unterminated_on_eof:
+          *string = fl_status_string_unterminated_on_eof;
           break;
-        case f_unterminated_nest_on_eol:
-          *string = fl_status_string_unterminated_nest_on_eol;
+        case f_unterminated_on_eol:
+          *string = fl_status_string_unterminated_on_eol;
           break;
-        case f_unterminated_nest_on_eos:
-          *string = fl_status_string_unterminated_nest_on_eos;
+        case f_unterminated_on_eos:
+          *string = fl_status_string_unterminated_on_eos;
           break;
-        case f_unterminated_nest_on_stop:
-          *string = fl_status_string_unterminated_nest_on_stop;
+        case f_unterminated_on_stop:
+          *string = fl_status_string_unterminated_on_stop;
           break;
         case f_unterminated_group:
           *string = fl_status_string_unterminated_group;
@@ -503,6 +503,21 @@ extern "C" {
           break;
         case f_unterminated_group_on_stop:
           *string = fl_status_string_unterminated_group_on_stop;
+          break;
+        case f_unterminated_nest:
+          *string = fl_status_string_unterminated_nest;
+          break;
+        case f_unterminated_nest_on_eof:
+          *string = fl_status_string_unterminated_nest_on_eof;
+          break;
+        case f_unterminated_nest_on_eol:
+          *string = fl_status_string_unterminated_nest_on_eol;
+          break;
+        case f_unterminated_nest_on_eos:
+          *string = fl_status_string_unterminated_nest_on_eos;
+          break;
+        case f_unterminated_nest_on_stop:
+          *string = fl_status_string_unterminated_nest_on_stop;
           break;
         case f_incomplete_utf:
           *string = fl_status_string_incomplete_utf;

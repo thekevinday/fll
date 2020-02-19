@@ -477,20 +477,20 @@ extern "C" {
     #define fl_status_string_string_too_large "f_string_too_large"
     #define fl_status_string_string_too_large_length 19
 
-    #define fl_status_string_unterminated_nest "f_unterminated_nest"
-    #define fl_status_string_unterminated_nest_length 20
+    #define fl_status_string_unterminated "f_unterminated"
+    #define fl_status_string_unterminated_length 15
 
-    #define fl_status_string_unterminated_nest_on_eof "f_unterminated_nest_on_eof"
-    #define fl_status_string_unterminated_nest_on_eof_length 27
+    #define fl_status_string_unterminated_on_eof "f_unterminated_on_eof"
+    #define fl_status_string_unterminated_on_eof_length 22
 
-    #define fl_status_string_unterminated_nest_on_eol "f_unterminated_nest_on_eol"
-    #define fl_status_string_unterminated_nest_on_eol_length 27
+    #define fl_status_string_unterminated_on_eol "f_unterminated_on_eol"
+    #define fl_status_string_unterminated_on_eol_length 22
 
-    #define fl_status_string_unterminated_nest_on_eos "f_unterminated_nest_on_eos"
-    #define fl_status_string_unterminated_nest_on_eos_length 27
+    #define fl_status_string_unterminated_on_eos "f_unterminated_on_eos"
+    #define fl_status_string_unterminated_on_eos_length 22
 
-    #define fl_status_string_unterminated_nest_on_stop "f_unterminated_nest_on_stop"
-    #define fl_status_string_unterminated_nest_on_stop_length 28
+    #define fl_status_string_unterminated_on_stop "f_unterminated_on_stop"
+    #define fl_status_string_unterminated_on_stop_length 23
 
     #define fl_status_string_unterminated_group "f_unterminated_group"
     #define fl_status_string_unterminated_group_length 21
@@ -506,6 +506,21 @@ extern "C" {
 
     #define fl_status_string_unterminated_group_on_stop "f_unterminated_group_on_stop"
     #define fl_status_string_unterminated_group_on_stop_length 29
+
+    #define fl_status_string_unterminated_nest "f_unterminated_nest"
+    #define fl_status_string_unterminated_nest_length 20
+
+    #define fl_status_string_unterminated_nest_on_eof "f_unterminated_nest_on_eof"
+    #define fl_status_string_unterminated_nest_on_eof_length 27
+
+    #define fl_status_string_unterminated_nest_on_eol "f_unterminated_nest_on_eol"
+    #define fl_status_string_unterminated_nest_on_eol_length 27
+
+    #define fl_status_string_unterminated_nest_on_eos "f_unterminated_nest_on_eos"
+    #define fl_status_string_unterminated_nest_on_eos_length 27
+
+    #define fl_status_string_unterminated_nest_on_stop "f_unterminated_nest_on_stop"
+    #define fl_status_string_unterminated_nest_on_stop_length 28
 
     #define fl_status_string_incomplete_utf "f_incomplete_utf"
     #define fl_status_string_incomplete_utf_length 17
