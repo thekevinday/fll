@@ -38,12 +38,19 @@ extern "C" {
  *   An nested set of all objects and content.
  *
  * @return
- *   f_none on success.
- *   f_none_on_stop on success after reaching stopping point .
- *   f_none_on_eos on success after reaching the end of the buffer.
+ *   f_none on success (both valid object and valid content found with start location is at end of content).
+ *   f_none_on_stop on success after reaching stopping point (both valid object and valid content found with start location is at stop point).
+ *   f_none_on_eos on success after reaching the end of the buffer (both valid object and valid content found with start location is at end of buffer).
  *   f_no_data_on_stop no data to write due start location being greater than stop location.
  *   f_no_data_on_eos no data to write due start location being greater than or equal to buffer size.
  *   f_no_data_on_eol if there is no data to write and EOL was reached (@todo: review related code and detemine what this is doing).
+ *   fl_fss_found_object_no_content on success and object was found but no content was found (start location is at end of object).
+ *   f_unterminated_on_eos (with error bit) if end of buffer is reached before a closing bracket is found (object was found).
+ *   f_unterminated_on_stop (with error bit) if stop location is reached before a closing bracket is found (object was found).
+ *   f_unterminated_nest_on_eos (with error bit) if end of buffer is reached while inside a nested list before a closing bracket is found (object was found).
+ *   f_unterminated_nest_on_stop (with error bit) if stop location is reached while inside a nested list before a closing bracket is found (object was found).
+ *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *   f_error_reallocation (with error bit) on reallocation error.

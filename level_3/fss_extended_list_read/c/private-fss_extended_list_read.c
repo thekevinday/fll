@@ -257,19 +257,31 @@ extern "C" {
       }
     }
 
-    f_string_length select = 0;
-
-    if (data->parameters[fss_extended_list_read_parameter_select].result == f_console_result_additional) {
-      status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[fss_extended_list_read_parameter_select].additional.array[data->parameters[fss_extended_list_read_parameter_select].additional.used - 1]], &select);
-
-      if (f_status_is_error(status)) {
-        fss_extended_list_read_print_number_argument_error(data->context, "fl_console_parameter_to_number_unsigned", fss_extended_list_read_long_select, arguments.argv[data->parameters[fss_extended_list_read_parameter_select].additional.array[0]], f_status_set_fine(status));
-        return status;
+    // Requested depths cannot be greater than contents depth.
+    if (depths.used > data->nest.used) {
+      if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
+        fprintf(f_standard_output, "0%c", f_string_eol);
+        return f_none;
       }
 
-      // This standard does not support multiple content groups.
-      if (select > 0) {
-        return f_none;
+      return f_none;
+    }
+
+    {
+      f_string_length select = 0;
+
+      if (data->parameters[fss_extended_list_read_parameter_select].result == f_console_result_additional) {
+        status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[fss_extended_list_read_parameter_select].additional.array[data->parameters[fss_extended_list_read_parameter_select].additional.used - 1]], &select);
+
+        if (f_status_is_error(status)) {
+          fss_extended_list_read_print_number_argument_error(data->context, "fl_console_parameter_to_number_unsigned", fss_extended_list_read_long_select, arguments.argv[data->parameters[fss_extended_list_read_parameter_select].additional.array[0]], f_status_set_fine(status));
+          return status;
+        }
+
+        // This standard does not support multiple content groups.
+        if (select > 0) {
+          return f_none;
+        }
       }
     }
 
@@ -370,7 +382,7 @@ extern "C" {
 
         for (f_array_length i = 0; i < items->used; i++) {
           if (names[i]) {
-            f_print_string_dynamic_partial(f_standard_output, data->buffer, items->array[depth_setting.value_at].object);
+            f_print_string_dynamic_partial(f_standard_output, data->buffer, items->array[i].object);
             fprintf(f_standard_output, "%c", f_string_eol);
           }
         } // for

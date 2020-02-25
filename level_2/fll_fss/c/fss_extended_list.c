@@ -34,10 +34,13 @@ extern "C" {
 
         status = fl_fss_extended_list_object_read(buffer, input, &nest->depth[0].array[nest->depth[0].used].object);
 
+        if (f_status_is_error(status)) {
+          return status;
+        }
+
         if (input->start >= input->stop || input->start >= buffer->used) {
           if (status == fl_fss_found_object || status == fl_fss_found_object_no_content) {
-            nest->depth[0].used++;
-
+            // extended list requires content closure, so this could be an error.
             return fl_fss_found_object_no_content;
           }
 
@@ -65,27 +68,23 @@ extern "C" {
         }
         else if (status == fl_fss_found_object_no_content) {
           found_data = f_true;
-
-          if (nest->depth[0].used >= nest->depth[0].size) {
-            f_status status = f_none;
-
-            f_macro_fss_items_resize(status, nest->depth[0], nest->depth[0].used + f_fss_default_allocation_step);
-
-            if (f_status_is_error(status)) {
-              return status;
-            }
-          }
-
           break;
         }
       } while (status == fl_fss_found_no_object);
 
       if (status == f_none_on_eos || status == f_none_on_stop) {
-        nest->depth[0].used++;
         return status;
       }
       else if (status == f_no_data_on_eos || status == f_no_data_on_stop) {
+        // If at least some valid object was found, then return f_none equivalents.
+        if (nest->depth[0].used > initial_used) {
+          if (status == f_no_data_on_eos) return f_none_on_eos;
+          if (status == f_no_data_on_stop) return f_none_on_stop;
+        }
 
+        return status;
+      }
+      else if (status == f_unterminated_on_eos || status == f_unterminated_on_stop || status == f_unterminated_nest_on_eos || status == f_unterminated_nest_on_stop) {
         // If at least some valid object was found, then return f_none equivalents.
         if (nest->depth[0].used > initial_used) {
           if (status == f_no_data_on_eos) return f_none_on_eos;
@@ -99,18 +98,12 @@ extern "C" {
       }
       // When content is found, the input->start is incremented, if content is found at input->stop, then input->start will be > input.stop.
       else if (input->start >= input->stop || input->start >= buffer->used) {
-        if (status == fl_fss_found_object || status == fl_fss_found_content || status == fl_fss_found_no_content || status == fl_fss_found_object_no_content) {
-          nest->depth[0].used++;
-        }
-
         if (input->start >= buffer->used) {
           return f_none_on_eos;
         }
 
         return f_none_on_stop;
       }
-
-      nest->depth[0].used++;
     } while (input->start < f_string_max_size);
 
     return f_status_is_error(f_number_overflow);

@@ -1,5 +1,5 @@
 #include <level_1/fss_basic.h>
-
+#include <level_0/print.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -101,7 +101,7 @@ extern "C" {
             if (slash_count % 2 == 0) {
               while (slash_count > 0) {
                 if (buffer->string[location->start] == f_fss_delimit_slash) {
-                  if (slash_count % 2 != 0) {
+                  if (slash_count % 2 == 1) {
                     delimits.array[delimits.used] = location->start;
                     delimits.used++;
                   }
@@ -197,9 +197,10 @@ extern "C" {
     // delimits must only be applied once a valid object is found.
     f_string_lengths delimits = f_string_lengths_initialize;
     f_string_lengths positions_start = f_string_lengths_initialize;
+    f_fss_objects objects = f_fss_objects_initialize;
 
     fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*location))
-    fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), positions_start, delimits, f_none_on_eos, f_none_on_stop)
+    fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), positions_start, delimits, objects, f_none_on_eos, f_none_on_stop)
 
     if (found->used + 1 >= found->size) {
       f_macro_fss_nest_resize(status, (*found), found->size + f_fss_default_allocation_step + 1);
@@ -212,11 +213,19 @@ extern "C" {
 
     f_array_length depth = 0;
     f_string_length position_previous = location->start;
+    f_string_length line_start = location->start;
     f_string_length last_newline = location->start;
-    f_fss_object object = f_fss_object_initialize;
 
     f_macro_string_lengths_new(status, positions_start, f_fss_default_allocation_step);
     if (f_status_is_error(status)) {
+      f_macro_string_lengths_delete_simple(delimits);
+
+      return status;
+    }
+
+    f_macro_fss_objects_new(status, objects, f_fss_default_allocation_step);
+    if (f_status_is_error(status)) {
+      f_macro_string_lengths_delete_simple(positions_start);
       f_macro_string_lengths_delete_simple(delimits);
 
       return status;
@@ -230,23 +239,17 @@ extern "C" {
     while (location->start < buffer->used && location->start <= location->stop) {
       if (buffer->string[location->start] == f_string_eol) {
         last_newline = location->start;
-
         position_previous = location->start;
-        status = fl_fss_increment_buffer(*buffer, location, 1);
-        if (f_status_is_error(status)) {
-          f_macro_string_lengths_delete_simple(delimits);
-          f_macro_string_lengths_delete_simple(positions_start);
-
-          return status;
-        }
+        location->start++;
 
         if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
+          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
         }
         else {
-          fl_macro_fss_nest_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_none_on_eos, f_none_on_stop)
+          fl_macro_fss_nest_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_none_on_eos, f_none_on_stop)
         }
 
+        line_start = location->start;
         continue;
       }
 
@@ -260,31 +263,34 @@ extern "C" {
         if (f_status_is_error(status)) {
           f_macro_string_lengths_delete_simple(delimits);
           f_macro_string_lengths_delete_simple(positions_start);
+          f_macro_fss_objects_delete_simple(objects);
 
           return status;
         }
 
         while (location->start < buffer->used && location->start <= location->stop && (buffer->string[location->start] == f_fss_delimit_placeholder || buffer->string[location->start] == f_fss_delimit_slash)) {
           position_previous = location->start;
+
+          if (buffer->string[location->start] == f_fss_delimit_slash) {
+            slash_last = location->start;
+            slash_count++;
+          }
+
           status = fl_fss_increment_buffer(*buffer, location, 1);
           if (f_status_is_error(status)) {
-            if (buffer->string[location->start] == f_fss_delimit_slash) {
-              slash_last = location->start;
-              slash_count++;
-            }
-
             f_macro_string_lengths_delete_simple(delimits);
             f_macro_string_lengths_delete_simple(positions_start);
+            f_macro_fss_objects_delete_simple(objects);
 
             return status;
           }
         } // while
 
         if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
+          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
         }
         else {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_no_data_on_eos, f_no_data_on_stop)
+          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_no_data_on_eos, f_no_data_on_stop)
         }
 
         // All slashes for an open are delimited (because it could represent a slash in the object name).
@@ -296,8 +302,10 @@ extern "C" {
           last_newline = location->start;
           position_previous = location->start;
           location->start++;
+          line_start = location->start;
         }
         else if (buffer->string[location->start] == f_fss_extended_list_open || buffer->string[location->start] == f_fss_extended_list_close) {
+          f_string_length before_list_open = position_previous;
           bool is_open = f_false;
 
           if (buffer->string[location->start] == f_fss_extended_list_open) {
@@ -309,6 +317,8 @@ extern "C" {
 
           while (location->start < buffer->used && location->start <= location->stop) {
             if (buffer->string[location->start] == f_string_eol) {
+              last_newline = location->start;
+              line_start = location->start + 1;
               break;
             }
 
@@ -319,6 +329,7 @@ extern "C" {
             if (f_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               f_macro_string_lengths_delete_simple(positions_start);
+              f_macro_fss_objects_delete_simple(objects);
 
               return status;
             }
@@ -328,21 +339,23 @@ extern "C" {
             if (f_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               f_macro_string_lengths_delete_simple(positions_start);
+              f_macro_fss_objects_delete_simple(objects);
 
               return status;
             }
           } // while
 
           if (depth > 0) {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
+            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
           }
           else {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_no_data_on_eos, f_no_data_on_stop)
+            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_no_data_on_eos, f_no_data_on_stop)
           }
 
           // this is a valid object open/close that has been delimited, save the slash delimit positions.
           if (buffer->string[location->start] == f_string_eol) {
-            f_string_length location_newline = location->start;
+            last_newline = location->start;
+            line_start = location->start + 1;
 
             if (is_open) {
               bool is_object = f_false;
@@ -357,8 +370,11 @@ extern "C" {
                 f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
                 if (f_status_is_error(status)) {
+                  location->start = last_newline;
+
                   f_macro_string_lengths_delete_simple(delimits);
                   f_macro_string_lengths_delete_simple(positions_start);
+                  f_macro_fss_objects_delete_simple(objects);
 
                   return status;
                 }
@@ -367,7 +383,7 @@ extern "C" {
               // apply slash delimits, only slashes and placeholders should be present.
               while (slash_count > 0) {
                 if (buffer->string[location->start] == f_fss_delimit_slash) {
-                  if (slash_count % 2 != 0) {
+                  if (slash_count % 2 == 1) {
                     delimits.array[delimits.used] = location->start;
                     delimits.used++;
                   }
@@ -376,6 +392,7 @@ extern "C" {
                 }
 
                 // Delimit slashes and placeholders are required to be in the ASCII range.
+                position_previous = location->start;
                 location->start++;
               } // while
 
@@ -387,8 +404,11 @@ extern "C" {
                   f_macro_string_lengths_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
 
                   if (f_status_is_error(status)) {
+                    location->start = last_newline;
+
                     f_macro_string_lengths_delete_simple(delimits);
                     f_macro_string_lengths_delete_simple(positions_start);
+                    f_macro_fss_objects_delete_simple(objects);
 
                     return status;
                   }
@@ -398,23 +418,22 @@ extern "C" {
                   positions_start.used = depth;
                 }
 
-                positions_start.array[depth] = location_newline + 1;
+                positions_start.array[depth] = last_newline + 1;
 
-                object.start = last_newline + 1;
-                object.stop = position_previous;
+                objects.array[depth].start = line_start;
+                objects.array[depth].stop = before_list_open;
               }
-
-              last_newline = location_newline;
             }
             else {
-              location->start = slash_last;
-
               if (delimits.used + 1 >= delimits.size) {
                 f_macro_string_lengths_resize(status, delimits, delimits.size + f_fss_default_allocation_step);
 
                 if (f_status_is_error(status)) {
+                  location->start = last_newline;
+
                   f_macro_string_lengths_delete_simple(delimits);
                   f_macro_string_lengths_delete_simple(positions_start);
+                  f_macro_fss_objects_delete_simple(objects);
 
                   return status;
                 }
@@ -424,23 +443,25 @@ extern "C" {
               delimits.used++;
             }
 
-            location->start = location_newline;
+            location->start = last_newline;
           }
         }
       }
       else if (buffer->string[location->start] == f_fss_extended_list_open) {
-        f_string_length location_open = location->start;
+        f_string_length before_list_open = position_previous;
 
         position_previous = location->start;
         status = fl_fss_increment_buffer(*buffer, location, 1);
         if (f_status_is_error(status)) {
           f_macro_string_lengths_delete_simple(delimits);
           f_macro_string_lengths_delete_simple(positions_start);
+          f_macro_fss_objects_delete_simple(objects);
 
           return status;
         }
 
         while (location->start < buffer->used && location->start <= location->stop) {
+
           if (buffer->string[location->start] == f_string_eol) {
             break;
           }
@@ -452,6 +473,7 @@ extern "C" {
           if (f_status_is_error(status)) {
             f_macro_string_lengths_delete_simple(delimits);
             f_macro_string_lengths_delete_simple(positions_start);
+            f_macro_fss_objects_delete_simple(objects);
 
             return status;
           }
@@ -461,16 +483,17 @@ extern "C" {
           if (f_status_is_error(status)) {
             f_macro_string_lengths_delete_simple(delimits);
             f_macro_string_lengths_delete_simple(positions_start);
+            f_macro_fss_objects_delete_simple(objects);
 
             return status;
           }
         } // while
 
         if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
+          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
         }
         else {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_no_data_on_eos, f_no_data_on_stop)
+          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_no_data_on_eos, f_no_data_on_stop)
         }
 
         if (buffer->string[location->start] == f_string_eol) {
@@ -482,6 +505,17 @@ extern "C" {
             if (f_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               f_macro_string_lengths_delete_simple(positions_start);
+              f_macro_fss_objects_delete_simple(objects);
+
+              return status;
+            }
+
+            f_macro_fss_objects_resize(status, objects, objects.size + f_fss_default_allocation_step);
+
+            if (f_status_is_error(status)) {
+              f_macro_string_lengths_delete_simple(delimits);
+              f_macro_string_lengths_delete_simple(positions_start);
+              f_macro_fss_objects_delete_simple(objects);
 
               return status;
             }
@@ -493,13 +527,18 @@ extern "C" {
 
           positions_start.array[depth] = location->start + 1;
 
-          object.start = last_newline + 1;
-          object.stop = position_previous;
+          objects.array[depth].start = line_start;
+          objects.array[depth].stop = before_list_open;
+
+          last_newline = location->start;
+          line_start = location->start + 1;
         }
         // No valid object open found, seek until EOL.
         else {
           while (location->start < buffer->used && location->start <= location->stop) {
             if (buffer->string[location->start] == f_string_eol) {
+              last_newline = location->start;
+              line_start = location->start + 1;
               break;
             }
 
@@ -508,32 +547,32 @@ extern "C" {
             if (f_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               f_macro_string_lengths_delete_simple(positions_start);
+              f_macro_fss_objects_delete_simple(objects);
 
               return status;
             }
           } // while
 
           if (depth > 0) {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
+            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
           }
           else {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_no_data_on_eos, f_no_data_on_stop)
+            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_no_data_on_eos, f_no_data_on_stop)
           }
         }
-
-        last_newline = location->start;
       }
       else if (buffer->string[location->start] == f_fss_extended_list_close) {
-        position_previous = location->start;
-        status = fl_fss_increment_buffer(*buffer, location, 1);
-        if (f_status_is_error(status)) {
-          f_macro_string_lengths_delete_simple(delimits);
-          f_macro_string_lengths_delete_simple(positions_start);
-
-          return status;
-        }
-
         while (location->start < buffer->used && location->start <= location->stop) {
+          position_previous = location->start;
+          status = fl_fss_increment_buffer(*buffer, location, 1);
+          if (f_status_is_error(status)) {
+            f_macro_string_lengths_delete_simple(delimits);
+            f_macro_string_lengths_delete_simple(positions_start);
+            f_macro_fss_objects_delete_simple(objects);
+
+            return status;
+          }
+
           if (buffer->string[location->start] == f_string_eol) {
             break;
           }
@@ -545,36 +584,27 @@ extern "C" {
           if (f_status_is_error(status)) {
             f_macro_string_lengths_delete_simple(delimits);
             f_macro_string_lengths_delete_simple(positions_start);
-
-            return status;
-          }
-
-          position_previous = location->start;
-          status = fl_fss_increment_buffer(*buffer, location, 1);
-          if (f_status_is_error(status)) {
-            f_macro_string_lengths_delete_simple(delimits);
-            f_macro_string_lengths_delete_simple(positions_start);
+            f_macro_fss_objects_delete_simple(objects);
 
             return status;
           }
         } // while
 
         if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
+          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
         }
         else {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_no_data_on_eos, f_no_data_on_stop)
+          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_no_data_on_eos, f_no_data_on_stop)
         }
 
         if (buffer->string[location->start] == f_string_eol) {
-          if (depth == 0) break;
-
           if (depth + 1 >= found->size) {
             f_macro_fss_nest_resize(status, (*found), found->size + f_fss_default_allocation_step);
 
             if (f_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               f_macro_string_lengths_delete_simple(positions_start);
+              f_macro_fss_objects_delete_simple(objects);
 
               return status;
             }
@@ -586,6 +616,7 @@ extern "C" {
             if (f_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               f_macro_string_lengths_delete_simple(positions_start);
+              f_macro_fss_objects_delete_simple(objects);
 
               return status;
             }
@@ -599,29 +630,61 @@ extern "C" {
             if (f_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               f_macro_string_lengths_delete_simple(positions_start);
+              f_macro_fss_objects_delete_simple(objects);
 
               return status;
             }
           }
 
-          found->depth[depth].array[position].object.start = object.start;
-          found->depth[depth].array[position].object.stop = object.stop;
+          // only assign object positions for nested objects.
+          if (depth > 0) {
+            found->depth[depth].array[position].object.start = objects.array[depth].start;
+            found->depth[depth].array[position].object.stop = objects.array[depth].stop;
+          }
+
           found->depth[depth].array[position].content.array[0].start = positions_start.array[depth];
           found->depth[depth].array[position].content.array[0].stop = last_newline;
           found->depth[depth].array[position].content.used = 1;
-          found->depth[depth].used++;
 
-          if (depth >= found->used) {
+          if (position >= found->depth[depth].used) {
+            found->depth[depth].used++;
+          }
+
+          if (found->used < depth + 1) {
             found->used = depth + 1;
           }
 
           last_newline = location->start;
+          line_start = location->start + 1;
+
+          if (depth == 0) {
+            status = fl_fss_increment_buffer(*buffer, location, 1);
+            if (f_status_is_error(status)) {
+              f_macro_string_lengths_delete_simple(delimits);
+              f_macro_string_lengths_delete_simple(positions_start);
+              f_macro_fss_objects_delete_simple(objects);
+
+              return status;
+            }
+
+            fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
+            fl_macro_fss_nest_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_none_on_eos, f_none_on_stop)
+
+            f_macro_string_lengths_delete_simple(delimits);
+            f_macro_string_lengths_delete_simple(positions_start);
+            f_macro_fss_objects_delete_simple(objects);
+
+            return fl_fss_found_content;
+          }
+
           depth--;
         }
         // No valid object close found, seek until EOL.
         else {
           while (location->start < buffer->used && location->start <= location->stop) {
             if (buffer->string[location->start] == f_string_eol) {
+              last_newline = location->start;
+              line_start = location->start + 1;
               break;
             }
 
@@ -630,22 +693,36 @@ extern "C" {
             if (f_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               f_macro_string_lengths_delete_simple(positions_start);
+              f_macro_fss_objects_delete_simple(objects);
 
               return status;
             }
           } // while
 
           if (depth > 0) {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
+            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_unterminated_nest_on_eos, f_unterminated_nest_on_stop)
           }
           else {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_no_data_on_eos, f_no_data_on_stop)
+            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, f_no_data_on_eos, f_no_data_on_stop)
           }
         }
+      }
+      else if (buffer->string[location->start] != f_string_eol) {
+        position_previous = location->start;
+        status = fl_fss_increment_buffer(*buffer, location, 1);
+        if (f_status_is_error(status)) {
+          f_macro_string_lengths_delete_simple(delimits);
+          f_macro_string_lengths_delete_simple(positions_start);
+          f_macro_fss_objects_delete_simple(objects);
 
-        if (depth > 0) {
-          last_newline = location->start;
+          return status;
         }
+
+        if (location->start >= buffer->used || location->start > location->stop) {
+          break;
+        }
+
+        continue;
       }
 
       position_previous = location->start;
@@ -653,33 +730,29 @@ extern "C" {
       if (f_status_is_error(status)) {
         f_macro_string_lengths_delete_simple(delimits);
         f_macro_string_lengths_delete_simple(positions_start);
+        f_macro_fss_objects_delete_simple(objects);
 
         return status;
       }
     } // while
 
-    fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
-
-    location->start = last_newline;
-    status = fl_fss_decrement_buffer(*buffer, location, 1);
-    if (f_status_is_error(status)) {
-      f_macro_string_lengths_delete_simple(delimits);
-      f_macro_string_lengths_delete_simple(positions_start);
-
-      return status;
-    }
-
-    found->depth[0].array[found->depth[0].used].content.array[0].start = positions_start.array[0];
-    found->depth[0].array[found->depth[0].used].content.array[0].stop = location->start;
-    found->depth[0].used++;
-    location->start = last_newline + 1;
-
-    fl_macro_fss_nest_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, f_none_on_eos, f_none_on_stop)
-
     f_macro_string_lengths_delete_simple(delimits);
     f_macro_string_lengths_delete_simple(positions_start);
+    f_macro_fss_objects_delete_simple(objects);
 
-    return fl_fss_found_content;
+    if (location->start > location->stop) {
+      if (depth == 0) {
+        return f_status_set_error(f_unterminated_on_stop);
+      }
+
+      return f_status_set_error(f_unterminated_nest_on_stop);
+    }
+
+    if (depth == 0) {
+      return f_status_set_error(f_unterminated_on_eos);
+    }
+
+    return f_status_set_error(f_unterminated_nest_on_eos);
   }
 #endif // _di_fl_fss_extended_list_content_read_
 

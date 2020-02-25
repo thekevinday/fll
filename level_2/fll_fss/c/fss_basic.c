@@ -34,6 +34,10 @@ extern "C" {
       do {
         status = fl_fss_basic_object_read(buffer, input, &objects->array[objects->used]);
 
+        if (f_status_is_error(status)) {
+          return status;
+        }
+
         if (input->start >= input->stop || input->start >= buffer->used) {
           if (status == fl_fss_found_object || status == fl_fss_found_object_no_content) {
             objects->used++;
@@ -72,6 +76,10 @@ extern "C" {
         if (status == fl_fss_found_object) {
           found_data = f_true;
           status = fl_fss_basic_content_read(buffer, input, &contents->array[contents->used]);
+
+          if (f_status_is_error(status)) {
+            return status;
+          }
 
           break;
         }

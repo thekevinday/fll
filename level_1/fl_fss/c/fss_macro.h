@@ -153,11 +153,12 @@ extern "C" {
 #endif // _di_fl_macro_fss_allocate_content_if_necessary_
 
 #ifndef _di_fl_macro_fss_nest_return_on_overflow_
-  #define fl_macro_fss_nest_return_on_overflow(buffer, location, found, delimits, positions, eos_status, stop_status) \
+  #define fl_macro_fss_nest_return_on_overflow(buffer, location, found, delimits, positions, objects, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
       f_status macro_allocation_status = f_none; \
       f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       f_macro_string_lengths_delete(macro_allocation_status, positions); \
+      f_macro_fss_objects_delete(macro_allocation_status, objects); \
       \
       /* @todo: found.array[found.used].stop = buffer.used - 1; */ \
       return eos_status; \
@@ -166,6 +167,7 @@ extern "C" {
       f_status macro_allocation_status = f_none; \
       f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       f_macro_string_lengths_delete(macro_allocation_status, positions); \
+      f_macro_fss_objects_delete(macro_allocation_status, objects); \
       \
       /* @todo: found.array[found.used].stop = location.stop; */ \
       return stop_status; \
@@ -173,7 +175,7 @@ extern "C" {
 #endif // _di_fl_macro_fss_nest_return_on_overflow_
 
 #ifndef _di_fl_macro_fss_nest_delimited_return_on_overflow_
-  #define fl_macro_fss_nest_delimited_return_on_overflow(buffer, location, found, delimits, positions, eos_status, stop_status) \
+  #define fl_macro_fss_nest_delimited_return_on_overflow(buffer, location, found, delimits, positions, objects, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
       f_status macro_allocation_status = f_none; \
       f_string_length i = 0; \
@@ -184,6 +186,7 @@ extern "C" {
       } \
       f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       f_macro_string_lengths_delete(macro_allocation_status, positions); \
+      f_macro_fss_objects_delete(macro_allocation_status, objects); \
       \
       return eos_status; \
     } \
@@ -197,6 +200,7 @@ extern "C" {
       } \
       f_macro_string_lengths_delete(macro_allocation_status, delimits); \
       f_macro_string_lengths_delete(macro_allocation_status, positions); \
+      f_macro_fss_objects_delete(macro_allocation_status, objects); \
       \
       return stop_status; \
     }

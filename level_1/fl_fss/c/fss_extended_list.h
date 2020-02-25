@@ -91,10 +91,10 @@ extern "C" {
  * @return
  *   fl_fss_found_content on success and content was found (start location is at end of content).
  *   fl_fss_found_no_content on success and no content was found (start location is after character designating this is not a content).
- *   f_none_on_stop on success after reaching stopping point (a valid content is not yet confirmed).
- *   f_none_on_eos on success after reaching the end of the buffer (a valid content is not yet confirmed).
- *   f_no_data_on_stop no data found after reaching stopping point (essentially only comments are found).
- *   f_no_data_on_eos no content found after reaching the end of the buffer (essentially only comments are found).
+ *   f_unterminated_on_eos (with error bit) if end of buffer is reached before a closing bracket is found.
+ *   f_unterminated_on_stop (with error bit) if stop location is reached before a closing bracket is found.
+ *   f_unterminated_nest_on_eos (with error bit) if end of buffer is reached while inside a nested list before a closing bracket is found.
+ *   f_unterminated_nest_on_stop (with error bit) if stop location is reached while inside a nested list before a closing bracket is found.
  *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.

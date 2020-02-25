@@ -26,9 +26,7 @@ extern "C" {
 
     // return found nothing if this line only contains whitespace and delimit placeholders.
     if (buffer->string[location->start] == f_string_eol) {
-      status = fl_fss_increment_buffer(*buffer, location, 1);
-      if (f_status_is_error(status)) return status;
-
+      location->start++;
       return fl_fss_found_no_object;
     }
 
@@ -101,7 +99,7 @@ extern "C" {
             if (slash_count % 2 == 0) {
               while (slash_count > 0) {
                 if (buffer->string[location->start] == f_fss_delimit_slash) {
-                  if (slash_count % 2 != 0) {
+                  if (slash_count % 2 == 1) {
                     delimits.array[delimits.used] = location->start;
                     delimits.used++;
                   }
@@ -194,7 +192,7 @@ extern "C" {
 
     f_status status = f_none;
 
-    // delimits must only be applied once a valid object is found
+    // delimits must only be applied once a valid object is found.
     f_string_lengths delimits = f_string_lengths_initialize;
 
     fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*location))
@@ -206,7 +204,7 @@ extern "C" {
     f_string_length last_newline = location->start;
     bool found_newline = f_false;
 
-    // identify where the content ends
+    // identify where the content ends.
     while (location->start < buffer->used && location->start <= location->stop) {
       if (buffer->string[location->start] == f_string_eol) {
         found_newline = f_true;
@@ -297,7 +295,7 @@ extern "C" {
 
             while (slash_count > 0) {
               if (buffer->string[location->start] == f_fss_delimit_slash) {
-                if (slash_count % 2 != 0) {
+                if (slash_count % 2 == 1) {
                   delimits.array[delimits.used] = location->start;
                   delimits.used++;
                 }

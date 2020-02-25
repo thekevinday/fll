@@ -226,16 +226,6 @@ extern "C" {
         return status;
       }
 
-      // Requested depths cannot be greater than contents depth.
-      if (depths.used > data->nest.used) {
-        if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
-          fprintf(f_standard_output, "0%c", f_string_eol);
-          return f_none;
-        }
-
-        return f_none;
-      }
-
       if (data->parameters[fss_extended_list_read_parameter_select].result == f_console_result_found) {
         fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the '");
         fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_extended_list_read_long_select);
