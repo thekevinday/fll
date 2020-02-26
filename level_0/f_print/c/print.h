@@ -37,6 +37,8 @@ extern "C" {
  *   The file to output to, including standard streams such as stdout and stderr.
  * @param string
  *   The string to output.
+ * @param length
+ *   The total number of characters to print.
  *
  * @return
  *   f_none on success.
