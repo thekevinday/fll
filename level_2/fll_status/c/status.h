@@ -1,14 +1,14 @@
 /**
  * FLL - Level 2
  *
- * Project: Errors
+ * Project: Status
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * Provides error functions, such as those that translate status codes into strings.
+ * Provides status code functions, such as those that translate status codes into strings.
  */
-#ifndef _FLL_errors_h
-#define _FLL_errors_h
+#ifndef _FLL_status_h
+#define _FLL_status_h
 
 // fll-0 includes
 #include <level_0/conversion.h>
@@ -51,4 +51,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _FLL_errors_h
+#endif // _FLL_status_h
