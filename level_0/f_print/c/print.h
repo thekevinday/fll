@@ -1,11 +1,13 @@
 /**
  * FLL - Level 0
  *
- * Project: Output
+ * Project: Print
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
  * Provides some standard printing functions not available in a libc.
+ *
+ * Functions provided here are not UTF-8 aware.
  */
 #ifndef _F_print_h
 #define _F_print_h
