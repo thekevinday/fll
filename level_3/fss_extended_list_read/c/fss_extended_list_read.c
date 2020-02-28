@@ -145,6 +145,7 @@ extern "C" {
         fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_extended_list_read_long_at);
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' requires a positive number.");
 
+        fss_extended_list_read_delete_data(data);
         return f_status_set_error(f_invalid_parameter);
       }
 
@@ -153,6 +154,7 @@ extern "C" {
         fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_extended_list_read_long_depth);
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' requires a positive number.");
 
+        fss_extended_list_read_delete_data(data);
         return f_status_set_error(f_invalid_parameter);
       }
 
@@ -161,6 +163,7 @@ extern "C" {
         fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_extended_list_read_long_line);
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' requires a positive number.");
 
+        fss_extended_list_read_delete_data(data);
         return f_status_set_error(f_invalid_parameter);
       }
 
@@ -169,6 +172,7 @@ extern "C" {
         fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_extended_list_read_long_name);
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' requires a string.");
 
+        fss_extended_list_read_delete_data(data);
         return f_status_set_error(f_invalid_parameter);
       }
 
@@ -177,6 +181,7 @@ extern "C" {
         fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_extended_list_read_long_select);
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' requires a positive number.");
 
+        fss_extended_list_read_delete_data(data);
         return f_status_set_error(f_invalid_parameter);
       }
 
@@ -188,6 +193,7 @@ extern "C" {
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_extended_list_read_long_line);
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' parameter.");
 
+          fss_extended_list_read_delete_data(data);
           return f_status_set_error(f_invalid_parameter);
         }
 
@@ -198,6 +204,7 @@ extern "C" {
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_extended_list_read_long_select);
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' parameter.");
 
+          fss_extended_list_read_delete_data(data);
           return f_status_set_error(f_invalid_parameter);
         }
       }
@@ -210,6 +217,7 @@ extern "C" {
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_extended_list_read_long_total);
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' parameter.");
 
+          fss_extended_list_read_delete_data(data);
           return f_status_set_error(f_invalid_parameter);
         }
       }
@@ -230,6 +238,9 @@ extern "C" {
         fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the '");
         fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", fss_extended_list_read_long_select);
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' parameter requires a positive number.");
+
+        macro_fss_extended_list_read_depths_delete_simple(depths);
+        fss_extended_list_read_delete_data(data);
         return f_status_set_error(f_invalid_parameter);
       }
 
@@ -242,6 +253,7 @@ extern "C" {
 
         if (f_status_is_error(status)) {
           fss_extended_list_read_print_file_error(data->context, "fl_file_read_fifo", "-", f_status_set_fine(status));
+
           macro_fss_extended_list_read_depths_delete_simple(depths);
           fss_extended_list_read_delete_data(data);
           return status;
@@ -270,6 +282,7 @@ extern "C" {
 
           if (f_status_is_error(status)) {
             fss_extended_list_read_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
+
             macro_fss_extended_list_read_depths_delete_simple(depths);
             fss_extended_list_read_delete_data(data);
             return status;
@@ -295,6 +308,7 @@ extern "C" {
 
           if (f_status_is_error(status)) {
             fss_extended_list_read_print_file_error(data->context, "fl_file_read", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
+
             macro_fss_extended_list_read_depths_delete_simple(depths);
             fss_extended_list_read_delete_data(data);
             return status;
