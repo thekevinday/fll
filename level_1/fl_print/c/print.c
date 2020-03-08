@@ -1,0 +1,523 @@
+#include <level_1/print.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef _di_fl_print_trim_string_
+  f_return_status fl_print_trim_string(FILE *output, const f_string string, const f_string_length length) {
+    #ifndef _di_level_1_parameter_checking_
+      if (string == 0) return f_status_set_error(f_invalid_parameter);
+      if (length < 1) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    register f_string_length i = 0;
+    f_status status = f_none;
+    uint8_t width_max = 0;
+
+    for (; i < length; i++) {
+      width_max = (length - i) + 1;
+      status = f_utf_is_whitespace(string + i, width_max);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_false) break;
+    } // for
+
+    for (; i < length; i++) {
+      if (string[i] == f_string_eos) continue;
+
+      width_max = (length - i) + 1;
+      status = f_utf_is_whitespace(string + i, width_max);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_true) {
+        f_string_length j = i + 1;
+
+        if (j == length) {
+          return f_none;
+        }
+
+        for (; j < length; j++) {
+          width_max = (length - j) + 1;
+          status = f_utf_is_whitespace(string + j, width_max);
+
+          if (f_status_is_error(status)) {
+            if (f_status_set_fine(status) == f_maybe) {
+              return f_status_set_error(f_invalid_utf);
+            }
+
+            return status;
+          }
+
+          // all whitespaces found so far must be printed when a non-whitespace is found.
+          if (status == f_false) {
+            for (; i < j; i++) {
+              if (string[i] == f_string_eos) continue;
+
+              if (fputc(string[i], output) == 0) {
+                return f_status_set_error(f_error_output);
+              }
+            } // for
+
+            break;
+          }
+        } // for
+
+        if (status == f_true) {
+          break;
+        }
+      }
+
+      if (fputc(string[i], output) == 0) {
+        return f_status_set_error(f_error_output);
+      }
+    } // for
+
+    return f_none;
+  }
+#endif // _di_fl_print_trim_string_
+
+#ifndef _di_fl_print_trim_string_dynamic_
+  f_return_status fl_print_trim_string_dynamic(FILE *output, const f_string_dynamic buffer) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    register f_string_length i = 0;
+    f_status status = f_none;
+    uint8_t width_max = 0;
+
+    for (; i < buffer.used; i++) {
+      width_max = (buffer.used - i) + 1;
+      status = f_utf_is_whitespace(buffer.string + i, width_max);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_false) break;
+    } // for
+
+    for (; i < buffer.used; i++) {
+      if (buffer.string[i] == f_string_eos) continue;
+
+      width_max = (buffer.used - i) + 1;
+      status = f_utf_is_whitespace(buffer.string + i, width_max);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_true) {
+        f_string_length j = i + 1;
+
+        if (j == buffer.used) {
+          return f_none;
+        }
+
+        for (; j < buffer.used; j++) {
+          width_max = (buffer.used - j) + 1;
+          status = f_utf_is_whitespace(buffer.string + j, width_max);
+
+          if (f_status_is_error(status)) {
+            if (f_status_set_fine(status) == f_maybe) {
+              return f_status_set_error(f_invalid_utf);
+            }
+
+            return status;
+          }
+
+          // all whitespaces found so far must be printed when a non-whitespace is found.
+          if (status == f_false) {
+            for (; i < j; i++) {
+              if (buffer.string[i] == f_string_eos) continue;
+
+              if (fputc(buffer.string[i], output) == 0) {
+                return f_status_set_error(f_error_output);
+              }
+            } // for
+
+            break;
+          }
+        } // for
+
+        if (status == f_true) {
+          break;
+        }
+      }
+
+      if (fputc(buffer.string[i], output) == 0) {
+        return f_status_set_error(f_error_output);
+      }
+    } // for
+
+    return f_none;
+  }
+#endif // _di_fl_print_trim_string_dynamic_
+
+#ifndef _di_fl_print_trim_string_dynamic_partial_
+  f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_location location) {
+    #ifndef _di_level_1_parameter_checking_
+      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (location.stop >= buffer.used) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    register f_string_length i = location.start;
+    f_status status = f_none;
+    uint8_t width_max = 0;
+
+    for (; i <= location.stop; i++) {
+      width_max = (location.stop - i) + 1;
+      status = f_utf_is_whitespace(buffer.string + i, width_max);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_false) break;
+    } // for
+
+    for (; i <= location.stop; i++) {
+      if (buffer.string[i] == f_string_eos) continue;
+
+      width_max = (location.stop - i) + 1;
+      status = f_utf_is_whitespace(buffer.string + i, width_max);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_true) {
+        f_string_length j = i + 1;
+
+        if (j == location.stop) {
+          return f_none;
+        }
+
+        for (; j <= location.stop; j++) {
+          width_max = (location.stop - j) + 1;
+          status = f_utf_is_whitespace(buffer.string + j, width_max);
+
+          if (f_status_is_error(status)) {
+            if (f_status_set_fine(status) == f_maybe) {
+              return f_status_set_error(f_invalid_utf);
+            }
+
+            return status;
+          }
+
+          // all whitespaces found so far must be printed when a non-whitespace is found.
+          if (status == f_false) {
+            for (; i <= j; i++) {
+              if (buffer.string[i] == f_string_eos) continue;
+
+              if (fputc(buffer.string[i], output) == 0) {
+                return f_status_set_error(f_error_output);
+              }
+            } // for
+
+            break;
+          }
+        } // for
+
+        if (status == f_true) {
+          break;
+        }
+      }
+
+      if (fputc(buffer.string[i], output) == 0) {
+        return f_status_set_error(f_error_output);
+      }
+    } // for
+
+    return f_none;
+  }
+#endif // _di_fl_print_trim_string_dynamic_partial_
+
+#ifndef _di_fl_print_trim_utf_string_
+  f_return_status fl_print_trim_utf_string(FILE *output, const f_utf_string string, const f_utf_string_length length) {
+    #ifndef _di_level_1_parameter_checking_
+      if (string == 0) return f_status_set_error(f_invalid_parameter);
+      if (length < 1) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    register f_string_length i = 0;
+    f_status status = f_none;
+
+    for (; i < length; i++) {
+      status = f_utf_character_is_whitespace(string[i]);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_false) break;
+    } // for
+
+    for (; i < length; i++) {
+      if (string[i] == f_string_eos) continue;
+
+      status = f_utf_character_is_whitespace(string[i]);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_true) {
+        f_string_length j = i + 1;
+
+        if (j == length) {
+          return f_none;
+        }
+
+        for (; j < length; j++) {
+          status = f_utf_character_is_whitespace(string[j]);
+
+          if (f_status_is_error(status)) {
+            if (f_status_set_fine(status) == f_maybe) {
+              return f_status_set_error(f_invalid_utf);
+            }
+
+            return status;
+          }
+
+          // all whitespaces found so far must be printed when a non-whitespace is found.
+          if (status == f_false) {
+            for (; i < j; i++) {
+              if (string[i] == f_string_eos) continue;
+
+              if (fputc(string[i], output) == 0) {
+                return f_status_set_error(f_error_output);
+              }
+            } // for
+
+            break;
+          }
+        } // for
+
+        if (status == f_true) {
+          break;
+        }
+      }
+
+      if (fputc(string[i], output) == 0) {
+        return f_status_set_error(f_error_output);
+      }
+    } // for
+
+    return f_none;
+  }
+#endif // _di_fl_print_trim_utf_string_
+
+#ifndef _di_fl_print_trim_utf_string_dynamic_
+  f_return_status fl_print_trim_utf_string_dynamic(FILE *output, const f_utf_string_dynamic buffer) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    register f_utf_string_length i = 0;
+    f_status status = f_none;
+
+    for (; i < buffer.used; i++) {
+      status = f_utf_character_is_whitespace(buffer.string[i]);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_false) break;
+    } // for
+
+    for (; i < buffer.used; i++) {
+      if (buffer.string[i] == f_string_eos) continue;
+
+      status = f_utf_character_is_whitespace(buffer.string[i]);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_true) {
+        f_string_length j = i + 1;
+
+        if (j == buffer.used) {
+          return f_none;
+        }
+
+        for (; j < buffer.used; j++) {
+          status = f_utf_character_is_whitespace(buffer.string[j]);
+
+          if (f_status_is_error(status)) {
+            if (f_status_set_fine(status) == f_maybe) {
+              return f_status_set_error(f_invalid_utf);
+            }
+
+            return status;
+          }
+
+          // all whitespaces found so far must be printed when a non-whitespace is found.
+          if (status == f_false) {
+            for (; i < j; i++) {
+              if (buffer.string[i] == f_string_eos) continue;
+
+              if (fputc(buffer.string[i], output) == 0) {
+                return f_status_set_error(f_error_output);
+              }
+            } // for
+
+            break;
+          }
+        } // for
+
+        if (status == f_true) {
+          break;
+        }
+      }
+
+      if (fputc(buffer.string[i], output) == 0) {
+        return f_status_set_error(f_error_output);
+      }
+    } // for
+
+    return f_none;
+  }
+#endif // _di_fl_print_trim_utf_string_dynamic_
+
+#ifndef _di_fl_print_trim_utf_string_dynamic_partial_
+  f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_dynamic buffer, const f_utf_string_location location) {
+    #ifndef _di_level_1_parameter_checking_
+      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (location.stop >= buffer.used) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    register f_string_length i = location.start;
+    f_status status = f_none;
+
+    for (; i <= location.stop; i++) {
+      status = f_utf_character_is_whitespace(buffer.string[i]);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_false) break;
+    } // for
+
+    for (; i <= location.stop; i++) {
+      if (buffer.string[i] == f_string_eos) continue;
+
+      status = f_utf_character_is_whitespace(buffer.string[i]);
+
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) {
+          return f_status_set_error(f_invalid_utf);
+        }
+
+        return status;
+      }
+
+      if (status == f_true) {
+        f_string_length j = i + 1;
+
+        if (j == location.stop) {
+          return f_none;
+        }
+
+        for (; j <= location.stop; j++) {
+          status = f_utf_character_is_whitespace(buffer.string[j]);
+
+          if (f_status_is_error(status)) {
+            if (f_status_set_fine(status) == f_maybe) {
+              return f_status_set_error(f_invalid_utf);
+            }
+
+            return status;
+          }
+
+          // all whitespaces found so far must be printed when a non-whitespace is found.
+          if (status == f_false) {
+            for (; i <= j; i++) {
+              if (buffer.string[i] == f_string_eos) continue;
+
+              if (fputc(buffer.string[i], output) == 0) {
+                return f_status_set_error(f_error_output);
+              }
+            } // for
+
+            break;
+          }
+        } // for
+
+        if (status == f_true) {
+          break;
+        }
+      }
+
+      if (fputc(buffer.string[i], output) == 0) {
+        return f_status_set_error(f_error_output);
+      }
+    } // for
+
+    return f_none;
+  }
+#endif // _di_fl_print_trim_utf_string_dynamic_partial_
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
