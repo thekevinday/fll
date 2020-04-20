@@ -15,7 +15,7 @@ extern "C" {
     f_status status = f_none;
     uint8_t width_max = 0;
 
-    for (; i < length; i++) {
+    for (; i < length; i += f_macro_utf_byte_width(string[i])) {
       width_max = (length - i) + 1;
       status = f_utf_is_whitespace(string + i, width_max);
 
@@ -30,7 +30,7 @@ extern "C" {
       if (status == f_false) break;
     } // for
 
-    for (; i < length; i++) {
+    for (; i < length; i += f_macro_utf_byte_width(string[i])) {
       if (string[i] == f_string_eos) continue;
 
       width_max = (length - i) + 1;
@@ -45,13 +45,13 @@ extern "C" {
       }
 
       if (status == f_true) {
-        f_string_length j = i + 1;
+        f_string_length j = i + f_macro_utf_byte_width(string[i]);
 
         if (j == length) {
           return f_none;
         }
 
-        for (; j < length; j++) {
+        for (; j < length; j += f_macro_utf_byte_width(string[j])) {
           width_max = (length - j) + 1;
           status = f_utf_is_whitespace(string + j, width_max);
 
@@ -101,7 +101,7 @@ extern "C" {
     f_status status = f_none;
     uint8_t width_max = 0;
 
-    for (; i < buffer.used; i++) {
+    for (; i < buffer.used; i += f_macro_utf_byte_width(buffer.string[i])) {
       width_max = (buffer.used - i) + 1;
       status = f_utf_is_whitespace(buffer.string + i, width_max);
 
@@ -116,7 +116,7 @@ extern "C" {
       if (status == f_false) break;
     } // for
 
-    for (; i < buffer.used; i++) {
+    for (; i < buffer.used; i += f_macro_utf_byte_width(buffer.string[i])) {
       if (buffer.string[i] == f_string_eos) continue;
 
       width_max = (buffer.used - i) + 1;
@@ -131,13 +131,13 @@ extern "C" {
       }
 
       if (status == f_true) {
-        f_string_length j = i + 1;
+        f_string_length j = i + f_macro_utf_byte_width(buffer.string[i]);
 
         if (j == buffer.used) {
           return f_none;
         }
 
-        for (; j < buffer.used; j++) {
+        for (; j < buffer.used; j += f_macro_utf_byte_width(buffer.string[j])) {
           width_max = (buffer.used - j) + 1;
           status = f_utf_is_whitespace(buffer.string + j, width_max);
 
@@ -189,9 +189,10 @@ extern "C" {
 
     register f_string_length i = location.start;
     f_status status = f_none;
+
     uint8_t width_max = 0;
 
-    for (; i <= location.stop; i++) {
+    for (; i <= location.stop; i += f_macro_utf_byte_width(buffer.string[i])) {
       width_max = (location.stop - i) + 1;
       status = f_utf_is_whitespace(buffer.string + i, width_max);
 
@@ -206,9 +207,13 @@ extern "C" {
       if (status == f_false) break;
     } // for
 
-    for (; i <= location.stop; i++) {
-      if (buffer.string[i] == f_string_eos) continue;
+    for (uint8_t width_i = f_macro_utf_byte_width(buffer.string[i]); i <= location.stop; i += width_i) {
+      if (buffer.string[i] == f_string_eos) {
+        width_i = 1;
+        continue;
+      }
 
+      width_i = f_macro_utf_byte_width(buffer.string[i]);
       width_max = (location.stop - i) + 1;
       status = f_utf_is_whitespace(buffer.string + i, width_max);
 
@@ -221,13 +226,14 @@ extern "C" {
       }
 
       if (status == f_true) {
-        f_string_length j = i + 1;
+        f_string_length j = i + width_i;
 
         if (j == location.stop) {
           return f_none;
         }
 
-        for (; j <= location.stop; j++) {
+        for (uint8_t width_j = f_macro_utf_byte_width(buffer.string[j]); j <= location.stop; j += width_j) {
+          width_j = f_macro_utf_byte_width(buffer.string[j]);
           width_max = (location.stop - j) + 1;
           status = f_utf_is_whitespace(buffer.string + j, width_max);
 
@@ -241,12 +247,19 @@ extern "C" {
 
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == f_false) {
-            for (; i <= j; i++) {
-              if (buffer.string[i] == f_string_eos) continue;
-
-              if (fputc(buffer.string[i], output) == 0) {
-                return f_status_set_error(f_error_output);
+            for (; i <= j; i += width_i) {
+              if (buffer.string[i] == f_string_eos) {
+                width_i = 1;
+                continue;
               }
+
+              width_i = f_macro_utf_byte_width(buffer.string[i]);
+
+              for (uint8_t k = 0; k < width_i; k++) {
+                if (fputc(buffer.string[i + k], output) == 0) {
+                  return f_status_set_error(f_error_output);
+                }
+              } // for
             } // for
 
             break;
@@ -258,9 +271,11 @@ extern "C" {
         }
       }
 
-      if (fputc(buffer.string[i], output) == 0) {
-        return f_status_set_error(f_error_output);
-      }
+      for (uint8_t k = 0; k < width_i; k++) {
+        if (fputc(buffer.string[i + k], output) == 0) {
+          return f_status_set_error(f_error_output);
+        }
+      } // for
     } // for
 
     return f_none;
