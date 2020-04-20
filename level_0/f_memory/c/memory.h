@@ -397,10 +397,10 @@ extern "C" {
     while (structures.used > 0) { \
       structures.used--; \
       f_macro_memory_structure_delete_simple(structures.array[structures.used], type); \
-      if (structures.used == 0) { \
-        if (f_memory_delete((void **) & structures.array, sizeof(type), structures.size)) { \
-          structures.size = 0; \
-        } \
+    } \
+    if (structures.used == 0) { \
+      if (f_memory_delete((void **) & structures.array, sizeof(type), structures.size)) { \
+        structures.size = 0; \
       } \
     }
 #endif // _di_f_macro_memory_structures_delete_simple_
@@ -417,10 +417,10 @@ extern "C" {
     while (structures.used > 0) { \
       structures.used--; \
       f_macro_memory_structure_destroy_simple(structures.array[structures.used], type); \
-      if (structures.used == 0) { \
-        if (f_memory_destroy((void **) & structures.array, sizeof(type), structures.size)) { \
-          structures.size = 0; \
-        } \
+    } \
+    if (structures.used == 0) { \
+      if (f_memory_destroy((void **) & structures.array, sizeof(type), structures.size)) { \
+        structures.size = 0; \
       } \
     }
 #endif // _di_f_macro_memory_structures_destroy_simple_
