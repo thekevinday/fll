@@ -2507,7 +2507,7 @@ extern "C" {
 #endif // _di_f_utf_character_is_whitespace_
 
 #ifndef _di_f_utf_character_to_char_
-  f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, unsigned short *max_width) {
+  f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, uint8_t *max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (utf_character == 0) return f_status_set_error(f_invalid_parameter);
       if (max_width == 0 && *character != 0) return f_status_set_error(f_invalid_parameter);
@@ -2576,12 +2576,12 @@ extern "C" {
 #endif // _di_f_utf_is_big_endian_
 
 #ifndef _di_f_utf_is_
-  f_return_status f_utf_is(const f_string character, const unsigned short max_width) {
+  f_return_status f_utf_is(const f_string character, const uint8_t max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    unsigned short width = f_macro_utf_byte_width_is(*character);
+    uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
       return f_false;
@@ -2596,7 +2596,7 @@ extern "C" {
 #endif // _di_f_utf_is_
 
 #ifndef _di_f_utf_is_control_
-  f_return_status f_utf_is_control(const f_string character, const unsigned short max_width) {
+  f_return_status f_utf_is_control(const f_string character, const uint8_t max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2627,7 +2627,7 @@ extern "C" {
 #endif // _di_f_utf_is_control_
 
 #ifndef _di_f_utf_is_control_picture_
-  f_return_status f_utf_is_control_picture(const f_string character, const unsigned short max_width) {
+  f_return_status f_utf_is_control_picture(const f_string character, const uint8_t max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2655,7 +2655,7 @@ extern "C" {
 #endif // _di_f_utf_is_control_picture_
 
 #ifndef _di_f_utf_is_graph_
-  f_return_status f_utf_is_graph(const f_string character, const unsigned short max_width) {
+  f_return_status f_utf_is_graph(const f_string character, const uint8_t max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2686,12 +2686,12 @@ extern "C" {
 #endif // _di_f_utf_is_graph_
 
 #ifndef _di_f_utf_is_whitespace_
-  f_return_status f_utf_is_whitespace(const f_string character, const unsigned short max_width) {
+  f_return_status f_utf_is_whitespace(const f_string character, const uint8_t max_width) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    unsigned short width = f_macro_utf_byte_width_is(*character);
+    uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
       if (isspace(*character)) {
@@ -2717,13 +2717,13 @@ extern "C" {
 #endif // _di_f_utf_is_whitespace_
 
 #ifndef _di_f_utf_char_to_character_
-  f_return_status f_utf_char_to_character(const f_string character, const unsigned short max_width, f_utf_character *character_utf) {
+  f_return_status f_utf_char_to_character(const f_string character, const uint8_t max_width, f_utf_character *character_utf) {
     #ifndef _di_level_0_parameter_checking_
       if (max_width < 1) return f_status_set_error(f_invalid_parameter);
       if (character_utf == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    unsigned short width = f_macro_utf_byte_width_is(*character);
+    uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
       *character_utf = f_macro_utf_character_from_char_1(character[0]);

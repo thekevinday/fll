@@ -657,7 +657,7 @@ extern "C" {
  *   f_failure (with error bit) if width is not long enough to convert.
  */
 #ifndef _di_f_utf_character_to_char_
-  extern f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, unsigned short *max_width);
+  extern f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, uint8_t *max_width);
 #endif // _di_f_utf_character_to_char_
 
 /**
@@ -694,7 +694,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_utf_is_
-  extern f_return_status f_utf_is(const f_string character, const unsigned short max_width);
+  extern f_return_status f_utf_is(const f_string character, const uint8_t max_width);
 #endif // _di_f_utf_is_
 
 /**
@@ -715,7 +715,7 @@ extern "C" {
  * @see iscntrl()
  */
 #ifndef _di_f_utf_is_control_
-  extern f_return_status f_utf_is_control(const f_string character, const unsigned short max_width);
+  extern f_return_status f_utf_is_control(const f_string character, const uint8_t max_width);
 #endif // _di_f_utf_is_control_
 
 /**
@@ -736,7 +736,7 @@ extern "C" {
  *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_is_control_picture_
-  extern f_return_status f_utf_is_control_picture(const f_string character, const unsigned short max_width);
+  extern f_return_status f_utf_is_control_picture(const f_string character, const uint8_t max_width);
 #endif // _di_f_utf_is_control_picture_
 
 /**
@@ -773,7 +773,7 @@ extern "C" {
  * @see f_utf_character_is_valid()
  */
 #ifndef _di_f_utf_is_fragment_
-  extern f_return_status f_utf_is_fragment(const f_string character, const unsigned short max_width);
+  extern f_return_status f_utf_is_fragment(const f_string character, const uint8_t max_width);
 #endif // _di_f_utf_is_fragment_
 
 /**
@@ -797,7 +797,7 @@ extern "C" {
  * @see iscntrl()
  */
 #ifndef _di_f_utf_is_graph_
-  extern f_return_status f_utf_is_graph(const f_string character, const unsigned short max_width);
+  extern f_return_status f_utf_is_graph(const f_string character, const uint8_t max_width);
 #endif // _di_f_utf_is_graph_
 
 /**
@@ -826,7 +826,7 @@ extern "C" {
  * @see f_utf_is_fragment()
  */
 #ifndef _di_f_utf_is_valid_
-  extern f_return_status f_utf_is_valid(const f_string character, const unsigned short max_width);
+  extern f_return_status f_utf_is_valid(const f_string character, const uint8_t max_width);
 #endif // _di_f_utf_is_valid_
 
 /**
@@ -850,7 +850,7 @@ extern "C" {
  * @see iscntrl()
  */
 #ifndef _di_f_utf_is_whitespace_
-  extern f_return_status f_utf_is_whitespace(const f_string character, const unsigned short max_width);
+  extern f_return_status f_utf_is_whitespace(const f_string character, const uint8_t max_width);
 #endif // _di_f_utf_is_whitespace_
 
 /**
@@ -873,7 +873,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_char_to_character_
-  extern f_return_status f_utf_char_to_character(const f_string character, const unsigned short max_width, f_utf_character *character_utf);
+  extern f_return_status f_utf_char_to_character(const f_string character, const uint8_t max_width, f_utf_character *character_utf);
 #endif // _di_f_utf_char_to_character_
 
 #ifdef __cplusplus
