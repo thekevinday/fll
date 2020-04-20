@@ -958,7 +958,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
       new_chain = f_false;
     }
 
-    f_clear_string_dynamic(fixed_string);
+    f_macro_string_dynamic_clear(fixed_string);
 
     if (new_chain) {
       while (j < data->chains.used) {

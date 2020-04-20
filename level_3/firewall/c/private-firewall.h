@@ -101,7 +101,7 @@ typedef struct {
   arguments.array[arguments.used].used   = argument.used; \
   arguments.used++; \
   \
-  f_clear_string_dynamic(argument);
+  f_macro_string_dynamic_clear(argument);
 
 /**
  * Perform commands.

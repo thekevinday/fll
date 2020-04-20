@@ -230,13 +230,13 @@ extern "C" {
 
   #define f_string_dynamic_initialize { f_string_initialize, 0, 0 }
 
-  #define f_clear_string_dynamic(dynamic) \
+  #define f_macro_string_dynamic_clear(dynamic) \
     dynamic.string = 0; \
     dynamic.size = 0; \
     dynamic.used = 0;
 
   #define f_macro_string_dynamic_new(status, dynamic, new_length) \
-    f_clear_string_dynamic(dynamic) \
+    f_macro_string_dynamic_clear(dynamic) \
     status = f_memory_new((void **) & dynamic.string, sizeof(f_string), new_length); \
     if (status == f_none) { \
       dynamic.size = new_length; \
@@ -299,7 +299,7 @@ extern "C" {
 
   #define f_string_dynamics_initialize { 0, 0, 0 }
 
-  #define f_clear_string_dynamics(dynamics) \
+  #define f_macro_string_dynamics_clear(dynamics) \
     dynamics.array = 0; \
     dynamics.size = 0; \
     dynamics.used = 0;
