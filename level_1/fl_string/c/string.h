@@ -114,9 +114,9 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare()
  * @see fl_string_dynamic_partial_compare_trim()
  */
-#ifndef _di_f_string_dynamic_compare_
-  extern f_return_status f_string_dynamic_compare(const f_string_dynamic string1, const f_string_dynamic string2);
-#endif // _di_f_string_dynamic_compare_
+#ifndef _di_fl_string_dynamic_compare_
+  extern f_return_status fl_string_dynamic_compare(const f_string_dynamic string1, const f_string_dynamic string2);
+#endif // _di_fl_string_dynamic_compare_
 
 /**
  * Compare two strings, similar to strncmp().
@@ -140,9 +140,9 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare()
  * @see fl_string_dynamic_partial_compare_trim()
  */
-#ifndef _di_f_string_dynamic_compare_trim_
-  extern f_return_status f_string_dynamic_compare_trim(const f_string_dynamic string1, const f_string_dynamic string2);
-#endif // _di_f_string_dynamic_compare_trim_
+#ifndef _di_fl_string_dynamic_compare_trim_
+  extern f_return_status fl_string_dynamic_compare_trim(const f_string_dynamic string1, const f_string_dynamic string2);
+#endif // _di_fl_string_dynamic_compare_trim_
 
 /**
  * Compare two strings, similar to strncmp(), but restricted to the given ranges.

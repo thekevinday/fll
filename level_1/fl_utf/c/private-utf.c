@@ -166,9 +166,7 @@ extern "C" {
       f_macro_string_dynamic_resize(status, (*result), size);
     }
 
-    if (f_status_is_error(status)) {
-      return status;
-    }
+    if (f_status_is_error(status)) return status;
 
     memcpy(result->string, string + start, size);
     result->used = size;
@@ -193,9 +191,7 @@ extern "C" {
       f_macro_string_dynamic_resize(status, (*result), size);
     }
 
-    if (f_status_is_error(status)) {
-      return status;
-    }
+    if (f_status_is_error(status)) return status;
 
     f_utf_string_length begin = start;
     f_utf_string_length end = stop;

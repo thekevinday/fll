@@ -27,8 +27,8 @@ extern "C" {
   }
 #endif // _di_fl_string_compare_trim_
 
-#ifndef _di_f_string_dynamic_compare_
-  f_return_status f_string_dynamic_compare(const f_string_dynamic string1, const f_string_dynamic string2) {
+#ifndef _di_fl_string_dynamic_compare_
+  f_return_status fl_string_dynamic_compare(const f_string_dynamic string1, const f_string_dynamic string2) {
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (string2.used <= 0) return f_status_set_error(f_invalid_parameter);
@@ -36,10 +36,10 @@ extern "C" {
 
     return private_fl_string_compare(string1.string, string2.string, 0, 0, string1.used, string2.used);
   }
-#endif // _di_f_string_dynamic_compare_
+#endif // _di_fl_string_dynamic_compare_
 
-#ifndef _di_f_string_dynamic_compare_trim_
-  f_return_status f_string_dynamic_compare_trim(const f_string_dynamic string1, const f_string_dynamic string2) {
+#ifndef _di_fl_string_dynamic_compare_trim_
+  f_return_status fl_string_dynamic_compare_trim(const f_string_dynamic string1, const f_string_dynamic string2) {
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (string2.used <= 0) return f_status_set_error(f_invalid_parameter);
@@ -47,7 +47,7 @@ extern "C" {
 
     return private_fl_string_compare_trim(string1.string, string2.string, 0, 0, string1.used, string2.used);
   }
-#endif // _di_f_string_dynamic_compare_trim_
+#endif // _di_fl_string_dynamic_compare_trim_
 
 #ifndef _di_fl_string_dynamic_partial_compare_
   f_return_status fl_string_dynamic_partial_compare(const f_string_dynamic string1, const f_string_dynamic string2, const f_string_location offset1, const f_string_location offset2) {

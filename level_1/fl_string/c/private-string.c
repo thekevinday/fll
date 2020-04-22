@@ -186,9 +186,7 @@ extern "C" {
       f_macro_string_dynamic_resize(status, (*result), size);
     }
 
-    if (f_status_is_error(status)) {
-      return status;
-    }
+    if (f_status_is_error(status)) return status;
 
     memcpy(result->string, string + start, size);
     result->used = size;
@@ -213,9 +211,7 @@ extern "C" {
       f_macro_string_dynamic_resize(status, (*result), size);
     }
 
-    if (f_status_is_error(status)) {
-      return status;
-    }
+    if (f_status_is_error(status)) return status;
 
     f_string_length begin = start;
     f_string_length end = stop;
@@ -225,7 +221,7 @@ extern "C" {
     // skip past leading whitespace.
     for (; begin <= end; begin += width) {
       // skip past NULL.
-      while (begin < size && string[begin] == f_string_eos) begin++;
+      while (begin < end && string[begin] == f_string_eos) begin++;
       if (begin > end) break;
 
       status = f_utf_is_whitespace(string + begin, (end - begin) + 1);
@@ -239,14 +235,17 @@ extern "C" {
 
       if (status == f_false) break;
 
-      width = f_macro_utf_byte_width_is(string[begin]);
+      width = f_macro_utf_byte_width(string[begin]);
     } // for
 
     for (; end > begin; end--) {
       // skip past NULL.
+      while (end > begin && string[end] == f_string_eos) end--;
       if (string[end] == f_string_eos) continue;
       if (end == begin) break;
 
+      // each UTF-8 character of width 8 is an incomplete part.
+      // go left until either width is 0 (ascii, or > 1) to determine the character.
       for (;;) {
         width = f_macro_utf_byte_width_is(string[end]);
         if (width == 1) {
@@ -269,6 +268,8 @@ extern "C" {
       }
 
       if (status == f_false) break;
+
+      width = f_macro_utf_byte_width(string[end]);
     } // for
 
     memcpy(result->string, string + begin, (end - begin) + 1);
