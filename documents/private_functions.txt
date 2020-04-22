@@ -1,0 +1,17 @@
+One of the objectives of this project is to make as much, if not all, of the functions available for use.
+
+Another of the objectives is to design each function to operate in isolation to another function.
+There is some flexibility in regards to this when it comes to individual projects.
+
+Such a design has advantages and disadvantages.
+
+One of those disadvantages is possible redundant code.
+The c-programming language does not have private functions by any normal means.
+The use of the f_gcc_attribute_visibility_internal helps simulate private functions.
+Such functionality only works in supporting GCC compilers.
+
+These synthetic private functions are implemented as an exception to the objectives for maintainability and redundancy purposes.
+Such implementations should be kept to a bare minimum.
+
+Functions defined as private will not be normally exposed through the public headers files.
+Such functions will be prefixed with 'private_'.
