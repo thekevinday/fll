@@ -32,6 +32,7 @@
 #include <level_1/console.h>
 #include <level_1/directory.h>
 #include <level_1/file.h>
+#include <level_1/print.h>
 #include <level_1/string.h>
 
 // fll-2 includes
@@ -65,6 +66,7 @@ extern "C" {
   #define fss_extended_read_short_object "o"
   #define fss_extended_read_short_select "s"
   #define fss_extended_read_short_total  "t"
+  #define fss_extended_read_short_trim   "T"
 
   #define fss_extended_read_long_at     "at"
   #define fss_extended_read_long_depth  "depth"
@@ -74,6 +76,7 @@ extern "C" {
   #define fss_extended_read_long_object "object"
   #define fss_extended_read_long_select "select"
   #define fss_extended_read_long_total  "total"
+  #define fss_extended_read_long_trim   "trim"
 
   enum {
     fss_extended_read_parameter_help,
@@ -90,6 +93,7 @@ extern "C" {
     fss_extended_read_parameter_object,
     fss_extended_read_parameter_select,
     fss_extended_read_parameter_total,
+    fss_extended_read_parameter_trim,
   };
 
   #define f_console_parameter_initialize_fss_extended_read \
@@ -107,9 +111,10 @@ extern "C" {
       f_console_parameter_initialize(fss_extended_read_short_object, fss_extended_read_long_object, 0, f_false, f_console_type_normal), \
       f_console_parameter_initialize(fss_extended_read_short_select, fss_extended_read_long_select, 0, f_true, f_console_type_normal), \
       f_console_parameter_initialize(fss_extended_read_short_total, fss_extended_read_long_total, 0, f_false, f_console_type_normal), \
+      f_console_parameter_initialize(fss_extended_read_short_trim, fss_extended_read_long_trim, 0, f_false, f_console_type_normal), \
     }
 
-  #define fss_extended_read_total_parameters 13
+  #define fss_extended_read_total_parameters 14
 #endif // _di_fss_extended_read_defines_
 
 #ifndef _di_fss_extended_read_data_

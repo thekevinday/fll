@@ -25,6 +25,7 @@ extern "C" {
     fll_program_print_help_option(data.context, fss_extended_list_read_short_object, fss_extended_list_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the object instead of the content.");
     fll_program_print_help_option(data.context, fss_extended_list_read_short_select, fss_extended_list_read_long_select, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Select sub-content at this index.");
     fll_program_print_help_option(data.context, fss_extended_list_read_short_total, fss_extended_list_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print the total number of lines.");
+    fll_program_print_help_option(data.context, fss_extended_list_read_short_trim, fss_extended_list_read_long_trim, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Trim object names on select or print.");
 
     fll_program_print_help_usage(data.context, fss_extended_list_read_name, "filename(s)");
 
@@ -106,9 +107,15 @@ extern "C" {
 
     printf("  For parameters like ");
     fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_extended_list_read_long_select);
-    printf(", if the standard doesn't support multiple content groups, then only a select of 0 would be valid.");
+    printf(", if the standard doesn't support multiple content groups, then only a select of 0 would be valid.%c", f_string_eol);
 
-    printf("%c%c", f_string_eol, f_string_eol);
+    printf("%c", f_string_eol);
+
+    printf("  The parameter ");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", fss_extended_list_read_long_trim);
+    printf(" will remove leading and trailing whitespaces when selecting objects or when printing objects.%c", f_string_eol);
+
+    printf("%c", f_string_eol);
 
     return f_none;
   }

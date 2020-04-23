@@ -111,7 +111,8 @@ extern "C" {
       depths->array[i].index_at = 0;
       depths->array[i].index_name = 0;
       depths->array[i].value_at = 0;
-      depths->array[i].value_name = f_string_eos;
+
+      f_macro_string_dynamic_clear(depths->array[i].value_name);
 
       if (data.parameters[fss_extended_list_read_parameter_depth].additional.used == 0) {
         position_depth = 0;
@@ -159,9 +160,15 @@ extern "C" {
           }
 
           depths->array[i].index_name = data.parameters[fss_extended_list_read_parameter_name].additional.array[position_name];
-          depths->array[i].value_name = arguments.argv[depths->array[i].index_name];
 
-          if (depths->array[i].value_name[0] == '\0') {
+          if (data.parameters[fss_extended_list_read_parameter_trim].result == f_console_result_found) {
+            fl_string_rip_trim(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+          }
+          else {
+            fl_string_rip(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+          }
+
+          if (depths->array[i].value_name.used == 0) {
             fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The '");
             fl_color_print(f_standard_error, data.context.notable, data.context.reset, "--%s", fss_extended_list_read_long_name);
             fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' must not be an empty string.");
@@ -316,18 +323,23 @@ extern "C" {
     if (depth_setting.index_name > 0) {
       memset(names, 0, sizeof(bool) * items->used);
 
-      f_string_length argv_length = strlen(depth_setting.value_name);
-      f_string_length name_length = 0;
+      f_string_location value_location = f_string_location_initialize;
+      value_location.stop = depth_setting.value_name.used - 1;
 
-      for (f_string_length i = 0; i < items->used; i++) {
-        name_length = (items->array[i].object.stop - items->array[i].object.start) + 1;
-
-        if (name_length == argv_length) {
-          if (fl_string_compare(data->buffer.string + items->array[i].object.start, depth_setting.value_name, name_length, argv_length) == f_equal_to) {
+      if (data->parameters[fss_extended_list_read_parameter_trim].result == f_console_result_found) {
+        for (f_string_length i = 0; i < items->used; i++) {
+          if (fl_string_dynamic_partial_compare_trim(data->buffer, depth_setting.value_name, items->array[i].object, value_location) == f_equal_to) {
             names[i] = 1;
           }
-        }
-      } // for
+        } // for
+      }
+      else {
+        for (f_string_length i = 0; i < items->used; i++) {
+          if (fl_string_dynamic_partial_compare(data->buffer, depth_setting.value_name, items->array[i].object, value_location) == f_equal_to) {
+            names[i] = 1;
+          }
+        } // for
+      }
     }
     else {
       memset(names, 1, sizeof(bool) * items->used);
@@ -370,23 +382,28 @@ extern "C" {
 
         return f_none;
       }
-      else {
-        if (depth_setting.index_at > 0) {
-          if (depth_setting.value_at < items->used && names[depth_setting.value_at]) {
-            f_print_string_dynamic_partial(f_standard_output, data->buffer, items->array[depth_setting.value_at].object);
-            fprintf(f_standard_output, "%c", f_string_eol);
-          }
 
-          return f_none;
+      f_return_status (*print_object)(FILE *, const f_string_dynamic, const f_string_location) = &f_print_string_dynamic_partial;
+
+      if (data->parameters[fss_extended_list_read_parameter_trim].result == f_console_result_found) {
+        print_object = &fl_print_trim_string_dynamic_partial;
+      }
+
+      if (depth_setting.index_at > 0) {
+        if (depth_setting.value_at < items->used && names[depth_setting.value_at]) {
+          print_object(f_standard_output, data->buffer, items->array[depth_setting.value_at].object);
+          fprintf(f_standard_output, "%c", f_string_eol);
         }
 
-        for (f_array_length i = 0; i < items->used; i++) {
-          if (names[i]) {
-            f_print_string_dynamic_partial(f_standard_output, data->buffer, items->array[i].object);
-            fprintf(f_standard_output, "%c", f_string_eol);
-          }
-        } // for
+        return f_none;
       }
+
+      for (f_array_length i = 0; i < items->used; i++) {
+        if (names[i]) {
+          print_object(f_standard_output, data->buffer, items->array[i].object);
+          fprintf(f_standard_output, "%c", f_string_eol);
+        }
+      } // for
 
       return f_none;
     }
