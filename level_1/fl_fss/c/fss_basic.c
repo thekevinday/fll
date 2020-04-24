@@ -59,7 +59,6 @@ extern "C" {
       status = fl_fss_increment_buffer(*buffer, location, 1);
       if (f_status_is_error(status)) return status;
 
-
       while (location->start <= location->stop && location->start < buffer->used) {
         if (buffer->string[location->start] == f_fss_delimit_placeholder) {
 
