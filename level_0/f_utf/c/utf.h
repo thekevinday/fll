@@ -513,6 +513,7 @@ extern "C" {
  *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is_valid()
+ * @see f_utf_is()
  */
 #ifndef _di_f_utf_character_is_
   extern f_return_status f_utf_character_is(const f_utf_character character);
@@ -530,6 +531,7 @@ extern "C" {
  *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
+ * @see f_utf_is_control()
  */
 #ifndef _di_f_utf_character_is_control_
   extern f_return_status f_utf_character_is_control(const f_utf_character character);
@@ -547,6 +549,8 @@ extern "C" {
  *   f_true if a UTF-8 control picture character.
  *   f_false if not a UTF-8 control picture character.
  *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_is_control_picture()
  */
 #ifndef _di_f_utf_character_is_control_picture_
   extern f_return_status f_utf_character_is_control_picture(const f_utf_character character);
@@ -570,6 +574,7 @@ extern "C" {
  *
  * @see f_utf_character_is()
  * @see f_utf_character_is_valid()
+ * @see f_utf_is_fragment()
  */
 #ifndef _di_f_utf_character_is_fragment_
   extern f_return_status f_utf_character_is_fragment(const f_utf_character character);
@@ -587,6 +592,7 @@ extern "C" {
  *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see isgraph()
+ * @see f_utf_is_graph()
  */
 #ifndef _di_f_utf_character_is_graph_
   extern f_return_status f_utf_character_is_graph(const f_utf_character character);
@@ -612,6 +618,7 @@ extern "C" {
  *
  * @see f_utf_character_is()
  * @see f_utf_character_is_fragment()
+ * @see f_utf_is_valid()
  */
 #ifndef _di_f_utf_character_is_valid_
   extern f_return_status f_utf_character_is_valid(const f_utf_character character);
@@ -630,6 +637,8 @@ extern "C" {
  *   f_true if a UTF-8 whitespace.
  *   f_false if not a UTF-8 whitespace.
  *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_is_whitespace()
  */
 #ifndef _di_f_utf_character_is_whitespace_
   extern f_return_status f_utf_character_is_whitespace(const f_utf_character character);
@@ -647,6 +656,8 @@ extern "C" {
  *   f_true if a UTF-8 non-printing or zero-width character.
  *   f_false if not a UTF-8 non-printing or zero-width character.
  *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_is_zero_width()
  */
 #ifndef _di_f_utf_character_is_zero_width_
   extern f_return_status f_utf_character_is_zero_width(const f_utf_character character);
@@ -712,6 +723,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
  * @see f_utf_is_valid()
+ * @see f_utf_character_is()
  */
 #ifndef _di_f_utf_is_
   extern f_return_status f_utf_is(const f_string character, const uint8_t max_width);
@@ -733,6 +745,7 @@ extern "C" {
  *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
+ * @see f_utf_character_is_control()
  */
 #ifndef _di_f_utf_is_control_
   extern f_return_status f_utf_is_control(const f_string character, const uint8_t max_width);
@@ -754,6 +767,8 @@ extern "C" {
  *   f_true if a UTF-8 control picture character.
  *   f_false if not a UTF-8 control picture character.
  *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see f_utf_character_is_control_picture()
  */
 #ifndef _di_f_utf_is_control_picture_
   extern f_return_status f_utf_is_control_picture(const f_string character, const uint8_t max_width);
@@ -791,6 +806,7 @@ extern "C" {
  *
  * @see f_utf_character_is()
  * @see f_utf_character_is_valid()
+ * @see f_utf_character_is_fragment()
  */
 #ifndef _di_f_utf_is_fragment_
   extern f_return_status f_utf_is_fragment(const f_string character, const uint8_t max_width);
@@ -815,6 +831,7 @@ extern "C" {
  *
  * @see isgraph()
  * @see iscntrl()
+ * @see f_utf_character_is_graph()
  */
 #ifndef _di_f_utf_is_graph_
   extern f_return_status f_utf_is_graph(const f_string character, const uint8_t max_width);
@@ -844,6 +861,7 @@ extern "C" {
  *
  * @see f_utf_is()
  * @see f_utf_is_fragment()
+ * @see f_utf_character_is_valid()
  */
 #ifndef _di_f_utf_is_valid_
   extern f_return_status f_utf_is_valid(const f_string character, const uint8_t max_width);
@@ -868,10 +886,38 @@ extern "C" {
  *
  * @see isspace()
  * @see iscntrl()
+ * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_f_utf_is_whitespace_
   extern f_return_status f_utf_is_whitespace(const f_string character, const uint8_t max_width);
 #endif // _di_f_utf_is_whitespace_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 general non-printing character.
+ *
+ * Only characters that do not print, which are generally called zero-width.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by max_width.
+ * @param max_width
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   f_true if a UTF-8 whitespace.
+ *   f_false if not a UTF-8 whitespace.
+ *   f_maybe (with error bit) if this could be a whitespace but width is not long enough.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see isspace()
+ * @see iscntrl()
+ * @see f_utf_character_is_zero_width()
+ */
+#ifndef _di_f_utf_is_zero_width_
+  extern f_return_status f_utf_is_zero_width(const f_string character, const uint8_t max_width);
+#endif // _di_f_utf_is_zero_width_
 
 /**
  * Convert an ASCII or UTF-8 character, stored as a string (character buffer), to the specialized f_utf_character type.

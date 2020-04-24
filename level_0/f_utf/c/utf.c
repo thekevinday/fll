@@ -2775,6 +2775,37 @@ extern "C" {
   }
 #endif // _di_f_utf_is_whitespace_
 
+#ifndef _di_f_utf_is_zero_width_
+  f_return_status f_utf_is_zero_width(const f_string character, const uint8_t max_width) {
+    #ifndef _di_level_0_parameter_checking_
+      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    uint8_t width = f_macro_utf_byte_width_is(*character);
+
+    if (width == 0) {
+      if (isspace(*character)) {
+        return f_true;
+      }
+
+      return f_false;
+    }
+
+    if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
+    }
+
+    f_utf_character character_utf = 0;
+    f_status status = 0;
+
+    status = f_utf_char_to_character(character, max_width, &character_utf);
+
+    if (status != f_none) return status;
+
+    return f_utf_character_is_zero_width(character_utf);
+  }
+#endif // _di_f_utf_is_zero_width_
+
 #ifndef _di_f_utf_char_to_character_
   f_return_status f_utf_char_to_character(const f_string character, const uint8_t max_width, f_utf_character *character_utf) {
     #ifndef _di_level_0_parameter_checking_
