@@ -2492,19 +2492,78 @@ extern "C" {
       return f_status_is_error(f_invalid_utf);
     }
 
-    // Latin-1 Supplement: U+00A0, U+00AD.
-    if (character == 0xc2a00000 || character == 0xc2ad0000) {
-      return f_true;
-    }
+    // reduce the number of checks by grouping checks by first byte.
+    uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
-    // Tags: U+E0020.
-    if (character == 0xf3a08080) {
-      return f_true;
+    if (byte_first == 0xc2) {
+      // Latin-1 Supplement: U+00A0, U+0085.
+      if (character == 0xc2a00000 || 0xc2850000) {
+        return f_true;
+      }
+    }
+    else if (byte_first == 0xe2) {
+      // General Punctuation: U+2000, U+2001, U+2002, U+2003.
+      if (character == 0xe2808000 || character == 0xe2808100 || character == 0xe2808200 || character == 0xe2808300) {
+        return f_true;
+      }
+
+      // General Punctuation: U+2004, U+2005, U+2006, U+2007.
+      if (character == 0xe2808400 || character == 0xe2808500 || character == 0xe2808600 || character == 0xe2808700) {
+        return f_true;
+      }
+
+      // General Punctuation: U+2008, U+2009, U+200A, U+2028.
+      if (character == 0xe2808800 || character == 0xe2808900 || character == 0xe2808a00 || character == 0xe280a800) {
+        return f_true;
+      }
+
+      // General Punctuation: U+2029, U+202F, U+205F.
+      if (character == 0xe280a900 || character == 0xe2819f00 || character == 0xe280af00) {
+        return f_true;
+      }
+    }
+    else if (byte_first == 0xe3) {
+      // CJK Symbols and Punctuation: U+3000.
+      if (character == 0xe3808000) {
+        return f_true;
+      }
     }
 
     return f_false;
   }
 #endif // _di_f_utf_character_is_whitespace_
+
+#ifndef _di_f_utf_character_is_zero_width_
+  f_return_status f_utf_character_is_zero_width(const f_utf_character character) {
+    if (f_macro_utf_character_width_is(character) == 1) {
+      return f_status_is_error(f_invalid_utf);
+    }
+
+    // reduce the number of checks by grouping checks by first byte.
+    uint8_t byte_first = f_macro_utf_character_to_char_1(character);
+
+    if (byte_first == 0xe1) {
+      // Mongolian: U+180E.
+      if (character == 0xe1a08e00) {
+        return f_true;
+      }
+    }
+    else if (byte_first == 0xe2) {
+      // General Punctuation: U+200B, U+200C, U+200D, U+2060.
+      if (character == 0xe2808b00 || character == 0xe2808c00 || character == 0xe2808d00 || character == 0xe281a000) {
+        return f_true;
+      }
+    }
+    else if (byte_first == 0xef) {
+      // Arabic Presentation Forms-B: U+FEFF.
+      if (character == 0xefbbbf00) {
+        return f_true;
+      }
+    }
+
+    return f_false;
+  }
+#endif // _di_f_utf_character_is_zero_width_
 
 #ifndef _di_f_utf_character_to_char_
   f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, uint8_t *max_width) {

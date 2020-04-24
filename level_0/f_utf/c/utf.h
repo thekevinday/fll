@@ -620,6 +620,9 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 general space character.
  *
+ * Non-printing or zero-width characters are not considered whitespace.
+ * This does include line separators like '\n'.
+ *
  * @param character
  *   The character to validate.
  *
@@ -631,6 +634,23 @@ extern "C" {
 #ifndef _di_f_utf_character_is_whitespace_
   extern f_return_status f_utf_character_is_whitespace(const f_utf_character character);
 #endif // _di_f_utf_character_is_whitespace_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 general non-printing character.
+ *
+ * Only characters that do not print, which are generally called zero-width.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 non-printing or zero-width character.
+ *   f_false if not a UTF-8 non-printing or zero-width character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ */
+#ifndef _di_f_utf_character_is_zero_width_
+  extern f_return_status f_utf_character_is_zero_width(const f_utf_character character);
+#endif // _di_f_utf_character_is_zero_width_
 
 /**
  * Convert a specialized f_utf_character type to a int8_t, stored as a string (character buffer).
