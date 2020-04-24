@@ -219,7 +219,39 @@ extern "C" {
 #endif // _di_fl_color_print_
 
 /**
- * Print a string, wrapped in a given start and stop color, and then print an EOL character.
+ * Print a string, wrapped in a given start, extra, and stop color.
+ *
+ * If the colors strings have nothing used in them, then this will only print the string.
+ *
+ * It is common for colors to be bolded.
+ * This is intended to simplify printing bold colors.
+ *
+ * @param file
+ *   The file or standard io.
+ * @param format
+ *   The color format parts.
+ * @param start_color
+ *   The color code to place at the beginning of the string, set to 0 to disable.
+ * @param extra_color
+ *   The color code to place immediately following the start_color, set to 0 to disable.
+ * @param stop_color
+ *   The color code to place at the end of the string, set to 0 to disable.
+ * @param string
+ *   The string to print to the file or standard io.
+ * @param ...
+ *   Variable arguments, processed in the same way fprintf() processes them.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_output (with error bit) on output error.
+ */
+#ifndef _di_fl_color_print2_
+  extern f_return_status fl_color_print2(FILE *file, const f_string_dynamic start_color, const f_string_dynamic extra_color, const f_string_dynamic end_color, const int8_t *string, ...);
+#endif // _di_fl_color_print2_
+
+/**
+ * Print a string, wrapped in a given start and stop color, then print an EOL character.
  *
  * If the colors strings have nothing used in them, then this will only print the string.
  *
@@ -246,6 +278,38 @@ extern "C" {
 #endif // _di_fl_color_print_line_
 
 /**
+ * Print a string, wrapped in a given start, extra, and stop color, then print an EOL character.
+ *
+ * If the colors strings have nothing used in them, then this will only print the string.
+ *
+ * It is common for colors to be bolded.
+ * This is intended to simplify printing bold colors.
+ *
+ * @param file
+ *   The file or standard io.
+ * @param format
+ *   The color format parts.
+ * @param start_color
+ *   The color code to place at the beginning of the string, set to 0 to disable.
+ * @param extra_color
+ *   The color code to place immediately following the start_color, set to 0 to disable.
+ * @param stop_color
+ *   The color code to place at the end of the string, set to 0 to disable.
+ * @param string
+ *   The string to print to the file or standard io.
+ * @param ...
+ *   Variable arguments, processed in the same way fprintf() processes them.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_output (with error bit) on output error.
+ */
+#ifndef _di_fl_color_print2_line_
+  extern f_return_status fl_color_print2_line(FILE *file, const f_string_dynamic start_color, const f_string_dynamic extra_color, const f_string_dynamic end_color, const int8_t *string, ...);
+#endif // _di_fl_color_print2_line_
+
+/**
  * Print a single color code to the given file or standard io.
  *
  * Try not to forget to print the color reset when done.
@@ -263,7 +327,6 @@ extern "C" {
 #ifndef _di_fl_color_print_code_
   extern f_return_status fl_color_print_code(FILE *file, const f_string_dynamic color);
 #endif // _di_fl_color_print_code_
-
 
 /**
  * Load the appropriate colors into the color context.
