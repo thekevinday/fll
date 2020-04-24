@@ -29,6 +29,9 @@ Unless explicitly defined, newlines designate the start of a potential new Objec
 
 Unless explicitly defined, whitespace may exist to the left of the start of objects.
 
+Unless explicitly defined, whitespace immediately both before and after an object is not considered part of an object.
+This simplifies identifying the object, use quoted objects to support whitespace before/after an object.
+
 Unless explicitly defined, quotes may only be either a single quote or a double quote and only a backslash may be used as a delimiter.
 
 Unless explicitly defined by the specification, character/data delimits are performed only when required and not unilaterally.
