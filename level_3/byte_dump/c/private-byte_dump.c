@@ -442,17 +442,26 @@ extern "C" {
 
 
     if (*offset > 0) {
-      f_string placeholder = " ";
-
-      if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
-        placeholder = byte_dump_character_placeholder;
+      if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+        while (*offset > 0 && j < data.width) {
+          printf(".");
+          (*offset)--;
+          j++;
+        } // while
       }
+      else {
+        f_string placeholder = " ";
 
-      while (*offset > 0 && j < data.width) {
-        fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", placeholder);
-        (*offset)--;
-        j++;
-      } // while
+        if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
+          placeholder = byte_dump_character_placeholder;
+        }
+
+        while (*offset > 0 && j < data.width) {
+          fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", placeholder);
+          (*offset)--;
+          j++;
+        } // while
+      }
     }
 
     // Print placeholders for the remaining fragments of UTF-8 characters printed on previous lines.
@@ -468,6 +477,9 @@ extern "C" {
           for (; j < previous->bytes && j < data.width; j++) {
             if (previous->invalid) {
               fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
+            }
+            else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+              printf(".");
             }
             else {
               fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
@@ -610,7 +622,12 @@ extern "C" {
         }
       }
       else if (f_utf_character_is_whitespace(characters.string[i]) == f_true) {
-        fl_color_print2(f_standard_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_space);
+        if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+          printf(".");
+        }
+        else {
+          fl_color_print2(f_standard_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_space);
+        }
       }
       else if (f_utf_character_is_zero_width(characters.string[i]) == f_true) {
         if (data.presentation == byte_dump_presentation_classic) {
@@ -732,6 +749,9 @@ extern "C" {
           if (invalid[i]) {
             fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
           }
+          else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+            printf(".");
+          }
           else {
             fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
           }
@@ -747,6 +767,9 @@ extern "C" {
             if (invalid[i]) {
               fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
             }
+            else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+              printf(".");
+            }
             else {
               fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
             }
@@ -761,6 +784,9 @@ extern "C" {
             if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
               if (invalid[i]) {
                 fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
+              }
+              else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+                printf(".");
               }
               else {
                 fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
@@ -781,6 +807,9 @@ extern "C" {
       for (; j < data.width; j++) {
         if (invalid[j]) {
           fl_color_print(f_standard_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
+        }
+        else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+          printf(".");
         }
         else {
           fl_color_print(f_standard_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
