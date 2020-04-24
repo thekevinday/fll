@@ -21,7 +21,7 @@ extern "C" {
     // delimits must only be applied once a valid object is found.
     f_string_lengths delimits = f_string_lengths_initialize;
 
-    fl_fss_skip_past_whitespace(*buffer, location);
+    fl_fss_skip_past_space(*buffer, location);
     fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, f_no_data_on_eos, f_no_data_on_stop)
 
     // return found nothing if this line only contains whitespace and delimit placeholders.

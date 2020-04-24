@@ -192,6 +192,9 @@ extern "C" {
 /**
  * Skip past all whitespace and control characters, except newline.
  *
+ * Zero-width characters are not skipped because they might be part of a graph character, such as combining characters.
+ * @todo needs consideration on how to handle zero-width before space/control vs zero-width before graph.
+ *
  * @param buffer
  *   The string to process.
  * @param location
@@ -202,12 +205,15 @@ extern "C" {
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fl_fss_skip_past_whitespace_
-  extern f_return_status fl_fss_skip_past_whitespace(const f_string_dynamic buffer, f_string_location *location);
-#endif // _di_fl_fss_skip_past_whitespace_
+#ifndef _di_fl_fss_skip_past_space_
+  extern f_return_status fl_fss_skip_past_space(const f_string_dynamic buffer, f_string_location *location);
+#endif // _di_fl_fss_skip_past_space_
 
 /**
- * Skip past all whitespace and control characters.
+ * Skip past all non-graph and non-zero-width characters (whitespace and control characters).
+ *
+ * Zero-width characters are not skipped because they might be part of a graph character, such as combining characters.
+ * @todo needs consideration on how to handle zero-width before space/control vs zero-width before graph.
  *
  * @param buffer
  *   The string to process.
@@ -219,9 +225,9 @@ extern "C" {
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fl_fss_skip_past_all_whitespace_
-  extern f_return_status fl_fss_skip_past_all_whitespace(const f_string_dynamic buffer, f_string_location *location);
-#endif // _di_fl_fss_skip_past_all_whitespace_
+#ifndef _di_fl_fss_skip_past_non_graph_
+  extern f_return_status fl_fss_skip_past_non_graph(const f_string_dynamic buffer, f_string_location *location);
+#endif // _di_fl_fss_skip_past_non_graph_
 
 #ifdef __cplusplus
 } // extern "C"

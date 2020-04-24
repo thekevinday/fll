@@ -291,8 +291,8 @@ extern "C" {
   }
 #endif // _di_fl_fss_is_space_
 
-#ifndef _di_fl_fss_skip_past_whitespace_
-  f_return_status fl_fss_skip_past_whitespace(const f_string_dynamic buffer, f_string_location *location) {
+#ifndef _di_fl_fss_skip_past_space_
+  f_return_status fl_fss_skip_past_space(const f_string_dynamic buffer, f_string_location *location) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (location == 0) return f_status_set_error(f_invalid_parameter);
@@ -310,7 +310,7 @@ extern "C" {
       max_width = buffer.used - location->start;
     }
 
-    while (buffer.string[location->start] == f_string_eos || (status = f_utf_is_whitespace(buffer.string + location->start, max_width)) == f_true) {
+    while (buffer.string[location->start] == f_string_eos || (status = f_utf_is_whitespace(buffer.string + location->start, max_width)) == f_true || (status = f_utf_is_control(buffer.string + location->start, max_width)) == f_true) {
       if (f_status_is_error(status)) {
         return status;
       }
@@ -349,10 +349,10 @@ extern "C" {
 
     return f_none;
   }
-#endif // _di_fl_fss_skip_past_whitespace_
+#endif // _di_fl_fss_skip_past_space_
 
-#ifndef _di_fl_fss_skip_past_all_whitespace_
-  f_return_status fl_fss_skip_past_all_whitespace(const f_string_dynamic buffer, f_string_location *location) {
+#ifndef _di_fl_fss_skip_past_non_graph_
+  f_return_status fl_fss_skip_past_non_graph(const f_string_dynamic buffer, f_string_location *location) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (location == 0) return f_status_set_error(f_invalid_parameter);
@@ -370,10 +370,8 @@ extern "C" {
       max_width = buffer.used - location->start;
     }
 
-    while (buffer.string[location->start] == f_string_eos || (status = f_utf_is_graph(buffer.string + location->start, max_width)) == f_false) {
-      if (f_status_is_error(status)) {
-        return status;
-      }
+    while (buffer.string[location->start] == f_string_eos || ((status = f_utf_is_graph(buffer.string + location->start, max_width)) == f_false && (status = f_utf_is_zero_width(buffer.string + location->start, max_width)) == f_false)) {
+      if (f_status_is_error(status)) return status;
 
       width = f_macro_utf_byte_width_is(buffer.string[location->start]);
 
@@ -407,7 +405,7 @@ extern "C" {
 
     return f_none;
   }
-#endif // _di_fl_fss_skip_past_all_whitespace_
+#endif // _di_fl_fss_skip_past_non_graph_
 
 #ifndef _di_fl_fss_shift_delimiters_
   f_return_status fl_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_location location) {
