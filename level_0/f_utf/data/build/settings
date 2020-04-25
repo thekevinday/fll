@@ -9,10 +9,10 @@ version_micro 0
 
 build_compiler gcc
 build_linker ar
-build_libraries -lc 
+build_libraries -lc
 build_libraries_fll -lf_memory
-build_sources_library utf.c
-build_sources_program 
+build_sources_library utf.c private-utf.c
+build_sources_program
 build_sources_headers utf.h
 build_sources_bash
 build_sources_settings
