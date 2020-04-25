@@ -6,6 +6,9 @@
  * Licenses: lgplv2.1
  *
  * Provides string capabilities.
+ *
+ * It is highly recommended that all string arrays are set to a max size of f_string_length_size.
+ * Any calculations against the length (aka: string.used) can always perform (A < B) operators such that the B is f_string_length_size + 1 without integer overflow.
  */
 #ifndef _F_string_h
 #define _F_string_h
@@ -98,6 +101,10 @@ extern "C" {
 
 #ifndef _di_f_string_length_
   typedef f_number_unsigned f_string_length;
+
+  // string size is set to (size - 4) to compensate for UTF-8 4-byte character such that it can easily act as a (size - 1) regardless of UTF-8.
+  #define f_string_length_size     0xfffffffffffffffb
+  #define f_string_length_size_max f_type_size_max_64_positive
 
   #define f_string_length_printf string_format_long_integer
 
