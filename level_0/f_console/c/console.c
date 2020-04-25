@@ -156,18 +156,18 @@ extern "C" {
                 f_utf_character character_argument_utf = 0;
                 f_utf_character character_console_utf = 0;
 
-                unsigned short max_width = string_length - sub_location;
+                unsigned short width_max = string_length - sub_location;
 
-                status = f_utf_char_to_character(arguments.argv[location] + sub_location, max_width, &character_argument_utf);
+                status = f_utf_char_to_character(arguments.argv[location] + sub_location, width_max, &character_argument_utf);
 
                 if (status != f_none) {
                   f_macro_string_lengths_delete_simple(needs_additional);
                   return status;
                 }
 
-                max_width = strlen(parameters.parameter[parameter_counter].symbol_short);
+                width_max = strlen(parameters.parameter[parameter_counter].symbol_short);
 
-                status = f_utf_char_to_character((f_string) parameters.parameter[parameter_counter].symbol_short, max_width, &character_console_utf);
+                status = f_utf_char_to_character((f_string) parameters.parameter[parameter_counter].symbol_short, width_max, &character_console_utf);
 
                 if (status != f_none) {
                   f_macro_string_lengths_delete_simple(needs_additional);

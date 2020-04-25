@@ -152,13 +152,13 @@ extern "C" {
 
     unsigned short width = 0;
 
-    f_string_length max_width = 0;
+    f_string_length width_max = 0;
 
     while (location->start < buffer.used) {
-      max_width = (location->stop - location->start) + 1;
+      width_max = (location->stop - location->start) + 1;
 
-      if (max_width > buffer.used - location->start) {
-        max_width = buffer.used - location->start;
+      if (width_max > buffer.used - location->start) {
+        width_max = buffer.used - location->start;
       }
 
       width = f_macro_utf_byte_width_is(buffer.string[location->start]);
@@ -182,7 +182,7 @@ extern "C" {
 
         if (width == seek_width) {
           f_utf_character character = 0;
-          status = f_utf_char_to_character(buffer.string + location->start, max_width, &character);
+          status = f_utf_char_to_character(buffer.string + location->start, width_max, &character);
 
           if (f_status_is_error(status)) {
             return status;
@@ -217,13 +217,13 @@ extern "C" {
     f_status status = f_none;
     unsigned short width = 0;
 
-    f_string_length max_width = (location->stop - location->start) + 1;
+    f_string_length width_max = (location->stop - location->start) + 1;
 
-    if (max_width > buffer.used - location->start) {
-      max_width = buffer.used - location->start;
+    if (width_max > buffer.used - location->start) {
+      width_max = buffer.used - location->start;
     }
 
-    while (buffer.string[location->start] == placeholder || (status = f_utf_is_graph(buffer.string + location->start, max_width)) == f_false) {
+    while (buffer.string[location->start] == placeholder || (status = f_utf_is_graph(buffer.string + location->start, width_max)) == f_false) {
       if (f_status_is_error(status)) {
         return status;
       }
@@ -249,10 +249,10 @@ extern "C" {
       if (location->start >= buffer.used) return f_none_on_eos;
       if (location->start > location->stop) return f_none_on_stop;
 
-      max_width = (location->stop - location->start) + 1;
+      width_max = (location->stop - location->start) + 1;
 
-      if (max_width > buffer.used - location->start) {
-        max_width = buffer.used - location->start;
+      if (width_max > buffer.used - location->start) {
+        width_max = buffer.used - location->start;
       }
     } // while
 
@@ -278,13 +278,13 @@ extern "C" {
     f_status status = f_none;
     unsigned short width = 0;
 
-    f_string_length max_width = (location->stop - location->start) + 1;
+    f_string_length width_max = (location->stop - location->start) + 1;
 
-    if (max_width > buffer.used - location->start) {
-      max_width = buffer.used - location->start;
+    if (width_max > buffer.used - location->start) {
+      width_max = buffer.used - location->start;
     }
 
-    while (buffer.string[location->start] == placeholder || (status = f_utf_is_whitespace(buffer.string + location->start, max_width)) == f_false) {
+    while (buffer.string[location->start] == placeholder || (status = f_utf_is_whitespace(buffer.string + location->start, width_max)) == f_false) {
       if (f_status_is_error(status)) {
         return status;
       }
@@ -310,10 +310,10 @@ extern "C" {
       if (location->start >= buffer.used) return f_none_on_eos;
       if (location->start > location->stop) return f_none_on_stop;
 
-      max_width = (location->stop - location->start) + 1;
+      width_max = (location->stop - location->start) + 1;
 
-      if (max_width > buffer.used - location->start) {
-        max_width = buffer.used - location->start;
+      if (width_max > buffer.used - location->start) {
+        width_max = buffer.used - location->start;
       }
     } // while
 
@@ -364,13 +364,13 @@ extern "C" {
 
     unsigned short width = 0;
 
-    f_string_length max_width = 0;
+    f_string_length width_max = 0;
 
     while (location->start < buffer.used) {
-      max_width = (location->stop - location->start) + 1;
+      width_max = (location->stop - location->start) + 1;
 
-      if (max_width > buffer.used - location->start) {
-        max_width = buffer.used - location->start;
+      if (width_max > buffer.used - location->start) {
+        width_max = buffer.used - location->start;
       }
 
       width = f_macro_utf_byte_width_is(buffer.string[location->start]);
@@ -392,7 +392,7 @@ extern "C" {
 
         if (width == seek_width) {
           f_utf_character character = 0;
-          status = f_utf_char_to_character(buffer.string + location->start, max_width, &character);
+          status = f_utf_char_to_character(buffer.string + location->start, width_max, &character);
 
           if (f_status_is_error(status)) {
             return status;
@@ -467,10 +467,10 @@ extern "C" {
 
     unsigned short width = 0;
 
-    f_string_length max_width = (location->stop - location->start) + 1;
+    f_string_length width_max = (location->stop - location->start) + 1;
 
     for (; location->start <= location->stop; location->start += width) {
-      max_width = (location->stop - location->start) + 1;
+      width_max = (location->stop - location->start) + 1;
 
       width = f_macro_utf_byte_width_is(string[location->start]);
 
@@ -492,7 +492,7 @@ extern "C" {
 
         if (width == seek_width) {
           f_utf_character character = 0;
-          status = f_utf_char_to_character(string + location->start, max_width, &character);
+          status = f_utf_char_to_character(string + location->start, width_max, &character);
 
           if (f_status_is_error(status)) {
             return status;
@@ -520,9 +520,9 @@ extern "C" {
     f_status status = f_none;
     unsigned short width = 0;
 
-    f_string_length max_width = (location->stop - location->start) + 1;
+    f_string_length width_max = (location->stop - location->start) + 1;
 
-    while (string[location->start] == placeholder || (status = f_utf_is_graph(string + location->start, max_width)) == f_false) {
+    while (string[location->start] == placeholder || (status = f_utf_is_graph(string + location->start, width_max)) == f_false) {
       if (f_status_is_error(status)) {
         return status;
       }
@@ -546,7 +546,7 @@ extern "C" {
 
       if (location->start > location->stop) return f_none_on_stop;
 
-      max_width = (location->stop - location->start) + 1;
+      width_max = (location->stop - location->start) + 1;
     } // while
 
     if (f_status_is_error(status)) {
@@ -568,9 +568,9 @@ extern "C" {
     f_status status = f_none;
     unsigned short width = 0;
 
-    f_string_length max_width = (location->stop - location->start) + 1;
+    f_string_length width_max = (location->stop - location->start) + 1;
 
-    while (string[location->start] == placeholder || (status = f_utf_is_whitespace(string + location->start, max_width)) == f_false) {
+    while (string[location->start] == placeholder || (status = f_utf_is_whitespace(string + location->start, width_max)) == f_false) {
       if (f_status_is_error(status)) {
         return status;
       }
@@ -594,7 +594,7 @@ extern "C" {
 
       if (location->start > location->stop) return f_none_on_stop;
 
-      max_width = (location->stop - location->start) + 1;
+      width_max = (location->stop - location->start) + 1;
     } // while
 
     if (f_status_is_error(status)) {
@@ -637,10 +637,10 @@ extern "C" {
 
     unsigned short width = 0;
 
-    f_string_length max_width = 0;
+    f_string_length width_max = 0;
 
     for (; location->start <= location->stop; location->start += width) {
-      max_width = (location->stop - location->start) + 1;
+      width_max = (location->stop - location->start) + 1;
 
       width = f_macro_utf_byte_width_is(string[location->start]);
 
@@ -660,7 +660,7 @@ extern "C" {
 
         if (width == seek_width) {
           f_utf_character character = 0;
-          status = f_utf_char_to_character(string + location->start, max_width, &character);
+          status = f_utf_char_to_character(string + location->start, width_max, &character);
 
           if (f_status_is_error(status)) {
             return status;

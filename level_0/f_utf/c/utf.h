@@ -672,8 +672,8 @@ extern "C" {
  *   The UTF-8 characterr to convert from.
  * @param character
  *   A int8_t representation of the UTF-8 character, stored as a string of width bytes.
- *   If max_width is 0, then this should not be allocated (set the pointer address to 0).
- * @param max_width
+ *   If width_max is 0, then this should not be allocated (set the pointer address to 0).
+ * @param width_max
  *   The number of bytes the generated character represents.
  *   If this is set to 0, then the character will be allocated and this will be set to the width of the utf_character.
  *   If this is set to some value greater than 0 (up to 4), then this represents the size of the character array (no allocations are performed).
@@ -688,7 +688,7 @@ extern "C" {
  *   f_failure (with error bit) if width is not long enough to convert.
  */
 #ifndef _di_f_utf_character_to_char_
-  extern f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, uint8_t *max_width);
+  extern f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, uint8_t *width_max);
 #endif // _di_f_utf_character_to_char_
 
 /**
@@ -711,8 +711,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by max_width.
- * @param max_width
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -726,7 +726,7 @@ extern "C" {
  * @see f_utf_character_is()
  */
 #ifndef _di_f_utf_is_
-  extern f_return_status f_utf_is(const f_string character, const uint8_t max_width);
+  extern f_return_status f_utf_is(const f_string character, const uint8_t width_max);
 #endif // _di_f_utf_is_
 
 /**
@@ -734,8 +734,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by max_width.
- * @param max_width
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -748,7 +748,7 @@ extern "C" {
  * @see f_utf_character_is_control()
  */
 #ifndef _di_f_utf_is_control_
-  extern f_return_status f_utf_is_control(const f_string character, const uint8_t max_width);
+  extern f_return_status f_utf_is_control(const f_string character, const uint8_t width_max);
 #endif // _di_f_utf_is_control_
 
 /**
@@ -758,8 +758,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by max_width.
- * @param max_width
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -771,7 +771,7 @@ extern "C" {
  * @see f_utf_character_is_control_picture()
  */
 #ifndef _di_f_utf_is_control_picture_
-  extern f_return_status f_utf_is_control_picture(const f_string character, const uint8_t max_width);
+  extern f_return_status f_utf_is_control_picture(const f_string character, const uint8_t width_max);
 #endif // _di_f_utf_is_control_picture_
 
 /**
@@ -795,8 +795,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by max_width.
- * @param max_width
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -809,7 +809,7 @@ extern "C" {
  * @see f_utf_character_is_fragment()
  */
 #ifndef _di_f_utf_is_fragment_
-  extern f_return_status f_utf_is_fragment(const f_string character, const uint8_t max_width);
+  extern f_return_status f_utf_is_fragment(const f_string character, const uint8_t width_max);
 #endif // _di_f_utf_is_fragment_
 
 /**
@@ -817,8 +817,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by max_width.
- * @param max_width
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -834,7 +834,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_f_utf_is_graph_
-  extern f_return_status f_utf_is_graph(const f_string character, const uint8_t max_width);
+  extern f_return_status f_utf_is_graph(const f_string character, const uint8_t width_max);
 #endif // _di_f_utf_is_graph_
 
 /**
@@ -848,8 +848,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by max_width.
- * @param max_width
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -864,7 +864,7 @@ extern "C" {
  * @see f_utf_character_is_valid()
  */
 #ifndef _di_f_utf_is_valid_
-  extern f_return_status f_utf_is_valid(const f_string character, const uint8_t max_width);
+  extern f_return_status f_utf_is_valid(const f_string character, const uint8_t width_max);
 #endif // _di_f_utf_is_valid_
 
 /**
@@ -872,8 +872,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by max_width.
- * @param max_width
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -889,7 +889,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_f_utf_is_whitespace_
-  extern f_return_status f_utf_is_whitespace(const f_string character, const uint8_t max_width);
+  extern f_return_status f_utf_is_whitespace(const f_string character, const uint8_t width_max);
 #endif // _di_f_utf_is_whitespace_
 
 /**
@@ -899,8 +899,8 @@ extern "C" {
  *
  * @param character
  *   The character to validate.
- *   There must be enough space allocated to compare against, as limited by max_width.
- * @param max_width
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
  *
@@ -916,7 +916,7 @@ extern "C" {
  * @see f_utf_character_is_zero_width()
  */
 #ifndef _di_f_utf_is_zero_width_
-  extern f_return_status f_utf_is_zero_width(const f_string character, const uint8_t max_width);
+  extern f_return_status f_utf_is_zero_width(const f_string character, const uint8_t width_max);
 #endif // _di_f_utf_is_zero_width_
 
 /**
@@ -924,8 +924,8 @@ extern "C" {
  *
  * @param character
  *   The character string to be converted to the f_utf_character type.
- *   There must be enough space allocated to convert against, as limited by max_width.
- * @param max_width
+ *   There must be enough space allocated to convert against, as limited by width_max.
+ * @param width_max
  *   The maximum width available for converting.
  *   Can be anything greater than 0.
  * @param character_utf
@@ -939,7 +939,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_char_to_character_
-  extern f_return_status f_utf_char_to_character(const f_string character, const uint8_t max_width, f_utf_character *character_utf);
+  extern f_return_status f_utf_char_to_character(const f_string character, const uint8_t width_max, f_utf_character *character_utf);
 #endif // _di_f_utf_char_to_character_
 
 #ifdef __cplusplus

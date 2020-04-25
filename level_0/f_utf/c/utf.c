@@ -2566,34 +2566,34 @@ extern "C" {
 #endif // _di_f_utf_character_is_zero_width_
 
 #ifndef _di_f_utf_character_to_char_
-  f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, uint8_t *max_width) {
+  f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, uint8_t *width_max) {
     #ifndef _di_level_0_parameter_checking_
       if (utf_character == 0) return f_status_set_error(f_invalid_parameter);
-      if (max_width == 0 && *character != 0) return f_status_set_error(f_invalid_parameter);
-      if (max_width != 0 && *character == 0) return f_status_set_error(f_invalid_parameter);
-      if (max_width != 0 && *max_width > 4) return f_status_set_error(f_invalid_parameter);
+      if (width_max == 0 && *character != 0) return f_status_set_error(f_invalid_parameter);
+      if (width_max != 0 && *character == 0) return f_status_set_error(f_invalid_parameter);
+      if (width_max != 0 && *width_max > 4) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status status = f_none;
 
     unsigned short width = f_macro_utf_character_width_is(utf_character);
 
-    if (max_width == 0) {
+    if (width_max == 0) {
       f_macro_string_new(status, *character, width);
 
       if (f_status_is_error(status)) return status;
 
       width = 1;
-      *max_width = 1;
+      *width_max = 1;
     }
     else if (width == 1) {
       return f_status_is_error(f_invalid_utf);
     }
-    else if (width > *max_width) {
+    else if (width > *width_max) {
       return f_status_set_error(f_failure);
     }
 
-    *max_width = width;
+    *width_max = width;
 
     if (f_utf_is_big_endian()) {
       memcpy(*character, &utf_character, width);
@@ -2635,9 +2635,9 @@ extern "C" {
 #endif // _di_f_utf_is_big_endian_
 
 #ifndef _di_f_utf_is_
-  f_return_status f_utf_is(const f_string character, const uint8_t max_width) {
+  f_return_status f_utf_is(const f_string character, const uint8_t width_max) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
+      if (width_max < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t width = f_macro_utf_byte_width_is(*character);
@@ -2655,9 +2655,9 @@ extern "C" {
 #endif // _di_f_utf_is_
 
 #ifndef _di_f_utf_is_control_
-  f_return_status f_utf_is_control(const f_string character, const uint8_t max_width) {
+  f_return_status f_utf_is_control(const f_string character, const uint8_t width_max) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
+      if (width_max < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t width = f_macro_utf_byte_width_is(*character);
@@ -2677,7 +2677,7 @@ extern "C" {
     f_utf_character character_utf = 0;
     f_status status = 0;
 
-    status = f_utf_char_to_character(character, max_width, &character_utf);
+    status = f_utf_char_to_character(character, width_max, &character_utf);
 
     if (status != f_none) return status;
 
@@ -2686,9 +2686,9 @@ extern "C" {
 #endif // _di_f_utf_is_control_
 
 #ifndef _di_f_utf_is_control_picture_
-  f_return_status f_utf_is_control_picture(const f_string character, const uint8_t max_width) {
+  f_return_status f_utf_is_control_picture(const f_string character, const uint8_t width_max) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
+      if (width_max < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t width = f_macro_utf_byte_width_is(*character);
@@ -2705,7 +2705,7 @@ extern "C" {
     f_utf_character character_utf = 0;
     f_status status = 0;
 
-    status = f_utf_char_to_character(character, max_width, &character_utf);
+    status = f_utf_char_to_character(character, width_max, &character_utf);
 
     if (status != f_none) return status;
 
@@ -2714,9 +2714,9 @@ extern "C" {
 #endif // _di_f_utf_is_control_picture_
 
 #ifndef _di_f_utf_is_graph_
-  f_return_status f_utf_is_graph(const f_string character, const uint8_t max_width) {
+  f_return_status f_utf_is_graph(const f_string character, const uint8_t width_max) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
+      if (width_max < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t width = f_macro_utf_byte_width_is(*character);
@@ -2736,7 +2736,7 @@ extern "C" {
     f_utf_character character_utf = 0;
     f_status status = 0;
 
-    status = f_utf_char_to_character(character, max_width, &character_utf);
+    status = f_utf_char_to_character(character, width_max, &character_utf);
 
     if (status != f_none) return status;
 
@@ -2745,9 +2745,9 @@ extern "C" {
 #endif // _di_f_utf_is_graph_
 
 #ifndef _di_f_utf_is_whitespace_
-  f_return_status f_utf_is_whitespace(const f_string character, const uint8_t max_width) {
+  f_return_status f_utf_is_whitespace(const f_string character, const uint8_t width_max) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
+      if (width_max < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t width = f_macro_utf_byte_width_is(*character);
@@ -2767,7 +2767,7 @@ extern "C" {
     f_utf_character character_utf = 0;
     f_status status = 0;
 
-    status = f_utf_char_to_character(character, max_width, &character_utf);
+    status = f_utf_char_to_character(character, width_max, &character_utf);
 
     if (status != f_none) return status;
 
@@ -2776,9 +2776,9 @@ extern "C" {
 #endif // _di_f_utf_is_whitespace_
 
 #ifndef _di_f_utf_is_zero_width_
-  f_return_status f_utf_is_zero_width(const f_string character, const uint8_t max_width) {
+  f_return_status f_utf_is_zero_width(const f_string character, const uint8_t width_max) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
+      if (width_max < 1) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t width = f_macro_utf_byte_width_is(*character);
@@ -2798,7 +2798,7 @@ extern "C" {
     f_utf_character character_utf = 0;
     f_status status = 0;
 
-    status = f_utf_char_to_character(character, max_width, &character_utf);
+    status = f_utf_char_to_character(character, width_max, &character_utf);
 
     if (status != f_none) return status;
 
@@ -2807,9 +2807,9 @@ extern "C" {
 #endif // _di_f_utf_is_zero_width_
 
 #ifndef _di_f_utf_char_to_character_
-  f_return_status f_utf_char_to_character(const f_string character, const uint8_t max_width, f_utf_character *character_utf) {
+  f_return_status f_utf_char_to_character(const f_string character, const uint8_t width_max, f_utf_character *character_utf) {
     #ifndef _di_level_0_parameter_checking_
-      if (max_width < 1) return f_status_set_error(f_invalid_parameter);
+      if (width_max < 1) return f_status_set_error(f_invalid_parameter);
       if (character_utf == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -2823,7 +2823,7 @@ extern "C" {
       return f_status_is_error(f_invalid_utf);
     }
 
-    if (width > max_width) {
+    if (width > width_max) {
       return f_status_set_error(f_failure);
     }
 
