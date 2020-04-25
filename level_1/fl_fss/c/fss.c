@@ -262,13 +262,14 @@ extern "C" {
       if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_string_length max_width = (location.stop - location.start) + 1;
+    f_string_length width_max = (location.stop - location.start) + 1;
 
-    if (max_width > buffer.used - location.start) {
-      max_width = buffer.used - location.start;
+    if (width_max > buffer.used - location.start) {
+      width_max = buffer.used - location.start;
     }
 
-    return f_utf_is_graph(buffer.string + location.start, max_width);
+    // @todo update to check against zero-width space.
+    return f_utf_is_graph(buffer.string + location.start, width_max);
   }
 #endif // _di_fl_fss_is_graph_
 
@@ -281,13 +282,14 @@ extern "C" {
       if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_string_length max_width = (location.stop - location.start) + 1;
+    f_string_length width_max = (location.stop - location.start) + 1;
 
-    if (max_width > buffer.used - location.start) {
-      max_width = buffer.used - location.start;
+    if (width_max > buffer.used - location.start) {
+      width_max = buffer.used - location.start;
     }
 
-    return f_utf_is_whitespace(buffer.string + location.start, max_width);
+    // @todo update to check against control characters and zero-width space.
+    return f_utf_is_whitespace(buffer.string + location.start, width_max);
   }
 #endif // _di_fl_fss_is_space_
 
@@ -304,15 +306,66 @@ extern "C" {
     f_status status = f_none;
     unsigned short width = 0;
 
-    f_string_length max_width = (location->stop - location->start) + 1;
+    f_string_length width_max = (location->stop - location->start) + 1;
 
-    if (max_width > buffer.used - location->start) {
-      max_width = buffer.used - location->start;
+    if (width_max > buffer.used - location->start) {
+      width_max = buffer.used - location->start;
     }
 
-    while (buffer.string[location->start] == f_string_eos || (status = f_utf_is_whitespace(buffer.string + location->start, max_width)) == f_true || (status = f_utf_is_control(buffer.string + location->start, max_width)) == f_true) {
-      if (f_status_is_error(status)) {
-        return status;
+    for (;;) {
+      if (buffer.string[location->start] != f_string_placeholder) {
+        status = f_utf_is_whitespace(buffer.string + location->start, width_max);
+
+        if (status == f_false) {
+          status = f_utf_is_control(buffer.string + location->start, width_max);
+
+          if (status == f_false) {
+            status = f_utf_is_zero_width(buffer.string + location->start, width_max);
+
+            if (status == f_true) {
+              f_string_length next_width_max = 0;
+
+              for (f_string_length next = location->start + 1; next < buffer.used && next <= location->stop; next += f_macro_utf_byte_width_is(buffer.string[next])) {
+                next_width_max = (location->stop - next) + 1;
+
+                status = f_utf_is_whitespace(buffer.string + next, width_max);
+                if (status == f_true) {
+                  // treat zero-width before a space like a space.
+                  break;
+                }
+                else if (status == f_false) {
+                  status = f_utf_is_control(buffer.string + next, width_max);
+
+                  if (status == f_true) {
+                    // treat zero-width before a control character like a space.
+                    break;
+                  }
+                  else if (status == f_false) {
+                    status = f_utf_is_zero_width(buffer.string + next, width_max);
+
+                    if (status == f_true) {
+                      // seek until a non-zero-width is reached.
+                      continue;
+                    }
+                    else if (status == f_false) {
+                      // treat zero-width as a non-whitespace non-control character when preceding a non-whitespace non-control character.
+                      return f_none;
+                    }
+                  }
+                  else if (f_status_is_error(status)) return status;
+                }
+                else if (f_status_is_error(status)) return status;
+              } // for
+            }
+            else if (status == f_false) {
+              // treat zero-width as a graph when preceding a non-whitespace non-control (that is not a zero-width).
+              return f_none;
+            }
+            else if (f_status_is_error(status)) return status;
+          }
+          else if (f_status_is_error(status)) return status;
+        }
+        else if (f_status_is_error(status)) return status;
       }
 
       if (buffer.string[location->start] == f_string_eol) return f_none_on_eol;
@@ -336,12 +389,12 @@ extern "C" {
       if (location->start >= buffer.used) return f_none_on_eos;
       if (location->start > location->stop) return f_none_on_stop;
 
-      max_width = (location->stop - location->start) + 1;
+      width_max = (location->stop - location->start) + 1;
 
-      if (max_width > buffer.used - location->start) {
-        max_width = buffer.used - location->start;
+      if (width_max > buffer.used - location->start) {
+        width_max = buffer.used - location->start;
       }
-    } // while
+    } // for
 
     if (f_status_is_error(status)) {
       return status;
@@ -364,13 +417,59 @@ extern "C" {
     f_status status = f_none;
     unsigned short width = 0;
 
-    f_string_length max_width = (location->stop - location->start) + 1;
+    f_string_length width_max = (location->stop - location->start) + 1;
 
-    if (max_width > buffer.used - location->start) {
-      max_width = buffer.used - location->start;
+    if (width_max > buffer.used - location->start) {
+      width_max = buffer.used - location->start;
     }
 
-    while (buffer.string[location->start] == f_string_eos || ((status = f_utf_is_graph(buffer.string + location->start, max_width)) == f_false && (status = f_utf_is_zero_width(buffer.string + location->start, max_width)) == f_false)) {
+    for (;;) {
+      if (buffer.string[location->start] != f_string_placeholder) {
+        status = f_utf_is_graph(buffer.string + location->start, width_max);
+
+        if (status == f_true) {
+          // stop at a graph.
+          break;
+        }
+        else if (status == f_false) {
+          status = f_utf_is_zero_width(buffer.string + location->start, width_max);
+
+          if (status == f_true) {
+            f_string_length next_width_max = 0;
+
+            for (f_string_length next = location->start + 1; next < buffer.used && next <= location->stop; next += f_macro_utf_byte_width_is(buffer.string[next])) {
+              next_width_max = (location->stop - next) + 1;
+
+              status = f_utf_is_graph(buffer.string + next, width_max);
+              if (status == f_true) {
+                // treat zero-width as a graph when preceding a graph.
+                return f_none;
+              }
+              else if (status == f_false) {
+                status = f_utf_is_zero_width(buffer.string + next, width_max);
+
+                if (status == f_true) {
+                  // seek until a non-zero-width is reached.
+                  continue;
+                }
+                else if (status == f_false) {
+                  // treat zero-width as a non-graph when preceding a non-graph (that is not a zero-width).
+                  break;
+                }
+                else if (f_status_is_error(status)) return status;
+              }
+              else if (f_status_is_error(status)) return status;
+            } // for
+          }
+          else if (status == f_false) {
+            // continue on when non-graph and non-zero-width.
+            break;
+          }
+          else if (f_status_is_error(status)) return status;
+        }
+        else if (f_status_is_error(status)) return status;
+      }
+
       if (f_status_is_error(status)) return status;
 
       width = f_macro_utf_byte_width_is(buffer.string[location->start]);
@@ -392,12 +491,12 @@ extern "C" {
       if (location->start >= buffer.used) return f_none_on_eos;
       if (location->start > location->stop) return f_none_on_stop;
 
-      max_width = (location->stop - location->start) + 1;
+      width_max = (location->stop - location->start) + 1;
 
-      if (max_width > buffer.used - location->start) {
-        max_width = buffer.used - location->start;
+      if (width_max > buffer.used - location->start) {
+        width_max = buffer.used - location->start;
       }
-    } // while
+    } // for
 
     if (f_status_is_error(status)) {
       return status;
