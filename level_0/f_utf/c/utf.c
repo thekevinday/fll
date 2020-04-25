@@ -2827,26 +2827,25 @@ extern "C" {
       return f_status_set_error(f_failure);
     }
 
-    *character_utf = 0;
-    *character_utf |= f_macro_utf_character_to_char_1(character[0]);
+    *character_utf = f_macro_utf_character_from_char_1(character[0]);
 
     if (width < 2) {
       return f_none;
     }
 
-    *character_utf |= f_macro_utf_character_to_char_2(character[1]);
+    *character_utf |= f_macro_utf_character_from_char_2(character[1]);
 
     if (width == 2) {
       return f_none;
     }
 
-    *character_utf |= f_macro_utf_character_to_char_3(character[2]);
+    *character_utf |= f_macro_utf_character_from_char_3(character[2]);
 
     if (width == 3) {
       return f_none;
     }
 
-    *character_utf |= f_macro_utf_character_to_char_4(character[3]);
+    *character_utf |= f_macro_utf_character_from_char_4(character[3]);
 
     return f_none;
   }

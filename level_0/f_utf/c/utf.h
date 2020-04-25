@@ -127,10 +127,10 @@ extern "C" {
   #define f_macro_utf_character_to_char_3(character) (((character) & f_utf_character_mask_char_3) >> 8)  // grab third byte.
   #define f_macro_utf_character_to_char_4(character) ((character) & f_utf_character_mask_char_4)         // grab fourth byte.
 
-  #define f_macro_utf_character_from_char_1(character) ((character) << 24) // shift the first byte.
-  #define f_macro_utf_character_from_char_2(character) ((character) << 16) // shift the second byte.
-  #define f_macro_utf_character_from_char_3(character) ((character) << 8)  // shift the third byte.
-  #define f_macro_utf_character_from_char_4(character) ((character))       // shift the fourth byte.
+  #define f_macro_utf_character_from_char_1(character) (((character) << 24) & f_utf_character_mask_char_1) // shift to first byte.
+  #define f_macro_utf_character_from_char_2(character) (((character) << 16) & f_utf_character_mask_char_2) // shift to second byte.
+  #define f_macro_utf_character_from_char_3(character) (((character) << 8) & f_utf_character_mask_char_3)  // shift to third byte.
+  #define f_macro_utf_character_from_char_4(character) ((character) & f_utf_character_mask_char_4)         // shift to fourth byte.
 
   #define f_macro_utf_character_width(character)    (f_macro_utf_byte_width(f_macro_utf_character_to_char_1(character)))
   #define f_macro_utf_character_width_is(character) (f_macro_utf_byte_width_is(f_macro_utf_character_to_char_1(character)))
