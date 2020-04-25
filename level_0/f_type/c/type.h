@@ -196,11 +196,12 @@ extern "C" {
  * Use these macros for GCC-specific tweaks so that if GCC is not supported then they can be easily disabled.
  *
  * f_gcc_attribute_visibility_internal provides a way to make some functions effectively private.
- *
- * @todo there is probably some sort of macro that GCC likely defines that can be utilized here to automatically enable/disable this.
  */
 #ifndef _di_f_gcc_specific_
-  #define f_gcc_attribute_visibility_internal __attribute__((visibility("internal")))
+  #define f_gcc_attribute_visibility_default   __attribute__((visibility("default")))
+  #define f_gcc_attribute_visibility_hidden    __attribute__((visibility("hidden")))
+  #define f_gcc_attribute_visibility_internal  __attribute__((visibility("internal")))
+  #define f_gcc_attribute_visibility_protected __attribute__((visibility("protected")))
 #endif // _di_f_gcc_specific_
 
 #ifdef __cplusplus
