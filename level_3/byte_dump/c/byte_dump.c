@@ -26,7 +26,7 @@ extern "C" {
     printf("%c", f_string_eol);
 
     fll_program_print_help_option(data.context, byte_dump_short_first, byte_dump_long_first, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Start reading at this byte offset.");
-    fll_program_print_help_option(data.context, byte_dump_short_last, byte_dump_long_last, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Stop reading at this byte offset.");
+    fll_program_print_help_option(data.context, byte_dump_short_last, byte_dump_long_last, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Stop reading at this (inclusive) byte offset.");
     fll_program_print_help_option(data.context, byte_dump_short_width, byte_dump_long_width, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Set number of columns of Bytes to display.");
 
     printf("%c", f_string_eol);
@@ -224,11 +224,11 @@ extern "C" {
         f_number_unsigned number = 0;
         status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_last].additional.array[data->parameters[byte_dump_parameter_last].additional.used - 1]], &number);
 
-        if (f_status_is_error(status) || number < 1 || number > f_type_number_size_unsigned) {
+        if (f_status_is_error(status) || number < 0 || number > f_type_number_size_unsigned) {
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "--%s", byte_dump_long_last);
           fl_color_print(f_standard_error, data->context.error, data->context.reset, "' value can only be a number (inclusively) between ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "1");
+          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "0");
           fl_color_print(f_standard_error, data->context.error, data->context.reset, " and ");
           fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%llu", f_type_number_size_unsigned);
           fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
@@ -251,6 +251,9 @@ extern "C" {
             byte_dump_delete_data(data);
             return f_status_set_error(status);
         }
+
+        // store last position as a relative offset from first instead of an absolute position.
+        data->last = (data->last - data->first) + 1;
       }
 
       if (data->process_pipe) {

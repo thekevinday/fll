@@ -9,7 +9,7 @@ extern "C" {
   f_return_status byte_dump_file(const byte_dump_data data, const f_string file_name, f_file file) {
     f_status status = f_none;
 
-    uint64_t position = data.first;
+    uint64_t position = 0;
     uint8_t size = 0;
     uint8_t byte = 0;
     uint8_t offset = 0;
