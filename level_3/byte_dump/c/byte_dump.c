@@ -58,6 +58,12 @@ extern "C" {
 
     printf("%c%c", f_string_eol, f_string_eol);
 
+    printf("  When ");
+    fl_color_print(f_standard_output, data.context.notable, data.context.reset, "--%s", byte_dump_long_last);
+    printf(" is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.");
+
+    printf("%c%c", f_string_eol, f_string_eol);
+
     return f_none;
   }
 #endif // _di_byte_dump_print_help_

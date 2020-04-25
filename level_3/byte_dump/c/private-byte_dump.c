@@ -77,10 +77,6 @@ extern "C" {
         }
         // Process the UTF-8 character.
         else if (width_utf > 1) {
-          position++;
-
-          if (data.last > 0 && position > data.last) break;
-
           continue;
         }
       }
@@ -103,13 +99,7 @@ extern "C" {
         // UTF-8 character fragments must have a width of 1 (and ASCII characters can only be the first character in a sequence).
         if (width_current == 1) {
           // Grab the next UTF-8 character fragment if the entire sequence is not collected yet.
-          if (width_count < width_utf) {
-            position++;
-
-            if (data.last > 0 && position > data.last) break;
-
-            continue;
-          }
+          if (width_count < width_utf) continue;
         }
         else {
           found_invalid_utf = f_true;
@@ -145,12 +135,20 @@ extern "C" {
             }
           }
         }
+
+        if (data.last) {
+          position += width_utf;
+
+          if (position >= data.last) break;
+        }
+      }
+      else if (data.last) {
+        position++;
+
+        if (position >= data.last) break;
       }
 
       width_utf = -1;
-      position++;
-
-      if (data.last > 0 && position > data.last) break;
     } // while
 
     // Print placeholders to fill out the remaining line and then optionally print the text block.
