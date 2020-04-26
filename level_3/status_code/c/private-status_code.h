@@ -30,7 +30,7 @@ extern "C" {
  *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  */
 #ifndef _di_status_code_process_check_
-  extern f_return_status status_code_process_check(const status_code_data data, const f_string value);
+  extern f_return_status status_code_process_check(const status_code_data data, const f_string value) f_gcc_attribute_visibility_internal;
 #endif // _di_status_code_process_check_
 
 /**
@@ -47,7 +47,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_status_code_process_number_
-  extern f_return_status status_code_process_number(const status_code_data data, const f_string value);
+  extern f_return_status status_code_process_number(const status_code_data data, const f_string value) f_gcc_attribute_visibility_internal;
 #endif // _di_status_code_process_number_
 
 /**
@@ -68,7 +68,7 @@ extern "C" {
  *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  */
 #ifndef _di_status_code_process_normal_
-  extern f_return_status status_code_process_normal(const status_code_data data, const f_string value);
+  extern f_return_status status_code_process_normal(const status_code_data data, const f_string value) f_gcc_attribute_visibility_internal;
 #endif // _di_status_code_process_normal_
 
 /**
@@ -92,7 +92,7 @@ extern "C" {
  *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  */
 #ifndef _di_status_code_convert_number_
-  extern f_return_status status_code_convert_number(const status_code_data data, const f_string value, f_number_unsigned *number);
+  extern f_return_status status_code_convert_number(const status_code_data data, const f_string value, f_number_unsigned *number) f_gcc_attribute_visibility_internal;
 #endif // _di_status_code_convert_number_
 
 #ifdef __cplusplus

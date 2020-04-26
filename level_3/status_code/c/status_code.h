@@ -118,7 +118,7 @@ extern "C" {
  *   f_none on success.
  */
 #ifndef _di_status_code_print_help_
-  extern f_return_status status_code_print_help(const status_code_data data);
+  extern f_return_status status_code_print_help(const fl_color_context context);
 #endif // _di_status_code_print_help_
 
 /**
