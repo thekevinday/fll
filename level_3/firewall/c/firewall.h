@@ -299,14 +299,14 @@ extern "C" {
 /**
  * Print help to standard output.
  *
- * @param data
- *   The program data.
+ * @param context
+ *   The color context settings.
  *
  * @return
  *   f_none on success.
  */
 #ifndef _di_firewall_print_help_
-  extern f_return_status firewall_print_help(const firewall_data data);
+  extern f_return_status firewall_print_help(const fl_color_context context);
 #endif // _di_firewall_print_help_
 
 /**

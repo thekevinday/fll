@@ -147,14 +147,14 @@ extern "C" {
 /**
  * Print help to standard output.
  *
- * @param data
- *   The program data.
+ * @param context
+ *   The color context settings.
  *
  * @return
  *   f_none on success.
  */
 #ifndef _di_fss_extended_read_print_help_
-  extern f_return_status fss_extended_read_print_help(const fss_extended_read_data data);
+  extern f_return_status fss_extended_read_print_help(const fl_color_context context);
 #endif // _di_fss_extended_read_print_help_
 
 /**

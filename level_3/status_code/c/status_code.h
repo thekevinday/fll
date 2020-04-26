@@ -111,8 +111,8 @@ extern "C" {
 /**
  * Print help to standard output.
  *
- * @param data
- *   The program data.
+ * @param context
+ *   The color context settings.
  *
  * @return
  *   f_none on success.

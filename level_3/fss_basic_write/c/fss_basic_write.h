@@ -106,14 +106,14 @@ extern "C" {
 /**
  * Print help to standard output.
  *
- * @param data
- *   The program data.
+ * @param context
+ *   The color context settings.
  *
  * @return
  *   f_none on success.
  */
 #ifndef _di_fss_basic_write_print_help_
-  extern f_return_status fss_basic_write_print_help(const fss_basic_write_data data);
+  extern f_return_status fss_basic_write_print_help(const fl_color_context context);
 #endif // _di_fss_basic_write_print_help_
 
 /**
