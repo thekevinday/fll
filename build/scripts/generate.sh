@@ -236,10 +236,10 @@ generate_help(){
   echo -e " -${c_important}m$c_reset, --${c_important}monolithic${c_reset}      Use FLL dependencies by monolithic (-lfll)."
   echo
   echo -e "${c_highlight}Special Options:$c_reset"
-  echo -e " --${c_important}enable-shared${c_reset}   Forcibly do install shared files."
-  echo -e " --${c_important}disable-shared${c_reset}  Forcibly do not install shared files."
-  echo -e " --${c_important}enable-static${c_reset}   Forcibly do install static files."
-  echo -e " --${c_important}disable-static${c_reset}  Forcibly do not install static files."
+  echo -e " --${c_important}enable-shared${c_reset}   Forcibly do build shared files."
+  echo -e " --${c_important}disable-shared${c_reset}  Forcibly do not build shared files."
+  echo -e " --${c_important}enable-static${c_reset}   Forcibly do build static files."
+  echo -e " --${c_important}disable-static${c_reset}  Forcibly do not build static files."
   echo
 }
 
