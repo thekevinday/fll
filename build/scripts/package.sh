@@ -218,24 +218,24 @@ package_help(){
   echo -e " ${c_notice}Version $version$c_reset"
   echo
   echo -e "$c_highlight$system_name$c_reset $c_notice<${c_reset}operation$c_notice>$c_reset"
-  echo -e " ${c_important}build${c_reset}         Build the package"
-  echo -e " ${c_important}dependencies${c_reset}  Rebuild all dependencies"
-  echo -e " ${c_important}clean${c_reset}         Delete all built packages"
+  echo -e " ${c_important}build${c_reset}         Build the package."
+  echo -e " ${c_important}dependencies${c_reset}  Rebuild all dependencies."
+  echo -e " ${c_important}clean${c_reset}         Delete all built packages."
   echo
   echo -e "${c_highlight}Options:$c_reset"
-  echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen"
-  echo -e " +${c_important}l$c_reset, ++${c_important}light$c_reset     Use color modes that show up better on light backgrounds"
-  echo -e " +${c_important}n$c_reset, ++${c_important}no_color$c_reset  Do not use color"
-  echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program"
+  echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen."
+  echo -e " +${c_important}l$c_reset, ++${c_important}light$c_reset     Use color modes that show up better on light backgrounds."
+  echo -e " +${c_important}n$c_reset, ++${c_important}no_color$c_reset  Do not use color."
+  echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program."
   echo
   echo -e "${c_highlight}Package Options:$c_reset"
-  echo -e " -${c_important}d$c_reset, --${c_important}destination${c_reset}  Specify a custom package destination directory"
-  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}        Specify a custom build directory"
-  echo -e " -${c_important}i$c_reset, --${c_important}individual${c_reset}   Build packages by individual package (levels 0. 1. and 2)"
-  echo -e " -${c_important}l$c_reset, --${c_important}level${c_reset}        Build packages by level (levels 0. 1. and 2)"
-  echo -e " -${c_important}m$c_reset, --${c_important}monolithic${c_reset}   Build a monolithic package (levels 0. 1. and 2)"
-  echo -e " -${c_important}p$c_reset, --${c_important}program${c_reset}      Build program packages (level 3)"
-  echo -e " -${c_important}s$c_reset, --${c_important}sources${c_reset}      Specify a custom sources directory"
+  echo -e " -${c_important}d$c_reset, --${c_important}destination${c_reset}  Specify a custom package destination directory."
+  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}        Specify a custom build directory."
+  echo -e " -${c_important}i$c_reset, --${c_important}individual${c_reset}   Build packages by individual package (levels 0. 1. and 2)."
+  echo -e " -${c_important}l$c_reset, --${c_important}level${c_reset}        Build packages by level (levels 0. 1. and 2)."
+  echo -e " -${c_important}m$c_reset, --${c_important}monolithic${c_reset}   Build a monolithic package (levels 0. 1. and 2)."
+  echo -e " -${c_important}p$c_reset, --${c_important}program${c_reset}      Build program packages (level 3)."
+  echo -e " -${c_important}s$c_reset, --${c_important}sources${c_reset}      Specify a custom sources directory."
   echo
 }
 
