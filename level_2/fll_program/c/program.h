@@ -86,6 +86,23 @@ extern "C" {
 #endif // _di_fll_program_print_help_option_long_
 
 /**
+ * Print standard help option (other option only).
+ *
+ * @param context
+ *   The color context.
+ * @param option_other
+ *   The other name of the option.
+ * @param description
+ *   A desciption associated with the option.
+ *
+ * @return
+ *   f_none on success.
+ */
+#ifndef _di_fll_program_print_help_option_other_
+  extern f_return_status fll_program_print_help_option_other(const fl_color_context context, const f_string option_other, const f_string description);
+#endif // _di_fll_program_print_help_option_other_
+
+/**
  * Print standard help usage.
  *
  * @param context

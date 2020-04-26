@@ -44,6 +44,17 @@ extern "C" {
   }
 #endif // _di_fll_program_print_help_option_long_
 
+#ifndef _di_fll_program_print_help_option_other_
+  f_return_status fll_program_print_help_option_other(const fl_color_context context, const f_string option_other, const f_string description) {
+    printf("%c  ", f_string_eol);
+    fl_color_print(f_standard_output, context.standout, context.reset, option_other);
+
+    printf("  %s", description);
+
+    return f_none;
+  }
+#endif // _di_fll_program_print_help_option_other_
+
 #ifndef _di_fll_program_print_help_usage_
   f_return_status fll_program_print_help_usage(const fl_color_context context, const f_string name, const f_string parameters) {
     printf("%c%c", f_string_eol, f_string_eol);
