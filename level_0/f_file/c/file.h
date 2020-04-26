@@ -382,7 +382,6 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_none is returned if file_stat has a non-zero address.
  *   f_none_on_eof on success and EOF was reached.
  *   f_file_not_open (with error bit) if file is not open.
  *   f_file_error_read (with error bit) if file read failed.
@@ -407,7 +406,6 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_none is returned if file_stat has a non-zero address.
  *   f_none_on_eof on success and EOF was reached.
  *   f_file_not_open (with error bit) if file is not open.
  *   f_file_error_seek (with error bit) if file seek failed.
@@ -437,7 +435,6 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_none is returned if file_stat has a non-zero address.
  *   f_invalid_name (with error bit) if the name is somehow invalid.
  *   f_out_of_memory (with error bit) if out of memory.
  *   f_number_overflow (with error bit) on overflow error.

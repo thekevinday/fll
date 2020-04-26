@@ -292,10 +292,6 @@ extern "C" {
 
 #ifndef _di_f_file_stat_
   f_return_status f_file_stat(const f_string file_name, struct stat *file_stat) {
-    if (file_stat != 0) {
-      return f_none;
-    }
-
     if (stat(file_name, file_stat) < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
         return f_status_set_error(f_invalid_name);
@@ -331,10 +327,6 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (file_id <= 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
-
-    if (file_stat != 0) {
-      return f_none;
-    }
 
     int result = fstatat(file_id, file_name, file_stat, flags);
     if (result < 0) {
@@ -372,10 +364,6 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (file_id <= 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
-
-    if (file_stat != 0) {
-      return f_none;
-    }
 
     int result = fstat(file_id, file_stat);
     if (result < 0) {
