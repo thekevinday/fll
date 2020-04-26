@@ -306,7 +306,7 @@ extern "C" {
         return f_status_set_error(f_invalid_directory);
       }
       else if (errno == ENOENT) {
-        return f_file_not_found;
+        return f_status_set_error(f_file_not_found);
       }
       else if (errno == EACCES) {
         return f_status_set_error(f_access_denied);
