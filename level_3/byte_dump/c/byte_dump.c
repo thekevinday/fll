@@ -362,7 +362,7 @@ extern "C" {
       }
     }
     else {
-      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an error code.");
+      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more filenames.");
       status = f_status_set_error(f_invalid_parameter);
     }
 
