@@ -25,6 +25,8 @@ extern "C" {
 
 /**
  * Result values that represent the type of command found.
+ *
+ * Here "empty" refers to '-', or '++', in that they only have the symbols (whereas '-x', or '++x' would not be empty).
  */
 #ifndef _di_f_console_ids_
   enum {
@@ -304,9 +306,9 @@ extern "C" {
  *   f_no_data if no parameters were found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_console_parameter_prioritize__
+#ifndef _di_f_console_parameter_prioritize_
   extern f_return_status f_console_parameter_prioritize(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision);
-#endif // _di_f_console_parameter_prioritize__
+#endif // _di_f_console_parameter_prioritize_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -61,18 +61,47 @@ extern "C" {
     f_string_length sub_location = 0;
     f_string_length increment_by = 0;
     f_string_length string_length = 0;
-    f_array_length parameter_counter = 0;
+    f_array_length i = 0;
 
-    unsigned short console_short = f_console_none;
-    unsigned short console_long = f_console_none;
-    unsigned short console_type = f_console_type_normal;
+    uint8_t console_short = f_console_none;
+    uint8_t console_long = f_console_none;
+    uint8_t console_type = f_console_type_normal;
 
     f_string_lengths needs_additional = f_string_lengths_initialize;
 
-    unsigned short width = 0;
+    uint8_t width = 0;
 
     // loop through and read all parameters.
     while (location < arguments.argc) {
+
+      // Additional parameters must always follow what requests them.
+      if (needs_additional.used > 0) {
+        i = needs_additional.array[0];
+
+        if (parameters.parameter[i].additional.used >= parameters.parameter[i].additional.size) {
+          f_macro_string_lengths_resize(status, parameters.parameter[i].additional, parameters.parameter[i].additional.size + f_console_default_allocation_step);
+
+          if (f_status_is_error(status)) {
+            f_macro_string_lengths_delete_simple(needs_additional);
+            return status;
+          }
+        }
+
+        parameters.parameter[i].result = f_console_result_additional;
+        parameters.parameter[i].additional.array[parameters.parameter[i].additional.used] = location;
+        parameters.parameter[i].additional.used++;
+
+        needs_additional.used--;
+
+        // Pop the matched parameter off of the top of the needs_additional array.
+        for (f_string_length i = 0; i < needs_additional.used; i++) {
+          needs_additional.array[i] = needs_additional.array[i + 1];
+        } // for
+
+        location++;
+        continue;
+      }
+
       f_console_identify(arguments.argv[location], &result);
 
       string_length = strnlen(arguments.argv[location], f_console_max_size);
@@ -106,57 +135,29 @@ extern "C" {
         console_short = f_console_none;
       }
 
-      // Additional parameters must always follow what requests them.
-      if (needs_additional.used > 0) {
-        parameter_counter = needs_additional.array[0];
-
-        if (parameters.parameter[parameter_counter].additional.used >= parameters.parameter[parameter_counter].additional.size) {
-          f_macro_string_lengths_resize(status, parameters.parameter[parameter_counter].additional, parameters.parameter[parameter_counter].additional.size + f_console_default_allocation_step);
-
-          if (f_status_is_error(status)) {
-            f_macro_string_lengths_delete_simple(needs_additional);
-            return status;
-          }
-        }
-
-        parameters.parameter[parameter_counter].result = f_console_result_additional;
-        parameters.parameter[parameter_counter].additional.array[parameters.parameter[parameter_counter].additional.used] = location;
-        parameters.parameter[parameter_counter].additional.used++;
-
-        needs_additional.used--;
-
-        // Pop the matched parameter off of the top of the needs_additional array.
-        for (f_string_length i = 0; i < needs_additional.used; i++) {
-          needs_additional.array[i] = needs_additional.array[i + 1];
-        } // for
-      }
-      else if (console_short != f_console_none) {
+      if (console_short != f_console_none) {
         // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
         while (sub_location < string_length) {
-          for (parameter_counter = 0; parameter_counter < parameters.used; parameter_counter++) {
-            if (parameters.parameter[parameter_counter].type != console_type) {
+          for (i = 0; i < parameters.used; i++) {
+            if (parameters.parameter[i].type != console_type) {
               continue;
             }
 
             if (result == console_short) {
-              if (parameters.parameter[parameter_counter].symbol_short == 0) {
-                continue;
-              }
+              if (parameters.parameter[i].symbol_short == 0) continue;
 
               width = f_macro_utf_byte_width_is(arguments.argv[location][sub_location]);
               if (width > 0) {
                 increment_by = width;
               }
 
-              if (arguments.argv[location][sub_location] != *parameters.parameter[parameter_counter].symbol_short) {
-                continue;
-              }
+              if (arguments.argv[location][sub_location] != *parameters.parameter[i].symbol_short) continue;
 
               if (width > 0) {
                 f_utf_character character_argument_utf = 0;
                 f_utf_character character_console_utf = 0;
 
-                unsigned short width_max = string_length - sub_location;
+                f_number_unsigned width_max = string_length - sub_location;
 
                 status = f_utf_char_to_character(arguments.argv[location] + sub_location, width_max, &character_argument_utf);
 
@@ -165,9 +166,9 @@ extern "C" {
                   return status;
                 }
 
-                width_max = strlen(parameters.parameter[parameter_counter].symbol_short);
+                width_max = strlen(parameters.parameter[i].symbol_short);
 
-                status = f_utf_char_to_character((f_string) parameters.parameter[parameter_counter].symbol_short, width_max, &character_console_utf);
+                status = f_utf_char_to_character((f_string) parameters.parameter[i].symbol_short, width_max, &character_console_utf);
 
                 if (status != f_none) {
                   f_macro_string_lengths_delete_simple(needs_additional);
@@ -180,11 +181,11 @@ extern "C" {
               }
             }
             else if (result == console_long) {
-              if (parameters.parameter[parameter_counter].symbol_long == 0) {
+              if (parameters.parameter[i].symbol_long == 0) {
                 continue;
               }
 
-              if (strncmp(&arguments.argv[location][sub_location], parameters.parameter[parameter_counter].symbol_long, increment_by + 1) != 0) {
+              if (strncmp(&arguments.argv[location][sub_location], parameters.parameter[i].symbol_long, increment_by + 1) != 0) {
                 continue;
               }
             }
@@ -192,8 +193,8 @@ extern "C" {
               continue;
             }
 
-            if (parameters.parameter[parameter_counter].locations.used >= parameters.parameter[parameter_counter].locations.size) {
-              f_macro_string_lengths_resize(status, parameters.parameter[parameter_counter].locations, parameters.parameter[parameter_counter].locations.size + f_console_default_allocation_step);
+            if (parameters.parameter[i].locations.used >= parameters.parameter[i].locations.size) {
+              f_macro_string_lengths_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
 
               if (f_status_is_error(status)) {
                 f_macro_string_lengths_delete_simple(needs_additional);
@@ -201,21 +202,21 @@ extern "C" {
               }
             }
 
-            parameters.parameter[parameter_counter].locations.array[parameters.parameter[parameter_counter].locations.used] = location;
-            parameters.parameter[parameter_counter].locations.used++;
+            parameters.parameter[i].locations.array[parameters.parameter[i].locations.used] = location;
+            parameters.parameter[i].locations.used++;
 
-            parameters.parameter[parameter_counter].result = f_console_result_found;
-            parameters.parameter[parameter_counter].location = location;
-            parameters.parameter[parameter_counter].location_sub = 0;
-            parameters.parameter[parameter_counter].total++;
+            parameters.parameter[i].result = f_console_result_found;
+            parameters.parameter[i].location = location;
+            parameters.parameter[i].location_sub = 0;
+            parameters.parameter[i].total++;
 
             if (result == console_short) {
-              parameters.parameter[parameter_counter].location_sub = sub_location;
+              parameters.parameter[i].location_sub = sub_location;
             }
 
-            if (parameters.parameter[parameter_counter].has_additional) {
-              if (needs_additional.used + parameters.parameter[parameter_counter].has_additional > needs_additional.size) {
-                f_macro_string_lengths_resize(status, needs_additional, needs_additional.used + parameters.parameter[parameter_counter].has_additional);
+            if (parameters.parameter[i].has_additional) {
+              if (needs_additional.used + parameters.parameter[i].has_additional > needs_additional.size) {
+                f_macro_string_lengths_resize(status, needs_additional, needs_additional.used + parameters.parameter[i].has_additional);
 
                 if (f_status_is_error(status)) {
                   f_macro_string_lengths_delete_simple(needs_additional);
@@ -223,8 +224,8 @@ extern "C" {
                 }
               }
 
-              for (f_array_length additional = 0; additional < parameters.parameter[parameter_counter].has_additional; additional++) {
-                needs_additional.array[needs_additional.used] = parameter_counter;
+              for (f_array_length additional = 0; additional < parameters.parameter[i].has_additional; additional++) {
+                needs_additional.array[needs_additional.used] = i;
                 needs_additional.used++;
               } // for
             }
@@ -238,21 +239,15 @@ extern "C" {
       else {
         found = f_false;
 
-        for (parameter_counter = 0; parameter_counter < parameters.used; parameter_counter++) {
-          if (parameters.parameter[parameter_counter].type != f_console_type_other) {
-            continue;
-          }
+        for (i = 0; i < parameters.used; i++) {
+          if (parameters.parameter[i].type != f_console_type_other) continue;
 
-          if (parameters.parameter[parameter_counter].symbol_other == 0) {
-            continue;
-          }
+          if (parameters.parameter[i].symbol_other == 0) continue;
 
-          if (strncmp(arguments.argv[location], parameters.parameter[parameter_counter].symbol_other, string_length + 1) != 0) {
-            continue;
-          }
+          if (strncmp(arguments.argv[location], parameters.parameter[i].symbol_other, string_length + 1) != 0) continue;
 
-          if (parameters.parameter[parameter_counter].locations.used >= parameters.parameter[parameter_counter].locations.size) {
-            f_macro_string_lengths_resize(status, parameters.parameter[parameter_counter].locations, parameters.parameter[parameter_counter].locations.size + f_console_default_allocation_step);
+          if (parameters.parameter[i].locations.used >= parameters.parameter[i].locations.size) {
+            f_macro_string_lengths_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
 
             if (f_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(needs_additional);
@@ -260,17 +255,17 @@ extern "C" {
             }
           }
 
-          parameters.parameter[parameter_counter].locations.array[parameters.parameter[parameter_counter].locations.used] = location;
-          parameters.parameter[parameter_counter].locations.used++;
+          parameters.parameter[i].locations.array[parameters.parameter[i].locations.used] = location;
+          parameters.parameter[i].locations.used++;
 
-          parameters.parameter[parameter_counter].result = f_console_result_found;
-          parameters.parameter[parameter_counter].location = location;
-          parameters.parameter[parameter_counter].location_sub = 0;
-          parameters.parameter[parameter_counter].total++;
+          parameters.parameter[i].result = f_console_result_found;
+          parameters.parameter[i].location = location;
+          parameters.parameter[i].location_sub = 0;
+          parameters.parameter[i].total++;
 
-          if (parameters.parameter[parameter_counter].has_additional) {
-            if (needs_additional.used + parameters.parameter[parameter_counter].has_additional > needs_additional.size) {
-              f_macro_string_lengths_resize(status, needs_additional, needs_additional.used + parameters.parameter[parameter_counter].has_additional);
+          if (parameters.parameter[i].has_additional) {
+            if (needs_additional.used + parameters.parameter[i].has_additional > needs_additional.size) {
+              f_macro_string_lengths_resize(status, needs_additional, needs_additional.used + parameters.parameter[i].has_additional);
 
               if (f_status_is_error(status)) {
                 f_macro_string_lengths_delete_simple(needs_additional);
@@ -278,8 +273,8 @@ extern "C" {
               }
             }
 
-            for (f_array_length additional = 0; additional < parameters.parameter[parameter_counter].has_additional; additional++) {
-              needs_additional.array[needs_additional.used] = parameter_counter;
+            for (f_array_length additional = 0; additional < parameters.parameter[i].has_additional; additional++) {
+              needs_additional.array[needs_additional.used] = i;
               needs_additional.used++;
             } // for
           }
