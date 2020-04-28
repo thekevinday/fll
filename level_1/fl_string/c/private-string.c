@@ -182,7 +182,7 @@ extern "C" {
     if (result == 0) {
       f_macro_string_dynamic_new(status, (*result), size);
     }
-    else {
+    else if (size > result->size) {
       f_macro_string_dynamic_resize(status, (*result), size);
     }
 
@@ -207,7 +207,7 @@ extern "C" {
     if (result == 0) {
       f_macro_string_dynamic_new(status, (*result), size);
     }
-    else {
+    else if (size > result->size) {
       f_macro_string_dynamic_resize(status, (*result), size);
     }
 
