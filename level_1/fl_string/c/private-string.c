@@ -170,6 +170,43 @@ extern "C" {
   }
 #endif // !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
 
+#if !defined(_di_fl_string_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_dynamic_partial_mash_)
+  f_return_status private_fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length source_length, f_string_dynamic *destination) {
+    f_status status = f_none;
+
+    if (destination->used == 0) {
+      if (source_length > f_string_max_size) return f_status_set_error(f_string_too_large);
+
+      f_macro_string_dynamic_resize(status, (*destination), source_length);
+      if (f_status_is_error(status)) return status;
+
+      memcpy(destination->string, source, source_length);
+
+      destination->used = source_length;
+    }
+    else {
+      f_string_length total = destination->used + source_length + glue_length;
+
+      if (total > f_string_max_size) return f_status_set_error(f_string_too_large);
+
+      if (total > destination->size) {
+        f_macro_string_dynamic_resize(status, (*destination), total);
+        if (f_status_is_error(status)) return status;
+      }
+
+      for (f_string_length i = 0; i < glue_length; i++) {
+        destination->string[destination->used + i] = glue[i];
+      } // for
+
+      memcpy(destination->string + destination->used + glue_length, source, source_length);
+
+      destination->used = total;
+    }
+
+    return f_none;
+  }
+#endif // !defined(_di_fl_string_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_dynamic_partial_mash_)
+
 #if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_)
   f_return_status private_fl_string_rip(const f_string string, const f_string_length start, const f_string_length stop, f_string_dynamic *result) {
     // The start and stop point are inclusive locations, and therefore start - stop is actually 1 too few locations.

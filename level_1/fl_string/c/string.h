@@ -145,6 +145,35 @@ extern "C" {
 #endif // _di_fl_string_dynamic_compare_trim_
 
 /**
+ * Append the source string onto the destination with the glue in between.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_mash()
+ * @see fl_string_dynamic_mash()
+ * @see fl_string_dynamic_partial_mash()
+ */
+#ifndef _di_fl_string_dynamic_mash_
+  extern f_return_status fl_string_dynamic_mash(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination);
+#endif // _di_fl_string_dynamic_mash_
+
+/**
  * Compare two strings, similar to strncmp(), but restricted to the given ranges.
  *
  * This does not stop on NULL.
@@ -202,6 +231,37 @@ extern "C" {
 #ifndef _di_fl_string_dynamic_partial_compare_trim_
   extern f_return_status fl_string_dynamic_partial_compare_trim(const f_string_dynamic string1, const f_string_dynamic string2, const f_string_location offset1, const f_string_location offset2);
 #endif // _di_fl_string_dynamic_partial_compare_trim_
+
+/**
+ * Append the source string onto the destination with the glue in between.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param offset
+ *   A range within the source to restrict the append from.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_mash()
+ * @see fl_string_dynamic_mash()
+ * @see fl_string_dynamic_partial_mash()
+ */
+#ifndef _di_fl_string_dynamic_partial_mash_
+  extern f_return_status fl_string_dynamic_partial_mash(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination);
+#endif // _di_fl_string_dynamic_partial_mash_
 
 /**
  * Allocate a new string from the provided range in the buffer.
@@ -420,6 +480,37 @@ extern "C" {
 #ifndef _di_fl_string_dynamic_seek_to_utf_character_
   extern f_return_status fl_string_dynamic_seek_to_utf_character(const f_string_dynamic buffer, f_string_location *location, const f_utf_character seek_to_this);
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
+
+/**
+ * Append the source string onto the destination with the glue in between.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param source_length
+ *   Total number of bytes to copy from source string.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_mash()
+ * @see fl_string_dynamic_mash()
+ * @see fl_string_dynamic_partial_mash()
+ */
+#ifndef _di_fl_string_mash_
+  extern f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length source_length, f_string_dynamic *destination);
+#endif // _di_fl_string_mash_
 
 /**
  * Allocate a new string from the provided range in the string.

@@ -49,6 +49,18 @@ extern "C" {
   }
 #endif // _di_fl_string_dynamic_compare_trim_
 
+#ifndef _di_fl_string_dynamic_mash_
+  f_return_status fl_string_dynamic_mash(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (source.used < 1) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    return private_fl_string_mash(glue, glue_length, source.string, source.used, destination);
+  }
+#endif // _di_fl_string_dynamic_mash_
+
 #ifndef _di_fl_string_dynamic_partial_compare_
   f_return_status fl_string_dynamic_partial_compare(const f_string_dynamic string1, const f_string_dynamic string2, const f_string_location offset1, const f_string_location offset2) {
     #ifndef _di_level_1_parameter_checking_
@@ -82,6 +94,21 @@ extern "C" {
     return private_fl_string_compare_trim(string1.string, string2.string, offset1.start, offset2.start, offset1.stop + 1, offset2.stop + 1);
   }
 #endif // _di_fl_string_dynamic_partial_compare_trim_
+
+#ifndef _di_fl_string_dynamic_partial_mash_
+  f_return_status fl_string_dynamic_partial_mash(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (source.used < 1) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+
+      if (offset.start > offset.stop) return f_status_set_error(f_invalid_parameter);
+      if (source.used <= offset.stop) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    return private_fl_string_mash(glue, glue_length, source.string + offset.start, (offset.stop - offset.start) + 1, destination);
+  }
+#endif // _di_fl_string_dynamic_partial_mash_
 
 #ifndef _di_fl_string_dynamic_rip_
   f_return_status fl_string_dynamic_rip(const f_string_dynamic buffer, const f_string_location location, f_string_dynamic *result) {
@@ -412,6 +439,18 @@ extern "C" {
     return f_none_on_eos;
   }
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
+
+#ifndef _di_fl_string_mash_
+  f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length source_length, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (source_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    return private_fl_string_mash(glue, glue_length, source, source_length, destination);
+  }
+#endif // _di_fl_string_mash_
 
 #ifndef _di_fl_string_rip_
   f_return_status fl_string_rip(const f_string string, const f_string_length start, const f_string_length stop, f_string_dynamic *result) {
