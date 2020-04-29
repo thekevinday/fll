@@ -82,7 +82,7 @@ extern "C" {
         choices.id = ids;
         choices.used = 3;
 
-        status = fll_program_process_parameters(arguments, parameters, choices, &data->remaining, &data->context);
+        status = fll_program_parameter_process(arguments, parameters, choices, &data->remaining, &data->context);
 
         if (f_status_is_error(status)) {
           byte_dump_delete_data(data);

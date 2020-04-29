@@ -89,8 +89,8 @@ extern "C" {
   }
 #endif // _di_fll_program_print_version_
 
-#ifndef _di_fll_program_process_parameters_
-  f_return_status fll_program_process_parameters(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, f_string_lengths *remaining, fl_color_context *context) {
+#ifndef _di_fll_program_parameter_process_
+  f_return_status fll_program_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, f_string_lengths *remaining, fl_color_context *context) {
     f_status status = f_none;
 
     status = f_console_parameter_process(arguments, parameters, remaining);
@@ -148,7 +148,7 @@ extern "C" {
 
     return status;
   }
-#endif // _di_fll_program_process_parameters_
+#endif // _di_fll_program_parameter_process_
 
 #ifdef __cplusplus
 } // extern "C"

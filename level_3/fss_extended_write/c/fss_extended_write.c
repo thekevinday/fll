@@ -36,7 +36,7 @@ extern "C" {
       f_console_parameter_id ids[3] = { fss_extended_write_parameter_no_color, fss_extended_write_parameter_light, fss_extended_write_parameter_dark };
       f_console_parameter_ids choices = { ids, 3 };
 
-      status = fll_program_process_parameters(arguments, parameters, choices, &data->remaining, &data->context);
+      status = fll_program_parameter_process(arguments, parameters, choices, &data->remaining, &data->context);
     }
 
     if (f_status_is_error(status)) {
