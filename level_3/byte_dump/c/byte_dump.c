@@ -72,11 +72,11 @@ extern "C" {
   f_return_status byte_dump_main(const f_console_arguments arguments, byte_dump_data *data) {
     f_status status = f_none;
 
-    // Identify priority of color parameters.
     {
       f_console_parameters parameters = { data->parameters, byte_dump_total_parameters };
       f_console_parameter_ids choices = f_console_parameter_ids_initialize;
 
+      // Identify priority of color parameters.
       {
         f_console_parameter_id ids[3] = { byte_dump_parameter_no_color, byte_dump_parameter_light, byte_dump_parameter_dark };
         choices.id = ids;
