@@ -5,6 +5,27 @@
 extern "C" {
 #endif
 
+#if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_dynamic_partial_append_)
+  f_return_status private_fl_string_append(const f_string source, const f_string_length source_length, f_string_dynamic *destination) {
+    f_status status = f_none;
+
+    f_string_length total = destination->used + source_length;
+
+    if (total > f_string_max_size) return f_status_set_error(f_string_too_large);
+
+    if (total > destination->size) {
+      f_macro_string_dynamic_resize(status, (*destination), total);
+      if (f_status_is_error(status)) return status;
+    }
+
+    memcpy(destination->string + destination->used, source, source_length);
+
+    destination->used = total;
+
+    return f_none;
+  }
+#endif // !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_dynamic_partial_append_)
+
 #if !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
   f_return_status private_fl_string_compare(const f_string string1, const f_string string2, const f_string_length offset1, const f_string_length offset2, const f_string_length stop1, const f_string_length stop2) {
     f_string_length i1 = offset1;
@@ -206,6 +227,33 @@ extern "C" {
     return f_none;
   }
 #endif // !defined(_di_fl_string_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_dynamic_partial_mash_)
+
+#if !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_dynamic_partial_prepend_)
+  f_return_status private_fl_string_prepend(const f_string source, const f_string_length source_length, f_string_dynamic *destination) {
+    f_status status = f_none;
+
+    f_string_length total = destination->used + source_length;
+
+    if (total > f_string_max_size) return f_status_set_error(f_string_too_large);
+
+    if (total > destination->size) {
+      f_macro_string_dynamic_resize(status, (*destination), total);
+      if (f_status_is_error(status)) return status;
+    }
+
+    if (destination->used > 0) {
+      memmove(destination->string + source_length, destination->string, destination->used);
+      memcpy(destination->string, source, source_length);
+    }
+    else {
+      memcpy(destination->string, source, source_length);
+    }
+
+    destination->used = total;
+
+    return f_none;
+  }
+#endif // !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_dynamic_partial_prepend_)
 
 #if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_)
   f_return_status private_fl_string_rip(const f_string string, const f_string_length start, const f_string_length stop, f_string_dynamic *result) {

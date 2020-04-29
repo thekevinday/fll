@@ -18,6 +18,33 @@ extern "C" {
 #endif
 
 /**
+ * Private implementation of fl_string_append().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source string to append.
+ * @param source_length
+ *   Total number of bytes to copy from source string.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_append()
+ * @see fl_string_dynamic_append()
+ * @see fl_string_dynamic_partial_append()
+ */
+#if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_dynamic_partial_append_)
+  extern f_return_status private_fl_string_append(const f_string source, const f_string_length source_length, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_dynamic_partial_append_)
+
+/**
  * Private implementation of fl_string_compare().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -109,6 +136,33 @@ extern "C" {
 #if !defined(_di_fl_string_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_dynamic_partial_mash_)
   extern f_return_status private_fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length source_length, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_dynamic_partial_mash_)
+
+/**
+ * Private implementation of fl_string_prepend().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param source_length
+ *   Total number of bytes to copy from source string.
+ * @param destination
+ *   The destination string the source and glue are prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_prepend()
+ * @see fl_string_dynamic_prepend()
+ * @see fl_string_dynamic_partial_prepend()
+ */
+#if !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_dynamic_partial_prepend_)
+  extern f_return_status private_fl_string_prepend(const f_string source, const f_string_length source_length, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_dynamic_partial_prepend_)
 
 /**
  * Private implementation of fl_string_rip().
