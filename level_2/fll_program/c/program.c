@@ -150,6 +150,68 @@ extern "C" {
   }
 #endif // _di_fll_program_parameter_process_
 
+#ifndef _di_fll_program_parameter_additional_mash_
+  f_return_status fll_program_parameter_additional_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
+    #ifndef _di_level_2_parameter_checking_
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    f_status status = f_none;
+
+    f_string_length length = 0;
+
+    for (f_string_length i = 0; i < additional.used; i++) {
+      length = strnlen(argv[additional.array[i]], f_console_max_size);
+
+      if (length > 0) {
+        status = fl_string_mash(glue, glue_length, argv[additional.array[i]], length, destination);
+
+        if (f_status_is_error(status)) return f_status_set_error(f_string_too_large);
+      }
+    } // for
+
+    return status;
+  }
+#endif // _di_fll_program_parameter_additional_mash_
+
+#ifndef _di_fll_program_parameter_additional_trim_mash_
+  f_return_status fll_program_parameter_additional_trim_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
+    #ifndef _di_level_2_parameter_checking_
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    f_status status = f_none;
+
+    f_string_dynamic ripped = f_string_dynamic_initialize;
+
+    for (f_string_length i = 0; i < additional.used; i++) {
+      status = fl_string_rip_trim(argv[additional.array[i]], 0, strnlen(argv[additional.array[i]], f_console_max_size), &ripped);
+
+      if (f_status_is_error(status)) {
+        f_macro_string_dynamic_delete_simple(ripped);
+        return status;
+      }
+
+      if (ripped.used > 0) {
+        status = fl_string_dynamic_mash(glue, glue_length, ripped, destination);
+
+        if (f_status_is_error(status)) {
+          f_macro_string_dynamic_delete_simple(ripped);
+          return f_status_set_error(f_string_too_large);
+        }
+      }
+    } // for
+
+    if (ripped.size) {
+      f_macro_string_dynamic_delete(status, ripped);
+    }
+
+    return status;
+  }
+#endif // _di_fll_program_parameter_additional_trim_mash_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

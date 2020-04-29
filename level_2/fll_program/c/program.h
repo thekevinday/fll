@@ -21,6 +21,7 @@
 
 // fll-1 includes
 #include <level_1/color.h>
+#include <level_1/string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -157,6 +158,54 @@ extern "C" {
 #ifndef _di_fll_program_parameter_process_
   extern f_return_status fll_program_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, f_string_lengths *remaining, fl_color_context *context);
 #endif // _di_fll_program_parameter_process_
+
+/**
+ * Mash together all additional arguments associated with a given console parameter.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param argv
+ *   The program argument array to parse.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ */
+#ifndef _di_fll_program_parameter_additional_mash_
+  extern f_return_status fll_program_parameter_additional_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination);
+#endif // _di_fll_program_parameter_additional_mash_
+
+/**
+ * Mash together all additional arguments associated with a given console parameter.
+ *
+ * The console parameter is trimmed before mashing.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param argv
+ *   The program argument array to parse.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ */
+#ifndef _di_fll_program_parameter_additional_trim_mash_
+  extern f_return_status fll_program_parameter_additional_trim_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination);
+#endif // _di_fll_program_parameter_additional_trim_mash_
 
 #ifdef __cplusplus
 } // extern "C"
