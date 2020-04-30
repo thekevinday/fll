@@ -528,6 +528,7 @@ extern "C" {
   f_return_status fl_string_rip(const f_string string, const f_string_length start, const f_string_length stop, f_string_dynamic *result) {
     #ifndef _di_level_1_parameter_checking_
       if (start > stop) return f_status_set_error(f_invalid_parameter);
+      if (result == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     return private_fl_string_rip(string, start, stop, result);
@@ -538,6 +539,7 @@ extern "C" {
   f_return_status fl_string_rip_trim(const f_string string, const f_string_length start, const f_string_length stop, f_string_dynamic *result) {
     #ifndef _di_level_1_parameter_checking_
       if (start > stop) return f_status_set_error(f_invalid_parameter);
+      if (result == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     return private_fl_string_rip_trim(string, start, stop, result);

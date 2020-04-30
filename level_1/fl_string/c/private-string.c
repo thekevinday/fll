@@ -264,10 +264,7 @@ extern "C" {
 
     f_status status = f_none;
 
-    if (result == 0) {
-      f_macro_string_dynamic_new(status, (*result), size);
-    }
-    else if (size > result->size) {
+    if (size > result->size) {
       f_macro_string_dynamic_resize(status, (*result), size);
     }
 
@@ -289,10 +286,7 @@ extern "C" {
 
     f_status status = f_none;
 
-    if (result == 0) {
-      f_macro_string_dynamic_new(status, (*result), size);
-    }
-    else if (size > result->size) {
+    if (size > result->size) {
       f_macro_string_dynamic_resize(status, (*result), size);
     }
 
