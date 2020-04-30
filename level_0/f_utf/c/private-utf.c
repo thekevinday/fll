@@ -5,6 +5,24 @@
 extern "C" {
 #endif
 
+#if !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
+  f_return_status private_f_utf_character_is_alpha(const f_utf_character character, const uint8_t width) {
+
+    // @todo: handle all Unicode "alpha".
+
+    return f_false;
+  }
+#endif // !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
+
+#if !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
+  f_return_status private_f_utf_character_is_alpha_numeric(const f_utf_character character, const uint8_t width) {
+
+    // @todo: handle all Unicode "alpha_numeric".
+
+    return f_false;
+  }
+#endif // !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
+
 #if !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
   f_return_status private_f_utf_character_is_control(const f_utf_character character, const uint8_t width) {
     if (width == 2) {
@@ -52,6 +70,15 @@ extern "C" {
     return f_false;
   }
 #endif // !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
+
+#if !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
+  f_return_status private_f_utf_character_is_numeric(const f_utf_character character, const uint8_t width) {
+
+    // @todo: handle all Unicode "numeric".
+
+    return f_false;
+  }
+#endif // !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
 
 #if !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
   f_return_status private_f_utf_character_is_valid(const f_utf_character character, const uint8_t width) {
@@ -2424,6 +2451,24 @@ extern "C" {
     return f_false;
   }
 #endif // !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
+
+#if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
+  f_return_status private_f_utf_character_is_word(const f_utf_character character, const uint8_t width) {
+
+    // @todo: handle all Unicode "word".
+
+    return f_false;
+  }
+#endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
+
+#if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
+  f_return_status private_f_utf_character_is_word_dash(const f_utf_character character, const uint8_t width) {
+
+    // @todo: handle all Unicode "word_dash".
+
+    return f_false;
+  }
+#endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
 
 #if !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
   f_return_status private_f_utf_character_is_zero_width(const f_utf_character character) {

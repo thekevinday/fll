@@ -18,6 +18,52 @@ extern "C" {
 #endif
 
 /**
+ * Private implementation of f_utf_character_is_alpha().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   f_true if a UTF-8 control character.
+ *   f_false if not a UTF-8 control character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_alpha()
+ * @see f_utf_is_alpha()
+ */
+#if !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
+  extern f_return_status private_f_utf_character_is_alpha(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
+
+/**
+ * Private implementation of f_utf_character_is_alpha_numeric().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   f_true if a UTF-8 control character.
+ *   f_false if not a UTF-8 control character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_control()
+ * @see f_utf_is_control()
+ */
+#if !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
+  extern f_return_status private_f_utf_character_is_alpha_numeric(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
+
+/**
  * Private implementation of f_utf_character_is_control().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -61,6 +107,29 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
 
 /**
+ * Private implementation of f_utf_character_is_numeric().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   f_true if a UTF-8 control character.
+ *   f_false if not a UTF-8 control character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_numeric()
+ * @see f_utf_is_numeric()
+ */
+#if !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
+  extern f_return_status private_f_utf_character_is_numeric(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
+
+/**
  * Private implementation of f_utf_character_is_valid().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -101,6 +170,52 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
   extern f_return_status private_f_utf_character_is_whitespace(const f_utf_character character) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
+
+/**
+ * Private implementation of f_utf_character_is_word().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   f_true if a UTF-8 control character.
+ *   f_false if not a UTF-8 control character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_word()
+ * @see f_utf_is_word()
+ */
+#if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
+  extern f_return_status private_f_utf_character_is_word(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
+
+/**
+ * Private implementation of f_utf_character_is_word_dash().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   f_true if a UTF-8 control character.
+ *   f_false if not a UTF-8 control character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_word_dash()
+ * @see f_utf_is_word_dash()
+ */
+#if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
+  extern f_return_status private_f_utf_character_is_word_dash(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
 
 /**
  * Private implementation of f_utf_character_is_zero_width().

@@ -520,6 +520,46 @@ extern "C" {
 #endif // _di_f_utf_character_is_
 
 /**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 alphabet character.
+ *   f_false if not a UTF-8 alphabet character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_is_alpha()
+ */
+#ifndef _di_f_utf_character_is_alpha_
+  extern f_return_status f_utf_character_is_alpha(const f_utf_character character);
+#endif // _di_f_utf_character_is_alpha_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabetic or numeric character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 alpha-numeric character.
+ *   f_false if not a UTF-8 alpha-numeric character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_is_alphanumeric()
+ */
+#ifndef _di_f_utf_character_is_alpha_numeric_
+  extern f_return_status f_utf_character_is_alpha_numeric(const f_utf_character character);
+#endif // _di_f_utf_character_is_alpha_numeric_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 control character.
  *
  * @param character
@@ -599,6 +639,26 @@ extern "C" {
 #endif // _di_f_utf_character_is_graph_
 
 /**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 numeric character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 numeric character.
+ *   f_false if not a UTF-8 numeric character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_is_numeric()
+ */
+#ifndef _di_f_utf_character_is_numeric_
+  extern f_return_status f_utf_character_is_numeric(const f_utf_character character);
+#endif // _di_f_utf_character_is_numeric_
+
+/**
  * Check to see if the entire byte block of the character is a valid UTF-8 character.
  *
  * This does validate if the UTF-8 character is a valid UTF-8 character.
@@ -645,6 +705,50 @@ extern "C" {
 #endif // _di_f_utf_character_is_whitespace_
 
 /**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 word character.
+ *
+ * A word character is alpha-numeric or an underscore '_'.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 word character.
+ *   f_false if not a UTF-8 word character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_is_word()
+ */
+#ifndef _di_f_utf_character_is_word_
+  extern f_return_status f_utf_character_is_word(const f_utf_character character);
+#endif // _di_f_utf_character_is_word_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 word or dash character.
+ *
+ * A word dash character is alpha-numeric, an underscore '_' or a dash '-'.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 word or dash character.
+ *   f_false if not a UTF-8 word or dash character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_is_word_dash()
+ */
+#ifndef _di_f_utf_character_is_word_dash_
+  extern f_return_status f_utf_character_is_word_dash(const f_utf_character character);
+#endif // _di_f_utf_character_is_word_dash_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 general non-printing character.
  *
  * Only characters that do not print, which are generally called zero-width.
@@ -662,6 +766,28 @@ extern "C" {
 #ifndef _di_f_utf_character_is_zero_width_
   extern f_return_status f_utf_character_is_zero_width(const f_utf_character character);
 #endif // _di_f_utf_character_is_zero_width_
+
+/**
+ * Check to see if the entire byte block of the character is an word character.
+ *
+ * A word character is alphanumeric or underscore '_'.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 alpha character.
+ *   f_false if not a UTF-8 alpha character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_is_word()
+ */
+#ifndef _di_f_utf_character_is_word_
+  extern f_return_status f_utf_character_is_word(const f_utf_character character);
+#endif // _di_f_utf_character_is_word_
 
 /**
  * Convert a specialized f_utf_character type to a int8_t, stored as a string (character buffer).
@@ -728,6 +854,54 @@ extern "C" {
 #ifndef _di_f_utf_is_
   extern f_return_status f_utf_is(const f_string character, const uint8_t width_max);
 #endif // _di_f_utf_is_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   f_true if a UTF-8 alphabet character.
+ *   f_false if not a UTF-8 alphabet character.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_alpha()
+ */
+#ifndef _di_f_utf_is_alpha_
+  extern f_return_status f_utf_is_alpha(const f_string character, const uint8_t width_max);
+#endif // _di_f_utf_is_alpha_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet or numeric character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   f_true if a UTF-8 alpha-numeric character.
+ *   f_false if not a UTF-8 alpha-numeric character.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_alpha_numeric()
+ */
+#ifndef _di_f_utf_is_alpha_numeric_
+  extern f_return_status f_utf_is_alpha_numeric(const f_string character, const uint8_t width_max);
+#endif // _di_f_utf_is_alpha_numeric_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 control character.
@@ -838,6 +1012,30 @@ extern "C" {
 #endif // _di_f_utf_is_graph_
 
 /**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 numeric character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   f_true if a UTF-8 numeric character.
+ *   f_false if not a UTF-8 numeric character.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_numeric()
+ */
+#ifndef _di_f_utf_is_numeric_
+  extern f_return_status f_utf_is_numeric(const f_string character, const uint8_t width_max);
+#endif // _di_f_utf_is_numeric_
+
+/**
  * Check to see if the entire byte block of the character is a UTF-8 character and if that character is a valid UTF-8.
  *
  * This does check the validity of the character, to not do this use f_utf_is().
@@ -891,6 +1089,58 @@ extern "C" {
 #ifndef _di_f_utf_is_whitespace_
   extern f_return_status f_utf_is_whitespace(const f_string character, const uint8_t width_max);
 #endif // _di_f_utf_is_whitespace_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 word character.
+ *
+ * A word character is alpha-numeric or an underscore '_'.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   f_true if a UTF-8 word character.
+ *   f_false if not a UTF-8 word character.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_word()
+ */
+#ifndef _di_f_utf_is_word_
+  extern f_return_status f_utf_is_word(const f_string character, const uint8_t width_max);
+#endif // _di_f_utf_is_word_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 word or dash character.
+ *
+ * A word dash character is alpha-numeric, an underscore '_' or a dash '-'.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   f_true if a UTF-8 word or dash character.
+ *   f_false if not a UTF-8 word or dash character.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_word_dash()
+ */
+#ifndef _di_f_utf_is_word_dash_
+  extern f_return_status f_utf_is_word_dash(const f_string character, const uint8_t width_max);
+#endif // _di_f_utf_is_word_dash_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 general non-printing character.
