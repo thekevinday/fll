@@ -214,6 +214,76 @@ extern "C" {
   }
 #endif // _di_fll_program_parameter_additional_mash_trim_
 
+#ifndef _di_fll_program_parameter_additional_rip_
+  f_return_status fll_program_parameter_additional_rip(const f_string *argv, const f_string_lengths additional, f_string_dynamics *result) {
+    #ifndef _di_level_2_parameter_checking_
+      if (argv == 0) return f_status_set_error(f_invalid_parameter);
+      if (result == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    f_status status = f_none;
+
+    for (f_string_length i = 0; i < additional.used; i++) {
+      f_string_dynamic ripped = f_string_dynamic_initialize;
+
+      status = fl_string_rip(argv[additional.array[i]], 0, strnlen(argv[additional.array[i]], f_console_max_size), &ripped);
+
+      if (f_status_is_error(status)) return status;
+
+      if (status == f_no_data) {
+        status = f_none;
+      }
+      else {
+        if (result->used >= result->size) {
+          f_macro_string_dynamics_resize(status, (*result), result->size + f_console_default_allocation_step);
+
+          if (f_status_is_error(status)) return status;
+        }
+
+        result->array[result->used] = ripped;
+        result->used++;
+      }
+    } // for
+
+    return status;
+  }
+#endif // _di_fll_program_parameter_additional_rip_
+
+#ifndef _di_fll_program_parameter_additional_rip_trim_
+  f_return_status fll_program_parameter_additional_rip_trim(const f_string *argv, const f_string_lengths additional, f_string_dynamics *result) {
+    #ifndef _di_level_2_parameter_checking_
+      if (argv == 0) return f_status_set_error(f_invalid_parameter);
+      if (result == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    f_status status = f_none;
+
+    for (f_string_length i = 0; i < additional.used; i++) {
+      f_string_dynamic ripped = f_string_dynamic_initialize;
+
+      status = fl_string_rip_trim(argv[additional.array[i]], 0, strnlen(argv[additional.array[i]], f_console_max_size), &ripped);
+
+      if (f_status_is_error(status)) return status;
+
+      if (status == f_no_data) {
+        status = f_none;
+      }
+      else {
+        if (result->used >= result->size) {
+          f_macro_string_dynamics_resize(status, (*result), result->size + f_console_default_allocation_step);
+
+          if (f_status_is_error(status)) return status;
+        }
+
+        result->array[result->used] = ripped;
+        result->used++;
+      }
+    } // for
+
+    return status;
+  }
+#endif // _di_fll_program_parameter_additional_rip_trim_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

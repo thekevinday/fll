@@ -210,6 +210,58 @@ extern "C" {
   extern f_return_status fll_program_parameter_additional_mash_trim(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination);
 #endif // _di_fll_program_parameter_additional_mash_trim_
 
+/**
+ * Allocate new strings from all of the provided locations.
+ *
+ * Empty console parameters are ignored.
+ *
+ * @param argv
+ *   The program argument array to parse.
+ * @param additional
+ *   The string locations where the console parameters are found.
+ * @param result
+ *   An array of dynamic strings each representing a console parameter.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if nothing to rip, no allocations or reallocations are performed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_rip()
+ * @see fll_program_parameter_additional_rip_trim()
+ */
+#ifndef _di_fll_program_parameter_additional_rip_
+  extern f_return_status fll_program_parameter_additional_rip(const f_string *argv, const f_string_lengths additional, f_string_dynamics *result);
+#endif // _di_fll_program_parameter_additional_rip_
+
+/**
+ * Allocate new strings from all of the provided locations.
+ *
+ * The console parameters are trimmed.
+ *
+ * @param argv
+ *   The program argument array to parse.
+ * @param additional
+ *   The string locations where the console parameters are found.
+ * @param result
+ *   An array of dynamic strings each representing a console parameter.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if nothing to rip, no allocations or reallocations are performed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_rip()
+ * @see fll_program_parameter_additional_rip()
+ */
+#ifndef _di_fll_program_parameter_additional_rip_trim_
+  extern f_return_status fll_program_parameter_additional_rip_trim(const f_string *argv, const f_string_lengths additional, f_string_dynamics *result);
+#endif // _di_fll_program_parameter_additional_rip_trim_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
