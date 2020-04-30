@@ -168,6 +168,8 @@ extern "C" {
  *   The number of bytes the glue takes up.
  * @param argv
  *   The program argument array to parse.
+ * @param additional
+ *   The string locations where the console parameters are found.
  * @param destination
  *   The destination string the source and glue are appended onto.
  *
@@ -181,7 +183,6 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_mash_
   extern f_return_status fll_program_parameter_additional_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination);
 #endif // _di_fll_program_parameter_additional_mash_
-
 /**
  * Mash together all additional arguments associated with a given console parameter.
  *
@@ -193,6 +194,8 @@ extern "C" {
  *   The number of bytes the glue takes up.
  * @param argv
  *   The program argument array to parse.
+ * @param additional
+ *   The string locations where the console parameters are found.
  * @param destination
  *   The destination string the source and glue are appended onto.
  *
@@ -203,9 +206,9 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  */
-#ifndef _di_fll_program_parameter_additional_trim_mash_
-  extern f_return_status fll_program_parameter_additional_trim_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination);
-#endif // _di_fll_program_parameter_additional_trim_mash_
+#ifndef _di_fll_program_parameter_additional_mash_trim_
+  extern f_return_status fll_program_parameter_additional_mash_trim(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination);
+#endif // _di_fll_program_parameter_additional_mash_trim_
 
 #ifdef __cplusplus
 } // extern "C"

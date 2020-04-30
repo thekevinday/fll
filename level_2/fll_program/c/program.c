@@ -153,6 +153,7 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_mash_
   f_return_status fll_program_parameter_additional_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
     #ifndef _di_level_2_parameter_checking_
+      if (argv == 0) return f_status_set_error(f_invalid_parameter);
       if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -175,9 +176,10 @@ extern "C" {
   }
 #endif // _di_fll_program_parameter_additional_mash_
 
-#ifndef _di_fll_program_parameter_additional_trim_mash_
-  f_return_status fll_program_parameter_additional_trim_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
+#ifndef _di_fll_program_parameter_additional_mash_trim_
+  f_return_status fll_program_parameter_additional_mash_trim(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
     #ifndef _di_level_2_parameter_checking_
+      if (argv == 0) return f_status_set_error(f_invalid_parameter);
       if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -210,7 +212,7 @@ extern "C" {
 
     return status;
   }
-#endif // _di_fll_program_parameter_additional_trim_mash_
+#endif // _di_fll_program_parameter_additional_mash_trim_
 
 #ifdef __cplusplus
 } // extern "C"
