@@ -30,28 +30,28 @@ extern "C" {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The argument '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
       fl_color_print(f_standard_error, context.error, context.reset, "' is not a valid number for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "--%s", parameter_name);
+      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
     else if (status == f_number_underflow) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The argument '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
       fl_color_print(f_standard_error, context.error, context.reset, "' is too small for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "--%s", parameter_name);
+      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
     else if (status == f_number_overflow) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The argument '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
       fl_color_print(f_standard_error, context.error, context.reset, "' is too large for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "--%s", parameter_name);
+      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
     else if (status == f_number_negative) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The argument '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
       fl_color_print(f_standard_error, context.error, context.reset, "' is negative, which is not allowed for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "--%s", parameter_name);
+      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
     else if (status == f_number_positive) {
@@ -60,12 +60,12 @@ extern "C" {
       fl_color_print(f_standard_error, context.error, context.reset, "' contains a '");
       fl_color_print(f_standard_error, context.notable, context.reset, "+");
       fl_color_print(f_standard_error, context.error, context.reset, "', which is not allowed for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "--%s", parameter_name);
+      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
     else if (status == f_no_data) {
       fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "--%s", parameter_name);
+      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "' must not be an empty string.");
     }
     else {
@@ -74,7 +74,7 @@ extern "C" {
       fl_color_print(f_standard_error, context.error, context.reset, ") has occurred while calling ");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s()", function_name);
       fl_color_print(f_standard_error, context.error, context.reset, "' for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "--%s", parameter_name);
+      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
       fl_color_print(f_standard_error, context.error, context.reset, "' with the value '");
       fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
@@ -170,7 +170,7 @@ extern "C" {
 
           if (depths->array[i].value_name.used == 0) {
             fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The '");
-            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "--%s", fss_extended_read_long_name);
+            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_name);
             fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' must not be an empty string.");
 
             return f_status_set_error(f_invalid_parameter);
@@ -185,14 +185,14 @@ extern "C" {
           fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The value '");
           fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%llu", depths->array[i].depth);
           fl_color_print(f_standard_error, data.context.error, data.context.reset, "' may only be specified once for the parameter '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "--%s", fss_extended_read_long_depth);
+          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_depth);
           fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "'.");
 
           return f_status_set_error(f_invalid_parameter);
         }
         else if (depths->array[i].depth > depths->array[j].depth) {
           fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The parameter '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "--%s", fss_extended_read_long_depth);
+          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_depth);
           fl_color_print(f_standard_error, data.context.error, data.context.reset, "' may not have the value '");
           fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%llu", depths->array[i].depth);
           fl_color_print(f_standard_error, data.context.error, data.context.reset, "' before the value '");

@@ -682,7 +682,7 @@ extern "C" {
     }
 
     while (location->start <= location->stop && location->start < content.used) {
-      if (content.string[location->start] == f_string_eol){
+      if (content.string[location->start] == f_string_eol) {
         buffer->string[buffer_position.stop] = f_string_eol;
         buffer->used = buffer_position.stop + 1;
         return f_none_on_eos;

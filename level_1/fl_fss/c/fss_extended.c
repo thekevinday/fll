@@ -402,7 +402,7 @@ extern "C" {
       if (found->used >= found->size) {
         f_macro_fss_content_resize(status, (*found), found->size + f_fss_default_allocation_step);
 
-        if (f_status_is_error(status)){
+        if (f_status_is_error(status)) {
           f_macro_string_lengths_delete_simple(delimits);
 
           return status;
