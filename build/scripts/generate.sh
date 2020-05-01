@@ -134,7 +134,7 @@ generate_main(){
   if [[ $do_help == "yes" ]] ; then
     generate_help
     generate_cleanup
-    exit 0
+    return 0
   fi
 
   generate_load_settings
@@ -144,28 +144,31 @@ generate_main(){
   elif [[ ! -d $path_bash ]] ; then
     echo -e "${c_error}ERROR: the bash path of $c_notice$path_bash$c_error is not a valid directory.$c_reset"
     generate_cleanup
-    exit 0
+    return 0
   fi
 
   if [[ $work_directory != "" && ! -d $work_directory ]] ; then
     echo -e "${c_error}ERROR: the work directory $c_notice$work_directory$c_error is not a valid directory.$c_reset"
-    exit 1
+    generate_cleanup
+    return 1
   fi
 
   if [[ $defines_override != "" && $(echo "$defines_override" | grep -s -o "[^_[:alnum:][:space:]]") != "" ]] ; then
     echo -e "${c_error}ERROR: the defines override $c_notice$defines_override$c_error includes invalid characters, only alphanumeric, whitespace, and underscore are allowed.$c_reset"
-    exit 1
+    generate_cleanup
+    return 1
   fi
 
   if [[ ! -d $path_c && ( ${variables[$(generate_id build_sources_library)]} != "" || ${variables[$(generate_id build_sources_program)]} != "" || ${variables[$(generate_id build_sources_headers)]} != "" ) ]] ; then
     echo -e "${c_error}ERROR: the c path of '$c_notice$path_c$c_error' is invalid.$c_reset"
     generate_cleanup
-    exit 1
+    return 1
   fi
 
   if [[ $operation_failure == "fail-multiple" ]] ; then
     echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
-    exit 1
+    generate_cleanup
+    return 1
   elif [[ $operation == "build" ]] ; then
     if [[ -f ${path_build}.built$project_built ]] ; then
       echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
@@ -180,11 +183,16 @@ generate_main(){
     generate_operation_clean
   elif [[ $operation == "" ]] ; then
     echo -e "${c_error}ERROR: no operation was given.$c_reset"
-    exit 1
+    generate_cleanup
+    return 1
   else
     echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
-    exit 1
+    generate_cleanup
+    return 1
   fi
+
+  generate_cleanup
+  return 0
 }
 
 generate_handle_colors(){
@@ -633,4 +641,3 @@ generate_cleanup(){
 }
 
 generate_main $*
-generate_cleanup

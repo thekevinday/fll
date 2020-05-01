@@ -146,22 +146,25 @@ install_main(){
   if [[ $do_help == "yes" ]] ; then
     install_help
     install_cleanup
-    exit 0
+    return 0
   fi
 
   if [[ $operation_failure == "fail-unsupported" ]] ; then
     echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
-    exit 1
+    install_cleanup
+    return 1
   fi
 
   if [[ $prefix == "" && ! -d $path_build ]] ; then
     echo -e "${c_error}ERROR: the build path $c_notice$path_build$c_error is not a valid directory.$c_reset"
-    exit 1
+    install_cleanup
+    return 1
   fi
 
   if [[ $destination_prefix != "" && ! -d $destination_prefix ]] ; then
     echo -e "${c_error}ERROR: the destination prefix $c_notice$destination_prefix$c_error is not a valid directory.$c_reset"
-    exit 1
+    install_cleanup
+    return 1
   fi
 
   if [[ $destination_prefix != "" ]] ; then
@@ -212,42 +215,52 @@ install_main(){
 
   if [[ $work_directory != "" && ! -d $work_directory ]] ; then
     echo -e "${c_error}ERROR: the work directory $c_notice$work_directory$c_error is not a valid directory.$c_reset"
-    exit 1
+    install_cleanup
+    return 1
   fi
 
   if [[ ! -d $destination_programs ]] ; then
     echo -e "${c_error}ERROR: the destination bindir $c_notice$destination_programs$c_error is not a valid directory.$c_reset"
-    exit 1
+    install_cleanup
+    return 1
   fi
 
   if [[ ! -d $destination_programs_static ]] ; then
     echo -e "${c_error}ERROR: the destination (static) bindir $c_notice$destination_programs_static$c_error is not a valid directory.$c_reset"
-    exit 1
+    install_cleanup
+    return 1
   fi
 
   if [[ ! -d $destination_programs_shared ]] ; then
     echo -e "${c_error}ERROR: the destination (shared) bindir $c_notice$destination_programs_shared$c_error is not a valid directory.$c_reset"
-    exit 1
+    install_cleanup
+    return 1
   fi
 
   if [[ ! -d $destination_includes ]] ; then
     echo -e "${c_error}ERROR: the destination incluedir $c_notice$destination_includes$c_error is not a valid directory.$c_reset"
-    exit 1
+    install_cleanup
+    return 1
   fi
 
   if [[ ! -d $destination_libraries_static ]] ; then
     echo -e "${c_error}ERROR: the destination (static) libdir $c_notice$destination_libraries_static$c_error is not a valid directory.$c_reset"
-    exit 1
+    install_cleanup
+    return 1
   fi
 
   if [[ ! -d $destination_libraries_shared ]] ; then
     echo -e "${c_error}ERROR: the destination (shared) libdir $c_notice$destination_libraries_shared$c_error is not a valid directory.$c_reset"
-    exit 1
+    install_cleanup
+    return 1
   fi
 
   install_load_settings
 
   install_perform_install
+
+  install_cleanup
+  return 0
 }
 
 install_handle_colors(){
@@ -519,4 +532,3 @@ install_cleanup(){
 }
 
 install_main $*
-install_cleanup

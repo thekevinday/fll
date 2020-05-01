@@ -104,49 +104,57 @@ package_main(){
   if [[ $do_help == "yes" ]] ; then
     package_help
     package_cleanup
-    exit 0
+    return 0
   fi
 
   if [[ $operation_failure == "fail-multiple" ]] ; then
     echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
-    exit 1
+    package_cleanup
+    return 1
   elif [[ $operation == "build" ]] ; then
     if [[ ! -d $path_build ]] ; then
       echo -e "${c_error}ERROR: build directory '$path_build' is invalid or missing.$c_reset"
-      exit 1
+      package_cleanup
+      return 1
     fi
 
     if [[ ! -d $path_destination ]] ; then
       mkdir -vp $path_destination
       if [[ $? -ne 0 ]] ; then
         echo -e "${c_error}ERROR: package directory '$path_destination' is invalid or could not be created.$c_reset"
-        exit 1
+        package_cleanup
+        return 1
       fi
     fi
 
     if [[ ! -d $path_sources ]] ; then
       echo -e "${c_error}ERROR: sources directory '$path_sources' is invalid or missing.$c_reset"
-      exit 1
+      package_cleanup
+      return 1
     fi
 
     if [[ ! -d ${path_sources}level_0/ ]] ; then
       echo -e "${c_error}ERROR: build sources directory '${path_sources}level_0/' is invalid or missing.$c_reset"
-      exit 1
+      package_cleanup
+      return 1
     fi
 
     if [[ ! -d ${path_sources}level_1/ ]] ; then
       echo -e "${c_error}ERROR: build sources directory '${path_sources}level_1/' is invalid or missing.$c_reset"
-      exit 1
+      package_cleanup
+      return 1
     fi
 
     if [[ ! -d ${path_sources}level_2/ ]] ; then
       echo -e "${c_error}ERROR: build sources directory '${path_sources}level_2/' is invalid or missing.$c_reset"
-      exit 1
+      package_cleanup
+      return 1
     fi
 
     if [[ ! -d ${path_sources}level_3/ ]] ; then
       echo -e "${c_error}ERROR: build sources directory '${path_sources}level_3/' is invalid or missing.$c_reset"
-      exit 1
+      package_cleanup
+      return 1
     fi
 
     if [[ $mode_individual == "" && $mode_level == "" && $mode_monolithic == "" && $mode_program == "" ]] ; then
@@ -171,24 +179,31 @@ package_main(){
   elif [[ $operation == "dependencies" ]] ; then
     if [[ ! -d $path_sources ]] ; then
       echo -e "${c_error}ERROR: sources directory '$path_sources' is invalid or missing.$c_reset"
-      exit 1
+      package_cleanup
+      return 1
     fi
 
     package_operation_dependencies
   elif [[ $operation == "clean" ]] ; then
     if [[ ! -d $path_destination ]] ; then
       echo -e "${c_warning}WARNING: package directory '$path_destination' does not exist, there is nothing to clean.$c_reset"
-      exit 0
+      package_cleanup
+      return 0
     fi
 
     package_operation_clean
   elif [[ $operation == "" ]] ; then
     echo -e "${c_error}ERROR: no operation was given.$c_reset"
-    exit 1
+    package_cleanup
+    return 1
   else
     echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
-    exit 1
+    package_cleanup
+    return 1
   fi
+
+  package_cleanup
+  return 0
 }
 
 package_handle_colors(){
@@ -512,7 +527,7 @@ package_operation_monolithic(){
   if [[ ! -d ${path_build}monolithic ]] ; then
     echo -e "${c_error}ERROR: build settings directory $c_notice${path_build}monolithic$c_error is invalid or missing.$c_reset"
     package_cleanup
-    exit 1
+    return 1
   fi
 
   package_create_base_files
@@ -523,7 +538,7 @@ package_operation_monolithic(){
     if [[ $? -ne 0 ]] ; then
       echo -e "${c_error}ERROR: failed to create directory $c_notice${package}data$c_error.$c_reset"
       package_cleanup
-      exit 1
+      return 1
     fi
   fi
 
@@ -536,7 +551,7 @@ package_operation_monolithic(){
   if [[ $? -ne 0 ]] ; then
     echo -e "${c_error}ERROR: failed to move the directory $c_notice$path_build$level$c_error as $c_notice$path_build${level}build$c_error.$c_reset"
     package_cleanup
-    exit 1
+    return 1
   fi
 
   if [[ ! -d ${package}sources/ ]] ; then
@@ -545,7 +560,7 @@ package_operation_monolithic(){
     if [[ $? -ne 0 ]] ; then
       echo -e "${c_error}ERROR: failed to create directory $c_notice${package}sources$c_error.$c_reset"
       package_cleanup
-      exit 1
+      return 1
     fi
   fi
 
@@ -1079,4 +1094,3 @@ package_cleanup(){
 }
 
 package_main $*
-package_cleanup
