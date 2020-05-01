@@ -50,7 +50,30 @@ extern "C" {
   extern f_return_status fl_serialize_simple(const f_string_dynamic value, f_string_dynamic *serialized);
 #endif // _di_fl_serialize_simple_
 
-// @todo: implement fl_unserialize_simple() such that a new array of strings is allocated.
+/**
+ * De-serialized the entire serialized string into multiple separate strings using the Simple serialize algorithm.
+ *
+ * The simple Serialize algorithm is akin to the PATH environment variable, example: PATH="/bin:/sbin:/usr/bin".
+ *
+ * After processing the above example, there would be the following positions:
+ *   1) start = 0, stop = 3.
+ *   2) start = 5, stop = 9.
+ *   3) start = 11, stop = 18.
+ *
+ * @param serialized
+ *   A serialized string to de-serialize.
+ * @param strings
+ *   An array of strings de-serialized from serialized.
+ *
+ * @return
+ *   f_none on success.
+ *   f_incomplete_utf_on_eos if end of sting is reached before a complete UTF-8 character can be processed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ */
+#ifndef _di_fl_unserialize_simple_
+  extern f_return_status fl_unserialize_simple(const f_string_dynamic serialized, f_string_dynamics *strings);
+#endif // _di_fl_unserialize_simple_
 
 /**
  * Identify string positions within a serialized string using the Simple serialize algorithm.
@@ -78,7 +101,7 @@ extern "C" {
 #endif // _di_fl_unserialize_simple_map_
 
 /**
- * Unserialize a specific string using the Simple serialize algorithm.
+ * Unserialize and find the address for a specific string using the Simple serialize algorithm.
  *
  * The simple Serialize algorithm is akin to the PATH environment variable, example: PATH="/bin:/sbin:/usr/bin".
  *
@@ -105,7 +128,34 @@ extern "C" {
   extern f_return_status fl_unserialize_simple_find(const f_string_dynamic serialized, const f_array_length index, f_string_location *location);
 #endif // _di_fl_unserialize_simple_find_
 
-// @todo: implement fl_unserialize_simple_get() such that a new string is allocated, if found.
+/**
+ * Unserialize and get a copy of a specific string using the Simple serialize algorithm.
+ *
+ * The simple Serialize algorithm is akin to the PATH environment variable, example: PATH="/bin:/sbin:/usr/bin".
+ *
+ * After processing the above example, there would be the following positions, for the given index:
+ *   1) with index = 0, start = 0, stop = 3.
+ *   2) with index = 1, start = 5, stop = 9.
+ *   3) with index = 2, start = 11, stop = 18.
+ *
+ * @param serialized
+ *   A serialized string to de-serialize.
+ * @param index
+ *   An index position within the serialized string to get the deserialized positions of.
+ * @param dynamic
+ *   The unserialized string from the specified index.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_eos on success at end of string.
+ *   f_no_data_on_eos if end of string reached before index was reached (dynamic->used is set to 0).
+ *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ */
+#ifndef _di_fl_unserialize_simple_get_
+  extern f_return_status fl_unserialize_simple_get(const f_string_dynamic serialized, const f_array_length index, f_string_dynamic *dynamic);
+#endif // _di_fl_unserialize_simple_get_
 
 #ifdef __cplusplus
 } // extern "C"
