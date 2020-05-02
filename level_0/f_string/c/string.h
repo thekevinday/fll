@@ -312,9 +312,7 @@ extern "C" {
     dynamics.used = 0;
 
   #define f_macro_string_dynamics_new(status, dynamics, length) \
-    dynamics.array = 0; \
-    dynamics.size = 0; \
-    dynamics.used = 0; \
+    f_macro_string_dynamics_clear(dynamics) \
     status = f_memory_new((void **) & dynamics.array, sizeof(f_string_dynamic), length); \
     if (status == f_none) { \
       dynamics.size = length; \

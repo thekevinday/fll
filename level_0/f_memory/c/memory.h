@@ -205,9 +205,7 @@ extern "C" {
  */
 #ifndef _di_f_macro_memory_structure_new_
   #define f_macro_memory_structure_new(status, structure, type, length) \
-    structure.array = 0; \
-    structure.size = 0; \
-    structure.used = 0; \
+    f_macro_memory_structure_clear(structure) \
     status = f_memory_new((void **) & structure.array, sizeof(type), length); \
     if (status == f_none) { \
       structure.size = length; \
@@ -335,9 +333,7 @@ extern "C" {
  */
 #ifndef _di_f_macro_memory_structures_new_
   #define f_macro_memory_structures_new(status, structures, type, new_length) \
-    structures.array = 0; \
-    structures.size = 0; \
-    structures.used = 0; \
+    f_macro_memory_structures_clear(structures) \
     status = f_memory_new((void **) & structures.array, sizeof(type), new_length); \
     if (status == f_none) { \
       structures.size = new_length; \
@@ -424,7 +420,6 @@ extern "C" {
       } \
     }
 #endif // _di_f_macro_memory_structures_destroy_simple_
-
 
 /**
  * Resize a generic memory structures.
