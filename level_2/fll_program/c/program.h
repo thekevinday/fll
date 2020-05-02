@@ -175,6 +175,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
+ *   f_no_data if nothing to rip, no allocations or reallocations are performed.
  *   f_string_max_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
@@ -201,6 +202,7 @@ extern "C" {
  *
  * @return
  *   f_none on success.
+ *   f_no_data if nothing to rip, no allocations or reallocations are performed.
  *   f_string_max_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.

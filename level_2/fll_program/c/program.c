@@ -161,6 +161,7 @@ extern "C" {
     f_status status = f_none;
 
     f_string_length length = 0;
+    f_string_length start = destination->used;
 
     for (f_string_length i = 0; i < additional.used; i++) {
       length = strnlen(argv[additional.array[i]], f_console_max_size);
@@ -171,6 +172,10 @@ extern "C" {
         if (f_status_is_error(status)) return f_status_set_error(f_string_too_large);
       }
     } // for
+
+    if (status == f_none && start == destination->used) {
+      return f_no_data;
+    }
 
     return status;
   }
@@ -186,28 +191,38 @@ extern "C" {
 
     f_status status = f_none;
 
+    f_string_length length = 0;
+    f_string_length start = destination->used;
     f_string_dynamic ripped = f_string_dynamic_initialize;
 
     for (f_string_length i = 0; i < additional.used; i++) {
-      status = fl_string_rip_trim(argv[additional.array[i]], 0, strnlen(argv[additional.array[i]], f_console_max_size), &ripped);
+      length = strnlen(argv[additional.array[i]], f_console_max_size);
 
-      if (f_status_is_error(status)) {
-        f_macro_string_dynamic_delete_simple(ripped);
-        return status;
-      }
-
-      if (ripped.used > 0) {
-        status = fl_string_dynamic_mash(glue, glue_length, ripped, destination);
+      if (length > 0) {
+        status = fl_string_rip_trim(argv[additional.array[i]], 0, length - 1, &ripped);
 
         if (f_status_is_error(status)) {
           f_macro_string_dynamic_delete_simple(ripped);
-          return f_status_set_error(f_string_too_large);
+          return status;
+        }
+
+        if (ripped.used > 0) {
+          status = fl_string_dynamic_mash(glue, glue_length, ripped, destination);
+
+          if (f_status_is_error(status)) {
+            f_macro_string_dynamic_delete_simple(ripped);
+            return f_status_set_error(f_string_too_large);
+          }
         }
       }
     } // for
 
     if (ripped.size) {
       f_macro_string_dynamic_delete(status, ripped);
+    }
+
+    if (status == f_none && start == destination->used) {
+      return f_no_data;
     }
 
     return status;
@@ -223,27 +238,38 @@ extern "C" {
 
     f_status status = f_none;
 
+    f_string_length length = 0;
+    f_string_length start = result->used;
+
     for (f_string_length i = 0; i < additional.used; i++) {
-      f_string_dynamic ripped = f_string_dynamic_initialize;
+      length = strnlen(argv[additional.array[i]], f_console_max_size);
 
-      status = fl_string_rip(argv[additional.array[i]], 0, strnlen(argv[additional.array[i]], f_console_max_size), &ripped);
+      if (length > 0) {
+        f_string_dynamic ripped = f_string_dynamic_initialize;
 
-      if (f_status_is_error(status)) return status;
+        status = fl_string_rip(argv[additional.array[i]], 0, length - 1, &ripped);
 
-      if (status == f_no_data) {
-        status = f_none;
-      }
-      else {
-        if (result->used >= result->size) {
-          f_macro_string_dynamics_resize(status, (*result), result->size + f_console_default_allocation_step);
+        if (f_status_is_error(status)) return status;
 
-          if (f_status_is_error(status)) return status;
+        if (status == f_no_data) {
+          status = f_none;
         }
+        else {
+          if (result->used >= result->size) {
+            f_macro_string_dynamics_resize(status, (*result), result->size + f_console_default_allocation_step);
 
-        result->array[result->used] = ripped;
-        result->used++;
+            if (f_status_is_error(status)) return status;
+          }
+
+          result->array[result->used] = ripped;
+          result->used++;
+        }
       }
     } // for
+
+    if (status == f_none && start == result->used) {
+      return f_no_data;
+    }
 
     return status;
   }
@@ -257,28 +283,38 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status status = f_none;
+    f_string_length length = 0;
+    f_string_length start = result->used;
 
     for (f_string_length i = 0; i < additional.used; i++) {
-      f_string_dynamic ripped = f_string_dynamic_initialize;
+      length = strnlen(argv[additional.array[i]], f_console_max_size);
 
-      status = fl_string_rip_trim(argv[additional.array[i]], 0, strnlen(argv[additional.array[i]], f_console_max_size), &ripped);
+      if (length > 0) {
+        f_string_dynamic ripped = f_string_dynamic_initialize;
 
-      if (f_status_is_error(status)) return status;
+        status = fl_string_rip_trim(argv[additional.array[i]], 0, length - 1, &ripped);
 
-      if (status == f_no_data) {
-        status = f_none;
-      }
-      else {
-        if (result->used >= result->size) {
-          f_macro_string_dynamics_resize(status, (*result), result->size + f_console_default_allocation_step);
+        if (f_status_is_error(status)) return status;
 
-          if (f_status_is_error(status)) return status;
+        if (status == f_no_data) {
+          status = f_none;
         }
+        else {
+          if (result->used >= result->size) {
+            f_macro_string_dynamics_resize(status, (*result), result->size + f_console_default_allocation_step);
 
-        result->array[result->used] = ripped;
-        result->used++;
+            if (f_status_is_error(status)) return status;
+          }
+
+          result->array[result->used] = ripped;
+          result->used++;
+        }
       }
     } // for
+
+    if (status == f_none && start == result->used) {
+      return f_no_data;
+    }
 
     return status;
   }
