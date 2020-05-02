@@ -814,7 +814,7 @@ extern "C" {
  *   f_failure (with error bit) if width is not long enough to convert.
  */
 #ifndef _di_f_utf_character_to_char_
-  extern f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, uint8_t *width_max);
+  extern f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, f_string_length *width_max);
 #endif // _di_f_utf_character_to_char_
 
 /**
@@ -852,7 +852,7 @@ extern "C" {
  * @see f_utf_character_is()
  */
 #ifndef _di_f_utf_is_
-  extern f_return_status f_utf_is(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_
 
 /**
@@ -876,7 +876,7 @@ extern "C" {
  * @see f_utf_character_is_alpha()
  */
 #ifndef _di_f_utf_is_alpha_
-  extern f_return_status f_utf_is_alpha(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_alpha(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_alpha_
 
 /**
@@ -900,7 +900,7 @@ extern "C" {
  * @see f_utf_character_is_alpha_numeric()
  */
 #ifndef _di_f_utf_is_alpha_numeric_
-  extern f_return_status f_utf_is_alpha_numeric(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_alpha_numeric(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_alpha_numeric_
 
 /**
@@ -922,7 +922,7 @@ extern "C" {
  * @see f_utf_character_is_control()
  */
 #ifndef _di_f_utf_is_control_
-  extern f_return_status f_utf_is_control(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_control(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_control_
 
 /**
@@ -945,7 +945,7 @@ extern "C" {
  * @see f_utf_character_is_control_picture()
  */
 #ifndef _di_f_utf_is_control_picture_
-  extern f_return_status f_utf_is_control_picture(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_control_picture(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_control_picture_
 
 /**
@@ -983,7 +983,7 @@ extern "C" {
  * @see f_utf_character_is_fragment()
  */
 #ifndef _di_f_utf_is_fragment_
-  extern f_return_status f_utf_is_fragment(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_fragment(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_fragment_
 
 /**
@@ -1008,7 +1008,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_f_utf_is_graph_
-  extern f_return_status f_utf_is_graph(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_graph(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_graph_
 
 /**
@@ -1032,7 +1032,7 @@ extern "C" {
  * @see f_utf_character_is_numeric()
  */
 #ifndef _di_f_utf_is_numeric_
-  extern f_return_status f_utf_is_numeric(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_numeric(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_numeric_
 
 /**
@@ -1062,7 +1062,7 @@ extern "C" {
  * @see f_utf_character_is_valid()
  */
 #ifndef _di_f_utf_is_valid_
-  extern f_return_status f_utf_is_valid(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_valid(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_valid_
 
 /**
@@ -1087,7 +1087,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_f_utf_is_whitespace_
-  extern f_return_status f_utf_is_whitespace(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_whitespace(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_whitespace_
 
 /**
@@ -1113,7 +1113,7 @@ extern "C" {
  * @see f_utf_character_is_word()
  */
 #ifndef _di_f_utf_is_word_
-  extern f_return_status f_utf_is_word(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_word(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_word_
 
 /**
@@ -1139,7 +1139,7 @@ extern "C" {
  * @see f_utf_character_is_word_dash()
  */
 #ifndef _di_f_utf_is_word_dash_
-  extern f_return_status f_utf_is_word_dash(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_word_dash(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_word_dash_
 
 /**
@@ -1166,7 +1166,7 @@ extern "C" {
  * @see f_utf_character_is_zero_width()
  */
 #ifndef _di_f_utf_is_zero_width_
-  extern f_return_status f_utf_is_zero_width(const f_string character, const uint8_t width_max);
+  extern f_return_status f_utf_is_zero_width(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_zero_width_
 
 /**
@@ -1189,7 +1189,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_char_to_character_
-  extern f_return_status f_utf_char_to_character(const f_string character, const uint8_t width_max, f_utf_character *character_utf);
+  extern f_return_status f_utf_char_to_character(const f_string character, const f_string_length width_max, f_utf_character *character_utf);
 #endif // _di_f_utf_char_to_character_
 
 #ifdef __cplusplus
