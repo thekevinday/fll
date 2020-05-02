@@ -61,7 +61,7 @@ extern "C" {
  * Other projects may provide their own values.
  */
 #ifndef _di_f_memory_default_allocation_step_
-  #define f_memory_default_allocation_step 3
+  #define f_memory_default_allocation_step 4
 #endif // _di_f_memory_default_allocation_step_
 
 /**
