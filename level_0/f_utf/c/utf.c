@@ -237,6 +237,26 @@ extern "C" {
   }
 #endif // _di_f_utf_character_is_word_dash_
 
+#ifndef _di_f_utf_character_is_word_dash_plus_
+  f_return_status f_utf_character_is_word_dash_plus(const f_utf_character character) {
+    unsigned short width = f_macro_utf_character_width_is(character);
+
+    if (width == 0) {
+      if (isalnum(f_macro_utf_character_to_char_1(character)) || character == '_' || character == '-' || character == '+') {
+        return f_true;
+      }
+
+      return f_false;
+    }
+
+    if (width == 1) {
+      return f_status_is_error(f_invalid_utf);
+    }
+
+    return private_f_utf_character_is_word_dash_plus(character, width);
+  }
+#endif // _di_f_utf_character_is_word_dash_plus_
+
 #ifndef _di_f_utf_character_is_zero_width_
   f_return_status f_utf_character_is_zero_width(const f_utf_character character) {
     if (f_macro_utf_character_width_is(character) == 1) {
@@ -677,6 +697,40 @@ extern "C" {
     return private_f_utf_character_is_word_dash(character_utf, width);
   }
 #endif // _di_f_utf_is_word_dash_
+
+#ifndef _di_f_utf_is_word_dash_plus_
+  f_return_status f_utf_is_word_dash_plus(const f_string character, const f_string_length width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    uint8_t width = f_macro_utf_byte_width_is(*character);
+
+    if (width == 0) {
+      if (isalnum(*character) || *character == '_' || *character == '-' || *character == '+') {
+        return f_true;
+      }
+
+      return f_false;
+    }
+
+    if (width == 1) {
+      return f_status_is_error(f_incomplete_utf);
+    }
+
+    f_utf_character character_utf = 0;
+
+    {
+      f_status status = 0;
+
+      status = f_utf_char_to_character(character, width_max, &character_utf);
+
+      if (status != f_none) return status;
+    }
+
+    return private_f_utf_character_is_word_dash_plus(character_utf, width);
+  }
+#endif // _di_f_utf_is_word_dash_plus_
 
 #ifndef _di_f_utf_is_zero_width_
   f_return_status f_utf_is_zero_width(const f_string character, const f_string_length width_max) {

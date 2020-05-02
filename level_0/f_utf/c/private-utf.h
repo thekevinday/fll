@@ -218,6 +218,29 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
 
 /**
+ * Private implementation of f_utf_character_is_word_dash_plus().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   f_true if a UTF-8 control character.
+ *   f_false if not a UTF-8 control character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_word_dash()
+ * @see f_utf_is_word_dash()
+ */
+#if !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
+  extern f_return_status private_f_utf_character_is_word_dash_plus(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
+
+/**
  * Private implementation of f_utf_character_is_zero_width().
  *
  * Intended to be shared to each of the different implementation variations.

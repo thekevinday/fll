@@ -749,6 +749,28 @@ extern "C" {
 #endif // _di_f_utf_character_is_word_dash_
 
 /**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 word, dash, or plus character.
+ *
+ * A word dash character is alpha-numeric, an underscore '_', a dash '-', or a plus '+'.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   f_true if a UTF-8 word or dash character.
+ *   f_false if not a UTF-8 word or dash character.
+ *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_is_word_dash()
+ */
+#ifndef _di_f_utf_character_is_word_dash_plus_
+  extern f_return_status f_utf_character_is_word_dash_plus(const f_utf_character character);
+#endif // _di_f_utf_character_is_word_dash_plus_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 general non-printing character.
  *
  * Only characters that do not print, which are generally called zero-width.
@@ -1141,6 +1163,32 @@ extern "C" {
 #ifndef _di_f_utf_is_word_dash_
   extern f_return_status f_utf_is_word_dash(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_word_dash_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 word, dash, or plus character.
+ *
+ * A word dash character is alpha-numeric, an underscore '_', a dash '-', or a plus '+'.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   f_true if a UTF-8 word or dash character.
+ *   f_false if not a UTF-8 word or dash character.
+ *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see iscntrl()
+ * @see f_utf_character_is_word_dash_plus()
+ */
+#ifndef _di_f_utf_is_word_dash_plus_
+  extern f_return_status f_utf_is_word_dash_plus(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_word_dash_plus_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 general non-printing character.

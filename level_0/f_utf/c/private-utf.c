@@ -2470,6 +2470,15 @@ extern "C" {
   }
 #endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
 
+#if !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
+  f_return_status private_f_utf_character_is_word_dash_plus(const f_utf_character character, const uint8_t width) {
+
+    // @todo: handle all Unicode "word_dash_plus".
+
+    return f_false;
+  }
+#endif // !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
+
 #if !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
   f_return_status private_f_utf_character_is_zero_width(const f_utf_character character) {
     // reduce the number of checks by grouping checks by first byte.
