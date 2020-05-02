@@ -300,7 +300,7 @@ extern "C" {
 
             data->file_position.total_elements = ftell(file.address);
 
-            // Sskip past empty files.
+            // Skip past empty files.
             if (data->file_position.total_elements == 0) {
               f_file_close(&file);
               continue;
