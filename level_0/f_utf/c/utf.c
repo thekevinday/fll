@@ -619,7 +619,7 @@ extern "C" {
     uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
-      if (iscntrl(*character) || *character == '_') {
+      if (isalnum(*character) || *character == '_') {
         return f_true;
       }
 
@@ -653,7 +653,7 @@ extern "C" {
     uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
-      if (iscntrl(*character) || *character == '_' || *character == '-') {
+      if (isalnum(*character) || *character == '_' || *character == '-') {
         return f_true;
       }
 
@@ -687,10 +687,7 @@ extern "C" {
     uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
-      if (isspace(*character)) {
-        return f_true;
-      }
-
+      // There are no zero-width spaces in ASCII.
       return f_false;
     }
 
