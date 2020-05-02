@@ -722,6 +722,12 @@ extern "C" {
           break;
       #endif // _di_fl_status_access_denied_
 
+      #ifndef _di_fl_status_array_
+        case f_array_too_large:
+          *string = fl_status_string_array_too_large;
+          break;
+      #endif // _di_fl_status_array_
+
       case f_status_code_last:
         *string = fl_status_string_status_code_last;
         break;

@@ -186,9 +186,11 @@ extern "C" {
 /**
  * Defines a variable to be used by arrays.
  */
-#ifndef _di_f_array_length_
+#ifndef _di_f_array_
   typedef f_number_unsigned f_array_length;
-#endif // _di_f_array_length_
+
+  #define f_array_max_size f_type_number_size_unsigned
+#endif // _di_f_array_
 
 /**
  * GCC-specific features.
