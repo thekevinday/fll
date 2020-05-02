@@ -36,7 +36,7 @@ extern "C" {
  * instead, they are intended to only point to existing data, so these should neither be allocated nor deallocated.
  */
 #ifndef _di_f_color_control_
-  typedef struct f_color_control {
+  typedef struct {
     const int8_t *blink;
     const int8_t *bold;
     const int8_t *conceal;
