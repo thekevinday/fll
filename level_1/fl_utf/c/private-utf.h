@@ -18,6 +18,66 @@ extern "C" {
 #endif
 
 /**
+ * Private implementation of fl_utf_string_append().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source string to append.
+ * @param start
+ *   Inclusive start point of string to append.
+ * @param stop
+ *   Inclusive stop point of string to append.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_append()
+ * @see fl_utf_string_mash()
+ * @see fl_utf_string_dynamic_append()
+ * @see fl_utf_string_dynamic_mash()
+ */
+#if !defined(_di_fl_utf_string_append_) || !defined(_di_fl_utf_string_dynamic_append_) || !defined(_di_fl_utf_string_append_mash_) || !defined(_di_fl_utf_string_dynamic_mash_)
+  extern f_return_status private_fl_utf_string_append(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_utf_string_append_) || !defined(_di_fl_utf_string_dynamic_append_) || !defined(_di_fl_utf_string_append_mash_) || !defined(_di_fl_utf_string_dynamic_mash_)
+
+/**
+ * Private implementation of fl_utf_string_append_nulless().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source string to append.
+ * @param start
+ *   Inclusive start point of string to append.
+ * @param stop
+ *   Inclusive stop point of string to append.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_append_nulless()
+ * @see fl_utf_string_mash_nulless()
+ * @see fl_utf_string_dynamic_append_nulless()
+ * @see fl_utf_string_dynamic_mash_nulless()
+ */
+#if !defined(_di_fl_utf_string_append_nulless_) || !defined(_di_fl_utf_string_dynamic_append_nulless_) || !defined(_di_fl_utf_string_mash_nulless_) || !defined(_di_fl_utf_string_dynamic_mash_nulless_)
+  extern f_return_status private_fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_utf_string_append_nulless_) || !defined(_di_fl_utf_string_dynamic_append_nulless_) || !defined(_di_fl_utf_string_mash_nulless_) || !defined(_di_fl_utf_string_dynamic_mash_nulless_)
+
+/**
  * Private implementation of fl_utf_string_compare().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -80,50 +140,77 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
 
 /**
- * Private implementation of fl_utf_string_rip().
+ * Private implementation of fl_utf_string_prepend().
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param string
- *   The string to rip from.
+ * @param source
+ *   The source string to prepend.
  * @param start
- *   Inclusive start point of string to rip.
+ *   Inclusive start point of string to append.
  * @param stop
- *   Inclusive stop point of string to rip.
- * @param result
- *   The new string, which will be allocated or reallocated as necessary.
+ *   Inclusive stop point of string to append.
+ * @param destination
+ *   The destination string the source and glue are prepended onto.
  *
  * @return
  *   f_none on success.
- *   f_no_data if nothing to rip, no allocations or reallocations are performed.
+ *   f_string_max_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_dynamic_rip()
- * @see fl_utf_string_rip()
+ * @see fl_utf_string_prepend()
+ * @see fl_utf_string_dynamic_prepend()
  */
-#if !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_)
-  extern f_return_status private_fl_utf_string_rip(const f_utf_string string, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *result) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_)
+#if !defined(_di_fl_utf_string_prepend_) || !defined(_di_fl_utf_string_dynamic_prepend_) || !defined(_di_fl_utf_string_append_mish_) || !defined(_di_fl_utf_string_dynamic_mish_)
+  extern f_return_status private_fl_utf_string_prepend(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_utf_string_prepend_) || !defined(_di_fl_utf_string_dynamic_prepend_) || !defined(_di_fl_utf_string_append_mish_) || !defined(_di_fl_utf_string_dynamic_mish_)
 
 /**
- * Private implementation of fl_string_rip_trim().
+ * Private implementation of fl_utf_string_prepend_nulless().
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param string
- *   The string to rip from.
+ * @param source
+ *   The source string to prepend.
  * @param start
- *   Inclusive start point of string to rip.
+ *   Inclusive start point of string to append.
  * @param stop
- *   Inclusive stop point of string to rip.
- * @param result
- *   The new string, which will be allocated or reallocated as necessary.
+ *   Inclusive stop point of string to append.
+ * @param destination
+ *   The destination string the source and glue are prepended onto.
  *
  * @return
  *   f_none on success.
- *   f_no_data if nothing to rip, no allocations or reallocations are performed.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_prepend_nulless()
+ * @see fl_utf_string_dynamic_prepend_nulless()
+ */
+#if !defined(_di_fl_utf_string_prepend_nulless_) || !defined(_di_fl_utf_string_dynamic_prepend_nulless_) || !defined(_di_fl_utf_string_append_mish_) || !defined(_di_fl_utf_string_dynamic_mish_)
+  extern f_return_status private_fl_utf_string_prepend_nulless(const f_utf_string source, f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_utf_string_prepend_nulless_) || !defined(_di_fl_utf_string_dynamic_prepend_nulless_) || !defined(_di_fl_utf_string_append_mish_) || !defined(_di_fl_utf_string_dynamic_mish_)
+
+/**
+ * Private implementation of fl_utf_string_rip(), but only the part for finding the start/stop range.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The string to rip from.
+ * @param start
+ *   Inclusive start point of string to rip.
+ *   Will be updated to reflect the new start range.
+ * @param stop
+ *   Inclusive stop point of string to rip.
+ *   Will be updated to reflect the new stop range.
+ *
+ * @return
+ *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -131,9 +218,9 @@ extern "C" {
  * @see fl_utf_string_dynamic_rip()
  * @see fl_utf_string_rip()
  */
-#if !defined(_di_fl_utf_string_rip_trim_) || !defined(_di_fl_utf_string_dynamic_rip_trim_)
-  extern f_return_status private_fl_utf_string_rip_trim(const f_utf_string string, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *result) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_utf_string_rip_trim_) || !defined(_di_fl_utf_string_dynamic_rip_trim_)
+#if !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_) || !defined(_di_fl_utf_string_rip_nulless_) || !defined(_di_fl_utf_string_dynamic_rip_nulless_)
+  extern f_return_status private_fl_utf_string_rip_find_range(const f_utf_string source, f_utf_string_length *start, f_utf_string_length *stop) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_) || !defined(_di_fl_utf_string_rip_nulless_) || !defined(_di_fl_utf_string_dynamic_rip_nulless_)
 
 #ifdef __cplusplus
 } // extern "C"

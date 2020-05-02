@@ -150,6 +150,52 @@ extern "C" {
   }
 #endif // _di_fll_program_parameter_process_
 
+#ifndef _di_fll_program_parameter_additional_append_
+  f_return_status fll_program_parameter_additional_append(const f_string *argv, const f_string_lengths additional, f_string_dynamics *destination) {
+    #ifndef _di_level_2_parameter_checking_
+      if (argv == 0) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    f_status status = f_none;
+
+    f_string_length length = 0;
+    f_string_length start = destination->used;
+
+    for (f_string_length i = 0; i < additional.used; i++) {
+      length = strnlen(argv[additional.array[i]], f_console_max_size);
+
+      if (length > 0) {
+        f_string_dynamic ripped = f_string_dynamic_initialize;
+
+        status = fl_string_append(argv[additional.array[i]], 0, length - 1, &ripped);
+
+        if (f_status_is_error(status)) return status;
+
+        if (status == f_no_data) {
+          status = f_none;
+        }
+        else {
+          if (destination->used >= destination->size) {
+            f_macro_string_dynamics_resize(status, (*destination), destination->size + f_console_default_allocation_step);
+
+            if (f_status_is_error(status)) return status;
+          }
+
+          destination->array[destination->used] = ripped;
+          destination->used++;
+        }
+      }
+    } // for
+
+    if (status == f_none && start == destination->used) {
+      return f_no_data;
+    }
+
+    return status;
+  }
+#endif // _di_fll_program_parameter_additional_append_
+
 #ifndef _di_fll_program_parameter_additional_mash_
   f_return_status fll_program_parameter_additional_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
     #ifndef _di_level_2_parameter_checking_
@@ -167,7 +213,7 @@ extern "C" {
       length = strnlen(argv[additional.array[i]], f_console_max_size);
 
       if (length > 0) {
-        status = fl_string_mash(glue, glue_length, argv[additional.array[i]], length, destination);
+        status = fl_string_mash(glue, glue_length, argv[additional.array[i]], 0, length - 1, destination);
 
         if (f_status_is_error(status)) return f_status_set_error(f_string_too_large);
       }
@@ -181,8 +227,53 @@ extern "C" {
   }
 #endif // _di_fll_program_parameter_additional_mash_
 
-#ifndef _di_fll_program_parameter_additional_mash_trim_
-  f_return_status fll_program_parameter_additional_mash_trim(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
+#ifndef _di_fll_program_parameter_additional_rip_
+  f_return_status fll_program_parameter_additional_rip(const f_string *argv, const f_string_lengths additional, f_string_dynamics *destination) {
+    #ifndef _di_level_2_parameter_checking_
+      if (argv == 0) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    f_status status = f_none;
+    f_string_length length = 0;
+    f_string_length start = destination->used;
+
+    for (f_string_length i = 0; i < additional.used; i++) {
+      length = strnlen(argv[additional.array[i]], f_console_max_size);
+
+      if (length > 0) {
+        f_string_dynamic ripped = f_string_dynamic_initialize;
+
+        status = fl_string_rip(argv[additional.array[i]], 0, length - 1, &ripped);
+
+        if (f_status_is_error(status)) return status;
+
+        if (status == f_no_data) {
+          status = f_none;
+        }
+        else {
+          if (destination->used >= destination->size) {
+            f_macro_string_dynamics_resize(status, (*destination), destination->size + f_console_default_allocation_step);
+
+            if (f_status_is_error(status)) return status;
+          }
+
+          destination->array[destination->used] = ripped;
+          destination->used++;
+        }
+      }
+    } // for
+
+    if (status == f_none && start == destination->used) {
+      return f_no_data;
+    }
+
+    return status;
+  }
+#endif // _di_fll_program_parameter_additional_rip_
+
+#ifndef _di_fll_program_parameter_additional_rip_mash_
+  f_return_status fll_program_parameter_additional_rip_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (argv == 0) return f_status_set_error(f_invalid_parameter);
       if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
@@ -199,7 +290,7 @@ extern "C" {
       length = strnlen(argv[additional.array[i]], f_console_max_size);
 
       if (length > 0) {
-        status = fl_string_rip_trim(argv[additional.array[i]], 0, length - 1, &ripped);
+        status = fl_string_rip(argv[additional.array[i]], 0, length - 1, &ripped);
 
         if (f_status_is_error(status)) {
           f_macro_string_dynamic_delete_simple(ripped);
@@ -227,98 +318,7 @@ extern "C" {
 
     return status;
   }
-#endif // _di_fll_program_parameter_additional_mash_trim_
-
-#ifndef _di_fll_program_parameter_additional_rip_
-  f_return_status fll_program_parameter_additional_rip(const f_string *argv, const f_string_lengths additional, f_string_dynamics *result) {
-    #ifndef _di_level_2_parameter_checking_
-      if (argv == 0) return f_status_set_error(f_invalid_parameter);
-      if (result == 0) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_2_parameter_checking_
-
-    f_status status = f_none;
-
-    f_string_length length = 0;
-    f_string_length start = result->used;
-
-    for (f_string_length i = 0; i < additional.used; i++) {
-      length = strnlen(argv[additional.array[i]], f_console_max_size);
-
-      if (length > 0) {
-        f_string_dynamic ripped = f_string_dynamic_initialize;
-
-        status = fl_string_rip(argv[additional.array[i]], 0, length - 1, &ripped);
-
-        if (f_status_is_error(status)) return status;
-
-        if (status == f_no_data) {
-          status = f_none;
-        }
-        else {
-          if (result->used >= result->size) {
-            f_macro_string_dynamics_resize(status, (*result), result->size + f_console_default_allocation_step);
-
-            if (f_status_is_error(status)) return status;
-          }
-
-          result->array[result->used] = ripped;
-          result->used++;
-        }
-      }
-    } // for
-
-    if (status == f_none && start == result->used) {
-      return f_no_data;
-    }
-
-    return status;
-  }
-#endif // _di_fll_program_parameter_additional_rip_
-
-#ifndef _di_fll_program_parameter_additional_rip_trim_
-  f_return_status fll_program_parameter_additional_rip_trim(const f_string *argv, const f_string_lengths additional, f_string_dynamics *result) {
-    #ifndef _di_level_2_parameter_checking_
-      if (argv == 0) return f_status_set_error(f_invalid_parameter);
-      if (result == 0) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_2_parameter_checking_
-
-    f_status status = f_none;
-    f_string_length length = 0;
-    f_string_length start = result->used;
-
-    for (f_string_length i = 0; i < additional.used; i++) {
-      length = strnlen(argv[additional.array[i]], f_console_max_size);
-
-      if (length > 0) {
-        f_string_dynamic ripped = f_string_dynamic_initialize;
-
-        status = fl_string_rip_trim(argv[additional.array[i]], 0, length - 1, &ripped);
-
-        if (f_status_is_error(status)) return status;
-
-        if (status == f_no_data) {
-          status = f_none;
-        }
-        else {
-          if (result->used >= result->size) {
-            f_macro_string_dynamics_resize(status, (*result), result->size + f_console_default_allocation_step);
-
-            if (f_status_is_error(status)) return status;
-          }
-
-          result->array[result->used] = ripped;
-          result->used++;
-        }
-      }
-    } // for
-
-    if (status == f_none && start == result->used) {
-      return f_no_data;
-    }
-
-    return status;
-  }
-#endif // _di_fll_program_parameter_additional_rip_trim_
+#endif // _di_fll_program_parameter_additional_rip_mash_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -6,15 +6,26 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_string_append_
-  f_return_status fl_string_append(const f_string source, const f_string_length source_length, f_string_dynamic *destination) {
+  f_return_status fl_string_append(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (source_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (start > stop) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_string_append(source, source_length, destination);
+    return private_fl_string_append(source, start, stop, destination);
   }
 #endif // _di_fl_string_append_
+
+#ifndef _di_fl_string_append_nulless_
+  f_return_status fl_string_append_nulless(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (start > stop) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    return private_fl_string_append_nulless(source, start, stop, destination);
+  }
+#endif // _di_fl_string_append_nulless_
 
 #ifndef _di_fl_string_compare_
   f_return_status fl_string_compare(const f_string string1, const f_string string2, const f_string_length length1, const f_string_length length2) {
@@ -67,7 +78,7 @@ extern "C" {
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_string_append(source.string, source.used, destination);
+    return private_fl_string_append(source.string, 0, source.used - 1, destination);
   }
 #endif // _di_fl_string_dynamic_append_
 
@@ -79,9 +90,77 @@ extern "C" {
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_string_mash(glue, glue_length, source.string, source.used, destination);
+    if (destination->used > 0) {
+      f_status status = private_fl_string_append(glue, 0, glue_length - 1, destination);
+
+      if (f_status_is_error(status)) {
+        return status;
+      }
+    }
+
+    return private_fl_string_append(source.string, 0, source.used - 1, destination);
   }
 #endif // _di_fl_string_dynamic_mash_
+
+#ifndef _di_fl_string_dynamic_mash_nulless_
+  f_return_status fl_string_dynamic_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (source.used < 1) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (destination->used > 0) {
+      f_status status = private_fl_string_append_nulless(glue, 0, glue_length - 1, destination);
+
+      if (f_status_is_error(status)) {
+        return status;
+      }
+    }
+
+    return private_fl_string_append_nulless(source.string, 0, source.used - 1, destination);
+  }
+#endif // _di_fl_string_dynamic_mash_nulless_
+
+#ifndef _di_fl_string_dynamic_mish_
+  f_return_status fl_string_dynamic_mish(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (source.used < 1) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (destination->used > 0) {
+      f_status status = private_fl_string_prepend(glue, 0, glue_length - 1, destination);
+
+      if (f_status_is_error(status)) {
+        return status;
+      }
+    }
+
+    return private_fl_string_prepend(source.string, 0, source.used - 1, destination);
+  }
+#endif // _di_fl_string_dynamic_mish_
+
+#ifndef _di_fl_string_dynamic_mish_nulless_
+  f_return_status fl_string_dynamic_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (source.used < 1) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (destination->used > 0) {
+      f_status status = private_fl_string_prepend_nulless(glue, 0, glue_length - 1, destination);
+
+      if (f_status_is_error(status)) {
+        return status;
+      }
+    }
+
+    return private_fl_string_prepend_nulless(source.string, 0, source.used - 1, destination);
+  }
+#endif // _di_fl_string_dynamic_mish_nulless_
 
 #ifndef _di_fl_string_dynamic_partial_compare_
   f_return_status fl_string_dynamic_partial_compare(const f_string_dynamic string1, const f_string_dynamic string2, const f_string_location offset1, const f_string_location offset2) {
@@ -117,49 +196,6 @@ extern "C" {
   }
 #endif // _di_fl_string_dynamic_partial_compare_trim_
 
-#ifndef _di_fl_string_dynamic_partial_append_
-  f_return_status fl_string_dynamic_partial_append(const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (source.used < 1) return f_status_set_error(f_invalid_parameter);
-      if (destination == 0) return f_status_set_error(f_invalid_parameter);
-
-      if (offset.start > offset.stop) return f_status_set_error(f_invalid_parameter);
-      if (source.used <= offset.stop) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    return private_fl_string_append(source.string + offset.start, (offset.stop - offset.start) + 1, destination);
-  }
-#endif // _di_fl_string_dynamic_partial_append_
-
-#ifndef _di_fl_string_dynamic_partial_mash_
-  f_return_status fl_string_dynamic_partial_mash(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
-      if (source.used < 1) return f_status_set_error(f_invalid_parameter);
-      if (destination == 0) return f_status_set_error(f_invalid_parameter);
-
-      if (offset.start > offset.stop) return f_status_set_error(f_invalid_parameter);
-      if (source.used <= offset.stop) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    return private_fl_string_mash(glue, glue_length, source.string + offset.start, (offset.stop - offset.start) + 1, destination);
-  }
-#endif // _di_fl_string_dynamic_partial_mash_
-
-#ifndef _di_fl_string_dynamic_partial_prepend_
-  f_return_status fl_string_dynamic_partial_prepend(const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (source.used < 1) return f_status_set_error(f_invalid_parameter);
-      if (destination == 0) return f_status_set_error(f_invalid_parameter);
-
-      if (offset.start > offset.stop) return f_status_set_error(f_invalid_parameter);
-      if (source.used <= offset.stop) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    return private_fl_string_prepend(source.string + offset.start, (offset.stop - offset.start) + 1, destination);
-  }
-#endif // _di_fl_string_dynamic_partial_prepend_
-
 #ifndef _di_fl_string_dynamic_prepend_
   f_return_status fl_string_dynamic_prepend(const f_string_dynamic source, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
@@ -167,37 +203,37 @@ extern "C" {
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_string_prepend(source.string, source.used, destination);
+    return private_fl_string_prepend(source.string, 0, source.used - 1, destination);
   }
 #endif // _di_fl_string_dynamic_prepend_
 
 #ifndef _di_fl_string_dynamic_rip_
-  f_return_status fl_string_dynamic_rip(const f_string_dynamic buffer, const f_string_location location, f_string_dynamic *result) {
+  f_return_status fl_string_dynamic_rip(const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used <= location.start) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used <= location.stop) return f_status_set_error(f_invalid_parameter);
+      if (offset.stop < offset.start) return f_status_set_error(f_invalid_parameter);
+      if (source.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (source.used <= offset.start) return f_status_set_error(f_invalid_parameter);
+      if (source.used <= offset.stop) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_string_rip(buffer.string, location.start, location.stop, result);
+    return private_fl_string_append(source.string, offset.start, offset.stop, destination);
   }
 #endif // _di_fl_string_dynamic_rip_
 
-#ifndef _di_fl_string_dynamic_rip_trim_
-  f_return_status fl_string_dynamic_rip_trim(const f_string_dynamic buffer, const f_string_location location, f_string_dynamic *result) {
+#ifndef _di_fl_string_dynamic_rip_nulless_
+  f_return_status fl_string_dynamic_rip_nulless(const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used <= location.start) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used <= location.stop) return f_status_set_error(f_invalid_parameter);
+      if (offset.stop < offset.start) return f_status_set_error(f_invalid_parameter);
+      if (source.used <= 0) return f_status_set_error(f_invalid_parameter);
+      if (source.used <= offset.start) return f_status_set_error(f_invalid_parameter);
+      if (source.used <= offset.stop) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_string_rip_trim(buffer.string, location.start, location.stop, result);
+    return private_fl_string_append_nulless(source.string, offset.start, offset.stop, destination);
   }
-#endif // _di_fl_string_dynamic_rip_trim_
+#endif // _di_fl_string_dynamic_rip_nulless_
 
 #ifndef _di_fl_string_dynamic_seek_line_to_
   f_return_status fl_string_dynamic_seek_line_to(const f_string_dynamic buffer, f_string_location *location, const int8_t seek_to_this) {
@@ -502,49 +538,142 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
 #ifndef _di_fl_string_mash_
-  f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length source_length, f_string_dynamic *destination) {
+  f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
-      if (source_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (stop > start) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_string_mash(glue, glue_length, source, source_length, destination);
+    if (destination->used > 0) {
+      f_status status = private_fl_string_append(glue, 0, glue_length - 1, destination);
+
+      if (f_status_is_error(status)) {
+        return status;
+      }
+    }
+
+    return private_fl_string_append(source, start, stop, destination);
   }
 #endif // _di_fl_string_mash_
 
-#ifndef _di_fl_string_prepend_
-  f_return_status fl_string_prepend(const f_string source, const f_string_length source_length, f_string_dynamic *destination) {
+#ifndef _di_fl_string_mash_nulless_
+  f_return_status fl_string_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (source_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (stop > start) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_string_prepend(source, source_length, destination);
+    if (destination->used > 0) {
+      f_status status = private_fl_string_append_nulless(glue, 0, glue_length - 1, destination);
+
+      if (f_status_is_error(status)) {
+        return status;
+      }
+    }
+
+    return private_fl_string_append_nulless(source, start, stop, destination);
+  }
+#endif // _di_fl_string_mash_nulless_
+
+#ifndef _di_fl_string_mish_
+  f_return_status fl_string_mish(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (stop > start) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (destination->used > 0) {
+      f_status status = private_fl_string_prepend(glue, 0, glue_length - 1, destination);
+
+      if (f_status_is_error(status)) {
+        return status;
+      }
+    }
+
+    return private_fl_string_prepend(source, start, stop, destination);
+  }
+#endif // _di_fl_string_mish_
+
+#ifndef _di_fl_string_mish_nulless_
+  f_return_status fl_string_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
+      if (stop > start) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (destination->used > 0) {
+      f_status status = private_fl_string_prepend_nulless(glue, 0, glue_length - 1, destination);
+
+      if (f_status_is_error(status)) {
+        return status;
+      }
+    }
+
+    return private_fl_string_prepend_nulless(source, start, stop, destination);
+  }
+#endif // _di_fl_string_mish_nulless_
+
+#ifndef _di_fl_string_prepend_
+  f_return_status fl_string_prepend(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (stop > start) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    return private_fl_string_prepend(source, start, stop, destination);
   }
 #endif // _di_fl_string_prepend_
 
-#ifndef _di_fl_string_rip_
-  f_return_status fl_string_rip(const f_string string, const f_string_length start, const f_string_length stop, f_string_dynamic *result) {
+#ifndef _di_fl_string_prepend_nulless_
+  f_return_status fl_string_prepend_nulless(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (start > stop) return f_status_set_error(f_invalid_parameter);
-      if (result == 0) return f_status_set_error(f_invalid_parameter);
+      if (stop > start) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_string_rip(string, start, stop, result);
+    return private_fl_string_prepend_nulless(source, start, stop, destination);
+  }
+#endif // _di_fl_string_prepend_nulless_
+
+#ifndef _di_fl_string_rip_
+  f_return_status fl_string_rip(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (start > stop) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_string_length begin = start;
+    f_string_length end = stop;
+
+    f_status status = private_fl_string_rip_find_range(source, &begin, &end);
+
+    if (f_status_is_error(status)) return status;
+
+    return private_fl_string_append(source, begin, end, destination);
   }
 #endif // _di_fl_string_rip_
 
-#ifndef _di_fl_string_rip_trim_
-  f_return_status fl_string_rip_trim(const f_string string, const f_string_length start, const f_string_length stop, f_string_dynamic *result) {
+#ifndef _di_fl_string_rip_nulless_
+  f_return_status fl_string_rip_nulless(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (start > stop) return f_status_set_error(f_invalid_parameter);
-      if (result == 0) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_string_rip_trim(string, start, stop, result);
+    f_string_length begin = start;
+    f_string_length end = stop;
+
+    f_status status = private_fl_string_rip_find_range(source, &begin, &end);
+
+    if (f_status_is_error(status)) return status;
+
+    return private_fl_string_append_nulless(source, begin, end, destination);
   }
-#endif // _di_fl_string_rip_trim_
+#endif // _di_fl_string_rip_nulless_
 
 #ifndef _di_fl_string_seek_line_to_
   f_return_status fl_string_seek_line_to(const f_string string, f_string_location *location, const int8_t seek_to_this) {

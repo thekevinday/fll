@@ -39,8 +39,10 @@ extern "C" {
  *
  * @param source
  *   The source string to append.
- * @param source_length
- *   Total number of bytes to copy from source string.
+ * @param start
+ *   Inclusive start point of string to append.
+ * @param stop
+ *   Inclusive stop point of string to append.
  * @param destination
  *   The destination string the source is appended onto.
  *
@@ -53,11 +55,38 @@ extern "C" {
  *
  * @see fl_string_append()
  * @see fl_string_dynamic_append()
- * @see fl_string_dynamic_partial_append()
  */
 #ifndef _di_fl_string_append_
-  extern f_return_status fl_string_append(const f_string source, const f_string_length source_length, f_string_dynamic *destination);
+  extern f_return_status fl_string_append(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
 #endif // _di_fl_string_append_
+
+/**
+ * Append the source string onto the destination.
+ *
+ * Skips over NULL characters from source when appending.
+ *
+ * @param source
+ *   The source string to append.
+ * @param start
+ *   Inclusive start point of string to append.
+ * @param stop
+ *   Inclusive stop point of string to append.
+ * @param destination
+ *   The destination string the source is appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_append_nulless()
+ * @see fl_string_dynamic_append_nulless()
+ */
+#ifndef _di_fl_string_append_nulless_
+  extern f_return_status fl_string_append_nulless(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+#endif // _di_fl_string_append_nulless_
 
 /**
  * Compare two strings, similar to strncmp().
@@ -135,11 +164,34 @@ extern "C" {
  *
  * @see fl_string_append()
  * @see fl_string_dynamic_append()
- * @see fl_string_dynamic_partial_append()
  */
 #ifndef _di_fl_string_dynamic_append_
   extern f_return_status fl_string_dynamic_append(const f_string_dynamic source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_append_
+
+/**
+ * Append the source string onto the destination.
+ *
+ * Skips over NULL characters from source when appending.
+ *
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination string the source is appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_append_nulless()
+ * @see fl_string_dynamic_append_nulless()
+ */
+#ifndef _di_fl_string_dynamic_append_nulless_
+  extern f_return_status fl_string_dynamic_append_nulless(const f_string_dynamic source, f_string_dynamic *destination);
+#endif // _di_fl_string_dynamic_append_nulless_
 
 /**
  * Compare two strings, similar to strncmp().
@@ -215,11 +267,98 @@ extern "C" {
  *
  * @see fl_string_mash()
  * @see fl_string_dynamic_mash()
- * @see fl_string_dynamic_partial_mash()
  */
 #ifndef _di_fl_string_dynamic_mash_
   extern f_return_status fl_string_dynamic_mash(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_mash_
+
+/**
+ * Append the source string onto the destination with the glue in between.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * Skips over NULL characters from glue and source when appending.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_mash_nulless()
+ * @see fl_string_dynamic_mash_nulless()
+ */
+#ifndef _di_fl_string_dynamic_mash_nulless_
+  extern f_return_status fl_string_dynamic_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination);
+#endif // _di_fl_string_dynamic_mash_nulless_
+
+/**
+ * Prepend the source string onto the destination with the glue in between.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_mish()
+ * @see fl_string_dynamic_mish()
+ */
+#ifndef _di_fl_string_dynamic_mish_
+  extern f_return_status fl_string_dynamic_mish(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination);
+#endif // _di_fl_string_dynamic_mish_
+
+/**
+ * Prepend the source string onto the destination with the glue in between.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * Skips over NULL characters from glue and source when appending.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_mish_nulless()
+ * @see fl_string_dynamic_mish_nulless()
+ */
+#ifndef _di_fl_string_dynamic_mish_nulless_
+  extern f_return_status fl_string_dynamic_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination);
+#endif // _di_fl_string_dynamic_mish_nulless_
 
 /**
  * Compare two strings, similar to strncmp(), but restricted to the given ranges.
@@ -281,91 +420,6 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_trim_
 
 /**
- * Append the source string onto the destination.
- *
- * @param source
- *   The source string to append.
- * @param offset
- *   A range within the source to restrict the append from.
- * @param destination
- *   The destination string the source is appended onto.
- *
- * @return
- *   f_none on success.
- *   f_string_max_size (with error bit) if the combined string is too large.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
- *
- * @see fl_string_append()
- * @see fl_string_dynamic_append()
- * @see fl_string_dynamic_partial_append()
- */
-#ifndef _di_fl_string_dynamic_partial_append_
-  extern f_return_status fl_string_dynamic_partial_append(const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination);
-#endif // _di_fl_string_dynamic_partial_append_
-
-/**
- * Append the source string onto the destination with the glue in between.
- *
- * If the destination string is empty, then no glue is appended.
- *
- * @param glue
- *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
- * @param source
- *   The source string to append.
- * @param offset
- *   A range within the source to restrict the append from.
- * @param destination
- *   The destination string the source and glue are appended onto.
- *
- * @return
- *   f_none on success.
- *   f_string_max_size (with error bit) if the combined string is too large.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
- *
- * @see fl_string_mash()
- * @see fl_string_dynamic_mash()
- * @see fl_string_dynamic_partial_mash()
- */
-#ifndef _di_fl_string_dynamic_partial_mash_
-  extern f_return_status fl_string_dynamic_partial_mash(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination);
-#endif // _di_fl_string_dynamic_partial_mash_
-
-/**
- * Prepend the source string onto the destination.
- *
- * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
- *
- * @param source
- *   The source string to prepend.
- * @param offset
- *   A range within the source to restrict the prepend from.
- * @param destination
- *   The destination string the source is prepended onto.
- *
- * @return
- *   f_none on success.
- *   f_string_max_size (with error bit) if the combined string is too large.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
- *
- * @see fl_string_append()
- * @see fl_string_prepend()
- * @see fl_string_dynamic_append()
- * @see fl_string_dynamic_prepend()
- * @see fl_string_dynamic_partial_append()
- */
-#ifndef _di_fl_string_dynamic_partial_append_
-  extern f_return_status fl_string_dynamic_partial_prepend(const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination);
-#endif // _di_fl_string_dynamic_partial_append_
-
-/**
  * Prepend the source string onto the destination.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
@@ -382,24 +436,46 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_string_append()
  * @see fl_string_prepend()
- * @see fl_string_dynamic_append()
- * @see fl_string_dynamic_partial_append()
- * @see fl_string_dynamic_partial_prepend()
  */
 #ifndef _di_fl_string_dynamic_prepend_
   extern f_return_status fl_string_dynamic_prepend(const f_string_dynamic source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_prepend_
 
 /**
+ * Prepend the source string onto the destination.
+ *
+ * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param destination
+ *   The destination string the source is prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_prepend_nulless()
+ */
+#ifndef _di_fl_string_dynamic_prepend_nulless_
+  extern f_return_status fl_string_dynamic_prepend_nulless(const f_string_dynamic source, f_string_dynamic *destination);
+#endif // _di_fl_string_dynamic_prepend_nulless_
+
+/**
  * Allocate a new string from the provided range in the buffer.
  *
- * @param buffer
+ * Ignores leading and trailing whitespace.
+ * As a result, resulting size may be smaller than requested range.
+ *
+ * @param source
  *   The buffer to rip from.
- * @param location
+ * @param offset
  *   A range within the buffer representing the string to rip.
- * @param result
+ * @param destination
  *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
@@ -409,12 +485,12 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_string_dynamic_rip_trim()
- * @see fl_string_rip()
- * @see fl_string_rip_trim()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_append()
+ * @see fl_string_dynamic_rip()
  */
 #ifndef _di_fl_string_dynamic_rip_
-  extern f_return_status fl_string_dynamic_rip(const f_string_dynamic buffer, const f_string_location location, f_string_dynamic *result);
+  extern f_return_status fl_string_dynamic_rip(const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_rip_
 
 /**
@@ -423,11 +499,13 @@ extern "C" {
  * Ignores leading and trailing whitespace.
  * As a result, resulting size may be smaller than requested range.
  *
- * @param buffer
- *   The buffer to rip from.
- * @param location
+ * Skips over NULL characters from source when appending.
+ *
+ * @param source
+ *   The string to rip from.
+ * @param offset
  *   A range within the buffer representing the string to rip.
- * @param result
+ * @param destination
  *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
@@ -437,13 +515,13 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_string_dynamic_rip()
- * @see fl_string_dynamic_rip_trim()
- * @see fl_string_rip()
+ * @see fl_string_append_nulless()
+ * @see fl_string_dynamic_append_nulless()
+ * @see fl_string_dynamic_rip_nulless()
  */
-#ifndef _di_fl_string_dynamic_rip_trim_
-  extern f_return_status fl_string_dynamic_rip_trim(const f_string_dynamic buffer, const f_string_location location, f_string_dynamic *result);
-#endif // _di_fl_string_dynamic_rip_trim_
+#ifndef _di_fl_string_dynamic_rip_nulless_
+  extern f_return_status fl_string_dynamic_rip_nulless(const f_string_dynamic source, const f_string_location offset, f_string_dynamic *destination);
+#endif // _di_fl_string_dynamic_rip_nulless_
 
 /**
  * Seek the buffer location forward until the character (1-byte wide) or EOL is reached.
@@ -621,8 +699,10 @@ extern "C" {
  *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
- * @param source_length
- *   Total number of bytes to copy from source string.
+ * @param start
+ *   Inclusive start point of string to prepend.
+ * @param stop
+ *   Inclusive stop point of string to prepend.
  * @param destination
  *   The destination string the source and glue are appended onto.
  *
@@ -635,11 +715,110 @@ extern "C" {
  *
  * @see fl_string_mash()
  * @see fl_string_dynamic_mash()
- * @see fl_string_dynamic_partial_mash()
  */
 #ifndef _di_fl_string_mash_
-  extern f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length source_length, f_string_dynamic *destination);
+  extern f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
 #endif // _di_fl_string_mash_
+
+/**
+ * Append the source string onto the destination with the glue in between.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * Skips over NULL characters from glue and source when appending.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param start
+ *   Inclusive start point of string to prepend.
+ * @param stop
+ *   Inclusive stop point of string to prepend.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_mash_nulless()
+ * @see fl_string_dynamic_mash_nulless()
+ */
+#ifndef _di_fl_string_mash_nulless_
+  extern f_return_status fl_string_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+#endif // _di_fl_string_mash_nulless_
+
+/**
+ * Prepend the source string onto the destination with the glue in between.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param start
+ *   Inclusive start point of string to prepend.
+ * @param stop
+ *   Inclusive stop point of string to prepend.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_mish()
+ * @see fl_string_dynamic_mish()
+ */
+#ifndef _di_fl_string_mish_
+  extern f_return_status fl_string_mish(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+#endif // _di_fl_string_mish_
+
+/**
+ * Prepend the source string onto the destination with the glue in between.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * Skips over NULL characters from glue and source when appending.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param start
+ *   Inclusive start point of string to prepend.
+ * @param stop
+ *   Inclusive stop point of string to prepend.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_mish_nulless()
+ * @see fl_string_dynamic_mish_nulless()
+ */
+#ifndef _di_fl_string_mish_nulless_
+  extern f_return_status fl_string_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+#endif // _di_fl_string_mish_nulless_
 
 /**
  * Prepend the source string onto the destination.
@@ -648,8 +827,10 @@ extern "C" {
  *
  * @param source
  *   The source string to prepend.
- * @param source_length
- *   Total number of bytes to copy from source string.
+ * @param start
+ *   Inclusive start point of string to prepend.
+ * @param stop
+ *   Inclusive stop point of string to prepend.
  * @param destination
  *   The destination string the source is prepended onto.
  *
@@ -660,26 +841,54 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_string_append()
- * @see fl_string_dynamic_append()
  * @see fl_string_dynamic_prepend()
- * @see fl_string_dynamic_partial_append()
- * @see fl_string_dynamic_partial_prepend()
  */
 #ifndef _di_fl_string_prepend_
-  extern f_return_status fl_string_prepend(const f_string source, const f_string_length source_length, f_string_dynamic *destination);
+  extern f_return_status fl_string_prepend(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
 #endif // _di_fl_string_prepend_
+
+/**
+ * Prepend the source string onto the destination.
+ *
+ * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+ *
+ * Skips over NULL characters from source when prepending.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param start
+ *   Inclusive start point of string to prepend.
+ * @param stop
+ *   Inclusive stop point of string to prepend.
+ * @param destination
+ *   The destination string the source is prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_string_dynamic_prepend_nulless()
+ */
+#ifndef _di_fl_string_prepend_nulless_
+  extern f_return_status fl_string_prepend_nulless(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+#endif // _di_fl_string_prepend_nulless_
 
 /**
  * Allocate a new string from the provided range in the string.
  *
- * @param string
+ * Ignores leading and trailing whitespace.
+ * As a result, resulting size may be smaller than requested range.
+ *
+ * @param source
  *   The string to rip from.
  * @param start
  *   An inclusive start location within string.
  * @param stop
  *   An inclusive stop location within string.
- * @param result
+ * @param destination
  *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
@@ -689,12 +898,11 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_string_dynamic_rip()
- * @see fl_string_dynamic_rip_trim()
- * @see fl_string_rip_trim()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_append()
  */
 #ifndef _di_fl_string_rip_
-  extern f_return_status fl_string_rip(const f_string string, const f_string_length start, const f_string_length stop, f_string_dynamic *result);
+  extern f_return_status fl_string_rip(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
 #endif // _di_fl_string_rip_
 
 /**
@@ -703,13 +911,15 @@ extern "C" {
  * Ignores leading and trailing whitespace.
  * As a result, resulting size may be smaller than requested range.
  *
- * @param string
+ * Skips over NULL characters from source when ripping.
+ *
+ * @param source
  *   The string to rip from.
  * @param start
  *   An inclusive start location within string.
  * @param stop
  *   An inclusive stop location within string.
- * @param result
+ * @param destination
  *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
@@ -719,13 +929,12 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_string_dynamic_rip()
- * @see fl_string_rip()
- * @see fl_string_rip_trim()
+ * @see fl_string_append_nulless()
+ * @see fl_string_dynamic_rip_nulless()
  */
-#ifndef _di_fl_string_rip_trim_
-  extern f_return_status fl_string_rip_trim(const f_string string, const f_string_length start, const f_string_length stop, f_string_dynamic *result);
-#endif // _di_fl_string_rip_trim_
+#ifndef _di_fl_string_rip_nulless_
+  extern f_return_status fl_string_rip_nulless(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+#endif // _di_fl_string_rip_nulless_
 
 /**
  * Seek the string location forward until the character (1-byte wide) or EOL is reached.

@@ -162,10 +162,10 @@ extern "C" {
           depths->array[i].index_name = data.parameters[fss_basic_list_read_parameter_name].additional.array[position_name];
 
           if (data.parameters[fss_basic_list_read_parameter_trim].result == f_console_result_found) {
-            fl_string_rip_trim(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+            fl_string_rip(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
           }
           else {
-            fl_string_rip(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+            fl_string_append(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
           }
 
           if (depths->array[i].value_name.used == 0) {
