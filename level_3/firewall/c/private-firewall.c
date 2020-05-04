@@ -613,9 +613,9 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
             f_file_close(&file);
           }
           else {
-            if (file_position.total_elements == 0) {
+            if (file_position.total == 0) {
               fseek(file.address, 0, SEEK_END);
-              file_position.total_elements = ftell(file.address);
+              file_position.total = ftell(file.address);
               fseek(file.address, 0, SEEK_SET);
             }
 
@@ -1478,9 +1478,8 @@ f_return_status firewall_delete_local_data(firewall_local_data *local) {
   local->is_stop = f_false;
   local->is_lock = f_false;
 
-  local->file_position.buffer_start = 0;
-  local->file_position.file_start = 0;
-  local->file_position.total_elements = 0;
+  local->file_position.start = 0;
+  local->file_position.total = 0;
 
   local->device = 0;
   local->chain = 0;

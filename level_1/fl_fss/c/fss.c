@@ -180,7 +180,7 @@ extern "C" {
 
     f_status         status = f_none;
     f_string_dynamic buffer = f_string_dynamic_initialize;
-    f_file_position  length = f_file_position_initialize;
+    f_file_position  position = f_file_position_initialize;
 
     // make sure we are in the proper length in the file
     {
@@ -190,16 +190,16 @@ extern "C" {
     }
 
     // 1: Prepare the buffer to handle a size of f_fss_max_header_length
-    length.total_elements = f_fss_max_header_length;
+    position.total = f_fss_max_header_length;
 
-    f_macro_string_dynamic_adjust(status, buffer, length.total_elements + 1);
+    f_macro_string_dynamic_adjust(status, buffer, position.total + 1);
 
     if (f_status_is_error(status)) {
       return status;
     }
 
     // 2: buffer the file
-    status = f_file_read_at(file, &buffer, length);
+    status = f_file_read_at(file, &buffer, position);
 
     if (f_status_is_error(status)) {
       return status;

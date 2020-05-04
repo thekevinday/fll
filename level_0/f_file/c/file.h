@@ -38,8 +38,9 @@ extern "C" {
   typedef f_string f_file_mode;
   typedef mode_t f_file_mask;
 
-  #define f_file_default_read_size 8192 // default to 8k read sizes.
-  #define f_file_max_path_length   1024
+  #define f_file_default_read_size  8192 // default to 8k read sizes.
+  #define f_file_default_write_size 8192 // default to 8k write sizes.
+  #define f_file_max_path_length    1024
 #endif // _di_f_file_types_
 
 /**
@@ -60,13 +61,17 @@ extern "C" {
  * The fseek() function parameters can be confusing, so provide a hopefully more readibly code via these macros.
  *
  * The f_macro_file_seek_begin() sets the file pointer from this many bytes from the beginning of the file.
- * The f_macro_file_seek_to() sets the file pointer from this many bytes relative to the current position.
+ * The f_macro_file_seek_data() sets the file pointer from this many bytes from the end of the file, relative to the next data.
  * The f_macro_file_seek_end() sets the file pointer from this many bytes from the end of the file.
+ * The f_macro_file_seek_hole() sets the file pointer from this many bytes from the end of the file, relative to the next hole.
+ * The f_macro_file_seek_to() sets the file pointer from this many bytes relative to the current position.
  */
 #ifndef _di_f_file_seeks_
   #define f_macro_file_seek_begin(file, bytes) fseek(file, bytes, SEEK_SET)
-  #define f_macro_file_seek_to(file, bytes)    fseek(file, bytes, SEEK_CUR)
+  #define f_macro_file_seek_data(file, bytes)  fseek(file, bytes, SEEK_DATA)
   #define f_macro_file_seek_end(file)          fseek(file, bytes, SEEK_END)
+  #define f_macro_file_seek_hole(file, bytes)  fseek(file, bytes, SEEK_HOLE)
+  #define f_macro_file_seek_to(file, bytes)    fseek(file, bytes, SEEK_CUR)
 #endif // _di_f_file_seeks_
 
 /**
@@ -95,18 +100,16 @@ extern "C" {
  *
  * This is commonly used to instruct functions how to buffer and use a file.
  *
- * buffer_start: Designate where to start writing to the buffer.
- * file_start: The positions where to begin reading the file.
- * total_elements: The total number of elements to read from the file into the buffer (set to 0 to read entire file).
+ * start: The positions where to begin reading the file.
+ * total: The total number of elements to read from the file into the buffer (set to 0 to read entire file).
  */
 #ifndef _di_f_file_position_
   typedef struct {
-    f_string_length buffer_start;
-    f_string_length file_start;
-    f_string_length total_elements;
+    f_string_length start;
+    f_string_length total;
   } f_file_position;
 
-  #define f_file_position_initialize { 0, 0, 0 }
+  #define f_file_position_initialize { 0, 0 }
 #endif // _di_f_file_position_
 
 /**
@@ -230,9 +233,9 @@ extern "C" {
  */
 #ifndef _di_f_macro_file_reset_position_
   #define f_macro_file_reset_position(position, file) \
-    if (position.total_elements == 0) { \
+    if (position.total == 0) { \
       fseek(file.address, 0L, SEEK_END); \
-      position.total_elements = ftell(file.address); \
+      position.total = ftell(file.address); \
       fseek(file.address, 0L, SEEK_SET); \
     }
 #endif // _di_f_macro_file_reset_position_
@@ -371,37 +374,12 @@ extern "C" {
 #endif // _di_f_file_read_
 
 /**
- * Read until a single block is filled or EOF is reached, storing it into a specific range within the buffer.
- *
- * This does not allocate space to the buffer, so be sure enough space exists (file->size_chunk * file->size_block).
- *
- * @param file
- *   The file to read.
- * @param buffer
- *   The buffer the file is being read into.
- * @param buffer_start
- *   The start position of the buffer.
- * @param total_elements
- *   The total elements to read.
- *   When set to 0, this will read until the entire buffer is filled or the EOF is reached.
- *
- * @return
- *   f_none on success.
- *   f_none_on_eof on success and EOF was reached.
- *   f_file_not_open (with error bit) if file is not open.
- *   f_file_error_read (with error bit) if file read failed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_file_read_range_
-  extern f_return_status f_file_read_range(f_file *file, f_string_dynamic *buffer, const f_string_length buffer_start, const f_string_length total_elements);
-#endif // _di_f_file_read_range_
-
-/**
  * Read until a single block is filled or EOF is reached, specified by the given range within the file, storing it in the buffer.
  *
  * This does not allocate space to the buffer, so be sure enough space exists (file->size_chunk * file->size_block).
  *
- * Will auto-seek file position to position.file_start.
+ * Will auto-seek file position to position.start.
+ * (The file is assumed to already be in the position.start position.)
  *
  * @param file
  *   The file to read.
@@ -415,13 +393,42 @@ extern "C" {
  *   f_none on success.
  *   f_none_on_eof on success and EOF was reached.
  *   f_file_not_open (with error bit) if file is not open.
- *   f_file_error_seek (with error bit) if file seek failed.
- *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_read_until()
  */
 #ifndef _di_f_file_read_at_
   extern f_return_status f_file_read_at(f_file *file, f_string_dynamic *buffer, const f_file_position position);
 #endif // _di_f_file_read_at_
+
+/**
+ * Read until a single block is filled or EOF is reached, appending it to the buffer.
+ *
+ * This does not allocate space to the buffer, so be sure enough space exists (file->size_chunk * file->size_block).
+ *
+ * Will not auto-seek file position.
+ *
+ * @param file
+ *   The file to read.
+ * @param buffer
+ *   The buffer the file is being read into.
+ * @param total
+ *   The total elements to read.
+ *   When set to 0, this will read until the entire buffer is filled or the EOF is reached.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_eof on success and EOF was reached.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_error_seek (with error bit) if file seek failed.
+ *   f_file_error_read (with error bit) if file read failed.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_read_at()
+ */
+#ifndef _di_f_file_read_until_
+  extern f_return_status f_file_read_until(f_file *file, f_string_dynamic *buffer, const f_string_length total);
+#endif // _di_f_file_read_until_
 
 /**
  * Read statistics of a file.

@@ -232,7 +232,7 @@ extern "C" {
       fss_basic_read_depths depths = fss_basic_read_depths_initialize;
 
       f_string_length counter = 0;
-      f_string_length original_size = data->file_position.total_elements;
+      f_string_length original_size = data->file_position.total;
 
       status = fss_basic_read_main_preprocess_depth(arguments, *data, &depths);
       if (f_status_is_error(status)) {
@@ -301,7 +301,7 @@ extern "C" {
 
           status = f_file_open(&file, arguments.argv[data->remaining.array[counter]]);
 
-          data->file_position.total_elements = original_size;
+          data->file_position.total = original_size;
 
           if (f_status_is_error(status)) {
             fss_basic_read_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
@@ -311,13 +311,13 @@ extern "C" {
             return status;
           }
 
-          if (data->file_position.total_elements == 0) {
+          if (data->file_position.total == 0) {
             fseek(file.address, 0, SEEK_END);
 
-            data->file_position.total_elements = ftell(file.address);
+            data->file_position.total = ftell(file.address);
 
             // Skip past empty files.
-            if (data->file_position.total_elements == 0) {
+            if (data->file_position.total == 0) {
               f_file_close(&file);
               continue;
             }
