@@ -91,7 +91,7 @@ extern "C" {
 
         file.address = f_pipe;
 
-        status = fl_file_read_fifo(file, &input);
+        status = fl_file_read(&file, &input);
 
         if (f_status_is_error(status)) {
           status = f_status_set_fine(status);

@@ -5,144 +5,125 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_file_read_
-  f_return_status fl_file_read(f_file file, const f_file_position position, f_string_dynamic *buffer) {
+  f_return_status fl_file_read(f_file *file, f_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
 
+    if (file->address == 0) return f_status_set_error(f_file_not_open);
+
+    const f_number_unsigned bytes_total = file->size_block * file->size_chunk;
+
+    f_status status = f_none;
+    f_string_length size = 0;
+
+    size = file->size_block;
+
+    for (;;) {
+      if (buffer->used + bytes_total > buffer->size) {
+        if (buffer->used + bytes_total > f_string_max_size) return f_status_set_error(f_string_too_large);
+
+        f_macro_string_dynamic_resize(status, (*buffer), buffer->used + bytes_total);
+
+        if (f_status_is_error(status)) return status;
+      }
+
+      status = f_file_read(file, buffer);
+
+      if (f_status_is_error(status)) return status;
+      if (status == f_none_on_eof) break;
+
+      size += file->size_block;
+    } // for
+
+    return status;
+  }
+#endif // _di_fl_file_read_
+
+#ifndef _di_fl_file_read_position
+  f_return_status fl_file_read_position(f_file *file, f_string_dynamic *buffer, const f_file_position position) {
+    #ifndef _di_level_1_parameter_checking_
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
+      if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (position.buffer_start < 0) return f_status_set_error(f_invalid_parameter);
       if (position.file_start < 0) return f_status_set_error(f_invalid_parameter);
       if (position.total_elements < 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.address == 0) return f_status_set_warning(f_file_not_open);
+    if (file->address == 0) return f_status_set_error(f_file_not_open);
 
     f_status status = f_none;
-    f_string_length size = 0;
     bool infinite = f_false;
 
-    // when total_elements is 0, this means the file read will until EOF is reached
+    f_number_unsigned bytes_total;
+
+    // when total_elements is 0, this means the file read will until EOF is reached.
     if (position.total_elements == 0) {
       infinite = f_true;
-      size = f_file_default_read_size;
+      bytes_total = file->size_block * file->size_chunk;
     }
     else {
-      size = position.total_elements;
+      bytes_total = position.total_elements * file->size_chunk;
     }
 
-    // populate the buffer
     do {
-      if (buffer->size <= size) {
-        f_macro_string_dynamic_resize(status, (*buffer), size);
+      if (buffer->used + bytes_total > buffer->size) {
+        if (buffer->used + bytes_total > f_string_max_size) return f_status_set_error(f_string_too_large);
 
-        if (f_status_is_error(status)) {
-          return status;
-        }
+        f_macro_string_dynamic_resize(status, (*buffer), buffer->used + bytes_total);
+
+        if (f_status_is_error(status)) return status;
       }
 
-      status = f_file_read_at(&file, buffer, position);
+      status = f_file_read_at(file, buffer, position);
 
-      if (status == f_none_on_eof) {
-        break;
-      }
-      else if (f_status_is_error(status)) {
-        return status;
-      }
-
-      if (infinite) {
-        if (size + f_file_default_read_size > f_string_max_size) {
-          return f_status_set_error(f_number_overflow);
-        }
-
-        size += f_file_default_read_size;
-      }
+      if (f_status_is_error(status)) return status;
+      if (status == f_none_on_eof) break;
     } while (infinite);
 
-    return f_none;
+    return status;
   }
-#endif // _di_fl_file_read_
-
-#ifndef _di_fl_file_read_fifo_
-  f_return_status fl_file_read_fifo(f_file file, f_string_dynamic *buffer) {
-    #ifndef _di_level_1_parameter_checking_
-      if (buffer == 0) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    if (file.address == 0) return f_status_set_warning(f_file_not_open);
-
-    f_status status = f_none;
-    f_string_length size = 0;
-
-    size = f_file_default_read_size;
-
-    // populate the buffer
-    do {
-      if (buffer->size <= size) {
-        f_macro_string_dynamic_resize(status, (*buffer), size);
-
-        if (f_status_is_error(status)) {
-          return status;
-        }
-      }
-
-      status = f_file_read(&file, buffer);
-
-      if (status == f_none_on_eof) {
-        break;
-      }
-      else if (f_status_is_error(status)) {
-        return status;
-      }
-
-      if (size + f_file_default_read_size > f_string_max_size) {
-        return f_status_set_error(f_number_overflow);
-      }
-
-      size += f_file_default_read_size;
-    } while (f_true);
-
-    return f_none;
-  }
-#endif // _di_fl_file_read_fifo_
+#endif // _di_fl_file_read_position
 
 #ifndef _di_fl_file_write_
-  f_return_status fl_file_write(f_file file, const f_string_dynamic buffer) {
-    if (file.address == 0) return f_status_set_error(f_file_not_open);
+  f_return_status fl_file_write(f_file *file, const f_string_dynamic buffer) {
+    #ifndef _di_level_1_parameter_checking_
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
 
-    f_status status = f_none;
+    if (file->address == 0) return f_status_set_error(f_file_not_open);
+
     size_t size = 0;
 
-    size = fwrite(buffer.string, file.byte_size, buffer.used, file.address);
+    size = fwrite(buffer.string, file->size_chunk, buffer.used, file->address);
 
-    if (size < buffer.used * file.byte_size) {
-      return f_status_set_error(f_file_error_write);
-    }
+    if (size < buffer.used * file->size_chunk) return f_status_set_error(f_file_error_write);
 
     return f_none;
   }
 #endif // _di_fl_file_write_
 
-#ifndef _di_fl_file_write_partial_
-  f_return_status fl_file_write_partial(f_file file, const f_string_dynamic buffer, const f_string_location position) {
+#ifndef _di_fl_file_write_position_
+  f_return_status fl_file_write_position(f_file *file, const f_string_dynamic buffer, const f_string_location position) {
     #ifndef _di_level_1_parameter_checking_
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (position.start < position.stop) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.address == 0) return f_file_not_open;
+    if (file->address == 0) return f_file_not_open;
 
-    f_status status = f_none;
     size_t size = 0;
 
     f_string_length total = buffer.used - (position.stop - position.start + 1);
 
-    size = fwrite(buffer.string + position.start, file.byte_size, total, file.address);
+    size = fwrite(buffer.string + position.start, file->size_chunk, total, file->address);
 
-    if (size < total * file.byte_size) {
-      return f_status_set_error(f_file_error_write);
-    }
+    if (size < total * file->size_chunk) return f_status_set_error(f_file_error_write);
 
     return f_none;
   }
-#endif // _di_fl_file_write_partial_
+#endif // _di_fl_file_write_position_
 
 #ifdef __cplusplus
 } // extern "C"

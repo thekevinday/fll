@@ -271,10 +271,10 @@ extern "C" {
 
         file.address = f_pipe;
 
-        status = fl_file_read_fifo(file, &data->buffer);
+        status = fl_file_read(&file, &data->buffer);
 
         if (f_status_is_error(status)) {
-          fss_basic_read_print_file_error(data->context, "fl_file_read_fifo", "-", f_status_set_fine(status));
+          fss_basic_read_print_file_error(data->context, "fl_file_read", "-", f_status_set_fine(status));
 
           macro_fss_basic_read_depths_delete_simple(depths);
           fss_basic_read_delete_data(data);
@@ -325,12 +325,12 @@ extern "C" {
             fseek(file.address, 0, SEEK_SET);
           }
 
-          status = fl_file_read(file, data->file_position, &data->buffer);
+          status = fl_file_read_position(&file, &data->buffer, data->file_position);
 
           f_file_close(&file);
 
           if (f_status_is_error(status)) {
-            fss_basic_read_print_file_error(data->context, "fl_file_read", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
+            fss_basic_read_print_file_error(data->context, "fl_file_read_position", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
 
             macro_fss_basic_read_depths_delete_simple(depths);
             fss_basic_read_delete_data(data);

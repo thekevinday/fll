@@ -38,7 +38,7 @@ extern "C" {
   typedef f_string f_file_mode;
   typedef mode_t f_file_mask;
 
-  #define f_file_default_read_size 4096 // default to 4k read sizes.
+  #define f_file_default_read_size 8192 // default to 8k read sizes.
   #define f_file_max_path_length   1024
 #endif // _di_f_file_types_
 
@@ -73,19 +73,21 @@ extern "C" {
  * Commonly used file related properties.
  *
  * id: File descriptor.
- * byte_size: How many bytes to use on each read/write (for normal string handling this should be sizeof(f_string).
  * address: A pointer to a file (generally opened).
  * mode: How the file is to be accessed (or is being accessed).
+ * size_chunk: Number of bytes to consider a character, a value of 1 means 1-byte (aka: uint8_t) (for normal string handling this should be sizeof(f_string)).
+ * size_block: The default number of chunks to read at a time (use (size_chunk * size_block) to determine total number of bytes).
  */
 #ifndef _di_f_file_
   typedef struct {
-    f_file_id   id;
-    size_t      byte_size;
-    FILE *      address;
-    f_file_mode mode;
+    f_file_id         id;
+    FILE *            address;
+    f_file_mode       mode;
+    size_t            size_chunk;
+    f_number_unsigned size_block;
   } f_file;
 
-  #define f_file_initialize { 0, 1, 0, (f_file_mode) f_file_read_only }
+  #define f_file_initialize { 0, 0, (f_file_mode) f_file_read_only, 1, f_file_default_read_size }
 #endif // _di_f_file_
 
 /**
@@ -95,8 +97,7 @@ extern "C" {
  *
  * buffer_start: Designate where to start writing to the buffer.
  * file_start: The positions where to begin reading the file.
- * total_elements: The total number of elements to read from the file into the buffer.
- * if total_elements: If set to 0, then this means to buffer the entire file no matter how big it is (crazy?).
+ * total_elements: The total number of elements to read from the file into the buffer (set to 0 to read entire file).
  */
 #ifndef _di_f_file_position_
   typedef struct {
@@ -349,7 +350,9 @@ extern "C" {
 #endif // _di_f_file_flush_
 
 /**
- * Read a until the entire buffer is filled or EOF is reached.
+ * Read until a single block is filled or EOF is reached.
+ *
+ * This does not allocate space to the buffer, so be sure enough space exists (file->size_chunk * file->size_block).
  *
  * @param file
  *   The file to read.
@@ -368,7 +371,9 @@ extern "C" {
 #endif // _di_f_file_read_
 
 /**
- * Read a given amount of data from the buffer, specified by the given range.
+ * Read until a single block is filled or EOF is reached, storing it into a specific range within the buffer.
+ *
+ * This does not allocate space to the buffer, so be sure enough space exists (file->size_chunk * file->size_block).
  *
  * @param file
  *   The file to read.
@@ -392,7 +397,9 @@ extern "C" {
 #endif // _di_f_file_read_range_
 
 /**
- * Read a given amount of data from the buffer, specified by the given range.
+ * Read until a single block is filled or EOF is reached, specified by the given range within the file, storing it in the buffer.
+ *
+ * This does not allocate space to the buffer, so be sure enough space exists (file->size_chunk * file->size_block).
  *
  * Will auto-seek file position to position.file_start.
  *

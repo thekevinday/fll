@@ -158,17 +158,24 @@ extern "C" {
   f_return_status f_file_read(f_file *file, f_string_dynamic *buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_chunk == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_block == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file->address == 0) return f_status_set_error(f_file_not_open);
 
-    int result = fread(buffer->string + buffer->used, file->byte_size, buffer->size - buffer->used - 1, file->address);
+    int result = fread(buffer->string + buffer->used, file->size_chunk, file->size_block, file->address);
 
     if (file->address == 0) return f_status_set_error(f_file_error_read);
     if (ferror(file->address) != 0) return f_status_set_error(f_file_error_read);
 
-    buffer->used += (result / file->byte_size);
+    if (file->size_chunk > 1) {
+      buffer->used += result * file->size_chunk;
+    }
+    else {
+      buffer->used += result;
+    }
 
     if (feof(file->address)) {
       return f_none_on_eof;
@@ -182,14 +189,15 @@ extern "C" {
   f_return_status f_file_read_range(f_file *file, f_string_dynamic *buffer, const f_string_length buffer_start, const f_string_length total_elements) {
     #ifndef _di_level_0_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_chunk == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_block == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
-
       if (buffer_start < 0) return f_status_set_error(f_invalid_parameter);
-      if (total_elements < 0) return f_status_set_error(f_invalid_parameter);
+      if (total_elements == 0) return f_status_set_error(f_invalid_parameter);
 
-      // when the available buffer size is smaller than the total elements, then there is not enough allocated memory available to read the file
+      // when the available buffer size is smaller than the total elements, then there is not enough allocated memory available to read the file.
       if (total_elements > 0) {
-        if (buffer->size - buffer_start < total_elements) return f_status_set_error(f_invalid_parameter);
+        if (buffer_start + total_elements > buffer->size) return f_status_set_error(f_invalid_parameter);
       }
     #endif // _di_level_0_parameter_checking_
 
@@ -198,21 +206,30 @@ extern "C" {
     int result = 0;
 
     if (total_elements == 0) {
-      result = fread(buffer->string + buffer_start, file->byte_size, buffer->size - buffer->used - 1, file->address);
+      result = fread(buffer->string + buffer_start, file->size_chunk, file->size_block, file->address);
     }
     else {
-      result = fread(buffer->string + buffer_start, file->byte_size, total_elements, file->address);
+      result = fread(buffer->string + buffer_start, file->size_chunk, total_elements, file->address);
     }
 
     if (file->address == 0) return f_status_set_error(f_file_error_read);
     if (ferror(file->address) != 0) return f_status_set_error(f_file_error_read);
 
-    // Save how much of our allocated buffer is actually used.
-    if (buffer_start + result > buffer->used) {
-      buffer->used = buffer_start + (result / file->byte_size);
+    f_string_length bytes_total;
+
+    if (file->size_chunk > 1) {
+      bytes_total = result * file->size_chunk;
+    }
+    else {
+      bytes_total = result;
     }
 
-    // Append an EOS only when the total elements were set to 0
+    // Save how much of our allocated buffer is actually used.
+    if (buffer_start + bytes_total > buffer->used) {
+      buffer->used = buffer_start + bytes_total;
+    }
+
+    // Append an EOS only when the total elements were set to 0.
     if (total_elements == 0) {
       buffer->string[buffer->used] = f_string_eos;
     }
@@ -230,21 +247,22 @@ extern "C" {
   f_return_status f_file_read_at(f_file *file, f_string_dynamic *buffer, const f_file_position position) {
     #ifndef _di_level_0_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_chunk == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_block == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
-
       if (position.buffer_start < 0) return f_status_set_error(f_invalid_parameter);
       if (position.file_start < 0) return f_status_set_error(f_invalid_parameter);
       if (position.total_elements < 0) return f_status_set_error(f_invalid_parameter);
 
-      // when the available buffer size is smaller than the total elements, then there is not enough allocated memory available to read the file
+      // when the available buffer size is smaller than the total elements, then there is not enough allocated memory available to read the file.
       if (position.total_elements > 0) {
-        if (buffer->size - position.buffer_start < position.total_elements) return f_status_set_error(f_invalid_parameter);
+        if (position.buffer_start + position.total_elements > buffer->size) return f_status_set_error(f_invalid_parameter);
       }
     #endif // _di_level_0_parameter_checking_
 
     if (file->address == 0) return f_status_set_error(f_file_not_open);
 
-    // first seek to 'where' we need to begin the read
+    // first seek to 'where' we need to begin the read.
     unsigned long current_file_position = ftell(file->address);
 
     if (current_file_position == (unsigned long) -1) return f_status_set_error(f_file_error_seek);
@@ -252,32 +270,41 @@ extern "C" {
     int result = 0;
 
     if (current_file_position > position.file_start) {
-      result = f_macro_file_seek_to(file->address, file->byte_size * (0 - (current_file_position - position.file_start)));
+      result = f_macro_file_seek_to(file->address, file->size_chunk * (0 - (current_file_position - position.file_start)));
     }
     else if (current_file_position < position.file_start) {
-      result = f_macro_file_seek_to(file->address, file->byte_size * (position.file_start - current_file_position));
+      result = f_macro_file_seek_to(file->address, file->size_chunk * (position.file_start - current_file_position));
     }
 
     if (result != 0) return f_status_set_error(f_file_error_seek);
 
     // now do the actual read
     if (position.total_elements == 0) {
-      result = fread(buffer->string + position.buffer_start, file->byte_size, buffer->size - buffer->used - 1, file->address);
+      result = fread(buffer->string + position.buffer_start, file->size_chunk, file->size_block, file->address);
     }
     else {
-      result = fread(buffer->string + position.buffer_start, file->byte_size, position.total_elements, file->address);
+      result = fread(buffer->string + position.buffer_start, file->size_chunk, position.total_elements, file->address);
     }
 
     if (file->address == 0) return f_status_set_error(f_file_error_read);
     if (ferror(file->address) != 0) return f_status_set_error(f_file_error_read);
 
-    // now save how much of our allocated buffer is actually used
-    // also make sure that we aren't making used space vanish
-    if (position.buffer_start + result > buffer->used) {
-      buffer->used = position.buffer_start + (result / file->byte_size);
+    f_number_unsigned bytes_total;
+
+    if (file->size_chunk > 1) {
+      bytes_total = result * file->size_chunk;
+    }
+    else {
+      bytes_total = result;
     }
 
-    // append an EOS only when the total elements were set to 0
+    // now save how much of our allocated buffer is actually used.
+    // also make sure that we aren't making used space vanish.
+    if (position.buffer_start + bytes_total > buffer->used) {
+      buffer->used = position.buffer_start + bytes_total;
+    }
+
+    // append an EOS only when the total elements were set to 0.
     if (position.total_elements == 0) {
       buffer->string[buffer->used] = f_string_eos;
     }

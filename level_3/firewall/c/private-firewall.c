@@ -619,7 +619,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
               fseek(file.address, 0, SEEK_SET);
             }
 
-            status = fl_file_read(file, file_position, &local_buffer);
+            status = fl_file_read_position(&file, &local_buffer, file_position);
 
             f_file_close(&file);
 
@@ -627,7 +627,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
               status = f_status_set_fine(status);
 
               if (status == f_invalid_parameter) {
-                fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read()");
+                fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read_position()");
               }
               else if (status == f_number_overflow) {
                 fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "ERROR: Integer overflow while trying to buffer the file '%.*s'", file_path.used, file_path.string);
@@ -645,7 +645,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
                 fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
               }
               else {
-                fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fl_file_read()", status);
+                fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fl_file_read_position()", status);
               }
 
               status = f_status_set_error(status);
@@ -1377,7 +1377,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
   f_macro_file_reset_position(local->file_position, file)
 
   fflush(stdout);
-  status = fl_file_read(file, local->file_position, &local->buffer);
+  status = fl_file_read_position(&file, &local->buffer, local->file_position);
 
   f_file_close(&file);
 
@@ -1385,7 +1385,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
     status = f_status_set_fine(status);
 
     if (status == f_invalid_parameter) {
-      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read().");
+      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_read_position().");
     }
     else if (status == f_number_overflow) {
       fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'.", filename);
@@ -1403,7 +1403,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
       fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
     }
     else {
-      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fl_file_read().", status);
+      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fl_file_read_position().", status);
     }
 
     return status;

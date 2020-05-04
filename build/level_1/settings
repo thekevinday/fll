@@ -12,9 +12,9 @@ build_linker ar
 build_libraries -lc
 build_libraries_fll -lfll_0
 build_libraries_fll-level -lfll_0
-build_sources_library color.c console.c directory.c file.c fss.c fss_basic.c fss_basic_list.c fss_extended.c fss_extended_list.c print.c serialized.c private-serialized.c socket.c status.c string.c utf.c private-string.c private-utf.c
+build_sources_library color.c console.c directory.c file.c fss.c fss_basic.c fss_basic_list.c fss_extended.c fss_extended_list.c print.c serialized.c private-serialized.c socket.c status.c string.c private-string.c utf.c private-utf.c utf_file.c
 build_sources_program 
-build_sources_headers color.h console.h directory.h file.h fss.h fss_basic.h fss_basic_list.h fss_status.h fss_extended.h fss_extended_list.h fss_macro.h print.h serialized.h socket.h status.h string.h utf.h
+build_sources_headers color.h console.h directory.h file.h fss.h fss_basic.h fss_basic_list.h fss_status.h fss_extended.h fss_extended_list.h fss_macro.h print.h serialized.h socket.h status.h string.h utf.h utf_file.h
 build_shared yes
 build_static yes
 
