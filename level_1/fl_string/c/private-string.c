@@ -411,6 +411,17 @@ extern "C" {
       if (status == f_false) break;
     } // for
 
+    if (*stop == *start) {
+      status = f_utf_is_whitespace(source + *stop, (stop_original - *stop) + 1);
+      if (f_status_is_error(status)) {
+        if (f_status_set_fine(status) == f_maybe) return f_status_set_error(f_invalid_utf);
+
+        return status;
+      }
+
+      if (status == f_true) return f_no_data;
+    }
+
     return f_none;
   }
 #endif // !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)

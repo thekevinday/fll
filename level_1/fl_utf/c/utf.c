@@ -562,6 +562,7 @@ extern "C" {
     f_status status = private_fl_utf_string_rip_find_range(source, &begin, &end);
 
     if (f_status_is_error(status)) return status;
+    if (status == f_no_data) return status;
 
     return private_fl_utf_string_append(source, begin, end, destination);
   }
@@ -580,6 +581,7 @@ extern "C" {
     f_status status = private_fl_utf_string_rip_find_range(source, &begin, &end);
 
     if (f_status_is_error(status)) return status;
+    if (status == f_no_data) return status;
 
     return private_fl_utf_string_append_nulless(source, begin, end, destination);
   }
