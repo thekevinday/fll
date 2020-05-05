@@ -154,13 +154,11 @@ extern "C" {
 #endif // _di_f_string_lengths_
 
 /**
- * A structure designating a start and stop position that represents a sub-string inside of some parent string.
- *
- * Use this to avoid resizing, restructuring, and reallocating the parent string to separate the sub-string.
+ * A structure designating a start and stop range for some string.
  *
  * In general, this project uses the start and stop position inclusively, meaning that a range of 0 to 1 would include positions 0 and position 1.
- * Therefore, 0 to 0 would be a position of 0.
- * Set start to some value larger than stop to designate no range.
+ * Therefore, a range from 0 to 0 would be include position 0.
+ * Set start to some value larger than stop to designate that there is no range (such as start = 1, stop = 0).
  *
  * start: the start position.
  * stop: the stop position.
@@ -172,19 +170,6 @@ extern "C" {
   } f_string_location;
 
   #define f_string_location_initialize { 1, 0 }
-
-  #define f_macro_string_location_new(status, string_location, length)     status = f_memory_new((void **) & string_location, sizeof(f_string_location), length)
-  #define f_macro_string_location_delete(status, string_location, length)  status = f_memory_delete((void **) & string_location, sizeof(f_string_location), length)
-  #define f_macro_string_location_destroy(status, string_location, length) status = f_memory_destroy((void **) & string_location, sizeof(f_string_location), length)
-
-  #define f_macro_string_location_delete_simple(string_location, length)  f_memory_delete((void **) & string_location, sizeof(f_string_location), length)
-  #define f_macro_string_location_destroy_simple(string_location, length) f_memory_destroy((void **) & string_location, sizeof(f_string_location), length)
-
-  #define f_macro_string_location_resize(status, string_location, old_length, new_length) \
-    status = f_memory_resize((void **) & string_location, sizeof(f_string_location), old_length, new_length)
-
-  #define f_macro_string_location_adjust(status, string_location, old_length, new_length) \
-    status = f_memory_adjust((void **) & string_location, sizeof(f_string_location), old_length, new_length)
 #endif // _di_f_string_location_
 
 /**
