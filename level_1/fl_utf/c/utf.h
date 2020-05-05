@@ -53,8 +53,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_append()
- * @see fl_utf_string_dynamic_append()
+ * @see fl_utf_string_append_nulless()
  */
 #ifndef _di_fl_utf_string_append_
   extern f_return_status fl_utf_string_append(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
@@ -81,8 +80,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_append_nulless()
- * @see fl_utf_string_dynamic_append_nulless()
+ * @see fl_utf_string_append()
  */
 #ifndef _di_fl_utf_string_append_nulless_
   extern f_return_status fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
@@ -164,8 +162,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_append()
- * @see fl_utf_string_dynamic_append()
+ * @see fl_utf_string_dynamic_append_nulless()
  */
 #ifndef _di_fl_utf_string_dynamic_append_
   extern f_return_status fl_utf_string_dynamic_append(const f_utf_string_dynamic source, f_utf_string_dynamic *destination);
@@ -188,8 +185,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_append_nulless()
- * @see fl_utf_string_dynamic_append_nulless()
+ * @see fl_utf_string_dynamic_append()
  */
 #ifndef _di_fl_utf_string_dynamic_append_nulless_
   extern f_return_status fl_utf_string_dynamic_append_nulless(const f_utf_string_dynamic source, f_utf_string_dynamic *destination);
@@ -365,6 +361,54 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_mish_nulless_
 
 /**
+ * Append the source UTF-8 string onto the destination, but restricted to the given range.
+ *
+ * @param source
+ *   The source string to append.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source is appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_append_nulless()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_append_
+  extern f_return_status fl_utf_string_dynamic_partial_append(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_append_
+
+/**
+ * Append the source UTF-8 string onto the destination, but restricted to the given range.
+ *
+ * Skips over NULL characters from source when appending.
+ *
+ * @param source
+ *   The source string to append.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source is appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_append()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_append_nulless_
+  extern f_return_status fl_utf_string_dynamic_partial_append_nulless(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_append_nulless_
+
+/**
  * Compare two UTF-8 strings, similar to strncmp(), but restricted to the given ranges.
  *
  * This does not stop on NULL.
@@ -374,9 +418,9 @@ extern "C" {
  *   String to compare.
  * @param string2
  *   String to compare.
- * @param offset1
+ * @param range1
  *   A range within the string1 to restrict the comparison to.
- * @param offset2
+ * @param range2
  *   A range within the string2 to restrict the comparison to.
  *
  * @return
@@ -391,7 +435,7 @@ extern "C" {
  * @see fl_utf_string_dynamic_compare_trim()
  */
 #ifndef _di_fl_utf_string_dynamic_partial_compare_
-  extern f_return_status fl_utf_string_dynamic_partial_compare(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_location offset1, const f_utf_string_location offset2);
+  extern f_return_status fl_utf_string_dynamic_partial_compare(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_location range1, const f_utf_string_location range2);
 #endif // _di_fl_utf_string_dynamic_partial_compare_
 
 /**
@@ -405,9 +449,9 @@ extern "C" {
  *   String to compare.
  * @param string2
  *   String to compare.
- * @param offset1
+ * @param range1
  *   A range within the string1 to restrict the comparison to.
- * @param offset2
+ * @param range2
  *   A range within the string2 to restrict the comparison to.
  *
  * @return
@@ -422,8 +466,178 @@ extern "C" {
  * @see fl_utf_string_dynamic_compare_trim()
  */
 #ifndef _di_fl_utf_string_dynamic_partial_compare_trim_
-  extern f_return_status fl_utf_string_dynamic_partial_compare_trim(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_location offset1, const f_utf_string_location offset2);
+  extern f_return_status fl_utf_string_dynamic_partial_compare_trim(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_location range1, const f_utf_string_location range2);
 #endif // _di_fl_utf_string_dynamic_partial_compare_trim_
+
+/**
+ * Append the UTF-8 source string onto the destination with the glue in between, but restricted to the given range.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_mash_nulless()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_mash_
+  extern f_return_status fl_utf_string_dynamic_partial_mash(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_mash_
+
+/**
+ * Append the UTF-8 source string onto the destination with the glue in between, but restricted to the given range.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * Skips over NULL characters from glue and source when appending.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_mash()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_mash_nulless_
+  extern f_return_status fl_utf_string_dynamic_partial_mash_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_mash_nulless_
+
+/**
+ * Prepend the UTF-8 source string onto the destination with the glue in between, but restricted to the given range.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_mish_nulless()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_mish_
+  extern f_return_status fl_utf_string_dynamic_partial_mish(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_mish_
+
+/**
+ * Prepend the UTF-8 source string onto the destination with the glue in between, but restricted to the given range.
+ *
+ * If the destination string is empty, then no glue is appended.
+ *
+ * Skips over NULL characters from glue and source when appending.
+ *
+ * @param glue
+ *   A string to append between the source and destination, such as a space: ' '.
+ * @param glue_length
+ *   The number of bytes the glue takes up.
+ * @param source
+ *   The source string to append.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source and glue are appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_mish()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_mish_nulless_
+  extern f_return_status fl_utf_string_dynamic_partial_mish_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_mish_nulless_
+
+/**
+ * Prepend the source string onto the destination, but restricted to the given range.
+ *
+ * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source is prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_prepend_nulless()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_prepend_
+  extern f_return_status fl_utf_string_dynamic_partial_prepend(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_prepend_
+
+/**
+ * Prepend the source string onto the destination, but restricted to the given range.
+ *
+ * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source is prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_prepend()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_prepend_nulless_
+  extern f_return_status fl_utf_string_dynamic_partial_prepend_nulless(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_prepend_nulless_
 
 /**
  * Prepend the source string onto the destination.
@@ -442,7 +656,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_prepend()
+ * @see fl_utf_string_dynamic_prepend_nulless()
  */
 #ifndef _di_fl_utf_string_dynamic_prepend_
   extern f_return_status fl_utf_string_dynamic_prepend(const f_utf_string_dynamic source, f_utf_string_dynamic *destination);
@@ -465,7 +679,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_prepend_nulless()
+ * @see fl_utf_string_dynamic_prepend()
  */
 #ifndef _di_fl_utf_string_dynamic_prepend_nulless_
   extern f_return_status fl_utf_string_dynamic_prepend_nulless(const f_utf_string_dynamic source, f_utf_string_dynamic *destination);
@@ -479,7 +693,7 @@ extern "C" {
  *
  * @param source
  *   The buffer to rip from.
- * @param offset
+ * @param range
  *   A range within the buffer representing the string to rip.
  * @param destination
  *   The new string, which will be allocated or reallocated as necessary.
@@ -491,12 +705,10 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_append()
- * @see fl_utf_string_dynamic_append()
- * @see fl_utf_string_dynamic_rip()
+ * @see fl_utf_string_dynamic_rip_nulless()
  */
 #ifndef _di_fl_utf_string_dynamic_rip_
-  extern f_return_status fl_utf_string_dynamic_rip(const f_utf_string_dynamic source, const f_utf_string_location offset, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_dynamic_rip(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_dynamic_rip_
 
 /**
@@ -509,7 +721,7 @@ extern "C" {
  *
  * @param source
  *   The string to rip from.
- * @param offset
+ * @param range
  *   A range within the buffer representing the string to rip.
  * @param destination
  *   The new string, which will be allocated or reallocated as necessary.
@@ -521,12 +733,10 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_append_nulless()
- * @see fl_utf_string_dynamic_append_nulless()
- * @see fl_utf_string_dynamic_rip_nulless()
+ * @see fl_utf_string_dynamic_rip()
  */
 #ifndef _di_fl_utf_string_dynamic_rip_nulless_
-  extern f_return_status fl_utf_string_dynamic_rip_nulless(const f_utf_string_dynamic source, const f_utf_string_location offset, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_dynamic_rip_nulless(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_dynamic_rip_nulless_
 
 /**
@@ -597,7 +807,7 @@ extern "C" {
  *   f_invalid_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  *   f_invalid_parameter (with error bit) if a parameter is invalid
  *
- * @see fl_utf_string_seek_line_untile_graph()
+ * @see fl_utf_string_seek_line_until_graph()
  */
 #ifndef _di_fl_utf_string_dynamic_seek_line_until_graph_
   extern f_return_status fl_utf_string_dynamic_seek_line_until_graph(const f_utf_string_dynamic buffer, f_utf_string_location *location, const f_utf_character placeholder);
@@ -733,8 +943,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_mash()
- * @see fl_utf_string_dynamic_mash()
+ * @see fl_utf_string_mash_nulless()
  */
 #ifndef _di_fl_utf_string_mash_
   extern f_return_status fl_utf_string_mash(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
@@ -767,8 +976,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_mash_nulless()
- * @see fl_utf_string_dynamic_mash_nulless()
+ * @see fl_utf_string_mash()
  */
 #ifndef _di_fl_utf_string_mash_nulless_
   extern f_return_status fl_utf_string_mash_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
@@ -799,8 +1007,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_mish()
- * @see fl_utf_string_dynamic_mish()
+ * @see fl_utf_string_mish_nulless()
  */
 #ifndef _di_fl_utf_string_mish_
   extern f_return_status fl_utf_string_mish(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
@@ -833,8 +1040,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_mish_nulless()
- * @see fl_utf_string_dynamic_mish_nulless()
+ * @see fl_utf_string_mish()
  */
 #ifndef _di_fl_utf_string_mish_nulless_
   extern f_return_status fl_utf_string_mish_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
@@ -861,7 +1067,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_dynamic_prepend()
+ * @see fl_utf_string_prepend_nulless()
  */
 #ifndef _di_fl_utf_string_prepend_
   extern f_return_status fl_utf_string_prepend(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
@@ -890,7 +1096,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_dynamic_prepend_nulless()
+ * @see fl_utf_string_prepend()
  */
 #ifndef _di_fl_utf_string_prepend_nulless_
   extern f_return_status fl_utf_string_prepend_nulless(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
@@ -918,8 +1124,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_append()
- * @see fl_utf_string_dynamic_append()
+ * @see fl_utf_string_rip_nulless()
  */
 #ifndef _di_fl_utf_string_rip_
   extern f_return_status fl_utf_string_rip(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
@@ -949,8 +1154,7 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_append_nulless()
- * @see fl_utf_string_dynamic_rip_nulless()
+ * @see fl_utf_string_append()
  */
 #ifndef _di_fl_utf_string_rip_nulless_
   extern f_return_status fl_utf_string_rip_nulless(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
@@ -975,7 +1179,6 @@ extern "C" {
  *   f_invalid_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_utf_string_dynamic_seek_line_to_char()
  * @see fl_utf_string_seek_line_to_char()
  */
 #ifndef _di_fl_utf_string_seek_line_to_
@@ -1000,7 +1203,6 @@ extern "C" {
  *   f_invalid_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_utf_string_dynamic_seek_line_to()
  * @see fl_utf_string_seek_line_to()
  */
 #ifndef _di_fl_utf_string_seek_line_to_char_
