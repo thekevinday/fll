@@ -53,7 +53,7 @@ extern "C" {
             if (f_status_is_error(status)) return status;
           }
 
-          memcpy(destination->string + destination->used, source + first, length);
+          memcpy(destination->string + destination->used, source + start + first, length);
           destination->used = total;
         }
 
@@ -74,7 +74,7 @@ extern "C" {
               if (f_status_is_error(status)) return status;
             }
 
-            memcpy(destination->string + destination->used, source + first, length);
+            memcpy(destination->string + destination->used, source + start + first, length);
             destination->used = total;
           }
         }
