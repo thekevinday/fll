@@ -11,9 +11,9 @@ build_compiler gcc
 build_linker ar
 build_libraries -lc
 build_libraries_fll -lfl_string -lfl_status -lfl_fss -lf_file -lf_utf -lf_conversion -lf_memory
-build_sources_library fss_basic.c fss_basic_list.c fss_extended.c fss_extended_list.c fss_status.c
+build_sources_library fss.c fss_basic.c fss_basic_list.c fss_extended.c fss_extended_list.c fss_status.c
 build_sources_program
-build_sources_headers fss_basic.h fss_basic_list.h fss_extended.h fss_extended_list.h fss_status.h
+build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_extended.h fss_extended_list.h fss_status.h
 build_sources_bash
 build_sources_settings
 build_shared yes
