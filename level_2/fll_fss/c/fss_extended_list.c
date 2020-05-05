@@ -5,9 +5,10 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_extended_list_read_
-  f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_location *input, f_fss_nest *nest) {
+  f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_location *location, f_fss_nest *nest) {
     #ifndef _di_level_3_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
+      if (location == 0) return f_status_set_error(f_invalid_parameter);
       if (nest == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_3_parameter_checking_
 
@@ -32,27 +33,27 @@ extern "C" {
           }
         }
 
-        status = fl_fss_extended_list_object_read(buffer, input, &nest->depth[0].array[nest->depth[0].used].object);
+        status = fl_fss_extended_list_object_read(buffer, location, &nest->depth[0].array[nest->depth[0].used].object);
 
         if (f_status_is_error(status)) {
           return status;
         }
 
-        if (input->start >= input->stop || input->start >= buffer->used) {
+        if (location->start >= location->stop || location->start >= buffer->used) {
           if (status == fl_fss_found_object || status == fl_fss_found_object_no_content) {
             // extended list requires content closure, so this could be an error.
             return fl_fss_found_object_no_content;
           }
 
           if (found_data) {
-            if (input->start >= buffer->used) {
+            if (location->start >= buffer->used) {
               return f_none_on_eos;
             }
 
             return f_none_on_stop;
           }
           else {
-            if (input->start >= buffer->used) {
+            if (location->start >= buffer->used) {
               return f_no_data_on_eos;
             }
 
@@ -62,7 +63,7 @@ extern "C" {
 
         if (status == fl_fss_found_object) {
           found_data = f_true;
-          status = fl_fss_extended_list_content_read(buffer, input, nest);
+          status = fl_fss_extended_list_content_read(buffer, location, nest);
 
           break;
         }
@@ -96,15 +97,15 @@ extern "C" {
       else if (status != fl_fss_found_object && status != fl_fss_found_content && status != fl_fss_found_no_content && status != fl_fss_found_object_no_content) {
         return status;
       }
-      // When content is found, the input->start is incremented, if content is found at input->stop, then input->start will be > input.stop.
-      else if (input->start >= input->stop || input->start >= buffer->used) {
-        if (input->start >= buffer->used) {
+      // When content is found, the location->start is incremented, if content is found at location->stop, then location->start will be > location.stop.
+      else if (location->start >= location->stop || location->start >= buffer->used) {
+        if (location->start >= buffer->used) {
           return f_none_on_eos;
         }
 
         return f_none_on_stop;
       }
-    } while (input->start < f_string_max_size);
+    } while (location->start < f_string_max_size);
 
     return f_status_is_error(f_number_overflow);
   }
