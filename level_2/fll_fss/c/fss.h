@@ -33,12 +33,15 @@ extern "C" {
 /**
  * Perform simple search through all objects against the given set, saving all values when matched.
  *
- * Only the first match for each name is snatched, all others are ignored.
+ * Multiple contents for a single object are appended.
+ * Only content for the first of each identical object is snatched, all others are ignored.
  *
  * This will trim the object names when comparing (removing leading/trailing whitespace).
  * This will strip NULL charactes when copying.
  *
  * This performs only a simple search algorithm that should be acceptable for small sets where performance is generally not a concern.
+ *
+ * This assumes values[].used is 0 at start to determine if value is already snatched.
  *
  * @param buffer
  *   The buffer to read from.
@@ -52,7 +55,6 @@ extern "C" {
  *   An array of lengths for each names string.
  * @param values
  *   An array of values where "snatched" content is stored.
- *   Each of these must be of type f_string_dynamic.
  * @param size
  *   The total size of the names, lengths, and values arrays.
  *
@@ -69,7 +71,10 @@ extern "C" {
 /**
  * Perform simple search through all objects against the given set, saving all values when matched.
  *
- * This will append all duplicates using the provided glue.
+ * All matches for each name is snatched.
+ * Multiple contents for a single object are appended.
+ * Content for multiple identical objects are appended.
+ *
  * This will trim the object names when comparing (removing leading/trailing whitespace).
  * This will strip NULL charactes when copying.
  *
@@ -83,13 +88,48 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- *   Each of these must be of type f_string.
  * @param lengths
  *   An array of lengths for each names string.
- *   Each of these must be of type f_string_length.
  * @param values
  *   An array of values where "snatched" content is stored.
- *   Each of these must be of type f_string_dynamic.
+ * @param size
+ *   The total size of the names, lengths, and values arrays.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data when there is no buffer, objects or contents to process.
+ *   f_error_reallocation (with error bit) on reallocation error.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fll_fss_snatch_together_
+  extern f_return_status fll_fss_snatch_together(const f_string_dynamic buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size);
+#endif // _di_fll_fss_snatch_together_
+
+/**
+ * Perform simple search through all objects against the given set, saving all values when matched.
+ *
+ * Multiple contents for a single object are appended using the provided glue.
+ * Only content for the first of each identical object is snatched, all others are ignored.
+ *
+ * This will trim the object names when comparing (removing leading/trailing whitespace).
+ * This will strip NULL charactes when copying.
+ *
+ * This performs only a simple search algorithm that should be acceptable for small sets where performance is generally not a concern.
+ *
+ * This assumes values[].used is 0 at start to determine if value is already snatched.
+ *
+ * @param buffer
+ *   The buffer to read from.
+ * @param objects
+ *   This object mappings to process.
+ * @param contents
+ *   This content mappings to process.
+ * @param names
+ *   An array of strings to "snatch" from the buffer.
+ * @param lengths
+ *   An array of lengths for each names string.
+ * @param values
+ *   An array of values where "snatched" content is stored.
  * @param size
  *   The total size of the names, lengths, and values arrays.
  * @param glue
@@ -106,6 +146,47 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_mash_
   extern f_return_status fll_fss_snatch_mash(const f_string_dynamic buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size, const f_string glue, const f_string_length glue_length);
 #endif // _di_fll_fss_snatch_mash_
+
+/**
+ * Perform simple search through all objects against the given set, saving all values when matched.
+ *
+ * All matches for each name is snatched.
+ * Multiple contents for a single object are appended using the provided glue.
+ * Content for multiple identical objects are appended using the provided glue.
+ *
+ * This will trim the object names when comparing (removing leading/trailing whitespace).
+ * This will strip NULL charactes when copying.
+ *
+ * This performs only a simple search algorithm that should be acceptable for small sets where performance is generally not a concern.
+ *
+ * @param buffer
+ *   The buffer to read from.
+ * @param objects
+ *   This object mappings to process.
+ * @param contents
+ *   This content mappings to process.
+ * @param names
+ *   An array of strings to "snatch" from the buffer.
+ * @param lengths
+ *   An array of lengths for each names string.
+ * @param values
+ *   An array of values where "snatched" content is stored.
+ * @param size
+ *   The total size of the names, lengths, and values arrays.
+ * @param glue
+ *   A string to append between each duplicate name found when "snatching".
+ * @param glue_length
+ *   The length of the glue string.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data when there is no buffer, objects or contents to process.
+ *   f_error_reallocation (with error bit) on reallocation error.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fll_fss_snatch_mash_together_
+  extern f_return_status fll_fss_snatch_mash_together(const f_string_dynamic buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size, const f_string glue, const f_string_length glue_length);
+#endif // _di_fll_fss_snatch_mash_together_
 
 #ifdef __cplusplus
 } // extern "C"
