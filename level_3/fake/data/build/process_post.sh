@@ -58,6 +58,8 @@ process_post_main(){
         if [[ $grab_next == "mode" ]] ; then
           if [[ $mode == "" ]] ; then
             mode=$p
+          else
+            mode="$mode $p"
           fi
         elif [[ $grab_next == "defines" ]] ; then
           if [[ $defines == "" ]] ; then
@@ -95,7 +97,7 @@ process_post_main(){
   echo -e "${c_title}Done Processing Operation: $c_reset$c_notice$operation$c_reset"
 
   if [[ $mode != "" ]] ; then
-    echo -e "  Mode: $c_reset$c_notice$mode$c_reset"
+    echo -e "  Modes: $c_reset$c_notice$mode$c_reset"
   fi
 
   if [[ $defines != "" ]] ; then

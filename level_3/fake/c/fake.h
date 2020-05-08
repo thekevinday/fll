@@ -472,8 +472,16 @@ extern "C" {
   #define fake_short_process  "p"
   #define fake_short_settings "s"
 
+  #define fake_short_defines_length  1
+  #define fake_short_mode_length     1
+  #define fake_short_process_length  1
+  #define fake_short_settings_length 1
+
   #define fake_short_path_build "b"
   #define fake_short_path_work  "w"
+
+  #define fake_short_path_build_length 1
+  #define fake_short_path_work_length  1
 
   #define fake_short_path_source_build     "B"
   #define fake_short_path_source_common    "O"
@@ -483,13 +491,29 @@ extern "C" {
   #define fake_short_path_source_licenses  "L"
   #define fake_short_path_source_settings  "S"
 
+  #define fake_short_path_source_build_length     1
+  #define fake_short_path_source_common_length    1
+  #define fake_short_path_source_data_length      1
+  #define fake_short_path_source_documents_length 1
+  #define fake_short_path_source_codes_length     1
+  #define fake_short_path_source_licenses_length  1
+  #define fake_short_path_source_settings_length  1
+
   #define fake_long_defines  "defines"
   #define fake_long_mode     "mode"
   #define fake_long_process  "process"
   #define fake_long_settings "settings"
 
+  #define fake_long_defines_length  7
+  #define fake_long_mode_length     4
+  #define fake_long_process_length  7
+  #define fake_long_settings_length 8
+
   #define fake_long_path_build "build"
   #define fake_long_path_work  "work"
+
+  #define fake_long_path_build_length 5
+  #define fake_long_path_work_length  4
 
   #define fake_long_path_source_build     "source_build"
   #define fake_long_path_source_common    "source_common"
@@ -499,6 +523,14 @@ extern "C" {
   #define fake_long_path_source_licenses  "source_licenses"
   #define fake_long_path_source_settings  "source_settings"
 
+  #define fake_long_path_source_build_length     12
+  #define fake_long_path_source_common_length    13
+  #define fake_long_path_source_data_length      11
+  #define fake_long_path_source_documents_length 16
+  #define fake_long_path_source_codes_length     12
+  #define fake_long_path_source_licenses_length  15
+  #define fake_long_path_source_settings_length  15
+
   // these special parameters are provided in such a way that they mimic the traditional ./configure script.
   #define fake_long_documents_disabled "disable-doc"
   #define fake_long_documents_enabled  "enable-doc"
@@ -506,6 +538,13 @@ extern "C" {
   #define fake_long_shared_enabled     "enable-shared"
   #define fake_long_static_disabled    "disable-static"
   #define fake_long_static_enabled     "enable-static"
+
+  #define fake_long_documents_disabled_length 11
+  #define fake_long_documents_enabled_length  10
+  #define fake_long_shared_disabled_length    14
+  #define fake_long_shared_enabled_length     13
+  #define fake_long_static_disabled_length    14
+  #define fake_long_static_enabled_length     13
 
   #define fake_other_operation_build    "build"
   #define fake_other_operation_clean    "clean"

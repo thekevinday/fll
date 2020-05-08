@@ -469,6 +469,9 @@ extern "C" {
 
               return status;
             }
+            else {
+              status = f_none;
+            }
           }
 
           if (length == 0 || status == f_no_data) {
