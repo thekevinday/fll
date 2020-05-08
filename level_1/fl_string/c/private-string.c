@@ -117,6 +117,8 @@ extern "C" {
     for (; i2 < stop2; i2++) {
       if (string2[i2] != f_string_eos) return f_not_equal_to;
     } // for
+
+    return f_equal_to;
   }
 #endif // !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
 

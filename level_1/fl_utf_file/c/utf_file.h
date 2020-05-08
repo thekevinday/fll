@@ -41,7 +41,7 @@ extern "C" {
  *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_reallocation (with error bit) on memory reallocation error.
- *   f_string_too_large (with error bit) if string is too large to fit into buffer.
+ *   f_string_too_large (with error bit) if string is too large to fit into the buffer.
  *   f_incomplete_utf_on_eof (with error bit) if UTF-8 character was incomplete at the end of the file.
  */
 #ifndef _di_fl_utf_file_read_
@@ -68,7 +68,7 @@ extern "C" {
  *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_reallocation (with error bit) on memory reallocation error.
- *   f_string_too_large (with error bit) if string is too large to fit into buffer.
+ *   f_string_too_large (with error bit) if string is too large to fit into the buffer.
  *   f_incomplete_utf_on_eof (with error bit) if UTF-8 character was incomplete at the end of the file.
  */
 #ifndef _di_fl_utf_file_read_position_

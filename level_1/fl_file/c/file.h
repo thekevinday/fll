@@ -35,7 +35,7 @@ extern "C" {
  *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_reallocation (with error bit) on memory reallocation error.
- *   f_string_too_large (with error bit) if string is too large to fit into buffer.
+ *   f_string_too_large (with error bit) if string is too large to fit into the buffer.
  */
 #ifndef _di_fl_file_read_
   extern f_return_status fl_file_read(f_file *file, f_string_dynamic *buffer);
@@ -59,7 +59,7 @@ extern "C" {
  *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_reallocation (with error bit) on memory reallocation error.
- *   f_string_too_large (with error bit) if string is too large to fit into buffer.
+ *   f_string_too_large (with error bit) if string is too large to fit into the buffer.
  */
 #ifndef _di_fl_file_read_position_
   extern f_return_status fl_file_read_position(f_file *file, f_string_dynamic *buffer, const f_file_position position);

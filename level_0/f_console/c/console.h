@@ -56,8 +56,14 @@ extern "C" {
   #define f_console_symbol_short_enable  "-"
   #define f_console_symbol_short_disable "+"
 
+  #define f_console_symbol_short_enable_length  1
+  #define f_console_symbol_short_disable_length 1
+
   #define f_console_symbol_long_enable  "--"
   #define f_console_symbol_long_disable "++"
+
+  #define f_console_symbol_long_enable_length  2
+  #define f_console_symbol_long_disable_length 2
 #endif // _di_f_console_symbols_
 
 /**

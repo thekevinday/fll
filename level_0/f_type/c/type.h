@@ -189,7 +189,8 @@ extern "C" {
 #ifndef _di_f_array_
   typedef f_number_unsigned f_array_length;
 
-  #define f_array_max_size f_type_number_size_unsigned
+  #define f_array_length_size     f_type_number_size_unsigned
+  #define f_array_length_size_max f_type_number_size_max_unsigned
 #endif // _di_f_array_
 
 /**
