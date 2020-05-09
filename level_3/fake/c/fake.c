@@ -216,30 +216,16 @@ extern "C" {
         return f_status_set_error(status);
       }
 
-      status = fake_load_settings_data(*data, &data->settings_data);
-
-      if (f_status_is_error(status)) {
-        fake_delete_data(data);
-        return f_status_set_error(status);
-      }
-
       for (uint8_t i = 0; i < fake_operations_total && operations[i]; i++) {
         data->operation = operations[i];
 
         if (operations[i] == fake_operation_build) {
-          status = fake_build_execute_process_script(*data, data->settings_data.process_pre);
-          if (f_status_is_error(status)) {
-            // @todo handle errors.
-            break;
-          }
+          status = fake_build_operate(*data);
 
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_build);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is not yet implemented.");
-
-          status = fake_build_execute_process_script(*data, data->settings_data.process_post);
           if (f_status_is_error(status)) {
-            // @todo handle errors.
+            fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
+            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_clean);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' failed.");
             break;
           }
         }
@@ -295,8 +281,6 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(data->path_source_codes);
     f_macro_string_dynamic_delete_simple(data->path_source_licenses);
     f_macro_string_dynamic_delete_simple(data->path_source_settings);
-
-    fake_macro_settings_data_delete_simple(data->settings_data);
 
     fl_macro_color_context_delete_simple(data->context);
 

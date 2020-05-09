@@ -13,23 +13,6 @@ extern "C" {
 #endif
 
 /**
- * Find the build settings file, load it, validate it, and process it.
- *
- * @param data
- *   The program data.
- * @param settings_data
- *   All settings data from the build settings file are loaded into this.
- *   These settings will have any specified mode property applied.
- *
- * @return
- *   f_none on success.
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_fake_load_settings_data_
-  extern f_return_status fake_load_settings_data(const fake_data data, fake_settings_data *settings_data) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_load_settings_data_
-
-/**
  * Print generic error messages.
  *
  * @param context
