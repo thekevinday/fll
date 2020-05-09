@@ -90,40 +90,24 @@ extern "C" {
 #endif // _di_fll_program_print_version_
 
 #ifndef _di_fll_program_parameter_process_
-  f_return_status fll_program_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, f_string_lengths *remaining, fl_color_context *context) {
+  f_return_status fll_program_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context) {
     f_status status = f_none;
 
     status = f_console_parameter_process(arguments, parameters, remaining);
-
-    f_console_parameter_id decision = choices.id[2];
-
-    f_console_parameter_prioritize(parameters, choices, &decision);
-
-    // load colors unless told not to.
-    if (decision != choices.id[0]) {
-      f_status allocation_status = f_none;
-
-      fl_macro_color_context_new(allocation_status, (*context));
-
-      if (f_status_is_error(allocation_status)) {
-        fprintf(f_standard_error, "CRITICAL ERROR: Unable to allocate memory.\n");
-        return allocation_status;
-      }
-
-      fl_color_load_context(context, decision == choices.id[1]);
-    }
 
     if (f_status_is_error(status)) {
       status = f_status_set_fine(status);
 
       if (status == f_no_data) {
         fl_color_print_line(f_standard_error, context->error, context->reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
-        // TODO: there is a way to identify which parameter is incorrect
+        // @todo there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       }
       else if (status == f_error_allocation || status == f_error_reallocation) {
-        fl_color_print_line(f_standard_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory.");
+        fl_color_print(f_standard_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
+        fl_color_print(f_standard_error, context->notable, context->reset, "f_console_parameter_process");
+        fl_color_print_line(f_standard_error, context->error, context->reset, ").");
       }
       else if (status == f_invalid_utf) {
         fl_color_print(f_standard_error, context->error, context->reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling ");
@@ -146,9 +130,97 @@ extern "C" {
       return f_status_set_error(status);
     }
 
+    f_console_parameter_id decision = choices.id[2];
+
+    f_string function;
+
+    if (right) {
+      function = "f_console_parameter_prioritize_right";
+      status = f_console_parameter_prioritize_right(parameters, choices, &decision);
+    }
+    else {
+      function = "f_console_parameter_prioritize_left";
+      status = f_console_parameter_prioritize_left(parameters, choices, &decision);
+    }
+
+    if (f_status_is_error(status)) {
+      status = f_status_set_fine(status);
+
+      if (status == f_error_allocation || status == f_error_reallocation) {
+        fl_color_print(f_standard_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
+        fl_color_print(f_standard_error, context->notable, context->reset, "%s", function);
+        fl_color_print_line(f_standard_error, context->error, context->reset, ").");
+      }
+      else if (status == f_invalid_parameter) {
+        fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling ");
+        fl_color_print(f_standard_error, context->notable, context->reset, "%s", function);
+        fl_color_print_line(f_standard_error, context->error, context->reset, "().");
+      }
+      else {
+        fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (");
+        fl_color_print(f_standard_error, context->notable, context->reset, "%u", status);
+        fl_color_print(f_standard_error, context->error, context->reset, ") has occurred while calling ");
+        fl_color_print(f_standard_error, context->notable, context->reset, "%s", function);
+        fl_color_print_line(f_standard_error, context->error, context->reset, "().");
+      }
+
+      return f_status_set_error(status);
+    }
+
+    // load colors unless told not to.
+    if (decision != choices.id[0]) {
+      f_status allocation_status = f_none;
+
+      fl_macro_color_context_new(allocation_status, (*context));
+
+      if (f_status_is_error(allocation_status)) {
+        fl_color_print(f_standard_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
+        fl_color_print(f_standard_error, context->notable, context->reset, "fl_macro_color_context_new");
+        fl_color_print_line(f_standard_error, context->error, context->reset, "().");
+
+        return allocation_status;
+      }
+
+      status = fl_color_load_context(context, decision == choices.id[1]);
+    }
+
     return status;
   }
 #endif // _di_fll_program_parameter_process_
+
+#ifndef _di_fll_program_parameter_process_quietly_
+  f_return_status fll_program_parameter_process_quietly(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context) {
+    f_status status = f_none;
+
+    status = f_console_parameter_process(arguments, parameters, remaining);
+
+    if (f_status_is_error(status)) return status;
+
+    f_console_parameter_id decision = choices.id[2];
+
+    if (right) {
+      status = f_console_parameter_prioritize_right(parameters, choices, &decision);
+    }
+    else {
+      status = f_console_parameter_prioritize_left(parameters, choices, &decision);
+    }
+
+    if (f_status_is_error(status)) return status;
+
+    // load colors unless told not to.
+    if (decision != choices.id[0]) {
+      f_status allocation_status = f_none;
+
+      fl_macro_color_context_new(allocation_status, (*context));
+
+      if (f_status_is_error(allocation_status)) return allocation_status;
+
+      status = fl_color_load_context(context, decision == choices.id[1]);
+    }
+
+    return status;
+  }
+#endif // _di_fll_program_parameter_process_quietly_
 
 #ifndef _di_fll_program_parameter_additional_append_
   f_return_status fll_program_parameter_additional_append(const f_string *argv, const f_string_lengths additional, f_string_dynamics *destination) {

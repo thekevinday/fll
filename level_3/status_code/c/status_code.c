@@ -37,16 +37,15 @@ extern "C" {
       f_console_parameter_id ids[3] = { status_code_parameter_no_color, status_code_parameter_light, status_code_parameter_dark };
       f_console_parameter_ids choices = { ids, 3 };
 
-      status = fll_program_parameter_process(arguments, parameters, choices, &data->remaining, &data->context);
-    }
+      status = fll_program_parameter_process(arguments, parameters, choices, f_true, &data->remaining, &data->context);
 
-    if (f_status_is_error(status)) {
-      status_code_delete_data(data);
-      return f_status_set_error(status);
-    }
+      if (f_status_is_error(status)) {
+        status_code_delete_data(data);
+        return f_status_set_error(status);
+      }
 
-    f_status status2 = f_none;
-    status = f_none;
+      status = f_none;
+    }
 
     if (data->parameters[status_code_parameter_help].result == f_console_result_found) {
       status_code_print_help(data->context);
@@ -98,6 +97,8 @@ extern "C" {
       status_code_delete_data(data);
       return f_status_set_error(f_invalid_parameter);
     }
+
+    f_status status2 = f_none;
 
     if (data->parameters[status_code_parameter_is_error].result == f_console_result_found || data->parameters[status_code_parameter_is_warning].result == f_console_result_found || data->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
       if (data->process_pipe) {

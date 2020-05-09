@@ -17,6 +17,8 @@ extern "C" {
     fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
     fll_program_print_help_option(context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
     fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
     fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol);
@@ -93,12 +95,14 @@ extern "C" {
         choices.id = ids;
         choices.used = 3;
 
-        status = fll_program_parameter_process(arguments, parameters, choices, &data->remaining, &data->context);
+        status = fll_program_parameter_process(arguments, parameters, choices, f_true, &data->remaining, &data->context);
 
         if (f_status_is_error(status)) {
           fake_delete_data(data);
           return f_status_set_error(status);
         }
+
+        status = f_none;
       }
 
       // Determine order of operations.

@@ -144,6 +144,8 @@ extern "C" {
  * @param choices
  *   A set of the color options: no-color option, light-color option, dark-color option.
  *   This must have its used size set to 3 and the ids are expected to be in this order: no_color, light, and dark.
+ * @param right
+ *   Set to TRUE for right priortization and FALSE for left prioritization.
  * @param remaining
  *   A list of remaining parameters not associated with anything.
  * @param context
@@ -156,8 +158,34 @@ extern "C" {
  *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fll_program_parameter_process_
-  extern f_return_status fll_program_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, f_string_lengths *remaining, fl_color_context *context);
+  extern f_return_status fll_program_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context);
 #endif // _di_fll_program_parameter_process_
+/**
+ * Perform basic parameter loading, including initialization of color context but does not print errors.
+ *
+ * @param arguments
+ *   The parameters passed to the process.
+ * @param parameters
+ *   The console parameters to look for.
+ * @param choices
+ *   A set of the color options: no-color option, light-color option, dark-color option.
+ *   This must have its used size set to 3 and the ids are expected to be in this order: no_color, light, and dark.
+ * @param right
+ *   Set to TRUE for right priortization and FALSE for left prioritization.
+ * @param remaining
+ *   A list of remaining parameters not associated with anything.
+ * @param context
+ *   The color context.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if "additional" parameters were expected but not found.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ */
+#ifndef _di_fll_program_parameter_process_quietly_
+  extern f_return_status fll_program_parameter_process_quietly(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context);
+#endif // _di_fll_program_parameter_process_quietly_
 
 /**
  * Allocate new strings from all of the provided locations.

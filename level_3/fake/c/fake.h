@@ -337,7 +337,10 @@ extern "C" {
     fake_parameter_help,
     fake_parameter_light,
     fake_parameter_dark,
+    fake_parameter_debug,
     fake_parameter_no_color,
+    fake_parameter_quiet,
+    fake_parameter_verbose,
     fake_parameter_version,
 
     fake_parameter_defines,
@@ -374,7 +377,10 @@ extern "C" {
       f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(fake_short_defines, fake_long_defines, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(fake_short_mode, fake_long_mode, 0, 1, f_console_type_normal), \
@@ -401,7 +407,7 @@ extern "C" {
       f_console_parameter_initialize(0, 0, fake_other_operation_skeleton, 0, f_console_type_other), \
     }
 
-  #define fake_total_parameters 28
+  #define fake_total_parameters 31
 #endif // _di_fake_defines_
 
 #ifndef _di_fake_data_

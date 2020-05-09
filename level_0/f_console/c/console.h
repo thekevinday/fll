@@ -67,7 +67,25 @@ extern "C" {
 #endif // _di_f_console_symbols_
 
 /**
- * Create some standard command line parameter options required by the kevux/fss/fll specifications.
+ * Create some standard command line parameter options required/expected by the kevux/fss/fll specifications.
+ *
+ * It is expected that all of the "+" and "++" console options described below are reserved for these purposes.
+ * This is not a strict requirement as such a thing is non-sense in open-source, but this should be considered a strong recommendation.
+ *
+ * It is acceptable for any of these options, when specified multiple times, for that number of times to represent the "level".
+ * For example, a "+D +D" means more debug output than simply "+D".
+ *
+ * The following options are subjective in interpretation but are expected to follow the general interpretation:
+ * - debug: Enable debugging, which will likely increase output verbosity.
+ * - quiet: Decrease verbosity, print less, in some use cases this could mean printing nothing.
+ * - verbose: Increase verbosity, print more, in some use cases this could mean printing just about everything.
+ *
+ * The following are less subjective in interpretation but do allow some flexibility.
+ * - dark: Do display color intended for dark backgrounds (often the default behavior) when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ * - help: Display the help text. This does not define how the text is displayed only that the text is displayed.
+ * - light: Do display color intended for light backgrounds when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ * - no_color: Do not display color when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ * - version: Should always print only the version number, no colors, but what represents the version number is undefined by this project.
  */
 #ifndef _di_f_standard_console_parameters_
   #define f_console_standard_short_dark     "d"
@@ -75,14 +93,36 @@ extern "C" {
   #define f_console_standard_short_help     "h"
   #define f_console_standard_short_light    "l"
   #define f_console_standard_short_no_color "n"
+  #define f_console_standard_short_quiet    "q"
+  #define f_console_standard_short_verbose  "V"
   #define f_console_standard_short_version  "v"
+
+  #define f_console_standard_short_dark_length     1
+  #define f_console_standard_short_debug_length    1
+  #define f_console_standard_short_help_length     1
+  #define f_console_standard_short_light_length    1
+  #define f_console_standard_short_no_color_length 1
+  #define f_console_standard_short_quiet_length    1
+  #define f_console_standard_short_verbose_length  1
+  #define f_console_standard_short_version_length  1
 
   #define f_console_standard_long_dark     "dark"
   #define f_console_standard_long_debug    "debug"
   #define f_console_standard_long_help     "help"
   #define f_console_standard_long_light    "light"
   #define f_console_standard_long_no_color "no_color"
+  #define f_console_standard_long_quiet    "quiet"
+  #define f_console_standard_long_verbose  "verbose"
   #define f_console_standard_long_version  "version"
+
+  #define f_console_standard_long_dark_length     4
+  #define f_console_standard_long_debug_length    5
+  #define f_console_standard_long_help_length     4
+  #define f_console_standard_long_light_length    5
+  #define f_console_standard_long_no_color_length 8
+  #define f_console_standard_long_quiet_length    5
+  #define f_console_standard_long_verbose_length  7
+  #define f_console_standard_long_version_length  7
 #endif // _di_f_standard_console_parameters_
 
 /**
@@ -290,6 +330,36 @@ extern "C" {
  * Given a set of parameter choices, determine which one has the highest priority.
  *
  * The priority is determined by viewing the parameters from left to right.
+ * The left-most parameter defined in the set has the priority over others.
+ *
+ * For example, the color context modes override each other, so only one gets priority.
+ * If given, say "+l ++no_color +d", the "+d" would be the left-most parameter "+l" and "++no_color".
+ * The decision would be "+d".
+ *
+ * This also applies to short parameters combined into one, such as "+lnd", the "d" would again be the decision.
+ *
+ * @param parameters
+ *   The parameters to process.
+ * @param choices
+ *   An array of numeric ids, each representing a parameter within the parameters variable.
+ *   The order does not matter.
+ * @param decision
+ *   The resulting decision.
+ *   If none of the parameters are found, then this will not be updated (therefore it is safe to have it pre-initialized to the default).
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if no parameters were found.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_console_parameter_prioritize_left_
+  extern f_return_status f_console_parameter_prioritize_left(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision);
+#endif // _di_f_console_parameter_prioritize_left_
+
+/**
+ * Given a set of parameter choices, determine which one has the highest priority.
+ *
+ * The priority is determined by viewing the parameters from left to right.
  * The right-most parameter defined in the set has the priority over others.
  *
  * For example, the color context modes override each other, so only one gets priority.
@@ -312,9 +382,9 @@ extern "C" {
  *   f_no_data if no parameters were found.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_console_parameter_prioritize_
-  extern f_return_status f_console_parameter_prioritize(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision);
-#endif // _di_f_console_parameter_prioritize_
+#ifndef _di_f_console_parameter_prioritize_right_
+  extern f_return_status f_console_parameter_prioritize_right(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision);
+#endif // _di_f_console_parameter_prioritize_right_
 
 #ifdef __cplusplus
 } // extern "C"

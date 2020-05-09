@@ -82,12 +82,14 @@ extern "C" {
         choices.id = ids;
         choices.used = 3;
 
-        status = fll_program_parameter_process(arguments, parameters, choices, &data->remaining, &data->context);
+        status = fll_program_parameter_process(arguments, parameters, choices, f_true, &data->remaining, &data->context);
 
         if (f_status_is_error(status)) {
           byte_dump_delete_data(data);
           return f_status_set_error(status);
         }
+
+        status = f_none;
       }
 
       // Identify priority of mode parameters.
@@ -97,7 +99,7 @@ extern "C" {
         choices.id = ids;
         choices.used = 5;
 
-        status = f_console_parameter_prioritize(parameters, choices, &choice);
+        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (f_status_is_error(status)) {
           byte_dump_delete_data(data);
@@ -128,7 +130,7 @@ extern "C" {
         choices.id = ids;
         choices.used = 3;
 
-        status = f_console_parameter_prioritize(parameters, choices, &choice);
+        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (f_status_is_error(status)) {
           byte_dump_delete_data(data);

@@ -315,14 +315,56 @@ extern "C" {
   }
 #endif // _di_f_console_parameter_process_
 
-#ifndef _di_f_console_parameter_prioritize_
-  f_return_status f_console_parameter_prioritize(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision) {
+#ifndef _di_f_console_parameter_prioritize_left_
+  f_return_status f_console_parameter_prioritize_left(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision) {
     #ifndef _di_level_0_parameter_checking_
       if (decision == 0) return f_status_set_error(f_invalid_parameter);
-      if (parameters.used == 0) return f_status_set_error(f_invalid_parameter);
       if (choices.id == 0) return f_status_set_error(f_invalid_parameter);
-      if (choices.used == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (choices.used == 0) return f_no_data;
+    if (parameters.used == 0) return f_no_data;
+
+    f_array_length location = 0;
+    f_array_length location_sub = 0;
+    f_console_parameter_id priority = 0;
+
+    for (f_array_length i = 0; i < choices.used; i++) {
+      if (choices.id[i] > parameters.used) return f_status_set_error(f_invalid_parameter);
+
+      if (parameters.parameter[choices.id[i]].result == f_console_result_found) {
+        if (parameters.parameter[choices.id[i]].location < location) {
+          location = parameters.parameter[choices.id[i]].location;
+          location_sub = parameters.parameter[choices.id[i]].location_sub;
+          priority = choices.id[i];
+        }
+        else if (parameters.parameter[choices.id[i]].location == location && parameters.parameter[choices.id[i]].location_sub < location_sub) {
+          location_sub = parameters.parameter[choices.id[i]].location_sub;
+          priority = choices.id[i];
+        }
+      }
+    } // for
+
+    // The first parameter location (argc = 0) is the program name, therefore if the location is 0, then no matches were found.
+    if (location == 0) {
+      return f_no_data;
+    }
+
+    *decision = priority;
+
+    return f_none;
+  }
+#endif // _di_f_console_parameter_prioritize_left_
+
+#ifndef _di_f_console_parameter_prioritize_right_
+  f_return_status f_console_parameter_prioritize_right(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision) {
+    #ifndef _di_level_0_parameter_checking_
+      if (decision == 0) return f_status_set_error(f_invalid_parameter);
+      if (choices.id == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (choices.used == 0) return f_no_data;
+    if (parameters.used == 0) return f_no_data;
 
     f_array_length location = 0;
     f_array_length location_sub = 0;
@@ -353,7 +395,7 @@ extern "C" {
 
     return f_none;
   }
-#endif // _di_f_console_parameter_prioritize_
+#endif // _di_f_console_parameter_prioritize_right_
 
 #ifdef __cplusplus
 } // extern "C"
