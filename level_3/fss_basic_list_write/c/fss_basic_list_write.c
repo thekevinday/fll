@@ -189,7 +189,7 @@ extern "C" {
         }
       }
       else {
-        f_print_string_dynamic(f_standard_output, buffer);
+        f_print_string_static(f_standard_output, buffer);
       }
     }
 
