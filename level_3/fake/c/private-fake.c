@@ -455,7 +455,7 @@ extern "C" {
           f_string_length length = strnlen(arguments.argv[location], f_console_max_size);
 
           if (length > 0) {
-            status = fl_string_append(arguments.argv[location], 0, length - 1, parameter_values[i]);
+            status = fl_string_append(arguments.argv[location], length, parameter_values[i]);
 
             if (f_status_is_error(status)) {
               if (status == f_status_set_error(f_string_too_large)) {

@@ -39,10 +39,8 @@ extern "C" {
  *
  * @param source
  *   The source string to append.
- * @param start
- *   Inclusive start point of string to append.
- * @param stop
- *   Inclusive stop point of string to append.
+ * @param length
+ *   The length of source to append.
  * @param destination
  *   The destination string the source is appended onto.
  *
@@ -57,7 +55,7 @@ extern "C" {
  * @see fl_string_append_nulless()
  */
 #ifndef _di_fl_string_append_
-  extern f_return_status fl_string_append(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+  extern f_return_status fl_string_append(const f_string source, const f_string_length length, f_string_dynamic *destination);
 #endif // _di_fl_string_append_
 
 /**
@@ -67,10 +65,8 @@ extern "C" {
  *
  * @param source
  *   The source string to append.
- * @param start
- *   Inclusive start point of string to append.
- * @param stop
- *   Inclusive stop point of string to append.
+ * @param length
+ *   The length of source to append.
  * @param destination
  *   The destination string the source is appended onto.
  *
@@ -85,7 +81,7 @@ extern "C" {
  * @see fl_string_append()
  */
 #ifndef _di_fl_string_append_nulless_
-  extern f_return_status fl_string_append_nulless(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+  extern f_return_status fl_string_append_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination);
 #endif // _di_fl_string_append_nulless_
 
 /**
@@ -944,10 +940,8 @@ extern "C" {
  *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
- * @param start
- *   Inclusive start point of string to prepend.
- * @param stop
- *   Inclusive stop point of string to prepend.
+ * @param length
+ *   The length of source to append.
  * @param destination
  *   The destination string the source and glue are appended onto.
  *
@@ -962,7 +956,7 @@ extern "C" {
  * @see fl_string_mash_nulless()
  */
 #ifndef _di_fl_string_mash_
-  extern f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+  extern f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length length, f_string_dynamic *destination);
 #endif // _di_fl_string_mash_
 
 /**
@@ -978,10 +972,8 @@ extern "C" {
  *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
- * @param start
- *   Inclusive start point of string to prepend.
- * @param stop
- *   Inclusive stop point of string to prepend.
+ * @param length
+ *   The length of source to append.
  * @param destination
  *   The destination string the source and glue are appended onto.
  *
@@ -996,7 +988,7 @@ extern "C" {
  * @see fl_string_mash()
  */
 #ifndef _di_fl_string_mash_nulless_
-  extern f_return_status fl_string_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+  extern f_return_status fl_string_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length length, f_string_dynamic *destination);
 #endif // _di_fl_string_mash_nulless_
 
 /**
@@ -1010,10 +1002,8 @@ extern "C" {
  *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
- * @param start
- *   Inclusive start point of string to prepend.
- * @param stop
- *   Inclusive stop point of string to prepend.
+ * @param length
+ *   The length of source to append.
  * @param destination
  *   The destination string the source and glue are appended onto.
  *
@@ -1028,7 +1018,7 @@ extern "C" {
  * @see fl_string_mish_nulless()
  */
 #ifndef _di_fl_string_mish_
-  extern f_return_status fl_string_mish(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+  extern f_return_status fl_string_mish(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length length, f_string_dynamic *destination);
 #endif // _di_fl_string_mish_
 
 /**
@@ -1044,10 +1034,8 @@ extern "C" {
  *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
- * @param start
- *   Inclusive start point of string to prepend.
- * @param stop
- *   Inclusive stop point of string to prepend.
+ * @param length
+ *   The length of source to append.
  * @param destination
  *   The destination string the source and glue are appended onto.
  *
@@ -1062,7 +1050,7 @@ extern "C" {
  * @see fl_string_mish()
  */
 #ifndef _di_fl_string_mish_nulless_
-  extern f_return_status fl_string_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+  extern f_return_status fl_string_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length length, f_string_dynamic *destination);
 #endif // _di_fl_string_mish_nulless_
 
 /**
@@ -1072,10 +1060,8 @@ extern "C" {
  *
  * @param source
  *   The source string to prepend.
- * @param start
- *   Inclusive start point of string to prepend.
- * @param stop
- *   Inclusive stop point of string to prepend.
+ * @param length
+ *   The length of source to append.
  * @param destination
  *   The destination string the source is prepended onto.
  *
@@ -1090,7 +1076,7 @@ extern "C" {
  * @see fl_string_prepend_nulless()
  */
 #ifndef _di_fl_string_prepend_
-  extern f_return_status fl_string_prepend(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+  extern f_return_status fl_string_prepend(const f_string source, const f_string_length length, f_string_dynamic *destination);
 #endif // _di_fl_string_prepend_
 
 /**
@@ -1102,10 +1088,8 @@ extern "C" {
  *
  * @param source
  *   The source string to prepend.
- * @param start
- *   Inclusive start point of string to prepend.
- * @param stop
- *   Inclusive stop point of string to prepend.
+ * @param length
+ *   The length of source to append.
  * @param destination
  *   The destination string the source is prepended onto.
  *
@@ -1120,21 +1104,19 @@ extern "C" {
  * @see fl_string_dynamic_prepend()
  */
 #ifndef _di_fl_string_prepend_nulless_
-  extern f_return_status fl_string_prepend_nulless(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+  extern f_return_status fl_string_prepend_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination);
 #endif // _di_fl_string_prepend_nulless_
 
 /**
  * Allocate a new string from the provided range in the string.
  *
  * Ignores leading and trailing whitespace.
- * As a result, resulting size may be smaller than requested range.
+ * As a result, resulting size may be smaller than requested length.
  *
  * @param source
  *   The string to rip from.
- * @param start
- *   An inclusive start location within string.
- * @param stop
- *   An inclusive stop location within string.
+ * @param length
+ *   The length of source to append.
  * @param destination
  *   The new string, which will be allocated or reallocated as necessary.
  *
@@ -1148,23 +1130,21 @@ extern "C" {
  * @see fl_string_rip_nulless()
  */
 #ifndef _di_fl_string_rip_
-  extern f_return_status fl_string_rip(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+  extern f_return_status fl_string_rip(const f_string source, const f_string_length length, f_string_dynamic *destination);
 #endif // _di_fl_string_rip_
 
 /**
  * Allocate a new string from the provided range in the string.
  *
  * Ignores leading and trailing whitespace.
- * As a result, resulting size may be smaller than requested range.
+ * As a result, resulting size may be smaller than requested length.
  *
  * Skips over NULL characters from source when ripping.
  *
  * @param source
  *   The string to rip from.
- * @param start
- *   An inclusive start location within string.
- * @param stop
- *   An inclusive stop location within string.
+ * @param length
+ *   The length of source to append.
  * @param destination
  *   The new string, which will be allocated or reallocated as necessary.
  *
@@ -1178,7 +1158,7 @@ extern "C" {
  * @see fl_string_rip()
  */
 #ifndef _di_fl_string_rip_nulless_
-  extern f_return_status fl_string_rip_nulless(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination);
+  extern f_return_status fl_string_rip_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination);
 #endif // _di_fl_string_rip_nulless_
 
 /**

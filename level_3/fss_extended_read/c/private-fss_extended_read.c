@@ -162,10 +162,10 @@ extern "C" {
           depths->array[i].index_name = data.parameters[fss_extended_read_parameter_name].additional.array[position_name];
 
           if (data.parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
-            status = fl_string_rip(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+            status = fl_string_rip(arguments.argv[depths->array[i].index_name], strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
           }
           else {
-            status = fl_string_append(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+            status = fl_string_append(arguments.argv[depths->array[i].index_name], strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
           }
 
           if (f_status_is_error(status)) {

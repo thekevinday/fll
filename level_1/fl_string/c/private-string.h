@@ -24,8 +24,8 @@ extern "C" {
  *
  * @param source
  *   The source string to append.
- * @param start
- *   Inclusive start point of string to append.
+ * @param length
+ *   Length of source to append.
  * @param stop
  *   Inclusive stop point of string to append.
  * @param destination
@@ -44,7 +44,7 @@ extern "C" {
  * @see fl_string_dynamic_mash()
  */
 #if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_)
-  extern f_return_status private_fl_string_append(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_string_append(const f_string source, const f_string_length length, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_)
 
 /**
@@ -54,10 +54,8 @@ extern "C" {
  *
  * @param source
  *   The source string to append.
- * @param start
- *   Inclusive start point of string to append.
- * @param stop
- *   Inclusive stop point of string to append.
+ * @param length
+ *   Length of source to append.
  * @param destination
  *   The destination string the source and glue are appended onto.
  *
@@ -74,7 +72,7 @@ extern "C" {
  * @see fl_string_dynamic_mash_nulless()
  */
 #if !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_)
-  extern f_return_status private_fl_string_append_nulless(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_string_append_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_)
 
 /**
@@ -146,10 +144,8 @@ extern "C" {
  *
  * @param source
  *   The source string to prepend.
- * @param start
- *   Inclusive start point of string to append.
- * @param stop
- *   Inclusive stop point of string to append.
+ * @param length
+ *   Length of source to append.
  * @param destination
  *   The destination string the source and glue are prepended onto.
  *
@@ -164,7 +160,7 @@ extern "C" {
  * @see fl_string_dynamic_prepend()
  */
 #if !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_append_mish_) || !defined(_di_fl_string_dynamic_mish_)
-  extern f_return_status private_fl_string_prepend(const f_string source, const f_string_length start, const f_string_length stop, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_string_prepend(const f_string source, const f_string_length length, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_append_mish_) || !defined(_di_fl_string_dynamic_mish_)
 
 /**
@@ -174,10 +170,8 @@ extern "C" {
  *
  * @param source
  *   The source string to prepend.
- * @param start
- *   Inclusive start point of string to append.
- * @param stop
- *   Inclusive stop point of string to append.
+ * @param length
+ *   Length of source to append.
  * @param destination
  *   The destination string the source and glue are prepended onto.
  *
@@ -192,7 +186,7 @@ extern "C" {
  * @see fl_string_dynamic_prepend_nulless()
  */
 #if !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_) || !defined(_di_fl_string_append_mish_) || !defined(_di_fl_string_dynamic_mish_)
-  extern f_return_status private_fl_string_prepend_nulless(const f_string source, f_string_length start, const f_string_length stop, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_string_prepend_nulless(const f_string source, f_string_length length, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_) || !defined(_di_fl_string_append_mish_) || !defined(_di_fl_string_dynamic_mish_)
 
 /**

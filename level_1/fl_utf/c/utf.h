@@ -57,7 +57,7 @@ extern "C" {
  * @see fl_utf_string_append_nulless()
  */
 #ifndef _di_fl_utf_string_append_
-  extern f_return_status fl_utf_string_append(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_append(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_append_
 
 /**
@@ -85,7 +85,7 @@ extern "C" {
  * @see fl_utf_string_append()
  */
 #ifndef _di_fl_utf_string_append_nulless_
-  extern f_return_status fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_append_nulless_
 
 /**
@@ -986,7 +986,7 @@ extern "C" {
  * @see fl_utf_string_mash_nulless()
  */
 #ifndef _di_fl_utf_string_mash_
-  extern f_return_status fl_utf_string_mash(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_mash(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_mash_
 
 /**
@@ -1020,7 +1020,7 @@ extern "C" {
  * @see fl_utf_string_mash()
  */
 #ifndef _di_fl_utf_string_mash_nulless_
-  extern f_return_status fl_utf_string_mash_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_mash_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_mash_nulless_
 
 /**
@@ -1052,7 +1052,7 @@ extern "C" {
  * @see fl_utf_string_mish_nulless()
  */
 #ifndef _di_fl_utf_string_mish_
-  extern f_return_status fl_utf_string_mish(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_mish(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_mish_
 
 /**
@@ -1086,7 +1086,7 @@ extern "C" {
  * @see fl_utf_string_mish()
  */
 #ifndef _di_fl_utf_string_mish_nulless_
-  extern f_return_status fl_utf_string_mish_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_mish_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_mish_nulless_
 
 /**
@@ -1114,7 +1114,7 @@ extern "C" {
  * @see fl_utf_string_prepend_nulless()
  */
 #ifndef _di_fl_utf_string_prepend_
-  extern f_return_status fl_utf_string_prepend(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_prepend(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_prepend_
 
 /**
@@ -1144,7 +1144,7 @@ extern "C" {
  * @see fl_utf_string_prepend()
  */
 #ifndef _di_fl_utf_string_prepend_nulless_
-  extern f_return_status fl_utf_string_prepend_nulless(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_prepend_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_prepend_nulless_
 
 /**
@@ -1172,7 +1172,7 @@ extern "C" {
  * @see fl_utf_string_rip_nulless()
  */
 #ifndef _di_fl_utf_string_rip_
-  extern f_return_status fl_utf_string_rip(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_rip(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_rip_
 
 /**
@@ -1202,7 +1202,7 @@ extern "C" {
  * @see fl_utf_string_append()
  */
 #ifndef _di_fl_utf_string_rip_nulless_
-  extern f_return_status fl_utf_string_rip_nulless(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination);
+  extern f_return_status fl_utf_string_rip_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_rip_nulless_
 
 /**

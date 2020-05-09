@@ -168,7 +168,7 @@ extern "C" {
       if (length > 0) {
         f_string_dynamic ripped = f_string_dynamic_initialize;
 
-        status = fl_string_append(argv[additional.array[i]], 0, length - 1, &ripped);
+        status = fl_string_append(argv[additional.array[i]], length, &ripped);
 
         if (f_status_is_error(status)) return status;
 
@@ -213,7 +213,7 @@ extern "C" {
       length = strnlen(argv[additional.array[i]], f_console_max_size);
 
       if (length > 0) {
-        status = fl_string_mash(glue, glue_length, argv[additional.array[i]], 0, length - 1, destination);
+        status = fl_string_mash(glue, glue_length, argv[additional.array[i]], length, destination);
 
         if (f_status_is_error(status)) return f_status_set_error(f_string_too_large);
       }
@@ -244,7 +244,7 @@ extern "C" {
       if (length > 0) {
         f_string_dynamic ripped = f_string_dynamic_initialize;
 
-        status = fl_string_rip(argv[additional.array[i]], 0, length - 1, &ripped);
+        status = fl_string_rip(argv[additional.array[i]], length, &ripped);
 
         if (f_status_is_error(status)) return status;
 
@@ -290,7 +290,7 @@ extern "C" {
       length = strnlen(argv[additional.array[i]], f_console_max_size);
 
       if (length > 0) {
-        status = fl_string_rip(argv[additional.array[i]], 0, length - 1, &ripped);
+        status = fl_string_rip(argv[additional.array[i]], length, &ripped);
 
         if (f_status_is_error(status)) {
           f_macro_string_dynamic_delete_simple(ripped);

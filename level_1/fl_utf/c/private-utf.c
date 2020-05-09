@@ -6,22 +6,19 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_utf_string_append_) || !defined(_di_fl_utf_string_dynamic_append_) || !defined(_di_fl_utf_string_append_mash_) || !defined(_di_fl_utf_string_dynamic_mash_)
-  f_return_status private_fl_utf_string_append(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination) {
-    // The start and stop point are inclusive locations, and therefore start - stop is actually 1 too few locations.
-    f_utf_string_length source_length = (stop - start) + 1;
-
-    if (destination->used + source_length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
+  f_return_status private_fl_utf_string_append(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
+    if (destination->used + length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
 
     f_status status = f_none;
 
-    const f_utf_string_length total = destination->used + source_length;
+    const f_utf_string_length total = destination->used + length;
 
     if (total > destination->size) {
       f_macro_string_dynamic_resize(status, (*destination), total);
       if (f_status_is_error(status)) return status;
     }
 
-    memcpy(destination->string + destination->used, source + start, source_length);
+    memcpy(destination->string + destination->used, source, length);
     destination->used = total;
 
     return f_none;
@@ -29,31 +26,28 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_append_) || !defined(_di_fl_utf_string_dynamic_append_) || !defined(_di_fl_utf_string_append_mash_) || !defined(_di_fl_utf_string_dynamic_mash_)
 
 #if !defined(_di_fl_utf_string_append_nulless_) || !defined(_di_fl_utf_string_dynamic_append_nulless_) || !defined(_di_fl_utf_string_mash_nulless_) || !defined(_di_fl_utf_string_dynamic_mash_nulless_)
-  f_return_status private_fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination) {
-    // The start and stop point are inclusive locations, and therefore start - stop is actually 1 too few locations.
-    f_utf_string_length source_length = (stop - start) + 1;
-
-    if (destination->used + source_length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
+  f_return_status private_fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
+    if (destination->used + length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
 
     f_status status = f_none;
 
     f_utf_string_length first = 0;
 
-    for (f_utf_string_length i = 0; i <= source_length; i++) {
-      if (i == source_length) {
+    for (f_utf_string_length i = 0; i <= length; i++) {
+      if (i == length) {
         if (i > first) {
-          f_utf_string_length length = i - first;
+          f_utf_string_length size = i - first;
 
-          if (destination->used + length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
+          if (destination->used + size > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
 
-          f_utf_string_length total = destination->used + length;
+          f_utf_string_length total = destination->used + size;
 
           if (total > destination->size) {
             f_macro_string_dynamic_resize(status, (*destination), total);
             if (f_status_is_error(status)) return status;
           }
 
-          memcpy(destination->string + destination->used, source + start + first, length);
+          memcpy(destination->string + destination->used, source + first, size);
           destination->used = total;
         }
 
@@ -63,23 +57,23 @@ extern "C" {
       if (source[i] == f_utf_character_eos) {
         if (i > 0) {
           if (i > first) {
-            f_utf_string_length length = i - first;
+            f_utf_string_length size = i - first;
 
-            if (destination->used + length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
+            if (destination->used + size > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
 
-            f_utf_string_length total = destination->used + length;
+            f_utf_string_length total = destination->used + size;
 
             if (total > destination->size) {
               f_macro_string_dynamic_resize(status, (*destination), total);
               if (f_status_is_error(status)) return status;
             }
 
-            memcpy(destination->string + destination->used, source + start + first, length);
+            memcpy(destination->string + destination->used, source + first, size);
             destination->used = total;
           }
         }
 
-        while (i + 1 < source_length && source[i + 1] == f_utf_character_eos) {
+        while (i + 1 < length && source[i + 1] == f_utf_character_eos) {
           i++;
         } // while
 
@@ -240,15 +234,12 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
 
 #if !defined(_di_fl_utf_string_prepend_) || !defined(_di_fl_utf_string_dynamic_prepend_)
-  f_return_status private_fl_utf_string_prepend(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination) {
-    // The start and stop point are inclusive locations, and therefore start - stop is actually 1 too few locations.
-    f_utf_string_length source_length = (stop - start) + 1;
-
-    if (destination->used + source_length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
+  f_return_status private_fl_utf_string_prepend(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
+    if (destination->used + length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
 
     f_status status = f_none;
 
-    const f_utf_string_length total = destination->used + source_length;
+    const f_utf_string_length total = destination->used + length;
 
     if (total > destination->size) {
       f_macro_string_dynamic_resize(status, (*destination), total);
@@ -256,11 +247,11 @@ extern "C" {
     }
 
     if (destination->used > 0) {
-      memmove(destination->string + source_length, destination->string, destination->used);
-      memcpy(destination->string, source + start, source_length);
+      memmove(destination->string + length, destination->string, destination->used);
+      memcpy(destination->string, source, length);
     }
     else {
-      memcpy(destination->string, source + start, source_length);
+      memcpy(destination->string, source, length);
     }
 
     destination->used = total;
@@ -269,36 +260,33 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_prepend_) || !defined(_di_fl_utf_string_dynamic_prepend_)
 
 #if !defined(_di_fl_utf_string_prepend_nulless_) || !defined(_di_fl_utf_string_dynamic_prepend_nulless_)
-  f_return_status private_fl_utf_string_prepend_nulless(const f_utf_string source, const f_utf_string_length start, const f_utf_string_length stop, f_utf_string_dynamic *destination) {
-    // The start and stop point are inclusive locations, and therefore start - stop is actually 1 too few locations.
-    f_utf_string_length source_length = (stop - start) + 1;
-
-    if (destination->used + source_length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
+  f_return_status private_fl_utf_string_prepend_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
+    if (destination->used + length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
 
     f_status status = f_none;
 
     f_utf_string_length first = 0;
     f_utf_string_length offset = 0;
 
-    for (f_utf_string_length i = 0; i <= source_length; i++) {
-      if (i == source_length) {
+    for (f_utf_string_length i = 0; i <= length; i++) {
+      if (i == length) {
         if (i > first) {
-          f_utf_string_length length = i - first;
+          f_utf_string_length size = i - first;
 
-          if (destination->used + length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
+          if (destination->used + size > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
 
-          f_utf_string_length total = destination->used + length;
+          f_utf_string_length total = destination->used + size;
 
           if (total > destination->size) {
             f_macro_string_dynamic_resize(status, (*destination), total);
             if (f_status_is_error(status)) return status;
           }
 
-          memmove(destination->string + offset + length, destination->string + offset, destination->used - offset);
-          memcpy(destination->string + offset, source + first, length);
+          memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
+          memcpy(destination->string + offset, source + first, size);
 
           destination->used = total;
-          offset += length;
+          offset += size;
         }
 
         break;
@@ -307,11 +295,11 @@ extern "C" {
       if (source[i] == f_utf_character_eos) {
         if (i > 0) {
           if (i > first) {
-            f_utf_string_length length = i - first;
+            f_utf_string_length size = i - first;
 
-            if (destination->used + length > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
+            if (destination->used + size > f_utf_string_max_size) return f_status_set_error(f_string_too_large);
 
-            f_utf_string_length total = destination->used + length;
+            f_utf_string_length total = destination->used + size;
 
             if (total > destination->size) {
               f_macro_string_dynamic_resize(status, (*destination), total);
@@ -319,15 +307,15 @@ extern "C" {
               if (f_status_is_error(status)) return status;
             }
 
-            memmove(destination->string + offset + length, destination->string + offset, destination->used - offset);
-            memcpy(destination->string + offset, source + first, length);
+            memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
+            memcpy(destination->string + offset, source + first, size);
 
             destination->used = total;
-            offset += length;
+            offset += size;
           }
         }
 
-        while (i + 1 < source_length && source[i + 1] == f_utf_character_eos) {
+        while (i + 1 < length && source[i + 1] == f_utf_character_eos) {
           i++;
         } // while
 
