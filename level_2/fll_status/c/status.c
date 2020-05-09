@@ -1166,13 +1166,6 @@ extern "C" {
       }
     #endif // _di_fll_status_access_denied_
 
-    #ifndef _di_fll_status_array_
-      if (fl_string_compare(string, fl_status_string_array_too_large, length, fl_status_string_array_too_large_length) == f_equal_to) {
-        *code = f_array_too_large;
-        return f_none;
-      }
-    #endif // _di_fll_status_array_
-
     if (fl_string_compare(string, fl_status_string_status_code_last, length, fl_status_string_status_code_last_length) == f_equal_to) {
       *code = f_status_code_last;
       return f_none;

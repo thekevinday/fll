@@ -50,7 +50,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_array_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_
   extern f_return_status fll_execute_arguments_add(const f_string source, const f_string_length length, f_string_dynamics *arguments);
@@ -88,7 +88,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_array_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
   extern f_return_status fll_execute_arguments_add_parameter(const f_string prefix, const f_string_length prefix_length, const f_string name, const f_string_length name_length, const f_string value, const f_string_length value_length, f_string_dynamics *arguments);
@@ -129,7 +129,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_array_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
   extern f_return_status fll_execute_arguments_add_parameter_set(const f_string prefix[], const f_string_length prefix_length[], const f_string name[], const f_string_length name_length[], const f_string value[], const f_string_length value_length[], const f_array_length size, f_string_dynamics *arguments);
@@ -156,7 +156,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_array_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_set_
   extern f_return_status fll_execute_arguments_add_set(const f_string source[], const f_string_length length[], const f_array_length size, f_string_dynamics *arguments);
@@ -179,7 +179,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_array_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_
   extern f_return_status fll_execute_arguments_dynamic_add(const f_string_dynamic source, f_string_dynamics *arguments);
@@ -212,7 +212,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_array_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_
   extern f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_dynamic prefix, const f_string_dynamic name, const f_string_dynamic value, f_string_dynamics *arguments);
@@ -247,7 +247,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_array_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
   extern f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_dynamic prefix[], const f_string_dynamic name[], const f_string_dynamic value[], const f_array_length size, f_string_dynamics *arguments);
@@ -272,7 +272,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_array_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
   extern f_return_status fll_execute_arguments_dynamic_add_set(const f_string_dynamic source[], const f_array_length size, f_string_dynamics *arguments);

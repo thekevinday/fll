@@ -328,10 +328,6 @@ extern "C" {
       f_access_denied_write,
     #endif // _di_f_status_access_denied_
 
-    #ifndef _di_f_status_array_
-      f_array_too_large,
-    #endif // _di_f_status_array_
-
     // Required.
     f_status_code_last
   }; // enum

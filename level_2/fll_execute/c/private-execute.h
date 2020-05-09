@@ -49,7 +49,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_array_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  *
  * @see fll_execute_arguments_add()
  * @see fll_execute_arguments_add_set()
@@ -86,7 +86,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_array_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  *
  * @see fll_execute_arguments_add_parameter()
  * @see fll_execute_arguments_add_parameter_set()

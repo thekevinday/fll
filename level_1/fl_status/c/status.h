@@ -717,11 +717,6 @@ extern "C" {
     #define fl_status_string_access_denied_super_length 21
   #endif // _di_fl_status_access_denied_
 
-  #ifndef _di_fl_status_array_
-    #define fl_status_string_array_too_large "f_array_too_large"
-    #define fl_status_string_array_too_large_length 17
-  #endif // _di_fl_status_array_
-
   #define fl_status_string_status_code_last "f_status_code_last"
   #define fl_status_string_status_code_last_length 17
 #endif // _di_fl_status_string_
