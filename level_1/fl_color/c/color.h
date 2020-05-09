@@ -31,6 +31,7 @@ extern "C" {
   typedef struct {
     f_color color_list;
     f_color_format color_format;
+    f_color_mode mode;
     f_string_dynamic reset;
     f_string_dynamic warning;
     f_string_dynamic error;
@@ -42,7 +43,7 @@ extern "C" {
     f_string_dynamic normal_reset;
   } fl_color_context;
 
-  #define fl_color_context_initialize { f_color_initialize_linux, f_color_format_initialize_linux, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize }
+  #define fl_color_context_initialize { f_color_initialize_linux, f_color_format_initialize_linux, f_color_mode_none, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize }
 
   #define fl_macro_color_context_new(status, color_context) \
     f_macro_string_dynamic_new(status, color_context.reset, f_color_max_size + 1); \

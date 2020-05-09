@@ -293,6 +293,8 @@ extern "C" {
       if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->notable,   context->color_format, context->color_list.bold);
       if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->important, context->color_format, context->color_list.blue);
       if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->standout,  context->color_format, context->color_list.purple);
+
+      context->mode = f_color_mode_light;
     }
     else {
       status = fl_macro_color_save_1(&context->reset, context->color_format, context->color_list.reset);
@@ -303,6 +305,8 @@ extern "C" {
       if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->notable,   context->color_format, context->color_list.bold);
       if (f_status_is_not_error(status)) status = fl_macro_color_save_2(&context->important, context->color_format, context->color_list.bold, context->color_list.green);
       if (f_status_is_not_error(status)) status = fl_macro_color_save_1(&context->standout,  context->color_format, context->color_list.green);
+
+      context->mode = f_color_mode_dark;
     }
 
     return status;

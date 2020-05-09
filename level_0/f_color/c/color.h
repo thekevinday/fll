@@ -24,12 +24,29 @@ extern "C" {
 #endif // _di_f_color_max_size_
 
 #ifndef _di_f_color_types_
-  typedef unsigned short f_color_id;
+  typedef uint8_t f_color_code;
 
-  // f_color_id codes
-  #define f_color_code_linux     0
-  #define f_color_code_xterminal 1
+  #define f_color_code_none      0
+  #define f_color_code_linux     1
+  #define f_color_code_xterminal 2
 #endif // _di_f_color_types_
+
+/**
+ * Specify color modes.
+ *
+ * Color modes communicate how the color is supposed to be.
+ *
+ * The f_color_mode_none define designates that there is no assigned mode (the mode is undefined).
+ * The f_color_mode_no_color define designates that the color mode is set to no color (disable colors).
+ */
+#ifndef _di_f_color_mode_
+  typedef uint8_t f_color_mode;
+
+  #define f_color_mode_none      0
+  #define f_color_mode_no_color  1
+  #define f_color_mode_dark      2
+  #define f_color_mode_light     3
+#endif // _di_f_color_mode_
 
 /**
  * The purpose behind these data types are not to dynamically allocate data.

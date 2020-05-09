@@ -183,6 +183,9 @@ extern "C" {
 
       status = fl_color_load_context(context, decision == choices.id[1]);
     }
+    else {
+      context->mode = f_color_mode_no_color;
+    }
 
     return status;
   }
