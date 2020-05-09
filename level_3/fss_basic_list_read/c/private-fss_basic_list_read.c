@@ -162,10 +162,39 @@ extern "C" {
           depths->array[i].index_name = data.parameters[fss_basic_list_read_parameter_name].additional.array[position_name];
 
           if (data.parameters[fss_basic_list_read_parameter_trim].result == f_console_result_found) {
-            fl_string_rip(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+            status = fl_string_rip(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
           }
           else {
-            fl_string_append(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+            status = fl_string_append(arguments.argv[depths->array[i].index_name], 0, strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+          }
+
+          if (f_status_is_error(status)) {
+            f_status status_code = f_status_set_fine(status);
+
+            // @todo: move error printing into common function.
+            if (status_code == f_error_allocation || status_code == f_error_reallocation) {
+              fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
+            }
+            else if (status_code == f_string_max_size) {
+              fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: Unable to process '");
+              fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_trim);
+              fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' because the maximum buffer size was reached.");
+            }
+            else {
+              f_string function = "fl_string_append";
+
+              if (data.parameters[fss_basic_list_read_parameter_trim].result == f_console_result_found) {
+                function = "fl_string_rip";
+              }
+
+              fl_color_print(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (");
+              fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%u", status_code);
+              fl_color_print(f_standard_error, data.context.error, data.context.reset, ") has occurred while calling ");
+              fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s()", function);
+              fl_color_print_line(f_standard_error, data.context.error, data.context.reset, ".");
+            }
+
+            return status;
           }
 
           if (depths->array[i].value_name.used == 0) {
