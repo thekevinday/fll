@@ -20,7 +20,7 @@ extern "C" {
     }
 
     if (f_status_is_error(status)) {
-      fake_print_error(data.context, f_status_set_fine(status), "fl_string_dynamic_append", f_true);
+      fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_append", f_true);
 
       f_macro_string_dynamic_delete_simple(path);
       return status;
@@ -48,7 +48,7 @@ extern "C" {
       }
 
       if (f_status_is_error(status)) {
-        fake_print_error_file(data.context, f_status_set_fine(status), name_function, path.string, "file", f_true);
+        fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), name_function, path.string, "file", f_true);
 
         f_macro_string_dynamic_delete_simple(buffer);
         f_macro_string_dynamic_delete_simple(path);
@@ -72,21 +72,25 @@ extern "C" {
         f_macro_string_dynamic_delete_simple(buffer);
 
         if (status == f_status_set_error(f_incomplete_utf_on_stop)) {
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%d", range.start);
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, " of settings file '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "').");
+          if (data.verbosity != fake_verbosity_quiet) {
+            fl_color_print(f_standard_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
+            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%d", range.start);
+            fl_color_print(f_standard_error, data.context.error, data.context.reset, " of settings file '");
+            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
+            fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "').");
+          }
         }
         else if (status == f_status_set_error(f_incomplete_utf_on_stop)) {
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%d", range.start);
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, " of settings file '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "').");
+          if (data.verbosity != fake_verbosity_quiet) {
+            fl_color_print(f_standard_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
+            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%d", range.start);
+            fl_color_print(f_standard_error, data.context.error, data.context.reset, " of settings file '");
+            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
+            fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "').");
+          }
         }
         else {
-          fake_print_error(data.context, f_status_set_fine(status), "fll_fss_extended_read", true);
+          fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_fss_extended_read", true);
         }
 
         f_macro_fss_objects_delete_simple(objects);
@@ -237,7 +241,7 @@ extern "C" {
           } // for
 
           if (f_status_is_error(status)) {
-            fake_print_error(data.context, f_status_set_fine(status), "f_macro_string_dynamic_new", f_true);
+            fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "f_macro_string_dynamic_new", f_true);
 
             f_macro_fss_objects_delete_simple(objects);
             f_macro_fss_contents_delete_simple(contents);
@@ -249,12 +253,14 @@ extern "C" {
 
         if (f_status_is_error(status)) {
           if (status == f_status_set_error(f_string_too_large)) {
-            fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: a setting in the build settings file '");
-            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path);
-            fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' is too long.");
+            if (data.verbosity != fake_verbosity_quiet) {
+              fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: a setting in the build settings file '");
+              fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path);
+              fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' is too long.");
+            }
           }
           else {
-            fake_print_error(data.context, f_status_set_fine(status), "fl_string_dynamic_partial_mash", f_true);
+            fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_partial_mash", f_true);
           }
         }
       }
@@ -413,8 +419,42 @@ extern "C" {
 
     status = fll_execute_arguments_add(fake_other_operation_build, fake_other_operation_build_length, &arguments);
 
+    // ensure console color mode is passed to the scripts so that they can also react to color mode.
+    if (!f_status_is_error(status) && data.context.mode != f_color_mode_none) {
+      char argument[3] = { f_console_symbol_disable, 0, 0 };
+
+      if (data.context.mode == f_color_mode_dark) {
+        argument[1] = f_console_standard_short_dark[0];
+      }
+      else if (data.context.mode == f_color_mode_light) {
+        argument[1] = f_console_standard_short_light[0];
+      }
+      else if (data.context.mode == f_color_mode_no_color) {
+        argument[1] = f_console_standard_short_no_color[0];
+      }
+
+      status = fll_execute_arguments_add(argument, 2, &arguments);
+    }
+
+    // ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
+    if (!f_status_is_error(status) && data.verbosity != fake_verbosity_normal) {
+      char argument[3] = { f_console_symbol_disable, 0, 0 };
+
+      if (data.verbosity == fake_verbosity_quiet) {
+        argument[1] = f_console_standard_short_quiet[0];
+      }
+      else if (data.verbosity == fake_verbosity_verbose) {
+        argument[1] = f_console_standard_short_verbose[0];
+      }
+      else if (data.verbosity == fake_verbosity_debug) {
+        argument[1] = f_console_standard_short_debug[0];
+      }
+
+      status = fll_execute_arguments_add(argument, 2, &arguments);
+    }
+
     if (f_status_is_error(status)) {
-      fake_print_error(data.context, f_status_set_fine(status), "fll_execute_arguments_add", f_true);
+      fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_execute_arguments_add", f_true);
 
       f_macro_string_dynamics_delete_simple(arguments);
       return status;
@@ -423,7 +463,7 @@ extern "C" {
     status = fll_execute_arguments_add_parameter_set(parameter_prefixs, parameter_prefixs_length, parameter_names, parameter_names_length, parameter_values, parameter_values_length, parameters_total, &arguments);
 
     if (f_status_is_error(status)) {
-      fake_print_error(data.context, f_status_set_fine(status), "fll_execute_arguments_add_parameter_set", f_true);
+      fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_execute_arguments_add_parameter_set", f_true);
 
       f_macro_string_dynamics_delete_simple(arguments);
       return status;
@@ -440,7 +480,7 @@ extern "C" {
     }
 
     if (f_status_is_error(status)) {
-      fake_print_error(data.context, f_status_set_fine(status), "fl_string_dynamic_append", f_true);
+      fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_append", f_true);
 
       f_macro_string_dynamic_delete_simple(path);
       return status;
@@ -452,12 +492,14 @@ extern "C" {
 
     if (f_status_is_error(status)) {
       if (f_status_set_fine(status) == f_failure) {
-        fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: Failed to execute script: ");
-        fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
-        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, ".");
+        if (data.verbosity != fake_verbosity_quiet) {
+          fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: Failed to execute script: ");
+          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
+          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, ".");
+        }
       }
       else {
-        fake_print_error(data.context, f_status_set_fine(status), "fll_execute_path", f_true);
+        fake_print_error(data.context, data.verbosity != fake_verbosity_quiet, f_status_set_fine(status), "fll_execute_path", f_true);
       }
     }
 

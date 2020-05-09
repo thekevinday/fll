@@ -79,6 +79,7 @@ extern "C" {
       // Identify priority of color parameters.
       {
         f_console_parameter_id ids[3] = { byte_dump_parameter_no_color, byte_dump_parameter_light, byte_dump_parameter_dark };
+
         choices.id = ids;
         choices.used = 3;
 
@@ -96,6 +97,7 @@ extern "C" {
       {
         f_console_parameter_id ids[5] = { byte_dump_parameter_hexidecimal, byte_dump_parameter_duodecimal, byte_dump_parameter_octal, byte_dump_parameter_binary, byte_dump_parameter_decimal };
         f_console_parameter_id choice = byte_dump_parameter_hexidecimal;
+
         choices.id = ids;
         choices.used = 5;
 
@@ -127,6 +129,7 @@ extern "C" {
       {
         f_console_parameter_id ids[3] = { byte_dump_parameter_normal, byte_dump_parameter_simple, byte_dump_parameter_classic };
         f_console_parameter_id choice = byte_dump_parameter_normal;
+
         choices.id = ids;
         choices.used = 3;
 

@@ -17,6 +17,8 @@ extern "C" {
  *
  * @param context
  *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
  * @param status
  *   The status code representing an error.
  * @param function
@@ -29,7 +31,7 @@ extern "C" {
  *   f_unknown is returned if the status code has no print message.
  */
 #ifndef _di_fake_print_error_
-  extern f_return_status fake_print_error(const fl_color_context context, const f_status status, const f_string function, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_print_error(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_
 
 /**
@@ -37,6 +39,8 @@ extern "C" {
  *
  * @param context
  *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
  * @param status
  *   The error status code to report on.
  * @param function
@@ -53,7 +57,7 @@ extern "C" {
  *   f_unknown is returned if the status code has no print message.
  */
 #ifndef _di_fake_print_error_file_
-  extern f_return_status fake_print_error_file(const fl_color_context context, const f_status status, const f_string function, const f_string file_name, const f_string file_or_directory, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_print_error_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string file_name, const f_string file_or_directory, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_file_
 
 /**
@@ -61,11 +65,13 @@ extern "C" {
  *
  * @param context
  *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
  * @param parameter
  *   The parameter name.
  */
 #ifndef _di_fake_print_error_parameter_missing_value_
-  extern void fake_print_error_parameter_missing_value(const fl_color_context context, const f_string parameter) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_parameter_missing_value(const fl_color_context context, const uint8_t verbosity, const f_string parameter) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_parameter_missing_value_
 
 /**
@@ -73,11 +79,13 @@ extern "C" {
  *
  * @param context
  *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
  * @param parameter
  *   The parameter name.
  */
 #ifndef _di_fake_print_error_parameter_too_many_
-  extern void fake_print_error_parameter_too_many(const fl_color_context context, const f_string parameter) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_parameter_too_many(const fl_color_context context, const uint8_t verbosity, const f_string parameter) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**

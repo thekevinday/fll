@@ -244,6 +244,13 @@ extern "C" {
   #define fake_operations_total      4
   #define fake_operations_initialize { 0, 0, 0, 0 }
 
+  enum {
+    fake_verbosity_quiet = 1,
+    fake_verbosity_normal,
+    fake_verbosity_verbose,
+    fake_verbosity_debug,
+  };
+
   #define fake_short_defines  "d"
   #define fake_short_mode     "m"
   #define fake_short_process  "p"
@@ -418,12 +425,12 @@ extern "C" {
     bool process_pipe;
 
     uint8_t operation;
+    uint8_t verbosity;
 
     f_string_dynamic defines;
     f_string_dynamics mode;
     f_string_dynamic process;
     f_string_dynamic settings;
-
 
     f_string_dynamic path_build;
     f_string_dynamic path_work;
@@ -445,6 +452,7 @@ extern "C" {
       f_string_lengths_initialize, \
       f_false, \
       0, \
+      fake_verbosity_normal, \
       f_string_dynamic_initialize, \
       f_string_dynamics_initialize, \
       f_string_dynamic_initialize, \

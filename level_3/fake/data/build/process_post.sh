@@ -27,6 +27,7 @@ process_post_main(){
   local operation=
   local mode=
   local defines=
+  local verbosity=
 
   # grab all supported parameters, ignoring duplicates.
   if [[ $# -gt 0 ]] ; then
@@ -45,6 +46,12 @@ process_post_main(){
           grab_next="mode"
         elif [[ $p == "-d" ]] ; then
           grab_next="defines"
+        elif [[ $p == "+q" ]] ; then
+          verbosity=quiet
+        elif [[ $p == "+V" ]] ; then
+          verbosity=verbose
+        elif [[ $p == "+D" ]] ; then
+          verbosity=debug
         elif [[ $p == "+n" ]] ; then
           if [[ $do_color == "normal" ]] ; then
             do_color=none
@@ -93,18 +100,20 @@ process_post_main(){
     c_prefix=
   fi
 
-  echo
-  echo -e "${c_title}Done Processing Operation: $c_reset$c_notice$operation$c_reset"
+  if [[ $verbosity != "quiet" ]] ; then
+    echo
+    echo -e "${c_title}Done Processing Operation: $c_reset$c_notice$operation$c_reset"
 
-  if [[ $mode != "" ]] ; then
-    echo -e "  Modes: $c_reset$c_notice$mode$c_reset"
+    if [[ $mode != "" ]] ; then
+      echo -e "  Modes: $c_reset$c_notice$mode$c_reset"
+    fi
+
+    if [[ $defines != "" ]] ; then
+      echo -e "  Defines: $c_reset$c_notice$defines$c_reset"
+    fi
+
+    echo
   fi
-
-  if [[ $defines != "" ]] ; then
-    echo -e "  Defines: $c_reset$c_notice$defines$c_reset"
-  fi
-
-  echo
 
   # cleanup and return
   unset process_post_main

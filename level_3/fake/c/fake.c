@@ -87,25 +87,56 @@ extern "C" {
 
     {
       f_console_parameters parameters = { data->parameters, fake_total_parameters };
-      f_console_parameter_ids choices = f_console_parameter_ids_initialize;
 
-      // Identify priority of color parameters.
+      // Load all parameters and identify priority of color parameters.
       {
         f_console_parameter_id ids[3] = { fake_parameter_no_color, fake_parameter_light, fake_parameter_dark };
+        f_console_parameter_ids choices = f_console_parameter_ids_initialize;
+
         choices.id = ids;
         choices.used = 3;
 
         status = fll_program_parameter_process(arguments, parameters, choices, f_true, &data->remaining, &data->context);
 
         if (f_status_is_error(status)) {
+          fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fll_program_parameter_process", f_true);
           fake_delete_data(data);
-          return f_status_set_error(status);
+          return status;
         }
-
-        status = f_none;
       }
 
+      // Identify priority of verbosity related parameters.
+      {
+        f_console_parameter_id ids[3] = { fake_parameter_quiet, fake_parameter_verbose, fake_parameter_debug };
+        f_console_parameter_ids choices = f_console_parameter_ids_initialize;
+        f_console_parameter_id choice = 0;
+
+        choices.id = ids;
+        choices.used = 3;
+
+        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
+
+        if (f_status_is_error(status)) {
+          fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "f_console_parameter_prioritize_right", f_true);
+          fake_delete_data(data);
+          return status;
+        }
+
+        if (choice == fake_parameter_quiet) {
+          data->verbosity = fake_verbosity_quiet;
+        }
+        else if (choice == fake_parameter_verbose) {
+          data->verbosity = fake_verbosity_verbose;
+        }
+        else if (choice == fake_parameter_debug) {
+          data->verbosity = fake_verbosity_debug;
+        }
+      }
+
+      status = f_none;
+
       // Determine order of operations.
+      // @todo: this should probably implemented as a standard function, such as: f_console_parameter_prioritize_set_right().
       {
         uint8_t order_total = 0;
         uint8_t operations_id[fake_operations_total] = fake_operations_initialize;
