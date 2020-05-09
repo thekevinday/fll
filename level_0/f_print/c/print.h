@@ -81,13 +81,13 @@ extern "C" {
  *
  * Will not stop at \0.
  * Will not print \0.
- * Will print the only the buffer range specified by location.
+ * Will print the only the buffer range specified by range.
  *
  * @param output
  *   The file to output to, including standard streams such as stdout and stderr.
  * @param buffer
  *   The string to output.
- * @param location
+ * @param range
  *   The range within the provided string to print.
  *
  * @return
@@ -96,7 +96,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_print_string_dynamic_partial_
-  extern f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_location location);
+  extern f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_range range);
 #endif // _di_f_print_string_dynamic_partial_
 
 #ifdef __cplusplus

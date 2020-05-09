@@ -242,7 +242,7 @@ extern "C" {
     f_status status = f_none;
 
     {
-      f_string_location input = f_string_location_initialize;
+      f_string_range input = f_string_range_initialize;
 
       input.start = 0;
       input.stop = data->buffer.used - 1;
@@ -352,19 +352,19 @@ extern "C" {
     if (depth_setting.index_name > 0) {
       memset(names, 0, sizeof(bool) * items->used);
 
-      f_string_location value_location = f_string_location_initialize;
-      value_location.stop = depth_setting.value_name.used - 1;
+      f_string_range value_range = f_string_range_initialize;
+      value_range.stop = depth_setting.value_name.used - 1;
 
       if (data->parameters[fss_extended_list_read_parameter_trim].result == f_console_result_found) {
         for (f_string_length i = 0; i < items->used; i++) {
-          if (fl_string_dynamic_partial_compare_trim(data->buffer, depth_setting.value_name, items->array[i].object, value_location) == f_equal_to) {
+          if (fl_string_dynamic_partial_compare_trim(data->buffer, depth_setting.value_name, items->array[i].object, value_range) == f_equal_to) {
             names[i] = 1;
           }
         } // for
       }
       else {
         for (f_string_length i = 0; i < items->used; i++) {
-          if (fl_string_dynamic_partial_compare(data->buffer, depth_setting.value_name, items->array[i].object, value_location) == f_equal_to) {
+          if (fl_string_dynamic_partial_compare(data->buffer, depth_setting.value_name, items->array[i].object, value_range) == f_equal_to) {
             names[i] = 1;
           }
         } // for
@@ -412,7 +412,7 @@ extern "C" {
         return f_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_dynamic, const f_string_location) = &f_print_string_dynamic_partial;
+      f_return_status (*print_object)(FILE *, const f_string_dynamic, const f_string_range) = &f_print_string_dynamic_partial;
 
       if (data->parameters[fss_extended_list_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_string_dynamic_partial;

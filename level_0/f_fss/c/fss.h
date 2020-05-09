@@ -109,21 +109,21 @@ extern "C" {
  * An array of string locations representing where a delimit was applied or is to be applied with respect to some string.
  */
 #ifndef _di_f_fss_delimits_
-  typedef f_string_locations f_fss_delimits;
+  typedef f_string_ranges f_fss_delimits;
 
-  #define f_fss_delimits_initialize f_string_locations_initialize
+  #define f_fss_delimits_initialize f_string_ranges_initialize
 
   #define f_macro_fss_delimits_clear(delimits) f_macro_memory_structure_clear(delimits)
 
-  #define f_macro_fss_delimits_new(status, delimits)     f_macro_string_locations_new(status, delimits)
-  #define f_macro_fss_delimits_delete(status, delimits)  f_macro_string_locations_delete(status, delimits)
-  #define f_macro_fss_delimits_destroy(status, delimits) f_macro_string_locations_destroy(status, delimits)
+  #define f_macro_fss_delimits_new(status, delimits)     f_macro_string_ranges_new(status, delimits)
+  #define f_macro_fss_delimits_delete(status, delimits)  f_macro_string_ranges_delete(status, delimits)
+  #define f_macro_fss_delimits_destroy(status, delimits) f_macro_string_ranges_destroy(status, delimits)
 
-  #define f_macro_fss_delimits_delete_simple(delimits)  f_macro_string_locations_delete_simple(delimits)
-  #define f_macro_fss_delimits_destroy_simple(delimits) f_macro_string_locations_destroy_simple(delimits)
+  #define f_macro_fss_delimits_delete_simple(delimits)  f_macro_string_ranges_delete_simple(delimits)
+  #define f_macro_fss_delimits_destroy_simple(delimits) f_macro_string_ranges_destroy_simple(delimits)
 
-  #define f_macro_fss_delimits_resize(status, delimits, new_length) f_macro_string_locations_resize(status, delimits, new_length)
-  #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_string_locations_adjust(status, delimits, new_length)
+  #define f_macro_fss_delimits_resize(status, delimits, new_length) f_macro_string_ranges_resize(status, delimits, new_length)
+  #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_string_ranges_adjust(status, delimits, new_length)
 #endif // _di_f_fss_delimits_
 
 /**
@@ -178,9 +178,9 @@ extern "C" {
  * This is a location that represents an object.
  */
 #ifndef _di_fss_object_
-  typedef f_string_location f_fss_object;
+  typedef f_string_range f_fss_object;
 
-  #define f_fss_object_initialize f_string_location_initialize
+  #define f_fss_object_initialize f_string_range_initialize
 
   #define f_macro_fss_object_new(status, object, length) status = f_memory_new((void **) & object, sizeof(f_fss_object), length)
 
@@ -239,7 +239,7 @@ extern "C" {
  */
 #ifndef _di_fss_content_
   typedef struct {
-    f_string_location *array;
+    f_string_range *array;
 
     f_array_length size;
     f_array_length used;
@@ -249,16 +249,16 @@ extern "C" {
 
   #define f_macro_fss_content_clear(content) f_macro_memory_structure_new(content)
 
-  #define f_macro_fss_content_new(status, content, length) f_macro_memory_structure_new(status, content, f_string_location, length)
+  #define f_macro_fss_content_new(status, content, length) f_macro_memory_structure_new(status, content, f_string_range, length)
 
-  #define f_macro_fss_content_delete(status, content)  f_macro_memory_structure_delete(status, content, f_string_location)
-  #define f_macro_fss_content_destroy(status, content) f_macro_memory_structure_destroy(status, content, f_string_location)
+  #define f_macro_fss_content_delete(status, content)  f_macro_memory_structure_delete(status, content, f_string_range)
+  #define f_macro_fss_content_destroy(status, content) f_macro_memory_structure_destroy(status, content, f_string_range)
 
-  #define f_macro_fss_content_delete_simple(content)  f_macro_memory_structure_delete_simple(content, f_string_location)
-  #define f_macro_fss_content_destroy_simple(content) f_macro_memory_structure_destroy_simple(content, f_string_location)
+  #define f_macro_fss_content_delete_simple(content)  f_macro_memory_structure_delete_simple(content, f_string_range)
+  #define f_macro_fss_content_destroy_simple(content) f_macro_memory_structure_destroy_simple(content, f_string_range)
 
-  #define f_macro_fss_content_resize(status, content, new_length) f_macro_memory_structure_resize(status, content, f_string_location, new_length)
-  #define f_macro_fss_content_adjust(status, content, new_length) f_macro_memory_structure_adjust(status, content, f_string_location, new_length)
+  #define f_macro_fss_content_resize(status, content, new_length) f_macro_memory_structure_resize(status, content, f_string_range, new_length)
+  #define f_macro_fss_content_adjust(status, content, new_length) f_macro_memory_structure_adjust(status, content, f_string_range, new_length)
 #endif // _di_fss_content_
 
 /**

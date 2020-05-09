@@ -58,7 +58,7 @@ extern "C" {
  *   f_number_overflow (with error bit) if the maximimum buffer size is reached.
  */
 #ifndef _di_fll_fss_extended_list_read_
-  extern f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_location *location, f_fss_nest *nest);
+  extern f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_range *location, f_fss_nest *nest);
 #endif // _di_fll_fss_extended_list_read_
 
 /**

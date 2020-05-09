@@ -165,11 +165,11 @@ extern "C" {
       return f_status_set_error(f_no_data);
     }
 
-    f_string_location location = f_string_location_initialize;
-    location.start = 0;
-    location.stop = strlen(argument) - 1;
+    f_string_range range = f_string_range_initialize;
+    range.start = 0;
+    range.stop = strlen(argument) - 1;
 
-    return f_conversion_string_to_number_signed(argument, number, location);
+    return f_conversion_string_to_number_signed(argument, number, range);
   }
 #endif // _fl_console_parameter_to_number_signed_
 
@@ -183,11 +183,11 @@ extern "C" {
       return f_status_set_error(f_no_data);
     }
 
-    f_string_location location = f_string_location_initialize;
-    location.start = 0;
-    location.stop = strlen(argument) - 1;
+    f_string_range range = f_string_range_initialize;
+    range.start = 0;
+    range.stop = strlen(argument) - 1;
 
-    return f_conversion_string_to_number_unsigned(argument, number, location);
+    return f_conversion_string_to_number_unsigned(argument, number, range);
   }
 #endif // _fl_console_parameter_to_number_unsigned_
 

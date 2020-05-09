@@ -163,14 +163,14 @@ extern "C" {
  * start: the start position.
  * stop: the stop position.
  */
-#ifndef _di_f_string_location_
+#ifndef _di_f_string_range_
   typedef struct {
     f_string_length start;
     f_string_length stop;
-  } f_string_location;
+  } f_string_range;
 
-  #define f_string_location_initialize { 1, 0 }
-#endif // _di_f_string_location_
+  #define f_string_range_initialize { 1, 0 }
+#endif // _di_f_string_range_
 
 /**
  * An array of string locations.
@@ -179,29 +179,29 @@ extern "C" {
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
  */
-#ifndef _di_f_string_locations_
+#ifndef _di_f_string_ranges_
   typedef struct {
-    f_string_location *array;
+    f_string_range *array;
 
     f_array_length size;
     f_array_length used;
-  } f_string_locations;
+  } f_string_ranges;
 
-  #define f_string_locations_initialize {0, 0, 0}
+  #define f_string_ranges_initialize {0, 0, 0}
 
-  #define f_macro_string_locations_clear(locations) f_macro_memory_structure_clear(locations)
+  #define f_macro_string_ranges_clear(locations) f_macro_memory_structure_clear(locations)
 
-  #define f_macro_string_locations_new(status, locations, length) f_macro_memory_structure_new(status, locations, f_string_location, length)
+  #define f_macro_string_ranges_new(status, locations, length) f_macro_memory_structure_new(status, locations, f_string_range, length)
 
-  #define f_macro_string_locations_delete(status, locations)  f_macro_memory_structure_delete(status, locations, f_string_location)
-  #define f_macro_string_locations_destroy(status, locations) f_macro_memory_structure_destroy(status, locations, f_string_location)
+  #define f_macro_string_ranges_delete(status, locations)  f_macro_memory_structure_delete(status, locations, f_string_range)
+  #define f_macro_string_ranges_destroy(status, locations) f_macro_memory_structure_destroy(status, locations, f_string_range)
 
-  #define f_macro_string_locations_delete_simple(locations)  f_macro_memory_structure_delete_simple(locations, f_string_location)
-  #define f_macro_string_locations_destroy_simple(locations) f_macro_memory_structure_destroy_simple(locations, f_string_location)
+  #define f_macro_string_ranges_delete_simple(locations)  f_macro_memory_structure_delete_simple(locations, f_string_range)
+  #define f_macro_string_ranges_destroy_simple(locations) f_macro_memory_structure_destroy_simple(locations, f_string_range)
 
-  #define f_macro_string_locations_resize(status, locations, new_length) f_macro_memory_structure_resize(status, locations, f_string_location, new_length)
-  #define f_macro_string_locations_adjust(status, locations, new_length) f_macro_memory_structure_adjust(status, locations, f_string_location, new_length)
-#endif // _di_f_string_locations_
+  #define f_macro_string_ranges_resize(status, locations, new_length) f_macro_memory_structure_resize(status, locations, f_string_range, new_length)
+  #define f_macro_string_ranges_adjust(status, locations, new_length) f_macro_memory_structure_adjust(status, locations, f_string_range, new_length)
+#endif // _di_f_string_ranges_
 
 /**
  * A string that supports contains a size attribute to handle dynamic allocations and deallocations.

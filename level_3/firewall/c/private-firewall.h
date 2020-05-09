@@ -131,7 +131,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
 /**
  * Process buffered rules.
  */
-f_return_status firewall_process_rules(f_string_location *input, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
+f_return_status firewall_process_rules(f_string_range *input, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 
 /**
  * Delete allocated data.

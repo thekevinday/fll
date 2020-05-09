@@ -210,24 +210,24 @@ extern "C" {
  * Designates a start and stop position that represents a sub-string inside of some parent string.
  * use this to avoid resizing, restructuring, and reallocating the parent string to separate the sub-string.
  */
-#ifndef _di_f_utf_string_location_
+#ifndef _di_f_utf_string_range_
   typedef struct {
     f_utf_string_length start;
     f_utf_string_length stop;
-  } f_utf_string_location;
+  } f_utf_string_range;
 
-  #define f_utf_string_location_initialize { 1, 0 }
+  #define f_utf_string_range_initialize { 1, 0 }
 
-  #define f_macro_utf_string_location_new(status, utf_string_location, length)   status = f_memory_new((void **) & utf_string_location, sizeof(f_utf_string_location), length)
-  #define f_macro_utf_string_location_delete(status, utf_string_location, size)  status = f_memory_delete((void **) & utf_string_location, sizeof(f_utf_string_location), size)
-  #define f_macro_utf_string_location_destroy(status, utf_string_location, size) status = f_memory_destroy((void **) & utf_string_location, sizeof(f_utf_string_location), size)
+  #define f_macro_utf_string_range_new(status, utf_string_range, length)   status = f_memory_new((void **) & utf_string_range, sizeof(f_utf_string_range), length)
+  #define f_macro_utf_string_range_delete(status, utf_string_range, size)  status = f_memory_delete((void **) & utf_string_range, sizeof(f_utf_string_range), size)
+  #define f_macro_utf_string_range_destroy(status, utf_string_range, size) status = f_memory_destroy((void **) & utf_string_range, sizeof(f_utf_string_range), size)
 
-  #define f_macro_utf_string_location_resize(status, utf_string_location, old_length, new_length) \
-    status = f_memory_resize((void **) & utf_string_location, sizeof(f_utf_string_location), old_length, new_length)
+  #define f_macro_utf_string_range_resize(status, utf_string_range, old_length, new_length) \
+    status = f_memory_resize((void **) & utf_string_range, sizeof(f_utf_string_range), old_length, new_length)
 
-  #define f_macro_utf_string_location_adjust(status, utf_string_location, old_length, new_length) \
-    status = f_memory_adjust((void **) & utf_string_location, sizeof(f_utf_string_location), old_length, new_length)
-#endif // _di_f_utf_string_location_
+  #define f_macro_utf_string_range_adjust(status, utf_string_range, old_length, new_length) \
+    status = f_memory_adjust((void **) & utf_string_range, sizeof(f_utf_string_range), old_length, new_length)
+#endif // _di_f_utf_string_range_
 
 /**
  * An array of string locations.
@@ -235,26 +235,26 @@ extern "C" {
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
  */
-#ifndef _di_f_utf_string_locations_
+#ifndef _di_f_utf_string_ranges_
   typedef struct {
-    f_utf_string_location *array;
+    f_utf_string_range *array;
 
     f_array_length size;
     f_array_length used;
-  } f_utf_string_locations;
+  } f_utf_string_ranges;
 
-  #define f_utf_string_locations_initialize {0, 0, 0}
+  #define f_utf_string_ranges_initialize {0, 0, 0}
 
-  #define f_clear_utf_string_locations(locations) f_macro_memory_structure_clear(locations)
+  #define f_clear_utf_string_ranges(locations) f_macro_memory_structure_clear(locations)
 
-  #define f_macro_utf_string_location_news(status, locations, length) f_macro_memory_structure_new(status, locations, f_utf_string_location, length)
+  #define f_macro_utf_string_range_news(status, locations, length) f_macro_memory_structure_new(status, locations, f_utf_string_range, length)
 
-  #define f_macro_utf_string_location_deletes(status, locations) f_macro_memory_structure_delete(status, locations, f_utf_string_location)
-  #define f_macro_utf_string_location_destroys(status, locations) f_macro_memory_structure_destroy(status, locations, f_utf_string_location)
+  #define f_macro_utf_string_range_deletes(status, locations) f_macro_memory_structure_delete(status, locations, f_utf_string_range)
+  #define f_macro_utf_string_range_destroys(status, locations) f_macro_memory_structure_destroy(status, locations, f_utf_string_range)
 
-  #define f_macro_utf_string_location_resizes(status, locations, new_length) f_macro_memory_structure_resize(status, locations, f_utf_string_location, new_length)
-  #define f_macro_utf_string_location_adjusts(status, locations, new_length) f_macro_memory_structure_adjust(status, locations, f_utf_string_location, new_length)
-#endif // _di_f_utf_string_locations_
+  #define f_macro_utf_string_range_resizes(status, locations, new_length) f_macro_memory_structure_resize(status, locations, f_utf_string_range, new_length)
+  #define f_macro_utf_string_range_adjusts(status, locations, new_length) f_macro_memory_structure_adjust(status, locations, f_utf_string_range, new_length)
+#endif // _di_f_utf_string_ranges_
 
 /**
  * A string that supports contains a size attribute to handle dynamic allocations and deallocations.

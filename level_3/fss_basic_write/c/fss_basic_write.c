@@ -56,7 +56,7 @@ extern "C" {
       bool object = (data->parameters[fss_basic_write_parameter_object].result == f_console_result_found);
 
       f_string_dynamic buffer = f_string_dynamic_initialize;
-      f_string_location location = f_string_location_initialize;
+      f_string_range range = f_string_range_initialize;
 
       if (data->process_pipe) {
         f_file file = f_file_initialize;
@@ -90,18 +90,18 @@ extern "C" {
           return f_status_set_error(status);
         }
 
-        location.start = 0;
-        location.stop = input.used - 1;
+        range.start = 0;
+        range.stop = input.used - 1;
 
         if (object) {
-          status = fl_fss_basic_object_write(&buffer, input, &location);
+          status = fl_fss_basic_object_write(&buffer, input, &range);
 
           if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
             return f_status_set_error(status);
           }
         }
         else {
-          status = fl_fss_basic_content_write(&buffer, input, &location);
+          status = fl_fss_basic_content_write(&buffer, input, &range);
 
           if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
             return f_status_set_error(status);
@@ -116,18 +116,18 @@ extern "C" {
         input.string = arguments.argv[data->parameters[fss_basic_write_parameter_string].additional.array[0]];
         input.used = strlen(input.string);
 
-        location.start = 0;
-        location.stop = input.used - 1;
+        range.start = 0;
+        range.stop = input.used - 1;
 
         if (object) {
-          status = fl_fss_basic_object_write(&buffer, input, &location);
+          status = fl_fss_basic_object_write(&buffer, input, &range);
 
           if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
             return f_status_set_error(status);
           }
         }
         else {
-          status = fl_fss_basic_content_write(&buffer, input, &location);
+          status = fl_fss_basic_content_write(&buffer, input, &range);
 
           if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
             return f_status_set_error(status);

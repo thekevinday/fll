@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_extended_object_read_
-  f_return_status fl_fss_extended_object_read(f_string_dynamic *buffer, f_string_location *location, f_fss_object *found) {
+  f_return_status fl_fss_extended_object_read(f_string_dynamic *buffer, f_string_range *location, f_fss_object *found) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (location == 0) return f_status_set_error(f_invalid_parameter);
@@ -361,7 +361,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_object_read_
 
 #ifndef _di_fl_fss_extended_content_read_
-  f_return_status fl_fss_extended_content_read(f_string_dynamic *buffer, f_string_location *location, f_fss_content *found) {
+  f_return_status fl_fss_extended_content_read(f_string_dynamic *buffer, f_string_range *location, f_fss_content *found) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (location == 0) return f_status_set_error(f_invalid_parameter);
@@ -777,7 +777,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_content_read_
 
 #ifndef _di_fl_fss_extended_object_write_
-  f_return_status fl_fss_extended_object_write(const f_string_dynamic object, f_string_location *location, f_string_dynamic *buffer) {
+  f_return_status fl_fss_extended_object_write(const f_string_dynamic object, f_string_range *location, f_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -785,7 +785,7 @@ extern "C" {
     f_status status = f_none;
     bool quoted = f_false;
 
-    f_string_location buffer_position = f_string_location_initialize;
+    f_string_range buffer_position = f_string_range_initialize;
     f_string_length start_position = f_string_initialize;
     f_string_length pre_allocate_size = 0;
 
@@ -1033,7 +1033,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_object_write_
 
 #ifndef _di_fl_fss_extended_content_write_
-  f_return_status fl_fss_extended_content_write(const f_string_dynamic content, f_string_location *location, f_string_dynamic *buffer) {
+  f_return_status fl_fss_extended_content_write(const f_string_dynamic content, f_string_range *location, f_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -1041,7 +1041,7 @@ extern "C" {
     f_status status = f_none;
     int8_t quoted = f_string_eos;
 
-    f_string_location buffer_position = f_string_location_initialize;
+    f_string_range buffer_position = f_string_range_initialize;
     f_string_length start_position = 0;
     f_string_length pre_allocate_size = 0;
 

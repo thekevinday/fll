@@ -652,7 +652,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
             }
             else {
               {
-                f_string_location input = f_string_location_initialize;
+                f_string_range input = f_string_range_initialize;
 
                 input.stop = local_buffer.used - 1;
 
@@ -867,7 +867,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
   f_array_length j = 0;
 
   f_string_length length = 0;
-  f_string_location location = f_string_location_initialize;
+  f_string_range range = f_string_range_initialize;
   f_string_dynamics arguments = f_string_dynamics_initialize;
 
   f_string_dynamic fixed_string = f_string_dynamic_initialize;
@@ -917,44 +917,44 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
     j = 0;
 
     // skip globally reserved chain name: main
-    location.start = 0;
-    location.stop = firewall_group_main_length - 1;
+    range.start = 0;
+    range.stop = firewall_group_main_length - 1;
     fixed_string.string = firewall_group_main;
     fixed_string.used = firewall_group_main_length;
-    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
+    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], range) == f_equal_to) {
       new_chain = f_false;
       reserved->has_main = f_true;
       reserved->main_at = i;
     }
 
     // skip globally reserved chain name: stop
-    location.start = 0;
-    location.stop = firewall_group_stop_length - 1;
+    range.start = 0;
+    range.stop = firewall_group_stop_length - 1;
     fixed_string.string = firewall_group_stop;
     fixed_string.used = firewall_group_stop_length;
-    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
+    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], range) == f_equal_to) {
       new_chain = f_false;
       reserved->has_stop = f_true;
       reserved->stop_at = i;
     }
 
     // skip globally reserved chain name: lock
-    location.start = 0;
-    location.stop = firewall_group_lock_length - 1;
+    range.start = 0;
+    range.stop = firewall_group_lock_length - 1;
     fixed_string.string = firewall_group_lock;
     fixed_string.used = firewall_group_lock_length;
-    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
+    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], range) == f_equal_to) {
       new_chain = f_false;
       reserved->has_lock = f_true;
       reserved->lock_at = i;
     }
 
     // skip globally reserved chain name: none
-    location.start = 0;
-    location.stop = firewall_group_lock_length - 1;
+    range.start = 0;
+    range.stop = firewall_group_lock_length - 1;
     fixed_string.string = firewall_chain_none;
     fixed_string.used = firewall_chain_none_length;
-    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], location) == f_equal_to) {
+    if (fl_string_dynamic_partial_compare(local->buffer, fixed_string, local->chain_objects.array[i], range) == f_equal_to) {
       new_chain = f_false;
     }
 
@@ -962,10 +962,10 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
 
     if (new_chain) {
       while (j < data->chains.used) {
-        location.start = 0;
-        location.stop = data->chains.array[j].used - 1;
+        range.start = 0;
+        range.stop = data->chains.array[j].used - 1;
 
-        if (fl_string_dynamic_partial_compare(local->buffer, data->chains.array[j], local->chain_objects.array[i], location) == f_equal_to) {
+        if (fl_string_dynamic_partial_compare(local->buffer, data->chains.array[j], local->chain_objects.array[i], range) == f_equal_to) {
           new_chain = f_false;
           local->chain_ids.array[i] = j;
 
@@ -1409,7 +1409,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
     return status;
   }
   else {
-    f_string_location input = f_string_location_initialize;
+    f_string_range input = f_string_range_initialize;
 
     input.stop = local->buffer.used - 1;
 
@@ -1438,7 +1438,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
   return status;
 }
 
-f_return_status firewall_process_rules(f_string_location *input, firewall_local_data *local, firewall_data *data) {
+f_return_status firewall_process_rules(f_string_range *input, firewall_local_data *local, firewall_data *data) {
   f_status status = f_none;
 
   status = fll_fss_extended_read(&local->buffer, input, &local->rule_objects, &local->rule_contents);

@@ -46,18 +46,18 @@ extern "C" {
 #endif // _di_f_print_string_dynamic_
 
 #ifndef _di_f_print_string_dynamic_partial_
-  f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_location location) {
+  f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
-      if (location.stop >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (range.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (range.stop >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    register f_string_length i = location.start;
+    register f_string_length i = range.start;
 
-    for (; i <= location.stop; i++) {
+    for (; i <= range.stop; i++) {
       if (buffer.string[i] != f_string_eos) {
         if (fputc(buffer.string[i], output) == 0) {
           return f_status_set_error(f_error_output);

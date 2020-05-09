@@ -5,10 +5,10 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_basic_read_
-  f_return_status fll_fss_basic_read(f_string_dynamic *buffer, f_string_location *location, f_fss_objects *objects, f_fss_contents *contents) {
+  f_return_status fll_fss_basic_read(f_string_dynamic *buffer, f_string_range *range, f_fss_objects *objects, f_fss_contents *contents) {
     #ifndef _di_level_2_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
-      if (location == 0) return f_status_set_error(f_invalid_parameter);
+      if (range == 0) return f_status_set_error(f_invalid_parameter);
       if (objects == 0) return f_status_set_error(f_invalid_parameter);
       if (contents == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -33,13 +33,13 @@ extern "C" {
       }
 
       do {
-        status = fl_fss_basic_object_read(buffer, location, &objects->array[objects->used]);
+        status = fl_fss_basic_object_read(buffer, range, &objects->array[objects->used]);
 
         if (f_status_is_error(status)) {
           return status;
         }
 
-        if (location->start >= location->stop || location->start >= buffer->used) {
+        if (range->start >= range->stop || range->start >= buffer->used) {
           if (status == fl_fss_found_object || status == fl_fss_found_object_no_content) {
             objects->used++;
 
@@ -59,14 +59,14 @@ extern "C" {
           }
 
           if (found_data) {
-            if (location->start >= buffer->used) {
+            if (range->start >= buffer->used) {
                return f_none_on_eos;
             }
 
             return f_none_on_stop;
           }
           else {
-            if (location->start >= buffer->used) {
+            if (range->start >= buffer->used) {
                return f_no_data_on_eos;
             }
 
@@ -76,7 +76,7 @@ extern "C" {
 
         if (status == fl_fss_found_object) {
           found_data = f_true;
-          status = fl_fss_basic_content_read(buffer, location, &contents->array[contents->used]);
+          status = fl_fss_basic_content_read(buffer, range, &contents->array[contents->used]);
 
           if (f_status_is_error(status)) {
             return status;
@@ -120,14 +120,14 @@ extern "C" {
       else if (status != fl_fss_found_object && status != fl_fss_found_content && status != fl_fss_found_no_content && status != fl_fss_found_object_no_content) {
         return status;
       }
-      // When content is found, the location->start is incremented, if content is found at location->stop, then location->start will be > location.stop.
-      else if (location->start >= location->stop || location->start >= buffer->used) {
+      // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
+      else if (range->start >= range->stop || range->start >= buffer->used) {
         if (status == fl_fss_found_object || status == fl_fss_found_content || status == fl_fss_found_no_content || status == fl_fss_found_object_no_content) {
           objects->used++;
           contents->used++;
         }
 
-        if (location->start >= buffer->used) {
+        if (range->start >= buffer->used) {
           return f_none_on_eos;
         }
 
@@ -136,7 +136,7 @@ extern "C" {
 
       objects->used++;
       contents->used++;
-    } while (location->start < f_string_max_size);
+    } while (range->start < f_string_max_size);
 
     return f_status_is_error(f_number_overflow);
   }
@@ -151,12 +151,12 @@ extern "C" {
 
     f_status status = 0;
     f_array_length current = 0;
-    f_string_location location = f_string_location_initialize;
+    f_string_range range = f_string_range_initialize;
 
-    location.start = 0;
-    location.stop = object.used - 1;
+    range.start = 0;
+    range.stop = object.used - 1;
 
-    status = fl_fss_basic_object_write(buffer, object, &location);
+    status = fl_fss_basic_object_write(buffer, object, &range);
 
     if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
       return status;
@@ -164,9 +164,9 @@ extern "C" {
 
     if (status == f_none || status == f_none_on_stop || status == f_none_on_eos || status == f_none_on_eol) {
       if (contents.used > 0) {
-        location.start = 0;
-        location.stop = contents.array[0].used - 1;
-        status = fl_fss_basic_content_write(buffer, contents.array[0], &location);
+        range.start = 0;
+        range.stop = contents.array[0].used - 1;
+        status = fl_fss_basic_content_write(buffer, contents.array[0], &range);
 
         if (f_status_is_error(status)) {
           return status;

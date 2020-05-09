@@ -205,19 +205,19 @@ extern "C" {
 #endif // _di_f_conversion_character_to_octal_
 
 #ifndef _di_f_conversion_string_to_binary_signed_
-  f_return_status f_conversion_string_to_binary_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative) {
+  f_return_status f_conversion_string_to_binary_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_binary(string[i], &digit) == f_none) {
         if (scale) {
           scale++;
@@ -261,19 +261,19 @@ extern "C" {
 #endif // _di_f_conversion_string_to_binary_signed_
 
 #ifndef _di_f_conversion_string_to_binary_unsigned_
-  f_return_status f_conversion_string_to_binary_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_binary_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_binary(string[i], &digit) == f_none) {
         if (scale) {
           scale++;
@@ -301,19 +301,19 @@ extern "C" {
 #endif // _di_f_conversion_string_to_binary_unsigned_
 
 #ifndef _di_f_conversion_string_to_decimal_signed_
-  f_return_status f_conversion_string_to_decimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative) {
+  f_return_status f_conversion_string_to_decimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_decimal(string[i], &digit) == f_none) {
 
         if (scale) {
@@ -362,19 +362,19 @@ extern "C" {
 #endif // _di_f_conversion_string_to_decimal_signed_
 
 #ifndef _di_f_conversion_string_to_decimal_unsigned_
-  f_return_status f_conversion_string_to_decimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_decimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_decimal(string[i], &digit) == f_none) {
 
         if (scale) {
@@ -405,19 +405,19 @@ extern "C" {
 #endif // _di_f_conversion_string_to_decimal_unsigned_
 
 #ifndef _di_f_conversion_string_to_duodecimal_signed_
-  f_return_status f_conversion_string_to_duodecimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative) {
+  f_return_status f_conversion_string_to_duodecimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_duodecimal(string[i], &digit) == f_none) {
 
         if (scale) {
@@ -466,19 +466,19 @@ extern "C" {
 #endif // _di_f_conversion_string_to_duodecimal_signed_
 
 #ifndef _di_f_conversion_string_to_duodecimal_unsigned_
-  f_return_status f_conversion_string_to_duodecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_duodecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_duodecimal(string[i], &digit) == f_none) {
 
         if (scale) {
@@ -509,19 +509,19 @@ extern "C" {
 #endif // _di_f_conversion_string_to_duodecimal_unsigned_
 
 #ifndef _di_f_conversion_string_to_hexidecimal_signed_
-  f_return_status f_conversion_string_to_hexidecimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative) {
+  f_return_status f_conversion_string_to_hexidecimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == f_none) {
 
         if (scale) {
@@ -570,19 +570,19 @@ extern "C" {
 #endif // _di_f_conversion_string_to_hexidecimal_signed_
 
 #ifndef _di_f_conversion_string_to_hexidecimal_unsigned_
-  f_return_status f_conversion_string_to_hexidecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_hexidecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == f_none) {
 
         if (scale) {
@@ -613,19 +613,19 @@ extern "C" {
 #endif // _di_f_conversion_string_to_hexidecimal_unsigned_
 
 #ifndef _di_f_conversion_string_to_octal_signed_
-  f_return_status f_conversion_string_to_octal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative) {
+  f_return_status f_conversion_string_to_octal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_octal(string[i], &digit) == f_none) {
 
         if (scale) {
@@ -674,19 +674,19 @@ extern "C" {
 #endif // _di_f_conversion_string_to_octal_signed_
 
 #ifndef _di_f_conversion_string_to_octal_unsigned_
-  f_return_status f_conversion_string_to_octal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_octal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_octal(string[i], &digit) == f_none) {
 
         if (scale) {
@@ -717,12 +717,12 @@ extern "C" {
 #endif // _di_f_conversion_string_to_octal_unsigned_
 
 #ifndef _di_f_conversion_string_to_number_signed_
-  f_return_status f_conversion_string_to_number_signed(const f_string string, f_number_signed *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_number_signed(const f_string string, f_number_signed *number, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (string[0] == '\0') {
@@ -737,7 +737,7 @@ extern "C" {
     f_string_length offset = 0;
     f_status status = f_none;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       width = f_macro_utf_byte_width_is(string[i]);
 
       if (width == 0) {
@@ -752,7 +752,7 @@ extern "C" {
       }
       else {
         if (mode == 0 && vector == 0) {
-          width_max = (location.stop - i) + 1;
+          width_max = (range.stop - i) + 1;
 
           status = f_utf_is_whitespace(string + i, width_max);
 
@@ -777,7 +777,7 @@ extern "C" {
         j = i + 1;
 
         // Immediate next value must be either a number, 'x', 'X', 'd', 'D', 'o', 'O', 'b', or 'B'.
-        if (j > location.stop) {
+        if (j > range.stop) {
           *number = 0;
           return f_none;
         }
@@ -841,9 +841,9 @@ extern "C" {
       return f_status_set_error(f_number_invalid);
     }
 
-    f_string_location location_offset = f_string_location_initialize;
-    location_offset.start = location.start + offset;
-    location_offset.stop = location.stop;
+    f_string_range location_offset = f_string_range_initialize;
+    location_offset.start = range.start + offset;
+    location_offset.stop = range.stop;
 
     if (mode == 10) {
       return f_conversion_string_to_decimal_signed(string, number, location_offset, vector == -1);
@@ -866,12 +866,12 @@ extern "C" {
 #endif // _di_f_conversion_string_to_number_signed_
 
 #ifndef _di_f_conversion_string_to_number_unsigned_
-  f_return_status f_conversion_string_to_number_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location) {
+  f_return_status f_conversion_string_to_number_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return f_status_set_error(f_invalid_parameter);
       if (number == 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (string[0] == '\0') {
@@ -886,7 +886,7 @@ extern "C" {
     f_status status = f_none;
     int8_t sign_found = 0;
 
-    for (f_string_length i = location.start; i <= location.stop; i++) {
+    for (f_string_length i = range.start; i <= range.stop; i++) {
       width = f_macro_utf_byte_width_is(string[i]);
 
       if (width == 0) {
@@ -901,7 +901,7 @@ extern "C" {
       }
       else {
         if (mode == 0) {
-          width_max = (location.stop - i) + 1;
+          width_max = (range.stop - i) + 1;
 
           status = f_utf_is_whitespace(string + i, width_max);
 
@@ -926,7 +926,7 @@ extern "C" {
         j = i + 1;
 
         // Immediate next value must be either a number, 'x', 'X', 'd', 'D', 'o', 'O', 'b', or 'B'.
-        if (j > location.stop) {
+        if (j > range.stop) {
           *number = 0;
           return f_none;
         }
@@ -978,9 +978,9 @@ extern "C" {
       return f_status_set_error(f_number_invalid);
     }
 
-    f_string_location location_offset = f_string_location_initialize;
-    location_offset.start = location.start + offset;
-    location_offset.stop = location.stop;
+    f_string_range location_offset = f_string_range_initialize;
+    location_offset.start = range.start + offset;
+    location_offset.stop = range.stop;
 
     if (mode == 10) {
       status = f_conversion_string_to_decimal_unsigned(string, number, location_offset);

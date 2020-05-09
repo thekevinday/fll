@@ -178,22 +178,22 @@ extern "C" {
 #endif // _di_fl_print_trim_string_dynamic_
 
 #ifndef _di_fl_print_trim_string_dynamic_partial_
-  f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_location location) {
+  f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_range range) {
     #ifndef _di_level_1_parameter_checking_
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
-      if (location.stop >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (range.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (range.stop >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    register f_string_length i = location.start;
+    register f_string_length i = range.start;
     f_status status = f_none;
 
     uint8_t width_max = 0;
 
-    for (; i <= location.stop; i += f_macro_utf_byte_width(buffer.string[i])) {
-      width_max = (location.stop - i) + 1;
+    for (; i <= range.stop; i += f_macro_utf_byte_width(buffer.string[i])) {
+      width_max = (range.stop - i) + 1;
       status = f_utf_is_whitespace(buffer.string + i, width_max);
 
       if (f_status_is_error(status)) {
@@ -207,14 +207,14 @@ extern "C" {
       if (status == f_false) break;
     } // for
 
-    for (uint8_t width_i = f_macro_utf_byte_width(buffer.string[i]); i <= location.stop; i += width_i) {
+    for (uint8_t width_i = f_macro_utf_byte_width(buffer.string[i]); i <= range.stop; i += width_i) {
       if (buffer.string[i] == f_string_eos) {
         width_i = 1;
         continue;
       }
 
       width_i = f_macro_utf_byte_width(buffer.string[i]);
-      width_max = (location.stop - i) + 1;
+      width_max = (range.stop - i) + 1;
       status = f_utf_is_whitespace(buffer.string + i, width_max);
 
       if (f_status_is_error(status)) {
@@ -228,13 +228,13 @@ extern "C" {
       if (status == f_true) {
         f_string_length j = i + width_i;
 
-        if (j == location.stop) {
+        if (j == range.stop) {
           return f_none;
         }
 
-        for (uint8_t width_j = f_macro_utf_byte_width(buffer.string[j]); j <= location.stop; j += width_j) {
+        for (uint8_t width_j = f_macro_utf_byte_width(buffer.string[j]); j <= range.stop; j += width_j) {
           width_j = f_macro_utf_byte_width(buffer.string[j]);
-          width_max = (location.stop - j) + 1;
+          width_max = (range.stop - j) + 1;
           status = f_utf_is_whitespace(buffer.string + j, width_max);
 
           if (f_status_is_error(status)) {
@@ -448,19 +448,19 @@ extern "C" {
 #endif // _di_fl_print_trim_utf_string_dynamic_
 
 #ifndef _di_fl_print_trim_utf_string_dynamic_partial_
-  f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_dynamic buffer, const f_utf_string_location location) {
+  f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_dynamic buffer, const f_utf_string_range range) {
     #ifndef _di_level_1_parameter_checking_
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
-      if (location.stop >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (range.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (range.stop >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    register f_string_length i = location.start;
+    register f_string_length i = range.start;
     f_status status = f_none;
 
-    for (; i <= location.stop; i++) {
+    for (; i <= range.stop; i++) {
       status = f_utf_character_is_whitespace(buffer.string[i]);
 
       if (f_status_is_error(status)) {
@@ -474,7 +474,7 @@ extern "C" {
       if (status == f_false) break;
     } // for
 
-    for (; i <= location.stop; i++) {
+    for (; i <= range.stop; i++) {
       if (buffer.string[i] == f_string_eos) continue;
 
       status = f_utf_character_is_whitespace(buffer.string[i]);
@@ -490,11 +490,11 @@ extern "C" {
       if (status == f_true) {
         f_string_length j = i + 1;
 
-        if (j == location.stop) {
+        if (j == range.stop) {
           return f_none;
         }
 
-        for (; j <= location.stop; j++) {
+        for (; j <= range.stop; j++) {
           status = f_utf_character_is_whitespace(buffer.string[j]);
 
           if (f_status_is_error(status)) {

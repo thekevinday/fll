@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_decrement_buffer_
-  f_return_status fl_fss_decrement_buffer(const f_string_dynamic buffer, f_string_location *location, const f_string_length step) {
+  f_return_status fl_fss_decrement_buffer(const f_string_dynamic buffer, f_string_range *location, const f_string_length step) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -84,7 +84,7 @@ extern "C" {
                       if (f_conversion_character_is_hexidecimal(buffer.string[i]) == f_true) {
                         i++;
 
-                        f_string_location length = f_string_location_initialize;
+                        f_string_range length = f_string_range_initialize;
 
                         length.start = i - 4;
                         length.stop = i;
@@ -140,7 +140,7 @@ extern "C" {
                     if (f_conversion_character_is_hexidecimal(buffer.string[i]) == f_true) {
                       i++;
 
-                      f_string_location length = f_string_location_initialize;
+                      f_string_range length = f_string_range_initialize;
 
                       length.start = i - 4;
                       length.stop = i;
@@ -213,7 +213,7 @@ extern "C" {
 #endif // _di_fl_fss_identify_file_
 
 #ifndef _di_fl_fss_increment_buffer_
-  f_return_status fl_fss_increment_buffer(const f_string_dynamic buffer, f_string_location *location, const f_string_length step) {
+  f_return_status fl_fss_increment_buffer(const f_string_dynamic buffer, f_string_range *location, const f_string_length step) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -254,79 +254,79 @@ extern "C" {
 #endif // _di_fl_fss_increment_buffer_
 
 #ifndef _di_fl_fss_is_graph_
-  f_return_status fl_fss_is_graph(const f_string_dynamic buffer, const f_string_location location) {
+  f_return_status fl_fss_is_graph(const f_string_dynamic buffer, const f_string_range range) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
-      if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_string_length width_max = (location.stop - location.start) + 1;
+    f_string_length width_max = (range.stop - range.start) + 1;
 
-    if (width_max > buffer.used - location.start) {
-      width_max = buffer.used - location.start;
+    if (width_max > buffer.used - range.start) {
+      width_max = buffer.used - range.start;
     }
 
     // @todo update to check against zero-width space.
-    return f_utf_is_graph(buffer.string + location.start, width_max);
+    return f_utf_is_graph(buffer.string + range.start, width_max);
   }
 #endif // _di_fl_fss_is_graph_
 
 #ifndef _di_fl_fss_is_space_
-  f_return_status fl_fss_is_space(const f_string_dynamic buffer, const f_string_location location) {
+  f_return_status fl_fss_is_space(const f_string_dynamic buffer, const f_string_range range) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
-      if (location.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_string_length width_max = (location.stop - location.start) + 1;
+    f_string_length width_max = (range.stop - range.start) + 1;
 
-    if (width_max > buffer.used - location.start) {
-      width_max = buffer.used - location.start;
+    if (width_max > buffer.used - range.start) {
+      width_max = buffer.used - range.start;
     }
 
     // @todo update to check against control characters and zero-width space.
-    return f_utf_is_whitespace(buffer.string + location.start, width_max);
+    return f_utf_is_whitespace(buffer.string + range.start, width_max);
   }
 #endif // _di_fl_fss_is_space_
 
 #ifndef _di_fl_fss_skip_past_space_
-  f_return_status fl_fss_skip_past_space(const f_string_dynamic buffer, f_string_location *location) {
+  f_return_status fl_fss_skip_past_space(const f_string_dynamic buffer, f_string_range *range) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (location == 0) return f_status_set_error(f_invalid_parameter);
-      if (location->start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location->stop < location->start) return f_status_set_error(f_invalid_parameter);
-      if (location->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (range == 0) return f_status_set_error(f_invalid_parameter);
+      if (range->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range->stop < range->start) return f_status_set_error(f_invalid_parameter);
+      if (range->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
     unsigned short width = 0;
 
-    f_string_length width_max = (location->stop - location->start) + 1;
+    f_string_length width_max = (range->stop - range->start) + 1;
 
-    if (width_max > buffer.used - location->start) {
-      width_max = buffer.used - location->start;
+    if (width_max > buffer.used - range->start) {
+      width_max = buffer.used - range->start;
     }
 
     for (;;) {
-      if (buffer.string[location->start] != f_string_placeholder) {
-        status = f_utf_is_whitespace(buffer.string + location->start, width_max);
+      if (buffer.string[range->start] != f_string_placeholder) {
+        status = f_utf_is_whitespace(buffer.string + range->start, width_max);
 
         if (status == f_false) {
-          status = f_utf_is_control(buffer.string + location->start, width_max);
+          status = f_utf_is_control(buffer.string + range->start, width_max);
 
           if (status == f_false) {
-            status = f_utf_is_zero_width(buffer.string + location->start, width_max);
+            status = f_utf_is_zero_width(buffer.string + range->start, width_max);
 
             if (status == f_true) {
               f_string_length next_width_max = 0;
 
-              for (f_string_length next = location->start + 1; next < buffer.used && next <= location->stop; next += f_macro_utf_byte_width_is(buffer.string[next])) {
-                next_width_max = (location->stop - next) + 1;
+              for (f_string_length next = range->start + 1; next < buffer.used && next <= range->stop; next += f_macro_utf_byte_width_is(buffer.string[next])) {
+                next_width_max = (range->stop - next) + 1;
 
                 status = f_utf_is_whitespace(buffer.string + next, width_max);
                 if (status == f_true) {
@@ -368,9 +368,9 @@ extern "C" {
         else if (f_status_is_error(status)) return status;
       }
 
-      if (buffer.string[location->start] == f_string_eol) return f_none_on_eol;
+      if (buffer.string[range->start] == f_string_eol) return f_none_on_eol;
 
-      width = f_macro_utf_byte_width_is(buffer.string[location->start]);
+      width = f_macro_utf_byte_width_is(buffer.string[range->start]);
 
       if (width == 0) {
         width = 1;
@@ -380,19 +380,19 @@ extern "C" {
         return f_status_set_error(f_incomplete_utf);
       }
       else {
-        if (location->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
-        if (location->start + width > location->stop) return f_status_set_error(f_incomplete_utf_on_stop);
+        if (range->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
+        if (range->start + width > range->stop) return f_status_set_error(f_incomplete_utf_on_stop);
       }
 
-      location->start += width;
+      range->start += width;
 
-      if (location->start >= buffer.used) return f_none_on_eos;
-      if (location->start > location->stop) return f_none_on_stop;
+      if (range->start >= buffer.used) return f_none_on_eos;
+      if (range->start > range->stop) return f_none_on_stop;
 
-      width_max = (location->stop - location->start) + 1;
+      width_max = (range->stop - range->start) + 1;
 
-      if (width_max > buffer.used - location->start) {
-        width_max = buffer.used - location->start;
+      if (width_max > buffer.used - range->start) {
+        width_max = buffer.used - range->start;
       }
     } // for
 
@@ -405,40 +405,40 @@ extern "C" {
 #endif // _di_fl_fss_skip_past_space_
 
 #ifndef _di_fl_fss_skip_past_non_graph_
-  f_return_status fl_fss_skip_past_non_graph(const f_string_dynamic buffer, f_string_location *location) {
+  f_return_status fl_fss_skip_past_non_graph(const f_string_dynamic buffer, f_string_range *range) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (location == 0) return f_status_set_error(f_invalid_parameter);
-      if (location->start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location->stop < location->start) return f_status_set_error(f_invalid_parameter);
-      if (location->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (range == 0) return f_status_set_error(f_invalid_parameter);
+      if (range->start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range->stop < range->start) return f_status_set_error(f_invalid_parameter);
+      if (range->start >= buffer.used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
     unsigned short width = 0;
 
-    f_string_length width_max = (location->stop - location->start) + 1;
+    f_string_length width_max = (range->stop - range->start) + 1;
 
-    if (width_max > buffer.used - location->start) {
-      width_max = buffer.used - location->start;
+    if (width_max > buffer.used - range->start) {
+      width_max = buffer.used - range->start;
     }
 
     for (;;) {
-      if (buffer.string[location->start] != f_string_placeholder) {
-        status = f_utf_is_graph(buffer.string + location->start, width_max);
+      if (buffer.string[range->start] != f_string_placeholder) {
+        status = f_utf_is_graph(buffer.string + range->start, width_max);
 
         if (status == f_true) {
           // stop at a graph.
           break;
         }
         else if (status == f_false) {
-          status = f_utf_is_zero_width(buffer.string + location->start, width_max);
+          status = f_utf_is_zero_width(buffer.string + range->start, width_max);
 
           if (status == f_true) {
             f_string_length next_width_max = 0;
 
-            for (f_string_length next = location->start + 1; next < buffer.used && next <= location->stop; next += f_macro_utf_byte_width_is(buffer.string[next])) {
-              next_width_max = (location->stop - next) + 1;
+            for (f_string_length next = range->start + 1; next < buffer.used && next <= range->stop; next += f_macro_utf_byte_width_is(buffer.string[next])) {
+              next_width_max = (range->stop - next) + 1;
 
               status = f_utf_is_graph(buffer.string + next, width_max);
               if (status == f_true) {
@@ -472,7 +472,7 @@ extern "C" {
 
       if (f_status_is_error(status)) return status;
 
-      width = f_macro_utf_byte_width_is(buffer.string[location->start]);
+      width = f_macro_utf_byte_width_is(buffer.string[range->start]);
 
       if (width == 0) {
         width = 1;
@@ -482,19 +482,19 @@ extern "C" {
         return f_status_set_error(f_incomplete_utf);
       }
       else {
-        if (location->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
-        if (location->start + width > location->stop) return f_status_set_error(f_incomplete_utf_on_stop);
+        if (range->start + width >= buffer.used) return f_status_set_error(f_incomplete_utf_on_eos);
+        if (range->start + width > range->stop) return f_status_set_error(f_incomplete_utf_on_stop);
       }
 
-      location->start += width;
+      range->start += width;
 
-      if (location->start >= buffer.used) return f_none_on_eos;
-      if (location->start > location->stop) return f_none_on_stop;
+      if (range->start >= buffer.used) return f_none_on_eos;
+      if (range->start > range->stop) return f_none_on_stop;
 
-      width_max = (location->stop - location->start) + 1;
+      width_max = (range->stop - range->start) + 1;
 
-      if (width_max > buffer.used - location->start) {
-        width_max = buffer.used - location->start;
+      if (width_max > buffer.used - range->start) {
+        width_max = buffer.used - range->start;
       }
     } // for
 
@@ -507,12 +507,12 @@ extern "C" {
 #endif // _di_fl_fss_skip_past_non_graph_
 
 #ifndef _di_fl_fss_shift_delimiters_
-  f_return_status fl_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_location location) {
+  f_return_status fl_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_range range) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer->used <= 0) return f_status_set_error(f_invalid_parameter);
-      if (location.start < 0) return f_status_set_error(f_invalid_parameter);
-      if (location.stop < location.start) return f_status_set_error(f_invalid_parameter);
-      if (location.start >= buffer->used) return f_status_set_error(f_invalid_parameter);
+      if (range.start < 0) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start >= buffer->used) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_string_length position = 0;
@@ -520,22 +520,22 @@ extern "C" {
     unsigned short utf_width = 0;
     unsigned short i = 0;
 
-    position = location.start;
+    position = range.start;
 
-    while (position < buffer->used && position <= location.stop) {
+    while (position < buffer->used && position <= range.stop) {
       if (buffer->string[position] == f_fss_delimit_placeholder) {
         distance++;
       }
 
       // do not waste time trying to process what is only going to be replaced with a delimit placeholder
-      if (position + distance >= buffer->used || position + distance > location.stop) {
+      if (position + distance >= buffer->used || position + distance > range.stop) {
         break;
       }
 
       utf_width = f_macro_utf_byte_width_is(buffer->string[position]);
       if (utf_width > 1) {
-        // not enough space in buffer or in location range to process UTF-8 character.
-        if (position + utf_width >= buffer->used || position + utf_width > location.stop) {
+        // not enough space in buffer or in range range to process UTF-8 character.
+        if (position + utf_width >= buffer->used || position + utf_width > range.stop) {
           return f_status_set_error(f_invalid_utf);
         }
 
@@ -558,7 +558,7 @@ extern "C" {
     }
 
     if (distance > 0) {
-      while (position < buffer->used + distance && position <= location.stop) {
+      while (position < buffer->used + distance && position <= range.stop) {
         buffer->string[position] = f_fss_delimit_placeholder;
         position++;
       }

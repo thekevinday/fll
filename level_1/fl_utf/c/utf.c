@@ -168,7 +168,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_compare_trim_
 
 #ifndef _di_fl_utf_string_dynamic_partial_append_
-  f_return_status fl_utf_string_dynamic_partial_append(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination) {
+  f_return_status fl_utf_string_dynamic_partial_append(const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_partial_append_
 
 #ifndef _di_fl_utf_string_dynamic_partial_append_nulless_
-  f_return_status fl_utf_string_dynamic_partial_append_nulless(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination) {
+  f_return_status fl_utf_string_dynamic_partial_append_nulless(const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
@@ -196,7 +196,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_partial_append_nulless_
 
 #ifndef _di_fl_utf_string_dynamic_partial_compare_
-  f_return_status fl_utf_string_dynamic_partial_compare(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_location range1, const f_utf_string_location range2) {
+  f_return_status fl_utf_string_dynamic_partial_compare(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_range range1, const f_utf_string_range range2) {
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= range1.stop) return f_status_set_error(f_invalid_parameter);
       if (string2.used <= range2.stop) return f_status_set_error(f_invalid_parameter);
@@ -207,7 +207,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_partial_compare_
 
 #ifndef _di_fl_utf_string_dynamic_partial_compare_trim_
-  f_return_status fl_utf_string_dynamic_partial_comparetrim(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_location range1, const f_utf_string_location range2) {
+  f_return_status fl_utf_string_dynamic_partial_comparetrim(const f_utf_string_dynamic string1, const f_utf_string_dynamic string2, const f_utf_string_range range1, const f_utf_string_range range2) {
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= range1.stop) return f_status_set_error(f_invalid_parameter);
       if (string2.used <= range2.stop) return f_status_set_error(f_invalid_parameter);
@@ -218,7 +218,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_partial_compare_trim_
 
 #ifndef _di_fl_utf_string_dynamic_partial_mash_
-  f_return_status fl_utf_string_dynamic_partial_mash(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination) {
+  f_return_status fl_utf_string_dynamic_partial_mash(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
@@ -240,7 +240,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_partial_mash_
 
 #ifndef _di_fl_utf_string_dynamic_partial_mash_nulless_
-  f_return_status fl_utf_string_dynamic_partial_mash_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination) {
+  f_return_status fl_utf_string_dynamic_partial_mash_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
@@ -262,7 +262,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_partial_mash_nulless_
 
 #ifndef _di_fl_utf_string_dynamic_partial_mish_
-  f_return_status fl_utf_string_dynamic_partial_mish(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination) {
+  f_return_status fl_utf_string_dynamic_partial_mish(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
@@ -284,7 +284,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_partial_mish_
 
 #ifndef _di_fl_utf_string_dynamic_partial_mish_nulless_
-  f_return_status fl_utf_string_dynamic_partial_mish_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination) {
+  f_return_status fl_utf_string_dynamic_partial_mish_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
@@ -306,7 +306,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_partial_mish_nulless_
 
 #ifndef _di_fl_utf_string_dynamic_partial_prepend_
-  f_return_status fl_utf_string_dynamic_partial_prepend(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination) {
+  f_return_status fl_utf_string_dynamic_partial_prepend(const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
@@ -320,7 +320,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_partial_prepend_
 
 #ifndef _di_fl_utf_string_dynamic_partial_prepend_nulless_
-  f_return_status fl_utf_string_dynamic_partial_prepend_nulless(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination) {
+  f_return_status fl_utf_string_dynamic_partial_prepend_nulless(const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
       if (destination == 0) return f_status_set_error(f_invalid_parameter);
@@ -358,7 +358,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_prepend_nulless_
 
 #ifndef _di_fl_utf_string_dynamic_rip_
-  f_return_status fl_utf_string_dynamic_rip(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination) {
+  f_return_status fl_utf_string_dynamic_rip(const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.start) return f_status_set_error(f_invalid_parameter);
       if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
@@ -373,7 +373,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_rip_
 
 #ifndef _di_fl_utf_string_dynamic_rip_nulless_
-  f_return_status fl_utf_string_dynamic_rip_nulless(const f_utf_string_dynamic source, const f_utf_string_location range, f_utf_string_dynamic *destination) {
+  f_return_status fl_utf_string_dynamic_rip_nulless(const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.start) return f_status_set_error(f_invalid_parameter);
       if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
@@ -388,7 +388,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_rip_nulless_
 
 #ifndef _di_fl_utf_string_dynamic_seek_line_to_
-  f_return_status fl_utf_string_dynamic_seek_line_to(const f_utf_string_dynamic buffer, f_utf_string_location *range, const f_utf_character seek_to_this) {
+  f_return_status fl_utf_string_dynamic_seek_line_to(const f_utf_string_dynamic buffer, f_utf_string_range *range, const f_utf_character seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= range->start) return f_status_set_error(f_invalid_parameter);
@@ -420,7 +420,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_seek_line_to_
 
 #ifndef _di_fl_utf_string_dynamic_seek_line_to_char_
-  f_return_status fl_utf_string_dynamic_seek_line_to_char(const f_utf_string_dynamic buffer, f_utf_string_location *range, const int8_t seek_to_this) {
+  f_return_status fl_utf_string_dynamic_seek_line_to_char(const f_utf_string_dynamic buffer, f_utf_string_range *range, const int8_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= range->start) return f_status_set_error(f_invalid_parameter);
@@ -454,7 +454,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_seek_line_to_character_
 
 #ifndef _di_fl_utf_string_dynamic_seek_line_until_graph_
-  f_return_status fl_utf_string_dynamic_seek_line_until_graph(const f_utf_string_dynamic buffer, f_utf_string_location *range, const f_utf_character placeholder) {
+  f_return_status fl_utf_string_dynamic_seek_line_until_graph(const f_utf_string_dynamic buffer, f_utf_string_range *range, const f_utf_character placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= range->start) return f_status_set_error(f_invalid_parameter);
@@ -496,7 +496,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_seek_line_until_graph_
 
 #ifndef _di_fl_utf_string_dynamic_seek_line_until_non_graph_
-  f_return_status fl_utf_string_dynamic_seek_line_until_non_graph(const f_utf_string_dynamic buffer, f_utf_string_location *range, const f_utf_character placeholder) {
+  f_return_status fl_utf_string_dynamic_seek_line_until_non_graph(const f_utf_string_dynamic buffer, f_utf_string_range *range, const f_utf_character placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= range->start) return f_status_set_error(f_invalid_parameter);
@@ -538,7 +538,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_seek_line_until_non_graph_
 
 #ifndef _di_fl_utf_string_dynamic_seek_to_
-  f_return_status fl_utf_string_dynamic_seek_to(const f_utf_string_dynamic buffer, f_utf_string_location *range, const f_utf_character seek_to_this) {
+  f_return_status fl_utf_string_dynamic_seek_to(const f_utf_string_dynamic buffer, f_utf_string_range *range, const f_utf_character seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= range->start) return f_status_set_error(f_invalid_parameter);
@@ -568,7 +568,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_seek_to_
 
 #ifndef _di_fl_utf_string_dynamic_seek_to_char_
-  f_return_status fl_utf_string_dynamic_seek_to_char(const f_utf_string_dynamic buffer, f_utf_string_location *range, const int8_t seek_to_this) {
+  f_return_status fl_utf_string_dynamic_seek_to_char(const f_utf_string_dynamic buffer, f_utf_string_range *range, const int8_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= range->start) return f_status_set_error(f_invalid_parameter);
@@ -771,7 +771,7 @@ extern "C" {
 #endif // _di_fl_utf_string_rip_nulless_
 
 #ifndef _di_fl_utf_string_seek_line_to_
-  f_return_status fl_utf_string_seek_line_to(const f_utf_string string, f_utf_string_location *range, const f_utf_character seek_to_this) {
+  f_return_status fl_utf_string_seek_line_to(const f_utf_string string, f_utf_string_range *range, const f_utf_character seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -799,7 +799,7 @@ extern "C" {
 #endif // _di_fl_utf_string_seek_line_to_
 
 #ifndef _di_fl_utf_string_seek_line_to_char_
-  f_return_status fl_utf_string_seek_line_to_char(const f_utf_string string, f_utf_string_location *range, const int8_t seek_to_this) {
+  f_return_status fl_utf_string_seek_line_to_char(const f_utf_string string, f_utf_string_range *range, const int8_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -824,7 +824,7 @@ extern "C" {
 #endif // _di_fl_utf_string_seek_line_to_char_
 
 #ifndef _di_fl_utf_string_seek_line_until_graph_
-  f_return_status fl_utf_string_seek_line_until_graph(const f_utf_string string, f_utf_string_location *range, const f_utf_character placeholder) {
+  f_return_status fl_utf_string_seek_line_until_graph(const f_utf_string string, f_utf_string_range *range, const f_utf_character placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -862,7 +862,7 @@ extern "C" {
 #endif // _di_fl_utf_string_seek_line_until_graph_
 
 #ifndef _di_fl_utf_string_seek_line_until_non_graph_
-  f_return_status fl_utf_string_seek_line_until_non_graph(const f_utf_string string, f_utf_string_location *range, const f_utf_character placeholder) {
+  f_return_status fl_utf_string_seek_line_until_non_graph(const f_utf_string string, f_utf_string_range *range, const f_utf_character placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -900,7 +900,7 @@ extern "C" {
 #endif // _di_fl_utf_string_seek_line_until_non_graph_
 
 #ifndef _di_fl_utf_string_seek_to_
-  f_return_status fl_utf_string_seek_to(const f_utf_string string, f_utf_string_location *range, const f_utf_character seek_to_this) {
+  f_return_status fl_utf_string_seek_to(const f_utf_string string, f_utf_string_range *range, const f_utf_character seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -926,7 +926,7 @@ extern "C" {
 #endif // _di_fl_utf_string_seek_to_
 
 #ifndef _di_fl_utf_string_seek_to_char_
-  f_return_status fl_utf_string_seek_to_char(const f_utf_string string, f_utf_string_location *range, const int8_t seek_to_this) {
+  f_return_status fl_utf_string_seek_to_char(const f_utf_string string, f_utf_string_range *range, const int8_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_

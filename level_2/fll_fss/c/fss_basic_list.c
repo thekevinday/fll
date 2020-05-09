@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_basic_list_read_
-  f_return_status fll_fss_basic_list_read(f_string_dynamic *buffer, f_string_location *location, f_fss_objects *objects, f_fss_contents *contents) {
+  f_return_status fll_fss_basic_list_read(f_string_dynamic *buffer, f_string_range *location, f_fss_objects *objects, f_fss_contents *contents) {
     #ifndef _di_level_2_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (location == 0) return f_status_set_error(f_invalid_parameter);
@@ -151,12 +151,12 @@ extern "C" {
 
     f_status status = 0;
     f_array_length current = 0;
-    f_string_location location = f_string_location_initialize;
+    f_string_range range = f_string_range_initialize;
 
-    location.start = 0;
-    location.stop = object.used - 1;
+    range.start = 0;
+    range.stop = object.used - 1;
 
-    status = fl_fss_basic_list_object_write(object, &location, buffer);
+    status = fl_fss_basic_list_object_write(object, &range, buffer);
 
     if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
       return status;
@@ -164,9 +164,9 @@ extern "C" {
 
     if (status == f_none || status == f_none_on_stop || status == f_none_on_eos || status == f_none_on_eol) {
       if (contents.used > 0) {
-        location.start = 0;
-        location.stop = contents.array[0].used - 1;
-        status = fl_fss_basic_list_content_write(contents.array[0], &location, buffer);
+        range.start = 0;
+        range.stop = contents.array[0].used - 1;
+        status = fl_fss_basic_list_content_write(contents.array[0], &range, buffer);
 
         if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
           return status;

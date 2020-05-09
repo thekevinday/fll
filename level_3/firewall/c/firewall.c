@@ -140,7 +140,7 @@ extern "C" {
       if (found_command) {
         firewall_local_data local = firewall_local_data_initialize;
         firewall_reserved_chains reserved = firewall_reserved_chains_initialize;
-        f_string_location input = f_string_location_initialize;
+        f_string_range input = f_string_range_initialize;
 
         if (command == firewall_parameter_command_show) {
           // Warning: these are hardcoded print commands (I am not certain how I am going to implement external 'show' rules as the default-firewall setting file is the wrong place to put this)

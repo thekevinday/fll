@@ -104,7 +104,7 @@ extern "C" {
 #endif // _di_fl_unserialize_simple_
 
 #ifndef _di_fl_unserialize_simple_map_
-  f_return_status fl_unserialize_simple_map(const f_string_dynamic serialized, f_string_locations *locations) {
+  f_return_status fl_unserialize_simple_map(const f_string_dynamic serialized, f_string_ranges *locations) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized.used == 0) return f_status_set_error(f_invalid_parameter);
       if (locations == 0) return f_status_set_error(f_invalid_parameter);
@@ -122,7 +122,7 @@ extern "C" {
 
       if (serialized.string[i] == f_serialized_simple_splitter || i + 1 >= serialized.used) {
         if (locations->used >= locations->size) {
-          f_macro_string_locations_resize(status, (*locations), locations->size + f_serialized_default_allocation_step);
+          f_macro_string_ranges_resize(status, (*locations), locations->size + f_serialized_default_allocation_step);
 
           if (f_status_is_error(status)) return status;
         }
@@ -162,13 +162,13 @@ extern "C" {
 #endif // _di_fl_unserialize_simple_map_
 
 #ifndef _di_fl_unserialize_simple_find_
-  f_return_status fl_unserialize_simple_find(const f_string_dynamic serialized, const f_array_length index, f_string_location *location) {
+  f_return_status fl_unserialize_simple_find(const f_string_dynamic serialized, const f_array_length index, f_string_range *range) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized.used == 0) return f_status_set_error(f_invalid_parameter);
-      if (location == 0) return f_status_set_error(f_invalid_parameter);
+      if (range == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_fl_unserialize_simple_find(serialized, index, location);
+    return private_fl_unserialize_simple_find(serialized, index, range);
   }
 #endif // _di_fl_unserialize_simple_find_
 
@@ -179,9 +179,9 @@ extern "C" {
       if (dynamic == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_string_location location = f_string_location_initialize;
+    f_string_range range = f_string_range_initialize;
 
-    f_status status = private_fl_unserialize_simple_find(serialized, index, &location);
+    f_status status = private_fl_unserialize_simple_find(serialized, index, &range);
 
     if (f_status_is_error(status)) return status;
 
@@ -190,7 +190,7 @@ extern "C" {
       return status;
     }
 
-    f_string_length total = (location.stop - location.start) + 1;
+    f_string_length total = (range.stop - range.start) + 1;
 
     if (total >= dynamic->size) {
       f_status status_allocation = f_none;
@@ -200,7 +200,7 @@ extern "C" {
       if (f_status_is_error(status_allocation)) return status_allocation;
     }
 
-    memcpy(dynamic->string, serialized.string + location.start, total);
+    memcpy(dynamic->string, serialized.string + range.start, total);
     dynamic->used = total;
 
     return status;

@@ -66,7 +66,7 @@
 
       return f_status_set_error(status);
     } else {
-      f_string_location input = f_string_location_initialize;
+      f_string_range input = f_string_range_initialize;
 
       input.stop = buffer->used - 1;
 
@@ -483,7 +483,7 @@
   f_return_status init_process_main_rule(const init_data data, f_string_dynamic *buffer, init_data *settings) {
     f_status status = f_none;
     f_string_dynamic buffer = f_string_dynamic_initialize;
-    f_string_location location = f_string_location_initialize;
+    f_string_range range = f_string_range_initialize;
     f_fss_objects objects = f_fss_objects_initialize;
     f_fss_contents contents = f_fss_contents_initialize;
     f_string_length position = 0;

@@ -86,13 +86,13 @@ extern "C" {
  *
  * Will not stop at \0.
  * Will not print \0.
- * Will print the only the buffer range specified by location, except for leading/trailing whitespace.
+ * Will print the only the buffer range specified by range, except for leading/trailing whitespace.
  *
  * @param output
  *   The file to output to, including standard streams such as stdout and stderr.
  * @param buffer
  *   The string to output.
- * @param location
+ * @param range
  *   The range within the provided string to print.
  *
  * @return
@@ -103,7 +103,7 @@ extern "C" {
  *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_fl_print_trim_string_dynamic_partial_
-  extern f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_location location);
+  extern f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_range range);
 #endif // _di_fl_print_trim_string_dynamic_partial_
 
 /**
@@ -164,13 +164,13 @@ extern "C" {
  *
  * Will not stop at \0.
  * Will not print \0.
- * Will print the only the buffer range specified by location, except for leading/trailing whitespace.
+ * Will print the only the buffer range specified by range, except for leading/trailing whitespace.
  *
  * @param output
  *   The file to output to, including standard streams such as stdout and stderr.
  * @param buffer
  *   The string to output.
- * @param location
+ * @param range
  *   The range within the provided string to print.
  *
  * @return
@@ -181,7 +181,7 @@ extern "C" {
  *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_fl_print_trim_utf_string_dynamic_partial_
-  extern f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_dynamic buffer, const f_utf_string_location location);
+  extern f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_dynamic buffer, const f_utf_string_range range);
 #endif // _di_fl_print_trim_utf_string_dynamic_partial_
 
 #ifdef __cplusplus

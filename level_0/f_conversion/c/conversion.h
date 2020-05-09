@@ -267,13 +267,13 @@ extern "C" {
  *   f_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_binary_signed_
-  extern f_return_status f_conversion_string_to_binary_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
+  extern f_return_status f_conversion_string_to_binary_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative);
 #endif // _di_f_conversion_string_to_binary_signed_
 
 /**
  * Convert a series of positive binary number characters into a f_number_unsigned.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
@@ -282,7 +282,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  *
  * @return
@@ -292,13 +292,13 @@ extern "C" {
  *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_binary_unsigned_
-  extern f_return_status f_conversion_string_to_binary_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_binary_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
 #endif // _di_f_conversion_string_to_binary_unsigned_
 
 /**
  * Convert a series of positive or negative decimal number characters into an f_number_signed.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
@@ -307,7 +307,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  * @param negative
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
@@ -320,13 +320,13 @@ extern "C" {
  *   f_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_decimal_signed_
-  extern f_return_status f_conversion_string_to_decimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
+  extern f_return_status f_conversion_string_to_decimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative);
 #endif // _di_f_conversion_string_to_decimal_signed_
 
 /**
  * Convert a series of positive decimal number characters into an f_number_unsigned.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
@@ -335,7 +335,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  *
  * @return
@@ -345,13 +345,13 @@ extern "C" {
  *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_decimal_unsigned_
-  extern f_return_status f_conversion_string_to_decimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_decimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
 #endif // _di_f_conversion_string_to_decimal_unsigned_
 
 /**
  * Convert a series of positive or negative duodecimal number characters into an f_number_signed.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
@@ -360,7 +360,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  * @param negative
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
@@ -373,13 +373,13 @@ extern "C" {
  *   f_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_duodecimal_signed_
-  extern f_return_status f_conversion_string_to_duodecimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
+  extern f_return_status f_conversion_string_to_duodecimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative);
 #endif // _di_f_conversion_string_to_duodecimal_signed_
 
 /**
  * Convert a series of positive duodecimal number characters into an f_number_unsigned.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
@@ -388,7 +388,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  *
  * @return
@@ -398,13 +398,13 @@ extern "C" {
  *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_duodecimal_unsigned_
-  extern f_return_status f_conversion_string_to_duodecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_duodecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
 #endif // _di_f_conversion_string_to_duodecimal_unsigned_
 
 /**
  * Convert a series of positive or negative hexidecimal number characters into an f_number_signed.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
@@ -413,7 +413,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  * @param negative
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
@@ -426,13 +426,13 @@ extern "C" {
  *   f_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_hexidecimal_signed_
-  extern f_return_status f_conversion_string_to_hexidecimal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
+  extern f_return_status f_conversion_string_to_hexidecimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative);
 #endif // _di_f_conversion_string_to_hexidecimal_signed_
 
 /**
  * Convert a series of positive hexidecimal number characters into an f_number_unsigned.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
@@ -441,7 +441,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  *
  * @return
@@ -451,13 +451,13 @@ extern "C" {
  *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_hexidecimal_unsigned_
-  extern f_return_status f_conversion_string_to_hexidecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_hexidecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
 #endif // _di_f_conversion_string_to_hexidecimal_unsigned_
 
 /**
  * Convert a series of positive or negative octal number characters into an f_number_signed.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
@@ -466,7 +466,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  * @param negative
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
@@ -478,13 +478,13 @@ extern "C" {
  *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_octal_signed_
-  extern f_return_status f_conversion_string_to_octal_signed(const f_string string, f_number_signed *number, const f_string_location location, const bool negative);
+  extern f_return_status f_conversion_string_to_octal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative);
 #endif // _di_f_conversion_string_to_octal_signed_
 
 /**
  * Convert a series of positive octal number characters into an f_number_unsigned.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
@@ -493,7 +493,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  *
  * @return
@@ -503,13 +503,13 @@ extern "C" {
  *   f_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_octal_unsigned_
-  extern f_return_status f_conversion_string_to_octal_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_octal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
 #endif // _di_f_conversion_string_to_octal_unsigned_
 
 /**
  * Convert a series of positive or negative number characters into an f_number_signed.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will process signed statuses (+/-).
  * This will detect based types as follows:
@@ -530,7 +530,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  *
  * @return
@@ -545,13 +545,13 @@ extern "C" {
  * @see strtoll()
  */
 #ifndef _di_f_conversion_string_to_number_signed_
-  extern f_return_status f_conversion_string_to_number_signed(const f_string string, f_number_signed *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_number_signed(const f_string string, f_number_signed *number, const f_string_range range);
 #endif // _di_f_conversion_string_to_number_signed_
 
 /**
  * Convert a series of positive number characters into an f_number_unsigned.
  *
- * This will stop at one of the following: location.stop or a non-digit.
+ * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  * This will detect based types as follows:
@@ -573,7 +573,7 @@ extern "C" {
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
- * @param location
+ * @param range
  *   The start/stop range to convert.
  *
  * @return
@@ -589,7 +589,7 @@ extern "C" {
  * @see strtoull()
  */
 #ifndef _di_f_conversion_string_to_number_unsigned_
-  extern f_return_status f_conversion_string_to_number_unsigned(const f_string string, f_number_unsigned *number, const f_string_location location);
+  extern f_return_status f_conversion_string_to_number_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
 #endif // _di_f_conversion_string_to_number_unsigned_
 
 #ifdef __cplusplus

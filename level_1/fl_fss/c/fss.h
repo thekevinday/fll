@@ -35,7 +35,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to process.
- * @param location
+ * @param range
  *   The start and stop positions to be incremented.
  *   The start position will be incremented by step.
  * @param step
@@ -47,14 +47,14 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_none_on_stop if the stop location is reached before all steps are completed.
+ *   f_none_on_stop if the stop range is reached before all steps are completed.
  *   f_none_on_eos if the end of buffer is reached before all steps are completed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   f_incomplete_utf_on_stop (with error bit) if the stop range is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  */
 #ifndef _di_fl_fss_decrement_buffer_
-  extern f_return_status fl_fss_decrement_buffer(const f_string_dynamic buffer, f_string_location *location, const f_string_length step);
+  extern f_return_status fl_fss_decrement_buffer(const f_string_dynamic buffer, f_string_range *range, const f_string_length step);
 #endif // _di_fl_fss_decrement_buffer_
 
 /**
@@ -104,7 +104,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to process.
- * @param location
+ * @param range
  *   The start and stop positions to be incremented.
  *   The start position will be incremented by step.
  * @param step
@@ -116,14 +116,14 @@ extern "C" {
  *
  * @return
  *   f_none on success.
- *   f_none_on_stop if the stop location is reached before all steps are completed.
+ *   f_none_on_stop if the stop range is reached before all steps are completed.
  *   f_none_on_eos if the end of buffer is reached before all steps are completed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   f_incomplete_utf_on_stop (with error bit) if the stop range is reached before the complete UTF-8 character can be processed.
  *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  */
 #ifndef _di_fl_fss_increment_buffer_
-  extern f_return_status fl_fss_increment_buffer(const f_string_dynamic buffer, f_string_location *location, const f_string_length step);
+  extern f_return_status fl_fss_increment_buffer(const f_string_dynamic buffer, f_string_range *range, const f_string_length step);
 #endif // _di_fl_fss_increment_buffer_
 
 /**
@@ -131,7 +131,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to process.
- * @param location
+ * @param range
  *   The character at the start position will be checked against the graph.
  * @param header
  *   The header data to populate with results of this function.
@@ -144,7 +144,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_is_graph_
-  extern f_return_status fl_fss_is_graph(const f_string_dynamic buffer, const f_string_location location);
+  extern f_return_status fl_fss_is_graph(const f_string_dynamic buffer, const f_string_range range);
 #endif // _di_fl_fss_is_graph_
 
 /**
@@ -152,7 +152,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to process.
- * @param location
+ * @param range
  *   The character at the start position will be checked against the graph.
  * @param header
  *   The header data to populate with results of this function.
@@ -165,7 +165,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_is_space_
-  extern f_return_status fl_fss_is_space(const f_string_dynamic buffer, const f_string_location location);
+  extern f_return_status fl_fss_is_space(const f_string_dynamic buffer, const f_string_range range);
 #endif // _di_fl_fss_is_space_
 
 /**
@@ -177,16 +177,16 @@ extern "C" {
  * @param buffer
  *   The string to process.
  *   This gets updated.
- * @param location
+ * @param range
  *   A restriction on where within the buffer the shifting happens.
  *
  * @return
  *   f_none on success.
- *   f_invalid_utf (with error bit) if UTF-8 cannot be fully processed (buffer or location range not long enough).
+ *   f_invalid_utf (with error bit) if UTF-8 cannot be fully processed (buffer or range range not long enough).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_shift_delimiters_
-  extern f_return_status fl_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_location location);
+  extern f_return_status fl_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_range range);
 #endif // _di_fl_fss_shift_delimiters_
 
 /**
@@ -197,16 +197,16 @@ extern "C" {
  *
  * @param buffer
  *   The string to process.
- * @param location
+ * @param range
  *   The start and stop positions in the buffer being processed.
- *   This increments location->start.
+ *   This increments range->start.
  *
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_skip_past_space_
-  extern f_return_status fl_fss_skip_past_space(const f_string_dynamic buffer, f_string_location *location);
+  extern f_return_status fl_fss_skip_past_space(const f_string_dynamic buffer, f_string_range *range);
 #endif // _di_fl_fss_skip_past_space_
 
 /**
@@ -217,16 +217,16 @@ extern "C" {
  *
  * @param buffer
  *   The string to process.
- * @param location
+ * @param range
  *   The start and stop positions in the buffer being processed.
- *   This increments location->start.
+ *   This increments range->start.
  *
  * @return
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_skip_past_non_graph_
-  extern f_return_status fl_fss_skip_past_non_graph(const f_string_dynamic buffer, f_string_location *location);
+  extern f_return_status fl_fss_skip_past_non_graph(const f_string_dynamic buffer, f_string_range *range);
 #endif // _di_fl_fss_skip_past_non_graph_
 
 #ifdef __cplusplus

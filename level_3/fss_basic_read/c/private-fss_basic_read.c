@@ -242,7 +242,7 @@ extern "C" {
     f_status status = f_none;
 
     {
-      f_string_location input = f_string_location_initialize;
+      f_string_range input = f_string_range_initialize;
 
       input.start = 0;
       input.stop = data->buffer.used - 1;
@@ -389,7 +389,7 @@ extern "C" {
         return f_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_dynamic, const f_string_location) = &f_print_string_dynamic_partial;
+      f_return_status (*print_object)(FILE *, const f_string_dynamic, const f_string_range) = &f_print_string_dynamic_partial;
 
       if (data->parameters[fss_basic_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_string_dynamic_partial;
