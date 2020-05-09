@@ -134,7 +134,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_extended_list_object_write_
-  extern f_return_status fl_fss_extended_list_object_write(const f_string_dynamic object, f_string_range *location, f_string_dynamic *buffer);
+  extern f_return_status fl_fss_extended_list_object_write(const f_string_static object, f_string_range *location, f_string_dynamic *buffer);
 #endif // _di_fl_fss_extended_list_object_write_
 
 /**
@@ -163,7 +163,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_extended_list_content_write_
-  extern f_return_status fl_fss_extended_list_content_write(const f_string_dynamic content, f_string_range *location, f_string_dynamic *buffer);
+  extern f_return_status fl_fss_extended_list_content_write(const f_string_static content, f_string_range *location, f_string_dynamic *buffer);
 #endif // _di_fl_fss_extended_list_content_write_
 
 #ifdef __cplusplus

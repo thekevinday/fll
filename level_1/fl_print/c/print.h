@@ -76,7 +76,7 @@ extern "C" {
  *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_fl_print_trim_string_dynamic_
-  extern f_return_status fl_print_trim_string_dynamic(FILE *output, const f_string_dynamic buffer);
+  extern f_return_status fl_print_trim_string_dynamic(FILE *output, const f_string_static buffer);
 #endif // _di_fl_print_trim_string_dynamic_
 
 /**
@@ -103,7 +103,7 @@ extern "C" {
  *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_fl_print_trim_string_dynamic_partial_
-  extern f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_dynamic buffer, const f_string_range range);
+  extern f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_static buffer, const f_string_range range);
 #endif // _di_fl_print_trim_string_dynamic_partial_
 
 /**

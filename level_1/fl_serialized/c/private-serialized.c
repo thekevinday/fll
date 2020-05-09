@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_unserialize_simple_find_) || !defined(_di_fl_unserialize_simple_get_)
-  f_return_status private_fl_unserialize_simple_find(const f_string_dynamic serialized, const f_array_length index, f_string_range *location) {
+  f_return_status private_fl_unserialize_simple_find(const f_string_static serialized, const f_array_length index, f_string_range *location) {
     f_status status = f_none;
 
     f_array_length i = 0;

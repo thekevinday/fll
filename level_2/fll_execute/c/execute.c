@@ -92,7 +92,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_set_
 
 #ifndef _di_fll_execute_arguments_dynamic_add_
-  f_return_status fll_execute_arguments_dynamic_add(const f_string_dynamic source, f_string_dynamics *arguments) {
+  f_return_status fll_execute_arguments_dynamic_add(const f_string_static source, f_string_dynamics *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (source.used > source.size) return f_status_set_error(f_invalid_parameter);
       if (arguments == 0) return f_status_set_error(f_invalid_parameter);
@@ -112,7 +112,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_dynamic_add_
 
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_
-  f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_dynamic prefix, const f_string_dynamic name, const f_string_dynamic value, f_string_dynamics *arguments) {
+  f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_static prefix, const f_string_static name, const f_string_static value, f_string_dynamics *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (prefix.used > prefix.size) return f_status_set_error(f_invalid_parameter);
       if (name.used > name.size) return f_status_set_error(f_invalid_parameter);
@@ -135,7 +135,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_dynamic_add_parameter_
 
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
-  f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_dynamic prefix[], const f_string_dynamic name[], const f_string_dynamic value[], const f_array_length size, f_string_dynamics *arguments) {
+  f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_static prefix[], const f_string_static name[], const f_string_static value[], const f_array_length size, f_string_dynamics *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (arguments == 0) return f_status_set_error(f_invalid_parameter);
       if (arguments->used > arguments->size) return f_status_set_error(f_invalid_parameter);
@@ -162,7 +162,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_dynamic_add_parameter_set_
 
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
-  f_return_status fll_execute_arguments_dynamic_add_set(const f_string_dynamic source[], const f_array_length size, f_string_dynamics *arguments) {
+  f_return_status fll_execute_arguments_dynamic_add_set(const f_string_static source[], const f_array_length size, f_string_dynamics *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (arguments == 0) return f_status_set_error(f_invalid_parameter);
       if (arguments->used > arguments->size) return f_status_set_error(f_invalid_parameter);

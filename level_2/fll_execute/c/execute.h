@@ -182,7 +182,7 @@ extern "C" {
  *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_
-  extern f_return_status fll_execute_arguments_dynamic_add(const f_string_dynamic source, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_dynamic_add(const f_string_static source, f_string_dynamics *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_
 
 /**
@@ -215,7 +215,7 @@ extern "C" {
  *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_
-  extern f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_dynamic prefix, const f_string_dynamic name, const f_string_dynamic value, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_static prefix, const f_string_static name, const f_string_static value, f_string_dynamics *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_parameter_
 
 /**
@@ -250,7 +250,7 @@ extern "C" {
  *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
-  extern f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_dynamic prefix[], const f_string_dynamic name[], const f_string_dynamic value[], const f_array_length size, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_static prefix[], const f_string_static name[], const f_string_static value[], const f_array_length size, f_string_dynamics *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_parameter_set_
 
 /**
@@ -275,7 +275,7 @@ extern "C" {
  *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
-  extern f_return_status fll_execute_arguments_dynamic_add_set(const f_string_dynamic source[], const f_array_length size, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_dynamic_add_set(const f_string_static source[], const f_array_length size, f_string_dynamics *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_set_
 
 /**

@@ -162,7 +162,7 @@ extern "C" {
  * @see fl_string_dynamic_append_nulless()
  */
 #ifndef _di_fl_string_dynamic_append_
-  extern f_return_status fl_string_dynamic_append(const f_string_dynamic source, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_append(const f_string_static source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_append_
 
 /**
@@ -186,7 +186,7 @@ extern "C" {
  * @see fl_string_dynamic_append()
  */
 #ifndef _di_fl_string_dynamic_append_nulless_
-  extern f_return_status fl_string_dynamic_append_nulless(const f_string_dynamic source, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_append_nulless(const f_string_static source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_append_nulless_
 
 /**
@@ -211,7 +211,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare_trim()
  */
 #ifndef _di_fl_string_dynamic_compare_
-  extern f_return_status fl_string_dynamic_compare(const f_string_dynamic string1, const f_string_dynamic string2);
+  extern f_return_status fl_string_dynamic_compare(const f_string_static string1, const f_string_static string2);
 #endif // _di_fl_string_dynamic_compare_
 
 /**
@@ -237,7 +237,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare_trim()
  */
 #ifndef _di_fl_string_dynamic_compare_trim_
-  extern f_return_status fl_string_dynamic_compare_trim(const f_string_dynamic string1, const f_string_dynamic string2);
+  extern f_return_status fl_string_dynamic_compare_trim(const f_string_static string1, const f_string_static string2);
 #endif // _di_fl_string_dynamic_compare_trim_
 
 /**
@@ -265,7 +265,7 @@ extern "C" {
  * @see fl_string_dynamic_mash_nulless()
  */
 #ifndef _di_fl_string_dynamic_mash_
-  extern f_return_status fl_string_dynamic_mash(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_mash(const f_string glue, const f_string_length glue_length, const f_string_static source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_mash_
 
 /**
@@ -295,7 +295,7 @@ extern "C" {
  * @see fl_string_dynamic_mash()
  */
 #ifndef _di_fl_string_dynamic_mash_nulless_
-  extern f_return_status fl_string_dynamic_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string_static source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_mash_nulless_
 
 /**
@@ -323,7 +323,7 @@ extern "C" {
  * @see fl_string_dynamic_mish_nulless()
  */
 #ifndef _di_fl_string_dynamic_mish_
-  extern f_return_status fl_string_dynamic_mish(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_mish(const f_string glue, const f_string_length glue_length, const f_string_static source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_mish_
 
 /**
@@ -353,7 +353,7 @@ extern "C" {
  * @see fl_string_dynamic_mish()
  */
 #ifndef _di_fl_string_dynamic_mish_nulless_
-  extern f_return_status fl_string_dynamic_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string_static source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_mish_nulless_
 
 /**
@@ -377,7 +377,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fl_string_dynamic_partial_append_
-  extern f_return_status fl_string_dynamic_partial_append(const f_string_dynamic source, const f_string_range range, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_partial_append(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_partial_append_
 
 /**
@@ -403,7 +403,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append()
  */
 #ifndef _di_fl_string_dynamic_partial_append_nulless_
-  extern f_return_status fl_string_dynamic_partial_append_nulless(const f_string_dynamic source, const f_string_range range, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_partial_append_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_partial_append_nulless_
 
 /**
@@ -432,7 +432,7 @@ extern "C" {
  * @see fl_string_dynamic_compare_trim()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_
-  extern f_return_status fl_string_dynamic_partial_compare(const f_string_dynamic string1, const f_string_dynamic string2, const f_string_range range1, const f_string_range range2);
+  extern f_return_status fl_string_dynamic_partial_compare(const f_string_static string1, const f_string_static string2, const f_string_range range1, const f_string_range range2);
 #endif // _di_fl_string_dynamic_partial_compare_
 
 /**
@@ -462,7 +462,7 @@ extern "C" {
  * @see fl_string_dynamic_compare_trim()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_trim_
-  extern f_return_status fl_string_dynamic_partial_compare_trim(const f_string_dynamic string1, const f_string_dynamic string2, const f_string_range range1, const f_string_range range2);
+  extern f_return_status fl_string_dynamic_partial_compare_trim(const f_string_static string1, const f_string_static string2, const f_string_range range1, const f_string_range range2);
 #endif // _di_fl_string_dynamic_partial_compare_trim_
 
 /**
@@ -492,7 +492,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_mash_nulless()
  */
 #ifndef _di_fl_string_dynamic_partial_mash_
-  extern f_return_status fl_string_dynamic_partial_mash(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, const f_string_range range, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_partial_mash(const f_string glue, const f_string_length glue_length, const f_string_static source, const f_string_range range, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_partial_mash_
 
 /**
@@ -524,7 +524,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_mash()
  */
 #ifndef _di_fl_string_dynamic_partial_mash_nulless_
-  extern f_return_status fl_string_dynamic_partial_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, const f_string_range range, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_partial_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string_static source, const f_string_range range, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_partial_mash_nulless_
 
 /**
@@ -554,7 +554,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_mish_nulless()
  */
 #ifndef _di_fl_string_dynamic_partial_mish_
-  extern f_return_status fl_string_dynamic_partial_mish(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, const f_string_range range, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_partial_mish(const f_string glue, const f_string_length glue_length, const f_string_static source, const f_string_range range, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_partial_mish_
 
 /**
@@ -586,7 +586,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_mish()
  */
 #ifndef _di_fl_string_dynamic_partial_mish_nulless_
-  extern f_return_status fl_string_dynamic_partial_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string_dynamic source, const f_string_range range, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_partial_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string_static source, const f_string_range range, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_partial_mish_nulless_
 
 /**
@@ -612,7 +612,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_prepend_nulless()
  */
 #ifndef _di_fl_string_dynamic_partial_prepend_
-  extern f_return_status fl_string_dynamic_partial_prepend(const f_string_dynamic source, const f_string_range range, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_partial_prepend(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_partial_prepend_
 
 /**
@@ -638,7 +638,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_prepend()
  */
 #ifndef _di_fl_string_dynamic_partial_prepend_nulless_
-  extern f_return_status fl_string_dynamic_partial_prepend_nulless(const f_string_dynamic source, const f_string_range range, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_partial_prepend_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_partial_prepend_nulless_
 
 /**
@@ -662,7 +662,7 @@ extern "C" {
  * @see fl_string_dynamic_prepend_nulless()
  */
 #ifndef _di_fl_string_dynamic_prepend_
-  extern f_return_status fl_string_dynamic_prepend(const f_string_dynamic source, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_prepend(const f_string_static source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_prepend_
 
 /**
@@ -686,7 +686,7 @@ extern "C" {
  * @see fl_string_dynamic_prepend()
  */
 #ifndef _di_fl_string_dynamic_prepend_nulless_
-  extern f_return_status fl_string_dynamic_prepend_nulless(const f_string_dynamic source, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_prepend_nulless(const f_string_static source, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_prepend_nulless_
 
 /**
@@ -712,7 +712,7 @@ extern "C" {
  * @see fl_string_dynamic_rip_nulless()
  */
 #ifndef _di_fl_string_dynamic_rip_
-  extern f_return_status fl_string_dynamic_rip(const f_string_dynamic source, const f_string_range range, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_rip(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_rip_
 
 /**
@@ -740,7 +740,7 @@ extern "C" {
  * @see fl_string_dynamic_rip()
  */
 #ifndef _di_fl_string_dynamic_rip_nulless_
-  extern f_return_status fl_string_dynamic_rip_nulless(const f_string_dynamic source, const f_string_range range, f_string_dynamic *destination);
+  extern f_return_status fl_string_dynamic_rip_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
 #endif // _di_fl_string_dynamic_rip_nulless_
 
 /**
@@ -765,7 +765,7 @@ extern "C" {
  * @see fl_string_seek_line_to_utf_character()
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_
-  extern f_return_status fl_string_dynamic_seek_line_to(const f_string_dynamic buffer, f_string_range *range, const int8_t seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_line_to(const f_string_static buffer, f_string_range *range, const int8_t seek_to_this);
 #endif // _di_fl_string_dynamic_seek_line_to_
 
 /**
@@ -793,7 +793,7 @@ extern "C" {
  * @see fl_string_seek_line_to()
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_utf_character_
-  extern f_return_status fl_string_dynamic_seek_line_to_utf_character(const f_string_dynamic buffer, f_string_range *range, const f_utf_character seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_line_to_utf_character(const f_string_static buffer, f_string_range *range, const f_utf_character seek_to_this);
 #endif // _di_fl_string_dynamic_seek_line_to_utf_character_
 
 /**
@@ -820,7 +820,7 @@ extern "C" {
  * @see fl_string_seek_line_until_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_
-  extern f_return_status fl_string_dynamic_seek_line_until_graph(const f_string_dynamic buffer, f_string_range *range, const int8_t placeholder);
+  extern f_return_status fl_string_dynamic_seek_line_until_graph(const f_string_static buffer, f_string_range *range, const int8_t placeholder);
 #endif // _di_fl_string_dynamic_seek_line_until_graph_
 
 /**
@@ -848,7 +848,7 @@ extern "C" {
  * @see fl_string_seek_line_until_non_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_non_graph_
-  extern f_return_status fl_string_dynamic_seek_line_until_non_graph(const f_string_dynamic buffer, f_string_range *range, const int8_t placeholder);
+  extern f_return_status fl_string_dynamic_seek_line_until_non_graph(const f_string_static buffer, f_string_range *range, const int8_t placeholder);
 #endif // _di_fl_string_dynamic_seek_line_until_non_graph_
 
 /**
@@ -876,7 +876,7 @@ extern "C" {
  * @see fl_string_seek_to_utf_character()
  */
 #ifndef _di_fl_string_dynamic_seek_to_
-  extern f_return_status fl_string_dynamic_seek_to(const f_string_dynamic buffer, f_string_range *range, const int8_t seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_to(const f_string_static buffer, f_string_range *range, const int8_t seek_to_this);
 #endif // _di_fl_string_dynamic_seek_to_
 
 /**
@@ -905,7 +905,7 @@ extern "C" {
  * @see fl_string_seek_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_to_utf_character_
-  extern f_return_status fl_string_dynamic_seek_to_utf_character(const f_string_dynamic buffer, f_string_range *range, const f_utf_character seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_to_utf_character(const f_string_static buffer, f_string_range *range, const f_utf_character seek_to_this);
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
 /**

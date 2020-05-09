@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_snatch_
-  f_return_status fll_fss_snatch(const f_string_dynamic buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size) {
+  f_return_status fll_fss_snatch(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -45,7 +45,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_
 
 #ifndef _di_fll_fss_snatch_apart_
-  f_return_status fll_fss_snatch_apart(const f_string_dynamic buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamics *values[], const f_string_length size) {
+  f_return_status fll_fss_snatch_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamics *values[], const f_string_length size) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -92,7 +92,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_apart_
 
 #ifndef _di_fll_fss_snatch_together_
-  f_return_status fll_fss_snatch_together(const f_string_dynamic buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size) {
+  f_return_status fll_fss_snatch_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -130,7 +130,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_together_
 
 #ifndef _di_fll_fss_snatch_mash_
-  f_return_status fll_fss_snatch_mash(const f_string_dynamic buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size, const f_string glue, const f_string_length glue_length) {
+  f_return_status fll_fss_snatch_mash(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size, const f_string glue, const f_string_length glue_length) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -170,7 +170,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_mash_
 
 #ifndef _di_fll_fss_snatch_mash_apart_
-  f_return_status fll_fss_snatch_mash_apart(const f_string_dynamic buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamics *values[], const f_string_length size, const f_string glue, const f_string_length glue_length) {
+  f_return_status fll_fss_snatch_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamics *values[], const f_string_length size, const f_string glue, const f_string_length glue_length) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -225,7 +225,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_mash_apart_
 
 #ifndef _di_fll_fss_snatch_mash_together_
-  f_return_status fll_fss_snatch_mash_together(const f_string_dynamic buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size, const f_string glue, const f_string_length glue_length) {
+  f_return_status fll_fss_snatch_mash_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size, const f_string glue, const f_string_length glue_length) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_2_parameter_checking_

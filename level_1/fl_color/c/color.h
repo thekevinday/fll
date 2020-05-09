@@ -216,7 +216,7 @@ extern "C" {
  *   f_error_output (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_
-  extern f_return_status fl_color_print(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const int8_t *string, ...);
+  extern f_return_status fl_color_print(FILE *file, const f_string_static start_color, const f_string_static end_color, const int8_t *string, ...);
 #endif // _di_fl_color_print_
 
 /**
@@ -248,7 +248,7 @@ extern "C" {
  *   f_error_output (with error bit) on output error.
  */
 #ifndef _di_fl_color_print2_
-  extern f_return_status fl_color_print2(FILE *file, const f_string_dynamic start_color, const f_string_dynamic extra_color, const f_string_dynamic end_color, const int8_t *string, ...);
+  extern f_return_status fl_color_print2(FILE *file, const f_string_static start_color, const f_string_static extra_color, const f_string_static end_color, const int8_t *string, ...);
 #endif // _di_fl_color_print2_
 
 /**
@@ -275,7 +275,7 @@ extern "C" {
  *   f_error_output (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_line_
-  extern f_return_status fl_color_print_line(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const int8_t *string, ...);
+  extern f_return_status fl_color_print_line(FILE *file, const f_string_static start_color, const f_string_static end_color, const int8_t *string, ...);
 #endif // _di_fl_color_print_line_
 
 /**
@@ -307,7 +307,7 @@ extern "C" {
  *   f_error_output (with error bit) on output error.
  */
 #ifndef _di_fl_color_print2_line_
-  extern f_return_status fl_color_print2_line(FILE *file, const f_string_dynamic start_color, const f_string_dynamic extra_color, const f_string_dynamic end_color, const int8_t *string, ...);
+  extern f_return_status fl_color_print2_line(FILE *file, const f_string_static start_color, const f_string_static extra_color, const f_string_static end_color, const int8_t *string, ...);
 #endif // _di_fl_color_print2_line_
 
 /**
@@ -326,7 +326,7 @@ extern "C" {
  *   f_error_output (with error bit) on output error.
  */
 #ifndef _di_fl_color_print_code_
-  extern f_return_status fl_color_print_code(FILE *file, const f_string_dynamic color);
+  extern f_return_status fl_color_print_code(FILE *file, const f_string_static color);
 #endif // _di_fl_color_print_code_
 
 /**

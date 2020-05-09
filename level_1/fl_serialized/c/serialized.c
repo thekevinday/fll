@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_serialize_simple_
-  f_return_status fl_serialize_simple(const f_string_dynamic value, f_string_dynamic *serialized) {
+  f_return_status fl_serialize_simple(const f_string_static value, f_string_dynamic *serialized) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -34,7 +34,7 @@ extern "C" {
 #endif // _di_fl_serialize_simple_
 
 #ifndef _di_fl_unserialize_simple_
-  f_return_status fl_unserialize_simple(const f_string_dynamic serialized, f_string_dynamics *strings) {
+  f_return_status fl_unserialize_simple(const f_string_static serialized, f_string_dynamics *strings) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized.used == 0) return f_status_set_error(f_invalid_parameter);
       if (strings == 0) return f_status_set_error(f_invalid_parameter);
@@ -104,7 +104,7 @@ extern "C" {
 #endif // _di_fl_unserialize_simple_
 
 #ifndef _di_fl_unserialize_simple_map_
-  f_return_status fl_unserialize_simple_map(const f_string_dynamic serialized, f_string_ranges *locations) {
+  f_return_status fl_unserialize_simple_map(const f_string_static serialized, f_string_ranges *locations) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized.used == 0) return f_status_set_error(f_invalid_parameter);
       if (locations == 0) return f_status_set_error(f_invalid_parameter);
@@ -162,7 +162,7 @@ extern "C" {
 #endif // _di_fl_unserialize_simple_map_
 
 #ifndef _di_fl_unserialize_simple_find_
-  f_return_status fl_unserialize_simple_find(const f_string_dynamic serialized, const f_array_length index, f_string_range *range) {
+  f_return_status fl_unserialize_simple_find(const f_string_static serialized, const f_array_length index, f_string_range *range) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized.used == 0) return f_status_set_error(f_invalid_parameter);
       if (range == 0) return f_status_set_error(f_invalid_parameter);
@@ -173,7 +173,7 @@ extern "C" {
 #endif // _di_fl_unserialize_simple_find_
 
 #ifndef _di_fl_unserialize_simple_get_
-  f_return_status fl_unserialize_simple_get(const f_string_dynamic serialized, const f_array_length index, f_string_dynamic *dynamic) {
+  f_return_status fl_unserialize_simple_get(const f_string_static serialized, const f_array_length index, f_string_dynamic *dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (serialized.used == 0) return f_status_set_error(f_invalid_parameter);
       if (dynamic == 0) return f_status_set_error(f_invalid_parameter);

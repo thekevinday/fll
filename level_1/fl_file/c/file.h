@@ -80,7 +80,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_file_write_
-  extern f_return_status fl_file_write(f_file *file, const f_string_dynamic buffer);
+  extern f_return_status fl_file_write(f_file *file, const f_string_static buffer);
 #endif // _di_fl_file_write_
 
 /**
@@ -100,7 +100,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_file_write_position_
-  extern f_return_status fl_file_write_position(f_file *file, const f_string_dynamic buffer, const f_string_range position);
+  extern f_return_status fl_file_write_position(f_file *file, const f_string_static buffer, const f_string_range position);
 #endif // _di_fl_file_write_position_
 
 #ifdef __cplusplus

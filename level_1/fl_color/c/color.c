@@ -114,7 +114,7 @@ extern "C" {
 #endif // _di_fl_color_save_
 
 #ifndef _di_fl_color_print_
-  f_return_status fl_color_print(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const int8_t *string, ...) {
+  f_return_status fl_color_print(FILE *file, const f_string_static start_color, const f_string_static end_color, const int8_t *string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (string == 0) return f_status_set_error(f_invalid_parameter);
@@ -145,7 +145,7 @@ extern "C" {
 #endif // _di_fl_color_print_
 
 #ifndef _di_fl_color_print2_
-  f_return_status fl_color_print2(FILE *file, const f_string_dynamic start_color, const f_string_dynamic extra_color, const f_string_dynamic end_color, const int8_t *string, ...) {
+  f_return_status fl_color_print2(FILE *file, const f_string_static start_color, const f_string_static extra_color, const f_string_static end_color, const int8_t *string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (string == 0) return f_status_set_error(f_invalid_parameter);
@@ -180,7 +180,7 @@ extern "C" {
 #endif // _di_fl_color_print2_
 
 #ifndef _di_fl_color_print_line_
-  f_return_status fl_color_print_line(FILE *file, const f_string_dynamic start_color, const f_string_dynamic end_color, const int8_t *string, ...) {
+  f_return_status fl_color_print_line(FILE *file, const f_string_static start_color, const f_string_static end_color, const int8_t *string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (string == 0) return f_status_set_error(f_invalid_parameter);
@@ -214,7 +214,7 @@ extern "C" {
 #endif // _di_fl_color_print_line_
 
 #ifndef _di_fl_color_print2_line_
-  f_return_status fl_color_print2_line(FILE *file, const f_string_dynamic start_color, const f_string_dynamic extra_color, const f_string_dynamic end_color, const int8_t *string, ...) {
+  f_return_status fl_color_print2_line(FILE *file, const f_string_static start_color, const f_string_static extra_color, const f_string_static end_color, const int8_t *string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (string == 0) return f_status_set_error(f_invalid_parameter);
@@ -252,7 +252,7 @@ extern "C" {
 #endif // _di_fl_color_print2_line_
 
 #ifndef _di_fl_color_print_code_
-  f_return_status fl_color_print_code(FILE *file, const f_string_dynamic color) {
+  f_return_status fl_color_print_code(FILE *file, const f_string_static color) {
     if (color.used != 0) {
       f_status status = f_print_string_dynamic(file, color);
 

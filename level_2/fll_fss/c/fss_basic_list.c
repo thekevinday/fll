@@ -143,7 +143,7 @@ extern "C" {
 #endif // _di_fll_fss_basic_list_read_
 
 #ifndef _di_fll_fss_basic_list_write_
-  f_return_status fll_fss_basic_list_write(const f_string_dynamic object, const f_string_dynamics contents, f_string_dynamic *buffer) {
+  f_return_status fll_fss_basic_list_write(const f_string_static object, const f_string_dynamics contents, f_string_dynamic *buffer) {
     #ifndef _di_level_2_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
       if (contents.used > contents.size) return f_status_set_error(f_invalid_parameter);

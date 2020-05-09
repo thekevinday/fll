@@ -54,7 +54,7 @@ extern "C" {
  *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  */
 #ifndef _di_fl_fss_decrement_buffer_
-  extern f_return_status fl_fss_decrement_buffer(const f_string_dynamic buffer, f_string_range *range, const f_string_length step);
+  extern f_return_status fl_fss_decrement_buffer(const f_string_static buffer, f_string_range *range, const f_string_length step);
 #endif // _di_fl_fss_decrement_buffer_
 
 /**
@@ -71,7 +71,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_identify_
-  extern f_return_status fl_fss_identify(const f_string_dynamic buffer, f_fss_header *header);
+  extern f_return_status fl_fss_identify(const f_string_static buffer, f_fss_header *header);
 #endif // _di_fl_fss_identify_
 
 /**
@@ -123,7 +123,7 @@ extern "C" {
  *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  */
 #ifndef _di_fl_fss_increment_buffer_
-  extern f_return_status fl_fss_increment_buffer(const f_string_dynamic buffer, f_string_range *range, const f_string_length step);
+  extern f_return_status fl_fss_increment_buffer(const f_string_static buffer, f_string_range *range, const f_string_length step);
 #endif // _di_fl_fss_increment_buffer_
 
 /**
@@ -144,7 +144,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_is_graph_
-  extern f_return_status fl_fss_is_graph(const f_string_dynamic buffer, const f_string_range range);
+  extern f_return_status fl_fss_is_graph(const f_string_static buffer, const f_string_range range);
 #endif // _di_fl_fss_is_graph_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_is_space_
-  extern f_return_status fl_fss_is_space(const f_string_dynamic buffer, const f_string_range range);
+  extern f_return_status fl_fss_is_space(const f_string_static buffer, const f_string_range range);
 #endif // _di_fl_fss_is_space_
 
 /**
@@ -206,7 +206,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_skip_past_space_
-  extern f_return_status fl_fss_skip_past_space(const f_string_dynamic buffer, f_string_range *range);
+  extern f_return_status fl_fss_skip_past_space(const f_string_static buffer, f_string_range *range);
 #endif // _di_fl_fss_skip_past_space_
 
 /**
@@ -226,7 +226,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_skip_past_non_graph_
-  extern f_return_status fl_fss_skip_past_non_graph(const f_string_dynamic buffer, f_string_range *range);
+  extern f_return_status fl_fss_skip_past_non_graph(const f_string_static buffer, f_string_range *range);
 #endif // _di_fl_fss_skip_past_non_graph_
 
 #ifdef __cplusplus

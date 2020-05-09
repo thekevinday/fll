@@ -419,7 +419,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_content_read_
 
 #ifndef _di_fl_fss_basic_object_write_
-  f_return_status fl_fss_basic_object_write(f_string_dynamic *buffer, const f_string_dynamic object, f_string_range *location) {
+  f_return_status fl_fss_basic_object_write(f_string_dynamic *buffer, const f_string_static object, f_string_range *location) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -658,7 +658,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_write_
 
 #ifndef _di_fl_fss_basic_content_write_
-  f_return_status fl_fss_basic_content_write(f_string_dynamic *buffer, const f_string_dynamic content, f_string_range *location) {
+  f_return_status fl_fss_basic_content_write(f_string_dynamic *buffer, const f_string_static content, f_string_range *location) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_

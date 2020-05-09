@@ -389,7 +389,7 @@ extern "C" {
         return f_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_dynamic, const f_string_range) = &f_print_string_dynamic_partial;
+      f_return_status (*print_object)(FILE *, const f_string_static, const f_string_range) = &f_print_string_dynamic_partial;
 
       if (data->parameters[fss_basic_list_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_string_dynamic_partial;

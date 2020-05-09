@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_decrement_buffer_
-  f_return_status fl_fss_decrement_buffer(const f_string_dynamic buffer, f_string_range *location, const f_string_length step) {
+  f_return_status fl_fss_decrement_buffer(const f_string_static buffer, f_string_range *location, const f_string_length step) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -39,7 +39,7 @@ extern "C" {
 #endif // _di_fl_fss_decrement_buffer_
 
 #ifndef _di_fl_fss_identify_
-  f_return_status fl_fss_identify(const f_string_dynamic buffer, f_fss_header *header) {
+  f_return_status fl_fss_identify(const f_string_static buffer, f_fss_header *header) {
     #ifndef _di_level_1_parameter_checking_
       if (header == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
@@ -213,7 +213,7 @@ extern "C" {
 #endif // _di_fl_fss_identify_file_
 
 #ifndef _di_fl_fss_increment_buffer_
-  f_return_status fl_fss_increment_buffer(const f_string_dynamic buffer, f_string_range *location, const f_string_length step) {
+  f_return_status fl_fss_increment_buffer(const f_string_static buffer, f_string_range *location, const f_string_length step) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (location->start < 0) return f_status_set_error(f_invalid_parameter);
@@ -254,7 +254,7 @@ extern "C" {
 #endif // _di_fl_fss_increment_buffer_
 
 #ifndef _di_fl_fss_is_graph_
-  f_return_status fl_fss_is_graph(const f_string_dynamic buffer, const f_string_range range) {
+  f_return_status fl_fss_is_graph(const f_string_static buffer, const f_string_range range) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (range.start < 0) return f_status_set_error(f_invalid_parameter);
@@ -274,7 +274,7 @@ extern "C" {
 #endif // _di_fl_fss_is_graph_
 
 #ifndef _di_fl_fss_is_space_
-  f_return_status fl_fss_is_space(const f_string_dynamic buffer, const f_string_range range) {
+  f_return_status fl_fss_is_space(const f_string_static buffer, const f_string_range range) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (range.start < 0) return f_status_set_error(f_invalid_parameter);
@@ -294,7 +294,7 @@ extern "C" {
 #endif // _di_fl_fss_is_space_
 
 #ifndef _di_fl_fss_skip_past_space_
-  f_return_status fl_fss_skip_past_space(const f_string_dynamic buffer, f_string_range *range) {
+  f_return_status fl_fss_skip_past_space(const f_string_static buffer, f_string_range *range) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (range == 0) return f_status_set_error(f_invalid_parameter);
@@ -405,7 +405,7 @@ extern "C" {
 #endif // _di_fl_fss_skip_past_space_
 
 #ifndef _di_fl_fss_skip_past_non_graph_
-  f_return_status fl_fss_skip_past_non_graph(const f_string_dynamic buffer, f_string_range *range) {
+  f_return_status fl_fss_skip_past_non_graph(const f_string_static buffer, f_string_range *range) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
       if (range == 0) return f_status_set_error(f_invalid_parameter);

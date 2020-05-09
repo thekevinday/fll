@@ -83,7 +83,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_fss_extended_list_write_
-  //extern f_return_status fll_fss_extended_list_write(const f_string_dynamic object, const f_string_dynamics contents, f_string_dynamic *buffer);
+  //extern f_return_status fll_fss_extended_list_write(const f_string_static object, const f_string_dynamics contents, f_string_dynamic *buffer);
 #endif // _di_fll_fss_extended_list_write_
 
 #ifdef __cplusplus

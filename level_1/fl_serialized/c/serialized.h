@@ -47,7 +47,7 @@ extern "C" {
  *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_serialize_simple_
-  extern f_return_status fl_serialize_simple(const f_string_dynamic value, f_string_dynamic *serialized);
+  extern f_return_status fl_serialize_simple(const f_string_static value, f_string_dynamic *serialized);
 #endif // _di_fl_serialize_simple_
 
 /**
@@ -72,7 +72,7 @@ extern "C" {
  *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_unserialize_simple_
-  extern f_return_status fl_unserialize_simple(const f_string_dynamic serialized, f_string_dynamics *strings);
+  extern f_return_status fl_unserialize_simple(const f_string_static serialized, f_string_dynamics *strings);
 #endif // _di_fl_unserialize_simple_
 
 /**
@@ -97,7 +97,7 @@ extern "C" {
  *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_unserialize_simple_map_
-  extern f_return_status fl_unserialize_simple_map(const f_string_dynamic serialized, f_string_ranges *locations);
+  extern f_return_status fl_unserialize_simple_map(const f_string_static serialized, f_string_ranges *locations);
 #endif // _di_fl_unserialize_simple_map_
 
 /**
@@ -125,7 +125,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_unserialize_simple_find_
-  extern f_return_status fl_unserialize_simple_find(const f_string_dynamic serialized, const f_array_length index, f_string_range *location);
+  extern f_return_status fl_unserialize_simple_find(const f_string_static serialized, const f_array_length index, f_string_range *location);
 #endif // _di_fl_unserialize_simple_find_
 
 /**
@@ -154,7 +154,7 @@ extern "C" {
  *   f_error_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_unserialize_simple_get_
-  extern f_return_status fl_unserialize_simple_get(const f_string_dynamic serialized, const f_array_length index, f_string_dynamic *dynamic);
+  extern f_return_status fl_unserialize_simple_get(const f_string_static serialized, const f_array_length index, f_string_dynamic *dynamic);
 #endif // _di_fl_unserialize_simple_get_
 
 #ifdef __cplusplus
