@@ -328,7 +328,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_execute_process_script_
-  extern f_return_status fake_build_execute_process_script(const fake_data data, const fake_build_settings settings, const f_string_dynamic process_script) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_build_execute_process_script(const fake_data data, const fake_build_settings settings, const f_string_static process_script) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_execute_process_script_
 
 #ifdef __cplusplus

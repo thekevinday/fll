@@ -73,7 +73,7 @@ extern "C" {
     fl_color_print(f_standard_output, context.notable, context.reset, "%s", fake_long_mode);
     printf(" of 'fll_monolithic' is specified, build libaries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').");
 
-    printf("%c", f_string_eol);
+    printf("%c%c", f_string_eol, f_string_eol);
 
     return f_none;
   }
@@ -246,6 +246,10 @@ extern "C" {
     else if (operations[0]) {
       status = fake_process_console_parameters(arguments, data);
 
+      if (!f_status_is_error(status)) {
+        status = fake_path_generate(data);
+      }
+
       if (f_status_is_error(status)) {
         fake_delete_data(data);
         return f_status_set_error(status);
@@ -307,6 +311,19 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(data->settings);
 
     f_macro_string_dynamic_delete_simple(data->path_build);
+    f_macro_string_dynamic_delete_simple(data->path_build_documents);
+    f_macro_string_dynamic_delete_simple(data->path_build_includes);
+    f_macro_string_dynamic_delete_simple(data->path_build_libraries);
+    f_macro_string_dynamic_delete_simple(data->path_build_libraries_script);
+    f_macro_string_dynamic_delete_simple(data->path_build_libraries_shared);
+    f_macro_string_dynamic_delete_simple(data->path_build_libraries_static);
+    f_macro_string_dynamic_delete_simple(data->path_build_objects);
+    f_macro_string_dynamic_delete_simple(data->path_build_process);
+    f_macro_string_dynamic_delete_simple(data->path_build_programs);
+    f_macro_string_dynamic_delete_simple(data->path_build_programs_script);
+    f_macro_string_dynamic_delete_simple(data->path_build_programs_shared);
+    f_macro_string_dynamic_delete_simple(data->path_build_programs_static);
+    f_macro_string_dynamic_delete_simple(data->path_build_settings);
     f_macro_string_dynamic_delete_simple(data->path_work);
 
     f_macro_string_dynamic_delete_simple(data->path_source_build);

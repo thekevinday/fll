@@ -5,6 +5,8 @@
 # The purpose of this script is to provide an example for the post-process part of Fake.
 # Despite being an example, it is intended to be actually used when using fake to build the fake project.
 #
+# The dependencies of this script are: bash and sed.
+#
 process_post_main(){
   local grab_next=
   local do_color=normal
@@ -23,11 +25,38 @@ process_post_main(){
   local c_subtle="\\033[1;30m"
   local c_prefix="\\"
 
-  # the three supported parameters.
+  # the supported parameters.
   local operation=
-  local mode=
   local defines=
+  local modes=
+  local process=
+  local file_settings=
+  local path_build=
+  local path_source_build=
+  local path_source_codes=
+  local path_source_common=
+  local path_source_data=
+  local path_source_documents=
+  local path_source_licenses=
+  local path_source_settings=
+  local path_work=
   local verbosity=
+
+  # standard settings paths.
+  local path_directory_separator="/"
+  local path_build_documents=
+  local path_build_includes=
+  local path_build_libraries=
+  local path_build_libraries_script=
+  local path_build_libraries_shared=
+  local path_build_libraries_static=
+  local path_build_objects=
+  local path_build_process=
+  local path_build_programs=
+  local path_build_programs_script=
+  local path_build_programs_shared=
+  local path_build_programs_static=
+  local path_build_settings=
 
   # grab all supported parameters, ignoring duplicates.
   if [[ $# -gt 0 ]] ; then
@@ -42,36 +71,82 @@ process_post_main(){
           if [[ $operation == "" ]] ; then
             operation=$p
           fi
-        elif [[ $p == "-m" ]] ; then
-          grab_next="mode"
         elif [[ $p == "-d" ]] ; then
           grab_next="defines"
+        elif [[ $p == "-m" ]] ; then
+          grab_next="modes"
+        elif [[ $p == "-o" ]] ; then
+          grab_next="process"
+        elif [[ $p == "-s" ]] ; then
+          grab_next="file_settings"
+        elif [[ $p == "-b" ]] ; then
+          grab_next="path_build"
+        elif [[ $p == "-B" ]] ; then
+          grab_next="path_source_build"
+        elif [[ $p == "-C" ]] ; then
+          grab_next="path_source_codes"
+        elif [[ $p == "-O" ]] ; then
+          grab_next="path_source_common"
+        elif [[ $p == "-D" ]] ; then
+          grab_next="path_source_data"
+        elif [[ $p == "-M" ]] ; then
+          grab_next="path_source_documents"
+        elif [[ $p == "-L" ]] ; then
+          grab_next="path_source_licenses"
+        elif [[ $p == "-S" ]] ; then
+          grab_next="path_source_settings"
+        elif [[ $p == "-w" ]] ; then
+          grab_next="path_work"
+        elif [[ $p == "+D" ]] ; then
+          verbosity=debug
         elif [[ $p == "+q" ]] ; then
           verbosity=quiet
         elif [[ $p == "+V" ]] ; then
           verbosity=verbose
-        elif [[ $p == "+D" ]] ; then
-          verbosity=debug
-        elif [[ $p == "+n" ]] ; then
-          if [[ $do_color == "normal" ]] ; then
-            do_color=none
-          fi
         elif [[ $p == "+l" ]] ; then
           if [[ $do_color == "normal" ]] ; then
             do_color=light
           fi
+        elif [[ $p == "+n" ]] ; then
+          if [[ $do_color == "normal" ]] ; then
+            do_color=none
+          fi
         fi
       else
-        if [[ $grab_next == "mode" ]] ; then
-          if [[ $mode == "" ]] ; then
-            mode=$p
-          else
-            mode="$mode $p"
-          fi
-        elif [[ $grab_next == "defines" ]] ; then
+        if [[ $grab_next == "defines" ]] ; then
           if [[ $defines == "" ]] ; then
             defines=$p
+          else
+            defines="$defines $p"
           fi
+        elif [[ $grab_next == "modes" ]] ; then
+          if [[ $modes == "" ]] ; then
+            modes=$p
+          else
+            modes="$modes $p"
+          fi
+        elif [[ $grab_next == "process" ]] ; then
+          process=$p
+        elif [[ $grab_next == "file_settings" ]] ; then
+          file_settings=$p
+        elif [[ $grab_next == "path_build" ]] ; then
+          path_build=$(process_post_path_fix $p)
+        elif [[ $grab_next == "path_source_build" ]] ; then
+          path_source_build=$(process_post_path_fix $p)
+        elif [[ $grab_next == "path_source_codes" ]] ; then
+          path_source_codes=$(process_post_path_fix $p)
+        elif [[ $grab_next == "path_source_common" ]] ; then
+          path_source_common=$(process_post_path_fix $p)
+        elif [[ $grab_next == "path_source_data" ]] ; then
+          path_source_data=$(process_post_path_fix $p)
+        elif [[ $grab_next == "path_source_documents" ]] ; then
+          path_source_documents=$(process_post_path_fix $p)
+        elif [[ $grab_next == "path_source_licenses" ]] ; then
+          path_source_licenses=$(process_post_path_fix $p)
+        elif [[ $grab_next == "path_source_settings" ]] ; then
+          path_source_settings=$(process_post_path_fix $p)
+        elif [[ $grab_next == "path_work" ]] ; then
+          path_work=$(process_post_path_fix $p)
         fi
 
         grab_next=
@@ -100,12 +175,27 @@ process_post_main(){
     c_prefix=
   fi
 
+  # update paths based on parameters.
+  path_build_documents=${path_build}documents$path_directory_separator
+  path_build_includes=${path_build}includes$path_directory_separator
+  path_build_libraries=${path_build}libraries$path_directory_separator
+  path_build_libraries_script=${path_build_libraries}script$path_directory_separator
+  path_build_libraries_shared=${path_build_libraries}shared$path_directory_separator
+  path_build_libraries_static=${path_build_libraries}static$path_directory_separator
+  path_build_objects=${path_build}objects$path_directory_separator
+  path_build_process=${path_build}process$path_directory_separator
+  path_build_programs=${path_build}programs$path_directory_separator
+  path_build_programs_script=${path_build_programs}script$path_directory_separator
+  path_build_programs_shared=${path_build_programs}shared$path_directory_separator
+  path_build_programs_static=${path_build_programs}static$path_directory_separator
+  path_build_settings=${path_build}settings$path_directory_separator
+
   if [[ $verbosity != "quiet" ]] ; then
     echo
     echo -e "${c_title}Done Processing Operation: $c_reset$c_notice$operation$c_reset"
 
-    if [[ $mode != "" ]] ; then
-      echo -e "  Modes: $c_reset$c_notice$mode$c_reset"
+    if [[ $modes != "" ]] ; then
+      echo -e "  Modes: $c_reset$c_notice$modes$c_reset"
     fi
 
     if [[ $defines != "" ]] ; then
@@ -115,9 +205,14 @@ process_post_main(){
     echo
   fi
 
-  # cleanup and return
+  # cleanup and return.
   unset process_post_main
+  unset process_post_path_fix
   return 0
+}
+
+process_post_path_fix(){
+  echo -n $* | sed -e "s|^${path_directory_separator}${path_directory_separator}*|${path_directory_separator}|" -e "s|${path_directory_separator}*$|${path_directory_separator}|"
 }
 
 # note: "$@" is necessary to preserve quoted arguments when passing though.

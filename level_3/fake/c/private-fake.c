@@ -5,6 +5,159 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_path_generate_
+  f_return_status fake_path_generate(fake_data *data) {
+    f_status status = f_none;
+    f_string function = "fl_string_dynamic_append";
+    uint8_t i = 0;
+
+    {
+      const f_string parameter_strings[] = {
+        fake_path_build_documents,
+        fake_path_build_includes,
+        fake_path_build_libraries,
+        fake_path_build_objects,
+        fake_path_build_process,
+        fake_path_build_programs,
+        fake_path_build_settings,
+      };
+
+      const f_string_length parameter_strings_lengths[] = {
+        fake_path_build_documents_length,
+        fake_path_build_includes_length,
+        fake_path_build_libraries_length,
+        fake_path_build_objects_length,
+        fake_path_build_process_length,
+        fake_path_build_programs_length,
+        fake_path_build_settings_length,
+      };
+
+      f_string_dynamic *parameter_values[] = {
+        &data->path_build_documents,
+        &data->path_build_includes,
+        &data->path_build_libraries,
+        &data->path_build_objects,
+        &data->path_build_process,
+        &data->path_build_programs,
+        &data->path_build_settings,
+      };
+
+      const uint8_t total = 7;
+
+      for (i = 0; i < total; i++) {
+        status = fl_string_dynamic_append_nulless(data->path_build, parameter_values[i]);
+        if (f_status_is_error(status)) break;
+
+        status = fl_string_append(parameter_strings[i], parameter_strings_lengths[i], parameter_values[i]);
+        if (f_status_is_error(status)) break;
+
+        status = fl_string_append_assure("/", 1, parameter_values[i]);
+        if (f_status_is_error(status)) {
+          function = "fl_string_append_assure";
+          break;
+        }
+
+        status = fl_string_dynamic_terminate(parameter_values[i]);
+        if (f_status_is_error(status)) {
+          function = "fl_string_dynamic_terminate";
+          break;
+        }
+      } // for
+    }
+
+    if (!f_status_is_error(status)) {
+      const f_string parameter_strings[] = {
+        fake_path_build_libraries_script,
+        fake_path_build_libraries_shared,
+        fake_path_build_libraries_static,
+      };
+
+      const f_string_length parameter_strings_lengths[] = {
+        fake_path_build_libraries_script_length,
+        fake_path_build_libraries_shared_length,
+        fake_path_build_libraries_static_length,
+      };
+
+      f_string_dynamic *parameter_values[] = {
+        &data->path_build_libraries_script,
+        &data->path_build_libraries_shared,
+        &data->path_build_libraries_static,
+      };
+
+      const uint8_t total = 3;
+
+      for (i = 0; i < total; i++) {
+        status = fl_string_dynamic_append_nulless(data->path_build_libraries, parameter_values[i]);
+        if (f_status_is_error(status)) break;
+
+        status = fl_string_append(parameter_strings[i], parameter_strings_lengths[i], parameter_values[i]);
+        if (f_status_is_error(status)) break;
+
+        status = fl_string_append_assure("/", 1, parameter_values[i]);
+        if (f_status_is_error(status)) {
+          function = "fl_string_append_assure";
+          break;
+        }
+
+        status = fl_string_dynamic_terminate(parameter_values[i]);
+        if (f_status_is_error(status)) {
+          function = "fl_string_dynamic_terminate";
+          break;
+        }
+      } // for
+    }
+
+    {
+      const f_string parameter_strings[] = {
+        fake_path_build_programs_script,
+        fake_path_build_programs_shared,
+        fake_path_build_programs_static,
+      };
+
+      const f_string_length parameter_strings_lengths[] = {
+        fake_path_build_programs_script_length,
+        fake_path_build_programs_shared_length,
+        fake_path_build_programs_static_length,
+      };
+
+      f_string_dynamic *parameter_values[] = {
+        &data->path_build_programs_script,
+        &data->path_build_programs_shared,
+        &data->path_build_programs_static,
+      };
+
+      const uint8_t total = 3;
+
+      for (i = 0; i < total; i++) {
+        status = fl_string_dynamic_append_nulless(data->path_build_programs, parameter_values[i]);
+        if (f_status_is_error(status)) break;
+
+        status = fl_string_append(parameter_strings[i], parameter_strings_lengths[i], parameter_values[i]);
+        if (f_status_is_error(status)) break;
+
+        status = fl_string_append_assure("/", 1, parameter_values[i]);
+        if (f_status_is_error(status)) {
+          function = "fl_string_append_assure";
+          break;
+        }
+
+        status = fl_string_dynamic_terminate(parameter_values[i]);
+        if (f_status_is_error(status)) {
+          function = "fl_string_dynamic_terminate";
+          break;
+        }
+      } // for
+    }
+
+    if (f_status_is_error(status)) {
+      fake_print_error(data->context, data->verbosity, f_status_set_fine(status), function, f_true);
+      return status;
+    }
+
+    return f_none;
+  }
+#endif // _di_fake_path_generate_
+
 #ifndef _di_fake_print_error_
   f_return_status fake_print_error(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const bool fallback) {
 

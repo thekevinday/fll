@@ -13,6 +13,20 @@ extern "C" {
 #endif
 
 /**
+ * Generate all appropriate paths based on runtime information.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_path_generate_
+  extern f_return_status fake_path_generate(fake_data *data) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_path_generate_
+
+/**
  * Print generic error messages.
  *
  * @param context

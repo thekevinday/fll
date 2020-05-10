@@ -318,10 +318,14 @@ extern "C" {
 #endif // _di_fake_build_operate_
 
 #ifndef _di_fake_build_execute_process_script_
-  f_return_status fake_build_execute_process_script(const fake_data data, const fake_build_settings settings, const f_string_dynamic process_script) {
+  f_return_status fake_build_execute_process_script(const fake_data data, const fake_build_settings settings, const f_string_static process_script) {
     if (process_script.used == 0) return f_none;
 
     f_status status = f_none;
+
+    //fake_file_extension_built
+
+    //if (fake_build_file_exists
 
     const f_string parameter_prefixs[] = {
       f_console_symbol_short_enable,
