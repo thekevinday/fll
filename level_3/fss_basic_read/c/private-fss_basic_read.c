@@ -389,7 +389,7 @@ extern "C" {
         return f_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_static, const f_string_range) = &f_print_string_static_partial;
+      f_return_status (*print_object)(FILE *, const f_string_static, const f_string_range) = &f_print_string_dynamic_partial;
 
       if (data->parameters[fss_basic_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_string_dynamic_partial;
@@ -455,7 +455,7 @@ extern "C" {
             }
             else if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
               if (data->contents.array[i].used > 0) {
-                f_print_string_static_partial(f_standard_output, data->buffer, data->contents.array[i].array[0]);
+                f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[0]);
                 fprintf(f_standard_output, "%c", f_string_eol);
               }
               else if (include_empty) {
@@ -464,7 +464,7 @@ extern "C" {
             }
             else {
               if (data->contents.array[i].used > 0) {
-                f_print_string_static_partial(f_standard_output, data->buffer, data->contents.array[i].array[0]);
+                f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[0]);
                 fprintf(f_standard_output, "%c", f_string_eol);
               }
               else if (include_empty) {
@@ -523,7 +523,7 @@ extern "C" {
         }
 
         if (line_current == line) {
-          f_print_string_static_partial(f_standard_output, data->buffer, data->contents.array[i].array[0]);
+          f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[0]);
           fprintf(f_standard_output, "%c", f_string_eol);
 
           break;
@@ -548,7 +548,7 @@ extern "C" {
         continue;
       }
 
-      f_print_string_static_partial(f_standard_output, data->buffer, data->contents.array[i].array[0]);
+      f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[0]);
       fprintf(f_standard_output, "%c", f_string_eol);
     } // for
 

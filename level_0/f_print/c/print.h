@@ -70,9 +70,9 @@ extern "C" {
  *   f_error_output (with error bit) on failure.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_print_string_static_
-  extern f_return_status f_print_string_static(FILE *output, const f_string_static buffer);
-#endif // _di_f_print_string_static_
+#ifndef _di_f_print_string_dynamic_
+  extern f_return_status f_print_string_dynamic(FILE *output, const f_string_static buffer);
+#endif // _di_f_print_string_dynamic_
 
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
@@ -95,9 +95,9 @@ extern "C" {
  *   f_error_output (with error bit) on failure.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_print_string_static_partial_
-  extern f_return_status f_print_string_static_partial(FILE *output, const f_string_static buffer, const f_string_range range);
-#endif // _di_f_print_string_static_partial_
+#ifndef _di_f_print_string_dynamic_partial_
+  extern f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_static buffer, const f_string_range range);
+#endif // _di_f_print_string_dynamic_partial_
 
 #ifdef __cplusplus
 } // extern "C"

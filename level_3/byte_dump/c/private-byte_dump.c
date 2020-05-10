@@ -309,7 +309,7 @@ extern "C" {
       }
       else if (data.mode == byte_dump_mode_duodecimal) {
         if (invalid[character_current]) {
-          f_print_string_static(f_standard_output, data.context.error);
+          f_print_string_dynamic(f_standard_output, data.context.error);
         }
 
         printf(" %01d", byte / 144);
@@ -339,7 +339,7 @@ extern "C" {
         }
 
         if (invalid[character_current]) {
-          f_print_string_static(f_standard_output, data.context.reset);
+          f_print_string_dynamic(f_standard_output, data.context.reset);
         }
       }
       else if (data.mode == byte_dump_mode_octal) {
