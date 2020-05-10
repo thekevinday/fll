@@ -82,11 +82,68 @@ extern "C" {
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
  *
- * @see fl_utf_string_append()
+ * @see fl_utf_string_append_assure()
  */
 #ifndef _di_fl_utf_string_append_nulless_
   extern f_return_status fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_append_nulless_
+
+/**
+ * Append the source UTF-8 string onto the destination, but only if the string is not already at the end.
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ *
+ * @param source
+ *   The source string to append.
+ * @param start
+ *   Inclusive start point of string to append.
+ * @param stop
+ *   Inclusive stop point of string to append.
+ * @param destination
+ *   The destination string the source is appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0 (start > stop).
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_append_assure_nulless()
+ */
+#ifndef _di_fl_utf_string_append_assure_
+  extern f_return_status fl_utf_string_append_assure(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_append_assure_
+
+/**
+ * Append the source UTF-8 string onto the destination, but only if the string is not already at the end.
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ * Skips over NULL characters from source when appending.
+ *
+ * @param source
+ *   The source string to append.
+ * @param start
+ *   Inclusive start point of string to append.
+ * @param stop
+ *   Inclusive stop point of string to append.
+ * @param destination
+ *   The destination string the source is appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0 (start > stop).
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_append()
+ */
+#ifndef _di_fl_utf_string_append_assure_nulless_
+  extern f_return_status fl_utf_string_append_assure_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_append_assure_nulless_
 
 /**
  * Compare two UTF-8 strings, similar to strncmp().
@@ -170,6 +227,55 @@ extern "C" {
 #ifndef _di_fl_utf_string_dynamic_append_
   extern f_return_status fl_utf_string_dynamic_append(const f_utf_string_dynamic source, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_dynamic_append_
+
+/**
+ * Append the source UTF-8 string onto the destination, but only if the string is not already at the end.
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ *
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination string the source is appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_append_assure_nulless()
+ */
+#ifndef _di_fl_utf_string_dynamic_append_assure_
+  extern f_return_status fl_utf_string_dynamic_append_assure(const f_utf_string_dynamic source, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_append_assure_
+
+/**
+ * Append the source UTF-8 string onto the destination, but only if the string is not already at the end.
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ * Skips over NULL characters from source when appending.
+ *
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination string the source is appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_append_assure()
+ */
+#ifndef _di_fl_utf_string_dynamic_append_assure_nulless_
+  extern f_return_status fl_utf_string_dynamic_append_assure_nulless(const f_utf_string_dynamic source, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_append_assure_nulless_
 
 /**
  * Append the source UTF-8 string onto the destination.
@@ -395,6 +501,58 @@ extern "C" {
 /**
  * Append the source UTF-8 string onto the destination, but restricted to the given range.
  *
+ * @param source
+ *   The source string to append.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source is appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0 or range is 0 (start > stop).
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_append_assure_nulless()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_append_assure_
+  extern f_return_status fl_utf_string_dynamic_partial_append_assure(const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_append_assure_
+
+/**
+ * Append the source UTF-8 string onto the destination, but only if the string is not already at the end and restricted to the given range
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ * Skips over NULL characters from source when appending.
+ *
+ * @param source
+ *   The source string to append.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source is appended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0 or range is 0 (start > stop).
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_append_assure()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_append_assure_nulless_
+  extern f_return_status fl_utf_string_dynamic_partial_append_assure_nulless(const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_append_assure_nulless_
+
+/**
+ * Append the source UTF-8 string onto the destination, but only if the string is not already at the end and restricted to the given range
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
  * Skips over NULL characters from source when appending.
  *
  * @param source
@@ -630,6 +788,62 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_partial_prepend_
 
 /**
+ * Prepend the source string onto the destination, but restricted to the given range, but only if the string is not already at the beginning.
+ *
+ * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source is prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0 or range is 0 (start > stop).
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_prepend_assure_nulless()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_prepend_assure_
+  extern f_return_status fl_utf_string_dynamic_partial_prepend_assure(const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_prepend_assure_
+
+/**
+ * Prepend the source string onto the destination, but restricted to the given range, but only if the string is not already at the beginning.
+ *
+ * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param range
+ *   A range within the source to restrict the copy from.
+ * @param destination
+ *   The destination string the source is prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0 or range is 0 (start > stop).
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_partial_prepend_assure()
+ */
+#ifndef _di_fl_utf_string_dynamic_partial_prepend_assure_nulless_
+  extern f_return_status fl_utf_string_dynamic_partial_prepend_assure_nulless(const f_utf_string_dynamic source, const f_utf_string_range range, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_partial_prepend_assure_nulless_
+
+/**
  * Prepend the source string onto the destination, but restricted to the given range.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
@@ -678,6 +892,58 @@ extern "C" {
 #ifndef _di_fl_utf_string_dynamic_prepend_
   extern f_return_status fl_utf_string_dynamic_prepend(const f_utf_string_dynamic source, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_dynamic_prepend_
+
+/**
+ * Prepend the source string onto the destination, but only if the string is not already at the beginning.
+ *
+ * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param destination
+ *   The destination string the source is prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_prepend_assure_nulless()
+ */
+#ifndef _di_fl_utf_string_dynamic_prepend_assure_
+  extern f_return_status fl_utf_string_dynamic_prepend_assure(const f_utf_string_dynamic source, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_prepend_assure_
+
+/**
+ * Prepend the source string onto the destination, but only if the string is not already at the beginning.
+ *
+ * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param destination
+ *   The destination string the source is prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0.
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_dynamic_prepend_assure()
+ */
+#ifndef _di_fl_utf_string_dynamic_prepend_assure_nulless_
+  extern f_return_status fl_utf_string_dynamic_prepend_assure_nulless(const f_utf_string_dynamic source, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_dynamic_prepend_assure_nulless_
 
 /**
  * Prepend the source string onto the destination.
@@ -1116,6 +1382,67 @@ extern "C" {
 #ifndef _di_fl_utf_string_prepend_
   extern f_return_status fl_utf_string_prepend(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
 #endif // _di_fl_utf_string_prepend_
+
+/**
+ * Prepend the UTF-8 source string onto the destination, but only if the string is not already at the beginning.
+ *
+ * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param start
+ *   Inclusive start point of string to prepend.
+ * @param stop
+ *   Inclusive stop point of string to prepend.
+ * @param destination
+ *   The destination string the source is prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0 (start > stop).
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_prepend_assure_nulless()
+ */
+#ifndef _di_fl_utf_string_prepend_assure_
+  extern f_return_status fl_utf_string_prepend_assure(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_prepend_assure_
+
+/**
+ * Prepend the UTF-8 source string onto the destination, but only if the string is not already at the beginning.
+ *
+ * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+ *
+ * This ignores NULL characters when comparing both the source and the destination.
+ * Skips over NULL characters from source when prepending.
+ *
+ * @param source
+ *   The source string to prepend.
+ * @param start
+ *   Inclusive start point of string to prepend.
+ * @param stop
+ *   Inclusive stop point of string to prepend.
+ * @param destination
+ *   The destination string the source is prepended onto.
+ *
+ * @return
+ *   f_none on success.
+ *   f_no_data if source length is 0 (start > stop).
+ *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on memory allocation error.
+ *   f_error_reallocation (with error bit) on memory reallocation error.
+ *
+ * @see fl_utf_string_prepend_assure()
+ */
+#ifndef _di_fl_utf_string_prepend_assure_nulless_
+  extern f_return_status fl_utf_string_prepend_assure_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination);
+#endif // _di_fl_utf_string_prepend_assure_nulless_
 
 /**
  * Prepend the UTF-8 source string onto the destination.

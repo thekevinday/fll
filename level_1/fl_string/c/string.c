@@ -17,6 +17,82 @@ extern "C" {
   }
 #endif // _di_fl_string_append_
 
+#ifndef _di_fl_string_append_assure_
+  f_return_status fl_string_append_assure(const f_string source, const f_string_length length, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (length == 0) return f_no_data;
+
+    if (destination->used < length) {
+      return private_fl_string_append(source, length, destination);
+    }
+
+    f_string_length i = 1;
+    f_string_length j = 1;
+
+    while (i <= length && j <= destination->used) {
+      if (source[length - i] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[destination->used - j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source[length - i] != destination->string[destination->used - j]) {
+        return private_fl_string_append(source, length, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_string_append_assure_
+
+#ifndef _di_fl_string_append_assure_nulless_
+  f_return_status fl_string_append_assure_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (length == 0) return f_no_data;
+
+    if (destination->used < length) {
+      return private_fl_string_append_nulless(source, length, destination);
+    }
+
+    f_string_length i = 1;
+    f_string_length j = 1;
+
+    while (i <= length && j <= destination->used) {
+      if (source[length - i] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[destination->used - j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source[length - i] != destination->string[destination->used - j]) {
+        return private_fl_string_append_nulless(source, length, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_string_append_assure_nulless_
+
 #ifndef _di_fl_string_append_nulless_
   f_return_status fl_string_append_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
@@ -64,6 +140,82 @@ extern "C" {
     return private_fl_string_append(source.string, source.used, destination);
   }
 #endif // _di_fl_string_dynamic_append_
+
+#ifndef _di_fl_string_dynamic_append_assure_
+  f_return_status fl_string_dynamic_append_assure(const f_string_static source, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return f_no_data;
+
+    if (destination->used < source.used) {
+      return private_fl_string_append(source.string, source.used, destination);
+    }
+
+    f_string_length i = 1;
+    f_string_length j = 1;
+
+    while (i <= source.used && j <= destination->used) {
+      if (source.string[source.used - i] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[destination->used - j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source.string[source.used - i] != destination->string[destination->used - j]) {
+        return private_fl_string_append(source.string, source.used, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_string_dynamic_append_assure_
+
+#ifndef _di_fl_string_dynamic_append_assure_nulless_
+  f_return_status fl_string_dynamic_append_assure_nulless(const f_string_static source, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return f_no_data;
+
+    if (destination->used < source.used) {
+      return private_fl_string_append_nulless(source.string, source.used, destination);
+    }
+
+    f_string_length i = 1;
+    f_string_length j = 1;
+
+    while (i <= source.used && j <= destination->used) {
+      if (source.string[source.used - i] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[destination->used - j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source.string[source.used - i] != destination->string[destination->used - j]) {
+        return private_fl_string_append_nulless(source.string, source.used, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_string_dynamic_append_assure_nulless_
 
 #ifndef _di_fl_string_dynamic_append_nulless_
   f_return_status fl_string_dynamic_append_nulless(const f_string_static source, f_string_dynamic *destination) {
@@ -162,6 +314,86 @@ extern "C" {
     return private_fl_string_append(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
 #endif // _di_fl_string_dynamic_partial_append_
+
+#ifndef _di_fl_string_dynamic_partial_append_assure_
+  f_return_status fl_string_dynamic_partial_append_assure(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return f_no_data;
+    if (range.start > range.stop) return f_no_data;
+
+    f_string_length length = (range.stop - range.start) + 1;
+
+    if (destination->used < length) {
+      return private_fl_string_append(source.string + range.start, length, destination);
+    }
+
+    f_string_length i = 1;
+    f_string_length j = 1;
+
+    while (i <= length && j <= destination->used) {
+      if (source.string[range.stop - i] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[destination->used - j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source.string[range.stop - i] != destination->string[destination->used - j]) {
+        return private_fl_string_append(source.string + range.start, length, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+  }
+#endif // _di_fl_string_dynamic_partial_append_assure_
+
+#ifndef _di_fl_string_dynamic_partial_append_assure_nulless_
+  f_return_status fl_string_dynamic_partial_append_assure_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return f_no_data;
+    if (range.start > range.stop) return f_no_data;
+
+    f_string_length length = (range.stop - range.start) + 1;
+
+    if (destination->used < length) {
+      return private_fl_string_append_nulless(source.string + range.start, length, destination);
+    }
+
+    f_string_length i = 1;
+    f_string_length j = 1;
+
+    while (i <= length && j <= destination->used) {
+      if (source.string[range.stop - i] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[destination->used - j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source.string[range.stop - i] != destination->string[destination->used - j]) {
+        return private_fl_string_append_nulless(source.string + range.start, length, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+  }
+#endif // _di_fl_string_dynamic_append_assure_nulless_
 
 #ifndef _di_fl_string_dynamic_partial_append_nulless_
   f_return_status fl_string_dynamic_partial_append_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
@@ -289,9 +521,93 @@ extern "C" {
     if (source.used == 0) return f_no_data;
     if (range.start > range.stop) return f_no_data;
 
-    return private_fl_string_prepend(source.string + range.start, (range.stop - range.start) + 1, destination);
+    f_string_length length = (range.stop - range.start) + 1;
+
+    if (destination->used < length) {
+      return private_fl_string_prepend(source.string + range.start, length, destination);
+    }
+
+    f_string_length i = 0;
+    f_string_length j = 0;
+
+    while (i < length && j < destination->used) {
+      if (source.string[i + range.start] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source.string[i + range.start] != destination->string[i]) {
+        return private_fl_string_prepend(source.string + range.start, length, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+
+    return f_none;
   }
 #endif // _di_fl_string_dynamic_partial_prepend_
+
+#ifndef _di_fl_string_dynamic_partial_prepend_assure_
+  f_return_status fl_string_dynamic_partial_prepend_assure(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return f_no_data;
+    if (range.start > range.stop) return f_no_data;
+
+    f_string_length length = (range.stop - range.start) + 1;
+
+    if (destination->used < length) {
+      return private_fl_string_prepend_nulless(source.string + range.start, length, destination);
+    }
+
+    f_string_length i = 0;
+    f_string_length j = 0;
+
+    while (i < length && j < destination->used) {
+      if (source.string[i + range.start] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source.string[i + range.start] != destination->string[i]) {
+        return private_fl_string_prepend_nulless(source.string + range.start, length, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_string_dynamic_partial_prepend_assure_
+
+#ifndef _di_fl_string_dynamic_partial_prepend_assure_nulless_
+  f_return_status fl_string_dynamic_partial_prepend_assure_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (source.used <= range.stop) return f_status_set_error(f_invalid_parameter);
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return f_no_data;
+    if (range.start > range.stop) return f_no_data;
+
+    return private_fl_string_prepend_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
+  }
+#endif // _di_fl_string_dynamic_partial_prepend_assure_nulless
 
 #ifndef _di_fl_string_dynamic_partial_prepend_nulless_
   f_return_status fl_string_dynamic_partial_prepend_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
@@ -318,6 +634,82 @@ extern "C" {
     return private_fl_string_prepend(source.string, source.used, destination);
   }
 #endif // _di_fl_string_dynamic_prepend_
+
+#ifndef _di_fl_string_dynamic_prepend_assure_
+  f_return_status fl_string_dynamic_prepend_assure(const f_string_static source, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return f_no_data;
+
+    if (destination->used < source.used) {
+      return private_fl_string_prepend(source.string, source.used, destination);
+    }
+
+    f_string_length i = 0;
+    f_string_length j = 0;
+
+    while (i < source.used && j < destination->used) {
+      if (source.string[i] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source.string[i] != destination->string[i]) {
+        return private_fl_string_prepend(source.string, source.used, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_string_dynamic_prepend_assure_
+
+#ifndef _di_fl_string_dynamic_prepend_assure_nulless_
+  f_return_status fl_string_dynamic_prepend_assure_nulless(const f_string_static source, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return f_no_data;
+
+    if (destination->used < source.used) {
+      return private_fl_string_prepend_nulless(source.string, source.used, destination);
+    }
+
+    f_string_length i = 0;
+    f_string_length j = 0;
+
+    while (i < source.used && j < destination->used) {
+      if (source.string[i] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source.string[i] != destination->string[i]) {
+        return private_fl_string_prepend_nulless(source.string, source.used, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_string_dynamic_prepend_assure_nulless_
 
 #ifndef _di_fl_string_dynamic_prepend_nulless_
   f_return_status fl_string_dynamic_prepend_nulless(const f_string_static source, f_string_dynamic *destination) {
@@ -765,6 +1157,82 @@ extern "C" {
     return private_fl_string_prepend_nulless(source, length, destination);
   }
 #endif // _di_fl_string_prepend_nulless_
+
+#ifndef _di_fl_string_prepend_assure_
+  f_return_status fl_string_prepend_assure(const f_string source, const f_string_length length, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (length == 0) return f_no_data;
+
+    if (destination->used < length) {
+      return private_fl_string_prepend(source, length, destination);
+    }
+
+    f_string_length i = 0;
+    f_string_length j = 0;
+
+    while (i < length && j < destination->used) {
+      if (source[i] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source[i] != destination->string[i]) {
+        return private_fl_string_prepend(source, length, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_string_prepend_assure_
+
+#ifndef _di_fl_string_prepend_assure_nulless_
+  f_return_status fl_string_prepend_assure_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (length == 0) return f_no_data;
+
+    if (destination->used < length) {
+      return private_fl_string_prepend_nulless(source, length, destination);
+    }
+
+    f_string_length i = 0;
+    f_string_length j = 0;
+
+    while (i < length && j < destination->used) {
+      if (source[i] == f_string_eos) {
+        i++;
+        continue;
+      }
+
+      if (destination->string[j] == f_string_eos) {
+        j++;
+        continue;
+      }
+
+      if (source[i] != destination->string[i]) {
+        return private_fl_string_prepend_nulless(source, length, destination);
+      }
+
+      i++;
+      j++;
+    } // while
+
+    return f_none;
+  }
+#endif // _di_fl_string_prepend_assure_nulless_
 
 #ifndef _di_fl_string_rip_
   f_return_status fl_string_rip(const f_string source, const f_string_length length, f_string_dynamic *destination) {
