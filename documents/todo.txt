@@ -1,0 +1,122 @@
+This file contains FLL-wide todo notes.
+
+- The FSS processing code uses 64-bit data types for string lengths.
+  This puts a hard limit on the size of files supported.
+  Expand this to support larger ranges.
+  Possible options include a second 64-bit type, such that the size is 128-bit.
+  This could also be two 128-bit types, resulting in a range of 256-bit.
+  Ultimately research needs to be done on how other open-source projects handle this and a good examples will be filesystems, like the e2fsutils project or compression tools like tar and bz2.
+
+- Custom language support needs to be looked into to allow for the project to support multiple languages.
+  Given that this project focuses on KISS principles, the project is targeted towards programs for specific users.
+  In which case, the language can be hardcoded in as a single language.
+  Later versions after this first locale support will then consider supporting multiple languages not necessarily compiled in.
+
+- Implement support for new standard parameter "+e"/"++exit_code", which designates that the exit code is to be stored in the following environment variable.
+  This allows storing the full error code, which is not generally suppoted by bash.
+
+- Implement "%llu" defines so that when number is of a different type, the correct '%llu' equivalent can be used.
+  There needs to be an '%lllu' equivalent fo 128-byte.
+  A better approach might be to define a custom printf()/fprintf() replacement functions that handle a new set of parameters, including color codes.
+  Example:
+    f_print(context, "%f1 Something %nu %fr$fn", number_type);
+   Where context can be NULL to do nothing on color prints, %f1 could be some color, %fr is color reset, %fn is newline, and %nu is the number (unsigned) to print.
+   This is just a random example and does not reflect the codes to be used.
+
+- Create an fss simple content type (such that data->contents.array[at].start can be used instead of data->contents.array[at].array[0].start).
+
+- FSS needs to allow escaping of comments, "\# " would escape a comment, every backslash after that would be literal.
+
+- status_code and fss_status_code should be able to distinguish a number and a non-number string.
+  This will allow for auto-detecting whether or not something is a code to print the string or a string to print the code.
+  When this is done, then the --number parameter can be removed.
+  (Also add --help Note: pointing out that f, -w, and -e only apply to numeric codes and will result in 0 (false) for all strings.)
+
+- byte_dump needs to handle a pipe, checkout what the fss_basic_read and similar projects are doing.
+
+- investigate static executables in how valgrind reports errors.
+
+- consider updating byte_dump to support multiple --first and multiple parameters such all --first parameters are effectively added together.
+  What this does is allow skipping a file using counters greater than the max_int size.
+  The --last position, should therefore be rewritten to be relative to the --first position.
+  alternatively, implement a --skip parameter that skips past the max_int number of bytes X number of times (--skip X) would skip X*max_int bytes.
+  alternatively, implement support for specifying metric unit symbols (such as 100m for 100 megabytes).
+
+- implement the "time" functonality to represent a unit of time (unlike the normal system, this unit of time is say milliseconds in any given year that can continue on until max_int).
+
+- implement the "data" unit that using the metric system more appropriately, such that a data is a single byte.
+  1 megadata in base 10 is (10^6)*8 = # of bits, and 1 megadata in base 16 s (16^6)*8 = # of bits.
+
+- console processing code needs to ignore unknown codes (namely, negative/positive numbes like: -3 or +4) (do not consider these parameters).
+
+- rename f_not_equal_to to f_equal_to_not (and do similar changes).
+
+- Research/Implement optimizaton by using pointers to reduce the complecity of processing multi-depth structures, such as fss_nest:
+  this:
+    nests->array[nests->used].array[index].array[0] = xxx;
+  could become:
+    *current = nests->array[nests->used].array[index].array;
+    current->array[0] = xxx;
+  The idea is that in the first case, thee is a lot more dereferencing needing to be performed whereas the second case, the massive dereferencing happens only the first time and then all subsequent calls have simpler dereferencing.
+
+- Add support for truncating whitespace before and after the name:
+  1) When selecting by object name 'ex ample' could then match ' ex ample '.
+  2) When printing the object name by itself, 'ex ample' would be printed instead of ' ex ample '.
+  3) Use -T/--trim to remove whitespace both before and after for all FSS read programs (just like PHP trim).
+  4) The leading whitespace on newlines that are to support such need not be trimmed automatically unless -T/--trim is passed.
+
+- Add support for printing line numbers, including when printing objects.
+  - Consider adding support for printing selection identifiers, such as the second object will have an id of 2, even if it is 100 lines down.
+
+- The leading and trailing whitespaces in names should be ignored when selecting and printing.
+
+- Update level-3 code to use the newly minted color2 function where appropriate.
+
+- byte_dump has a bug where offsets are not entirely selected correctly OR the output is wrong.
+ - byte_dump -tpw 24 /bin/bash -fl 0x4b 0x7d vs byte_dump -tpw 24 /bin/bash | head
+   - look at how the -fl results in 3 placeholders at start, this is incorrect.
+   - 0x48 is an interesting start point, but the start line should be more like the head variant for row 3.
+
+
+
+
+ * Programs to create:
+ * - fake: the project is compiled.
+ * - document: the documentation is built/processed/generated.
+ * - generate: special scripts are run for the purpose of generating any build-time code/scripts/files.
+ * - finish: the project is installed.
+ * - package: the project is turned into a package (tarballed, etc..).
+ * - coverage: the project has tests run against it.
+
+
+
+- consider redesigning console parameters to use three sets of arrays instead of one (short, long, and other).
+  - this would increase performance, but is it worth the complexity of the structure?
+  - it may simplify the design in other ways.
+
+
+- F_STATUS_XX could be the error code for the program on exit, such that +s, ++status is a new standard parameter for specifying the variable name.
+  Variable name will be made uppercase and will be only alphabetic or underscore.
+
+
+A new wiki-like syntax meant to be simpler:
+  - url:"http:// a b c/"
+  - code:" code goes here"
+  - quote:"This is a quote"
+  - var:"some_variable_name"
+  - emphasis:"This text is important"
+
+  Escaping only neds to be done like these two cases:
+  1) escaping main syntax:
+    - url\:"http:// a b c/"
+    - after the first '\:', every '\' is a literal '\'.
+      - url\\\\\:"http:// a b c/" would be read as: 'url\\\\:"http:// a b c/"'.
+  2) escaping the quoted part
+    - quote:"This is a \"quote\""
+    - There is no way to know the terminating '"' so all quotes inside must be escaped.
+    - after the first '\"', every '\' is a literal '\'.
+      - quote:"" would be read as: 'url\\\\:"http:// a b c/"'.
+  - Create this as a new FSS format, FSS-Text (FSS-000D).
+
+Go though all source code and ensure that, for all non-exceptional cases, any dynamic strings appends to existing buffers instead of overwriting them (based on buffer->used).
+Then document this behavior.
