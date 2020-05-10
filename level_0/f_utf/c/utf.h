@@ -257,6 +257,31 @@ extern "C" {
 #endif // _di_f_utf_string_ranges_
 
 /**
+ * A string that is analogous to f_utf_string_dynamic but intended for static-only uses.
+ *
+ * The f_utf_string_static type should never be directly allocated or deallocated.
+ *
+ * string: the string.
+ * size: total amount of space available.
+ * used: total number of space used.
+ */
+#ifndef _di_f_utf_string_static_
+  typedef struct {
+    f_utf_string string;
+
+    f_utf_string_length size;
+    f_utf_string_length used;
+  } f_utf_string_static;
+
+  #define f_utf_string_static_initialize { f_utf_string_initialize, 0, 0 }
+
+  #define f_macro_utf_string_static_clear(string_static) \
+    string_static.string = 0; \
+    string_static.size = 0; \
+    string_static.used = 0;
+#endif // _di_f_string_static_
+
+/**
  * A string that supports contains a size attribute to handle dynamic allocations and deallocations.
  * save the string size along with the string, so that strlen(..) commands can be avoided as much as possible.
  *
@@ -264,19 +289,11 @@ extern "C" {
  * used: total number of allocated spaces used.
  */
 #ifndef _di_f_utf_string_dynamic_
-  typedef struct {
-    f_utf_string string;
+  typedef f_utf_string_static f_utf_string_dynamic;
 
-    f_utf_string_length size;
-    f_utf_string_length used;
-  } f_utf_string_dynamic;
+  #define f_utf_string_dynamic_initialize f_utf_string_static_initialize
 
-  #define f_utf_string_dynamic_initialize { f_utf_string_initialize, 0, 0 }
-
-  #define f_clear_utf_string_dynamic(dynamic) \
-    dynamic.string = 0; \
-    dynamic.size = 0; \
-    dynamic.used = 0;
+  #define f_clear_utf_string_dynamic(dynamic) f_macro_utf_string_static_clear(dynamic)
 
   #define f_macro_utf_string_dynamic_new(status, dynamic, new_length) \
     f_clear_utf_string_dynamic(dynamic) \

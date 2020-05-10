@@ -174,7 +174,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_position
 
 #ifndef _di_fl_utf_file_write_
-  f_return_status fl_utf_file_write(f_file *file, const f_utf_string_dynamic buffer) {
+  f_return_status fl_utf_file_write(f_file *file, const f_utf_string_static buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -224,7 +224,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_
 
 #ifndef _di_fl_utf_file_write_position_
-  f_return_status fl_utf_file_write_position(f_file *file, const f_utf_string_dynamic buffer, const f_utf_string_range position) {
+  f_return_status fl_utf_file_write_position(f_file *file, const f_utf_string_static buffer, const f_utf_string_range position) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (position.start < position.stop) return f_status_set_error(f_invalid_parameter);

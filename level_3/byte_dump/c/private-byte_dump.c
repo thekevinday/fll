@@ -230,7 +230,7 @@ extern "C" {
 #endif // _di_byte_dump_file_
 
 #ifndef _di_byte_dump_print_character_fragment_
-  bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, byte_dump_previous *previous, byte_dump_cell *cell, uint8_t *offset) {
+  bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_static characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, byte_dump_previous *previous, byte_dump_cell *cell, uint8_t *offset) {
     uint8_t byte = 0;
 
     bool reset = f_false;
@@ -430,7 +430,7 @@ extern "C" {
 #endif // _di_byte_dump_print_character_fragment_
 
 #ifndef _di_byte_dump_print_text_
-  void byte_dump_print_text(const byte_dump_data data, const f_utf_string_dynamic characters, const uint8_t invalid[], byte_dump_previous *previous, uint8_t *offset) {
+  void byte_dump_print_text(const byte_dump_data data, const f_utf_string_static characters, const uint8_t invalid[], byte_dump_previous *previous, uint8_t *offset) {
     uint8_t j = 0;
     uint8_t output = 0;
     uint8_t width_utf = 0;

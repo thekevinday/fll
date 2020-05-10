@@ -366,7 +366,7 @@ extern "C" {
 #endif // _di_fl_print_trim_utf_string_
 
 #ifndef _di_fl_print_trim_utf_string_dynamic_
-  f_return_status fl_print_trim_utf_string_dynamic(FILE *output, const f_utf_string_dynamic buffer) {
+  f_return_status fl_print_trim_utf_string_dynamic(FILE *output, const f_utf_string_static buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used <= 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -448,7 +448,7 @@ extern "C" {
 #endif // _di_fl_print_trim_utf_string_dynamic_
 
 #ifndef _di_fl_print_trim_utf_string_dynamic_partial_
-  f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_dynamic buffer, const f_utf_string_range range) {
+  f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_static buffer, const f_utf_string_range range) {
     #ifndef _di_level_1_parameter_checking_
       if (range.start < 0) return f_status_set_error(f_invalid_parameter);
       if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
