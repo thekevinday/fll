@@ -6,6 +6,46 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_clean_operate_
+  f_return_status fake_clean_operate(const fake_data data) {
+    f_status status = f_none;
+
+    if (data.verbosity != fake_verbosity_quiet) {
+      printf("%c", f_string_eol);
+      fl_color_print(f_standard_output, data.context.important, data.context.reset, "Deleting all files within build directory '");
+      fl_color_print(f_standard_output, data.context.notable, data.context.reset, "%s", data.path_build.string);
+      fl_color_print_line(f_standard_output, data.context.important, data.context.reset, "'.");
+    }
+
+    if (data.verbosity == fake_verbosity_verbose) {
+      status = f_directory_remove_custom(data.path_build.string, fake_directory_max_recursion, f_true, fake_clean_remove_recursively_verbosely);
+    }
+    else {
+      status = f_directory_remove(data.path_build.string, fake_directory_max_recursion, f_true);
+    }
+
+    if (f_status_is_error(status)) {
+      fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "f_directory_remove", f_true);
+      return status;
+    }
+
+    return f_none;
+  }
+#endif // _di_fake_clean_operate_
+
+#if !defined(_di_fake_clean_operate_)
+  int fake_clean_remove_recursively_verbosely(const char *path, const struct stat *file_stat, int type, struct FTW *entity) {
+    if (entity->level == 0) return 0;
+
+    int result = remove(path);
+
+    if (result == 0) {
+      printf("Removed '%s'.%c", path, f_string_eol);
+    }
+
+    return result;
+  }
+#endif // !defined(_di_fake_clean_operate_)
 
 #ifdef __cplusplus
 } // extern "C"

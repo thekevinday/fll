@@ -111,11 +111,12 @@
 #include <unistd.h>
 
 // fll-0 includes
-#include <level_0/console.h>
-#include <level_0/file.h>
 #include <level_0/status.h>
 #include <level_0/string.h>
 #include <level_0/type.h>
+#include <level_0/console.h>
+#include <level_0/directory.h>
+#include <level_0/file.h>
 
 // fll-1 includes
 #include <level_1/color.h>
@@ -125,6 +126,7 @@
 
 // fll-2 includes
 #include <level_2/execute.h>
+#include <level_2/directory.h>
 #include <level_2/fss.h>
 #include <level_2/fss_extended.h>
 #include <level_2/program.h>
@@ -245,6 +247,8 @@ extern "C" {
 #endif // _di_fake_build_language_
 
 #ifndef _di_fake_defines_
+  #define fake_directory_max_recursion 2048
+
   enum {
     fake_operation_build = 1,
     fake_operation_clean,

@@ -262,31 +262,49 @@ extern "C" {
           status = fake_build_operate(*data);
 
           if (f_status_is_error(status)) {
-            fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_clean);
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' failed.");
+            if (data->verbosity != fake_verbosity_quiet) {
+              fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
+              fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_build);
+              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' failed.");
+            }
+
             break;
           }
         }
         else if (operations[i] == fake_operation_clean) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_clean);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is not yet implemented.");
+          status = fake_clean_operate(*data);
+
+          if (f_status_is_error(status)) {
+            if (data->verbosity != fake_verbosity_quiet) {
+              fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
+              fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_clean);
+              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' failed.");
+            }
+
+            break;
+          }
         }
         else if (operations[i] == fake_operation_make) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_make);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is not yet implemented.");
+          if (data->verbosity != fake_verbosity_quiet) {
+            fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
+            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_make);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is not yet implemented.");
+          }
         }
         else if (operations[i] == fake_operation_skeleton) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_skeleton);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is not yet implemented.");
+          if (data->verbosity != fake_verbosity_quiet) {
+            fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
+            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_skeleton);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is not yet implemented.");
+          }
         }
       } // for
     }
     else {
-      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an operation.");
+      if (data->verbosity != fake_verbosity_quiet) {
+        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an operation.");
+      }
+
       status = f_status_set_error(f_invalid_parameter);
     }
 

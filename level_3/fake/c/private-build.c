@@ -48,7 +48,7 @@ extern "C" {
       }
 
       if (f_status_is_error(status)) {
-        fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), name_function, path.string, "file", f_true);
+        fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), name_function, path.string, f_true, f_true);
 
         f_macro_string_dynamic_delete_simple(buffer);
         f_macro_string_dynamic_delete_simple(path);

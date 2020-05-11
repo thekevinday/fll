@@ -59,10 +59,10 @@ extern "C" {
  *   The error status code to report on.
  * @param function
  *   The function call that returned the error.
- * @param file_name
+ * @param name
  *   The name of the file or directory.
- * @param file_or_directory
- *   A string that should be either 'file' or 'directory' used when printing the message.
+ * @param is_file
+ *   Set to TRUE if this is a file and FALSE if this is a directory.
  * @param fallback
  *   Set to f_true to print the fallback error message for unknown errors.
  *
@@ -71,7 +71,7 @@ extern "C" {
  *   f_unknown is returned if the status code has no print message.
  */
 #ifndef _di_fake_print_error_file_
-  extern f_return_status fake_print_error_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string file_name, const f_string file_or_directory, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_print_error_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string name, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_file_
 
 /**

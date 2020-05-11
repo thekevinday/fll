@@ -194,22 +194,16 @@ extern "C" {
 #endif // _di_fake_print_error_
 
 #ifndef _di_fake_print_error_file_
-  f_return_status fake_print_error_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string file_name, const f_string file_or_directory, const bool fallback) {
+  f_return_status fake_print_error_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string name, const bool is_file, const bool fallback) {
+    f_string file_or_directory = 0;
+
+    if (is_file) file_or_directory = "file";
+    else file_or_directory = "directory";
 
     if (status == f_file_not_found) {
       if (verbosity != fake_verbosity_quiet) {
-        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: failed to find file '");
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
-      }
-
-      return f_none;
-    }
-
-    if (status == f_directory_not_found) {
-      if (verbosity != fake_verbosity_quiet) {
-        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: failed to find directory '");
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
+        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: failed to find %s '", file_or_directory);
+        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
         fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       }
 
@@ -218,10 +212,10 @@ extern "C" {
 
     if (status == f_invalid_parameter) {
       if (verbosity != fake_verbosity_quiet) {
-        fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ", function, file_name);
+        fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ", function, name);
         fl_color_print(f_standard_error, context.notable, context.reset, "%s", function);
         fl_color_print(f_standard_error, context.error, context.reset, "() for the %s '", file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
+        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
         fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       }
 
@@ -231,7 +225,7 @@ extern "C" {
     if (status == f_invalid_name) {
       if (verbosity != fake_verbosity_quiet) {
         fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Invalid %s name '", file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
+        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
         fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       }
 
@@ -241,7 +235,7 @@ extern "C" {
     if (status == f_out_of_memory) {
       if (verbosity != fake_verbosity_quiet) {
         fl_color_print(f_standard_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory, while trying to access %s '", file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
+        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
         fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       }
 
@@ -251,7 +245,7 @@ extern "C" {
     if (status == f_number_overflow) {
       if (verbosity != fake_verbosity_quiet) {
         fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Overflow while trying to access %s '", file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
+        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
         fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       }
 
@@ -261,7 +255,7 @@ extern "C" {
     if (status == f_invalid_directory) {
       if (verbosity != fake_verbosity_quiet) {
         fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Invalid directory while trying to access %s '", file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
+        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
         fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       }
 
@@ -271,7 +265,7 @@ extern "C" {
     if (status == f_access_denied) {
       if (verbosity != fake_verbosity_quiet) {
         fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Access denied while trying to access %s '", file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
+        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
         fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       }
 
@@ -281,18 +275,52 @@ extern "C" {
     if (status == f_loop) {
       if (verbosity != fake_verbosity_quiet) {
         fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Loop while trying to access %s '", file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
+        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
         fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
       }
 
       return f_none;
     }
 
+    if (is_file) {
+    }
+    else {
+      if (status == f_directory_not_found) {
+        if (verbosity != fake_verbosity_quiet) {
+          fl_color_print(f_standard_error, context.error, context.reset, "ERROR: failed to find %s '", file_or_directory);
+          fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
+          fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        }
+
+        return f_none;
+      }
+
+      if (status == f_no_data) {
+        if (verbosity != fake_verbosity_quiet) {
+          fl_color_print(f_standard_error, context.error, context.reset, "ERROR: could not find %s '", file_or_directory);
+          fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
+          fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        }
+
+        return f_none;
+      }
+
+      if (status == f_failure) {
+        if (verbosity != fake_verbosity_quiet) {
+          fl_color_print(f_standard_error, context.error, context.reset, "ERROR: failed to read the %s '", file_or_directory);
+          fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
+          fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        }
+
+        return f_none;
+      }
+    }
+
     if (fake_print_error(context, verbosity, status, function, f_false) == f_unknown && fallback && verbosity != fake_verbosity_quiet) {
       fl_color_print(f_standard_error, context.error, context.reset, "UNKNOWN ERROR: (");
       fl_color_print(f_standard_error, context.notable, context.reset, "%d", status);
       fl_color_print(f_standard_error, context.error, context.reset, ") occurred for %s '", file_or_directory);
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s", file_name);
+      fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
       fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
     }
 
@@ -573,7 +601,7 @@ extern "C" {
 
           if (f_status_is_error(status)) {
             if (f_status_set_fine(status) != f_directory_not_found || parameters_required[i]) {
-              fake_print_error_file(data->context, data->verbosity, f_status_set_fine(status), "f_file_stat", parameter_values[i]->string, "directory", f_true);
+              fake_print_error_file(data->context, data->verbosity, f_status_set_fine(status), "f_file_stat", parameter_values[i]->string, f_false, f_true);
               return status;
             }
           }
