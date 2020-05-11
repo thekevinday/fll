@@ -243,6 +243,12 @@ extern "C" {
         case f_out_of_memory:
           *string = fl_status_string_out_of_memory;
           break;
+        case f_prohibited:
+          *string = fl_status_string_prohibited;
+          break;
+        case f_read_only:
+          *string = fl_status_string_read_only;
+          break;
         case f_error_input:
           *string = fl_status_string_input_error;
           break;
@@ -269,6 +275,9 @@ extern "C" {
           break;
         case f_incomplete:
           *string = fl_status_string_incomplete;
+          break;
+        case f_write_only:
+          *string = fl_status_string_write_only;
           break;
       #endif // _di_fl_status_basic_
 
@@ -594,8 +603,56 @@ extern "C" {
         case f_file_is_empty:
           *string = fl_status_string_file_is_empty;
           break;
+        case f_file_is_type_block:
+          *string = fl_status_string_file_is_type_block;
+          break;
+        case f_file_is_type_character:
+          *string = fl_status_string_file_is_type_character;
+          break;
+        case f_file_is_type_directory:
+          *string = fl_status_string_file_is_type_directory;
+          break;
+        case f_file_is_type_file:
+          *string = fl_status_string_file_is_type_file;
+          break;
+        case f_file_is_type_link:
+          *string = fl_status_string_file_is_type_link;
+          break;
+        case f_file_is_type_pipe:
+          *string = fl_status_string_file_is_type_pipe;
+          break;
+        case f_file_is_type_socket:
+          *string = fl_status_string_file_is_type_socket;
+          break;
+        case f_file_is_type_unknown:
+          *string = fl_status_string_file_is_type_unknown;
+          break;
         case f_file_not_open:
           *string = fl_status_string_file_not_open;
+          break;
+        case f_file_not_type_block:
+          *string = fl_status_string_file_not_type_block;
+          break;
+        case f_file_not_type_character:
+          *string = fl_status_string_file_not_type_character;
+          break;
+        case f_file_not_type_directory:
+          *string = fl_status_string_file_not_type_directory;
+          break;
+        case f_file_not_type_file:
+          *string = fl_status_string_file_not_type_file;
+          break;
+        case f_file_not_type_link:
+          *string = fl_status_string_file_not_type_link;
+          break;
+        case f_file_not_type_pipe:
+          *string = fl_status_string_file_not_type_pipe;
+          break;
+        case f_file_not_type_socket:
+          *string = fl_status_string_file_not_type_socket;
+          break;
+        case f_file_not_type_unknown:
+          *string = fl_status_string_file_not_type_unknown;
           break;
         case f_file_error_allocation:
           *string = fl_status_string_file_allocation_error;
@@ -614,6 +671,12 @@ extern "C" {
           break;
         case f_file_not_utf:
           *string = fl_status_string_file_not_utf;
+          break;
+        case f_file_max_descriptors:
+          *string = fl_status_string_file_max_descriptors;
+          break;
+        case f_file_max_open:
+          *string = fl_status_string_file_max_open;
           break;
       #endif // _di_fl_status_file_
 
@@ -662,6 +725,12 @@ extern "C" {
           break;
         case f_directory_not_utf:
           *string = fl_status_string_directory_not_utf;
+          break;
+        case f_directory_error_unsupported:
+          *string = fl_status_string_directory_error_unsupported;
+          break;
+        case f_directory_error_stream:
+          *string = fl_status_string_directory_error_stream;
           break;
       #endif // _di_fl_status_directory_
 

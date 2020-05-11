@@ -15,7 +15,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_file_open_
-  f_return_status f_file_open(f_file *file, const f_string file_name) {
+  f_return_status f_file_open(f_file *file, const f_string path) {
     #ifndef _di_level_0_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -23,7 +23,7 @@ extern "C" {
     // if file->mode is unset, then this may cause a segfault.
     if (file->mode == 0) return f_status_set_error(f_invalid_parameter);
 
-    file->address = fopen(file_name, file->mode);
+    file->address = fopen(path, file->mode);
 
     if (file->address == 0) return f_status_set_error(f_file_not_found);
     if (ferror(file->address) != 0) return f_status_set_error(f_file_error_open);
@@ -60,12 +60,12 @@ extern "C" {
 #endif // _di_f_file_close_
 
 #ifndef _di_f_file_exists_
-  f_return_status f_file_exists(const f_string file_name) {
+  f_return_status f_file_exists(const f_string path) {
     #ifndef _di_level_0_parameter_checking_
-      if (file_name == 0) return f_status_set_error(f_invalid_parameter);
+      if (path == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (access(file_name, F_OK)) {
+    if (access(path, F_OK)) {
       if (errno == ENOENT) {
         return f_false;
       }
@@ -97,13 +97,13 @@ extern "C" {
 #endif // _di_f_file_exists_
 
 #ifndef _di_f_file_exists_at_
-  f_return_status f_file_exists_at(const int directory_file_descriptor, const f_string file_name, const int flags) {
+  f_return_status f_file_exists_at(const int directory_file_descriptor, const f_string path, const int flags) {
     #ifndef _di_level_0_parameter_checking_
       if (directory_file_descriptor == 0) return f_status_set_error(f_invalid_parameter);
-      if (file_name == 0) return f_status_set_error(f_invalid_parameter);
+      if (path == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (faccessat(directory_file_descriptor, file_name, F_OK, flags)) {
+    if (faccessat(directory_file_descriptor, path, F_OK, flags)) {
       if (errno == ENOENT) {
         return f_false;
       }
@@ -288,9 +288,53 @@ extern "C" {
   }
 #endif // _di_f_file_read_until_
 
+#ifndef _di_f_file_remove_
+  f_return_status f_file_remove(const f_string path) {
+    if (unlink(path) < 0) {
+      if (errno == EACCES) {
+        return f_status_set_error(f_access_denied);
+      }
+      else if (errno == EBUSY) {
+        return f_status_set_error(f_busy);
+      }
+      else if (errno == EIO) {
+        return f_status_set_error(f_error_input_output);
+      }
+      else if (errno == EISDIR) {
+        return f_status_set_error(f_file_is_type_directory);
+      }
+      else if (errno == ELOOP) {
+        return f_status_set_error(f_loop);
+      }
+      else if (errno == ENAMETOOLONG || errno == EFAULT) {
+        return f_status_set_error(f_invalid_name);
+      }
+      else if (errno == ENOENT) {
+        return f_status_set_error(f_file_not_found);
+      }
+      else if (errno == ENOMEM) {
+        return f_status_set_error(f_out_of_memory);
+      }
+      else if (errno == ENOTDIR) {
+        return f_status_set_error(f_invalid_directory);
+      }
+      else if (errno == EPERM) {
+        return f_status_set_error(f_prohibited);
+      }
+      else if (errno == EROFS) {
+        return f_status_set_error(f_read_only);
+      }
+
+      return f_status_set_error(f_failure);
+    }
+
+    return f_none;
+  }
+#endif // _di_f_file_remove_
+
 #ifndef _di_f_file_stat_
-  f_return_status f_file_stat(const f_string file_name, struct stat *file_stat) {
-    if (stat(file_name, file_stat) < 0) {
+  f_return_status f_file_stat(const f_string path, struct stat *file_stat) {
+    if (stat(path, file_stat) < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
         return f_status_set_error(f_invalid_name);
       }
@@ -321,12 +365,13 @@ extern "C" {
 #endif // _di_f_file_stat_
 
 #ifndef _di_f_file_stat_at_
-  f_return_status f_file_stat_at(const int file_id, const f_string file_name, struct stat *file_stat, const int flags) {
+  f_return_status f_file_stat_at(const int file_id, const f_string path, struct stat *file_stat, const int flags) {
     #ifndef _di_level_0_parameter_checking_
       if (file_id <= 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    int result = fstatat(file_id, file_name, file_stat, flags);
+    int result = fstatat(file_id, path, file_stat, flags);
+
     if (result < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
         return f_status_set_error(f_invalid_name);
@@ -364,6 +409,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     int result = fstat(file_id, file_stat);
+
     if (result < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
         return f_status_set_error(f_invalid_name);

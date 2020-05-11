@@ -1,5 +1,5 @@
 /**
- * FLL - Level 1
+ * FLL - Level 2
  *
  * Project: Directory
  * API Version: 0.5
@@ -7,8 +7,8 @@
  *
  * Provides operations for directory handling.
  */
-#ifndef _FL_directory_h
-#define _FL_directory_h
+#ifndef _FLL_directory_h
+#define _FLL_directory_h
 
 // libc includes
 #include <dirent.h>
@@ -23,23 +23,22 @@
 #include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/type.h>
+#include <level_0/directory.h>
+#include <level_0/file.h>
+
+// fll-1 includes
+#include <level_1/string.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_fl_directory_limitations_
-  #define fl_directory_default_allocation_step f_memory_default_allocation_step
-
-  #define fl_directory_name_max 255
-#endif // _di_fl_directory_limitations_
-
 /**
- * Print the names of each file and/or directory inside the given directory.
+ * For some given path, print the names of each file and/or directory inside the directory, stored as a directory listing.
  *
  * Allows specifying a custom filter and custom sort.
  *
- * @param directory_path
+ * @param path
  *   Filesystem path to the directory.
  * @param filter
  *   A filter function of the form: int xxx(const struct direct *).
@@ -48,8 +47,8 @@ extern "C" {
  *   A sort function of the form: int xxx(const struct direct *, const struct direct *).
  *   Set to 0 to not use (NULL).
  *   There are two pre-made libc functions available for this: alphasort() and versionsort().
- * @param names
- *   Will be populated with the names of each file and/or directory inside the names parameter.
+ * @param listing
+ *   Will be populated with the names of all top-level paths found within the given directory.
  *
  * @return
  *   f_none on success.
@@ -57,15 +56,21 @@ extern "C" {
  *   f_failure (with error bit) if failed to read directory information.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   f_directory_error_open (with error bit) on directory open error.
+ *   f_directory_error_descriptor (with error bit) on directory file descriptor error.
+ *   f_directory_error_stream (with error bit) on directory stream error.
+ *   f_directory_error_unsupported (with error bit) on directory file descriptor not supported.
  *
+ * @see alphasort()
  * @see scandir()
+ * @see versionsort()
  */
-#ifndef _di_fl_directory_list_
-  extern f_return_status fl_directory_list(const f_string directory_path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics *names);
-#endif // _di_fl_directory_list_
+#ifndef _di_fll_directory_list_
+  extern f_return_status fll_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_directory_listing *listing);
+#endif // _di_fll_directory_list_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _FL_directory_h
+#endif // _FLL_directory_h

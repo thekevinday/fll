@@ -75,6 +75,31 @@ extern "C" {
 #endif // _di_f_file_seeks_
 
 /**
+ * Provide file type macros.
+ */
+#ifndef _di_f_file_type_
+  #define f_file_type_mask S_IFMT
+
+  #define f_file_type_pipe      S_IFIFO
+  #define f_file_type_character S_IFCHR
+  #define f_file_type_directory S_IFDIR
+  #define f_file_type_block     S_IFBLK
+  #define f_file_type_file      S_IFREG
+  #define f_file_type_link      S_IFLNK
+  #define f_file_type_socket    S_IFSOCK
+
+  #define f_macro_file_type_is(mode) f_file_type_mask & S_IFIFO
+
+  #define f_macro_file_type_is_pipe(mode)      f_macro_file_type_is(mode) == f_file_type_pipe
+  #define f_macro_file_type_is_character(mode) f_macro_file_type_is(mode) == f_file_type_character
+  #define f_macro_file_type_is_directory(mode) f_macro_file_type_is(mode) == f_file_type_directory
+  #define f_macro_file_type_is_block(mode)     f_macro_file_type_is(mode) == f_file_type_block
+  #define f_macro_file_type_is_file(mode)      f_macro_file_type_is(mode) == f_file_type_file
+  #define f_macro_file_type_is_link(mode)      f_macro_file_type_is(mode) == f_file_type_link
+  #define f_macro_file_type_is_socket(mode)    f_macro_file_type_is(mode) == f_file_type_socket
+#endif // _di_f_file_type_
+
+/**
  * Commonly used file related properties.
  *
  * id: File descriptor.
@@ -248,8 +273,8 @@ extern "C" {
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor and file address.
- * @param file_name
- *   The name of the file to be opened.
+ * @param path
+ *   The path file name.
  *
  * @return
  *   f_none on success.
@@ -259,7 +284,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_file_open_
-  extern f_return_status f_file_open(f_file *file, const f_string file_name);
+  extern f_return_status f_file_open(f_file *file, const f_string path);
 #endif // _di_f_file_open_
 
 /**
@@ -287,8 +312,8 @@ extern "C" {
 /**
  * Check if a file exists.
  *
- * @param file_name
- *   The file name.
+ * @param path
+ *   The path file name.
  *
  * @return
  *   f_true if file exists.
@@ -303,7 +328,7 @@ extern "C" {
  *   f_false (with error bit) on unknown/unhandled errors.
  */
 #ifndef _di_f_file_exists_
-  extern f_return_status f_file_exists(const f_string file_name);
+  extern f_return_status f_file_exists(const f_string path);
 #endif // _di_f_file_exists_
 
 /**
@@ -311,8 +336,8 @@ extern "C" {
  *
  * @param directory_file_descriptor
  *   The file descriptor of the directory.
- * @param file_name
- *   The file name.
+ * @param path
+ *   The path file name.
  * @param flags
  *   Additional flags to pass, such as AT_EACCESS or AT_SYMLINK_NOFOLLOW.
  *
@@ -329,7 +354,7 @@ extern "C" {
  *   f_false (with error bit) on unknown/unhandled errors.
  */
 #ifndef _di_f_file_exists_at_
-  extern f_return_status f_file_exists_at(const int directory_file_descriptor, const f_string file_name, const int flags);
+  extern f_return_status f_file_exists_at(const int directory_file_descriptor, const f_string path, const int flags);
 #endif // _di_f_file_exists_at_
 
 /**
@@ -429,6 +454,34 @@ extern "C" {
 #ifndef _di_f_file_read_until_
   extern f_return_status f_file_read_until(f_file *file, f_string_dynamic *buffer, const f_string_length total);
 #endif // _di_f_file_read_until_
+
+/**
+ * Remove a file.
+ *
+ * @param path
+ *   The path file name.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_busy (with error bit) if file is busy.
+ *   f_error_input_output (with error bit) if an I/O error occurred.
+ *   f_file_is_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
+ *   f_loop (with error bit) on loop error.
+ *   f_invalid_name (with error bit) on path name error.
+ *   f_file_not_found (with error bit) if file not found.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   f_prohibited (with error bit) if filesystem does not allow for removing.
+ *   f_read_only (with error bit) if file is read-only.
+ *   f_failure (with error bit) for any other (unlink()) error.
+ *
+ * @see unlink()
+ */
+#ifndef _di_f_file_remove_
+  extern f_return_status f_file_remove(const f_string path);
+#endif // _di_f_file_remove_
 
 /**
  * Read statistics of a file.

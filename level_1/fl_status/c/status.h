@@ -251,6 +251,12 @@ extern "C" {
     #define fl_status_string_out_of_memory "f_out_of_memory"
     #define fl_status_string_out_of_memory_length 15
 
+    #define fl_status_string_prohibited "f_prohibited"
+    #define fl_status_string_prohibited_length 12
+
+    #define fl_status_string_read_only "f_read_only"
+    #define fl_status_string_read_only_length 11
+
     #define fl_status_string_input_error "f_error_input"
     #define fl_status_string_input_error_length 13
 
@@ -277,6 +283,9 @@ extern "C" {
 
     #define fl_status_string_incomplete "f_incomplete"
     #define fl_status_string_incomplete_length 12
+
+    #define fl_status_string_write_only "f_write_only"
+    #define fl_status_string_write_only_length 12
   #endif // _di_fl_status_basic_
 
   #ifndef _di_fl_status_invalid_
@@ -591,11 +600,62 @@ extern "C" {
     #define fl_status_string_file_found "f_file_found"
     #define fl_status_string_file_found_length 12
 
+    #define fl_status_string_file_is "f_file_is"
+    #define fl_status_string_file_is_length 9
+
     #define fl_status_string_file_is_empty "f_file_is_empty"
     #define fl_status_string_file_is_empty_length 15
 
+    #define fl_status_string_file_is_type_block "f_file_is_type_block"
+    #define fl_status_string_file_is_type_block_length 20
+
+    #define fl_status_string_file_is_type_character "f_file_is_type_character"
+    #define fl_status_string_file_is_type_character_length 24
+
+    #define fl_status_string_file_is_type_directory "f_file_is_type_directory"
+    #define fl_status_string_file_is_type_directory_length 24
+
+    #define fl_status_string_file_is_type_file "f_file_is_type_file"
+    #define fl_status_string_file_is_type_file_length 19
+
+    #define fl_status_string_file_is_type_link "f_file_is_type_link"
+    #define fl_status_string_file_is_type_link_length 19
+
+    #define fl_status_string_file_is_type_pipe "f_file_is_type_pipe"
+    #define fl_status_string_file_is_type_pipe_length 19
+
+    #define fl_status_string_file_is_type_socket "f_file_is_type_socket"
+    #define fl_status_string_file_is_type_socket_length 21
+
+    #define fl_status_string_file_is_type_unknown "f_file_is_type_unknown"
+    #define fl_status_string_file_is_type_unknown_length 22
+
     #define fl_status_string_file_not_open "f_file_not_open"
     #define fl_status_string_file_not_open_length 15
+
+    #define fl_status_string_file_not_type_block "f_file_not_type_block"
+    #define fl_status_string_file_not_type_block_length 21
+
+    #define fl_status_string_file_not_type_character "f_file_not_type_character"
+    #define fl_status_string_file_not_type_character_length 25
+
+    #define fl_status_string_file_not_type_directory "f_file_not_type_directory"
+    #define fl_status_string_file_not_type_directory_length 25
+
+    #define fl_status_string_file_not_type_file "f_file_not_type_file"
+    #define fl_status_string_file_not_type_file_length 20
+
+    #define fl_status_string_file_not_type_link "f_file_not_type_link"
+    #define fl_status_string_file_not_type_link_length 20
+
+    #define fl_status_string_file_not_type_pipe "f_file_not_type_pipe"
+    #define fl_status_string_file_not_type_pipe_length 20
+
+    #define fl_status_string_file_not_type_socket "f_file_not_type_socket"
+    #define fl_status_string_file_not_type_socket_length 22
+
+    #define fl_status_string_file_not_type_unknown "f_file_not_type_unknown"
+    #define fl_status_string_file_not_type_unknown_length 23
 
     #define fl_status_string_file_allocation_error "f_file_error_allocation"
     #define fl_status_string_file_allocation_error_length 23
@@ -614,6 +674,12 @@ extern "C" {
 
     #define fl_status_string_file_not_utf "f_file_not_utf"
     #define fl_status_string_file_not_utf_length 14
+
+    #define fl_status_string_file_max_descriptors "f_file_max_descriptors"
+    #define fl_status_string_file_max_descriptors_length 22
+
+    #define fl_status_string_file_max_open "f_file_max_open"
+    #define fl_status_string_file_max_open_length 15
   #endif // _di_fl_status_file_
 
   #ifndef _di_fl_status_directory_
@@ -661,6 +727,12 @@ extern "C" {
 
     #define fl_status_string_directory_not_utf "f_directory_not_utf"
     #define fl_status_string_directory_not_utf_length 19
+
+    #define fl_status_string_directory_error_unsupported "f_directory_error_unsupported"
+    #define fl_status_string_directory_error_unsupported_length 19
+
+    #define fl_status_string_directory_error_stream "f_directory_error_stream"
+    #define fl_status_string_directory_error_stream_length 19
   #endif // _di_fl_status_directory_
 
   #ifndef _di_fl_status_socket_

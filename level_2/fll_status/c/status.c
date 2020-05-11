@@ -406,6 +406,16 @@ extern "C" {
         return f_none;
       }
 
+      if (fl_string_compare(string, fl_status_string_prohibited, length, fl_status_string_prohibited_length) == f_equal_to) {
+        *code = f_prohibited;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_read_only, length, fl_status_string_read_only_length) == f_equal_to) {
+        *code = f_read_only;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_input_error, length, fl_status_string_input_error_length) == f_equal_to) {
         *code = f_error_input;
         return f_none;
@@ -448,6 +458,11 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_incomplete, length, fl_status_string_incomplete_length) == f_equal_to) {
         *code = f_incomplete;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_write_only, length, fl_status_string_write_only_length) == f_equal_to) {
+        *code = f_write_only;
         return f_none;
       }
     #endif // _di_fll_status_basic_
@@ -967,8 +982,88 @@ extern "C" {
         return f_none;
       }
 
+      if (fl_string_compare(string, fl_status_string_file_is_type_block, length, fl_status_string_file_is_type_block_length) == f_equal_to) {
+        *code = f_file_is_type_block;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_is_type_character, length, fl_status_string_file_is_type_character_length) == f_equal_to) {
+        *code = f_file_is_type_character;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_is_type_directory, length, fl_status_string_file_is_type_directory_length) == f_equal_to) {
+        *code = f_file_is_type_directory;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_is_type_file, length, fl_status_string_file_is_type_file_length) == f_equal_to) {
+        *code = f_file_is_type_file;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_is_type_link, length, fl_status_string_file_is_type_link_length) == f_equal_to) {
+        *code = f_file_is_type_link;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_is_type_pipe, length, fl_status_string_file_is_type_pipe_length) == f_equal_to) {
+        *code = f_file_is_type_pipe;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_is_type_socket, length, fl_status_string_file_is_type_socket_length) == f_equal_to) {
+        *code = f_file_is_type_socket;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_is_type_unknown, length, fl_status_string_file_is_type_unknown_length) == f_equal_to) {
+        *code = f_file_is_type_unknown;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_file_not_open, length, fl_status_string_file_not_open_length) == f_equal_to) {
         *code = f_file_not_open;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_not_type_block, length, fl_status_string_file_not_type_block_length) == f_equal_to) {
+        *code = f_file_not_type_block;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_not_type_character, length, fl_status_string_file_not_type_character_length) == f_equal_to) {
+        *code = f_file_not_type_character;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_not_type_directory, length, fl_status_string_file_not_type_directory_length) == f_equal_to) {
+        *code = f_file_not_type_directory;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_not_type_file, length, fl_status_string_file_not_type_file_length) == f_equal_to) {
+        *code = f_file_not_type_file;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_not_type_link, length, fl_status_string_file_not_type_link_length) == f_equal_to) {
+        *code = f_file_not_type_link;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_not_type_pipe, length, fl_status_string_file_not_type_pipe_length) == f_equal_to) {
+        *code = f_file_not_type_pipe;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_not_type_socket, length, fl_status_string_file_not_type_socket_length) == f_equal_to) {
+        *code = f_file_not_type_socket;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_not_type_unknown, length, fl_status_string_file_not_type_unknown_length) == f_equal_to) {
+        *code = f_file_not_type_unknown;
         return f_none;
       }
 
@@ -999,6 +1094,16 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_file_not_utf, length, fl_status_string_file_not_utf_length) == f_equal_to) {
         *code = f_file_not_utf;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_max_descriptors, length, fl_status_string_file_max_descriptors_length) == f_equal_to) {
+        *code = f_file_max_descriptors;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_file_max_open, length, fl_status_string_file_max_open_length) == f_equal_to) {
+        *code = f_file_max_open;
         return f_none;
       }
     #endif // _di_fll_status_file_
@@ -1076,6 +1181,16 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_directory_not_utf, length, fl_status_string_directory_not_utf_length) == f_equal_to) {
         *code = f_directory_not_utf;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_directory_error_unsupported, length, fl_status_string_directory_error_unsupported_length) == f_equal_to) {
+        *code = f_directory_error_unsupported;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_directory_error_stream, length, fl_status_string_directory_error_stream_length) == f_equal_to) {
+        *code = f_directory_error_stream;
         return f_none;
       }
     #endif // _di_fll_status_directory_

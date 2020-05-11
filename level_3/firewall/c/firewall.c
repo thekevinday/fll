@@ -315,7 +315,7 @@ extern "C" {
         }
 
         // load all network devices
-        status = fl_directory_list((f_string) network_devices, 0, alphasort, &data->devices);
+        status = f_directory_list((f_string) network_devices, 0, alphasort, &data->devices);
 
         if (f_status_is_error(status)) {
           status = f_status_set_fine(status);
