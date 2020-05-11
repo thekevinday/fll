@@ -195,6 +195,9 @@ extern "C" {
  *   f_prohibited (with error bit) if filesystem does not allow for removing.
  *   f_read_only (with error bit) if file is read-only.
  *   f_failure (with error bit) for any other (unlink()) error.
+ *   f_number_overflow (with error bit) on integer overflow.
+ *   f_file_max_descriptors (with error bit) if max file descriptors was reached.
+ *   f_file_max_open (with error bit) too many open files.
  *
  * @see nftw()
  * @see remove()

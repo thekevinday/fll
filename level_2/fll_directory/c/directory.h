@@ -60,6 +60,8 @@ extern "C" {
  *   f_directory_error_descriptor (with error bit) on directory file descriptor error.
  *   f_directory_error_stream (with error bit) on directory stream error.
  *   f_directory_error_unsupported (with error bit) on directory file descriptor not supported.
+ *   f_file_max_descriptors (with error bit) if max file descriptors was reached.
+ *   f_file_max_open (with error bit) too many open files.
  *
  * @see alphasort()
  * @see scandir()

@@ -82,8 +82,6 @@ extern "C" {
       result = remove(path);
     }
 
-    // @todo properly handle the correct error codes, this was simply copied over from f_file_remove().
-
     if (result < 0) {
       if (errno == EACCES) {
         return f_status_set_error(f_access_denied);
@@ -117,6 +115,18 @@ extern "C" {
       }
       else if (errno == EROFS) {
         return f_status_set_error(f_read_only);
+      }
+      else if (errno == EOVERFLOW) {
+        return f_status_set_error(f_number_overflow);
+      }
+      else if (errno == EMFILE) {
+        return f_status_set_error(f_file_max_descriptors);
+      }
+      else if (errno == ENFILE) {
+        return f_status_set_error(f_file_max_open);
+      }
+      else if (errno == EINVAL) {
+        return f_status_set_error(f_invalid_parameter);
       }
 
       return f_status_set_error(f_failure);
@@ -148,8 +158,6 @@ extern "C" {
       result = remove(path);
     }
 
-    // @todo properly handle the correct error codes, this was simply copied over from f_file_remove().
-
     if (result < 0) {
       if (errno == EACCES) {
         return f_status_set_error(f_access_denied);
@@ -183,6 +191,18 @@ extern "C" {
       }
       else if (errno == EROFS) {
         return f_status_set_error(f_read_only);
+      }
+      else if (errno == EOVERFLOW) {
+        return f_status_set_error(f_number_overflow);
+      }
+      else if (errno == EMFILE) {
+        return f_status_set_error(f_file_max_descriptors);
+      }
+      else if (errno == ENFILE) {
+        return f_status_set_error(f_file_max_open);
+      }
+      else if (errno == EINVAL) {
+        return f_status_set_error(f_invalid_parameter);
       }
 
       return f_status_set_error(f_failure);
