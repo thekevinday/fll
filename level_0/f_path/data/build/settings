@@ -13,7 +13,7 @@ build_libraries
 build_libraries_fll
 build_sources_library 
 build_sources_program 
-build_sources_headers path_fll.h path_filesystem.h
+build_sources_headers path_fll.h path_filesystem.h path.h
 build_sources_bash
 build_sources_settings
 build_shared yes

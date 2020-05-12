@@ -14,7 +14,7 @@ build_libraries_fll
 build_libraries_fll-level
 build_sources_library console.c conversion.c directory.c private-directory.c file.c memory.c pipe.c print.c utf.c private-utf.c
 build_sources_program
-build_sources_headers color.h console.h conversion.h directory.c file.h fss.h memory.h path_fll.h path_filesystem.h pipe.h print.h serialized.h socket.h status.h string.h type.h type_array.h utf.h
+build_sources_headers color.h console.h conversion.h directory.c file.h fss.h memory.h path_fll.h path_filesystem.h path.h pipe.h print.h serialized.h socket.h status.h string.h type.h type_array.h utf.h
 build_shared yes
 build_static yes
 
