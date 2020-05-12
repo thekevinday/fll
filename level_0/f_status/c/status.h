@@ -305,6 +305,12 @@ extern "C" {
       f_file_max_open,
     #endif // _di_f_status_file_
 
+    #ifndef _di_f_status_filesystem_
+      f_filesystem_error,
+      f_filesystem_quota_blocks,
+      f_filesystem_quota_reached,
+    #endif // _di_f_status_filesystem_
+
     // Most of these are a guess until I get around to researching & implementing linux directory I/O.
     #ifndef _di_f_status_directory_
       f_directory_error,
@@ -312,6 +318,7 @@ extern "C" {
       f_directory_error_close,
       f_directory_error_descriptor,
       f_directory_error_flush,
+      f_directory_error_link_max,
       f_directory_error_open,
       f_directory_error_purge,
       f_directory_error_read,

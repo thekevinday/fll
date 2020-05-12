@@ -154,6 +154,82 @@ extern "C" {
   }
 #endif // _di_f_file_flush_
 
+#ifndef _di_f_file_is_
+  f_return_status f_file_is(const f_string path, const int type) {
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(file_stat));
+
+    if (stat(path, &file_stat) < 0) {
+      if (errno == ENAMETOOLONG || errno == EFAULT) {
+        return f_status_set_error(f_invalid_name);
+      }
+      else if (errno == ENOMEM) {
+        return f_status_set_error(f_out_of_memory);
+      }
+      else if (errno == EOVERFLOW) {
+        return f_status_set_error(f_number_overflow);
+      }
+      else if (errno == ENOTDIR) {
+        return f_status_set_error(f_invalid_directory);
+      }
+      else if (errno == ENOENT) {
+        return f_file_not_found;
+      }
+      else if (errno == EACCES) {
+        return f_status_set_error(f_access_denied);
+      }
+      else if (errno == ELOOP) {
+        return f_status_set_error(f_loop);
+      }
+
+      return f_status_set_error(f_file_error_stat);
+    }
+
+    if (f_macro_file_type_get(file_stat.st_mode) == type) return f_true;
+
+    return f_false;
+  }
+#endif // _di_f_file_is_
+
+#ifndef _di_f_file_is_at_
+  f_return_status f_file_is_at(const int file_id, const f_string path, const int type, const bool follow) {
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(file_stat));
+
+    if (fstatat(file_id, path, &file_stat, follow ? 0 : AT_SYMLINK_NOFOLLOW) < 0) {
+      if (errno == ENAMETOOLONG || errno == EFAULT) {
+        return f_status_set_error(f_invalid_name);
+      }
+      else if (errno == ENOMEM) {
+        return f_status_set_error(f_out_of_memory);
+      }
+      else if (errno == EOVERFLOW) {
+        return f_status_set_error(f_number_overflow);
+      }
+      else if (errno == ENOTDIR) {
+        return f_status_set_error(f_invalid_directory);
+      }
+      else if (errno == ENOENT) {
+        return f_file_not_found;
+      }
+      else if (errno == EACCES) {
+        return f_status_set_error(f_access_denied);
+      }
+      else if (errno == ELOOP) {
+        return f_status_set_error(f_loop);
+      }
+
+      return f_status_set_error(f_file_error_stat);
+    }
+
+    if (file_stat.st_mode == (S_IFMT & S_IFDIR)) return f_true;
+
+    return f_false;
+  }
+#endif // _di_f_file_is_at_
+
 #ifndef _di_f_file_read_
   f_return_status f_file_read(f_file *file, f_string_dynamic *buffer) {
     #ifndef _di_level_0_parameter_checking_
@@ -370,9 +446,7 @@ extern "C" {
       if (file_id <= 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    int result = fstatat(file_id, path, file_stat, flags);
-
-    if (result < 0) {
+    if (fstatat(file_id, path, file_stat, flags) < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
         return f_status_set_error(f_invalid_name);
       }

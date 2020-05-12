@@ -680,6 +680,18 @@ extern "C" {
           break;
       #endif // _di_fl_status_file_
 
+      #ifndef _di_f_status_filesystem_
+        case f_filesystem_error:
+          *string = fl_status_string_filesystem_error;
+          break;
+        case f_filesystem_quota_blocks:
+          *string = fl_status_string_filesystem_quota_blocks;
+          break;
+        case f_filesystem_quota_reached:
+          *string = fl_status_string_filesystem_quota_reached;
+          break;
+      #endif // _di_f_status_filesystem_
+
       #ifndef _di_fl_status_directory_
         case f_directory_error_read:
           *string = fl_status_string_directory_read_error;
@@ -689,6 +701,9 @@ extern "C" {
           break;
         case f_directory_error_flush:
           *string = fl_status_string_directory_flush_error;
+          break;
+        case f_directory_error_link_max:
+          *string = fl_status_string_directory_error_link_max;
           break;
         case f_directory_error_purge:
           *string = fl_status_string_directory_purge_error;

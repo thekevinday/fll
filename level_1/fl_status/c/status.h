@@ -682,6 +682,17 @@ extern "C" {
     #define fl_status_string_file_max_open_length 15
   #endif // _di_fl_status_file_
 
+  #ifndef _di_f_status_filesystem_
+    #define fl_status_string_filesystem_error "f_filesystem_error"
+    #define fl_status_string_filesystem_error_length 18
+
+    #define fl_status_string_filesystem_quota_blocks "f_filesystem_quota_blocks"
+    #define fl_status_string_filesystem_quota_blocks_length 25
+
+    #define fl_status_string_filesystem_quota_reached "f_filesystem_quota_reached"
+    #define fl_status_string_filesystem_quota_reached_length 26
+  #endif // _di_f_status_filesystem_
+
   #ifndef _di_fl_status_directory_
     #define fl_status_string_directory_read_error "f_directory_error_read"
     #define fl_status_string_directory_read_error_length 22
@@ -691,6 +702,9 @@ extern "C" {
 
     #define fl_status_string_directory_flush_error "f_directory_error_flush"
     #define fl_status_string_directory_flush_error_length 23
+
+    #define fl_status_string_directory_error_link_max "f_directory_error_link_max"
+    #define fl_status_string_directory_error_link_max_length 26
 
     #define fl_status_string_directory_purge_error "f_directory_error_purge"
     #define fl_status_string_directory_purge_error_length 23

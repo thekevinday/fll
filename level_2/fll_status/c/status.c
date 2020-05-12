@@ -1108,6 +1108,23 @@ extern "C" {
       }
     #endif // _di_fll_status_file_
 
+    #ifndef _di_f_status_filesystem_
+      if (fl_string_compare(string, fl_status_string_filesystem_error, length, fl_status_string_filesystem_error_length) == f_equal_to) {
+        *code = f_filesystem_error;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_filesystem_quota_blocks, length, fl_status_string_filesystem_quota_blocks_length) == f_equal_to) {
+        *code = f_filesystem_quota_blocks;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_filesystem_quota_reached, length, fl_status_string_filesystem_quota_reached_length) == f_equal_to) {
+        *code = f_filesystem_quota_reached;
+        return f_none;
+      }
+    #endif // _di_f_status_filesystem_
+
     #ifndef _di_fll_status_directory_
       if (fl_string_compare(string, fl_status_string_directory_read_error, length, fl_status_string_directory_read_error_length) == f_equal_to) {
         *code = f_directory_error_read;
@@ -1121,6 +1138,11 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_directory_flush_error, length, fl_status_string_directory_flush_error_length) == f_equal_to) {
         *code = f_directory_error_flush;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_directory_error_link_max, length, fl_status_string_directory_error_link_max_length) == f_equal_to) {
+        *code = f_directory_error_link_max;
         return f_none;
       }
 

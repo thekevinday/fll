@@ -88,15 +88,15 @@ extern "C" {
   #define f_file_type_link      S_IFLNK
   #define f_file_type_socket    S_IFSOCK
 
-  #define f_macro_file_type_is(mode) f_file_type_mask & S_IFIFO
+  #define f_macro_file_type_get(mode) (f_file_type_mask & mode)
 
-  #define f_macro_file_type_is_pipe(mode)      f_macro_file_type_is(mode) == f_file_type_pipe
-  #define f_macro_file_type_is_character(mode) f_macro_file_type_is(mode) == f_file_type_character
-  #define f_macro_file_type_is_directory(mode) f_macro_file_type_is(mode) == f_file_type_directory
-  #define f_macro_file_type_is_block(mode)     f_macro_file_type_is(mode) == f_file_type_block
-  #define f_macro_file_type_is_file(mode)      f_macro_file_type_is(mode) == f_file_type_file
-  #define f_macro_file_type_is_link(mode)      f_macro_file_type_is(mode) == f_file_type_link
-  #define f_macro_file_type_is_socket(mode)    f_macro_file_type_is(mode) == f_file_type_socket
+  #define f_macro_file_type_is_pipe(mode)      f_macro_file_type_get(mode) == f_file_type_pipe
+  #define f_macro_file_type_is_character(mode) f_macro_file_type_get(mode) == f_file_type_character
+  #define f_macro_file_type_is_directory(mode) f_macro_file_type_get(mode) == f_file_type_directory
+  #define f_macro_file_type_is_block(mode)     f_macro_file_type_get(mode) == f_file_type_block
+  #define f_macro_file_type_is_file(mode)      f_macro_file_type_get(mode) == f_file_type_file
+  #define f_macro_file_type_is_link(mode)      f_macro_file_type_get(mode) == f_file_type_link
+  #define f_macro_file_type_is_socket(mode)    f_macro_file_type_get(mode) == f_file_type_socket
 #endif // _di_f_file_type_
 
 /**
@@ -249,6 +249,27 @@ extern "C" {
   #define f_file_mode_world_rw  (S_IROTH | S_IWOTH)
   #define f_file_mode_world_rx  (S_IROTH | S_IXOTH)
   #define f_file_mode_world_wx  (S_IWOTH | S_IXOTH)
+
+  #define f_file_mode_all_rwx (f_file_mode_owner_rwx | f_file_mode_group_rwx | f_file_mode_world_rwx)
+  #define f_file_mode_all_rw  (f_file_mode_owner_rw | f_file_mode_group_rw | f_file_mode_world_rw)
+  #define f_file_mode_all_wx  (f_file_mode_owner_wx | f_file_mode_group_wx | f_file_mode_world_wx)
+  #define f_file_mode_all_rx  (f_file_mode_owner_rx | f_file_mode_group_rx | f_file_mode_world_rx)
+  #define f_file_mode_all_r   (f_file_mode_owner_r | f_file_mode_group_r | f_file_mode_world_r)
+  #define f_file_mode_all_w   (f_file_mode_owner_w | f_file_mode_group_w | f_file_mode_world_w)
+  #define f_file_mode_all_x   (f_file_mode_owner_x | f_file_mode_group_x | f_file_mode_world_x)
+
+  // file mode sticky-bits and all bits.
+  #define f_file_mode_special_user  S_ISUID
+  #define f_file_mode_special_group S_ISGID
+  #define f_file_mode_special_world S_ISVTX
+  #define f_file_mode_special_all   (S_ISUID | S_ISGID | S_ISVTX | S_IRWXU | S_IRWXG | S_IRWXO)
+
+  // special file mode combinations.
+  #define f_file_mode_user_access    (f_file_mode_owner_rwx | f_file_mode_group_rwx | f_file_mode_world_x)
+  #define f_file_mode_user_directory (f_file_mode_owner_rwx | f_file_mode_group_rwx)
+  #define f_file_mode_user_file      (f_file_mode_owner_rw | f_file_mode_group_rw)
+  #define f_file_mode_user_program   (f_file_mode_owner_rx | f_file_mode_group_rx)
+  #define f_file_mode_user_protected (f_file_mode_owner_r | f_file_mode_group_r)
 #endif // _di_f_file_modes_
 
 /**
@@ -376,6 +397,63 @@ extern "C" {
 #ifndef _di_f_file_flush_
   extern f_return_status f_file_flush(f_file *file);
 #endif // _di_f_file_flush_
+
+/**
+ * Identify whether or not a file exists at the given path and if that file is a specific type.
+ *
+ * @param path
+ *   The path file name.
+ * @param type
+ *   The type of the file
+ *
+ * @return
+ *   t_true if path was found and path is type.
+ *   f_false if path was found and path is not type.
+ *   f_file_not_found if the path was not found.
+ *   f_invalid_name (with error bit) if the name is somehow invalid.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_access_denied (with error bit) if access to the file was denied.
+ *   f_loop (with error bit) if a loop occurred.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstat()
+ */
+#ifndef _di_f_file_is_
+  extern f_return_status f_file_is(const f_string path, const int type);
+#endif // _di_f_file_is_
+
+/**
+ * Identify whether or not a file exists at the given path within the parent directory and if that file is a specific type.
+ *
+ * @param file_id
+ *   The file descriptor representing the parent directory to search within.
+ * @param path
+ *   The path file name.
+ * @param type
+ *   The type of the file
+ * @param follow
+ *   Set to TRUE to follow symbolic links when determining if path is a file.
+ *   Set to FALSE to not follow.
+ *
+ * @return
+ *   t_true if path was found and path is type.
+ *   f_false if path was found and path is not type.
+ *   f_file_not_found if the path was not found.
+ *   f_invalid_name (with error bit) if the name is somehow invalid.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_access_denied (with error bit) if access to the file was denied.
+ *   f_loop (with error bit) if a loop occurred.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstatat()
+ */
+#ifndef _di_f_file_is_at_
+  extern f_return_status f_file_is_at(const int file_id, const f_string path, const int type, const bool follow);
+#endif // _di_f_file_is_at_
 
 /**
  * Read until a single block is filled or EOF is reached.

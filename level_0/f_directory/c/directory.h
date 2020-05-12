@@ -13,9 +13,11 @@
 // libc includes
 #include <dirent.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 // work-around for out-dated systems.
@@ -42,11 +44,14 @@ extern "C" {
  *
  * The name max 255 because the directory name size is 256.
  * The last 1 is for the NULL character.
+ *
+ * The directory max recursion is more of a default than a rule.
  */
 #ifndef _di_f_directory_limitations_
   #define f_directory_default_allocation_step f_memory_default_allocation_step
 
-  #define f_directory_name_max 255
+  #define f_directory_name_max      255
+  #define f_directory_max_recursion 2048
 #endif // _di_f_directory_limitations_
 
 /**
@@ -134,6 +139,121 @@ extern "C" {
       f_directory_listing_initialize, \
     }
 #endif // _di_f_directory_
+
+/**
+ * Create a directory at the given path.
+ *
+ * @param path
+ *   The path file name.
+ * @param modes
+ *   The directory modes to use when creating.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_file_not_found (with error bit) if a file within the path is not found (such as a broken symbolic link).
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_prohibited (with error bit) if filesystem does not allow for removing.
+ *   f_read_only (with error bit) if file is read-only.
+ *   f_failure (with error bit) for any other (mkdir()) error.
+ *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   f_file_found (with error bit) of a directory aleady exists at the path.
+ *   f_invalid_name (with error bit) on path name error.
+ *   f_directory_error_link_max (with error bit) max links limit reached or exceeded.
+ *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *
+ * @see mkdir()
+ */
+#ifndef _di_f_directory_create_
+  extern f_return_status f_directory_create(const f_string path, const mode_t modes);
+#endif // _di_f_directory_create_
+
+/**
+ * Create a directory at the given path within the directories specified by the file descriptor.
+ *
+ * @param at_id
+ *   The file descriptor in which the directory will be created within.
+ * @param path
+ *   The path file name.
+ * @param modes
+ *   The directory modes to use when creating.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_file_not_found (with error bit) if a file within the path is not found (such as a broken symbolic link).
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_prohibited (with error bit) if filesystem does not allow for removing.
+ *   f_read_only (with error bit) if file is read-only.
+ *   f_failure (with error bit) for any other (mkdir()) error.
+ *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   f_file_found (with error bit) of a directory aleady exists at the path.
+ *   f_invalid_name (with error bit) on path name error.
+ *   f_directory_error_link_max (with error bit) max links limit reached or exceeded.
+ *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *
+ * @see mkdir()
+ *
+#ifndef _di_f_directory_create_at_
+  extern f_return_status f_directory_create_at(const int at_id, const f_string path, const mode_t modes);
+#endif // _di_f_directory_create_at_
+
+/**
+ * Identify whether or not a file exists at the given path and if that file is a directory.
+ *
+ * @param path
+ *   The path file name.
+ *
+ * @return
+ *   t_true if path was found and path is a directory.
+ *   f_false if path was found and path is not a directory.
+ *   f_file_not_found if the path was not found.
+ *   f_invalid_name (with error bit) if the name is somehow invalid.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_access_denied (with error bit) if access to the file was denied.
+ *   f_loop (with error bit) if a loop occurred.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstat()
+ */
+#ifndef _di_f_directory_is_
+  extern f_return_status f_directory_is(const f_string path);
+#endif // _di_f_directory_is_
+
+/**
+ * Identify whether or not a file exists at the given path within the parent directory and if that file is a directory.
+ *
+ * @param file_id
+ *   The file descriptor representing the parent directory to search within.
+ * @param path
+ *   The path file name.
+ * @param follow
+ *   Set to TRUE to follow symbolic links when determining if path is a file.
+ *   Set to FALSE to not follow.
+ *
+ * @return
+ *   t_true if path was found and path is a directory.
+ *   f_false if path was found and path is not a directory.
+ *   f_file_not_found if the path was not found.
+ *   f_invalid_name (with error bit) if the name is somehow invalid.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_access_denied (with error bit) if access to the file was denied.
+ *   f_loop (with error bit) if a loop occurred.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstatat()
+ */
+#ifndef _di_f_directory_is_at_
+  extern f_return_status f_directory_is_at(const int file_id, const f_string path, const bool follow);
+#endif // _di_f_directory_is_at_
 
 /**
  * For some given path, print the names of each file and/or directory inside the directory.

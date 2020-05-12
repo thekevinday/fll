@@ -86,7 +86,7 @@ extern "C" {
       status = f_file_stat_at(parent_fd, entity[i]->d_name, &file_stat, 0);
       if (f_status_is_error(status)) break;
 
-      mode = f_macro_file_type_is(file_stat.d_type);
+      mode = f_macro_file_type_get(file_stat.st_mode);
 
       if (mode == f_file_type_block) {
         names = &listing->block;
