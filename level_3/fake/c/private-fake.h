@@ -118,6 +118,24 @@ extern "C" {
   extern f_return_status fake_process_console_parameters(const f_console_arguments arguments, fake_data *data) f_gcc_attribute_visibility_internal;
 #endif // _di_validate_console_parameters_
 
+/**
+ * Validate directories and print any relating error messages.
+ *
+ * This should not be called for skeleton as in that case the directories probably do not exist.
+ *
+ * @param arguments
+ *   The parameters passed to the process.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_validate_parameter_directories_
+  extern f_return_status fake_validate_parameter_directories(const f_console_arguments arguments, const fake_data data) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_validate_parameter_directories_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

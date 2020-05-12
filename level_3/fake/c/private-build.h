@@ -282,37 +282,6 @@ extern "C" {
 #endif // _di_fake_build_settings_
 
 /**
- * Find the build settings file, load it, validate it, and process it.
- *
- * @param data
- *   The program data.
- * @param settings
- *   All build related settings data from the build settings file are loaded into this.
- *   These settings will have any specified mode property applied.
- *
- * @return
- *   f_none on success.
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_fake_build_load_settings_
-  extern f_return_status fake_build_load_settings(const fake_data data, fake_build_settings *settings) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_build_load_settings_
-
-/**
- * Execute the build operation.
- *
- * @param data
- *   The program data.
- *
- * @return
- *   f_none on success.
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_fake_build_operate_
-  extern f_return_status fake_build_operate(const fake_data data) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_build_operate_
-
-/**
  * Execute the Pre-Process or Post-pocess build script.
  *
  * @param data
@@ -330,6 +299,37 @@ extern "C" {
 #ifndef _di_fake_build_execute_process_script_
   extern f_return_status fake_build_execute_process_script(const fake_data data, const fake_build_settings settings, const f_string_static process_script) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_execute_process_script_
+
+/**
+ * Execute the build operation.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   f_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_operate_
+  extern f_return_status fake_build_operate(const fake_data data) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_operate_
+
+/**
+ * Find the build settings file, load it, validate it, and process it.
+ *
+ * @param data
+ *   The program data.
+ * @param settings
+ *   All build related settings data from the build settings file are loaded into this.
+ *   These settings will have any specified mode property applied.
+ *
+ * @return
+ *   f_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_settings_load_
+  extern f_return_status fake_build_settings_load(const fake_data data, fake_build_settings *settings) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_settings_load_
 
 #ifdef __cplusplus
 } // extern "C"

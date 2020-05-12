@@ -26,7 +26,6 @@ extern "C" {
   extern f_return_status fake_clean_operate(const fake_data data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_clean_operate_
 
-
 /**
  * A special function intended to be used directly by nftw().
  *

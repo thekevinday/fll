@@ -83,7 +83,11 @@ extern "C" {
   f_return_status fake_main(const f_console_arguments arguments, fake_data *data) {
     f_status status = f_none;
 
-    uint8_t operations[fake_operations_total] = fake_operations_initialize;
+    uint8_t operations[fake_operations_total];
+    f_string operations_name[fake_operations_total];
+
+    memset(&operations, 0, sizeof(uint8_t) * fake_operations_total);
+    memset(&operations_name, 0, sizeof(f_string) * fake_operations_total);
 
     {
       f_console_parameters parameters = { data->parameters, fake_total_parameters };
@@ -144,6 +148,7 @@ extern "C" {
         if (data->parameters[fake_parameter_operation_build].result == f_console_result_found) {
           operations[0] = fake_operation_build;
           operations_id[0] = fake_parameter_operation_build;
+          operations_name[0] = fake_other_operation_build;
           order_total = 1;
         }
 
@@ -155,6 +160,9 @@ extern "C" {
 
               operations_id[0] = fake_parameter_operation_build;
               operations_id[1] = fake_parameter_operation_clean;
+
+              operations_name[0] = fake_other_operation_build;
+              operations_name[1] = fake_other_operation_clean;
             }
             else {
               operations[0] = fake_operation_clean;
@@ -162,6 +170,9 @@ extern "C" {
 
               operations_id[0] = fake_parameter_operation_clean;
               operations_id[1] = fake_parameter_operation_build;
+
+              operations_name[0] = fake_other_operation_clean;
+              operations_name[1] = fake_other_operation_build;
             }
 
             order_total = 2;
@@ -169,6 +180,7 @@ extern "C" {
           else {
             operations[0] = fake_operation_clean;
             operations_id[0] = fake_parameter_operation_clean;
+            operations_name[0] = fake_other_operation_clean;
             order_total = 1;
           }
         }
@@ -184,15 +196,18 @@ extern "C" {
             if (i == order_total) {
               operations[order_total] = fake_operation_make;
               operations_id[order_total] = fake_parameter_operation_make;
+              operations_name[order_total] = fake_other_operation_make;
             }
             else {
               for (uint8_t j = order_total; j > i; j--  ) {
                 operations[j] = operations[j - 1];
                 operations_id[j] = operations_id[j - 1];
+                operations_name[j] = operations_name[j - 1];
               } // for
 
               operations[i] = fake_operation_make;
               operations_id[i] = fake_parameter_operation_make;
+              operations_name[i] = fake_other_operation_make;
             }
 
             order_total++;
@@ -200,6 +215,7 @@ extern "C" {
           else {
             operations[0] = fake_operation_make;
             operations_id[0] = fake_parameter_operation_make;
+            operations_name[0] = fake_other_operation_make;
             order_total = 1;
           }
         }
@@ -215,21 +231,25 @@ extern "C" {
             if (i == order_total) {
               operations[order_total] = fake_operation_skeleton;
               operations_id[order_total] = fake_parameter_operation_skeleton;
+              operations_name[order_total] = fake_other_operation_skeleton;
             }
             else {
               for (uint8_t j = order_total; j > i; j--) {
                 operations[j] = operations[j - 1];
                 operations_id[j] = operations_id[j - 1];
+                operations_name[j] = operations_name[j - 1];
               } // for
 
               operations[i] = fake_operation_skeleton;
               operations_id[i] = fake_parameter_operation_skeleton;
+              operations_name[i] = fake_other_operation_skeleton;
             }
 
             order_total++;
           }
           else {
             operations[0] = fake_operation_skeleton;
+            operations_name[0] = fake_other_operation_skeleton;
           }
         }
       }
@@ -244,6 +264,8 @@ extern "C" {
       fll_program_print_version(fake_version);
     }
     else if (operations[0]) {
+      bool validate_parameter_directories = f_true;
+
       status = fake_process_console_parameters(arguments, data);
 
       if (!f_status_is_error(status)) {
@@ -259,50 +281,68 @@ extern "C" {
         data->operation = operations[i];
 
         if (operations[i] == fake_operation_build) {
-          status = fake_build_operate(*data);
+          if (validate_parameter_directories) {
+            status = fake_validate_parameter_directories(arguments, *data);
+            validate_parameter_directories = f_false;
+          }
 
-          if (f_status_is_error(status)) {
-            if (data->verbosity != fake_verbosity_quiet) {
-              fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-              fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_build);
-              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' failed.");
-            }
-
-            break;
+          if (!f_status_is_error(status)) {
+            status = fake_build_operate(*data);
           }
         }
         else if (operations[i] == fake_operation_clean) {
-          status = fake_clean_operate(*data);
+          if (validate_parameter_directories) {
+            status = fake_validate_parameter_directories(arguments, *data);
+            validate_parameter_directories = f_false;
+          }
 
-          if (f_status_is_error(status)) {
-            if (data->verbosity != fake_verbosity_quiet) {
-              fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-              fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_clean);
-              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' failed.");
-            }
-
-            break;
+          if (!f_status_is_error(status)) {
+            status = fake_clean_operate(*data);
           }
         }
         else if (operations[i] == fake_operation_make) {
+          if (validate_parameter_directories) {
+            status = fake_validate_parameter_directories(arguments, *data);
+            validate_parameter_directories = f_false;
+          }
+
           if (data->verbosity != fake_verbosity_quiet) {
+            fprintf(f_standard_error, "%c", f_string_eol);
             fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
             fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_make);
             fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is not yet implemented.");
           }
         }
         else if (operations[i] == fake_operation_skeleton) {
+          status = fake_skeleton_operate(*data);
+        }
+
+        if (f_status_is_error(status)) {
           if (data->verbosity != fake_verbosity_quiet) {
+            fprintf(f_standard_error, "%c", f_string_eol);
             fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_skeleton);
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is not yet implemented.");
+            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", operations_name[i]);
+            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' failed.");
           }
+
+          break;
         }
       } // for
+
+      // ensure a newline is always put at the end of the program execution, unless in quite mode.
+      if (data->verbosity != fake_verbosity_quiet) {
+        if (f_status_is_error(status)) {
+          fprintf(f_standard_error, "%c", f_string_eol);
+        }
+        else {
+          fprintf(f_standard_output, "%c", f_string_eol);
+        }
+      }
     }
     else {
       if (data->verbosity != fake_verbosity_quiet) {
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an operation.");
+        fprintf(f_standard_error, "%c", f_string_eol);
       }
 
       status = f_status_set_error(f_invalid_parameter);
