@@ -32,18 +32,35 @@ process_pre_main(){
   local process=
   local file_settings=
   local path_build=
-  local path_source_build=
-  local path_source_codes=
-  local path_source_common=
-  local path_source_data=
-  local path_source_documents=
-  local path_source_licenses=
-  local path_source_settings=
+  local path_data=
+  local path_sources=
   local path_work=
   local verbosity=
 
-  # standard settings paths.
+  # generated paths and standard paths.
   local path_directory_separator="/"
+  local path_data_build=
+  local path_documents="documents/"
+  local path_licenses="licenses/"
+  local path_sources_bash=
+  local path_sources_c=
+  local path_sources_cpp=
+  local path_work_includes=
+  local path_work_libraries=
+  local path_work_libraries_script=
+  local path_work_libraries_shared=
+  local path_work_libraries_static=
+  local path_work_programs=
+  local path_work_programs_script=
+  local path_work_programs_shared=
+  local path_work_programs_static=
+
+  # generated file paths.
+  local file_data_build_dependencies=
+  local file_data_build_settings=
+  local file_documents_readme=
+
+  # standard build paths.
   local path_build_documents=
   local path_build_includes=
   local path_build_libraries=
@@ -81,20 +98,10 @@ process_pre_main(){
           grab_next="file_settings"
         elif [[ $p == "-b" ]] ; then
           grab_next="path_build"
-        elif [[ $p == "-B" ]] ; then
-          grab_next="path_source_build"
-        elif [[ $p == "-C" ]] ; then
-          grab_next="path_source_codes"
-        elif [[ $p == "-O" ]] ; then
-          grab_next="path_source_common"
         elif [[ $p == "-D" ]] ; then
-          grab_next="path_source_data"
-        elif [[ $p == "-M" ]] ; then
-          grab_next="path_source_documents"
-        elif [[ $p == "-L" ]] ; then
-          grab_next="path_source_licenses"
+          grab_next="path_data"
         elif [[ $p == "-S" ]] ; then
-          grab_next="path_source_settings"
+          grab_next="path_sources"
         elif [[ $p == "-w" ]] ; then
           grab_next="path_work"
         elif [[ $p == "+D" ]] ; then
@@ -176,23 +183,45 @@ process_pre_main(){
   fi
 
   # update paths based on parameters.
-  path_build_documents=${path_build}documents$path_directory_separator
-  path_build_includes=${path_build}includes$path_directory_separator
-  path_build_libraries=${path_build}libraries$path_directory_separator
-  path_build_libraries_script=${path_build_libraries}script$path_directory_separator
-  path_build_libraries_shared=${path_build_libraries}shared$path_directory_separator
-  path_build_libraries_static=${path_build_libraries}static$path_directory_separator
-  path_build_objects=${path_build}objects$path_directory_separator
-  path_build_process=${path_build}process$path_directory_separator
-  path_build_programs=${path_build}programs$path_directory_separator
-  path_build_programs_script=${path_build_programs}script$path_directory_separator
-  path_build_programs_shared=${path_build_programs}shared$path_directory_separator
-  path_build_programs_static=${path_build_programs}static$path_directory_separator
-  path_build_settings=${path_build}settings$path_directory_separator
+  path_data_build="${path_data}build$path_directory_separator"
+
+  path_sources_bash="${path_sources}bash$path_directory_separator"
+  path_sources_c="${path_sources}c$path_directory_separator"
+  path_sources_cpp="${path_sources}c++$path_directory_separator"
+
+  path_build_documents="${path_build}documents$path_directory_separator"
+  path_build_includes="${path_build}includes$path_directory_separator"
+  path_build_libraries="${path_build}libraries$path_directory_separator"
+  path_build_libraries_script="${path_build_libraries}script$path_directory_separator"
+  path_build_libraries_shared="${path_build_libraries}shared$path_directory_separator"
+  path_build_libraries_static="${path_build_libraries}static$path_directory_separator"
+  path_build_objects="${path_build}objects$path_directory_separator"
+  path_build_process="${path_build}process$path_directory_separator"
+  path_build_programs="${path_build}programs$path_directory_separator"
+  path_build_programs_script="${path_build_programs}script$path_directory_separator"
+  path_build_programs_shared="${path_build_programs}shared$path_directory_separator"
+  path_build_programs_static="${path_build_programs}static$path_directory_separator"
+  path_build_settings="${path_build}settings$path_directory_separator"
+
+  if [[ $path_work != "" ]] ; then
+    path_work_includes="${path_work}includes$path_directory_separator"
+    path_work_libraries="${path_work_libraries}libraries$path_directory_separator"
+    path_work_libraries_script="${path_work_libraries_script}script$path_directory_separator"
+    path_work_libraries_shared="${path_work_libraries_shared}shared$path_directory_separator"
+    path_work_libraries_static="${path_work_libraries_static}static$path_directory_separator"
+    path_work_programs="${path_work_programs}programs$path_directory_separator"
+    path_work_programs_script="${path_work_programs_script}script$path_directory_separator"
+    path_work_programs_shared="${path_work_programs_shared}shared$path_directory_separator"
+    path_work_programs_static="${path_work_programs_static}static$path_directory_separator"
+  fi
+
+  file_data_build_dependencies="${path_data_build}dependencies"
+  file_data_build_settings="${path_data_build}settings"
+  file_documents_readme="${path_documents}readme"
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
-    echo -e "${c_title}Done Processing Operation: $c_reset$c_notice$operation$c_reset"
+    echo -e "${c_title}Post Processing Operation: $c_reset$c_notice$operation$c_reset"
 
     if [[ $modes != "" ]] ; then
       echo -e "  Modes: $c_reset$c_notice$modes$c_reset"
@@ -215,5 +244,5 @@ process_pre_path_fix(){
   echo -n $* | sed -e "s|^${path_directory_separator}${path_directory_separator}*|${path_directory_separator}|" -e "s|${path_directory_separator}*$|${path_directory_separator}|"
 }
 
-# note: "$@" is necessary to preserve quoted arguments when passing though.
+# note: "$@" is necessary to preserve quoted arguments when passing to function.
 process_pre_main "$@"

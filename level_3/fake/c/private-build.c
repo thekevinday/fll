@@ -11,97 +11,6 @@ extern "C" {
     if (process_script.used == 0) return f_none;
 
     f_status status = f_none;
-
-    const f_string parameter_prefixs[] = {
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-      f_console_symbol_short_enable,
-    };
-
-    const f_string_length parameter_prefixs_length[] = {
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-       f_console_symbol_short_enable_length,
-    };
-
-    const f_string parameter_names[] = {
-      fake_short_defines,
-      fake_short_process,
-      fake_short_settings,
-      fake_short_path_build,
-      fake_short_path_work,
-      fake_short_path_source_build,
-      fake_short_path_source_common,
-      fake_short_path_source_data,
-      fake_short_path_source_documents,
-      fake_short_path_source_codes,
-      fake_short_path_source_licenses,
-      fake_short_path_source_settings,
-    };
-
-    const f_string_length parameter_names_length[] = {
-       fake_short_defines_length,
-       fake_short_process_length,
-       fake_short_settings_length,
-       fake_short_path_build_length,
-       fake_short_path_work_length,
-       fake_short_path_source_build_length,
-       fake_short_path_source_common_length,
-       fake_short_path_source_data_length,
-       fake_short_path_source_documents_length,
-       fake_short_path_source_codes_length,
-       fake_short_path_source_licenses_length,
-       fake_short_path_source_settings_length,
-    };
-
-    const f_string parameter_values[] = {
-      data.defines.string,
-      data.process.string,
-      data.settings.string,
-      data.path_build.string,
-      data.path_work.string,
-      data.path_source_build.string,
-      data.path_source_common.string,
-      data.path_source_data.string,
-      data.path_source_documents.string,
-      data.path_source_codes.string,
-      data.path_source_licenses.string,
-      data.path_source_settings.string,
-    };
-
-    const f_string_length parameter_values_length[] = {
-      data.defines.used,
-      data.process.used,
-      data.settings.used,
-      data.path_build.used,
-      data.path_work.used,
-      data.path_source_build.used,
-      data.path_source_common.used,
-      data.path_source_data.used,
-      data.path_source_documents.used,
-      data.path_source_codes.used,
-      data.path_source_licenses.used,
-      data.path_source_settings.used,
-    };
-
     f_string_dynamics arguments = f_string_dynamics_initialize;
 
     status = fll_execute_arguments_add(fake_other_operation_build, fake_other_operation_build_length, &arguments);
@@ -147,30 +56,101 @@ extern "C" {
       return status;
     }
 
-    status = fll_execute_arguments_add_parameter_set(parameter_prefixs, parameter_prefixs_length, parameter_names, parameter_names_length, parameter_values, parameter_values_length, 12, &arguments);
+    {
+      const f_string parameters_prefix[] = {
+        f_console_symbol_short_enable,
+        f_console_symbol_short_enable,
+        f_console_symbol_short_enable,
+        f_console_symbol_short_enable,
+        f_console_symbol_short_enable,
+        f_console_symbol_short_enable,
+        f_console_symbol_short_enable,
+      };
 
-    if (f_status_is_error(status)) {
-      fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_execute_arguments_add_parameter_set", f_true);
+      const f_string_length parameters_prefix_length[] = {
+         f_console_symbol_short_enable_length,
+         f_console_symbol_short_enable_length,
+         f_console_symbol_short_enable_length,
+         f_console_symbol_short_enable_length,
+         f_console_symbol_short_enable_length,
+         f_console_symbol_short_enable_length,
+         f_console_symbol_short_enable_length,
+      };
 
-      f_macro_string_dynamics_delete_simple(arguments);
-      return status;
+      const f_string parameters_name[] = {
+        fake_short_defines,
+        fake_short_process,
+        fake_short_settings,
+        fake_short_path_build,
+        fake_short_path_data,
+        fake_short_path_sources,
+        fake_short_path_work,
+      };
+
+      const f_string_length parameters_name_length[] = {
+         fake_short_defines_length,
+         fake_short_process_length,
+         fake_short_settings_length,
+         fake_short_path_build_length,
+         fake_short_path_data_length,
+         fake_short_path_sources_length,
+         fake_short_path_work_length,
+      };
+
+      const f_string parameters_value[] = {
+        data.defines.string,
+        data.process.string,
+        data.settings.string,
+        data.path_build.string,
+        data.path_data.string,
+        data.path_sources.string,
+        data.path_work.string,
+      };
+
+      const f_string_length parameters_value_length[] = {
+        data.defines.used,
+        data.process.used,
+        data.settings.used,
+        data.path_build.used,
+        data.path_data.used,
+        data.path_sources.used,
+        data.path_work.used,
+      };
+
+      status = fll_execute_arguments_add_parameter_set(parameters_prefix, parameters_prefix_length, parameters_name, parameters_name_length, parameters_value, parameters_value_length, 7, &arguments);
+
+      if (f_status_is_error(status)) {
+        fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_execute_arguments_add_parameter_set", f_true);
+
+        f_macro_string_dynamics_delete_simple(arguments);
+        return status;
+      }
     }
 
     f_string_dynamic path = f_string_dynamic_initialize;
 
-    if (process_script.string[0] != '/') {
-      status = fl_string_dynamic_append(data.path_source_settings, &path);
-    }
+    {
+      f_string function = "fl_string_dynamic_append_nulless";
 
-    if (!f_status_is_error(status)) {
-      status = fl_string_dynamic_append(process_script, &path);
-    }
+      if (process_script.string[0] != '/') {
+        status = fl_string_dynamic_append_nulless(data.path_data_build, &path);
+      }
 
-    if (f_status_is_error(status)) {
-      fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_append", f_true);
+      if (!f_status_is_error(status)) {
+        status = fl_string_dynamic_append_nulless(process_script, &path);
+      }
 
-      f_macro_string_dynamic_delete_simple(path);
-      return status;
+      if (!f_status_is_error(status)) {
+        function = "fl_string_dynamic_terminate";
+        status = fl_string_dynamic_terminate(&path);
+      }
+
+      if (f_status_is_error(status)) {
+        fake_print_error(data.context, data.verbosity, f_status_set_fine(status), function, f_true);
+
+        f_macro_string_dynamic_delete_simple(path);
+        return status;
+      }
     }
 
     int results = 0;
@@ -187,7 +167,7 @@ extern "C" {
         }
       }
       else {
-        fake_print_error(data.context, data.verbosity != fake_verbosity_quiet, f_status_set_fine(status), "fll_execute_path", f_true);
+        fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_execute_path", f_true);
       }
     }
 
@@ -207,7 +187,7 @@ extern "C" {
 
     if (f_status_is_error(status)) {
       fake_macro_build_settings_delete_simple(settings);
-      return f_status_set_error(status);
+      return status;
     }
 
     status = fake_build_execute_process_script(data, settings, settings.process_pre);
@@ -242,30 +222,16 @@ extern "C" {
     f_status status = f_none;
     f_file file = f_file_initialize;
     f_string_dynamic buffer = f_string_dynamic_initialize;
-    f_string_dynamic path = f_string_dynamic_initialize;
-
-    status = fl_string_dynamic_append(data.path_source_settings, &path);
-
-    if (!f_status_is_error(status)) {
-      status = fl_string_dynamic_append(data.settings, &path);
-    }
-
-    if (f_status_is_error(status)) {
-      fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_append", f_true);
-
-      f_macro_string_dynamic_delete_simple(path);
-      return status;
-    }
 
     {
       f_string name_function = f_string_initialize;
 
       name_function = "f_file_exists";
-      status = f_file_exists(path.string);
+      status = f_file_exists(data.file_data_build_settings.string);
 
       if (status == f_true) {
         name_function = "f_file_open";
-        status = f_file_open(&file, path.string);
+        status = f_file_open(&file, data.file_data_build_settings.string);
 
         if (status == f_none) {
           name_function = "fl_file_read_position";
@@ -279,10 +245,9 @@ extern "C" {
       }
 
       if (f_status_is_error(status)) {
-        fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), name_function, path.string, f_true, f_true);
+        fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), name_function, data.file_data_build_settings.string, "create", f_true, f_true);
 
         f_macro_string_dynamic_delete_simple(buffer);
-        f_macro_string_dynamic_delete_simple(path);
         return status;
       }
     }
@@ -308,7 +273,7 @@ extern "C" {
             fl_color_print(f_standard_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
             fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%d", range.start);
             fl_color_print(f_standard_error, data.context.error, data.context.reset, " of settings file '");
-            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
+            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
             fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "').");
           }
         }
@@ -318,7 +283,7 @@ extern "C" {
             fl_color_print(f_standard_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
             fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%d", range.start);
             fl_color_print(f_standard_error, data.context.error, data.context.reset, " of settings file '");
-            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
+            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
             fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "').");
           }
         }
@@ -329,7 +294,6 @@ extern "C" {
         f_macro_fss_objects_delete_simple(objects);
         f_macro_fss_contents_delete_simple(contents);
         f_macro_string_dynamic_delete_simple(buffer);
-        f_macro_string_dynamic_delete_simple(path);
 
         return status;
       }
@@ -479,7 +443,6 @@ extern "C" {
             f_macro_fss_objects_delete_simple(objects);
             f_macro_fss_contents_delete_simple(contents);
             f_macro_string_dynamic_delete_simple(buffer);
-            f_macro_string_dynamic_delete_simple(path);
             return status;
           }
         }
@@ -489,7 +452,7 @@ extern "C" {
             if (data.verbosity != fake_verbosity_quiet) {
               fprintf(f_standard_error, "%c", f_string_eol);
               fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: a setting in the build settings file '");
-              fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path);
+              fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings);
               fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' is too long.");
             }
           }
@@ -504,7 +467,6 @@ extern "C" {
     }
 
     f_macro_string_dynamic_delete_simple(buffer);
-    f_macro_string_dynamic_delete_simple(path);
 
     // @todo: perform validation of values, such as "shared" and "static", at least one must be "yes".
 

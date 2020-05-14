@@ -23,22 +23,17 @@ extern "C" {
 
     printf("%c", f_string_eol);
 
-    fll_program_print_help_option(context, fake_short_path_build, fake_long_path_build, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Custom build directory.");
     fll_program_print_help_option(context, fake_short_defines, fake_long_defines, f_console_symbol_short_enable, f_console_symbol_long_enable, " Override custom defines with these defines.");
     fll_program_print_help_option(context, fake_short_mode, fake_long_mode, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use this mode when processing the build settings.");
     fll_program_print_help_option(context, fake_short_process, fake_long_process, f_console_symbol_short_enable, f_console_symbol_long_enable, " Process name for storing build states.");
     fll_program_print_help_option(context, fake_short_settings, fake_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use this settings file, from within the source settings directory.");
-    fll_program_print_help_option(context, fake_short_path_work, fake_long_path_work, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use includes/libraries from this directory instead of system.");
 
     printf("%c", f_string_eol);
 
-    fll_program_print_help_option(context, fake_short_path_source_build, fake_long_path_source_build, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Custom path to the build source files.");
-    fll_program_print_help_option(context, fake_short_path_source_codes, fake_long_path_source_codes, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Custom path to the compiled source files, such as c.");
-    fll_program_print_help_option(context, fake_short_path_source_common, fake_long_path_source_common, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Custom path to the common source files.");
-    fll_program_print_help_option(context, fake_short_path_source_data, fake_long_path_source_data, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Custom path to the data source files.");
-    fll_program_print_help_option(context, fake_short_path_source_documents, fake_long_path_source_documents, f_console_symbol_short_enable, f_console_symbol_long_enable, "Custom path to the documents source files.");
-    fll_program_print_help_option(context, fake_short_path_source_licenses, fake_long_path_source_licenses, f_console_symbol_short_enable, f_console_symbol_long_enable, " Custom path to the license source files.");
-    fll_program_print_help_option(context, fake_short_path_source_settings, fake_long_path_source_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, " Custom path to the settings source files.");
+    fll_program_print_help_option(context, fake_short_path_build, fake_long_path_build, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a custom build directory.");
+    fll_program_print_help_option(context, fake_short_path_data, fake_long_path_data, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Specify a custom path to the data files.");
+    fll_program_print_help_option(context, fake_short_path_sources, fake_long_path_sources, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a custom path to the source files.");
+    fll_program_print_help_option(context, fake_short_path_work, fake_long_path_work, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use includes/libraries/programs from this directory instead of system.");
 
     printf("%c%c", f_string_eol, f_string_eol);
 
@@ -341,6 +336,7 @@ extern "C" {
     }
     else {
       if (data->verbosity != fake_verbosity_quiet) {
+        fprintf(f_standard_error, "%c", f_string_eol);
         fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an operation.");
         fprintf(f_standard_error, "%c", f_string_eol);
       }
@@ -384,13 +380,32 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(data->path_build_settings);
     f_macro_string_dynamic_delete_simple(data->path_work);
 
-    f_macro_string_dynamic_delete_simple(data->path_source_build);
-    f_macro_string_dynamic_delete_simple(data->path_source_common);
-    f_macro_string_dynamic_delete_simple(data->path_source_data);
-    f_macro_string_dynamic_delete_simple(data->path_source_documents);
-    f_macro_string_dynamic_delete_simple(data->path_source_codes);
-    f_macro_string_dynamic_delete_simple(data->path_source_licenses);
-    f_macro_string_dynamic_delete_simple(data->path_source_settings);
+    f_macro_string_dynamic_delete_simple(data->path_data);
+    f_macro_string_dynamic_delete_simple(data->path_data_build);
+
+    f_macro_string_dynamic_delete_simple(data->path_documents);
+
+    f_macro_string_dynamic_delete_simple(data->path_licenses);
+
+    f_macro_string_dynamic_delete_simple(data->path_sources);
+    f_macro_string_dynamic_delete_simple(data->path_sources_bash);
+    f_macro_string_dynamic_delete_simple(data->path_sources_c);
+    f_macro_string_dynamic_delete_simple(data->path_sources_cpp);
+
+    f_macro_string_dynamic_delete_simple(data->path_work);
+    f_macro_string_dynamic_delete_simple(data->path_work_includes);
+    f_macro_string_dynamic_delete_simple(data->path_work_libraries);
+    f_macro_string_dynamic_delete_simple(data->path_work_libraries_script);
+    f_macro_string_dynamic_delete_simple(data->path_work_libraries_shared);
+    f_macro_string_dynamic_delete_simple(data->path_work_libraries_static);
+    f_macro_string_dynamic_delete_simple(data->path_work_programs);
+    f_macro_string_dynamic_delete_simple(data->path_work_programs_script);
+    f_macro_string_dynamic_delete_simple(data->path_work_programs_shared);
+    f_macro_string_dynamic_delete_simple(data->path_work_programs_static);
+
+    f_macro_string_dynamic_delete_simple(data->file_data_build_dependencies);
+    f_macro_string_dynamic_delete_simple(data->file_data_build_settings);
+    f_macro_string_dynamic_delete_simple(data->file_documents_readme);
 
     fl_macro_color_context_delete_simple(data->context);
 

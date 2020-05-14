@@ -157,77 +157,74 @@ extern "C" {
 #endif // _di_fake_default_allocation_step_
 
 /**
- * Fake paths are hard-coded paths that are generally generated into a full path based on runtime settings.
- *
- * For example path_build_documents will become "build/documents/" if the fake_default_path_build is used.
+ * The build operation utilizes pre-defined path structures.
+ * These structures are hard-coded by their individual pieces to be constructed later on.
  */
 #ifndef _di_fake_path_
-  #define fake_path_documents "documents" f_path_separator
-  #define fake_path_data      "data"      f_path_separator
-  #define fake_path_licenses  "licenses"  f_path_separator
-  #define fake_path_sources   "sources"   f_path_separator
+  #define fake_path_part_bash      "bash"      f_path_separator
+  #define fake_path_part_build     "build"     f_path_separator
+  #define fake_path_part_c         "c"         f_path_separator
+  #define fake_path_part_cpp       "c++"       f_path_separator
+  #define fake_path_part_data      "data"      f_path_separator
+  #define fake_path_part_documents "documents" f_path_separator
+  #define fake_path_part_includes  "includes"  f_path_separator
+  #define fake_path_part_libraries "libraries" f_path_separator
+  #define fake_path_part_licenses  "licenses"  f_path_separator
+  #define fake_path_part_objects   "objects"   f_path_separator
+  #define fake_path_part_process   "process"   f_path_separator
+  #define fake_path_part_programs  "programs"  f_path_separator
+  #define fake_path_part_script    "script"    f_path_separator
+  #define fake_path_part_settings  "settings"  f_path_separator
+  #define fake_path_part_shared    "shared"    f_path_separator
+  #define fake_path_part_sources   "sources"   f_path_separator
+  #define fake_path_part_static    "static"    f_path_separator
 
-  #define fake_path_documents_length 9
-  #define fake_path_data_length      4
-  #define fake_path_licenses_length  8
-  #define fake_path_sources_length   7
-
-  #define fake_path_build_documents        "documents" f_path_separator
-  #define fake_path_build_includes         "includes"  f_path_separator
-  #define fake_path_build_libraries        "libraries" f_path_separator
-  #define fake_path_build_libraries_script "script"    f_path_separator
-  #define fake_path_build_libraries_shared "shared"    f_path_separator
-  #define fake_path_build_libraries_static "static"    f_path_separator
-  #define fake_path_build_objects          "objects"   f_path_separator
-  #define fake_path_build_process          "process"   f_path_separator
-  #define fake_path_build_programs         "programs"  f_path_separator
-  #define fake_path_build_programs_script  "script"    f_path_separator
-  #define fake_path_build_programs_shared  "shared"    f_path_separator
-  #define fake_path_build_programs_static  "static"    f_path_separator
-  #define fake_path_build_settings         "settings"  f_path_separator
-
-  #define fake_path_build_documents_length        10
-  #define fake_path_build_includes_length         9
-  #define fake_path_build_libraries_length        10
-  #define fake_path_build_libraries_script_length 6
-  #define fake_path_build_libraries_shared_length 6
-  #define fake_path_build_libraries_static_length 6
-  #define fake_path_build_objects_length          7
-  #define fake_path_build_process_length          7
-  #define fake_path_build_programs_length         9
-  #define fake_path_build_programs_script_length  7
-  #define fake_path_build_programs_shared_length  7
-  #define fake_path_build_programs_static_length  7
-  #define fake_path_build_settings_length         9
-
-  // these paths are suffixes to be appended onto the work directory, if the work directory is supplied.
-  #define fake_path_work_includes         "includes"  f_path_separator
-  #define fake_path_work_libraries        "libraries" f_path_separator
-  #define fake_path_work_libraries_script "libraries" f_path_separator "script" f_path_separator
-  #define fake_path_work_libraries_shared "libraries" f_path_separator "shared" f_path_separator
-  #define fake_path_work_libraries_static "libraries" f_path_separator "static" f_path_separator
-  #define fake_path_work_programs         "programs"  f_path_separator
-  #define fake_path_work_programs_script  "programs"  f_path_separator "script" f_path_separator
-  #define fake_path_work_programs_shared  "programs"  f_path_separator "shared" f_path_separator
-  #define fake_path_work_programs_static  "programs"  f_path_separator "static" f_path_separator
-
-  #define fake_path_work_includes_length         9
-  #define fake_path_work_libraries_length        10
-  #define fake_path_work_libraries_script_length 17
-  #define fake_path_work_libraries_shared_length 17
-  #define fake_path_work_libraries_static_length 17
-  #define fake_path_work_programs_length         9
-  #define fake_path_work_programs_script_length  16
-  #define fake_path_work_programs_shared_length  16
-  #define fake_path_work_programs_static_length  16
+  #define fake_path_part_bash_length      (4 + f_path_separator_length)
+  #define fake_path_part_build_length     (5 + f_path_separator_length)
+  #define fake_path_part_c_length         (1 + f_path_separator_length)
+  #define fake_path_part_cpp_length       (3 + f_path_separator_length)
+  #define fake_path_part_data_length      (4 + f_path_separator_length)
+  #define fake_path_part_documents_length (9 + f_path_separator_length)
+  #define fake_path_part_includes_length  (8 + f_path_separator_length)
+  #define fake_path_part_libraries_length (9 + f_path_separator_length)
+  #define fake_path_part_licenses_length  (8 + f_path_separator_length)
+  #define fake_path_part_objects_length   (7 + f_path_separator_length)
+  #define fake_path_part_process_length   (7 + f_path_separator_length)
+  #define fake_path_part_programs_length  (8 + f_path_separator_length)
+  #define fake_path_part_script_length    (6 + f_path_separator_length)
+  #define fake_path_part_settings_length  (8 + f_path_separator_length)
+  #define fake_path_part_shared_length    (6 + f_path_separator_length)
+  #define fake_path_part_sources_length   (7 + f_path_separator_length)
+  #define fake_path_part_static_length    (6 + f_path_separator_length)
 #endif // _di_fake_path_
 
-#ifndef _di_fake_defaults_
-  #define fake_default_path_build "build" f_path_separator
-  #define fake_default_path_work  ""
+#ifndef _di_fake_file_
+  #define fake_file_dependencies "dependencies"
+  #define fake_file_process_post "process_post.sh"
+  #define fake_file_process_pre  "process_pre.sh"
+  #define fake_file_readme       "readme"
+  #define fake_file_settings     "settings"
 
-  #define fake_default_path_build_length 6
-  #define fake_default_path_work_length  0
+  #define fake_file_dependencies_length 12
+  #define fake_file_process_post_length 15
+  #define fake_file_process_pre_length  14
+  #define fake_file_readme_length       6
+  #define fake_file_settings_length     8
+#endif // _di_fake_file_
+
+/**
+ * Provide default settings.
+ */
+#ifndef _di_fake_defaults_
+  #define fake_default_path_build   "build"   f_path_separator
+  #define fake_default_path_data    "data"    f_path_separator
+  #define fake_default_path_sources "sources" f_path_separator
+  #define fake_default_path_work    ""
+
+  #define fake_default_path_build_length   (5 + f_path_separator_length)
+  #define fake_default_path_data_length    (4 + f_path_separator_length)
+  #define fake_default_path_sources_length (7 + f_path_separator_length)
+  #define fake_default_path_work_length    0
 
   #define fake_default_defines  ""
   #define fake_default_mode     ""
@@ -238,30 +235,6 @@ extern "C" {
   #define fake_default_mode_length     0
   #define fake_default_process_length  0
   #define fake_default_settings_length 8
-
-  #define fake_default_path_source_build     "data"     f_path_separator "build"     f_path_separator
-  #define fake_default_path_source_codes     "sources"  f_path_separator
-  #define fake_default_path_source_common    "data"     f_path_separator "common"    f_path_separator
-  #define fake_default_path_source_data      "data"     f_path_separator
-  #define fake_default_path_source_documents "data"     f_path_separator "documents" f_path_separator
-  #define fake_default_path_source_licenses  "licenses" f_path_separator
-  #define fake_default_path_source_settings  "data"     f_path_separator "build"     f_path_separator
-
-  #define fake_default_path_source_build_length     11
-  #define fake_default_path_source_codes_length     8
-  #define fake_default_path_source_common_length    12
-  #define fake_default_path_source_data_length      5
-  #define fake_default_path_source_documents_length 15
-  #define fake_default_path_source_licenses_length  9
-  #define fake_default_path_source_settings_length  11
-
-  #define fake_default_language_bash "bash" f_path_separator
-  #define fake_default_language_c    "c"    f_path_separator
-  #define fake_default_language_cpp  "c++"  f_path_separator
-
-  #define fake_default_language_bash_length 5
-  #define fake_default_language_c_length    2
-  #define fake_default_language_cpp_length  4
 #endif // _di_fake_defaults_
 
 #ifndef _di_fake_build_language_
@@ -314,27 +287,15 @@ extern "C" {
   #define fake_file_extension_built_length    6
   #define fake_file_extension_building_length 9
 
-  #define fake_short_path_build "b"
-  #define fake_short_path_work  "w"
+  #define fake_short_path_build   "b"
+  #define fake_short_path_data    "D"
+  #define fake_short_path_sources "S"
+  #define fake_short_path_work    "w"
 
-  #define fake_short_path_build_length 1
-  #define fake_short_path_work_length  1
-
-  #define fake_short_path_source_build     "B"
-  #define fake_short_path_source_common    "O"
-  #define fake_short_path_source_data      "D"
-  #define fake_short_path_source_documents "M"
-  #define fake_short_path_source_codes     "C"
-  #define fake_short_path_source_licenses  "L"
-  #define fake_short_path_source_settings  "S"
-
-  #define fake_short_path_source_build_length     1
-  #define fake_short_path_source_common_length    1
-  #define fake_short_path_source_data_length      1
-  #define fake_short_path_source_documents_length 1
-  #define fake_short_path_source_codes_length     1
-  #define fake_short_path_source_licenses_length  1
-  #define fake_short_path_source_settings_length  1
+  #define fake_short_path_build_length   1
+  #define fake_short_path_data_length    1
+  #define fake_short_path_sources_length 1
+  #define fake_short_path_work_length    1
 
   #define fake_long_defines  "defines"
   #define fake_long_mode     "mode"
@@ -346,27 +307,15 @@ extern "C" {
   #define fake_long_process_length  7
   #define fake_long_settings_length 8
 
-  #define fake_long_path_build "build"
-  #define fake_long_path_work  "work"
+  #define fake_long_path_build   "build"
+  #define fake_long_path_data    "data"
+  #define fake_long_path_sources "sources"
+  #define fake_long_path_work    "work"
 
-  #define fake_long_path_build_length 5
-  #define fake_long_path_work_length  4
-
-  #define fake_long_path_source_build     "source_build"
-  #define fake_long_path_source_common    "source_common"
-  #define fake_long_path_source_data      "source_data"
-  #define fake_long_path_source_documents "source_documents"
-  #define fake_long_path_source_codes     "source_codes"
-  #define fake_long_path_source_licenses  "source_licenses"
-  #define fake_long_path_source_settings  "source_settings"
-
-  #define fake_long_path_source_build_length     12
-  #define fake_long_path_source_common_length    13
-  #define fake_long_path_source_data_length      11
-  #define fake_long_path_source_documents_length 16
-  #define fake_long_path_source_codes_length     12
-  #define fake_long_path_source_licenses_length  15
-  #define fake_long_path_source_settings_length  15
+  #define fake_long_path_build_length   5
+  #define fake_long_path_data_length    4
+  #define fake_long_path_sources_length 7
+  #define fake_long_path_work_length    4
 
   // these special parameters are provided in such a way that they mimic the traditional ./configure script.
   #define fake_long_documents_disabled "disable-doc"
@@ -409,15 +358,9 @@ extern "C" {
     fake_parameter_settings,
 
     fake_parameter_path_build,
+    fake_parameter_path_data,
+    fake_parameter_path_sources,
     fake_parameter_path_work,
-
-    fake_parameter_path_source_build,
-    fake_parameter_path_source_common,
-    fake_parameter_path_source_data,
-    fake_parameter_path_source_documents,
-    fake_parameter_path_source_codes,
-    fake_parameter_path_source_licenses,
-    fake_parameter_path_source_settings,
 
     fake_parameter_documents_disabled,
     fake_parameter_documents_enabled,
@@ -447,14 +390,9 @@ extern "C" {
       f_console_parameter_initialize(fake_short_process, fake_long_process, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(fake_short_settings, fake_long_settings, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(fake_short_path_build, fake_long_path_build, 0, 1, f_console_type_normal), \
+      f_console_parameter_initialize(fake_short_path_data, fake_long_path_data, 0, 1, f_console_type_normal), \
+      f_console_parameter_initialize(fake_short_path_sources, fake_long_path_sources, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(fake_short_path_work, fake_long_path_work, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_source_build, fake_long_path_source_build, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_source_common, fake_long_path_source_common, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_source_data, fake_long_path_source_data, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_source_documents, fake_long_path_source_documents, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_source_codes, fake_long_path_source_codes, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_source_licenses, fake_long_path_source_licenses, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_source_settings, fake_long_path_source_settings, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(0, fake_long_documents_disabled, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(0, fake_long_documents_enabled, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(0, fake_long_shared_disabled, 0, 0, f_console_type_normal), \
@@ -467,7 +405,7 @@ extern "C" {
       f_console_parameter_initialize(0, 0, fake_other_operation_skeleton, 0, f_console_type_other), \
     }
 
-  #define fake_total_parameters 31
+  #define fake_total_parameters 26
 #endif // _di_fake_defines_
 
 #ifndef _di_fake_data_
@@ -499,15 +437,33 @@ extern "C" {
     f_string_dynamic path_build_programs_shared;
     f_string_dynamic path_build_programs_static;
     f_string_dynamic path_build_settings;
-    f_string_dynamic path_work;
 
-    f_string_dynamic path_source_build;
-    f_string_dynamic path_source_common;
-    f_string_dynamic path_source_data;
-    f_string_dynamic path_source_documents;
-    f_string_dynamic path_source_codes;
-    f_string_dynamic path_source_licenses;
-    f_string_dynamic path_source_settings;
+    f_string_dynamic path_data;
+    f_string_dynamic path_data_build;
+
+    f_string_dynamic path_documents;
+
+    f_string_dynamic path_licenses;
+
+    f_string_dynamic path_sources;
+    f_string_dynamic path_sources_bash;
+    f_string_dynamic path_sources_c;
+    f_string_dynamic path_sources_cpp;
+
+    f_string_dynamic path_work;
+    f_string_dynamic path_work_includes;
+    f_string_dynamic path_work_libraries;
+    f_string_dynamic path_work_libraries_script;
+    f_string_dynamic path_work_libraries_shared;
+    f_string_dynamic path_work_libraries_static;
+    f_string_dynamic path_work_programs;
+    f_string_dynamic path_work_programs_script;
+    f_string_dynamic path_work_programs_shared;
+    f_string_dynamic path_work_programs_static;
+
+    f_string_dynamic file_data_build_dependencies;
+    f_string_dynamic file_data_build_settings;
+    f_string_dynamic file_documents_readme;
 
     fl_color_context context;
   } fake_data;
@@ -521,6 +477,19 @@ extern "C" {
       fake_verbosity_normal, \
       f_string_dynamic_initialize, \
       f_string_dynamics_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
+      f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
