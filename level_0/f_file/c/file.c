@@ -14,27 +14,71 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_file_open_
-  f_return_status f_file_open(f_file *file, const f_string path) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file == 0) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_file_create_
+  f_return_status f_file_create(f_string path, const mode_t mode, const bool exclusive) {
+    int flags = O_CLOEXEC | O_CREAT | O_WRONLY;
 
-    // if file->mode is unset, then this may cause a segfault.
-    if (file->mode == 0) return f_status_set_error(f_invalid_parameter);
+    if (exclusive) {
+      flags |= O_EXCL;
+    }
 
-    file->address = fopen(path, file->mode);
+    int result = open(path, flags, mode);
 
-    if (file->address == 0) return f_status_set_error(f_file_not_found);
-    if (ferror(file->address) != 0) return f_status_set_error(f_file_error_open);
+    if (result < 0) {
+      if (errno == EACCES) {
+        return f_status_set_error(f_access_denied);
+      }
+      else if (errno == EDQUOT) {
+        return f_status_set_error(f_filesystem_quota_blocks);
+      }
+      else if (errno == EEXIST) {
+        return f_status_set_error(f_file_found);
+      }
+      else if (errno == ENAMETOOLONG || errno == EFAULT) {
+        return f_status_set_error(f_invalid_name);
+      }
+      else if (errno == EFBIG || errno == EOVERFLOW) {
+        return f_status_set_error(f_number_overflow);
+      }
+      else if (errno == EINTR) {
+        return f_status_set_error(f_interrupted);
+      }
+      else if (errno == EINVAL) {
+        return f_status_set_error(f_invalid_parameter);
+      }
+      else if (errno == ELOOP) {
+        return f_status_set_error(f_loop);
+      }
+      else if (errno == ENFILE) {
+        return f_status_set_error(f_file_max_open);
+      }
+      else if (errno == ENOENT || errno == ENOTDIR) {
+        return f_status_set_error(f_invalid_directory);
+      }
+      else if (errno == ENOMEM) {
+        return f_status_set_error(f_out_of_memory);
+      }
+      else if (errno == ENOSPC) {
+        return f_status_set_error(f_filesystem_quota_reached);
+      }
+      else if (errno == EPERM) {
+        return f_status_set_error(f_prohibited);
+      }
+      else if (errno == EROFS) {
+        return f_status_set_error(f_read_only);
+      }
+      else if (errno == ETXTBSY) {
+        return f_status_set_error(f_busy);
+      }
 
-    file->id = fileno(file->address);
+      return f_status_set_error(f_failure);
+    }
 
-    if (file->id == -1) return f_status_set_error(f_file_error_descriptor);
+    close(result);
 
     return f_none;
   }
-#endif // _di_f_file_open_
+#endif // _di_f_file_create_
 
 #ifndef _di_f_file_close_
   f_return_status f_file_close(f_file *file) {
@@ -229,6 +273,28 @@ extern "C" {
     return f_false;
   }
 #endif // _di_f_file_is_at_
+
+#ifndef _di_f_file_open_
+  f_return_status f_file_open(f_file *file, const f_string path) {
+    #ifndef _di_level_0_parameter_checking_
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    // if file->mode is unset, then this may cause a segfault.
+    if (file->mode == 0) return f_status_set_error(f_invalid_parameter);
+
+    file->address = fopen(path, file->mode);
+
+    if (file->address == 0) return f_status_set_error(f_file_not_found);
+    if (ferror(file->address) != 0) return f_status_set_error(f_file_error_open);
+
+    file->id = fileno(file->address);
+
+    if (file->id == -1) return f_status_set_error(f_file_error_descriptor);
+
+    return f_none;
+  }
+#endif // _di_f_file_open_
 
 #ifndef _di_f_file_read_
   f_return_status f_file_read(f_file *file, f_string_dynamic *buffer) {

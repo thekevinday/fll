@@ -139,8 +139,6 @@ extern "C" {
 
 /**
  * File mode relation functionality.
- *
- * TODO: This information below needs to be confirmed and updated accordingly..
  */
 #ifndef _di_f_file_modes_
 
@@ -287,26 +285,44 @@ extern "C" {
 #endif // _di_f_macro_file_reset_position_
 
 /**
- * Open a particular file and save its stream.
+ * Create a file based on the given path and file mode.
  *
- * This will open the file and obtain the file descriptor.
+ * The file will not be open after calling this.
+ * This is useful for creating empty files.
  *
- * @param file
- *   The data related to the file being opened.
- *   This will be updated with the file descriptor and file address.
  * @param path
- *   The path file name.
+ *   Full path to the file (including entire filename).
+ * @param mode
+ *   The file mode.
+ * @param exclusive
+ *   If TRUE, will fail when file already exists.
+ *   If FALSE, will not fail if file already exists.
  *
  * @return
  *   f_none on success.
- *   f_file_not_found (with error bit) if the file was not found.
- *   f_file_error_open (with error bit) if the file is already open.
- *   f_file_error_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_prohibited (with error bit) if filesystem does not allow for removing.
+ *   f_read_only (with error bit) if file is read-only.
+ *   f_failure (with error bit) for any other (mkdir()) error.
+ *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   f_file_found (with error bit) of a directory aleady exists at the path.
+ *   f_invalid_name (with error bit) on path name error.
+ *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   f_file_max_open (with error bit) when system-wide max open files is reached.
+ *   f_busy (with error bit) if filesystem is too busy to perforrm write.
+ *
+ * @see open()
  */
-#ifndef _di_f_file_open_
-  extern f_return_status f_file_open(f_file *file, const f_string path);
-#endif // _di_f_file_open_
+#ifndef _di_f_file_create_
+  extern f_return_status f_file_create(f_string path, const mode_t mode, const bool exclusive);
+#endif // _di_f_file_create_
 
 /**
  * Close an opened file.
@@ -454,6 +470,30 @@ extern "C" {
 #ifndef _di_f_file_is_at_
   extern f_return_status f_file_is_at(const int file_id, const f_string path, const int type, const bool follow);
 #endif // _di_f_file_is_at_
+
+/**
+ * Open a particular file and save its stream.
+ *
+ * This will open the file and obtain the file descriptor.
+ *
+ * @param file
+ *   The data related to the file being opened.
+ *   This will be updated with the file descriptor and file address.
+ * @param path
+ *   The path file name.
+ *
+ * @return
+ *   f_none on success.
+ *   f_file_not_found (with error bit) if the file was not found.
+ *   f_file_error_open (with error bit) if the file is already open.
+ *   f_file_error_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fopen()
+ */
+#ifndef _di_f_file_open_
+  extern f_return_status f_file_open(f_file *file, const f_string path);
+#endif // _di_f_file_open_
 
 /**
  * Read until a single block is filled or EOF is reached.
