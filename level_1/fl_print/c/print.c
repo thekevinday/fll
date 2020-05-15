@@ -31,7 +31,7 @@ extern "C" {
     } // for
 
     for (; i < length; i += f_macro_utf_byte_width(string[i])) {
-      if (string[i] == f_string_eos) continue;
+      if (string[i] == 0) continue;
 
       width_max = (length - i) + 1;
       status = f_utf_is_whitespace(string + i, width_max);
@@ -66,7 +66,7 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == f_false) {
             for (; i < j; i++) {
-              if (string[i] == f_string_eos) continue;
+              if (string[i] == 0) continue;
 
               if (fputc(string[i], output) == 0) {
                 return f_status_set_error(f_error_output);
@@ -117,7 +117,7 @@ extern "C" {
     } // for
 
     for (; i < buffer.used; i += f_macro_utf_byte_width(buffer.string[i])) {
-      if (buffer.string[i] == f_string_eos) continue;
+      if (buffer.string[i] == 0) continue;
 
       width_max = (buffer.used - i) + 1;
       status = f_utf_is_whitespace(buffer.string + i, width_max);
@@ -152,7 +152,7 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == f_false) {
             for (; i < j; i++) {
-              if (buffer.string[i] == f_string_eos) continue;
+              if (buffer.string[i] == 0) continue;
 
               if (fputc(buffer.string[i], output) == 0) {
                 return f_status_set_error(f_error_output);
@@ -208,7 +208,7 @@ extern "C" {
     } // for
 
     for (uint8_t width_i = f_macro_utf_byte_width(buffer.string[i]); i <= range.stop; i += width_i) {
-      if (buffer.string[i] == f_string_eos) {
+      if (buffer.string[i] == 0) {
         width_i = 1;
         continue;
       }
@@ -248,7 +248,7 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == f_false) {
             for (; i <= j; i += width_i) {
-              if (buffer.string[i] == f_string_eos) {
+              if (buffer.string[i] == 0) {
                 width_i = 1;
                 continue;
               }
@@ -307,7 +307,7 @@ extern "C" {
     } // for
 
     for (; i < length; i++) {
-      if (string[i] == f_string_eos) continue;
+      if (string[i] == 0) continue;
 
       status = f_utf_character_is_whitespace(string[i]);
 
@@ -340,7 +340,7 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == f_false) {
             for (; i < j; i++) {
-              if (string[i] == f_string_eos) continue;
+              if (string[i] == 0) continue;
 
               if (fputc(string[i], output) == 0) {
                 return f_status_set_error(f_error_output);
@@ -389,7 +389,7 @@ extern "C" {
     } // for
 
     for (; i < buffer.used; i++) {
-      if (buffer.string[i] == f_string_eos) continue;
+      if (buffer.string[i] == 0) continue;
 
       status = f_utf_character_is_whitespace(buffer.string[i]);
 
@@ -422,7 +422,7 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == f_false) {
             for (; i < j; i++) {
-              if (buffer.string[i] == f_string_eos) continue;
+              if (buffer.string[i] == 0) continue;
 
               if (fputc(buffer.string[i], output) == 0) {
                 return f_status_set_error(f_error_output);
@@ -475,7 +475,7 @@ extern "C" {
     } // for
 
     for (; i <= range.stop; i++) {
-      if (buffer.string[i] == f_string_eos) continue;
+      if (buffer.string[i] == 0) continue;
 
       status = f_utf_character_is_whitespace(buffer.string[i]);
 
@@ -508,7 +508,7 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == f_false) {
             for (; i <= j; i++) {
-              if (buffer.string[i] == f_string_eos) continue;
+              if (buffer.string[i] == 0) continue;
 
               if (fputc(buffer.string[i], output) == 0) {
                 return f_status_set_error(f_error_output);

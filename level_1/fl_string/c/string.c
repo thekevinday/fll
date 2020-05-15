@@ -33,12 +33,12 @@ extern "C" {
     f_string_length j = 1;
 
     while (i <= length && j <= destination->used) {
-      if (source[length - i] == f_string_eos) {
+      if (source[length - i] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[destination->used - j] == f_string_eos) {
+      if (destination->string[destination->used - j] == 0) {
         j++;
         continue;
       }
@@ -71,12 +71,12 @@ extern "C" {
     f_string_length j = 1;
 
     while (i <= length && j <= destination->used) {
-      if (source[length - i] == f_string_eos) {
+      if (source[length - i] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[destination->used - j] == f_string_eos) {
+      if (destination->string[destination->used - j] == 0) {
         j++;
         continue;
       }
@@ -157,12 +157,12 @@ extern "C" {
     f_string_length j = 1;
 
     while (i <= source.used && j <= destination->used) {
-      if (source.string[source.used - i] == f_string_eos) {
+      if (source.string[source.used - i] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[destination->used - j] == f_string_eos) {
+      if (destination->string[destination->used - j] == 0) {
         j++;
         continue;
       }
@@ -195,12 +195,12 @@ extern "C" {
     f_string_length j = 1;
 
     while (i <= source.used && j <= destination->used) {
-      if (source.string[source.used - i] == f_string_eos) {
+      if (source.string[source.used - i] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[destination->used - j] == f_string_eos) {
+      if (destination->string[destination->used - j] == 0) {
         j++;
         continue;
       }
@@ -335,12 +335,12 @@ extern "C" {
     f_string_length j = 1;
 
     while (i <= length && j <= destination->used) {
-      if (source.string[range.stop - i] == f_string_eos) {
+      if (source.string[range.stop - i] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[destination->used - j] == f_string_eos) {
+      if (destination->string[destination->used - j] == 0) {
         j++;
         continue;
       }
@@ -375,12 +375,12 @@ extern "C" {
     f_string_length j = 1;
 
     while (i <= length && j <= destination->used) {
-      if (source.string[range.stop - i] == f_string_eos) {
+      if (source.string[range.stop - i] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[destination->used - j] == f_string_eos) {
+      if (destination->string[destination->used - j] == 0) {
         j++;
         continue;
       }
@@ -531,12 +531,12 @@ extern "C" {
     f_string_length j = 0;
 
     while (i < length && j < destination->used) {
-      if (source.string[i + range.start] == f_string_eos) {
+      if (source.string[i + range.start] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[j] == f_string_eos) {
+      if (destination->string[j] == 0) {
         j++;
         continue;
       }
@@ -573,12 +573,12 @@ extern "C" {
     f_string_length j = 0;
 
     while (i < length && j < destination->used) {
-      if (source.string[i + range.start] == f_string_eos) {
+      if (source.string[i + range.start] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[j] == f_string_eos) {
+      if (destination->string[j] == 0) {
         j++;
         continue;
       }
@@ -651,12 +651,12 @@ extern "C" {
     f_string_length j = 0;
 
     while (i < source.used && j < destination->used) {
-      if (source.string[i] == f_string_eos) {
+      if (source.string[i] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[j] == f_string_eos) {
+      if (destination->string[j] == 0) {
         j++;
         continue;
       }
@@ -689,12 +689,12 @@ extern "C" {
     f_string_length j = 0;
 
     while (i < source.used && j < destination->used) {
-      if (source.string[i] == f_string_eos) {
+      if (source.string[i] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[j] == f_string_eos) {
+      if (destination->string[j] == 0) {
         j++;
         continue;
       }
@@ -1042,7 +1042,7 @@ extern "C" {
       if (destination->used > destination->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (destination->used > 0 && destination->string[destination->used - 1] == f_string_eos) return f_none;
+    if (destination->used > 0 && destination->string[destination->used - 1] == 0) return f_none;
 
     if (destination->used + 1 > f_string_max_size) return f_status_set_error(f_string_too_large);
 
@@ -1055,7 +1055,7 @@ extern "C" {
       if (f_status_is_error(status)) return status;
     }
 
-    destination->string[destination->used] = f_string_eos;
+    destination->string[destination->used] = 0;
     destination->used = total;
 
     return f_none;
@@ -1174,12 +1174,12 @@ extern "C" {
     f_string_length j = 0;
 
     while (i < length && j < destination->used) {
-      if (source[i] == f_string_eos) {
+      if (source[i] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[j] == f_string_eos) {
+      if (destination->string[j] == 0) {
         j++;
         continue;
       }
@@ -1212,12 +1212,12 @@ extern "C" {
     f_string_length j = 0;
 
     while (i < length && j < destination->used) {
-      if (source[i] == f_string_eos) {
+      if (source[i] == 0) {
         i++;
         continue;
       }
 
-      if (destination->string[j] == f_string_eos) {
+      if (destination->string[j] == 0) {
         j++;
         continue;
       }

@@ -50,7 +50,7 @@ extern "C" {
     }
 
     // handle quote support
-    int8_t quoted = f_string_eos;
+    int8_t quoted = 0;
 
     // identify where the object begins
     if (buffer->string[location->start] == f_fss_delimit_slash) {
@@ -126,7 +126,7 @@ extern "C" {
     }
 
     // identify where the object ends
-    if (quoted == f_string_eos) {
+    if (quoted == 0) {
       status = f_none;
       while (buffer->string[location->start] == f_fss_delimit_placeholder || (status = fl_fss_is_graph(*buffer, *location)) == f_true) {
         status = fl_fss_increment_buffer(*buffer, location, 1);
@@ -389,7 +389,7 @@ extern "C" {
     }
 
     bool has_delimit = f_false;
-    int8_t quoted = f_string_eos;
+    int8_t quoted = 0;
 
     bool continue_main_loop = f_false;
 
@@ -397,7 +397,7 @@ extern "C" {
     f_array_length already_used = found->used;
 
     while (location->start <= location->stop && location->start < buffer->used) {
-      quoted = f_string_eos;
+      quoted = 0;
 
       if (found->used >= found->size) {
         f_macro_fss_content_resize(status, (*found), found->size + f_fss_default_allocation_step);
@@ -502,7 +502,7 @@ extern "C" {
       }
 
       // identify where the content ends
-      if (quoted == f_string_eos) {
+      if (quoted == 0) {
         status = f_none;
         while (buffer->string[location->start] == f_fss_delimit_placeholder || (status = fl_fss_is_graph(*buffer, *location)) == f_true) {
           status = fl_fss_increment_buffer(*buffer, location, 1);
@@ -1039,7 +1039,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = f_none;
-    int8_t quoted = f_string_eos;
+    int8_t quoted = 0;
 
     f_string_range buffer_position = f_string_range_initialize;
     f_string_length start_position = 0;
@@ -1175,7 +1175,7 @@ extern "C" {
       if (f_status_is_error(status)) return status;
     } // while
 
-    if (quoted != f_string_eos) {
+    if (quoted != 0) {
       while (location->start <= location->stop && location->start < content.used) {
         if (content.string[location->start] == f_fss_delimit_slash) {
           f_string_length slash_count = 1;

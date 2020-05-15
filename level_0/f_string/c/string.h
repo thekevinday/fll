@@ -34,13 +34,6 @@ extern "C" {
 #endif // _en_BUG_strnlen_
 
 /**
- * Define the end of string character.
- */
-#ifndef _di_f_string_has_eos_
-  #define f_string_eos '\0'
-#endif // _di_f_string_has_eos_
-
-/**
  * Define the end of line character.
  * FLL forbids '\r' and '\r\n' as end of line characters, \r will be silently ignored.
  */
@@ -83,7 +76,7 @@ extern "C" {
   typedef char *f_string;
 
   #define f_string_max_size   f_type_number_size_unsigned
-  #define f_string_initialize f_string_eos
+  #define f_string_initialize 0
 
   #define f_macro_string_new(status, string, length)     status = f_memory_new((void **) & string, sizeof(f_string), length)
   #define f_macro_string_delete(status, string, length)  status = f_memory_delete((void **) & string, sizeof(f_string), length)

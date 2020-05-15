@@ -460,7 +460,7 @@ extern "C" {
                 f_string_length total = 1;
 
                 for (f_string_length j = items->array[i].content.array[0].start; j <= items->array[i].content.array[0].stop; j++) {
-                  if (data->buffer.string[j] == f_string_eos) continue;
+                  if (data->buffer.string[j] == 0) continue;
 
                   if (data->buffer.string[j] == f_string_eol) {
                     total++;
@@ -484,7 +484,7 @@ extern "C" {
 
                 if (line == 0) {
                   for (; i <= items->array[i].content.array[0].stop; i++) {
-                    if (data->buffer.string[i] == f_string_eos) continue;
+                    if (data->buffer.string[i] == 0) continue;
                     if (data->buffer.string[i] == f_string_eol) {
                       fprintf(f_standard_output, "%c", f_string_eol);
                       break;
@@ -497,7 +497,7 @@ extern "C" {
                   f_string_length line_current = 0;
 
                   for (; i <= items->array[i].content.array[0].stop; i++) {
-                    if (data->buffer.string[i] == f_string_eos) continue;
+                    if (data->buffer.string[i] == 0) continue;
 
                     if (data->buffer.string[i] == f_string_eol) {
                       line_current++;
@@ -506,7 +506,7 @@ extern "C" {
                         i++;
 
                         for (; i <= items->array[i].content.array[0].stop; i++) {
-                          if (data->buffer.string[i] == f_string_eos) continue;
+                          if (data->buffer.string[i] == 0) continue;
                           if (data->buffer.string[i] == f_string_eol) {
                             fprintf(f_standard_output, "%c", f_string_eol);
                             break;
@@ -557,7 +557,7 @@ extern "C" {
         }
 
         for (f_string_length j = items->array[i].content.array[0].start; j <= items->array[i].content.array[0].stop; j++) {
-          if (data->buffer.string[j] == f_string_eos) continue;
+          if (data->buffer.string[j] == 0) continue;
 
           if (data->buffer.string[j] == f_string_eol) {
             total++;
@@ -611,7 +611,7 @@ extern "C" {
           if (j > items->array[i].content.array[0].stop) continue;
 
           for (; j <= items->array[i].content.array[0].stop; j++) {
-            if (data->buffer.string[j] == f_string_eos) continue;
+            if (data->buffer.string[j] == 0) continue;
 
             if (data->buffer.string[j] == f_string_eol) {
               fprintf(f_standard_output, "%c", f_string_eol);

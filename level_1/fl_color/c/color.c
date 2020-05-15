@@ -107,7 +107,7 @@ extern "C" {
     buffer->used += string_size;
 
     // do not forget the EOS
-    buffer->string[buffer->used] = f_string_eos;
+    buffer->string[buffer->used] = 0;
 
     return f_none;
   }

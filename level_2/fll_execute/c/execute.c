@@ -223,7 +223,7 @@ extern "C" {
     }
 
     if (name_size == 0) {
-      fixed_arguments[0] = f_string_eos;
+      fixed_arguments[0] = 0;
     }
     else {
       fixed_arguments[0] = program_name;
@@ -243,7 +243,7 @@ extern "C" {
       }
 
       memcpy(fixed_arguments[i + 1], arguments.array[i].string, arguments.array[i].used);
-      fixed_arguments[i + 1][arguments.array[i].used] = f_string_eos;
+      fixed_arguments[i + 1][arguments.array[i].used] = 0;
     } // for
 
     // insert the required array terminated
@@ -328,7 +328,7 @@ extern "C" {
     }
 
     if (name_size == 0) {
-      fixed_arguments[0] = f_string_eos;
+      fixed_arguments[0] = 0;
     }
     else {
       fixed_arguments[0] = program_name;
@@ -348,7 +348,7 @@ extern "C" {
       }
 
       memcpy(fixed_arguments[i + 1], arguments.array[i].string, arguments.array[i].used);
-      fixed_arguments[i + 1][arguments.array[i].used] = f_string_eos;
+      fixed_arguments[i + 1][arguments.array[i].used] = 0;
     } // for
 
     // insert the required array terminated
@@ -425,7 +425,7 @@ extern "C" {
       }
 
       memcpy(fixed_arguments[i + 1], arguments.array[i].string, arguments.array[i].used);
-      fixed_arguments[i + 1][arguments.array[i].used] = f_string_eos;
+      fixed_arguments[i + 1][arguments.array[i].used] = 0;
     } // for
 
     // insert the required array terminated
@@ -495,7 +495,7 @@ extern "C" {
       }
 
       memcpy(fixed_arguments[i + 1], arguments.array[i].string, arguments.array[i].used);
-      fixed_arguments[i + 1][arguments.array[i].used] = f_string_eos;
+      fixed_arguments[i + 1][arguments.array[i].used] = 0;
     } // for
 
     // insert the required array terminated

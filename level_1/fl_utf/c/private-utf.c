@@ -93,11 +93,11 @@ extern "C" {
 
     for (; i1 < stop1 && i2 < stop2; i1++, i2++) {
       // skip past NULL in string1.
-      while (i1 < stop1 && string1[i1] == f_string_eos) i1++;
+      while (i1 < stop1 && string1[i1] == 0) i1++;
       if (i1 == stop1) break;
 
       // skip past NULL in string2.
-      while (i2 < stop2 && string2[i2] == f_string_eos) i2++;
+      while (i2 < stop2 && string2[i2] == 0) i2++;
       if (i2 == stop2) break;
 
       if (string1[i1] != string2[i2]) return f_not_equal_to;
@@ -105,11 +105,11 @@ extern "C" {
 
     // only return f_equal_to if all remaining characters are NULL.
     for (; i1 < stop1; i1++) {
-      if (string1[i1] != f_string_eos) return f_not_equal_to;
+      if (string1[i1] != 0) return f_not_equal_to;
     } // for
 
     for (; i2 < stop2; i2++) {
-      if (string2[i2] != f_string_eos) return f_not_equal_to;
+      if (string2[i2] != 0) return f_not_equal_to;
     } // for
 
     return f_equal_to;
@@ -126,7 +126,7 @@ extern "C" {
     // skip past leading whitespace in string1.
     for (; i1 < stop1; i1++) {
       // skip past NULL in string1.
-      while (i1 < stop1 && string1[i1] == f_string_eos) i1++;
+      while (i1 < stop1 && string1[i1] == 0) i1++;
       if (i1 == stop1) break;
 
       status = f_utf_character_is_whitespace(string1[i1]);
@@ -143,7 +143,7 @@ extern "C" {
     // skip past leading whitespace in string2.
     for (; i2 < stop2; i2++) {
       // skip past NULL in string2.
-      while (i2 < stop2 && string2[i2] == f_string_eos) i2++;
+      while (i2 < stop2 && string2[i2] == 0) i2++;
       if (i2 == stop2) break;
 
       status = f_utf_character_is_whitespace(string2[i2]);
@@ -168,7 +168,7 @@ extern "C" {
       // determine where the last non-whitespace is in string1.
       for (f_utf_string_length j = i1; j < stop1; j++) {
         // skip past NULL in string1.
-        while (j < stop1 && string1[j] == f_string_eos) j++;
+        while (j < stop1 && string1[j] == 0) j++;
         if (j == stop1) break;
 
         status = f_utf_character_is_whitespace(string1[j]);
@@ -188,7 +188,7 @@ extern "C" {
       // determine where the last non-whitespace is in string2.
       for (f_utf_string_length j = i2; j < stop2; j++) {
         // skip past NULL in string2.
-        while (j < stop2 && string2[j] == f_string_eos) j++;
+        while (j < stop2 && string2[j] == 0) j++;
         if (j == stop2) break;
 
         status = f_utf_character_is_whitespace(string2[j]);
@@ -210,11 +210,11 @@ extern "C" {
 
     for (; i1 < last1 && i2 < last2; i1++, i2++) {
       // skip past NULL in string1.
-      while (i1 < last1 && string1[i1] == f_string_eos) i1++;
+      while (i1 < last1 && string1[i1] == 0) i1++;
       if (i1 == last1) break;
 
       // skip past NULL in string2.
-      while (i2 < last2 && string2[i2] == f_string_eos) i2++;
+      while (i2 < last2 && string2[i2] == 0) i2++;
       if (i2 == last2) break;
 
       if (string1[i1] != string2[i2]) return f_not_equal_to;
@@ -222,11 +222,11 @@ extern "C" {
 
     // only return f_equal_to if all remaining characters are NULL.
     for (; i1 < last1; i1++) {
-      if (string1[i1] != f_string_eos) return f_not_equal_to;
+      if (string1[i1] != 0) return f_not_equal_to;
     } // for
 
     for (; i2 < last2; i2++) {
-      if (string2[i2] != f_string_eos) return f_not_equal_to;
+      if (string2[i2] != 0) return f_not_equal_to;
     } // for
 
     return f_equal_to;
@@ -337,7 +337,7 @@ extern "C" {
     // skip past leading whitespace.
     for (; *start <= *stop; (*start)++) {
       // skip past NULL.
-      while (*start < *stop && source[*start] == f_string_eos) (*start)++;
+      while (*start < *stop && source[*start] == 0) (*start)++;
       if (*start > *stop) break;
 
       status = f_utf_character_is_whitespace(source[*start]);
@@ -353,9 +353,9 @@ extern "C" {
     for (; *stop > *start; (*stop)--) {
 
       // skip past NULL.
-      while (*stop > *start && source[*stop] == f_string_eos) (*stop)--;
+      while (*stop > *start && source[*stop] == 0) (*stop)--;
 
-      if (source[*stop] == f_string_eos) continue;
+      if (source[*stop] == 0) continue;
       if (*stop == *start) break;
 
       status = f_utf_character_is_whitespace(source[*stop]);

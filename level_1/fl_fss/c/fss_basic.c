@@ -50,7 +50,7 @@ extern "C" {
     }
 
     // handle quote support
-    int8_t quoted = f_string_eos;
+    int8_t quoted = 0;
 
     // identify where the object begins
     if (buffer->string[location->start] == f_fss_delimit_slash) {
@@ -120,7 +120,7 @@ extern "C" {
     }
 
     // identify where the object ends
-    if (quoted == f_string_eos) {
+    if (quoted == 0) {
       status = f_none;
       while (buffer->string[location->start] == f_fss_delimit_placeholder || (status = fl_fss_is_space(*buffer, *location)) == f_false) {
         status = fl_fss_increment_buffer(*buffer, location, 1);

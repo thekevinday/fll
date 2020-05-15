@@ -14,7 +14,7 @@ extern "C" {
     register f_string_length i = 0;
 
     for (; i < length; i++) {
-      if (string[i] != f_string_eos) {
+      if (string[i] != 0) {
         if (fputc(string[i], output) == 0) {
           return f_status_set_error(f_error_output);
         }
@@ -34,7 +34,7 @@ extern "C" {
     register f_string_length i = 0;
 
     for (; i < buffer.used; i++) {
-      if (buffer.string[i] != f_string_eos) {
+      if (buffer.string[i] != 0) {
         if (fputc(buffer.string[i], output) == 0) {
           return f_status_set_error(f_error_output);
         }
@@ -58,7 +58,7 @@ extern "C" {
     register f_string_length i = range.start;
 
     for (; i <= range.stop; i++) {
-      if (buffer.string[i] != f_string_eos) {
+      if (buffer.string[i] != 0) {
         if (fputc(buffer.string[i], output) == 0) {
           return f_status_set_error(f_error_output);
         }
