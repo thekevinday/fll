@@ -199,12 +199,14 @@ extern "C" {
 #endif // _di_fake_path_
 
 #ifndef _di_fake_file_
+  #define fake_file_defines      "defines"
   #define fake_file_dependencies "dependencies"
   #define fake_file_process_post "process_post.sh"
   #define fake_file_process_pre  "process_pre.sh"
   #define fake_file_readme       "readme"
   #define fake_file_settings     "settings"
 
+  #define fake_file_defines_length      7
   #define fake_file_dependencies_length 12
   #define fake_file_process_post_length 15
   #define fake_file_process_pre_length  14
@@ -461,6 +463,7 @@ extern "C" {
     f_string_dynamic path_work_programs_shared;
     f_string_dynamic path_work_programs_static;
 
+    f_string_dynamic file_data_build_defines;
     f_string_dynamic file_data_build_dependencies;
     f_string_dynamic file_data_build_settings;
     f_string_dynamic file_documents_readme;
@@ -477,6 +480,7 @@ extern "C" {
       fake_verbosity_normal, \
       f_string_dynamic_initialize, \
       f_string_dynamics_initialize, \
+      f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \

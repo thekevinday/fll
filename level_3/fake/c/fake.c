@@ -403,6 +403,7 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(data->path_work_programs_shared);
     f_macro_string_dynamic_delete_simple(data->path_work_programs_static);
 
+    f_macro_string_dynamic_delete_simple(data->file_data_build_defines);
     f_macro_string_dynamic_delete_simple(data->file_data_build_dependencies);
     f_macro_string_dynamic_delete_simple(data->file_data_build_settings);
     f_macro_string_dynamic_delete_simple(data->file_documents_readme);

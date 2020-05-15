@@ -129,7 +129,7 @@ extern "C" {
       const uint8_t parameters_length[] = {
         3,
         3,
-        2,
+        3,
         1,
       };
 
@@ -146,6 +146,7 @@ extern "C" {
       };
 
       f_string_dynamic *parameters_value_2[] = {
+        &data->file_data_build_defines,
         &data->file_data_build_dependencies,
         &data->file_data_build_settings,
       };
@@ -179,6 +180,7 @@ extern "C" {
         fake_path_part_script,
         fake_path_part_shared,
         fake_path_part_static,
+        fake_file_defines,
         fake_file_dependencies,
         fake_file_settings,
         fake_file_readme,
@@ -191,6 +193,7 @@ extern "C" {
         fake_path_part_script_length,
         fake_path_part_shared_length,
         fake_path_part_static_length,
+        fake_file_defines_length,
         fake_file_dependencies_length,
         fake_file_settings_length,
         fake_file_readme_length,
@@ -203,12 +206,13 @@ extern "C" {
         &data->path_build_programs_script,
         &data->path_build_programs_shared,
         &data->path_build_programs_static,
+        &data->file_data_build_defines,
         &data->file_data_build_dependencies,
         &data->file_data_build_settings,
         &data->file_documents_readme,
       };
 
-      for (i = 0; i < 9; i++) {
+      for (i = 0; i < 10; i++) {
         status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (f_status_is_error(status)) {
@@ -371,12 +375,13 @@ extern "C" {
         &data->path_work_programs_script,
         &data->path_work_programs_shared,
         &data->path_work_programs_static,
+        &data->file_data_build_defines,
         &data->file_data_build_dependencies,
         &data->file_data_build_settings,
         &data->file_documents_readme,
       };
 
-      for (i = 0; i < 30; i++) {
+      for (i = 0; i < 31; i++) {
         if (parameters_value[i]->used == 0) continue;
 
         status = fl_string_dynamic_terminate(parameters_value[i]);

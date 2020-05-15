@@ -52,6 +52,10 @@ extern "C" {
     f_string_dynamic file_data_build_process_pre = f_string_dynamic_initialize;
 
     if (!f_status_is_error(status)) {
+      status = fake_skeleton_operate_file_create(data, data.file_data_build_defines, f_false);
+    }
+
+    if (!f_status_is_error(status)) {
       status = fake_skeleton_operate_file_create(data, data.file_data_build_dependencies, f_false);
     }
 

@@ -36,6 +36,7 @@ process_pre_main(){
   local path_sources=
   local path_work=
   local verbosity=
+  local build_status=
 
   # generated paths and standard paths.
   local path_directory_separator="/"
@@ -118,6 +119,8 @@ process_pre_main(){
           if [[ $do_color == "normal" ]] ; then
             do_color=none
           fi
+        elif [[ $p == "++status" ]] ; then
+          grab_next=build_status
         fi
       else
         if [[ $grab_next == "defines" ]] ; then
@@ -133,9 +136,9 @@ process_pre_main(){
             modes="$modes $p"
           fi
         elif [[ $grab_next == "process" ]] ; then
-          process=$p
+          process="$p"
         elif [[ $grab_next == "file_settings" ]] ; then
-          file_settings=$p
+          file_settings="$p"
         elif [[ $grab_next == "path_build" ]] ; then
           path_build=$(process_pre_path_fix $p)
         elif [[ $grab_next == "path_source_build" ]] ; then
@@ -154,6 +157,8 @@ process_pre_main(){
           path_source_settings=$(process_pre_path_fix $p)
         elif [[ $grab_next == "path_work" ]] ; then
           path_work=$(process_pre_path_fix $p)
+        elif [[ $grab_next == "build_status" ]] ; then
+          build_status="$p"
         fi
 
         grab_next=
@@ -221,7 +226,7 @@ process_pre_main(){
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
-    echo -e "${c_title}Post Processing Operation: $c_reset$c_notice$operation$c_reset"
+    echo -e "${c_title}Processing Operation: $c_reset$c_notice$operation$c_reset"
 
     if [[ $modes != "" ]] ; then
       echo -e "  Modes: $c_reset$c_notice$modes$c_reset"

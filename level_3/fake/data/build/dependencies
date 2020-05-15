@@ -5,6 +5,7 @@ f_string
 f_color
 f_console
 f_conversion
+f_environment
 f_fss
 f_file
 f_path

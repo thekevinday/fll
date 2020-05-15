@@ -153,9 +153,11 @@ extern "C" {
       }
     }
 
-    int results = 0;
+    {
+      int result = 0;
 
-    status = fll_execute_path(path.string, arguments, &results);
+      status = fll_execute_path(path.string, arguments, &result);
+    }
 
     if (f_status_is_error(status)) {
       if (f_status_set_fine(status) == f_failure) {
