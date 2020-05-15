@@ -729,12 +729,6 @@ extern "C" {
         case f_directory_not_open:
           *string = fl_status_string_directory_not_open;
           break;
-        case f_directory_error_allocation:
-          *string = fl_status_string_directory_allocation_error;
-          break;
-        case f_directory_error_reallocation:
-          *string = fl_status_string_directory_reallocation_error;
-          break;
         case f_directory_error:
           *string = fl_status_string_directory_error;
           break;

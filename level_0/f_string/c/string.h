@@ -295,6 +295,29 @@ extern "C" {
 #endif // _di_f_string_dynamic_
 
 /**
+ * An array of static strings.
+ *
+ * array: the array of static strings.
+ * size: total amount of space available.
+ * used: total number of space used.
+ */
+#ifndef _di_f_string_statics_
+  typedef struct {
+    f_string_static *array;
+
+    f_string_length size;
+    f_string_length used;
+  } f_string_statics;
+
+  #define f_string_statics_initialize { 0, 0, 0 }
+
+  #define f_macro_string_statics_clear(statics) \
+    statics.array = 0; \
+    statics.size = 0; \
+    statics.used = 0;
+#endif // _di_f_string_statics_
+
+/**
  * An array of dynamic strings.
  *
  * array: the array of dynamic strings.
@@ -302,19 +325,11 @@ extern "C" {
  * used: total number of allocated spaces used.
  */
 #ifndef _di_f_string_dynamics_
-  typedef struct {
-    f_string_dynamic *array;
+  typedef f_string_statics f_string_dynamics;
 
-    f_string_length size;
-    f_string_length used;
-  } f_string_dynamics;
+  #define f_string_dynamics_initialize f_string_statics_initialize
 
-  #define f_string_dynamics_initialize { 0, 0, 0 }
-
-  #define f_macro_string_dynamics_clear(dynamics) \
-    dynamics.array = 0; \
-    dynamics.size = 0; \
-    dynamics.used = 0;
+  #define f_macro_string_dynamics_clear(dynamics) f_macro_string_statics_clear(dynamics)
 
   #define f_macro_string_dynamics_new(status, dynamics, length) \
     f_macro_string_dynamics_clear(dynamics) \

@@ -125,17 +125,17 @@ extern "C" {
 
 /**
  * A structure representing a directory.
+ *
+ * @todo review this and decide to keep and use it or just remove it.
  */
 #ifndef _di_f_directory_
   typedef struct {
     struct dirent entity;
-    int descriptor;
     f_directory_listing content;
   } f_directory;
 
   #define f_directory_initialize { \
       { 0, 0, 0, 0, 0 }, \
-      0, \
       f_directory_listing_initialize, \
     }
 #endif // _di_f_directory_

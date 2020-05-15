@@ -86,6 +86,13 @@ extern "C" {
  * - light: Do display color intended for light backgrounds when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
  * - no_color: Do not display color when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
  * - version: Should always print only the version number, no colors, but what represents the version number is undefined by this project.
+ *
+ * The following options are for special purposes:
+ * - status: Represents the return status code from another program.
+ *           Because it is associated with the status from another program, its structure is very subjective.
+ *           The only expectation is that it somehow communicates the fss status codes.
+ *           Example of complex use: "failed_program_name:error:123".
+ *           Example of simple use: "123".
  */
 #ifndef _di_f_standard_console_parameters_
   #define f_console_standard_short_dark     "d"
@@ -111,6 +118,7 @@ extern "C" {
   #define f_console_standard_long_help     "help"
   #define f_console_standard_long_light    "light"
   #define f_console_standard_long_no_color "no_color"
+  #define f_console_standard_long_status   "status"
   #define f_console_standard_long_quiet    "quiet"
   #define f_console_standard_long_verbose  "verbose"
   #define f_console_standard_long_version  "version"
@@ -120,6 +128,7 @@ extern "C" {
   #define f_console_standard_long_help_length     4
   #define f_console_standard_long_light_length    5
   #define f_console_standard_long_no_color_length 8
+  #define f_console_standard_long_status_length   6
   #define f_console_standard_long_quiet_length    5
   #define f_console_standard_long_verbose_length  7
   #define f_console_standard_long_version_length  7

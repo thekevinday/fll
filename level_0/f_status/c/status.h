@@ -311,10 +311,8 @@ extern "C" {
       f_filesystem_quota_reached,
     #endif // _di_f_status_filesystem_
 
-    // Most of these are a guess until I get around to researching & implementing linux directory I/O.
     #ifndef _di_f_status_directory_
       f_directory_error,
-      f_directory_error_allocation,
       f_directory_error_close,
       f_directory_error_descriptor,
       f_directory_error_flush,
@@ -322,7 +320,6 @@ extern "C" {
       f_directory_error_open,
       f_directory_error_purge,
       f_directory_error_read,
-      f_directory_error_reallocation,
       f_directory_error_stream,
       f_directory_error_synchronize,
       f_directory_error_unsupported,

@@ -730,12 +730,6 @@ extern "C" {
     #define fl_status_string_directory_not_open "f_directory_not_open"
     #define fl_status_string_directory_not_open_length 20
 
-    #define fl_status_string_directory_allocation_error "f_directory_error_allocation"
-    #define fl_status_string_directory_allocation_error_length 28
-
-    #define fl_status_string_directory_reallocation_error "f_directory_error_reallocation"
-    #define fl_status_string_directory_reallocation_error_length 30
-
     #define fl_status_string_directory_error "f_directory_error"
     #define fl_status_string_directory_error_length 17
 

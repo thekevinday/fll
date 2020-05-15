@@ -23,6 +23,7 @@
 #include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/type.h>
+#include <level_0/environment.h>
 
 // fll-1 includes
 #include <level_1/string.h>
@@ -298,8 +299,41 @@ extern "C" {
  * @see execv()
  */
 #ifndef _di_fll_execute_path_
-  extern f_return_status fll_execute_path(const f_string program_path, const f_string_dynamics arguments, int *result);
+  extern f_return_status fll_execute_path(const f_string program_path, const f_string_statics arguments, int *result);
 #endif // _di_fll_execute_path_
+
+/**
+ * Execute a program given some path + program name (such as "/bin/bash").
+ *
+ * The environment is defined by the names and values pair.
+ *
+ * @param program_path
+ *   The entire path to the program.
+ * @param arguments
+ *   An array of strings representing the arguments.
+ * @param names
+ *   An array of strings representing the environment variable names.
+ *   At most names.used variables are created.
+ *   Duplicate names are overwritten.
+ * @param values
+ *   An array of strings representing the environment variable names.
+ *   The values.used must be of at least names.used.
+ *   Set individual strings.used to 0 for empty/null values.
+ * @param result
+ *   The code returned after finishing execution of program_path.
+ *
+ * @return
+ *   f_none on success.
+ *   f_failure (with error bit) if result is non-zero.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on allocation error.
+ *   f_error_reallocation (with error bit) on reallocation error.
+ *
+ * @see execv()
+ */
+#ifndef _di_fll_execute_path_environment_
+  f_return_status fll_execute_path_environment(const f_string program_path, const f_string_statics arguments, const f_string_statics names, const f_string_statics values, int *result);
+#endif // _di_fll_execute_path_environment_
 
 /**
  * Execute a program given by name found in the PATH environment (such as "bash").
@@ -322,8 +356,44 @@ extern "C" {
  * @see execvp()
  */
 #ifndef _di_fll_execute_program_
-  extern f_return_status fll_execute_program(const f_string program_name, const f_string_dynamics arguments, int *result);
+  extern f_return_status fll_execute_program(const f_string program_name, const f_string_statics arguments, int *result);
 #endif // _di_fll_execute_program_
+
+/**
+ * Execute a program given by name found in the PATH environment (such as "bash").
+ *
+ * Uses the provided environment array to designate the environment for the called program.
+ *
+ * @todo this probably needs special work to find the program from PATH when PATH environment variable gets cleared before execution.
+ *
+ * @param program_name
+ *   The name of the program.
+ * @param arguments
+ *   An array of strings representing the arguments.
+ * @param names
+ *   An array of strings representing the environment variable names.
+ *   At most names.used variables are created.
+ *   Duplicate names are overwritten.
+ * @param values
+ *   An array of strings representing the environment variable names.
+ *   The values.used must be of at least names.used.
+ *   Set individual strings.used to 0 for empty/null values.
+ * @param result
+ *   The code returned after finishing execution of program.
+ *
+ * @return
+ *   f_none on success.
+ *   f_failure (with error bit) if result is non-zero.
+ *   f_fork_failed (with error bit) on fork failure.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_allocation (with error bit) on allocation error.
+ *   f_error_reallocation (with error bit) on reallocation error.
+ *
+ * @see execvpe()
+ */
+#ifndef _di_fll_execute_program_environment_
+  extern f_return_status fll_execute_program_environment(const f_string program_name, const f_string_statics arguments, const f_string_statics names, const f_string_statics values, int *result);
+#endif // _di_fll_execute_program_environment_
 
 #ifdef __cplusplus
 } // extern "C"

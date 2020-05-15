@@ -1186,16 +1186,6 @@ extern "C" {
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_directory_allocation_error, length, fl_status_string_directory_allocation_error_length) == f_equal_to) {
-        *code = f_directory_error_allocation;
-        return f_none;
-      }
-
-      if (fl_string_compare(string, fl_status_string_directory_reallocation_error, length, fl_status_string_directory_reallocation_error_length) == f_equal_to) {
-        *code = f_directory_error_reallocation;
-        return f_none;
-      }
-
       if (fl_string_compare(string, fl_status_string_directory_error, length, fl_status_string_directory_error_length) == f_equal_to) {
         *code = f_directory_error;
         return f_none;
