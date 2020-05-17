@@ -9,7 +9,7 @@ version_micro 0
 
 process_pre process_pre.sh
 process_post process_post.sh
-process_environment
+environment
 
 modes individual level monolithic
 modes_default individual

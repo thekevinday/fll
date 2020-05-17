@@ -14,24 +14,9 @@ extern "C" {
 
 #ifndef _di_fake_build_settings_
   typedef struct {
-    f_string_dynamic build_compiler;
-    f_string_dynamic build_libraries;
-    f_string_dynamic build_linker;
-    f_string_dynamic build_shared;
-    f_string_dynamic build_sources_headers;
-    f_string_dynamic build_sources_library;
-    f_string_dynamic build_sources_program;
-    f_string_dynamic build_sources_setting;
-    f_string_dynamic build_sources_shell;
-    f_string_dynamic build_static;
-    f_string_dynamic defines_all;
-    f_string_dynamic defines_shared;
-    f_string_dynamic defines_static;
-    f_string_dynamic flags_all;
-    f_string_dynamic flags_library;
-    f_string_dynamic flags_program;
-    f_string_dynamic flags_shared;
-    f_string_dynamic flags_static;
+    bool build_shared;
+    bool build_static;
+
     f_string_dynamic path_language;
     f_string_dynamic path_headers;
     f_string_dynamic path_library_shared;
@@ -45,130 +30,64 @@ extern "C" {
     f_string_dynamic version_major;
     f_string_dynamic version_micro;
     f_string_dynamic version_minor;
+
+    f_string_dynamics build_compiler;
+    f_string_dynamics build_libraries;
+    f_string_dynamics build_linker;
+    f_string_dynamics build_sources_headers;
+    f_string_dynamics build_sources_library;
+    f_string_dynamics build_sources_program;
+    f_string_dynamics build_sources_setting;
+    f_string_dynamics build_sources_shell;
+    f_string_dynamics defines_all;
+    f_string_dynamics defines_shared;
+    f_string_dynamics defines_static;
+    f_string_dynamics environment;
+    f_string_dynamics flags_all;
+    f_string_dynamics flags_library;
+    f_string_dynamics flags_program;
+    f_string_dynamics flags_shared;
+    f_string_dynamics flags_static;
   } fake_build_settings;
 
-  #define fake_build_settings_initialize { f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize, f_string_dynamic_initialize }
-
-  #define fake_macro_settings_build_clear(settings) \
-    f_macro_string_dynamic_clear(settings.build_compiler) \
-    f_macro_string_dynamic_clear(settings.build_libraries) \
-    f_macro_string_dynamic_clear(settings.build_linker) \
-    f_macro_string_dynamic_clear(settings.build_shared) \
-    f_macro_string_dynamic_clear(settings.build_sources_headers) \
-    f_macro_string_dynamic_clear(settings.build_sources_library) \
-    f_macro_string_dynamic_clear(settings.build_sources_program) \
-    f_macro_string_dynamic_clear(settings.build_sources_setting) \
-    f_macro_string_dynamic_clear(settings.build_sources_shell) \
-    f_macro_string_dynamic_clear(settings.build_static) \
-    f_macro_string_dynamic_clear(settings.defines_all) \
-    f_macro_string_dynamic_clear(settings.defines_shared) \
-    f_macro_string_dynamic_clear(settings.defines_static) \
-    f_macro_string_dynamic_clear(settings.flags_all) \
-    f_macro_string_dynamic_clear(settings.flags_library) \
-    f_macro_string_dynamic_clear(settings.flags_program) \
-    f_macro_string_dynamic_clear(settings.flags_shared) \
-    f_macro_string_dynamic_clear(settings.flags_static) \
-    f_macro_string_dynamic_clear(settings.path_language) \
-    f_macro_string_dynamic_clear(settings.path_headers) \
-    f_macro_string_dynamic_clear(settings.path_libary_shared) \
-    f_macro_string_dynamic_clear(settings.path_library_static) \
-    f_macro_string_dynamic_clear(settings.path_program_shared) \
-    f_macro_string_dynamic_clear(settings.path_program_static) \
-    f_macro_string_dynamic_clear(settings.process_post) \
-    f_macro_string_dynamic_clear(settings.process_pre) \
-    f_macro_string_dynamic_clear(settings.project_level) \
-    f_macro_string_dynamic_clear(settings.project_name) \
-    f_macro_string_dynamic_clear(settings.version_major) \
-    f_macro_string_dynamic_clear(settings.version_micro) \
-    f_macro_string_dynamic_clear(settings.version_minor)
-
-  #define fake_macro_build_settings_delete(status, settings) \
-    f_macro_string_dynamic_delete(status, settings.build_compiler) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.build_libraries) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.build_linker) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.build_shared) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.build_sources_headers) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.build_sources_library) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.build_sources_program) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.build_sources_setting) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.build_sources_shell) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.build_static) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.defines_all) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.defines_shared) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.defines_static) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.flags_all) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.flags_library) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.flags_program) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.flags_shared) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.flags_static) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.path_language) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.path_headers) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.path_library_shared) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.path_library_static) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.path_library_shared) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.path_library_static) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.process_post) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.process_pre) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.project_level) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.project_name) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.version_major) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.version_micro) \
-    if (status == f_none) f_macro_string_dynamic_delete(status, settings.version_minor)
-
-  #define fake_macro_build_settings_destroy(status, settings, length) \
-    f_macro_string_dynamic_delete(status, settings.build_compiler) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.build_libraries) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.build_linker) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.build_shared) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.build_sources_headers) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.build_sources_library) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.build_sources_program) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.build_sources_setting) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.build_sources_shell) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.build_static) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.defines_all) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.defines_shared) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.defines_static) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.flags_all) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.flags_library) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.flags_program) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.flags_shared) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.flags_static) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.path_language) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.path_headers) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.path_library_shared) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.path_library_static) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.path_program_shared) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.path_program_static) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.process_post) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.process_pre) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.project_level) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.project_name) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.version_major) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.version_micro) \
-    if (status == f_none) f_macro_string_dynamic_destroy(status, settings.version_minor)
+  #define fake_build_settings_initialize { \
+    f_true, \
+    f_true, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+  }
 
   #define fake_macro_build_settings_delete_simple(settings) \
-    f_macro_string_dynamic_delete_simple(settings.build_compiler) \
-    f_macro_string_dynamic_delete_simple(settings.build_libraries) \
-    f_macro_string_dynamic_delete_simple(settings.build_linker) \
-    f_macro_string_dynamic_delete_simple(settings.build_shared) \
-    f_macro_string_dynamic_delete_simple(settings.build_sources_headers) \
-    f_macro_string_dynamic_delete_simple(settings.build_sources_library) \
-    f_macro_string_dynamic_delete_simple(settings.build_sources_program) \
-    f_macro_string_dynamic_delete_simple(settings.build_sources_setting) \
-    f_macro_string_dynamic_delete_simple(settings.build_sources_shell) \
-    f_macro_string_dynamic_delete_simple(settings.build_static) \
-    f_macro_string_dynamic_delete_simple(settings.defines_all) \
-    f_macro_string_dynamic_delete_simple(settings.defines_shared) \
-    f_macro_string_dynamic_delete_simple(settings.defines_static) \
-    f_macro_string_dynamic_delete_simple(settings.flags_all) \
-    f_macro_string_dynamic_delete_simple(settings.flags_library) \
-    f_macro_string_dynamic_delete_simple(settings.flags_program) \
-    f_macro_string_dynamic_delete_simple(settings.flags_shared) \
-    f_macro_string_dynamic_delete_simple(settings.flags_static) \
-    f_macro_string_dynamic_delete_simple(settings.path_language) \
     f_macro_string_dynamic_delete_simple(settings.path_headers) \
+    f_macro_string_dynamic_delete_simple(settings.path_language) \
     f_macro_string_dynamic_delete_simple(settings.path_library_shared) \
     f_macro_string_dynamic_delete_simple(settings.path_library_static) \
     f_macro_string_dynamic_delete_simple(settings.path_program_shared) \
@@ -179,40 +98,24 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(settings.project_name) \
     f_macro_string_dynamic_delete_simple(settings.version_major) \
     f_macro_string_dynamic_delete_simple(settings.version_micro) \
-    f_macro_string_dynamic_delete_simple(settings.version_minor)
-
-  #define fake_macro_build_settings_destroy_simple(settings, length) \
-    f_macro_string_dynamic_destroy_simple(settings.build_compiler) \
-    f_macro_string_dynamic_destroy_simple(settings.build_libraries) \
-    f_macro_string_dynamic_destroy_simple(settings.build_linker) \
-    f_macro_string_dynamic_destroy_simple(settings.build_shared) \
-    f_macro_string_dynamic_destroy_simple(settings.build_sources_headers) \
-    f_macro_string_dynamic_destroy_simple(settings.build_sources_library) \
-    f_macro_string_dynamic_destroy_simple(settings.build_sources_program) \
-    f_macro_string_dynamic_destroy_simple(settings.build_sources_setting) \
-    f_macro_string_dynamic_destroy_simple(settings.build_sources_shell) \
-    f_macro_string_dynamic_destroy_simple(settings.build_static) \
-    f_macro_string_dynamic_destroy_simple(settings.defines_all) \
-    f_macro_string_dynamic_destroy_simple(settings.defines_shared) \
-    f_macro_string_dynamic_destroy_simple(settings.defines_static) \
-    f_macro_string_dynamic_destroy_simple(settings.flags_all) \
-    f_macro_string_dynamic_destroy_simple(settings.flags_library) \
-    f_macro_string_dynamic_destroy_simple(settings.flags_program) \
-    f_macro_string_dynamic_destroy_simple(settings.flags_shared) \
-    f_macro_string_dynamic_destroy_simple(settings.flags_static) \
-    f_macro_string_dynamic_destroy_simple(settings.path_language) \
-    f_macro_string_dynamic_destroy_simple(settings.path_headers) \
-    f_macro_string_dynamic_destroy_simple(settings.path_library_shared) \
-    f_macro_string_dynamic_destroy_simple(settings.path_library_static) \
-    f_macro_string_dynamic_destroy_simple(settings.path_program_shared) \
-    f_macro_string_dynamic_destroy_simple(settings.path_program_static) \
-    f_macro_string_dynamic_destroy_simple(settings.process_post) \
-    f_macro_string_dynamic_destroy_simple(settings.process_pre) \
-    f_macro_string_dynamic_destroy_simple(settings.project_level) \
-    f_macro_string_dynamic_destroy_simple(settings.project_name) \
-    f_macro_string_dynamic_destroy_simple(settings.version_major) \
-    f_macro_string_dynamic_destroy_simple(settings.version_micro) \
-    f_macro_string_dynamic_destroy_simple(settings.version_minor)
+    f_macro_string_dynamic_delete_simple(settings.version_minor) \
+    f_macro_string_dynamics_delete_simple(settings.build_compiler) \
+    f_macro_string_dynamics_delete_simple(settings.build_libraries) \
+    f_macro_string_dynamics_delete_simple(settings.build_linker) \
+    f_macro_string_dynamics_delete_simple(settings.build_sources_headers) \
+    f_macro_string_dynamics_delete_simple(settings.build_sources_library) \
+    f_macro_string_dynamics_delete_simple(settings.build_sources_program) \
+    f_macro_string_dynamics_delete_simple(settings.build_sources_setting) \
+    f_macro_string_dynamics_delete_simple(settings.build_sources_shell) \
+    f_macro_string_dynamics_delete_simple(settings.defines_all) \
+    f_macro_string_dynamics_delete_simple(settings.defines_shared) \
+    f_macro_string_dynamics_delete_simple(settings.defines_static) \
+    f_macro_string_dynamics_delete_simple(settings.environment) \
+    f_macro_string_dynamics_delete_simple(settings.flags_all) \
+    f_macro_string_dynamics_delete_simple(settings.flags_library) \
+    f_macro_string_dynamics_delete_simple(settings.flags_program) \
+    f_macro_string_dynamics_delete_simple(settings.flags_shared) \
+    f_macro_string_dynamics_delete_simple(settings.flags_static)
 
   #define fake_build_settings_name_build_compiler         "build_compiler"
   #define fake_build_settings_name_build_libraries        "build_libraries"
@@ -227,6 +130,7 @@ extern "C" {
   #define fake_build_settings_name_defines_all            "defines_all"
   #define fake_build_settings_name_defines_shared         "defines_shared"
   #define fake_build_settings_name_defines_static         "defines_static"
+  #define fake_build_settings_name_environment            "environment"
   #define fake_build_settings_name_flags_all              "flags_all"
   #define fake_build_settings_name_flags_library          "flags_library"
   #define fake_build_settings_name_flags_program          "flags_program"
@@ -256,6 +160,7 @@ extern "C" {
   #define fake_build_settings_name_build_sources_settings_length 22
   #define fake_build_settings_name_build_sources_shell_length    19
   #define fake_build_settings_name_build_static_length           12
+  #define fake_build_settings_name_environment_length            11
   #define fake_build_settings_name_defines_all_length            11
   #define fake_build_settings_name_defines_shared_length         14
   #define fake_build_settings_name_defines_static_length         14
@@ -278,7 +183,13 @@ extern "C" {
   #define fake_build_settings_name_version_micro_length          13
   #define fake_build_settings_name_version_minor_length          13
 
-  #define fake_build_settings_total 31
+  #define fake_build_settings_total 32
+
+  #define fake_build_settings_bool_yes "yes"
+  #define fake_build_settings_bool_no  "no"
+
+  #define fake_build_settings_bool_yes_length 3
+  #define fake_build_settings_bool_no_length  2
 #endif // _di_fake_build_settings_
 
 /**

@@ -39,6 +39,9 @@ extern "C" {
   #define f_path_separator          "/"
   #define f_path_separator_variable ":"
 
+  #define f_path_separator_length          1
+  #define f_path_separator_variable_length 1
+
   #define f_path_environment         "PATH"
   #define f_path_home_wildcard       "~"
   #define f_path_present_working     "PWD"
