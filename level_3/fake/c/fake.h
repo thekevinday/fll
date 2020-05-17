@@ -179,23 +179,23 @@ extern "C" {
   #define fake_path_part_sources   "sources"   f_path_separator
   #define fake_path_part_static    "static"    f_path_separator
 
-  #define fake_path_part_bash_length      (4 + f_path_separator_length)
-  #define fake_path_part_build_length     (5 + f_path_separator_length)
-  #define fake_path_part_c_length         (1 + f_path_separator_length)
-  #define fake_path_part_cpp_length       (3 + f_path_separator_length)
-  #define fake_path_part_data_length      (4 + f_path_separator_length)
-  #define fake_path_part_documents_length (9 + f_path_separator_length)
-  #define fake_path_part_includes_length  (8 + f_path_separator_length)
-  #define fake_path_part_libraries_length (9 + f_path_separator_length)
-  #define fake_path_part_licenses_length  (8 + f_path_separator_length)
-  #define fake_path_part_objects_length   (7 + f_path_separator_length)
-  #define fake_path_part_process_length   (7 + f_path_separator_length)
-  #define fake_path_part_programs_length  (8 + f_path_separator_length)
-  #define fake_path_part_script_length    (6 + f_path_separator_length)
-  #define fake_path_part_settings_length  (8 + f_path_separator_length)
-  #define fake_path_part_shared_length    (6 + f_path_separator_length)
-  #define fake_path_part_sources_length   (7 + f_path_separator_length)
-  #define fake_path_part_static_length    (6 + f_path_separator_length)
+  #define fake_path_part_bash_length      5
+  #define fake_path_part_build_length     6
+  #define fake_path_part_c_length         2
+  #define fake_path_part_cpp_length       4
+  #define fake_path_part_data_length      5
+  #define fake_path_part_documents_length 10
+  #define fake_path_part_includes_length  9
+  #define fake_path_part_libraries_length 10
+  #define fake_path_part_licenses_length  9
+  #define fake_path_part_objects_length   8
+  #define fake_path_part_process_length   8
+  #define fake_path_part_programs_length  9
+  #define fake_path_part_script_length    7
+  #define fake_path_part_settings_length  9
+  #define fake_path_part_shared_length    7
+  #define fake_path_part_sources_length   8
+  #define fake_path_part_static_length    7
 #endif // _di_fake_path_
 
 #ifndef _di_fake_file_
@@ -223,9 +223,9 @@ extern "C" {
   #define fake_default_path_sources "sources" f_path_separator
   #define fake_default_path_work    ""
 
-  #define fake_default_path_build_length   (5 + f_path_separator_length)
-  #define fake_default_path_data_length    (4 + f_path_separator_length)
-  #define fake_default_path_sources_length (7 + f_path_separator_length)
+  #define fake_default_path_build_length   6
+  #define fake_default_path_data_length    5
+  #define fake_default_path_sources_length 8
   #define fake_default_path_work_length    0
 
   #define fake_default_defines  ""

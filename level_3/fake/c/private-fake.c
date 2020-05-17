@@ -398,11 +398,11 @@ extern "C" {
 #endif // _di_fake_path_generate_
 
 #ifndef _di_fake_path_generate_string_dynamic_
-  f_return_status fake_path_generate_string_dynamic(fake_data *data, const f_string_dynamic source, f_string_dynamic *value[], const uint8_t length) {
+  f_return_status fake_path_generate_string_dynamic(fake_data *data, const f_string_dynamic source, f_string_dynamic *destination[], const uint8_t length) {
     f_status status = f_none;
 
     for (uint8_t i = 0; i < length; i++) {
-      status = fl_string_dynamic_append_nulless(source, value[i]);
+      status = fl_string_dynamic_append_nulless(source, destination[i]);
       if (f_status_is_error(status)) return status;
     } // for
 
@@ -469,7 +469,7 @@ extern "C" {
     if (status == f_invalid_parameter) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ", function, name);
+        fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
         fl_color_print(f_standard_error, context.notable, context.reset, "%s", function);
         fl_color_print(f_standard_error, context.error, context.reset, "() for the %s '", file_or_directory);
         fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
@@ -689,7 +689,7 @@ extern "C" {
           }
 
           f_string_length location = data->parameters[parameters_id[i]].additional.array[0];
-          f_string_length length = strnlen(arguments.argv[location], f_console_max_size);
+          f_string_length length = strnlen(arguments.argv[location], f_console_length_size);
 
           if (length > 0) {
             status = fl_string_append(arguments.argv[location], length, parameters_value[i]);

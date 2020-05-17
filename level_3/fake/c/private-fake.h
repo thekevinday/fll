@@ -33,7 +33,7 @@ extern "C" {
  *   The program data.
  * @param source
  *   The string to copy from.
- * @param value
+ * @param destination
  *   An array of pointers to the strings to append onto.
  * @param length
  *   The size of the values.
@@ -43,7 +43,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_string_dynamic_
-  extern f_return_status fake_path_generate_string_dynamic(fake_data *data, const f_string_dynamic source, f_string_dynamic *value[], const uint8_t size) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_path_generate_string_dynamic(fake_data *data, const f_string_dynamic source, f_string_dynamic *destination[], const uint8_t size) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_path_generate_string_dynamic_
 
 /**

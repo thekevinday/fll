@@ -154,9 +154,96 @@ extern "C" {
     }
 
     {
+      f_string_dynamics environment_names = f_string_dynamics_initialize;
+      f_string_dynamics environment_values = f_string_dynamics_initialize;
+
+      // @todo add support for allowing specific environment variables
+      const f_string variables_name[] = {
+        f_path_environment,
+        f_path_present_working
+      };
+
+      const f_string_length variables_length[] = {
+        f_path_environment_length,
+        f_path_present_working_length
+      };
+
+      f_string_dynamic variable_name = f_string_dynamic_initialize;
+      f_string_dynamic variable_value = f_string_dynamic_initialize;
+
+      for (uint8_t i = 0; i < 2; i++) {
+        status = f_environment_get(variables_name[i], &variable_value);
+        if (f_status_is_error(status)) {
+          status = f_status_set_fine(status);
+
+          if (status == f_error_reallocation) {
+            fake_print_error(data.context, data.verbosity, status, "f_environment_get", f_true);
+
+            f_macro_string_dynamic_delete_simple(variable_name);
+            f_macro_string_dynamic_delete_simple(variable_value);
+            f_macro_string_dynamic_delete_simple(path);
+            f_macro_string_dynamics_delete_simple(environment_names);
+            f_macro_string_dynamics_delete_simple(environment_values);
+            f_macro_string_dynamics_delete_simple(arguments);
+            return status;
+          }
+        }
+
+        if (environment_names.used + 1 > environment_names.size) {
+          f_macro_string_dynamics_resize(status, environment_names, environment_names.size + f_memory_default_allocation_step);
+
+          if (!f_status_is_error(status)) {
+            f_macro_string_dynamics_resize(status, environment_values, environment_values.size + f_memory_default_allocation_step);
+          }
+
+          if (f_status_is_error(status)) {
+            fake_print_error(data.context, data.verbosity, status, "f_macro_string_dynamics_resize", f_true);
+
+            f_macro_string_dynamic_delete_simple(variable_name);
+            f_macro_string_dynamic_delete_simple(variable_value);
+            f_macro_string_dynamic_delete_simple(path);
+            f_macro_string_dynamics_delete_simple(environment_names);
+            f_macro_string_dynamics_delete_simple(environment_values);
+            f_macro_string_dynamics_delete_simple(arguments);
+            return status;
+          }
+        }
+
+        status = fl_string_append(variables_name[i], variables_length[i], &variable_name);
+
+        if (f_status_is_error(status)) {
+          fake_print_error(data.context, data.verbosity, status, "fl_string_append", f_true);
+
+          f_macro_string_dynamic_delete_simple(variable_name);
+          f_macro_string_dynamic_delete_simple(variable_value);
+          f_macro_string_dynamic_delete_simple(path);
+          f_macro_string_dynamics_delete_simple(environment_names);
+          f_macro_string_dynamics_delete_simple(environment_values);
+          f_macro_string_dynamics_delete_simple(arguments);
+          return status;
+        }
+
+        environment_names.array[environment_names.used].string = variable_name.string;
+        environment_names.array[environment_names.used].used = variable_name.used;
+        environment_names.array[environment_names.used].size = variable_name.size;
+        environment_names.used++;
+
+        environment_values.array[environment_values.used].string = variable_value.string;
+        environment_values.array[environment_values.used].used = variable_value.used;
+        environment_values.array[environment_values.used].size = variable_value.size;
+        environment_values.used++;
+
+        f_macro_string_dynamic_clear(variable_name);
+        f_macro_string_dynamic_clear(variable_value);
+      }
+
       int result = 0;
 
-      status = fll_execute_path(path.string, arguments, &result);
+      status = fll_execute_path_environment(path.string, arguments, environment_names, environment_values, &result);
+
+      f_macro_string_dynamics_delete_simple(environment_names);
+      f_macro_string_dynamics_delete_simple(environment_values);
+      f_macro_string_dynamics_delete_simple(arguments);
     }
 
     if (f_status_is_error(status)) {
@@ -169,12 +256,11 @@ extern "C" {
         }
       }
       else {
-        fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_execute_path", f_true);
+        fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_execute_path_environment", f_true);
       }
     }
 
     f_macro_string_dynamic_delete_simple(path);
-    f_macro_string_dynamics_delete_simple(arguments);
 
     return status;
   }
@@ -182,6 +268,11 @@ extern "C" {
 
 #ifndef _di_fake_build_operate_
   f_return_status fake_build_operate(const fake_data data) {
+    if (data.verbosity != fake_verbosity_quiet) {
+      printf("%c", f_string_eol);
+      fl_color_print_line(f_standard_output, data.context.important, data.context.reset, "Building project.");
+    }
+
     f_status status = f_none;
     fake_build_settings settings = fake_build_settings_initialize;
 

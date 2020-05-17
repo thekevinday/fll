@@ -330,7 +330,7 @@ extern "C" {
           fprintf(f_standard_error, "%c", f_string_eol);
         }
         else {
-          fprintf(f_standard_output, "%c", f_string_eol);
+          fprintf(f_standard_output, "%cAll operations complete.%c%c", f_string_eol, f_string_eol, f_string_eol);
         }
       }
     }
