@@ -40,7 +40,7 @@ extern "C" {
       } // for
     } // for
 
-    return status;
+    return f_none;
   }
 #endif // _di_fll_fss_snatch_
 
@@ -87,7 +87,7 @@ extern "C" {
       } // for
     } // for
 
-    return status;
+    return f_none;
   }
 #endif // _di_fll_fss_snatch_apart_
 
@@ -125,7 +125,7 @@ extern "C" {
       } // for
     } // for
 
-    return status;
+    return f_none;
   }
 #endif // _di_fll_fss_snatch_together_
 
@@ -165,7 +165,7 @@ extern "C" {
       } // for
     } // for
 
-    return status;
+    return f_none;
   }
 #endif // _di_fll_fss_snatch_mash_
 
@@ -220,7 +220,7 @@ extern "C" {
       if (f_status_is_error(status)) return status;
     } // for
 
-    return status;
+    return f_none;
   }
 #endif // _di_fll_fss_snatch_mash_apart_
 
@@ -258,7 +258,7 @@ extern "C" {
       } // for
     } // for
 
-    return status;
+    return f_none;
   }
 #endif // _di_fll_fss_snatch_mash_together_
 
