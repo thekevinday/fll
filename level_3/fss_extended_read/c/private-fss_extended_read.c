@@ -175,7 +175,7 @@ extern "C" {
             if (status_code == f_error_allocation || status_code == f_error_reallocation) {
               fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
             }
-            else if (status_code == f_string_max_size) {
+            else if (status_code == f_string_length_size) {
               fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: Unable to process '");
               fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_trim);
               fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' because the maximum buffer size was reached.");

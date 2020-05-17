@@ -14,6 +14,43 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_file_access_
+  f_return_status f_file_access(const f_string path) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (access(path, F_OK)) {
+      if (errno == ENOENT) {
+        return f_false;
+      }
+
+      if (errno == ENAMETOOLONG || errno == EFAULT) {
+        return f_status_set_error(f_invalid_name);
+      }
+      else if (errno == ENOMEM) {
+        return f_status_set_error(f_out_of_memory);
+      }
+      else if (errno == EOVERFLOW) {
+        return f_status_set_error(f_number_overflow);
+      }
+      else if (errno == ENOTDIR) {
+        return f_status_set_error(f_invalid_directory);
+      }
+      else if (errno == EACCES) {
+        return f_status_set_error(f_access_denied);
+      }
+      else if (errno == ELOOP) {
+        return f_status_set_error(f_loop);
+      }
+
+      return f_status_set_error(f_false);
+    }
+
+    return f_true;
+  }
+#endif // _di_f_file_access_
+
 #ifndef _di_f_file_create_
   f_return_status f_file_create(f_string path, const mode_t mode, const bool exclusive) {
     int flags = O_CLOEXEC | O_CREAT | O_WRONLY;
@@ -103,43 +140,6 @@ extern "C" {
   }
 #endif // _di_f_file_close_
 
-#ifndef _di_f_file_exists_
-  f_return_status f_file_exists(const f_string path) {
-    #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return f_status_set_error(f_invalid_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (access(path, F_OK)) {
-      if (errno == ENOENT) {
-        return f_false;
-      }
-
-      if (errno == ENAMETOOLONG || errno == EFAULT) {
-        return f_status_set_error(f_invalid_name);
-      }
-      else if (errno == ENOMEM) {
-        return f_status_set_error(f_out_of_memory);
-      }
-      else if (errno == EOVERFLOW) {
-        return f_status_set_error(f_number_overflow);
-      }
-      else if (errno == ENOTDIR) {
-        return f_status_set_error(f_invalid_directory);
-      }
-      else if (errno == EACCES) {
-        return f_status_set_error(f_access_denied);
-      }
-      else if (errno == ELOOP) {
-        return f_status_set_error(f_loop);
-      }
-
-      return f_status_set_error(f_false);
-    }
-
-    return f_true;
-  }
-#endif // _di_f_file_exists_
-
 #ifndef _di_f_file_exists_at_
   f_return_status f_file_exists_at(const int directory_file_descriptor, const f_string path, const int flags) {
     #ifndef _di_level_0_parameter_checking_
@@ -197,6 +197,42 @@ extern "C" {
     return f_status_set_error(f_file_error_flush);
   }
 #endif // _di_f_file_flush_
+
+#ifndef _di_f_file_exists_
+  f_return_status f_file_exists(const f_string path) {
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(file_stat));
+
+    if (stat(path, &file_stat) < 0) {
+      if (errno == ENAMETOOLONG || errno == EFAULT) {
+        return f_status_set_error(f_invalid_name);
+      }
+      else if (errno == ENOMEM) {
+        return f_status_set_error(f_out_of_memory);
+      }
+      else if (errno == EOVERFLOW) {
+        return f_status_set_error(f_number_overflow);
+      }
+      else if (errno == ENOTDIR) {
+        return f_status_set_error(f_invalid_directory);
+      }
+      else if (errno == ENOENT) {
+        return f_false;
+      }
+      else if (errno == EACCES) {
+        return f_status_set_error(f_access_denied);
+      }
+      else if (errno == ELOOP) {
+        return f_status_set_error(f_loop);
+      }
+
+      return f_status_set_error(f_file_error_stat);
+    }
+
+    return f_true;
+  }
+#endif // _di_f_file_exists_
 
 #ifndef _di_f_file_is_
   f_return_status f_file_is(const f_string path, const int type) {

@@ -238,7 +238,7 @@ extern "C" {
     f_string_length start = destination->used;
 
     for (f_string_length i = 0; i < additional.used; i++) {
-      length = strnlen(argv[additional.array[i]], f_console_max_size);
+      length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
         f_string_dynamic ripped = f_string_dynamic_initialize;
@@ -285,7 +285,7 @@ extern "C" {
     f_string_length start = destination->used;
 
     for (f_string_length i = 0; i < additional.used; i++) {
-      length = strnlen(argv[additional.array[i]], f_console_max_size);
+      length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
         status = fl_string_mash(glue, glue_length, argv[additional.array[i]], length, destination);
@@ -314,7 +314,7 @@ extern "C" {
     f_string_length start = destination->used;
 
     for (f_string_length i = 0; i < additional.used; i++) {
-      length = strnlen(argv[additional.array[i]], f_console_max_size);
+      length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
         f_string_dynamic ripped = f_string_dynamic_initialize;
@@ -362,7 +362,7 @@ extern "C" {
     f_string_dynamic ripped = f_string_dynamic_initialize;
 
     for (f_string_length i = 0; i < additional.used; i++) {
-      length = strnlen(argv[additional.array[i]], f_console_max_size);
+      length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
         status = fl_string_rip(argv[additional.array[i]], length, &ripped);

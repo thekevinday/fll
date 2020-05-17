@@ -285,6 +285,30 @@ extern "C" {
 #endif // _di_f_macro_file_reset_position_
 
 /**
+ * Check if a file can be accessed.
+ *
+ * @param path
+ *   The path file name.
+ *
+ * @return
+ *   f_true if file exists.
+ *   f_false if file does not exist.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_invalid_name (with error bit) if the filename is too long.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_false (with error bit) on unknown/unhandled errors.
+ *
+ * @see access()
+ */
+#ifndef _di_f_file_access_
+  extern f_return_status f_file_access(const f_string path);
+#endif // _di_f_file_access_
+
+/**
  * Create a file based on the given path and file mode.
  *
  * The file will not be open after calling this.
@@ -347,28 +371,6 @@ extern "C" {
 #endif // _di_f_file_close_
 
 /**
- * Check if a file exists.
- *
- * @param path
- *   The path file name.
- *
- * @return
- *   f_true if file exists.
- *   f_false if file does not exist.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_name (with error bit) if the filename is too long.
- *   f_out_of_memory (with error bit) if out of memory.
- *   f_number_overflow (with error bit) on overflow error.
- *   f_invalid_directory (with error bit) on invalid directory.
- *   f_access_denied (with error bit) on access denied.
- *   f_loop (with error bit) on loop error.
- *   f_false (with error bit) on unknown/unhandled errors.
- */
-#ifndef _di_f_file_exists_
-  extern f_return_status f_file_exists(const f_string path);
-#endif // _di_f_file_exists_
-
-/**
  * Check if a file exists at a given directory.
  *
  * @param directory_file_descriptor
@@ -415,7 +417,36 @@ extern "C" {
 #endif // _di_f_file_flush_
 
 /**
+ * Identify whether or not a file exists at the given path.
+ *
+ * This does not require access on the file itself.
+ * This only requires access via the parent directories in the path.
+ *
+ * @param path
+ *   The path file name.
+ *
+ * @return
+ *   t_true if path was found.
+ *   f_false if path was not found.
+ *   f_invalid_name (with error bit) if the name is somehow invalid.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_access_denied (with error bit) if access to the file was denied.
+ *   f_loop (with error bit) if a loop occurred.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see stat()
+ */
+#ifndef _di_f_file_exists_
+  extern f_return_status f_file_exists(const f_string path);
+#endif // _di_f_file_exists_
+
+/**
  * Identify whether or not a file exists at the given path and if that file is a specific type.
+ *
+ * This does not require access on the file itself.
+ * This only requires access via the parent directories in the path.
  *
  * @param path
  *   The path file name.
@@ -434,7 +465,7 @@ extern "C" {
  *   f_loop (with error bit) if a loop occurred.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fstat()
+ * @see stat()
  */
 #ifndef _di_f_file_is_
   extern f_return_status f_file_is(const f_string path, const int type);

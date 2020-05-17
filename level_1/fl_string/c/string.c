@@ -1044,7 +1044,7 @@ extern "C" {
 
     if (destination->used > 0 && destination->string[destination->used - 1] == 0) return f_none;
 
-    if (destination->used + 1 > f_string_max_size) return f_status_set_error(f_string_too_large);
+    if (destination->used + 1 > f_string_length_size) return f_status_set_error(f_string_too_large);
 
     const f_string_length total = destination->used + 1;
 

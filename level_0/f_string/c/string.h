@@ -75,7 +75,6 @@ extern "C" {
 #ifndef _di_f_string_
   typedef char *f_string;
 
-  #define f_string_max_size   f_type_number_size_unsigned
   #define f_string_initialize 0
 
   #define f_macro_string_new(status, string, length)     status = f_memory_new((void **) & string, sizeof(f_string), length)
@@ -97,7 +96,7 @@ extern "C" {
 
   // string size is set to (size - 4) to compensate for UTF-8 4-byte character such that it can easily act as a (size - 1) regardless of UTF-8.
   #define f_string_length_size     0xfffffffffffffffb
-  #define f_string_length_size_max f_type_size_max_64_positive
+  #define f_string_length_size_max f_type_number_size_max_unsigned
 
   #define f_string_length_printf string_format_long_integer
 

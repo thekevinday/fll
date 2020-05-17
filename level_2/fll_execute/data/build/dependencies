@@ -3,4 +3,6 @@ f_status
 f_memory
 f_string
 f_environment
+f_file
+f_path
 fl_string

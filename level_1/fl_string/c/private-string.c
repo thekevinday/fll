@@ -7,7 +7,7 @@ extern "C" {
 
 #if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_)
   f_return_status private_fl_string_append(const f_string source, const f_string_length length, f_string_dynamic *destination) {
-    if (destination->used + length > f_string_max_size) return f_status_set_error(f_string_too_large);
+    if (destination->used + length > f_string_length_size) return f_status_set_error(f_string_too_large);
 
     f_status status = f_none;
 
@@ -27,7 +27,7 @@ extern "C" {
 
 #if !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_)
   f_return_status private_fl_string_append_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination) {
-    if (destination->used + length > f_string_max_size) return f_status_set_error(f_string_too_large);
+    if (destination->used + length > f_string_length_size) return f_status_set_error(f_string_too_large);
 
     f_status status = f_none;
 
@@ -38,7 +38,7 @@ extern "C" {
         if (i > first) {
           f_string_length size = i - first;
 
-          if (destination->used + size > f_string_max_size) return f_status_set_error(f_string_too_large);
+          if (destination->used + size > f_string_length_size) return f_status_set_error(f_string_too_large);
 
           f_string_length total = destination->used + size;
 
@@ -59,7 +59,7 @@ extern "C" {
           if (i > first) {
             f_string_length size = i - first;
 
-            if (destination->used + size > f_string_max_size) return f_status_set_error(f_string_too_large);
+            if (destination->used + size > f_string_length_size) return f_status_set_error(f_string_too_large);
 
             f_string_length total = destination->used + size;
 
@@ -249,7 +249,7 @@ extern "C" {
 
 #if !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_)
   f_return_status private_fl_string_prepend(const f_string source, const f_string_length length, f_string_dynamic *destination) {
-    if (destination->used + length > f_string_max_size) return f_status_set_error(f_string_too_large);
+    if (destination->used + length > f_string_length_size) return f_status_set_error(f_string_too_large);
 
     f_status status = f_none;
 
@@ -275,7 +275,7 @@ extern "C" {
 
 #if !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
   f_return_status private_fl_string_prepend_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination) {
-    if (destination->used + length > f_string_max_size) return f_status_set_error(f_string_too_large);
+    if (destination->used + length > f_string_length_size) return f_status_set_error(f_string_too_large);
 
     f_status status = f_none;
 
@@ -287,7 +287,7 @@ extern "C" {
         if (i > first) {
           f_string_length size = i - first;
 
-          if (destination->used + size > f_string_max_size) return f_status_set_error(f_string_too_large);
+          if (destination->used + size > f_string_length_size) return f_status_set_error(f_string_too_large);
 
           f_string_length total = destination->used + size;
 
@@ -311,7 +311,7 @@ extern "C" {
           if (i > first) {
             f_string_length size = i - first;
 
-            if (destination->used + size > f_string_max_size) return f_status_set_error(f_string_too_large);
+            if (destination->used + size > f_string_length_size) return f_status_set_error(f_string_too_large);
 
             f_string_length total = destination->used + size;
 

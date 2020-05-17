@@ -22,7 +22,7 @@ extern "C" {
 
     for (;;) {
       if (buffer->used + bytes_total > buffer->size) {
-        if (buffer->used + bytes_total > f_string_max_size) return f_status_set_error(f_string_too_large);
+        if (buffer->used + bytes_total > f_string_length_size) return f_status_set_error(f_string_too_large);
 
         f_macro_string_dynamic_resize(status, (*buffer), buffer->used + bytes_total);
 
@@ -65,7 +65,7 @@ extern "C" {
     }
 
     if (buffer->used + bytes_total > buffer->size) {
-      if (buffer->used + bytes_total > f_string_max_size) return f_status_set_error(f_string_too_large);
+      if (buffer->used + bytes_total > f_string_length_size) return f_status_set_error(f_string_too_large);
 
       f_macro_string_dynamic_resize(status, (*buffer), buffer->used + bytes_total);
 
@@ -79,7 +79,7 @@ extern "C" {
 
     while (infinite) {
       if (buffer->used + bytes_total > buffer->size) {
-        if (buffer->used + bytes_total > f_string_max_size) return f_status_set_error(f_string_too_large);
+        if (buffer->used + bytes_total > f_string_length_size) return f_status_set_error(f_string_too_large);
 
         f_macro_string_dynamic_resize(status, (*buffer), buffer->used + bytes_total);
 

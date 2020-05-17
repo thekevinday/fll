@@ -136,7 +136,7 @@ extern "C" {
 
       objects->used++;
       contents->used++;
-    } while (range->start < f_string_max_size);
+    } while (range->start < f_string_length_size);
 
     return f_status_is_error(f_number_overflow);
   }

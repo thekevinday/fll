@@ -70,7 +70,7 @@ extern "C" {
         if (f_status_is_error(status)) return status;
         if (status == f_not_equal_to) continue;
 
-        if (values[j]->used + contents.array[i].used > f_string_max_size) return f_status_set_error(f_buffer_too_large);
+        if (values[j]->used + contents.array[i].used > f_string_length_size) return f_status_set_error(f_buffer_too_large);
 
         if (values[j]->used + contents.array[i].used > values[j]->used) {
           f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + contents.array[i].used);
@@ -195,8 +195,8 @@ extern "C" {
         if (f_status_is_error(status)) return status;
         if (status == f_not_equal_to) continue;
 
-        if (values[j]->used + f_fss_default_allocation_step > f_string_max_size) {
-          if (values[j]->used + 1 > f_string_max_size) return f_status_set_error(f_buffer_too_large);
+        if (values[j]->used + f_fss_default_allocation_step > f_string_length_size) {
+          if (values[j]->used + 1 > f_string_length_size) return f_status_set_error(f_buffer_too_large);
 
           f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + 1);
           if (f_status_is_error(status)) return status;

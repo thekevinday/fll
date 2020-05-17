@@ -207,7 +207,7 @@ extern "C" {
     last_slash = strrchr(program_path, '/');
 
     if (last_slash != 0) {
-      name_size = strnlen(last_slash, PATH_MAX);
+      name_size = strnlen(last_slash, f_path_max);
 
       if (name_size > 1) {
         f_macro_string_new(status, program_name, name_size + 1);
@@ -249,10 +249,17 @@ extern "C" {
     // insert the required array terminated
     fixed_arguments[arguments.used + 2] = 0;
 
-    // @todo validate that the file at program_path actually exists before attempting to fork and execute
-    int process_id = 0;
+    status = f_file_exists(program_path);
+    if (f_status_is_error(status)) {
+      return status;
+    }
+    else if (status == f_false) {
+      return f_status_set_error(f_file_not_found);
+    }
 
-    process_id = vfork();
+    pid_t process_id = 0;
+
+    process_id = fork();
 
     if (process_id < 0) {
       if (name_size > 0) f_macro_string_delete_simple(program_name, name_size);
@@ -281,7 +288,7 @@ extern "C" {
       f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
     } // for
 
-    if (*result != 0) return f_status_set_error(f_failure);
+    if (result != 0 && *result != 0) return f_status_set_error(f_failure);
 
     return f_none;
   }
@@ -312,7 +319,7 @@ extern "C" {
     last_slash = strrchr(program_path, '/');
 
     if (last_slash != 0) {
-      name_size = strnlen(last_slash, PATH_MAX);
+      name_size = strnlen(last_slash, f_path_max);
 
       if (name_size > 1) {
         f_macro_string_new(status, program_name, name_size + 1);
@@ -354,10 +361,17 @@ extern "C" {
     // insert the required array terminated
     fixed_arguments[arguments.used + 2] = 0;
 
-    // @todo validate that the file at program_path actually exists before attempting to fork and execute
-    int process_id = 0;
+    status = f_file_exists(program_path);
+    if (f_status_is_error(status)) {
+      return status;
+    }
+    else if (status == f_false) {
+      return f_status_set_error(f_file_not_found);
+    }
 
-    process_id = vfork();
+    pid_t process_id = 0;
+
+    process_id = fork();
 
     if (process_id < 0) {
       if (name_size > 0) f_macro_string_delete_simple(program_name, name_size);
@@ -375,7 +389,7 @@ extern "C" {
 
       for (f_array_length i = 0; i < names.used; i++) {
         f_environment_set_dynamic(names.array[i], values.array[i], true);
-      }
+      } // for
 
       execv(program_path, fixed_arguments);
 
@@ -392,7 +406,7 @@ extern "C" {
       f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
     } // for
 
-    if (*result != 0) return f_status_set_error(f_failure);
+    if (result != 0 && *result != 0) return f_status_set_error(f_failure);
 
     return f_none;
   }
@@ -412,8 +426,9 @@ extern "C" {
     fixed_arguments[0] = program_name;
 
     f_status status = f_none;
+    f_string_length i = 0;
 
-    for (f_string_length i = 0; i < arguments.used; i++) {
+    for (; i < arguments.used; i++) {
       f_macro_string_new(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
 
       if (f_status_is_error(status)) {
@@ -431,10 +446,9 @@ extern "C" {
     // insert the required array terminated
     fixed_arguments[arguments.used + 2] = 0;
 
-    // @todo validate that the file at program_path actually exists before attempting to fork and execute
-    int process_id = 0;
+    pid_t process_id = 0;
 
-    process_id = vfork();
+    process_id = fork();
 
     if (process_id < 0) {
       for (f_string_length i = 0; i < arguments.used; i++) {
@@ -459,7 +473,7 @@ extern "C" {
       f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
     } // for
 
-    if (*result != 0) return f_status_set_error(f_failure);
+    if (result != 0 && *result != 0) return f_status_set_error(f_failure);
 
     return f_none;
   }
@@ -482,8 +496,9 @@ extern "C" {
     fixed_arguments[0] = program_name;
 
     f_status status = f_none;
+    f_string_length i = 0;
 
-    for (f_string_length i = 0; i < arguments.used; i++) {
+    for (; i < arguments.used; i++) {
       f_macro_string_new(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
 
       if (f_status_is_error(status)) {
@@ -501,10 +516,90 @@ extern "C" {
     // insert the required array terminated
     fixed_arguments[arguments.used + 2] = 0;
 
-    // @todo validate that the file at program_path actually exists before attempting to fork and execute
-    int process_id = 0;
+    f_string_dynamic path = f_string_dynamic_initialize;
+    f_string_dynamics paths = f_string_dynamics_initialize;
 
-    process_id = vfork();
+    status = f_environment_get("PATH", &path);
+
+    if (f_status_is_error(status)) {
+      // Do not consider PATH is not available (or valid?) to be an error.
+      if (f_status_set_fine(status) == f_invalid || f_status_set_fine(status) == f_failure) {
+        status = f_none;
+      }
+    }
+    else {
+      status = f_path_explode_dynamic(path, &paths);
+    }
+
+    if (f_status_is_error(status)) {
+      f_macro_string_dynamic_delete_simple(path);
+      f_macro_string_dynamics_delete_simple(paths);
+      return status;
+    }
+
+    f_macro_string_dynamic_delete(status, path);
+    if (f_status_is_error(status)) {
+      f_macro_string_dynamics_delete_simple(paths);
+      return status;
+    }
+
+    const f_string_length program_name_length = strnlen(program_name, f_path_max);
+    f_string_dynamic *found = 0;
+
+    for (i = 0; i < paths.used; i++) {
+      status = fl_string_append(program_name, program_name_length, &paths.array[i]);
+
+      if (!f_status_is_error(status)) {
+        status = fl_string_dynamic_terminate(&paths.array[i]);
+      }
+
+      if (!f_status_is_error(status)) {
+        status = f_file_exists(paths.array[i].string);
+
+        if (status == f_true) {
+          found = &paths.array[i];
+          break;
+        }
+
+        if (f_status_is_error(status)) {
+          status = f_status_set_fine(status);
+
+          // don't consider bad/non-accessible paths an error, just ignore them.
+          if (status == f_invalid_name) {
+            continue;
+          }
+          else if (status == f_invalid_directory) {
+            continue;
+          }
+          else if (status == f_access_denied) {
+            continue;
+          }
+        }
+      }
+
+      if (f_status_is_error(status)) {
+        f_macro_string_dynamics_delete_simple(paths);
+        return status;
+      }
+    } // for
+
+    if (found == 0) {
+      f_macro_string_dynamics_delete_simple(paths);
+      return f_status_set_error(f_file_not_found);
+    }
+
+    char program_path[found->used];
+
+    memcpy(&program_path, found->string, found->used);
+
+    f_macro_string_dynamics_delete(status, paths);
+    if (f_status_is_error(status)) {
+      return status;
+    }
+
+    pid_t process_id = 0;
+
+    process_id = fork();
 
     if (process_id < 0) {
       for (f_string_length i = 0; i < arguments.used; i++) {
@@ -522,7 +617,7 @@ extern "C" {
         f_environment_set_dynamic(names.array[i], values.array[i], true);
       }
 
-      execvp(program_name, fixed_arguments);
+      execvp(program_path, fixed_arguments);
 
       // according to manpages, calling _exit() is safer and should be called here instead of exit()
       _exit(-1);
@@ -535,7 +630,7 @@ extern "C" {
       f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
     } // for
 
-    if (*result != 0) return f_status_set_error(f_failure);
+    if (result != 0 && *result != 0) return f_status_set_error(f_failure);
 
     return f_none;
   }

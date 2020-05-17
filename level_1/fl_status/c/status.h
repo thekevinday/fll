@@ -600,9 +600,6 @@ extern "C" {
     #define fl_status_string_file_found "f_file_found"
     #define fl_status_string_file_found_length 12
 
-    #define fl_status_string_file_is "f_file_is"
-    #define fl_status_string_file_is_length 9
-
     #define fl_status_string_file_is_empty "f_file_is_empty"
     #define fl_status_string_file_is_empty_length 15
 

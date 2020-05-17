@@ -137,9 +137,9 @@ extern "C" {
 /**
  * The maximum size for a single parameter.
  */
-#ifndef _di_f_console_max_size_
-  #define f_console_max_size f_string_max_size
-#endif // _di_f_console_max_size_
+#ifndef _di_f_console_length_size_
+  #define f_console_length_size f_string_length_size
+#endif // _di_f_console_length_size_
 
 /**
  * Provide a default allocation step.
@@ -305,13 +305,13 @@ extern "C" {
  * Long parameters are processed as follows:
  * - Begin with either '--' or '++'.
  * - "Empty" parameters are allow, such that '--' or '++' are valid parameters.
- * - Are any length long so long as it is less than f_console_max_size.
+ * - Are any length long so long as it is less than f_console_length_size.
  * - May not be grouped and must be separated from any subsequent parameter, such as: "tar --extract --create --file".
  * - Additional parameters must immediately follow the parameter, such as "tar --extract --file file.tar.gz --create".
  *
  * Other parameters are processed as follows:
  * - Anything that does not begin with '-', '+', '--', or '++'.
- * - Are any length long so long as it is less than f_console_max_size.
+ * - Are any length long so long as it is less than f_console_length_size.
  * - May not be grouped and must be separated from any subsequent parameter, such as: "tar extract create file".
  * - Additional parameters must immediately follow the parameter, such as "tar extract file file.tar.gz create".
  *

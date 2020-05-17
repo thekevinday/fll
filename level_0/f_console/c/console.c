@@ -104,7 +104,7 @@ extern "C" {
 
       f_console_identify(arguments.argv[location], &result);
 
-      string_length = strnlen(arguments.argv[location], f_console_max_size);
+      string_length = strnlen(arguments.argv[location], f_console_length_size);
 
       // process the current parameter.
       if (result == f_console_short_enable || result == f_console_short_disable) {

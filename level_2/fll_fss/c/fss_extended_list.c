@@ -105,7 +105,7 @@ extern "C" {
 
         return f_none_on_stop;
       }
-    } while (location->start < f_string_max_size);
+    } while (location->start < f_string_length_size);
 
     return f_status_is_error(f_number_overflow);
   }

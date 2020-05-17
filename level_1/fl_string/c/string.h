@@ -47,7 +47,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -73,7 +73,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -100,7 +100,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -126,7 +126,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -207,7 +207,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -229,7 +229,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -253,7 +253,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -277,7 +277,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -356,7 +356,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -386,7 +386,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -414,7 +414,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -444,7 +444,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -468,7 +468,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -494,7 +494,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -522,7 +522,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -548,7 +548,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -637,7 +637,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -669,7 +669,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -699,7 +699,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -731,7 +731,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -757,7 +757,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -785,7 +785,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -813,7 +813,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -839,7 +839,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 or range is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -863,7 +863,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -889,7 +889,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -915,7 +915,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -939,7 +939,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0.
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -1209,7 +1209,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -1241,7 +1241,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -1271,7 +1271,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -1303,7 +1303,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -1329,7 +1329,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -1357,7 +1357,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -1386,7 +1386,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.
@@ -1415,7 +1415,7 @@ extern "C" {
  * @return
  *   f_none on success.
  *   f_no_data if source length is 0 (start > stop).
- *   f_string_max_size (with error bit) if the combined string is too large.
+ *   f_string_length_size (with error bit) if the combined string is too large.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on memory allocation error.
  *   f_error_reallocation (with error bit) on memory reallocation error.

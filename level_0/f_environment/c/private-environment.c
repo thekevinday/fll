@@ -30,7 +30,7 @@ extern "C" {
         if (f_status_is_error(status)) return status;
       }
 
-      memcpy(&value->string + value->used, result, value->used + size);
+      memcpy(value->string + value->used, result, value->used + size);
       value->used = size;
     }
 

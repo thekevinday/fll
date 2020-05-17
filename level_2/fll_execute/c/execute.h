@@ -11,7 +11,6 @@
 #define _FLL_execute_h
 
 // libc includes
-#include <linux/limits.h> // defines PATH_MAX
 #include <memory.h>
 #include <signal.h>
 #include <string.h>
@@ -24,6 +23,8 @@
 #include <level_0/string.h>
 #include <level_0/type.h>
 #include <level_0/environment.h>
+#include <level_0/file.h>
+#include <level_0/path.h>
 
 // fll-1 includes
 #include <level_1/string.h>
@@ -51,7 +52,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_
   extern f_return_status fll_execute_arguments_add(const f_string source, const f_string_length length, f_string_dynamics *arguments);
@@ -89,7 +90,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
   extern f_return_status fll_execute_arguments_add_parameter(const f_string prefix, const f_string_length prefix_length, const f_string name, const f_string_length name_length, const f_string value, const f_string_length value_length, f_string_dynamics *arguments);
@@ -130,7 +131,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
   extern f_return_status fll_execute_arguments_add_parameter_set(const f_string prefix[], const f_string_length prefix_length[], const f_string name[], const f_string_length name_length[], const f_string value[], const f_string_length value_length[], const f_array_length size, f_string_dynamics *arguments);
@@ -157,7 +158,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_set_
   extern f_return_status fll_execute_arguments_add_set(const f_string source[], const f_string_length length[], const f_array_length size, f_string_dynamics *arguments);
@@ -180,7 +181,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_
   extern f_return_status fll_execute_arguments_dynamic_add(const f_string_static source, f_string_dynamics *arguments);
@@ -213,7 +214,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_
   extern f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_static prefix, const f_string_static name, const f_string_static value, f_string_dynamics *arguments);
@@ -248,7 +249,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
   extern f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_static prefix[], const f_string_static name[], const f_string_static value[], const f_array_length size, f_string_dynamics *arguments);
@@ -273,7 +274,7 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too larger for further allocation.
+ *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
   extern f_return_status fll_execute_arguments_dynamic_add_set(const f_string_static source[], const f_array_length size, f_string_dynamics *arguments);
@@ -281,6 +282,8 @@ extern "C" {
 
 /**
  * Execute a program given some path + program name (such as "/bin/bash").
+ *
+ * This does validate that the program path exists.
  *
  * @param program_path
  *   The entire path to the program.
@@ -295,6 +298,14 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
+ *   f_file_not_found (with error bit) if file does not exist at the program_path.
+ *   f_invalid_name (with error bit) if the program_path is too long.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory in program_path.
+ *   f_access_denied (with error bit) on access denied for program_path.
+ *   f_loop (with error bit) on loop error while checking the program_path.
+ *   f_file_error_stat (with error bit) on stat error while checking the program_path.
  *
  * @see execv()
  */
@@ -304,6 +315,8 @@ extern "C" {
 
 /**
  * Execute a program given some path + program name (such as "/bin/bash").
+ *
+ * This does validate that the program path exists.
  *
  * The environment is defined by the names and values pair.
  *
@@ -318,7 +331,7 @@ extern "C" {
  * @param values
  *   An array of strings representing the environment variable names.
  *   The values.used must be of at least names.used.
- *   Set individual strings.used to 0 for empty/null values.
+ *   Set individual strings.used to 0 for empty/NULL values.
  * @param result
  *   The code returned after finishing execution of program_path.
  *
@@ -328,6 +341,14 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
+ *   f_file_not_found (with error bit) if file does not exist at the program_path.
+ *   f_invalid_name (with error bit) if the program_path is too long.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory in program_path.
+ *   f_access_denied (with error bit) on access denied for program_path.
+ *   f_loop (with error bit) on loop error while checking the program_path.
+ *   f_file_error_stat (with error bit) on stat error while checking the program_path.
  *
  * @see execv()
  */
@@ -337,6 +358,8 @@ extern "C" {
 
 /**
  * Execute a program given by name found in the PATH environment (such as "bash").
+ *
+ * This does not validate the path to the program.
  *
  * @param program_name
  *   The name of the program.
@@ -352,6 +375,8 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
+ *   f_file_not_found (with error bit) if file does not exist at the program_path.
+ *   f_string_length_size (with error bit) if the combined string (generated from PATH) is too large.
  *
  * @see execvp()
  */
@@ -364,7 +389,9 @@ extern "C" {
  *
  * Uses the provided environment array to designate the environment for the called program.
  *
- * @todo this probably needs special work to find the program from PATH when PATH environment variable gets cleared before execution.
+ * This does validate the path to the program because it completes the path to the program.
+ * This is done because the PATH environment will get cleared or may be set differently.
+ * Execution of program_name is done using the PATH environment prior to clearing and reassigning the environment variables.
  *
  * @param program_name
  *   The name of the program.
@@ -388,6 +415,15 @@ extern "C" {
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *   f_error_allocation (with error bit) on allocation error.
  *   f_error_reallocation (with error bit) on reallocation error.
+ *   f_file_not_found (with error bit) if file does not exist at the program_path.
+ *   f_invalid_name (with error bit) if the program_path is too long.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory in program_path.
+ *   f_access_denied (with error bit) on access denied for program_path.
+ *   f_loop (with error bit) on loop error while checking the program_path.
+ *   f_buffer_too_large (with error bit) if paths array (generated from PATH) is too large for further addressing.
+ *   f_string_length_size (with error bit) if the combined string (generated from PATH) is too large.
  *
  * @see execvpe()
  */
