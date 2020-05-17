@@ -59,18 +59,18 @@
 #include <stdlib.h>
 
 // fll-0 includes
+#include <level_0/type.h>
+#include <level_0/string.h>
 #include <level_0/console.h>
+#include <level_0/directory.h>
 #include <level_0/file.h>
 #include <level_0/fss.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
-#include <level_0/string.h>
-#include <level_0/type.h>
 
 // fll-1 includes
 #include <level_1/color.h>
 #include <level_1/console.h>
-#include <level_1/directory.h>
 #include <level_1/file.h>
 #include <level_1/fss.h>
 #include <level_1/fss_basic_list.h>

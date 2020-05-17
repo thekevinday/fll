@@ -19,11 +19,6 @@
 #include <level_0/type.h>
 #include <level_0/utf.h>
 
-// fll-1 includes
-#include <level_1/string.h>
-#include <level_1/status.h>
-#include <level_1/print.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

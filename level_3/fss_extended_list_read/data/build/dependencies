@@ -4,12 +4,13 @@ f_memory
 f_string
 f_color
 f_console
+f_directory
+f_environment
 f_fss
 f_pipe
 f_print
 fl_color
 fl_console
-fl_directory
 fl_file
 fl_fss
 fl_print

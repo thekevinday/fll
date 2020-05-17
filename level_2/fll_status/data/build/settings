@@ -10,7 +10,7 @@ version_micro 0
 build_compiler gcc
 build_linker ar
 build_libraries -lc
-build_libraries_fll -lfl_string -lfl_status -lf_utf -lf_conversion -lf_memory
+build_libraries_fll -lfl_status -lfl_string -lf_conversion -lf_utf -lf_memory
 build_sources_library status.c
 build_sources_program
 build_sources_headers status.h

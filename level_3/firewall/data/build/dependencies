@@ -5,7 +5,9 @@ f_string
 f_color
 f_console
 f_directory
+f_environment
 f_fss
+f_path
 f_pipe
 f_print
 f_utf
