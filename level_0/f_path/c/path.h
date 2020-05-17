@@ -100,6 +100,58 @@ extern "C" {
   extern f_return_status f_path_explode_dynamic(const f_string_static path, f_string_dynamics *paths);
 #endif // _di_f_path_explode_dynamic_
 
+/**
+ * Separate a given PATH-style string into multiple separate paths.
+ *
+ * The paths are created in reverse order.
+ *
+ * @param path
+ *   The string to process that is expected to follow the traditional Linux standard PATH environment variable.
+ *   Each seperate path is separated by a single ':'.
+ *   Must not contain NULLs except for the terminating NULL.
+ *   Must be NULL terminated.
+ * @param paths
+ *   All of the strings exploded from PATH.
+ *   Each exploded path, when not empty, is guaranteed to have a trailing '/'.
+ *   Each exploded path is not NULL terminated.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_reallocation (with error bit) on reallocation error.
+ *   f_error_allocation (with error bit) on allocation error.
+ *   f_buffer_too_large (with error bit) if paths array is too large for further addressing.
+ */
+#ifndef _di_f_path_explode_reverse_
+  extern f_return_status f_path_explode_reverse(const f_string path, f_string_dynamics *paths);
+#endif // _di_f_path_explode_reverse_
+
+/**
+ * Separate a given PATH-style string into multiple separate paths.
+ *
+ * The paths are created in reverse order.
+ *
+ * @param path
+ *   The string to process that is expected to follow the traditional Linux standard PATH environment variable.
+ *   Each seperate path is separated by a single ':'.
+ *   Need not be NULL terminated.
+ *   NULLs are ignored and are not copied into the exploded paths.
+ * @param paths
+ *   All of the strings exploded from PATH.
+ *   Each exploded path, when not empty, is guaranteed to have a trailing '/'.
+ *   Each exploded path is not NULL terminated.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_error_reallocation (with error bit) on reallocation error.
+ *   f_error_allocation (with error bit) on allocation error.
+ *   f_buffer_too_large (with error bit) if paths array is too large for further addressing.
+ */
+#ifndef _di_f_path_explode_reverse_dynamic_
+  extern f_return_status f_path_explode_reverse_dynamic(const f_string_static path, f_string_dynamics *paths);
+#endif // _di_f_path_explode_reverse_dynamic_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
