@@ -7,9 +7,10 @@ version_major 0
 version_minor 5
 version_micro 0
 
+environment
+
 process_pre process_pre.sh
 process_post process_post.sh
-environment
 
 modes individual level monolithic
 modes_default individual
@@ -17,10 +18,10 @@ modes_default individual
 build_compiler gcc
 build_linker ar
 build_libraries -lc
-build_libraries_fll -lfll_program -lfll_execute -lfll_fss -lfl_color -lfl_console -lfl_file -lfl_fss -lfl_status -lfl_string -lfl_utf -lf_environment -lf_file -lf_console -lf_conversion -lf_directory -lf_path -lf_print -lf_utf -lf_memory
+build_libraries_fll -lfll_execute -lfll_fss -lfll_program -lfl_color -lfl_console -lfl_file -lfl_fss -lfl_status -lfl_string -lfl_utf -lf_environment -lf_file -lf_console -lf_conversion -lf_directory -lf_path -lf_print -lf_utf -lf_memory
 build_libraries_fll-level -lfll_2 -lfll_1 -lfll_0
 build_libraries_fll-monolithic -lfll
-build_libraries-individual -lfll_program -lfll_execute -lfll_fss -lfl_color -lfl_console -lfl_file -lfl_fss -lfl_status -lfl_string -lfl_utf -lf_environment -lf_file -lf_console -lf_conversion -lf_directory -lf_path -lf_print -lf_utf -lf_memory
+build_libraries-individual -lfll_execute -lfll_fss -lfll_program -lfl_color -lfl_console -lfl_file -lfl_fss -lfl_status -lfl_string -lfl_utf -lf_environment -lf_file -lf_console -lf_conversion -lf_directory -lf_path -lf_print -lf_utf -lf_memory
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_sources_library fake.c private-fake.c private-clean.c private-build.c private-make.c private-skeleton.c

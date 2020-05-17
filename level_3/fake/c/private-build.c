@@ -362,7 +362,8 @@ extern "C" {
 
     status = fake_build_execute_process_script(data, settings, settings.process_pre);
     if (f_status_is_error(status)) {
-      // @todo handle errors.
+      fake_macro_build_settings_delete_simple(settings);
+      return status;
     }
 
     // @todo: may have to process all data intended to be used in parameters, exploding them into console parameters.
@@ -377,9 +378,6 @@ extern "C" {
     // 8) touch build file designating that build fully completed.
 
     status = fake_build_execute_process_script(data, settings, settings.process_post);
-    if (f_status_is_error(status)) {
-      // @todo handle errors.
-    }
 
     fake_macro_build_settings_delete_simple(settings);
 
@@ -426,6 +424,7 @@ extern "C" {
       f_fss_objects objects = f_fss_objects_initialize;
       f_fss_contents contents = f_fss_contents_initialize;
       f_string_range range = f_string_range_initialize;
+      bool error_printed = f_false;
 
       range.start = 0;
       range.stop = buffer.used - 1;
@@ -489,6 +488,8 @@ extern "C" {
           fake_build_settings_name_flags_program,
           fake_build_settings_name_flags_shared,
           fake_build_settings_name_flags_static,
+          fake_build_settings_name_modes,
+          fake_build_settings_name_modes_default,
           fake_build_settings_name_path_headers,
           fake_build_settings_name_path_language,
           fake_build_settings_name_path_library_shared,
@@ -524,6 +525,8 @@ extern "C" {
           fake_build_settings_name_flags_program_length,
           fake_build_settings_name_flags_shared_length,
           fake_build_settings_name_flags_static_length,
+          fake_build_settings_name_modes_length,
+          fake_build_settings_name_modes_default_length,
           fake_build_settings_name_path_headers_length,
           fake_build_settings_name_path_language_length,
           fake_build_settings_name_path_library_shared_length,
@@ -575,6 +578,8 @@ extern "C" {
           &settings->flags_program,
           &settings->flags_shared,
           &settings->flags_static,
+          &settings->modes,
+          &settings->modes_default,
           &path_headers,
           &path_language,
           &path_library_shared,
@@ -590,25 +595,66 @@ extern "C" {
           &version_minor,
         };
 
+        f_string function = "fll_fss_snatch_apart";
+
         status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, settings_value, fake_build_settings_total);
 
         if (status == f_none) {
-          for (f_array_length i = 0; i < data.mode.used; i++) {
-            f_string_dynamic settings_mode_name_dynamic[fake_build_settings_total];
-            f_string settings_mode_names[fake_build_settings_total];
-            f_string_length setting_mode_lengths[fake_build_settings_total];
+          f_string_dynamic settings_mode_name_dynamic[fake_build_settings_total];
+          f_string settings_mode_names[fake_build_settings_total];
+          f_string_length setting_mode_lengths[fake_build_settings_total];
+
+          const f_string_dynamics *modes = &settings->modes_default;
+          bool found = f_false;
+
+          f_array_length i = 0;
+          f_array_length j = 0;
+
+          // if any mode is specified, the entire defaults is replaced.
+          if (data.mode.used > 0) {
+            modes = &data.mode;
+          }
+
+          for (; i < modes->used; i++) {
+            found = f_false;
+
+            for (j = 0; j < settings->modes.used; j++) {
+              if (fl_string_dynamic_compare_trim(modes->array[i], settings->modes.array[j]) == f_equal_to) {
+                found = f_true;
+                break;
+              }
+            } // for
+
+            if (found == f_false) {
+              if (data.verbosity != fake_verbosity_quiet) {
+                fprintf(f_standard_error, "%c", f_string_eol);
+                fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: the specified mode '");
+                fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", modes->array[i].string);
+                fl_color_print(f_standard_error, data.context.error, data.context.reset, "' is not a valid mode, according to '");
+                fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
+                fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "'.");
+              }
+
+              error_printed = f_true;
+              status = f_status_set_error(f_invalid_parameter);
+              break;
+            }
 
             memset(&settings_mode_name_dynamic, 0, sizeof(f_string_dynamic) * fake_build_settings_total);
             memset(&settings_mode_names, 0, sizeof(f_string) * fake_build_settings_total);
+            memset(&setting_mode_lengths, 0, sizeof(f_string_length) * fake_build_settings_total);
 
-            for (f_string_length j = 0; j < fake_build_settings_total; j++) {
-              setting_mode_lengths[j] = settings_length[j] + 1 + data.mode.array[i].used;
+            for (j = 0; j < fake_build_settings_total; j++) {
+              setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
 
               f_macro_string_dynamic_new(status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
-              if (f_status_is_error(status)) break;
+              if (f_status_is_error(status)) {
+                function = "f_macro_string_dynamic_new";
+                break;
+              }
 
               memcpy(settings_mode_name_dynamic[j].string, settings_name[j], settings_length[j]);
-              memcpy(settings_mode_name_dynamic[j].string + settings_length[j] + 1, data.mode.array[i].string, data.mode.array[i].used);
+              memcpy(settings_mode_name_dynamic[j].string + settings_length[j] + 1, modes->array[i].string, modes->array[i].used);
               settings_mode_name_dynamic[j].string[settings_length[j]] = '-';
 
               settings_mode_names[j] = settings_mode_name_dynamic[j].string;
@@ -616,39 +662,18 @@ extern "C" {
 
             if (status == f_none) {
               status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, settings_value, fake_build_settings_total);
+
+              if (f_status_is_error(status)) {
+                function = "fll_fss_snatch_apart";
+              }
             }
 
-            for (f_string_length j = 0; j < fake_build_settings_total; j++) {
+            for (j = 0; j < fake_build_settings_total; j++) {
               f_macro_string_dynamic_delete_simple(settings_mode_name_dynamic[j]);
             } // for
 
             if (f_status_is_error(status)) break;
           } // for
-
-          if (f_status_is_error(status)) {
-            fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "f_macro_string_dynamic_new", f_true);
-
-            f_macro_string_dynamics_delete_simple(build_shared);
-            f_macro_string_dynamics_delete_simple(build_static);
-            f_macro_string_dynamics_delete_simple(path_headers);
-            f_macro_string_dynamics_delete_simple(path_language);
-            f_macro_string_dynamics_delete_simple(path_library_shared);
-            f_macro_string_dynamics_delete_simple(path_library_static);
-            f_macro_string_dynamics_delete_simple(path_program_shared);
-            f_macro_string_dynamics_delete_simple(path_program_static);
-            f_macro_string_dynamics_delete_simple(process_post);
-            f_macro_string_dynamics_delete_simple(process_pre);
-            f_macro_string_dynamics_delete_simple(project_level);
-            f_macro_string_dynamics_delete_simple(project_name);
-            f_macro_string_dynamics_delete_simple(version_major);
-            f_macro_string_dynamics_delete_simple(version_micro);
-            f_macro_string_dynamics_delete_simple(version_minor);
-
-            f_macro_fss_objects_delete_simple(objects);
-            f_macro_fss_contents_delete_simple(contents);
-            f_macro_string_dynamic_delete_simple(buffer);
-            return status;
-          }
         }
 
         if (f_status_is_error(status)) {
@@ -661,152 +686,153 @@ extern "C" {
               fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' is too long.");
             }
           }
-          else {
-            fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_partial_mash", f_true);
+          else if (!error_printed) {
+            fake_print_error(data.context, data.verbosity, f_status_set_fine(status), function, f_true);
           }
         }
+        else {
+          const f_string settings_single_name[] = {
+            fake_build_settings_name_build_shared,
+            fake_build_settings_name_build_static,
+            fake_build_settings_name_path_headers,
+            fake_build_settings_name_path_language,
+            fake_build_settings_name_path_library_shared,
+            fake_build_settings_name_path_library_static,
+            fake_build_settings_name_path_program_shared,
+            fake_build_settings_name_path_program_static,
+            fake_build_settings_name_process_post,
+            fake_build_settings_name_process_pre,
+            fake_build_settings_name_project_level,
+            fake_build_settings_name_project_name,
+            fake_build_settings_name_version_major,
+            fake_build_settings_name_version_micro,
+            fake_build_settings_name_version_minor,
+          };
 
-        const f_string settings_single_name[] = {
-          fake_build_settings_name_build_shared,
-          fake_build_settings_name_build_static,
-          fake_build_settings_name_path_headers,
-          fake_build_settings_name_path_language,
-          fake_build_settings_name_path_library_shared,
-          fake_build_settings_name_path_library_static,
-          fake_build_settings_name_path_program_shared,
-          fake_build_settings_name_path_program_static,
-          fake_build_settings_name_process_post,
-          fake_build_settings_name_process_pre,
-          fake_build_settings_name_project_level,
-          fake_build_settings_name_project_name,
-          fake_build_settings_name_version_major,
-          fake_build_settings_name_version_micro,
-          fake_build_settings_name_version_minor,
-        };
+          const f_string_statics *settings_single_source[] = {
+            &build_shared,
+            &build_static,
+            &path_headers,
+            &path_language,
+            &path_library_shared,
+            &path_library_static,
+            &path_program_shared,
+            &path_program_static,
+            &process_post,
+            &process_pre,
+            &project_level,
+            &project_name,
+            &version_major,
+            &version_micro,
+            &version_minor,
+          };
 
-        const f_string_statics *settings_single_source[] = {
-          &build_shared,
-          &build_static,
-          &path_headers,
-          &path_language,
-          &path_library_shared,
-          &path_library_static,
-          &path_program_shared,
-          &path_program_static,
-          &process_post,
-          &process_pre,
-          &project_level,
-          &project_name,
-          &version_major,
-          &version_micro,
-          &version_minor,
-        };
+          bool *settings_single_bool[] = {
+            &settings->build_shared,
+            &settings->build_static,
+          };
 
-        bool *settings_single_bool[] = {
-          &settings->build_shared,
-          &settings->build_static,
-        };
+          f_string_dynamic *settings_single_destination[] = {
+            0,
+            0,
+            &settings->path_headers,
+            &settings->path_language,
+            &settings->path_library_shared,
+            &settings->path_library_static,
+            &settings->path_program_shared,
+            &settings->path_program_static,
+            &settings->process_post,
+            &settings->process_pre,
+            &settings->project_level,
+            &settings->project_name,
+            &settings->version_major,
+            &settings->version_micro,
+            &settings->version_minor,
+          };
 
-        f_string_dynamic *settings_single_destination[] = {
-          0,
-          0,
-          &settings->path_headers,
-          &settings->path_language,
-          &settings->path_library_shared,
-          &settings->path_library_static,
-          &settings->path_program_shared,
-          &settings->path_program_static,
-          &settings->process_post,
-          &settings->process_pre,
-          &settings->project_level,
-          &settings->project_name,
-          &settings->version_major,
-          &settings->version_micro,
-          &settings->version_minor,
-        };
+          uint8_t settings_single_type[] = {
+            1, // yes/no
+            1,
+            2, // path
+            2,
+            2,
+            2,
+            2,
+            2,
+            3, // just a string
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+          };
 
-        uint8_t settings_single_type[] = {
-          1, // yes/no
-          1,
-          2, // path
-          2,
-          2,
-          2,
-          2,
-          2,
-          3, // just a string
-          3,
-          3,
-          3,
-          3,
-          3,
-          3,
-        };
+          for (f_array_length i = 0; i < 15; i++) {
+            if (settings_single_source[i]->used == 0) continue;
 
-        for (f_array_length i = 0; i < 15; i++) {
-          if (settings_single_source[i]->used == 0) continue;
-
-          if (settings_single_source[i]->used > 1) {
-            if (data.verbosity != fake_verbosity_quiet) {
-              fprintf(f_standard_warning, "%c", f_string_eol);
-              fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
-              fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
-              fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "' in the file '");
-              fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
-              fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "' may only have a single property, only using the first: '");
-              fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", settings_single_source[i]->array[0].string);
-              fl_color_print_line(f_standard_warning, data.context.warning, data.context.reset, "'.");
-            }
-          }
-
-          if (settings_single_type[i] == 1) {
-            if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_settings_bool_yes, settings_single_source[i]->array[0].used, fake_build_settings_bool_yes_length) == f_equal_to) {
-              *settings_single_bool[i] = f_true;
-            }
-            else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_settings_bool_no, settings_single_source[i]->array[0].used, fake_build_settings_bool_no_length) == f_equal_to) {
-              *settings_single_bool[i] = f_false;
-            }
-            else {
-              *settings_single_bool[i] = f_true;
-
+            if (settings_single_source[i]->used > 1) {
               if (data.verbosity != fake_verbosity_quiet) {
                 fprintf(f_standard_warning, "%c", f_string_eol);
                 fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
                 fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
                 fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "' in the file '");
                 fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
-                fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "' may be either '");
-                fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", fake_build_settings_bool_yes);
-                fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "' or '");
-                fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", fake_build_settings_bool_no);
-                fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "', defaulting to '");
-                fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", fake_build_settings_bool_yes);
+                fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "' may only have a single property, only using the first: '");
+                fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", settings_single_source[i]->array[0].string);
                 fl_color_print_line(f_standard_warning, data.context.warning, data.context.reset, "'.");
               }
             }
-          }
-          else {
-            status = fl_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);
-            if (f_status_is_error(status)) {
-              fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_append_nulless", f_true);
-              break;
-            }
 
-            if (settings_single_type[i] == 2) {
-              status = fl_string_append_assure(f_path_separator, f_path_separator_length, settings_single_destination[i]);
+            if (settings_single_type[i] == 1) {
+              if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_settings_bool_yes, settings_single_source[i]->array[0].used, fake_build_settings_bool_yes_length) == f_equal_to) {
+                *settings_single_bool[i] = f_true;
+              }
+              else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_settings_bool_no, settings_single_source[i]->array[0].used, fake_build_settings_bool_no_length) == f_equal_to) {
+                *settings_single_bool[i] = f_false;
+              }
+              else {
+                *settings_single_bool[i] = f_true;
+
+                if (data.verbosity != fake_verbosity_quiet) {
+                  fprintf(f_standard_warning, "%c", f_string_eol);
+                  fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
+                  fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
+                  fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "' in the file '");
+                  fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
+                  fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "' may be either '");
+                  fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", fake_build_settings_bool_yes);
+                  fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "' or '");
+                  fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", fake_build_settings_bool_no);
+                  fl_color_print(f_standard_warning, data.context.warning, data.context.reset, "', defaulting to '");
+                  fl_color_print(f_standard_warning, data.context.notable, data.context.reset, "%s", fake_build_settings_bool_yes);
+                  fl_color_print_line(f_standard_warning, data.context.warning, data.context.reset, "'.");
+                }
+              }
+            }
+            else {
+              status = fl_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);
               if (f_status_is_error(status)) {
                 fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_append_nulless", f_true);
                 break;
               }
-            }
 
-            status = fl_string_dynamic_terminate(settings_single_destination[i]);
-            if (f_status_is_error(status)) {
-              fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_terminate", f_true);
-              break;
+              if (settings_single_type[i] == 2) {
+                status = fl_string_append_assure(f_path_separator, f_path_separator_length, settings_single_destination[i]);
+                if (f_status_is_error(status)) {
+                  fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_append_nulless", f_true);
+                  break;
+                }
+              }
+
+              status = fl_string_dynamic_terminate(settings_single_destination[i]);
+              if (f_status_is_error(status)) {
+                fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_terminate", f_true);
+                break;
+              }
             }
-          }
-        } // for
+          } // for
+        }
 
         f_macro_string_dynamics_delete_simple(build_shared);
         f_macro_string_dynamics_delete_simple(build_static);
@@ -830,8 +856,6 @@ extern "C" {
     }
 
     f_macro_string_dynamic_delete_simple(buffer);
-
-    // @todo: perform validation of values, such as "shared" and "static", at least one must be "yes".
 
     return status;
   }

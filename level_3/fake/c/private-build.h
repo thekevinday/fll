@@ -48,6 +48,8 @@ extern "C" {
     f_string_dynamics flags_program;
     f_string_dynamics flags_shared;
     f_string_dynamics flags_static;
+    f_string_dynamics modes;
+    f_string_dynamics modes_default;
   } fake_build_settings;
 
   #define fake_build_settings_initialize { \
@@ -66,6 +68,8 @@ extern "C" {
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
     f_string_dynamics_initialize, \
     f_string_dynamics_initialize, \
     f_string_dynamics_initialize, \
@@ -115,7 +119,9 @@ extern "C" {
     f_macro_string_dynamics_delete_simple(settings.flags_library) \
     f_macro_string_dynamics_delete_simple(settings.flags_program) \
     f_macro_string_dynamics_delete_simple(settings.flags_shared) \
-    f_macro_string_dynamics_delete_simple(settings.flags_static)
+    f_macro_string_dynamics_delete_simple(settings.flags_static) \
+    f_macro_string_dynamics_delete_simple(settings.modes) \
+    f_macro_string_dynamics_delete_simple(settings.modes_default)
 
   #define fake_build_settings_name_build_compiler         "build_compiler"
   #define fake_build_settings_name_build_libraries        "build_libraries"
@@ -136,6 +142,8 @@ extern "C" {
   #define fake_build_settings_name_flags_program          "flags_program"
   #define fake_build_settings_name_flags_shared           "flags_shared"
   #define fake_build_settings_name_flags_static           "flags_static"
+  #define fake_build_settings_name_modes                  "modes"
+  #define fake_build_settings_name_modes_default          "modes_default"
   #define fake_build_settings_name_path_language          "path_language"
   #define fake_build_settings_name_path_headers           "path_headers"
   #define fake_build_settings_name_path_library_shared    "path_library_shared"
@@ -169,6 +177,8 @@ extern "C" {
   #define fake_build_settings_name_flags_program_length          13
   #define fake_build_settings_name_flags_shared_length           12
   #define fake_build_settings_name_flags_static_length           12
+  #define fake_build_settings_name_modes_length                  5
+  #define fake_build_settings_name_modes_default_length          13
   #define fake_build_settings_name_path_language_length          13
   #define fake_build_settings_name_path_headers_length           12
   #define fake_build_settings_name_path_library_shared_length    19
@@ -183,7 +193,7 @@ extern "C" {
   #define fake_build_settings_name_version_micro_length          13
   #define fake_build_settings_name_version_minor_length          13
 
-  #define fake_build_settings_total 32
+  #define fake_build_settings_total 34
 
   #define fake_build_settings_bool_yes "yes"
   #define fake_build_settings_bool_no  "no"

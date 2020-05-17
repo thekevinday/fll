@@ -416,7 +416,7 @@ extern "C" {
     if (status == f_invalid_parameter) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter in function ");
+        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Invalid parameter when calling function ");
         fl_color_print(f_standard_error, context.notable, context.reset, "%s", function);
         fl_color_print_line(f_standard_error, context.error, context.reset, "().");
       }
