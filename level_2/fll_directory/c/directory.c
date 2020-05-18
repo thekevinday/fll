@@ -81,7 +81,7 @@ extern "C" {
         continue;
       }
 
-      memset(&file_stat, 0, sizeof(file_stat));
+      memset(&file_stat, 0, sizeof(struct stat));
 
       status = f_file_stat_at(parent_fd, entity[i]->d_name, &file_stat, 0);
       if (f_status_is_error(status)) break;

@@ -40,7 +40,6 @@ extern "C" {
 
   #define f_file_default_read_size  8192 // default to 8k read sizes.
   #define f_file_default_write_size 8192 // default to 8k write sizes.
-  #define f_file_max_path_length    1024
 #endif // _di_f_file_types_
 
 /**
@@ -285,6 +284,34 @@ extern "C" {
 #endif // _di_f_macro_file_reset_position_
 
 /**
+ * Change owner and group of a given file at the specified path.
+ *
+ * @param path
+ *   The path file name.
+ * @param uid
+ *   The new user id to use.
+ * @param gid
+ *   The new group id to use.
+ *
+ * @return
+ *   f_true if file exists.
+ *   f_false if file does not exist.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_invalid_name (with error bit) if the filename is too long.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_false (with error bit) on unknown/unhandled errors.
+ *
+ * @see chown()
+ */
+#ifndef _di_f_file_change_owner_
+  extern f_return_status f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid);
+#endif // _di_f_file_change_owner_
+
+/**
  * Check if a file can be accessed.
  *
  * @param path
@@ -307,6 +334,111 @@ extern "C" {
 #ifndef _di_f_file_access_
   extern f_return_status f_file_access(const f_string path);
 #endif // _di_f_file_access_
+
+/**
+ * Copy a file.
+ *
+ * The paths must not contain NULL except for the terminating NULL.
+ * The paths must be NULL terminated.
+ *
+ * @param source
+ *   The path to the file to copy from.
+ * @param destination
+ *   The path to copy to.
+ * @param mode
+ *   The file mode assigned to the destination file.
+ * @param size_block
+ *   The default number of chunks to read at a time with each chunk being 1-byte.
+ *   Must be greater than 0.
+ * @param exclusive
+ *   If TRUE, will fail when file already exists.
+ *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_prohibited (with error bit) if filesystem does not allow for removing.
+ *   f_read_only (with error bit) if file is read-only.
+ *   f_failure (with error bit) for any other (mkdir()) error.
+ *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   f_file_found (with error bit) of a directory aleady exists at the path.
+ *   f_invalid_name (with error bit) on path name error.
+ *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   f_file_max_open (with error bit) when system-wide max open files is reached.
+ *   f_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   f_file_error_read (with error bit) on file read error.
+ *   f_file_error_write (with error bit) on file write error.
+ *
+ * @see f_file_create()
+ * @see f_file_open()
+ * @see f_file_close()
+ * @see read()
+ */
+#ifndef _di_f_file_copy_
+  extern f_return_status f_file_copy(const f_string source, const f_string destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive);
+#endif // _di_f_file_copy_
+
+/**
+ * Copy a file, as well as its file mode and possibly the owner and group.
+ *
+ * The paths must not contain NULL except for the terminating NULL.
+ * The paths must be NULL terminated.
+ *
+ * @todo provide a return status for when owner/role cannot be assigned.
+ * This will be returned when complete so that caller can decide if this is an error or not.
+ *
+ * @param source
+ *   The path to the file to copy from.
+ * @param destination
+ *   The path to copy to.
+ * @param size_block
+ *   The default number of chunks to read at a time with each chunk being 1-byte.
+ *   Must be greater than 0.
+ * @param exclusive
+ *   If TRUE, will fail when file already exists.
+ *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param roles
+ *   If TRUE, will copy the owner and group ids.
+ *   If FALSE, will not copy the owner and group ids.
+ *   (In both cases the file mode is copied.)
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_prohibited (with error bit) if filesystem does not allow for removing.
+ *   f_read_only (with error bit) if file is read-only.
+ *   f_failure (with error bit) for any other (mkdir()) error.
+ *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   f_file_found (with error bit) of a directory aleady exists at the path.
+ *   f_invalid_name (with error bit) on path name error.
+ *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   f_file_max_open (with error bit) when system-wide max open files is reached.
+ *   f_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   f_file_error_read (with error bit) on file read error.
+ *   f_file_error_write (with error bit) on file write error.
+ *
+ * @see f_file_create()
+ * @see f_file_open()
+ * @see f_file_close()
+ * @see read()
+ */
+#ifndef _di_f_file_clone_
+  extern f_return_status f_file_clone(const f_string source, const f_string destination, const f_number_unsigned size_block, const bool exclusive, const bool roles);
+#endif // _di_f_file_clone_
 
 /**
  * Create a file based on the given path and file mode.
@@ -542,6 +674,8 @@ extern "C" {
  *   f_file_not_open (with error bit) if file is not open.
  *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fread()
  */
 #ifndef _di_f_file_read_
   extern f_return_status f_file_read(f_file *file, f_string_dynamic *buffer);

@@ -1,14 +1,5 @@
-/**
- * FLL - Level 0
- *
- * Project: File
- * API Version: 0.5
- * Licenses: lgplv2.1
- *
- * Provides structures and data types for a file I/O.
- * Provides operations for opening/closing files.
- */
 #include <level_0/file.h>
+#include "private-file.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -51,71 +42,128 @@ extern "C" {
   }
 #endif // _di_f_file_access_
 
-#ifndef _di_f_file_create_
-  f_return_status f_file_create(f_string path, const mode_t mode, const bool exclusive) {
-    int flags = O_CLOEXEC | O_CREAT | O_WRONLY;
+#ifndef _di_f_file_change_owner_
+  f_return_status f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid) {
+    return private_f_file_change_owner(path, uid, gid);
+  }
+#endif // _di_f_file_change_owner_
 
-    if (exclusive) {
-      flags |= O_EXCL;
+#ifndef _di_f_file_copy_
+  f_return_status f_file_copy(const f_string source, const f_string destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive) {
+    #ifndef _di_level_0_parameter_checking_
+      if (size_block == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status status = f_none;
+
+    status = private_f_file_create(destination, mode, exclusive);
+    if (f_status_is_error(status)) return status;
+
+    f_file file_source = f_file_initialize;
+    f_file file_destination = f_file_initialize;
+
+    file_destination.mode = f_file_write_create;
+
+    status = private_f_file_open(&file_source, source);
+    if (f_status_is_error(status)) return status;
+
+    status = private_f_file_open(&file_destination, destination);
+    if (f_status_is_error(status)) {
+      private_f_file_close(&file_source);
+      return status;
     }
 
-    int result = open(path, flags, mode);
+    ssize_t size_read = 0;
+    ssize_t size_write = 0;
+    char *buffer[size_block];
 
-    if (result < 0) {
-      if (errno == EACCES) {
-        return f_status_set_error(f_access_denied);
-      }
-      else if (errno == EDQUOT) {
-        return f_status_set_error(f_filesystem_quota_blocks);
-      }
-      else if (errno == EEXIST) {
-        return f_status_set_error(f_file_found);
-      }
-      else if (errno == ENAMETOOLONG || errno == EFAULT) {
-        return f_status_set_error(f_invalid_name);
-      }
-      else if (errno == EFBIG || errno == EOVERFLOW) {
-        return f_status_set_error(f_number_overflow);
-      }
-      else if (errno == EINTR) {
-        return f_status_set_error(f_interrupted);
-      }
-      else if (errno == EINVAL) {
-        return f_status_set_error(f_invalid_parameter);
-      }
-      else if (errno == ELOOP) {
-        return f_status_set_error(f_loop);
-      }
-      else if (errno == ENFILE) {
-        return f_status_set_error(f_file_max_open);
-      }
-      else if (errno == ENOENT || errno == ENOTDIR) {
-        return f_status_set_error(f_invalid_directory);
-      }
-      else if (errno == ENOMEM) {
-        return f_status_set_error(f_out_of_memory);
-      }
-      else if (errno == ENOSPC) {
-        return f_status_set_error(f_filesystem_quota_reached);
-      }
-      else if (errno == EPERM) {
-        return f_status_set_error(f_prohibited);
-      }
-      else if (errno == EROFS) {
-        return f_status_set_error(f_read_only);
-      }
-      else if (errno == ETXTBSY) {
-        return f_status_set_error(f_busy);
-      }
+    memset(buffer, 0, size_block);
 
-      return f_status_set_error(f_failure);
-    }
+    while ((size_read = read(file_source.id, buffer, size_block)) > 0) {
+      size_write = write(file_destination.id, buffer, size_read);
 
-    close(result);
+      if (size_write < 0 || size_write != size_read) {
+        private_f_file_close(&file_destination);
+        private_f_file_close(&file_source);
+
+        return f_status_set_error(f_file_error_write);
+      }
+    } // while
+
+    private_f_file_close(&file_destination);
+    private_f_file_close(&file_source);
+
+    if (size_read < 0) return f_status_set_error(f_file_error_read);
 
     return f_none;
   }
-#endif // _di_f_file_create_
+#endif // _di_f_file_copy_
+
+#ifndef _di_f_file_clone_
+  f_return_status f_file_clone(const f_string source, const f_string destination, const f_number_unsigned size_block, const bool exclusive, const bool roles) {
+    #ifndef _di_level_0_parameter_checking_
+      if (size_block == 0) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status status = f_none;
+    struct stat source_stat;
+
+    memset(&source_stat, 0, sizeof(struct stat));
+
+    status = private_f_file_stat(source, &source_stat);
+    if (f_status_is_error(status)) return status;
+
+    status = private_f_file_create(destination, source_stat.st_mode, exclusive);
+    if (f_status_is_error(status)) return status;
+
+    // guarantee the file mode is updated (create does not set mode for existing files).
+    status = private_f_file_change_mode(destination, source_stat.st_mode);
+    if (f_status_is_error(status)) return status;
+
+    if (roles) {
+      status = private_f_file_change_owner(destination, source_stat.st_uid, source_stat.st_gid);
+      if (f_status_is_error(status)) return status;
+    }
+
+    f_file file_source = f_file_initialize;
+    f_file file_destination = f_file_initialize;
+
+    file_destination.mode = f_file_write_create;
+
+    status = private_f_file_open(&file_source, source);
+    if (f_status_is_error(status)) return status;
+
+    status = private_f_file_open(&file_destination, destination);
+    if (f_status_is_error(status)) {
+      private_f_file_close(&file_source);
+      return status;
+    }
+
+    ssize_t size_read = 0;
+    ssize_t size_write = 0;
+    char *buffer[size_block];
+
+    memset(buffer, 0, size_block);
+
+    while ((size_read = read(file_source.id, buffer, size_block)) > 0) {
+      size_write = write(file_destination.id, buffer, size_read);
+
+      if (size_write < 0 || size_write != size_read) {
+        private_f_file_close(&file_destination);
+        private_f_file_close(&file_source);
+
+        return f_status_set_error(f_file_error_write);
+      }
+    } // while
+
+    private_f_file_close(&file_destination);
+    private_f_file_close(&file_source);
+
+    if (size_read < 0) return f_status_set_error(f_file_error_read);
+
+    return f_none;
+  }
+#endif // _di_f_file_clone_
 
 #ifndef _di_f_file_close_
   f_return_status f_file_close(f_file *file) {
@@ -123,22 +171,15 @@ extern "C" {
       if (file == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file->address == 0) return f_status_set_error(f_file_not_open);
-
-    // if we were given a file descriptor as well, make sure to flush all changes to the disk that are not flushed by the 'fflush()' command
-    if (file->id) {
-      // make sure all unfinished data gets completed.
-      if (fsync(file->id) != 0) return f_status_set_error(f_file_error_synchronize);
-    }
-
-    if (fclose(file->address) == 0) {
-      file->address = 0;
-      return f_none;
-    }
-
-    return f_status_set_error(f_file_error_close);
+    return private_f_file_close(file);
   }
 #endif // _di_f_file_close_
+
+#ifndef _di_f_file_create_
+  f_return_status f_file_create(f_string path, const mode_t mode, const bool exclusive) {
+    return private_f_file_create(path, mode, exclusive);
+  }
+#endif // _di_f_file_create_
 
 #ifndef _di_f_file_exists_at_
   f_return_status f_file_exists_at(const int directory_file_descriptor, const f_string path, const int flags) {
@@ -202,7 +243,7 @@ extern "C" {
   f_return_status f_file_exists(const f_string path) {
     struct stat file_stat;
 
-    memset(&file_stat, 0, sizeof(file_stat));
+    memset(&file_stat, 0, sizeof(struct stat));
 
     if (stat(path, &file_stat) < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
@@ -238,7 +279,7 @@ extern "C" {
   f_return_status f_file_is(const f_string path, const int type) {
     struct stat file_stat;
 
-    memset(&file_stat, 0, sizeof(file_stat));
+    memset(&file_stat, 0, sizeof(struct stat));
 
     if (stat(path, &file_stat) < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
@@ -276,7 +317,7 @@ extern "C" {
   f_return_status f_file_is_at(const int file_id, const f_string path, const int type, const bool follow) {
     struct stat file_stat;
 
-    memset(&file_stat, 0, sizeof(file_stat));
+    memset(&file_stat, 0, sizeof(struct stat));
 
     if (fstatat(file_id, path, &file_stat, follow ? 0 : AT_SYMLINK_NOFOLLOW) < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
@@ -316,19 +357,7 @@ extern "C" {
       if (file == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // if file->mode is unset, then this may cause a segfault.
-    if (file->mode == 0) return f_status_set_error(f_invalid_parameter);
-
-    file->address = fopen(path, file->mode);
-
-    if (file->address == 0) return f_status_set_error(f_file_not_found);
-    if (ferror(file->address) != 0) return f_status_set_error(f_file_error_open);
-
-    file->id = fileno(file->address);
-
-    if (file->id == -1) return f_status_set_error(f_file_error_descriptor);
-
-    return f_none;
+    return private_f_file_open(file, path);
   }
 #endif // _di_f_file_open_
 
@@ -512,33 +541,7 @@ extern "C" {
 
 #ifndef _di_f_file_stat_
   f_return_status f_file_stat(const f_string path, struct stat *file_stat) {
-    if (stat(path, file_stat) < 0) {
-      if (errno == ENAMETOOLONG || errno == EFAULT) {
-        return f_status_set_error(f_invalid_name);
-      }
-      else if (errno == ENOMEM) {
-        return f_status_set_error(f_out_of_memory);
-      }
-      else if (errno == EOVERFLOW) {
-        return f_status_set_error(f_number_overflow);
-      }
-      else if (errno == ENOTDIR) {
-        return f_status_set_error(f_invalid_directory);
-      }
-      else if (errno == ENOENT) {
-        return f_status_set_error(f_file_not_found);
-      }
-      else if (errno == EACCES) {
-        return f_status_set_error(f_access_denied);
-      }
-      else if (errno == ELOOP) {
-        return f_status_set_error(f_loop);
-      }
-
-      return f_status_set_error(f_file_error_stat);
-    }
-
-    return f_none;
+    return private_f_file_stat(path, file_stat);
   }
 #endif // _di_f_file_stat_
 

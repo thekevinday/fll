@@ -115,7 +115,7 @@ extern "C" {
   f_return_status f_directory_is(const f_string path) {
     struct stat file_stat;
 
-    memset(&file_stat, 0, sizeof(file_stat));
+    memset(&file_stat, 0, sizeof(struct stat));
 
     if (stat(path, &file_stat) < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
@@ -153,7 +153,7 @@ extern "C" {
   f_return_status f_directory_is_at(const int file_id, const f_string path, const bool follow) {
     struct stat file_stat;
 
-    memset(&file_stat, 0, sizeof(file_stat));
+    memset(&file_stat, 0, sizeof(struct stat));
 
     if (fstatat(file_id, path, &file_stat, follow ? 0 : AT_SYMLINK_NOFOLLOW) < 0) {
       if (errno == ENAMETOOLONG || errno == EFAULT) {
