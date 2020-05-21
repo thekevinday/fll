@@ -34,25 +34,9 @@ extern "C" {
  * Provide common file-typ specific data types.
  */
 #ifndef _di_f_file_types_
-  typedef int  f_file_id;
-  typedef f_string f_file_mode;
-  typedef mode_t f_file_mask;
-
   #define f_file_default_read_size  8192 // default to 8k read sizes.
   #define f_file_default_write_size 8192 // default to 8k write sizes.
 #endif // _di_f_file_types_
-
-/**
- * Provide classic string-based file modes.
- */
-#ifndef _di_f_file_oldstyle_modes_
-  #define f_file_read_only         "r"
-  #define f_file_read_write        "r+"
-  #define f_file_read_write_create "rw"
-  #define f_file_read_write_append "a+"
-  #define f_file_write_create      "w"
-  #define f_file_write_append      "a"
-#endif // _di_f_file_oldstyle_modes_
 
 /**
  * Provide macros for file-seek operations.
@@ -102,129 +86,118 @@ extern "C" {
  * Commonly used file related properties.
  *
  * id: File descriptor.
- * address: A pointer to a file (generally opened).
- * mode: How the file is to be accessed (or is being accessed).
  * size_chunk: Number of bytes to consider a character, a value of 1 means 1-byte (aka: uint8_t) (for normal string handling this should be sizeof(f_string)).
  * size_block: The default number of chunks to read at a time (use (size_chunk * size_block) to determine total number of bytes).
  */
 #ifndef _di_f_file_
   typedef struct {
-    f_file_id         id;
-    FILE *            address;
-    f_file_mode       mode;
-    size_t            size_chunk;
-    f_number_unsigned size_block;
+    int    id;
+    size_t size_chunk;
+    size_t size_block;
   } f_file;
 
-  #define f_file_initialize { 0, 0, (f_file_mode) f_file_read_only, 1, f_file_default_read_size }
+  #define f_file_initialize { 0, 1, f_file_default_read_size }
 #endif // _di_f_file_
-
-/**
- * Store file positions.
- *
- * This is commonly used to instruct functions how to buffer and use a file.
- *
- * start: The positions where to begin reading the file.
- * total: The total number of elements to read from the file into the buffer (set to 0 to read entire file).
- */
-#ifndef _di_f_file_position_
-  typedef struct {
-    f_string_length start;
-    f_string_length total;
-  } f_file_position;
-
-  #define f_file_position_initialize { 0, 0 }
-#endif // _di_f_file_position_
 
 /**
  * File mode relation functionality.
  */
 #ifndef _di_f_file_modes_
 
-  // file open modes
-  #define f_file_mode_read_only    O_RDONLY
-  #define f_file_mode_write_only   O_WRONLY
-  #define f_file_mode_read_write   O_RDWR
-  #define f_file_mode_create       O_CREAT
-  #define f_file_mode_exclusive    O_EXCL
-  #define f_file_mode_no_tty       O_NOCTTY
-  #define f_file_mode_truncate     O_TRUNC
-  #define f_file_mode_append       O_APPEND
-  #define f_file_mode_non_blocking O_NONBLOCK
-  #define f_file_mode_synchronous  O_SYNC
-  #define f_file_mode_no_follow    O_NOFOLLOW
-  #define f_file_mode_directory    O_DIRECTORY
-  #define f_file_mode_direct_io    O_DIRECT
-  #define f_file_mode_asynchronous O_ASYNC
-  #define f_file_mode_large_file   O_LARGEFILE
+  // file open flags
+  #define f_file_flag_append             O_APPEND
+  #define f_file_flag_asynchronous       O_ASYNC
+  #define f_file_flag_create             O_CREAT
+  #define f_file_flag_close_execute      O_CLOEXEC
+  #define f_file_flag_direct             O_DIRECT
+  #define f_file_flag_directory          O_DIRECTORY
+  #define f_file_flag_exclusive          O_EXCL
+  #define f_file_flag_large_file         O_LARGEFILE
+  #define f_file_flag_no_access_time     O_NOATIME
+  #define f_file_flag_no_follow          O_NOFOLLOW
+  #define f_file_flag_no_tty             O_NOCTTY
+  #define f_file_flag_non_blocking       O_NONBLOCK
+  #define f_file_flag_path               O_PATH
+  #define f_file_flag_read_only          O_RDONLY
+  #define f_file_flag_read_write         O_RDWR
+  #define f_file_flag_synchronous        O_SYNC
+  #define f_file_flag_synchronous_direct O_DSYNC
+  #define f_file_flag_temporary          O_TMPFILE
+  #define f_file_flag_truncate           O_TRUNC
+  #define f_file_flag_write_only         O_WRONLY
 
-  // file open modes pre-combined with create
-  #define f_file_mode_create_ro (O_CREAT | O_RDONLY)
-  #define f_file_mode_create_wo (O_CREAT | O_WRONLY)
-  #define f_file_mode_create_rw (O_CREAT | O_RDRW)
+  // file open flags pre-combined with create.
+  #define f_file_flag_create_ro (O_CREAT | O_RDONLY)
+  #define f_file_flag_create_wo (O_CREAT | O_WRONLY)
+  #define f_file_flag_create_rw (O_CREAT | O_RDRW)
 
-  // file open modes pre-combined will fail if file exists
-  #define f_file_mode_create_new_ro (O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_mode_create_new_wo (O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_mode_create_new_rw (O_CREAT | O_EXCL | O_RDRW)
+  // file open flags pre-combined will fail if file exists.
+  #define f_file_flag_create_new_ro (O_CREAT | O_EXCL | O_RDONLY)
+  #define f_file_flag_create_new_wo (O_CREAT | O_EXCL | O_WRONLY)
+  #define f_file_flag_create_new_rw (O_CREAT | O_EXCL | O_RDRW)
 
-  // file open modes pre-combined with synchronous io
-  #define f_file_mode_sync_ro            (O_SYNC | O_RDONLY)
-  #define f_file_mode_sync_wo            (O_SYNC | O_WRONLY)
-  #define f_file_mode_sync_rw            (O_SYNC | O_RDRW)
-  #define f_file_mode_sync_create_ro     (O_SYNC | O_CREAT | O_RDONLY)
-  #define f_file_mode_sync_create_wo     (O_SYNC | O_CREAT | O_WRONLY)
-  #define f_file_mode_sync_create_rw     (O_SYNC | O_CREAT | O_RDRW)
-  #define f_file_mode_sync_create_new_ro (O_SYNC | O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_mode_sync_create_new_wo (O_SYNC | O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_mode_sync_create_new_rw (O_SYNC | O_CREAT | O_EXCL | O_RDRW)
+  // file open flags pre-combined will truncate any existing files to 0.
+  #define f_file_flag_truncate_ro (O_CREAT | O_TRUNC | O_RDONLY)
+  #define f_file_flag_truncate_rw (O_CREAT | O_TRUNC | O_RDRW)
+  #define f_file_flag_truncate_wo (O_CREAT | O_TRUNC | O_WRONLY)
 
-  // file open modes pre-combined with asynchronous io
-  #define f_file_mode_async_ro            (O_ASYNC | O_RDONLY)
-  #define f_file_mode_async_wo            (O_ASYNC | O_WRONLY)
-  #define f_file_mode_async_rw            (O_ASYNC | O_RDRW)
-  #define f_file_mode_async_create_ro     (O_ASYNC | O_CREAT | O_RDONLY)
-  #define f_file_mode_async_create_wo     (O_ASYNC | O_CREAT | O_WRONLY)
-  #define f_file_mode_async_create_rw     (O_ASYNC | O_CREAT | O_RDRW)
-  #define f_file_mode_async_create_new_ro (O_ASYNC | O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_mode_async_create_new_wo (O_ASYNC | O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_mode_async_create_new_rw (O_ASYNC | O_CREAT | O_EXCL | O_RDRW)
+  // file open flags pre-combined with synchronous io.
+  #define f_file_flag_sync_ro            (O_SYNC | O_RDONLY)
+  #define f_file_flag_sync_wo            (O_SYNC | O_WRONLY)
+  #define f_file_flag_sync_rw            (O_SYNC | O_RDRW)
+  #define f_file_flag_sync_create_ro     (O_SYNC | O_CREAT | O_RDONLY)
+  #define f_file_flag_sync_create_wo     (O_SYNC | O_CREAT | O_WRONLY)
+  #define f_file_flag_sync_create_rw     (O_SYNC | O_CREAT | O_RDRW)
+  #define f_file_flag_sync_create_new_ro (O_SYNC | O_CREAT | O_EXCL | O_RDONLY)
+  #define f_file_flag_sync_create_new_wo (O_SYNC | O_CREAT | O_EXCL | O_WRONLY)
+  #define f_file_flag_sync_create_new_rw (O_SYNC | O_CREAT | O_EXCL | O_RDRW)
 
-  // file open modes pre-combined with direct io (which works synchronously)
-  #define f_file_mode_direct_ro            (O_DIRECT | O_RDONLY)
-  #define f_file_mode_direct_wo            (O_DIRECT | O_WRONLY)
-  #define f_file_mode_direct_rw            (O_DIRECT | O_RDRW)
-  #define f_file_mode_direct_create_ro     (O_DIRECT | O_CREAT | O_RDONLY)
-  #define f_file_mode_direct_create_wo     (O_DIRECT | O_CREAT | O_WRONLY)
-  #define f_file_mode_direct_create_rw     (O_DIRECT | O_CREAT | O_RDRW)
-  #define f_file_mode_direct_create_new_ro (O_DIRECT | O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_mode_direct_create_new_wo (O_DIRECT | O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_mode_direct_create_new_rw (O_DIRECT | O_CREAT | O_EXCL | O_RDRW)
+  // file open flags pre-combined with asynchronous io.
+  #define f_file_flag_async_ro            (O_ASYNC | O_RDONLY)
+  #define f_file_flag_async_wo            (O_ASYNC | O_WRONLY)
+  #define f_file_flag_async_rw            (O_ASYNC | O_RDRW)
+  #define f_file_flag_async_create_ro     (O_ASYNC | O_CREAT | O_RDONLY)
+  #define f_file_flag_async_create_wo     (O_ASYNC | O_CREAT | O_WRONLY)
+  #define f_file_flag_async_create_rw     (O_ASYNC | O_CREAT | O_RDRW)
+  #define f_file_flag_async_create_new_ro (O_ASYNC | O_CREAT | O_EXCL | O_RDONLY)
+  #define f_file_flag_async_create_new_wo (O_ASYNC | O_CREAT | O_EXCL | O_WRONLY)
+  #define f_file_flag_async_create_new_rw (O_ASYNC | O_CREAT | O_EXCL | O_RDRW)
 
-  // file open modes pre-combined with large_file
-  #define f_file_mode_large_ro                  (O_LARGEFILE | O_RDONLY)
-  #define f_file_mode_large_wo                  (O_LARGEFILE | O_WRONLY)
-  #define f_file_mode_large_rw                  (O_LARGEFILE | O_RDRW)
-  #define f_file_mode_large_sync_ro             (O_LARGEFILE | O_SYNC | O_RDONLY)
-  #define f_file_mode_large_sync_wo             (O_LARGEFILE | O_SYNC | O_WRONLY)
-  #define f_file_mode_large_sync_rw             (O_LARGEFILE | O_SYNC | O_RDRW)
-  #define f_file_mode_large_sync_create_ro      (O_LARGEFILE | O_SYNC | O_CREAT | O_RDONLY)
-  #define f_file_mode_large_sync_create_wo      (O_LARGEFILE | O_SYNC | O_CREAT | O_WRONLY)
-  #define f_file_mode_large_sync_create_rw      (O_LARGEFILE | O_SYNC | O_CREAT | O_RDRW)
-  #define f_file_mode_large_sync_create_new_ro  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_mode_large_sync_create_new_wo  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_mode_large_sync_create_new_rw  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_RDRW)
-  #define f_file_mode_large_async_ro            (O_LARGEFILE | O_ASYNC | O_RDONLY)
-  #define f_file_mode_large_async_wo            (O_LARGEFILE | O_ASYNC | O_WRONLY)
-  #define f_file_mode_large_async_rw            (O_LARGEFILE | O_ASYNC | O_RDRW)
-  #define f_file_mode_large_async_create_ro     (O_LARGEFILE | O_ASYNC | O_CREAT | O_RDONLY)
-  #define f_file_mode_large_async_create_wo     (O_LARGEFILE | O_ASYNC | O_CREAT | O_WRONLY)
-  #define f_file_mode_large_async_create_rw     (O_LARGEFILE | O_ASYNC | O_CREAT | O_RDRW)
-  #define f_file_mode_large_async_create_new_ro (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_mode_large_async_create_new_wo (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_mode_large_async_create_new_rw (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_RDRW)
+  // file open flags pre-combined with direct io (which works synchronously).
+  #define f_file_flag_direct_ro            (O_DIRECT | O_RDONLY)
+  #define f_file_flag_direct_wo            (O_DIRECT | O_WRONLY)
+  #define f_file_flag_direct_rw            (O_DIRECT | O_RDRW)
+  #define f_file_flag_direct_create_ro     (O_DIRECT | O_CREAT | O_RDONLY)
+  #define f_file_flag_direct_create_wo     (O_DIRECT | O_CREAT | O_WRONLY)
+  #define f_file_flag_direct_create_rw     (O_DIRECT | O_CREAT | O_RDRW)
+  #define f_file_flag_direct_create_new_ro (O_DIRECT | O_CREAT | O_EXCL | O_RDONLY)
+  #define f_file_flag_direct_create_new_wo (O_DIRECT | O_CREAT | O_EXCL | O_WRONLY)
+  #define f_file_flag_direct_create_new_rw (O_DIRECT | O_CREAT | O_EXCL | O_RDRW)
 
-  // file permission modes
+  // file open flags pre-combined with large_file.
+  #define f_file_flag_large_ro                  (O_LARGEFILE | O_RDONLY)
+  #define f_file_flag_large_wo                  (O_LARGEFILE | O_WRONLY)
+  #define f_file_flag_large_rw                  (O_LARGEFILE | O_RDRW)
+  #define f_file_flag_large_sync_ro             (O_LARGEFILE | O_SYNC | O_RDONLY)
+  #define f_file_flag_large_sync_wo             (O_LARGEFILE | O_SYNC | O_WRONLY)
+  #define f_file_flag_large_sync_rw             (O_LARGEFILE | O_SYNC | O_RDRW)
+  #define f_file_flag_large_sync_create_ro      (O_LARGEFILE | O_SYNC | O_CREAT | O_RDONLY)
+  #define f_file_flag_large_sync_create_wo      (O_LARGEFILE | O_SYNC | O_CREAT | O_WRONLY)
+  #define f_file_flag_large_sync_create_rw      (O_LARGEFILE | O_SYNC | O_CREAT | O_RDRW)
+  #define f_file_flag_large_sync_create_new_ro  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_RDONLY)
+  #define f_file_flag_large_sync_create_new_wo  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_WRONLY)
+  #define f_file_flag_large_sync_create_new_rw  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_RDRW)
+  #define f_file_flag_large_async_ro            (O_LARGEFILE | O_ASYNC | O_RDONLY)
+  #define f_file_flag_large_async_wo            (O_LARGEFILE | O_ASYNC | O_WRONLY)
+  #define f_file_flag_large_async_rw            (O_LARGEFILE | O_ASYNC | O_RDRW)
+  #define f_file_flag_large_async_create_ro     (O_LARGEFILE | O_ASYNC | O_CREAT | O_RDONLY)
+  #define f_file_flag_large_async_create_wo     (O_LARGEFILE | O_ASYNC | O_CREAT | O_WRONLY)
+  #define f_file_flag_large_async_create_rw     (O_LARGEFILE | O_ASYNC | O_CREAT | O_RDRW)
+  #define f_file_flag_large_async_create_new_ro (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_RDONLY)
+  #define f_file_flag_large_async_create_new_wo (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_WRONLY)
+  #define f_file_flag_large_async_create_new_rw (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_RDRW)
+
+  // file permission modes.
   #define f_file_mode_owner_rwx S_IRWXU
   #define f_file_mode_owner_r   S_IRUSR
   #define f_file_mode_owner_w   S_IWUSR
@@ -270,18 +243,67 @@ extern "C" {
 #endif // _di_f_file_modes_
 
 /**
- * Macro for resetting the file position and the total elements to the size of the file.
+ * Change mode of a given file at the specified path.
  *
- * @todo review why this is being done this way and consider renaming, changing, or removing this.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The new mode to use.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_invalid_name (with error bit) if the filename is too long.
+ *   f_loop (with error bit) on loop error.
+ *   f_file_not_found (with error bit) if file at path was not found.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_prohibited (with error bit) if filesystem does not allow for file changes.
+ *   f_read_only (with error bit) if file is read-only.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_failure (with error bit) for any other (mkdir()) error.
+ *
+ * @see chmod()
  */
-#ifndef _di_f_macro_file_reset_position_
-  #define f_macro_file_reset_position(position, file) \
-    if (position.total == 0) { \
-      fseek(file.address, 0L, SEEK_END); \
-      position.total = ftell(file.address); \
-      fseek(file.address, 0L, SEEK_SET); \
-    }
-#endif // _di_f_macro_file_reset_position_
+#ifndef _di_f_file_change_mode_
+  extern f_return_status f_file_change_mode(const f_string path, const mode_t mode, const bool dereference);
+#endif // _di_f_file_change_mode_
+
+/**
+ * Change mode of a given file at the specified path.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The new mode to use.
+ * @param flags
+ *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_invalid_name (with error bit) if the filename is too long.
+ *   f_loop (with error bit) on loop error.
+ *   f_file_not_found (with error bit) if file at path was not found.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_prohibited (with error bit) if filesystem does not allow for file changes.
+ *   f_read_only (with error bit) if file is read-only.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_failure (with error bit) for any other (mkdir()) error.
+ *
+ * @see chmod()
+ */
+#ifndef _di_f_file_change_mode_at_
+  extern f_return_status f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode, const int flags);
+#endif // _di_f_file_change_mode_at_
 
 /**
  * Change owner and group of a given file at the specified path.
@@ -292,6 +314,9 @@ extern "C" {
  *   The new user id to use.
  * @param gid
  *   The new group id to use.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
  *
  * @return
  *   f_true if file exists.
@@ -308,8 +333,40 @@ extern "C" {
  * @see chown()
  */
 #ifndef _di_f_file_change_owner_
-  extern f_return_status f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid);
+  extern f_return_status f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid, const bool dereference);
 #endif // _di_f_file_change_owner_
+
+/**
+ * Change owner and group of a given file at the specified path.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param uid
+ *   The new user id to use.
+ * @param gid
+ *   The new group id to use.
+ * @param flags
+ *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ *
+ * @return
+ *   f_true if file exists.
+ *   f_false if file does not exist.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_invalid_name (with error bit) if the filename is too long.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_false (with error bit) on unknown/unhandled errors.
+ *
+ * @see chown()
+ */
+#ifndef _di_f_file_change_owner_at_
+  extern f_return_status f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flags);
+#endif // _di_f_file_change_owner_at_
 
 /**
  * Check if a file can be accessed.
@@ -365,7 +422,7 @@ extern "C" {
  *   f_read_only (with error bit) if file is read-only.
  *   f_failure (with error bit) for any other (mkdir()) error.
  *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   f_no_space (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   f_file_found (with error bit) of a directory aleady exists at the path.
  *   f_invalid_name (with error bit) on path name error.
  *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -375,11 +432,6 @@ extern "C" {
  *   f_busy (with error bit) if filesystem is too busy to perforrm write.
  *   f_file_error_read (with error bit) on file read error.
  *   f_file_error_write (with error bit) on file write error.
- *
- * @see f_file_create()
- * @see f_file_open()
- * @see f_file_close()
- * @see read()
  */
 #ifndef _di_f_file_copy_
   extern f_return_status f_file_copy(const f_string source, const f_string destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive);
@@ -420,7 +472,7 @@ extern "C" {
  *   f_read_only (with error bit) if file is read-only.
  *   f_failure (with error bit) for any other (mkdir()) error.
  *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   f_no_space (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   f_file_found (with error bit) of a directory aleady exists at the path.
  *   f_invalid_name (with error bit) on path name error.
  *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -430,29 +482,52 @@ extern "C" {
  *   f_busy (with error bit) if filesystem is too busy to perforrm write.
  *   f_file_error_read (with error bit) on file read error.
  *   f_file_error_write (with error bit) on file write error.
- *
- * @see f_file_create()
- * @see f_file_open()
- * @see f_file_close()
- * @see read()
  */
 #ifndef _di_f_file_clone_
   extern f_return_status f_file_clone(const f_string source, const f_string destination, const f_number_unsigned size_block, const bool exclusive, const bool roles);
 #endif // _di_f_file_clone_
 
 /**
+ * Close an open file.
+ *
+ * Will flush before closing.
+ *
+ * @param id
+ *   The file descriptor.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_file_error_descriptor (with error bit) if file descriptor is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   f_no_space (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   f_file_error_synchronize (with error bit) on flush failure.
+ *   f_file_error_close (with error bit) if fclose() failed for any other reason.
+ *
+ * @see fclose()
+ */
+#ifndef _di_f_file_close_
+  extern f_return_status f_file_close(int *id);
+#endif // _di_f_file_close_
+
+/**
  * Create a file based on the given path and file mode.
  *
  * The file will not be open after calling this.
- * This is useful for creating empty files.
  *
  * @param path
- *   Full path to the file (including entire filename).
+ *   The path file name.
  * @param mode
- *   The file mode.
+ *   The file mode to open in.
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to fail if the path is a symbolic link.
+ *   This does not write symbolic links. (@todo add function f_create_link() for creating symbolic links.)
  *
  * @return
  *   f_none on success.
@@ -465,7 +540,7 @@ extern "C" {
  *   f_read_only (with error bit) if file is read-only.
  *   f_failure (with error bit) for any other (mkdir()) error.
  *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   f_no_space (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   f_file_found (with error bit) of a directory aleady exists at the path.
  *   f_invalid_name (with error bit) on path name error.
  *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -477,76 +552,53 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_file_create_
-  extern f_return_status f_file_create(f_string path, const mode_t mode, const bool exclusive);
+  extern f_return_status f_file_create(const f_string path, const mode_t mode, const bool exclusive, const bool dereference);
 #endif // _di_f_file_create_
 
 /**
- * Close an opened file.
+ * Create a file based on the given path and file mode.
  *
- * If the file descriptor is defined, then fsync() is called before closing.
+ * The file will not be open after calling this.
  *
- * @param file
- *   The file to close.
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to open in.
+ * @param exclusive
+ *   If TRUE, will fail when file already exists.
+ *   If FALSE, will not fail if file already exists.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to fail if the path is a symbolic link.
+ *   This does not write symbolic links. (@todo add function f_create_link() for creating symbolic links.)
  *
  * @return
  *   f_none on success.
- *   f_file_not_open (with error bit) if the file is not open.
- *   f_file_error_synchronize (with error bit) on fsync() failure.
- *   f_file_error_close (with error bit) if fclose() failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *
- * @see fsync()
- * @see fclose()
- */
-#ifndef _di_f_file_close_
-  extern f_return_status f_file_close(f_file *file);
-#endif // _di_f_file_close_
-
-/**
- * Check if a file exists at a given directory.
- *
- * @param directory_file_descriptor
- *   The file descriptor of the directory.
- * @param path
- *   The path file name.
- * @param flags
- *   Additional flags to pass, such as AT_EACCESS or AT_SYMLINK_NOFOLLOW.
- *
- * @return
- *   f_true if file exists.
- *   f_false if file does not exist.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_name (with error bit) if the filename is too long.
- *   f_out_of_memory (with error bit) if out of memory.
- *   f_number_overflow (with error bit) on overflow error.
- *   f_invalid_directory (with error bit) on invalid directory.
  *   f_access_denied (with error bit) on access denied.
  *   f_loop (with error bit) on loop error.
- *   f_false (with error bit) on unknown/unhandled errors.
+ *   f_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_prohibited (with error bit) if filesystem does not allow for removing.
+ *   f_read_only (with error bit) if file is read-only.
+ *   f_failure (with error bit) for any other (mkdir()) error.
+ *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   f_no_space (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   f_file_found (with error bit) of a directory aleady exists at the path.
+ *   f_invalid_name (with error bit) on path name error.
+ *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   f_file_max_open (with error bit) when system-wide max open files is reached.
+ *   f_busy (with error bit) if filesystem is too busy to perforrm write.
+ *
+ * @see openat()
  */
-#ifndef _di_f_file_exists_at_
-  extern f_return_status f_file_exists_at(const int directory_file_descriptor, const f_string path, const int flags);
-#endif // _di_f_file_exists_at_
-
-/**
- * Flush the file.
- *
- * This calls fflush().
- *
- * @param file
- *   The file to flush.
- *
- * @return
- *   f_none is returned on success.
- *   f_file_not_open (with error bit) if the file is not open.
- *   f_file_error_flush (with error bit) if the flush failed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *
- * @see fflush()
- */
-#ifndef _di_f_file_flush_
-  extern f_return_status f_file_flush(f_file *file);
-#endif // _di_f_file_flush_
+#ifndef _di_f_file_create_at_
+  extern f_return_status f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive, const bool dereference);
+#endif // _di_f_file_create_at_
 
 /**
  * Identify whether or not a file exists at the given path.
@@ -573,6 +625,59 @@ extern "C" {
 #ifndef _di_f_file_exists_
   extern f_return_status f_file_exists(const f_string path);
 #endif // _di_f_file_exists_
+
+/**
+ * Identify whether or not a file exists at the given path.
+ *
+ * This does not require access on the file itself.
+ * This only requires access via the parent directories in the path.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param flags
+ *   Additional flags to pass, such as AT_EACCESS or AT_SYMLINK_NOFOLLOW.
+ *
+ * @return
+ *   f_true if file exists.
+ *   f_false if file does not exist.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_invalid_name (with error bit) if the filename is too long.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_false (with error bit) on unknown/unhandled errors.
+ *
+ * @see fstatat()
+ */
+#ifndef _di_f_file_exists_at_
+  extern f_return_status f_file_exists_at(const int at_id, const f_string path, const bool follow);
+#endif // _di_f_file_exists_at_
+
+/**
+ * Flush the file.
+ *
+ * @param id
+ *   The file descriptor.
+ *
+ * @return
+ *   f_none is returned on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_file_error_descriptor (with error bit) if file descriptor is invalid.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   f_no_space (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   f_unsupported (with error bit) if the file system or file type does not support flushing.
+ *   f_failure (with error bit) on any other failure.
+ *
+ * @see fsync()
+ */
+#ifndef _di_f_file_flush_
+  extern f_return_status f_file_flush(const int id);
+#endif // _di_f_file_flush_
 
 /**
  * Identify whether or not a file exists at the given path and if that file is a specific type.
@@ -606,8 +711,8 @@ extern "C" {
 /**
  * Identify whether or not a file exists at the given path within the parent directory and if that file is a specific type.
  *
- * @param file_id
- *   The file descriptor representing the parent directory to search within.
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param type
@@ -631,19 +736,106 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_is_at_
-  extern f_return_status f_file_is_at(const int file_id, const f_string path, const int type, const bool follow);
+  extern f_return_status f_file_is_at(const int at_id, const f_string path, const int type, const bool follow);
 #endif // _di_f_file_is_at_
+
+/**
+ * Create a symbolic link to a file.
+ *
+ * This will not replace existing files/links.
+ * This does not validate the existence of target.
+ *
+ * @param target
+ *   A path that the link points to.
+ * @param point
+ *   A path to the link that does the pointing.
+ *
+ * @return
+ *
+ * @see symlink()
+ */
+#ifndef _di_f_file_link_
+  extern f_return_status f_file_link(const f_string target, const f_string point);
+#endif // _di_f_file_link_
+
+/**
+ * Create a symbolic link to a file.
+ *
+ * This will not replace existing files/links.
+ * This does not validate the existence of target.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which point path is relative to.
+ * @param target
+ *   A path that the link points to.
+ * @param point
+ *   A path to the link that does the pointing.
+ *
+ * @return
+ *
+ * @see symlinkat()
+ */
+#ifndef _di_f_file_link_at_
+  extern f_return_status f_file_link_at(const int at_id, const f_string target, const f_string point);
+#endif // _di_f_file_link_at_
+
+/**
+ * Create a hard link to a file.
+ *
+ * This will not replace existing files/links.
+ *
+ * @param target
+ *   A path that the link points to.
+ * @param point
+ *   A path to the link that does the pointing.
+ *
+ * @return
+ *
+ * @see link()
+ */
+#ifndef _di_f_file_link_hard_
+  extern f_return_status f_file_link_hard(const f_string target, const f_string point);
+#endif // _di_f_file_link_hard_
+
+/**
+ * Create a hard link to a file.
+ *
+ * This will not replace existing files/links.
+ *
+ * @param at_id_target
+ *   The parent directory, as an open directory file descriptor, in which target path is relative to.
+ * @param at_id_point
+ *   The parent directory, as an open directory file descriptor, in which point path is relative to.
+ * @param target
+ *   A path that the link points to.
+ * @param point
+ *   A path to the link that does the pointing.
+ * @param flags
+ *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ *
+ * @return
+ *
+ * @see linkat()
+ */
+#ifndef _di_f_file_link_hard_at_
+  extern f_return_status f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string target, const f_string point, const int flags);
+#endif // _di_f_file_link_hard_at_
 
 /**
  * Open a particular file and save its stream.
  *
  * This will open the file and obtain the file descriptor.
  *
+ * @param path
+ *   The path file name.
+ * @param flags
+ *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ * @param mode
+ *   The file mode to open in.
+ *   Set to 0 to not use.
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor and file address.
- * @param path
- *   The path file name.
  *
  * @return
  *   f_none on success.
@@ -652,87 +844,129 @@ extern "C" {
  *   f_file_error_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fopen()
+ * @see open()
  */
 #ifndef _di_f_file_open_
-  extern f_return_status f_file_open(f_file *file, const f_string path);
+  extern f_return_status f_file_open(const f_string path, const int flags, const mode_t mode, f_file *file);
 #endif // _di_f_file_open_
 
 /**
- * Read until a single block is filled or EOF is reached.
+ * Open a particular file and save its stream.
  *
- * This does not allocate space to the buffer, so be sure enough space exists (file->size_chunk * file->size_block).
+ * This will open the file and obtain the file descriptor.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param flags
+ *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ * @param mode
+ *   The file mode to open in.
+ *   Set to 0 to not use.
+ * @param file
+ *   The data related to the file being opened.
+ *   This will be updated with the file descriptor and file address.
+ *
+ * @return
+ *   f_none on success.
+ *   f_file_not_found (with error bit) if the file was not found.
+ *   f_file_error_open (with error bit) if the file is already open.
+ *   f_file_error_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see openat()
+ */
+#ifndef _di_f_file_open_at_
+  extern f_return_status f_file_open_at(const int at_id, const f_string path, const int flags, const mode_t mode, f_file *file);
+#endif // _di_f_file_open_at_
+
+/**
+ * Read until EOF is reached.
+ *
+ * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
  *
  * @param file
  *   The file to read.
+ *   The file must already be open.
  * @param buffer
  *   The buffer the file is being read into.
+ *   The contents of the file is appended into this buffer.
  *
  * @return
  *   f_none on success.
  *   f_none_on_eof on success and EOF was reached.
- *   f_file_not_open (with error bit) if file is not open.
- *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
  *
- * @see fread()
+ * @see read()
  */
 #ifndef _di_f_file_read_
   extern f_return_status f_file_read(f_file *file, f_string_dynamic *buffer);
 #endif // _di_f_file_read_
 
 /**
- * Read until a single block is filled or EOF is reached, specified by the given range within the file, storing it in the buffer.
+ * Read until a single block is filled or EOF is reached.
  *
- * This does not allocate space to the buffer, so be sure enough space exists (file->size_chunk * file->size_block).
- *
- * Will auto-seek file position to position.start.
- * (The file is assumed to already be in the position.start position.)
+ * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
  *
  * @param file
  *   The file to read.
+ *   The file must already be open.
  * @param buffer
  *   The buffer the file is being read into.
- * @param position
- *   The file position information.
- *   When position.total_elemenets is set to 0, this will read until the entire buffer is filled or the EOF is reached.
+ *   The contents of the file is appended into this buffer.
  *
  * @return
  *   f_none on success.
  *   f_none_on_eof on success and EOF was reached.
- *   f_file_not_open (with error bit) if file is not open.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
  *
- * @see f_file_read_until()
+ * @see read()
  */
-#ifndef _di_f_file_read_at_
-  extern f_return_status f_file_read_at(f_file *file, f_string_dynamic *buffer, const f_file_position position);
-#endif // _di_f_file_read_at_
+#ifndef _di_f_file_read_
+  extern f_return_status f_file_read_block(f_file *file, f_string_dynamic *buffer);
+#endif // _di_f_file_read_
 
 /**
- * Read until a single block is filled or EOF is reached, appending it to the buffer.
+ * Read until a given number or EOF is reached, storing it in the buffer.
  *
- * This does not allocate space to the buffer, so be sure enough space exists (file->size_chunk * file->size_block).
- *
- * Will not auto-seek file position.
+ * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
  *
  * @param file
  *   The file to read.
+ *   The file must already be open.
  * @param buffer
  *   The buffer the file is being read into.
  * @param total
- *   The total elements to read.
- *   When set to 0, this will read until the entire buffer is filled or the EOF is reached.
+ *   The total bytes to read, unless EOF is reached first.
  *
  * @return
  *   f_none on success.
  *   f_none_on_eof on success and EOF was reached.
- *   f_file_not_open (with error bit) if file is not open.
- *   f_file_error_seek (with error bit) if file seek failed.
- *   f_file_error_read (with error bit) if file read failed.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
  *
- * @see f_file_read_at()
+ * @see read
  */
 #ifndef _di_f_file_read_until_
   extern f_return_status f_file_read_until(f_file *file, f_string_dynamic *buffer, const f_string_length total);
@@ -767,21 +1001,75 @@ extern "C" {
 #endif // _di_f_file_remove_
 
 /**
- * Read statistics of a file.
+ * Remove a file.
  *
- * This will not re-read the file statistics., file_status must not be allocated.
- * This is because fstatat() will allocate to this variable.
- *
- * This is essentially a wrapper to fstatat() converting any error codes into the FLL format.
- *
- * @param file_id
- *   The file descriptor.
- * @param file_name
- *   The name of the file.
- * @param file_stat
- *   The statistics read.
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
  * @param flags
- *   Any valid flag used by fstatat(), such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_busy (with error bit) if file is busy.
+ *   f_error_input_output (with error bit) if an I/O error occurred.
+ *   f_file_is_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
+ *   f_loop (with error bit) on loop error.
+ *   f_invalid_name (with error bit) on path name error.
+ *   f_file_not_found (with error bit) if file not found.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   f_prohibited (with error bit) if filesystem does not allow for removing.
+ *   f_read_only (with error bit) if file is read-only.
+ *   f_failure (with error bit) for any other (unlink()) error.
+ *
+ * @see unlinkat()
+ */
+#ifndef _di_f_file_remove_at_
+  extern f_return_status f_file_remove_at(const int at_id, const f_string path, const int flags);
+#endif // _di_f_file_remove_at_
+
+/**
+ * Given an open file descriptor, seek
+ *
+ * @param id
+ *   The file descriptor.
+ * @param whence
+ *   One of: SEEK_SET, SEEK_CUR, SEEK_END, SEEK_DATA, SEEK_HOLE.
+ * @param offset
+ *   The offset to use, based off of whence.
+ * @param seeked
+ *   This gets update to represent the total amount seeked.
+ *   To be compared against offset.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_out_of_bound (with error bit) if SEEK_DATA or SEEK_HOLE is specified as whence and offset is beyond the end of file.
+ *   f_number_overflow (with error bit) on overflow for offset.
+ *   f_file_is_type_pipe (with error bit) if file descriptor represents a pipe, socket, or FIFO.
+ *   f_failure (with error bit) on any other error.
+ *
+ * @see lseek
+ */
+#ifndef _di_f_file_seek_
+  extern f_return_status f_file_seek(const int id, const int whence, const f_string_length offset, f_string_length *seeked);
+#endif // _di_f_file_seek_
+
+/**
+ * Read the size of file.
+ *
+ * @param path
+ *   The path to the file.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
+ * @param size
+ *   This gets set to the size of the file.
  *
  * @return
  *   f_none on success.
@@ -794,22 +1082,75 @@ extern "C" {
  *   f_loop (with error bit) if a loop occurred.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @see fstatat()
+ * @see f_file_stat()
  */
-#ifndef _di_f_file_stat_at_
-  extern f_return_status f_file_stat_at(const int file_id, const f_string file_name, struct stat *file_stat, const int flags);
-#endif // _di_f_file_stat_at_
+#ifndef _di_f_file_size_
+  extern f_return_status f_file_size(const f_string path, const bool dereference, f_string_length *size);
+#endif // _di_f_file_size_
+
+/**
+ * Read the size of file.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path to the file.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
+ * @param size
+ *   This gets set to the size of the file.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_name (with error bit) if the name is somehow invalid.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_file_not_found (with error bit) if the file was not found.
+ *   f_access_denied (with error bit) if access to the file was denied.
+ *   f_loop (with error bit) if a loop occurred.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_stat_at()
+ */
+#ifndef _di_f_file_size_at_
+  extern f_return_status f_file_size_at(const int at_id, const f_string path, const bool dereference, f_string_length *size);
+#endif // _di_f_file_size_at_
+
+/**
+ * Read size of a file relative to the path represented by the file descriptor id.
+ *
+ * @param id
+ *   The file descriptor.
+ * @param size
+ *   This gets set to the size of the file.
+ *
+ * @return
+ *   f_none on success.
+ *   f_invalid_name (with error bit) if the name is somehow invalid.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_file_not_found (with error bit) if the file was not found.
+ *   f_access_denied (with error bit) if access to the file was denied.
+ *   f_loop (with error bit) if a loop occurred.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_stat_by_id()
+ */
+#ifndef _di_f_file_size_by_id_
+  extern f_return_status f_file_size_by_id(const int id, f_string_length *size);
+#endif // _di_f_file_size_by_id_
 
 /**
  * Read statistics of a file.
  *
- * This will not re-read the file statistics., file_status must not be allocated.
- * This is because stat() will allocate to this variable.
- *
- * This is essentially a wrapper to stat() converting any error codes into the FLL format.
- *
- * @param file_name
- *   The name of the file.
+ * @param path
+ *   The path to the file.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
  * @param file_stat
  *   The statistics read.
  *
@@ -827,18 +1168,42 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_stat_
-  extern f_return_status f_file_stat(const f_string file_name, struct stat *file_stat);
+  extern f_return_status f_file_stat(const f_string path, const bool dereference, struct stat *file_stat);
 #endif // _di_f_file_stat_
 
 /**
- * Read statistics of a file.
+ * Read statistics of a file relative to the path represented by the file descriptor id.
  *
- * This will not re-read the file statistics., file_status must not be allocated.
- * This is because fstat() will allocate to this variable.
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path to the file.
+ * @param flags
+ *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ * @param file_stat
+ *   The statistics read.
  *
- * This is essentially a wrapper to fstat() converting any error codes into the FLL format.
+ * @return
+ *   f_none on success.
+ *   f_invalid_name (with error bit) if the name is somehow invalid.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_file_not_found (with error bit) if the file was not found.
+ *   f_access_denied (with error bit) if access to the file was denied.
+ *   f_loop (with error bit) if a loop occurred.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- * @param file_id
+ * @see fstatat()
+ */
+#ifndef _di_f_file_stat_at_
+  extern f_return_status f_file_stat_at(const int at_id, const f_string path, const int flags, struct stat *file_stat);
+#endif // _di_f_file_stat_at_
+
+/**
+ * Read statistics of a file using a file descriptor id.
+ *
+ * @param id
  *   The file descriptor.
  * @param file_stat
  *   The statistics read.
@@ -857,7 +1222,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_stat_by_id_
-  extern f_return_status f_file_stat_by_id(const int file_id, struct stat *file_stat);
+  extern f_return_status f_file_stat_by_id(const int id, struct stat *file_stat);
 #endif // _di_f_file_stat_by_id_
 
 #ifdef __cplusplus

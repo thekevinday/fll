@@ -124,7 +124,7 @@ extern "C" {
     f_string_dynamic buffer;
     f_fss_objects objects;
     f_fss_contents contents;
-    f_file_position file_position;
+    f_string_quantity quantity;
     f_string_lengths remaining;
     bool process_pipe;
 
@@ -137,7 +137,7 @@ extern "C" {
       f_string_dynamic_initialize, \
       f_fss_objects_initialize, \
       f_fss_contents_initialize, \
-      f_file_position_initialize, \
+      f_string_quantity_initialize, \
       f_string_lengths_initialize, \
       f_false, \
       fl_color_context_initialize, \

@@ -228,6 +228,9 @@ extern "C" {
         case f_warn:
           *string = fl_status_string_warn;
           break;
+        case f_block:
+          *string = fl_status_string_block;
+          break;
         case f_critical:
           *string = fl_status_string_critical;
           break;
@@ -239,6 +242,12 @@ extern "C" {
           break;
         case f_no_data:
           *string = fl_status_string_no_data;
+          break;
+        case f_no_space:
+          *string = fl_status_string_no_space;
+          break;
+        case f_out_of_bound:
+          *string = fl_status_string_out_of_bound;
           break;
         case f_out_of_memory:
           *string = fl_status_string_out_of_memory;
@@ -567,6 +576,9 @@ extern "C" {
       #endif // _di_fl_status_fork_
 
       #ifndef _di_fl_status_file_
+        case f_file_closed:
+          *string = fl_status_string_file_closed;
+          break;
         case f_file_error_seek:
           *string = fl_status_string_file_seek_error;
           break;
@@ -597,11 +609,11 @@ extern "C" {
         case f_file_not_found:
           *string = fl_status_string_file_not_found;
           break;
+        case f_file_empty:
+          *string = fl_status_string_file_empty;
+          break;
         case f_file_found:
           *string = fl_status_string_file_found;
-          break;
-        case f_file_is_empty:
-          *string = fl_status_string_file_is_empty;
           break;
         case f_file_is_type_block:
           *string = fl_status_string_file_is_type_block;
@@ -678,6 +690,9 @@ extern "C" {
         case f_file_max_open:
           *string = fl_status_string_file_max_open;
           break;
+        case f_file_utf:
+          *string = fl_status_string_file_utf;
+          break;
       #endif // _di_fl_status_file_
 
       #ifndef _di_f_status_filesystem_
@@ -720,11 +735,17 @@ extern "C" {
         case f_directory_error_descriptor:
           *string = fl_status_string_directory_descriptor_error;
           break;
+        case f_directory_closed:
+          *string = fl_status_string_directory_closed;
+          break;
+        case f_directory_empty:
+          *string = fl_status_string_directory_empty;
+          break;
+        case f_directory_found:
+          *string = fl_status_string_directory_found;
+          break;
         case f_directory_not_found:
           *string = fl_status_string_directory_not_found;
-          break;
-        case f_directory_is_empty:
-          *string = fl_status_string_directory_is_empty;
           break;
         case f_directory_not_open:
           *string = fl_status_string_directory_not_open;
@@ -740,6 +761,9 @@ extern "C" {
           break;
         case f_directory_error_stream:
           *string = fl_status_string_directory_error_stream;
+          break;
+        case f_directory_utf:
+          *string = fl_status_string_directory_utf;
           break;
       #endif // _di_fl_status_directory_
 

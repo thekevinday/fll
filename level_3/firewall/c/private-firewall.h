@@ -18,8 +18,6 @@ typedef struct {
   bool is_stop;
   bool is_lock;
 
-  f_file_position file_position;
-
   f_array_length device;
 
   f_string_dynamic buffer;
@@ -37,7 +35,6 @@ typedef struct {
     f_false, \
     f_false, \
     f_false, \
-    f_file_position_initialize, \
     0, \
     f_string_dynamic_initialize, \
     0, \

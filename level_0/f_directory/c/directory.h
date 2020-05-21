@@ -45,13 +45,14 @@ extern "C" {
  * The name max 255 because the directory name size is 256.
  * The last 1 is for the NULL character.
  *
- * The directory max recursion is more of a default than a rule.
+ * The directory max descriptors is more of a default than a rule.
+ * This is generally used for nftw() recursive operations to reduce the number of open file descriptors during recursion.
  */
 #ifndef _di_f_directory_limitations_
   #define f_directory_default_allocation_step f_memory_default_allocation_step
 
-  #define f_directory_name_max      255
-  #define f_directory_max_recursion 2048
+  #define f_directory_name_max        255
+  #define f_directory_descriptors_max 255
 #endif // _di_f_directory_limitations_
 
 /**
@@ -124,6 +125,55 @@ extern "C" {
 #endif // _di_f_directory_listing_
 
 /**
+ * A structure representing a set of modes intended to be used by directory operations.
+ *
+ * A small set of macros are provider to help simplify assigning modes.
+ *
+ * The pipe (S_IFIFO) is intentionally not supported.
+ */
+#ifndef _di_f_directory_mode_
+  typedef struct {
+    f_string_dynamics block;     // S_IFBLK
+    f_string_dynamics character; // S_IFCHR
+    f_string_dynamics directory; // S_IFDIR
+    f_string_dynamics file;      // S_IFREG
+    f_string_dynamics link;      // S_IFLNK
+    f_string_dynamics socket;    // S_IFSOCK
+    f_string_dynamics unknown;
+  } f_directory_mode;
+
+  #define f_directory_mode_initialize { \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+  }
+
+  #define f_macro_directory_mode_set_all(modes, mode) \
+    modes.block = mode; \
+    modes.character = mode; \
+    modes.directory = mode; \
+    modes.file = mode; \
+    modes.link = mode; \
+    modes.socket = mode; \
+    modes.unknown = mode;
+
+  #define f_macro_directory_mode_set_common(modes, mode_directory, mode_file, mode_link) \
+    modes.directory = mode_directory; \
+    modes.file = mode_file; \
+    modes.link = mode_link;
+
+  #define f_macro_directory_mode_set_uncommon(modes, mode_block, mode_character, mode_socket, mode_unknown) \
+    modes.block = mode_block; \
+    modes.character = mode_character; \
+    modes.socket = mode_socket; \
+    modes.unknown = mode_unknown;
+#endif // _di_f_directory_mode_
+
+/**
  * A structure representing a directory.
  *
  * @todo review this and decide to keep and use it or just remove it.
@@ -145,8 +195,8 @@ extern "C" {
  *
  * @param path
  *   The path file name.
- * @param modes
- *   The directory modes to use when creating.
+ * @param mode
+ *   The directory mode to use when creating.
  *
  * @return
  *   f_none on success.
@@ -159,7 +209,7 @@ extern "C" {
  *   f_read_only (with error bit) if file is read-only.
  *   f_failure (with error bit) for any other (mkdir()) error.
  *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   f_no_space (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   f_file_found (with error bit) of a directory aleady exists at the path.
  *   f_invalid_name (with error bit) on path name error.
  *   f_directory_error_link_max (with error bit) max links limit reached or exceeded.
@@ -168,7 +218,7 @@ extern "C" {
  * @see mkdir()
  */
 #ifndef _di_f_directory_create_
-  extern f_return_status f_directory_create(const f_string path, const mode_t modes);
+  extern f_return_status f_directory_create(const f_string path, const mode_t mode);
 #endif // _di_f_directory_create_
 
 /**
@@ -178,8 +228,8 @@ extern "C" {
  *   The file descriptor in which the directory will be created within.
  * @param path
  *   The path file name.
- * @param modes
- *   The directory modes to use when creating.
+ * @param mode
+ *   The directory mode to use when creating.
  *
  * @return
  *   f_none on success.
@@ -192,17 +242,40 @@ extern "C" {
  *   f_read_only (with error bit) if file is read-only.
  *   f_failure (with error bit) for any other (mkdir()) error.
  *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   f_no_space (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   f_file_found (with error bit) of a directory aleady exists at the path.
  *   f_invalid_name (with error bit) on path name error.
  *   f_directory_error_link_max (with error bit) max links limit reached or exceeded.
  *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
  *
  * @see mkdir()
- *
+ */
 #ifndef _di_f_directory_create_at_
-  extern f_return_status f_directory_create_at(const int at_id, const f_string path, const mode_t modes);
+  extern f_return_status f_directory_create_at(const int at_id, const f_string path, const mode_t mode);
 #endif // _di_f_directory_create_at_
+
+/**
+ * Identify whether or not a file exists at the given path and if that file is a directory or a symlink to a directory.
+ *
+ * @param path
+ *   The path file name.
+ *
+ * @return
+ *   t_true if path was found and path is a directory (or a symlink to a directory).
+ *   f_false if path was found and path is not a directory.
+ *   f_file_not_found if the path was not found.
+ *   f_invalid_name (with error bit) if the name is somehow invalid.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_access_denied (with error bit) if access to the file was denied.
+ *   f_loop (with error bit) if a loop occurred.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstat()
+ */
+#ifndef _di_f_directory_exists_
+  extern f_return_status f_directory_exists(const f_string path);
+#endif // _di_f_directory_exists_
 
 /**
  * Identify whether or not a file exists at the given path and if that file is a directory.
@@ -212,7 +285,7 @@ extern "C" {
  *
  * @return
  *   t_true if path was found and path is a directory.
- *   f_false if path was found and path is not a directory.
+ *   f_false if path was found and path is not a directory (this includes symlinks).
  *   f_file_not_found if the path was not found.
  *   f_invalid_name (with error bit) if the name is somehow invalid.
  *   f_out_of_memory (with error bit) if out of memory.

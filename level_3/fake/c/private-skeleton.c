@@ -91,7 +91,7 @@ extern "C" {
 
     if (path.used == 0) return f_none;
 
-    status = f_directory_is(path.string);
+    status = f_directory_exists(path.string);
     if (status == f_true) {
       if (data.verbosity == fake_verbosity_verbose) {
         printf("Directory '%s' already exists.%c", path.string, f_string_eol);
@@ -132,7 +132,7 @@ extern "C" {
       }
     }
     else if (f_status_is_error(status)) {
-      fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), "f_directory_is", path.string, "create", f_false, f_true);
+      fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), "f_directory_exists", path.string, "create", f_false, f_true);
       return status;
     }
 

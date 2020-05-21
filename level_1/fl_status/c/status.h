@@ -236,6 +236,9 @@ extern "C" {
     #define fl_status_string_warn "f_warn"
     #define fl_status_string_warn_length 6
 
+    #define fl_status_string_block "f_block"
+    #define fl_status_string_block_length 7
+
     #define fl_status_string_critical "f_critical"
     #define fl_status_string_critical_length 10
 
@@ -247,6 +250,12 @@ extern "C" {
 
     #define fl_status_string_no_data "f_no_data"
     #define fl_status_string_no_data_length 9
+
+    #define fl_status_string_no_space "f_no_space"
+    #define fl_status_string_no_space_length 10
+
+    #define fl_status_string_out_of_bound "f_out_of_bound"
+    #define fl_status_string_out_of_bound_length 14
 
     #define fl_status_string_out_of_memory "f_out_of_memory"
     #define fl_status_string_out_of_memory_length 15
@@ -567,6 +576,9 @@ extern "C" {
   #endif // _di_fl_status_fork_
 
   #ifndef _di_fl_status_file_
+    #define fl_status_string_file_closed "f_file_closed"
+    #define fl_status_string_file_closed_length 13
+
     #define fl_status_string_file_seek_error "f_file_error_seek"
     #define fl_status_string_file_seek_error_length 17
 
@@ -597,11 +609,11 @@ extern "C" {
     #define fl_status_string_file_not_found "f_file_not_found"
     #define fl_status_string_file_not_found_length 16
 
+    #define fl_status_string_file_empty "f_file_empty"
+    #define fl_status_string_file_empty_length 12
+
     #define fl_status_string_file_found "f_file_found"
     #define fl_status_string_file_found_length 12
-
-    #define fl_status_string_file_is_empty "f_file_is_empty"
-    #define fl_status_string_file_is_empty_length 15
 
     #define fl_status_string_file_is_type_block "f_file_is_type_block"
     #define fl_status_string_file_is_type_block_length 20
@@ -677,6 +689,9 @@ extern "C" {
 
     #define fl_status_string_file_max_open "f_file_max_open"
     #define fl_status_string_file_max_open_length 15
+
+    #define fl_status_string_file_utf "f_file_utf"
+    #define fl_status_string_file_utf_length 10
   #endif // _di_fl_status_file_
 
   #ifndef _di_f_status_filesystem_
@@ -691,6 +706,9 @@ extern "C" {
   #endif // _di_f_status_filesystem_
 
   #ifndef _di_fl_status_directory_
+    #define fl_status_string_directory_closed "f_directory_closed"
+    #define fl_status_string_directory_closed_length 18
+
     #define fl_status_string_directory_read_error "f_directory_error_read"
     #define fl_status_string_directory_read_error_length 22
 
@@ -718,11 +736,14 @@ extern "C" {
     #define fl_status_string_directory_descriptor_error "f_directory_error_descriptor"
     #define fl_status_string_directory_descriptor_error_length 28
 
+    #define fl_status_string_directory_empty "f_directory_empty"
+    #define fl_status_string_directory_empty_length 17
+
+    #define fl_status_string_directory_found "f_directory_found"
+    #define fl_status_string_directory_found_length 17
+
     #define fl_status_string_directory_not_found "f_directory_not_found"
     #define fl_status_string_directory_not_found_length 21
-
-    #define fl_status_string_directory_is_empty "f_directory_is_empty"
-    #define fl_status_string_directory_is_empty_length 20
 
     #define fl_status_string_directory_not_open "f_directory_not_open"
     #define fl_status_string_directory_not_open_length 20
@@ -738,6 +759,9 @@ extern "C" {
 
     #define fl_status_string_directory_error_stream "f_directory_error_stream"
     #define fl_status_string_directory_error_stream_length 19
+
+    #define fl_status_string_directory_utf "f_directory_utf"
+    #define fl_status_string_directory_utf_length 15
   #endif // _di_fl_status_directory_
 
   #ifndef _di_fl_status_socket_

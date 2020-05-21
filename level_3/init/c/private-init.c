@@ -8,7 +8,7 @@
   f_return_status init_rule_buffer(const init_data data, const f_string filename, f_string_dynamic *buffer, f_fss_objects *objects, f_fss_contents *contents) {
     f_file file = f_file_initialize;
     f_status status = f_none;
-    f_file_position file_position = f_file_position_initialize;
+    f_string_quantity quantity = f_string_quantity_initialize;
 
     status = f_file_open(&file, filename);
 
@@ -38,10 +38,10 @@
       return f_status_set_error(status);
     }
 
-    f_macro_file_reset_position(file_position, file)
+    f_macro_file_reset_position(quantity, file)
 
     fflush(stdout);
-    status = fl_file_read_position(&file, buffer, file_position);
+    status = fl_file_read_position(&file, buffer, quantity);
 
     f_file_close(&file);
 

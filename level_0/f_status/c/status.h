@@ -134,6 +134,7 @@ extern "C" {
 
     #ifndef _di_f_status_basic_
       f_none = 197, // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
+      f_block,
       f_critical,
       f_does_not_exist,
       f_dummy,
@@ -147,6 +148,8 @@ extern "C" {
       f_maybe,
       f_not_connected,
       f_no_data,
+      f_no_space,
+      f_out_of_bound,
       f_out_of_memory,
       f_prohibited,
       f_read_only,
@@ -266,6 +269,7 @@ extern "C" {
     #endif // _di_f_status_fork_
 
     #ifndef _di_f_status_file_
+      f_file_closed,
       f_file_error,
       f_file_error_allocation,
       f_file_error_close,
@@ -280,8 +284,8 @@ extern "C" {
       f_file_error_stat,
       f_file_error_synchronize,
       f_file_error_write,
+      f_file_empty,
       f_file_found,
-      f_file_is_empty,
       f_file_is_type_block,
       f_file_is_type_character,
       f_file_is_type_directory,
@@ -303,6 +307,7 @@ extern "C" {
       f_file_not_utf,
       f_file_max_descriptors,
       f_file_max_open,
+      f_file_utf,
     #endif // _di_f_status_file_
 
     #ifndef _di_f_status_filesystem_
@@ -324,10 +329,13 @@ extern "C" {
       f_directory_error_synchronize,
       f_directory_error_unsupported,
       f_directory_error_write,
-      f_directory_is_empty,
+      f_directory_closed,
+      f_directory_empty,
+      f_directory_found,
       f_directory_not_found,
       f_directory_not_open,
       f_directory_not_utf,
+      f_directory_utf,
     #endif // _di_f_status_directory_
 
     #ifndef _di_f_status_socket_

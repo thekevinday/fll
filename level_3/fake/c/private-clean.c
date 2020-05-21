@@ -18,10 +18,10 @@ extern "C" {
     }
 
     if (data.verbosity == fake_verbosity_verbose) {
-      status = f_directory_remove_custom(data.path_build.string, f_directory_max_recursion, f_true, fake_clean_remove_recursively_verbosely);
+      status = f_directory_remove_custom(data.path_build.string, f_directory_descriptors_max, f_true, fake_clean_remove_recursively_verbosely);
     }
     else {
-      status = f_directory_remove(data.path_build.string, f_directory_max_recursion, f_true);
+      status = f_directory_remove(data.path_build.string, f_directory_descriptors_max, f_true);
     }
 
     if (f_status_is_error(status)) {

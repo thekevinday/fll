@@ -123,7 +123,7 @@ extern "C" {
 
     f_string_dynamic buffer;
     f_fss_nest nest;
-    f_file_position file_position;
+    f_string_quantity quantity;
     f_string_lengths remaining;
     bool process_pipe;
 
@@ -135,7 +135,7 @@ extern "C" {
       f_console_parameter_initialize_fss_extended_list_read, \
       f_string_dynamic_initialize, \
       f_fss_nest_initialize, \
-      f_file_position_initialize, \
+      f_quantity_initialize, \
       f_string_lengths_initialize, \
       f_false, \
       fl_color_context_initialize, \

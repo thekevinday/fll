@@ -566,7 +566,6 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
           f_file file = f_file_initialize;
           f_string_dynamic file_path = f_string_dynamic_initialize;
           f_string_dynamic local_buffer = f_string_dynamic_initialize;
-          f_file_position file_position = f_file_position_initialize;
 
           f_fss_objects basic_objects = f_fss_objects_initialize;
           f_fss_contents basic_contents = f_fss_objects_initialize;
@@ -613,13 +612,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
             f_file_close(&file);
           }
           else {
-            if (file_position.total == 0) {
-              fseek(file.address, 0, SEEK_END);
-              file_position.total = ftell(file.address);
-              fseek(file.address, 0, SEEK_SET);
-            }
-
-            status = fl_file_read_position(&file, &local_buffer, file_position);
+            status = f_file_read(&file, &local_buffer);
 
             f_file_close(&file);
 
@@ -1374,10 +1367,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
     return status;
   }
 
-  f_macro_file_reset_position(local->file_position, file)
-
-  fflush(stdout);
-  status = fl_file_read_position(&file, &local->buffer, local->file_position);
+  status = f_file_read(&file, &local->buffer);
 
   f_file_close(&file);
 
@@ -1477,9 +1467,6 @@ f_return_status firewall_delete_local_data(firewall_local_data *local) {
   local->is_main = f_false;
   local->is_stop = f_false;
   local->is_lock = f_false;
-
-  local->file_position.start = 0;
-  local->file_position.total = 0;
 
   local->device = 0;
   local->chain = 0;

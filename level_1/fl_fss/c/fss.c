@@ -172,43 +172,27 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (header == 0) return f_status_set_error(f_invalid_parameter);
-      if (file->address == 0) return f_status_set_error(f_file_not_open);
-      if (ferror(file->address) != 0) return f_status_set_error(f_file_error);
+      if (file->id == 0) return f_status_set_error(f_file_not_open);
+      if (file->id < 0) return f_status_set_error(f_file_error);
     #endif // _di_level_1_parameter_checking_
 
-    clearerr(file->address);
-
-    f_status         status = f_none;
-    f_string_dynamic buffer = f_string_dynamic_initialize;
-    f_file_position  position = f_file_position_initialize;
-
-    // make sure we are in the proper length in the file
     {
-      int seek_result = f_macro_file_seek_begin(file->address, 0);
-
-      if (seek_result != 0) return f_status_set_error(f_file_error_seek);
+      f_string_length seeked = 0;
+      if (f_status_is_error(f_file_seek(file->id, SEEK_SET, 0, &seeked))) {
+        return f_status_set_error(f_file_error_seek);
+      }
     }
 
-    // 1: Prepare the buffer to handle a size of f_fss_max_header_length
-    position.total = f_fss_max_header_length;
+    f_status status = f_none;
+    f_string_dynamic buffer = f_string_dynamic_initialize;
 
-    f_macro_string_dynamic_adjust(status, buffer, position.total + 1);
+    f_macro_string_dynamic_resize(status, buffer, f_fss_max_header_length + 1);
+    if (f_status_is_error(status)) return status;
 
-    if (f_status_is_error(status)) {
-      return status;
-    }
+    status = f_file_read_until(file, &buffer, f_fss_max_header_length + 1);
+    if (f_status_is_error(status)) return status;
 
-    // 2: buffer the file
-    status = f_file_read_at(file, &buffer, position);
-
-    if (f_status_is_error(status)) {
-      return status;
-    }
-
-    // 3: Now attempt to process the file for the header
-    status = fl_fss_identify(buffer, header);
-
-    return status;
+    return fl_fss_identify(buffer, header);
   }
 #endif // _di_fl_fss_identify_file_
 

@@ -1,27 +1,9 @@
 This file contains FLL-wide todo notes.
 
-- The FSS processing code uses 64-bit data types for string lengths.
-  This puts a hard limit on the size of files supported.
-  Expand this to support larger ranges.
-  Possible options include a second 64-bit type, such that the size is 128-bit.
-  This could also be two 128-bit types, resulting in a range of 256-bit.
-  Ultimately research needs to be done on how other open-source projects handle this and a good examples will be filesystems, like the e2fsutils project or compression tools like tar and bz2.
-
 - Custom language support needs to be looked into to allow for the project to support multiple languages.
   Given that this project focuses on KISS principles, the project is targeted towards programs for specific users.
   In which case, the language can be hardcoded in as a single language.
   Later versions after this first locale support will then consider supporting multiple languages not necessarily compiled in.
-
-- Implement support for new standard parameter "+e"/"++exit_code", which designates that the exit code is to be stored in the following environment variable.
-  This allows storing the full error code, which is not generally suppoted by bash.
-
-- Implement "%llu" defines so that when number is of a different type, the correct '%llu' equivalent can be used.
-  There needs to be an '%lllu' equivalent fo 128-byte.
-  A better approach might be to define a custom printf()/fprintf() replacement functions that handle a new set of parameters, including color codes.
-  Example:
-    f_print(context, "%f1 Something %nu %fr$fn", number_type);
-   Where context can be NULL to do nothing on color prints, %f1 could be some color, %fr is color reset, %fn is newline, and %nu is the number (unsigned) to print.
-   This is just a random example and does not reflect the codes to be used.
 
 - Create an fss simple content type (such that data->contents.array[at].start can be used instead of data->contents.array[at].array[0].start).
 
@@ -120,3 +102,5 @@ A new wiki-like syntax meant to be simpler:
 
 Go though all source code and ensure that, for all non-exceptional cases, any dynamic strings appends to existing buffers instead of overwriting them (based on buffer->used).
 Then document this behavior.
+
+The status code processing code are all out of alphabetic order and need cleanup.

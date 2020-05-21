@@ -86,11 +86,11 @@ extern "C" {
  *   f_none on success.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_file_read_at().
+ *   Errors from (with error bit): f_file_read_quantity().
  *   Errors from (with error bit): fl_fss_identify()
  *   File errors (with error bit): f_file_error_seek, f_file_not_open.
  *
- * @see f_file_read_at()
+ * @see f_file_read_quantity()
  * @see fl_fss_identify()
  */
 #ifndef _di_fl_fss_identify_file_

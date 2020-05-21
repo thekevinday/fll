@@ -165,9 +165,9 @@ extern "C" {
 #endif // _di_f_string_range_
 
 /**
- * An array of string locations.
+ * An array of string ranges.
  *
- * array: the array of string locations.
+ * array: the array of string ranges.
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
  */
@@ -181,19 +181,71 @@ extern "C" {
 
   #define f_string_ranges_initialize {0, 0, 0}
 
-  #define f_macro_string_ranges_clear(locations) f_macro_memory_structure_clear(locations)
+  #define f_macro_string_ranges_clear(ranges) f_macro_memory_structure_clear(ranges)
 
-  #define f_macro_string_ranges_new(status, locations, length) f_macro_memory_structure_new(status, locations, f_string_range, length)
+  #define f_macro_string_ranges_new(status, ranges, length) f_macro_memory_structure_new(status, ranges, f_string_range, length)
 
-  #define f_macro_string_ranges_delete(status, locations)  f_macro_memory_structure_delete(status, locations, f_string_range)
-  #define f_macro_string_ranges_destroy(status, locations) f_macro_memory_structure_destroy(status, locations, f_string_range)
+  #define f_macro_string_ranges_delete(status, ranges)  f_macro_memory_structure_delete(status, ranges, f_string_range)
+  #define f_macro_string_ranges_destroy(status, ranges) f_macro_memory_structure_destroy(status, ranges, f_string_range)
 
-  #define f_macro_string_ranges_delete_simple(locations)  f_macro_memory_structure_delete_simple(locations, f_string_range)
-  #define f_macro_string_ranges_destroy_simple(locations) f_macro_memory_structure_destroy_simple(locations, f_string_range)
+  #define f_macro_string_ranges_delete_simple(ranges)  f_macro_memory_structure_delete_simple(ranges, f_string_range)
+  #define f_macro_string_ranges_destroy_simple(ranges) f_macro_memory_structure_destroy_simple(ranges, f_string_range)
 
-  #define f_macro_string_ranges_resize(status, locations, new_length) f_macro_memory_structure_resize(status, locations, f_string_range, new_length)
-  #define f_macro_string_ranges_adjust(status, locations, new_length) f_macro_memory_structure_adjust(status, locations, f_string_range, new_length)
+  #define f_macro_string_ranges_resize(status, ranges, new_length) f_macro_memory_structure_resize(status, ranges, f_string_range, new_length)
+  #define f_macro_string_ranges_adjust(status, ranges, new_length) f_macro_memory_structure_adjust(status, ranges, f_string_range, new_length)
 #endif // _di_f_string_ranges_
+
+/**
+ * Store string quantity.
+ *
+ * Similar to f_string_range, except total is relative to start and is not an absolute stop position.
+ *
+ * Two common uses for when total is 0 is:
+ * 1) Exactly that, process a total of 0 strings bytes.
+ * 2) Process with no limit, aka infinite.
+ *
+ * start: The position where the string starts (based on some string/buffer).
+ * total: The total number of elements within that string/buffer the quantity represents.
+ */
+#ifndef _di_f_string_quantity_
+  typedef struct {
+    f_string_length start;
+    f_string_length total;
+  } f_string_quantity;
+
+  #define f_string_quantity_initialize { 0, 0 }
+#endif // _di_f_string_quantity_
+
+/**
+ * An array of string quantities.
+ *
+ * array: the array of string quantities.
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
+#ifndef _di_f_string_quantitys_
+  typedef struct {
+    f_string_quantity *array;
+
+    f_array_length size;
+    f_array_length used;
+  } f_string_quantitys;
+
+  #define f_string_quantitys_initialize {0, 0, 0}
+
+  #define f_macro_string_quantitys_clear(quantitys) f_macro_memory_structure_clear(quantitys)
+
+  #define f_macro_string_quantitys_new(status, quantitys, length) f_macro_memory_structure_new(status, quantitys, f_string_quantity, length)
+
+  #define f_macro_string_quantitys_delete(status, quantitys)  f_macro_memory_structure_delete(status, quantitys, f_string_quantity)
+  #define f_macro_string_quantitys_destroy(status, quantitys) f_macro_memory_structure_destroy(status, quantitys, f_string_quantity)
+
+  #define f_macro_string_quantitys_delete_simple(quantitys)  f_macro_memory_structure_delete_simple(quantitys, f_string_quantity)
+  #define f_macro_string_quantitys_destroy_simple(quantitys) f_macro_memory_structure_destroy_simple(quantitys, f_string_quantity)
+
+  #define f_macro_string_quantitys_resize(status, quantitys, new_length) f_macro_memory_structure_resize(status, quantitys, f_string_quantity, new_length)
+  #define f_macro_string_quantitys_adjust(status, quantitys, new_length) f_macro_memory_structure_adjust(status, quantitys, f_string_quantity, new_length)
+#endif // _di_f_string_quantitys_
 
 /**
  * A string that is analogous to f_string_dynamic but intended for static-only uses.

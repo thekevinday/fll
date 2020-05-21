@@ -1,8 +1,193 @@
 #include <level_1/utf_file.h>
+#include "private-utf_file.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#ifndef _di_f_file_read_
+  f_return_status f_file_read(f_file *file, f_string_dynamic *buffer) {
+    #ifndef _di_level_0_parameter_checking_
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_chunk == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_block == 0) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (file->id <= 0) return f_status_set_error(f_file_not_open);
+
+    f_status status = f_none;
+    ssize_t size_read = 0;
+
+    // use a custom buffer so that memory is allocated post-read instead of pre-read.
+    const f_string_length buffer_size = file->size_chunk * file->size_block;
+    char buffer_read[buffer_size];
+
+    memset(&buffer_read, 0, sizeof(buffer_size));
+
+    while ((size_read = read(file->id, buffer_read, buffer_size)) > 0) {
+      if (buffer->used + size_read > buffer->size) {
+        if (buffer->size + size_read > f_string_length_size) {
+          return f_status_set_error(f_string_too_large);
+        }
+
+        f_macro_string_dynamic_resize(status, (*buffer), buffer->size + size_read);
+        if (f_status_is_error(status)) return status;
+      }
+
+      memcpy(buffer->string + buffer->used, buffer_read, buffer_size);
+      buffer->used += size_read;
+    } // while
+
+    if (size_read == 0) {
+      return f_none_on_eof;
+    }
+
+    if (size_read < 0) {
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return f_status_set_error(f_block);
+      if (errno == EBADF) return f_status_set_error(f_file_error_descriptor);
+      if (errno == EFAULT) return f_status_set_error(f_invalid_buffer);
+      if (errno == EINTR) return f_status_set_error(f_interrupted);
+      if (errno == EINVAL) return f_status_set_error(f_invalid_parameter);
+      if (errno == EIO) return f_status_set_error(f_error_input_output);
+      if (errno == EISDIR) return f_status_set_error(f_file_is_type_directory);
+
+      return f_status_set_error(f_failure);
+    }
+
+    return f_none;
+  }
+#endif // _di_f_file_read_
+
+#ifndef _di_f_file_read_block_
+  f_return_status f_file_read_block(f_file *file, f_string_dynamic *buffer) {
+    #ifndef _di_level_0_parameter_checking_
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_chunk == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_block == 0) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (file->id <= 0) return f_status_set_error(f_file_not_open);
+
+    f_status status = f_none;
+    ssize_t size_read = 0;
+
+    const f_string_length buffer_size = file->size_chunk * file->size_block;
+    char buffer_read[buffer_size];
+
+    memset(&buffer_read, 0, sizeof(buffer_size));
+
+    if ((size_read = read(file->id, buffer_read, buffer_size)) > 0) {
+      if (buffer->used + size_read > buffer->size) {
+        if (buffer->size + size_read > f_string_length_size) {
+          return f_status_set_error(f_string_too_large);
+        }
+
+        f_macro_string_dynamic_resize(status, (*buffer), buffer->size + size_read);
+        if (f_status_is_error(status)) return status;
+      }
+
+      memcpy(buffer->string + buffer->used, buffer_read, buffer_size);
+      buffer->used += size_read;
+    }
+
+    if (size_read == 0) {
+      return f_none_on_eof;
+    }
+
+    if (size_read < 0) {
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return f_status_set_error(f_block);
+      if (errno == EBADF) return f_status_set_error(f_file_error_descriptor);
+      if (errno == EFAULT) return f_status_set_error(f_invalid_buffer);
+      if (errno == EINTR) return f_status_set_error(f_interrupted);
+      if (errno == EINVAL) return f_status_set_error(f_invalid_parameter);
+      if (errno == EIO) return f_status_set_error(f_error_input_output);
+      if (errno == EISDIR) return f_status_set_error(f_file_is_type_directory);
+
+      return f_status_set_error(f_failure);
+    }
+
+    return f_none;
+  }
+#endif // _di_f_file_read_block_
+
+#ifndef _di_f_file_read_until_
+  f_return_status f_file_read_until(f_file *file, f_string_dynamic *buffer, const f_string_length total) {
+    #ifndef _di_level_0_parameter_checking_
+      if (file == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_chunk == 0) return f_status_set_error(f_invalid_parameter);
+      if (file->size_block == 0) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (file->id <= 0) return f_status_set_error(f_file_not_open);
+
+    f_status status = f_none;
+    ssize_t size_read = 0;
+
+    f_string_length buffer_size = file->size_chunk * file->size_block;
+    f_string_length buffer_count = 0;
+
+    if (total < buffer_size) {
+      buffer_size = total;
+    }
+
+    char buffer_read[buffer_size];
+
+    memset(&buffer_read, 0, sizeof(buffer_size));
+
+    if ((size_read = read(file->id, buffer_read, buffer_size)) > 0) {
+      if (buffer->used + size_read > buffer->size) {
+        if (buffer->size + size_read > f_string_length_size) {
+          return f_status_set_error(f_string_too_large);
+        }
+
+        f_macro_string_dynamic_resize(status, (*buffer), buffer->size + size_read);
+        if (f_status_is_error(status)) return status;
+      }
+
+      memcpy(buffer->string + buffer->used, buffer_read, buffer_size);
+      buffer->used += size_read;
+      buffer_count += size_read;
+    }
+
+    if (size_read == 0) {
+      return f_none_on_eof;
+    }
+
+    if (size_read < 0) {
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return f_status_set_error(f_block);
+      if (errno == EBADF) return f_status_set_error(f_file_error_descriptor);
+      if (errno == EFAULT) return f_status_set_error(f_invalid_buffer);
+      if (errno == EINTR) return f_status_set_error(f_interrupted);
+      if (errno == EINVAL) return f_status_set_error(f_invalid_parameter);
+      if (errno == EIO) return f_status_set_error(f_error_input_output);
+      if (errno == EISDIR) return f_status_set_error(f_file_is_type_directory);
+
+      return f_status_set_error(f_failure);
+    }
+
+    return f_none;
+  }
+#endif // _di_f_file_read_until_
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #ifndef _di_fl_utf_file_read_
   f_return_status fl_utf_file_read(f_file *file, f_utf_string_dynamic *buffer) {
@@ -75,7 +260,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_
 
 #ifndef _di_fl_utf_file_read_position
-  f_return_status fl_utf_file_read_position(f_file *file, f_utf_string_dynamic *buffer, const f_file_position position) {
+  f_return_status fl_utf_file_read_position(f_file *file, f_utf_string_dynamic *buffer, const f_string_quantity quantity) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer == 0) return f_status_set_error(f_invalid_parameter);
@@ -87,15 +272,15 @@ extern "C" {
 
     // first seek to 'where' we need to begin the read.
     {
-      long current_file_position = ftell(file->address);
+      long current_file_quantity = ftell(file->address);
 
-      if (current_file_position == -1) return f_status_set_error(f_file_error_seek);
+      if (current_file_quantity == -1) return f_status_set_error(f_file_error_seek);
 
-      if (current_file_position > position.start) {
-        result = f_macro_file_seek_to(file->address, file->size_chunk * (0 - (current_file_position - position.start)));
+      if (current_file_quantity > quantity.start) {
+        result = f_macro_file_seek_to(file->address, file->size_chunk * (0 - (current_file_quantity - quantity.start)));
       }
-      else if (current_file_position < position.start) {
-        result = f_macro_file_seek_to(file->address, file->size_chunk * (position.start - current_file_position));
+      else if (current_file_quantity < quantity.start) {
+        result = f_macro_file_seek_to(file->address, file->size_chunk * (quantity.start - current_file_quantity));
       }
 
       if (result != 0) return f_status_set_error(f_file_error_seek);
@@ -110,12 +295,12 @@ extern "C" {
     f_number_unsigned bytes_total;
 
     // when total is 0, this means the file read will until EOF is reached.
-    if (position.total == 0) {
+    if (quantity.total == 0) {
       infinite = f_true;
       bytes_total = file->size_block * file->size_chunk;
     }
     else {
-      bytes_total = position.total * file->size_chunk;
+      bytes_total = quantity.total * file->size_chunk;
     }
 
     uint8_t width = 0;
@@ -131,11 +316,11 @@ extern "C" {
         if (f_status_is_error(status)) return status;
       }
 
-      if (position.total == 0) {
+      if (quantity.total == 0) {
         result = fread(buffer->string + buffer->used, file->size_chunk, file->size_block, file->address);
       }
       else {
-        result = fread(buffer->string + buffer->used, file->size_chunk, position.total, file->address);
+        result = fread(buffer->string + buffer->used, file->size_chunk, quantity.total, file->address);
       }
 
       if (file->address == 0) return f_status_set_error(f_file_error_read);

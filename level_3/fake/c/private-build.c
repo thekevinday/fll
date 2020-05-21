@@ -402,8 +402,8 @@ extern "C" {
         status = f_file_open(&file, data.file_data_build_settings.string);
 
         if (status == f_none) {
-          name_function = "fl_file_read_position";
-          status = fl_file_read(&file, &buffer);
+          name_function = "f_file_read";
+          status = f_file_read(&file, &buffer);
 
           f_file_close(&file);
         }

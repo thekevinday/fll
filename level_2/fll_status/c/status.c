@@ -381,6 +381,11 @@ extern "C" {
         return f_none;
       }
 
+      if (fl_string_compare(string, fl_status_string_block, length, fl_status_string_block_length) == f_equal_to) {
+        *code = f_block;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_critical, length, fl_status_string_critical_length) == f_equal_to) {
         *code = f_critical;
         return f_none;
@@ -398,6 +403,16 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_no_data, length, fl_status_string_no_data_length) == f_equal_to) {
         *code = f_no_data;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_no_space, length, fl_status_string_no_space_length) == f_equal_to) {
+        *code = f_no_space;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_out_of_bound, length, fl_status_string_out_of_bound_length) == f_equal_to) {
+        *code = f_out_of_bound;
         return f_none;
       }
 
@@ -922,6 +937,11 @@ extern "C" {
     #endif // _di_fll_status_fork_
 
     #ifndef _di_fll_status_file_
+      if (fl_string_compare(string, fl_status_string_file_closed, length, fl_status_string_file_closed_length) == f_equal_to) {
+        *code = f_file_closed;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_file_seek_error, length, fl_status_string_file_seek_error_length) == f_equal_to) {
         *code = f_file_error_seek;
         return f_none;
@@ -972,13 +992,13 @@ extern "C" {
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_file_found, length, fl_status_string_file_found_length) == f_equal_to) {
-        *code = f_file_found;
+      if (fl_string_compare(string, fl_status_string_file_empty, length, fl_status_string_file_empty_length) == f_equal_to) {
+        *code = f_file_empty;
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_file_is_empty, length, fl_status_string_file_is_empty_length) == f_equal_to) {
-        *code = f_file_is_empty;
+      if (fl_string_compare(string, fl_status_string_file_found, length, fl_status_string_file_found_length) == f_equal_to) {
+        *code = f_file_found;
         return f_none;
       }
 
@@ -1106,6 +1126,11 @@ extern "C" {
         *code = f_file_max_open;
         return f_none;
       }
+
+      if (fl_string_compare(string, fl_status_string_file_utf, length, fl_status_string_file_utf_length) == f_equal_to) {
+        *code = f_file_utf;
+        return f_none;
+      }
     #endif // _di_fll_status_file_
 
     #ifndef _di_f_status_filesystem_
@@ -1126,6 +1151,11 @@ extern "C" {
     #endif // _di_f_status_filesystem_
 
     #ifndef _di_fll_status_directory_
+      if (fl_string_compare(string, fl_status_string_directory_closed, length, fl_status_string_directory_closed_length) == f_equal_to) {
+        *code = f_directory_closed;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_directory_read_error, length, fl_status_string_directory_read_error_length) == f_equal_to) {
         *code = f_directory_error_read;
         return f_none;
@@ -1171,13 +1201,18 @@ extern "C" {
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_directory_not_found, length, fl_status_string_directory_not_found_length) == f_equal_to) {
-        *code = f_directory_not_found;
+      if (fl_string_compare(string, fl_status_string_directory_found, length, fl_status_string_directory_found_length) == f_equal_to) {
+        *code = f_directory_found;
         return f_none;
       }
 
-      if (fl_string_compare(string, fl_status_string_directory_is_empty, length, fl_status_string_directory_is_empty_length) == f_equal_to) {
-        *code = f_directory_is_empty;
+      if (fl_string_compare(string, fl_status_string_directory_empty, length, fl_status_string_directory_empty_length) == f_equal_to) {
+        *code = f_directory_empty;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_directory_not_found, length, fl_status_string_directory_not_found_length) == f_equal_to) {
+        *code = f_directory_not_found;
         return f_none;
       }
 
@@ -1203,6 +1238,11 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_directory_error_stream, length, fl_status_string_directory_error_stream_length) == f_equal_to) {
         *code = f_directory_error_stream;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_directory_utf, length, fl_status_string_directory_utf_length) == f_equal_to) {
+        *code = f_directory_utf;
         return f_none;
       }
     #endif // _di_fll_status_directory_

@@ -36,8 +36,6 @@ extern "C" {
  *   Check errno for details.
  *
  * @see f_directory_remove()
- * @see nftw()
- * @see remove()
  */
 #if !defined(_di_f_directory_remove_)
   extern int private_f_directory_remove_recursively(const char *path, const struct stat *file_stat, int type, struct FTW *entity) f_gcc_attribute_visibility_internal;
