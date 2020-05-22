@@ -364,26 +364,22 @@ extern "C" {
 #endif // _di_f_file_open_at_
 
 #ifndef _di_f_file_read_
-  f_return_status f_file_read(f_file *file, f_string_dynamic *buffer) {
+  f_return_status f_file_read(const f_file file, f_string_dynamic *buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (file == 0) return f_status_set_error(f_invalid_parameter);
-      if (file->size_chunk == 0) return f_status_set_error(f_invalid_parameter);
-      if (file->size_block == 0) return f_status_set_error(f_invalid_parameter);
+      if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file->id <= 0) return f_status_set_error(f_file_not_open);
+    if (file.id <= 0) return f_status_set_error(f_file_not_open);
 
     f_status status = f_none;
     ssize_t size_read = 0;
 
-    // use a custom buffer so that memory is allocated post-read instead of pre-read.
-    const f_string_length buffer_size = file->size_chunk * file->size_block;
-    char buffer_read[buffer_size];
+    char buffer_read[file.size_read];
 
-    memset(&buffer_read, 0, sizeof(buffer_size));
+    memset(&buffer_read, 0, sizeof(file.size_read));
 
-    while ((size_read = read(file->id, buffer_read, buffer_size)) > 0) {
+    while ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
       if (buffer->used + size_read > buffer->size) {
         if (buffer->size + size_read > f_string_length_size) {
           return f_status_set_error(f_string_too_large);
@@ -393,7 +389,7 @@ extern "C" {
         if (f_status_is_error(status)) return status;
       }
 
-      memcpy(buffer->string + buffer->used, buffer_read, buffer_size);
+      memcpy(buffer->string + buffer->used, buffer_read, size_read);
       buffer->used += size_read;
     } // while
 
@@ -418,25 +414,22 @@ extern "C" {
 #endif // _di_f_file_read_
 
 #ifndef _di_f_file_read_block_
-  f_return_status f_file_read_block(f_file *file, f_string_dynamic *buffer) {
+  f_return_status f_file_read_block(const f_file file, f_string_dynamic *buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (file == 0) return f_status_set_error(f_invalid_parameter);
-      if (file->size_chunk == 0) return f_status_set_error(f_invalid_parameter);
-      if (file->size_block == 0) return f_status_set_error(f_invalid_parameter);
+      if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file->id <= 0) return f_status_set_error(f_file_not_open);
+    if (file.id <= 0) return f_status_set_error(f_file_not_open);
 
     f_status status = f_none;
     ssize_t size_read = 0;
 
-    const f_string_length buffer_size = file->size_chunk * file->size_block;
-    char buffer_read[buffer_size];
+    char buffer_read[file.size_read];
 
-    memset(&buffer_read, 0, sizeof(buffer_size));
+    memset(&buffer_read, 0, sizeof(file.size_read));
 
-    if ((size_read = read(file->id, buffer_read, buffer_size)) > 0) {
+    if ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
       if (buffer->used + size_read > buffer->size) {
         if (buffer->size + size_read > f_string_length_size) {
           return f_status_set_error(f_string_too_large);
@@ -446,7 +439,7 @@ extern "C" {
         if (f_status_is_error(status)) return status;
       }
 
-      memcpy(buffer->string + buffer->used, buffer_read, buffer_size);
+      memcpy(buffer->string + buffer->used, buffer_read, size_read);
       buffer->used += size_read;
     }
 
@@ -471,20 +464,18 @@ extern "C" {
 #endif // _di_f_file_read_block_
 
 #ifndef _di_f_file_read_until_
-  f_return_status f_file_read_until(f_file *file, f_string_dynamic *buffer, const f_string_length total) {
+  f_return_status f_file_read_until(const f_file file, f_string_dynamic *buffer, const f_string_length total) {
     #ifndef _di_level_0_parameter_checking_
-      if (file == 0) return f_status_set_error(f_invalid_parameter);
-      if (file->size_chunk == 0) return f_status_set_error(f_invalid_parameter);
-      if (file->size_block == 0) return f_status_set_error(f_invalid_parameter);
+      if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
       if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file->id <= 0) return f_status_set_error(f_file_not_open);
+    if (file.id <= 0) return f_status_set_error(f_file_not_open);
 
     f_status status = f_none;
     ssize_t size_read = 0;
 
-    f_string_length buffer_size = file->size_chunk * file->size_block;
+    f_string_length buffer_size = file.size_read;
     f_string_length buffer_count = 0;
 
     if (total < buffer_size) {
@@ -495,7 +486,7 @@ extern "C" {
 
     memset(&buffer_read, 0, sizeof(buffer_size));
 
-    if ((size_read = read(file->id, buffer_read, buffer_size)) > 0) {
+    while (buffer_count < total && (size_read = read(file.id, buffer_read, buffer_size)) > 0) {
       if (buffer->used + size_read > buffer->size) {
         if (buffer->size + size_read > f_string_length_size) {
           return f_status_set_error(f_string_too_large);
@@ -505,10 +496,10 @@ extern "C" {
         if (f_status_is_error(status)) return status;
       }
 
-      memcpy(buffer->string + buffer->used, buffer_read, buffer_size);
+      memcpy(buffer->string + buffer->used, buffer_read, size_read);
       buffer->used += size_read;
       buffer_count += size_read;
-    }
+    } // while
 
     if (size_read == 0) {
       return f_none_on_eof;
@@ -694,6 +685,122 @@ extern "C" {
     return private_f_file_stat_by_id(id, file_stat);
   }
 #endif // _di_f_file_stat_by_id_
+
+#ifndef _di_f_file_write_
+  f_return_status f_file_write(const f_file file, const f_string_dynamic buffer, f_string_length *written) {
+    #ifndef _di_level_0_parameter_checking_
+      if (file.size_write == 0) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used >= buffer.size) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+
+    if (buffer.used == 0) {
+      *written = 0;
+      return f_no_data;
+    }
+
+    f_status status = private_f_file_write_until(file, buffer.string, buffer.used, written);
+    if (f_status_is_error(status)) return f_status_set_error(status);
+
+    if (status == f_none && *written == buffer.used) return f_none_on_eos;
+
+    return status;
+  }
+#endif // _di_f_file_write_
+
+#ifndef _di_f_file_write_block_
+  f_return_status f_file_write_block(const f_file file, const f_string_dynamic buffer, f_string_length *written) {
+    #ifndef _di_level_0_parameter_checking_
+      if (file.size_write == 0) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used >= buffer.size) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+
+    if (buffer.used == 0) {
+      *written = 0;
+      return f_no_data;
+    }
+
+    f_string_length write_max = file.size_write;
+
+    if (write_max > buffer.used) {
+      write_max = buffer.used;
+    }
+
+    f_status status = private_f_file_write_until(file, buffer.string, write_max, written);
+    if (f_status_is_error(status)) return f_status_set_error(status);
+
+    if (status == f_none && *written == buffer.used) return f_none_on_eos;
+
+    return status;
+  }
+#endif // _di_f_file_write_block_
+
+#ifndef _di_f_file_write_until_
+  f_return_status f_file_write_until(const f_file file, const f_string_dynamic buffer, const f_string_length total, f_string_length *written) {
+    #ifndef _di_level_0_parameter_checking_
+      if (file.size_write == 0) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used >= buffer.size) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+
+    if (buffer.used == 0 || total == 0) {
+      *written = 0;
+      return f_no_data;
+    }
+
+    f_string_length write_max = file.size_write;
+
+    if (write_max > buffer.used) {
+      write_max = buffer.used;
+    }
+
+    f_status status = private_f_file_write_until(file, buffer.string, write_max, written);
+    if (f_status_is_error(status)) return f_status_set_error(status);
+
+    if (status == f_none && *written == buffer.used) return f_none_on_eos;
+
+    return status;
+  }
+#endif // _di_f_file_write_until_
+
+#ifndef _di_f_file_write_range_
+  f_return_status f_file_write_range(const f_file file, const f_string_dynamic buffer, const f_string_range range, f_string_length *written) {
+    #ifndef _di_level_0_parameter_checking_
+      if (file.size_write == 0) return f_status_set_error(f_invalid_parameter);
+      if (buffer.used >= buffer.size) return f_status_set_error(f_invalid_parameter);
+      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
+      if (range.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+
+    if (buffer.used == 0) {
+      *written = 0;
+      return f_no_data;
+    }
+
+    const f_string_length total = (range.stop - range.start) + 1;
+    f_string_length write_max = total;
+
+    if (write_max > buffer.used) {
+      write_max = buffer.used;
+    }
+
+    f_status status = private_f_file_write_until(file, buffer.string + range.start, write_max, written);
+    if (f_status_is_error(status)) return f_status_set_error(status);
+
+    if (status == f_none) {
+      if (range.start + *written == total) return f_none_on_stop;
+      if (range.start + *written == buffer.used) return f_none_on_eos;
+    }
+
+    return status;
+  }
+#endif // _di_f_file_write_range_
 
 #ifdef __cplusplus
 } // extern "C"

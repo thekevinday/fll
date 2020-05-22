@@ -52,7 +52,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_fl_utf_file_read_
-  extern f_return_status fl_utf_file_read(f_file *file, f_utf_string_dynamic *buffer);
+  extern f_return_status fl_utf_file_read(const f_file file, f_utf_string_dynamic *buffer);
 #endif // _di_fl_utf_file_read_
 
 /**
@@ -82,9 +82,9 @@ extern "C" {
  *
  * @see read()
  */
-#ifndef _di_f_utf_file_read_
-  extern f_return_status f_utf_file_read_block(f_file *file, f_utf_string_dynamic *buffer);
-#endif // _di_f_utf_file_read_
+#ifndef _di_fl_utf_file_read_
+  extern f_return_status fl_utf_file_read_block(const f_file file, f_utf_string_dynamic *buffer);
+#endif // _di_fl_utf_file_read_
 
 /**
  * Read until a given number or EOF is reached, storing it in the buffer.
@@ -114,141 +114,141 @@ extern "C" {
  *
  * @see read
  */
-#ifndef _di_f_utf_file_read_until_
-  extern f_return_status f_utf_file_read_until(f_file *file, f_utf_string_dynamic *buffer, const f_utf_string_length total);
-#endif // _di_f_utf_file_read_until_
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#ifndef _di_fl_utf_file_read_until_
+  extern f_return_status fl_utf_file_read_until(const f_file file, f_utf_string_dynamic *buffer, const f_utf_string_length total);
+#endif // _di_fl_utf_file_read_until_
 
 /**
- * Load entire file into the UTF-8 buffer.
- *
- * This does not validate the UTF-8 codes.
+ * Write until entire buffer is written.
  *
  * @param file
- *   The file to read from.
+ *   The file to write to.
+ *   The file must already be open.
  * @param buffer
- *   The buffer to load the file into.
+ *   The buffer to write to the file.
+ * @param written
+ *   The total bytes written.
  *
  * @return
  *   f_none on success.
- *   f_none_on_eof on success and EOF was reached.
- *   f_file_not_open (with error bit) if file is not open.
- *   f_file_error_seek (with error bit) if file seek failed.
- *   f_file_error_read (with error bit) if file read failed.
+ *   f_none_on_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on memory reallocation error.
- *   f_string_too_large (with error bit) if string is too large to fit into the buffer.
- *   f_incomplete_utf_on_eof (with error bit) if UTF-8 character was incomplete at the end of the file.
- */
-#ifndef _di_fl_utf_file_read_
-  extern f_return_status fl_utf_file_read(f_file *file, f_utf_string_dynamic *buffer);
-#endif // _di_fl_utf_file_read_
-
-/**
- * Load file into the UTF-8 buffer, based on specified positions.
- *
- * This does not validate the UTF-8 codes.
- *
- * @param file
- *   The file to read from.
- * @param buffer
- *   The buffer to save the file.
- * @param quantity
- *   The file position to base reading off of.
- *
- * @return
- *   f_none on success.
- *   f_none_on_eof on success and EOF was reached.
+ *   f_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
  *   f_file_not_open (with error bit) if file is not open.
- *   f_file_error_seek (with error bit) if file seek failed.
- *   f_file_error_read (with error bit) if file read failed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on memory reallocation error.
- *   f_string_too_large (with error bit) if string is too large to fit into the buffer.
- *   f_incomplete_utf_on_eof (with error bit) if UTF-8 character was incomplete at the end of the file.
- */
-#ifndef _di_fl_utf_file_read_position_
-  extern f_return_status fl_utf_file_read_position(f_file *file, f_utf_string_dynamic *buffer, const f_string_quantity quantity);
-#endif // _di_fl_utf_file_read_position
-
-/**
- * Save entire UTF-8 buffer into file.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
+ *   f_incomplete_utf_on_stop (with error bit) if UTF-8 character was incomplete at the stop location.
+ *   f_incomplete_utf_on_eos (with error bit) if UTF-8 character was incomplete at the end of the string.
  *
- * This does not validate the UTF-8 codes.
- *
- * @param file
- *   The file to save to.
- * @param buffer
- *   The buffer to save to the file.
- *
- * @return
- *   f_none on success.
- *   f_file_not_open (with error bit) if file is not open.
- *   f_file_error_write (with error bit) if write failed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ * @see write()
  */
 #ifndef _di_fl_utf_file_write_
-  extern f_return_status fl_utf_file_write(f_file *file, const f_utf_string_static buffer);
+  extern f_return_status fl_utf_file_write(const f_file file, const f_utf_string_dynamic buffer, f_utf_string_length *written);
 #endif // _di_fl_utf_file_write_
 
 /**
- * Save entire UTF-8 buffer into file, based on specified positions.
+ * Write until a single block is filled or entire buffer is written.
  *
- * This does not validate the UTF-8 codes.
+ * To check how much was write into the buffer, record buffer->used before execution and compare to buffer->used after execution.
  *
  * @param file
- *   The file to save to.
+ *   The file to write to.
+ *   The file must already be open.
  * @param buffer
- *   The buffer to save to the file.
- * @param position
- *   The file position to base writing off of.
+ *   The buffer to write to the file.
+ * @param written
+ *   The total bytes written.
  *
  * @return
  *   f_none on success.
- *   f_file_not_open (with error bit) if file is not open.
- *   f_file_error_write (with error bit) if write failed.
+ *   f_none_on_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
+ *   f_incomplete_utf_on_stop (with error bit) if UTF-8 character was incomplete at the stop location.
+ *   f_incomplete_utf_on_eos (with error bit) if UTF-8 character was incomplete at the end of the string.
+ *
+ * @see write()
  */
-#ifndef _di_fl_utf_file_write_position_
-  extern f_return_status fl_utf_file_write_position(f_file *file, const f_utf_string_static buffer, const f_utf_string_range position);
-#endif // _di_fl_utf_file_write_position_
+#ifndef _di_fl_utf_file_write_block_
+  extern f_return_status fl_utf_file_write_block(const f_file file, const f_utf_string_dynamic buffer, f_utf_string_length *written);
+#endif // _di_fl_utf_file_write_block_
+
+/**
+ * Write until a given number or entire buffer is written.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param total
+ *   The total bytes to write, unless end of buffer is reached first.
+ * @param written
+ *   The total bytes written.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   f_none_on_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
+ *   f_incomplete_utf_on_stop (with error bit) if UTF-8 character was incomplete at the stop location.
+ *   f_incomplete_utf_on_eos (with error bit) if UTF-8 character was incomplete at the end of the string.
+ *
+ * @see write()
+ */
+#ifndef _di_fl_utf_file_write_until_
+  extern f_return_status fl_utf_file_write_until(const f_file file, const f_utf_string_dynamic buffer, const f_utf_string_length total, f_utf_string_length *written);
+#endif // _di_fl_utf_file_write_until_
+
+/**
+ * Write a given range within the buffer.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param range
+ *   An inclusive start an stop range within the buffer to read.
+ * @param written
+ *   The total bytes written.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   f_none_on_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
+ *   f_incomplete_utf_on_stop (with error bit) if UTF-8 character was incomplete at the stop location.
+ *   f_incomplete_utf_on_eos (with error bit) if UTF-8 character was incomplete at the end of the string.
+ *
+ * @see write()
+ */
+#ifndef _di_fl_utf_file_write_range_
+  extern f_return_status fl_utf_file_write_range(const f_file file, const f_utf_string_dynamic buffer, const f_utf_string_range range, f_utf_string_length *written);
+#endif // _di_fl_utf_file_write_range_
 
 #ifdef __cplusplus
 } // extern "C"

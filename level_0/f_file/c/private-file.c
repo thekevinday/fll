@@ -408,6 +408,48 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
+#if !defined(f_file_write) || !defined(f_file_write_until) || !defined(f_file_write_range)
+  f_return_status private_f_file_write_until(const f_file file, const f_string string, const f_string_length total, f_string_length *written) {
+    *written = 0;
+
+    f_status status = f_none;
+    f_string_length write_size = file.size_write;
+    f_string_length write_max = total;
+
+    ssize_t size_write = 0;
+
+    if (write_max < write_size) {
+      write_size = write_max;
+    }
+
+    while (*written < write_max && (size_write = write(file.id, string + *written, write_size)) > 0) {
+      *written += size_write;
+
+      if (*written + write_size > write_max) {
+        write_size = write_max - *written;
+      }
+    } // while
+
+    if (size_write == 0) {
+      return f_none_on_stop;
+    }
+
+    if (size_write < 0) {
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return f_status_set_error(f_block);
+      if (errno == EBADF) return f_status_set_error(f_file_error_descriptor);
+      if (errno == EFAULT) return f_status_set_error(f_invalid_buffer);
+      if (errno == EINTR) return f_status_set_error(f_interrupted);
+      if (errno == EINVAL) return f_status_set_error(f_invalid_parameter);
+      if (errno == EIO) return f_status_set_error(f_error_input_output);
+      if (errno == EISDIR) return f_status_set_error(f_file_is_type_directory);
+
+      return f_status_set_error(f_failure);
+    }
+
+    return f_none;
+  }
+#endif // !defined(f_file_write) || !defined(f_file_write_until) || !defined(f_file_write_range)
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

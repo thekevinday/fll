@@ -25,7 +25,7 @@ extern "C" {
       if (f_status_is_error(status)) return status;
     }
     else {
-      status = f_directory_create(destination, mode);
+      status = f_directory_create(destination, mode.directory);
       if (f_status_is_error(status)) return status;
     }
 
@@ -168,7 +168,7 @@ extern "C" {
 
       memset(&file_stat, 0, sizeof(struct stat));
 
-      status = f_file_stat_at(parent_fd, entity[i]->d_name, &file_stat, 0);
+      status = f_file_stat_at(parent_fd, entity[i]->d_name, 0, &file_stat);
       if (f_status_is_error(status)) break;
 
       mode = f_macro_file_type_get(file_stat.st_mode);
@@ -216,7 +216,7 @@ extern "C" {
         if (total > names->array[names->used].size) {
           f_status status = f_none;
 
-          f_macro_string_dynamic_resize(status, (*destination), total);
+          f_macro_string_dynamics_resize(status, (*names), total);
           if (f_status_is_error(status)) break;
         }
 

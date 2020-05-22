@@ -7,8 +7,8 @@
  *
  * Provides operations for directory handling.
  */
-#ifndef _PRIVATE_F_directory_h
-#define _PRIVATE_F_directory_h
+#ifndef _PRIVATE_FL_directory_h
+#define _PRIVATE_FL_directory_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,4 +76,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_F_directory_h
+#endif // _PRIVATE_FL_directory_h

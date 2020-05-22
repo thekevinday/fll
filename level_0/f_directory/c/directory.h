@@ -133,13 +133,13 @@ extern "C" {
  */
 #ifndef _di_f_directory_mode_
   typedef struct {
-    f_string_dynamics block;     // S_IFBLK
-    f_string_dynamics character; // S_IFCHR
-    f_string_dynamics directory; // S_IFDIR
-    f_string_dynamics file;      // S_IFREG
-    f_string_dynamics link;      // S_IFLNK
-    f_string_dynamics socket;    // S_IFSOCK
-    f_string_dynamics unknown;
+    mode_t block;     // S_IFBLK
+    mode_t character; // S_IFCHR
+    mode_t directory; // S_IFDIR
+    mode_t file;      // S_IFREG
+    mode_t link;      // S_IFLNK
+    mode_t socket;    // S_IFSOCK
+    mode_t unknown;
   } f_directory_mode;
 
   #define f_directory_mode_initialize { \

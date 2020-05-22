@@ -86,17 +86,16 @@ extern "C" {
  * Commonly used file related properties.
  *
  * id: File descriptor.
- * size_chunk: Number of bytes to consider a character, a value of 1 means 1-byte (aka: uint8_t) (for normal string handling this should be sizeof(f_string)).
- * size_block: The default number of chunks to read at a time (use (size_chunk * size_block) to determine total number of bytes).
+ * size_block: The default number of 1-byte characters to read at a time and is often used for the read/write buffer size.
  */
 #ifndef _di_f_file_
   typedef struct {
     int    id;
-    size_t size_chunk;
-    size_t size_block;
+    size_t size_read;
+    size_t size_write;
   } f_file;
 
-  #define f_file_initialize { 0, 1, f_file_default_read_size }
+  #define f_file_initialize { 0, f_file_default_read_size, f_file_default_write_size }
 #endif // _di_f_file_
 
 /**
@@ -908,7 +907,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_file_read_
-  extern f_return_status f_file_read(f_file *file, f_string_dynamic *buffer);
+  extern f_return_status f_file_read(const f_file file, f_string_dynamic *buffer);
 #endif // _di_f_file_read_
 
 /**
@@ -938,7 +937,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_file_read_
-  extern f_return_status f_file_read_block(f_file *file, f_string_dynamic *buffer);
+  extern f_return_status f_file_read_block(const f_file file, f_string_dynamic *buffer);
 #endif // _di_f_file_read_
 
 /**
@@ -966,10 +965,10 @@ extern "C" {
  *   f_file_not_open (with error bit) if file is not open.
  *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
  *
- * @see read
+ * @see read()
  */
 #ifndef _di_f_file_read_until_
-  extern f_return_status f_file_read_until(f_file *file, f_string_dynamic *buffer, const f_string_length total);
+  extern f_return_status f_file_read_until(const f_file file, f_string_dynamic *buffer, const f_string_length total);
 #endif // _di_f_file_read_until_
 
 /**
@@ -1224,6 +1223,130 @@ extern "C" {
 #ifndef _di_f_file_stat_by_id_
   extern f_return_status f_file_stat_by_id(const int id, struct stat *file_stat);
 #endif // _di_f_file_stat_by_id_
+
+/**
+ * Write until entire buffer is written.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param written
+ *   The total bytes written.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
+ *
+ * @see write()
+ */
+#ifndef _di_f_file_write_
+  extern f_return_status f_file_write(const f_file file, const f_string_dynamic buffer, f_string_length *written);
+#endif // _di_f_file_write_
+
+/**
+ * Write until a single block is filled or entire buffer is written.
+ *
+ * To check how much was write into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param written
+ *   The total bytes written.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
+ *
+ * @see write()
+ */
+#ifndef _di_f_file_write_block_
+  extern f_return_status f_file_write_block(const f_file file, const f_string_dynamic buffer, f_string_length *written);
+#endif // _di_f_file_write_block_
+
+/**
+ * Write until a given number or entire buffer is written.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param total
+ *   The total bytes to write, unless end of buffer is reached first.
+ * @param written
+ *   The total bytes written.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   f_none_on_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
+ *
+ * @see write()
+ */
+#ifndef _di_f_file_write_until_
+  extern f_return_status f_file_write_until(const f_file file, const f_string_dynamic buffer, const f_string_length total, f_string_length *written);
+#endif // _di_f_file_write_until_
+
+/**
+ * Write a given range within the buffer.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param range
+ *   An inclusive start an stop range within the buffer to read.
+ * @param written
+ *   The total bytes written.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   f_none_on_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
+ *
+ * @see write()
+ */
+#ifndef _di_f_file_write_range_
+  extern f_return_status f_file_write_range(const f_file file, const f_string_dynamic buffer, const f_string_range range, f_string_length *written);
+#endif // _di_f_file_write_range_
 
 #ifdef __cplusplus
 } // extern "C"

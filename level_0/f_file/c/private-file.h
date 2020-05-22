@@ -540,6 +540,42 @@ extern "C" {
   extern f_return_status private_f_file_stat_by_id(const int id, struct stat *file_stat) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
+/**
+ * Private implementation of private_f_file_write_until().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param string
+ *   The string to write to the file.
+ * @param total
+ *   The total bytes to write.
+ * @param written
+ *   The total bytes written.
+ *
+ * @return
+ *   f_none on success.
+ *   f_none_on_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   f_none_on_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
+ *   f_invalid_buffer (with error bit) if the buffer is invalid.
+ *   f_interrupted (with error bit) if interrupt was received.
+ *   f_error_input_output (with error bit) on I/O error.
+ *   f_file_not_open (with error bit) if file is not open.
+ *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
+ *
+ * @see f_file_write()
+ * @see f_file_write_range()
+ * @see f_file_write_until()
+ */
+#if !defined(f_file_write) || !defined(f_file_write_until) || !defined(f_file_write_range)
+  extern f_return_status private_f_file_write_until(const f_file file, const f_string string, const f_string_length total, f_string_length *written) f_gcc_attribute_visibility_internal;
+#endif // !defined(f_file_write) || !defined(f_file_write_until) || !defined(f_file_write_range)
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
