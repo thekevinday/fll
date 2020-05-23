@@ -16,7 +16,7 @@ extern "C" {
   f_return_status init_print_version(const init_data data) {
     printf("%s\n", init_version);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_init_print_version_
 
@@ -38,33 +38,33 @@ extern "C" {
 
     fll_program_print_help_usage(context, init_name, "");
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_init_print_help_
 
 #ifndef _di_init_main_
   f_return_status init_main(const f_console_arguments arguments, init_data *data) {
-    f_status status  = f_none;
+    f_status status  = F_none;
     int8_t run_level[init_kernel_runlevel_buffer];
 
     memset(run_level, 0, init_kernel_runlevel_buffer);
 
-    unsigned short do_socket_file = f_true;
-    unsigned short do_socket_port = f_false;
+    unsigned short do_socket_file = F_true;
+    unsigned short do_socket_port = F_false;
 
     {
       f_console_parameters parameters = { data->parameters, init_total_parameters };
       f_console_parameter_id ids[3] = { init_parameter_no_color, init_parameter_light, init_parameter_dark };
       f_console_parameter_ids choices = { ids, 3 };
 
-      status = fll_program_parameter_process(arguments, parameters, choices, f_true, &data->remaining, &data->context);
+      status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-      if (f_status_is_error(status)) {
+      if (F_status_is_error(status)) {
         // @todo: init_delete_data(data);
-        return f_status_set_error(status);
+        return F_status_set_error(status);
       }
 
-      status = f_none;
+      status = F_none;
     }
 
     if (data->parameters[init_parameter_runlevel].result == f_console_result_found) {
@@ -106,7 +106,7 @@ extern "C" {
     init_stack_memory stack_memory = init_stack_memory_initialize;
 
     //status = init_initialize_stack_memory(&stack_memory);
-    if (f_status_is_error(status)) {
+    if (F_status_is_error(status)) {
       // @todo: init_delete_data((*data));
       // @todo: init_delete_stack_memory(&stack_memory);
       return status;

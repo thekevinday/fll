@@ -47,12 +47,12 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   f_none on success.
- *   f_no_data if source length is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_none on success.
+ *   F_data_not if source length is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_
   extern f_return_status fll_execute_arguments_add(const f_string source, const f_string_length length, f_string_dynamics *arguments);
@@ -85,12 +85,12 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   f_none on success.
- *   f_no_data if source length is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_none on success.
+ *   F_data_not if source length is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
   extern f_return_status fll_execute_arguments_add_parameter(const f_string prefix, const f_string_length prefix_length, const f_string name, const f_string_length name_length, const f_string value, const f_string_length value_length, f_string_dynamics *arguments);
@@ -126,12 +126,12 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   f_none on success.
- *   f_no_data if size is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_none on success.
+ *   F_data_not if size is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
   extern f_return_status fll_execute_arguments_add_parameter_set(const f_string prefix[], const f_string_length prefix_length[], const f_string name[], const f_string_length name_length[], const f_string value[], const f_string_length value_length[], const f_array_length size, f_string_dynamics *arguments);
@@ -153,12 +153,12 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   f_none on success.
- *   f_no_data if size is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_none on success.
+ *   F_data_not if size is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_add_set_
   extern f_return_status fll_execute_arguments_add_set(const f_string source[], const f_string_length length[], const f_array_length size, f_string_dynamics *arguments);
@@ -176,12 +176,12 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   f_none on success.
- *   f_no_data if source length is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_none on success.
+ *   F_data_not if source length is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_
   extern f_return_status fll_execute_arguments_dynamic_add(const f_string_static source, f_string_dynamics *arguments);
@@ -209,12 +209,12 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   f_none on success.
- *   f_no_data if source length is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_none on success.
+ *   F_data_not if source length is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_
   extern f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_static prefix, const f_string_static name, const f_string_static value, f_string_dynamics *arguments);
@@ -244,12 +244,12 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   f_none on success.
- *   f_no_data if source length is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_none on success.
+ *   F_data_not if source length is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
   extern f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_static prefix[], const f_string_static name[], const f_string_static value[], const f_array_length size, f_string_dynamics *arguments);
@@ -269,12 +269,12 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   f_none on success.
- *   f_no_data if source length is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_none on success.
+ *   F_data_not if source length is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
   extern f_return_status fll_execute_arguments_dynamic_add_set(const f_string_static source[], const f_array_length size, f_string_dynamics *arguments);
@@ -293,19 +293,19 @@ extern "C" {
  *   The code returned after finishing execution of program_path.
  *
  * @return
- *   f_none on success.
- *   f_failure (with error bit) if result is non-zero.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_file_not_found (with error bit) if file does not exist at the program_path.
- *   f_invalid_name (with error bit) if the program_path is too long.
- *   f_out_of_memory (with error bit) if out of memory.
- *   f_number_overflow (with error bit) on overflow error.
- *   f_invalid_directory (with error bit) on invalid directory in program_path.
- *   f_access_denied (with error bit) on access denied for program_path.
- *   f_loop (with error bit) on loop error while checking the program_path.
- *   f_file_error_stat (with error bit) on stat error while checking the program_path.
+ *   F_none on success.
+ *   F_failure (with error bit) if result is non-zero.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_file_found_not (with error bit) if file does not exist at the program_path.
+ *   F_name (with error bit) if the program_path is too long.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_directory (with error bit) on invalid directory in program_path.
+ *   F_access_denied (with error bit) on access denied for program_path.
+ *   F_loop (with error bit) on loop error while checking the program_path.
+ *   F_file_stat (with error bit) on stat error while checking the program_path.
  *
  * @see execv()
  */
@@ -336,19 +336,19 @@ extern "C" {
  *   The code returned after finishing execution of program_path.
  *
  * @return
- *   f_none on success.
- *   f_failure (with error bit) if result is non-zero.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_file_not_found (with error bit) if file does not exist at the program_path.
- *   f_invalid_name (with error bit) if the program_path is too long.
- *   f_out_of_memory (with error bit) if out of memory.
- *   f_number_overflow (with error bit) on overflow error.
- *   f_invalid_directory (with error bit) on invalid directory in program_path.
- *   f_access_denied (with error bit) on access denied for program_path.
- *   f_loop (with error bit) on loop error while checking the program_path.
- *   f_file_error_stat (with error bit) on stat error while checking the program_path.
+ *   F_none on success.
+ *   F_failure (with error bit) if result is non-zero.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_file_found_not (with error bit) if file does not exist at the program_path.
+ *   F_name (with error bit) if the program_path is too long.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_directory (with error bit) on invalid directory in program_path.
+ *   F_access_denied (with error bit) on access denied for program_path.
+ *   F_loop (with error bit) on loop error while checking the program_path.
+ *   F_file_stat (with error bit) on stat error while checking the program_path.
  *
  * @see execv()
  */
@@ -369,13 +369,13 @@ extern "C" {
  *   The code returned after finishing execution of program.
  *
  * @return
- *   f_none on success.
- *   f_failure (with error bit) if result is non-zero.
- *   f_fork_failed (with error bit) on fork failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_file_not_found (with error bit) if file does not exist at the program_path.
+ *   F_none on success.
+ *   F_failure (with error bit) if result is non-zero.
+ *   F_fork (with error bit) on fork failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_file_found_not (with error bit) if file does not exist at the program_path.
  *   f_string_length_size (with error bit) if the combined string (generated from PATH) is too large.
  *
  * @see execvp()
@@ -409,20 +409,20 @@ extern "C" {
  *   The code returned after finishing execution of program.
  *
  * @return
- *   f_none on success.
- *   f_failure (with error bit) if result is non-zero.
- *   f_fork_failed (with error bit) on fork failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_file_not_found (with error bit) if file does not exist at the program_path.
- *   f_invalid_name (with error bit) if the program_path is too long.
- *   f_out_of_memory (with error bit) if out of memory.
- *   f_number_overflow (with error bit) on overflow error.
- *   f_invalid_directory (with error bit) on invalid directory in program_path.
- *   f_access_denied (with error bit) on access denied for program_path.
- *   f_loop (with error bit) on loop error while checking the program_path.
- *   f_buffer_too_large (with error bit) if paths array (generated from PATH) is too large for further addressing.
+ *   F_none on success.
+ *   F_failure (with error bit) if result is non-zero.
+ *   F_fork (with error bit) on fork failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_file_found_not (with error bit) if file does not exist at the program_path.
+ *   F_name (with error bit) if the program_path is too long.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_directory (with error bit) on invalid directory in program_path.
+ *   F_access_denied (with error bit) on access denied for program_path.
+ *   F_loop (with error bit) on loop error while checking the program_path.
+ *   F_buffer_too_large (with error bit) if paths array (generated from PATH) is too large for further addressing.
  *   f_string_length_size (with error bit) if the combined string (generated from PATH) is too large.
  *
  * @see execvpe()

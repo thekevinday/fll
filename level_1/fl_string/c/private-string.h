@@ -32,11 +32,11 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   f_string_length_size (with error bit) if the combined string is too large.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see fl_string_append()
  * @see fl_string_mash()
@@ -60,11 +60,11 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   f_string_length_size (with error bit) if the combined string is too large.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see fl_string_append_nulless()
  * @see fl_string_mash_nulless()
@@ -94,9 +94,9 @@ extern "C" {
  *   Exclusive stop position for string2.
  *
  * @return
- *   f_equal_to when both strings equal.
- *   f_not_equal_to when both strings do not equal.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_string_compare()
  * @see fl_string_dynamic_compare()
@@ -125,9 +125,9 @@ extern "C" {
  *   Exclusive stop position for string2.
  *
  * @return
- *   f_equal_to when both strings equal.
- *   f_not_equal_to when both strings do not equal.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_string_compare_trim()
  * @see fl_string_dynamic_compare_trim()
@@ -150,11 +150,11 @@ extern "C" {
  *   The destination string the source and glue are prepended onto.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   f_string_length_size (with error bit) if the combined string is too large.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see fl_string_prepend()
  * @see fl_string_dynamic_prepend()
@@ -176,11 +176,11 @@ extern "C" {
  *   The destination string the source and glue are prepended onto.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   f_string_length_size (with error bit) if the combined string is too large.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see fl_string_prepend_nulless()
  * @see fl_string_dynamic_prepend_nulless()
@@ -204,11 +204,11 @@ extern "C" {
  *   Will be updated to reflect the new stop range.
  *
  * @return
- *   f_none on success.
- *   f_no_data on success but only whitespace found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_data_not on success but only whitespace found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see fl_string_dynamic_rip()
  * @see fl_string_rip()

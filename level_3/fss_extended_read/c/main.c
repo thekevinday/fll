@@ -5,12 +5,12 @@ int main(const unsigned long argc, const f_string *argv) {
   fss_extended_read_data data = fss_extended_read_data_initialize;
 
   if (f_pipe_input_exists()) {
-    data.process_pipe = f_true;
+    data.process_pipe = F_true;
   }
 
   f_status status = fss_extended_read_main(arguments, &data);
 
-  if (f_status_is_error(status)) {
+  if (F_status_is_error(status)) {
     return 1;
   }
 

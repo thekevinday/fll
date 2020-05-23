@@ -22,27 +22,27 @@ extern "C" {
 
     fll_program_print_help_usage(context, fss_basic_write_name, "");
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fss_basic_write_print_help_
 
 #ifndef _di_fss_basic_write_main_
   f_return_status fss_basic_write_main(const f_console_arguments arguments, fss_basic_write_data *data) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     {
       f_console_parameters parameters = { data->parameters, fss_basic_write_total_parameters };
       f_console_parameter_id ids[3] = { fss_basic_write_parameter_no_color, fss_basic_write_parameter_light, fss_basic_write_parameter_dark };
       f_console_parameter_ids choices = { ids, 3 };
 
-       status = fll_program_parameter_process(arguments, parameters, choices, f_true, &data->remaining, &data->context);
+       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-      if (f_status_is_error(status)) {
+      if (F_status_is_error(status)) {
         fss_basic_write_delete_data(data);
-        return f_status_set_error(status);
+        return F_status_set_error(status);
       }
 
-      status = f_none;
+      status = F_none;
     }
 
     if (data->parameters[fss_basic_write_parameter_help].result == f_console_result_found) {
@@ -66,19 +66,19 @@ extern "C" {
 
         status = f_file_read(file, &input);
 
-        if (f_status_is_error(status)) {
-          status = f_status_set_fine(status);
+        if (F_status_is_error(status)) {
+          status = F_status_set_fine(status);
 
-          if (status == f_invalid_parameter) {
+          if (status == F_parameter) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           }
-          else if (status == f_file_not_found) {
+          else if (status == F_file_found_not) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", "-");
           }
-          else if (status == f_file_error_open) {
+          else if (status == F_file_open) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", "-");
           }
-          else if (status == f_file_error_descriptor) {
+          else if (status == F_file_descriptor) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
           }
           else {
@@ -87,7 +87,7 @@ extern "C" {
 
           f_macro_string_dynamic_delete_simple(input);
           fss_basic_write_delete_data(data);
-          return f_status_set_error(status);
+          return F_status_set_error(status);
         }
 
         range.start = 0;
@@ -96,15 +96,15 @@ extern "C" {
         if (object) {
           status = fl_fss_basic_object_write(&buffer, input, &range);
 
-          if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
-            return f_status_set_error(status);
+          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos) {
+            return F_status_set_error(status);
           }
         }
         else {
           status = fl_fss_basic_content_write(&buffer, input, &range);
 
-          if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
-            return f_status_set_error(status);
+          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos) {
+            return F_status_set_error(status);
           }
         }
 
@@ -122,19 +122,19 @@ extern "C" {
         if (object) {
           status = fl_fss_basic_object_write(&buffer, input, &range);
 
-          if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
-            return f_status_set_error(status);
+          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos) {
+            return F_status_set_error(status);
           }
         }
         else {
           status = fl_fss_basic_content_write(&buffer, input, &range);
 
-          if (f_status_is_error(status) || status == f_no_data_on_stop || status == f_no_data_on_eos) {
-            return f_status_set_error(status);
+          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos) {
+            return F_status_set_error(status);
           }
         }
 
-        status = f_none;
+        status = F_none;
       }
 
       if (data->parameters[fss_basic_write_parameter_file].result == f_console_result_additional) {
@@ -144,21 +144,21 @@ extern "C" {
 
         status = f_file_open(arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]], 0, &output);
 
-        if (f_status_is_error(status)) {
-          status = f_status_set_fine(status);
+        if (F_status_is_error(status)) {
+          status = F_status_set_fine(status);
 
           f_file_close(&output.id);
 
-          if (status == f_invalid_parameter) {
+          if (status == F_parameter) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           }
-          else if (status == f_file_not_found) {
+          else if (status == F_file_found_not) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
           }
-          else if (status == f_file_error_open) {
+          else if (status == F_file_open) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
           }
-          else if (status == f_file_error_descriptor) {
+          else if (status == F_file_descriptor) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
           }
           else {
@@ -172,13 +172,13 @@ extern "C" {
         status = f_file_write(output, buffer, 0);
         f_file_close(&output.id);
 
-        if (f_status_is_error(status)) {
-          status = f_status_set_fine(status);
+        if (F_status_is_error(status)) {
+          status = F_status_set_fine(status);
 
-          if (status == f_invalid_parameter) {
+          if (status == F_parameter) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");
           }
-          else if (status == f_file_error_write) {
+          else if (status == F_file_write) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
           }
           else {
@@ -186,7 +186,7 @@ extern "C" {
           }
 
           fss_basic_write_delete_data(data);
-          return f_status_set_error(status);
+          return F_status_set_error(status);
         }
       }
       else {
@@ -201,7 +201,7 @@ extern "C" {
 
 #ifndef _di_fss_basic_write_delete_data_
   f_return_status fss_basic_write_delete_data(fss_basic_write_data *data) {
-    f_status status = f_none;
+    f_status status = F_none;
     f_string_length i = 0;
 
     while (i < fss_basic_write_total_parameters) {
@@ -213,7 +213,7 @@ extern "C" {
     f_macro_string_lengths_delete_simple(data->remaining);
     fl_macro_color_context_delete_simple(data->context);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fss_basic_write_delete_data_
 

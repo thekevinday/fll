@@ -7,32 +7,32 @@ extern "C" {
 
 #ifndef _di_f_directory_copy_
   f_return_status private_f_directory_copy(const f_string source, const f_string destination, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     status = f_directory_exists(source);
-    if (f_status_is_error(status)) return status;
-    if (status == f_false) return f_status_set_error(f_invalid_directory);
+    if (F_status_is_error(status)) return status;
+    if (status == F_false) return F_status_set_error(F_directory);
 
     status = f_directory_exists(destination);
-    if (f_status_is_error(status)) return status;
+    if (F_status_is_error(status)) return status;
 
-    if (status == f_true) {
+    if (status == F_true) {
       if (exclusive) {
-        return f_status_set_error(f_directory_found);
+        return F_status_set_error(F_directory_found);
       }
 
-      status = f_file_change_mode(destination, mode.directory, f_false);
-      if (f_status_is_error(status)) return status;
+      status = f_file_change_mode(destination, mode.directory, F_false);
+      if (F_status_is_error(status)) return status;
     }
     else {
       status = f_directory_create(destination, mode.directory);
-      if (f_status_is_error(status)) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     f_directory_listing listing = f_directory_listing_initialize;
 
     status = private_fl_directory_list(source, 0, 0, &listing);
-    if (f_status_is_error(status)) {
+    if (F_status_is_error(status)) {
       f_macro_directory_listing_delete_simple(listing);
       return status;
     }
@@ -88,7 +88,7 @@ extern "C" {
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.directory);
-    return f_none;
+    return F_none;
   }
 #endif // _di_f_directory_copy_
 
@@ -97,34 +97,34 @@ extern "C" {
     struct dirent **entity = 0;
 
     f_string_length size = 0;
-    f_status status = f_none;
+    f_status status = F_none;
 
     DIR *parent = opendir(path);
 
     if (parent == 0) {
       if (errno == ENOMEM) {
-        return f_status_set_error(f_out_of_memory);
+        return F_status_set_error(F_memory_out);
       }
       else if (errno == ENOMEM) {
-        return f_status_set_error(f_out_of_memory);
+        return F_status_set_error(F_memory_out);
       }
       else if (errno == EMFILE) {
-        return f_status_set_error(f_file_max_descriptors);
+        return F_status_set_error(F_file_descriptors_max);
       }
       else if (errno == ENFILE) {
-        return f_status_set_error(f_file_max_open);
+        return F_status_set_error(F_file_open_max);
       }
       else if (errno == ENOTDIR) {
-        return f_status_set_error(f_invalid_directory);
+        return F_status_set_error(F_directory);
       }
       else if (errno == ENOENT) {
-        return f_status_set_error(f_directory_not_found);
+        return F_status_set_error(F_directory_not_found);
       }
       else if (errno == EACCES) {
-        return f_status_set_error(f_access_denied);
+        return F_status_set_error(F_access_denied);
       }
 
-      return f_status_set_error(f_directory_error_open);
+      return F_status_set_error(F_directory_open);
     }
 
     int parent_fd = dirfd(parent);
@@ -133,13 +133,13 @@ extern "C" {
       closedir(parent);
 
       if (errno == EINVAL) {
-        return f_status_set_error(f_directory_error_stream);
+        return F_status_set_error(F_directory_stream);
       }
       else if (errno == ENOTSUP) {
-        return f_status_set_error(f_directory_error_unsupported);
+        return F_status_set_error(F_directory_unsupported);
       }
 
-      return f_status_set_error(f_directory_error_descriptor);
+      return F_status_set_error(F_directory_descriptor);
     }
 
     const size_t length = scandir(path, &entity, filter, sort);
@@ -147,8 +147,8 @@ extern "C" {
     if (length == -1) {
       closedir(parent);
 
-      if (errno == ENOMEM) return f_status_set_error(f_error_allocation);
-      else return f_status_set_error(f_failure);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_allocation);
+      else return F_status_set_error(F_failure);
     }
 
     f_string_dynamics *names = 0;
@@ -169,7 +169,7 @@ extern "C" {
       memset(&file_stat, 0, sizeof(struct stat));
 
       status = f_file_stat_at(parent_fd, entity[i]->d_name, 0, &file_stat);
-      if (f_status_is_error(status)) break;
+      if (F_status_is_error(status)) break;
 
       mode = f_macro_file_type_get(file_stat.st_mode);
 
@@ -200,24 +200,24 @@ extern "C" {
 
       if (names->used >= names->size) {
         f_macro_string_dynamics_resize(status, (*names), names->size + f_directory_default_allocation_step);
-        if (f_status_is_error(status)) break;
+        if (F_status_is_error(status)) break;
       }
 
       f_macro_string_dynamic_new(status, names->array[names->used], size);
-      if (f_status_is_error(status)) break;
+      if (F_status_is_error(status)) break;
 
       if (names->array[names->used].used > 0 && names->array[names->used].string[names->array[names->used].used - 1] != 0) {
         if (names->array[names->used].used + 1 > f_string_length_size) {
-          status = f_status_set_error(f_string_too_large);
+          status = F_status_set_error(F_string_too_large);
           break;
         }
 
         total = names->array[names->used].used + 1;
         if (total > names->array[names->used].size) {
-          f_status status = f_none;
+          f_status status = F_none;
 
           f_macro_string_dynamics_resize(status, (*names), total);
-          if (f_status_is_error(status)) break;
+          if (F_status_is_error(status)) break;
         }
 
         names->array[names->used].string[names->array[names->used].used] = 0;
@@ -239,10 +239,10 @@ extern "C" {
 
     f_memory_delete((void **) & entity, sizeof(struct dirent *), 1);
 
-    if (f_status_is_error(status)) return status;
-    if (length == 0) return f_no_data;
+    if (F_status_is_error(status)) return status;
+    if (length == 0) return F_data_not;
 
-    return f_none;
+    return F_none;
   }
 #endif // !defined(_di_fl_directory_list_)
 

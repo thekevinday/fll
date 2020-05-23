@@ -6,12 +6,12 @@ int main(const int argc, const f_string *argv) {
   firewall_data data = firewall_data_initialize;
 
   if (f_pipe_input_exists()) {
-    data.process_pipe = f_true;
+    data.process_pipe = F_true;
   }
 
   f_status status = firewall_main(arguments, &data);
 
-  if (f_status_is_error(status)) {
+  if (F_status_is_error(status)) {
     return 1;
   }
 

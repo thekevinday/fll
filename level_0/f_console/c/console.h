@@ -284,9 +284,9 @@ extern "C" {
  *   The resulting console type code determined by this function.
  *
  * @return
- *   f_none on success.
- *   f_no_data the input string is empty.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_data_not the input string is empty.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_f_console_identify_
   extern f_return_status f_console_identify(const f_string input, f_console_id *result);
@@ -324,12 +324,12 @@ extern "C" {
  *   A list of remaining parameters not associated with anything.
  *
  * @return
- *   f_none on success.
- *   f_no_data if "additional" parameters were expected but not found.
- *   f_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character, when processing arguments.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_data_not if "additional" parameters were expected but not found.
+ *   F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character, when processing arguments.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_f_console_parameter_process_
   extern f_return_status f_console_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, f_string_lengths *remaining);
@@ -357,9 +357,9 @@ extern "C" {
  *   If none of the parameters are found, then this will not be updated (therefore it is safe to have it pre-initialized to the default).
  *
  * @return
- *   f_none on success.
- *   f_no_data if no parameters were found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_data_not if no parameters were found.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_left_
   extern f_return_status f_console_parameter_prioritize_left(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision);
@@ -387,9 +387,9 @@ extern "C" {
  *   If none of the parameters are found, then this will not be updated (therefore it is safe to have it pre-initialized to the default).
  *
  * @return
- *   f_none on success.
- *   f_no_data if no parameters were found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_data_not if no parameters were found.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_right_
   extern f_return_status f_console_parameter_prioritize_right(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision);

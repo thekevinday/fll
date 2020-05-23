@@ -9,7 +9,7 @@ extern "C" {
   f_return_status private_fl_utf_file_write_until(const f_file file, const f_utf_string string, const f_utf_string_length total, f_utf_string_length *written) {
     *written = 0;
 
-    f_status status = f_none;
+    f_status status = F_none;
     f_utf_string_length write_size = file.size_write > 4 ? file.size_write : 4;
     f_utf_string_length write_max = total;
     f_utf_string_length i = 0;
@@ -92,19 +92,19 @@ extern "C" {
       size_write = write(file.id, buffer_write, used);
 
       if (size_write == 0) {
-        return f_none_on_stop;
+        return F_none_stop;
       }
 
       if (size_write < 0) {
-        if (errno == EAGAIN || errno == EWOULDBLOCK) return f_status_set_error(f_block);
-        if (errno == EBADF) return f_status_set_error(f_file_error_descriptor);
-        if (errno == EFAULT) return f_status_set_error(f_invalid_buffer);
-        if (errno == EINTR) return f_status_set_error(f_interrupted);
-        if (errno == EINVAL) return f_status_set_error(f_invalid_parameter);
-        if (errno == EIO) return f_status_set_error(f_error_input_output);
-        if (errno == EISDIR) return f_status_set_error(f_file_is_type_directory);
+        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+        if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+        if (errno == EFAULT) return F_status_set_error(F_buffer);
+        if (errno == EINTR) return F_status_set_error(F_interrupted);
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == EIO) return F_status_set_error(F_input_output);
+        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-        return f_status_set_error(f_failure);
+        return F_status_set_error(F_failure);
       }
 
       *written += i;
@@ -115,7 +115,7 @@ extern "C" {
       }
     } while (*written < write_max);
 
-    return f_none;
+    return F_none;
   }
 #endif // !defined(fl_utf_file_write) || !defined(fl_utf_file_write_until) || !defined(fl_utf_file_write_range)
 

@@ -8,7 +8,7 @@ extern "C" {
 
 #ifndef _di_fake_clean_operate_
   f_return_status fake_clean_operate(const fake_data data) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol);
@@ -18,18 +18,18 @@ extern "C" {
     }
 
     if (data.verbosity == fake_verbosity_verbose) {
-      status = f_directory_remove_custom(data.path_build.string, f_directory_descriptors_max, f_true, fake_clean_remove_recursively_verbosely);
+      status = f_directory_remove_custom(data.path_build.string, f_directory_descriptors_max, F_true, fake_clean_remove_recursively_verbosely);
     }
     else {
-      status = f_directory_remove(data.path_build.string, f_directory_descriptors_max, f_true);
+      status = f_directory_remove(data.path_build.string, f_directory_descriptors_max, F_true);
     }
 
-    if (f_status_is_error(status)) {
-      fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "f_directory_remove", f_true);
+    if (F_status_is_error(status)) {
+      fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "f_directory_remove", F_true);
       return status;
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fake_clean_operate_
 

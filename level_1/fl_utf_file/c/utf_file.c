@@ -8,13 +8,13 @@ extern "C" {
 #ifndef _di_fl_utf_file_read_
   f_return_status fl_utf_file_read(const f_file file, f_utf_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer->used > buffer->size) return f_status_set_error(f_invalid_parameter);
+      if (file.size_read == 0) return F_status_set_error(F_parameter);
+      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+    if (file.id <= 0) return F_status_set_error(F_file_open_not);
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     ssize_t size_read = 0;
     uint8_t width = 0;
@@ -29,11 +29,11 @@ extern "C" {
     while ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
       if (buffer->used + size_read > buffer->size) {
         if (buffer->size + size_read > f_string_length_size) {
-          return f_status_set_error(f_string_too_large);
+          return F_status_set_error(F_string_too_large);
         }
 
         f_macro_string_dynamic_resize(status, (*buffer), buffer->size + size_read);
-        if (f_status_is_error(status)) return status;
+        if (F_status_is_error(status)) return status;
       }
 
       for (i = 0; i < size_read; i += width) {
@@ -61,35 +61,35 @@ extern "C" {
     } // while
 
     if (size_read == 0) {
-      return f_none_on_eof;
+      return F_none_eof;
     }
 
     if (size_read < 0) {
-      if (errno == EAGAIN || errno == EWOULDBLOCK) return f_status_set_error(f_block);
-      if (errno == EBADF) return f_status_set_error(f_file_error_descriptor);
-      if (errno == EFAULT) return f_status_set_error(f_invalid_buffer);
-      if (errno == EINTR) return f_status_set_error(f_interrupted);
-      if (errno == EINVAL) return f_status_set_error(f_invalid_parameter);
-      if (errno == EIO) return f_status_set_error(f_error_input_output);
-      if (errno == EISDIR) return f_status_set_error(f_file_is_type_directory);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EIO) return F_status_set_error(F_input_output);
+      if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-      return f_status_set_error(f_failure);
+      return F_status_set_error(F_failure);
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fl_utf_file_read_
 
 #ifndef _di_fl_utf_file_read_block_
   f_return_status fl_utf_file_read_block(const f_file file, f_utf_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer->used > buffer->size) return f_status_set_error(f_invalid_parameter);
+      if (file.size_read == 0) return F_status_set_error(F_parameter);
+      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+    if (file.id <= 0) return F_status_set_error(F_file_open_not);
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     ssize_t size_read = 0;
     uint8_t width = 0;
@@ -104,11 +104,11 @@ extern "C" {
     if ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
       if (buffer->used + size_read > buffer->size) {
         if (buffer->size + size_read > f_string_length_size) {
-          return f_status_set_error(f_string_too_large);
+          return F_status_set_error(F_string_too_large);
         }
 
         f_macro_string_dynamic_resize(status, (*buffer), buffer->size + size_read);
-        if (f_status_is_error(status)) return status;
+        if (F_status_is_error(status)) return status;
       }
 
       for (i = 0; i < size_read; i += width) {
@@ -136,35 +136,35 @@ extern "C" {
     }
 
     if (size_read == 0) {
-      return f_none_on_eof;
+      return F_none_eof;
     }
 
     if (size_read < 0) {
-      if (errno == EAGAIN || errno == EWOULDBLOCK) return f_status_set_error(f_block);
-      if (errno == EBADF) return f_status_set_error(f_file_error_descriptor);
-      if (errno == EFAULT) return f_status_set_error(f_invalid_buffer);
-      if (errno == EINTR) return f_status_set_error(f_interrupted);
-      if (errno == EINVAL) return f_status_set_error(f_invalid_parameter);
-      if (errno == EIO) return f_status_set_error(f_error_input_output);
-      if (errno == EISDIR) return f_status_set_error(f_file_is_type_directory);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EIO) return F_status_set_error(F_input_output);
+      if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-      return f_status_set_error(f_failure);
+      return F_status_set_error(F_failure);
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fl_utf_file_read_block_
 
 #ifndef _di_fl_utf_file_read_until_
   f_return_status fl_utf_file_read_until(const f_file file, f_utf_string_dynamic *buffer, const f_utf_string_length total) {
     #ifndef _di_level_1_parameter_checking_
-      if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer->used > buffer->size) return f_status_set_error(f_invalid_parameter);
+      if (file.size_read == 0) return F_status_set_error(F_parameter);
+      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+    if (file.id <= 0) return F_status_set_error(F_file_open_not);
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     ssize_t size_read = 0;
     uint8_t width = 0;
@@ -186,11 +186,11 @@ extern "C" {
     while (buffer_count < total && (size_read = read(file.id, buffer_read, buffer_size)) > 0) {
       if (buffer->used + size_read > buffer->size) {
         if (buffer->size + size_read > f_string_length_size) {
-          return f_status_set_error(f_string_too_large);
+          return F_status_set_error(F_string_too_large);
         }
 
         f_macro_string_dynamic_resize(status, (*buffer), buffer->size + size_read);
-        if (f_status_is_error(status)) return status;
+        if (F_status_is_error(status)) return status;
       }
 
       for (i = 0; i < size_read; i += width) {
@@ -219,43 +219,43 @@ extern "C" {
     } // while
 
     if (size_read == 0) {
-      return f_none_on_eof;
+      return F_none_eof;
     }
 
     if (size_read < 0) {
-      if (errno == EAGAIN || errno == EWOULDBLOCK) return f_status_set_error(f_block);
-      if (errno == EBADF) return f_status_set_error(f_file_error_descriptor);
-      if (errno == EFAULT) return f_status_set_error(f_invalid_buffer);
-      if (errno == EINTR) return f_status_set_error(f_interrupted);
-      if (errno == EINVAL) return f_status_set_error(f_invalid_parameter);
-      if (errno == EIO) return f_status_set_error(f_error_input_output);
-      if (errno == EISDIR) return f_status_set_error(f_file_is_type_directory);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EIO) return F_status_set_error(F_input_output);
+      if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-      return f_status_set_error(f_failure);
+      return F_status_set_error(F_failure);
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fl_utf_file_read_until_
 
 #ifndef _di_fl_utf_file_write_
   f_return_status fl_utf_file_write(const f_file file, const f_utf_string_dynamic buffer, f_utf_string_length *written) {
     #ifndef _di_level_0_parameter_checking_
-      if (file.size_write == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used >= buffer.size) return f_status_set_error(f_invalid_parameter);
+      if (file.size_write == 0) return F_status_set_error(F_parameter);
+      if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+    if (file.id <= 0) return F_status_set_error(F_file_open_not);
 
     if (buffer.used == 0) {
       *written = 0;
-      return f_no_data;
+      return F_data_not;
     }
 
     f_status status = private_fl_utf_file_write_until(file, buffer.string, buffer.used, written);
-    if (f_status_is_error(status)) return f_status_set_error(status);
+    if (F_status_is_error(status)) return F_status_set_error(status);
 
-    if (status == f_none && *written == buffer.used) return f_none_on_eos;
+    if (status == F_none && *written == buffer.used) return F_none_eos;
 
     return status;
   }
@@ -264,15 +264,15 @@ extern "C" {
 #ifndef _di_fl_utf_file_write_block_
   f_return_status fl_utf_file_write_block(const f_file file, const f_utf_string_dynamic buffer, f_utf_string_length *written) {
     #ifndef _di_level_0_parameter_checking_
-      if (file.size_write == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used >= buffer.size) return f_status_set_error(f_invalid_parameter);
+      if (file.size_write == 0) return F_status_set_error(F_parameter);
+      if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+    if (file.id <= 0) return F_status_set_error(F_file_open_not);
 
     if (buffer.used == 0) {
       *written = 0;
-      return f_no_data;
+      return F_data_not;
     }
 
     f_utf_string_length write_max = file.size_write;
@@ -282,9 +282,9 @@ extern "C" {
     }
 
     f_status status = private_fl_utf_file_write_until(file, buffer.string, write_max, written);
-    if (f_status_is_error(status)) return f_status_set_error(status);
+    if (F_status_is_error(status)) return F_status_set_error(status);
 
-    if (status == f_none && *written == buffer.used) return f_none_on_eos;
+    if (status == F_none && *written == buffer.used) return F_none_eos;
 
     return status;
   }
@@ -293,15 +293,15 @@ extern "C" {
 #ifndef _di_fl_utf_file_write_until_
   f_return_status fl_utf_file_write_until(const f_file file, const f_utf_string_dynamic buffer, const f_utf_string_length total, f_utf_string_length *written) {
     #ifndef _di_level_0_parameter_checking_
-      if (file.size_write == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used >= buffer.size) return f_status_set_error(f_invalid_parameter);
+      if (file.size_write == 0) return F_status_set_error(F_parameter);
+      if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+    if (file.id <= 0) return F_status_set_error(F_file_open_not);
 
     if (buffer.used == 0 || total == 0) {
       *written = 0;
-      return f_no_data;
+      return F_data_not;
     }
 
     f_utf_string_length write_max = file.size_write;
@@ -311,9 +311,9 @@ extern "C" {
     }
 
     f_status status = private_fl_utf_file_write_until(file, buffer.string, write_max, written);
-    if (f_status_is_error(status)) return f_status_set_error(status);
+    if (F_status_is_error(status)) return F_status_set_error(status);
 
-    if (status == f_none && *written == buffer.used) return f_none_on_eos;
+    if (status == F_none && *written == buffer.used) return F_none_eos;
 
     return status;
   }
@@ -322,17 +322,17 @@ extern "C" {
 #ifndef _di_fl_utf_file_write_range_
   f_return_status fl_utf_file_write_range(const f_file file, const f_utf_string_dynamic buffer, const f_utf_string_range range, f_utf_string_length *written) {
     #ifndef _di_level_0_parameter_checking_
-      if (file.size_write == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer.used >= buffer.size) return f_status_set_error(f_invalid_parameter);
-      if (range.stop < range.start) return f_status_set_error(f_invalid_parameter);
-      if (range.start >= buffer.used) return f_status_set_error(f_invalid_parameter);
+      if (file.size_write == 0) return F_status_set_error(F_parameter);
+      if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
+      if (range.stop < range.start) return F_status_set_error(F_parameter);
+      if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return f_status_set_error(f_file_not_open);
+    if (file.id <= 0) return F_status_set_error(F_file_open_not);
 
     if (buffer.used == 0) {
       *written = 0;
-      return f_no_data;
+      return F_data_not;
     }
 
     // @todo consider adding a custom status return for when an invalid UTF-8 is written due to range limitations.
@@ -345,11 +345,11 @@ extern "C" {
     }
 
     f_status status = private_fl_utf_file_write_until(file, buffer.string + range.start, write_max, written);
-    if (f_status_is_error(status)) return f_status_set_error(status);
+    if (F_status_is_error(status)) return F_status_set_error(status);
 
-    if (status == f_none) {
-      if (range.start + *written == total) return f_none_on_stop;
-      if (range.start + *written == buffer.used) return f_none_on_eos;
+    if (status == F_none) {
+      if (range.start + *written == total) return F_none_stop;
+      if (range.start + *written == buffer.used) return F_none_eos;
     }
 
     return status;

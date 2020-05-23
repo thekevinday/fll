@@ -8,15 +8,15 @@ extern "C" {
 
 #ifndef _di_fake_build_execute_process_script_
   f_return_status fake_build_execute_process_script(const fake_data data, const fake_build_settings settings, const f_string_static process_script) {
-    if (process_script.used == 0) return f_none;
+    if (process_script.used == 0) return F_none;
 
-    f_status status = f_none;
+    f_status status = F_none;
     f_string_dynamics arguments = f_string_dynamics_initialize;
 
     status = fll_execute_arguments_add(fake_other_operation_build, fake_other_operation_build_length, &arguments);
 
     // ensure console color mode is passed to the scripts so that they can also react to color mode.
-    if (!f_status_is_error(status) && data.context.mode != f_color_mode_none) {
+    if (!F_status_is_error(status) && data.context.mode != f_color_mode_none) {
       char argument[3] = { f_console_symbol_disable, 0, 0 };
 
       if (data.context.mode == f_color_mode_dark) {
@@ -33,7 +33,7 @@ extern "C" {
     }
 
     // ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
-    if (!f_status_is_error(status) && data.verbosity != fake_verbosity_normal) {
+    if (!F_status_is_error(status) && data.verbosity != fake_verbosity_normal) {
       char argument[3] = { f_console_symbol_disable, 0, 0 };
 
       if (data.verbosity == fake_verbosity_quiet) {
@@ -49,8 +49,8 @@ extern "C" {
       status = fll_execute_arguments_add(argument, 2, &arguments);
     }
 
-    if (f_status_is_error(status)) {
-      fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_execute_arguments_add", f_true);
+    if (F_status_is_error(status)) {
+      fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fll_execute_arguments_add", F_true);
 
       f_macro_string_dynamics_delete_simple(arguments);
       return status;
@@ -119,8 +119,8 @@ extern "C" {
 
       status = fll_execute_arguments_add_parameter_set(parameters_prefix, parameters_prefix_length, parameters_name, parameters_name_length, parameters_value, parameters_value_length, 7, &arguments);
 
-      if (f_status_is_error(status)) {
-        fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_execute_arguments_add_parameter_set", f_true);
+      if (F_status_is_error(status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fll_execute_arguments_add_parameter_set", F_true);
 
         f_macro_string_dynamics_delete_simple(arguments);
         return status;
@@ -137,17 +137,17 @@ extern "C" {
         status = fl_string_dynamic_append_nulless(data.path_data_build, &path);
       }
 
-      if (!f_status_is_error(status)) {
+      if (!F_status_is_error(status)) {
         status = fl_string_dynamic_append_nulless(process_script, &path);
       }
 
-      if (!f_status_is_error(status)) {
+      if (!F_status_is_error(status)) {
         function = "fl_string_dynamic_terminate";
         status = fl_string_dynamic_terminate(&path);
       }
 
-      if (f_status_is_error(status)) {
-        fake_print_error(data.context, data.verbosity, f_status_set_fine(status), function, f_true);
+      if (F_status_is_error(status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(status), function, F_true);
 
         f_macro_string_dynamic_delete_simple(path);
         f_macro_string_dynamics_delete_simple(arguments);
@@ -172,8 +172,8 @@ extern "C" {
         };
 
         f_macro_string_dynamics_new(status, names, 2);
-        if (f_status_is_error(status)) {
-          fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "f_macro_string_dynamics_new", f_true);
+        if (F_status_is_error(status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true);
 
           f_macro_string_dynamic_delete_simple(path);
           f_macro_string_dynamics_delete_simple(arguments);
@@ -185,7 +185,7 @@ extern "C" {
 
         for (uint8_t i = 0; i < 2; i++) {
           status = fl_string_append(variables_name[i], variables_length[i], &part);
-          if (f_status_is_error(status)) break;
+          if (F_status_is_error(status)) break;
 
           names.array[names.used].string = part.string;
           names.array[names.used].used = part.used;
@@ -195,7 +195,7 @@ extern "C" {
           f_macro_string_dynamic_clear(part);
         } // for
 
-        if (!f_status_is_error(status)) {
+        if (!F_status_is_error(status)) {
           if (names.used + settings.environment.used > names.size) {
             if (names.used + settings.environment.used > f_array_length_size) {
               if (data.verbosity != fake_verbosity_quiet) {
@@ -210,12 +210,12 @@ extern "C" {
               f_macro_string_dynamic_delete_simple(part);
               f_macro_string_dynamics_delete_simple(arguments);
               f_macro_string_dynamics_delete_simple(names);
-              return f_status_set_error(f_buffer_too_large);
+              return F_status_set_error(F_buffer_too_large);
             }
 
             f_macro_string_dynamics_resize(status, names, names.used + settings.environment.used);
-            if (f_status_is_error(status)) {
-              fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "f_macro_string_dynamics_resize", f_true);
+            if (F_status_is_error(status)) {
+              fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "f_macro_string_dynamics_resize", F_true);
 
               f_macro_string_dynamic_delete_simple(part);
               f_macro_string_dynamics_delete_simple(arguments);
@@ -226,7 +226,7 @@ extern "C" {
 
           for (f_string_length i = 0; i < settings.environment.used; i++) {
             status = fl_string_dynamic_append_nulless(settings.environment.array[i], &part);
-            if (f_status_is_error(status)) break;
+            if (F_status_is_error(status)) break;
 
             names.array[names.used].string = part.string;
             names.array[names.used].used = part.used;
@@ -239,8 +239,8 @@ extern "C" {
 
         f_macro_string_dynamic_delete_simple(part);
 
-        if (f_status_is_error(status)) {
-          fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_append", f_true);
+        if (F_status_is_error(status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_append", F_true);
 
           f_macro_string_dynamic_delete_simple(path);
           f_macro_string_dynamics_delete_simple(arguments);
@@ -257,10 +257,10 @@ extern "C" {
 
       for (f_string_length i = 0; i < names.used; i++) {
         status = f_environment_get_dynamic(names.array[i], &variable_value);
-        if (f_status_is_error(status)) {
-          status = f_status_set_fine(status);
+        if (F_status_is_error(status)) {
+          status = F_status_set_fine(status);
 
-          if (status == f_error_reallocation) {
+          if (status == F_memory_reallocation) {
             function = "f_macro_string_dynamics_resize";
             break;
           }
@@ -269,11 +269,11 @@ extern "C" {
         if (environment_names.used + 1 > environment_names.size) {
           f_macro_string_dynamics_resize(status, environment_names, environment_names.size + f_memory_default_allocation_step);
 
-          if (!f_status_is_error(status)) {
+          if (!F_status_is_error(status)) {
             f_macro_string_dynamics_resize(status, environment_values, environment_values.size + f_memory_default_allocation_step);
           }
 
-          if (f_status_is_error(status)) {
+          if (F_status_is_error(status)) {
             function = "f_macro_string_dynamics_resize";
             break;
           }
@@ -281,7 +281,7 @@ extern "C" {
 
         status = fl_string_dynamic_append(names.array[i], &variable_name);
 
-        if (f_status_is_error(status)) {
+        if (F_status_is_error(status)) {
           function = "fl_string_append";
           break;
         }
@@ -302,8 +302,8 @@ extern "C" {
 
       f_macro_string_dynamics_delete_simple(names);
 
-      if (f_status_is_error(status)) {
-        fake_print_error(data.context, data.verbosity, status, function, f_true);
+      if (F_status_is_error(status)) {
+        fake_print_error(data.context, data.verbosity, status, function, F_true);
 
         f_macro_string_dynamic_delete_simple(variable_name);
         f_macro_string_dynamic_delete_simple(variable_value);
@@ -323,8 +323,8 @@ extern "C" {
       f_macro_string_dynamics_delete_simple(arguments);
     }
 
-    if (f_status_is_error(status)) {
-      if (f_status_set_fine(status) == f_failure) {
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_failure) {
         if (data.verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol);
           fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to execute script: ");
@@ -333,7 +333,7 @@ extern "C" {
         }
       }
       else {
-        fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_execute_path_environment", f_true);
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fll_execute_path_environment", F_true);
       }
     }
 
@@ -350,18 +350,18 @@ extern "C" {
       fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Building project.");
     }
 
-    f_status status = f_none;
+    f_status status = F_none;
     fake_build_settings settings = fake_build_settings_initialize;
 
     status = fake_build_settings_load(data, &settings);
 
-    if (f_status_is_error(status)) {
+    if (F_status_is_error(status)) {
       fake_macro_build_settings_delete_simple(settings);
       return status;
     }
 
     status = fake_build_execute_process_script(data, settings, settings.process_pre);
-    if (f_status_is_error(status)) {
+    if (F_status_is_error(status)) {
       fake_macro_build_settings_delete_simple(settings);
       return status;
     }
@@ -387,7 +387,7 @@ extern "C" {
 
 #ifndef _di_fake_build_settings_load_
   f_return_status fake_build_settings_load(const fake_data data, fake_build_settings *settings) {
-    f_status status = f_none;
+    f_status status = F_none;
     f_file file = f_file_initialize;
     f_string_dynamic buffer = f_string_dynamic_initialize;
 
@@ -397,23 +397,23 @@ extern "C" {
       name_function = "f_file_exists";
       status = f_file_exists(data.file_data_build_settings.string);
 
-      if (status == f_true) {
+      if (status == F_true) {
         name_function = "f_file_open";
         status = f_file_open(data.file_data_build_settings.string, 0, &file);
 
-        if (status == f_none) {
+        if (status == F_none) {
           name_function = "f_file_read";
           status = f_file_read(file, &buffer);
 
           f_file_close(&file.id);
         }
       }
-      else if (status == f_false) {
-        status = f_status_set_error(f_file_not_found);
+      else if (status == F_false) {
+        status = F_status_set_error(F_file_found_not);
       }
 
-      if (f_status_is_error(status)) {
-        fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), name_function, data.file_data_build_settings.string, "create", f_true, f_true);
+      if (F_status_is_error(status)) {
+        fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), name_function, data.file_data_build_settings.string, "create", F_true, F_true);
 
         f_macro_string_dynamic_delete_simple(buffer);
         return status;
@@ -424,19 +424,19 @@ extern "C" {
       f_fss_objects objects = f_fss_objects_initialize;
       f_fss_contents contents = f_fss_contents_initialize;
       f_string_range range = f_string_range_initialize;
-      bool error_printed = f_false;
+      bool error_printed = F_false;
 
       range.start = 0;
       range.stop = buffer.used - 1;
 
       status = fll_fss_extended_read(&buffer, &range, &objects, &contents);
 
-      if (f_status_is_error(status)) {
+      if (F_status_is_error(status)) {
         f_macro_fss_objects_delete_simple(objects);
         f_macro_fss_contents_delete_simple(contents);
         f_macro_string_dynamic_delete_simple(buffer);
 
-        if (status == f_status_set_error(f_incomplete_utf_on_stop)) {
+        if (status == F_status_set_error(F_incomplete_utf_stop)) {
           if (data.verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol);
             fl_color_print(f_type_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
@@ -446,7 +446,7 @@ extern "C" {
             fl_color_print_line(f_type_error, data.context.error, data.context.reset, "').");
           }
         }
-        else if (status == f_status_set_error(f_incomplete_utf_on_stop)) {
+        else if (status == F_status_set_error(F_incomplete_utf_stop)) {
           if (data.verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol);
             fl_color_print(f_type_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
@@ -457,7 +457,7 @@ extern "C" {
           }
         }
         else {
-          fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fll_fss_extended_read", f_true);
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fll_fss_extended_read", F_true);
         }
 
         f_macro_fss_objects_delete_simple(objects);
@@ -599,13 +599,13 @@ extern "C" {
 
         status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, settings_value, fake_build_settings_total);
 
-        if (status == f_none) {
+        if (status == F_none) {
           f_string_dynamic settings_mode_name_dynamic[fake_build_settings_total];
           f_string settings_mode_names[fake_build_settings_total];
           f_string_length setting_mode_lengths[fake_build_settings_total];
 
           const f_string_dynamics *modes = &settings->modes_default;
-          bool found = f_false;
+          bool found = F_false;
 
           f_array_length i = 0;
           f_array_length j = 0;
@@ -616,16 +616,16 @@ extern "C" {
           }
 
           for (; i < modes->used; i++) {
-            found = f_false;
+            found = F_false;
 
             for (j = 0; j < settings->modes.used; j++) {
-              if (fl_string_dynamic_compare_trim(modes->array[i], settings->modes.array[j]) == f_equal_to) {
-                found = f_true;
+              if (fl_string_dynamic_compare_trim(modes->array[i], settings->modes.array[j]) == F_equal_to) {
+                found = F_true;
                 break;
               }
             } // for
 
-            if (found == f_false) {
+            if (found == F_false) {
               if (data.verbosity != fake_verbosity_quiet) {
                 fprintf(f_type_error, "%c", f_string_eol);
                 fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the specified mode '");
@@ -635,8 +635,8 @@ extern "C" {
                 fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
               }
 
-              error_printed = f_true;
-              status = f_status_set_error(f_invalid_parameter);
+              error_printed = F_true;
+              status = F_status_set_error(F_parameter);
               break;
             }
 
@@ -648,7 +648,7 @@ extern "C" {
               setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
 
               f_macro_string_dynamic_new(status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
-              if (f_status_is_error(status)) {
+              if (F_status_is_error(status)) {
                 function = "f_macro_string_dynamic_new";
                 break;
               }
@@ -660,10 +660,10 @@ extern "C" {
               settings_mode_names[j] = settings_mode_name_dynamic[j].string;
             } // for
 
-            if (status == f_none) {
+            if (status == F_none) {
               status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, settings_value, fake_build_settings_total);
 
-              if (f_status_is_error(status)) {
+              if (F_status_is_error(status)) {
                 function = "fll_fss_snatch_apart";
               }
             }
@@ -672,12 +672,12 @@ extern "C" {
               f_macro_string_dynamic_delete_simple(settings_mode_name_dynamic[j]);
             } // for
 
-            if (f_status_is_error(status)) break;
+            if (F_status_is_error(status)) break;
           } // for
         }
 
-        if (f_status_is_error(status)) {
-          if (status == f_status_set_error(f_string_too_large)) {
+        if (F_status_is_error(status)) {
+          if (status == F_status_set_error(F_string_too_large)) {
             if (data.verbosity != fake_verbosity_quiet) {
               // @todo update FSS functions to return which setting index the problem happened on.
               fprintf(f_type_error, "%c", f_string_eol);
@@ -687,7 +687,7 @@ extern "C" {
             }
           }
           else if (!error_printed) {
-            fake_print_error(data.context, data.verbosity, f_status_set_fine(status), function, f_true);
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(status), function, F_true);
           }
         }
         else {
@@ -785,14 +785,14 @@ extern "C" {
             }
 
             if (settings_single_type[i] == 1) {
-              if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_settings_bool_yes, settings_single_source[i]->array[0].used, fake_build_settings_bool_yes_length) == f_equal_to) {
-                *settings_single_bool[i] = f_true;
+              if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_settings_bool_yes, settings_single_source[i]->array[0].used, fake_build_settings_bool_yes_length) == F_equal_to) {
+                *settings_single_bool[i] = F_true;
               }
-              else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_settings_bool_no, settings_single_source[i]->array[0].used, fake_build_settings_bool_no_length) == f_equal_to) {
-                *settings_single_bool[i] = f_false;
+              else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_settings_bool_no, settings_single_source[i]->array[0].used, fake_build_settings_bool_no_length) == F_equal_to) {
+                *settings_single_bool[i] = F_false;
               }
               else {
-                *settings_single_bool[i] = f_true;
+                *settings_single_bool[i] = F_true;
 
                 if (data.verbosity != fake_verbosity_quiet) {
                   fprintf(f_type_warning, "%c", f_string_eol);
@@ -812,22 +812,22 @@ extern "C" {
             }
             else {
               status = fl_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);
-              if (f_status_is_error(status)) {
-                fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_append_nulless", f_true);
+              if (F_status_is_error(status)) {
+                fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
                 break;
               }
 
               if (settings_single_type[i] == 2) {
                 status = fl_string_append_assure(f_path_separator, f_path_separator_length, settings_single_destination[i]);
-                if (f_status_is_error(status)) {
-                  fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_append_nulless", f_true);
+                if (F_status_is_error(status)) {
+                  fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
                   break;
                 }
               }
 
               status = fl_string_dynamic_terminate(settings_single_destination[i]);
-              if (f_status_is_error(status)) {
-                fake_print_error(data.context, data.verbosity, f_status_set_fine(status), "fl_string_dynamic_terminate", f_true);
+              if (F_status_is_error(status)) {
+                fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
                 break;
               }
             }

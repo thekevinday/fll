@@ -40,11 +40,11 @@ extern "C" {
  *   The name of the file with the error.
  * @param status
  *   The status code representing the error.
- *   The status code should be passed through f_status_set_fine() if it contains error or warning bits.
+ *   The status code should be passed through F_status_set_fine() if it contains error or warning bits.
  *
  * @return
- *   f_true if error message was printed.
- *   f_false if no error message was printed.
+ *   F_true if error message was printed.
+ *   F_false if no error message was printed.
  */
 #ifndef _di_fll_file_error_print_
   extern f_return_status fll_file_error_print(FILE *file, const fl_color_context context, const f_string function_name, const f_string file_name, const f_status status);

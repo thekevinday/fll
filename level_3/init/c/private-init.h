@@ -45,32 +45,32 @@ extern "C" {
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
-      f_false, \
-      f_false, \
+      F_false, \
+      F_false, \
     }
 
   #define delete_init_rule(status, rule) \
     f_macro_string_dynamic_delete(status, rule.name); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       f_macro_string_dynamic_delete(status, rule.directory); \
     } \
-    if (status == f_none) { \
+    if (status == F_none) { \
       f_macro_string_dynamic_delete(status, rule.address); \
     } \
-    if (status == f_none) { \
+    if (status == F_none) { \
       rule.require = 0; \
       rule.asynchronous = 0; \
     }
 
   #define destroy_init_rule(status, rule) \
     f_macro_string_dynamic_destroy(status, rule.name); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       f_macro_string_dynamic_destroy(status, rule.directory); \
     } \
-    if (status == f_none) { \
+    if (status == F_none) { \
       f_macro_string_dynamic_destroy(status, rule.address); \
     } \
-    if (status == f_none) { \
+    if (status == F_none) { \
       rule.require = 0; \
       rule.asynchronous = 0; \
     }
@@ -87,36 +87,36 @@ extern "C" {
   #define init_rules_initialize { 0, 0, 0 }
 
   #define f_init_rules_delete(status, rules) \
-    status = f_none; \
+    status = F_none; \
     while (rules.size > 0) { \
       --rules.size; \
       delete_init_rule(status, rules.array[rules.size]); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) status = f_memory_delete((void **) & rules.array, sizeof(init_rule), rules.size); \
-    if (status == f_none) rules.used = 0;
+    if (status == F_none) status = f_memory_delete((void **) & rules.array, sizeof(init_rule), rules.size); \
+    if (status == F_none) rules.used = 0;
 
   #define f_init_rules_destroy(status, rules) \
-    status = f_none; \
+    status = F_none; \
     while (rules.size > 0) { \
       --rules.size; \
       destroy_init_rule(status, rules.array[rules.size]); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) status = f_memory_destroy((void **) & rules.array, sizeof(init_rule), rules.size); \
-    if (status == f_none) rules.used = 0;
+    if (status == F_none) status = f_memory_destroy((void **) & rules.array, sizeof(init_rule), rules.size); \
+    if (status == F_none) rules.used = 0;
 
   #define f_init_rules_resize(status, rules, new_length) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < rules.size) { \
       f_string_length i = rules.size - new_length; \
       for (; i < rules.size; i++) { \
         delete_init_rule(status, rules.array[i]); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_resize((void **) & rules.array, sizeof(init_rule), rules.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_resize((void **) & rules.array, sizeof(init_rule), rules.size, new_length); \
+    if (status == F_none) { \
       if (new_length > rules.size) { \
         f_string_length i = rules.size; \
         for (; i < new_length; i++) { \
@@ -128,16 +128,16 @@ extern "C" {
     }
 
   #define f_init_rules_adjust(status, rules, new_length) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < rules.size) { \
       f_string_length i = rules.size - new_length; \
       for (; i < rules.size; i++) { \
         destroy_init_rule(status, rules.array[i]); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_adjust((void **) & rules.array, sizeof(init_rule), rules.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_adjust((void **) & rules.array, sizeof(init_rule), rules.size, new_length); \
+    if (status == F_none) { \
       if (new_length > rules.size) { \
         f_string_length i = rules.size; \
         for (; i < new_length; i++) { \
@@ -164,13 +164,13 @@ extern "C" {
 
   #define delete_init_category(status, category) \
     f_macro_string_dynamic_delete(status, category.name); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       delete_init_rule(status, category.last); \
     }
 
   #define destroy_init_category(status, category) \
     f_macro_string_dynamic_destroy(status, category.name); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       destroy_init_rule(status, category.last); \
     }
 #endif // _di_init_category_
@@ -187,36 +187,36 @@ extern "C" {
   #define init_categorys_initialize { 0, 0, 0 }
 
   #define f_init_categorys_delete(status, categorys) \
-    status = f_none; \
+    status = F_none; \
     while (categorys.size > 0) { \
       --categorys.size; \
       delete_init_category(status, categorys.array[categorys.size]); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) status = f_memory_delete((void **) & categorys.array, sizeof(init_category), categorys.size); \
-    if (status == f_none) categorys.used = 0;
+    if (status == F_none) status = f_memory_delete((void **) & categorys.array, sizeof(init_category), categorys.size); \
+    if (status == F_none) categorys.used = 0;
 
   #define f_init_categorys_destroy(status, categorys) \
-    status = f_none; \
+    status = F_none; \
     while (categorys.size > 0) { \
       --categorys.size; \
       destroy_init_category(status, categorys.array[categorys.size]); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) status = f_memory_destroy((void **) & categorys.array, sizeof(init_category), categorys.size); \
-    if (status == f_none) categorys.used = 0;
+    if (status == F_none) status = f_memory_destroy((void **) & categorys.array, sizeof(init_category), categorys.size); \
+    if (status == F_none) categorys.used = 0;
 
   #define f_init_categorys_resize(status, categorys, new_length) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < categorys.size) { \
       f_string_length i = categorys.size - new_length; \
       for (; i < categorys.size; i++) { \
         delete_init_category(status, categorys.array[i]); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_resize((void **) & categorys.array, sizeof(init_category), categorys.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_resize((void **) & categorys.array, sizeof(init_category), categorys.size, new_length); \
+    if (status == F_none) { \
       if (new_length > categorys.size) { \
         f_string_length i = categorys.size; \
         for (; i < new_length; i++) { \
@@ -228,16 +228,16 @@ extern "C" {
     }
 
   #define f_init_categorys_adjust(status, categorys, new_length) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < categorys.size) { \
       f_string_length i = categorys.size - new_length; \
       for (; i < categorys.size; i++) { \
         destroy_init_category(status, categorys.array[i]); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_adjust((void **) & categorys.array, sizeof(init_category), categorys.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_adjust((void **) & categorys.array, sizeof(init_category), categorys.size, new_length); \
+    if (status == F_none) { \
       if (new_length > categorys.size) { \
         f_string_length i = categorys.size; \
         for (; i < new_length; i++) { \

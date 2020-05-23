@@ -31,10 +31,10 @@ typedef struct {
 
 #define firewall_local_data_initialize \
   { \
-    f_true, \
-    f_false, \
-    f_false, \
-    f_false, \
+    F_true, \
+    F_false, \
+    F_false, \
+    F_false, \
     0, \
     f_string_dynamic_initialize, \
     0, \
@@ -57,9 +57,9 @@ typedef struct {
 
 #define firewall_reserved_chains_initialize \
   { \
-    f_false, \
-    f_false, \
-    f_false, \
+    F_false, \
+    F_false, \
+    F_false, \
     0, \
     0, \
     0, \
@@ -90,7 +90,7 @@ typedef struct {
   if (arguments.used >= arguments.size) { \
     f_macro_string_dynamics_resize(status, arguments, arguments.used + firewall_default_allocation_step); \
     \
-    if (f_status_is_error(status)) break; \
+    if (F_status_is_error(status)) break; \
   } \
   \
   arguments.array[arguments.used].string = argument.string; \

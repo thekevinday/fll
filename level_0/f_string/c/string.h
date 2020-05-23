@@ -294,21 +294,21 @@ extern "C" {
   #define f_macro_string_dynamic_new(status, dynamic, new_length) \
     f_macro_string_dynamic_clear(dynamic) \
     status = f_memory_new((void **) & dynamic.string, sizeof(f_string), new_length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamic.size = new_length; \
       dynamic.used = 0; \
     }
 
   #define f_macro_string_dynamic_delete(status, dynamic) \
     status = f_memory_delete((void **) & dynamic.string, sizeof(f_string), dynamic.size); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamic.size = 0; \
       dynamic.used = 0; \
     }
 
   #define f_macro_string_dynamic_destroy(status, dynamic) \
     status = f_memory_destroy((void **) & dynamic.string, sizeof(f_string), dynamic.size); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamic.size = 0; \
       dynamic.used = 0; \
     }
@@ -325,14 +325,14 @@ extern "C" {
 
   #define f_macro_string_dynamic_resize(status, dynamic, new_length) \
     status = f_memory_resize((void **) & dynamic.string, sizeof(f_string), dynamic.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamic.size = new_length; \
       if (dynamic.used > dynamic.size) dynamic.used = new_length; \
     }
 
   #define f_macro_string_dynamic_adjust(status, dynamic, new_length) \
     status = f_memory_adjust((void **) & dynamic.string, sizeof(f_string), dynamic.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamic.size = new_length; \
       if (dynamic.used > dynamic.size) dynamic.used = new_length; \
     }
@@ -378,32 +378,32 @@ extern "C" {
   #define f_macro_string_dynamics_new(status, dynamics, length) \
     f_macro_string_dynamics_clear(dynamics) \
     status = f_memory_new((void **) & dynamics.array, sizeof(f_string_dynamic), length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamics.size = length; \
       dynamics.used = 0; \
     }
 
   #define f_macro_string_dynamics_delete(status, dynamics) \
-    status = f_none; \
+    status = F_none; \
     dynamics.used = dynamics.size; \
     while (dynamics.used > 0) { \
       dynamics.used--; \
       f_macro_string_dynamic_delete(status, dynamics.array[dynamics.used]); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) status = f_memory_delete((void **) & dynamics.array, sizeof(f_string_dynamic), dynamics.size); \
-    if (status == f_none) dynamics.size = 0;
+    if (status == F_none) status = f_memory_delete((void **) & dynamics.array, sizeof(f_string_dynamic), dynamics.size); \
+    if (status == F_none) dynamics.size = 0;
 
   #define f_macro_string_dynamics_destroy(status, dynamics) \
-    status = f_none; \
+    status = F_none; \
     dynamics.used = dynamics.size; \
     while (dynamics.used > 0) { \
       dynamics.used--; \
       f_macro_string_dynamic_destroy(status, dynamics.array[dynamics.used]); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) status = f_memory_destroy((void **) & dynamics.array, sizeof(f_string_dynamic), dynamics.size); \
-    if (status == f_none) dynamics.size = 0;
+    if (status == F_none) status = f_memory_destroy((void **) & dynamics.array, sizeof(f_string_dynamic), dynamics.size); \
+    if (status == F_none) dynamics.size = 0;
 
   #define f_macro_string_dynamics_delete_simple(dynamics) \
     dynamics.used = dynamics.size; \
@@ -430,16 +430,16 @@ extern "C" {
     }
 
   #define f_macro_string_dynamics_resize(status, dynamics, new_length) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < dynamics.size) { \
       f_string_length i = dynamics.size - new_length; \
       for (; i < dynamics.size; i++) { \
         f_macro_string_dynamic_delete(status, dynamics.array[i]); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_resize((void **) & dynamics.array, sizeof(f_string_dynamic), dynamics.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_resize((void **) & dynamics.array, sizeof(f_string_dynamic), dynamics.size, new_length); \
+    if (status == F_none) { \
       if (new_length > dynamics.size) { \
         f_string_length i = dynamics.size; \
         for (; i < new_length; i++) { \
@@ -451,16 +451,16 @@ extern "C" {
     }
 
   #define f_macro_string_dynamics_adjust(status, dynamics, new_length) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < dynamics.size) { \
       f_string_length i = dynamics.size - new_length; \
       for (; i < dynamics.size; i++) { \
         f_macro_string_dynamic_destroy(status, dynamics.array[i], f_string_dynamic); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_adjust((void **) & dynamics.array, sizeof(f_string_dynamic), dynamics.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_adjust((void **) & dynamics.array, sizeof(f_string_dynamic), dynamics.size, new_length); \
+    if (status == F_none) { \
       if (new_length > dynamics.size) { \
         f_string_length i = dynamics.size; \
         for (; i < new_length; i++) { \

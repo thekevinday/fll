@@ -216,7 +216,7 @@ extern "C" {
     { \
       byte_dump_console_parameter_initialize, \
       f_string_lengths_initialize, \
-      f_false, \
+      F_false, \
       0, \
       0, \
       8, \
@@ -233,7 +233,7 @@ extern "C" {
  *   The color context settings.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  */
 #ifndef _di_byte_dump_print_help_
   extern f_return_status byte_dump_print_help(const fl_color_context context);
@@ -250,7 +250,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see byte_dump_delete_data()
@@ -268,7 +268,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see byte_dump_main()

@@ -53,8 +53,8 @@ extern "C" {
   } fake_build_settings;
 
   #define fake_build_settings_initialize { \
-    f_true, \
-    f_true, \
+    F_true, \
+    F_true, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
@@ -214,7 +214,7 @@ extern "C" {
  *   This is expected to be either settings.process_pre or settings.process_post.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_execute_process_script_
@@ -228,7 +228,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
@@ -245,7 +245,7 @@ extern "C" {
  *   These settings will have any specified mode property applied.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_settings_load_

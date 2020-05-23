@@ -49,18 +49,18 @@ extern "C" {
  *   A set of all locations where a valid object was found.
  *
  * @return
- *   fl_fss_found_object on success and object was found (start location is at end of object).
- *   fl_fss_found_no_object on success and no object was found (start location is after character designating this is not an object).
- *   f_none_on_stop on success after reaching stopping point (a valid object is not yet confirmed).
- *   f_none_on_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
- *   f_no_data_on_stop no data found after reaching stopping point (essentially only comments are found).
- *   f_no_data_on_eos no objects found after reaching the end of the buffer (essentially only comments are found).
- *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
- *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   FL_fss_found_object on success and object was found (start location is at end of object).
+ *   FL_fss_found_object_not on success and no object was found (start location is after character designating this is not an object).
+ *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
+ *   F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
+ *   F_data_no_stop no data found after reaching stopping point (essentially only comments are found).
+ *   F_data_no_eos no objects found after reaching the end of the buffer (essentially only comments are found).
+ *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
+ *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_basic_object_read_
   extern f_return_status fl_fss_basic_object_read(f_string_dynamic *buffer, f_string_range *location, f_fss_object *found);
@@ -84,18 +84,18 @@ extern "C" {
  *   A set of all locations where a valid content was found.
  *
  * @return
- *   fl_fss_found_content on success and content was found (start location is at end of content).
- *   fl_fss_found_no_content on success and no content was found (start location is after character designating this is not a content).
- *   f_none_on_stop on success after reaching stopping point (a valid content is not yet confirmed).
- *   f_none_on_eos on success after reaching the end of the buffer (a valid content is not yet confirmed).
- *   f_no_data_on_stop no data found after reaching stopping point (essentially only comments are found).
- *   f_no_data_on_eos no content found after reaching the end of the buffer (essentially only comments are found).
- *   f_incomplete_utf_on_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
- *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   FL_fss_found_content on success and content was found (start location is at end of content).
+ *   FL_fss_found_content_not on success and no content was found (start location is after character designating this is not a content).
+ *   F_none_stop on success after reaching stopping point (a valid content is not yet confirmed).
+ *   F_none_eos on success after reaching the end of the buffer (a valid content is not yet confirmed).
+ *   F_data_no_stop no data found after reaching stopping point (essentially only comments are found).
+ *   F_data_no_eos no content found after reaching the end of the buffer (essentially only comments are found).
+ *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
+ *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_basic_content_read_
   extern f_return_status fl_fss_basic_content_read(f_string_dynamic *buffer, f_string_range *location, f_fss_content *found);
@@ -117,15 +117,15 @@ extern "C" {
  *   This will be auto-incremented and must not be a static string.
  *
  * @return
- *   f_none on success.
- *   f_none_on_stop on success after reaching stopping point .
- *   f_none_on_eos on success after reaching the end of the buffer.
- *   f_no_data_on_stop no data to write due start location being greater than stop location.
- *   f_no_data_on_eos no data to write due start location being greater than or equal to buffer size.
- *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_none_stop on success after reaching stopping point .
+ *   F_none_eos on success after reaching the end of the buffer.
+ *   F_data_no_stop no data to write due start location being greater than stop location.
+ *   F_data_no_eos no data to write due start location being greater than or equal to buffer size.
+ *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_basic_object_write_
   extern f_return_status fl_fss_basic_object_write(f_string_dynamic *buffer, const f_string_static object, f_string_range *location);
@@ -146,15 +146,15 @@ extern "C" {
  *   This will be auto-incremented and must not be a static string.
  *
  * @return
- *   f_none on success.
- *   f_none_on_stop on success after reaching stopping point .
- *   f_none_on_eos on success after reaching the end of the buffer.
- *   f_no_data_on_stop no data to write due start location being greater than stop location.
- *   f_no_data_on_eos no data to write due start location being greater than or equal to buffer size.
- *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_none_stop on success after reaching stopping point .
+ *   F_none_eos on success after reaching the end of the buffer.
+ *   F_data_no_stop no data to write due start location being greater than stop location.
+ *   F_data_no_eos no data to write due start location being greater than or equal to buffer size.
+ *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_basic_content_write_
   extern f_return_status fl_fss_basic_content_write(f_string_dynamic *buffer, const f_string_static content, f_string_range *location);

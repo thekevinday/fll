@@ -7,29 +7,29 @@ extern "C" {
 
 #if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_)
   f_return_status private_fl_string_append(const f_string source, const f_string_length length, f_string_dynamic *destination) {
-    if (destination->used + length > f_string_length_size) return f_status_set_error(f_string_too_large);
+    if (destination->used + length > f_string_length_size) return F_status_set_error(F_string_too_large);
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     const f_string_length total = destination->used + length;
 
     if (total > destination->size) {
       f_macro_string_dynamic_resize(status, (*destination), total);
-      if (f_status_is_error(status)) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     memcpy(destination->string + destination->used, source, length);
     destination->used = total;
 
-    return f_none;
+    return F_none;
   }
 #endif // !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_)
 
 #if !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_)
   f_return_status private_fl_string_append_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination) {
-    if (destination->used + length > f_string_length_size) return f_status_set_error(f_string_too_large);
+    if (destination->used + length > f_string_length_size) return F_status_set_error(F_string_too_large);
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     f_string_length first = 0;
 
@@ -38,13 +38,13 @@ extern "C" {
         if (i > first) {
           f_string_length size = i - first;
 
-          if (destination->used + size > f_string_length_size) return f_status_set_error(f_string_too_large);
+          if (destination->used + size > f_string_length_size) return F_status_set_error(F_string_too_large);
 
           f_string_length total = destination->used + size;
 
           if (total > destination->size) {
             f_macro_string_dynamic_resize(status, (*destination), total);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
 
           memcpy(destination->string + destination->used, source + first, size);
@@ -59,13 +59,13 @@ extern "C" {
           if (i > first) {
             f_string_length size = i - first;
 
-            if (destination->used + size > f_string_length_size) return f_status_set_error(f_string_too_large);
+            if (destination->used + size > f_string_length_size) return F_status_set_error(F_string_too_large);
 
             f_string_length total = destination->used + size;
 
             if (total > destination->size) {
               f_macro_string_dynamic_resize(status, (*destination), total);
-              if (f_status_is_error(status)) return status;
+              if (F_status_is_error(status)) return status;
             }
 
             memcpy(destination->string + destination->used, source + first, size);
@@ -82,7 +82,7 @@ extern "C" {
       }
     } // for
 
-    return f_none;
+    return F_none;
   }
 #endif // !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_)
 
@@ -100,19 +100,19 @@ extern "C" {
       while (i2 < stop2 && string2[i2] == 0) i2++;
       if (i2 == stop2) break;
 
-      if (string1[i1] != string2[i2]) return f_not_equal_to;
+      if (string1[i1] != string2[i2]) return F_equal_to_not;
     } // for
 
-    // only return f_equal_to if all remaining characters are NULL.
+    // only return F_equal_to if all remaining characters are NULL.
     for (; i1 < stop1; i1++) {
-      if (string1[i1] != 0) return f_not_equal_to;
+      if (string1[i1] != 0) return F_equal_to_not;
     } // for
 
     for (; i2 < stop2; i2++) {
-      if (string2[i2] != 0) return f_not_equal_to;
+      if (string2[i2] != 0) return F_equal_to_not;
     } // for
 
-    return f_equal_to;
+    return F_equal_to;
   }
 #endif // !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
 
@@ -123,7 +123,7 @@ extern "C" {
 
     uint8_t width = 0;
     uint8_t width_max = 0;
-    f_status status = f_none;
+    f_status status = F_none;
 
     // skip past leading whitespace in string1.
     for (; i1 < stop1; i1 += width) {
@@ -133,13 +133,13 @@ extern "C" {
 
       width_max = (stop1 - i1) + 1;
       status = f_utf_is_whitespace(string1 + i1, width_max);
-      if (f_status_is_error(status)) {
-        if (f_status_set_fine(status) == f_maybe) return f_status_set_error(f_invalid_utf);
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
 
-      if (status == f_false) break;
+      if (status == F_false) break;
 
       width = f_macro_utf_byte_width(string1[i1]);
     } // for
@@ -152,15 +152,15 @@ extern "C" {
 
       width_max = (stop2 - i2) + 1;
       status = f_utf_is_whitespace(string2 + i2, width_max);
-      if (f_status_is_error(status)) {
-        if (f_status_set_fine(status) == f_maybe) {
-          return f_status_set_error(f_invalid_utf);
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_maybe) {
+          return F_status_set_error(F_utf);
         }
 
         return status;
       }
 
-      if (status == f_false) break;
+      if (status == F_false) break;
 
       width = f_macro_utf_byte_width(string2[i2]);
     } // for
@@ -181,15 +181,15 @@ extern "C" {
 
         width_max = (stop1 - j) + 1;
         status = f_utf_is_whitespace(string1 + j, width_max);
-        if (f_status_is_error(status)) {
-          if (f_status_set_fine(status) == f_maybe) return f_status_set_error(f_invalid_utf);
+        if (F_status_is_error(status)) {
+          if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
           return status;
         }
 
         width = f_macro_utf_byte_width(string1[j]);
 
-        if (status == f_false) {
+        if (status == F_false) {
           last1 = j;
           size1++;
         }
@@ -203,21 +203,21 @@ extern "C" {
 
         width_max = (stop2 - j) + 1;
         status = f_utf_is_whitespace(string2 + j, width_max);
-        if (f_status_is_error(status)) {
-          if (f_status_set_fine(status) == f_maybe) return f_status_set_error(f_invalid_utf);
+        if (F_status_is_error(status)) {
+          if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
           return status;
         }
 
         width = f_macro_utf_byte_width(string2[j]);
 
-        if (status == f_false) {
+        if (status == F_false) {
           last2 = j;
           size2++;
         }
       } // for
 
-      if (size1 != size2) return f_not_equal_to;
+      if (size1 != size2) return F_equal_to_not;
     }
 
     for (; i1 < last1 && i2 < last2; i1++, i2++) {
@@ -229,35 +229,35 @@ extern "C" {
       while (i2 < last2 && string2[i2] == 0) i2++;
       if (i2 == last2) break;
 
-      if (string1[i1] != string2[i2]) return f_not_equal_to;
+      if (string1[i1] != string2[i2]) return F_equal_to_not;
     } // for
 
-    // only return f_equal_to if all remaining characters are NULL.
+    // only return F_equal_to if all remaining characters are NULL.
     while (i1 < last1) {
-      if (string1[i1] != 0) return f_not_equal_to;
+      if (string1[i1] != 0) return F_equal_to_not;
       i1++;
     } // while
 
     while (i2 < last2) {
-      if (string2[i2] != 0) return f_not_equal_to;
+      if (string2[i2] != 0) return F_equal_to_not;
       i2++;
     } // while
 
-    return f_equal_to;
+    return F_equal_to;
   }
 #endif // !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
 
 #if !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_)
   f_return_status private_fl_string_prepend(const f_string source, const f_string_length length, f_string_dynamic *destination) {
-    if (destination->used + length > f_string_length_size) return f_status_set_error(f_string_too_large);
+    if (destination->used + length > f_string_length_size) return F_status_set_error(F_string_too_large);
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     const f_string_length total = destination->used + length;
 
     if (total > destination->size) {
       f_macro_string_dynamic_resize(status, (*destination), total);
-      if (f_status_is_error(status)) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     if (destination->used > 0) {
@@ -269,15 +269,15 @@ extern "C" {
     }
 
     destination->used = total;
-    return f_none;
+    return F_none;
   }
 #endif // !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_)
 
 #if !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
   f_return_status private_fl_string_prepend_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination) {
-    if (destination->used + length > f_string_length_size) return f_status_set_error(f_string_too_large);
+    if (destination->used + length > f_string_length_size) return F_status_set_error(F_string_too_large);
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     f_string_length first = 0;
     f_string_length offset = 0;
@@ -287,13 +287,13 @@ extern "C" {
         if (i > first) {
           f_string_length size = i - first;
 
-          if (destination->used + size > f_string_length_size) return f_status_set_error(f_string_too_large);
+          if (destination->used + size > f_string_length_size) return F_status_set_error(F_string_too_large);
 
           f_string_length total = destination->used + size;
 
           if (total > destination->size) {
             f_macro_string_dynamic_resize(status, (*destination), total);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
 
           memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
@@ -311,14 +311,14 @@ extern "C" {
           if (i > first) {
             f_string_length size = i - first;
 
-            if (destination->used + size > f_string_length_size) return f_status_set_error(f_string_too_large);
+            if (destination->used + size > f_string_length_size) return F_status_set_error(F_string_too_large);
 
             f_string_length total = destination->used + size;
 
             if (total > destination->size) {
               f_macro_string_dynamic_resize(status, (*destination), total);
 
-              if (f_status_is_error(status)) return status;
+              if (F_status_is_error(status)) return status;
             }
 
             memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
@@ -338,7 +338,7 @@ extern "C" {
       }
     } // for
 
-    return f_none;
+    return F_none;
   }
 #endif // !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
 
@@ -346,7 +346,7 @@ extern "C" {
   f_return_status private_fl_string_rip_find_range(const f_string source, f_string_length *start, f_string_length *stop) {
     f_string_length stop_original = *stop;
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     uint8_t width = 0;
 
@@ -357,13 +357,13 @@ extern "C" {
       if (*start > *stop) break;
 
       status = f_utf_is_whitespace(source + *start, (*stop - *start) + 1);
-      if (f_status_is_error(status)) {
-        if (f_status_set_fine(status) == f_maybe) return f_status_set_error(f_invalid_utf);
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
 
-      if (status == f_false) break;
+      if (status == F_false) break;
 
       width = f_macro_utf_byte_width(source[*start]);
     } // for
@@ -392,27 +392,27 @@ extern "C" {
       if (*stop == *start) break;
 
       status = f_utf_is_whitespace(source + *stop, (stop_original - *stop) + 1);
-      if (f_status_is_error(status)) {
-        if (f_status_set_fine(status) == f_maybe) return f_status_set_error(f_invalid_utf);
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
 
-      if (status == f_false) break;
+      if (status == F_false) break;
     } // for
 
     if (*stop == *start) {
       status = f_utf_is_whitespace(source + *stop, (stop_original - *stop) + 1);
-      if (f_status_is_error(status)) {
-        if (f_status_set_fine(status) == f_maybe) return f_status_set_error(f_invalid_utf);
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
 
-      if (status == f_true) return f_no_data;
+      if (status == F_true) return F_data_not;
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)
 

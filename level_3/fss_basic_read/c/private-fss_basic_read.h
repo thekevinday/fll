@@ -79,24 +79,24 @@ extern "C" {
   #define macro_fss_basic_read_depths_new(status, depths, length) f_macro_memory_structure_new(status, depths, fss_basic_read_depth, length)
 
   #define macro_fss_basic_read_depths_delete(status, depths) \
-    status = f_none; \
+    status = F_none; \
     depths.used = depths.size; \
     while (depths.used > 0) { \
       depths.used--; \
       macro_fss_basic_read_depth_delete(status, depths.array[depths.used]); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) f_macro_memory_structure_delete(depths, fss_basic_read_depth)
+    if (status == F_none) f_macro_memory_structure_delete(depths, fss_basic_read_depth)
 
   #define macro_fss_basic_read_depths_destroy(status, depths) \
-    status = f_none; \
+    status = F_none; \
     depths.used = depths.size; \
     while (depths.used > 0) { \
       depths.used--; \
       macro_fss_basic_read_depth_destroy(status, depths.array[depths.used]); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) f_macro_memory_structure_destroy(depths, fss_basic_read_depth)
+    if (status == F_none) f_macro_memory_structure_destroy(depths, fss_basic_read_depth)
 
   #define macro_fss_basic_read_depths_delete_simple(depths) \
     depths.used = depths.size; \
@@ -115,16 +115,16 @@ extern "C" {
     if (depths.used == 0) f_macro_memory_structure_destroy_simple(depths, fss_basic_read_depth)
 
   #define macro_fss_basic_read_depths_resize(status, depths, new_length) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < depths.size) { \
       f_array_length i = depths.size - new_length; \
       for (; i < depths.size; i++) { \
         macro_fss_basic_read_depth_delete(status, depths.array[i]); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_resize((void **) & depths.array, sizeof(fss_basic_read_depth), depths.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_resize((void **) & depths.array, sizeof(fss_basic_read_depth), depths.size, new_length); \
+    if (status == F_none) { \
       if (new_length > depths.size) { \
         f_array_length i = depths.size; \
         for (; i < new_length; i++) { \
@@ -136,16 +136,16 @@ extern "C" {
     }
 
   #define macro_fss_basic_read_depths_adjust(status, depths, new_length) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < depths.size) { \
       f_array_length i = depths.size - new_length; \
       for (; i < depths.size; i++) { \
         macro_fss_basic_read_depth_delete(status, depths.array[i]); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_adjust((void **) & depths.array, sizeof(fss_basic_read_depth), depths.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_adjust((void **) & depths.array, sizeof(fss_basic_read_depth), depths.size, new_length); \
+    if (status == F_none) { \
       if (new_length > depths.size) { \
         f_array_length i = depths.size; \
         for (; i < new_length; i++) { \
@@ -204,8 +204,8 @@ extern "C" {
  *   This stores the pre-processed depth parameters.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fss_basic_read_main_preprocess_depth_
   extern f_return_status fss_basic_read_main_preprocess_depth(const f_console_arguments arguments, const fss_basic_read_data data, fss_basic_read_depths *depths) f_gcc_attribute_visibility_internal;

@@ -22,358 +22,346 @@ extern "C" {
 /**
  * Status masks.
  */
-#ifndef _di_f_status_masks_
+#ifndef _di_F_status_masks_
   // f_status is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
-  #define f_status_bit_error   0x8000 // 1000 0000 0000 0000
-  #define f_status_bit_signal  0xc000 // 1100 0000 0000 0000
-  #define f_status_bit_warning 0x4000 // 0100 0000 0000 0000
+  #define F_status_bit_error   0x8000 // 1000 0000 0000 0000
+  #define F_status_bit_signal  0xc000 // 1100 0000 0000 0000
+  #define F_status_bit_warning 0x4000 // 0100 0000 0000 0000
 
-  #define f_status_mask_fine 0x3fff // 0011 1111 1111 1111
-  #define f_status_mask_code 0xc000 // 1100 0000 0000 0000
+  #define F_status_mask_fine 0x3fff // 0011 1111 1111 1111
+  #define F_status_mask_code 0xc000 // 1100 0000 0000 0000
 
-  #define f_status_is_error(status)   (status & f_status_bit_error)
-  #define f_status_is_fine(status)    ((status & f_status_mask_code) == 0)
-  #define f_status_is_problem(status) ((status & f_status_bit_error) || (status & f_status_bit_warning))
-  #define f_status_is_signal(status)  (status & f_status_bit_signal)
-  #define f_status_is_warning(status) (status & f_status_bit_warning)
+  #define F_status_is_error(status)   (status & F_status_bit_error)
+  #define F_status_is_fine(status)    ((status & F_status_mask_code) == 0)
+  #define F_status_is_problem(status) ((status & F_status_bit_error) || (status & F_status_bit_warning))
+  #define F_status_is_signal(status)  (status & F_status_bit_signal)
+  #define F_status_is_warning(status) (status & F_status_bit_warning)
 
-  #define f_status_is_not_error(status)   ((status & f_status_bit_error) == 0)
-  #define f_status_is_not_signal(status)  ((status & f_status_bit_signal) == 0)
-  #define f_status_is_not_warning(status) ((status & f_status_bit_warning) == 0)
+  #define F_status_is_not_error(status)   ((status & F_status_bit_error) == 0)
+  #define F_status_is_not_signal(status)  ((status & F_status_bit_signal) == 0)
+  #define F_status_is_not_warning(status) ((status & F_status_bit_warning) == 0)
 
-  #define f_status_set_error(status)   (status | f_status_bit_error)
-  #define f_status_set_signal(status)  (status | f_status_bit_signal)
-  #define f_status_set_warning(status) (status | f_status_bit_warning)
+  #define F_status_set_error(status)   (status | F_status_bit_error)
+  #define F_status_set_signal(status)  (status | F_status_bit_signal)
+  #define F_status_set_warning(status) (status | F_status_bit_warning)
 
-  // Use f_status_set_fine to remove the error, warning, and signal bits.
-  #define f_status_set_fine(status) (status & f_status_mask_fine)
+  // Use F_status_set_fine to remove the error, warning, and signal bits.
+  #define F_status_set_fine(status) (status & F_status_mask_fine)
 
   // Maximum size of the status code.
-  #define f_status_size_max             0x3fff
-  #define f_status_size_max_with_signal 0x10000
-#endif // _di_f_status_masks_
+  #define F_status_size_max             0x3fff
+  #define F_status_size_max_with_signal 0x10000
+#endif // _di_F_status_masks_
 
 /**
  * All standard/core status codes.
  *
- * The code f_status_code_last is intended to be used as the starting point for anything extending this and povided its own status codes.
+ * The code F_status_code_last is intended to be used as the starting point for anything extending this and povided its own status codes.
  */
-#ifndef _di_f_status_codes_
+#ifndef _di_F_status_codes_
   enum {
-    #ifndef _di_f_status_booleans_
-      f_false = 0,
-      f_true,
-    #endif // _di_f_status_booleans_
+    #ifndef _di_F_status_booleans_
+      F_false = 0,
+      F_true,
+    #endif // _di_F_status_booleans_
 
-    #ifndef _di_f_status_signals_
-      f_signal_hangup = 1,
-      f_signal_interrupt,
-      f_signal_quit,
-      f_signal_illegal,
-      f_signal_trap,
-      f_signal_abort,
-      f_signal_bus_error,
-      f_signal_floating_point_exception,
-      f_signal_kill, // unblockable
-      f_signal_user_1,
-      f_signal_segmentation_fault,
-      f_signal_user_2,
-      f_signal_broken_pipe,
-      f_signal_alarm_clock,
-      f_signal_termination,
-      f_signal_stack_fault,
-      f_signal_child,
-      f_signal_continue,
-      f_signal_stop, // unblockable
-      f_signal_keyboard_stop,
-      f_signal_tty_in,
-      f_signal_tty_out,
-      f_signal_urgent,
-      f_signal_cpu_limit,
-      f_signal_file_size_limit,
-      f_signal_virtual_alarm_clock,
-      f_signal_profile_alarm_clock,
-      f_signal_window_size_change,
-      f_signal_pollable_event,
-      f_signal_power_failure,
-      f_signal_bad_system_call,
-      f_signal_reserved_32,
-      f_signal_reserved_33,
-      f_signal_reserved_34,
-      f_signal_reserved_35,
-      f_signal_reserved_36,
-      f_signal_reserved_37,
-      f_signal_reserved_38,
-      f_signal_reserved_39,
-      f_signal_reserved_40,
-      f_signal_reserved_41,
-      f_signal_reserved_42,
-      f_signal_reserved_43,
-      f_signal_reserved_44,
-      f_signal_reserved_45,
-      f_signal_reserved_46,
-      f_signal_reserved_47,
-      f_signal_reserved_48,
-      f_signal_reserved_49,
-      f_signal_reserved_50,
-      f_signal_reserved_51,
-      f_signal_reserved_52,
-      f_signal_reserved_53,
-      f_signal_reserved_54,
-      f_signal_reserved_55,
-      f_signal_reserved_56,
-      f_signal_reserved_57,
-      f_signal_reserved_58,
-      f_signal_reserved_59,
-      f_signal_reserved_60,
-      f_signal_reserved_61,
-      f_signal_reserved_62,
-      f_signal_reserved_63,
-      f_signal_reserved_64,
-    #endif // _di_f_status_signals_
+    #ifndef _di_F_status_signals_
+      F_signal_hangup = 1,
+      F_signal_interrupt,
+      F_signal_quit,
+      F_signal_illegal,
+      F_signal_trap,
+      F_signal_abort,
+      F_signal_bus_error,
+      F_signal_floating_point_exception,
+      F_signal_kill, // unblockable
+      F_signal_user_1,
+      F_signal_segmentation_fault,
+      F_signal_user_2,
+      F_signal_broken_pipe,
+      F_signal_alarm_clock,
+      F_signal_termination,
+      F_signal_stack_fault,
+      F_signal_child,
+      F_signal_continue,
+      F_signal_stop, // unblockable
+      F_signal_keyboard_stop,
+      F_signal_tty_in,
+      F_signal_tty_out,
+      F_signal_urgent,
+      F_signal_cpu_limit,
+      F_signal_file_size_limit,
+      F_signal_virtual_alarm_clock,
+      F_signal_profile_alarm_clock,
+      F_signal_window_size_change,
+      F_signal_pollable_event,
+      F_signal_power_failure,
+      F_signal_bad_system_call,
+      F_signal_reserved_32,
+      F_signal_reserved_33,
+      F_signal_reserved_34,
+      F_signal_reserved_35,
+      F_signal_reserved_36,
+      F_signal_reserved_37,
+      F_signal_reserved_38,
+      F_signal_reserved_39,
+      F_signal_reserved_40,
+      F_signal_reserved_41,
+      F_signal_reserved_42,
+      F_signal_reserved_43,
+      F_signal_reserved_44,
+      F_signal_reserved_45,
+      F_signal_reserved_46,
+      F_signal_reserved_47,
+      F_signal_reserved_48,
+      F_signal_reserved_49,
+      F_signal_reserved_50,
+      F_signal_reserved_51,
+      F_signal_reserved_52,
+      F_signal_reserved_53,
+      F_signal_reserved_54,
+      F_signal_reserved_55,
+      F_signal_reserved_56,
+      F_signal_reserved_57,
+      F_signal_reserved_58,
+      F_signal_reserved_59,
+      F_signal_reserved_60,
+      F_signal_reserved_61,
+      F_signal_reserved_62,
+      F_signal_reserved_63,
+      F_signal_reserved_64,
+    #endif // _di_F_status_signals_
 
-    #ifndef _di_f_status_basic_
-      f_none = 197, // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
-      f_block,
-      f_critical,
-      f_does_not_exist,
-      f_dummy,
-      f_error_input,
-      f_error_output,
-      f_error_input_output,
-      f_failure,
-      f_incomplete,
-      f_interrupted,
-      f_loop,
-      f_maybe,
-      f_not_connected,
-      f_no_data,
-      f_no_space,
-      f_out_of_bound,
-      f_out_of_memory,
-      f_prohibited,
-      f_read_only,
-      f_unknown,
-      f_unsupported,
-      f_warn,
-      f_write_only,
-    #endif // _di_f_status_basic_
+    #ifndef _di_F_status_basic_
+      F_none = 197, // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
+      F_block,
+      F_critical,
+      F_exist_not,
+      F_dummy,
+      F_input,
+      F_output,
+      F_input_output,
+      F_failure,
+      F_incomplete,
+      F_interrupted,
+      F_loop,
+      F_maybe,
+      F_connected_not,
+      F_data_not,
+      F_space_not,
+      F_bound_out,
+      F_memory_out,
+      F_prohibited,
+      F_read_only,
+      F_unknown,
+      F_unsupported,
+      F_warn,
+      F_write_only,
+      F_utf,
+      F_invalid,
+      F_name,
+      F_parameter,
+      F_syntax,
+      F_data,
+      F_file,
+      F_descriptor,
+      F_socket,
+      F_device,
+      F_link,
+      F_pipe,
+      F_address,
+      F_port,
+      F_value,
+      F_process,
+      F_fork,
+      F_process_too_many,
+    #endif // _di_F_status_basic_
 
-    #ifndef _di_f_status_invalid_
-      f_invalid,
-      f_invalid_name,
-      f_invalid_parameter,
-      f_invalid_syntax,
-      f_invalid_data,
-      f_invalid_file,
-      f_invalid_directory,
-      f_invalid_descriptor,
-      f_invalid_socket,
-      f_invalid_device,
-      f_invalid_link,
-      f_invalid_pipe,
-      f_invalid_address,
-      f_invalid_port,
-      f_invalid_value,
-      f_invalid_buffer,
-      f_invalid_process,
-      f_invalid_utf,
-      f_invalid_on_eof,
-      f_invalid_on_eol,
-      f_invalid_on_eos,
-      f_invalid_on_stop,
-    #endif // _di_f_status_invalid_
+    #ifndef _di_F_status_busy_
+      F_busy,
+      F_busy_address,
+      F_busy_buffer,
+      F_busy_device,
+      F_busy_pipe,
+      F_busy_port,
+      F_busy_process,
+      F_busy_socket,
+    #endif // _di_F_status_busy_
 
-    #ifndef _di_f_status_busy_
-      f_busy,
-      f_busy_address,
-      f_busy_buffer,
-      f_busy_device,
-      f_busy_pipe,
-      f_busy_port,
-      f_busy_process,
-      f_busy_socket,
-    #endif // _di_f_status_busy_
+    #ifndef _di_F_status_unavailable_
+      F_unavailable,
+      F_unavailable_address,
+      F_unavailable_buffer,
+      F_unavailable_device,
+      F_unavailable_pipe,
+      F_unavailable_port,
+      F_unavailable_process,
+      F_unavailable_socket,
+    #endif // _di_F_status_unavailable_
 
-    #ifndef _di_f_status_unavailable_
-      f_unavailable,
-      f_unavailable_address,
-      f_unavailable_buffer,
-      f_unavailable_device,
-      f_unavailable_pipe,
-      f_unavailable_port,
-      f_unavailable_process,
-      f_unavailable_socket,
-    #endif // _di_f_status_unavailable_
+    #ifndef _di_F_status_digits_
+      F_number_decimal,
+      F_number_divide_by_zero,
+      F_number_invalid,
+      F_number_negative,
+      F_number_overflow,
+      F_number_positive,
+      F_number_underflow,
+      F_number_whole,
+      F_number_zero,
+    #endif // _di_F_status_digits_
 
-    #ifndef _di_f_status_digits_
-      f_number_decimal,
-      f_number_divide_by_zero,
-      f_number_invalid,
-      f_number_negative,
-      f_number_overflow,
-      f_number_positive,
-      f_number_underflow,
-      f_number_whole,
-      f_number_zero,
-    #endif // _di_f_status_digits_
+    #ifndef _di_F_status_buffer_
+      F_buffer,
+      F_buffer_too_small,
+      F_buffer_too_large,
+      F_eof,
+      F_eol,
+      F_eos,
+      F_stop,
+      F_incomplete_utf,
+      F_incomplete_utf_block,
+      F_incomplete_utf_eof,
+      F_incomplete_utf_eol,
+      F_incomplete_utf_eos,
+      F_incomplete_utf_stop,
+      F_none_block,
+      F_none_eof,
+      F_none_eol,
+      F_none_eos,
+      F_none_stop,
+      F_data_block_no,
+      F_data_no_eof,
+      F_data_no_eol,
+      F_data_no_eos,
+      F_data_no_stop,
+      F_string_too_small,
+      F_string_too_large,
+      F_unterminated,
+      F_unterminated_block,
+      F_unterminated_eof,
+      F_unterminated_eol,
+      F_unterminated_eos,
+      F_unterminated_stop,
+      F_unterminated_group,
+      F_unterminated_group_block,
+      F_unterminated_group_eof,
+      F_unterminated_group_eol,
+      F_unterminated_group_eos,
+      F_unterminated_group_stop,
+      F_unterminated_nest,
+      F_unterminated_nest_block,
+      F_unterminated_nest_eof,
+      F_unterminated_nest_eol,
+      F_unterminated_nest_eos,
+      F_unterminated_nest_stop,
+    #endif // _di_F_status_buffer_
 
-    #ifndef _di_f_status_buffers_
-      f_buffer_too_small,
-      f_buffer_too_large,
-      f_error_on_block,
-      f_error_on_eof,
-      f_error_on_eol,
-      f_error_on_eos,
-      f_error_on_stop,
-      f_incomplete_utf,
-      f_incomplete_utf_on_block,
-      f_incomplete_utf_on_eof,
-      f_incomplete_utf_on_eol,
-      f_incomplete_utf_on_eos,
-      f_incomplete_utf_on_stop,
-      f_none_on_block,
-      f_none_on_eof,
-      f_none_on_eol,
-      f_none_on_eos,
-      f_none_on_stop,
-      f_no_data_on_block,
-      f_no_data_on_eof,
-      f_no_data_on_eol,
-      f_no_data_on_eos,
-      f_no_data_on_stop,
-      f_string_too_small,
-      f_string_too_large,
-      f_unterminated,
-      f_unterminated_on_block,
-      f_unterminated_on_eof,
-      f_unterminated_on_eol,
-      f_unterminated_on_eos,
-      f_unterminated_on_stop,
-      f_unterminated_group,
-      f_unterminated_group_on_block,
-      f_unterminated_group_on_eof,
-      f_unterminated_group_on_eol,
-      f_unterminated_group_on_eos,
-      f_unterminated_group_on_stop,
-      f_unterminated_nest,
-      f_unterminated_nest_on_block,
-      f_unterminated_nest_on_eof,
-      f_unterminated_nest_on_eol,
-      f_unterminated_nest_on_eos,
-      f_unterminated_nest_on_stop,
-    #endif // _di_f_status_buffers_
+    #ifndef _di_F_status_memory_
+      F_memory_allocation,
+      F_memory_deallocation,
+      F_memory_reallocation,
+    #endif // _di_F_status_memory_
 
-    #ifndef _di_f_status_allocation_
-      f_error_allocation,
-      f_error_deallocation,
-      f_error_reallocation,
-    #endif // _di_f_status_allocation_
+    #ifndef _di_F_status_file_
+      F_file_closed,
+      F_file_error,
+      F_file_allocation,
+      F_file_close,
+      F_file_deallocation,
+      F_file_descriptor,
+      F_file_flush,
+      F_file_open,
+      F_file_purge,
+      F_file_read,
+      F_file_reallocation,
+      F_file_seek,
+      F_file_stat,
+      F_file_synchronize,
+      F_file_write,
+      F_file_empty,
+      F_file_found,
+      F_file_type_block,
+      F_file_type_character,
+      F_file_type_directory,
+      F_file_type_file,
+      F_file_type_link,
+      F_file_type_pipe,
+      F_file_type_socket,
+      F_file_type_unknown,
+      F_file_found_not,
+      F_file_open_not,
+      F_file_type_not_block,
+      F_file_type_not_character,
+      F_file_type_not_directory,
+      F_file_type_not_file,
+      F_file_type_not_link,
+      F_file_type_not_pipe,
+      F_file_type_not_socket,
+      F_file_type_not_unknown,
+      F_file_not_utf,
+      F_file_descriptors_max,
+      F_file_open_max,
+      F_file_utf,
+    #endif // _di_F_status_file_
 
-    #ifndef _di_f_status_fork_
-      f_fork_failed,
-      f_too_many_processes,
-    #endif // _di_f_status_fork_
+    #ifndef _di_F_status_filesystem_
+      F_filesystem,
+      F_filesystem_quota_blocks,
+      F_filesystem_quota_reached,
+    #endif // _di_F_status_filesystem_
 
-    #ifndef _di_f_status_file_
-      f_file_closed,
-      f_file_error,
-      f_file_error_allocation,
-      f_file_error_close,
-      f_file_error_deallocation,
-      f_file_error_descriptor,
-      f_file_error_flush,
-      f_file_error_open,
-      f_file_error_purge,
-      f_file_error_read,
-      f_file_error_reallocation,
-      f_file_error_seek,
-      f_file_error_stat,
-      f_file_error_synchronize,
-      f_file_error_write,
-      f_file_empty,
-      f_file_found,
-      f_file_is_type_block,
-      f_file_is_type_character,
-      f_file_is_type_directory,
-      f_file_is_type_file,
-      f_file_is_type_link,
-      f_file_is_type_pipe,
-      f_file_is_type_socket,
-      f_file_is_type_unknown,
-      f_file_not_found,
-      f_file_not_open,
-      f_file_not_type_block,
-      f_file_not_type_character,
-      f_file_not_type_directory,
-      f_file_not_type_file,
-      f_file_not_type_link,
-      f_file_not_type_pipe,
-      f_file_not_type_socket,
-      f_file_not_type_unknown,
-      f_file_not_utf,
-      f_file_max_descriptors,
-      f_file_max_open,
-      f_file_utf,
-    #endif // _di_f_status_file_
+    #ifndef _di_F_status_directory_
+      F_directory,
+      F_directory_close,
+      F_directory_descriptor,
+      F_directory_flush,
+      F_directory_link_max,
+      F_directory_open,
+      F_directory_purge,
+      F_directory_read,
+      F_directory_stream,
+      F_directory_synchronize,
+      F_directory_unsupported,
+      F_directory_write,
+      F_directory_closed,
+      F_directory_empty,
+      F_directory_found,
+      F_directory_not_found,
+      F_directory_not_open,
+      F_directory_utf_not,
+      F_directory_utf,
+    #endif // _di_F_status_directory_
 
-    #ifndef _di_f_status_filesystem_
-      f_filesystem_error,
-      f_filesystem_quota_blocks,
-      f_filesystem_quota_reached,
-    #endif // _di_f_status_filesystem_
+    #ifndef _di_F_status_socket_
+      F_socket_connection_client,
+      F_socket_connection_target,
+      F_socket_receive,
+      F_socket_send,
+    #endif // _di_F_status_socket_
 
-    #ifndef _di_f_status_directory_
-      f_directory_error,
-      f_directory_error_close,
-      f_directory_error_descriptor,
-      f_directory_error_flush,
-      f_directory_error_link_max,
-      f_directory_error_open,
-      f_directory_error_purge,
-      f_directory_error_read,
-      f_directory_error_stream,
-      f_directory_error_synchronize,
-      f_directory_error_unsupported,
-      f_directory_error_write,
-      f_directory_closed,
-      f_directory_empty,
-      f_directory_found,
-      f_directory_not_found,
-      f_directory_not_open,
-      f_directory_not_utf,
-      f_directory_utf,
-    #endif // _di_f_status_directory_
+    #ifndef _di_F_status_compare_
+      F_than_less,
+      F_equal_to,
+      F_equal_to_not,
+      F_than_greater,
+    #endif // _di_F_status_compare_
 
-    #ifndef _di_f_status_socket_
-      f_socket_error_connection_client,
-      f_socket_error_connection_target,
-      f_socket_error_receive,
-      f_socket_error_send,
-    #endif // _di_f_status_socket_
-
-    #ifndef _di_f_status_non_
-      f_less_than,
-      f_equal_to,
-      f_not_equal_to,
-      f_greater_than,
-    #endif // _di_f_status_non_
-
-    #ifndef _di_f_status_access_denied_
-      f_access_denied,
-      f_access_denied_execute,
-      f_access_denied_group,
-      f_access_denied_read,
-      f_access_denied_super, // "super" as in super user (root user).
-      f_access_denied_user,
-      f_access_denied_world,
-      f_access_denied_write,
-    #endif // _di_f_status_access_denied_
+    #ifndef _di_F_status_access_
+      F_access_denied,
+      F_access_denied_execute,
+      F_access_denied_group,
+      F_access_denied_read,
+      F_access_denied_super, // "super" as in super user (root user).
+      F_access_denied_user,
+      F_access_denied_world,
+      F_access_denied_write,
+    #endif // _di_F_status_access_
 
     // Required.
-    f_status_code_last
+    F_status_code_last
   }; // enum
-#endif // _di_f_status_codes_
+#endif // _di_F_status_codes_
 
 #ifdef __cplusplus
 } // extern "C"

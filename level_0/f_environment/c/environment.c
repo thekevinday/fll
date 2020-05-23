@@ -8,10 +8,10 @@ extern "C" {
 #ifndef _di_f_environment_clear_
   f_return_status f_environment_clear() {
     if (clearenv() == 0) {
-      return f_none;
+      return F_none;
     }
 
-    return f_status_set_error(f_failure);
+    return F_status_set_error(F_failure);
   }
 #endif // _di_f_environment_clear_
 
@@ -24,11 +24,11 @@ extern "C" {
 #ifndef _di_f_environment_get_dynamic_
   f_return_status f_environment_get_dynamic(const f_string_static name, f_string_dynamic *value) {
     #ifndef _di_level_0_parameter_checking_
-      if (name.used > name.size) return f_status_set_error(f_invalid_parameter);
-      if (value->used > value->size) return f_status_set_error(f_invalid_parameter);
+      if (name.used > name.size) return F_status_set_error(F_parameter);
+      if (value->used > value->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (name.used == 0) return f_no_data;
+    if (name.used == 0) return F_data_not;
 
     if (name.string[name.used - 1] == 0) {
       return private_f_environment_get(name.string, value);
@@ -52,11 +52,11 @@ extern "C" {
 #ifndef _di_f_environment_set_dynamic_
   f_return_status f_environment_set_dynamic(const f_string_static name, const f_string_static value, const bool replace) {
     #ifndef _di_level_0_parameter_checking_
-      if (name.used > name.size) return f_status_set_error(f_invalid_parameter);
-      if (value.used > value.size) return f_status_set_error(f_invalid_parameter);
+      if (name.used > name.size) return F_status_set_error(F_parameter);
+      if (value.used > value.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (name.used == 0) return f_no_data;
+    if (name.used == 0) return F_data_not;
 
     if (name.string[name.used - 1] == 0) {
       if (value.used > 0 && value.string[value.used - 1] == 0) {
@@ -104,10 +104,10 @@ extern "C" {
 #ifndef _di_f_environment_unset_
   f_return_status f_environment_unset_dynamic(const f_string_static name) {
     #ifndef _di_level_0_parameter_checking_
-      if (name.used > name.size) return f_status_set_error(f_invalid_parameter);
+      if (name.used > name.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (name.used == 0) return f_no_data;
+    if (name.used == 0) return F_data_not;
 
     if (name.string[name.used - 1] == 0) {
       return private_f_environment_unset(name.string);

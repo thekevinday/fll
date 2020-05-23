@@ -76,15 +76,15 @@ extern "C" {
 
   #define f_console_parameter_initialize_fss_status_code \
     { \
-      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
-      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
-      f_console_parameter_initialize(fss_status_code_short_is_fine, fss_status_code_long_is_fine, 0, f_false, f_console_type_normal), \
-      f_console_parameter_initialize(fss_status_code_short_is_warning, fss_status_code_long_is_warning, 0, f_false, f_console_type_normal), \
-      f_console_parameter_initialize(fss_status_code_short_is_error, fss_status_code_long_is_error, 0, f_false, f_console_type_normal), \
-      f_console_parameter_initialize(fss_status_code_short_number, fss_status_code_long_number, 0, f_false, f_console_type_normal), \
+      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
+      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_initialize(fss_status_code_short_is_fine, fss_status_code_long_is_fine, 0, F_false, f_console_type_normal), \
+      f_console_parameter_initialize(fss_status_code_short_is_warning, fss_status_code_long_is_warning, 0, F_false, f_console_type_normal), \
+      f_console_parameter_initialize(fss_status_code_short_is_error, fss_status_code_long_is_error, 0, F_false, f_console_type_normal), \
+      f_console_parameter_initialize(fss_status_code_short_number, fss_status_code_long_number, 0, F_false, f_console_type_normal), \
     }
 
   #define fss_status_code_total_parameters 9
@@ -104,7 +104,7 @@ extern "C" {
     { \
       f_console_parameter_initialize_fss_status_code, \
       f_string_lengths_initialize, \
-      f_false, \
+      F_false, \
       fl_color_context_initialize, \
     }
 #endif // _di_fss_status_code_data_
@@ -116,7 +116,7 @@ extern "C" {
  *   The color context settings.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  */
 #ifndef _di_fss_status_code_print_help_
   extern f_return_status fss_status_code_print_help(const fl_color_context context);
@@ -133,7 +133,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see fss_status_code_delete_data()
@@ -151,7 +151,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see fss_status_code_main()

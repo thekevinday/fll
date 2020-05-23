@@ -69,11 +69,11 @@ extern "C" {
  *   Each exploded path is not NULL terminated.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_buffer_too_large (with error bit) if paths array is too large for further addressing.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_buffer_too_large (with error bit) if paths array is too large for further addressing.
  */
 #ifndef _di_f_path_explode_
   extern f_return_status f_path_explode(const f_string path, f_string_dynamics *paths);
@@ -93,11 +93,11 @@ extern "C" {
  *   Each exploded path is not NULL terminated.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_buffer_too_large (with error bit) if paths array is too large for further addressing.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_buffer_too_large (with error bit) if paths array is too large for further addressing.
  */
 #ifndef _di_f_path_explode_dynamic_
   extern f_return_status f_path_explode_dynamic(const f_string_static path, f_string_dynamics *paths);
@@ -119,11 +119,11 @@ extern "C" {
  *   Each exploded path is not NULL terminated.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_buffer_too_large (with error bit) if paths array is too large for further addressing.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_buffer_too_large (with error bit) if paths array is too large for further addressing.
  */
 #ifndef _di_f_path_explode_reverse_
   extern f_return_status f_path_explode_reverse(const f_string path, f_string_dynamics *paths);
@@ -145,11 +145,11 @@ extern "C" {
  *   Each exploded path is not NULL terminated.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_buffer_too_large (with error bit) if paths array is too large for further addressing.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_buffer_too_large (with error bit) if paths array is too large for further addressing.
  */
 #ifndef _di_f_path_explode_reverse_dynamic_
   extern f_return_status f_path_explode_reverse_dynamic(const f_string_static path, f_string_dynamics *paths);

@@ -43,9 +43,9 @@ extern "C" {
  *   The total number of characters to print.
  *
  * @return
- *   f_none on success.
- *   f_error_output (with error bit) on failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_print_string_
   extern f_return_status f_print_string(FILE *output, const f_string string, const f_string_length length);
@@ -66,9 +66,9 @@ extern "C" {
  *   The string to output.
  *
  * @return
- *   f_none on success.
- *   f_error_output (with error bit) on failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_print_string_dynamic_
   extern f_return_status f_print_string_dynamic(FILE *output, const f_string_static buffer);
@@ -91,9 +91,9 @@ extern "C" {
  *   The range within the provided string to print.
  *
  * @return
- *   f_none on success.
- *   f_error_output (with error bit) on failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_print_string_dynamic_partial_
   extern f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_static buffer, const f_string_range range);

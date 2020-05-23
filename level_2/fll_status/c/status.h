@@ -38,10 +38,10 @@ extern "C" {
  *   The status code a matched string represents.
  *
  * @return
- *   f_none on success.
- *   f_no_data if string is empty.
- *   f_invalid_data (with error bit) if not found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_data_not if string is empty.
+ *   F_data (with error bit) if not found.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_status_from_string_
   extern f_return_status fll_status_from_string(const f_string string, f_status *code);

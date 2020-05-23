@@ -19,7 +19,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_
@@ -35,7 +35,7 @@ extern "C" {
  *   The file path for the directory to create.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with warning bit) are returned on certain problems that can be ignored.
  *   Status codes (with error bit) are returned on any problem.
  */
@@ -55,7 +55,7 @@ extern "C" {
  *   Set to FALSE to not make the file executable.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with warning bit) are returned on certain problems that can be ignored.
  *   Status codes (with error bit) are returned on any problem.
  */

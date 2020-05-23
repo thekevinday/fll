@@ -29,10 +29,10 @@ extern "C" {
  *   The value will be appended (set value->used to 0 to replace).
  *
  * @return
- *   f_none on success.
- *   f_does_not_exist if name does not exist.
- *   f_string_too_large (with error bit) if appended string length is too large to store in the buffer.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_exist_not if name does not exist.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see f_environment_get()
  * @see f_environment_get_dynamic()
@@ -56,10 +56,10 @@ extern "C" {
  *   Set to FALSE to not replace value if name already exists.
  *
  * @return
- *   f_none on success.
- *   f_invalid (with error bit) if name is an invalid string.
- *   f_out_of_memory (with error bit) on out of memory.
- *   f_failure (with error bit) on any other error.
+ *   F_none on success.
+ *   F_invalid (with error bit) if name is an invalid string.
+ *   F_memory_out (with error bit) on out of memory.
+ *   F_failure (with error bit) on any other error.
  *
  * @see f_environment_set()
  * @see f_environment_set_dynamic()
@@ -76,10 +76,10 @@ extern "C" {
  *   The name string must not contain the '=' character.
  *
  * @return
- *   f_none on success.
- *   f_invalid (with error bit) if name is an invalid string.
- *   f_out_of_memory (with error bit) on out of memory.
- *   f_failure (with error bit) on any other error.
+ *   F_none on success.
+ *   F_invalid (with error bit) if name is an invalid string.
+ *   F_memory_out (with error bit) on out of memory.
+ *   F_failure (with error bit) on any other error.
  *
  * @see f_environment_unset()
  * @see f_environment_unset_dynamic()

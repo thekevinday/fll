@@ -6,12 +6,12 @@ extern "C" {
 
 #ifndef _fl_console_parameter_to_string_dynamic_directory_
   f_return_status fl_console_parameter_to_string_dynamic_directory(const f_string argument, f_string_dynamic *directory) {
-    f_status status = f_none;
+    f_status status = F_none;
     f_string_length length = strlen(argument);
 
     if (length == 0) {
       directory->used = 0;
-      return f_none;
+      return F_none;
     }
 
     if (length > 1) {
@@ -32,7 +32,7 @@ extern "C" {
           length += 2;
 
           f_macro_string_dynamic_new(status, (*directory), length);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
 
           memcpy(directory->string + 1, argument + begin, length - 2);
 
@@ -43,7 +43,7 @@ extern "C" {
         }
         else {
           f_macro_string_dynamic_new(status, (*directory), 1);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
 
           directory->used = 1;
           directory->size = 1;
@@ -63,7 +63,7 @@ extern "C" {
           length += 4;
 
           f_macro_string_dynamic_new(status, (*directory), length);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
 
           memcpy(directory->string + 3, argument + begin, length - 4);
 
@@ -76,7 +76,7 @@ extern "C" {
         }
         else {
           f_macro_string_dynamic_new(status, (*directory), 3);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
 
           directory->used = 3;
           directory->size = 3;
@@ -98,7 +98,7 @@ extern "C" {
           length += 3;
 
           f_macro_string_dynamic_new(status, (*directory), length);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
 
           memcpy(directory->string + 2, argument + begin, length - 3);
 
@@ -110,7 +110,7 @@ extern "C" {
         }
         else {
           f_macro_string_dynamic_new(status, (*directory), 2);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
 
           directory->used = 2;
           directory->size = 2;
@@ -122,7 +122,7 @@ extern "C" {
         length++;
 
         f_macro_string_dynamic_new(status, (*directory), length);
-        if (f_status_is_error(status)) return status;
+        if (F_status_is_error(status)) return status;
 
         memcpy(directory->string, argument, length - 1);
 
@@ -133,7 +133,7 @@ extern "C" {
     }
     else if (argument[0] != '/') {
       f_macro_string_dynamic_new(status, (*directory), 2);
-      if (f_status_is_error(status)) return status;
+      if (F_status_is_error(status)) return status;
 
       memcpy(directory->string, argument, 2);
 
@@ -143,7 +143,7 @@ extern "C" {
     }
     else {
       f_macro_string_dynamic_new(status, (*directory), 1);
-      if (f_status_is_error(status)) return status;
+      if (F_status_is_error(status)) return status;
 
       memcpy(directory->string, argument, 1);
 
@@ -151,18 +151,18 @@ extern "C" {
       directory->size = 1;
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _fl_console_parameter_to_string_dynamic_directory_
 
 #ifndef _fl_console_parameter_to_number_signed_
   f_return_status fl_console_parameter_to_number_signed(const f_string argument, f_number_signed *number) {
     #ifndef _di_level_0_parameter_checking_
-      if (argument == 0) return f_status_set_error(f_invalid_parameter);
+      if (argument == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_f
 
     if (argument[0] == '\0') {
-      return f_status_set_error(f_no_data);
+      return F_status_set_error(F_data_not);
     }
 
     f_string_range range = f_string_range_initialize;
@@ -176,11 +176,11 @@ extern "C" {
 #ifndef _fl_console_parameter_to_number_unsigned_
   f_return_status fl_console_parameter_to_number_unsigned(const f_string argument, f_number_unsigned *number) {
     #ifndef _di_level_0_parameter_checking_
-      if (argument == 0) return f_status_set_error(f_invalid_parameter);
+      if (argument == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_f
 
     if (argument[0] == '\0') {
-      return f_status_set_error(f_no_data);
+      return F_status_set_error(F_data_not);
     }
 
     f_string_range range = f_string_range_initialize;

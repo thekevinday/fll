@@ -240,33 +240,33 @@ extern "C" {
   #ifdef _en_firewall_debug_
     #define f_console_parameter_initialize_firewall \
       { \
-        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
-        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(0, 0, firewall_command_start, f_false, f_console_type_other), \
-        f_console_parameter_initialize(0, 0, firewall_command_stop, f_false, f_console_type_other), \
-        f_console_parameter_initialize(0, 0, firewall_command_restart, f_false, f_console_type_other), \
-        f_console_parameter_initialize(0, 0, firewall_command_lock, f_false, f_console_type_other), \
-        f_console_parameter_initialize(0, 0, firewall_command_show, f_false, f_console_type_other), \
+        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
+        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(0, 0, firewall_command_start, F_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_stop, F_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_restart, F_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_lock, F_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_show, F_false, f_console_type_other), \
       }
 
     #define firewall_total_parameters 11
   #else
     #define f_console_parameter_initialize_firewall \
       { \
-        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
-        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(0, 0, firewall_command_start, f_false, f_console_type_other), \
-        f_console_parameter_initialize(0, 0, firewall_command_stop, f_false, f_console_type_other), \
-        f_console_parameter_initialize(0, 0, firewall_command_restart, f_false, f_console_type_other), \
-        f_console_parameter_initialize(0, 0, firewall_command_lock, f_false, f_console_type_other), \
-        f_console_parameter_initialize(0, 0, firewall_command_show, f_false, f_console_type_other), \
+        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
+        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(0, 0, firewall_command_start, F_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_stop, F_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_restart, F_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_lock, F_false, f_console_type_other), \
+        f_console_parameter_initialize(0, 0, firewall_command_show, F_false, f_console_type_other), \
       }
 
     #define firewall_total_parameters 10
@@ -290,7 +290,7 @@ extern "C" {
       f_console_parameter_initialize_firewall, \
       f_string_dynamics_initialize, \
       f_string_lengths_initialize, \
-      f_false, \
+      F_false, \
       f_string_dynamics_initialize, \
       fl_color_context_initialize, \
     }
@@ -303,7 +303,7 @@ extern "C" {
  *   The color context settings.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  */
 #ifndef _di_firewall_print_help_
   extern f_return_status firewall_print_help(const fl_color_context context);
@@ -320,7 +320,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see firewall_delete_data()
@@ -338,7 +338,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see firewall_main()

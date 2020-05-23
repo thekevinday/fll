@@ -7,7 +7,7 @@ extern "C" {
 
 #ifndef _di_fake_path_generate_
   f_return_status fake_path_generate(fake_data *data) {
-    f_status status = f_none;
+    f_status status = F_none;
     uint8_t i = 0;
 
     {
@@ -52,8 +52,8 @@ extern "C" {
       for (i = 0; i < 3; i++) {
         status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
-        if (f_status_is_error(status)) {
-          fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fake_path_generate_string_dynamic", f_true);
+        if (F_status_is_error(status)) {
+          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
           return status;
         }
       } // for
@@ -111,8 +111,8 @@ extern "C" {
       for (i = 0; i < 13; i++) {
         status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
-        if (f_status_is_error(status)) {
-          fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fl_string_append_nulless", f_true);
+        if (F_status_is_error(status)) {
+          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_append_nulless", F_true);
           return status;
         }
       } // for
@@ -165,8 +165,8 @@ extern "C" {
       for (i = 0; i < 4; i++) {
         status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
-        if (f_status_is_error(status)) {
-          fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fake_path_generate_string_dynamic", f_true);
+        if (F_status_is_error(status)) {
+          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
           return status;
         }
       } // for
@@ -215,8 +215,8 @@ extern "C" {
       for (i = 0; i < 10; i++) {
         status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
-        if (f_status_is_error(status)) {
-          fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fl_string_append_nulless", f_true);
+        if (F_status_is_error(status)) {
+          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_append_nulless", F_true);
           return status;
         }
       } // for
@@ -233,8 +233,8 @@ extern "C" {
         for (i = 0; i < 3; i++) {
           status = fl_string_dynamic_append_nulless(data->path_work, parameters_value[i]);
 
-          if (f_status_is_error(status)) {
-            fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fl_string_dynamic_append_nulless", f_true);
+          if (F_status_is_error(status)) {
+            fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
             return status;
           }
         } // for
@@ -262,8 +262,8 @@ extern "C" {
         for (i = 0; i < 3; i++) {
           status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
-          if (f_status_is_error(status)) {
-            fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fl_string_append_nulless", f_true);
+          if (F_status_is_error(status)) {
+            fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_append_nulless", F_true);
             return status;
           }
         } // for
@@ -300,8 +300,8 @@ extern "C" {
         for (i = 0; i < 2; i++) {
           status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
-          if (f_status_is_error(status)) {
-            fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fake_path_generate_string_dynamic", f_true);
+          if (F_status_is_error(status)) {
+            fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
             return status;
           }
         } // for
@@ -338,8 +338,8 @@ extern "C" {
         for (i = 0; i < 6; i++) {
           status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
-          if (f_status_is_error(status)) {
-            fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fl_string_append_nulless", f_true);
+          if (F_status_is_error(status)) {
+            fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_append_nulless", F_true);
             return status;
           }
         } // for
@@ -386,34 +386,34 @@ extern "C" {
 
         status = fl_string_dynamic_terminate(parameters_value[i]);
 
-        if (f_status_is_error(status)) {
-          fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fl_string_dynamic_terminate", f_true);
+        if (F_status_is_error(status)) {
+          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
           return status;
         }
       } // for
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fake_path_generate_
 
 #ifndef _di_fake_path_generate_string_dynamic_
   f_return_status fake_path_generate_string_dynamic(fake_data *data, const f_string_dynamic source, f_string_dynamic *destination[], const uint8_t length) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     for (uint8_t i = 0; i < length; i++) {
       status = fl_string_dynamic_append_nulless(source, destination[i]);
-      if (f_status_is_error(status)) return status;
+      if (F_status_is_error(status)) return status;
     } // for
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fake_path_generate_string_dynamic_
 
 #ifndef _di_fake_print_error_
   f_return_status fake_print_error(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const bool fallback) {
 
-    if (status == f_invalid_parameter) {
+    if (status == F_parameter) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol);
         fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid parameter when calling function ");
@@ -421,10 +421,10 @@ extern "C" {
         fl_color_print_line(f_type_error, context.error, context.reset, "().");
       }
 
-      return f_none;
+      return F_none;
     }
 
-    if (status == f_error_allocation || status == f_error_reallocation) {
+    if (status == F_memory_allocation || status == F_memory_reallocation) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol);
         fl_color_print(f_type_error, context.error, context.reset, "ERROR: Unable to allocate memory in function ");
@@ -432,7 +432,7 @@ extern "C" {
         fl_color_print_line(f_type_error, context.error, context.reset, "().");
       }
 
-      return f_none;
+      return F_none;
     }
 
     if (fallback && verbosity != fake_verbosity_quiet) {
@@ -444,7 +444,7 @@ extern "C" {
       fl_color_print_line(f_type_error, context.error, context.reset, "().");
     }
 
-    return f_unknown;
+    return F_unknown;
   }
 #endif // _di_fake_print_error_
 
@@ -455,7 +455,7 @@ extern "C" {
     if (is_file) file_or_directory = "file";
     else file_or_directory = "directory";
 
-    if (status == f_file_not_found) {
+    if (status == F_file_found_not) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol);
         fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to find %s '", file_or_directory);
@@ -463,10 +463,10 @@ extern "C" {
         fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
-      return f_none;
+      return F_none;
     }
 
-    if (status == f_invalid_parameter) {
+    if (status == F_parameter) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol);
         fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
@@ -476,10 +476,10 @@ extern "C" {
         fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
-      return f_none;
+      return F_none;
     }
 
-    if (status == f_invalid_name) {
+    if (status == F_name) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol);
         fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid %s name '", file_or_directory);
@@ -487,10 +487,10 @@ extern "C" {
         fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
-      return f_none;
+      return F_none;
     }
 
-    if (status == f_out_of_memory) {
+    if (status == F_memory_out) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol);
         fl_color_print(f_type_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory, while trying to %s %s '", operation, file_or_directory);
@@ -498,10 +498,10 @@ extern "C" {
         fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
-      return f_none;
+      return F_none;
     }
 
-    if (status == f_number_overflow) {
+    if (status == F_number_overflow) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol);
         fl_color_print(f_type_error, context.error, context.reset, "ERROR: Overflow while trying to %s %s '", operation, file_or_directory);
@@ -509,10 +509,10 @@ extern "C" {
         fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
-      return f_none;
+      return F_none;
     }
 
-    if (status == f_invalid_directory) {
+    if (status == F_directory) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol);
         fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid directory while trying to %s %s '", operation, file_or_directory);
@@ -520,10 +520,10 @@ extern "C" {
         fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
-      return f_none;
+      return F_none;
     }
 
-    if (status == f_access_denied) {
+    if (status == F_access_denied) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol);
         fl_color_print(f_type_error, context.error, context.reset, "ERROR: Access denied while trying to %s %s '", operation, file_or_directory);
@@ -531,10 +531,10 @@ extern "C" {
         fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
-      return f_none;
+      return F_none;
     }
 
-    if (status == f_loop) {
+    if (status == F_loop) {
       if (verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol);
         fl_color_print(f_type_error, context.error, context.reset, "ERROR: Loop while trying to %s %s '", operation, file_or_directory);
@@ -542,11 +542,11 @@ extern "C" {
         fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
-      return f_none;
+      return F_none;
     }
 
     if (is_file) {
-      if (status == f_directory_not_found) {
+      if (status == F_directory_not_found) {
         if (verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol);
           fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
@@ -554,11 +554,11 @@ extern "C" {
           fl_color_print_line(f_type_error, context.error, context.reset, "' due to an invalid directory in the path.");
         }
 
-        return f_none;
+        return F_none;
       }
     }
     else {
-      if (status == f_directory_not_found) {
+      if (status == F_directory_not_found) {
         if (verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol);
           fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
@@ -566,10 +566,10 @@ extern "C" {
           fl_color_print_line(f_type_error, context.error, context.reset, "' due to an invalid directory in the path.");
         }
 
-        return f_none;
+        return F_none;
       }
 
-      if (status == f_failure) {
+      if (status == F_failure) {
         if (verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol);
           fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
@@ -577,11 +577,11 @@ extern "C" {
           fl_color_print_line(f_type_error, context.error, context.reset, "'.");
         }
 
-        return f_none;
+        return F_none;
       }
     }
 
-    if (fake_print_error(context, verbosity, status, function, f_false) == f_unknown && fallback && verbosity != fake_verbosity_quiet) {
+    if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
       fprintf(f_type_error, "%c", f_string_eol);
       fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
       fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
@@ -590,7 +590,7 @@ extern "C" {
       fl_color_print_line(f_type_error, context.error, context.reset, "'.");
     }
 
-    return f_unknown;
+    return F_unknown;
   }
 #endif // _di_fake_print_error_file_
 
@@ -618,7 +618,7 @@ extern "C" {
 
 #ifndef _di_fake_process_console_parameters_
   f_return_status fake_process_console_parameters(const f_console_arguments arguments, fake_data *data) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     // @todo move as many of the inline error printing code into more general functions where possible to provide more accurate error reporting.
 
@@ -646,7 +646,7 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' specified too many times.");
           }
 
-          return f_status_set_error(f_invalid_parameter);
+          return F_status_set_error(F_parameter);
         }
       } // for
     }
@@ -680,12 +680,12 @@ extern "C" {
       for (uint8_t i = 0; i < 2; i++) {
         if (data->parameters[parameters_id[i]].result == f_console_result_found) {
           fake_print_error_parameter_missing_value(data->context, data->verbosity, parameters_name[i]);
-          return f_status_set_error(f_invalid_parameter);
+          return F_status_set_error(F_parameter);
         }
         else if (data->parameters[parameters_id[i]].result == f_console_result_additional) {
           if (data->parameters[parameters_id[i]].total > 1) {
             fake_print_error_parameter_too_many(data->context, data->verbosity, parameters_name[i]);
-            return f_status_set_error(f_invalid_parameter);
+            return F_status_set_error(F_parameter);
           }
 
           f_string_length location = data->parameters[parameters_id[i]].additional.array[0];
@@ -694,8 +694,8 @@ extern "C" {
           if (length > 0) {
             status = fl_string_append(arguments.argv[location], length, parameters_value[i]);
 
-            if (f_status_is_error(status)) {
-              if (status == f_status_set_error(f_string_too_large)) {
+            if (F_status_is_error(status)) {
+              if (status == F_status_set_error(F_string_too_large)) {
                 if (data->verbosity != fake_verbosity_quiet) {
                   fprintf(f_type_error, "%c", f_string_eol);
                   fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the parameter '");
@@ -704,17 +704,17 @@ extern "C" {
                 }
               }
               else {
-                fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fl_string_append", f_true);
+                fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_append", F_true);
               }
 
               return status;
             }
             else {
-              status = f_none;
+              status = F_none;
             }
           }
 
-          if (length == 0 || status == f_no_data) {
+          if (length == 0 || status == F_data_not) {
             if (data->verbosity != fake_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol);
               fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the parameter '");
@@ -726,8 +726,8 @@ extern "C" {
         else if (parameter_default_lengths[i] > 0) {
           f_macro_string_dynamic_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
-          if (f_status_is_error(status)) {
-            fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "f_macro_string_dynamic_resize", f_true);
+          if (F_status_is_error(status)) {
+            fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "f_macro_string_dynamic_resize", F_true);
             return status;
           }
 
@@ -739,7 +739,7 @@ extern "C" {
 
     if (data->parameters[fake_parameter_defines].result == f_console_result_found) {
       fake_print_error_parameter_missing_value(data->context, data->verbosity, fake_long_defines);
-      return f_status_set_error(f_invalid_parameter);
+      return F_status_set_error(F_parameter);
     }
 
     {
@@ -781,18 +781,18 @@ extern "C" {
       for (uint8_t i = 0; i < 4; i++) {
         if (data->parameters[parameters_id[i]].result == f_console_result_found) {
           fake_print_error_parameter_missing_value(data->context, data->verbosity, parameters_name[i]);
-          return f_status_set_error(f_invalid_parameter);
+          return F_status_set_error(F_parameter);
         }
         else if (data->parameters[parameters_id[i]].result == f_console_result_additional) {
           if (data->parameters[parameters_id[i]].additional.used > 1) {
             fake_print_error_parameter_too_many(data->context, data->verbosity, parameters_name[i]);
-            return f_status_set_error(f_invalid_parameter);
+            return F_status_set_error(F_parameter);
           }
 
           status = fl_console_parameter_to_string_dynamic_directory(arguments.argv[data->parameters[parameters_id[i]].additional.array[0]], parameters_value[i]);
 
-          if (f_status_is_error(status)) {
-            if (fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", f_false) == f_unknown && data->verbosity != fake_verbosity_quiet) {
+          if (F_status_is_error(status)) {
+            if (fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol);
               fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to process parameter '");
               fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
@@ -805,8 +805,8 @@ extern "C" {
         else if (parameter_default_lengths[i] > 0) {
           f_macro_string_dynamic_new(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
-          if (f_status_is_error(status)) {
-            if (fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "f_macro_string_dynamic_new", f_false) == f_unknown && data->verbosity != fake_verbosity_quiet) {
+          if (F_status_is_error(status)) {
+            if (fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "f_macro_string_dynamic_new", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol);
               fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to load default for the parameter '");
               fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
@@ -825,8 +825,8 @@ extern "C" {
     if (data->parameters[fake_parameter_defines].result == f_console_result_additional) {
       status = fll_program_parameter_additional_rip_mash(" ", 1, arguments.argv, data->parameters[fake_parameter_defines].additional, &data->defines);
 
-      if (f_status_is_error(status)) {
-        if (status == f_status_set_error(f_string_too_large)) {
+      if (F_status_is_error(status)) {
+        if (status == F_status_set_error(F_string_too_large)) {
           if (data->verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol);
             fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the (combined) parameter '");
@@ -835,7 +835,7 @@ extern "C" {
           }
         }
         else {
-          fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fll_program_parameter_additional_rip_mash", f_true);
+          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_additional_rip_mash", F_true);
         }
 
         return status;
@@ -844,13 +844,13 @@ extern "C" {
 
     if (data->parameters[fake_parameter_mode].result == f_console_result_found) {
       fake_print_error_parameter_missing_value(data->context, data->verbosity, fake_long_mode);
-      return f_status_set_error(f_invalid_parameter);
+      return F_status_set_error(F_parameter);
     }
     else if (data->parameters[fake_parameter_mode].result == f_console_result_additional) {
       status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_mode].additional, &data->mode);
 
-      if (f_status_is_error(status)) {
-        if (fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fll_program_parameter_additional_rip", f_false) == f_unknown && data->verbosity != fake_verbosity_quiet) {
+      if (F_status_is_error(status)) {
+        if (fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol);
           fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to process the parameter '");
           fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
@@ -870,8 +870,8 @@ extern "C" {
 
           status = f_utf_is_word_dash_plus(data->mode.array[i].string + j, width_max);
 
-          if (f_status_is_error(status)) {
-            if (fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "f_utf_is_word_dash_plus", f_false) == f_unknown && data->verbosity != fake_verbosity_quiet) {
+          if (F_status_is_error(status)) {
+            if (fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol);
               fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to process the parameter '");
               fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
@@ -881,7 +881,7 @@ extern "C" {
             return status;
           }
 
-          if (status == f_false) {
+          if (status == F_false) {
             if (data->verbosity != fake_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol);
               fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the '");
@@ -891,13 +891,13 @@ extern "C" {
               fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' contains non-word, non-dash, and non-plus characters.");
             }
 
-            return f_status_set_error(f_invalid_parameter);
+            return F_status_set_error(F_parameter);
           }
         } // for
       } // for
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fake_process_console_parameters_
 
@@ -932,26 +932,26 @@ extern "C" {
     };
 
     const bool parameters_required[] = {
-      f_true,
-      f_true,
-      f_true,
-      f_false,
+      F_true,
+      F_true,
+      F_true,
+      F_false,
     };
 
     struct stat directory_stat;
-    f_status status = f_none;
+    f_status status = F_none;
 
     for (uint8_t i = 0; i < 4; i++) {
       if (parameters_value[i]->used > 0) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
-        status = f_file_stat(parameters_value[i]->string, f_true, &directory_stat);
+        status = f_file_stat(parameters_value[i]->string, F_true, &directory_stat);
 
-        if (status == f_status_set_error(f_file_not_found)) status = f_status_set_error(f_directory_not_found);
+        if (status == F_status_set_error(F_file_found_not)) status = F_status_set_error(F_directory_not_found);
 
-        if (f_status_is_error(status)) {
-          if (f_status_set_fine(status) != f_directory_not_found || parameters_required[i]) {
-            fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), "f_file_stat", parameters_value[i]->string, "access", f_false, f_true);
+        if (F_status_is_error(status)) {
+          if (F_status_set_fine(status) != F_directory_not_found || parameters_required[i]) {
+            fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_file_stat", parameters_value[i]->string, "access", F_false, F_true);
             return status;
           }
         }
@@ -962,11 +962,11 @@ extern "C" {
         fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' was found.");
 
-        return f_status_set_error(f_directory_not_found);
+        return F_status_set_error(F_directory_not_found);
       }
     } // for
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fake_validate_parameter_directories_
 

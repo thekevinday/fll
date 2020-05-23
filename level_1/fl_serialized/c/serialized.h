@@ -42,9 +42,9 @@ extern "C" {
  *   The dynamic string that represents a serialized set of strings.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_serialize_simple_
   extern f_return_status fl_serialize_simple(const f_string_static value, f_string_dynamic *serialized);
@@ -66,10 +66,10 @@ extern "C" {
  *   An array of strings de-serialized from serialized.
  *
  * @return
- *   f_none on success.
- *   f_incomplete_utf_on_eos if end of sting is reached before a complete UTF-8 character can be processed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_incomplete_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_unserialize_simple_
   extern f_return_status fl_unserialize_simple(const f_string_static serialized, f_string_dynamics *strings);
@@ -91,10 +91,10 @@ extern "C" {
  *   The locations within the serialized string representing distinct separate strings.
  *
  * @return
- *   f_none on success.
- *   f_incomplete_utf_on_eos if end of sting is reached before a complete UTF-8 character can be processed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_incomplete_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_unserialize_simple_map_
   extern f_return_status fl_unserialize_simple_map(const f_string_static serialized, f_string_ranges *locations);
@@ -118,11 +118,11 @@ extern "C" {
  *   A location within the serialized string representing the string at the given index.
  *
  * @return
- *   f_none on success.
- *   f_none_on_eos on success at end of string.
- *   f_no_data_on_eos if end of string reached before index was reached.
- *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_none_eos on success at end of string.
+ *   F_data_no_eos if end of string reached before index was reached.
+ *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_unserialize_simple_find_
   extern f_return_status fl_unserialize_simple_find(const f_string_static serialized, const f_array_length index, f_string_range *location);
@@ -146,12 +146,12 @@ extern "C" {
  *   The unserialized string from the specified index.
  *
  * @return
- *   f_none on success.
- *   f_none_on_eos on success at end of string.
- *   f_no_data_on_eos if end of string reached before index was reached (dynamic->used is set to 0).
- *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_none_eos on success at end of string.
+ *   F_data_no_eos if end of string reached before index was reached (dynamic->used is set to 0).
+ *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fl_unserialize_simple_get_
   extern f_return_status fl_unserialize_simple_get(const f_string_static serialized, const f_array_length index, f_string_dynamic *dynamic);

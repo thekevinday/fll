@@ -10,12 +10,12 @@ extern "C" {
     f_number_unsigned number = 0;
     f_status status = fss_status_code_convert_number(data, value, &number);
 
-    if (f_status_is_error(status)) {
+    if (F_status_is_error(status)) {
       return status;
     }
 
     if (data.parameters[fss_status_code_parameter_is_error].result == f_console_result_found) {
-      if (f_status_is_error(number)) {
+      if (F_status_is_error(number)) {
         printf("%s\n", fl_status_string_true);
       }
       else {
@@ -23,7 +23,7 @@ extern "C" {
       }
     }
     else if (data.parameters[fss_status_code_parameter_is_warning].result == f_console_result_found) {
-      if (f_status_is_warning(number)) {
+      if (F_status_is_warning(number)) {
         printf("%s\n", fl_status_string_true);
       }
       else {
@@ -31,7 +31,7 @@ extern "C" {
       }
     }
     else if (data.parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
-      if (f_status_is_fine(number)) {
+      if (F_status_is_fine(number)) {
         printf("%s\n", fl_status_string_true);
       }
       else {
@@ -39,43 +39,43 @@ extern "C" {
       }
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fss_status_code_process_check_
 
 #ifndef _di_fss_status_code_process_number_
   f_return_status fss_status_code_process_number(const fss_status_code_data data, const f_string value) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     {
       f_number_unsigned number = 0;
 
       status = fl_console_parameter_to_number_unsigned(value, &number);
 
-      if (status == f_none) {
+      if (status == F_none) {
         fl_color_print_line(f_type_output, data.context.error, data.context.reset, "invalid name");
 
-        return f_status_set_error(f_invalid_parameter);
+        return F_status_set_error(F_parameter);
       }
 
-      if (status == f_no_data || f_status_set_fine(status) == f_invalid_parameter) {
+      if (status == F_data_not || F_status_set_fine(status) == F_parameter) {
         fl_color_print_line(f_type_output, data.context.error, data.context.reset, "invalid data");
 
         return status;
       }
     }
 
-    f_status code = f_none;
+    f_status code = F_none;
 
     status = fll_fss_status_from_string(value, &code);
 
-    if (f_status_is_error(status)) {
-      if (f_status_set_fine(status) == f_invalid_data) {
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_data) {
         status = fll_status_from_string(value, &code);
       }
 
-      if (f_status_is_error(status)) {
-        if (f_status_set_fine(status) == f_invalid_data) {
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_data) {
           fl_color_print_line(f_type_output, data.context.error, data.context.reset, "unknown name");
         }
         else {
@@ -86,15 +86,15 @@ extern "C" {
       }
     }
 
-    if (status == f_invalid_data) {
+    if (status == F_data) {
       fl_color_print_line(f_type_output, data.context.warning, data.context.reset, "unknown code");
 
-      return f_none;
+      return F_none;
     }
 
     printf("%u\n", code);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fss_status_code_process_number_
 
@@ -103,7 +103,7 @@ extern "C" {
     f_number_unsigned number = 0;
     f_status status = fss_status_code_convert_number(data, value, &number);
 
-    if (f_status_is_error(status)) {
+    if (F_status_is_error(status)) {
       return status;
     }
 
@@ -112,8 +112,8 @@ extern "C" {
 
     status = fll_fss_status_to_string(code, &string);
 
-    if (f_status_is_error(status)) {
-      if (f_status_set_fine(status) == f_invalid_data) {
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_data) {
         fl_color_print_line(f_type_output, data.context.error, data.context.reset, "unknown code");
       }
       else {
@@ -125,7 +125,7 @@ extern "C" {
 
     printf("%s\n", string);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fss_status_code_process_normal_
 
@@ -133,14 +133,14 @@ extern "C" {
   f_return_status fss_status_code_convert_number(const fss_status_code_data data, const f_string value, f_number_unsigned *number) {
     f_status status = fl_console_parameter_to_number_unsigned(value, number);
 
-    if (*number > f_status_size_max_with_signal) {
+    if (*number > F_status_size_max_with_signal) {
       fl_color_print_line(f_type_output, data.context.error, data.context.reset, "out of range");
 
       return status;
     }
 
-    if (f_status_is_error(status)) {
-      if (f_status_set_fine(status) == f_number_negative) {
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_number_negative) {
         fl_color_print_line(f_type_output, data.context.error, data.context.reset, "out of range");
       }
       else {
@@ -150,7 +150,7 @@ extern "C" {
       return status;
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fss_status_code_convert_number_
 

@@ -7,53 +7,53 @@ extern "C" {
 #ifndef _di_f_memory_new_
   f_return_status f_memory_new(void **pointer, const f_memory_size_t type, const f_memory_length length) {
     #ifndef _di_level_0_parameter_checking_
-      if (type <= 0) return f_status_set_error(f_invalid_parameter);
-      if (pointer == 0) return f_status_set_error(f_invalid_parameter);
+      if (type <= 0) return F_status_set_error(F_parameter);
+      if (pointer == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-allocations
-    if (*pointer != 0) return f_none;
+    if (*pointer != 0) return F_none;
 
     // Some people use malloc(type * length) to produce the same results.
     // I have noticed this sometimes causes an increase in L1/L2 cache misses (0.02% L1 increase, 0.01% L2 increase).
     *pointer = calloc(type, length);
 
     if (*pointer) {
-      return f_none;
+      return F_none;
     }
 
-    return f_status_set_error(f_error_allocation);
+    return F_status_set_error(F_memory_allocation);
   }
 #endif // _di_f_memory_new_
 
 #if ! ( defined (_di_f_memory_delete_) || defined (_f_memory_FORCE_secure_memory_) )
   f_return_status f_memory_delete(void **pointer, const f_memory_size_t type, const f_memory_length length) {
     #ifndef _di_level_0_parameter_checking_
-      if (pointer == 0) return f_status_set_error(f_invalid_parameter);
+      if (pointer == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-frees.
-    if (*pointer == 0) return f_none;
+    if (*pointer == 0) return F_none;
 
     free(*pointer);
 
     // it has been deallocated, so reset the pointer.
     if (*pointer != 0) *pointer = 0;
 
-    return f_none;
+    return F_none;
   }
 #endif // ! ( defined (_di_f_memory_delete_) || defined (_f_memory_FORCE_secure_memory_) )
 
 #if ! ( defined (_di_f_memory_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
   f_return_status f_memory_destroy(void **pointer, const f_memory_size_t type, const f_memory_length length) {
     #ifndef _di_level_0_parameter_checking_
-      if (length <  0) return f_status_set_error(f_invalid_parameter);
-      if (type <= 0) return f_status_set_error(f_invalid_parameter);
-      if (pointer == 0) return f_status_set_error(f_invalid_parameter);
+      if (length <  0) return F_status_set_error(F_parameter);
+      if (type <= 0) return F_status_set_error(F_parameter);
+      if (pointer == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-frees.
-    if (*pointer == 0) return f_none;
+    if (*pointer == 0) return F_none;
 
     if (length > 0) {
       memset(*pointer, 0, type * length);
@@ -64,21 +64,21 @@ extern "C" {
     // it has been deallocated, so reset the pointer.
     if (*pointer != 0) *pointer = 0;
 
-    return f_none;
+    return F_none;
   }
 #endif // ! ( defined (_di_f_memory_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
 
 #if ! ( defined (_di_f_memory_resize_) || defined (_f_memory_FORCE_secure_memory_) )
   f_return_status f_memory_resize(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length) {
     #ifndef _di_level_0_parameter_checking_
-      if (type <= 0) return f_status_set_error(f_invalid_parameter);
-      if (old_length < 0) return f_status_set_error(f_invalid_parameter);
-      if (new_length < 0) return f_status_set_error(f_invalid_parameter);
-      if (pointer == 0) return f_status_set_error(f_invalid_parameter);
+      if (type <= 0) return F_status_set_error(F_parameter);
+      if (old_length < 0) return F_status_set_error(F_parameter);
+      if (new_length < 0) return F_status_set_error(F_parameter);
+      if (pointer == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // don't be wasteful.
-    if (old_length == new_length) return f_none;
+    if (old_length == new_length) return F_none;
 
     if (*pointer != 0) {
       void *new_pointer = 0;
@@ -93,7 +93,7 @@ extern "C" {
         // it has been deallocated, so reset the pointer
         if (*pointer != 0) *pointer = 0;
 
-        return f_none;
+        return F_none;
       }
 
       if (new_pointer) {
@@ -107,35 +107,35 @@ extern "C" {
           *pointer = new_pointer;
         }
 
-        return f_none;
+        return F_none;
       }
     }
     else if (new_length > 0) {
       *pointer = calloc(type, new_length);
 
       if (*pointer) {
-        return f_none;
+        return F_none;
       }
     }
     else {
-      return f_none;
+      return F_none;
     }
 
-    return f_status_set_error(f_error_reallocation);
+    return F_status_set_error(F_memory_reallocation);
   }
 #endif // ! ( defined (_di_f_memory_resize_) || defined (_f_memory_FORCE_secure_memory_) )
 
 #if ! ( defined (_di_f_memory_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
   f_return_status f_memory_adjust(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length) {
     #ifndef _di_level_0_parameter_checking_
-      if (type <= 0) return f_status_set_error(f_invalid_parameter);
-      if (old_length < 0) return f_status_set_error(f_invalid_parameter);
-      if (new_length < 0) return f_status_set_error(f_invalid_parameter);
-      if (pointer == 0) return f_status_set_error(f_invalid_parameter);
+      if (type <= 0) return F_status_set_error(F_parameter);
+      if (old_length < 0) return F_status_set_error(F_parameter);
+      if (new_length < 0) return F_status_set_error(F_parameter);
+      if (pointer == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // don't be wasteful
-    if (old_length == new_length) return f_none;
+    if (old_length == new_length) return F_none;
 
     if (*pointer != 0) {
       void *new_pointer = 0;
@@ -158,7 +158,7 @@ extern "C" {
         // it has been deallocated, so reset the pointer
         if (*pointer != 0) *pointer = 0;
 
-        return f_none;
+        return F_none;
       }
 
       if (new_pointer) {
@@ -172,21 +172,21 @@ extern "C" {
           *pointer = new_pointer;
         }
 
-        return f_none;
+        return F_none;
       }
     }
     else if (new_length > 0) {
       *pointer = calloc(type, new_length);
 
       if (*pointer) {
-        return f_none;
+        return F_none;
       }
     }
     else {
-      return f_none;
+      return F_none;
     }
 
-    return f_status_set_error(f_error_reallocation);
+    return F_status_set_error(F_memory_reallocation);
   }
 #endif // ! ( defined (_di_f_memory_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
 

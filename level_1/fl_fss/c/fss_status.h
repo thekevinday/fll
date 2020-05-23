@@ -20,33 +20,33 @@ extern "C" {
 #endif
 
 enum {
-  fl_fss_status_code_first = f_status_code_last + 1,
+  FL_fss_status_code_first = F_status_code_last + 1,
 
-  #ifndef _di_fl_fss_status_error_
-    fl_fss_invalid_format,
-    fl_fss_invalid_format_eos,
-  #endif // _di_fl_fss_status_error_
+  #ifndef _di_FL_fss_status_error_
+    FL_fss_format,
+    FL_fss_format_eos,
+  #endif // _di_FL_fss_status_error_
 
-  #ifndef _di_fl_fss_status_warning_
-    fl_fss_invalid_but_accepted,
-    fl_fss_invalid_but_accepted_eos,
-    fl_fss_no_header,
-    fl_fss_no_header_eos,
-  #endif // _di_fl_fss_status_warning_
+  #ifndef _di_FL_fss_status_warning_
+    FL_fss_accepted_invalid,
+    FL_fss_accepted_invalid_eos,
+    FL_fss_header_not,
+    FL_fss_header_not_eos,
+  #endif // _di_FL_fss_status_warning_
 
-  #ifndef _di_fl_fss_status_success_
-    fl_fss_found_content,
-    fl_fss_found_object,
-    fl_fss_found_object_no_content,
-    fl_fss_found_no_content,
-    fl_fss_found_no_object,
-  #endif // _di_fl_fss_status_success_
+  #ifndef _di_FL_fss_status_success_
+    FL_fss_found_content,
+    FL_fss_found_object,
+    FL_fss_found_object_content_not,
+    FL_fss_found_content_not,
+    FL_fss_found_object_not,
+  #endif // _di_FL_fss_status_success_
 
-  #ifndef _di_fl_fss_status_codes_
-    fl_fss_found_comment,
-  #endif // _di_fl_fss_status_codes_
+  #ifndef _di_FL_fss_status_codes_
+    FL_fss_found_comment,
+  #endif // _di_FL_fss_status_codes_
 
-  fl_fss_status_code_last,
+  FL_fss_status_code_last,
 }; // enum
 
 #ifdef __cplusplus

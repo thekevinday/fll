@@ -7,14 +7,14 @@ extern "C" {
 #ifndef _di_f_console_identify_
   f_return_status f_console_identify(const f_string input, f_console_id *result) {
     #ifndef _di_level_0_parameter_checking_
-      if (result == 0) return f_status_set_error(f_invalid_parameter);
+      if (result == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_f
 
     const f_string_length length = strnlen(input, 3);
 
     if (length == 0) {
       *result = f_console_none;
-      return f_no_data;
+      return F_data_not;
     }
 
     if (input[0] == f_console_symbol_enable) {
@@ -43,19 +43,19 @@ extern "C" {
     }
     else *result = f_console_none;
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_f_console_identify_
 
 #ifndef _di_f_console_parameter_process_
   f_return_status f_console_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, f_string_lengths *remaining) {
     #ifndef _di_level_0_parameter_checking_
-      if (remaining == 0) return f_status_set_error(f_invalid_parameter);
+      if (remaining == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = f_none;
+    f_status status = F_none;
     f_console_id result = 0;
-    bool found = f_false;
+    bool found = F_false;
 
     unsigned long location = 1; // Parameter 0 represents the program name so skip it.
     f_string_length sub_location = 0;
@@ -81,7 +81,7 @@ extern "C" {
         if (parameters.parameter[i].additional.used >= parameters.parameter[i].additional.size) {
           f_macro_string_lengths_resize(status, parameters.parameter[i].additional, parameters.parameter[i].additional.size + f_console_default_allocation_step);
 
-          if (f_status_is_error(status)) {
+          if (F_status_is_error(status)) {
             f_macro_string_lengths_delete_simple(needs_additional);
             return status;
           }
@@ -161,7 +161,7 @@ extern "C" {
 
                 status = f_utf_char_to_character(arguments.argv[location] + sub_location, width_max, &character_argument_utf);
 
-                if (status != f_none) {
+                if (status != F_none) {
                   f_macro_string_lengths_delete_simple(needs_additional);
                   return status;
                 }
@@ -170,7 +170,7 @@ extern "C" {
 
                 status = f_utf_char_to_character((f_string) parameters.parameter[i].symbol_short, width_max, &character_console_utf);
 
-                if (status != f_none) {
+                if (status != F_none) {
                   f_macro_string_lengths_delete_simple(needs_additional);
                   return status;
                 }
@@ -196,7 +196,7 @@ extern "C" {
             if (parameters.parameter[i].locations.used >= parameters.parameter[i].locations.size) {
               f_macro_string_lengths_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
 
-              if (f_status_is_error(status)) {
+              if (F_status_is_error(status)) {
                 f_macro_string_lengths_delete_simple(needs_additional);
                 return status;
               }
@@ -218,7 +218,7 @@ extern "C" {
               if (needs_additional.used + parameters.parameter[i].has_additional > needs_additional.size) {
                 f_macro_string_lengths_resize(status, needs_additional, needs_additional.used + parameters.parameter[i].has_additional);
 
-                if (f_status_is_error(status)) {
+                if (F_status_is_error(status)) {
                   f_macro_string_lengths_delete_simple(needs_additional);
                   return status;
                 }
@@ -237,7 +237,7 @@ extern "C" {
         } // while
       }
       else {
-        found = f_false;
+        found = F_false;
 
         for (i = 0; i < parameters.used; i++) {
           if (parameters.parameter[i].type != f_console_type_other) continue;
@@ -249,7 +249,7 @@ extern "C" {
           if (parameters.parameter[i].locations.used >= parameters.parameter[i].locations.size) {
             f_macro_string_lengths_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
 
-            if (f_status_is_error(status)) {
+            if (F_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(needs_additional);
               return status;
             }
@@ -267,7 +267,7 @@ extern "C" {
             if (needs_additional.used + parameters.parameter[i].has_additional > needs_additional.size) {
               f_macro_string_lengths_resize(status, needs_additional, needs_additional.used + parameters.parameter[i].has_additional);
 
-              if (f_status_is_error(status)) {
+              if (F_status_is_error(status)) {
                 f_macro_string_lengths_delete_simple(needs_additional);
                 return status;
               }
@@ -279,7 +279,7 @@ extern "C" {
             } // for
           }
 
-          found = f_true;
+          found = F_true;
           break;
         } // for
 
@@ -288,7 +288,7 @@ extern "C" {
           if (remaining->used >= remaining->size) {
             f_macro_string_lengths_resize(status, (*remaining), remaining->size + f_console_default_allocation_step);
 
-            if (f_status_is_error(status)) {
+            if (F_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(needs_additional);
               return status;
             }
@@ -303,10 +303,10 @@ extern "C" {
     } // while
 
     if (needs_additional.used > 0) {
-      status = f_no_data;
+      status = F_data_not;
     }
     else {
-      status = f_none;
+      status = F_none;
     }
 
     f_macro_string_lengths_delete_simple(needs_additional);
@@ -318,19 +318,19 @@ extern "C" {
 #ifndef _di_f_console_parameter_prioritize_left_
   f_return_status f_console_parameter_prioritize_left(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision) {
     #ifndef _di_level_0_parameter_checking_
-      if (decision == 0) return f_status_set_error(f_invalid_parameter);
-      if (choices.id == 0) return f_status_set_error(f_invalid_parameter);
+      if (decision == 0) return F_status_set_error(F_parameter);
+      if (choices.id == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (choices.used == 0) return f_no_data;
-    if (parameters.used == 0) return f_no_data;
+    if (choices.used == 0) return F_data_not;
+    if (parameters.used == 0) return F_data_not;
 
     f_array_length location = 0;
     f_array_length location_sub = 0;
     f_console_parameter_id priority = 0;
 
     for (f_array_length i = 0; i < choices.used; i++) {
-      if (choices.id[i] > parameters.used) return f_status_set_error(f_invalid_parameter);
+      if (choices.id[i] > parameters.used) return F_status_set_error(F_parameter);
 
       if (parameters.parameter[choices.id[i]].result == f_console_result_found) {
         if (parameters.parameter[choices.id[i]].location < location) {
@@ -347,31 +347,31 @@ extern "C" {
 
     // The first parameter location (argc = 0) is the program name, therefore if the location is 0, then no matches were found.
     if (location == 0) {
-      return f_no_data;
+      return F_data_not;
     }
 
     *decision = priority;
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_f_console_parameter_prioritize_left_
 
 #ifndef _di_f_console_parameter_prioritize_right_
   f_return_status f_console_parameter_prioritize_right(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision) {
     #ifndef _di_level_0_parameter_checking_
-      if (decision == 0) return f_status_set_error(f_invalid_parameter);
-      if (choices.id == 0) return f_status_set_error(f_invalid_parameter);
+      if (decision == 0) return F_status_set_error(F_parameter);
+      if (choices.id == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (choices.used == 0) return f_no_data;
-    if (parameters.used == 0) return f_no_data;
+    if (choices.used == 0) return F_data_not;
+    if (parameters.used == 0) return F_data_not;
 
     f_array_length location = 0;
     f_array_length location_sub = 0;
     f_console_parameter_id priority = 0;
 
     for (f_array_length i = 0; i < choices.used; i++) {
-      if (choices.id[i] > parameters.used) return f_status_set_error(f_invalid_parameter);
+      if (choices.id[i] > parameters.used) return F_status_set_error(F_parameter);
 
       if (parameters.parameter[choices.id[i]].result == f_console_result_found) {
         if (parameters.parameter[choices.id[i]].location > location) {
@@ -388,12 +388,12 @@ extern "C" {
 
     // The first parameter location (argc = 0) is the program name, therefore if the location is 0, then no matches were found.
     if (location == 0) {
-      return f_no_data;
+      return F_data_not;
     }
 
     *decision = priority;
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_f_console_parameter_prioritize_right_
 

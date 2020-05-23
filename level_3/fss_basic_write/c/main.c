@@ -6,7 +6,7 @@ int main(const unsigned long argc, const f_string *argv) {
 
   f_status status = fss_basic_write_main(arguments, &data);
 
-  if (f_status_is_error(status)) {
+  if (F_status_is_error(status)) {
     return 1;
   }
 

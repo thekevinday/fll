@@ -31,17 +31,17 @@ extern "C" {
  *   The total bytes written.
  *
  * @return
- *   f_none on success.
- *   f_none_on_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
- *   f_none_on_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
- *   f_file_error_descriptor (with error bit) if the file descriptor is invalid.
- *   f_invalid_buffer (with error bit) if the buffer is invalid.
- *   f_interrupted (with error bit) if interrupt was received.
- *   f_error_input_output (with error bit) on I/O error.
- *   f_file_not_open (with error bit) if file is not open.
- *   f_file_is_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_none on success.
+ *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_file_open_not (with error bit) if file is not open.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *
  * @see fl_utf_file_write()
  * @see fl_utf_file_write_range()

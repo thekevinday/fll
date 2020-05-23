@@ -7,11 +7,11 @@ extern "C" {
 #ifndef _di_f_path_explode_
   f_return_status f_path_explode(const f_string path, f_string_dynamics *paths) {
     #ifndef _di_level_0_parameter_checking_
-      if (paths == 0) return f_status_set_error(f_invalid_parameter);
-      if (paths->used > paths->size) return f_status_set_error(f_invalid_parameter);
+      if (paths == 0) return F_status_set_error(F_parameter);
+      if (paths->used > paths->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = f_none;
+    f_status status = F_none;
     const f_string_length length = strnlen(path, PATH_MAX);
 
     if (length == 0) {
@@ -20,22 +20,22 @@ extern "C" {
       if (paths->used + 1 > paths->size) {
         if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
           if (paths->size + 1 > f_array_length_size) {
-            return f_status_set_error(f_buffer_too_large);
+            return F_status_set_error(F_buffer_too_large);
           }
 
           f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
         }
         else {
           f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
         }
       }
 
       f_macro_string_dynamic_clear(paths->array[paths->used]);
       paths->used++;
 
-      return f_none;
+      return F_none;
     }
 
     f_string_length i = length;
@@ -47,15 +47,15 @@ extern "C" {
         if (paths->used + 1 > paths->size) {
           if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
             if (paths->size + 1 > f_array_length_size) {
-              return f_status_set_error(f_buffer_too_large);
+              return F_status_set_error(F_buffer_too_large);
             }
 
             f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
           else {
             f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
         }
 
@@ -74,13 +74,13 @@ extern "C" {
         if (total > 0) {
           if (path[i - 1] == f_path_separator[0]) {
             f_macro_string_dynamic_new(status, part, total);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
 
             part.used = total;
           }
           else {
             f_macro_string_dynamic_new(status, part, total + 1);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
 
             part.string[total] = f_path_separator[0];
             part.used = total + 1;
@@ -98,19 +98,19 @@ extern "C" {
       }
     } // for
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_f_path_explode_
 
 #ifndef _di_f_path_explode_dynamic_
   f_return_status f_path_explode_dynamic(const f_string_static path, f_string_dynamics *paths) {
     #ifndef _di_level_0_parameter_checking_
-      if (path.used > path.size) return f_status_set_error(f_invalid_parameter);
-      if (paths == 0) return f_status_set_error(f_invalid_parameter);
-      if (paths->used > paths->size) return f_status_set_error(f_invalid_parameter);
+      if (path.used > path.size) return F_status_set_error(F_parameter);
+      if (paths == 0) return F_status_set_error(F_parameter);
+      if (paths->used > paths->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     if (path.used == 0) {
       // When PATH is "", this is actually a valid search path for PWD.
@@ -118,22 +118,22 @@ extern "C" {
       if (paths->used + 1 > paths->size) {
         if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
           if (paths->size + 1 > f_array_length_size) {
-            return f_status_set_error(f_buffer_too_large);
+            return F_status_set_error(F_buffer_too_large);
           }
 
           f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
         }
         else {
           f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
         }
       }
 
       f_macro_string_dynamic_clear(paths->array[paths->used]);
       paths->used++;
 
-      return f_none;
+      return F_none;
     }
 
     f_string_length i = 0;
@@ -148,15 +148,15 @@ extern "C" {
         if (paths->used + 1 > paths->size) {
           if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
             if (paths->size + 1 > f_array_length_size) {
-              return f_status_set_error(f_buffer_too_large);
+              return F_status_set_error(F_buffer_too_large);
             }
 
             f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
           else {
             f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
         }
 
@@ -172,7 +172,7 @@ extern "C" {
 
         if (total > 0) {
           f_macro_string_dynamic_new(status, part, total);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
 
           for (j = 0; j < total; j++) {
             if (path.string[first + j] == 0) continue;
@@ -183,7 +183,7 @@ extern "C" {
 
           if (part.string[part.used - 1] != f_path_separator[0]) {
             f_macro_string_dynamic_resize(status, part, total + 1);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
 
             part.string[part.used] = f_path_separator[0];
             part.used++;
@@ -199,18 +199,18 @@ extern "C" {
       }
     } // for
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_f_path_explode_dynamic_
 
 #ifndef _di_f_path_explode_reverse_
   f_return_status f_path_explode_reverse(const f_string path, f_string_dynamics *paths) {
     #ifndef _di_level_0_parameter_checking_
-      if (paths == 0) return f_status_set_error(f_invalid_parameter);
-      if (paths->used > paths->size) return f_status_set_error(f_invalid_parameter);
+      if (paths == 0) return F_status_set_error(F_parameter);
+      if (paths->used > paths->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = f_none;
+    f_status status = F_none;
     const f_string_length length = strnlen(path, PATH_MAX);
 
     if (length == 0) {
@@ -219,15 +219,15 @@ extern "C" {
       if (paths->used + 1 > paths->size) {
         if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
           if (paths->size + 1 > f_array_length_size) {
-            return f_status_set_error(f_buffer_too_large);
+            return F_status_set_error(F_buffer_too_large);
           }
 
           f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
         }
         else {
           f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
         }
       }
 
@@ -236,7 +236,7 @@ extern "C" {
       paths->array[paths->used].size = 0;
       paths->used++;
 
-      return f_none;
+      return F_none;
     }
 
     f_string_length i = length;
@@ -253,15 +253,15 @@ extern "C" {
         if (paths->used + 1 > paths->size) {
           if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
             if (paths->size + 1 > f_array_length_size) {
-              return f_status_set_error(f_buffer_too_large);
+              return F_status_set_error(F_buffer_too_large);
             }
 
             f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
           else {
             f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
         }
 
@@ -271,13 +271,13 @@ extern "C" {
           if (total > 0) {
             if (path[j + total] == f_path_separator[0]) {
               f_macro_string_dynamic_new(status, part, total);
-              if (f_status_is_error(status)) return status;
+              if (F_status_is_error(status)) return status;
 
               part.used = total;
             }
             else {
               f_macro_string_dynamic_new(status, part, total + 1);
-              if (f_status_is_error(status)) return status;
+              if (F_status_is_error(status)) return status;
 
               part.string[total] = f_path_separator[0];
               part.used = total + 1;
@@ -295,13 +295,13 @@ extern "C" {
           if (total > 0) {
             if (path[last - 1] == f_path_separator[0]) {
               f_macro_string_dynamic_new(status, part, total);
-              if (f_status_is_error(status)) return status;
+              if (F_status_is_error(status)) return status;
 
               part.used = total;
             }
             else {
               f_macro_string_dynamic_new(status, part, total + 1);
-              if (f_status_is_error(status)) return status;
+              if (F_status_is_error(status)) return status;
 
               part.used = total + 1;
               part.string[total] = f_path_separator[0];
@@ -318,19 +318,19 @@ extern "C" {
       }
     } // for
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_f_path_explode_reverse_
 
 #ifndef _di_f_path_explode_reverse_dynamic_
   f_return_status f_path_explode_reverse_dynamic(const f_string_static path, f_string_dynamics *paths) {
     #ifndef _di_level_0_parameter_checking_
-      if (path.used > path.size) return f_status_set_error(f_invalid_parameter);
-      if (paths == 0) return f_status_set_error(f_invalid_parameter);
-      if (paths->used > paths->size) return f_status_set_error(f_invalid_parameter);
+      if (path.used > path.size) return F_status_set_error(F_parameter);
+      if (paths == 0) return F_status_set_error(F_parameter);
+      if (paths->used > paths->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     if (path.used == 0) {
       // When PATH is "", this is actually a valid search path for PWD.
@@ -338,22 +338,22 @@ extern "C" {
       if (paths->used + 1 > paths->size) {
         if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
           if (paths->size + 1 > f_array_length_size) {
-            return f_status_set_error(f_buffer_too_large);
+            return F_status_set_error(F_buffer_too_large);
           }
 
           f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
         }
         else {
           f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
         }
       }
 
       f_macro_string_dynamic_clear(paths->array[paths->used]);
       paths->used++;
 
-      return f_none;
+      return F_none;
     }
 
     f_string_length i = path.used;
@@ -371,15 +371,15 @@ extern "C" {
         if (paths->used + 1 > paths->size) {
           if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
             if (paths->size + 1 > f_array_length_size) {
-              return f_status_set_error(f_buffer_too_large);
+              return F_status_set_error(F_buffer_too_large);
             }
 
             f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
           else {
             f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
         }
 
@@ -388,7 +388,7 @@ extern "C" {
 
           if (total > 0) {
             f_macro_string_dynamic_new(status, part, total);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
 
             for (k = 0; k < total; k++) {
               if (path.string[i + k] == 0) continue;
@@ -399,7 +399,7 @@ extern "C" {
 
             if (part.string[part.used - 1] != f_path_separator[0]) {
               f_macro_string_dynamic_resize(status, part, total + 1);
-              if (f_status_is_error(status)) return status;
+              if (F_status_is_error(status)) return status;
 
               part.string[part.used] = f_path_separator[0];
               part.used++;
@@ -413,7 +413,7 @@ extern "C" {
           total = last - j;
 
           f_macro_string_dynamic_new(status, part, total);
-          if (f_status_is_error(status)) return status;
+          if (F_status_is_error(status)) return status;
 
           for (k = 0; k < total; k++) {
             if (path.string[i + k] == 0) continue;
@@ -424,7 +424,7 @@ extern "C" {
 
           if (part.string[part.used - 1] != f_path_separator[0]) {
             f_macro_string_dynamic_resize(status, part, total + 1);
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
 
             part.string[part.used - 1] = f_path_separator[0];
             part.used++;
@@ -438,7 +438,7 @@ extern "C" {
       }
     } // for
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_f_path_explode_reverse_dynamic_
 

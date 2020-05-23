@@ -189,27 +189,27 @@ extern "C" {
   #ifdef _en_init_debug_
     #define f_console_parameter_initialize_init \
       { \
-        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
-        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, f_true, f_console_type_normal), \
-        f_console_parameter_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, f_true, f_console_type_normal), \
+        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
+        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, F_true, f_console_type_normal), \
+        f_console_parameter_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, F_true, f_console_type_normal), \
       }
 
     #define init_total_parameters 8
   #else
     #define f_console_parameter_initialize_init \
       { \
-        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, f_false, f_console_type_normal), \
-        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, f_false, f_console_type_inverse), \
-        f_console_parameter_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, f_true, f_console_type_normal), \
-        f_console_parameter_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, f_true, f_console_type_normal), \
+        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
+        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, F_true, f_console_type_normal), \
+        f_console_parameter_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, F_true, f_console_type_normal), \
       }
 
     #define init_total_parameters 7
@@ -230,7 +230,7 @@ extern "C" {
     { \
       f_console_parameter_initialize_init, \
       f_string_lengths_initialize, \
-      f_false, \
+      F_false, \
       fl_color_context_initialize, \
     }
 
@@ -282,7 +282,7 @@ extern "C" {
  *   The color context settings.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  */
 #ifndef _di_init_print_help_
   extern f_return_status init_print_help(const fl_color_context context);
@@ -297,7 +297,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_init_main_
@@ -313,7 +313,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_init_main_

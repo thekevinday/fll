@@ -83,9 +83,9 @@ extern "C" {
  *   The total number of blocks to be allocated.
  *
  * @return
- *   f_none on success.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_memory_new_
   extern f_return_status f_memory_new(void **pointer, const f_memory_size_t type, const f_memory_length length);
@@ -106,8 +106,8 @@ extern "C" {
  *   The total number of blocks to be allocated.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #if ! ( defined (_di_f_memory_delete_) || defined (_f_memory_FORCE_secure_memory_) )
   extern f_return_status f_memory_delete(void **pointer, const f_memory_size_t type, const f_memory_length length);
@@ -126,8 +126,8 @@ extern "C" {
  *   The total number of blocks to be allocated.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #if ! ( defined (_di_f_memory_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
   extern f_return_status f_memory_destroy(void **pointer, const f_memory_size_t type, const f_memory_length length);
@@ -148,9 +148,9 @@ extern "C" {
  *   The total number of blocks representing the length to be resized to.
  *
  * @return
- *   f_none on success.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #if ! ( defined (_di_f_memory_resize_) || defined (_f_memory_FORCE_secure_memory_) )
   extern f_return_status f_memory_resize(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
@@ -171,9 +171,9 @@ extern "C" {
  *   The total number of blocks representing the length to be resized to.
  *
  * @return
- *   f_none on success.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #if ! ( defined (_di_f_memory_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
   extern f_return_status f_memory_adjust(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
@@ -207,7 +207,7 @@ extern "C" {
   #define f_macro_memory_structure_new(status, structure, type, length) \
     f_macro_memory_structure_clear(structure) \
     status = f_memory_new((void **) & structure.array, sizeof(type), length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       structure.size = length; \
       structure.used = 0; \
     }
@@ -223,7 +223,7 @@ extern "C" {
 #ifndef _di_f_macro_memory_structure_delete_
   #define f_macro_memory_structure_delete(status, structure, type) \
     status = f_memory_delete((void **) & structure.array, sizeof(type), structure.size); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       structure.size = 0; \
       structure.used = 0; \
     }
@@ -239,7 +239,7 @@ extern "C" {
 #ifndef _di_f_macro_memory_structure_destroy_
   #define f_macro_memory_structure_destroy(status, structure, type) \
     status = f_memory_destroy((void **) & structure.array, sizeof(type), structure.size); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       structure.size = 0; \
       structure.used = 0; \
     }
@@ -253,7 +253,7 @@ extern "C" {
  */
 #ifndef _di_f_macro_memory_structure_delete_simple_
   #define f_macro_memory_structure_delete_simple(structure, type) \
-    if (f_memory_delete((void **) & structure.array, sizeof(type), structure.size) == f_none) { \
+    if (f_memory_delete((void **) & structure.array, sizeof(type), structure.size) == F_none) { \
       structure.size = 0; \
       structure.used = 0; \
     }
@@ -267,7 +267,7 @@ extern "C" {
  */
 #ifndef _di_f_macro_memory_structure_destroy_simple_
   #define f_macro_memory_structure_destroy_simple(structure, type) \
-    if (f_memory_destroy((void **) & structure.array, sizeof(type), structure.size) == f_none) { \
+    if (f_memory_destroy((void **) & structure.array, sizeof(type), structure.size) == F_none) { \
       structure.size = 0; \
       structure.used = 0; \
     }
@@ -284,7 +284,7 @@ extern "C" {
 #ifndef _di_f_macro_memory_structure_resize_
   #define f_macro_memory_structure_resize(status, structure, type, new_length) \
     status = f_memory_resize((void **) & structure.array, sizeof(type), structure.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       structure.size = new_length; \
       if (structure.used > structure.size) structure.used = new_length; \
     }
@@ -301,7 +301,7 @@ extern "C" {
 #ifndef _di_f_macro_memory_structure_adjust_
   #define f_macro_memory_structure_adjust(status, structure, type, new_length) \
     status = f_memory_adjust((void **) & structure.array, sizeof(type), structure.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       structure.size = new_length; \
       if (structure.used > structure.size) structure.used = new_length; \
     }
@@ -335,7 +335,7 @@ extern "C" {
   #define f_macro_memory_structures_new(status, structures, type, new_length) \
     f_macro_memory_structures_clear(structures) \
     status = f_memory_new((void **) & structures.array, sizeof(type), new_length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       structures.size = new_length; \
       structures.used = 0; \
     }
@@ -350,15 +350,15 @@ extern "C" {
  */
 #ifndef _di_f_macro_memory_structures_delete_
   #define f_macro_memory_structures_delete(status, structures, type) \
-    status = f_none; \
+    status = F_none; \
     structures.used = structures.size; \
     while (structures.used > 0) { \
       structures.used--; \
       f_macro_memory_structure_delete(status, structures.array[structures.used], type); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) status = f_memory_delete((void **) & structures.array, sizeof(type), structures.size); \
-    if (status == f_none) structures.size = 0;
+    if (status == F_none) status = f_memory_delete((void **) & structures.array, sizeof(type), structures.size); \
+    if (status == F_none) structures.size = 0;
 #endif // _di_f_macro_memory_structures_delete_
 
 /**
@@ -370,15 +370,15 @@ extern "C" {
  */
 #ifndef _di_f_macro_memory_structures_destroy_
   #define f_macro_memory_structures_destroy(status, structures, type) \
-    status = f_none; \
+    status = F_none; \
     structures.used = structures.size; \
     while (structures.used > 0) { \
       structures.used--; \
       f_macro_memory_structure_destroy(status, structures.array[structures.used], type); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) status = f_memory_destroy((void **) & structures.array, sizeof(type), structures.size); \
-    if (status == f_none) structures.size = 0;
+    if (status == F_none) status = f_memory_destroy((void **) & structures.array, sizeof(type), structures.size); \
+    if (status == F_none) structures.size = 0;
 #endif // _di_f_macro_memory_structures_destroy_
 
 /**
@@ -432,16 +432,16 @@ extern "C" {
  */
 #ifndef _di_f_macro_memory_structures_resize_
   #define f_macro_memory_structures_resize(status, structures, type, new_length, length_variable) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < structures.size) { \
       length_variable i = structures.size - new_length; \
       for (; i < structures.size; i++) { \
         f_macro_memory_structure_delete(status, structures.array[i], type); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_resize((void **) & structures.array, sizeof(type), structures.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_resize((void **) & structures.array, sizeof(type), structures.size, new_length); \
+    if (status == F_none) { \
       if (new_length > structures.size) { \
         length_variable i = structures.size; \
         for (; i < new_length; i++) { \
@@ -464,16 +464,16 @@ extern "C" {
  */
 #ifndef _di_f_macro_memory_structures_adjust_
   #define f_macro_memory_structures_adjust(status, structures, type, new_length, length_variable) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < structures.size) { \
       length_variable i = structures.size - new_length; \
       for (; i < structures.size; i++) { \
         f_macro_memory_structure_destroy(status, structures.array[i], type); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_adjust((void **) & structures.array, sizeof(type), structures.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_adjust((void **) & structures.array, sizeof(type), structures.size, new_length); \
+    if (status == F_none) { \
       if (new_length > structures.size) { \
         length_variable i = structures.size; \
         for (; i < new_length; i++) { \

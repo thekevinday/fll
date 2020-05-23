@@ -43,12 +43,12 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   f_none on success.
- *   f_no_data if length is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_none on success.
+ *   F_data_not if length is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  *
  * @see fll_execute_arguments_add()
  * @see fll_execute_arguments_add_set()
@@ -80,12 +80,12 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   f_none on success.
- *   f_no_data if name_length is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on allocation error.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_none on success.
+ *   F_data_not if name_length is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
  *
  * @see fll_execute_arguments_add_parameter()
  * @see fll_execute_arguments_add_parameter_set()

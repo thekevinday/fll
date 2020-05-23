@@ -66,8 +66,8 @@ extern "C" {
  *   Data for the file to print.
  *
  * @return
- *   f_none on success.
- *   f_failure (with error bit) on failure, usually when read() fails.
+ *   F_none on success.
+ *   F_failure (with error bit) on failure, usually when read() fails.
  */
 #ifndef _di_byte_dump_file_
   extern f_return_status byte_dump_file(const byte_dump_data data, const f_string file_name, f_file file) f_gcc_attribute_visibility_internal;
@@ -105,8 +105,8 @@ extern "C" {
  *   Will be reduced to 0 once used.
  *
  * @return
- *   f_true is returned to designate that a reset is needed.
- *   f_false is returned to designate that a reset is not needed.
+ *   F_true is returned to designate that a reset is needed.
+ *   F_false is returned to designate that a reset is not needed.
  *
  * @see byte_dump_print_text()
  */
@@ -151,8 +151,8 @@ extern "C" {
  *   The status code representing the error.
  *
  * @param
- *   f_true if error has been printed.
- *   f_false if error has not been printed.
+ *   F_true if error has been printed.
+ *   F_false if error has not been printed.
  */
 #ifndef _di_byte_dump_print_file_error_
   extern void byte_dump_print_file_error(const fl_color_context context, const f_string function, const f_string file_name, const f_status status) f_gcc_attribute_visibility_internal;

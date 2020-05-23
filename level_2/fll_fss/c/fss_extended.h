@@ -40,17 +40,17 @@ extern "C" {
  *   This will be populated with all valid contents found.
  *
  * @return
- *   f_none on success.
- *   f_none_on_stop on success after reaching stopping point .
- *   f_none_on_eos on success after reaching the end of the buffer.
- *   f_no_data_on_stop no data to write due start location being greater than stop location.
- *   f_no_data_on_eos no data to write due start location being greater than or equal to buffer size.
- *   f_no_data_on_eol if there is no data to write and EOL was reached (@todo: review related code and detemine what this is doing).
- *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) if the maximimum buffer size is reached.
+ *   F_none on success.
+ *   F_none_stop on success after reaching stopping point .
+ *   F_none_eos on success after reaching the end of the buffer.
+ *   F_data_no_stop no data to write due start location being greater than stop location.
+ *   F_data_no_eos no data to write due start location being greater than or equal to buffer size.
+ *   F_data_no_eol if there is no data to write and EOL was reached (@todo: review related code and detemine what this is doing).
+ *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) if the maximimum buffer size is reached.
  */
 #ifndef _di_fll_fss_extended_read_
   extern f_return_status fll_fss_extended_read(f_string_dynamic *buffer, f_string_range *location, f_fss_objects *objects, f_fss_contents *contents);
@@ -67,15 +67,15 @@ extern "C" {
  *   The buffer to write to.
  *
  * @return
- *   f_none on success.
- *   f_none_on_stop on success after reaching stopping point .
- *   f_none_on_eos on success after reaching the end of the buffer.
- *   f_no_data_on_stop no data to write due start location being greater than stop location.
- *   f_no_data_on_eos no data to write due start location being greater than or equal to buffer size.
- *   f_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   f_invalid_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_none_stop on success after reaching stopping point .
+ *   F_none_eos on success after reaching the end of the buffer.
+ *   F_data_no_stop no data to write due start location being greater than stop location.
+ *   F_data_no_eos no data to write due start location being greater than or equal to buffer size.
+ *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_fss_extended_write_
   extern f_return_status fll_fss_extended_write(const f_string_static object, const f_string_statics contents, f_string_dynamic *buffer);

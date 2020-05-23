@@ -15,7 +15,7 @@ extern "C" {
     printf("%c%c", f_string_eol, f_string_eol);
     fl_color_print(f_type_output, context.important, context.reset, " Available Options: ");
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fll_program_print_help_header_
 
@@ -29,7 +29,7 @@ extern "C" {
     fl_color_print(f_type_output, context.standout, context.reset, option_long);
     printf("  %s", description);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fll_program_print_help_option_
 
@@ -40,7 +40,7 @@ extern "C" {
     fl_color_print(f_type_output, context.standout, context.reset, option_long);
     printf("  %s", description);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fll_program_print_help_option_long_
 
@@ -51,7 +51,7 @@ extern "C" {
 
     printf("  %s", description);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fll_program_print_help_option_other_
 
@@ -85,36 +85,36 @@ extern "C" {
   f_return_status fll_program_print_version(const f_string version) {
     printf("%s%c", version, f_string_eol);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fll_program_print_version_
 
 #ifndef _di_fll_program_parameter_process_
   f_return_status fll_program_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     status = f_console_parameter_process(arguments, parameters, remaining);
 
-    if (f_status_is_error(status)) {
-      status = f_status_set_fine(status);
+    if (F_status_is_error(status)) {
+      status = F_status_set_fine(status);
 
-      if (status == f_no_data) {
+      if (status == F_data_not) {
         fl_color_print_line(f_type_error, context->error, context->reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // @todo there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       }
-      else if (status == f_error_allocation || status == f_error_reallocation) {
+      else if (status == F_memory_allocation || status == F_memory_reallocation) {
         fl_color_print(f_type_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
         fl_color_print(f_type_error, context->notable, context->reset, "f_console_parameter_process");
         fl_color_print_line(f_type_error, context->error, context->reset, ").");
       }
-      else if (status == f_invalid_utf) {
+      else if (status == F_utf) {
         fl_color_print(f_type_error, context->error, context->reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling ");
         fl_color_print(f_type_error, context->notable, context->reset, "f_console_parameter_process()");
         fl_color_print_line(f_type_error, context->error, context->reset, ".");
       }
-      else if (status == f_invalid_parameter) {
+      else if (status == F_parameter) {
         fl_color_print(f_type_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling ");
         fl_color_print(f_type_error, context->notable, context->reset, "f_console_parameter_process()");
         fl_color_print_line(f_type_error, context->error, context->reset, ".");
@@ -127,7 +127,7 @@ extern "C" {
         fl_color_print_line(f_type_error, context->error, context->reset, ".");
       }
 
-      return f_status_set_error(status);
+      return F_status_set_error(status);
     }
 
     f_console_parameter_id decision = choices.id[2];
@@ -143,15 +143,15 @@ extern "C" {
       status = f_console_parameter_prioritize_left(parameters, choices, &decision);
     }
 
-    if (f_status_is_error(status)) {
-      status = f_status_set_fine(status);
+    if (F_status_is_error(status)) {
+      status = F_status_set_fine(status);
 
-      if (status == f_error_allocation || status == f_error_reallocation) {
+      if (status == F_memory_allocation || status == F_memory_reallocation) {
         fl_color_print(f_type_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
         fl_color_print(f_type_error, context->notable, context->reset, "%s", function);
         fl_color_print_line(f_type_error, context->error, context->reset, ").");
       }
-      else if (status == f_invalid_parameter) {
+      else if (status == F_parameter) {
         fl_color_print(f_type_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling ");
         fl_color_print(f_type_error, context->notable, context->reset, "%s", function);
         fl_color_print_line(f_type_error, context->error, context->reset, "().");
@@ -164,16 +164,16 @@ extern "C" {
         fl_color_print_line(f_type_error, context->error, context->reset, "().");
       }
 
-      return f_status_set_error(status);
+      return F_status_set_error(status);
     }
 
     // load colors unless told not to.
     if (decision != choices.id[0]) {
-      f_status allocation_status = f_none;
+      f_status allocation_status = F_none;
 
       fl_macro_color_context_new(allocation_status, (*context));
 
-      if (f_status_is_error(allocation_status)) {
+      if (F_status_is_error(allocation_status)) {
         fl_color_print(f_type_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
         fl_color_print(f_type_error, context->notable, context->reset, "fl_macro_color_context_new");
         fl_color_print_line(f_type_error, context->error, context->reset, "().");
@@ -193,11 +193,11 @@ extern "C" {
 
 #ifndef _di_fll_program_parameter_process_quietly_
   f_return_status fll_program_parameter_process_quietly(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     status = f_console_parameter_process(arguments, parameters, remaining);
 
-    if (f_status_is_error(status)) return status;
+    if (F_status_is_error(status)) return status;
 
     f_console_parameter_id decision = choices.id[2];
 
@@ -208,15 +208,15 @@ extern "C" {
       status = f_console_parameter_prioritize_left(parameters, choices, &decision);
     }
 
-    if (f_status_is_error(status)) return status;
+    if (F_status_is_error(status)) return status;
 
     // load colors unless told not to.
     if (decision != choices.id[0]) {
-      f_status allocation_status = f_none;
+      f_status allocation_status = F_none;
 
       fl_macro_color_context_new(allocation_status, (*context));
 
-      if (f_status_is_error(allocation_status)) return allocation_status;
+      if (F_status_is_error(allocation_status)) return allocation_status;
 
       status = fl_color_load_context(context, decision == choices.id[1]);
     }
@@ -228,11 +228,11 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_append_
   f_return_status fll_program_parameter_additional_append(const f_string *argv, const f_string_lengths additional, f_string_dynamics *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (argv == 0) return f_status_set_error(f_invalid_parameter);
-      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+      if (argv == 0) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     f_string_length length = 0;
     f_string_length start = destination->used;
@@ -245,16 +245,16 @@ extern "C" {
 
         status = fl_string_append(argv[additional.array[i]], length, &ripped);
 
-        if (f_status_is_error(status)) return status;
+        if (F_status_is_error(status)) return status;
 
-        if (status == f_no_data) {
-          status = f_none;
+        if (status == F_data_not) {
+          status = F_none;
         }
         else {
           if (destination->used >= destination->size) {
             f_macro_string_dynamics_resize(status, (*destination), destination->size + f_console_default_allocation_step);
 
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
 
           destination->array[destination->used] = ripped;
@@ -263,8 +263,8 @@ extern "C" {
       }
     } // for
 
-    if (status == f_none && start == destination->used) {
-      return f_no_data;
+    if (status == F_none && start == destination->used) {
+      return F_data_not;
     }
 
     return status;
@@ -274,12 +274,12 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_mash_
   f_return_status fll_program_parameter_additional_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (argv == 0) return f_status_set_error(f_invalid_parameter);
-      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
-      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+      if (argv == 0) return F_status_set_error(F_parameter);
+      if (glue_length < 1) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     f_string_length length = 0;
     f_string_length start = destination->used;
@@ -290,12 +290,12 @@ extern "C" {
       if (length > 0) {
         status = fl_string_mash(glue, glue_length, argv[additional.array[i]], length, destination);
 
-        if (f_status_is_error(status)) return f_status_set_error(f_string_too_large);
+        if (F_status_is_error(status)) return F_status_set_error(F_string_too_large);
       }
     } // for
 
-    if (status == f_none && start == destination->used) {
-      return f_no_data;
+    if (status == F_none && start == destination->used) {
+      return F_data_not;
     }
 
     return status;
@@ -305,11 +305,11 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_rip_
   f_return_status fll_program_parameter_additional_rip(const f_string *argv, const f_string_lengths additional, f_string_dynamics *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (argv == 0) return f_status_set_error(f_invalid_parameter);
-      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+      if (argv == 0) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = f_none;
+    f_status status = F_none;
     f_string_length length = 0;
     f_string_length start = destination->used;
 
@@ -321,16 +321,16 @@ extern "C" {
 
         status = fl_string_rip(argv[additional.array[i]], length, &ripped);
 
-        if (f_status_is_error(status)) return status;
+        if (F_status_is_error(status)) return status;
 
-        if (status == f_no_data) {
-          status = f_none;
+        if (status == F_data_not) {
+          status = F_none;
         }
         else {
           if (destination->used >= destination->size) {
             f_macro_string_dynamics_resize(status, (*destination), destination->size + f_console_default_allocation_step);
 
-            if (f_status_is_error(status)) return status;
+            if (F_status_is_error(status)) return status;
           }
 
           destination->array[destination->used] = ripped;
@@ -339,8 +339,8 @@ extern "C" {
       }
     } // for
 
-    if (status == f_none && start == destination->used) {
-      return f_no_data;
+    if (status == F_none && start == destination->used) {
+      return F_data_not;
     }
 
     return status;
@@ -350,12 +350,12 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_rip_mash_
   f_return_status fll_program_parameter_additional_rip_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (argv == 0) return f_status_set_error(f_invalid_parameter);
-      if (glue_length < 1) return f_status_set_error(f_invalid_parameter);
-      if (destination == 0) return f_status_set_error(f_invalid_parameter);
+      if (argv == 0) return F_status_set_error(F_parameter);
+      if (glue_length < 1) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = f_none;
+    f_status status = F_none;
 
     f_string_length length = 0;
     f_string_length start = destination->used;
@@ -367,7 +367,7 @@ extern "C" {
       if (length > 0) {
         status = fl_string_rip(argv[additional.array[i]], length, &ripped);
 
-        if (f_status_is_error(status)) {
+        if (F_status_is_error(status)) {
           f_macro_string_dynamic_delete_simple(ripped);
           return status;
         }
@@ -375,9 +375,9 @@ extern "C" {
         if (ripped.used > 0) {
           status = fl_string_dynamic_mash(glue, glue_length, ripped, destination);
 
-          if (f_status_is_error(status)) {
+          if (F_status_is_error(status)) {
             f_macro_string_dynamic_delete_simple(ripped);
-            return f_status_set_error(f_string_too_large);
+            return F_status_set_error(F_string_too_large);
           }
         }
       }
@@ -387,8 +387,8 @@ extern "C" {
       f_macro_string_dynamic_delete(status, ripped);
     }
 
-    if (status == f_none && start == destination->used) {
-      return f_no_data;
+    if (status == F_none && start == destination->used) {
+      return F_data_not;
     }
 
     return status;

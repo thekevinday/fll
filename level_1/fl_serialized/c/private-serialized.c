@@ -7,7 +7,7 @@ extern "C" {
 
 #if !defined(_di_fl_unserialize_simple_find_) || !defined(_di_fl_unserialize_simple_get_)
   f_return_status private_fl_unserialize_simple_find(const f_string_static serialized, const f_array_length index, f_string_range *location) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     f_array_length i = 0;
     f_array_length start = 0;
@@ -30,7 +30,7 @@ extern "C" {
             location->stop = i - 1;
           }
 
-          return f_none;
+          return F_none;
         }
 
         start = i + width;
@@ -42,17 +42,17 @@ extern "C" {
           location->stop = i - 1;
         }
 
-        return f_none_on_eos;
+        return F_none_eos;
       }
 
       if (i + width > serialized.used) {
-        return f_status_set_error(f_incomplete_utf_on_eos);
+        return F_status_set_error(F_incomplete_utf_eos);
       }
 
       i += width;
     } // while
 
-    return f_no_data_on_eos;
+    return F_data_no_eos;
   }
 #endif // !defined(_di_fl_unserialize_simple_find_) || !defined(_di_fl_unserialize_simple_get_)
 

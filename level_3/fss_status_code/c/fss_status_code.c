@@ -17,45 +17,45 @@ extern "C" {
 
     printf("%c", f_string_eol);
 
-    fll_program_print_help_option(context, fss_status_code_short_is_fine, fss_status_code_long_is_fine, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print f_true if the error code is not an error, f_false otherwise.");
-    fll_program_print_help_option(context, fss_status_code_short_is_warning, fss_status_code_long_is_warning, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print f_true if the error code is a warning, f_false otherwise.");
-    fll_program_print_help_option(context, fss_status_code_short_is_error, fss_status_code_long_is_error, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print f_true if the error code is an error, f_false otherwise.");
+    fll_program_print_help_option(context, fss_status_code_short_is_fine, fss_status_code_long_is_fine, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print F_true if the error code is not an error, F_false otherwise.");
+    fll_program_print_help_option(context, fss_status_code_short_is_warning, fss_status_code_long_is_warning, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print F_true if the error code is a warning, F_false otherwise.");
+    fll_program_print_help_option(context, fss_status_code_short_is_error, fss_status_code_long_is_error, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print F_true if the error code is an error, F_false otherwise.");
     fll_program_print_help_option(context, fss_status_code_short_number, fss_status_code_long_number, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Convert status code name to number.");
 
     fll_program_print_help_usage(context, fss_status_code_name, "status code(s)");
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fss_status_code_print_help_
 
 #ifndef _di_fss_status_code_main_
   f_return_status fss_status_code_main(const f_console_arguments arguments, fss_status_code_data *data) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     {
       f_console_parameters parameters = { data->parameters, fss_status_code_total_parameters };
       f_console_parameter_id ids[3] = { fss_status_code_parameter_no_color, fss_status_code_parameter_light, fss_status_code_parameter_dark };
       f_console_parameter_ids choices = { ids, 3 };
 
-      status = fll_program_parameter_process(arguments, parameters, choices, f_true, &data->remaining, &data->context);
+      status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-      if (f_status_is_error(status)) {
+      if (F_status_is_error(status)) {
         fss_status_code_delete_data(data);
-        return f_status_set_error(status);
+        return F_status_set_error(status);
       }
 
-      status = f_none;
+      status = F_none;
     }
 
     if (data->parameters[fss_status_code_parameter_help].result == f_console_result_found) {
       fss_status_code_print_help(data->context);
       fss_status_code_delete_data(data);
-      return f_none;
+      return F_none;
     }
     else if (data->parameters[fss_status_code_parameter_version].result == f_console_result_found) {
       fll_program_print_version(fss_status_code_version);
       fss_status_code_delete_data(data);
-      return f_none;
+      return F_none;
     }
 
     if (data->parameters[fss_status_code_parameter_is_error].result == f_console_result_found) {
@@ -67,7 +67,7 @@ extern "C" {
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
         fss_status_code_delete_data(data);
-        return f_status_set_error(status);
+        return F_status_set_error(status);
       }
       else if (data->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
         fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
@@ -77,7 +77,7 @@ extern "C" {
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
         fss_status_code_delete_data(data);
-        return f_status_set_error(status);
+        return F_status_set_error(status);
       }
     }
     else if (data->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found && data->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
@@ -88,17 +88,17 @@ extern "C" {
       fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
       fss_status_code_delete_data(data);
-      return f_status_set_error(status);
+      return F_status_set_error(status);
     }
 
     if (data->remaining.used == 0 && !data->process_pipe) {
       fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify an error code.");
 
       fss_status_code_delete_data(data);
-      return f_status_set_error(f_invalid_parameter);
+      return F_status_set_error(F_parameter);
     }
 
-    f_status status2 = f_none;
+    f_status status2 = F_none;
 
     if (data->parameters[fss_status_code_parameter_is_error].result == f_console_result_found || data->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found || data->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
       if (data->process_pipe) {
@@ -109,7 +109,7 @@ extern "C" {
         for (f_array_length i = 0; i < data->remaining.used; i++) {
           status2 = fss_status_code_process_check(*data, arguments.argv[data->remaining.array[i]]);
 
-          if (f_status_is_error(status2) && status == f_none) {
+          if (F_status_is_error(status2) && status == F_none) {
             status = status2;
           }
         } // for
@@ -124,7 +124,7 @@ extern "C" {
         for (f_array_length i = 0; i < data->remaining.used; i++) {
           status2 = fss_status_code_process_number(*data, arguments.argv[data->remaining.array[i]]);
 
-          if (f_status_is_error(status2) && status == f_none) {
+          if (F_status_is_error(status2) && status == F_none) {
             status = status2;
           }
         } // for
@@ -139,7 +139,7 @@ extern "C" {
         for (f_array_length i = 0; i < data->remaining.used; i++) {
           status2 = fss_status_code_process_normal(*data, arguments.argv[data->remaining.array[i]]);
 
-          if (f_status_is_error(status2) && status == f_none) {
+          if (F_status_is_error(status2) && status == F_none) {
             status = status2;
           }
         } // for
@@ -164,7 +164,7 @@ extern "C" {
     f_macro_string_lengths_delete_simple(data->remaining);
     fl_macro_color_context_delete_simple(data->context);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fss_status_code_delete_data_
 

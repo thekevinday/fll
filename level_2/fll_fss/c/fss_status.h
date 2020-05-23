@@ -32,53 +32,53 @@ extern "C" {
 
 #ifndef _di_fll_fss_status_string_
   #ifndef _di_fll_fss_status_error_
-    #define fll_fss_status_string_invalid_format "fl_fss_invalid_format"
-    #define fll_fss_status_string_invalid_format_length 21
+    #define fll_fss_status_string_format "FL_fss_format"
+    #define fll_fss_status_string_format_length 13
 
-    #define fll_fss_status_string_invalid_format_eos "fl_fss_invalid_format_eos"
-    #define fll_fss_status_string_invalid_format_eos_length 25
+    #define fll_fss_status_string_format_eos "FL_fss_format_eos"
+    #define fll_fss_status_string_format_eos_length 17
   #endif // _di_fll_fss_status_error_
 
   #ifndef _di_fll_fss_status_warning_
-    #define fll_fss_status_string_no_header "fl_fss_no_header"
-    #define fll_fss_status_string_no_header_length 16
+    #define fll_fss_status_string_header_not "FL_fss_header_not"
+    #define fll_fss_status_string_header_not_length 17
 
-    #define fll_fss_status_string_accepted_but_invalid "fl_fss_invalid_but_accepted"
-    #define fll_fss_status_string_accepted_but_invalid_length 27
+    #define fll_fss_status_string_accepted_invalid "FL_fss_accepted_invalid"
+    #define fll_fss_status_string_accepted_invalid_length 23
 
-    #define fll_fss_status_string_no_header_eos "fl_fss_no_header_eos"
-    #define fll_fss_status_string_no_header_eos_length 20
+    #define fll_fss_status_string_header_not_eos "FL_fss_header_not_eos"
+    #define fll_fss_status_string_header_not_eos_length 21
 
-    #define fll_fss_status_string_accepted_but_invalid_eos "fl_fss_invalid_but_accepted_eos"
-    #define fll_fss_status_string_accepted_but_invalid_eos_length 31
+    #define fll_fss_status_string_accepted_invalid_eos "FL_fss_accepted_invalid_eos"
+    #define fll_fss_status_string_accepted_invalid_eos_length 27
   #endif // _di_fll_fss_status_warning_
 
   #ifndef _di_fll_fss_status_success_
-    #define fll_fss_status_string_found_object "fl_fss_found_object"
+    #define fll_fss_status_string_found_object "FL_fss_found_object"
     #define fll_fss_status_string_found_object_length 19
 
-    #define fll_fss_status_string_found_content "fl_fss_found_content"
+    #define fll_fss_status_string_found_content "FL_fss_found_content"
     #define fll_fss_status_string_found_content_length 20
 
-    #define fll_fss_status_string_found_no_object "fl_fss_found_no_object"
-    #define fll_fss_status_string_found_no_object_length 22
+    #define fll_fss_status_string_found_object_not "FL_fss_found_object_not"
+    #define fll_fss_status_string_found_object_not_length 23
 
-    #define fll_fss_status_string_found_no_content "fl_fss_found_no_content"
-    #define fll_fss_status_string_found_no_content_length 23
+    #define fll_fss_status_string_found_content_not "FL_fss_found_content_not"
+    #define fll_fss_status_string_found_content_not_length 24
 
-    #define fll_fss_status_string_found_object_no_content "fl_fss_found_object_no_content"
-    #define fll_fss_status_string_found_object_no_content_length 30
+    #define fll_fss_status_string_found_object_content_not "FL_fss_found_object_content_not"
+    #define fll_fss_status_string_found_object_content_not_length 31
   #endif // _di_fll_fss_status_success_
 
   #ifndef _di_fll_fss_status_codes_
-    #define fll_fss_status_string_found_comment "fl_fss_found_comment"
+    #define fll_fss_status_string_found_comment "FL_fss_found_comment"
     #define fll_fss_status_string_found_comment_length 14
   #endif // _di_fll_fss_status_codes_
 
-  #define fll_fss_status_string_status_code_first "fl_fss_status_code_first"
+  #define fll_fss_status_string_status_code_first "FL_fss_status_code_first"
   #define fll_fss_status_string_status_code_first_length 24
 
-  #define fll_fss_status_string_status_code_last "fl_fss_status_code_last"
+  #define fll_fss_status_string_status_code_last "FL_fss_status_code_last"
   #define fll_fss_status_string_status_code_last_length 22
 #endif // _di_fll_fss_status_string_
 
@@ -95,10 +95,10 @@ extern "C" {
  *   The code code a matched string represents.
  *
  * @return
- *   f_none on success.
- *   f_no_data if string is empty.
- *   f_invalid_data (with error bit) if not found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_data_not if string is empty.
+ *   F_data (with error bit) if not found.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fll_status_from_string
  */

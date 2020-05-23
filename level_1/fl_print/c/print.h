@@ -39,11 +39,11 @@ extern "C" {
  *   The total number of characters to print.
  *
  * @return
- *   f_none on success.
- *   f_error_output (with error bit) on failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_none on success.
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_fl_print_trim_string_
   extern f_return_status fl_print_trim_string(FILE *output, const f_string string, const f_string_length length);
@@ -64,11 +64,11 @@ extern "C" {
  *   The string to output.
  *
  * @return
- *   f_none on success.
- *   f_error_output (with error bit) on failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_none on success.
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_fl_print_trim_string_dynamic_
   extern f_return_status fl_print_trim_string_dynamic(FILE *output, const f_string_static buffer);
@@ -91,11 +91,11 @@ extern "C" {
  *   The range within the provided string to print.
  *
  * @return
- *   f_none on success.
- *   f_error_output (with error bit) on failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_none on success.
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_fl_print_trim_string_dynamic_partial_
   extern f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_static buffer, const f_string_range range);
@@ -117,11 +117,11 @@ extern "C" {
  *   The total number of characters to print.
  *
  * @return
- *   f_none on success.
- *   f_error_output (with error bit) on failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_none on success.
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_fl_print_trim_utf_string_
   extern f_return_status fl_print_trim_utf_string(FILE *output, const f_utf_string string, const f_utf_string_length length);
@@ -142,11 +142,11 @@ extern "C" {
  *   The string to output.
  *
  * @return
- *   f_none on success.
- *   f_error_output (with error bit) on failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_none on success.
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_fl_print_trim_utf_string_dynamic_
   extern f_return_status fl_print_trim_utf_string_dynamic(FILE *output, const f_utf_string_static buffer);
@@ -169,11 +169,11 @@ extern "C" {
  *   The range within the provided string to print.
  *
  * @return
- *   f_none on success.
- *   f_error_output (with error bit) on failure.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_none on success.
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_fl_print_trim_utf_string_dynamic_partial_
   extern f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_static buffer, const f_utf_string_range range);

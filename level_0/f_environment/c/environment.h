@@ -35,8 +35,8 @@ extern "C" {
  * Delete all environment variables.
  *
  * @return
- *   f_none on success.
- *   f_failure (with error bit) on failure.
+ *   F_none on success.
+ *   F_failure (with error bit) on failure.
  *
  * @see clearenv()
  */
@@ -59,10 +59,10 @@ extern "C" {
  *   The value will be appended (set value->used to 0 to replace).
  *
  * @return
- *   f_none on success.
- *   f_does_not_exist if name does not exist.
- *   f_string_too_large (with error bit) if appended string length is too large to store in the buffer.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_exist_not if name does not exist.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see getenv()
  */
@@ -85,12 +85,12 @@ extern "C" {
  *   The value will be appended (set value->used to 0 to replace).
  *
  * @return
- *   f_none on success.
- *   f_does_not_exist if name does not exist.
- *   f_no_data if name.used is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_string_too_large (with error bit) if appended string length is too large to store in the buffer.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_exist_not if name does not exist.
+ *   F_data_not if name.used is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see getenv()
  */
@@ -115,10 +115,10 @@ extern "C" {
  *   Set to FALSE to not replace value if name already exists.
  *
  * @return
- *   f_none on success.
- *   f_invalid (with error bit) if name is an invalid string.
- *   f_out_of_memory (with error bit) on out of memory.
- *   f_failure (with error bit) on any other error.
+ *   F_none on success.
+ *   F_invalid (with error bit) if name is an invalid string.
+ *   F_memory_out (with error bit) on out of memory.
+ *   F_failure (with error bit) on any other error.
  *
  * @see setenv()
  */
@@ -143,12 +143,12 @@ extern "C" {
  *   Set to FALSE to not replace value if name already exists.
  *
  * @return
- *   f_none on success.
- *   f_no_data if name.used is 0.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid (with error bit) if name is an invalid string.
- *   f_out_of_memory (with error bit) on out of memory.
- *   f_failure (with error bit) on any other error.
+ *   F_none on success.
+ *   F_data_not if name.used is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_invalid (with error bit) if name is an invalid string.
+ *   F_memory_out (with error bit) on out of memory.
+ *   F_failure (with error bit) on any other error.
  *
  * @see setenv()
  */
@@ -165,10 +165,10 @@ extern "C" {
  *   The name must be NULL terminated.
  *
  * @return
- *   f_none on success.
- *   f_invalid (with error bit) if name is an invalid string.
- *   f_out_of_memory (with error bit) on out of memory.
- *   f_failure (with error bit) on any other error.
+ *   F_none on success.
+ *   F_invalid (with error bit) if name is an invalid string.
+ *   F_memory_out (with error bit) on out of memory.
+ *   F_failure (with error bit) on any other error.
  *
  * @see unsetenv()
  */
@@ -185,11 +185,11 @@ extern "C" {
  *   The name need not be NULL terminated.
  *
  * @return
- *   f_none on success.
- *   f_invalid (with error bit) if name is an invalid string.
- *   f_out_of_memory (with error bit) on out of memory.
- *   f_failure (with error bit) on any other error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_invalid (with error bit) if name is an invalid string.
+ *   F_memory_out (with error bit) on out of memory.
+ *   F_failure (with error bit) on any other error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see unsetenv()
  */

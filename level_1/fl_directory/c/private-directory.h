@@ -54,17 +54,17 @@ extern "C" {
  *   Will be populated with the names of all top-level paths found within the given directory.
  *
  * @return
- *   f_none on success.
- *   f_no_data if directory is empty (@fixme: unlikely due to '.' and '..' probably always being returned.).
- *   f_failure (with error bit) if failed to read directory information.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on memory reallocation error.
- *   f_directory_error_open (with error bit) on directory open error.
- *   f_directory_error_descriptor (with error bit) on directory file descriptor error.
- *   f_directory_error_stream (with error bit) on directory stream error.
- *   f_directory_error_unsupported (with error bit) on directory file descriptor not supported.
- *   f_file_max_descriptors (with error bit) if max file descriptors was reached.
- *   f_file_max_open (with error bit) too many open files.
+ *   F_none on success.
+ *   F_data_not if directory is empty (@fixme: unlikely due to '.' and '..' probably always being returned.).
+ *   F_failure (with error bit) if failed to read directory information.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_directory_open (with error bit) on directory open error.
+ *   F_directory_descriptor (with error bit) on directory file descriptor error.
+ *   F_directory_stream (with error bit) on directory stream error.
+ *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
+ *   F_file_descriptors_max (with error bit) if max file descriptors was reached.
+ *   F_file_open_max (with error bit) too many open files.
  *
  * @see fl_directory_list()
  */

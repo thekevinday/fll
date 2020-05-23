@@ -89,8 +89,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if character is a binary.
- *   f_false if character is not a binary.
+ *   F_true if character is a binary.
+ *   F_false if character is not a binary.
  */
 #ifndef _di_f_conversion_character_is_binary_
   extern f_return_status f_conversion_character_is_binary(const int8_t character);
@@ -103,8 +103,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if character is a decimal.
- *   f_false if character is not a decimal.
+ *   F_true if character is a decimal.
+ *   F_false if character is not a decimal.
  */
 #ifndef _di_f_conversion_character_is_decimal_
   extern f_return_status f_conversion_character_is_decimal(const int8_t character);
@@ -117,8 +117,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if character is a duodecimal.
- *   f_false if character is not a duodecimal.
+ *   F_true if character is a duodecimal.
+ *   F_false if character is not a duodecimal.
  */
 #ifndef _di_f_conversion_character_is_duodecimal_
   extern f_return_status f_conversion_character_is_duodecimal(const int8_t character);
@@ -131,8 +131,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if character is a hexidecimal.
- *   f_false if character is not a hexidecimal.
+ *   F_true if character is a hexidecimal.
+ *   F_false if character is not a hexidecimal.
  */
 #ifndef _di_f_conversion_character_is_hexidecimal_
   extern f_return_status f_conversion_character_is_hexidecimal(const int8_t character);
@@ -145,8 +145,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if character is an octal.
- *   f_false if character is not an octal.
+ *   F_true if character is an octal.
+ *   F_false if character is not an octal.
  */
 #ifndef _di_f_conversion_character_is_octal_
   extern f_return_status f_conversion_character_is_octal(const int8_t character);
@@ -162,9 +162,9 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   f_none if character was converted to a binary.
- *   f_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none if character was converted to a binary.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_binary_
   extern f_return_status f_conversion_character_to_binary(const int8_t character, f_number_unsigned *number);
@@ -180,9 +180,9 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   f_none if character was converted to a decimal.
- *   f_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none if character was converted to a decimal.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_decimal_
   extern f_return_status f_conversion_character_to_decimal(const int8_t character, f_number_unsigned *number);
@@ -198,9 +198,9 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   f_none if character was converted to a duodecimal.
- *   f_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none if character was converted to a duodecimal.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_duodecimal_
   extern f_return_status f_conversion_character_to_duodecimal(const int8_t character, f_number_unsigned *number);
@@ -216,9 +216,9 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   f_none if character was converted to a hexidecimal.
- *   f_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none if character was converted to a hexidecimal.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_hexidecimal_
   extern f_return_status f_conversion_character_to_hexidecimal(const int8_t character, f_number_unsigned *number);
@@ -234,9 +234,9 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   f_none if character was converted to a hexidecimal.
- *   f_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none if character was converted to a hexidecimal.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_octal_
   extern f_return_status f_conversion_character_to_octal(const int8_t character, f_number_unsigned *number);
@@ -260,11 +260,11 @@ extern "C" {
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
  *
  * @return
- *   f_none if the binary string was converted to an signed long.
- *   f_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) on integer overflow.
- *   f_number_underflow (with error bit) on integer underflow.
+ *   F_none if the binary string was converted to an signed long.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) on integer overflow.
+ *   F_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_binary_signed_
   extern f_return_status f_conversion_string_to_binary_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative);
@@ -286,10 +286,10 @@ extern "C" {
  *   The start/stop range to convert.
  *
  * @return
- *   f_none if the binary string was converted to an unsigned long.
- *   f_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) on integer overflow.
+ *   F_none if the binary string was converted to an unsigned long.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_binary_unsigned_
   extern f_return_status f_conversion_string_to_binary_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
@@ -313,11 +313,11 @@ extern "C" {
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
  *
  * @return
- *   f_none if the decimal string was converted to an signed long.
- *   f_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) on integer overflow.
- *   f_number_underflow (with error bit) on integer underflow.
+ *   F_none if the decimal string was converted to an signed long.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) on integer overflow.
+ *   F_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_decimal_signed_
   extern f_return_status f_conversion_string_to_decimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative);
@@ -339,10 +339,10 @@ extern "C" {
  *   The start/stop range to convert.
  *
  * @return
- *   f_none if the decimal string was converted to an unsigned long.
- *   f_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) on integer overflow.
+ *   F_none if the decimal string was converted to an unsigned long.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_decimal_unsigned_
   extern f_return_status f_conversion_string_to_decimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
@@ -366,11 +366,11 @@ extern "C" {
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
  *
  * @return
- *   f_none if the duodecimal string was converted to an signed long.
- *   f_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) on integer overflow.
- *   f_number_underflow (with error bit) on integer underflow.
+ *   F_none if the duodecimal string was converted to an signed long.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) on integer overflow.
+ *   F_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_duodecimal_signed_
   extern f_return_status f_conversion_string_to_duodecimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative);
@@ -392,10 +392,10 @@ extern "C" {
  *   The start/stop range to convert.
  *
  * @return
- *   f_none if the duodecimal string was converted to an unsigned long.
- *   f_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) on integer overflow.
+ *   F_none if the duodecimal string was converted to an unsigned long.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_duodecimal_unsigned_
   extern f_return_status f_conversion_string_to_duodecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
@@ -419,11 +419,11 @@ extern "C" {
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
  *
  * @return
- *   f_none if the hexidecimal string was converted to an signed long.
- *   f_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) on integer overflow.
- *   f_number_underflow (with error bit) on integer underflow.
+ *   F_none if the hexidecimal string was converted to an signed long.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) on integer overflow.
+ *   F_number_underflow (with error bit) on integer underflow.
  */
 #ifndef _di_f_conversion_string_to_hexidecimal_signed_
   extern f_return_status f_conversion_string_to_hexidecimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative);
@@ -445,10 +445,10 @@ extern "C" {
  *   The start/stop range to convert.
  *
  * @return
- *   f_none if the hexidecimal string was converted to an unsigned long.
- *   f_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) on integer overflow.
+ *   F_none if the hexidecimal string was converted to an unsigned long.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_hexidecimal_unsigned_
   extern f_return_status f_conversion_string_to_hexidecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
@@ -472,10 +472,10 @@ extern "C" {
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
  *
  * @return
- *   f_none if the octal string was converted to an signed long.
- *   f_number_invalid (with error bit) if no conversion was made due to non-octal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) on integer overflow.
+ *   F_none if the octal string was converted to an signed long.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-octal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_octal_signed_
   extern f_return_status f_conversion_string_to_octal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative);
@@ -497,10 +497,10 @@ extern "C" {
  *   The start/stop range to convert.
  *
  * @return
- *   f_none if the octal string was converted to an unsigned long.
- *   f_number_invalid (with error bit) if no conversion was made due to non-octal values being found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_overflow (with error bit) on integer overflow.
+ *   F_none if the octal string was converted to an unsigned long.
+ *   F_number_invalid (with error bit) if no conversion was made due to non-octal values being found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_overflow (with error bit) on integer overflow.
  */
 #ifndef _di_f_conversion_string_to_octal_unsigned_
   extern f_return_status f_conversion_string_to_octal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range);
@@ -534,13 +534,13 @@ extern "C" {
  *   The start/stop range to convert.
  *
  * @return
- *   f_none on success.
- *   f_no_data (with error bit) if string starts with a null (length is 0).
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_invalid (with error bit) if parameter is not a number.
- *   f_number_overflow (with error bit) on integer overflow.
- *   f_number_underflow (with error bit) on integer underflow.
- *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
+ *   F_none on success.
+ *   F_data_not (with error bit) if string starts with a null (length is 0).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_invalid (with error bit) if parameter is not a number.
+ *   F_number_overflow (with error bit) on integer overflow.
+ *   F_number_underflow (with error bit) on integer underflow.
+ *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *
  * @see strtoll()
  */
@@ -577,14 +577,14 @@ extern "C" {
  *   The start/stop range to convert.
  *
  * @return
- *   f_none on success.
- *   f_no_data (with error bit) if string starts with a null (length is 0).
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_number_invalid (with error bit) if parameter is not a number.
- *   f_number_negative (with error bit) on negative value.
- *   f_number_positive (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).
- *   f_number_overflow (with error bit) on integer overflow.
- *   f_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
+ *   F_none on success.
+ *   F_data_not (with error bit) if string starts with a null (length is 0).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_number_invalid (with error bit) if parameter is not a number.
+ *   F_number_negative (with error bit) on negative value.
+ *   F_number_positive (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).
+ *   F_number_overflow (with error bit) on integer overflow.
+ *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *
  * @see strtoull()
  */

@@ -70,13 +70,13 @@ extern "C" {
 
     printf("%c%c", f_string_eol, f_string_eol);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fake_print_help_
 
 #ifndef _di_fake_main_
   f_return_status fake_main(const f_console_arguments arguments, fake_data *data) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     uint8_t operations[fake_operations_total];
     f_string operations_name[fake_operations_total];
@@ -95,10 +95,10 @@ extern "C" {
         choices.id = ids;
         choices.used = 3;
 
-        status = fll_program_parameter_process(arguments, parameters, choices, f_true, &data->remaining, &data->context);
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-        if (f_status_is_error(status)) {
-          fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fll_program_parameter_process", f_true);
+        if (F_status_is_error(status)) {
+          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_process", F_true);
           fake_delete_data(data);
           return status;
         }
@@ -115,8 +115,8 @@ extern "C" {
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
-        if (f_status_is_error(status)) {
-          fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "f_console_parameter_prioritize_right", f_true);
+        if (F_status_is_error(status)) {
+          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
           fake_delete_data(data);
           return status;
         }
@@ -132,7 +132,7 @@ extern "C" {
         }
       }
 
-      status = f_none;
+      status = F_none;
 
       // Determine order of operations.
       // @todo: this should probably implemented as a standard function, such as: f_console_parameter_prioritize_set_right().
@@ -250,7 +250,7 @@ extern "C" {
       }
     }
 
-    status = f_none;
+    status = F_none;
 
     if (data->parameters[fake_parameter_help].result == f_console_result_found) {
       fake_print_help(data->context);
@@ -259,17 +259,17 @@ extern "C" {
       fll_program_print_version(fake_version);
     }
     else if (operations[0]) {
-      bool validate_parameter_directories = f_true;
+      bool validate_parameter_directories = F_true;
 
       status = fake_process_console_parameters(arguments, data);
 
-      if (!f_status_is_error(status)) {
+      if (!F_status_is_error(status)) {
         status = fake_path_generate(data);
       }
 
-      if (f_status_is_error(status)) {
+      if (F_status_is_error(status)) {
         fake_delete_data(data);
-        return f_status_set_error(status);
+        return F_status_set_error(status);
       }
 
       for (uint8_t i = 0; i < fake_operations_total && operations[i]; i++) {
@@ -278,27 +278,27 @@ extern "C" {
         if (operations[i] == fake_operation_build) {
           if (validate_parameter_directories) {
             status = fake_validate_parameter_directories(arguments, *data);
-            validate_parameter_directories = f_false;
+            validate_parameter_directories = F_false;
           }
 
-          if (!f_status_is_error(status)) {
+          if (!F_status_is_error(status)) {
             status = fake_build_operate(*data);
           }
         }
         else if (operations[i] == fake_operation_clean) {
           if (validate_parameter_directories) {
             status = fake_validate_parameter_directories(arguments, *data);
-            validate_parameter_directories = f_false;
+            validate_parameter_directories = F_false;
           }
 
-          if (!f_status_is_error(status)) {
+          if (!F_status_is_error(status)) {
             status = fake_clean_operate(*data);
           }
         }
         else if (operations[i] == fake_operation_make) {
           if (validate_parameter_directories) {
             status = fake_validate_parameter_directories(arguments, *data);
-            validate_parameter_directories = f_false;
+            validate_parameter_directories = F_false;
           }
 
           if (data->verbosity != fake_verbosity_quiet) {
@@ -312,7 +312,7 @@ extern "C" {
           status = fake_skeleton_operate(*data);
         }
 
-        if (f_status_is_error(status)) {
+        if (F_status_is_error(status)) {
           if (data->verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol);
             fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the operation '");
@@ -326,7 +326,7 @@ extern "C" {
 
       // ensure a newline is always put at the end of the program execution, unless in quite mode.
       if (data->verbosity != fake_verbosity_quiet) {
-        if (f_status_is_error(status)) {
+        if (F_status_is_error(status)) {
           fprintf(f_type_error, "%c", f_string_eol);
         }
         else {
@@ -341,7 +341,7 @@ extern "C" {
         fprintf(f_type_error, "%c", f_string_eol);
       }
 
-      status = f_status_set_error(f_invalid_parameter);
+      status = F_status_set_error(F_parameter);
     }
 
     fake_delete_data(data);
@@ -410,7 +410,7 @@ extern "C" {
 
     fl_macro_color_context_delete_simple(data->context);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fake_delete_data_
 

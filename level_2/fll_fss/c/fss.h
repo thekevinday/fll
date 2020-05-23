@@ -59,10 +59,10 @@ extern "C" {
  *   The total size of the names, lengths, and values arrays.
  *
  * @return
- *   f_none on success.
- *   f_no_data when there is no buffer, objects or contents to process.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_data_not when there is no buffer, objects or contents to process.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   f_string_length_size (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_
@@ -97,11 +97,11 @@ extern "C" {
  *   The total size of the names, lengths, and values arrays.
  *
  * @return
- *   f_none on success.
- *   f_no_data when there is no buffer, objects or contents to process.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_buffer_too_large (with error bit) on maximum buffer limit reached when processing values.
+ *   F_none on success.
+ *   F_data_not when there is no buffer, objects or contents to process.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_buffer_too_large (with error bit) on maximum buffer limit reached when processing values.
  *   f_string_length_size (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_apart_
@@ -136,10 +136,10 @@ extern "C" {
  *   The total size of the names, lengths, and values arrays.
  *
  * @return
- *   f_none on success.
- *   f_no_data when there is no buffer, objects or contents to process.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_data_not when there is no buffer, objects or contents to process.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   f_string_length_size (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_together_
@@ -179,10 +179,10 @@ extern "C" {
  *   The length of the glue string.
  *
  * @return
- *   f_none on success.
- *   f_no_data when there is no buffer, objects or contents to process.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_data_not when there is no buffer, objects or contents to process.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   f_string_length_size (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_mash_
@@ -221,10 +221,10 @@ extern "C" {
  *   The length of the glue string.
  *
  * @return
- *   f_none on success.
- *   f_no_data when there is no buffer, objects or contents to process.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_data_not when there is no buffer, objects or contents to process.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   f_string_length_size (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_mash_apart_
@@ -263,10 +263,10 @@ extern "C" {
  *   The length of the glue string.
  *
  * @return
- *   f_none on success.
- *   f_no_data when there is no buffer, objects or contents to process.
- *   f_error_reallocation (with error bit) on reallocation error.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_data_not when there is no buffer, objects or contents to process.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   f_string_length_size (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_mash_together_

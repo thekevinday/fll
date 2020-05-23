@@ -19,7 +19,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_
@@ -39,7 +39,7 @@ extern "C" {
  *   The size of the values.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_string_dynamic_
@@ -58,11 +58,11 @@ extern "C" {
  * @param function
  *   The name of the function where the error happened.
  * @param fallback
- *   Set to f_true to print the fallback error message for unknown errors.
+ *   Set to F_true to print the fallback error message for unknown errors.
  *
  * @return
- *   f_none is returned on successful print of known errors.
- *   f_unknown is returned if the status code has no print message.
+ *   F_none is returned on successful print of known errors.
+ *   F_unknown is returned if the status code has no print message.
  */
 #ifndef _di_fake_print_error_
   extern f_return_status fake_print_error(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const bool fallback) f_gcc_attribute_visibility_internal;
@@ -86,11 +86,11 @@ extern "C" {
  * @param is_file
  *   Set to TRUE if this is a file and FALSE if this is a directory.
  * @param fallback
- *   Set to f_true to print the fallback error message for unknown errors.
+ *   Set to F_true to print the fallback error message for unknown errors.
  *
  * @return
- *   f_none is returned on successful print of known errors.
- *   f_unknown is returned if the status code has no print message.
+ *   F_none is returned on successful print of known errors.
+ *   F_unknown is returned if the status code has no print message.
  */
 #ifndef _di_fake_print_error_file_
   extern f_return_status fake_print_error_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string name, const f_string operation, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
@@ -133,7 +133,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_process_console_parameters_
@@ -151,7 +151,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_validate_parameter_directories_

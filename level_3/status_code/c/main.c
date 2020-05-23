@@ -5,12 +5,12 @@ int main(const unsigned long argc, const f_string *argv) {
   status_code_data data = status_code_data_initialize;
 
   if (f_pipe_input_exists()) {
-    data.process_pipe = f_true;
+    data.process_pipe = F_true;
   }
 
   f_status status = status_code_main(arguments, &data);
 
-  if (f_status_is_error(status) || status == f_false) {
+  if (F_status_is_error(status) || status == F_false) {
     return 1;
   }
 

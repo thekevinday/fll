@@ -63,26 +63,26 @@ extern "C" {
  *   If FALSE, will not fail if parent directory already exists (existing directory will be updated).
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_access_denied (with error bit) on access denied.
- *   f_loop (with error bit) on loop error.
- *   f_file_found (with error bit) if a file was found while exclusive is TRUE.
- *   f_out_of_memory (with error bit) if out of memory.
- *   f_prohibited (with error bit) if filesystem does not allow for removing.
- *   f_read_only (with error bit) if file is read-only.
- *   f_failure (with error bit) for any other (mkdir()) error.
- *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
- *   f_file_found (with error bit) of a directory aleady exists at the path.
- *   f_invalid_name (with error bit) on path name error.
- *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   f_number_overflow (with error bit) on overflow error.
- *   f_interrupted (with error bit) when program received an interrupt signal, halting create.
- *   f_file_max_open (with error bit) when system-wide max open files is reached.
- *   f_busy (with error bit) if filesystem is too busy to perforrm write.
- *   f_file_error_read (with error bit) on file read error.
- *   f_file_error_write (with error bit) on file write error.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_failure (with error bit) for any other (mkdir()) error.
+ *   F_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_file_open_max (with error bit) when system-wide max open files is reached.
+ *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_file_read (with error bit) on file read error.
+ *   F_file_write (with error bit) on file write error.
 
  * @see f_directory_create()
  * @see f_file_copy()
@@ -119,26 +119,26 @@ extern "C" {
  *   (In both cases the file mode is copied.)
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_access_denied (with error bit) on access denied.
- *   f_loop (with error bit) on loop error.
- *   f_file_found (with error bit) if a file was found while exclusive is TRUE.
- *   f_out_of_memory (with error bit) if out of memory.
- *   f_prohibited (with error bit) if filesystem does not allow for removing.
- *   f_read_only (with error bit) if file is read-only.
- *   f_failure (with error bit) for any other (mkdir()) error.
- *   f_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   f_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
- *   f_file_found (with error bit) of a directory aleady exists at the path.
- *   f_invalid_name (with error bit) on path name error.
- *   f_invalid_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   f_number_overflow (with error bit) on overflow error.
- *   f_interrupted (with error bit) when program received an interrupt signal, halting create.
- *   f_file_max_open (with error bit) when system-wide max open files is reached.
- *   f_busy (with error bit) if filesystem is too busy to perforrm write.
- *   f_file_error_read (with error bit) on file read error.
- *   f_file_error_write (with error bit) on file write error.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_failure (with error bit) for any other (mkdir()) error.
+ *   F_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_file_open_max (with error bit) when system-wide max open files is reached.
+ *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_file_read (with error bit) on file read error.
+ *   F_file_write (with error bit) on file write error.
  *
  * @see f_directory_create()
  * @see f_file_clone()
@@ -166,17 +166,17 @@ extern "C" {
  *   Will be populated with the names of all top-level paths found within the given directory.
  *
  * @return
- *   f_none on success.
- *   f_no_data if directory is empty (@fixme: unlikely due to '.' and '..' probably always being returned.).
- *   f_failure (with error bit) if failed to read directory information.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on memory reallocation error.
- *   f_directory_error_open (with error bit) on directory open error.
- *   f_directory_error_descriptor (with error bit) on directory file descriptor error.
- *   f_directory_error_stream (with error bit) on directory stream error.
- *   f_directory_error_unsupported (with error bit) on directory file descriptor not supported.
- *   f_file_max_descriptors (with error bit) if max file descriptors was reached.
- *   f_file_max_open (with error bit) too many open files.
+ *   F_none on success.
+ *   F_data_not if directory is empty (@fixme: unlikely due to '.' and '..' probably always being returned.).
+ *   F_failure (with error bit) if failed to read directory information.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_directory_open (with error bit) on directory open error.
+ *   F_directory_descriptor (with error bit) on directory file descriptor error.
+ *   F_directory_stream (with error bit) on directory stream error.
+ *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
+ *   F_file_descriptors_max (with error bit) if max file descriptors was reached.
+ *   F_file_open_max (with error bit) too many open files.
  *
  * @see alphasort()
  * @see opendir()

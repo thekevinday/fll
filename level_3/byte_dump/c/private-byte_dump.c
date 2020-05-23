@@ -7,7 +7,7 @@ extern "C" {
 
 #ifndef _di_byte_dump_file_
   f_return_status byte_dump_file(const byte_dump_data data, const f_string file_name, f_file file) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     uint64_t position = 0;
     uint8_t size = 0;
@@ -22,7 +22,7 @@ extern "C" {
     byte_dump_previous previous = byte_dump_previous_initialize;
 
     bool character_reset = 0;
-    bool found_invalid_utf = f_false;
+    bool found_invalid_utf = F_false;
 
     // Store the current character data until it can be printed.
     f_utf_string_dynamic characters = f_utf_string_dynamic_initialize;
@@ -53,7 +53,7 @@ extern "C" {
         // The character is reset, the characters.used is to be reset.
         if (character_reset) {
           characters.used = 0;
-          character_reset = f_false;
+          character_reset = F_false;
           memset(&invalid, 0, sizeof(uint8_t) * data.width);
         }
 
@@ -70,7 +70,7 @@ extern "C" {
 
         // The first character in a UTF-8 sequence cannot have a width of 1.
         if (width_utf == 1) {
-          found_invalid_utf = f_true;
+          found_invalid_utf = F_true;
           invalid[character_current] = 1;
         }
         // Process the UTF-8 character.
@@ -100,36 +100,36 @@ extern "C" {
           if (width_count < width_utf) continue;
         }
         else {
-          found_invalid_utf = f_true;
+          found_invalid_utf = F_true;
           invalid[character_current] = width_utf;
         }
       }
 
       // At this point: an ASCII character is collected, the entire UTF-8 character sequence is collected, or an invalid UTF-8 was processed.
       if (!invalid[character_current] && width_utf > 1) {
-        if (f_utf_character_is_valid(characters.string[character_current]) == f_false) {
-          found_invalid_utf = f_true;
+        if (f_utf_character_is_valid(characters.string[character_current]) == F_false) {
+          found_invalid_utf = F_true;
           invalid[character_current] = width_utf;
         }
       }
 
-      if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous, &cell, &offset) == f_true) {
-        character_reset = f_true;
+      if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
+        character_reset = F_true;
       }
 
       if (width_utf > 1) {
-        if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 2, &previous, &cell, &offset) == f_true) {
-          character_reset = f_true;
+        if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 2, &previous, &cell, &offset) == F_true) {
+          character_reset = F_true;
         }
 
         if (width_utf > 2) {
-          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous, &cell, &offset) == f_true) {
-            character_reset = f_true;
+          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous, &cell, &offset) == F_true) {
+            character_reset = F_true;
           }
 
           if (width_utf > 3) {
-            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous, &cell, &offset) == f_true) {
-              character_reset = f_true;
+            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous, &cell, &offset) == F_true) {
+              character_reset = F_true;
             }
           }
         }
@@ -218,7 +218,7 @@ extern "C" {
       fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
       printf("%c", f_string_eol);
-      status = f_status_set_error(f_failure);
+      status = F_status_set_error(F_failure);
     }
 
     fflush(f_type_error);
@@ -231,7 +231,7 @@ extern "C" {
   bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_static characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, byte_dump_previous *previous, byte_dump_cell *cell, uint8_t *offset) {
     uint8_t byte = 0;
 
-    bool reset = f_false;
+    bool reset = F_false;
 
     f_utf_string_length character_current = characters.used - 1;
 
@@ -386,7 +386,7 @@ extern "C" {
         bytes = width_utf - byte_current;
       }
 
-      reset = f_true;
+      reset = F_true;
 
       if (data.parameters[byte_dump_parameter_text].result == f_console_result_found) {
         byte_dump_print_text(data, characters, invalid, previous, offset);
@@ -432,7 +432,7 @@ extern "C" {
     uint8_t j = 0;
     uint8_t output = 0;
     uint8_t width_utf = 0;
-    bool printed = f_false;
+    bool printed = F_false;
 
     fl_color_print(f_type_output, data.context.notable, data.context.reset, "  %s ", byte_dump_character_wall);
 
@@ -617,7 +617,7 @@ extern "C" {
           printf(".");
         }
       }
-      else if (f_utf_character_is_whitespace(characters.string[i]) == f_true) {
+      else if (f_utf_character_is_whitespace(characters.string[i]) == F_true) {
         if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
           printf(".");
         }
@@ -625,7 +625,7 @@ extern "C" {
           fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_space);
         }
       }
-      else if (f_utf_character_is_zero_width(characters.string[i]) == f_true) {
+      else if (f_utf_character_is_zero_width(characters.string[i]) == F_true) {
         if (data.presentation == byte_dump_presentation_classic) {
           printf(".");
         }
@@ -636,7 +636,7 @@ extern "C" {
           printf(" ");
         }
       }
-      else if (f_utf_character_is_control(characters.string[i]) == f_true) {
+      else if (f_utf_character_is_control(characters.string[i]) == F_true) {
         // print a space (or '.') for control characters.
         if (data.presentation == byte_dump_presentation_classic) {
           fl_color_print(f_type_output, data.context.warning, data.context.reset, ".");
@@ -825,14 +825,14 @@ extern "C" {
 
 #ifndef _di_byte_dump_print_file_error_
   void byte_dump_print_file_error(const fl_color_context context, const f_string function, const f_string file_name, const f_status status) {
-    if (status == f_false) {
+    if (status == F_false) {
       fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to find file '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (status == f_invalid_parameter) {
+    if (status == F_parameter) {
       fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ", function, file_name);
       fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
       fl_color_print(f_type_error, context.error, context.reset, "() for the file '");
@@ -841,42 +841,42 @@ extern "C" {
       return;
     }
 
-    if (status == f_invalid_name) {
+    if (status == F_name) {
       fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid filename '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (status == f_out_of_memory) {
+    if (status == F_memory_out) {
       fl_color_print(f_type_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory, while trying to access file '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (status == f_number_overflow) {
+    if (status == F_number_overflow) {
       fl_color_print(f_type_error, context.error, context.reset, "ERROR: Overflow while trying to access file '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (status == f_invalid_directory) {
+    if (status == F_directory) {
       fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid directory while trying to access file '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (status == f_access_denied) {
+    if (status == F_access_denied) {
       fl_color_print(f_type_error, context.error, context.reset, "ERROR: Access denied while trying to access file '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       return;
     }
 
-    if (status == f_loop) {
+    if (status == F_loop) {
       fl_color_print(f_type_error, context.error, context.reset, "ERROR: Loop while trying to access file '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, context.error, context.reset, "'.");

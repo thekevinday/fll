@@ -28,11 +28,11 @@ extern "C" {
  *   A location within the serialized string representing the string at the given index.
  *
  * @return
- *   f_none on success.
- *   f_none_on_eos on success at end of string.
- *   f_no_data_on_eos if end of string reached before index was reached.
- *   f_incomplete_utf_on_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_none_eos on success at end of string.
+ *   F_data_no_eos if end of string reached before index was reached.
+ *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #if !defined(_di_fl_unserialize_simple_find_) || !defined(_di_fl_unserialize_simple_get_)
   extern f_return_status private_fl_unserialize_simple_find(const f_string_static serialized, const f_array_length index, f_string_range *location) f_gcc_attribute_visibility_internal;

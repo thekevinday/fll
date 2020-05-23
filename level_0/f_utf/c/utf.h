@@ -351,35 +351,35 @@ extern "C" {
   #define f_macro_utf_string_dynamic_new(status, dynamic, new_length) \
     f_clear_utf_string_dynamic(dynamic) \
     status = f_memory_new((void **) & dynamic.string, sizeof(f_utf_string), new_length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamic.size = new_length; \
       dynamic.used = 0; \
     }
 
   #define f_macro_utf_string_dynamic_delete(status, dynamic) \
     status = f_memory_delete((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamic.size = 0; \
       dynamic.used = 0; \
     }
 
   #define f_macro_utf_string_dynamic_destroy(status, dynamic) \
     status = f_memory_destroy((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamic.size = 0; \
       dynamic.used = 0; \
     }
 
   #define f_macro_utf_string_dynamic_resize(status, dynamic, new_length) \
     status = f_memory_resize((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamic.size = new_length; \
       if (dynamic.used > dynamic.size) dynamic.used = new_length; \
     }
 
   #define f_macro_utf_string_dynamic_adjust(status, dynamic, new_length) \
     status = f_memory_adjust((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamic.size = new_length; \
       if (dynamic.used > dynamic.size) dynamic.used = new_length; \
     }
@@ -411,42 +411,42 @@ extern "C" {
     dynamics.size = 0; \
     dynamics.used = 0; \
     status = f_memory_new((void **) & dynamics.array, sizeof(f_utf_string_dynamic), length); \
-    if (status == f_none) { \
+    if (status == F_none) { \
       dynamics.size = length; \
       dynamics.used = 0; \
     }
 
   #define f_macro_utf_string_dynamics_delete(status, dynamics) \
-    status = f_none; \
+    status = F_none; \
     while (dynamics.size > 0) { \
       --dynamics.size; \
       f_macro_utf_string_dynamic_destroy(status, dynamics.array[dynamics.size]); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) status = f_memory_delete((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size); \
-    if (status == f_none) dynamics.used = 0;
+    if (status == F_none) status = f_memory_delete((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size); \
+    if (status == F_none) dynamics.used = 0;
 
   #define f_macro_utf_string_dynamics_destroy(status, dynamics) \
-    status = f_none; \
+    status = F_none; \
     while (dynamics.size > 0) { \
       --dynamics.size; \
       f_macro_utf_string_dynamic_destroy(status, dynamics.array[dynamics.size]); \
-      if (status != f_none) break; \
+      if (status != F_none) break; \
     } \
-    if (status == f_none) status = f_memory_destroy((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size); \
-    if (status == f_none) dynamics.used = 0;
+    if (status == F_none) status = f_memory_destroy((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size); \
+    if (status == F_none) dynamics.used = 0;
 
   #define f_macro_utf_string_dynamics_resize(status, dynamics, new_length) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < dynamics.size) { \
       f_utf_string_length i = dynamics.size - new_length; \
       for (; i < dynamics.size; i++) { \
         f_macro_utf_string_dynamic_destroy(status, dynamics.array[i]); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_resize((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_resize((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size, new_length); \
+    if (status == F_none) { \
       if (new_length > dynamics.size) { \
         f_utf_string_length i = dynamics.size; \
         for (; i < new_length; i++) { \
@@ -458,16 +458,16 @@ extern "C" {
     }
 
   #define f_macro_utf_string_dynamics_adjust(status, dynamics, new_length) \
-    status = f_none; \
+    status = F_none; \
     if (new_length < dynamics.size) { \
       f_utf_string_length i = dynamics.size - new_length; \
       for (; i < dynamics.size; i++) { \
         f_macro_utf_string_dynamic_destroy(status, dynamics.array[i], f_utf_string_dynamic); \
-        if (status != f_none) break; \
+        if (status != F_none) break; \
       } \
     } \
-    if (status == f_none) status = f_memory_adjust((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size, new_length); \
-    if (status == f_none) { \
+    if (status == F_none) status = f_memory_adjust((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size, new_length); \
+    if (status == F_none) { \
       if (new_length > dynamics.size) { \
         f_utf_string_length i = dynamics.size; \
         for (; i < new_length; i++) { \
@@ -578,9 +578,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 character.
- *   f_false if not a UTF-8 character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is_valid()
  * @see f_utf_is()
@@ -598,9 +598,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 alphabet character.
- *   f_false if not a UTF-8 alphabet character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 alphabet character.
+ *   F_false if not a UTF-8 alphabet character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
  * @see f_utf_is_alpha()
@@ -618,9 +618,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 alpha-numeric character.
- *   f_false if not a UTF-8 alpha-numeric character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 alpha-numeric character.
+ *   F_false if not a UTF-8 alpha-numeric character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
  * @see f_utf_is_alphanumeric()
@@ -636,9 +636,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 control character.
- *   f_false if not a UTF-8 control character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 control character.
+ *   F_false if not a UTF-8 control character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
  * @see f_utf_is_control()
@@ -656,9 +656,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 control picture character.
- *   f_false if not a UTF-8 control picture character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 control picture character.
+ *   F_false if not a UTF-8 control picture character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_is_control_picture()
  */
@@ -678,9 +678,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 character.
- *   f_false if not a UTF-8 character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is()
  * @see f_utf_character_is_valid()
@@ -697,9 +697,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 graph.
- *   f_false if not a UTF-8 graph.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 graph.
+ *   F_false if not a UTF-8 graph.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see isgraph()
  * @see f_utf_is_graph()
@@ -717,9 +717,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 numeric character.
- *   f_false if not a UTF-8 numeric character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 numeric character.
+ *   F_false if not a UTF-8 numeric character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
  * @see f_utf_is_numeric()
@@ -742,9 +742,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 character.
- *   f_false if not a UTF-8 character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is()
  * @see f_utf_character_is_fragment()
@@ -764,9 +764,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 whitespace.
- *   f_false if not a UTF-8 whitespace.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 whitespace.
+ *   F_false if not a UTF-8 whitespace.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_is_whitespace()
  */
@@ -785,9 +785,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 word character.
- *   f_false if not a UTF-8 word character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 word character.
+ *   F_false if not a UTF-8 word character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
  * @see f_utf_is_word()
@@ -807,9 +807,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 word or dash character.
- *   f_false if not a UTF-8 word or dash character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 word or dash character.
+ *   F_false if not a UTF-8 word or dash character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
  * @see f_utf_is_word_dash()
@@ -829,9 +829,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 word or dash character.
- *   f_false if not a UTF-8 word or dash character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 word or dash character.
+ *   F_false if not a UTF-8 word or dash character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
  * @see f_utf_is_word_dash()
@@ -849,9 +849,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 non-printing or zero-width character.
- *   f_false if not a UTF-8 non-printing or zero-width character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 non-printing or zero-width character.
+ *   F_false if not a UTF-8 non-printing or zero-width character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_is_zero_width()
  */
@@ -870,9 +870,9 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   f_true if a UTF-8 alpha character.
- *   f_false if not a UTF-8 alpha character.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_true if a UTF-8 alpha character.
+ *   F_false if not a UTF-8 alpha character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
  * @see f_utf_is_word()
@@ -898,12 +898,12 @@ extern "C" {
  *   If this is greater than 0, and the utf_character width is larger than this size, then an error is returned.
  *
  * @return
- *   f_none if conversion was successful.
- *   f_failure (with error bit) if width is not long enough to convert.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_failure (with error bit) if width is not long enough to convert.
+ *   F_none if conversion was successful.
+ *   F_failure (with error bit) if width is not long enough to convert.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_failure (with error bit) if width is not long enough to convert.
  */
 #ifndef _di_f_utf_character_to_char_
   extern f_return_status f_utf_character_to_char(const f_utf_character utf_character, f_string *character, f_string_length *width_max);
@@ -915,8 +915,8 @@ extern "C" {
  * @todo relocate this outside of f_utf into a more general path, perhaps f_memory (f_memory_is_big_endian).
  *
  * @return
- *   f_true if the system is big-endian.
- *   f_false if the system is little-endian.
+ *   F_true if the system is big-endian.
+ *   F_false if the system is little-endian.
  */
 #ifndef _di_f_utf_is_big_endian_
   extern f_return_status f_utf_is_big_endian();
@@ -935,10 +935,10 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 character.
- *   f_false if not a UTF-8 character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see f_utf_is_valid()
  * @see f_utf_character_is()
@@ -960,9 +960,9 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 alphabet character.
- *   f_false if not a UTF-8 alphabet character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_true if a UTF-8 alphabet character.
+ *   F_false if not a UTF-8 alphabet character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
  * @see f_utf_character_is_alpha()
@@ -984,9 +984,9 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 alpha-numeric character.
- *   f_false if not a UTF-8 alpha-numeric character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_true if a UTF-8 alpha-numeric character.
+ *   F_false if not a UTF-8 alpha-numeric character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
  * @see f_utf_character_is_alpha_numeric()
@@ -1006,9 +1006,9 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 control character.
- *   f_false if not a UTF-8 control character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_true if a UTF-8 control character.
+ *   F_false if not a UTF-8 control character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
  * @see f_utf_character_is_control()
@@ -1030,9 +1030,9 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 control picture character.
- *   f_false if not a UTF-8 control picture character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_true if a UTF-8 control picture character.
+ *   F_false if not a UTF-8 control picture character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see f_utf_character_is_control_picture()
  */
@@ -1067,8 +1067,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 character.
- *   f_false if not a UTF-8 character.
+ *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
  *
  * @see f_utf_character_is()
  * @see f_utf_character_is_valid()
@@ -1089,11 +1089,11 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 graph.
- *   f_false if not a UTF-8 graph.
- *   f_maybe (with error bit) if this could be a graph but width is not long enough.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_true if a UTF-8 graph.
+ *   F_false if not a UTF-8 graph.
+ *   F_maybe (with error bit) if this could be a graph but width is not long enough.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see isgraph()
  * @see iscntrl()
@@ -1116,9 +1116,9 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 numeric character.
- *   f_false if not a UTF-8 numeric character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_true if a UTF-8 numeric character.
+ *   F_false if not a UTF-8 numeric character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
  * @see f_utf_character_is_numeric()
@@ -1144,10 +1144,10 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a valid UTF-8 character.
- *   f_false if not a valid UTF-8 character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_true if a valid UTF-8 character.
+ *   F_false if not a valid UTF-8 character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see f_utf_is()
  * @see f_utf_is_fragment()
@@ -1168,11 +1168,11 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 whitespace.
- *   f_false if not a UTF-8 whitespace.
- *   f_maybe (with error bit) if this could be a whitespace but width is not long enough.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_true if a UTF-8 whitespace.
+ *   F_false if not a UTF-8 whitespace.
+ *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see isspace()
  * @see iscntrl()
@@ -1197,9 +1197,9 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 word character.
- *   f_false if not a UTF-8 word character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_true if a UTF-8 word character.
+ *   F_false if not a UTF-8 word character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
  * @see f_utf_character_is_word()
@@ -1223,9 +1223,9 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 word or dash character.
- *   f_false if not a UTF-8 word or dash character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_true if a UTF-8 word or dash character.
+ *   F_false if not a UTF-8 word or dash character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
  * @see f_utf_character_is_word_dash()
@@ -1249,9 +1249,9 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 word or dash character.
- *   f_false if not a UTF-8 word or dash character.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_true if a UTF-8 word or dash character.
+ *   F_false if not a UTF-8 word or dash character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
  * @see f_utf_character_is_word_dash_plus()
@@ -1273,11 +1273,11 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   f_true if a UTF-8 whitespace.
- *   f_false if not a UTF-8 whitespace.
- *   f_maybe (with error bit) if this could be a whitespace but width is not long enough.
- *   f_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_true if a UTF-8 whitespace.
+ *   F_false if not a UTF-8 whitespace.
+ *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see isspace()
  * @see iscntrl()
@@ -1301,10 +1301,10 @@ extern "C" {
  *   This value may be cleared, even on error.
  *
  * @return
- *   f_none if conversion was successful.
- *   f_failure (with error bit) if width is not long enough to convert.
- *   f_invalid_utf (with error bit) if character is an invalid UTF-8 character.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none if conversion was successful.
+ *   F_failure (with error bit) if width is not long enough to convert.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_char_to_character_
   extern f_return_status f_utf_char_to_character(const f_string character, const f_string_length width_max, f_utf_character *character_utf);

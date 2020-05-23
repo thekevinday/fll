@@ -38,7 +38,7 @@ extern "C" {
  *   The version number of the program.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  */
 #ifndef _di_fll_program_print_help_header_
   extern f_return_status fll_program_print_help_header(const fl_color_context context, const f_string name, const f_string version);
@@ -61,7 +61,7 @@ extern "C" {
  *   A desciption associated with the option.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  */
 #ifndef _di_fll_program_print_help_option_
   extern f_return_status fll_program_print_help_option(const fl_color_context context, const f_string option_short, const f_string option_long, const f_string symbol_short, const f_string symbol_long, const f_string description);
@@ -80,7 +80,7 @@ extern "C" {
  *   A desciption associated with the option.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  */
 #ifndef _di_fll_program_print_help_option_long_
   extern f_return_status fll_program_print_help_option_long(const fl_color_context context, const f_string option_long, const f_string symbol_long, const f_string description);
@@ -97,7 +97,7 @@ extern "C" {
  *   A desciption associated with the option.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  */
 #ifndef _di_fll_program_print_help_option_other_
   extern f_return_status fll_program_print_help_option_other(const fl_color_context context, const f_string option_other, const f_string description);
@@ -115,7 +115,7 @@ extern "C" {
  *   Set the first array value to EOS to disable printing of parameters.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  */
 #ifndef _di_fll_program_print_help_usage_
   extern f_return_status fll_program_print_help_usage(const fl_color_context context, const f_string name, const f_string parameters);
@@ -128,7 +128,7 @@ extern "C" {
  *   The version number of the program.
  *
  * @return
- *   f_none on success.
+ *   F_none on success.
  */
 #ifndef _di_fll_program_print_version_
   extern f_return_status fll_program_print_version(const f_string version);
@@ -152,10 +152,10 @@ extern "C" {
  *   The color context.
  *
  * @return
- *   f_none on success.
- *   f_no_data if "additional" parameters were expected but not found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_data_not if "additional" parameters were expected but not found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fll_program_parameter_process_
   extern f_return_status fll_program_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context);
@@ -178,10 +178,10 @@ extern "C" {
  *   The color context.
  *
  * @return
- *   f_none on success.
- *   f_no_data if "additional" parameters were expected but not found.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_data_not if "additional" parameters were expected but not found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fll_program_parameter_process_quietly_
   extern f_return_status fll_program_parameter_process_quietly(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context);
@@ -202,11 +202,11 @@ extern "C" {
  *   An array of dynamic strings each representing a console parameter.
  *
  * @return
- *   f_none on success.
- *   f_no_data if nothing to rip, no allocations or reallocations are performed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_data_not if nothing to rip, no allocations or reallocations are performed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see fl_string_append()
  */
@@ -229,12 +229,12 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   f_none on success.
- *   f_no_data if nothing to rip, no allocations or reallocations are performed.
+ *   F_none on success.
+ *   F_data_not if nothing to rip, no allocations or reallocations are performed.
  *   f_string_length_size (with error bit) if the combined string is too large.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fll_program_parameter_additional_mash_
   extern f_return_status fll_program_parameter_additional_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination);
@@ -253,11 +253,11 @@ extern "C" {
  *   An array of dynamic strings each representing a console parameter.
  *
  * @return
- *   f_none on success.
- *   f_no_data if nothing to rip, no allocations or reallocations are performed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_none on success.
+ *   F_data_not if nothing to rip, no allocations or reallocations are performed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see fl_string_rip()
  */
@@ -281,12 +281,12 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   f_none on success.
- *   f_no_data if nothing to rip, no allocations or reallocations are performed.
+ *   F_none on success.
+ *   F_data_not if nothing to rip, no allocations or reallocations are performed.
  *   f_string_length_size (with error bit) if the combined string is too large.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_error_allocation (with error bit) on memory allocation error.
- *   f_error_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_fll_program_parameter_additional_rip_mash_
   extern f_return_status fll_program_parameter_additional_rip_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination);

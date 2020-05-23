@@ -64,13 +64,13 @@ extern "C" {
 
     printf("%c%c", f_string_eol, f_string_eol);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_byte_dump_print_help_
 
 #ifndef _di_byte_dump_main_
   f_return_status byte_dump_main(const f_console_arguments arguments, byte_dump_data *data) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     {
       f_console_parameters parameters = { data->parameters, byte_dump_total_parameters };
@@ -83,14 +83,14 @@ extern "C" {
         choices.id = ids;
         choices.used = 3;
 
-        status = fll_program_parameter_process(arguments, parameters, choices, f_true, &data->remaining, &data->context);
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-        if (f_status_is_error(status)) {
+        if (F_status_is_error(status)) {
           byte_dump_delete_data(data);
-          return f_status_set_error(status);
+          return F_status_set_error(status);
         }
 
-        status = f_none;
+        status = F_none;
       }
 
       // Identify priority of mode parameters.
@@ -103,9 +103,9 @@ extern "C" {
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
-        if (f_status_is_error(status)) {
+        if (F_status_is_error(status)) {
           byte_dump_delete_data(data);
-          return f_status_set_error(status);
+          return F_status_set_error(status);
         }
 
         if (choice == byte_dump_parameter_hexidecimal) {
@@ -135,9 +135,9 @@ extern "C" {
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
-        if (f_status_is_error(status)) {
+        if (F_status_is_error(status)) {
           byte_dump_delete_data(data);
-          return f_status_set_error(status);
+          return F_status_set_error(status);
         }
 
         if (choice == byte_dump_parameter_normal) {
@@ -152,7 +152,7 @@ extern "C" {
       }
     }
 
-    status = f_none;
+    status = F_none;
 
     if (data->parameters[byte_dump_parameter_help].result == f_console_result_found) {
       byte_dump_print_help(data->context);
@@ -167,13 +167,13 @@ extern "C" {
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
 
         byte_dump_delete_data(data);
-        return f_status_set_error(status);
+        return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_width].result == f_console_result_additional) {
         f_number_unsigned number = 0;
         status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_width].additional.array[data->parameters[byte_dump_parameter_width].additional.used - 1]], &number);
 
-        if (f_status_is_error(status) || number < 1 || number >= 0xfb) {
+        if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
           fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
           fl_color_print(f_type_error, data->context.error, data->context.reset, "' value can only be a number between ");
@@ -183,7 +183,7 @@ extern "C" {
           fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
           byte_dump_delete_data(data);
-          return f_status_set_error(status);
+          return F_status_set_error(status);
         }
 
         data->width = (uint8_t) number;
@@ -195,13 +195,13 @@ extern "C" {
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
 
         byte_dump_delete_data(data);
-        return f_status_set_error(status);
+        return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional) {
         f_number_unsigned number = 0;
         status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_first].additional.array[data->parameters[byte_dump_parameter_first].additional.used - 1]], &number);
 
-        if (f_status_is_error(status) || number > f_type_number_size_unsigned) {
+        if (F_status_is_error(status) || number > f_type_number_size_unsigned) {
           fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
           fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
           fl_color_print(f_type_error, data->context.error, data->context.reset, "' value can only be a number (inclusively) between ");
@@ -211,7 +211,7 @@ extern "C" {
           fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
           byte_dump_delete_data(data);
-          return f_status_set_error(status);
+          return F_status_set_error(status);
         }
 
         data->first = number;
@@ -223,13 +223,13 @@ extern "C" {
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
 
         byte_dump_delete_data(data);
-        return f_status_set_error(status);
+        return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
         f_number_unsigned number = 0;
         status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_last].additional.array[data->parameters[byte_dump_parameter_last].additional.used - 1]], &number);
 
-        if (f_status_is_error(status) || number < 0 || number > f_type_number_size_unsigned) {
+        if (F_status_is_error(status) || number < 0 || number > f_type_number_size_unsigned) {
           fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
           fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
           fl_color_print(f_type_error, data->context.error, data->context.reset, "' value can only be a number (inclusively) between ");
@@ -239,7 +239,7 @@ extern "C" {
           fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
           byte_dump_delete_data(data);
-          return f_status_set_error(status);
+          return F_status_set_error(status);
         }
 
         data->last = number;
@@ -254,7 +254,7 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' value.");
 
             byte_dump_delete_data(data);
-            return f_status_set_error(status);
+            return F_status_set_error(status);
         }
 
         // store last position as a relative offset from first instead of an absolute position.
@@ -289,7 +289,7 @@ extern "C" {
 
         status = byte_dump_file(*data, "-", file);
 
-        if (f_status_is_error(status)) {
+        if (F_status_is_error(status)) {
           byte_dump_delete_data(data);
           return status;
         }
@@ -298,21 +298,21 @@ extern "C" {
       if (data->remaining.used > 0) {
         // pre-process remaining arguments to ensure that they all files exist before processing.
         {
-          f_status missing_files = f_none;
+          f_status missing_files = F_none;
 
           for (f_array_length counter = 0; counter < data->remaining.used; counter++) {
             status = f_file_exists(arguments.argv[data->remaining.array[counter]]);
-            if (status == f_false || f_status_is_error(status)) {
-              if (missing_files == f_none) {
+            if (status == F_false || F_status_is_error(status)) {
+              if (missing_files == F_none) {
                 missing_files = status;
               }
 
-              byte_dump_print_file_error(data->context, "f_file_exists", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
+              byte_dump_print_file_error(data->context, "f_file_exists", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
             }
           } // for
 
-          if (missing_files != f_none) {
-            status = f_status_set_error(missing_files);
+          if (missing_files != F_none) {
+            status = F_status_set_error(missing_files);
 
             byte_dump_delete_data(data);
             return status;
@@ -323,8 +323,8 @@ extern "C" {
           f_file file = f_file_initialize;
 
           status = f_file_open(arguments.argv[data->remaining.array[counter]], 0, &file);
-          if (f_status_is_error(status)) {
-            byte_dump_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
+          if (F_status_is_error(status)) {
+            byte_dump_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
             byte_dump_delete_data(data);
             return status;
           }
@@ -356,19 +356,19 @@ extern "C" {
 
           f_file_close(&file.id);
 
-          if (f_status_is_error(status)) {
+          if (F_status_is_error(status)) {
             byte_dump_delete_data(data);
             return status;
           }
         } // for
       }
       else {
-        status = f_false;
+        status = F_false;
       }
     }
     else {
       fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more filenames.");
-      status = f_status_set_error(f_invalid_parameter);
+      status = F_status_set_error(F_parameter);
     }
 
     byte_dump_delete_data(data);
@@ -387,7 +387,7 @@ extern "C" {
     f_macro_string_lengths_delete_simple(data->remaining);
     fl_macro_color_context_delete_simple(data->context);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_byte_dump_delete_data_
 

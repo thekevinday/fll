@@ -117,27 +117,27 @@ extern "C" {
 
     printf("%c", f_string_eol);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fss_basic_list_read_print_help_
 
 #ifndef _di_fss_basic_list_read_main_
   f_return_status fss_basic_list_read_main(const f_console_arguments arguments, fss_basic_list_read_data *data) {
-    f_status status = f_none;
+    f_status status = F_none;
 
     {
       f_console_parameters parameters = { data->parameters, fss_basic_list_read_total_parameters };
       f_console_parameter_id ids[3] = { fss_basic_list_read_parameter_no_color, fss_basic_list_read_parameter_light, fss_basic_list_read_parameter_dark };
       f_console_parameter_ids choices = { ids, 3 };
 
-      status = fll_program_parameter_process(arguments, parameters, choices, f_true, &data->remaining, &data->context);
+      status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-      if (f_status_is_error(status)) {
+      if (F_status_is_error(status)) {
         fss_basic_list_read_delete_data(data);
-        return f_status_set_error(status);
+        return F_status_set_error(status);
       }
 
-      status = f_none;
+      status = F_none;
     }
 
     if (data->parameters[fss_basic_list_read_parameter_help].result == f_console_result_found) {
@@ -153,7 +153,7 @@ extern "C" {
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
 
         fss_basic_list_read_delete_data(data);
-        return f_status_set_error(f_invalid_parameter);
+        return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_list_read_parameter_depth].result == f_console_result_found) {
@@ -162,7 +162,7 @@ extern "C" {
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
 
         fss_basic_list_read_delete_data(data);
-        return f_status_set_error(f_invalid_parameter);
+        return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_found) {
@@ -171,7 +171,7 @@ extern "C" {
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
 
         fss_basic_list_read_delete_data(data);
-        return f_status_set_error(f_invalid_parameter);
+        return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_list_read_parameter_name].result == f_console_result_found) {
@@ -180,7 +180,7 @@ extern "C" {
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a string.");
 
         fss_basic_list_read_delete_data(data);
-        return f_status_set_error(f_invalid_parameter);
+        return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_found) {
@@ -189,7 +189,7 @@ extern "C" {
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
 
         fss_basic_list_read_delete_data(data);
-        return f_status_set_error(f_invalid_parameter);
+        return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_list_read_parameter_object].result == f_console_result_found) {
@@ -201,7 +201,7 @@ extern "C" {
           fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
 
           fss_basic_list_read_delete_data(data);
-          return f_status_set_error(f_invalid_parameter);
+          return F_status_set_error(F_parameter);
         }
 
         if (data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_additional) {
@@ -212,7 +212,7 @@ extern "C" {
           fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
 
           fss_basic_list_read_delete_data(data);
-          return f_status_set_error(f_invalid_parameter);
+          return F_status_set_error(F_parameter);
         }
       }
 
@@ -225,7 +225,7 @@ extern "C" {
           fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
 
           fss_basic_list_read_delete_data(data);
-          return f_status_set_error(f_invalid_parameter);
+          return F_status_set_error(F_parameter);
         }
       }
 
@@ -235,7 +235,7 @@ extern "C" {
       f_string_length original_size = data->quantity.total;
 
       status = fss_basic_list_read_main_preprocess_depth(arguments, *data, &depths);
-      if (f_status_is_error(status)) {
+      if (F_status_is_error(status)) {
         macro_fss_basic_list_read_depths_delete_simple(depths);
         fss_basic_list_read_delete_data(data);
         return status;
@@ -249,11 +249,11 @@ extern "C" {
           fprintf(f_type_output, "0%c", f_string_eol);
 
           fss_basic_list_read_delete_data(data);
-          return f_none;
+          return F_none;
         }
 
         fss_basic_list_read_delete_data(data);
-        return f_none;
+        return F_none;
       }
 
       if (data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_found) {
@@ -263,7 +263,7 @@ extern "C" {
 
         macro_fss_basic_list_read_depths_delete_simple(depths);
         fss_basic_list_read_delete_data(data);
-        return f_status_set_error(f_invalid_parameter);
+        return F_status_set_error(F_parameter);
       }
 
       if (data->process_pipe) {
@@ -273,8 +273,8 @@ extern "C" {
 
         status = f_file_read(file, &data->buffer);
 
-        if (f_status_is_error(status)) {
-          fss_basic_list_read_print_file_error(data->context, "fl_file_read", "-", f_status_set_fine(status));
+        if (F_status_is_error(status)) {
+          fss_basic_list_read_print_file_error(data->context, "fl_file_read", "-", F_status_set_fine(status));
 
           macro_fss_basic_list_read_depths_delete_simple(depths);
           fss_basic_list_read_delete_data(data);
@@ -283,7 +283,7 @@ extern "C" {
 
         status = fss_basic_list_read_main_process_file(arguments, data, "-", depths);
 
-        if (f_status_is_error(status)) {
+        if (F_status_is_error(status)) {
           macro_fss_basic_list_read_depths_delete_simple(depths);
           fss_basic_list_read_delete_data(data);
           return status;
@@ -303,8 +303,8 @@ extern "C" {
 
           data->quantity.total = original_size;
 
-          if (f_status_is_error(status)) {
-            fss_basic_list_read_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
+          if (F_status_is_error(status)) {
+            fss_basic_list_read_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
             macro_fss_basic_list_read_depths_delete_simple(depths);
             fss_basic_list_read_delete_data(data);
             return status;
@@ -313,8 +313,8 @@ extern "C" {
           if (data->quantity.total == 0) {
             status = f_file_size_by_id(file.id, &data->quantity.total);
 
-            if (f_status_is_error(status)) {
-              fss_basic_list_read_print_file_error(data->context, "f_file_size_by_id", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
+            if (F_status_is_error(status)) {
+              fss_basic_list_read_print_file_error(data->context, "f_file_size_by_id", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
               macro_fss_basic_list_read_depths_delete_simple(depths);
               fss_basic_list_read_delete_data(data);
             }
@@ -330,8 +330,8 @@ extern "C" {
 
           f_file_close(&file.id);
 
-          if (f_status_is_error(status)) {
-            fss_basic_list_read_print_file_error(data->context, "f_file_read_until", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
+          if (F_status_is_error(status)) {
+            fss_basic_list_read_print_file_error(data->context, "f_file_read_until", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
             macro_fss_basic_list_read_depths_delete_simple(depths);
             fss_basic_list_read_delete_data(data);
             return status;
@@ -339,7 +339,7 @@ extern "C" {
 
           status = fss_basic_list_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[counter]], depths);
 
-          if (f_status_is_error(status)) {
+          if (F_status_is_error(status)) {
             macro_fss_basic_list_read_depths_delete_simple(depths);
             fss_basic_list_read_delete_data(data);
             return status;
@@ -356,7 +356,7 @@ extern "C" {
     }
     else {
       fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more files.");
-      status = f_status_set_error(f_invalid_parameter);
+      status = F_status_set_error(F_parameter);
     }
 
     fss_basic_list_read_delete_data(data);
@@ -366,7 +366,7 @@ extern "C" {
 
 #ifndef _di_fss_basic_list_read_delete_data_
   f_return_status fss_basic_list_read_delete_data(fss_basic_list_read_data *data) {
-    f_status status = f_none;
+    f_status status = F_none;
     f_string_length i = 0;
 
     while (i < fss_basic_list_read_total_parameters) {
@@ -382,7 +382,7 @@ extern "C" {
 
     fl_macro_color_context_delete_simple(data->context);
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fss_basic_list_read_delete_data_
 

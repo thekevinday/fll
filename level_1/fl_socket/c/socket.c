@@ -12,43 +12,43 @@ extern "C"{
 
     if (bind(*socket_id, (struct sockaddr *) socket_address, sizeof(struct sockaddr_un)) < 0) {
       if (errno == EACCES) {
-        return f_access_denied;
+        return F_access_denied;
       }
       else if (errno == EADDRINUSE) {
-        return f_busy_address;
+        return F_busy_address;
       }
       else if (errno == EADDRNOTAVAIL) {
-        return f_unavailable_address;
+        return F_unavailable_address;
       }
       else if (errno == EINVAL) {
-        return f_busy_socket;
+        return F_busy_socket;
       }
       else if (errno == ENOTSOCK) {
-        return f_invalid_socket;
+        return F_socket;
       }
       else if (errno == ENAMETOOLONG) {
-        return f_string_too_large;
+        return F_string_too_large;
       }
       else if (errno == ENOENT) {
-        return f_file_not_found;
+        return F_file_found_not;
       }
       else if (errno == EFAULT) {
-        return f_invalid_address;
+        return F_address;
       }
       else if (errno == ENOTDIR) {
-        return f_directory_not_found;
+        return F_directory_not_found;
       }
       else if (errno == ENOMEM) {
-        return f_out_of_memory;
+        return F_memory_out;
       }
       else if (errno == ELOOP) {
-        return f_loop;
+        return F_loop;
       }
 
-      return f_failure;
+      return F_failure;
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fl_socket_file_bind_
 
@@ -56,22 +56,22 @@ extern "C"{
   f_return_status fl_socket_listen(const f_socket_id socket_id, const unsigned int socket_backlog) {
     if (listen(socket_id, socket_backlog) < 0) {
       if (errno == EADDRINUSE) {
-        return f_busy;
+        return F_busy;
       }
       else if (errno == EBADF) {
-        return f_file_error_descriptor;
+        return F_file_descriptor;
       }
       else if (errno == ENOTSOCK) {
-        return f_invalid_socket;
+        return F_socket;
       }
       else if (errno == EOPNOTSUPP) {
-        return f_unsupported;
+        return F_unsupported;
       }
 
-      return f_failure;
+      return F_failure;
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fl_socket_listen_
 
@@ -93,34 +93,34 @@ extern "C"{
       }
       else {
         // socket close id is unsupported.
-        return f_unsupported;
+        return F_unsupported;
       }
     }
 
     if (error_code > 0) {
       if (error_code == EBADF) {
-        return f_file_error_descriptor;
+        return F_file_descriptor;
       }
       else if (error_code == EINVAL) {
-        return f_invalid_value;
+        return F_value;
       }
       else if (error_code == ENOTCONN) {
-        return f_not_connected;
+        return F_connected_not;
       }
       else if (error_code == ENOTSOCK) {
-        return f_invalid_socket;
+        return F_socket;
       }
       else if (error_code == EINTR) {
-        return f_interrupted;
+        return F_interrupted;
       }
       else if (error_code == EBADF) {
-        return f_error_input_output;
+        return F_input_output;
       }
 
-      return f_failure;
+      return F_failure;
     }
 
-    return f_none;
+    return F_none;
   }
 #endif // _di_fl_socket_close_client_
 

@@ -46,12 +46,12 @@ extern "C" {
  *   (For UTF-8 character of width 3, each step would be (3 * sizeof(int8_t)).
  *
  * @return
- *   f_none on success.
- *   f_none_on_stop if the stop range is reached before all steps are completed.
- *   f_none_on_eos if the end of buffer is reached before all steps are completed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_incomplete_utf_on_stop (with error bit) if the stop range is reached before the complete UTF-8 character can be processed.
- *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
+ *   F_none on success.
+ *   F_none_stop if the stop range is reached before all steps are completed.
+ *   F_none_eos if the end of buffer is reached before all steps are completed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_incomplete_utf_stop (with error bit) if the stop range is reached before the complete UTF-8 character can be processed.
+ *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  */
 #ifndef _di_fl_fss_decrement_buffer_
   extern f_return_status fl_fss_decrement_buffer(const f_string_static buffer, f_string_range *range, const f_string_length step);
@@ -66,9 +66,9 @@ extern "C" {
  *   The header data to populate with results of this function.
  *
  * @return
- *   fl_fss_no_header if no header is found.
- *   fl_fss_no_header (with error bit) if the an error occurred prior to identifying a valid header.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   FL_fss_header_not if no header is found.
+ *   FL_fss_header_not (with error bit) if the an error occurred prior to identifying a valid header.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_identify_
   extern f_return_status fl_fss_identify(const f_string_static buffer, f_fss_header *header);
@@ -83,12 +83,12 @@ extern "C" {
  *   The header data to populate with results of this function.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors from (with error bit): f_file_read_until().
  *   Errors from (with error bit): fl_fss_identify()
- *   File errors (with error bit): f_file_error_seek, f_file_not_open.
+ *   File errors (with error bit): F_file_seek, F_file_open_not.
  *
  * @see f_file_read_until()
  * @see fl_fss_identify()
@@ -115,12 +115,12 @@ extern "C" {
  *   (For UTF-8 character of width 3, each step would be (3 * sizeof(int8_t)).
  *
  * @return
- *   f_none on success.
- *   f_none_on_stop if the stop range is reached before all steps are completed.
- *   f_none_on_eos if the end of buffer is reached before all steps are completed.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_incomplete_utf_on_stop (with error bit) if the stop range is reached before the complete UTF-8 character can be processed.
- *   f_incomplete_utf_on_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
+ *   F_none on success.
+ *   F_none_stop if the stop range is reached before all steps are completed.
+ *   F_none_eos if the end of buffer is reached before all steps are completed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_incomplete_utf_stop (with error bit) if the stop range is reached before the complete UTF-8 character can be processed.
+ *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  */
 #ifndef _di_fl_fss_increment_buffer_
   extern f_return_status fl_fss_increment_buffer(const f_string_static buffer, f_string_range *range, const f_string_length step);
@@ -137,11 +137,11 @@ extern "C" {
  *   The header data to populate with results of this function.
  *
  * @return
- *   f_true if the character in the buffer is a graph character.
- *   f_false if the character in the buffer is not a graph character.
- *   f_maybe (with error bit) if the character width is outside the stop position.
- *   f_failure (with error bit) if the buffer is not wide enough or the width is outside the stop position.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_true if the character in the buffer is a graph character.
+ *   F_false if the character in the buffer is not a graph character.
+ *   F_maybe (with error bit) if the character width is outside the stop position.
+ *   F_failure (with error bit) if the buffer is not wide enough or the width is outside the stop position.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_is_graph_
   extern f_return_status fl_fss_is_graph(const f_string_static buffer, const f_string_range range);
@@ -158,11 +158,11 @@ extern "C" {
  *   The header data to populate with results of this function.
  *
  * @return
- *   f_true if the character in the buffer is a space character.
- *   f_false if the character in the buffer is not a space character.
- *   f_maybe (with error bit) if the character width is outside the stop position.
- *   f_failure (with error bit) if the buffer is not wide enough or the width is outside the stop position.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_true if the character in the buffer is a space character.
+ *   F_false if the character in the buffer is not a space character.
+ *   F_maybe (with error bit) if the character width is outside the stop position.
+ *   F_failure (with error bit) if the buffer is not wide enough or the width is outside the stop position.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_is_space_
   extern f_return_status fl_fss_is_space(const f_string_static buffer, const f_string_range range);
@@ -181,9 +181,9 @@ extern "C" {
  *   A restriction on where within the buffer the shifting happens.
  *
  * @return
- *   f_none on success.
- *   f_invalid_utf (with error bit) if UTF-8 cannot be fully processed (buffer or range range not long enough).
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_utf (with error bit) if UTF-8 cannot be fully processed (buffer or range range not long enough).
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_shift_delimiters_
   extern f_return_status fl_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_range range);
@@ -202,8 +202,8 @@ extern "C" {
  *   This increments range->start.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_skip_past_space_
   extern f_return_status fl_fss_skip_past_space(const f_string_static buffer, f_string_range *range);
@@ -222,8 +222,8 @@ extern "C" {
  *   This increments range->start.
  *
  * @return
- *   f_none on success.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_skip_past_non_graph_
   extern f_return_status fl_fss_skip_past_non_graph(const f_string_static buffer, f_string_range *range);
