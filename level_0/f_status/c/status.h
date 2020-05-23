@@ -57,15 +57,24 @@ extern "C" {
  * All standard/core status codes.
  *
  * The code F_status_code_last is intended to be used as the starting point for anything extending this and povided its own status codes.
+ *
+ * Most codes are sorted alphabetically, within their respective groups.
+ * There are special case codes that are expected to be in specific positions.
+ * 1) F_false, must always evaluate to 0.
+ * 2) F_true, must always evaluate to 1 and will conflict with F_signal_hangup.
+ * 3) All f_signal_*, these numbers must map directly to the standard signal codes.
+ * 4) f_none, this is intended to be the default return code and the return code representing the standard start code.
+ * 5) F_status_code_last, this is intended to designate the last code provided by level_0 status project.
+ *    All code sets started by another project (such as FSS status codes) must start at this number + 1 with a code start map.
  */
 #ifndef _di_F_status_codes_
   enum {
-    #ifndef _di_F_status_booleans_
+    #ifndef _di_F_status_boolean_
       F_false = 0,
       F_true,
-    #endif // _di_F_status_booleans_
+    #endif // _di_F_status_boolean_
 
-    #ifndef _di_F_status_signals_
+    #ifndef _di_F_status_signal_
       F_signal_hangup = 1,
       F_signal_interrupt,
       F_signal_quit,
@@ -73,7 +82,7 @@ extern "C" {
       F_signal_trap,
       F_signal_abort,
       F_signal_bus_error,
-      F_signal_floating_point_exception,
+      F_signal_floating_point_error,
       F_signal_kill, // unblockable
       F_signal_user_1,
       F_signal_segmentation_fault,
@@ -130,51 +139,53 @@ extern "C" {
       F_signal_reserved_62,
       F_signal_reserved_63,
       F_signal_reserved_64,
-    #endif // _di_F_status_signals_
+    #endif // _di_F_status_signal_
 
+    // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
     #ifndef _di_F_status_basic_
-      F_none = 197, // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
+      F_none = 197,
+      F_address,
       F_block,
+      F_bound_out,
+      F_connected_not,
       F_critical,
-      F_exist_not,
+      F_descriptor,
+      F_device,
       F_dummy,
-      F_input,
-      F_output,
-      F_input_output,
+      F_eof,
+      F_eol,
+      F_eos,
+      F_exist_not,
       F_failure,
+      F_fork,
       F_incomplete,
+      F_input,
+      F_input_output,
       F_interrupted,
+      F_invalid,
+      F_output,
+      F_link,
       F_loop,
       F_maybe,
-      F_connected_not,
-      F_data_not,
-      F_space_not,
-      F_bound_out,
       F_memory_out,
-      F_prohibited,
-      F_read_only,
-      F_unknown,
-      F_unsupported,
-      F_warn,
-      F_write_only,
-      F_utf,
-      F_invalid,
       F_name,
       F_parameter,
-      F_syntax,
-      F_data,
-      F_file,
-      F_descriptor,
-      F_socket,
-      F_device,
-      F_link,
       F_pipe,
-      F_address,
       F_port,
-      F_value,
       F_process,
-      F_fork,
       F_process_too_many,
+      F_prohibited,
+      F_read_only,
+      F_socket,
+      F_space_not,
+      F_stop,
+      F_syntax,
+      F_unknown,
+      F_unsupported,
+      F_utf,
+      F_value,
+      F_warn,
+      F_write_only,
     #endif // _di_F_status_basic_
 
     #ifndef _di_F_status_busy_
@@ -199,26 +210,22 @@ extern "C" {
       F_unavailable_socket,
     #endif // _di_F_status_unavailable_
 
-    #ifndef _di_F_status_digits_
+    #ifndef _di_F_status_number_
+      F_number,
       F_number_decimal,
       F_number_divide_by_zero,
-      F_number_invalid,
       F_number_negative,
       F_number_overflow,
       F_number_positive,
       F_number_underflow,
       F_number_whole,
       F_number_zero,
-    #endif // _di_F_status_digits_
+    #endif // _di_F_status_number_
 
     #ifndef _di_F_status_buffer_
       F_buffer,
       F_buffer_too_small,
       F_buffer_too_large,
-      F_eof,
-      F_eol,
-      F_eos,
-      F_stop,
       F_incomplete_utf,
       F_incomplete_utf_block,
       F_incomplete_utf_eof,
@@ -230,11 +237,13 @@ extern "C" {
       F_none_eol,
       F_none_eos,
       F_none_stop,
-      F_data_block_no,
-      F_data_no_eof,
-      F_data_no_eol,
-      F_data_no_eos,
-      F_data_no_stop,
+      F_data,
+      F_data_not,
+      F_data_not_block,
+      F_data_not_eof,
+      F_data_not_eol,
+      F_data_not_eos,
+      F_data_not_stop,
       F_string_too_small,
       F_string_too_large,
       F_unterminated,
@@ -264,87 +273,88 @@ extern "C" {
     #endif // _di_F_status_memory_
 
     #ifndef _di_F_status_file_
-      F_file_closed,
-      F_file_error,
+      F_file,
       F_file_allocation,
       F_file_close,
+      F_file_closed,
       F_file_deallocation,
       F_file_descriptor,
+      F_file_descriptor_max,
+      F_file_empty,
+      F_file_error,
       F_file_flush,
+      F_file_found,
+      F_file_found_not,
       F_file_open,
+      F_file_open_max,
+      F_file_open_not,
       F_file_purge,
       F_file_read,
       F_file_reallocation,
       F_file_seek,
       F_file_stat,
       F_file_synchronize,
-      F_file_write,
-      F_file_empty,
-      F_file_found,
       F_file_type_block,
       F_file_type_character,
       F_file_type_directory,
-      F_file_type_file,
       F_file_type_link,
-      F_file_type_pipe,
-      F_file_type_socket,
-      F_file_type_unknown,
-      F_file_found_not,
-      F_file_open_not,
       F_file_type_not_block,
       F_file_type_not_character,
       F_file_type_not_directory,
-      F_file_type_not_file,
       F_file_type_not_link,
       F_file_type_not_pipe,
+      F_file_type_not_regular,
       F_file_type_not_socket,
       F_file_type_not_unknown,
-      F_file_not_utf,
-      F_file_descriptors_max,
-      F_file_open_max,
+      F_file_type_pipe,
+      F_file_type_regular,
+      F_file_type_socket,
+      F_file_type_unknown,
       F_file_utf,
+      F_file_utf_not,
+      F_file_write,
     #endif // _di_F_status_file_
 
     #ifndef _di_F_status_filesystem_
       F_filesystem,
-      F_filesystem_quota_blocks,
+      F_filesystem_quota_block,
       F_filesystem_quota_reached,
     #endif // _di_F_status_filesystem_
 
     #ifndef _di_F_status_directory_
       F_directory,
       F_directory_close,
+      F_directory_closed,
       F_directory_descriptor,
+      F_directory_empty,
+      F_directory_found,
+      F_directory_found_not,
       F_directory_flush,
       F_directory_link_max,
       F_directory_open,
+      F_directory_open_not,
       F_directory_purge,
       F_directory_read,
       F_directory_stream,
       F_directory_synchronize,
       F_directory_unsupported,
-      F_directory_write,
-      F_directory_closed,
-      F_directory_empty,
-      F_directory_found,
-      F_directory_not_found,
-      F_directory_not_open,
-      F_directory_utf_not,
       F_directory_utf,
+      F_directory_utf_not,
+      F_directory_write,
     #endif // _di_F_status_directory_
 
     #ifndef _di_F_status_socket_
-      F_socket_connection_client,
-      F_socket_connection_target,
+      F_socket_connect_client,
+      F_socket_connect_target,
       F_socket_receive,
       F_socket_send,
     #endif // _di_F_status_socket_
 
     #ifndef _di_F_status_compare_
-      F_than_less,
       F_equal_to,
       F_equal_to_not,
       F_than_greater,
+      F_than_less,
     #endif // _di_F_status_compare_
 
     #ifndef _di_F_status_access_

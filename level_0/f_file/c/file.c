@@ -241,7 +241,7 @@ extern "C" {
 
     if (link(target, point) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_blocks);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -269,7 +269,7 @@ extern "C" {
 
     if (linkat(at_id_target, target, at_id_point, point, flags) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_blocks);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);

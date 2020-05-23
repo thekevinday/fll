@@ -203,11 +203,11 @@ extern "C" {
       #endif // _di_fll_fss_status_basic_
 
       #ifndef _di_f_status_buffers_
-        case F_data_no_eof:
+        case F_data_not_eof:
           return F_true;
-        case F_data_no_eos:
+        case F_data_not_eos:
           return F_true;
-        case F_data_no_stop:
+        case F_data_not_stop:
           return F_true;
         case F_none_eof:
           return F_true;
@@ -239,7 +239,7 @@ extern "C" {
           return F_true;
       #endif // _di_fll_fss_status_basic_
 
-      #ifndef _di_fll_error_non_
+      #ifndef _di_F_error_compare_
         case F_than_less:
           return F_true;
         case F_equal_to:

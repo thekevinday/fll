@@ -9,7 +9,7 @@ extern "C" {
   f_return_status f_directory_create(const f_string path, const mode_t mode) {
     if (mkdir(path, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_blocks);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -38,7 +38,7 @@ extern "C" {
 
     if (mkdirat(at_id, path, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_blocks);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -225,7 +225,7 @@ extern "C" {
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == EMFILE) return F_status_set_error(F_file_descriptors_max);
+      if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
 
@@ -272,7 +272,7 @@ extern "C" {
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == EMFILE) return F_status_set_error(F_file_descriptors_max);
+      if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
 

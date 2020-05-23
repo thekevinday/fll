@@ -185,7 +185,7 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    if (status == F_data_no_eos) {
+    if (status == F_data_not_eos) {
       dynamic->used = 0;
       return status;
     }

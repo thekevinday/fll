@@ -120,7 +120,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eos on success at end of string.
- *   F_data_no_eos if end of string reached before index was reached.
+ *   F_data_not_eos if end of string reached before index was reached.
  *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -148,7 +148,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eos on success at end of string.
- *   F_data_no_eos if end of string reached before index was reached (dynamic->used is set to 0).
+ *   F_data_not_eos if end of string reached before index was reached (dynamic->used is set to 0).
  *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_reallocation (with error bit) on memory reallocation error.

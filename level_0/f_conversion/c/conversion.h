@@ -163,7 +163,7 @@ extern "C" {
  *
  * @return
  *   F_none if character was converted to a binary.
- *   F_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
+ *   F_number (with error bit) if no conversion was made due to non-binary values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_binary_
@@ -181,7 +181,7 @@ extern "C" {
  *
  * @return
  *   F_none if character was converted to a decimal.
- *   F_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_decimal_
@@ -199,7 +199,7 @@ extern "C" {
  *
  * @return
  *   F_none if character was converted to a duodecimal.
- *   F_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_duodecimal_
@@ -217,7 +217,7 @@ extern "C" {
  *
  * @return
  *   F_none if character was converted to a hexidecimal.
- *   F_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_hexidecimal_
@@ -235,7 +235,7 @@ extern "C" {
  *
  * @return
  *   F_none if character was converted to a hexidecimal.
- *   F_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_octal_
@@ -261,7 +261,7 @@ extern "C" {
  *
  * @return
  *   F_none if the binary string was converted to an signed long.
- *   F_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
+ *   F_number (with error bit) if no conversion was made due to non-binary values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
@@ -287,7 +287,7 @@ extern "C" {
  *
  * @return
  *   F_none if the binary string was converted to an unsigned long.
- *   F_number_invalid (with error bit) if no conversion was made due to non-binary values being found.
+ *   F_number (with error bit) if no conversion was made due to non-binary values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_number_overflow (with error bit) on integer overflow.
  */
@@ -314,7 +314,7 @@ extern "C" {
  *
  * @return
  *   F_none if the decimal string was converted to an signed long.
- *   F_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
@@ -340,7 +340,7 @@ extern "C" {
  *
  * @return
  *   F_none if the decimal string was converted to an unsigned long.
- *   F_number_invalid (with error bit) if no conversion was made due to non-decimal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_number_overflow (with error bit) on integer overflow.
  */
@@ -367,7 +367,7 @@ extern "C" {
  *
  * @return
  *   F_none if the duodecimal string was converted to an signed long.
- *   F_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
@@ -393,7 +393,7 @@ extern "C" {
  *
  * @return
  *   F_none if the duodecimal string was converted to an unsigned long.
- *   F_number_invalid (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_number_overflow (with error bit) on integer overflow.
  */
@@ -420,7 +420,7 @@ extern "C" {
  *
  * @return
  *   F_none if the hexidecimal string was converted to an signed long.
- *   F_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
@@ -446,7 +446,7 @@ extern "C" {
  *
  * @return
  *   F_none if the hexidecimal string was converted to an unsigned long.
- *   F_number_invalid (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_number_overflow (with error bit) on integer overflow.
  */
@@ -473,7 +473,7 @@ extern "C" {
  *
  * @return
  *   F_none if the octal string was converted to an signed long.
- *   F_number_invalid (with error bit) if no conversion was made due to non-octal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-octal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_number_overflow (with error bit) on integer overflow.
  */
@@ -498,7 +498,7 @@ extern "C" {
  *
  * @return
  *   F_none if the octal string was converted to an unsigned long.
- *   F_number_invalid (with error bit) if no conversion was made due to non-octal values being found.
+ *   F_number (with error bit) if no conversion was made due to non-octal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_number_overflow (with error bit) on integer overflow.
  */
@@ -537,7 +537,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not (with error bit) if string starts with a null (length is 0).
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_number_invalid (with error bit) if parameter is not a number.
+ *   F_number (with error bit) if parameter is not a number.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
  *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
@@ -580,7 +580,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not (with error bit) if string starts with a null (length is 0).
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_number_invalid (with error bit) if parameter is not a number.
+ *   F_number (with error bit) if parameter is not a number.
  *   F_number_negative (with error bit) on negative value.
  *   F_number_positive (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).
  *   F_number_overflow (with error bit) on integer overflow.

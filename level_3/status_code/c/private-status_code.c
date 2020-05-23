@@ -16,26 +16,26 @@ extern "C" {
 
     if (data.parameters[status_code_parameter_is_error].result == f_console_result_found) {
       if (F_status_is_error(number)) {
-        printf("%s\n", fl_status_string_true);
+        printf("%s\n", FL_status_string_true);
       }
       else {
-        printf("%s\n", fl_status_string_false);
+        printf("%s\n", FL_status_string_false);
       }
     }
     else if (data.parameters[status_code_parameter_is_warning].result == f_console_result_found) {
       if (F_status_is_warning(number)) {
-        printf("%s\n", fl_status_string_true);
+        printf("%s\n", FL_status_string_true);
       }
       else {
-        printf("%s\n", fl_status_string_false);
+        printf("%s\n", FL_status_string_false);
       }
     }
     else if (data.parameters[status_code_parameter_is_fine].result == f_console_result_found) {
       if (F_status_is_fine(number)) {
-        printf("%s\n", fl_status_string_true);
+        printf("%s\n", FL_status_string_true);
       }
       else {
-        printf("%s\n", fl_status_string_false);
+        printf("%s\n", FL_status_string_false);
       }
     }
 

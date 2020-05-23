@@ -36,7 +36,7 @@ extern "C"{
         return F_address;
       }
       else if (errno == ENOTDIR) {
-        return F_directory_not_found;
+        return F_directory_found_not;
       }
       else if (errno == ENOMEM) {
         return F_memory_out;

@@ -208,7 +208,7 @@ extern "C" {
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_name (with error bit) on path name error.
@@ -241,7 +241,7 @@ extern "C" {
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_name (with error bit) on path name error.
@@ -389,7 +389,7 @@ extern "C" {
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other (unlink()) error.
  *   F_number_overflow (with error bit) on integer overflow.
- *   F_file_descriptors_max (with error bit) if max file descriptors was reached.
+ *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
  *   F_file_open_max (with error bit) too many open files.
  *
  * @see nftw()

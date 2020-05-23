@@ -54,10 +54,10 @@ extern "C" {
           }
           else {
             if (location->start >= buffer->used) {
-              return F_data_no_eos;
+              return F_data_not_eos;
             }
 
-            return F_data_no_stop;
+            return F_data_not_stop;
           }
         }
 
@@ -76,11 +76,11 @@ extern "C" {
       if (status == F_none_eos || status == F_none_stop) {
         return status;
       }
-      else if (status == F_data_no_eos || status == F_data_no_stop) {
+      else if (status == F_data_not_eos || status == F_data_not_stop) {
         // If at least some valid object was found, then return F_none equivalents.
         if (nest->depth[0].used > initial_used) {
-          if (status == F_data_no_eos) return F_none_eos;
-          if (status == F_data_no_stop) return F_none_stop;
+          if (status == F_data_not_eos) return F_none_eos;
+          if (status == F_data_not_stop) return F_none_stop;
         }
 
         return status;
@@ -88,8 +88,8 @@ extern "C" {
       else if (status == F_unterminated_eos || status == F_unterminated_stop || status == F_unterminated_nest_eos || status == F_unterminated_nest_stop) {
         // If at least some valid object was found, then return F_none equivalents.
         if (nest->depth[0].used > initial_used) {
-          if (status == F_data_no_eos) return F_none_eos;
-          if (status == F_data_no_stop) return F_none_stop;
+          if (status == F_data_not_eos) return F_none_eos;
+          if (status == F_data_not_stop) return F_none_stop;
         }
 
         return status;
@@ -128,7 +128,7 @@ extern "C" {
 
     status = fl_fss_extended_list_object_write(object, &range, buffer);
 
-    if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos) {
+    if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
       return status;
     }
 
@@ -138,7 +138,7 @@ extern "C" {
         range.stop = contents.array[0].used - 1;
         status = fl_fss_extended_list_content_write(contents.array[0], &range, buffer);
 
-        if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos) {
+        if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
           return status;
         }
       }

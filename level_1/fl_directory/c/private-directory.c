@@ -109,7 +109,7 @@ extern "C" {
         return F_status_set_error(F_memory_out);
       }
       else if (errno == EMFILE) {
-        return F_status_set_error(F_file_descriptors_max);
+        return F_status_set_error(F_file_descriptor_max);
       }
       else if (errno == ENFILE) {
         return F_status_set_error(F_file_open_max);
@@ -118,7 +118,7 @@ extern "C" {
         return F_status_set_error(F_directory);
       }
       else if (errno == ENOENT) {
-        return F_status_set_error(F_directory_not_found);
+        return F_status_set_error(F_directory_found_not);
       }
       else if (errno == EACCES) {
         return F_status_set_error(F_access_denied);

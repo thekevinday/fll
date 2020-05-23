@@ -22,7 +22,7 @@ extern "C" {
     f_string_lengths delimits = f_string_lengths_initialize;
 
     fl_fss_skip_past_space(*buffer, location);
-    fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_no_eos, F_data_no_stop)
+    fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
 
     // return found nothing if this line only contains whitespace and delimit placeholders.
     if (buffer->string[location->start] == f_string_eol) {
@@ -37,7 +37,7 @@ extern "C" {
 
     // ignore all comment lines.
     if (buffer->string[location->start] == f_fss_comment) {
-      fl_macro_fss_object_seek_till_newline((*buffer), (*location), delimits, F_data_no_eos, F_data_no_stop)
+      fl_macro_fss_object_seek_till_newline((*buffer), (*location), delimits, F_data_not_eos, F_data_not_stop)
 
       status = fl_fss_increment_buffer(*buffer, location, 1);
       if (F_status_is_error(status)) return status;
@@ -63,7 +63,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
         } // while
 
-        fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_no_eos, F_data_no_stop)
+        fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
 
         if (buffer->string[location->start] == f_fss_extended_list_open) {
           f_string_length stop_point = location->start - 1;
@@ -82,7 +82,7 @@ extern "C" {
             if (F_status_is_error(status)) return status;
           } // while
 
-          fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_no_eos, F_data_no_stop)
+          fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
 
           if (buffer->string[location->start] == f_string_eol) {
             f_string_length start = location->start;
@@ -171,7 +171,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // while
 
-    fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_no_eos, F_data_no_stop)
+    fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
 
     status = fl_fss_increment_buffer(*buffer, location, 1);
     if (F_status_is_error(status)) return status;
@@ -290,7 +290,7 @@ extern "C" {
           fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop)
         }
         else {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_no_eos, F_data_no_stop)
+          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_not_eos, F_data_not_stop)
         }
 
         // All slashes for an open are delimited (because it could represent a slash in the object name).
@@ -349,7 +349,7 @@ extern "C" {
             fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop)
           }
           else {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_no_eos, F_data_no_stop)
+            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_not_eos, F_data_not_stop)
           }
 
           // this is a valid object open/close that has been delimited, save the slash delimit positions.
@@ -493,7 +493,7 @@ extern "C" {
           fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop)
         }
         else {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_no_eos, F_data_no_stop)
+          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_not_eos, F_data_not_stop)
         }
 
         if (buffer->string[location->start] == f_string_eol) {
@@ -557,7 +557,7 @@ extern "C" {
             fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop)
           }
           else {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_no_eos, F_data_no_stop)
+            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_not_eos, F_data_not_stop)
           }
         }
       }
@@ -594,7 +594,7 @@ extern "C" {
           fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop)
         }
         else {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_no_eos, F_data_no_stop)
+          fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_not_eos, F_data_not_stop)
         }
 
         if (buffer->string[location->start] == f_string_eol) {
@@ -703,7 +703,7 @@ extern "C" {
             fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop)
           }
           else {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_no_eos, F_data_no_stop)
+            fl_macro_fss_nest_return_on_overflow((*buffer), (*location), (*found), delimits, positions_start, objects, F_data_not_eos, F_data_not_stop)
           }
         }
       }
@@ -772,10 +772,10 @@ extern "C" {
     fl_macro_fss_skip_past_delimit_placeholders(object, (*location))
 
     if (location->start > location->stop) {
-      return F_data_no_stop;
+      return F_data_not_stop;
     }
     else if (location->start >= object.used) {
-      return F_data_no_eos;
+      return F_data_not_eos;
     }
 
     start_position = location->start;
@@ -872,7 +872,7 @@ extern "C" {
       }
       else if (object.string[location->start] == f_string_eol) {
         if (buffer_position.stop == buffer_position.start) {
-          return F_data_no_eol;
+          return F_data_not_eol;
         }
 
         break;
@@ -921,10 +921,10 @@ extern "C" {
     fl_macro_fss_skip_past_delimit_placeholders(content, (*location))
 
     if (location->start > location->stop) {
-      return F_data_no_stop;
+      return F_data_not_stop;
     }
     else if (location->start >= content.used) {
-      return F_data_no_eos;
+      return F_data_not_eos;
     }
 
     start_position = location->start;

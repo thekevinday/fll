@@ -123,14 +123,14 @@ extern "C" {
         if (object) {
           status = fl_fss_extended_object_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos) {
+          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
             return F_status_set_error(status);
           }
         }
         else {
           status = fl_fss_extended_content_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos) {
+          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
             return F_status_set_error(status);
           }
 
@@ -162,7 +162,7 @@ extern "C" {
 
           status = fl_fss_extended_object_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos) {
+          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
             return F_status_set_error(status);
           }
         }
@@ -178,7 +178,7 @@ extern "C" {
 
             status = fl_fss_extended_content_write(input, &range, &buffer);
 
-            if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos) {
+            if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
               return F_status_set_error(status);
             }
 

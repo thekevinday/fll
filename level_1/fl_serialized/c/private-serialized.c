@@ -52,7 +52,7 @@ extern "C" {
       i += width;
     } // while
 
-    return F_data_no_eos;
+    return F_data_not_eos;
   }
 #endif // !defined(_di_fl_unserialize_simple_find_) || !defined(_di_fl_unserialize_simple_get_)
 

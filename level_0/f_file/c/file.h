@@ -427,7 +427,7 @@ extern "C" {
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_name (with error bit) on path name error.
@@ -477,7 +477,7 @@ extern "C" {
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_name (with error bit) on path name error.
@@ -507,7 +507,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
  *   F_interrupted (with error bit) if interrupt was received.
  *   F_input_output (with error bit) on I/O error.
- *   F_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_file_synchronize (with error bit) on flush failure.
  *   F_file_close (with error bit) if fclose() failed for any other reason.
@@ -545,7 +545,7 @@ extern "C" {
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_name (with error bit) on path name error.
@@ -590,7 +590,7 @@ extern "C" {
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_name (with error bit) on path name error.
@@ -674,7 +674,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
  *   F_input_output (with error bit) on I/O error.
- *   F_filesystem_quota_blocks (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_unsupported (with error bit) if the file system or file type does not support flushing.
  *   F_failure (with error bit) on any other failure.

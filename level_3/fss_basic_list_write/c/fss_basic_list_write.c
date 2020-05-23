@@ -96,14 +96,14 @@ extern "C" {
         if (object) {
           status = fl_fss_basic_list_object_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos || status == F_data_no_eol) {
+          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
             return F_status_set_error(status);
           }
         }
         else {
           status = fl_fss_basic_list_content_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos || status == F_data_no_eol) {
+          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
             return F_status_set_error(status);
           }
         }
@@ -122,14 +122,14 @@ extern "C" {
         if (object) {
           status = fl_fss_basic_list_object_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos || status == F_data_no_eol) {
+          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
             return F_status_set_error(status);
           }
         }
         else {
           status = fl_fss_basic_list_content_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_no_stop || status == F_data_no_eos || status == F_data_no_eol) {
+          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
             return F_status_set_error(status);
           }
         }

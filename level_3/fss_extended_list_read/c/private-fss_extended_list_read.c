@@ -26,7 +26,7 @@ extern "C" {
       fl_color_print(f_type_error, context.notable, context.reset, "%s()", function_name);
       fl_color_print_line(f_type_error, context.error, context.reset, ".");
     }
-    else if (status == F_number_invalid) {
+    else if (status == F_number) {
       fl_color_print(f_type_error, context.error, context.reset, "ERROR: The argument '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", argument);
       fl_color_print(f_type_error, context.error, context.reset, "' is not a valid number for the parameter '");
@@ -284,7 +284,7 @@ extern "C" {
 
         return F_status_set_error(status);
       }
-      else if (status == F_data_no_stop || status == F_data_no_eos) {
+      else if (status == F_data_not_stop || status == F_data_not_eos) {
         // Clear buffers, then attempt the next file.
         f_macro_fss_nest_delete_simple(data->nest);
         f_macro_string_dynamic_delete_simple(data->buffer);

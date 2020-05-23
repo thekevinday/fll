@@ -41,9 +41,9 @@ extern "C" {
  *   F_none on success (both valid object and valid content found with start location is at end of content).
  *   F_none_stop on success after reaching stopping point (both valid object and valid content found with start location is at stop point).
  *   F_none_eos on success after reaching the end of the buffer (both valid object and valid content found with start location is at end of buffer).
- *   F_data_no_stop no data to write due start location being greater than stop location.
- *   F_data_no_eos no data to write due start location being greater than or equal to buffer size.
- *   F_data_no_eol if there is no data to write and EOL was reached (@todo: review related code and detemine what this is doing).
+ *   F_data_not_stop no data to write due start location being greater than stop location.
+ *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *   F_data_not_eol if there is no data to write and EOL was reached (@todo: review related code and detemine what this is doing).
  *   FL_fss_found_object_content_not on success and object was found but no content was found (start location is at end of object).
  *   F_unterminated_eos (with error bit) if end of buffer is reached before a closing bracket is found (object was found).
  *   F_unterminated_stop (with error bit) if stop location is reached before a closing bracket is found (object was found).
@@ -75,8 +75,8 @@ extern "C" {
  *   F_none on success.
  *   F_none_stop on success after reaching stopping point .
  *   F_none_eos on success after reaching the end of the buffer.
- *   F_data_no_stop no data to write due start location being greater than stop location.
- *   F_data_no_eos no data to write due start location being greater than or equal to buffer size.
+ *   F_data_not_stop no data to write due start location being greater than stop location.
+ *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *   F_memory_reallocation (with error bit) on reallocation error.

@@ -104,7 +104,7 @@ extern "C" {
       if (errno == EINTR) return F_status_set_error(F_interrupted);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_blocks);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
 
       return F_status_set_error(F_file_close);
     }
@@ -213,7 +213,7 @@ extern "C" {
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == EROFS) return F_status_set_error(F_unsupported);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_blocks);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
 
       return F_status_set_error(F_failure);
     }
@@ -227,7 +227,7 @@ extern "C" {
 
     if (symlink(target, point) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_blocks);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -255,7 +255,7 @@ extern "C" {
 
     if (symlinkat(target, at_id, point) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_blocks);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -290,7 +290,7 @@ extern "C" {
 
     if (file->id < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_blocks);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -325,7 +325,7 @@ extern "C" {
 
     if (file->id < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_blocks);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);

@@ -546,7 +546,7 @@ extern "C" {
     }
 
     if (is_file) {
-      if (status == F_directory_not_found) {
+      if (status == F_directory_found_not) {
         if (verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol);
           fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
@@ -558,7 +558,7 @@ extern "C" {
       }
     }
     else {
-      if (status == F_directory_not_found) {
+      if (status == F_directory_found_not) {
         if (verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol);
           fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
@@ -947,10 +947,10 @@ extern "C" {
 
         status = f_file_stat(parameters_value[i]->string, F_true, &directory_stat);
 
-        if (status == F_status_set_error(F_file_found_not)) status = F_status_set_error(F_directory_not_found);
+        if (status == F_status_set_error(F_file_found_not)) status = F_status_set_error(F_directory_found_not);
 
         if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) != F_directory_not_found || parameters_required[i]) {
+          if (F_status_set_fine(status) != F_directory_found_not || parameters_required[i]) {
             fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_file_stat", parameters_value[i]->string, "access", F_false, F_true);
             return status;
           }
@@ -962,7 +962,7 @@ extern "C" {
         fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' was found.");
 
-        return F_status_set_error(F_directory_not_found);
+        return F_status_set_error(F_directory_found_not);
       }
     } // for
 

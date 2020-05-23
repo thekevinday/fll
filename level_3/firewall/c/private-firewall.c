@@ -658,7 +658,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
                 if (status == F_parameter) {
                   fl_color_print_line(f_type_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_read() for the file '%.*s'", file_path.used, file_path.string);
                 }
-                else if (status == F_data_no_eos || status == F_data_not || status == F_data_no_stop) {
+                else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
                   // empty files are to be silently ignored
                 }
                 else if (status == F_memory_allocation || status == F_memory_reallocation) {
@@ -1412,7 +1412,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
     if (status == F_parameter) {
       fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", filename);
     }
-    else if (status == F_data_no_eos || status == F_data_not || status == F_data_no_stop) {
+    else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
       fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: No relevant data was found within the file '%s'.", filename);
     }
     else if (status == F_memory_allocation || status == F_memory_reallocation) {

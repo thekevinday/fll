@@ -78,7 +78,7 @@
 
       if (status == F_parameter) {
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", filename);
-      } else if (status == F_data_no_eos || status == F_data_not || status == F_data_no_stop) {
+      } else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: No relevant data was found within the file '%s'.", filename);
       } else if (status == F_memory_allocation || status == F_memory_reallocation) {
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
@@ -496,7 +496,7 @@
 
       if (status == F_parameter) {
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", init_rule_core_file);
-      } else if (status == F_data_no_eos || status == F_data_not || status == F_data_no_stop) {
+      } else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: No relevant data was found within the file '%s'.", init_rule_core_file);
       } else if (status == F_memory_allocation || status == F_memory_reallocation) {
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");

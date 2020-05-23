@@ -83,7 +83,7 @@ extern "C" {
       case 0x30: *number = 0; break;
       case 0x31: *number = 1; break;
       default:
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
     }
 
     return F_none;
@@ -108,7 +108,7 @@ extern "C" {
       case 0x38: *number = 8; break;
       case 0x39: *number = 9; break;
       default:
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
     }
 
     return F_none;
@@ -137,7 +137,7 @@ extern "C" {
       case 0x61: *decimal = 10; break;
       case 0x62: *decimal = 11; break;
       default:
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
     }
 
     return F_none;
@@ -174,7 +174,7 @@ extern "C" {
       case 0x65: *decimal = 14; break;
       case 0x66: *decimal = 15; break;
       default:
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
     }
 
     return F_none;
@@ -197,7 +197,7 @@ extern "C" {
       case 0x36: *number = 6; break;
       case 0x37: *number = 7; break;
       default:
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
     }
 
     return F_none;
@@ -251,7 +251,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
     } // for
 
@@ -291,7 +291,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
     } // for
 
@@ -352,7 +352,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
     } // for
 
@@ -395,7 +395,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
     } // for
 
@@ -456,7 +456,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
     } // for
 
@@ -499,7 +499,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
     } // for
 
@@ -560,7 +560,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
     } // for
 
@@ -603,7 +603,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
     } // for
 
@@ -664,7 +664,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
     } // for
 
@@ -707,7 +707,7 @@ extern "C" {
         }
       }
       else if (string[i] != '\0') {
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
     } // for
 
@@ -747,7 +747,7 @@ extern "C" {
             continue;
           }
 
-          return F_status_set_error(F_number_invalid);
+          return F_status_set_error(F_number);
         }
       }
       else {
@@ -770,7 +770,7 @@ extern "C" {
           }
         }
 
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
 
       if (string[i] == 0x30) {
@@ -801,7 +801,7 @@ extern "C" {
           offset += 2;
         }
         else {
-          return F_status_set_error(F_number_invalid);
+          return F_status_set_error(F_number);
         }
 
         break;
@@ -814,7 +814,7 @@ extern "C" {
           offset++;
         }
         else {
-          return F_status_set_error(F_number_invalid);
+          return F_status_set_error(F_number);
         }
       }
 
@@ -825,7 +825,7 @@ extern "C" {
           offset++;
         }
         else {
-          return F_status_set_error(F_number_invalid);
+          return F_status_set_error(F_number);
         }
       }
 
@@ -834,11 +834,11 @@ extern "C" {
         break;
       }
 
-      return F_status_set_error(F_number_invalid);
+      return F_status_set_error(F_number);
     } // for
 
     if (mode == 0) {
-      return F_status_set_error(F_number_invalid);
+      return F_status_set_error(F_number);
     }
 
     f_string_range location_offset = f_string_range_initialize;
@@ -896,7 +896,7 @@ extern "C" {
             continue;
           }
 
-          return F_status_set_error(F_number_invalid);
+          return F_status_set_error(F_number);
         }
       }
       else {
@@ -919,7 +919,7 @@ extern "C" {
           }
         }
 
-        return F_status_set_error(F_number_invalid);
+        return F_status_set_error(F_number);
       }
 
       if (string[i] == 0x30) {
@@ -950,7 +950,7 @@ extern "C" {
           offset += 2;
         }
         else {
-          return F_status_set_error(F_number_invalid);
+          return F_status_set_error(F_number);
         }
 
         break;
@@ -971,11 +971,11 @@ extern "C" {
         break;
       }
 
-      return F_status_set_error(F_number_invalid);
+      return F_status_set_error(F_number);
     } // for
 
     if (mode == 0) {
-      return F_status_set_error(F_number_invalid);
+      return F_status_set_error(F_number);
     }
 
     f_string_range location_offset = f_string_range_initialize;
@@ -1008,7 +1008,7 @@ extern "C" {
         return F_status_set_error(F_number_positive);
       }
 
-      return F_status_set_error(F_number_invalid);
+      return F_status_set_error(F_number);
     }
 
     return status;
