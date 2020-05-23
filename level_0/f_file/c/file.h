@@ -86,16 +86,19 @@ extern "C" {
  * Commonly used file related properties.
  *
  * id: File descriptor.
- * size_block: The default number of 1-byte characters to read at a time and is often used for the read/write buffer size.
+ * flags: Flags used for opening the file.
+ * size_read: The default number of 1-byte characters to read at a time and is often used for the read buffer size.
+ * size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
  */
 #ifndef _di_f_file_
   typedef struct {
     int    id;
+    int    flags;
     size_t size_read;
     size_t size_write;
   } f_file;
 
-  #define f_file_initialize { 0, f_file_default_read_size, f_file_default_write_size }
+  #define f_file_initialize { 0, O_RDONLY, f_file_default_read_size, f_file_default_write_size }
 #endif // _di_f_file_
 
 /**
@@ -139,6 +142,10 @@ extern "C" {
   #define f_file_flag_truncate_ro (O_CREAT | O_TRUNC | O_RDONLY)
   #define f_file_flag_truncate_rw (O_CREAT | O_TRUNC | O_RDRW)
   #define f_file_flag_truncate_wo (O_CREAT | O_TRUNC | O_WRONLY)
+
+  // file open flags pre-combined will truncate any existing files to 0.
+  #define f_file_flag_append_rw (O_CREAT | O_APPEND | O_RDRW)
+  #define f_file_flag_append_wo (O_CREAT | O_APPEND | O_WRONLY)
 
   // file open flags pre-combined with synchronous io.
   #define f_file_flag_sync_ro            (O_SYNC | O_RDONLY)
@@ -240,6 +247,30 @@ extern "C" {
   #define f_file_mode_user_program   (f_file_mode_owner_rx | f_file_mode_group_rx)
   #define f_file_mode_user_protected (f_file_mode_owner_r | f_file_mode_group_r)
 #endif // _di_f_file_modes_
+
+/**
+ * Check if a file can be accessed.
+ *
+ * @param path
+ *   The path file name.
+ *
+ * @return
+ *   f_true if file exists.
+ *   f_false if file does not exist.
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *   f_invalid_name (with error bit) if the filename is too long.
+ *   f_out_of_memory (with error bit) if out of memory.
+ *   f_number_overflow (with error bit) on overflow error.
+ *   f_invalid_directory (with error bit) on invalid directory.
+ *   f_access_denied (with error bit) on access denied.
+ *   f_loop (with error bit) on loop error.
+ *   f_false (with error bit) on unknown/unhandled errors.
+ *
+ * @see access()
+ */
+#ifndef _di_f_file_access_
+  extern f_return_status f_file_access(const f_string path);
+#endif // _di_f_file_access_
 
 /**
  * Change mode of a given file at the specified path.
@@ -366,30 +397,6 @@ extern "C" {
 #ifndef _di_f_file_change_owner_at_
   extern f_return_status f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flags);
 #endif // _di_f_file_change_owner_at_
-
-/**
- * Check if a file can be accessed.
- *
- * @param path
- *   The path file name.
- *
- * @return
- *   f_true if file exists.
- *   f_false if file does not exist.
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *   f_invalid_name (with error bit) if the filename is too long.
- *   f_out_of_memory (with error bit) if out of memory.
- *   f_number_overflow (with error bit) on overflow error.
- *   f_invalid_directory (with error bit) on invalid directory.
- *   f_access_denied (with error bit) on access denied.
- *   f_loop (with error bit) on loop error.
- *   f_false (with error bit) on unknown/unhandled errors.
- *
- * @see access()
- */
-#ifndef _di_f_file_access_
-  extern f_return_status f_file_access(const f_string path);
-#endif // _di_f_file_access_
 
 /**
  * Copy a file.
@@ -827,8 +834,6 @@ extern "C" {
  *
  * @param path
  *   The path file name.
- * @param flags
- *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
  * @param mode
  *   The file mode to open in.
  *   Set to 0 to not use.
@@ -846,7 +851,7 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_file_open_
-  extern f_return_status f_file_open(const f_string path, const int flags, const mode_t mode, f_file *file);
+  extern f_return_status f_file_open(const f_string path, const mode_t mode, f_file *file);
 #endif // _di_f_file_open_
 
 /**
@@ -858,8 +863,6 @@ extern "C" {
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
- * @param flags
- *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
  * @param mode
  *   The file mode to open in.
  *   Set to 0 to not use.
@@ -877,7 +880,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_file_open_at_
-  extern f_return_status f_file_open_at(const int at_id, const f_string path, const int flags, const mode_t mode, f_file *file);
+  extern f_return_status f_file_open_at(const int at_id, const f_string path, const mode_t mode, f_file *file);
 #endif // _di_f_file_open_at_
 
 /**
@@ -1234,6 +1237,7 @@ extern "C" {
  *   The buffer to write to the file.
  * @param written
  *   The total bytes written.
+ *   Set pointer to 0 to not use.
  *
  * @return
  *   f_none on success.
@@ -1265,6 +1269,7 @@ extern "C" {
  *   The buffer to write to the file.
  * @param written
  *   The total bytes written.
+ *   Set pointer to 0 to not use.
  *
  * @return
  *   f_none on success.
@@ -1296,6 +1301,7 @@ extern "C" {
  *   The total bytes to write, unless end of buffer is reached first.
  * @param written
  *   The total bytes written.
+ *   Set pointer to 0 to not use.
  *
  * @return
  *   f_none on success.
@@ -1328,6 +1334,7 @@ extern "C" {
  *   An inclusive start an stop range within the buffer to read.
  * @param written
  *   The total bytes written.
+ *   Set pointer to 0 to not use.
  *
  * @return
  *   f_none on success.

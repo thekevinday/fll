@@ -746,6 +746,11 @@ extern "C" {
         return f_none;
       }
 
+      if (fl_string_compare(string, fl_status_string_no_data_on_block, length, fl_status_string_no_data_on_block_length) == f_equal_to) {
+        *code = f_no_data_on_block;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_none_on_eof, length, fl_status_string_none_on_eof_length) == f_equal_to) {
         *code = f_none_on_eof;
         return f_none;
@@ -766,6 +771,11 @@ extern "C" {
         return f_none;
       }
 
+      if (fl_string_compare(string, fl_status_string_none_on_block, length, fl_status_string_none_on_block_length) == f_equal_to) {
+        *code = f_none_on_block;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_error_on_eof, length, fl_status_string_error_on_eof_length) == f_equal_to) {
         *code = f_error_on_eof;
         return f_none;
@@ -783,6 +793,11 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_error_on_stop, length, fl_status_string_error_on_stop_length) == f_equal_to) {
         *code = f_error_on_stop;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_error_on_block, length, fl_status_string_error_on_block_length) == f_equal_to) {
+        *code = f_error_on_block;
         return f_none;
       }
 
@@ -831,6 +846,11 @@ extern "C" {
         return f_none;
       }
 
+      if (fl_string_compare(string, fl_status_string_unterminated_on_block, length, fl_status_string_unterminated_on_block_length) == f_equal_to) {
+        *code = f_unterminated_on_block;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_unterminated_group, length, fl_status_string_unterminated_group_length) == f_equal_to) {
         *code = f_unterminated_group;
         return f_none;
@@ -853,6 +873,11 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_unterminated_group_on_stop, length, fl_status_string_unterminated_group_on_stop_length) == f_equal_to) {
         *code = f_unterminated_group_on_stop;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_unterminated_group_on_block, length, fl_status_string_unterminated_group_on_block_length) == f_equal_to) {
+        *code = f_unterminated_group_on_block;
         return f_none;
       }
 
@@ -881,6 +906,11 @@ extern "C" {
         return f_none;
       }
 
+      if (fl_string_compare(string, fl_status_string_unterminated_nest_on_block, length, fl_status_string_unterminated_nest_on_block_length) == f_equal_to) {
+        *code = f_unterminated_nest_on_block;
+        return f_none;
+      }
+
       if (fl_string_compare(string, fl_status_string_incomplete_utf, length, fl_status_string_incomplete_utf_length) == f_equal_to) {
         *code = f_incomplete_utf;
         return f_none;
@@ -903,6 +933,11 @@ extern "C" {
 
       if (fl_string_compare(string, fl_status_string_incomplete_utf_on_stop, length, fl_status_string_incomplete_utf_on_stop_length) == f_equal_to) {
         *code = f_incomplete_utf_on_stop;
+        return f_none;
+      }
+
+      if (fl_string_compare(string, fl_status_string_incomplete_utf_on_block, length, fl_status_string_incomplete_utf_on_block_length) == f_equal_to) {
+        *code = f_incomplete_utf_on_block;
         return f_none;
       }
     #endif // _di_fll_status_buffers_

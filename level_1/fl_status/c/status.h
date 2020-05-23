@@ -462,6 +462,9 @@ extern "C" {
     #define fl_status_string_no_data_on_stop "f_no_data_on_stop"
     #define fl_status_string_no_data_on_stop_length 17
 
+    #define fl_status_string_no_data_on_block "f_no_data_on_block"
+    #define fl_status_string_no_data_on_block_length 18
+
     #define fl_status_string_none_on_eol "f_none_on_eol"
     #define fl_status_string_none_on_eol_length 13
 
@@ -470,6 +473,9 @@ extern "C" {
 
     #define fl_status_string_none_on_stop "f_none_on_stop"
     #define fl_status_string_none_on_stop_length 14
+
+    #define fl_status_string_none_on_block "f_none_on_block"
+    #define fl_status_string_none_on_block_length 15
 
     #define fl_status_string_error_on_eof "f_error_on_eof"
     #define fl_status_string_error_on_eof_length 14
@@ -482,6 +488,9 @@ extern "C" {
 
     #define fl_status_string_error_on_stop "f_error_on_stop"
     #define fl_status_string_error_on_stop_length 15
+
+    #define fl_status_string_error_on_block "f_error_on_block"
+    #define fl_status_string_error_on_block_length 16
 
     #define fl_status_string_buffer_too_small "f_buffer_too_small"
     #define fl_status_string_buffer_too_small_length 18
@@ -510,6 +519,9 @@ extern "C" {
     #define fl_status_string_unterminated_on_stop "f_unterminated_on_stop"
     #define fl_status_string_unterminated_on_stop_length 22
 
+    #define fl_status_string_unterminated_on_block "f_unterminated_on_block"
+    #define fl_status_string_unterminated_on_block_length 23
+
     #define fl_status_string_unterminated_group "f_unterminated_group"
     #define fl_status_string_unterminated_group_length 20
 
@@ -524,6 +536,9 @@ extern "C" {
 
     #define fl_status_string_unterminated_group_on_stop "f_unterminated_group_on_stop"
     #define fl_status_string_unterminated_group_on_stop_length 28
+
+    #define fl_status_string_unterminated_group_on_block "f_unterminated_group_on_block"
+    #define fl_status_string_unterminated_group_on_block_length 29
 
     #define fl_status_string_unterminated_nest "f_unterminated_nest"
     #define fl_status_string_unterminated_nest_length 19
@@ -540,6 +555,9 @@ extern "C" {
     #define fl_status_string_unterminated_nest_on_stop "f_unterminated_nest_on_stop"
     #define fl_status_string_unterminated_nest_on_stop_length 27
 
+    #define fl_status_string_unterminated_nest_on_block "f_unterminated_nest_on_block"
+    #define fl_status_string_unterminated_nest_on_block_length 28
+
     #define fl_status_string_incomplete_utf "f_incomplete_utf"
     #define fl_status_string_incomplete_utf_length 16
 
@@ -554,6 +572,9 @@ extern "C" {
 
     #define fl_status_string_incomplete_utf_on_stop "f_incomplete_utf_on_stop"
     #define fl_status_string_incomplete_utf_on_stop_length 24
+
+    #define fl_status_string_incomplete_utf_on_block "f_incomplete_utf_on_block"
+    #define fl_status_string_incomplete_utf_on_block_length 25
   #endif // _di_fl_status_buffers_
 
   #ifndef _di_fl_status_allocation_

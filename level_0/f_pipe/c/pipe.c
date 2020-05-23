@@ -4,11 +4,11 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_pipe_exists_
-  f_return_status f_pipe_exists() {
+#ifndef _di_f_pipe_input_exists_
+  f_return_status f_pipe_input_exists() {
     struct stat st_info;
 
-    if (fstat(fileno(f_pipe), &st_info) != 0) {
+    if (fstat(f_type_descriptor_input, &st_info) != 0) {
       return f_status_set_error(f_file_error_stat);
     }
 
@@ -18,13 +18,13 @@ extern "C" {
 
     return f_false;
   }
-#endif // _di_f_pipe_exists_
+#endif // _di_f_pipe_input_exists_
 
 #ifndef _di_f_pipe_warning_exists_
   f_return_status f_pipe_warning_exists() {
     struct stat st_info;
 
-    if (fstat(fileno(f_pipe_warning), &st_info) != 0) {
+    if (fstat(f_type_descriptor_warning, &st_info) != 0) {
       return f_status_set_error(f_file_error_stat);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
   f_return_status f_pipe_error_exists() {
     struct stat st_info;
 
-    if (fstat(fileno(f_pipe_error), &st_info) != 0) {
+    if (fstat(f_type_descriptor_error, &st_info) != 0) {
       return f_status_set_error(f_file_error_stat);
     }
 
@@ -56,7 +56,7 @@ extern "C" {
   f_return_status f_pipe_debug_exists() {
     struct stat st_info;
 
-    if (fstat(fileno(f_pipe_debug), &st_info) != 0) {
+    if (fstat(f_type_descriptor_debug, &st_info) != 0) {
       return f_status_set_error(f_file_error_stat);
     }
 

@@ -43,13 +43,13 @@ extern "C" {
     fll_program_print_help_usage(context, byte_dump_name, "filename(s)");
 
     printf("  When using the ");
-    fl_color_print(f_standard_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_text);
+    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_text);
     printf(" option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.");
 
     printf("%c%c", f_string_eol, f_string_eol);
 
     printf("  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the ");
-    fl_color_print(f_standard_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_placeholder);
+    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_placeholder);
     printf(" option is used).");
 
     printf("%c%c", f_string_eol, f_string_eol);
@@ -59,7 +59,7 @@ extern "C" {
     printf("%c%c", f_string_eol, f_string_eol);
 
     printf("  When ");
-    fl_color_print(f_standard_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
+    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
     printf(" is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.");
 
     printf("%c%c", f_string_eol, f_string_eol);
@@ -162,9 +162,9 @@ extern "C" {
     }
     else if (data->remaining.used > 0 || data->process_pipe) {
       if (data->parameters[byte_dump_parameter_width].result == f_console_result_found) {
-        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
+        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
 
         byte_dump_delete_data(data);
         return f_status_set_error(status);
@@ -174,13 +174,13 @@ extern "C" {
         status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_width].additional.array[data->parameters[byte_dump_parameter_width].additional.used - 1]], &number);
 
         if (f_status_is_error(status) || number < 1 || number >= 0xfb) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "' value can only be a number between ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "0");
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, " and ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "251");
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "' value can only be a number between ");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "0");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, " and ");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "251");
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
           byte_dump_delete_data(data);
           return f_status_set_error(status);
@@ -190,9 +190,9 @@ extern "C" {
       }
 
       if (data->parameters[byte_dump_parameter_first].result == f_console_result_found) {
-        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
+        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
 
         byte_dump_delete_data(data);
         return f_status_set_error(status);
@@ -202,13 +202,13 @@ extern "C" {
         status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_first].additional.array[data->parameters[byte_dump_parameter_first].additional.used - 1]], &number);
 
         if (f_status_is_error(status) || number > f_type_number_size_unsigned) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "' value can only be a number (inclusively) between ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "0");
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, " and ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%llu", f_type_number_size_unsigned);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "' value can only be a number (inclusively) between ");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "0");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, " and ");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%llu", f_type_number_size_unsigned);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
           byte_dump_delete_data(data);
           return f_status_set_error(status);
@@ -218,9 +218,9 @@ extern "C" {
       }
 
       if (data->parameters[byte_dump_parameter_last].result == f_console_result_found) {
-        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
+        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
 
         byte_dump_delete_data(data);
         return f_status_set_error(status);
@@ -230,13 +230,13 @@ extern "C" {
         status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_last].additional.array[data->parameters[byte_dump_parameter_last].additional.used - 1]], &number);
 
         if (f_status_is_error(status) || number < 0 || number > f_type_number_size_unsigned) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "' value can only be a number (inclusively) between ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "0");
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, " and ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%llu", f_type_number_size_unsigned);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "' value can only be a number (inclusively) between ");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "0");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, " and ");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%llu", f_type_number_size_unsigned);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
           byte_dump_delete_data(data);
           return f_status_set_error(status);
@@ -247,11 +247,11 @@ extern "C" {
 
       if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional && data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
         if (data->first > data->last) {
-            fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
-            fl_color_print(f_standard_error, data->context.error, data->context.reset, "' value cannot be greater than the parameter '");
-            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' value.");
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "' value cannot be greater than the parameter '");
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' value.");
 
             byte_dump_delete_data(data);
             return f_status_set_error(status);
@@ -264,28 +264,28 @@ extern "C" {
       if (data->process_pipe) {
         f_file file = f_file_initialize;
 
-        file.address = f_pipe;
+        file.id = f_type_descriptor_input;
 
         printf("%c", f_string_eol);
-        fl_color_print(f_standard_output, data->context.title, data->context.reset, "Piped Byte Dump: (in ");
+        fl_color_print(f_type_output, data->context.title, data->context.reset, "Piped Byte Dump: (in ");
 
         if (data->mode == byte_dump_mode_hexidecimal) {
-          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Hexidecimal");
+          fl_color_print(f_type_output, data->context.title, data->context.reset, "Hexidecimal");
         }
         else if (data->mode == byte_dump_mode_duodecimal) {
-          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Duodecimal");
+          fl_color_print(f_type_output, data->context.title, data->context.reset, "Duodecimal");
         }
         else if (data->mode == byte_dump_mode_octal) {
-          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Octal");
+          fl_color_print(f_type_output, data->context.title, data->context.reset, "Octal");
         }
         else if (data->mode == byte_dump_mode_binary) {
-          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Binary");
+          fl_color_print(f_type_output, data->context.title, data->context.reset, "Binary");
         }
         else if (data->mode == byte_dump_mode_decimal) {
-          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Decimal");
+          fl_color_print(f_type_output, data->context.title, data->context.reset, "Decimal");
         }
 
-        fl_color_print_line(f_standard_output, data->context.title, data->context.reset, ")");
+        fl_color_print_line(f_type_output, data->context.title, data->context.reset, ")");
 
         status = byte_dump_file(*data, "-", file);
 
@@ -322,7 +322,7 @@ extern "C" {
         for (f_array_length counter = 0; counter < data->remaining.used; counter++) {
           f_file file = f_file_initialize;
 
-          status = f_file_open(&file, arguments.argv[data->remaining.array[counter]]);
+          status = f_file_open(arguments.argv[data->remaining.array[counter]], 0, &file);
           if (f_status_is_error(status)) {
             byte_dump_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], f_status_set_fine(status));
             byte_dump_delete_data(data);
@@ -330,31 +330,31 @@ extern "C" {
           }
 
           printf("%c", f_string_eol);
-          fl_color_print(f_standard_output, data->context.title, data->context.reset, "Byte Dump of: ");
-          fl_color_print(f_standard_output, data->context.notable, data->context.reset, "%s", arguments.argv[data->remaining.array[counter]]);
-          fl_color_print(f_standard_output, data->context.title, data->context.reset, " (in ");
+          fl_color_print(f_type_output, data->context.title, data->context.reset, "Byte Dump of: ");
+          fl_color_print(f_type_output, data->context.notable, data->context.reset, "%s", arguments.argv[data->remaining.array[counter]]);
+          fl_color_print(f_type_output, data->context.title, data->context.reset, " (in ");
 
           if (data->mode == byte_dump_mode_hexidecimal) {
-            fl_color_print(f_standard_output, data->context.title, data->context.reset, "Hexidecimal");
+            fl_color_print(f_type_output, data->context.title, data->context.reset, "Hexidecimal");
           }
           else if (data->mode == byte_dump_mode_duodecimal) {
-            fl_color_print(f_standard_output, data->context.title, data->context.reset, "Duodecimal");
+            fl_color_print(f_type_output, data->context.title, data->context.reset, "Duodecimal");
           }
           else if (data->mode == byte_dump_mode_octal) {
-            fl_color_print(f_standard_output, data->context.title, data->context.reset, "Octal");
+            fl_color_print(f_type_output, data->context.title, data->context.reset, "Octal");
           }
           else if (data->mode == byte_dump_mode_binary) {
-            fl_color_print(f_standard_output, data->context.title, data->context.reset, "Binary");
+            fl_color_print(f_type_output, data->context.title, data->context.reset, "Binary");
           }
           else if (data->mode == byte_dump_mode_decimal) {
-            fl_color_print(f_standard_output, data->context.title, data->context.reset, "Decimal");
+            fl_color_print(f_type_output, data->context.title, data->context.reset, "Decimal");
           }
 
-          fl_color_print_line(f_standard_output, data->context.title, data->context.reset, ")");
+          fl_color_print_line(f_type_output, data->context.title, data->context.reset, ")");
 
           status = byte_dump_file(*data, arguments.argv[data->remaining.array[counter]], file);
 
-          f_file_close(&file);
+          f_file_close(&file.id);
 
           if (f_status_is_error(status)) {
             byte_dump_delete_data(data);
@@ -367,7 +367,7 @@ extern "C" {
       }
     }
     else {
-      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more filenames.");
+      fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more filenames.");
       status = f_status_set_error(f_invalid_parameter);
     }
 

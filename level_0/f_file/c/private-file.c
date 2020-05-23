@@ -119,10 +119,13 @@ extern "C" {
     f_file file_source = f_file_initialize;
     f_file file_destination = f_file_initialize;
 
-    f_status status = private_f_file_open(source, f_file_flag_read_only, 0, &file_source);
+    file_source.flags = f_file_flag_read_only;
+    file_destination.flags = f_file_flag_write_only | f_file_flag_no_follow;
+
+    f_status status = private_f_file_open(source, 0, &file_source);
     if (f_status_is_error(status)) return status;
 
-    status = private_f_file_open(destination, f_file_flag_write_only | f_file_flag_no_follow, 0, &file_destination);
+    status = private_f_file_open(destination, 0, &file_destination);
     if (f_status_is_error(status)) {
       private_f_file_close(&file_source.id);
       return status;
@@ -156,18 +159,19 @@ extern "C" {
 
 #if !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
   f_return_status private_f_file_create(const f_string path, const mode_t mode, const bool exclusive, const bool dereference) {
-    int flags = O_CLOEXEC | O_CREAT | O_WRONLY;
+    f_file file = f_file_initialize;
+
+    file.flags = O_CLOEXEC | O_CREAT | O_WRONLY;
 
     if (exclusive) {
-      flags |= O_EXCL;
+      file.flags |= O_EXCL;
     }
 
     if (!dereference) {
-      flags |= O_NOFOLLOW;
+      file.flags |= O_NOFOLLOW;
     }
 
-    f_file file = f_file_initialize;
-    f_status status = private_f_file_open(path, mode, flags, &file);
+    f_status status = private_f_file_open(path, mode, &file);
 
     if (file.id > 0) {
       return private_f_file_close(&file.id);
@@ -179,18 +183,19 @@ extern "C" {
 
 #if !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
   f_return_status private_f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive, const bool dereference) {
-    int flags = O_CLOEXEC | O_CREAT | O_WRONLY;
+    f_file file = f_file_initialize;
+
+    file.flags = O_CLOEXEC | O_CREAT | O_WRONLY;
 
     if (exclusive) {
-      flags |= O_EXCL;
+      file.flags |= O_EXCL;
     }
 
     if (!dereference) {
-      flags |= O_NOFOLLOW;
+      file.flags |= O_NOFOLLOW;
     }
 
-    f_file file = f_file_initialize;
-    f_status status = private_f_file_open_at(at_id, path, flags, mode, &file);
+    f_status status = private_f_file_open_at(at_id, path, mode, &file);
 
     if (file.id > 0) {
       return private_f_file_close(&file.id);
@@ -275,12 +280,12 @@ extern "C" {
 #endif // !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
-  f_return_status private_f_file_open(const f_string path, const int flags, const mode_t mode, f_file *file) {
+  f_return_status private_f_file_open(const f_string path, const mode_t mode, f_file *file) {
     if (mode == 0) {
-      file->id = open(path, flags);
+      file->id = open(path, file->flags);
     }
     else {
-      file->id = open(path, flags, mode);
+      file->id = open(path, file->flags, mode);
     }
 
     if (file->id < 0) {
@@ -310,12 +315,12 @@ extern "C" {
 #endif // !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
-  f_return_status private_f_file_open_at(const int at_id, const f_string path, const int flags, const mode_t mode, f_file *file) {
+  f_return_status private_f_file_open_at(const int at_id, const f_string path, const mode_t mode, f_file *file) {
     if (mode == 0) {
-      file->id = openat(at_id, path, flags);
+      file->id = openat(at_id, path, file->flags);
     }
     else {
-      file->id = openat(at_id, path, flags, mode);
+      file->id = openat(at_id, path, file->flags, mode);
     }
 
     if (file->id < 0) {

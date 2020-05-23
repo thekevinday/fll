@@ -8,12 +8,12 @@ extern "C" {
 #ifndef _di_fss_extended_read_print_file_error_
   void fss_extended_read_print_file_error(const fl_color_context context, const f_string function_name, const f_string file_name, const f_status status) {
 
-    if (fll_file_error_print(f_standard_error, context, function_name, file_name, status) == f_false) {
-      fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%u", status);
-      fl_color_print(f_standard_error, context.error, context.reset, ") has occurred while calling ");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s()", function_name);
-      fl_color_print_line(f_standard_error, context.error, context.reset, ".");
+    if (fll_file_error_print(f_type_error, context, function_name, file_name, status) == f_false) {
+      fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (");
+      fl_color_print(f_type_error, context.notable, context.reset, "%u", status);
+      fl_color_print(f_type_error, context.error, context.reset, ") has occurred while calling ");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s()", function_name);
+      fl_color_print_line(f_type_error, context.error, context.reset, ".");
     }
   }
 #endif // _di_fss_extended_read_print_file_error_
@@ -22,62 +22,62 @@ extern "C" {
   void fss_extended_read_print_number_argument_error(const fl_color_context context, const f_string function_name, const f_string parameter_name, const f_string argument, const f_status status) {
 
     if (status == f_invalid_parameter) {
-      fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s()", function_name);
-      fl_color_print_line(f_standard_error, context.error, context.reset, ".");
+      fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s()", function_name);
+      fl_color_print_line(f_type_error, context.error, context.reset, ".");
     }
     else if (status == f_number_invalid) {
-      fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The argument '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
-      fl_color_print(f_standard_error, context.error, context.reset, "' is not a valid number for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: The argument '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", argument);
+      fl_color_print(f_type_error, context.error, context.reset, "' is not a valid number for the parameter '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
     }
     else if (status == f_number_underflow) {
-      fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The argument '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
-      fl_color_print(f_standard_error, context.error, context.reset, "' is too small for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: The argument '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", argument);
+      fl_color_print(f_type_error, context.error, context.reset, "' is too small for the parameter '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
     }
     else if (status == f_number_overflow) {
-      fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The argument '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
-      fl_color_print(f_standard_error, context.error, context.reset, "' is too large for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: The argument '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", argument);
+      fl_color_print(f_type_error, context.error, context.reset, "' is too large for the parameter '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
     }
     else if (status == f_number_negative) {
-      fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The argument '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
-      fl_color_print(f_standard_error, context.error, context.reset, "' is negative, which is not allowed for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: The argument '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", argument);
+      fl_color_print(f_type_error, context.error, context.reset, "' is negative, which is not allowed for the parameter '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
     }
     else if (status == f_number_positive) {
-      fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The argument '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
-      fl_color_print(f_standard_error, context.error, context.reset, "' contains a '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "+");
-      fl_color_print(f_standard_error, context.error, context.reset, "', which is not allowed for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: The argument '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", argument);
+      fl_color_print(f_type_error, context.error, context.reset, "' contains a '");
+      fl_color_print(f_type_error, context.notable, context.reset, "+");
+      fl_color_print(f_type_error, context.error, context.reset, "', which is not allowed for the parameter '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
     }
     else if (status == f_no_data) {
-      fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "' must not be an empty string.");
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: The parameter '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_line(f_type_error, context.error, context.reset, "' must not be an empty string.");
     }
     else {
-      fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%u", status);
-      fl_color_print(f_standard_error, context.error, context.reset, ") has occurred while calling ");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s()", function_name);
-      fl_color_print(f_standard_error, context.error, context.reset, "' for the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print(f_standard_error, context.error, context.reset, "' with the value '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s", argument);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (");
+      fl_color_print(f_type_error, context.notable, context.reset, "%u", status);
+      fl_color_print(f_type_error, context.error, context.reset, ") has occurred while calling ");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s()", function_name);
+      fl_color_print(f_type_error, context.error, context.reset, "' for the parameter '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print(f_type_error, context.error, context.reset, "' with the value '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", argument);
+      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
     }
   }
 #endif // _di_fss_extended_read_print_number_argument_error_
@@ -95,7 +95,7 @@ extern "C" {
 
       macro_fss_extended_read_depths_new(status, (*depths), depth_size);
       if (f_status_is_error(status)) {
-        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
         return status;
       }
 
@@ -173,12 +173,12 @@ extern "C" {
 
             // @todo: move error printing into common function.
             if (status_code == f_error_allocation || status_code == f_error_reallocation) {
-              fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
+              fl_color_print_line(f_type_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
             }
             else if (status_code == f_string_length_size) {
-              fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: Unable to process '");
-              fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_trim);
-              fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' because the maximum buffer size was reached.");
+              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unable to process '");
+              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_trim);
+              fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' because the maximum buffer size was reached.");
             }
             else {
               f_string function = "fl_string_append";
@@ -187,20 +187,20 @@ extern "C" {
                 function = "fl_string_rip";
               }
 
-              fl_color_print(f_standard_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (");
-              fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%u", status_code);
-              fl_color_print(f_standard_error, data.context.error, data.context.reset, ") has occurred while calling ");
-              fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s()", function);
-              fl_color_print_line(f_standard_error, data.context.error, data.context.reset, ".");
+              fl_color_print(f_type_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (");
+              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%u", status_code);
+              fl_color_print(f_type_error, data.context.error, data.context.reset, ") has occurred while calling ");
+              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s()", function);
+              fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
             }
 
             return status;
           }
 
           if (depths->array[i].value_name.used == 0) {
-            fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The '");
-            fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_name);
-            fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' must not be an empty string.");
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_name);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' must not be an empty string.");
 
             return f_status_set_error(f_invalid_parameter);
           }
@@ -211,22 +211,22 @@ extern "C" {
     for (f_array_length i = 0; i < depths->used; i++) {
       for (f_array_length j = i + 1; j < depths->used; j++) {
         if (depths->array[i].depth == depths->array[j].depth) {
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The value '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%llu", depths->array[i].depth);
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, "' may only be specified once for the parameter '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_depth);
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "'.");
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The value '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%llu", depths->array[i].depth);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "' may only be specified once for the parameter '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_depth);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
 
           return f_status_set_error(f_invalid_parameter);
         }
         else if (depths->array[i].depth > depths->array[j].depth) {
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The parameter '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_depth);
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, "' may not have the value '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%llu", depths->array[i].depth);
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, "' before the value '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%llu", depths->array[j].depth);
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "'.");
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The parameter '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_depth);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "' may not have the value '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%llu", depths->array[i].depth);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "' before the value '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%llu", depths->array[j].depth);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
 
           return f_status_set_error(f_invalid_parameter);
         }
@@ -253,33 +253,33 @@ extern "C" {
         status = f_status_set_fine(status);
 
         if (status == f_invalid_parameter) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "fll_fss_extended_read()");
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, " for the file '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", filename);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "fll_fss_extended_read()");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, " for the file '");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", filename);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "'.");
         }
         else if (status == f_error_allocation || status == f_error_reallocation) {
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
         }
         else if (status == f_incomplete_utf_on_stop) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%d", input.start);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ").");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%d", input.start);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, ").");
         }
         else if (status == f_incomplete_utf_on_eos) {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%d", input.start);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ").");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%d", input.start);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, ").");
         }
         else {
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%u", status);
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, ") has occurred while calling ");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "fll_fss_extended_read()");
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, " for the file '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", filename);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%u", status);
+          fl_color_print(f_type_error, data->context.error, data->context.reset, ") has occurred while calling ");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "fll_fss_extended_read()");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, " for the file '");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", filename);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "'.");
         }
 
         return f_status_set_error(status);
@@ -360,10 +360,10 @@ extern "C" {
       if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
         if (depths.array[0].index_at > 0) {
           if (depths.array[0].value_at < data->objects.used && names[depths.array[0].value_at]) {
-            fprintf(f_standard_output, "1%c", f_string_eol);
+            fprintf(f_type_output, "1%c", f_string_eol);
           }
           else {
-            fprintf(f_standard_output, "0%c", f_string_eol);
+            fprintf(f_type_output, "0%c", f_string_eol);
           }
         }
         else if (depths.array[0].index_name > 0) {
@@ -375,10 +375,10 @@ extern "C" {
             total++;
           } // for
 
-          fprintf(f_standard_output, "%llu%c", total, f_string_eol);
+          fprintf(f_type_output, "%llu%c", total, f_string_eol);
         }
         else {
-          fprintf(f_standard_output, "%llu%c", data->objects.used, f_string_eol);
+          fprintf(f_type_output, "%llu%c", data->objects.used, f_string_eol);
         }
 
         return f_none;
@@ -397,8 +397,8 @@ extern "C" {
         for (; i < data->objects.used; i++) {
           if (names[i]) {
             if (at == depths.array[0].value_at) {
-              print_object(f_standard_output, data->buffer, data->objects.array[i]);
-              fprintf(f_standard_output, "%c", f_string_eol);
+              print_object(f_type_output, data->buffer, data->objects.array[i]);
+              fprintf(f_type_output, "%c", f_string_eol);
               break;
             }
 
@@ -412,8 +412,8 @@ extern "C" {
       for (f_string_length i = 0; i < data->objects.used; i++) {
         if (names[i] == 0) continue;
 
-        print_object(f_standard_output, data->buffer, data->objects.array[i]);
-        fprintf(f_standard_output, "%c", f_string_eol);
+        print_object(f_type_output, data->buffer, data->objects.array[i]);
+        fprintf(f_type_output, "%c", f_string_eol);
       } // for
 
       return f_none;
@@ -422,7 +422,7 @@ extern "C" {
     if (depths.array[0].index_at > 0) {
       if (depths.array[0].value_at >= data->objects.used) {
         if (names[depths.array[0].value_at] && data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
-          fprintf(f_standard_output, "0%c", f_string_eol);
+          fprintf(f_type_output, "0%c", f_string_eol);
         }
 
         return f_none;
@@ -436,10 +436,10 @@ extern "C" {
           if (at == depths.array[0].value_at) {
             if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
               if (data->contents.array[i].used == 0) {
-                fprintf(f_standard_output, "0%c", f_string_eol);
+                fprintf(f_type_output, "0%c", f_string_eol);
               }
               else {
-                fprintf(f_standard_output, "1%c", f_string_eol);
+                fprintf(f_type_output, "1%c", f_string_eol);
               }
 
               return f_none;
@@ -452,30 +452,30 @@ extern "C" {
 
                   if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                     if (select < data->contents.array[i].used) {
-                      f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[select]);
-                      fprintf(f_standard_output, "%c", f_string_eol);
+                      f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
+                      fprintf(f_type_output, "%c", f_string_eol);
                     }
                   }
                   else {
                     for (j = 0; j < data->contents.array[i].used; j++) {
-                      f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[j]);
+                      f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
                       if (j + 1 < data->contents.array[i].used) {
                         printf(" ");
                       }
                     } // for
 
-                    fprintf(f_standard_output, "%c", f_string_eol);
+                    fprintf(f_type_output, "%c", f_string_eol);
                   }
                 }
                 else if (include_empty) {
                   if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                     if (select == 0) {
-                      fprintf(f_standard_output, "%c", f_string_eol);
+                      fprintf(f_type_output, "%c", f_string_eol);
                     }
                   }
                   else {
-                    fprintf(f_standard_output, "%c", f_string_eol);
+                    fprintf(f_type_output, "%c", f_string_eol);
                   }
                 }
               }
@@ -488,30 +488,30 @@ extern "C" {
 
               if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                 if (select < data->contents.array[i].used) {
-                  f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[select]);
-                  fprintf(f_standard_output, "%c", f_string_eol);
+                  f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
+                  fprintf(f_type_output, "%c", f_string_eol);
                 }
               }
               else {
                 for (j = 0; j < data->contents.array[i].used; j++) {
-                  f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[j]);
+                  f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
                   if (j + 1 < data->contents.array[i].used) {
                     printf(" ");
                   }
                 } // for
 
-                fprintf(f_standard_output, "%c", f_string_eol);
+                fprintf(f_type_output, "%c", f_string_eol);
               }
             }
             else if (include_empty) {
               if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                 if (select == 0) {
-                  fprintf(f_standard_output, "%c", f_string_eol);
+                  fprintf(f_type_output, "%c", f_string_eol);
                 }
               }
               else {
-                fprintf(f_standard_output, "%c", f_string_eol);
+                fprintf(f_type_output, "%c", f_string_eol);
               }
             }
 
@@ -540,7 +540,7 @@ extern "C" {
         total++;
       } // for
 
-      fprintf(f_standard_output, "%llu%c", total, f_string_eol);
+      fprintf(f_type_output, "%llu%c", total, f_string_eol);
       return f_none;
     }
 
@@ -557,7 +557,7 @@ extern "C" {
         if (data->contents.array[i].used == 0) {
           if (include_empty) {
             if (line_current == line) {
-              fprintf(f_standard_output, "%c", f_string_eol);
+              fprintf(f_type_output, "%c", f_string_eol);
               break;
             }
 
@@ -570,20 +570,20 @@ extern "C" {
         if (line_current == line) {
           if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
             if (select < data->contents.array[i].used) {
-              f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[select]);
-              fprintf(f_standard_output, "%c", f_string_eol);
+              f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
+              fprintf(f_type_output, "%c", f_string_eol);
             }
           }
           else {
             for (j = 0; j < data->contents.array[i].used; j++) {
-              f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[j]);
+              f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
               if (j + 1 < data->contents.array[i].used) {
                 printf(" ");
               }
             } // for
 
-            fprintf(f_standard_output, "%c", f_string_eol);
+            fprintf(f_type_output, "%c", f_string_eol);
           }
 
           break;
@@ -605,7 +605,7 @@ extern "C" {
 
       if (data->contents.array[i].used == 0) {
         if (include_empty && select == 0) {
-          fprintf(f_standard_output, "%c", f_string_eol);
+          fprintf(f_type_output, "%c", f_string_eol);
         }
 
         continue;
@@ -613,20 +613,20 @@ extern "C" {
 
       if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
         if (select < data->contents.array[i].used) {
-          f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[select]);
-          fprintf(f_standard_output, "%c", f_string_eol);
+          f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
+          fprintf(f_type_output, "%c", f_string_eol);
         }
       }
       else {
         for (j = 0; j < data->contents.array[i].used; j++) {
-          f_print_string_dynamic_partial(f_standard_output, data->buffer, data->contents.array[i].array[j]);
+          f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
           if (j + 1 < data->contents.array[i].used) {
             printf(" ");
           }
         } // for
 
-        fprintf(f_standard_output, "%c", f_string_eol);
+        fprintf(f_type_output, "%c", f_string_eol);
       }
     } // for
 

@@ -5,7 +5,7 @@ int main(const int argc, const f_string *argv) {
   const f_console_arguments arguments = { argc, argv };
   firewall_data data = firewall_data_initialize;
 
-  if (f_pipe_exists()) {
+  if (f_pipe_input_exists()) {
     data.process_pipe = f_true;
   }
 

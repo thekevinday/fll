@@ -9,7 +9,7 @@ extern "C" {
   f_return_status fl_utf_file_read(const f_file file, f_utf_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used > buffer->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id <= 0) return f_status_set_error(f_file_not_open);
@@ -84,7 +84,7 @@ extern "C" {
   f_return_status fl_utf_file_read_block(const f_file file, f_utf_string_dynamic *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used > buffer->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id <= 0) return f_status_set_error(f_file_not_open);
@@ -159,7 +159,7 @@ extern "C" {
   f_return_status fl_utf_file_read_until(const f_file file, f_utf_string_dynamic *buffer, const f_utf_string_length total) {
     #ifndef _di_level_1_parameter_checking_
       if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used > buffer->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id <= 0) return f_status_set_error(f_file_not_open);

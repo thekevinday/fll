@@ -60,39 +60,39 @@ extern "C" {
 
     if (data->parameters[status_code_parameter_is_error].result == f_console_result_found) {
       if (data->parameters[status_code_parameter_is_warning].result == f_console_result_found) {
-        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_error);
-        fl_color_print(f_standard_error, data->context.error, data->context.reset, "' cannot be used with the parameter ");
-        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_warning);
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
+        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_error);
+        fl_color_print(f_type_error, data->context.error, data->context.reset, "' cannot be used with the parameter ");
+        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_warning);
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
         status_code_delete_data(data);
         return f_status_set_error(status);
       }
       else if (data->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
-        fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_error);
-        fl_color_print(f_standard_error, data->context.error, data->context.reset, "' cannot be used with the parameter ");
-        fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_fine);
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
+        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_error);
+        fl_color_print(f_type_error, data->context.error, data->context.reset, "' cannot be used with the parameter ");
+        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_fine);
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
         status_code_delete_data(data);
         return f_status_set_error(status);
       }
     }
     else if (data->parameters[status_code_parameter_is_warning].result == f_console_result_found && data->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
-      fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-      fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_warning);
-      fl_color_print(f_standard_error, data->context.error, data->context.reset, "' cannot be used with the parameter ");
-      fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_fine);
-      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, ".");
+      fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+      fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_warning);
+      fl_color_print(f_type_error, data->context.error, data->context.reset, "' cannot be used with the parameter ");
+      fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, status_code_long_is_fine);
+      fl_color_print_line(f_type_error, data->context.error, data->context.reset, ".");
 
       status_code_delete_data(data);
       return f_status_set_error(status);
     }
 
     if (data->remaining.used == 0 && !data->process_pipe) {
-      fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify a status code.");
+      fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify a status code.");
 
       status_code_delete_data(data);
       return f_status_set_error(f_invalid_parameter);

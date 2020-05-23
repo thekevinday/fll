@@ -117,13 +117,13 @@ extern "C" {
       pid_t pid_services = clone(init_handler_child_services, stack_memory.services + init_stack_size_small_services, init_flags_clone, stack_memory.services);
 
       if (pid_services < 0) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to clone services process (errno = %i).", errno);
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Failed to clone services process (errno = %i).", errno);
       }
 
       pid_t pid_control_file = clone(init_handler_child_control_file, stack_memory.control_file + init_stack_size_control_file, init_flags_clone, stack_memory.control_file);
 
       if (pid_control_file < 0) {
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: Failed to clone control via file process (errno = %i).", errno);
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Failed to clone control via file process (errno = %i).", errno);
       }
     */
 
@@ -151,11 +151,11 @@ extern "C" {
             continue;
           }
           else if (errno != EINTR) {
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: sigwaitinfo() failed (errno = %i).", errno);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: sigwaitinfo() failed (errno = %i).", errno);
 
             signal_problem_count++;
             if (signal_problem_count > problem_count_max_signal_size) {
-              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: max signal problem count has been reached, sleeping for a period of time.", errno);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: max signal problem count has been reached, sleeping for a period of time.", errno);
               sleep(init_panic_signal_sleep_seconds);
               signal_problem_count = 0;
             }

@@ -4,7 +4,7 @@ int main(const unsigned long argc, const f_string *argv) {
   const f_console_arguments arguments = { argc, argv };
   fss_extended_read_data data = fss_extended_read_data_initialize;
 
-  if (f_pipe_exists()) {
+  if (f_pipe_input_exists()) {
     data.process_pipe = f_true;
   }
 

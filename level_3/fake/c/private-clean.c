@@ -12,9 +12,9 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol);
-      fl_color_print(f_standard_output, data.context.important, data.context.reset, "Deleting all files within build directory '");
-      fl_color_print(f_standard_output, data.context.notable, data.context.reset, "%s", data.path_build.string);
-      fl_color_print_line(f_standard_output, data.context.important, data.context.reset, "'.");
+      fl_color_print(f_type_output, data.context.important, data.context.reset, "Deleting all files within build directory '");
+      fl_color_print(f_type_output, data.context.notable, data.context.reset, "%s", data.path_build.string);
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "'.");
     }
 
     if (data.verbosity == fake_verbosity_verbose) {

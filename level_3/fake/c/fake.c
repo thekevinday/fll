@@ -37,7 +37,7 @@ extern "C" {
 
     printf("%c%c", f_string_eol, f_string_eol);
 
-    fl_color_print(f_standard_output, context.important, context.reset, " Special Options: ");
+    fl_color_print(f_type_output, context.important, context.reset, " Special Options: ");
 
     fll_program_print_help_option_long(context, fake_long_documents_disabled, f_console_symbol_long_enable, "   Forcibly do not build documents files.");
     fll_program_print_help_option_long(context, fake_long_documents_enabled, f_console_symbol_long_enable, "    Forcibly do build documents files.");
@@ -48,7 +48,7 @@ extern "C" {
 
     printf("%c%c", f_string_eol, f_string_eol);
 
-    fl_color_print(f_standard_output, context.important, context.reset, " Operations: ");
+    fl_color_print(f_type_output, context.important, context.reset, " Operations: ");
 
     fll_program_print_help_option_other(context, fake_other_operation_build, "   Build or compile the code based on build settings file.");
     fll_program_print_help_option_other(context, fake_other_operation_clean, "   Delete all build files.");
@@ -58,14 +58,14 @@ extern "C" {
     fll_program_print_help_usage(context, fake_name, "operation");
 
     printf("  When performing the ");
-    fl_color_print(f_standard_output, context.notable, context.reset, "%s", fake_other_operation_build);
+    fl_color_print(f_type_output, context.notable, context.reset, "%s", fake_other_operation_build);
     printf(" operation, the ");
-    fl_color_print(f_standard_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
+    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
     printf(" parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.");
     printf("%c", f_string_eol);
 
     printf("  For example, when a ");
-    fl_color_print(f_standard_output, context.notable, context.reset, "%s", fake_long_mode);
+    fl_color_print(f_type_output, context.notable, context.reset, "%s", fake_long_mode);
     printf(" of 'fll_monolithic' is specified, build libaries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').");
 
     printf("%c%c", f_string_eol, f_string_eol);
@@ -302,10 +302,10 @@ extern "C" {
           }
 
           if (data->verbosity != fake_verbosity_quiet) {
-            fprintf(f_standard_error, "%c", f_string_eol);
-            fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", fake_other_operation_make);
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is not yet implemented.");
+            fprintf(f_type_error, "%c", f_string_eol);
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the operation '");
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", fake_other_operation_make);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' is not yet implemented.");
           }
         }
         else if (operations[i] == fake_operation_skeleton) {
@@ -314,10 +314,10 @@ extern "C" {
 
         if (f_status_is_error(status)) {
           if (data->verbosity != fake_verbosity_quiet) {
-            fprintf(f_standard_error, "%c", f_string_eol);
-            fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", operations_name[i]);
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' failed.");
+            fprintf(f_type_error, "%c", f_string_eol);
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the operation '");
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", operations_name[i]);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' failed.");
           }
 
           break;
@@ -327,18 +327,18 @@ extern "C" {
       // ensure a newline is always put at the end of the program execution, unless in quite mode.
       if (data->verbosity != fake_verbosity_quiet) {
         if (f_status_is_error(status)) {
-          fprintf(f_standard_error, "%c", f_string_eol);
+          fprintf(f_type_error, "%c", f_string_eol);
         }
         else {
-          fprintf(f_standard_output, "%cAll operations complete.%c%c", f_string_eol, f_string_eol, f_string_eol);
+          fprintf(f_type_output, "%cAll operations complete.%c%c", f_string_eol, f_string_eol, f_string_eol);
         }
       }
     }
     else {
       if (data->verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "ERROR: you failed to specify an operation.");
-        fprintf(f_standard_error, "%c", f_string_eol);
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify an operation.");
+        fprintf(f_type_error, "%c", f_string_eol);
       }
 
       status = f_status_set_error(f_invalid_parameter);

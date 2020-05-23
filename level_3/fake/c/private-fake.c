@@ -415,10 +415,10 @@ extern "C" {
 
     if (status == f_invalid_parameter) {
       if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Invalid parameter when calling function ");
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", function);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "().");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid parameter when calling function ");
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
+        fl_color_print_line(f_type_error, context.error, context.reset, "().");
       }
 
       return f_none;
@@ -426,22 +426,22 @@ extern "C" {
 
     if (status == f_error_allocation || status == f_error_reallocation) {
       if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Unable to allocate memory in function ");
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", function);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "().");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Unable to allocate memory in function ");
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
+        fl_color_print_line(f_type_error, context.error, context.reset, "().");
       }
 
       return f_none;
     }
 
     if (fallback && verbosity != fake_verbosity_quiet) {
-      fprintf(f_standard_error, "%c", f_string_eol);
-      fl_color_print(f_standard_error, context.error, context.reset, "UNKNOWN ERROR: (");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%d", status);
-      fl_color_print(f_standard_error, context.error, context.reset, ") in function ");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s", function);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "().");
+      fprintf(f_type_error, "%c", f_string_eol);
+      fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
+      fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+      fl_color_print(f_type_error, context.error, context.reset, ") in function ");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
+      fl_color_print_line(f_type_error, context.error, context.reset, "().");
     }
 
     return f_unknown;
@@ -457,10 +457,10 @@ extern "C" {
 
     if (status == f_file_not_found) {
       if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: failed to find %s '", file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to find %s '", file_or_directory);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
       return f_none;
@@ -468,12 +468,12 @@ extern "C" {
 
     if (status == f_invalid_parameter) {
       if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", function);
-        fl_color_print(f_standard_error, context.error, context.reset, "() for the %s '", file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
+        fl_color_print(f_type_error, context.error, context.reset, "() for the %s '", file_or_directory);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
       return f_none;
@@ -481,10 +481,10 @@ extern "C" {
 
     if (status == f_invalid_name) {
       if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Invalid %s name '", file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid %s name '", file_or_directory);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
       return f_none;
@@ -492,10 +492,10 @@ extern "C" {
 
     if (status == f_out_of_memory) {
       if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory, while trying to %s %s '", operation, file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory, while trying to %s %s '", operation, file_or_directory);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
       return f_none;
@@ -503,10 +503,10 @@ extern "C" {
 
     if (status == f_number_overflow) {
       if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Overflow while trying to %s %s '", operation, file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Overflow while trying to %s %s '", operation, file_or_directory);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
       return f_none;
@@ -514,10 +514,10 @@ extern "C" {
 
     if (status == f_invalid_directory) {
       if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Invalid directory while trying to %s %s '", operation, file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid directory while trying to %s %s '", operation, file_or_directory);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
       return f_none;
@@ -525,10 +525,10 @@ extern "C" {
 
     if (status == f_access_denied) {
       if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Access denied while trying to %s %s '", operation, file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Access denied while trying to %s %s '", operation, file_or_directory);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
       return f_none;
@@ -536,10 +536,10 @@ extern "C" {
 
     if (status == f_loop) {
       if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, context.error, context.reset, "ERROR: Loop while trying to %s %s '", operation, file_or_directory);
-        fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-        fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Loop while trying to %s %s '", operation, file_or_directory);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
 
       return f_none;
@@ -548,10 +548,10 @@ extern "C" {
     if (is_file) {
       if (status == f_directory_not_found) {
         if (verbosity != fake_verbosity_quiet) {
-          fprintf(f_standard_error, "%c", f_string_eol);
-          fl_color_print(f_standard_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
-          fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-          fl_color_print_line(f_standard_error, context.error, context.reset, "' due to an invalid directory in the path.");
+          fprintf(f_type_error, "%c", f_string_eol);
+          fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+          fl_color_print_line(f_type_error, context.error, context.reset, "' due to an invalid directory in the path.");
         }
 
         return f_none;
@@ -560,10 +560,10 @@ extern "C" {
     else {
       if (status == f_directory_not_found) {
         if (verbosity != fake_verbosity_quiet) {
-          fprintf(f_standard_error, "%c", f_string_eol);
-          fl_color_print(f_standard_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
-          fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-          fl_color_print_line(f_standard_error, context.error, context.reset, "' due to an invalid directory in the path.");
+          fprintf(f_type_error, "%c", f_string_eol);
+          fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+          fl_color_print_line(f_type_error, context.error, context.reset, "' due to an invalid directory in the path.");
         }
 
         return f_none;
@@ -571,10 +571,10 @@ extern "C" {
 
       if (status == f_failure) {
         if (verbosity != fake_verbosity_quiet) {
-          fprintf(f_standard_error, "%c", f_string_eol);
-          fl_color_print(f_standard_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
-          fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-          fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+          fprintf(f_type_error, "%c", f_string_eol);
+          fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+          fl_color_print_line(f_type_error, context.error, context.reset, "'.");
         }
 
         return f_none;
@@ -582,12 +582,12 @@ extern "C" {
     }
 
     if (fake_print_error(context, verbosity, status, function, f_false) == f_unknown && fallback && verbosity != fake_verbosity_quiet) {
-      fprintf(f_standard_error, "%c", f_string_eol);
-      fl_color_print(f_standard_error, context.error, context.reset, "UNKNOWN ERROR: (");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%d", status);
-      fl_color_print(f_standard_error, context.error, context.reset, ") occurred while trying to %s %s '", operation, file_or_directory);
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s", name);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "'.");
+      fprintf(f_type_error, "%c", f_string_eol);
+      fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
+      fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+      fl_color_print(f_type_error, context.error, context.reset, ") occurred while trying to %s %s '", operation, file_or_directory);
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
+      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
     }
 
     return f_unknown;
@@ -597,10 +597,10 @@ extern "C" {
 #ifndef _di_fake_print_error_parameter_missing_value_
   void fake_print_error_parameter_missing_value(const fl_color_context context, const uint8_t verbosity, const f_string parameter) {
     if (verbosity != fake_verbosity_quiet) {
-      fprintf(f_standard_error, "%c", f_string_eol);
-      fl_color_print(f_standard_error, context.error, context.reset, "ERROR: The parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "' was specified, but no value was given.");
+      fprintf(f_type_error, "%c", f_string_eol);
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: The parameter '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter);
+      fl_color_print_line(f_type_error, context.error, context.reset, "' was specified, but no value was given.");
     }
   }
 #endif // _di_fake_print_error_parameter_missing_value_
@@ -608,10 +608,10 @@ extern "C" {
 #ifndef _di_fake_print_error_parameter_too_many_
   void fake_print_error_parameter_too_many(const fl_color_context context, const uint8_t verbosity, const f_string parameter) {
     if (verbosity != fake_verbosity_quiet) {
-      fprintf(f_standard_error, "%c", f_string_eol);
-      fl_color_print(f_standard_error, context.error, context.reset, "ERROR: the parameter '");
-      fl_color_print(f_standard_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter);
-      fl_color_print_line(f_standard_error, context.error, context.reset, "' specified too many times.");
+      fprintf(f_type_error, "%c", f_string_eol);
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: the parameter '");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter);
+      fl_color_print_line(f_type_error, context.error, context.reset, "' specified too many times.");
     }
   }
 #endif // _di_fake_print_error_parameter_too_many_
@@ -640,10 +640,10 @@ extern "C" {
       for (uint8_t i = 0; i < 4; i++) {
         if (data->parameters[parameters_id[i]].total > 1) {
           if (data->verbosity != fake_verbosity_quiet) {
-            fprintf(f_standard_error, "%c", f_string_eol);
-            fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the operation '");
-            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", parameters_name[i]);
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' specified too many times.");
+            fprintf(f_type_error, "%c", f_string_eol);
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the operation '");
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", parameters_name[i]);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' specified too many times.");
           }
 
           return f_status_set_error(f_invalid_parameter);
@@ -697,10 +697,10 @@ extern "C" {
             if (f_status_is_error(status)) {
               if (status == f_status_set_error(f_string_too_large)) {
                 if (data->verbosity != fake_verbosity_quiet) {
-                  fprintf(f_standard_error, "%c", f_string_eol);
-                  fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the parameter '");
-                  fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
-                  fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is too long.");
+                  fprintf(f_type_error, "%c", f_string_eol);
+                  fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the parameter '");
+                  fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
+                  fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' is too long.");
                 }
               }
               else {
@@ -716,10 +716,10 @@ extern "C" {
 
           if (length == 0 || status == f_no_data) {
             if (data->verbosity != fake_verbosity_quiet) {
-              fprintf(f_standard_error, "%c", f_string_eol);
-              fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the parameter '");
-              fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
-              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' must not be empty and must not contain only whitespace.");
+              fprintf(f_type_error, "%c", f_string_eol);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the parameter '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' must not be empty and must not contain only whitespace.");
             }
           }
         }
@@ -793,10 +793,10 @@ extern "C" {
 
           if (f_status_is_error(status)) {
             if (fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", f_false) == f_unknown && data->verbosity != fake_verbosity_quiet) {
-              fprintf(f_standard_error, "%c", f_string_eol);
-              fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: failed to process parameter '");
-              fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
-              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");
+              fprintf(f_type_error, "%c", f_string_eol);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to process parameter '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "'.");
             }
 
             return status;
@@ -807,10 +807,10 @@ extern "C" {
 
           if (f_status_is_error(status)) {
             if (fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "f_macro_string_dynamic_new", f_false) == f_unknown && data->verbosity != fake_verbosity_quiet) {
-              fprintf(f_standard_error, "%c", f_string_eol);
-              fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: failed to load default for the parameter '");
-              fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
-              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");
+              fprintf(f_type_error, "%c", f_string_eol);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to load default for the parameter '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "'.");
             }
 
             return status;
@@ -828,10 +828,10 @@ extern "C" {
       if (f_status_is_error(status)) {
         if (status == f_status_set_error(f_string_too_large)) {
           if (data->verbosity != fake_verbosity_quiet) {
-            fprintf(f_standard_error, "%c", f_string_eol);
-            fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the (combined) parameter '");
-            fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_defines);
-            fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' is too long.");
+            fprintf(f_type_error, "%c", f_string_eol);
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the (combined) parameter '");
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_defines);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' is too long.");
           }
         }
         else {
@@ -851,10 +851,10 @@ extern "C" {
 
       if (f_status_is_error(status)) {
         if (fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "fll_program_parameter_additional_rip", f_false) == f_unknown && data->verbosity != fake_verbosity_quiet) {
-          fprintf(f_standard_error, "%c", f_string_eol);
-          fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: failed to process the parameter '");
-          fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
-          fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");
+          fprintf(f_type_error, "%c", f_string_eol);
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to process the parameter '");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "'.");
         }
 
         return status;
@@ -872,10 +872,10 @@ extern "C" {
 
           if (f_status_is_error(status)) {
             if (fake_print_error(data->context, data->verbosity, f_status_set_fine(status), "f_utf_is_word_dash_plus", f_false) == f_unknown && data->verbosity != fake_verbosity_quiet) {
-              fprintf(f_standard_error, "%c", f_string_eol);
-              fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: failed to process the parameter '");
-              fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
-              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "'.");
+              fprintf(f_type_error, "%c", f_string_eol);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to process the parameter '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "'.");
             }
 
             return status;
@@ -883,12 +883,12 @@ extern "C" {
 
           if (status == f_false) {
             if (data->verbosity != fake_verbosity_quiet) {
-              fprintf(f_standard_error, "%c", f_string_eol);
-              fl_color_print(f_standard_error, data->context.error, data->context.reset, "ERROR: the '");
-              fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
-              fl_color_print(f_standard_error, data->context.error, data->context.reset, "' parameters value '");
-              fl_color_print(f_standard_error, data->context.notable, data->context.reset, "%s", data->mode.array[i].string);
-              fl_color_print_line(f_standard_error, data->context.error, data->context.reset, "' contains non-word, non-dash, and non-plus characters.");
+              fprintf(f_type_error, "%c", f_string_eol);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameters value '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", data->mode.array[i].string);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' contains non-word, non-dash, and non-plus characters.");
             }
 
             return f_status_set_error(f_invalid_parameter);
@@ -945,7 +945,7 @@ extern "C" {
       if (parameters_value[i]->used > 0) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
-        status = f_file_stat(parameters_value[i]->string, &directory_stat);
+        status = f_file_stat(parameters_value[i]->string, f_true, &directory_stat);
 
         if (status == f_status_set_error(f_file_not_found)) status = f_status_set_error(f_directory_not_found);
 
@@ -957,10 +957,10 @@ extern "C" {
         }
       }
       else if (parameters_required[i]) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: No valid path for the (required) directory parameter '");
-        fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
-        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' was found.");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: No valid path for the (required) directory parameter '");
+        fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' was found.");
 
         return f_status_set_error(f_directory_not_found);
       }

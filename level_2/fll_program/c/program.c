@@ -7,13 +7,13 @@ extern "C" {
 #ifndef _di_fll_program_print_help_header_
   f_return_status fll_program_print_help_header(const fl_color_context context, const f_string name, const f_string version) {
     printf("%c", f_string_eol);
-    fl_color_print(f_standard_output, context.title, context.reset, " %s", name);
+    fl_color_print(f_type_output, context.title, context.reset, " %s", name);
 
     printf("%c", f_string_eol);
-    fl_color_print(f_standard_output, context.notable, context.reset, "  Version %s", version);
+    fl_color_print(f_type_output, context.notable, context.reset, "  Version %s", version);
 
     printf("%c%c", f_string_eol, f_string_eol);
-    fl_color_print(f_standard_output, context.important, context.reset, " Available Options: ");
+    fl_color_print(f_type_output, context.important, context.reset, " Available Options: ");
 
     return f_none;
   }
@@ -23,10 +23,10 @@ extern "C" {
   f_return_status fll_program_print_help_option(const fl_color_context context, const f_string option_short, const f_string option_long, const f_string symbol_short, const f_string symbol_long, const f_string description) {
     printf("%c", f_string_eol);
     printf("  %s", symbol_short);
-    fl_color_print(f_standard_output, context.standout, context.reset, option_short);
+    fl_color_print(f_type_output, context.standout, context.reset, option_short);
 
     printf(", %s", symbol_long);
-    fl_color_print(f_standard_output, context.standout, context.reset, option_long);
+    fl_color_print(f_type_output, context.standout, context.reset, option_long);
     printf("  %s", description);
 
     return f_none;
@@ -37,7 +37,7 @@ extern "C" {
   f_return_status fll_program_print_help_option_long(const fl_color_context context, const f_string option_long, const f_string symbol_long, const f_string description) {
     printf("%c", f_string_eol);
     printf("      %s", symbol_long);
-    fl_color_print(f_standard_output, context.standout, context.reset, option_long);
+    fl_color_print(f_type_output, context.standout, context.reset, option_long);
     printf("  %s", description);
 
     return f_none;
@@ -47,7 +47,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_other_
   f_return_status fll_program_print_help_option_other(const fl_color_context context, const f_string option_other, const f_string description) {
     printf("%c  ", f_string_eol);
-    fl_color_print(f_standard_output, context.standout, context.reset, option_other);
+    fl_color_print(f_type_output, context.standout, context.reset, option_other);
 
     printf("  %s", description);
 
@@ -58,23 +58,23 @@ extern "C" {
 #ifndef _di_fll_program_print_help_usage_
   f_return_status fll_program_print_help_usage(const fl_color_context context, const f_string name, const f_string parameters) {
     printf("%c%c", f_string_eol, f_string_eol);
-    fl_color_print(f_standard_output, context.important, context.reset, " Usage:");
+    fl_color_print(f_type_output, context.important, context.reset, " Usage:");
 
     printf("%c  ", f_string_eol);
-    fl_color_print(f_standard_output, context.standout, context.reset, name);
+    fl_color_print(f_type_output, context.standout, context.reset, name);
 
     printf(" ");
-    fl_color_print(f_standard_output, context.notable, context.reset, "[");
+    fl_color_print(f_type_output, context.notable, context.reset, "[");
 
     printf(" options ");
-    fl_color_print(f_standard_output, context.notable, context.reset, "]");
+    fl_color_print(f_type_output, context.notable, context.reset, "]");
 
     if (parameters[0] != '\0') {
       printf(" ");
-      fl_color_print(f_standard_output, context.notable, context.reset, "[");
+      fl_color_print(f_type_output, context.notable, context.reset, "[");
 
       printf(" %s ", parameters);
-      fl_color_print(f_standard_output, context.notable, context.reset, "]");
+      fl_color_print(f_type_output, context.notable, context.reset, "]");
     }
 
     printf("%c%c", f_string_eol, f_string_eol);
@@ -99,32 +99,32 @@ extern "C" {
       status = f_status_set_fine(status);
 
       if (status == f_no_data) {
-        fl_color_print_line(f_standard_error, context->error, context->reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
+        fl_color_print_line(f_type_error, context->error, context->reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
         // @todo there is a way to identify which parameter is incorrect
         //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
         //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
       }
       else if (status == f_error_allocation || status == f_error_reallocation) {
-        fl_color_print(f_standard_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "f_console_parameter_process");
-        fl_color_print_line(f_standard_error, context->error, context->reset, ").");
+        fl_color_print(f_type_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
+        fl_color_print(f_type_error, context->notable, context->reset, "f_console_parameter_process");
+        fl_color_print_line(f_type_error, context->error, context->reset, ").");
       }
       else if (status == f_invalid_utf) {
-        fl_color_print(f_standard_error, context->error, context->reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "f_console_parameter_process()");
-        fl_color_print_line(f_standard_error, context->error, context->reset, ".");
+        fl_color_print(f_type_error, context->error, context->reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling ");
+        fl_color_print(f_type_error, context->notable, context->reset, "f_console_parameter_process()");
+        fl_color_print_line(f_type_error, context->error, context->reset, ".");
       }
       else if (status == f_invalid_parameter) {
-        fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "f_console_parameter_process()");
-        fl_color_print_line(f_standard_error, context->error, context->reset, ".");
+        fl_color_print(f_type_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling ");
+        fl_color_print(f_type_error, context->notable, context->reset, "f_console_parameter_process()");
+        fl_color_print_line(f_type_error, context->error, context->reset, ".");
       }
       else {
-        fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (");
-        fl_color_print(f_standard_error, context->notable, context->reset, "%u", status);
-        fl_color_print(f_standard_error, context->error, context->reset, ") has occurred while calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "f_console_parameter_process()");
-        fl_color_print_line(f_standard_error, context->error, context->reset, ".");
+        fl_color_print(f_type_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (");
+        fl_color_print(f_type_error, context->notable, context->reset, "%u", status);
+        fl_color_print(f_type_error, context->error, context->reset, ") has occurred while calling ");
+        fl_color_print(f_type_error, context->notable, context->reset, "f_console_parameter_process()");
+        fl_color_print_line(f_type_error, context->error, context->reset, ".");
       }
 
       return f_status_set_error(status);
@@ -147,21 +147,21 @@ extern "C" {
       status = f_status_set_fine(status);
 
       if (status == f_error_allocation || status == f_error_reallocation) {
-        fl_color_print(f_standard_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "%s", function);
-        fl_color_print_line(f_standard_error, context->error, context->reset, ").");
+        fl_color_print(f_type_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
+        fl_color_print(f_type_error, context->notable, context->reset, "%s", function);
+        fl_color_print_line(f_type_error, context->error, context->reset, ").");
       }
       else if (status == f_invalid_parameter) {
-        fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "%s", function);
-        fl_color_print_line(f_standard_error, context->error, context->reset, "().");
+        fl_color_print(f_type_error, context->error, context->reset, "INTERNAL ERROR: Invalid parameter when calling ");
+        fl_color_print(f_type_error, context->notable, context->reset, "%s", function);
+        fl_color_print_line(f_type_error, context->error, context->reset, "().");
       }
       else {
-        fl_color_print(f_standard_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (");
-        fl_color_print(f_standard_error, context->notable, context->reset, "%u", status);
-        fl_color_print(f_standard_error, context->error, context->reset, ") has occurred while calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "%s", function);
-        fl_color_print_line(f_standard_error, context->error, context->reset, "().");
+        fl_color_print(f_type_error, context->error, context->reset, "INTERNAL ERROR: An unhandled error (");
+        fl_color_print(f_type_error, context->notable, context->reset, "%u", status);
+        fl_color_print(f_type_error, context->error, context->reset, ") has occurred while calling ");
+        fl_color_print(f_type_error, context->notable, context->reset, "%s", function);
+        fl_color_print_line(f_type_error, context->error, context->reset, "().");
       }
 
       return f_status_set_error(status);
@@ -174,9 +174,9 @@ extern "C" {
       fl_macro_color_context_new(allocation_status, (*context));
 
       if (f_status_is_error(allocation_status)) {
-        fl_color_print(f_standard_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
-        fl_color_print(f_standard_error, context->notable, context->reset, "fl_macro_color_context_new");
-        fl_color_print_line(f_standard_error, context->error, context->reset, "().");
+        fl_color_print(f_type_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
+        fl_color_print(f_type_error, context->notable, context->reset, "fl_macro_color_context_new");
+        fl_color_print_line(f_type_error, context->error, context->reset, "().");
 
         return allocation_status;
       }

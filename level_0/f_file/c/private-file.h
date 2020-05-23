@@ -43,6 +43,7 @@ extern "C" {
  *   f_failure (with error bit) for any other (mkdir()) error.
  *
  * @see f_file_change_mode()
+ * @see f_file_copy()
  */
 #if !defined(_di_f_file_change_mode_) || !defined(_di_f_file_copy_)
   extern f_return_status private_f_file_change_mode(const f_string path, const mode_t mode, const bool dereference) f_gcc_attribute_visibility_internal;
@@ -77,6 +78,7 @@ extern "C" {
  *   f_failure (with error bit) for any other (mkdir()) error.
  *
  * @see f_file_change_mode_at()
+ * @see f_file_copy_at()
  */
 #if !defined(_di_f_file_change_mode_at_) || !defined(_di_f_file_copy_at_)
   extern f_return_status private_f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode, const int flags) f_gcc_attribute_visibility_internal;
@@ -112,6 +114,7 @@ extern "C" {
  *   f_failure (with error bit) for any other (mkdir()) error.
  *
  * @see f_file_change_owner()
+ * @see f_file_copy()
  */
 #if !defined(_di_f_file_change_owner_) || !defined(_di_f_file_copy_)
   extern f_return_status private_f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) f_gcc_attribute_visibility_internal;
@@ -148,6 +151,7 @@ extern "C" {
  *   f_failure (with error bit) for any other (mkdir()) error.
  *
  * @see f_file_change_owner_at()
+ * @see f_file_copy_at()
  */
 #if !defined(_di_f_file_change_owner_at_) || !defined(_di_f_file_copy_at_)
   extern f_return_status private_f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flags) f_gcc_attribute_visibility_internal;
@@ -173,6 +177,7 @@ extern "C" {
  *   f_file_error_close (with error bit) if fclose() failed for any other reason.
  *
  * @see f_file_close()
+ * @see f_file_copy()
  */
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
   extern f_return_status private_f_file_close(int *id) f_gcc_attribute_visibility_internal;
@@ -235,11 +240,17 @@ extern "C" {
  *   The path file name.
  * @param mode
  *   The file mode to open in.
- * @param flags
- *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor and file address.
+ *   This will be updated with the create flags (ignoring and overriding existing file.flags).
+ * @param exclusive
+ *   If TRUE, will fail when file already exists.
+ *   If FALSE, will not fail if file already exists.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to fail if the path is a symbolic link.
+ *   This does not write symbolic links. (@todo add function f_create_link() for creating symbolic links.)
  *
  * @return
  *   f_none on success.
@@ -261,6 +272,7 @@ extern "C" {
  *   f_file_max_open (with error bit) when system-wide max open files is reached.
  *   f_busy (with error bit) if filesystem is too busy to perforrm write.
  *
+ * @see f_file_copy()
  * @see f_file_create()
  */
 #if !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
@@ -277,12 +289,18 @@ extern "C" {
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor and file address.
+ *   This will be updated with the create flags (ignoring and overriding existing file.flags).
  * @param path
  *   The path file name.
  * @param mode
  *   The file mode to open in.
- * @param flags
- *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ * @param exclusive
+ *   If TRUE, will fail when file already exists.
+ *   If FALSE, will not fail if file already exists.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to fail if the path is a symbolic link.
+ *   This does not write symbolic links. (@todo add function f_create_link() for creating symbolic links.)
  *
  * @return
  *   f_none on success.
@@ -304,6 +322,7 @@ extern "C" {
  *   f_file_max_open (with error bit) when system-wide max open files is reached.
  *   f_busy (with error bit) if filesystem is too busy to perforrm write.
  *
+ * @see f_file_copy_at()
  * @see f_file_create_at()
  */
 #if !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
@@ -322,6 +341,7 @@ extern "C" {
  *
  * @return
  *
+ * @see f_file_copy()
  * @see f_file_link()
  */
 #if !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
@@ -342,6 +362,7 @@ extern "C" {
  *
  * @return
  *
+ * @see f_file_copy_at()
  * @see f_file_link_at()
  */
 #if !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
@@ -366,71 +387,13 @@ extern "C" {
  *   f_unsupported (with error bit) if the file system or file type does not support flushing.
  *   f_failure (with error bit) on any other failure.
  *
+ * @see f_file_close()
+ * @see f_file_copy()
  * @see f_file_flush()
  */
 #if !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
   extern f_return_status private_f_file_flush(const int id) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
-
-/**
- * Private implementation of f_file_open().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param path
- *   The path file name.
- * @param flags
- *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
- * @param mode
- *   The file mode to open in.
- *   Set to 0 to not use.
- * @param file
- *   The data related to the file being opened.
- *   This will be updated with the file descriptor and file address.
- *
- * @return
- *   f_none on success.
- *   f_file_not_found (with error bit) if the file was not found.
- *   f_file_error_open (with error bit) if the file is already open.
- *   f_file_error_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *
- * @see f_file_open()
- */
-#if !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_open(const f_string path, const int flags, const mode_t mode, f_file *file) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
-
-/**
- * Private implementation of f_file_open_at().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
- * @param path
- *   The path file name.
- * @param flags
- *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
- * @param mode
- *   The file mode to open in.
- *   Set to 0 to not use.
- * @param file
- *   The data related to the file being opened.
- *   This will be updated with the file descriptor and file address.
- *
- * @return
- *   f_none on success.
- *   f_file_not_found (with error bit) if the file was not found.
- *   f_file_error_open (with error bit) if the file is already open.
- *   f_file_error_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
- *   f_invalid_parameter (with error bit) if a parameter is invalid.
- *
- * @see f_file_open_at()
- */
-#if !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_open_at(const int at_id, const f_string path, const int flags, const mode_t mode, f_file *file) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
 
 /**
  * Create a link to a file.
@@ -445,10 +408,90 @@ extern "C" {
  * @return
  *
  * @see f_file_link()
+ * @see f_file_copy()
  */
 #if !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
   extern f_return_status private_f_file_link(const f_string target, const f_string point);
 #endif // !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
+
+/**
+ * Create a link to a file.
+ *
+ * This will not replace existing files/links.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param target
+ *   A path that the link points to.
+ * @param point
+ *   A path to the link that does the pointing.
+ *
+ * @return
+ *
+ * @see f_file_link_at()
+ * @see f_file_copy_at()
+ */
+#if !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
+  extern f_return_status private_f_file_link_at(const int at_id, const f_string target, const f_string point);
+#endif // !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
+
+/**
+ * Private implementation of f_file_open().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to open in.
+ *   Set to 0 to not use.
+ * @param file
+ *   The data related to the file being opened.
+ *   This will be updated with the file descriptor and file address.
+ *
+ * @return
+ *   f_none on success.
+ *   f_file_not_found (with error bit) if the file was not found.
+ *   f_file_error_open (with error bit) if the file is already open.
+ *   f_file_error_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_copy()
+ * @see f_file_open()
+ */
+#if !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
+  extern f_return_status private_f_file_open(const f_string path, const mode_t mode, f_file *file) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
+
+/**
+ * Private implementation of f_file_open_at().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to open in.
+ *   Set to 0 to not use.
+ * @param file
+ *   The data related to the file being opened.
+ *   This will be updated with the file descriptor and file address.
+ *
+ * @return
+ *   f_none on success.
+ *   f_file_not_found (with error bit) if the file was not found.
+ *   f_file_error_open (with error bit) if the file is already open.
+ *   f_file_error_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
+ *   f_invalid_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_copy_at()
+ * @see f_file_open_at()
+ */
+#if !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
+  extern f_return_status private_f_file_open_at(const int at_id, const f_string path, const mode_t mode, f_file *file) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
 
 /**
  * Private implementation of f_file_close().
@@ -474,6 +517,7 @@ extern "C" {
  *   f_loop (with error bit) if a loop occurred.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
+ * @see f_file_copy()
  * @see f_file_stat()
  */
 #if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
@@ -506,6 +550,7 @@ extern "C" {
  *   f_loop (with error bit) if a loop occurred.
  *   f_invalid_parameter (with error bit) if a parameter is invalid.
  *
+ * @see f_file_copy_at()
  * @see f_file_stat_at()
  */
 #if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)

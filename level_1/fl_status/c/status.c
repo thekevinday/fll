@@ -456,6 +456,9 @@ extern "C" {
         case f_no_data_on_stop:
           *string = fl_status_string_no_data_on_stop;
           break;
+        case f_no_data_on_block:
+          *string = fl_status_string_no_data_on_block;
+          break;
         case f_none_on_eof:
           *string = fl_status_string_none_on_eof;
           break;
@@ -468,6 +471,9 @@ extern "C" {
         case f_none_on_stop:
           *string = fl_status_string_none_on_stop;
           break;
+        case f_none_on_block:
+          *string = fl_status_string_none_on_block;
+          break;
         case f_error_on_eof:
           *string = fl_status_string_error_on_eof;
           break;
@@ -479,6 +485,9 @@ extern "C" {
           break;
         case f_error_on_stop:
           *string = fl_status_string_error_on_stop;
+          break;
+        case f_error_on_block:
+          *string = fl_status_string_error_on_block;
           break;
         case f_buffer_too_small:
           *string = fl_status_string_buffer_too_small;
@@ -507,6 +516,9 @@ extern "C" {
         case f_unterminated_on_stop:
           *string = fl_status_string_unterminated_on_stop;
           break;
+        case f_unterminated_on_block:
+          *string = fl_status_string_unterminated_on_block;
+          break;
         case f_unterminated_group:
           *string = fl_status_string_unterminated_group;
           break;
@@ -521,6 +533,9 @@ extern "C" {
           break;
         case f_unterminated_group_on_stop:
           *string = fl_status_string_unterminated_group_on_stop;
+          break;
+        case f_unterminated_group_on_block:
+          *string = fl_status_string_unterminated_group_on_block;
           break;
         case f_unterminated_nest:
           *string = fl_status_string_unterminated_nest;
@@ -537,6 +552,9 @@ extern "C" {
         case f_unterminated_nest_on_stop:
           *string = fl_status_string_unterminated_nest_on_stop;
           break;
+        case f_unterminated_nest_on_block:
+          *string = fl_status_string_unterminated_nest_on_block;
+          break;
         case f_incomplete_utf:
           *string = fl_status_string_incomplete_utf;
           break;
@@ -551,6 +569,9 @@ extern "C" {
           break;
         case f_incomplete_utf_on_stop:
           *string = fl_status_string_incomplete_utf_on_stop;
+          break;
+        case f_incomplete_utf_on_block:
+          *string = fl_status_string_incomplete_utf_on_block;
           break;
       #endif // _di_fl_status_buffers_
 

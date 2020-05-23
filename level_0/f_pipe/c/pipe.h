@@ -6,6 +6,8 @@
  * Licenses: lgplv2.1
  *
  * Provides pipe functionality.
+ *
+ * @todo implement pipe() functionality.
  */
 #ifndef _F_pipe_h
 #define _F_pipe_h
@@ -23,31 +25,21 @@ extern "C" {
 #endif
 
 /**
- * Default pipe sources.
- */
-#ifndef _di_f_pipe_
-  #define f_pipe         f_standard_input
-  #define f_pipe_warning f_standard_warning
-  #define f_pipe_error   f_standard_error
-  #define f_pipe_debug   f_standard_debug
-#endif // _di_f_pipe_
-
-/**
- * Identify whether or not the default f_pipe source (generally standard input) contains piped data.
+ * Identify whether or not the standard input pipe source contains piped data.
  *
  * @return
  *   f_true if there is piped data.
  *   f_false if there is no piped data.
  *   f_file_error_stat (with error bit) on stat() error.
  *
- * @see stat()
+ * @see fstat()
  */
-#ifndef _di_f_pipe_exists_
-  extern f_return_status f_pipe_exists();
-#endif // _di_f_pipe_exists_
+#ifndef _di_f_pipe_input_exists_
+  extern f_return_status f_pipe_input_exists();
+#endif // _di_f_pipe_input_exists_
 
 /**
- * Identify whether or not the default f_pipe_warning source (generally standard warning) contains piped data.
+ * Identify whether or not the standard warning pipe contains piped data.
  *
  * For most systems, standard warning does not exist and instead maps to standard output.
  *
@@ -56,28 +48,28 @@ extern "C" {
  *   f_false if there is no piped data.
  *   f_file_error_stat (with error bit) on stat() error.
  *
- * @see stat()
+ * @see fstat()
  */
 #ifndef _di_f_pipe_warning_exists_
   extern f_return_status f_pipe_warning_exists();
 #endif // _di_f_pipe_warning_exists_
 
 /**
- * Identify whether or not the default f_pipe_error source (generally standard error) contains piped data.
+ * Identify whether or not the standard error pipe source contains piped data.
  *
  * @return
  *   f_true if there is piped data.
  *   f_false if there is no piped data.
  *   f_file_error_stat (with error bit) on stat() error.
  *
- * @see stat()
+ * @see fstat()
  */
 #ifndef _di_f_pipe_error_exists_
   extern f_return_status f_pipe_error_exists();
 #endif // _di_f_pipe_error_exists_
 
 /**
- * Identify whether or not the default f_pipe_debug source (generally standard warning) contains piped data.
+ * Identify whether or not the standard debug pipe source contains piped data.
  *
  * For most systems, standard debug does not exist and instead maps to standard output.
  *
@@ -86,7 +78,7 @@ extern "C" {
  *   f_false if there is no piped data.
  *   f_file_error_stat (with error bit) on stat() error.
  *
- * @see stat()
+ * @see fstat()
  */
 #ifndef _di_f_pipe_debug_exists_
   extern f_return_status f_pipe_debug_exists();

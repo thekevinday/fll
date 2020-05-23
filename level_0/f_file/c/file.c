@@ -344,22 +344,22 @@ extern "C" {
 #endif // _di_f_file_is_at_
 
 #ifndef _di_f_file_open_
-  f_return_status f_file_open(const f_string path, const int flags, const mode_t mode, f_file *file) {
+  f_return_status f_file_open(const f_string path, const mode_t mode, f_file *file) {
     #ifndef _di_level_0_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_file_open(path, mode, flags, file);
+    return private_f_file_open(path, mode, file);
   }
 #endif // _di_f_file_open_
 
 #ifndef _di_f_file_open_at_
-  f_return_status f_file_open_at(const int at_id, const f_string path, const int flags, const mode_t mode, f_file *file) {
+  f_return_status f_file_open_at(const int at_id, const f_string path, const mode_t mode, f_file *file) {
     #ifndef _di_level_0_parameter_checking_
       if (file == 0) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_file_open_at(at_id, path, flags, mode, file);
+    return private_f_file_open_at(at_id, path, mode, file);
   }
 #endif // _di_f_file_open_at_
 
@@ -367,7 +367,7 @@ extern "C" {
   f_return_status f_file_read(const f_file file, f_string_dynamic *buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used > buffer->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id <= 0) return f_status_set_error(f_file_not_open);
@@ -417,7 +417,7 @@ extern "C" {
   f_return_status f_file_read_block(const f_file file, f_string_dynamic *buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used > buffer->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id <= 0) return f_status_set_error(f_file_not_open);
@@ -467,7 +467,7 @@ extern "C" {
   f_return_status f_file_read_until(const f_file file, f_string_dynamic *buffer, const f_string_length total) {
     #ifndef _di_level_0_parameter_checking_
       if (file.size_read == 0) return f_status_set_error(f_invalid_parameter);
-      if (buffer->used >= buffer->size) return f_status_set_error(f_invalid_parameter);
+      if (buffer->used > buffer->size) return f_status_set_error(f_invalid_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id <= 0) return f_status_set_error(f_file_not_open);
@@ -696,14 +696,26 @@ extern "C" {
     if (file.id <= 0) return f_status_set_error(f_file_not_open);
 
     if (buffer.used == 0) {
-      *written = 0;
+      if (written) *written = 0;
       return f_no_data;
     }
 
-    f_status status = private_f_file_write_until(file, buffer.string, buffer.used, written);
-    if (f_status_is_error(status)) return f_status_set_error(status);
+    f_status status = f_none;
 
-    if (status == f_none && *written == buffer.used) return f_none_on_eos;
+    if (written) {
+      private_f_file_write_until(file, buffer.string, buffer.used, written);
+
+      if (status == f_none && *written == buffer.used) return f_none_on_eos;
+    }
+    else {
+      f_string_length written_local = 0;
+
+      private_f_file_write_until(file, buffer.string, buffer.used, &written_local);
+
+      if (status == f_none && written_local == buffer.used) return f_none_on_eos;
+    }
+
+    if (f_status_is_error(status)) return f_status_set_error(status);
 
     return status;
   }
@@ -719,7 +731,7 @@ extern "C" {
     if (file.id <= 0) return f_status_set_error(f_file_not_open);
 
     if (buffer.used == 0) {
-      *written = 0;
+      if (written) *written = 0;
       return f_no_data;
     }
 
@@ -729,10 +741,26 @@ extern "C" {
       write_max = buffer.used;
     }
 
-    f_status status = private_f_file_write_until(file, buffer.string, write_max, written);
-    if (f_status_is_error(status)) return f_status_set_error(status);
+    f_status status = f_none;
 
-    if (status == f_none && *written == buffer.used) return f_none_on_eos;
+    if (written) {
+      private_f_file_write_until(file, buffer.string, write_max, written);
+
+      if (status == f_none) {
+        if (*written == buffer.used) return f_none_on_eos;
+        if (*written == write_max) return f_none_on_stop;
+      }
+    }
+    else {
+      f_string_length written_local = 0;
+
+      private_f_file_write_until(file, buffer.string, write_max, &written_local);
+
+      if (status == f_none) {
+        if (written_local == buffer.used) return f_none_on_eos;
+        if (written_local == write_max) return f_none_on_stop;
+      }
+    }
 
     return status;
   }
@@ -748,7 +776,7 @@ extern "C" {
     if (file.id <= 0) return f_status_set_error(f_file_not_open);
 
     if (buffer.used == 0 || total == 0) {
-      *written = 0;
+      if (written) *written = 0;
       return f_no_data;
     }
 
@@ -758,10 +786,26 @@ extern "C" {
       write_max = buffer.used;
     }
 
-    f_status status = private_f_file_write_until(file, buffer.string, write_max, written);
-    if (f_status_is_error(status)) return f_status_set_error(status);
+    f_status status = f_none;
 
-    if (status == f_none && *written == buffer.used) return f_none_on_eos;
+    if (written) {
+      private_f_file_write_until(file, buffer.string, write_max, written);
+
+      if (status == f_none) {
+        if (*written == buffer.used) return f_none_on_eos;
+        if (*written == write_max) return f_none_on_stop;
+      }
+    }
+    else {
+      f_string_length written_local = 0;
+
+      private_f_file_write_until(file, buffer.string, buffer.used, &written_local);
+
+      if (status == f_none) {
+        if (written_local == buffer.used) return f_none_on_eos;
+        if (written_local == write_max) return f_none_on_stop;
+      }
+    }
 
     return status;
   }
@@ -779,7 +823,7 @@ extern "C" {
     if (file.id <= 0) return f_status_set_error(f_file_not_open);
 
     if (buffer.used == 0) {
-      *written = 0;
+      if (written) *written = 0;
       return f_no_data;
     }
 
@@ -790,12 +834,25 @@ extern "C" {
       write_max = buffer.used;
     }
 
-    f_status status = private_f_file_write_until(file, buffer.string + range.start, write_max, written);
-    if (f_status_is_error(status)) return f_status_set_error(status);
+    f_status status = f_none;
 
-    if (status == f_none) {
-      if (range.start + *written == total) return f_none_on_stop;
-      if (range.start + *written == buffer.used) return f_none_on_eos;
+    if (written) {
+      private_f_file_write_until(file, buffer.string + range.start, write_max, written);
+
+      if (status == f_none) {
+        if (range.start + *written == buffer.used) return f_none_on_stop;
+        if (range.start + *written == total) return f_none_on_eos;
+      }
+    }
+    else {
+      f_string_length written_local = 0;
+
+      private_f_file_write_until(file, buffer.string + range.start, write_max, &written_local);
+
+      if (status == f_none) {
+        if (range.start + written_local == buffer.used) return f_none_on_eos;
+        if (range.start + written_local == total) return f_none_on_stop;
+      }
     }
 
     return status;

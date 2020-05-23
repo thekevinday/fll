@@ -53,13 +53,13 @@ extern "C" {
       status = fl_console_parameter_to_number_unsigned(value, &number);
 
       if (status == f_none) {
-        fl_color_print_line(f_standard_output, data.context.error, data.context.reset, "invalid name");
+        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "invalid name");
 
         return f_status_set_error(f_invalid_parameter);
       }
 
       if (status == f_no_data || f_status_set_fine(status) == f_invalid_parameter) {
-        fl_color_print_line(f_standard_output, data.context.error, data.context.reset, "invalid data");
+        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "invalid data");
 
         return status;
       }
@@ -76,10 +76,10 @@ extern "C" {
 
       if (f_status_is_error(status)) {
         if (f_status_set_fine(status) == f_invalid_data) {
-          fl_color_print_line(f_standard_output, data.context.error, data.context.reset, "unknown name");
+          fl_color_print_line(f_type_output, data.context.error, data.context.reset, "unknown name");
         }
         else {
-          fl_color_print_line(f_standard_output, data.context.error, data.context.reset, "failed to convert");
+          fl_color_print_line(f_type_output, data.context.error, data.context.reset, "failed to convert");
         }
 
         return status;
@@ -87,7 +87,7 @@ extern "C" {
     }
 
     if (status == f_invalid_data) {
-      fl_color_print_line(f_standard_output, data.context.warning, data.context.reset, "unknown code");
+      fl_color_print_line(f_type_output, data.context.warning, data.context.reset, "unknown code");
 
       return f_none;
     }
@@ -114,10 +114,10 @@ extern "C" {
 
     if (f_status_is_error(status)) {
       if (f_status_set_fine(status) == f_invalid_data) {
-        fl_color_print_line(f_standard_output, data.context.error, data.context.reset, "unknown code");
+        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "unknown code");
       }
       else {
-        fl_color_print_line(f_standard_output, data.context.error, data.context.reset, "failed to convert");
+        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "failed to convert");
       }
 
       return status;
@@ -134,17 +134,17 @@ extern "C" {
     f_status status = fl_console_parameter_to_number_unsigned(value, number);
 
     if (*number > f_status_size_max_with_signal) {
-      fl_color_print_line(f_standard_output, data.context.error, data.context.reset, "out of range");
+      fl_color_print_line(f_type_output, data.context.error, data.context.reset, "out of range");
 
       return status;
     }
 
     if (f_status_is_error(status)) {
       if (f_status_set_fine(status) == f_number_negative) {
-        fl_color_print_line(f_standard_output, data.context.error, data.context.reset, "out of range");
+        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "out of range");
       }
       else {
-        fl_color_print_line(f_standard_output, data.context.error, data.context.reset, "invalid number");
+        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "invalid number");
       }
 
       return status;

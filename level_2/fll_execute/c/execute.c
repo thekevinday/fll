@@ -388,7 +388,7 @@ extern "C" {
       clearenv();
 
       for (f_array_length i = 0; i < names.used; i++) {
-        f_environment_set_dynamic(names.array[i], values.array[i], true);
+        f_environment_set_dynamic(names.array[i], values.array[i], f_true);
       } // for
 
       execv(program_path, fixed_arguments);
@@ -614,7 +614,7 @@ extern "C" {
       clearenv();
 
       for (f_array_length i = 0; i < names.used; i++) {
-        f_environment_set_dynamic(names.array[i], values.array[i], true);
+        f_environment_set_dynamic(names.array[i], values.array[i], f_true);
       }
 
       execvp(program_path, fixed_arguments);

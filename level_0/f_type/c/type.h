@@ -13,6 +13,7 @@
 // libc includes
 #include <stdbool.h>
 #include <stdint.h>
+#include <unistd.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -175,13 +176,19 @@ extern "C" {
  * For most systems, there is no standard warning nor is there a standard debug.
  * Therefore, these will map to standard output.
  */
-#ifndef _di_f_type_standard_input_output_
-  #define f_standard_debug   stdout
-  #define f_standard_error   stderr
-  #define f_standard_input   stdin
-  #define f_standard_output  stdout
-  #define f_standard_warning stdout
-#endif // _di_f_type_standard_input_output_
+#ifndef _di_f_type_input_output_
+  #define f_type_debug   stdout
+  #define f_type_error   stderr
+  #define f_type_input   stdin
+  #define f_type_output  stdout
+  #define f_type_warning stdout
+
+  #define f_type_descriptor_debug   STDOUT_FILENO
+  #define f_type_descriptor_error   STDERR_FILENO
+  #define f_type_descriptor_input   STDIN_FILENO
+  #define f_type_descriptor_output  STDOUT_FILENO
+  #define f_type_descriptor_warning STDOUT_FILENO
+#endif // _di_f_type_input_output_
 
 /**
  * Defines a variable to be used by arrays.

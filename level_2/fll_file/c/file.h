@@ -31,7 +31,7 @@ extern "C" {
  * Print file error messages.
  *
  * @param file
- *   The file to write to, such as f_standard_output or f_standard_error.
+ *   The file to write to, such as f_type_output or f_type_error.
  * @param context
  *   The color context information to use when printing.
  * @param function_name

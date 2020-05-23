@@ -4,7 +4,7 @@ int main(const unsigned long argc, const f_string *argv) {
   const f_console_arguments arguments = { argc, argv };
   status_code_data data = status_code_data_initialize;
 
-  if (f_pipe_exists()) {
+  if (f_pipe_input_exists()) {
     data.process_pipe = f_true;
   }
 

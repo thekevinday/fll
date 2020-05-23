@@ -12,7 +12,7 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol);
-      fl_color_print_line(f_standard_output, data.context.important, data.context.reset, "Generating skeleton structure.");
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Generating skeleton structure.");
     }
 
     {
@@ -102,10 +102,10 @@ extern "C" {
 
     if (status == f_false) {
       if (data.verbosity != fake_verbosity_quiet) {
-        fprintf(f_standard_error, "%c", f_string_eol);
-        fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The path '");
-        fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
-        fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' exists but is not a directory.");
+        fprintf(f_type_error, "%c", f_string_eol);
+        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The path '");
+        fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path.string);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' exists but is not a directory.");
       }
 
       return f_status_set_warning(f_failure);
@@ -115,10 +115,10 @@ extern "C" {
 
       if (f_status_is_error(status)) {
         if (f_status_set_fine(status) == f_file_not_found) {
-          fprintf(f_standard_error, "%c", f_string_eol);
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The path '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' could not be created, a parent directory does not exist.");
+          fprintf(f_type_error, "%c", f_string_eol);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The path '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path.string);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' could not be created, a parent directory does not exist.");
         }
         else {
           fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), "f_directory_create", path.string, "create", f_false, f_true);
@@ -182,14 +182,14 @@ extern "C" {
         mode = f_file_mode_all_rwx;
       }
 
-      status = f_file_create(path.string, mode, true);
+      status = f_file_create(path.string, mode, f_true, f_true);
 
       if (f_status_is_error(status)) {
         if (f_status_set_fine(status) == f_file_not_found) {
-          fprintf(f_standard_error, "%c", f_string_eol);
-          fl_color_print(f_standard_error, data.context.error, data.context.reset, "ERROR: The path '");
-          fl_color_print(f_standard_error, data.context.notable, data.context.reset, "%s", path.string);
-          fl_color_print_line(f_standard_error, data.context.error, data.context.reset, "' could not be created, a parent directory does not exist.");
+          fprintf(f_type_error, "%c", f_string_eol);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The file '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path.string);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' could not be created, a parent directory does not exist.");
         }
         else {
           fake_print_error_file(data.context, data.verbosity, f_status_set_fine(status), "f_file_create", path.string, "create", f_true, f_true);
