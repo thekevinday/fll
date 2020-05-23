@@ -166,6 +166,7 @@ extern "C" {
     #define FL_status_string_address          "F_address"
     #define FL_status_string_block            "F_block"
     #define FL_status_string_bound_out        "F_bound_out"
+    #define FL_status_string_connected        "F_connected"
     #define FL_status_string_connected_not    "F_connected_not"
     #define FL_status_string_critical         "F_critical"
     #define FL_status_string_descriptor       "F_descriptor"
@@ -174,6 +175,7 @@ extern "C" {
     #define FL_status_string_eof              "F_eof"
     #define FL_status_string_eol              "F_eol"
     #define FL_status_string_eos              "F_eos"
+    #define FL_status_string_exist            "F_exist"
     #define FL_status_string_exist_not        "F_exist_not"
     #define FL_status_string_failure          "F_failure"
     #define FL_status_string_fork             "F_fork"
@@ -195,7 +197,6 @@ extern "C" {
     #define FL_status_string_process_too_many "F_process_too_many"
     #define FL_status_string_prohibited       "F_prohibited"
     #define FL_status_string_read_only        "F_read_only"
-    #define FL_status_string_socket           "F_socket"
     #define FL_status_string_space_not        "F_space_not"
     #define FL_status_string_stop             "F_stop"
     #define FL_status_string_syntax           "F_syntax"
@@ -203,6 +204,7 @@ extern "C" {
     #define FL_status_string_unsupported      "F_unsupported"
     #define FL_status_string_utf              "F_utf"
     #define FL_status_string_value            "F_value"
+    #define FL_status_string_value_not        "F_value_not"
     #define FL_status_string_warn             "F_warn"
     #define FL_status_string_write_only       "F_write_only"
 
@@ -210,6 +212,7 @@ extern "C" {
     #define FL_status_string_address_length          9
     #define FL_status_string_block_length            7
     #define FL_status_string_bound_out_length        11
+    #define FL_status_string_connected_length        11
     #define FL_status_string_connected_not_length    15
     #define FL_status_string_critical_length         10
     #define FL_status_string_descriptor_length       12
@@ -218,6 +221,7 @@ extern "C" {
     #define FL_status_string_eof_length              5
     #define FL_status_string_eol_length              5
     #define FL_status_string_eos_length              5
+    #define FL_status_string_exist_length            7
     #define FL_status_string_exist_not_length        11
     #define FL_status_string_failure_length          9
     #define FL_status_string_fork_length             6
@@ -239,7 +243,6 @@ extern "C" {
     #define FL_status_string_process_too_many_length 18
     #define FL_status_string_prohibited_length       12
     #define FL_status_string_read_only_length        11
-    #define FL_status_string_socket_length           8
     #define FL_status_string_space_not_length        11
     #define FL_status_string_stop_length             6
     #define FL_status_string_syntax_length           8
@@ -247,6 +250,7 @@ extern "C" {
     #define FL_status_string_unsupported_length      13
     #define FL_status_string_utf_length              5
     #define FL_status_string_value_length            7
+    #define FL_status_string_value_not_length        11
     #define FL_status_string_warn_length             6
     #define FL_status_string_write_only_length       12
   #endif // _di_F_status_basic_
@@ -424,7 +428,7 @@ extern "C" {
     #define FL_status_string_file_found_not          "F_file_found_not"
     #define FL_status_string_file_open               "F_file_open"
     #define FL_status_string_file_open_max           "F_file_open_max"
-    #define FL_status_string_file_open_not           "F_file_open_not"
+    #define FL_status_string_file_opened             "F_file_opened"
     #define FL_status_string_file_purge              "F_file_purge"
     #define FL_status_string_file_read               "F_file_read"
     #define FL_status_string_file_reallocation       "F_file_reallocation"
@@ -464,7 +468,7 @@ extern "C" {
     #define FL_status_string_file_found_not_length           16
     #define FL_status_string_file_open_length                11
     #define FL_status_string_file_open_max_length            15
-    #define FL_status_string_file_open_not_length            15
+    #define FL_status_string_file_opened_length              13
     #define FL_status_string_file_purge_length               12
     #define FL_status_string_file_read_length                11
     #define FL_status_string_file_reallocation_length        19
@@ -508,12 +512,12 @@ extern "C" {
     #define FL_status_string_directory_closed      "F_directory_closed"
     #define FL_status_string_directory_descriptor  "F_directory_descriptor"
     #define FL_status_string_directory_empty       "F_directory_empty"
+    #define FL_status_string_directory_empty_not   "F_directory_empty_not"
     #define FL_status_string_directory_found       "F_directory_found"
     #define FL_status_string_directory_found_not   "F_directory_found_not"
     #define FL_status_string_directory_flush       "F_directory_flush"
     #define FL_status_string_directory_link_max    "F_directory_link_max"
     #define FL_status_string_directory_open        "F_directory_open"
-    #define FL_status_string_directory_open_not    "F_directory_open_not"
     #define FL_status_string_directory_purge       "F_directory_purge"
     #define FL_status_string_directory_read        "F_directory_read"
     #define FL_status_string_directory_stream      "F_directory_stream"
@@ -528,12 +532,12 @@ extern "C" {
     #define FL_status_string_directory_closed_length      18
     #define FL_status_string_directory_descriptor_length  22
     #define FL_status_string_directory_empty_length       17
+    #define FL_status_string_directory_empty_not_length   21
     #define FL_status_string_directory_found_length       17
     #define FL_status_string_directory_found_not_length   21
     #define FL_status_string_directory_flush_length       17
     #define FL_status_string_directory_link_max_length    20
     #define FL_status_string_directory_open_length        16
-    #define FL_status_string_directory_open_not_length    20
     #define FL_status_string_directory_purge_length       17
     #define FL_status_string_directory_read_length        16
     #define FL_status_string_directory_stream_length      18
@@ -545,15 +549,17 @@ extern "C" {
   #endif // _di_F_status_directory_
 
   #ifndef _di_F_status_socket_
-    #define FL_status_string_socket_client  "F_socket_connect_client"
-    #define FL_status_string_socket_target  "F_socket_connect_target"
+    #define FL_status_string_socket         "F_socket"
+    #define FL_status_string_socket_client  "F_socket_client"
     #define FL_status_string_socket_receive "F_socket_receive"
     #define FL_status_string_socket_send    "F_socket_send"
+    #define FL_status_string_socket_target  "F_socket_target"
 
-    #define FL_status_string_socket_client_length  23
-    #define FL_status_string_socket_target_length  23
+    #define FL_status_string_socket_length         8
+    #define FL_status_string_socket_client_length  15
     #define FL_status_string_socket_receive_length 16
     #define FL_status_string_socket_send_length    13
+    #define FL_status_string_socket_target_length  15
   #endif // _di_F_status_socket_
 
   #ifndef _di_F_status_compare_
@@ -568,7 +574,7 @@ extern "C" {
     #define FL_status_string_than_less_length    11
   #endif // _di_F_status_compare_
 
-  #ifndef _di_F_status_access_denied_
+  #ifndef _di_F_status_access_
     #define FL_status_string_access_denied         "F_access_denied"
     #define FL_status_string_access_denied_user    "F_access_denied_user"
     #define FL_status_string_access_denied_group   "F_access_denied_group"
@@ -577,16 +583,32 @@ extern "C" {
     #define FL_status_string_access_denied_write   "F_access_denied_write"
     #define FL_status_string_access_denied_execute "F_access_denied_execute"
     #define FL_status_string_access_denied_super   "F_access_denied_super"
+    #define FL_status_string_access_granted         "F_access_granted"
+    #define FL_status_string_access_granted_user    "F_access_granted_user"
+    #define FL_status_string_access_granted_group   "F_access_granted_group"
+    #define FL_status_string_access_granted_world   "F_access_granted_world"
+    #define FL_status_string_access_granted_read    "F_access_granted_read"
+    #define FL_status_string_access_granted_write   "F_access_granted_write"
+    #define FL_status_string_access_granted_execute "F_access_granted_execute"
+    #define FL_status_string_access_granted_super   "F_access_granted_super"
 
-    #define FL_status_string_access_denied_length         15
-    #define FL_status_string_access_denied_user_length    20
-    #define FL_status_string_access_denied_group_length   21
-    #define FL_status_string_access_denied_world_length   21
-    #define FL_status_string_access_denied_read_length    20
-    #define FL_status_string_access_denied_write_length   21
-    #define FL_status_string_access_denied_execute_length 23
-    #define FL_status_string_access_denied_super_length   21
-  #endif // _di_F_status_access_denied_
+    #define FL_status_string_access_denied_length          15
+    #define FL_status_string_access_denied_user_length     20
+    #define FL_status_string_access_denied_group_length    21
+    #define FL_status_string_access_denied_world_length    21
+    #define FL_status_string_access_denied_read_length     20
+    #define FL_status_string_access_denied_write_length    21
+    #define FL_status_string_access_denied_execute_length  23
+    #define FL_status_string_access_denied_super_length    21
+    #define FL_status_string_access_granted_length         16
+    #define FL_status_string_access_granted_user_length    21
+    #define FL_status_string_access_granted_group_length   22
+    #define FL_status_string_access_granted_world_length   22
+    #define FL_status_string_access_granted_read_length    21
+    #define FL_status_string_access_granted_write_length   22
+    #define FL_status_string_access_granted_execute_length 24
+    #define FL_status_string_access_granted_super_length   22
+  #endif // _di_F_status_access_
 
   #define FL_status_string_status_code_last "F_status_code_last"
 

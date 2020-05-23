@@ -147,6 +147,7 @@ extern "C" {
       F_address,
       F_block,
       F_bound_out,
+      F_connected,
       F_connected_not,
       F_critical,
       F_descriptor,
@@ -155,6 +156,7 @@ extern "C" {
       F_eof,
       F_eol,
       F_eos,
+      F_exist,
       F_exist_not,
       F_failure,
       F_fork,
@@ -176,7 +178,6 @@ extern "C" {
       F_process_too_many,
       F_prohibited,
       F_read_only,
-      F_socket,
       F_space_not,
       F_stop,
       F_syntax,
@@ -184,6 +185,7 @@ extern "C" {
       F_unsupported,
       F_utf,
       F_value,
+      F_value_not,
       F_warn,
       F_write_only,
     #endif // _di_F_status_basic_
@@ -281,13 +283,12 @@ extern "C" {
       F_file_descriptor,
       F_file_descriptor_max,
       F_file_empty,
-      F_file_error,
       F_file_flush,
       F_file_found,
       F_file_found_not,
       F_file_open,
+      F_file_opened,
       F_file_open_max,
-      F_file_open_not,
       F_file_purge,
       F_file_read,
       F_file_reallocation,
@@ -327,12 +328,12 @@ extern "C" {
       F_directory_closed,
       F_directory_descriptor,
       F_directory_empty,
+      F_directory_empty_not,
       F_directory_found,
       F_directory_found_not,
       F_directory_flush,
       F_directory_link_max,
       F_directory_open,
-      F_directory_open_not,
       F_directory_purge,
       F_directory_read,
       F_directory_stream,
@@ -344,10 +345,11 @@ extern "C" {
     #endif // _di_F_status_directory_
 
     #ifndef _di_F_status_socket_
-      F_socket_connect_client,
-      F_socket_connect_target,
+      F_socket,
+      F_socket_client,
       F_socket_receive,
       F_socket_send,
+      F_socket_target,
     #endif // _di_F_status_socket_
 
     #ifndef _di_F_status_compare_
@@ -366,6 +368,14 @@ extern "C" {
       F_access_denied_user,
       F_access_denied_world,
       F_access_denied_write,
+      F_access_granted,
+      F_access_granted_execute,
+      F_access_granted_group,
+      F_access_granted_read,
+      F_access_granted_super, // "super" as in super user (root user).
+      F_access_granted_user,
+      F_access_granted_world,
+      F_access_granted_write,
     #endif // _di_F_status_access_
 
     // Required.

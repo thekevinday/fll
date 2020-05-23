@@ -381,6 +381,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_connected, length, FL_status_string_connected_length) == F_equal_to) {
+        *code = F_connected;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_connected_not, length, FL_status_string_connected_not_length) == F_equal_to) {
         *code = F_connected_not;
         return F_none;
@@ -418,6 +423,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_eos, length, FL_status_string_eos_length) == F_equal_to) {
         *code = F_eos;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_exist, length, FL_status_string_exist_length) == F_equal_to) {
+        *code = F_exist;
         return F_none;
       }
 
@@ -526,11 +536,6 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_compare(string, FL_status_string_socket, length, FL_status_string_socket_length) == F_equal_to) {
-        *code = F_socket;
-        return F_none;
-      }
-
       if (fl_string_compare(string, FL_status_string_space_not, length, FL_status_string_space_not_length) == F_equal_to) {
         *code = F_space_not;
         return F_none;
@@ -563,6 +568,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_value, length, FL_status_string_value_length) == F_equal_to) {
         *code = F_value;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_value_not, length, FL_status_string_value_not_length) == F_equal_to) {
+        *code = F_value_not;
         return F_none;
       }
 
@@ -998,8 +1008,8 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_compare(string, FL_status_string_file_open_not, length, FL_status_string_file_open_not_length) == F_equal_to) {
-        *code = F_file_open_not;
+      if (fl_string_compare(string, FL_status_string_file_opened, length, FL_status_string_file_opened_length) == F_equal_to) {
+        *code = F_file_opened;
         return F_none;
       }
 
@@ -1172,6 +1182,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_directory_empty_not, length, FL_status_string_directory_empty_not_length) == F_equal_to) {
+        *code = F_directory_empty_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_directory_found, length, FL_status_string_directory_found_length) == F_equal_to) {
         *code = F_directory_found;
         return F_none;
@@ -1194,11 +1209,6 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_directory_open, length, FL_status_string_directory_open_length) == F_equal_to) {
         *code = F_directory_open;
-        return F_none;
-      }
-
-      if (fl_string_compare(string, FL_status_string_directory_open_not, length, FL_status_string_directory_open_not_length) == F_equal_to) {
-        *code = F_directory_open_not;
         return F_none;
       }
 
@@ -1244,13 +1254,13 @@ extern "C" {
     #endif // _di_F_status_directory_
 
     #ifndef _di_F_status_socket_
-      if (fl_string_compare(string, FL_status_string_socket_client, length, FL_status_string_socket_client_length) == F_equal_to) {
-        *code = F_socket_connect_client;
+      if (fl_string_compare(string, FL_status_string_socket, length, FL_status_string_socket_length) == F_equal_to) {
+        *code = F_socket;
         return F_none;
       }
 
-      if (fl_string_compare(string, FL_status_string_socket_target, length, FL_status_string_socket_target_length) == F_equal_to) {
-        *code = F_socket_connect_target;
+      if (fl_string_compare(string, FL_status_string_socket_client, length, FL_status_string_socket_client_length) == F_equal_to) {
+        *code = F_socket_client;
         return F_none;
       }
 
@@ -1261,6 +1271,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_socket_send, length, FL_status_string_socket_send_length) == F_equal_to) {
         *code = F_socket_send;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_socket_target, length, FL_status_string_socket_target_length) == F_equal_to) {
+        *code = F_socket_target;
         return F_none;
       }
     #endif // _di_F_status_socket_
@@ -1287,7 +1302,7 @@ extern "C" {
       }
     #endif // _di_F_status_compare_
 
-    #ifndef _di_F_status_access_denied_
+    #ifndef _di_F_status_access_
       if (fl_string_compare(string, FL_status_string_access_denied, length, FL_status_string_access_denied_length) == F_equal_to) {
         *code = F_access_denied;
         return F_none;
@@ -1327,7 +1342,47 @@ extern "C" {
         *code = F_access_denied_super;
         return F_none;
       }
-    #endif // _di_F_status_access_denied_
+
+      if (fl_string_compare(string, FL_status_string_access_granted, length, FL_status_string_access_granted_length) == F_equal_to) {
+        *code = F_access_granted;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_access_granted_user, length, FL_status_string_access_granted_user_length) == F_equal_to) {
+        *code = F_access_granted_user;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_access_granted_group, length, FL_status_string_access_granted_group_length) == F_equal_to) {
+        *code = F_access_granted_group;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_access_granted_world, length, FL_status_string_access_granted_world_length) == F_equal_to) {
+        *code = F_access_granted_world;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_access_granted_read, length, FL_status_string_access_granted_read_length) == F_equal_to) {
+        *code = F_access_granted_read;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_access_granted_write, length, FL_status_string_access_granted_write_length) == F_equal_to) {
+        *code = F_access_granted_write;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_access_granted_execute, length, FL_status_string_access_granted_execute_length) == F_equal_to) {
+        *code = F_access_granted_execute;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_access_granted_super, length, FL_status_string_access_granted_super_length) == F_equal_to) {
+        *code = F_access_granted_super;
+        return F_none;
+      }
+    #endif // _di_F_status_access_
 
     if (fl_string_compare(string, FL_status_string_status_code_last, length, FL_status_string_status_code_last_length) == F_equal_to) {
       *code = F_status_code_last;

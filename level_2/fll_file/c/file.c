@@ -10,7 +10,7 @@ extern "C" {
     if (status == F_memory_allocation || status == F_memory_reallocation) {
       fl_color_print_line(file, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory.");
     }
-    else if (status == F_file_open_not) {
+    else if (status == F_file_closed) {
       fl_color_print(file, context.error, context.reset, "INTERNAL ERROR: The file '");
       fl_color_print(file, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(file, context.error, context.reset, "' is no longer open.");

@@ -227,6 +227,9 @@ extern "C" {
         case F_bound_out:
           *string = FL_status_string_bound_out;
           break;
+        case F_connected:
+          *string = FL_status_string_connected;
+          break;
         case F_connected_not:
           *string = FL_status_string_connected_not;
           break;
@@ -250,6 +253,9 @@ extern "C" {
           break;
         case F_eos:
           *string = FL_status_string_eos;
+          break;
+        case F_exist:
+          *string = FL_status_string_exist;
           break;
         case F_exist_not:
           *string = FL_status_string_exist_not;
@@ -314,9 +320,6 @@ extern "C" {
         case F_read_only:
           *string = FL_status_string_read_only;
           break;
-        case F_socket:
-          *string = FL_status_string_socket;
-          break;
         case F_space_not:
           *string = FL_status_string_space_not;
           break;
@@ -337,6 +340,9 @@ extern "C" {
           break;
         case F_value:
           *string = FL_status_string_value;
+          break;
+        case F_value_not:
+          *string = FL_status_string_value_not;
           break;
         case F_warn:
           *string = FL_status_string_warn;
@@ -608,8 +614,8 @@ extern "C" {
         case F_file_open_max:
           *string = FL_status_string_file_open_max;
           break;
-        case F_file_open_not:
-          *string = FL_status_string_file_open_not;
+        case F_file_opened:
+          *string = FL_status_string_file_opened;
           break;
         case F_file_purge:
           *string = FL_status_string_file_purge;
@@ -713,6 +719,9 @@ extern "C" {
         case F_directory_empty:
           *string = FL_status_string_directory_empty;
           break;
+        case F_directory_empty_not:
+          *string = FL_status_string_directory_empty_not;
+          break;
         case F_directory_found:
           *string = FL_status_string_directory_found;
           break;
@@ -727,9 +736,6 @@ extern "C" {
           break;
         case F_directory_open:
           *string = FL_status_string_directory_open;
-          break;
-        case F_directory_open_not:
-          *string = FL_status_string_directory_open_not;
           break;
         case F_directory_purge:
           *string = FL_status_string_directory_purge;
@@ -758,17 +764,20 @@ extern "C" {
       #endif // _di_F_status_directory_
 
       #ifndef _di_F_status_socket_
-        case F_socket_connect_client:
-          *string = FL_status_string_socket_client;
+        case F_socket:
+          *string = FL_status_string_socket;
           break;
-        case F_socket_connect_target:
-          *string = FL_status_string_socket_target;
+        case F_socket_client:
+          *string = FL_status_string_socket_client;
           break;
         case F_socket_receive:
           *string = FL_status_string_socket_receive;
           break;
         case F_socket_send:
           *string = FL_status_string_socket_send;
+          break;
+        case F_socket_target:
+          *string = FL_status_string_socket_target;
           break;
       #endif // _di_F_status_socket_
 
@@ -787,7 +796,7 @@ extern "C" {
           break;
       #endif // _di_F_status_compare_
 
-      #ifndef _di_F_status_access_denied_
+      #ifndef _di_F_status_access_
         case F_access_denied:
           *string = FL_status_string_access_denied;
           break;
@@ -812,7 +821,31 @@ extern "C" {
         case F_access_denied_super:
           *string = FL_status_string_access_denied_super;
           break;
-      #endif // _di_F_status_access_denied_
+        case F_access_granted:
+          *string = FL_status_string_access_granted;
+          break;
+        case F_access_granted_user:
+          *string = FL_status_string_access_granted_user;
+          break;
+        case F_access_granted_group:
+          *string = FL_status_string_access_granted_group;
+          break;
+        case F_access_granted_world:
+          *string = FL_status_string_access_granted_world;
+          break;
+        case F_access_granted_read:
+          *string = FL_status_string_access_granted_read;
+          break;
+        case F_access_granted_write:
+          *string = FL_status_string_access_granted_write;
+          break;
+        case F_access_granted_execute:
+          *string = FL_status_string_access_granted_execute;
+          break;
+        case F_access_granted_super:
+          *string = FL_status_string_access_granted_super;
+          break;
+      #endif // _di_F_status_access_
 
       case F_status_code_last:
         *string = FL_status_string_status_code_last;

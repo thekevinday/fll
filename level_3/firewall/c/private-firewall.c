@@ -625,7 +625,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
               else if (status == F_number_overflow) {
                 fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Integer overflow while trying to buffer the file '%.*s'", file_path.used, file_path.string);
               }
-              else if (status == F_file_open_not) {
+              else if (status == F_file_closed) {
                 fl_color_print_line(f_type_error, data.context.error, data.context.reset, "INTERNAL ERROR: The file '%.*s' is no longer open", file_path.used, file_path.string);
               }
               else if (status == F_file_seek) {
@@ -1380,7 +1380,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
     else if (status == F_number_overflow) {
       fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'.", filename);
     }
-    else if (status == F_file_open_not) {
+    else if (status == F_file_closed) {
       fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: The file '%s' is no longer open.", filename);
     }
     else if (status == F_file_seek) {

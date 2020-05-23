@@ -370,7 +370,8 @@ extern "C" {
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return F_status_set_error(F_file_open_not);
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (file.id == 0) return F_status_set_error(F_file_closed);
 
     f_status status = F_none;
     ssize_t size_read = 0;
@@ -420,7 +421,8 @@ extern "C" {
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return F_status_set_error(F_file_open_not);
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (file.id == 0) return F_status_set_error(F_file_closed);
 
     f_status status = F_none;
     ssize_t size_read = 0;
@@ -470,7 +472,8 @@ extern "C" {
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return F_status_set_error(F_file_open_not);
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (file.id == 0) return F_status_set_error(F_file_closed);
 
     f_status status = F_none;
     ssize_t size_read = 0;
@@ -693,7 +696,8 @@ extern "C" {
       if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return F_status_set_error(F_file_open_not);
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (file.id == 0) return F_status_set_error(F_file_closed);
 
     if (buffer.used == 0) {
       if (written) *written = 0;
@@ -728,7 +732,8 @@ extern "C" {
       if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return F_status_set_error(F_file_open_not);
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (file.id == 0) return F_status_set_error(F_file_closed);
 
     if (buffer.used == 0) {
       if (written) *written = 0;
@@ -773,7 +778,8 @@ extern "C" {
       if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return F_status_set_error(F_file_open_not);
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (file.id == 0) return F_status_set_error(F_file_closed);
 
     if (buffer.used == 0 || total == 0) {
       if (written) *written = 0;
@@ -820,7 +826,8 @@ extern "C" {
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id <= 0) return F_status_set_error(F_file_open_not);
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (file.id == 0) return F_status_set_error(F_file_closed);
 
     if (buffer.used == 0) {
       if (written) *written = 0;

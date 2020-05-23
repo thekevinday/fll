@@ -172,8 +172,8 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return F_status_set_error(F_parameter);
       if (header == 0) return F_status_set_error(F_parameter);
-      if (file->id == 0) return F_status_set_error(F_file_open_not);
-      if (file->id < 0) return F_status_set_error(F_file_error);
+      if (file->id == 0) return F_status_set_error(F_file_closed);
+      if (file->id < 0) return F_status_set_error(F_file);
     #endif // _di_level_1_parameter_checking_
 
     {

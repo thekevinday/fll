@@ -904,7 +904,8 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_interrupted (with error bit) if interrupt was received.
  *   F_input_output (with error bit) on I/O error.
- *   F_file_open_not (with error bit) if file is not open.
+ *   F_file (with error bit) if file descriptor is in an error state.
+ *   F_file_closed (with error bit) if file is not open.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *
  * @see read()
@@ -934,7 +935,8 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_interrupted (with error bit) if interrupt was received.
  *   F_input_output (with error bit) on I/O error.
- *   F_file_open_not (with error bit) if file is not open.
+ *   F_file (with error bit) if file descriptor is in an error state.
+ *   F_file_closed (with error bit) if file is not open.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *
  * @see read()
@@ -965,7 +967,8 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_interrupted (with error bit) if interrupt was received.
  *   F_input_output (with error bit) on I/O error.
- *   F_file_open_not (with error bit) if file is not open.
+ *   F_file (with error bit) if file descriptor is in an error state.
+ *   F_file_closed (with error bit) if file is not open.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *
  * @see read()
@@ -1248,7 +1251,8 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_interrupted (with error bit) if interrupt was received.
  *   F_input_output (with error bit) on I/O error.
- *   F_file_open_not (with error bit) if file is not open.
+ *   F_file (with error bit) if file descriptor is in an error state.
+ *   F_file_closed (with error bit) if file is not open.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *
  * @see write()
@@ -1280,7 +1284,8 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_interrupted (with error bit) if interrupt was received.
  *   F_input_output (with error bit) on I/O error.
- *   F_file_open_not (with error bit) if file is not open.
+ *   F_file (with error bit) if file descriptor is in an error state.
+ *   F_file_closed (with error bit) if file is not open.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *
  * @see write()
@@ -1313,7 +1318,8 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_interrupted (with error bit) if interrupt was received.
  *   F_input_output (with error bit) on I/O error.
- *   F_file_open_not (with error bit) if file is not open.
+ *   F_file (with error bit) if file descriptor is in an error state.
+ *   F_file_closed (with error bit) if file is not open.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *
  * @see write()
@@ -1346,7 +1352,8 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_interrupted (with error bit) if interrupt was received.
  *   F_input_output (with error bit) on I/O error.
- *   F_file_open_not (with error bit) if file is not open.
+ *   F_file (with error bit) if file descriptor is in an error state.
+ *   F_file_closed (with error bit) if file is not open.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *
  * @see write()

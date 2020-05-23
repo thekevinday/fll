@@ -52,7 +52,7 @@
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_read_until().");
       } else if (status == F_number_overflow) {
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Integer overflow while trying to buffer the file '%s'.", filename);
-      } else if (status == F_file_open_not) {
+      } else if (status == F_file_closed) {
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "INTERNAL ERROR: The file '%s' is no longer open.", filename);
       } else if (status == F_file_seek) {
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: A seek error occurred while accessing the file '%s'.", filename);
