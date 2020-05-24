@@ -438,10 +438,12 @@ extern "C" {
     #define FL_status_string_file_type_block         "F_file_type_block"
     #define FL_status_string_file_type_character     "F_file_type_character"
     #define FL_status_string_file_type_directory     "F_file_type_directory"
+    #define FL_status_string_file_type_fifo          "F_file_type_fifo"
     #define FL_status_string_file_type_link          "F_file_type_link"
     #define FL_status_string_file_type_not_block     "F_file_type_not_block"
     #define FL_status_string_file_type_not_character "F_file_type_not_character"
     #define FL_status_string_file_type_not_directory "F_file_type_not_directory"
+    #define FL_status_string_file_type_not_fifo      "F_file_type_not_fifo"
     #define FL_status_string_file_type_not_link      "F_file_type_not_link"
     #define FL_status_string_file_type_not_pipe      "F_file_type_not_pipe"
     #define FL_status_string_file_type_not_regular   "F_file_type_not_regular"
@@ -478,10 +480,12 @@ extern "C" {
     #define FL_status_string_file_type_block_length          17
     #define FL_status_string_file_type_character_length      21
     #define FL_status_string_file_type_directory_length      21
+    #define FL_status_string_file_type_fifo_length           16
     #define FL_status_string_file_type_link_length           16
     #define FL_status_string_file_type_not_block_length      21
     #define FL_status_string_file_type_not_character_length  25
     #define FL_status_string_file_type_not_directory_length  25
+    #define FL_status_string_file_type_not_fifo_length       20
     #define FL_status_string_file_type_not_link_length       20
     #define FL_status_string_file_type_not_pipe_length       20
     #define FL_status_string_file_type_not_regular_length    23

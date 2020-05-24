@@ -65,7 +65,7 @@ extern "C" {
     f_string_dynamics block;     // S_IFBLK
     f_string_dynamics character; // S_IFCHR
     f_string_dynamics directory; // S_IFDIR
-    f_string_dynamics file;      // S_IFREG
+    f_string_dynamics regular;   // S_IFREG
     f_string_dynamics link;      // S_IFLNK
     f_string_dynamics pipe;      // S_IFIFO
     f_string_dynamics socket;    // S_IFSOCK
@@ -87,7 +87,7 @@ extern "C" {
     f_macro_string_dynamics_delete(status, listing.block) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.character) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.directory) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.file) \
+    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.regular) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.link) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.pipe) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.socket) \
@@ -97,7 +97,7 @@ extern "C" {
     f_macro_string_dynamics_destroy(status, listing.block) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.character) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.directory) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.file) \
+    if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.regular) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.link) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.pipe) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.socket) \
@@ -107,7 +107,7 @@ extern "C" {
     f_macro_string_dynamics_delete_simple(listing.block) \
     f_macro_string_dynamics_delete_simple(listing.character) \
     f_macro_string_dynamics_delete_simple(listing.directory) \
-    f_macro_string_dynamics_delete_simple(listing.file) \
+    f_macro_string_dynamics_delete_simple(listing.regular) \
     f_macro_string_dynamics_delete_simple(listing.link) \
     f_macro_string_dynamics_delete_simple(listing.pipe) \
     f_macro_string_dynamics_delete_simple(listing.socket) \
@@ -117,7 +117,7 @@ extern "C" {
     f_macro_string_dynamics_destroy_simple(listing.block) \
     f_macro_string_dynamics_destroy_simple(listing.character) \
     f_macro_string_dynamics_destroy_simple(listing.directory) \
-    f_macro_string_dynamics_destroy_simple(listing.file) \
+    f_macro_string_dynamics_destroy_simple(listing.regular) \
     f_macro_string_dynamics_destroy_simple(listing.link) \
     f_macro_string_dynamics_destroy_simple(listing.pipe) \
     f_macro_string_dynamics_destroy_simple(listing.socket) \
@@ -136,7 +136,7 @@ extern "C" {
     mode_t block;     // S_IFBLK
     mode_t character; // S_IFCHR
     mode_t directory; // S_IFDIR
-    mode_t file;      // S_IFREG
+    mode_t regular;   // S_IFREG
     mode_t link;      // S_IFLNK
     mode_t socket;    // S_IFSOCK
     mode_t unknown;
@@ -156,14 +156,14 @@ extern "C" {
     modes.block = mode; \
     modes.character = mode; \
     modes.directory = mode; \
-    modes.file = mode; \
+    modes.regular = mode; \
     modes.link = mode; \
     modes.socket = mode; \
     modes.unknown = mode;
 
   #define f_macro_directory_mode_set_common(modes, mode_directory, mode_file, mode_link) \
     modes.directory = mode_directory; \
-    modes.file = mode_file; \
+    modes.regular = mode_file; \
     modes.link = mode_link;
 
   #define f_macro_directory_mode_set_uncommon(modes, mode_block, mode_character, mode_socket, mode_unknown) \

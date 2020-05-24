@@ -63,7 +63,7 @@ extern "C" {
  * 1) F_false, must always evaluate to 0.
  * 2) F_true, must always evaluate to 1 and will conflict with F_signal_hangup.
  * 3) All f_signal_*, these numbers must map directly to the standard signal codes.
- * 4) f_none, this is intended to be the default return code and the return code representing the standard start code.
+ * 4) F_none, this is intended to be the default return code and the return code representing the standard start code.
  * 5) F_status_code_last, this is intended to designate the last code provided by level_0 status project.
  *    All code sets started by another project (such as FSS status codes) must start at this number + 1 with a code start map.
  */
@@ -298,10 +298,12 @@ extern "C" {
       F_file_type_block,
       F_file_type_character,
       F_file_type_directory,
+      F_file_type_fifo,
       F_file_type_link,
       F_file_type_not_block,
       F_file_type_not_character,
       F_file_type_not_directory,
+      F_file_type_not_fifo,
       F_file_type_not_link,
       F_file_type_not_pipe,
       F_file_type_not_regular,

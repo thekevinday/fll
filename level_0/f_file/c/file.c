@@ -61,32 +61,90 @@ extern "C" {
     f_status status = F_none;
     struct stat source_stat;
 
+    // remove the file type from the mode.
+    const mode_t mode_access = (~f_file_type_mask) & mode;
+
     memset(&source_stat, 0, sizeof(struct stat));
 
     status = private_f_file_stat(source, &source_stat, F_false);
     if (F_status_is_error(status)) return status;
 
-    if (f_macro_file_type_is_file(source_stat.st_mode)) {
-      status = private_f_file_create(destination, mode, exclusive, F_false);
+    if (f_macro_file_type_is_regular(source_stat.st_mode)) {
+      status = private_f_file_create(destination, mode_access, exclusive, F_false);
       if (F_status_is_error(status)) return status;
 
       if (!exclusive) {
-        status = private_f_file_change_mode(destination, mode, F_false);
+        status = private_f_file_change_mode(destination, mode_access, F_false);
         if (F_status_is_error(status)) return status;
       }
 
       return private_f_file_copy_content(source, destination, size_block);
     }
-    else if (f_macro_file_type_is_link(source_stat.st_mode)) {
-      status = private_f_file_link(destination, source);
-      if (F_status_set_fine(status) == F_file_found) {
-        if (exclusive) return status;
-      }
-      else if (F_status_is_error(status)) {
-        return status;
+    else if (f_macro_file_type_is_directory(source_stat.st_mode)) {
+      status = private_f_file_create_directory(destination, mode_access);
+
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) != F_file_found || exclusive) {
+          return status;
+        }
       }
 
-      status = private_f_file_change_mode(destination, mode, F_false);
+      status = private_f_file_change_mode(destination, mode_access, F_false);
+      if (F_status_is_error(status)) return status;
+
+      return F_none;
+    }
+    else if (f_macro_file_type_is_link(source_stat.st_mode)) {
+      status = private_f_file_link(destination, source);
+
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) != F_file_found || exclusive) {
+          return status;
+        }
+      }
+
+      status = private_f_file_change_mode(destination, mode_access, F_false);
+      if (F_status_is_error(status)) return status;
+
+      return F_none;
+    }
+    else if (f_macro_file_type_is_fifo(source_stat.st_mode)) {
+      status = private_f_file_create_fifo(destination, mode_access);
+
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) != F_file_found || exclusive) {
+          return status;
+        }
+      }
+
+      status = private_f_file_change_mode(destination, mode_access, F_false);
+      if (F_status_is_error(status)) return status;
+
+      return F_none;
+    }
+    else if (f_macro_file_type_is_socket(source_stat.st_mode)) {
+      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | mode_access, source_stat.st_rdev);
+
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) != F_file_found || exclusive) {
+          return status;
+        }
+      }
+
+      status = private_f_file_change_mode(destination, mode_access, F_false);
+      if (F_status_is_error(status)) return status;
+
+    }
+    else if (f_macro_file_type_is_block(source_stat.st_mode) || f_macro_file_type_is_character(source_stat.st_mode)) {
+      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | mode_access, source_stat.st_rdev);
+
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) != F_file_found || exclusive) {
+          return status;
+        }
+      }
+
+      status = private_f_file_change_mode(destination, mode_access, F_false);
       if (F_status_is_error(status)) return status;
 
       return F_none;
@@ -110,7 +168,7 @@ extern "C" {
     status = private_f_file_stat(source, &source_stat, F_false);
     if (F_status_is_error(status)) return status;
 
-    if (f_macro_file_type_is_file(source_stat.st_mode)) {
+    if (f_macro_file_type_is_regular(source_stat.st_mode)) {
       status = private_f_file_create(destination, source_stat.st_mode, exclusive, F_false);
       if (F_status_is_error(status)) return status;
 
@@ -171,6 +229,62 @@ extern "C" {
     return private_f_file_create_at(at_id, path, mode, exclusive, dereference);
   }
 #endif // _di_f_file_create_at_
+
+#ifndef _di_f_file_create_device_
+  f_return_status f_file_create_device(const f_string path, const mode_t mode, const unsigned int major, const unsigned int minor) {
+    if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
+      return F_status_set_error(F_unsupported);
+    }
+
+    const dev_t device = makedev(major, minor);
+
+    return private_f_file_create_node(path, mode, device);
+  }
+#endif // _di_f_file_create_device_
+
+#ifndef _di_f_file_create_device_at_
+  f_return_status f_file_create_device_at(const int at_id, const f_string path, const mode_t mode, const unsigned int major, const unsigned int minor) {
+    if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
+      return F_status_set_error(F_unsupported);
+    }
+
+    const dev_t device = makedev(major, minor);
+
+    return private_f_file_create_node_at(at_id, path, mode, device);
+  }
+#endif // _di_f_file_create_device_at_
+
+#ifndef _di_f_file_create_fifo_
+  f_return_status f_file_create_fifo(const f_string path, const mode_t mode) {
+    return private_f_file_create_fifo(path, mode);
+  }
+#endif // _di_f_file_create_fifo_
+
+#ifndef _di_f_file_create_fifo_at_
+  f_return_status f_file_create_fifo_at(const int at_id, const f_string path, const mode_t mode) {
+    return private_f_file_create_fifo_at(at_id, path, mode);
+  }
+#endif // _di_f_file_create_fifo_at_
+
+#ifndef _di_f_file_create_node_
+  f_return_status f_file_create_node(const f_string path, const mode_t mode, const dev_t device) {
+    if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
+      return F_status_set_error(F_unsupported);
+    }
+
+    return private_f_file_create_node(path, mode, device);
+  }
+#endif // _di_f_file_create_node_
+
+#ifndef _di_f_file_create_node_at_
+  f_return_status f_file_create_node_at(const int at_id, const f_string path, const mode_t mode, const dev_t device) {
+    if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
+      return F_status_set_error(F_unsupported);
+    }
+
+    return private_f_file_create_node_at(at_id, path, mode, device);
+  }
+#endif // _di_f_file_create_node_at_
 
 #ifndef _di_f_file_exists_
   f_return_status f_file_exists(const f_string path) {

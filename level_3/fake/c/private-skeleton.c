@@ -146,7 +146,7 @@ extern "C" {
 
     if (path.used == 0) return F_none;
 
-    status = f_file_is(path.string, f_file_type_file);
+    status = f_file_is(path.string, f_file_type_regular);
     if (status == F_true) {
       if (data.verbosity == fake_verbosity_verbose) {
         printf("File '%s' already exists.%c", path.string, f_string_eol);

@@ -7,6 +7,10 @@
  *
  * Provides structures and data types for a file I/O.
  * Provides operations for opening/closing files.
+ *
+ * @fixme Currently this uses makedev(3) to create devices, which is non-standad.
+ *        The documentation for mknod(2) isn't clear on how to make major/minor based block and character devices.
+ *        Find out how to implement this and elliminate the use of the non-standard makedev(3) call.
  */
 #ifndef _F_file_h
 #define _F_file_h
@@ -20,6 +24,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+
+// non-standard libc includs
+#include <sys/sysmacros.h>
 
 // fll-0 includes
 #include <level_0/status.h>
@@ -59,26 +66,30 @@ extern "C" {
 
 /**
  * Provide file type macros.
+ *
+ * Note: f_file_type_pipe and f_file_type_fifo are the same.
  */
 #ifndef _di_f_file_type_
   #define f_file_type_mask S_IFMT
 
-  #define f_file_type_pipe      S_IFIFO
+  #define f_file_type_block     S_IFBLK
   #define f_file_type_character S_IFCHR
   #define f_file_type_directory S_IFDIR
-  #define f_file_type_block     S_IFBLK
-  #define f_file_type_file      S_IFREG
+  #define f_file_type_fifo      S_IFIFO
   #define f_file_type_link      S_IFLNK
+  #define f_file_type_pipe      S_IFIFO
+  #define f_file_type_regular   S_IFREG
   #define f_file_type_socket    S_IFSOCK
 
   #define f_macro_file_type_get(mode) (f_file_type_mask & mode)
 
-  #define f_macro_file_type_is_pipe(mode)      f_macro_file_type_get(mode) == f_file_type_pipe
+  #define f_macro_file_type_is_block(mode)     f_macro_file_type_get(mode) == f_file_type_block
   #define f_macro_file_type_is_character(mode) f_macro_file_type_get(mode) == f_file_type_character
   #define f_macro_file_type_is_directory(mode) f_macro_file_type_get(mode) == f_file_type_directory
-  #define f_macro_file_type_is_block(mode)     f_macro_file_type_get(mode) == f_file_type_block
-  #define f_macro_file_type_is_file(mode)      f_macro_file_type_get(mode) == f_file_type_file
+  #define f_macro_file_type_is_fifo(mode)      f_macro_file_type_get(mode) == f_file_type_fifo
   #define f_macro_file_type_is_link(mode)      f_macro_file_type_get(mode) == f_file_type_link
+  #define f_macro_file_type_is_pipe(mode)      f_macro_file_type_get(mode) == f_file_type_pipe
+  #define f_macro_file_type_is_regular(mode)   f_macro_file_type_get(mode) == f_file_type_regular
   #define f_macro_file_type_is_socket(mode)    f_macro_file_type_get(mode) == f_file_type_socket
 #endif // _di_f_file_type_
 
@@ -404,6 +415,8 @@ extern "C" {
  * The paths must not contain NULL except for the terminating NULL.
  * The paths must be NULL terminated.
  *
+ * For directory file types, this will only copy the directory itself and not its contents.
+ *
  * @param source
  *   The path to the file to copy from.
  * @param destination
@@ -419,6 +432,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_unsupported if copying a given type of file is unsupported.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_access_denied (with error bit) on access denied.
  *   F_loop (with error bit) on loop error.
@@ -449,6 +463,8 @@ extern "C" {
  * The paths must not contain NULL except for the terminating NULL.
  * The paths must be NULL terminated.
  *
+ * For directory file types, this will only copy the directory itself and not its contents.
+ *
  * @todo provide a return status for when owner/role cannot be assigned.
  * This will be returned when complete so that caller can decide if this is an error or not.
  *
@@ -469,6 +485,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_unsupported if copying a given type of file is unsupported.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_access_denied (with error bit) on access denied.
  *   F_loop (with error bit) on loop error.
@@ -605,6 +622,219 @@ extern "C" {
 #ifndef _di_f_file_create_at_
   extern f_return_status f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive, const bool dereference);
 #endif // _di_f_file_create_at_
+
+/**
+ * Create a device node based on the given path and file mode.
+ *
+ * Warning: Due to the current status of POSIX and LINUX in regards to major and minor devices, this utilizes the non-POSI makedev() function.
+ *
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to assign.
+ * @param major
+ *   The major device number for character and block file types.
+ *   Is ignored by pipe file types.
+ * @param minor
+ *   The minor device number for character and block file types.
+ *   Is ignored by pipe file types.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_failure (with error bit) for any other (mknod()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_unsupported (with error bit) for unsupported file types.
+ *
+ * @see makedev()
+ * @see mknod()
+ */
+#ifndef _di_f_file_create_device_
+  extern f_return_status f_file_create_device(const f_string path, const mode_t mode, const unsigned int major, const unsigned int minor);
+#endif // _di_f_file_create_device_
+
+/**
+ * Create a device node based on the given path and file mode.
+ *
+ * Warning: Due to the current status of POSIX and LINUX in regards to major and minor devices, this utilizes the non-POSI makedev() function.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to assign.
+ * @param major
+ *   The major device number for character and block file types.
+ *   Is ignored by pipe file types.
+ * @param minor
+ *   The minor device number for character and block file types.
+ *   Is ignored by pipe file types.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_failure (with error bit) for any other (mknod()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_unsupported (with error bit) for unsupported file types.
+ *   F_file_descriptor (with error bit) for bad file descriptor.
+ *
+ * @see makedev()
+ * @see mknodat()
+ */
+#ifndef _di_f_file_create_device_at_
+  extern f_return_status f_file_create_device_at(const int at_id, const f_string path, const mode_t mode, const unsigned int major, const unsigned int minor);
+#endif // _di_f_file_create_device_at_
+
+/**
+ * Create a fifo based on the given path and file mode.
+ *
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to assign.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_failure (with error bit) for any other (mknod()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or ififos are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_unsupported (with error bit) for unsupported file types.
+ *
+ * @see mkfifo()
+ */
+#ifndef _di_f_file_create_fifo_
+  extern f_return_status f_file_create_fifo(const f_string path, const mode_t mode);
+#endif // _di_f_file_create_fifo_
+
+/**
+ * Create a fifo based on the given path and file mode.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to assign.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_failure (with error bit) for any other (mknod()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or ififos are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_unsupported (with error bit) for unsupported file types.
+ *   F_file_descriptor (with error bit) for bad file descriptor.
+ *
+ * @see mkfifoat()
+ */
+#ifndef _di_f_file_create_fifo_at_
+  extern f_return_status f_file_create_fifo_at(const int at_id, const f_string path, const mode_t mode);
+#endif // _di_f_file_create_fifo_at_
+
+/**
+ * Create a node based on the given path and file mode.
+ *
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to assign.
+ * @param device
+ *   The device number for character and block file types.
+ *   Is ignored by pipe file types.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_failure (with error bit) for any other (mknod()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_unsupported (with error bit) for unsupported file types.
+ *
+ * @see mknod()
+ */
+#ifndef _di_f_file_create_node_
+  extern f_return_status f_file_create_node(const f_string path, const mode_t mode, const dev_t device);
+#endif // _di_f_file_create_node_
+
+/**
+ * Create a node based on the given path and file mode.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to assign.
+ * @param device
+ *   The device number for character and block file types.
+ *   Is ignored by pipe file types.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_failure (with error bit) for any other (mknod()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_unsupported (with error bit) for unsupported file types.
+ *   F_file_descriptor (with error bit) for bad file descriptor.
+ *
+ * @see mknodat()
+ */
+#ifndef _di_f_file_create_node_at_
+  extern f_return_status f_file_create_node_at(const int at_id, const f_string path, const mode_t mode, const dev_t device);
+#endif // _di_f_file_create_node_at_
 
 /**
  * Identify whether or not a file exists at the given path.
@@ -839,7 +1069,7 @@ extern "C" {
  *   Set to 0 to not use.
  * @param file
  *   The data related to the file being opened.
- *   This will be updated with the file descriptor and file address.
+ *   This will be updated with the file descriptor.
  *
  * @return
  *   F_none on success.
@@ -868,7 +1098,7 @@ extern "C" {
  *   Set to 0 to not use.
  * @param file
  *   The data related to the file being opened.
- *   This will be updated with the file descriptor and file address.
+ *   This will be updated with the file descriptor.
  *
  * @return
  *   F_none on success.

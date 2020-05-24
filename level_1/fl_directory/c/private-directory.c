@@ -52,11 +52,11 @@ extern "C" {
 
     f_macro_string_dynamics_delete_simple(listing.character);
 
-    for (; i < listing.file.used; i++) {
+    for (; i < listing.regular.used; i++) {
       // @todo
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.file);
+    f_macro_string_dynamics_delete_simple(listing.regular);
 
     for (; i < listing.link.used; i++) {
       // @todo
@@ -182,8 +182,8 @@ extern "C" {
       else if (mode == f_file_type_directory) {
         names = &listing->directory;
       }
-      else if (mode == f_file_type_file) {
-        names = &listing->file;
+      else if (mode == f_file_type_regular) {
+        names = &listing->regular;
       }
       else if (mode == f_file_type_link) {
         names = &listing->link;

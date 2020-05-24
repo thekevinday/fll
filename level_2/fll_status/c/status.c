@@ -1078,6 +1078,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_file_type_not_fifo, length, FL_status_string_file_type_not_fifo_length) == F_equal_to) {
+        *code = F_file_type_not_fifo;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_file_type_not_link, length, FL_status_string_file_type_not_link_length) == F_equal_to) {
         *code = F_file_type_not_link;
         return F_none;

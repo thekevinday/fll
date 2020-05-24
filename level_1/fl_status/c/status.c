@@ -644,6 +644,9 @@ extern "C" {
         case F_file_type_directory:
           *string = FL_status_string_file_type_directory;
           break;
+        case F_file_type_fifo:
+          *string = FL_status_string_file_type_fifo;
+          break;
         case F_file_type_link:
           *string = FL_status_string_file_type_link;
           break;
@@ -652,6 +655,9 @@ extern "C" {
           break;
         case F_file_type_not_directory:
           *string = FL_status_string_file_type_not_directory;
+          break;
+        case F_file_type_not_fifo:
+          *string = FL_status_string_file_type_not_fifo;
           break;
         case F_file_type_not_link:
           *string = FL_status_string_file_type_not_link;

@@ -242,7 +242,7 @@ extern "C" {
  *   The file mode to open in.
  * @param file
  *   The data related to the file being opened.
- *   This will be updated with the file descriptor and file address.
+ *   This will be updated with the file descriptor.
  *   This will be updated with the create flags (ignoring and overriding existing file.flags).
  * @param exclusive
  *   If TRUE, will fail when file already exists.
@@ -288,7 +288,7 @@ extern "C" {
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param file
  *   The data related to the file being opened.
- *   This will be updated with the file descriptor and file address.
+ *   This will be updated with the file descriptor.
  *   This will be updated with the create flags (ignoring and overriding existing file.flags).
  * @param path
  *   The path file name.
@@ -328,6 +328,216 @@ extern "C" {
 #if !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
   extern f_return_status private_f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive, const bool dereference) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
+
+/**
+ * Private implementation for creating directories.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The directory mode to use when creating.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_failure (with error bit) for any other (mkdir()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory_link_max (with error bit) max links limit reached or exceeded.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *
+ * @see f_file_copy()
+ * @see mkdir()
+ */
+#if !defined(_di_f_file_copy_)
+  extern f_return_status private_f_file_create_directory(const f_string path, const mode_t mode) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_copy_)
+
+/**
+ * Private implementation for creating directories.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param at_id
+ *   The file descriptor in which the directory will be created within.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The directory mode to use when creating.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_failure (with error bit) for any other (mkdir()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory_link_max (with error bit) max links limit reached or exceeded.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *
+ * @see f_file_copy_at()
+ * @see mkdirat()
+ */
+#if !defined(_di_f_file_copy_at_)
+  extern f_return_status private_f_file_create_directory_at(const int at_id, const f_string path, const mode_t mode) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_copy_at_)
+
+/**
+ * Create a fifo based on the given path and file mode.
+ *
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to assign.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_failure (with error bit) for any other (mknod()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or ififos are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_unsupported (with error bit) for unsupported file types.
+ *
+ * @see mkfifo()
+ */
+#if !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
+  extern f_return_status private_f_file_create_fifo(const f_string path, const mode_t mode) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
+
+/**
+ * Create a fifo based on the given path and file mode.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to assign.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_failure (with error bit) for any other (mknod()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or ififos are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_unsupported (with error bit) for unsupported file types.
+ *   F_file_descriptor (with error bit) for bad file descriptor.
+ *
+ * @see mkfifoat()
+ */
+#if !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
+  extern f_return_status private_f_file_create_fifo_at(const int at_id, const f_string path, const mode_t mode) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
+
+/**
+ * Private implementation of f_file_create_node().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to assign.
+ * @param device
+ *   The device number for character and block file types.
+ *   Is ignored by pipe file types.
+ * @param file
+ *   The data related to the file being created.
+ *   This will be updated with the file descriptor.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_failure (with error bit) for any other (mknod()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_unsupported (with error bit) for unsupported file types.
+ *
+ * @see f_file_create_device()
+ * @see f_file_create_node()
+ */
+#if !defined(_di_f_file_create_device_) || !defined(_di_f_file_create_node_) || !defined(_di_f_file_copy_)
+  extern f_return_status private_f_file_create_node(const f_string path, const mode_t mode, const dev_t device) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_create_device_) || !defined(_di_f_file_create_node_) || !defined(_di_f_file_copy_)
+
+/**
+ * Private implementation of f_file_create_node_at().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to assign.
+ * @param device
+ *   The device number for character and block file types.
+ *   Is ignored by pipe file types.
+ * @param file
+ *   The data related to the file being created.
+ *   This will be updated with the file descriptor.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_failure (with error bit) for any other (mknod()) error.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_unsupported (with error bit) for unsupported file types.
+ *   F_file_descriptor (with error bit) for bad file descriptor.
+ *
+ * @see f_file_create_device_at()
+ * @see f_file_create_node_at()
+ */
+#if !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
+  extern f_return_status private_f_file_create_node_at(const int at_id, const f_string path, const mode_t mode, const dev_t device) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
 
 /**
  * Private implementation of f_file_link().
@@ -447,7 +657,7 @@ extern "C" {
  *   Set to 0 to not use.
  * @param file
  *   The data related to the file being opened.
- *   This will be updated with the file descriptor and file address.
+ *   This will be updated with the file descriptor.
  *
  * @return
  *   F_none on success.
@@ -477,7 +687,7 @@ extern "C" {
  *   Set to 0 to not use.
  * @param file
  *   The data related to the file being opened.
- *   This will be updated with the file descriptor and file address.
+ *   This will be updated with the file descriptor.
  *
  * @return
  *   F_none on success.
