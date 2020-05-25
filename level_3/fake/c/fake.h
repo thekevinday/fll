@@ -122,12 +122,12 @@
 // fll-1 includes
 #include <level_1/color.h>
 #include <level_1/console.h>
+#include <level_1/directory.h>
 #include <level_1/file.h>
 #include <level_1/string.h>
 
 // fll-2 includes
 #include <level_2/execute.h>
-#include <level_2/directory.h>
 #include <level_2/fss.h>
 #include <level_2/fss_extended.h>
 #include <level_2/program.h>
