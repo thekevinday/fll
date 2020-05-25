@@ -246,6 +246,214 @@ extern "C" {
   }
 #endif // !defined(_di_fl_directory_list_)
 
+#if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
+  f_return_status private_fl_directory_path_push(const f_string source, const f_string_length length, f_string_dynamic *destination) {
+    bool terminated_null = F_false;
+    bool separator_prepend = F_false;
+    bool separator_append = F_false;
+
+    f_string_length total = 0;
+    f_string_length start = 0;
+    f_string_length length_truncated = length;
+    f_status status = F_none;
+
+    {
+      f_string_length i = 0;
+      f_string_length j = 0;
+
+      if (destination->used > 0) {
+        if (destination->string[destination->used - 1] == 0) {
+          terminated_null = F_true;
+          total = 1;
+
+          destination->used--;
+        }
+
+        for (i = destination->used - 1; i > 0; i--) {
+          if (destination->string[i] == 0) continue;
+
+          status = f_utf_is_control(destination->string + i, destination->used - i);
+          if (status == F_true) continue;
+
+          if (F_status_is_error(status)) {
+            if (F_status_set_fine(status) == F_incomplete_utf) continue;
+
+            return status;
+          }
+
+          if (destination->string[i] == f_path_separator[0]) {
+            if (i - 1 > 0) {
+              for (j = i - 1; j > 0; j--) {
+                if (destination->string[j] == 0) continue;
+
+                status = f_utf_is_control(destination->string + j, destination->used - j);
+                if (status == F_true) continue;
+
+                if (F_status_is_error(status)) {
+                  if (F_status_set_fine(status) == F_incomplete_utf) continue;
+
+                  return status;
+                }
+
+                if (destination->string[j] == f_path_separator[0]) {
+                  destination->used = j + 1;
+                }
+                else {
+                  break;
+                }
+              } // for
+            }
+          }
+          else {
+            separator_prepend = F_true;
+            total++;
+          }
+
+          break;
+        } // for
+
+        if (destination->used > 0 && i == 0) {
+          if (destination->string[0] != 0 && destination->string[0] != f_path_separator[0]) {
+            separator_prepend = F_true;
+            total++;
+          }
+        }
+      }
+
+      for (i = length - 1; i > 0; i--) {
+        if (source[i] == 0) continue;
+
+        status = f_utf_is_control(source + i, length - i);
+        if (status == F_true) continue;
+
+        if (F_status_is_error(status)) {
+          if (F_status_set_fine(status) == F_incomplete_utf) continue;
+
+          return status;
+        }
+
+        if (source[i] == f_path_separator[0]) {
+          if (!separator_prepend && destination->used > 0) {
+            destination->used--;
+          }
+
+          if (i - 1 > 0) {
+            for (j = i - 1; j > 0; j--) {
+              if (source[j] == 0) continue;
+
+              status = f_utf_is_control(source + j, length - j);
+              if (status == F_true) continue;
+
+              if (F_status_is_error(status)) {
+                if (F_status_set_fine(status) == F_incomplete_utf) continue;
+
+                return status;
+              }
+
+              if (source[j] == f_path_separator[0]) {
+                length_truncated = j + 1;
+              }
+              else {
+                break;
+              }
+            } // for
+          }
+        }
+        else {
+          separator_append = F_true;
+          total++;
+        }
+
+        break;
+      } // for
+
+      if (i == 0 && source[0] != f_path_separator[0]) {
+        separator_append = F_true;
+        total++;
+      }
+
+      for (i = 0; i < length_truncated; i++) {
+        if (source[i] == 0) continue;
+
+        status = f_utf_is_control(source + i, length - i);
+        if (status == F_true) continue;
+
+        if (F_status_is_error(status)) {
+          if (F_status_set_fine(status) == F_incomplete_utf) continue;
+
+          return status;
+        }
+
+        start = i;
+
+        if (source[0] == f_path_separator[0]) {
+          if (i + 1 < length_truncated) {
+            for (j = i + 1; j < length_truncated; j++) {
+              if (source[j] == 0) continue;
+
+              status = f_utf_is_control(source + j, length - j);
+              if (status == F_true) continue;
+
+              if (F_status_is_error(status)) {
+                if (F_status_set_fine(status) == F_incomplete_utf) continue;
+
+                return status;
+              }
+
+              if (source[j] == f_path_separator[0]) {
+                start = j;
+              }
+              else {
+                break;
+              }
+            } // for
+          }
+        }
+
+        break;
+      } // for
+
+      total += length_truncated - start;
+
+      if (destination->used + total > destination->size) {
+        if (destination->used + total > f_string_length_size) {
+          return F_status_set_error(F_string_too_large);
+        }
+
+        f_macro_string_dynamic_resize(status, (*destination), destination->used + total);
+        if (F_status_is_error(status)) return status;
+      }
+    }
+
+    if (separator_prepend) {
+      destination->string[destination->used] = f_path_separator[0];
+      destination->used++;
+      total--;
+    }
+
+    if (length_truncated - start > 0) {
+      memcpy(destination->string + destination->used, source + start, length_truncated - start);
+    }
+
+    destination->used += total;
+
+    if (separator_append) {
+      if (terminated_null) {
+        destination->string[destination->used - 2] = f_path_separator[0];
+        destination->string[destination->used - 1] = 0;
+      }
+      else {
+        destination->string[destination->used - 1] = f_path_separator[0];
+      }
+    }
+    else if (terminated_null) {
+      destination->string[destination->used - 1] = 0;
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

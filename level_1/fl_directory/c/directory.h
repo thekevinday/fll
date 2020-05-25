@@ -34,8 +34,10 @@
 #include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/type.h>
-#include <level_0/file.h>
+#include <level_0/utf.h>
 #include <level_0/directory.h>
+#include <level_0/file.h>
+#include <level_0/path.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -186,6 +188,75 @@ extern "C" {
 #ifndef _di_fl_directory_list_
   extern f_return_status fl_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_directory_listing *listing);
 #endif // _di_fl_directory_list_
+
+/**
+ * Append a path string onto the destination path.
+ *
+ * This ensures that there is a trailing '/' after pop.
+ * This ignores control characters.
+ * This does not dynamically reallocate the string.
+ *
+ * @param path
+ *   The path to remove a single directory.
+ *   This will only be NULL terminated if path string is already NULL terminated.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if path.used is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_directory_path_pop_
+  extern f_return_status fl_directory_path_pop(f_string_static *path);
+#endif // _di_fl_directory_path_pop_
+
+/**
+ * Append a path string onto the destination path.
+ *
+ * This ensures that there is a leading and trailing '/' from source.
+ * This ignores control characters.
+ *
+ * @param source
+ *   The path to append onto the destination.
+ *   This need not be NULL terminated.
+ * @param length
+ *   The length of the string.
+ *   Must not exceed length of source.
+ * @param destination
+ *   The destination path to push the path part onto.
+ *   Any terminating NULLs at the end of the destination string are removed before appending.
+ *   This will only be NULL terminated if destination string is already NULL terminated.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if length is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_directory_path_push_
+  extern f_return_status fl_directory_path_push(const f_string source, f_string_length length, f_string_dynamic *destination);
+#endif // _di_fl_directory_path_push_
+
+/**
+ * Append a dynamic path string onto the destination path.
+ *
+ * This ensures that there is a leading and trailing '/' from source.
+ * This ignores control characters.
+ *
+ * @param source
+ *   The path to append onto the destination.
+ *   This need not be NULL terminated.
+ * @param destination
+ *   The destination path to push the path part onto.
+ *   Any terminating NULLs at the end of the destination string are removed before appending.
+ *   This will only be NULL terminated if destination string is already NULL terminated.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if source.used is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_directory_path_push_dynamic_
+  extern f_return_status fl_directory_path_push_dynamic(const f_string_static source, f_string_dynamic *destination);
+#endif // _di_fl_directory_path_push_dynamic_
 
 #ifdef __cplusplus
 } // extern "C"

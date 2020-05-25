@@ -72,6 +72,34 @@ extern "C" {
   extern f_return_status private_fl_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_directory_listing *listing) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_directory_list_)
 
+/**
+ * Private implementation of fl_directory_path_push().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The path to append onto the destination.
+ *   This need not be NULL terminated.
+ * @param length
+ *   The length of the string.
+ *   Must not exceed length of source.
+ * @param destination
+ *   The destination path to push the path part onto.
+ *   Any terminating NULLs at the end of the destination string are removed before appending.
+ *   This will only be NULL terminated if destination string is already NULL terminated.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if length is 0.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fl_directory_path_push()
+ * @see fl_directory_path_push_dynamic()
+ */
+#if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
+  extern f_return_status private_fl_directory_path_push(const f_string source, const f_string_length length, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
