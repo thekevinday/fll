@@ -7,6 +7,7 @@ extern "C" {
 
 #ifndef _di_f_directory_create_
   f_return_status f_directory_create(const f_string path, const mode_t mode) {
+
     if (mkdir(path, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);

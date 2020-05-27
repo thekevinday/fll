@@ -15,28 +15,77 @@ extern "C" {
 #endif
 
 /**
- * A special function intended to be used directly by fl_directory_copy()
+ * Private implementation of fl_directory_copy().
  *
- * @param path
- *   The file path.
- * @param file_stat
- *   The file stat.
- * @param type
- *   The file type.
- * @param entity
- *   The FTW entity.
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source file path.
+ *   Must be NULL terminated.
+ * @param destination
+ *   The destination file path.
+ *   Must be NULL terminated.
+ * @param mode
+ *   The directory modes.
+ * @param size_block
+ *   The default number of chunks to read at a time with each chunk being 1-byte.
+ *   Must be greater than 0.
+ * @param exclusive
+ *   If TRUE, will fail when file already exists.
+ *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param failures
+ *   A list of paths and their respective status codes for copy failures.
+ *   If 0, then this and statuses is ignored.
  *
  * @return
- *   0 on success.
- *   -1 on failure.
- *   Check errno for details.
+ *   F_none on success.
+ *   F_failure on handled error (failures and statuses is updated with failure and status code).
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory re-allocation error.
  *
  * @see fl_directory_copy()
  */
 #if !defined(_di_fl_directory_copy_)
-  f_return_status private_fl_directory_copy(const f_string source, const f_string destination, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_directory_copy(const f_string_static source, const f_string_static destination, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_directory_copy_)
 
+/**
+ * A special function intended to be used directly by private_fl_directory_copy().
+ *
+ * Will only copy a single file and record any detected errors.
+ *
+ * @param file
+ *   The name of the file within source to copy into destination.
+ *   Must be NULL terminated.
+ * @param source
+ *   The source file path.
+ *   Must be NULL terminated.
+ * @param destination
+ *   The destination file path.
+ *   Must be NULL terminated.
+ * @param mode
+ *   The directory mode.
+ * @param size_block
+ *   The default number of chunks to read at a time with each chunk being 1-byte.
+ *   Must be greater than 0.
+ * @param exclusive
+ *   If TRUE, will fail when file already exists.
+ *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param failures
+ *   A list of paths and their respective status codes for copy failures.
+ *   If 0, then this and statuses is ignored.
+ *
+ * @return
+ *   F_none on success.
+ *   F_failure on handled error (failures and statuses is updated with failure and status code).
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory re-allocation error.
+ *
+ * @see fl_directory_copy()
+ */
+#if !defined(_di_fl_directory_copy_)
+  extern f_return_status private_fl_directory_copy_file(const f_string_static file, const f_string_static source, const f_string_static destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_directory_copy_)
 
 /**
  * A special function intended to be used directly by fl_directory_list().
@@ -50,6 +99,9 @@ extern "C" {
  *   A sort function of the form: int xxx(const struct direct *, const struct direct *).
  *   Set to 0 to not use (NULL).
  *   There are two pre-made libc functions available for this: alphasort() and versionsort().
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
  * @param listing
  *   Will be populated with the names of all top-level paths found within the given directory.
  *
@@ -69,7 +121,7 @@ extern "C" {
  * @see fl_directory_list()
  */
 #if !defined(_di_fl_directory_list_)
-  extern f_return_status private_fl_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_directory_listing *listing) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing *listing) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_directory_list_)
 
 /**

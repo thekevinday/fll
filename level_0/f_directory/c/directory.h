@@ -34,6 +34,7 @@
 #include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/type.h>
+#include <level_0/directory_type.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,141 +55,6 @@ extern "C" {
   #define f_directory_name_max        255
   #define f_directory_descriptors_max 255
 #endif // _di_f_directory_limitations_
-
-/**
- * A structure representing a listing of paths found within a directory.
- *
- * Each property represents a set of paths grouped by directory entity file type.
- */
-#ifndef _di_f_directory_listing_
-  typedef struct {
-    f_string_dynamics block;     // S_IFBLK
-    f_string_dynamics character; // S_IFCHR
-    f_string_dynamics directory; // S_IFDIR
-    f_string_dynamics regular;   // S_IFREG
-    f_string_dynamics link;      // S_IFLNK
-    f_string_dynamics pipe;      // S_IFIFO
-    f_string_dynamics socket;    // S_IFSOCK
-    f_string_dynamics unknown;
-  } f_directory_listing;
-
-  #define f_directory_listing_initialize { \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-  }
-
-  #define f_macro_directory_listing_delete(status, listing) \
-    f_macro_string_dynamics_delete(status, listing.block) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.character) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.directory) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.regular) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.link) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.pipe) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.socket) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.unknown)
-
-  #define f_macro_directory_listing_destroy(status, listing) \
-    f_macro_string_dynamics_destroy(status, listing.block) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.character) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.directory) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.regular) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.link) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.pipe) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.socket) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.unknown)
-
-  #define f_macro_directory_listing_delete_simple(listing) \
-    f_macro_string_dynamics_delete_simple(listing.block) \
-    f_macro_string_dynamics_delete_simple(listing.character) \
-    f_macro_string_dynamics_delete_simple(listing.directory) \
-    f_macro_string_dynamics_delete_simple(listing.regular) \
-    f_macro_string_dynamics_delete_simple(listing.link) \
-    f_macro_string_dynamics_delete_simple(listing.pipe) \
-    f_macro_string_dynamics_delete_simple(listing.socket) \
-    f_macro_string_dynamics_delete_simple(listing.unknown)
-
-  #define f_macro_directory_listing_destroy_simple(listing) \
-    f_macro_string_dynamics_destroy_simple(listing.block) \
-    f_macro_string_dynamics_destroy_simple(listing.character) \
-    f_macro_string_dynamics_destroy_simple(listing.directory) \
-    f_macro_string_dynamics_destroy_simple(listing.regular) \
-    f_macro_string_dynamics_destroy_simple(listing.link) \
-    f_macro_string_dynamics_destroy_simple(listing.pipe) \
-    f_macro_string_dynamics_destroy_simple(listing.socket) \
-    f_macro_string_dynamics_destroy_simple(listing.unknown)
-#endif // _di_f_directory_listing_
-
-/**
- * A structure representing a set of modes intended to be used by directory operations.
- *
- * A small set of macros are provider to help simplify assigning modes.
- *
- * The pipe (S_IFIFO) is intentionally not supported.
- */
-#ifndef _di_f_directory_mode_
-  typedef struct {
-    mode_t block;     // S_IFBLK
-    mode_t character; // S_IFCHR
-    mode_t directory; // S_IFDIR
-    mode_t regular;   // S_IFREG
-    mode_t link;      // S_IFLNK
-    mode_t socket;    // S_IFSOCK
-    mode_t unknown;
-  } f_directory_mode;
-
-  #define f_directory_mode_initialize { \
-    0, \
-    0, \
-    0, \
-    0, \
-    0, \
-    0, \
-    0, \
-  }
-
-  #define f_macro_directory_mode_set_all(modes, mode) \
-    modes.block = mode; \
-    modes.character = mode; \
-    modes.directory = mode; \
-    modes.regular = mode; \
-    modes.link = mode; \
-    modes.socket = mode; \
-    modes.unknown = mode;
-
-  #define f_macro_directory_mode_set_common(modes, mode_directory, mode_file, mode_link) \
-    modes.directory = mode_directory; \
-    modes.regular = mode_file; \
-    modes.link = mode_link;
-
-  #define f_macro_directory_mode_set_uncommon(modes, mode_block, mode_character, mode_socket, mode_unknown) \
-    modes.block = mode_block; \
-    modes.character = mode_character; \
-    modes.socket = mode_socket; \
-    modes.unknown = mode_unknown;
-#endif // _di_f_directory_mode_
-
-/**
- * A structure representing a directory.
- *
- * @todo review this and decide to keep and use it or just remove it.
- */
-#ifndef _di_f_directory_
-  typedef struct {
-    struct dirent entity;
-    f_directory_listing content;
-  } f_directory;
-
-  #define f_directory_initialize { \
-      { 0, 0, 0, 0, 0 }, \
-      f_directory_listing_initialize, \
-    }
-#endif // _di_f_directory_
 
 /**
  * Create a directory at the given path.
@@ -261,7 +127,7 @@ extern "C" {
  *   The path file name.
  *
  * @return
- *   t_true if path was found and path is a directory (or a symlink to a directory).
+ *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
  *   F_name (with error bit) if the name is somehow invalid.
@@ -284,7 +150,7 @@ extern "C" {
  *   The path file name.
  *
  * @return
- *   t_true if path was found and path is a directory.
+ *   F_true if path was found and path is a directory.
  *   F_false if path was found and path is not a directory (this includes symlinks).
  *   F_file_found_not if the path was not found.
  *   F_name (with error bit) if the name is somehow invalid.
@@ -312,7 +178,7 @@ extern "C" {
  *   Set to FALSE to not follow.
  *
  * @return
- *   t_true if path was found and path is a directory.
+ *   F_true if path was found and path is a directory.
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
  *   F_name (with error bit) if the name is somehow invalid.

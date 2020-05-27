@@ -13,7 +13,7 @@ build_libraries -lc
 build_libraries_fll
 build_sources_library 
 build_sources_program 
-build_sources_headers status.h
+build_sources_headers status.h status_array.h
 build_sources_bash
 build_sources_settings
 build_shared yes

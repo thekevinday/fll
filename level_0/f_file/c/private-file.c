@@ -6,9 +6,9 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_file_change_mode_) || !defined(_di_f_file_copy_)
-  f_return_status private_f_file_change_mode(const f_string path, const mode_t mode, const bool dereference) {
+  f_return_status private_f_file_change_mode(const f_string path, const mode_t mode) {
 
-    if ((dereference ? chmod(path, mode) : lchmod(path, mode)) < 0) {
+    if (chmod(path, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -158,17 +158,13 @@ extern "C" {
 #endif // !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
 
 #if !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
-  f_return_status private_f_file_create(const f_string path, const mode_t mode, const bool exclusive, const bool dereference) {
+  f_return_status private_f_file_create(const f_string path, const mode_t mode, const bool exclusive) {
     f_file file = f_file_initialize;
 
     file.flags = O_CLOEXEC | O_CREAT | O_WRONLY;
 
     if (exclusive) {
       file.flags |= O_EXCL;
-    }
-
-    if (!dereference) {
-      file.flags |= O_NOFOLLOW;
     }
 
     f_status status = private_f_file_open(path, mode, &file);
@@ -182,17 +178,13 @@ extern "C" {
 #endif // !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
-  f_return_status private_f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive, const bool dereference) {
+  f_return_status private_f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive) {
     f_file file = f_file_initialize;
 
     file.flags = O_CLOEXEC | O_CREAT | O_WRONLY;
 
     if (exclusive) {
       file.flags |= O_EXCL;
-    }
-
-    if (!dereference) {
-      file.flags |= O_NOFOLLOW;
     }
 
     f_status status = private_f_file_open_at(at_id, path, mode, &file);
@@ -426,6 +418,79 @@ extern "C" {
     return F_none;
   }
 #endif // !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
+
+#if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
+  f_return_status private_f_file_link_read(const f_string path, const struct stat link_stat, f_string_dynamic *target) {
+    // create a NULL terminated string based on file stat.
+    if (link_stat.st_size + 1 > target->size) {
+      if (link_stat.st_size + 1 > f_string_length_size) {
+        return F_status_set_error(F_string_too_large);
+      }
+
+      f_status status = F_none;
+
+      f_macro_string_dynamic_resize(status, (*target), link_stat.st_size + 1);
+      if (F_status_is_error(status)) return status;
+    }
+
+    memset(target->string, 0, target->used + 1);
+
+    target->used = link_stat.st_size;
+
+    if (readlink(path, target->string, target->used) < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EIO) return F_status_set_error(F_input_output);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
+
+#if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
+  f_return_status private_f_file_link_read_at(const int at_id, const f_string path, const struct stat link_stat, f_string_dynamic *target) {
+    // create a NULL terminated string based on file stat.
+    if (link_stat.st_size + 1 > target->size) {
+      if (link_stat.st_size + 1 > f_string_length_size) {
+        return F_status_set_error(F_string_too_large);
+      }
+
+      f_status status = F_none;
+
+      f_macro_string_dynamic_resize(status, (*target), link_stat.st_size + 1);
+      if (F_status_is_error(status)) return status;
+    }
+
+    memset(target->string, 0, target->used + 1);
+
+    target->used = link_stat.st_size;
+
+    if (readlink(path, target->string, target->used) < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EIO) return F_status_set_error(F_input_output);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
   f_return_status private_f_file_open(const f_string path, const mode_t mode, f_file *file) {

@@ -31,6 +31,7 @@
 
 // fll-0 includes
 #include <level_0/status.h>
+#include <level_0/status_array.h>
 #include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/type.h>
@@ -51,18 +52,29 @@ extern "C" {
  *
  * Symbolic links are not followed, they are copied as the symbolic link itself.
  *
+ * This does not copy unknown file types.
+ *
  * @param source
- *   The path to the directory to copy from.
+ *   The source file path.
+ *   Must be NULL terminated.
  * @param destination
- *   The path to copy to.
+ *   The destination file path.
+ *   Must be NULL terminated.
+ * @param source_length
+ *   The length of the source path.
+ * @param destination_length
+ *   The length of the destination path.
  * @param mode
- *   The file mode assigned to the destination file (based on each file type).
+ *   The directory modes.
  * @param size_block
  *   The default number of chunks to read at a time with each chunk being 1-byte.
- *   Must be greater than 0.
+ *   Set to 0 to use default block read size.
  * @param exclusive
- *   If TRUE, will fail when parent directory already exists.
- *   If FALSE, will not fail if parent directory already exists (existing directory will be updated).
+ *   If TRUE, will fail when file already exists.
+ *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param failures
+ *   A list of paths and their respective status codes for copy failures.
+ *   If 0, then this and statuses is ignored.
  *
  * @return
  *   F_none on success.
@@ -85,13 +97,12 @@ extern "C" {
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
  *   F_file_read (with error bit) on file read error.
  *   F_file_write (with error bit) on file write error.
-
- * @see f_directory_create()
+ *
  * @see f_file_copy()
  * @see read()
  */
 #ifndef _di_fl_directory_copy_
-  extern f_return_status fl_directory_copy(const f_string source, const f_string destination, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive);
+  extern f_return_status fl_directory_copy(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures);
 #endif // _di_fl_directory_copy_
 
 /**
@@ -104,6 +115,8 @@ extern "C" {
  * This will be returned when complete so that caller can decide if this is an error or not.
  *
  * Symbolic links are not followed, they are copied as the symbolic link itself.
+ *
+ * This does not copy unknown file types.
  *
  * @param source
  *   The path to the directory to copy from.
@@ -164,6 +177,9 @@ extern "C" {
  *   A sort function of the form: int xxx(const struct direct *, const struct direct *).
  *   Set to 0 to not use (NULL).
  *   There are two pre-made libc functions available for this: alphasort() and versionsort().
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
  * @param listing
  *   Will be populated with the names of all top-level paths found within the given directory.
  *
@@ -186,7 +202,7 @@ extern "C" {
  * @see versionsort()
  */
 #ifndef _di_fl_directory_list_
-  extern f_return_status fl_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_directory_listing *listing);
+  extern f_return_status fl_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing *listing);
 #endif // _di_fl_directory_list_
 
 /**

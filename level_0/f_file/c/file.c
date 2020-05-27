@@ -7,10 +7,6 @@ extern "C" {
 
 #ifndef _di_f_file_access_
   f_return_status f_file_access(const f_string path) {
-    #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
     if (access(path, F_OK)) {
       if (errno == ENOENT) return F_false;
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
@@ -29,8 +25,8 @@ extern "C" {
 #endif // _di_f_file_access_
 
 #ifndef _di_f_file_change_mode_
-  f_return_status f_file_change_mode(const f_string path, const mode_t mode, const bool dereference) {
-    return private_f_file_change_mode(path, mode, dereference);
+  f_return_status f_file_change_mode(const f_string path, const mode_t mode) {
+    return private_f_file_change_mode(path, mode);
   }
 #endif // _di_f_file_change_mode_
 
@@ -54,10 +50,6 @@ extern "C" {
 
 #ifndef _di_f_file_copy_
   f_return_status f_file_copy(const f_string source, const f_string destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive) {
-    #ifndef _di_level_0_parameter_checking_
-      if (size_block == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
     f_status status = F_none;
     struct stat source_stat;
 
@@ -66,19 +58,19 @@ extern "C" {
 
     memset(&source_stat, 0, sizeof(struct stat));
 
-    status = private_f_file_stat(source, &source_stat, F_false);
+    status = private_f_file_stat(source, F_false, &source_stat);
     if (F_status_is_error(status)) return status;
 
     if (f_macro_file_type_is_regular(source_stat.st_mode)) {
-      status = private_f_file_create(destination, mode_access, exclusive, F_false);
+      status = private_f_file_create(destination, mode_access, exclusive);
       if (F_status_is_error(status)) return status;
 
       if (!exclusive) {
-        status = private_f_file_change_mode(destination, mode_access, F_false);
+        status = private_f_file_change_mode(destination, mode_access);
         if (F_status_is_error(status)) return status;
       }
 
-      return private_f_file_copy_content(source, destination, size_block);
+      return private_f_file_copy_content(source, destination, size_block == 0 ? f_file_default_read_size : size_block);
     }
     else if (f_macro_file_type_is_directory(source_stat.st_mode)) {
       status = private_f_file_create_directory(destination, mode_access);
@@ -89,22 +81,29 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, mode_access, F_false);
+      status = private_f_file_change_mode(destination, mode_access);
       if (F_status_is_error(status)) return status;
 
       return F_none;
     }
     else if (f_macro_file_type_is_link(source_stat.st_mode)) {
-      status = private_f_file_link(destination, source);
+      f_string_dynamic target = f_string_dynamic_initialize;
+
+      status = private_f_file_link_read(source, source_stat, &target);
+      if (F_status_is_error(status)) {
+        f_macro_string_dynamic_delete_simple(target);
+        return status;
+      }
+
+      status = private_f_file_link(target.string, destination);
+
+      f_macro_string_dynamic_delete_simple(target);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
           return status;
         }
       }
-
-      status = private_f_file_change_mode(destination, mode_access, F_false);
-      if (F_status_is_error(status)) return status;
 
       return F_none;
     }
@@ -117,7 +116,7 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, mode_access, F_false);
+      status = private_f_file_change_mode(destination, mode_access);
       if (F_status_is_error(status)) return status;
 
       return F_none;
@@ -131,9 +130,10 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, mode_access, F_false);
+      status = private_f_file_change_mode(destination, mode_access);
       if (F_status_is_error(status)) return status;
 
+      return F_none;
     }
     else if (f_macro_file_type_is_block(source_stat.st_mode) || f_macro_file_type_is_character(source_stat.st_mode)) {
       status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | mode_access, source_stat.st_rdev);
@@ -144,7 +144,7 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, mode_access, F_false);
+      status = private_f_file_change_mode(destination, mode_access);
       if (F_status_is_error(status)) return status;
 
       return F_none;
@@ -156,24 +156,20 @@ extern "C" {
 
 #ifndef _di_f_file_clone_
   f_return_status f_file_clone(const f_string source, const f_string destination, const f_number_unsigned size_block, const bool exclusive, const bool roles) {
-    #ifndef _di_level_0_parameter_checking_
-      if (size_block == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
     f_status status = F_none;
     struct stat source_stat;
 
     memset(&source_stat, 0, sizeof(struct stat));
 
-    status = private_f_file_stat(source, &source_stat, F_false);
+    status = private_f_file_stat(source, F_false, &source_stat);
     if (F_status_is_error(status)) return status;
 
     if (f_macro_file_type_is_regular(source_stat.st_mode)) {
-      status = private_f_file_create(destination, source_stat.st_mode, exclusive, F_false);
+      status = private_f_file_create(destination, source_stat.st_mode, exclusive);
       if (F_status_is_error(status)) return status;
 
       if (!exclusive) {
-        status = private_f_file_change_mode(destination, source_stat.st_mode, F_false);
+        status = private_f_file_change_mode(destination, source_stat.st_mode);
         if (F_status_is_error(status)) return status;
       }
 
@@ -182,7 +178,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      return private_f_file_copy_content(source, destination, size_block);
+      return private_f_file_copy_content(source, destination, size_block == 0 ? f_file_default_read_size : size_block);
     }
     else if (f_macro_file_type_is_link(source_stat.st_mode)) {
       status = private_f_file_link(destination, source);
@@ -193,7 +189,7 @@ extern "C" {
         return status;
       }
 
-      status = private_f_file_change_mode(destination, source_stat.st_mode, F_false);
+      status = private_f_file_change_mode(destination, source_stat.st_mode);
       if (F_status_is_error(status)) return status;
 
       if (roles) {
@@ -219,14 +215,14 @@ extern "C" {
 #endif // _di_f_file_close_
 
 #ifndef _di_f_file_create_
-  f_return_status f_file_create(const f_string path, const mode_t mode, const bool exclusive, const bool dereference) {
-    return private_f_file_create(path, mode, exclusive, dereference);
+  f_return_status f_file_create(const f_string path, const mode_t mode, const bool exclusive) {
+    return private_f_file_create(path, mode, exclusive);
   }
 #endif // _di_f_file_create_
 
 #ifndef _di_f_file_create_at_
-  f_return_status f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive, const bool dereference) {
-    return private_f_file_create_at(at_id, path, mode, exclusive, dereference);
+  f_return_status f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive) {
+    return private_f_file_create_at(at_id, path, mode, exclusive);
   }
 #endif // _di_f_file_create_at_
 
@@ -406,6 +402,28 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_file_link_hard_at_
+
+#ifndef _di_f_file_link_read_
+  f_return_status f_file_link_read(const f_string path, const struct stat link_stat, f_string_dynamic *target) {
+    #ifndef _di_level_0_parameter_checking_
+      if (link_stat.st_size == 0) return F_status_set_error(F_parameter);
+      if (target == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_file_link_read(path, link_stat, target);
+  }
+#endif // _di_f_file_link_read_
+
+#ifndef _di_f_file_link_read_at_
+  f_return_status f_file_link_read_at(const int at_id, const f_string path, const struct stat link_stat, f_string_dynamic *target) {
+    #ifndef _di_level_0_parameter_checking_
+      if (link_stat.st_size == 0) return F_status_set_error(F_parameter);
+      if (target == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_file_link_read_at(at_id, path, link_stat, target);
+  }
+#endif // _di_f_file_link_read_at_
 
 #ifndef _di_f_file_is_
   f_return_status f_file_is(const f_string path, const int type) {

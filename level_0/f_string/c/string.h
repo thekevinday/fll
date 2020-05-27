@@ -470,7 +470,7 @@ extern "C" {
       dynamics.size = new_length; \
       if (dynamics.used > dynamics.size) dynamics.used = new_length; \
     }
-#endif // _di_f_string_dynamic_
+#endif // _di_f_string_dynamics_
 
 #ifdef __cplusplus
 } // extern "C"

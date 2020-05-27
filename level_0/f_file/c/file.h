@@ -286,13 +286,13 @@ extern "C" {
 /**
  * Change mode of a given file at the specified path.
  *
+ * This does not set mode based on umask(), be sure to apply umask if so desired.
+ * (such as: mode & ~mask).
+ *
  * @param path
  *   The path file name.
  * @param mode
  *   The new mode to use.
- * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
- *   Set to FALSE to operate on the symlink itself.
  *
  * @return
  *   F_none on success.
@@ -311,11 +311,14 @@ extern "C" {
  * @see chmod()
  */
 #ifndef _di_f_file_change_mode_
-  extern f_return_status f_file_change_mode(const f_string path, const mode_t mode, const bool dereference);
+  extern f_return_status f_file_change_mode(const f_string path, const mode_t mode);
 #endif // _di_f_file_change_mode_
 
 /**
  * Change mode of a given file at the specified path.
+ *
+ * This does not set mode based on umask(), be sure to apply umask if so desired.
+ * (such as: mode & ~mask).
  *
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
@@ -325,6 +328,8 @@ extern "C" {
  *   The new mode to use.
  * @param flags
  *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ *   Warning: chmod on a symolic link is currently not supported in POSIX.
+ *   Therefore AT_SYMLINK_NO_FOLLOW does nothing at this time and is assumed to always be TRUE.
  *
  * @return
  *   F_none on success.
@@ -417,6 +422,11 @@ extern "C" {
  *
  * For directory file types, this will only copy the directory itself and not its contents.
  *
+ * This does not copy unknown file types.
+ *
+ * This does not set mode based on umask(), be sure to apply umask if so desired.
+ * (such as: mode & ~mask).
+ *
  * @param source
  *   The path to the file to copy from.
  * @param destination
@@ -425,7 +435,7 @@ extern "C" {
  *   The file mode assigned to the destination file.
  * @param size_block
  *   The default number of chunks to read at a time with each chunk being 1-byte.
- *   Must be greater than 0.
+ *   Set to 0 to use default block read size.
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
@@ -465,6 +475,8 @@ extern "C" {
  *
  * For directory file types, this will only copy the directory itself and not its contents.
  *
+ * This does not copy unknown file types.
+ *
  * @todo provide a return status for when owner/role cannot be assigned.
  * This will be returned when complete so that caller can decide if this is an error or not.
  *
@@ -474,7 +486,7 @@ extern "C" {
  *   The path to copy to.
  * @param size_block
  *   The default number of chunks to read at a time with each chunk being 1-byte.
- *   Must be greater than 0.
+ *   Set to 0 to use default block read size.
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
@@ -547,10 +559,6 @@ extern "C" {
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists.
- * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
- *   Set to FALSE to fail if the path is a symbolic link.
- *   This does not write symbolic links. (@todo add function f_create_link() for creating symbolic links.)
  *
  * @return
  *   F_none on success.
@@ -575,7 +583,7 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_file_create_
-  extern f_return_status f_file_create(const f_string path, const mode_t mode, const bool exclusive, const bool dereference);
+  extern f_return_status f_file_create(const f_string path, const mode_t mode, const bool exclusive);
 #endif // _di_f_file_create_
 
 /**
@@ -592,10 +600,6 @@ extern "C" {
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists.
- * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
- *   Set to FALSE to fail if the path is a symbolic link.
- *   This does not write symbolic links. (@todo add function f_create_link() for creating symbolic links.)
  *
  * @return
  *   F_none on success.
@@ -620,7 +624,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_file_create_at_
-  extern f_return_status f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive, const bool dereference);
+  extern f_return_status f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive);
 #endif // _di_f_file_create_at_
 
 /**
@@ -846,7 +850,7 @@ extern "C" {
  *   The path file name.
  *
  * @return
- *   t_true if path was found.
+ *   F_true if path was found.
  *   F_false if path was not found.
  *   F_name (with error bit) if the name is somehow invalid.
  *   F_memory_out (with error bit) if out of memory.
@@ -927,7 +931,7 @@ extern "C" {
  *   The type of the file
  *
  * @return
- *   t_true if path was found and path is type.
+ *   F_true if path was found and path is type.
  *   F_false if path was found and path is not type.
  *   F_file_found_not if the path was not found.
  *   F_name (with error bit) if the name is somehow invalid.
@@ -958,7 +962,7 @@ extern "C" {
  *   Set to FALSE to not follow.
  *
  * @return
- *   t_true if path was found and path is type.
+ *   F_true if path was found and path is type.
  *   F_false if path was found and path is not type.
  *   F_file_found_not if the path was not found.
  *   F_name (with error bit) if the name is somehow invalid.
@@ -987,6 +991,23 @@ extern "C" {
  *   A path to the link that does the pointing.
  *
  * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_file_found (with error bit) if a file aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
+ *   F_read_only (with error bit) if filesystem is read-only.
+ *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_failure (with error bit) for any other (symlink()) error.
  *
  * @see symlink()
  */
@@ -1008,6 +1029,24 @@ extern "C" {
  *   A path to the link that does the pointing.
  *
  * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_file_found (with error bit) if a file aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
+ *   F_read_only (with error bit) if filesystem is read-only.
+ *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_failure (with error bit) for any other (symlinkat()) error.
  *
  * @see symlinkat()
  */
@@ -1026,6 +1065,23 @@ extern "C" {
  *   A path to the link that does the pointing.
  *
  * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_file_found (with error bit) if a file aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
+ *   F_read_only (with error bit) if filesystem is read-only.
+ *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_failure (with error bit) for any other (link()) error.
  *
  * @see link()
  */
@@ -1050,12 +1106,101 @@ extern "C" {
  *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
  *
  * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_file_found (with error bit) if a file aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
+ *   F_read_only (with error bit) if filesystem is read-only.
+ *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_failure (with error bit) for any other (linkat()) error.
  *
  * @see linkat()
  */
 #ifndef _di_f_file_link_hard_at_
   extern f_return_status f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string target, const f_string point, const int flags);
 #endif // _di_f_file_link_hard_at_
+
+/**
+ * Get the target a given link points to.
+ *
+ * This does not require access on the file itself.
+ * This only requires access via the parent directories in the path.
+ *
+ * @param path
+ *   The path file name.
+ * @param link_stat
+ *   The link file statistics.
+ * @param target
+ *   Will be replaced with the path in which the link points to.
+ *   Will be NULL terminated with the NULL at target.string[target.used];
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_name (with error bit) on path name error.
+ *   F_file_found_not (with error bit) if the file at path was not found.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_failure (with error bit) for any other (readlink()) error.
+ *
+ * @see readlink()
+ */
+#ifndef _di_f_file_link_read_
+  extern f_return_status f_file_link_read(const f_string path, const struct stat link_stat, f_string_dynamic *target);
+#endif // _di_f_file_link_read_
+
+/**
+ * Get the target a given link points to.
+ *
+ * This does not require access on the file itself.
+ * This only requires access via the parent directories in the path.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param link_stat
+ *   The link file statistics.
+ * @param target
+ *   Will be replaced with the path in which the link points to.
+ *   Will be NULL terminated with the NULL at target.string[target.used];
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_name (with error bit) on path name error.
+ *   F_file_found_not (with error bit) if the file at path was not found.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_failure (with error bit) for any other (readlinkat()) error.
+ *
+ * @see readlinkat()
+ */
+#ifndef _di_f_file_link_read_at_
+  extern f_return_status f_file_link_read_at(const int at_id, const f_string path, const struct stat link_stat, f_string_dynamic *target);
+#endif // _di_f_file_link_read_at_
 
 /**
  * Open a particular file and save its stream.

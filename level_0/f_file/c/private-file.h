@@ -24,9 +24,6 @@ extern "C" {
  *   The path file name.
  * @param mode
  *   The new mode to use.
- * @param dereference
- *   Set to TRUE to dereference symlinks (often is what is desired).
- *   Set to FALSE to operate on the symlink itself.
  *
  * @return
  *   F_none on success.
@@ -46,7 +43,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #if !defined(_di_f_file_change_mode_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_change_mode(const f_string path, const mode_t mode, const bool dereference) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_f_file_change_mode(const f_string path, const mode_t mode) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_change_mode_) || !defined(_di_f_file_copy_)
 
 /**
@@ -62,6 +59,8 @@ extern "C" {
  *   The new mode to use.
  * @param flags
  *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ *   Warning: chmod on a symolic link is currently not supported in POSIX.
+ *   Therefore AT_SYMLINK_NO_FOLLOW does nothing at this time and is assumed to always be TRUE.
  *
  * @return
  *   F_none on success.
@@ -247,10 +246,6 @@ extern "C" {
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists.
- * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
- *   Set to FALSE to fail if the path is a symbolic link.
- *   This does not write symbolic links. (@todo add function f_create_link() for creating symbolic links.)
  *
  * @return
  *   F_none on success.
@@ -276,7 +271,7 @@ extern "C" {
  * @see f_file_create()
  */
 #if !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_create(const f_string path, const mode_t mode, const bool exclusive, const bool dereference) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_f_file_create(const f_string path, const mode_t mode, const bool exclusive) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
 
 /**
@@ -297,10 +292,6 @@ extern "C" {
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists.
- * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
- *   Set to FALSE to fail if the path is a symbolic link.
- *   This does not write symbolic links. (@todo add function f_create_link() for creating symbolic links.)
  *
  * @return
  *   F_none on success.
@@ -326,7 +317,7 @@ extern "C" {
  * @see f_file_create_at()
  */
 #if !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive, const bool dereference) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
 
 /**
@@ -540,46 +531,6 @@ extern "C" {
 #endif // !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
 
 /**
- * Private implementation of f_file_link().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param target
- *   A path that the link points to.
- * @param point
- *   A path to the link that does the pointing.
- *
- * @return
- *
- * @see f_file_copy()
- * @see f_file_link()
- */
-#if !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_link(const f_string target, const f_string point) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
-
-/**
- * Private implementation of f_file_link_at().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which point point path is relative to.
- * @param target
- *   A path that the link points to.
- * @param point
- *   A path to the link that does the pointing.
- *
- * @return
- *
- * @see f_file_copy_at()
- * @see f_file_link_at()
- */
-#if !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_link_at(const int at_id, const f_string target, const f_string point) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
-
-/**
  * Private implementation of f_file_flush().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -606,9 +557,9 @@ extern "C" {
 #endif // !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
 
 /**
- * Create a link to a file.
+ * Private implementation of f_file_link().
  *
- * This will not replace existing files/links.
+ * Intended to be shared to each of the different implementation variations.
  *
  * @param target
  *   A path that the link points to.
@@ -616,34 +567,138 @@ extern "C" {
  *   A path to the link that does the pointing.
  *
  * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_file_found (with error bit) if a file aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
+ *   F_read_only (with error bit) if filesystem is read-only.
+ *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_failure (with error bit) for any other (symlink()) error.
  *
- * @see f_file_link()
  * @see f_file_copy()
+ * @see f_file_link()
  */
 #if !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_link(const f_string target, const f_string point);
+  extern f_return_status private_f_file_link(const f_string target, const f_string point) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
 
 /**
- * Create a link to a file.
+ * Private implementation of f_file_link_at().
  *
- * This will not replace existing files/links.
+ * Intended to be shared to each of the different implementation variations.
  *
  * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ *   The parent directory, as an open directory file descriptor, in which point point path is relative to.
  * @param target
  *   A path that the link points to.
  * @param point
  *   A path to the link that does the pointing.
  *
  * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_file_found (with error bit) if a file aleady exists at the path.
+ *   F_name (with error bit) on path name error.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_loop (with error bit) on loop error.
+ *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
+ *   F_read_only (with error bit) if filesystem is read-only.
+ *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_failure (with error bit) for any other (symlink()) error.
  *
- * @see f_file_link_at()
  * @see f_file_copy_at()
+ * @see f_file_link_at()
  */
 #if !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_link_at(const int at_id, const f_string target, const f_string point);
+  extern f_return_status private_f_file_link_at(const int at_id, const f_string target, const f_string point) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
+
+/**
+ * Private implementation of f_file_link_read().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param path
+ *   The path file name.
+ * @param link_stat
+ *   The link file statistics.
+ * @param target
+ *   Will be replaced with the path in which the link points to.
+ *   Will be NULL terminated with the NULL at target.string[target.used];
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_name (with error bit) on path name error.
+ *   F_file_found_not (with error bit) if the file at path was not found.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_failure (with error bit) for any other (readlink()) error.
+ *
+ * @see f_file_link_read()
+ */
+#if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
+  extern f_return_status private_f_file_link_read(const f_string path, const struct stat link_stat, f_string_dynamic *target) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
+
+/**
+ * Private implementation of f_file_link_read_at().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param link_stat
+ *   The link file statistics.
+ * @param target
+ *   Will be replaced with the path in which the link points to.
+ *   Will be NULL terminated with the NULL at target.string[target.used];
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_name (with error bit) on path name error.
+ *   F_file_found_not (with error bit) if the file at path was not found.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_failure (with error bit) for any other (readlinkat()) error.
+ *
+ * @see f_file_link_read_at()
+ */
+#if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
+  extern f_return_status private_f_file_link_read_at(const int at_id, const f_string path, const struct stat link_stat, f_string_dynamic *target) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
 
 /**
  * Private implementation of f_file_open().
@@ -711,7 +766,7 @@ extern "C" {
  * @param file_name
  *   The name of the file.
  * @param dereference
- *   Set to TRUE to dereference symlinks (often is what is desired).
+ *   Set to TRUE to dereference symlinks.
  *   Set to FALSE to operate on the symlink itself.
  * @param file_stat
  *   The statistics read.
