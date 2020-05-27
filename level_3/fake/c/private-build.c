@@ -366,6 +366,11 @@ extern "C" {
       return status;
     }
 
+    f_directory_statuss failures = f_directory_statuss_initialize;
+    f_directory_mode mode = f_directory_mode_initialize;
+
+    f_macro_directory_mode_set_default_umask(mode, data.umask);
+
     // @todo: may have to process all data intended to be used in parameters, exploding them into console parameters.
     // Steps:
     // 1) copy sources settings to build settings

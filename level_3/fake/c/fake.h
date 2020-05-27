@@ -416,6 +416,7 @@ extern "C" {
 
     f_string_lengths remaining;
     bool process_pipe;
+    mode_t umask;
 
     uint8_t operation;
     uint8_t verbosity;
@@ -476,6 +477,7 @@ extern "C" {
       fake_console_parameter_initialize, \
       f_string_lengths_initialize, \
       F_false, \
+      0, \
       0, \
       fake_verbosity_normal, \
       f_string_dynamic_initialize, \

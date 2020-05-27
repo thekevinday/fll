@@ -182,7 +182,7 @@ extern "C" {
         mode = f_file_mode_all_rwx;
       }
 
-      status = f_file_create(path.string, mode, F_true, F_true);
+      status = f_file_create(path.string, mode, F_true);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
