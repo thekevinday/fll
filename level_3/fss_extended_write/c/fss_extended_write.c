@@ -205,7 +205,7 @@ extern "C" {
       if (data->parameters[fss_extended_write_parameter_file].result == f_console_result_additional) {
         f_file output = f_file_initialize;
 
-        output.flags = f_file_flag_append_wo;
+        output.flag = f_file_flag_append_wo;
 
         status = f_file_open(arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]], 0, &output);
 

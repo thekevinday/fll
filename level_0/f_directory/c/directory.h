@@ -41,10 +41,51 @@ extern "C" {
 #endif
 
 /**
+ * Directory AT_* define related functionality.
+ */
+#ifndef _di_f_directory_at_
+  #define f_directory_at_current_working    -100
+  #define f_directory_at_symlink_follow     0x400
+  #define f_directory_at_symlink_follow_no  0x100
+  #define f_directory_at_remove_directory   0x200
+  #define f_directory_at_automount_no       0x800
+  #define f_directory_at_path_empty         0x1000
+  #define f_directory_at_statx_sync_type    0x6000
+  #define f_directory_at_statx_sync_as_stat 0x0000
+  #define f_directory_at_statx_sync_force   0x2000
+  #define f_directory_at_statx_sync_no      0x4000
+#endif // _di_f_directory_at_
+
+/**
+ * Directory flag related functionality.
+ */
+#ifndef _di_f_directory_flag_
+
+  // directory open flags
+  #define f_directory_flag_append             O_APPEND
+  #define f_directory_flag_asynchronous       O_ASYNC
+  #define f_directory_flag_create             O_CREAT
+  #define f_directory_flag_close_execute      O_CLOEXEC
+  #define f_directory_flag_direct             O_DIRECT
+  #define f_directory_flag_directory          O_DIRECTORY
+  #define f_directory_flag_exclusive          O_EXCL
+  #define f_directory_flag_large_file         O_LARGEFILE
+  #define f_directory_flag_no_access_time     O_NOATIME
+  #define f_directory_flag_no_follow          O_NOFOLLOW
+  #define f_directory_flag_no_tty             O_NOCTTY
+  #define f_directory_flag_non_blocking       O_NONBLOCK
+  #define f_directory_flag_path               010000000
+  #define f_directory_flag_read_only          O_RDONLY
+  #define f_directory_flag_read_write         O_RDWR
+  #define f_directory_flag_synchronous        O_SYNC
+  #define f_directory_flag_synchronous_direct O_DSYNC
+  #define f_directory_flag_temporary          O_TMPFILE
+  #define f_directory_flag_truncate           O_TRUNC
+  #define f_directory_flag_write_only         O_WRONLY
+#endif // _di_f_directory_flag_
+
+/**
  * Provide limitations and related defines.
- *
- * The name max 255 because the directory name size is 256.
- * The last 1 is for the NULL character.
  *
  * The directory max descriptors is more of a default than a rule.
  * This is generally used for nftw() recursive operations to reduce the number of open file descriptors during recursion.
@@ -52,7 +93,7 @@ extern "C" {
 #ifndef _di_f_directory_limitations_
   #define f_directory_default_allocation_step f_memory_default_allocation_step
 
-  #define f_directory_name_max        255
+  #define f_directory_name_max        NAME_MAX
   #define f_directory_descriptors_max 255
 #endif // _di_f_directory_limitations_
 
@@ -91,7 +132,7 @@ extern "C" {
  * Create a directory at the given path within the directories specified by the file descriptor.
  *
  * @param at_id
- *   The file descriptor in which the directory will be created within.
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -113,8 +154,9 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_directory_link_max (with error bit) max links limit reached or exceeded.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *
- * @see mkdir()
+ * @see mkdirat()
  */
 #ifndef _di_f_directory_create_at_
   extern f_return_status f_directory_create_at(const int at_id, const f_string path, const mode_t mode);
@@ -137,11 +179,39 @@ extern "C" {
  *   F_loop (with error bit) if a loop occurred.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fstat()
+ * @see stat()
  */
 #ifndef _di_f_directory_exists_
   extern f_return_status f_directory_exists(const f_string path);
 #endif // _di_f_directory_exists_
+
+/**
+ * Identify whether or not a file exists at the given path and if that file is a directory or a symlink to a directory.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param flag
+ *   Any valid flag, such as f_directory_at_path_empty, f_directory_at_automount_no, or f_directory_at_symlink_follow_no.
+ *
+ * @return
+ *   F_true if path was found and path is a directory (or a symlink to a directory).
+ *   F_false if path was found and path is not a directory.
+ *   F_file_found_not if the path was not found.
+ *   F_name (with error bit) if the name is somehow invalid.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_loop (with error bit) if a loop occurred.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
+ *
+ * @see fstatat()
+ */
+#ifndef _di_f_directory_exists_at_
+  extern f_return_status f_directory_exists_at(const int at_id, const f_string path, const int flag);
+#endif // _di_f_directory_exists_at_
 
 /**
  * Identify whether or not a file exists at the given path and if that file is a directory.
@@ -160,7 +230,7 @@ extern "C" {
  *   F_loop (with error bit) if a loop occurred.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fstat()
+ * @see stat()
  */
 #ifndef _di_f_directory_is_
   extern f_return_status f_directory_is(const f_string path);
@@ -169,13 +239,12 @@ extern "C" {
 /**
  * Identify whether or not a file exists at the given path within the parent directory and if that file is a directory.
  *
- * @param file_id
- *   The file descriptor representing the parent directory to search within.
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
- * @param follow
- *   Set to TRUE to follow symbolic links when determining if path is a file.
- *   Set to FALSE to not follow.
+ * @param flag
+ *   Any valid flag, such as f_directory_at_path_empty, f_directory_at_automount_no, or f_directory_at_symlink_follow_no.
  *
  * @return
  *   F_true if path was found and path is a directory.
@@ -187,11 +256,12 @@ extern "C" {
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_loop (with error bit) if a loop occurred.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *
  * @see fstatat()
  */
 #ifndef _di_f_directory_is_at_
-  extern f_return_status f_directory_is_at(const int file_id, const f_string path, const bool follow);
+  extern f_return_status f_directory_is_at(const int at_id, const f_string path, const int flag);
 #endif // _di_f_directory_is_at_
 
 /**
@@ -225,6 +295,58 @@ extern "C" {
 #ifndef _di_f_directory_list_
   extern f_return_status f_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics *names);
 #endif // _di_f_directory_list_
+
+/**
+ * Open the directory specified by path.
+ *
+ * This opens with O_PATH and O_CLOEXEC.
+ *
+ * @param path
+ *   The path file name.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
+ * @param id
+ *   The file descriptor.
+ *   This is updated with the result of open() or openat().
+ *
+ * @return
+ *   F_none on success.
+ *   F_failure (with error bit) if failed to read directory information.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see open()
+ */
+#ifndef _di_f_directory_open_
+  extern f_return_status private_f_directory_open(const f_string path, const bool dereference, int *id) f_gcc_attribute_visibility_internal;
+#endif // _di_f_directory_open_
+
+/**
+ * Open the directory specified by path.
+ *
+ * This opens with O_PATH and O_CLOEXEC.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
+ * @param id
+ *   The file descriptor.
+ *   This is updated with the result of open() or openat().
+ *
+ * @return
+ *   F_none on success.
+ *   F_failure (with error bit) if failed to read directory information.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see openat()
+ */
+#ifndef _di_f_directory_open_at_
+  extern f_return_status private_f_directory_open_at(const int at_id, const f_string path, const bool dereference, int *id) f_gcc_attribute_visibility_internal;
+#endif // _di_f_directory_open_at_
 
 /**
  * Remove a directory and possibly its contents.

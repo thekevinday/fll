@@ -362,6 +362,7 @@ extern "C" {
     #endif // _di_F_status_compare_
 
     #ifndef _di_F_status_access_
+      F_access,
       F_access_denied,
       F_access_denied_execute,
       F_access_denied_group,
@@ -378,6 +379,9 @@ extern "C" {
       F_access_granted_user,
       F_access_granted_world,
       F_access_granted_write,
+      F_access_group,
+      F_access_mode,
+      F_access_owner,
     #endif // _di_F_status_access_
 
     // Required.

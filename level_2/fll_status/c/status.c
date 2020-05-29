@@ -1308,6 +1308,11 @@ extern "C" {
     #endif // _di_F_status_compare_
 
     #ifndef _di_F_status_access_
+      if (fl_string_compare(string, FL_status_string_access, length, FL_status_string_access_length) == F_equal_to) {
+        *code = F_access;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_access_denied, length, FL_status_string_access_denied_length) == F_equal_to) {
         *code = F_access_denied;
         return F_none;
@@ -1385,6 +1390,21 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_access_granted_super, length, FL_status_string_access_granted_super_length) == F_equal_to) {
         *code = F_access_granted_super;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_access_group, length, FL_status_string_access_group_length) == F_equal_to) {
+        *code = F_access_mode;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_access_mode, length, FL_status_string_access_mode_length) == F_equal_to) {
+        *code = F_access_group;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_access_owner, length, FL_status_string_access_owner_length) == F_equal_to) {
+        *code = F_access_owner;
         return F_none;
       }
     #endif // _di_F_status_access_

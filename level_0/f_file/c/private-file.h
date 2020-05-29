@@ -57,10 +57,6 @@ extern "C" {
  *   The path file name.
  * @param mode
  *   The new mode to use.
- * @param flags
- *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
- *   Warning: chmod on a symolic link is currently not supported in POSIX.
- *   Therefore AT_SYMLINK_NO_FOLLOW does nothing at this time and is assumed to always be TRUE.
  *
  * @return
  *   F_none on success.
@@ -77,11 +73,10 @@ extern "C" {
  *   F_failure (with error bit) for any other (mkdir()) error.
  *
  * @see f_file_change_mode_at()
- * @see f_file_copy_at()
  */
-#if !defined(_di_f_file_change_mode_at_) || !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode, const int flags) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_change_mode_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_change_mode_at_)
+  extern f_return_status private_f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_change_mode_at_)
 
 /**
  * Private implementation of f_file_change_owner().
@@ -103,14 +98,17 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_access_denied (with error bit) on access denied.
  *   F_name (with error bit) if the filename is too long.
+ *   F_buffer (with error bit) if the buffer is invalid.
  *   F_loop (with error bit) on loop error.
  *   F_file_found_not (with error bit) if file at path was not found.
  *   F_memory_out (with error bit) if out of memory.
  *   F_directory (with error bit) on invalid directory.
- *   F_prohibited (with error bit) if filesystem does not allow for file changes.
+ *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
+ *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
  *   F_read_only (with error bit) if file is read-only.
  *   F_input_output (with error bit) on I/O error.
- *   F_failure (with error bit) for any other (mkdir()) error.
+ *   F_failure (with error bit) for any other (chown() or lchown()) error.
+ *
  *
  * @see f_file_change_owner()
  * @see f_file_copy()
@@ -132,7 +130,7 @@ extern "C" {
  *   The new user id to use.
  * @param gid
  *   The new group id to use.
- * @param flags
+ * @param flag
  *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
  *
  * @return
@@ -140,21 +138,23 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_access_denied (with error bit) on access denied.
  *   F_name (with error bit) if the filename is too long.
+ *   F_buffer (with error bit) if the buffer is invalid.
  *   F_loop (with error bit) on loop error.
  *   F_file_found_not (with error bit) if file at path was not found.
  *   F_memory_out (with error bit) if out of memory.
  *   F_directory (with error bit) on invalid directory.
- *   F_prohibited (with error bit) if filesystem does not allow for file changes.
+ *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
+ *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
  *   F_read_only (with error bit) if file is read-only.
  *   F_input_output (with error bit) on I/O error.
- *   F_failure (with error bit) for any other (mkdir()) error.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
+ *   F_failure (with error bit) for any other (chown() or lchown()) error.
  *
  * @see f_file_change_owner_at()
- * @see f_file_copy_at()
  */
-#if !defined(_di_f_file_change_owner_at_) || !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flags) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_change_owner_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_change_owner_at_)
+  extern f_return_status private_f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_change_owner_at_)
 
 /**
  * Private implementation of f_file_close().
@@ -242,7 +242,7 @@ extern "C" {
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor.
- *   This will be updated with the create flags (ignoring and overriding existing file.flags).
+ *   This will be updated with the create flag (ignoring and overriding existing file.flag).
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists.
@@ -284,7 +284,7 @@ extern "C" {
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor.
- *   This will be updated with the create flags (ignoring and overriding existing file.flags).
+ *   This will be updated with the create flag (ignoring and overriding existing file.flag).
  * @param path
  *   The path file name.
  * @param mode
@@ -313,12 +313,11 @@ extern "C" {
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
  *
- * @see f_file_copy_at()
  * @see f_file_create_at()
  */
-#if !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_create_at_)
   extern f_return_status private_f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
+#endif // !defined(_di_f_file_create_at_)
 
 /**
  * Private implementation for creating directories.
@@ -383,7 +382,6 @@ extern "C" {
  *   F_directory_link_max (with error bit) max links limit reached or exceeded.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *
- * @see f_file_copy_at()
  * @see mkdirat()
  */
 #if !defined(_di_f_file_copy_at_)
@@ -441,7 +439,7 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_unsupported (with error bit) for unsupported file types.
- *   F_file_descriptor (with error bit) for bad file descriptor.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *
  * @see mkfifoat()
  */
@@ -521,7 +519,7 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_unsupported (with error bit) for unsupported file types.
- *   F_file_descriptor (with error bit) for bad file descriptor.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *
  * @see f_file_create_device_at()
  * @see f_file_create_node_at()
@@ -621,15 +619,14 @@ extern "C" {
  *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
  *   F_read_only (with error bit) if filesystem is read-only.
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
- *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_failure (with error bit) for any other (symlink()) error.
  *
- * @see f_file_copy_at()
  * @see f_file_link_at()
  */
-#if !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_link_at_)
   extern f_return_status private_f_file_link_at(const int at_id, const f_string target, const f_string point) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
+#endif // !defined(_di_f_file_link_at_)
 
 /**
  * Private implementation of f_file_link_read().
@@ -691,7 +688,7 @@ extern "C" {
  *   F_file_found_not (with error bit) if the file at path was not found.
  *   F_memory_out (with error bit) if out of memory.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_failure (with error bit) for any other (readlinkat()) error.
  *
  * @see f_file_link_read_at()
@@ -748,15 +745,14 @@ extern "C" {
  *   F_none on success.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_file_open (with error bit) if the file is already open.
- *   F_file_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see f_file_copy_at()
  * @see f_file_open_at()
  */
-#if !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_open_at_)
   extern f_return_status private_f_file_open_at(const int at_id, const f_string path, const mode_t mode, f_file *file) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
+#endif // !defined(_di_f_file_open_at_)
 
 /**
  * Private implementation of f_file_close().
@@ -798,7 +794,7 @@ extern "C" {
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param file_name
  *   The name of the file.
- * @param flags
+ * @param flag
  *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
  * @param file_stat
  *   The statistics read.
@@ -815,12 +811,11 @@ extern "C" {
  *   F_loop (with error bit) if a loop occurred.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see f_file_copy_at()
  * @see f_file_stat_at()
  */
-#if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_stat_at(const int at_id, const f_string file_name, const int flags, struct stat *file_stat) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_stat_at_)
+  extern f_return_status private_f_file_stat_at(const int at_id, const f_string file_name, const int flag, struct stat *file_stat) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_stat_at_)
 
 /**
  * Private implementation of f_file_close().

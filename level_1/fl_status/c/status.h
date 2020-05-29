@@ -579,14 +579,15 @@ extern "C" {
   #endif // _di_F_status_compare_
 
   #ifndef _di_F_status_access_
-    #define FL_status_string_access_denied         "F_access_denied"
-    #define FL_status_string_access_denied_user    "F_access_denied_user"
-    #define FL_status_string_access_denied_group   "F_access_denied_group"
-    #define FL_status_string_access_denied_world   "F_access_denied_world"
-    #define FL_status_string_access_denied_read    "F_access_denied_read"
-    #define FL_status_string_access_denied_write   "F_access_denied_write"
-    #define FL_status_string_access_denied_execute "F_access_denied_execute"
-    #define FL_status_string_access_denied_super   "F_access_denied_super"
+    #define FL_status_string_access                 "F_access"
+    #define FL_status_string_access_denied          "F_access_denied"
+    #define FL_status_string_access_denied_user     "F_access_denied_user"
+    #define FL_status_string_access_denied_group    "F_access_denied_group"
+    #define FL_status_string_access_denied_world    "F_access_denied_world"
+    #define FL_status_string_access_denied_read     "F_access_denied_read"
+    #define FL_status_string_access_denied_write    "F_access_denied_write"
+    #define FL_status_string_access_denied_execute  "F_access_denied_execute"
+    #define FL_status_string_access_denied_super    "F_access_denied_super"
     #define FL_status_string_access_granted         "F_access_granted"
     #define FL_status_string_access_granted_user    "F_access_granted_user"
     #define FL_status_string_access_granted_group   "F_access_granted_group"
@@ -595,7 +596,11 @@ extern "C" {
     #define FL_status_string_access_granted_write   "F_access_granted_write"
     #define FL_status_string_access_granted_execute "F_access_granted_execute"
     #define FL_status_string_access_granted_super   "F_access_granted_super"
+    #define FL_status_string_access_group           "F_access_group"
+    #define FL_status_string_access_mode            "F_access_mode"
+    #define FL_status_string_access_owner           "F_access_owner"
 
+    #define FL_status_string_access_length                 8
     #define FL_status_string_access_denied_length          15
     #define FL_status_string_access_denied_user_length     20
     #define FL_status_string_access_denied_group_length    21
@@ -612,6 +617,9 @@ extern "C" {
     #define FL_status_string_access_granted_write_length   22
     #define FL_status_string_access_granted_execute_length 24
     #define FL_status_string_access_granted_super_length   22
+    #define FL_status_string_access_group_length           14
+    #define FL_status_string_access_mode_length            13
+    #define FL_status_string_access_owner_length           14
   #endif // _di_F_status_access_
 
   #define FL_status_string_status_code_last "F_status_code_last"

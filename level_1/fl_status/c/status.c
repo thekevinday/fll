@@ -803,6 +803,9 @@ extern "C" {
       #endif // _di_F_status_compare_
 
       #ifndef _di_F_status_access_
+        case F_access:
+          *string = FL_status_string_access;
+          break;
         case F_access_denied:
           *string = FL_status_string_access_denied;
           break;
@@ -850,6 +853,15 @@ extern "C" {
           break;
         case F_access_granted_super:
           *string = FL_status_string_access_granted_super;
+          break;
+        case F_access_group:
+          *string = FL_status_string_access_group;
+          break;
+        case F_access_mode:
+          *string = FL_status_string_access_mode;
+          break;
+        case F_access_owner:
+          *string = FL_status_string_access_owner;
           break;
       #endif // _di_F_status_access_
 

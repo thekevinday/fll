@@ -28,9 +28,9 @@ extern "C" {
 #endif // !defined(_di_f_file_change_mode_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_change_mode_at_) || !defined(_di_f_file_copy_at_)
-  f_return_status private_f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode, const int flags) {
+  f_return_status private_f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode) {
 
-    if (fchmodat(at_id, path, mode, flags) < 0) {
+    if (fchmodat(at_id, path, mode, 0) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -38,7 +38,7 @@ extern "C" {
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == EIO) return F_status_set_error(F_input_output);
@@ -52,8 +52,36 @@ extern "C" {
 
 #if !defined(_di_f_file_change_owner_) || !defined(_di_f_file_copy_)
   f_return_status private_f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) {
+    int result = 0;
 
-    if ((dereference ? chown(path, uid, gid) : lchown(path, uid, gid)) < 0) {
+    if (dereference) {
+      if (uid != -1) {
+        result = chown(path, uid, -1);
+
+        if (result < 0 && errno == EPERM) return F_status_set_error(F_access_owner);
+      }
+
+      if (result == 0 && gid != -1) {
+        result = chown(path, -1, gid);
+
+        if (errno == EPERM) return F_status_set_error(F_access_group);
+      }
+    }
+    else {
+      if (uid != -1) {
+        result = lchown(path, uid, -1);
+
+        if (result < 0 && errno == EPERM) return F_status_set_error(F_access_owner);
+      }
+
+      if (gid != -1) {
+        result = lchown(path, -1, gid);
+
+        if (result < 0 && errno == EPERM) return F_status_set_error(F_access_group);
+      }
+    }
+
+    if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -61,7 +89,6 @@ extern "C" {
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == EIO) return F_status_set_error(F_input_output);
 
@@ -73,9 +100,22 @@ extern "C" {
 #endif // !defined(_di_f_file_change_owner_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_change_owner_at_) || !defined(_di_f_file_copy_at_)
-  f_return_status private_f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flags) {
+  f_return_status private_f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) {
+    int result = 0;
 
-    if (fchownat(at_id, path, uid, gid, flags) < 0) {
+    if (uid != -1) {
+      result = fchownat(at_id, path, uid, -1, flag);
+
+      if (result < 0 && errno == EPERM) return F_status_set_error(F_access_owner);
+    }
+
+    if (gid != -1) {
+      result = fchownat(at_id, path, -1, gid, flag);
+
+      if (result < 0 && errno == EPERM) return F_status_set_error(F_access_group);
+    }
+
+    if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -83,8 +123,7 @@ extern "C" {
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
-      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == EIO) return F_status_set_error(F_input_output);
 
@@ -100,7 +139,7 @@ extern "C" {
     if (F_status_is_error(private_f_file_flush(*id))) return F_status_set_error(F_file_synchronize);
 
     if (close(*id) < 0) {
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EINTR) return F_status_set_error(F_interrupted);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
@@ -119,8 +158,8 @@ extern "C" {
     f_file file_source = f_file_initialize;
     f_file file_destination = f_file_initialize;
 
-    file_source.flags = f_file_flag_read_only;
-    file_destination.flags = f_file_flag_write_only | f_file_flag_no_follow;
+    file_source.flag = f_file_flag_read_only;
+    file_destination.flag = f_file_flag_write_only | f_file_flag_no_follow;
 
     f_status status = private_f_file_open(source, 0, &file_source);
     if (F_status_is_error(status)) return status;
@@ -157,14 +196,57 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
 
+#if !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_)
+  f_return_status private_f_file_copy_content_at(const int at_id, const f_string source, const f_string destination, const f_number_unsigned size_block) {
+    f_file file_source = f_file_initialize;
+    f_file file_destination = f_file_initialize;
+
+    file_source.flag = f_file_flag_read_only;
+    file_destination.flag = f_file_flag_write_only | f_file_flag_no_follow;
+
+    f_status status = private_f_file_open_at(at_id, source, 0, &file_source);
+    if (F_status_is_error(status)) return status;
+
+    status = private_f_file_open_at(at_id, destination, 0, &file_destination);
+    if (F_status_is_error(status)) {
+      private_f_file_close(&file_source.id);
+      return status;
+    }
+
+    ssize_t size_read = 0;
+    ssize_t size_write = 0;
+    char *buffer[size_block];
+
+    memset(buffer, 0, size_block);
+
+    while ((size_read = read(file_source.id, buffer, size_block)) > 0) {
+      size_write = write(file_destination.id, buffer, size_read);
+
+      if (size_write < 0 || size_write != size_read) {
+        private_f_file_close(&file_destination.id);
+        private_f_file_close(&file_source.id);
+
+        return F_status_set_error(F_file_write);
+      }
+    } // while
+
+    private_f_file_close(&file_destination.id);
+    private_f_file_close(&file_source.id);
+
+    if (size_read < 0) return F_status_set_error(F_file_read);
+
+    return F_none;
+  }
+#endif // !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_)
+
 #if !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
   f_return_status private_f_file_create(const f_string path, const mode_t mode, const bool exclusive) {
     f_file file = f_file_initialize;
 
-    file.flags = O_CLOEXEC | O_CREAT | O_WRONLY;
+    file.flag = f_file_flag_close_execute | f_file_flag_create | f_file_flag_write_only;
 
     if (exclusive) {
-      file.flags |= O_EXCL;
+      file.flag |= f_file_flag_exclusive;
     }
 
     f_status status = private_f_file_open(path, mode, &file);
@@ -181,10 +263,10 @@ extern "C" {
   f_return_status private_f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive) {
     f_file file = f_file_initialize;
 
-    file.flags = O_CLOEXEC | O_CREAT | O_WRONLY;
+    file.flag = f_file_flag_close_execute | f_file_flag_create | f_file_flag_write_only;
 
     if (exclusive) {
-      file.flags |= O_EXCL;
+      file.flag |= f_file_flag_exclusive;
     }
 
     f_status status = private_f_file_open_at(at_id, path, mode, &file);
@@ -232,7 +314,7 @@ extern "C" {
       if (errno == EEXIST) return F_status_set_error(F_file_found);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL || errno == EBADF) return F_status_set_error(F_parameter);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == EMLINK) return F_status_set_error(F_directory_link_max);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
@@ -241,6 +323,7 @@ extern "C" {
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
 
       return F_status_set_error(F_failure);
     }
@@ -283,7 +366,7 @@ extern "C" {
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
 
       return F_status_set_error(F_failure);
     }
@@ -329,7 +412,7 @@ extern "C" {
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
@@ -405,7 +488,7 @@ extern "C" {
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
@@ -473,7 +556,7 @@ extern "C" {
 
     target->used = link_stat.st_size;
 
-    if (readlink(path, target->string, target->used) < 0) {
+    if (readlinkat(at_id, path, target->string, target->used) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -483,7 +566,7 @@ extern "C" {
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
 
       return F_status_set_error(F_failure);
     }
@@ -495,10 +578,10 @@ extern "C" {
 #if !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
   f_return_status private_f_file_open(const f_string path, const mode_t mode, f_file *file) {
     if (mode == 0) {
-      file->id = open(path, file->flags);
+      file->id = open(path, file->flag);
     }
     else {
-      file->id = open(path, file->flags, mode);
+      file->id = open(path, file->flag, mode);
     }
 
     if (file->id < 0) {
@@ -513,12 +596,14 @@ extern "C" {
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == ETXTBSY) return F_status_set_error(F_busy);
+      if (errno == EISDIR) return F_status_set_error(F_directory);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_unsupported);
 
       return F_status_set_error(F_failure);
     }
@@ -530,10 +615,10 @@ extern "C" {
 #if !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
   f_return_status private_f_file_open_at(const int at_id, const f_string path, const mode_t mode, f_file *file) {
     if (mode == 0) {
-      file->id = openat(at_id, path, file->flags);
+      file->id = openat(at_id, path, file->flag);
     }
     else {
-      file->id = openat(at_id, path, file->flags, mode);
+      file->id = openat(at_id, path, file->flag, mode);
     }
 
     if (file->id < 0) {
@@ -547,14 +632,16 @@ extern "C" {
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == ETXTBSY) return F_status_set_error(F_busy);
+      if (errno == EISDIR) return F_status_set_error(F_directory);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_unsupported);
 
       return F_status_set_error(F_failure);
     }
@@ -584,9 +671,9 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)
-  f_return_status private_f_file_stat_at(const int at_id, const f_string path, const int flags, struct stat *file_stat) {
+  f_return_status private_f_file_stat_at(const int at_id, const f_string path, const int flag, struct stat *file_stat) {
 
-    if (fstatat(at_id, path, file_stat, flags) < 0) {
+    if (fstatat(at_id, path, file_stat, flag) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
@@ -595,7 +682,7 @@ extern "C" {
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
 
       return F_status_set_error(F_file_stat);

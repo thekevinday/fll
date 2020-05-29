@@ -5,11 +5,229 @@
 extern "C" {
 #endif
 
+#if !defined(_di_fl_directory_clone_)
+  f_return_status private_fl_directory_clone(const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+    f_status status = f_directory_exists(source.string);
+
+    if (F_status_is_error(status)) return status;
+    if (status == F_false) return F_status_set_error(F_directory);
+
+    struct stat source_stat;
+
+    memset(&source_stat, 0, sizeof(struct stat));
+
+    status = f_file_stat(source.string, F_false, &source_stat);
+    if (F_status_is_error(status)) return status;
+
+    status = f_directory_exists(destination.string);
+    if (F_status_is_error(status)) return status;
+
+    if (status == F_true) {
+      if (exclusive) {
+        return F_status_set_error(F_directory_found);
+      }
+
+      status = f_file_change_mode(destination.string, source_stat.st_mode);
+      if (F_status_is_error(status)) return status;
+    }
+    else {
+      status = f_directory_create(destination.string, source_stat.st_mode);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (role) {
+      status = f_file_change_owner(destination.string, source_stat.st_uid, source_stat.st_gid, F_true);
+      if (F_status_is_error(status)) return status;
+    }
+
+    f_directory_listing listing = f_directory_listing_initialize;
+
+    status = private_fl_directory_list(source.string, 0, 0, F_false, &listing);
+    if (F_status_is_error(status)) {
+      f_macro_directory_listing_delete_simple(listing);
+      return status;
+    }
+
+    status = F_none;
+
+    f_array_length i = 0;
+
+    int directory_fd = 0;
+    f_string_length failures_used = failures ? failures->used : 0;
+
+    for (; F_status_is_fine(status) && i < listing.block.used; i++) {
+      status = private_fl_directory_clone_file(listing.block.array[i], source, destination, role, size_block, exclusive, failures);
+    } // for
+
+    f_macro_string_dynamics_delete_simple(listing.block);
+
+    for (i = 0; F_status_is_fine(status) && i < listing.character.used; i++) {
+      status = private_fl_directory_clone_file(listing.character.array[i], source, destination, role, size_block, exclusive, failures);
+    } // for
+
+    f_macro_string_dynamics_delete_simple(listing.character);
+
+    for (i = 0; F_status_is_fine(status) && i < listing.regular.used; i++) {
+      status = private_fl_directory_clone_file(listing.regular.array[i], source, destination, role, size_block, exclusive, failures);
+    } // for
+
+    f_macro_string_dynamics_delete_simple(listing.regular);
+
+    for (i = 0; F_status_is_fine(status) && i < listing.link.used; i++) {
+      status = private_fl_directory_clone_file(listing.link.array[i], source, destination, role, size_block, exclusive, failures);
+    } // for
+
+    f_macro_string_dynamics_delete_simple(listing.link);
+
+    for (i = 0; F_status_is_fine(status) && i < listing.socket.used; i++) {
+      status = private_fl_directory_clone_file(listing.socket.array[i], source, destination, role, size_block, exclusive, failures);
+    } // for
+
+    f_macro_string_dynamics_delete_simple(listing.socket);
+
+    for (i = 0; F_status_is_fine(status) && i < listing.unknown.used; i++) {
+      status = private_fl_directory_clone_file(listing.unknown.array[i], source, destination, role, size_block, exclusive, failures);
+    } // for
+
+    f_macro_string_dynamics_delete_simple(listing.unknown);
+
+    for (i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
+      f_string_static source_sub = f_string_static_initialize;
+      f_string_static destination_sub = f_string_static_initialize;
+
+      source_sub.used = source.used + listing.directory.array[i].used + 1;
+      source_sub.size = source_sub.used;
+
+      destination_sub.used = destination.used + listing.directory.array[i].used + 1;
+      destination_sub.size = destination_sub.used;
+
+      char path_source_sub[source_sub.used + 1];
+      char path_destination_sub[destination_sub.used + 1];
+
+      memcpy(path_source_sub, source.string, source.used);
+      memcpy(path_source_sub + source.used + 1, listing.directory.array[i].string, listing.directory.array[i].used);
+
+      memcpy(path_destination_sub, destination.string, destination.used);
+      memcpy(path_destination_sub + destination.used + 1, listing.directory.array[i].string, listing.directory.array[i].used);
+
+      path_source_sub[source.used] = f_path_separator[0];
+      path_source_sub[source_sub.used] = 0;
+
+      path_destination_sub[destination.used] = f_path_separator[0];
+      path_destination_sub[destination_sub.used] = 0;
+
+      source_sub.string = path_source_sub;
+      destination_sub.string = path_destination_sub;
+
+      status = private_fl_directory_clone(source_sub, destination_sub, role, size_block, exclusive, failures);
+    } // for
+
+    f_macro_string_dynamics_delete_simple(listing.directory);
+
+    if (F_status_is_error(status)) return status;
+
+    if (failures && failures_used < failures->used) return F_failure;
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_directory_clone_)
+
+#if !defined(_di_fl_directory_clone_file_)
+  f_return_status private_fl_directory_clone_file(const f_string_static file, const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+    char path_source[source.used + file.used + 2];
+    char path_destination[destination.used + file.used + 2];
+
+    memcpy(path_source, source.string, source.used);
+    memcpy(path_source + source.used + 1, file.string, file.used);
+    path_source[source.used] = f_path_separator[0];
+    path_source[source.used + file.used + 1] = 0;
+
+    memcpy(path_destination, destination.string, destination.used);
+    memcpy(path_destination + destination.used + 1, file.string, file.used);
+    path_destination[destination.used] = f_path_separator[0];
+    path_destination[destination.used + file.used + 1] = 0;
+
+    f_status status = f_file_clone(path_source, path_destination, role, size_block, exclusive);
+
+    if (F_status_is_error(status) || status == F_unsupported) {
+      if (status == F_status_set_error(F_memory_allocation) || status == F_status_set_error(F_memory_reallocation)) {
+        return F_status_set_error(status);
+      }
+
+      if (!failures) return F_failure;
+
+      const f_status status_failure = status;
+
+      if (failures->used + 1 > failures->size) {
+        if (failures->size + f_memory_default_allocation_step > f_array_length_size) {
+          if (failures->size + 1 > f_array_length_size) {
+            return F_status_set_error(F_buffer_too_large);
+          }
+
+          f_macro_directory_statuss_resize(status, (*failures), failures->used + 1);
+          if (F_status_is_error(status)) return status;
+        }
+        else {
+          f_macro_directory_statuss_resize(status, (*failures), failures->used + f_memory_default_allocation_step);
+          if (F_status_is_error(status)) return status;
+        }
+      }
+
+      f_directory_status failure = f_directory_status_initialize;
+      f_string_length size = 0;
+
+      // identify if failure was because of source or destination.
+      struct stat source_stat;
+
+      memset(&source_stat, 0, sizeof(struct stat));
+
+      status = f_file_stat(source.string, F_false, &source_stat);
+      if (F_status_is_error(status)) {
+        if (status == F_status_set_error(F_string_too_large)) {
+          size = f_string_length_size - 1;
+        }
+        else {
+          size = source.used + file.used + 1;
+        }
+
+        f_macro_directory_status_resize(status, failure, size + 1);
+        if (F_status_is_error(status)) return status;
+
+        memcpy(failure.path.string, path_source, size);
+        failure.path.string[size] = 0;
+      }
+      else {
+        if (status == F_status_set_error(F_string_too_large)) {
+          size = f_string_length_size - 1;
+        }
+        else {
+          size = destination.used + file.used + 1;
+        }
+
+        f_macro_directory_status_resize(status, failure, size + 1);
+        if (F_status_is_error(status)) return status;
+
+        memcpy(failure.path.string, path_destination, size);
+        failure.path.string[size] = 0;
+      }
+
+      failures->array[failures->used].path.string = failure.path.string;
+      failures->array[failures->used].path.used = size;
+      failures->array[failures->used].path.size = size + 1;
+      failures->array[failures->used].status = status_failure;
+      failures->used++;
+
+      return F_failure;
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_directory_clone_file_)
+
 #if !defined(_di_fl_directory_copy_)
   f_return_status private_fl_directory_copy(const f_string_static source, const f_string_static destination, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
-    f_status status = F_none;
+    f_status status = f_directory_exists(source.string);
 
-    status = f_directory_exists(source.string);
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory);
 
@@ -121,7 +339,7 @@ extern "C" {
   }
 #endif // !defined(_di_fl_directory_copy_)
 
-#if !defined(_di_fl_directory_copy_)
+#if !defined(_di_fl_directory_copy_file_)
   f_return_status private_fl_directory_copy_file(const f_string_static file, const f_string_static source, const f_string_static destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
     char path_source[source.used + file.used + 2];
     char path_destination[destination.used + file.used + 2];
@@ -211,7 +429,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_directory_copy_)
+#endif // !defined(_di_fl_directory_copy_file_)
 
 #if !defined(_di_fl_directory_list_)
   f_return_status private_fl_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing *listing) {

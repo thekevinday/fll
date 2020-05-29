@@ -31,22 +31,92 @@ extern "C" {
 #endif // _di_f_file_change_mode_
 
 #ifndef _di_f_file_change_mode_at_
-  f_return_status f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode, const int flags) {
-    return private_f_file_change_mode_at(at_id, path, mode, flags);
+  f_return_status f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode) {
+    return private_f_file_change_mode_at(at_id, path, mode);
   }
 #endif // _di_f_file_change_mode_at_
 
 #ifndef _di_f_file_change_owner_
   f_return_status f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) {
+    #ifndef _di_level_0_parameter_checking_
+      if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
+      if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     return private_f_file_change_owner(path, uid, gid, dereference);
   }
 #endif // _di_f_file_change_owner_
 
 #ifndef _di_f_file_change_owner_at_
-  f_return_status f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flags) {
-    return private_f_file_change_owner_at(at_id, path, uid, gid, flags);
+  f_return_status f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) {
+    #ifndef _di_level_0_parameter_checking_
+      if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
+      if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_file_change_owner_at(at_id, path, uid, gid, flag);
   }
 #endif // _di_f_file_change_owner_at_
+
+#ifndef _di_f_file_clone_
+  f_return_status f_file_clone(const f_string source, const f_string destination, const bool role, const f_number_unsigned size_block, const bool exclusive) {
+    f_status status = F_none;
+    struct stat source_stat;
+
+    memset(&source_stat, 0, sizeof(struct stat));
+
+    status = private_f_file_stat(source, F_false, &source_stat);
+    if (F_status_is_error(status)) return status;
+
+    if (f_macro_file_type_is_regular(source_stat.st_mode)) {
+      status = private_f_file_create(destination, source_stat.st_mode, exclusive);
+      if (F_status_is_error(status)) return status;
+
+      if (!exclusive) {
+        status = private_f_file_change_mode(destination, source_stat.st_mode);
+        if (F_status_is_error(status)) return status;
+      }
+
+      if (role) {
+        status = private_f_file_change_owner(destination, source_stat.st_uid, source_stat.st_gid, F_false);
+        if (F_status_is_error(status)) return status;
+      }
+
+      return private_f_file_copy_content(source, destination, size_block == 0 ? f_file_default_read_size : size_block);
+    }
+    else if (f_macro_file_type_is_link(source_stat.st_mode)) {
+      status = private_f_file_link(destination, source);
+      if (F_status_set_fine(status) == F_file_found) {
+        if (exclusive) return status;
+      }
+      else if (F_status_is_error(status)) {
+        return status;
+      }
+
+      status = private_f_file_change_mode(destination, source_stat.st_mode);
+      if (F_status_is_error(status)) return status;
+
+      if (role) {
+        status = private_f_file_change_owner(destination, source_stat.st_uid, source_stat.st_gid, F_false);
+        if (F_status_is_error(status)) return status;
+      }
+
+      return F_none;
+    }
+
+    return F_unsupported;
+  }
+#endif // _di_f_file_clone_
+
+#ifndef _di_f_file_close_
+  f_return_status f_file_close(int *id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (id == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_file_close(id);
+  }
+#endif // _di_f_file_close_
 
 #ifndef _di_f_file_copy_
   f_return_status f_file_copy(const f_string source, const f_string destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive) {
@@ -154,66 +224,6 @@ extern "C" {
   }
 #endif // _di_f_file_copy_
 
-#ifndef _di_f_file_clone_
-  f_return_status f_file_clone(const f_string source, const f_string destination, const f_number_unsigned size_block, const bool exclusive, const bool roles) {
-    f_status status = F_none;
-    struct stat source_stat;
-
-    memset(&source_stat, 0, sizeof(struct stat));
-
-    status = private_f_file_stat(source, F_false, &source_stat);
-    if (F_status_is_error(status)) return status;
-
-    if (f_macro_file_type_is_regular(source_stat.st_mode)) {
-      status = private_f_file_create(destination, source_stat.st_mode, exclusive);
-      if (F_status_is_error(status)) return status;
-
-      if (!exclusive) {
-        status = private_f_file_change_mode(destination, source_stat.st_mode);
-        if (F_status_is_error(status)) return status;
-      }
-
-      if (roles) {
-        status = private_f_file_change_owner(destination, source_stat.st_uid, source_stat.st_gid, F_false);
-        if (F_status_is_error(status)) return status;
-      }
-
-      return private_f_file_copy_content(source, destination, size_block == 0 ? f_file_default_read_size : size_block);
-    }
-    else if (f_macro_file_type_is_link(source_stat.st_mode)) {
-      status = private_f_file_link(destination, source);
-      if (F_status_set_fine(status) == F_file_found) {
-        if (exclusive) return status;
-      }
-      else if (F_status_is_error(status)) {
-        return status;
-      }
-
-      status = private_f_file_change_mode(destination, source_stat.st_mode);
-      if (F_status_is_error(status)) return status;
-
-      if (roles) {
-        status = private_f_file_change_owner(destination, source_stat.st_uid, source_stat.st_gid, F_false);
-        if (F_status_is_error(status)) return status;
-      }
-
-      return F_none;
-    }
-
-    return F_unsupported;
-  }
-#endif // _di_f_file_clone_
-
-#ifndef _di_f_file_close_
-  f_return_status f_file_close(int *id) {
-    #ifndef _di_level_0_parameter_checking_
-      if (id == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_file_close(id);
-  }
-#endif // _di_f_file_close_
-
 #ifndef _di_f_file_create_
   f_return_status f_file_create(const f_string path, const mode_t mode, const bool exclusive) {
     return private_f_file_create(path, mode, exclusive);
@@ -320,6 +330,7 @@ extern "C" {
       if (errno == ENOENT) return F_file_found_not;
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
 
       return F_status_set_error(F_file_stat);
     }
@@ -375,9 +386,9 @@ extern "C" {
 #endif // _di_f_file_link_hard_
 
 #ifndef _di_f_file_link_hard_at_
-  f_return_status f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string target, const f_string point, const int flags) {
+  f_return_status f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string target, const f_string point, const int flag) {
 
-    if (linkat(at_id_target, target, at_id_point, point, flags) < 0) {
+    if (linkat(at_id_target, target, at_id_point, point, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -389,7 +400,7 @@ extern "C" {
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
@@ -465,6 +476,7 @@ extern "C" {
       if (errno == ENOENT) return F_file_found_not;
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
 
       return F_status_set_error(F_file_stat);
     }
@@ -681,9 +693,9 @@ extern "C" {
 #endif // _di_f_file_remove_
 
 #ifndef _di_f_file_remove_at_
-  f_return_status f_file_remove_at(const int at_id, const f_string path, const int flags) {
+  f_return_status f_file_remove_at(const int at_id, const f_string path, const int flag) {
 
-    if (unlinkat(at_id, path, flags) < 0) {
+    if (unlinkat(at_id, path, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBUSY) return F_status_set_error(F_busy);
       if (errno == EIO) return F_status_set_error(F_input_output);
@@ -696,6 +708,7 @@ extern "C" {
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
 
       return F_status_set_error(F_failure);
     }
@@ -800,13 +813,13 @@ extern "C" {
 #endif // _di_f_file_stat_
 
 #ifndef _di_f_file_stat_at_
-  f_return_status f_file_stat_at(const int at_id, const f_string path, const int flags, struct stat *file_stat) {
+  f_return_status f_file_stat_at(const int at_id, const f_string path, const int flag, struct stat *file_stat) {
     #ifndef _di_level_0_parameter_checking_
       if (at_id <= 0) return F_status_set_error(F_parameter);
       if (file_stat == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_file_stat_at(at_id, path, flags, file_stat);
+    return private_f_file_stat_at(at_id, path, flag, file_stat);
   }
 #endif // _di_f_file_stat_at_
 
