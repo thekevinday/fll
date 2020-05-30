@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_directory_clone_)
-  f_return_status private_fl_directory_clone(const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+  f_return_status private_fl_directory_clone(const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
     f_status status = F_none;
     f_directory_listing listing = f_directory_listing_initialize;
 
@@ -24,37 +24,37 @@ extern "C" {
     f_string_length failures_used = failures ? failures->used : 0;
 
     for (; F_status_is_fine(status) && i < listing.block.used; i++) {
-      status = private_fl_directory_clone_file(listing.block.array[i], source, destination, role, size_block, exclusive, failures);
+      status = private_fl_directory_clone_file(listing.block.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.block);
 
     for (i = 0; F_status_is_fine(status) && i < listing.character.used; i++) {
-      status = private_fl_directory_clone_file(listing.character.array[i], source, destination, role, size_block, exclusive, failures);
+      status = private_fl_directory_clone_file(listing.character.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.character);
 
     for (i = 0; F_status_is_fine(status) && i < listing.regular.used; i++) {
-      status = private_fl_directory_clone_file(listing.regular.array[i], source, destination, role, size_block, exclusive, failures);
+      status = private_fl_directory_clone_file(listing.regular.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.regular);
 
     for (i = 0; F_status_is_fine(status) && i < listing.link.used; i++) {
-      status = private_fl_directory_clone_file(listing.link.array[i], source, destination, role, size_block, exclusive, failures);
+      status = private_fl_directory_clone_file(listing.link.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.link);
 
     for (i = 0; F_status_is_fine(status) && i < listing.socket.used; i++) {
-      status = private_fl_directory_clone_file(listing.socket.array[i], source, destination, role, size_block, exclusive, failures);
+      status = private_fl_directory_clone_file(listing.socket.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.socket);
 
     for (i = 0; F_status_is_fine(status) && i < listing.unknown.used; i++) {
-      status = private_fl_directory_clone_file(listing.unknown.array[i], source, destination, role, size_block, exclusive, failures);
+      status = private_fl_directory_clone_file(listing.unknown.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.unknown);
@@ -126,7 +126,7 @@ extern "C" {
         }
       }
 
-      status = private_fl_directory_clone(source_sub, destination_sub, role, size_block, exclusive, failures);
+      status = private_fl_directory_clone(source_sub, destination_sub, role, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.directory);
@@ -140,7 +140,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_clone_)
 
 #if !defined(_di_fl_directory_clone_file_)
-  f_return_status private_fl_directory_clone_file(const f_string_static file, const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+  f_return_status private_fl_directory_clone_file(const f_string_static file, const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
     char path_source[source.used + file.used + 2];
     char path_destination[destination.used + file.used + 2];
 
@@ -227,12 +227,16 @@ extern "C" {
       return F_failure;
     }
 
+    if (verbose) {
+      fprintf(verbose, "Cloned '%s' to '%s'.%c", source.string, destination.string, f_string_eol);
+    }
+
     return F_none;
   }
 #endif // !defined(_di_fl_directory_clone_file_)
 
 #if !defined(_di_fl_directory_copy_)
-  f_return_status private_fl_directory_copy(const f_string_static source, const f_string_static destination, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+  f_return_status private_fl_directory_copy(const f_string_static source, const f_string_static destination, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
     f_status status = F_none;
     f_directory_listing listing = f_directory_listing_initialize;
 
@@ -250,37 +254,43 @@ extern "C" {
     f_string_length failures_used = failures ? failures->used : 0;
 
     for (; F_status_is_fine(status) && i < listing.block.used; i++) {
-      status = private_fl_directory_copy_file(listing.block.array[i], source, destination, mode.block, size_block, exclusive, failures);
+      status = private_fl_directory_copy_file(listing.block.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.block);
 
     for (i = 0; F_status_is_fine(status) && i < listing.character.used; i++) {
-      status = private_fl_directory_copy_file(listing.character.array[i], source, destination, mode.character, size_block, exclusive, failures);
+      status = private_fl_directory_copy_file(listing.character.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.character);
 
+    for (i = 0; F_status_is_fine(status) && i < listing.fifo.used; i++) {
+      status = private_fl_directory_copy_file(listing.fifo.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
+    } // for
+
+    f_macro_string_dynamics_delete_simple(listing.fifo);
+
     for (i = 0; F_status_is_fine(status) && i < listing.regular.used; i++) {
-      status = private_fl_directory_copy_file(listing.regular.array[i], source, destination, mode.regular, size_block, exclusive, failures);
+      status = private_fl_directory_copy_file(listing.regular.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.regular);
 
     for (i = 0; F_status_is_fine(status) && i < listing.link.used; i++) {
-      status = private_fl_directory_copy_file(listing.link.array[i], source, destination, mode.link, size_block, exclusive, failures);
+      status = private_fl_directory_copy_file(listing.link.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.link);
 
     for (i = 0; F_status_is_fine(status) && i < listing.socket.used; i++) {
-      status = private_fl_directory_copy_file(listing.socket.array[i], source, destination, mode.socket, size_block, exclusive, failures);
+      status = private_fl_directory_copy_file(listing.socket.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.socket);
 
     for (i = 0; F_status_is_fine(status) && i < listing.unknown.used; i++) {
-      status = private_fl_directory_copy_file(listing.unknown.array[i], source, destination, mode.unknown, size_block, exclusive, failures);
+      status = private_fl_directory_copy_file(listing.unknown.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.unknown);
@@ -338,7 +348,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
       }
 
-      status = private_fl_directory_copy(source_sub, destination_sub, mode, size_block, exclusive, failures);
+      status = private_fl_directory_copy(source_sub, destination_sub, mode, size_block, exclusive, verbose, failures);
     } // for
 
     f_macro_string_dynamics_delete_simple(listing.directory);
@@ -352,7 +362,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_copy_)
 
 #if !defined(_di_fl_directory_copy_file_)
-  f_return_status private_fl_directory_copy_file(const f_string_static file, const f_string_static source, const f_string_static destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+  f_return_status private_fl_directory_copy_file(const f_string_static file, const f_string_static source, const f_string_static destination, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
     char path_source[source.used + file.used + 2];
     char path_destination[destination.used + file.used + 2];
 
@@ -437,6 +447,10 @@ extern "C" {
       failures->used++;
 
       return F_failure;
+    }
+
+    if (verbose) {
+      fprintf(verbose, "Copied '%s' to '%s'.%c", source.string, destination.string, f_string_eol);
     }
 
     return F_none;
@@ -539,8 +553,8 @@ extern "C" {
       else if (mode == f_file_type_link) {
         names = &listing->link;
       }
-      else if (mode == f_file_type_pipe) {
-        names = &listing->pipe;
+      else if (mode == f_file_type_fifo) {
+        names = &listing->fifo;
       }
       else if (mode == f_file_type_socket) {
         names = &listing->socket;

@@ -74,6 +74,9 @@ extern "C" {
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param verbose
+ *   Set to 0 to not print copy operation values on successful copy.
+ *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
  * @param failures
  *   A list of paths and their respective status codes for clone failures.
  *   If 0, then this and statuses is ignored.
@@ -105,7 +108,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #ifndef _di_fl_directory_clone_
-  extern f_return_status fl_directory_clone(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures);
+  extern f_return_status fl_directory_clone(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures);
 #endif // _di_fl_directory_clone_
 
 /**
@@ -140,6 +143,9 @@ extern "C" {
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param verbose
+ *   Set to 0 to not print copy operation values on successful copy.
+ *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
  * @param failures
  *   A list of paths and their respective status codes for clone failures.
  *   If 0, then this and statuses is ignored.
@@ -171,7 +177,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #ifndef _di_fl_directory_clone_content_
-  extern f_return_status fl_directory_clone_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures);
+  extern f_return_status fl_directory_clone_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures);
 #endif // _di_fl_directory_clone_content_
 
 /**
@@ -202,9 +208,9 @@ extern "C" {
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
- * @param exclusive
- *   If TRUE, will fail when file already exists.
- *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param verbose
+ *   Set to 0 to not print copy operation values on successful copy.
+ *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
  * @param failures
  *   A list of paths and their respective status codes for copy failures.
  *   If 0, then this and statuses is ignored.
@@ -236,7 +242,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #ifndef _di_fl_directory_copy_
-  extern f_return_status fl_directory_copy(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures);
+  extern f_return_status fl_directory_copy(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures);
 #endif // _di_fl_directory_copy_
 
 /**
@@ -269,6 +275,9 @@ extern "C" {
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param verbose
+ *   Set to 0 to not print copy operation values on successful copy.
+ *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
  * @param failures
  *   A list of paths and their respective status codes for copy failures.
  *   If 0, then this and statuses is ignored.
@@ -300,7 +309,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #ifndef _di_fl_directory_copy_content_
-  extern f_return_status fl_directory_copy_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures);
+  extern f_return_status fl_directory_copy_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures);
 #endif // _di_fl_directory_copy_content_
 
 /**

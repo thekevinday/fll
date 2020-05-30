@@ -66,8 +66,6 @@ extern "C" {
 
 /**
  * Provide file type macros.
- *
- * Note: f_file_type_pipe and f_file_type_fifo are the same.
  */
 #ifndef _di_f_file_type_
   #define f_file_type_mask S_IFMT
@@ -77,7 +75,6 @@ extern "C" {
   #define f_file_type_directory S_IFDIR
   #define f_file_type_fifo      S_IFIFO
   #define f_file_type_link      S_IFLNK
-  #define f_file_type_pipe      S_IFIFO
   #define f_file_type_regular   S_IFREG
   #define f_file_type_socket    S_IFSOCK
 
@@ -88,7 +85,6 @@ extern "C" {
   #define f_macro_file_type_is_directory(mode) f_macro_file_type_get(mode) == f_file_type_directory
   #define f_macro_file_type_is_fifo(mode)      f_macro_file_type_get(mode) == f_file_type_fifo
   #define f_macro_file_type_is_link(mode)      f_macro_file_type_get(mode) == f_file_type_link
-  #define f_macro_file_type_is_pipe(mode)      f_macro_file_type_get(mode) == f_file_type_pipe
   #define f_macro_file_type_is_regular(mode)   f_macro_file_type_get(mode) == f_file_type_regular
   #define f_macro_file_type_is_socket(mode)    f_macro_file_type_get(mode) == f_file_type_socket
 #endif // _di_f_file_type_
@@ -540,7 +536,7 @@ extern "C" {
  * @param destination
  *   The path to copy to.
  * @param mode
- *   The file mode assigned to the destination file.
+ *   The file mode assigned to the destination file, based on the file type.
  * @param size_block
  *   The default number of chunks to read at a time with each chunk being 1-byte.
  *   Set to 0 to use default block read size.
@@ -572,7 +568,7 @@ extern "C" {
  *   F_file_write (with error bit) on file write error.
  */
 #ifndef _di_f_file_copy_
-  extern f_return_status f_file_copy(const f_string source, const f_string destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive);
+  extern f_return_status f_file_copy(const f_string source, const f_string destination, const f_mode mode, const f_number_unsigned size_block, const bool exclusive);
 #endif // _di_f_file_copy_
 
 /**

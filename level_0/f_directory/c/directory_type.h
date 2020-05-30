@@ -32,7 +32,7 @@ extern "C" {
     f_string_dynamics directory; // S_IFDIR
     f_string_dynamics regular;   // S_IFREG
     f_string_dynamics link;      // S_IFLNK
-    f_string_dynamics pipe;      // S_IFIFO
+    f_string_dynamics fifo;      // S_IFIFO
     f_string_dynamics socket;    // S_IFSOCK
     f_string_dynamics unknown;
   } f_directory_listing;
@@ -54,7 +54,7 @@ extern "C" {
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.directory) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.regular) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.link) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.pipe) \
+    if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.fifo) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.socket) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.unknown)
 
@@ -64,7 +64,7 @@ extern "C" {
     if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.directory) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.regular) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.link) \
-    if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.pipe) \
+    if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.fifo) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_destroy(status, listing.socket) \
     if (!F_status_is_error(status)) f_macro_string_dynamics_delete(status, listing.unknown)
 
@@ -74,7 +74,7 @@ extern "C" {
     f_macro_string_dynamics_delete_simple(listing.directory) \
     f_macro_string_dynamics_delete_simple(listing.regular) \
     f_macro_string_dynamics_delete_simple(listing.link) \
-    f_macro_string_dynamics_delete_simple(listing.pipe) \
+    f_macro_string_dynamics_delete_simple(listing.fifo) \
     f_macro_string_dynamics_delete_simple(listing.socket) \
     f_macro_string_dynamics_delete_simple(listing.unknown)
 
@@ -84,77 +84,10 @@ extern "C" {
     f_macro_string_dynamics_destroy_simple(listing.directory) \
     f_macro_string_dynamics_destroy_simple(listing.regular) \
     f_macro_string_dynamics_destroy_simple(listing.link) \
-    f_macro_string_dynamics_destroy_simple(listing.pipe) \
+    f_macro_string_dynamics_destroy_simple(listing.fifo) \
     f_macro_string_dynamics_destroy_simple(listing.socket) \
     f_macro_string_dynamics_destroy_simple(listing.unknown)
 #endif // _di_f_directory_listing_
-
-/**
- * A structure representing a set of modes intended to be used by directory operations.
- *
- * A small set of macros are provider to help simplify assigning modes.
- *
- * The pipe (S_IFIFO) is intentionally not supported.
- */
-#ifndef _di_f_directory_mode_
-  typedef struct {
-    mode_t block;     // S_IFBLK
-    mode_t character; // S_IFCHR
-    mode_t directory; // S_IFDIR
-    mode_t regular;   // S_IFREG
-    mode_t link;      // S_IFLNK
-    mode_t socket;    // S_IFSOCK
-    mode_t unknown;
-  } f_directory_mode;
-
-  #define f_directory_mode_initialize { \
-    0, \
-    0, \
-    0, \
-    0, \
-    0, \
-    0, \
-    0, \
-  }
-
-  #define f_macro_directory_mode_set_default(modes) \
-    modes.block = f_file_mode_all_rw; \
-    modes.character = f_file_mode_all_rw; \
-    modes.directory = f_file_mode_all_rwx; \
-    modes.regular = f_file_mode_all_rw; \
-    modes.link = f_file_mode_all_rw; \
-    modes.socket = f_file_mode_all_rw; \
-    modes.unknown = f_file_mode_all_rw;
-
-  #define f_macro_directory_mode_set_default_umask(modes, mask) \
-    modes.block = f_file_mode_all_rw & ~mask; \
-    modes.character = f_file_mode_all_rw & ~mask; \
-    modes.directory = f_file_mode_all_rwx & ~mask; \
-    modes.regular = f_file_mode_all_rw & ~mask; \
-    modes.link = f_file_mode_all_rw & ~mask; \
-    modes.socket = f_file_mode_all_rw & ~mask; \
-    modes.unknown = f_file_mode_all_rw & ~mask;
-
-  #define f_macro_directory_mode_set_all(modes, mode) \
-    modes.block = mode; \
-    modes.character = mode; \
-    modes.directory = mode; \
-    modes.regular = mode; \
-    modes.link = mode; \
-    modes.socket = mode; \
-    modes.unknown = mode;
-
-  #define f_macro_directory_mode_set_common(modes, mode_directory, mode_file, mode_link) \
-    modes.directory = mode_directory; \
-    modes.regular = mode_file; \
-    modes.link = mode_link;
-
-  #define f_macro_directory_mode_set_uncommon(modes, mode_block, mode_character, mode_socket, mode_unknown) \
-    modes.block = mode_block; \
-    modes.character = mode_character; \
-    modes.socket = mode_socket; \
-    modes.unknown = mode_unknown;
-#endif // _di_f_directory_mode_
 
 /**
  * An association of a path and a status code.

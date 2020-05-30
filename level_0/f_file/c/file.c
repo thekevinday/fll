@@ -119,12 +119,9 @@ extern "C" {
 #endif // _di_f_file_close_
 
 #ifndef _di_f_file_copy_
-  f_return_status f_file_copy(const f_string source, const f_string destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive) {
+  f_return_status f_file_copy(const f_string source, const f_string destination, const f_mode mode, const f_number_unsigned size_block, const bool exclusive) {
     f_status status = F_none;
     struct stat source_stat;
-
-    // remove the file type from the mode.
-    const mode_t mode_access = (~f_file_type_mask) & mode;
 
     memset(&source_stat, 0, sizeof(struct stat));
 
@@ -132,18 +129,19 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (f_macro_file_type_is_regular(source_stat.st_mode)) {
-      status = private_f_file_create(destination, mode_access, exclusive);
+
+      status = private_f_file_create(destination, (~f_file_type_mask) & mode.regular, exclusive);
       if (F_status_is_error(status)) return status;
 
       if (!exclusive) {
-        status = private_f_file_change_mode(destination, mode_access);
+        status = private_f_file_change_mode(destination, (~f_file_type_mask) & mode.regular);
         if (F_status_is_error(status)) return status;
       }
 
       return private_f_file_copy_content(source, destination, size_block == 0 ? f_file_default_read_size : size_block);
     }
     else if (f_macro_file_type_is_directory(source_stat.st_mode)) {
-      status = private_f_file_create_directory(destination, mode_access);
+      status = private_f_file_create_directory(destination, (~f_file_type_mask) & mode.directory);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -151,7 +149,7 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, mode_access);
+      status = private_f_file_change_mode(destination, (~f_file_type_mask) & mode.directory);
       if (F_status_is_error(status)) return status;
 
       return F_none;
@@ -178,7 +176,7 @@ extern "C" {
       return F_none;
     }
     else if (f_macro_file_type_is_fifo(source_stat.st_mode)) {
-      status = private_f_file_create_fifo(destination, mode_access);
+      status = private_f_file_create_fifo(destination, (~f_file_type_mask) & mode.fifo);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -186,13 +184,13 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, mode_access);
+      status = private_f_file_change_mode(destination, (~f_file_type_mask) & mode.fifo);
       if (F_status_is_error(status)) return status;
 
       return F_none;
     }
     else if (f_macro_file_type_is_socket(source_stat.st_mode)) {
-      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | mode_access, source_stat.st_rdev);
+      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | (~f_file_type_mask) & mode.socket, source_stat.st_rdev);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -200,13 +198,13 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, mode_access);
+      status = private_f_file_change_mode(destination, (~f_file_type_mask) & mode.socket);
       if (F_status_is_error(status)) return status;
 
       return F_none;
     }
     else if (f_macro_file_type_is_block(source_stat.st_mode) || f_macro_file_type_is_character(source_stat.st_mode)) {
-      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | mode_access, source_stat.st_rdev);
+      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | (~f_file_type_mask) & mode.block, source_stat.st_rdev);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -214,7 +212,7 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, mode_access);
+      status = private_f_file_change_mode(destination, (~f_file_type_mask) & mode.block);
       if (F_status_is_error(status)) return status;
 
       return F_none;

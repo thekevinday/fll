@@ -13,6 +13,7 @@
 // libc includes
 #include <stdbool.h>
 #include <stdint.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 #ifdef __cplusplus
@@ -213,6 +214,76 @@ extern "C" {
   #define f_gcc_attribute_visibility_internal  __attribute__((visibility("internal")))
   #define f_gcc_attribute_visibility_protected __attribute__((visibility("protected")))
 #endif // _di_f_gcc_specific_
+
+
+/**
+ * A structure representing a set of modes intended to be used by file or directory operations.
+ */
+#ifndef _di_f_mode_
+  typedef struct {
+    mode_t block;     // S_IFBLK
+    mode_t character; // S_IFCHR
+    mode_t directory; // S_IFDIR
+    mode_t fifo;      // S_IFIFO
+    mode_t regular;   // S_IFREG
+    mode_t link;      // S_IFLNK
+    mode_t socket;    // S_IFSOCK
+    mode_t unknown;
+  } f_mode;
+
+  #define f_mode_initialize { \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+  }
+
+  #define f_macro_mode_set_default(mode) \
+    mode.block = f_file_mode_all_rw; \
+    mode.character = f_file_mode_all_rw; \
+    mode.directory = f_file_mode_all_rwx; \
+    mode.fifo = f_file_mode_all_rw; \
+    mode.regular = f_file_mode_all_rw; \
+    mode.link = f_file_mode_all_rw; \
+    mode.socket = f_file_mode_all_rw; \
+    mode.unknown = f_file_mode_all_rw;
+
+  #define f_macro_mode_set_default_umask(mode, mask) \
+    mode.block = f_file_mode_all_rw & ~mask; \
+    mode.character = f_file_mode_all_rw & ~mask; \
+    mode.directory = f_file_mode_all_rwx & ~mask; \
+    mode.fifo = f_file_mode_all_rw & ~mask; \
+    mode.regular = f_file_mode_all_rw & ~mask; \
+    mode.link = f_file_mode_all_rw & ~mask; \
+    mode.socket = f_file_mode_all_rw & ~mask; \
+    mode.unknown = f_file_mode_all_rw & ~mask;
+
+  #define f_macro_mode_set_all(mode, value) \
+    mode.block = value; \
+    mode.character = value; \
+    mode.directory = value; \
+    mode.fifo = value; \
+    mode.regular = value; \
+    mode.link = value; \
+    mode.socket = value; \
+    mode.unknown = value;
+
+  #define f_macro_mode_set_common(mode, value_directory, value_file, value_link) \
+    mode.directory = value_directory; \
+    mode.regular = value_file; \
+    mode.link = value_link;
+
+  #define f_macro_mode_set_uncommon(mode, value_block, value_character, value_fifo, value_socket, value_unknown) \
+    mode.block = value_block; \
+    mode.character = value_character; \
+    mode.fifo = value_fifo; \
+    mode.socket = value_socket; \
+    mode.unknown = value_unknown;
+#endif // _di_f_directory_mode_
 
 #ifdef __cplusplus
 } // extern "C"

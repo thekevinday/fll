@@ -35,6 +35,9 @@ extern "C" {
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param verbose
+ *   Set to 0 to not print copy operation values on successful copy.
+ *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
  * @param failures
  *   A list of paths and their respective status codes for clone failures.
  *   If 0, then this and statuses is ignored.
@@ -66,7 +69,7 @@ extern "C" {
  * @see fl_directory_clone()
  */
 #if !defined(_di_fl_directory_clone_)
-  extern f_return_status private_fl_directory_clone(const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_directory_clone(const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_directory_clone_)
 
 /**
@@ -93,6 +96,9 @@ extern "C" {
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param verbose
+ *   Set to 0 to not print copy operation values on successful copy.
+ *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
  * @param failures
  *   A list of paths and their respective status codes for clone failures.
  *   If 0, then this and statuses is ignored.
@@ -124,7 +130,7 @@ extern "C" {
  * @see fl_directory_clone()
  */
 #if !defined(_di_fl_directory_clone_file_)
-  extern f_return_status private_fl_directory_clone_file(const f_string_static file, const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_directory_clone_file(const f_string_static file, const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_directory_clone_file_)
 
 /**
@@ -139,13 +145,16 @@ extern "C" {
  *   The destination file path.
  *   Must be NULL terminated.
  * @param mode
- *   The directory modes.
+ *   The mode for each file type.
  * @param size_block
  *   The default number of chunks to read at a time with each chunk being 1-byte.
  *   Must be greater than 0.
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param verbose
+ *   Set to 0 to not print copy operation values on successful copy.
+ *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
  * @param failures
  *   A list of paths and their respective status codes for copy failures.
  *   If 0, then this and statuses is ignored.
@@ -177,7 +186,7 @@ extern "C" {
  * @see fl_directory_copy()
  */
 #if !defined(_di_fl_directory_copy_)
-  extern f_return_status private_fl_directory_copy(const f_string_static source, const f_string_static destination, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_directory_copy(const f_string_static source, const f_string_static destination, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_directory_copy_)
 
 /**
@@ -195,13 +204,16 @@ extern "C" {
  *   The destination file path.
  *   Must be NULL terminated.
  * @param mode
- *   The directory mode.
+ *   The mode for each file type.
  * @param size_block
  *   The default number of chunks to read at a time with each chunk being 1-byte.
  *   Must be greater than 0.
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param verbose
+ *   Set to 0 to not print copy operation values on successful copy.
+ *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
  * @param failures
  *   A list of paths and their respective status codes for copy failures.
  *   If 0, then this and statuses is ignored.
@@ -233,7 +245,7 @@ extern "C" {
  * @see fl_directory_copy()
  */
 #if !defined(_di_fl_directory_copy_file_)
-  extern f_return_status private_fl_directory_copy_file(const f_string_static file, const f_string_static source, const f_string_static destination, const mode_t mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_directory_copy_file(const f_string_static file, const f_string_static source, const f_string_static destination, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_directory_copy_file_)
 
 /**

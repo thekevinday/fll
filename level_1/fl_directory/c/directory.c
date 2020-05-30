@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_directory_clone_
-  f_return_status fl_directory_clone(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+  f_return_status fl_directory_clone(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
     f_status status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
@@ -40,6 +40,10 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
+    if (verbose) {
+      fprintf(verbose, "Cloned '%s' to '%s'.%c", source, destination, f_string_eol);
+    }
+
     f_string_static static_source = { source, source_length, source_length };
     f_string_static static_destination = { destination, destination_length, destination_length };
 
@@ -62,12 +66,12 @@ extern "C" {
       } // for
     }
 
-    return private_fl_directory_clone(static_source, static_destination, role, size_block, exclusive, failures);
+    return private_fl_directory_clone(static_source, static_destination, role, size_block, exclusive, verbose, failures);
   }
 #endif // _di_fl_directory_clone_
 
 #ifndef _di_fl_directory_clone_content_
-  f_return_status fl_directory_clone_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+  f_return_status fl_directory_clone_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
     f_status status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
@@ -99,12 +103,12 @@ extern "C" {
       } // for
     }
 
-    return private_fl_directory_clone(static_source, static_destination, role, size_block, exclusive, failures);
+    return private_fl_directory_clone(static_source, static_destination, role, size_block, exclusive, verbose, failures);
   }
 #endif // _di_fl_directory_clone_content_
 
 #ifndef _di_fl_directory_copy_
-  f_return_status fl_directory_copy(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+  f_return_status fl_directory_copy(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
     f_status status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
@@ -126,6 +130,10 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
+    if (verbose) {
+      fprintf(verbose, "Copied '%s' to '%s'.%c", source, destination, f_string_eol);
+    }
+
     f_string_static static_source = { source, source_length, source_length };
     f_string_static static_destination = { destination, destination_length, destination_length };
 
@@ -148,12 +156,12 @@ extern "C" {
       } // for
     }
 
-    return private_fl_directory_copy(static_source, static_destination, mode, size_block, exclusive, failures);
+    return private_fl_directory_copy(static_source, static_destination, mode, size_block, exclusive, verbose, failures);
   }
 #endif // _di_fl_directory_copy_
 
 #ifndef _di_fl_directory_copy_content_
-  f_return_status fl_directory_copy_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+  f_return_status fl_directory_copy_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
     f_status status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
@@ -185,7 +193,7 @@ extern "C" {
       } // for
     }
 
-    return private_fl_directory_copy(static_source, static_destination, mode, size_block, exclusive, failures);
+    return private_fl_directory_copy(static_source, static_destination, mode, size_block, exclusive, verbose, failures);
   }
 #endif // _di_fl_directory_copy_content_
 
