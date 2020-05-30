@@ -31,7 +31,7 @@
  *   - settings/
  *
  * The "data/" directory contains all file data, such as firmware or files commonly found under /usr/share in a standard GNU Linux system.
- * The "data/" direcory may also contain build-time data.
+ * The "data/" directory may also contain build-time data.
  * The "documents/" directory contains all documentation after any build-time processing.
  * The "libraries/" and "programs/" directories contains the sub-directories "script/", "shared/", and "static/".
  * The "libraries/" directory will contain compiled libraries or library-like scripts in their respective sub-directories.
@@ -41,66 +41,6 @@
  *
  * @todo this will eventually support fakefile, which is akin to makefile.
  *       All of the setting data will be loaded and available for a fakefile.
- *
- * @todo update the below documentation and clean it up (this is the build settings documentation).
- *
- * "build_compiler"
- *
- * "build_libraries"
- *
- * "build_linker"
- *
- * "build_shared"
- *
- * "build_sources_headers"
- * "build_sources_library"
- * "build_sources_program"
- * "build_sources_setting"
- * "build_sources_shell"
- *
- * "build_static"
- *
- * "path_headers"
- * "path_library_shared"
- * "path_library_static"
- * "path_program_shared"
- * "path_program_static"
- *
- * "defines_all"
- * "defines_shared"
- * "defines_static"
- *
- * "flags_all"
- * "flags_library"
- * "flags_program"
- * "flags_shared"
- * "flags_static"
- *
- * "path_language"
- *
- * "process_pre"
- * - This represents the name of a script to run (either a path to the script by prepending '/' or './', or the name a script found via PATH environment variable).
- * - This script will receive three types of parameters, if relevant (1: the operation name, will always be present) (2: -m mode, such that "mode" is the mode value) (3: -d defines, such that "defines" is the combine defines).
- * - This script is run before the operation, for each operation.
- * - This script also accepts the color mode parameters as "+n" for no color and "+l" for light color.
- * - The path of the script, when using './' is relative to the 'data/build/settings/' directory.
- *
- * "process_post"
- * - Identical to "pre_process", except that this script is run after the operation, for each operation.
- * - Also (always) receives a parameter: "-r result, such that "result" is the numeric value representing the return status of the operation.
- *
- * "project_level" This needs to be changed (maybe "build_includes_path"), such that the value is "level_1" instead of "1', for example. There needs to be additional include sub-directory support for header directories.
- * "project_name"
- *
- * "version_major"
- * "version_micro"
- * "version_minor"
- *
- * The data/ is intended to contain additional data, the following are special use or reserved:
- *   "data/build/": The build related settings are stored here, such as process_pre.sh or the settings configuration "data/build/settings".
- *   "data/settings/": Any configuration settings files, like those found under "/etc/".
- *   "data/common/": Any common data files, like those found under "/usr/share/".
- *   "data/documents/": Any documentation data files, like those found under "/usr/share/man/".
  */
 #ifndef _fake_h
 
@@ -443,6 +383,7 @@ extern "C" {
 
     f_string_dynamic path_data;
     f_string_dynamic path_data_build;
+    f_string_dynamic path_data_settings;
 
     f_string_dynamic path_documents;
 
@@ -482,6 +423,7 @@ extern "C" {
       fake_verbosity_normal, \
       f_string_dynamic_initialize, \
       f_string_dynamics_initialize, \
+      f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \

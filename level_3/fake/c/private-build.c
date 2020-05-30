@@ -1,10 +1,142 @@
 #include <level_3/fake.h>
 #include "private-fake.h"
 #include "private-build.h"
+#include "private-print.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#ifndef _di_fake_build_copy_data_settings_
+  f_return_status fake_build_copy_data_settings(const fake_data data, const fake_build_settings settings, const f_mode mode) {
+    f_status status = F_none;
+    f_directory_statuss failures = f_directory_statuss_initialize;
+    f_string_dynamic path_source = f_string_dynamic_initialize;
+
+    if (data.verbosity != fake_verbosity_quiet) {
+      printf("%cCopying source settings.%c", f_string_eol, f_string_eol);
+    }
+
+    f_macro_string_dynamic_new(status, path_source, data.path_data_settings.used);
+    if (F_status_is_error(status)) {
+      fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "f_macro_string_dynamic_new", F_true);
+
+      f_macro_string_dynamic_delete_simple(path_source);
+      return status;
+    }
+
+    memcpy(path_source.string, data.path_data_settings.string, data.path_data_settings.used);
+
+    for (f_array_length i = 0; i < settings.build_sources_setting.used; i++) {
+      if (settings.build_sources_setting.array[i].used == 0) continue;
+
+      if (data.path_data_settings.used == 0) {
+        path_source.used = 0;
+      }
+      else {
+        path_source.used = data.path_data_settings.used - 1;
+      }
+
+      status = fl_string_dynamic_append_nulless(settings.build_sources_setting.array[i], &path_source);
+      if (F_status_is_error(status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
+        break;
+      }
+
+      status = fl_string_dynamic_terminate(&path_source);
+      if (F_status_is_error(status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+        break;
+      }
+
+      if ((status = f_directory_is(path_source.string)) == F_true) {
+        status = fl_directory_copy_content(path_source.string, data.path_build_settings.string, path_source.used, data.path_build_settings.used, mode, f_file_default_read_size, F_false, (data.verbosity == fake_verbosity_verbose) ? f_type_output : 0, &failures);
+
+        if (F_status_is_error(status)) {
+          if (data.verbosity == fake_verbosity_verbose) {
+            for (f_string_length j = 0; j < failures.used; j++) {
+              fake_print_error_operation(data.context, data.verbosity, F_status_set_fine(status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, data.path_data_settings.string, F_true);
+            } // for
+
+            if (F_status_set_fine(status) != F_failure) {
+              fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_directory_copy_content", F_true);
+            }
+
+            break;
+          }
+          else if (data.verbosity != fake_verbosity_quiet) {
+            fake_print_error_operation(data.context, data.verbosity, F_status_set_fine(status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, data.path_data_settings.string, F_true);
+          }
+
+          break;
+        }
+      }
+      else if (status == F_false) {
+        status = f_file_copy(path_source.string, data.path_build_settings.string, mode, f_file_default_read_size, F_false);
+
+        if (F_status_is_error(status)) {
+          fake_print_error_operation(data.context, data.verbosity, F_status_set_fine(status), "f_file_copy", "copy", "to", path_source.string, data.path_data_settings.string, F_true);
+          break;
+        }
+      }
+      else if (F_status_is_error(status)) {
+        fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_directory_is", path_source.string, "create", F_false, F_true);
+        break;
+      }
+    } // for
+
+    f_macro_directory_statuss_delete_simple(failures);
+    f_macro_string_dynamic_delete_simple(path_source);
+
+    return F_none;
+  }
+#endif // _di_fake_build_copy_data_settings_
+
+#ifndef _di_fake_build_skeleton_
+  f_return_status fake_build_skeleton(const fake_data data, const fake_build_settings settings, const mode_t mode) {
+    f_status status = F_none;
+
+    const f_string_static *directorys[] = {
+      &data.path_build,
+      &data.path_build_documents,
+      &data.path_build_includes,
+      &data.path_build_libraries,
+      &data.path_build_libraries_script,
+      &data.path_build_libraries_shared,
+      &data.path_build_libraries_static,
+      &data.path_build_objects,
+      &data.path_build_process,
+      &data.path_build_programs,
+      &data.path_build_programs_script,
+      &data.path_build_programs_shared,
+      &data.path_build_programs_static,
+      &data.path_build_settings,
+    };
+
+    if (data.verbosity != fake_verbosity_quiet) {
+      printf("%cCreating base build directories.%c", f_string_eol, f_string_eol);
+    }
+
+    for (uint8_t i = 0; i < 14; i++) {
+      if (directorys[i]->used == 0) continue;
+
+      status = f_directory_create(directorys[i]->string, mode);
+
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_file_found) continue;
+
+        fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_directory_create", directorys[i]->string, "create", F_false, F_true);
+        return status;
+      }
+
+      if (data.verbosity == fake_verbosity_verbose) {
+        printf("Created directory '%s'%c", directorys[i]->string, f_string_eol);
+      }
+    } // for
+
+    return F_none;
+  }
+#endif // _di_fake_build_skeleton_
 
 #ifndef _di_fake_build_execute_process_script_
   f_return_status fake_build_execute_process_script(const fake_data data, const fake_build_settings settings, const f_string_static process_script) {
@@ -366,10 +498,21 @@ extern "C" {
       return status;
     }
 
-    f_directory_statuss failures = f_directory_statuss_initialize;
-    f_directory_mode mode = f_directory_mode_initialize;
+    f_mode mode = f_mode_initialize;
 
-    f_macro_directory_mode_set_default_umask(mode, data.umask);
+    f_macro_mode_set_default_umask(mode, data.umask);
+
+    status = fake_build_skeleton(data, settings, mode.directory);
+    if (F_status_is_error(status)) {
+      fake_macro_build_settings_delete_simple(settings);
+      return status;
+    }
+
+    status = fake_build_copy_data_settings(data, settings, mode);
+    if (F_status_is_error(status)) {
+      fake_macro_build_settings_delete_simple(settings);
+      return status;
+    }
 
     // @todo: may have to process all data intended to be used in parameters, exploding them into console parameters.
     // Steps:

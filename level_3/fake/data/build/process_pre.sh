@@ -235,8 +235,6 @@ process_pre_main(){
     if [[ $defines != "" ]] ; then
       echo -e "  Defines: $c_reset$c_notice$defines$c_reset"
     fi
-
-    echo
   fi
 
   # cleanup and return.

@@ -3,6 +3,7 @@
 #include "private-build.h"
 #include "private-clean.h"
 #include "private-make.h"
+#include "private-print.h"
 #include "private-skeleton.h"
 
 #ifdef __cplusplus
@@ -383,6 +384,8 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(data->path_data);
     f_macro_string_dynamic_delete_simple(data->path_data_build);
 
+    f_macro_string_dynamic_delete_simple(data->path_data_settings);
+
     f_macro_string_dynamic_delete_simple(data->path_documents);
 
     f_macro_string_dynamic_delete_simple(data->path_licenses);
@@ -406,6 +409,7 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(data->file_data_build_defines);
     f_macro_string_dynamic_delete_simple(data->file_data_build_dependencies);
     f_macro_string_dynamic_delete_simple(data->file_data_build_settings);
+
     f_macro_string_dynamic_delete_simple(data->file_documents_readme);
 
     fl_macro_color_context_delete_simple(data->context);

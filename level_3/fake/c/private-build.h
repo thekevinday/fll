@@ -203,6 +203,42 @@ extern "C" {
 #endif // _di_fake_build_settings_
 
 /**
+ * Copy over the data settings files.
+ *
+ * @param data
+ *   The program data.
+ * @param settings
+ *   All build related settings data from the build settings file.
+ * @param mode
+ *   The modes for each file type.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_copy_data_settings_
+  extern f_return_status fake_build_copy_data_settings(const fake_data data, const fake_build_settings settings, const f_mode mode) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_copy_data_settings_
+
+/**
+ * Create all of the base directories inside the build directory.
+ *
+ * @param data
+ *   The program data.
+ * @param settings
+ *   All build related settings data from the build settings file.
+ * @param mode
+ *   The directory mode.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_skeleton_
+  extern f_return_status fake_build_skeleton(const fake_data data, const fake_build_settings settings, const mode_t mode) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_skeleton_
+
+/**
  * Execute the Pre-Process or Post-pocess build script.
  *
  * @param data

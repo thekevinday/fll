@@ -1,5 +1,6 @@
 #include <level_3/fake.h>
 #include "private-fake.h"
+#include "private-print.h"
 #include "private-skeleton.h"
 
 #ifdef __cplusplus
@@ -20,6 +21,7 @@ extern "C" {
         &data.path_build,
         &data.path_data,
         &data.path_data_build,
+        &data.path_data_settings,
         &data.path_documents,
         &data.path_licenses,
         &data.path_sources,
@@ -38,7 +40,7 @@ extern "C" {
         &data.path_work_programs_static,
       };
 
-      for (uint8_t i = 0; i < 19; i++) {
+      for (uint8_t i = 0; i < 20; i++) {
         status = fake_skeleton_operate_directory_create(data, *parameters_value[i]);
 
         if (F_status_is_error(status)) {
