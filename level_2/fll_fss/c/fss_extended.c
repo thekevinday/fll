@@ -176,7 +176,7 @@ extern "C" {
       } // while
 
       // extended always ends each call with a space, and so the last position should be replaced with an eol.
-      buffer->string[buffer->used - 1] = f_string_eol;
+      buffer->string[buffer->used - 1] = f_string_eol[0];
     }
 
     return F_none;

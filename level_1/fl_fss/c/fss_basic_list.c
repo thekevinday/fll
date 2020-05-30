@@ -25,7 +25,7 @@ extern "C" {
     fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
 
     // return found nothing if this line only contains whitespace and delimit placeholders.
-    if (buffer->string[location->start] == f_string_eol) {
+    if (buffer->string[location->start] == f_string_eol[0]) {
       location->start++;
       return FL_fss_found_object_not;
     }
@@ -44,7 +44,7 @@ extern "C" {
     }
 
     // identify where the object ends.
-    while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol) {
+    while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol[0]) {
       if (buffer->string[location->start] == f_fss_delimit_slash) {
         f_string_length first_slash = location->start;
         f_string_length slash_count = 1;
@@ -70,7 +70,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           while (location->start < buffer->used && location->start <= location->stop) {
-            if (buffer->string[location->start] == f_string_eol || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
+            if (buffer->string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
               break;
             }
 
@@ -82,7 +82,7 @@ extern "C" {
 
           fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
 
-          if (buffer->string[location->start] == f_string_eol) {
+          if (buffer->string[location->start] == f_string_eol[0]) {
             f_string_length start = location->start;
 
             location->start = first_slash;
@@ -133,7 +133,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         while (location->start < buffer->used && location->start <= location->stop) {
-          if (buffer->string[location->start] == f_string_eol || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
+          if (buffer->string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
             break;
           }
 
@@ -145,7 +145,7 @@ extern "C" {
 
         fl_macro_fss_object_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, F_none_eos, F_none_stop)
 
-        if (buffer->string[location->start] == f_string_eol) {
+        if (buffer->string[location->start] == f_string_eol[0]) {
           fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
           found->stop = stop_point;
@@ -164,7 +164,7 @@ extern "C" {
     } // while
 
     // seek to the end of the line when no valid object is found.
-    while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol) {
+    while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol[0]) {
       status = fl_fss_increment_buffer(*buffer, location, 1);
       if (F_status_is_error(status)) return status;
     } // while
@@ -206,7 +206,7 @@ extern "C" {
 
     // identify where the content ends.
     while (location->start < buffer->used && location->start <= location->stop) {
-      if (buffer->string[location->start] == f_string_eol) {
+      if (buffer->string[location->start] == f_string_eol[0]) {
         found_newline = F_true;
         last_newline = location->start;
 
@@ -248,7 +248,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           while (location->start < buffer->used && location->start <= location->stop) {
-            if (buffer->string[location->start] == f_string_eol || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
+            if (buffer->string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
               break;
             }
 
@@ -265,7 +265,7 @@ extern "C" {
             fl_macro_fss_content_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
           }
 
-          if (buffer->string[location->start] == f_string_eol) {
+          if (buffer->string[location->start] == f_string_eol[0]) {
             f_string_length start = location->start;
 
             location->start = first_slash;
@@ -319,7 +319,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         while (location->start < buffer->used && location->start <= location->stop) {
-          if (buffer->string[location->start] == f_string_eol || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
+          if (buffer->string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
             break;
           }
 
@@ -336,7 +336,7 @@ extern "C" {
           fl_macro_fss_content_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
         }
 
-        if (buffer->string[location->start] == f_string_eol) {
+        if (buffer->string[location->start] == f_string_eol[0]) {
           if (found_newline) {
             fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
@@ -483,7 +483,7 @@ extern "C" {
           break;
         }
       }
-      else if (object.string[location->start] == f_string_eol) {
+      else if (object.string[location->start] == f_string_eol[0]) {
         if (buffer_position.stop == buffer_position.start) {
           return F_data_not_eol;
         }
@@ -501,7 +501,7 @@ extern "C" {
     } // while
 
     buffer->string[buffer_position.stop] = f_fss_basic_list_open;
-    buffer->string[buffer_position.stop + 1] = f_string_eol;
+    buffer->string[buffer_position.stop + 1] = f_string_eol[0];
     buffer->used = buffer_position.stop + 2;
 
     if (location->start > location->stop) {
@@ -590,7 +590,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           while (location->start < content.used && location->start <= location->stop) {
-            if (content.string[location->start] == f_string_eol || (status = fl_fss_is_graph(content, *location)) == F_true) {
+            if (content.string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(content, *location)) == F_true) {
               break;
             }
 
@@ -600,7 +600,7 @@ extern "C" {
             if (F_status_is_error(status)) return status;
           } // while
 
-          if (content.string[location->start] == f_string_eol || location->start >= content.used || location->start > location->stop) {
+          if (content.string[location->start] == f_string_eol[0] || location->start >= content.used || location->start > location->stop) {
             pre_allocate_size += slash_count + 1;
 
             if (pre_allocate_size > buffer->size) {
@@ -636,7 +636,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         while (location->start < content.used && location->start <= location->stop) {
-          if (content.string[location->start] == f_string_eol || (status = fl_fss_is_graph(content, *location)) == F_true) {
+          if (content.string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(content, *location)) == F_true) {
             break;
           }
 
@@ -646,7 +646,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
         } // while
 
-        if (content.string[location->start] == f_string_eol || location->start >= content.used || location->start > location->stop) {
+        if (content.string[location->start] == f_string_eol[0] || location->start >= content.used || location->start > location->stop) {
           pre_allocate_size++;
 
           if (pre_allocate_size > buffer->size) {
@@ -669,7 +669,7 @@ extern "C" {
       else if (content.string[location->start] == f_fss_comment && !has_graph) {
         is_comment = F_true;
       }
-      else if (content.string[location->start] == f_string_eol) {
+      else if (content.string[location->start] == f_string_eol[0]) {
         has_graph = F_false;
         is_comment = F_false;
       }
@@ -699,7 +699,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // while
 
-    buffer->string[buffer_position.stop] = f_string_eol;
+    buffer->string[buffer_position.stop] = f_string_eol[0];
     buffer->used = buffer_position.stop + 1;
 
     if (location->start > location->stop) {

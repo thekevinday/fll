@@ -297,7 +297,7 @@ extern "C" {
     }
 
     for (;;) {
-      if (buffer.string[range->start] != f_string_placeholder) {
+      if (buffer.string[range->start] != f_fss_delimit_placeholder) {
         status = f_utf_is_whitespace(buffer.string + range->start, width_max);
 
         if (status == F_false) {
@@ -352,7 +352,7 @@ extern "C" {
         else if (F_status_is_error(status)) return status;
       }
 
-      if (buffer.string[range->start] == f_string_eol) return F_none_eol;
+      if (buffer.string[range->start] == f_string_eol[0]) return F_none_eol;
 
       width = f_macro_utf_byte_width_is(buffer.string[range->start]);
 
@@ -408,7 +408,7 @@ extern "C" {
     }
 
     for (;;) {
-      if (buffer.string[range->start] != f_string_placeholder) {
+      if (buffer.string[range->start] != f_fss_delimit_placeholder) {
         status = f_utf_is_graph(buffer.string + range->start, width_max);
 
         if (status == F_true) {

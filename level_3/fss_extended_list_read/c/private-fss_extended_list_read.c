@@ -296,7 +296,7 @@ extern "C" {
     // Requested depths cannot be greater than contents depth.
     if (depths.used > data->nest.used) {
       if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
-        fprintf(f_type_output, "0%c", f_string_eol);
+        fprintf(f_type_output, "0%c", f_string_eol[0]);
         return F_none;
       }
 
@@ -385,10 +385,10 @@ extern "C" {
 
         if (depth_setting.index_at > 0) {
           if (depth_setting.value_at < items->used && names[depth_setting.value_at]) {
-            fprintf(f_type_output, "1%c", f_string_eol);
+            fprintf(f_type_output, "1%c", f_string_eol[0]);
           }
           else {
-            fprintf(f_type_output, "0%c", f_string_eol);
+            fprintf(f_type_output, "0%c", f_string_eol[0]);
           }
 
           return F_none;
@@ -402,12 +402,12 @@ extern "C" {
             total++;
           } // for
 
-          fprintf(f_type_output, "%llu%c", total, f_string_eol);
+          fprintf(f_type_output, "%llu%c", total, f_string_eol[0]);
 
           return F_none;
         }
 
-        fprintf(f_type_output, "%llu%c", items->used, f_string_eol);
+        fprintf(f_type_output, "%llu%c", items->used, f_string_eol[0]);
 
         return F_none;
       }
@@ -421,7 +421,7 @@ extern "C" {
       if (depth_setting.index_at > 0) {
         if (depth_setting.value_at < items->used && names[depth_setting.value_at]) {
           print_object(f_type_output, data->buffer, items->array[depth_setting.value_at].object);
-          fprintf(f_type_output, "%c", f_string_eol);
+          fprintf(f_type_output, "%c", f_string_eol[0]);
         }
 
         return F_none;
@@ -430,7 +430,7 @@ extern "C" {
       for (f_array_length i = 0; i < items->used; i++) {
         if (names[i]) {
           print_object(f_type_output, data->buffer, items->array[i].object);
-          fprintf(f_type_output, "%c", f_string_eol);
+          fprintf(f_type_output, "%c", f_string_eol[0]);
         }
       } // for
 
@@ -440,7 +440,7 @@ extern "C" {
     if (depth_setting.index_at > 0) {
       if (depth_setting.value_at >= items->used) {
         if (names[depth_setting.value_at] && data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
-          fprintf(f_type_output, "0%c", f_string_eol);
+          fprintf(f_type_output, "0%c", f_string_eol[0]);
         }
 
         return F_none;
@@ -454,7 +454,7 @@ extern "C" {
           if (at == depth_setting.value_at) {
             if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
               if (items->array[i].content.used == 0) {
-                fprintf(f_type_output, "0%c", f_string_eol);
+                fprintf(f_type_output, "0%c", f_string_eol[0]);
               }
               else {
                 f_string_length total = 1;
@@ -462,12 +462,12 @@ extern "C" {
                 for (f_string_length j = items->array[i].content.array[0].start; j <= items->array[i].content.array[0].stop; j++) {
                   if (data->buffer.string[j] == 0) continue;
 
-                  if (data->buffer.string[j] == f_string_eol) {
+                  if (data->buffer.string[j] == f_string_eol[0]) {
                     total++;
                   }
                 } // for
 
-                fprintf(f_type_output, "%llu%c", total, f_string_eol);
+                fprintf(f_type_output, "%llu%c", total, f_string_eol[0]);
               }
 
               return F_none;
@@ -476,7 +476,7 @@ extern "C" {
             if (data->parameters[fss_extended_list_read_parameter_line].result == f_console_result_additional) {
               if (items->array[i].content.used == 0) {
                 if (include_empty && line == 0) {
-                  fprintf(f_type_output, "%c", f_string_eol);
+                  fprintf(f_type_output, "%c", f_string_eol[0]);
                 }
               }
               else {
@@ -485,8 +485,8 @@ extern "C" {
                 if (line == 0) {
                   for (; i <= items->array[i].content.array[0].stop; i++) {
                     if (data->buffer.string[i] == 0) continue;
-                    if (data->buffer.string[i] == f_string_eol) {
-                      fprintf(f_type_output, "%c", f_string_eol);
+                    if (data->buffer.string[i] == f_string_eol[0]) {
+                      fprintf(f_type_output, "%c", f_string_eol[0]);
                       break;
                     }
 
@@ -499,7 +499,7 @@ extern "C" {
                   for (; i <= items->array[i].content.array[0].stop; i++) {
                     if (data->buffer.string[i] == 0) continue;
 
-                    if (data->buffer.string[i] == f_string_eol) {
+                    if (data->buffer.string[i] == f_string_eol[0]) {
                       line_current++;
 
                       if (line_current == line) {
@@ -507,8 +507,8 @@ extern "C" {
 
                         for (; i <= items->array[i].content.array[0].stop; i++) {
                           if (data->buffer.string[i] == 0) continue;
-                          if (data->buffer.string[i] == f_string_eol) {
-                            fprintf(f_type_output, "%c", f_string_eol);
+                          if (data->buffer.string[i] == f_string_eol[0]) {
+                            fprintf(f_type_output, "%c", f_string_eol[0]);
                             break;
                           }
 
@@ -529,7 +529,7 @@ extern "C" {
               f_print_string_dynamic_partial(f_type_output, data->buffer, items->array[i].content.array[0]);
             }
             else if (include_empty) {
-              fprintf(f_type_output, "%c", f_string_eol);
+              fprintf(f_type_output, "%c", f_string_eol[0]);
             }
 
             break;
@@ -559,13 +559,13 @@ extern "C" {
         for (f_string_length j = items->array[i].content.array[0].start; j <= items->array[i].content.array[0].stop; j++) {
           if (data->buffer.string[j] == 0) continue;
 
-          if (data->buffer.string[j] == f_string_eol) {
+          if (data->buffer.string[j] == f_string_eol[0]) {
             total++;
           }
         } // for
       } // for
 
-      fprintf(f_type_output, "%llu%c", total, f_string_eol);
+      fprintf(f_type_output, "%llu%c", total, f_string_eol[0]);
       return F_none;
     }
 
@@ -582,7 +582,7 @@ extern "C" {
         if (items->array[i].content.used == 0) {
           if (include_empty) {
             if (line_current == line) {
-              fprintf(f_type_output, "%c", f_string_eol);
+              fprintf(f_type_output, "%c", f_string_eol[0]);
               break;
             }
 
@@ -596,7 +596,7 @@ extern "C" {
 
         if (line_current != line) {
           for (; j <= items->array[i].content.array[0].stop; j++) {
-            if (data->buffer.string[j] == f_string_eol) {
+            if (data->buffer.string[j] == f_string_eol[0]) {
               line_current++;
 
               if (line_current == line) {
@@ -613,8 +613,8 @@ extern "C" {
           for (; j <= items->array[i].content.array[0].stop; j++) {
             if (data->buffer.string[j] == 0) continue;
 
-            if (data->buffer.string[j] == f_string_eol) {
-              fprintf(f_type_output, "%c", f_string_eol);
+            if (data->buffer.string[j] == f_string_eol[0]) {
+              fprintf(f_type_output, "%c", f_string_eol[0]);
               break;
             }
 
@@ -635,7 +635,7 @@ extern "C" {
 
       if (items->array[i].content.used == 0) {
         if (include_empty) {
-          fprintf(f_type_output, "%c", f_string_eol);
+          fprintf(f_type_output, "%c", f_string_eol[0]);
         }
 
         continue;

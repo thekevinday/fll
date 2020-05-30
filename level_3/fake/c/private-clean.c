@@ -12,7 +12,7 @@ extern "C" {
     f_status status = F_none;
 
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%c", f_string_eol);
+      printf("%c", f_string_eol[0]);
       fl_color_print(f_type_output, data.context.important, data.context.reset, "Deleting all files within build directory '");
       fl_color_print(f_type_output, data.context.notable, data.context.reset, "%s", data.path_build.string);
       fl_color_print_line(f_type_output, data.context.important, data.context.reset, "'.");
@@ -41,7 +41,7 @@ extern "C" {
     int result = remove(path);
 
     if (result == 0) {
-      printf("Removed '%s'.%c", path, f_string_eol);
+      printf("Removed '%s'.%c", path, f_string_eol[0]);
     }
 
     return result;

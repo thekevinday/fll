@@ -228,7 +228,7 @@ extern "C" {
     }
 
     if (verbose) {
-      fprintf(verbose, "Cloned '%s' to '%s'.%c", source.string, destination.string, f_string_eol);
+      fprintf(verbose, "Cloned '%s' to '%s'.%c", source.string, destination.string, f_string_eol[0]);
     }
 
     return F_none;
@@ -450,7 +450,7 @@ extern "C" {
     }
 
     if (verbose) {
-      fprintf(verbose, "Copied '%s' to '%s'.%c", source.string, destination.string, f_string_eol);
+      fprintf(verbose, "Copied '%s' to '%s'.%c", source.string, destination.string, f_string_eol[0]);
     }
 
     return F_none;

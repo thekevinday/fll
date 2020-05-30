@@ -31,7 +31,7 @@ extern "C" {
     fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
     fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, " Enable debugging.");
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(context, init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Do not attempt to process kernel command line or perform any boot-time specific preparations.");
     fll_program_print_help_option(context, init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a custom run level, ignoring the kernel command line runlevel argument.");

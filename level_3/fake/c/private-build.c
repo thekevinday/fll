@@ -14,7 +14,7 @@ extern "C" {
     f_string_dynamic path_source = f_string_dynamic_initialize;
 
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%cCopying source settings.%c", f_string_eol, f_string_eol);
+      printf("%cCopying source settings.%c", f_string_eol[0], f_string_eol[0]);
     }
 
     f_macro_string_dynamic_new(status, path_source, data.path_data_settings.used);
@@ -114,7 +114,7 @@ extern "C" {
     };
 
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%cCreating base build directories.%c", f_string_eol, f_string_eol);
+      printf("%cCreating base build directories.%c", f_string_eol[0], f_string_eol[0]);
     }
 
     for (uint8_t i = 0; i < 14; i++) {
@@ -130,7 +130,7 @@ extern "C" {
       }
 
       if (data.verbosity == fake_verbosity_verbose) {
-        printf("Created directory '%s'%c", directorys[i]->string, f_string_eol);
+        printf("Created directory '%s'%c", directorys[i]->string, f_string_eol[0]);
       }
     } // for
 
@@ -331,7 +331,7 @@ extern "C" {
           if (names.used + settings.environment.used > names.size) {
             if (names.used + settings.environment.used > f_array_length_size) {
               if (data.verbosity != fake_verbosity_quiet) {
-                fprintf(f_type_error, "%c", f_string_eol);
+                fprintf(f_type_error, "%c", f_string_eol[0]);
                 fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The values for the settings '");
                 fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_settings_name_environment);
                 fl_color_print(f_type_error, data.context.error, data.context.reset, "' of settings file '");
@@ -458,7 +458,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_failure) {
         if (data.verbosity != fake_verbosity_quiet) {
-          fprintf(f_type_error, "%c", f_string_eol);
+          fprintf(f_type_error, "%c", f_string_eol[0]);
           fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to execute script: ");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path.string);
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
@@ -478,7 +478,7 @@ extern "C" {
 #ifndef _di_fake_build_operate_
   f_return_status fake_build_operate(const fake_data data) {
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%c", f_string_eol);
+      printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Building project.");
     }
 
@@ -586,7 +586,7 @@ extern "C" {
 
         if (status == F_status_set_error(F_incomplete_utf_stop)) {
           if (data.verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol);
+            fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
             fl_color_print(f_type_error, data.context.notable, data.context.reset, "%d", range.start);
             fl_color_print(f_type_error, data.context.error, data.context.reset, " of settings file '");
@@ -596,7 +596,7 @@ extern "C" {
         }
         else if (status == F_status_set_error(F_incomplete_utf_stop)) {
           if (data.verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol);
+            fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
             fl_color_print(f_type_error, data.context.notable, data.context.reset, "%d", range.start);
             fl_color_print(f_type_error, data.context.error, data.context.reset, " of settings file '");
@@ -775,7 +775,7 @@ extern "C" {
 
             if (found == F_false) {
               if (data.verbosity != fake_verbosity_quiet) {
-                fprintf(f_type_error, "%c", f_string_eol);
+                fprintf(f_type_error, "%c", f_string_eol[0]);
                 fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the specified mode '");
                 fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", modes->array[i].string);
                 fl_color_print(f_type_error, data.context.error, data.context.reset, "' is not a valid mode, according to '");
@@ -828,7 +828,7 @@ extern "C" {
           if (status == F_status_set_error(F_string_too_large)) {
             if (data.verbosity != fake_verbosity_quiet) {
               // @todo update FSS functions to return which setting index the problem happened on.
-              fprintf(f_type_error, "%c", f_string_eol);
+              fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: a setting in the build settings file '");
               fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
               fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' is too long.");
@@ -921,7 +921,7 @@ extern "C" {
 
             if (settings_single_source[i]->used > 1) {
               if (data.verbosity != fake_verbosity_quiet) {
-                fprintf(f_type_warning, "%c", f_string_eol);
+                fprintf(f_type_warning, "%c", f_string_eol[0]);
                 fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
                 fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
                 fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");
@@ -943,7 +943,7 @@ extern "C" {
                 *settings_single_bool[i] = F_true;
 
                 if (data.verbosity != fake_verbosity_quiet) {
-                  fprintf(f_type_warning, "%c", f_string_eol);
+                  fprintf(f_type_warning, "%c", f_string_eol[0]);
                   fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
                   fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
                   fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");

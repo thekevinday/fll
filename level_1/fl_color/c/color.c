@@ -207,7 +207,7 @@ extern "C" {
     }
 
     // now print the trailing newline, this is done _after_ ending the colors to avoid color wrapping issues that can happen when a color code follows a newline
-    fprintf(file, "%c", f_string_eol);
+    fprintf(file, "%c", f_string_eol[0]);
 
     return F_none;
   }
@@ -245,7 +245,7 @@ extern "C" {
     }
 
     // now print the trailing newline, this is done _after_ ending the colors to avoid color wrapping issues that can happen when a color code follows a newline
-    fprintf(file, "%c", f_string_eol);
+    fprintf(file, "%c", f_string_eol[0]);
 
     return F_none;
   }

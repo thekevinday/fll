@@ -6,13 +6,13 @@ extern "C" {
 
 #ifndef _di_fll_program_print_help_header_
   f_return_status fll_program_print_help_header(const fl_color_context context, const f_string name, const f_string version) {
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
     fl_color_print(f_type_output, context.title, context.reset, " %s", name);
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
     fl_color_print(f_type_output, context.notable, context.reset, "  Version %s", version);
 
-    printf("%c%c", f_string_eol, f_string_eol);
+    printf("%c%c", f_string_eol[0], f_string_eol[0]);
     fl_color_print(f_type_output, context.important, context.reset, " Available Options: ");
 
     return F_none;
@@ -21,7 +21,7 @@ extern "C" {
 
 #ifndef _di_fll_program_print_help_option_
   f_return_status fll_program_print_help_option(const fl_color_context context, const f_string option_short, const f_string option_long, const f_string symbol_short, const f_string symbol_long, const f_string description) {
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
     printf("  %s", symbol_short);
     fl_color_print(f_type_output, context.standout, context.reset, option_short);
 
@@ -35,7 +35,7 @@ extern "C" {
 
 #ifndef _di_fll_program_print_help_option_long_
   f_return_status fll_program_print_help_option_long(const fl_color_context context, const f_string option_long, const f_string symbol_long, const f_string description) {
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
     printf("      %s", symbol_long);
     fl_color_print(f_type_output, context.standout, context.reset, option_long);
     printf("  %s", description);
@@ -46,7 +46,7 @@ extern "C" {
 
 #ifndef _di_fll_program_print_help_option_other_
   f_return_status fll_program_print_help_option_other(const fl_color_context context, const f_string option_other, const f_string description) {
-    printf("%c  ", f_string_eol);
+    printf("%c  ", f_string_eol[0]);
     fl_color_print(f_type_output, context.standout, context.reset, option_other);
 
     printf("  %s", description);
@@ -57,10 +57,10 @@ extern "C" {
 
 #ifndef _di_fll_program_print_help_usage_
   f_return_status fll_program_print_help_usage(const fl_color_context context, const f_string name, const f_string parameters) {
-    printf("%c%c", f_string_eol, f_string_eol);
+    printf("%c%c", f_string_eol[0], f_string_eol[0]);
     fl_color_print(f_type_output, context.important, context.reset, " Usage:");
 
-    printf("%c  ", f_string_eol);
+    printf("%c  ", f_string_eol[0]);
     fl_color_print(f_type_output, context.standout, context.reset, name);
 
     printf(" ");
@@ -77,13 +77,13 @@ extern "C" {
       fl_color_print(f_type_output, context.notable, context.reset, "]");
     }
 
-    printf("%c%c", f_string_eol, f_string_eol);
+    printf("%c%c", f_string_eol[0], f_string_eol[0]);
   }
 #endif // _di_fll_program_print_help_usage_
 
 #ifndef _di_fll_program_print_version_
   f_return_status fll_program_print_version(const f_string version) {
-    printf("%s%c", version, f_string_eol);
+    printf("%s%c", version, f_string_eol[0]);
 
     return F_none;
   }

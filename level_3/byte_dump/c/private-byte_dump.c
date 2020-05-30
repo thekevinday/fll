@@ -196,11 +196,11 @@ extern "C" {
         byte_dump_print_text(data, characters, invalid, &previous, &offset);
       }
       else {
-        printf("%c", f_string_eol);
+        printf("%c", f_string_eol[0]);
       }
     }
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     // make sure to flush standard out to help prevent standard error from causing poblems.
     fflush(f_type_output);
@@ -209,7 +209,7 @@ extern "C" {
       fl_color_print(f_type_error, data.context.error, data.context.reset, "Invalid UTF-8 codes were detected for file '");
       fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
-      printf("%c", f_string_eol);
+      printf("%c", f_string_eol[0]);
     }
 
     if (size < 0) {
@@ -217,7 +217,7 @@ extern "C" {
       fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: read() failed for '");
       fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
-      printf("%c", f_string_eol);
+      printf("%c", f_string_eol[0]);
       status = F_status_set_error(F_failure);
     }
 
@@ -392,7 +392,7 @@ extern "C" {
         byte_dump_print_text(data, characters, invalid, previous, offset);
       }
       else {
-        printf("%c", f_string_eol);
+        printf("%c", f_string_eol[0]);
       }
 
       cell->column = 0;
@@ -819,7 +819,7 @@ extern "C" {
     }
 
     fl_color_print(f_type_output, data.context.notable, data.context.reset, " |");
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
   }
 #endif // _di_byte_dump_file_
 

@@ -41,7 +41,7 @@ extern "C" {
     }
 
     if (verbose) {
-      fprintf(verbose, "Cloned '%s' to '%s'.%c", source, destination, f_string_eol);
+      fprintf(verbose, "Cloned '%s' to '%s'.%c", source, destination, f_string_eol[0]);
     }
 
     f_string_static static_source = { source, source_length, source_length };
@@ -131,7 +131,7 @@ extern "C" {
     }
 
     if (verbose) {
-      fprintf(verbose, "Copied '%s' to '%s'.%c", source, destination, f_string_eol);
+      fprintf(verbose, "Copied '%s' to '%s'.%c", source, destination, f_string_eol[0]);
     }
 
     f_string_static static_source = { source, source_length, source_length };

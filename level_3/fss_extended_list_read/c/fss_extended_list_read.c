@@ -15,7 +15,7 @@ extern "C" {
     fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
     fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(context, fss_extended_list_read_short_at, fss_extended_list_read_long_at, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Select object at this numeric index.");
     fll_program_print_help_option(context, fss_extended_list_read_short_depth, fss_extended_list_read_long_depth, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Select object at this numeric depth.");
@@ -31,54 +31,54 @@ extern "C" {
 
     fl_color_print(f_type_output, context.important, context.reset, " Notes:");
 
-    printf("%c", f_string_eol, f_string_eol);
+    printf("%c", f_string_eol[0], f_string_eol[0]);
 
-    printf("  This program will print the content associated with the given object and content data based on the FSS-0002 Basic List standard.%c", f_string_eol);
+    printf("  This program will print the content associated with the given object and content data based on the FSS-0002 Basic List standard.%c", f_string_eol[0]);
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     printf("  When using the ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_depth);
-    printf(" option, an order of operations is enforced on the parameters.%c", f_string_eol);
+    printf(" option, an order of operations is enforced on the parameters.%c", f_string_eol[0]);
 
-    printf("  When this order of operations is in effect, parameters to the right of a depth parameter are influenced by that depth parameter:%c", f_string_eol);
+    printf("  When this order of operations is in effect, parameters to the right of a depth parameter are influenced by that depth parameter:%c", f_string_eol[0]);
 
     printf("    ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_at);
-    printf(": An object index at the specified depth.%c", f_string_eol);
+    printf(": An object index at the specified depth.%c", f_string_eol[0]);
 
     printf("    ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_depth);
-    printf(": A new depth within the specified depth, indexed from the root.%c", f_string_eol);
+    printf(": A new depth within the specified depth, indexed from the root.%c", f_string_eol[0]);
 
     printf("    ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_name);
-    printf(": An object name at the specified depth.%c", f_string_eol);
+    printf(": An object name at the specified depth.%c", f_string_eol[0]);
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     printf("  The parameter ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_depth);
-    printf(" must be in numeric order, but values in between may be skipped.%c", f_string_eol);
-    printf("    ('-d 0 -a 1 -d 2 -a 2' would specify index 1 at depth 0, any index at depth 1, and index 2 at depth 2.)%c", f_string_eol);
-    printf("    ('-d 2 -a 1 -d 0 -a 2' would be invalid because depth 2 is before depth 1.)%c", f_string_eol);
+    printf(" must be in numeric order, but values in between may be skipped.%c", f_string_eol[0]);
+    printf("    ('-d 0 -a 1 -d 2 -a 2' would specify index 1 at depth 0, any index at depth 1, and index 2 at depth 2.)%c", f_string_eol[0]);
+    printf("    ('-d 2 -a 1 -d 0 -a 2' would be invalid because depth 2 is before depth 1.)%c", f_string_eol[0]);
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     printf("  The parameter ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_select);
-    printf(" selects a content index at a given depth.%c", f_string_eol);
-    printf("    (This parameter is not synonymous with the depth parameter and does not relate to nested content).%c", f_string_eol);
+    printf(" selects a content index at a given depth.%c", f_string_eol[0]);
+    printf("    (This parameter is not synonymous with the depth parameter and does not relate to nested content).%c", f_string_eol[0]);
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     printf("  Specify both ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_object);
     printf(" and the ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_total);
-    printf(" parameters to get the total objects.%c", f_string_eol);
+    printf(" parameters to get the total objects.%c", f_string_eol[0]);
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     printf("  When both ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_at);
@@ -88,34 +88,34 @@ extern "C" {
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_at);
     printf(" parameter value will be treated as a position relative to the specified ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_name);
-    printf(" parameter value.%c", f_string_eol);
+    printf(" parameter value.%c", f_string_eol[0]);
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     printf("  This program may support parameters, such as ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_depth);
     printf(" or ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_select);
-    printf(", even if not supported by the standard.%c", f_string_eol);
-    printf("  This is done to help ensure consistency for scripting.%c", f_string_eol);
+    printf(", even if not supported by the standard.%c", f_string_eol[0]);
+    printf("  This is done to help ensure consistency for scripting.%c", f_string_eol[0]);
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     printf("  For parameters like ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_depth);
-    printf(", if the standard doesn't support nested content, then only a depth of 0 would be valid.%c", f_string_eol);
+    printf(", if the standard doesn't support nested content, then only a depth of 0 would be valid.%c", f_string_eol[0]);
 
     printf("  For parameters like ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_select);
-    printf(", if the standard doesn't support multiple content groups, then only a select of 0 would be valid.%c", f_string_eol);
+    printf(", if the standard doesn't support multiple content groups, then only a select of 0 would be valid.%c", f_string_eol[0]);
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     printf("  The parameter ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_trim);
-    printf(" will remove leading and trailing whitespaces when selecting objects or when printing objects.%c", f_string_eol);
+    printf(" will remove leading and trailing whitespaces when selecting objects or when printing objects.%c", f_string_eol[0]);
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     return F_none;
   }

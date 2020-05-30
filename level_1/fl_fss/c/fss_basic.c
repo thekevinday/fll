@@ -137,7 +137,7 @@ extern "C" {
 
         fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
-        if (buffer->string[location->start] == f_string_eol) {
+        if (buffer->string[location->start] == f_string_eol[0]) {
           location->start++;
           return FL_fss_found_object_content_not;
         }
@@ -217,7 +217,7 @@ extern "C" {
               fl_macro_fss_object_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, F_none_eos, F_none_stop)
 
               if ((status = fl_fss_is_graph(*buffer, *location)) == F_true) {
-                while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol) {
+                while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol[0]) {
                   status = fl_fss_increment_buffer(*buffer, location, 1);
                   if (F_status_is_error(status)) return status;
                 } // while
@@ -244,7 +244,7 @@ extern "C" {
 
                 return status;
               }
-              else if (buffer->string[location->start] == f_string_eol) {
+              else if (buffer->string[location->start] == f_string_eol[0]) {
                 fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
                 found->stop = length - 1;
@@ -296,7 +296,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           while (location->start <= location->stop && location->start < buffer->used) {
-            if (buffer->string[location->start] == f_string_eol) {
+            if (buffer->string[location->start] == f_string_eol[0]) {
               fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
               location->start++;
@@ -314,7 +314,7 @@ extern "C" {
               return status;
             }
             else if (buffer->string[location->start] != f_fss_delimit_placeholder) {
-              while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol) {
+              while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol[0]) {
 
                 status = fl_fss_increment_buffer(*buffer, location, 1);
                 if (F_status_is_error(status)) return status;
@@ -337,7 +337,7 @@ extern "C" {
 
           fl_macro_fss_object_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, F_none_eos, F_none_stop)
         }
-        else if (buffer->string[location->start] == f_string_eol) {
+        else if (buffer->string[location->start] == f_string_eol[0]) {
           f_macro_string_lengths_delete_simple(delimits);
 
           location->start++;
@@ -352,7 +352,7 @@ extern "C" {
     }
 
     // seek to the end of the line when no valid object is found
-    while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol) {
+    while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol[0]) {
       status = fl_fss_increment_buffer(*buffer, location, 1);
       if (F_status_is_error(status)) return status;
     } // while
@@ -389,7 +389,7 @@ extern "C" {
     fl_macro_fss_content_return_on_overflow((*buffer), (*location), (*found), delimits, F_none_eos, F_none_stop)
 
     // return found nothing if this line only contains whitespace and delimit placeholders
-    if (buffer->string[location->start] == f_string_eol) {
+    if (buffer->string[location->start] == f_string_eol[0]) {
       location->start++;
       return FL_fss_found_content_not;
     }
@@ -517,7 +517,7 @@ extern "C" {
 
         continue;
       }
-      else if (object.string[location->start] == f_string_eol) {
+      else if (object.string[location->start] == f_string_eol[0]) {
         if (quoted) {
           buffer->string[buffer_position.stop] = f_fss_delimit_double_quote;
           buffer_position.stop++;
@@ -606,7 +606,7 @@ extern "C" {
 
             continue;
           }
-          else if (object.string[location->start] == f_string_eol) {
+          else if (object.string[location->start] == f_string_eol[0]) {
             buffer->string[buffer_position.stop] = f_fss_delimit_double_quote;
             buffer_position.stop++;
 
@@ -682,8 +682,8 @@ extern "C" {
     }
 
     while (location->start <= location->stop && location->start < content.used) {
-      if (content.string[location->start] == f_string_eol) {
-        buffer->string[buffer_position.stop] = f_string_eol;
+      if (content.string[location->start] == f_string_eol[0]) {
+        buffer->string[buffer_position.stop] = f_string_eol[0];
         buffer->used = buffer_position.stop + 1;
         return F_none_eos;
       }
@@ -697,7 +697,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // while
 
-    buffer->string[buffer_position.stop] = f_string_eol;
+    buffer->string[buffer_position.stop] = f_string_eol[0];
     buffer->used = buffer_position.stop + 1;
 
     if (location->start > location->stop) {

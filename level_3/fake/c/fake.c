@@ -22,21 +22,21 @@ extern "C" {
     fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
     fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(context, fake_short_defines, fake_long_defines, f_console_symbol_short_enable, f_console_symbol_long_enable, " Override custom defines with these defines.");
     fll_program_print_help_option(context, fake_short_mode, fake_long_mode, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use this mode when processing the build settings.");
     fll_program_print_help_option(context, fake_short_process, fake_long_process, f_console_symbol_short_enable, f_console_symbol_long_enable, " Process name for storing build states.");
     fll_program_print_help_option(context, fake_short_settings, fake_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use this settings file, from within the source settings directory.");
 
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(context, fake_short_path_build, fake_long_path_build, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a custom build directory.");
     fll_program_print_help_option(context, fake_short_path_data, fake_long_path_data, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Specify a custom path to the data files.");
     fll_program_print_help_option(context, fake_short_path_sources, fake_long_path_sources, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a custom path to the source files.");
     fll_program_print_help_option(context, fake_short_path_work, fake_long_path_work, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use includes/libraries/programs from this directory instead of system.");
 
-    printf("%c%c", f_string_eol, f_string_eol);
+    printf("%c%c", f_string_eol[0], f_string_eol[0]);
 
     fl_color_print(f_type_output, context.important, context.reset, " Special Options: ");
 
@@ -47,7 +47,7 @@ extern "C" {
     fll_program_print_help_option_long(context, fake_long_static_disabled, f_console_symbol_long_enable, "Forcibly do not build static files.");
     fll_program_print_help_option_long(context, fake_long_static_enabled, f_console_symbol_long_enable, " Forcibly do build static files.");
 
-    printf("%c%c", f_string_eol, f_string_eol);
+    printf("%c%c", f_string_eol[0], f_string_eol[0]);
 
     fl_color_print(f_type_output, context.important, context.reset, " Operations: ");
 
@@ -63,13 +63,13 @@ extern "C" {
     printf(" operation, the ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
     printf(" parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.");
-    printf("%c", f_string_eol);
+    printf("%c", f_string_eol[0]);
 
     printf("  For example, when a ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s", fake_long_mode);
     printf(" of 'fll_monolithic' is specified, build libaries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').");
 
-    printf("%c%c", f_string_eol, f_string_eol);
+    printf("%c%c", f_string_eol[0], f_string_eol[0]);
 
     return F_none;
   }
@@ -303,7 +303,7 @@ extern "C" {
           }
 
           if (data->verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol);
+            fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the operation '");
             fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", fake_other_operation_make);
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' is not yet implemented.");
@@ -315,7 +315,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (data->verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol);
+            fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the operation '");
             fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", operations_name[i]);
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' failed.");
@@ -328,18 +328,18 @@ extern "C" {
       // ensure a newline is always put at the end of the program execution, unless in quite mode.
       if (data->verbosity != fake_verbosity_quiet) {
         if (F_status_is_error(status)) {
-          fprintf(f_type_error, "%c", f_string_eol);
+          fprintf(f_type_error, "%c", f_string_eol[0]);
         }
         else {
-          fprintf(f_type_output, "%cAll operations complete.%c%c", f_string_eol, f_string_eol, f_string_eol);
+          fprintf(f_type_output, "%cAll operations complete.%c%c", f_string_eol[0], f_string_eol[0], f_string_eol[0]);
         }
       }
     }
     else {
       if (data->verbosity != fake_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol);
+        fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify an operation.");
-        fprintf(f_type_error, "%c", f_string_eol);
+        fprintf(f_type_error, "%c", f_string_eol[0]);
       }
 
       status = F_status_set_error(F_parameter);

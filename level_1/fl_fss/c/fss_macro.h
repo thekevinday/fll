@@ -209,7 +209,7 @@ extern "C" {
 
 #ifndef _di_fl_macro_fss_object_seek_till_newline_
   #define fl_macro_fss_object_seek_till_newline(buffer, location, delimits, eos_status, stop_status) \
-    while (buffer.string[location.start] != f_string_eol) { \
+    while (buffer.string[location.start] != f_string_eol[0]) { \
       location.start++; \
       if (location.start >= buffer.used) { \
         f_status macro_allocation_status = F_none; \
@@ -228,7 +228,7 @@ extern "C" {
 
 #ifndef _di_fl_macro_fss_object_delimited_seek_till_newline_
   #define fl_macro_fss_object_delimited_seek_till_newline(buffer, location, delimits, eos_status, stop_status) \
-    while (buffer.string[location.start] != f_string_eol) { \
+    while (buffer.string[location.start] != f_string_eol[0]) { \
       location.start++; \
       if (location.start >= buffer.used) { \
         f_status macro_allocation_status = F_none; \
@@ -259,7 +259,7 @@ extern "C" {
 
 #ifndef _di_fl_macro_fss_content_seek_till_newline_
   #define fl_macro_fss_content_seek_till_newline(buffer, location, found, delimits, eos_status, stop_status) \
-    while (buffer.string[location.start] != f_string_eol) { \
+    while (buffer.string[location.start] != f_string_eol[0]) { \
       location.start++; \
       if (location.start >= buffer.used) { \
         f_status macro_allocation_status = F_none; \
@@ -280,7 +280,7 @@ extern "C" {
 
 #ifndef _di_fl_macro_fss_content_delimited_seek_till_newline_
   #define fl_macro_fss_content_delimited_seek_till_newline(buffer, location, found, delimits, eos_status, stop_status) \
-    while (buffer.string[location.start] != f_string_eol) { \
+    while (buffer.string[location.start] != f_string_eol[0]) { \
       location.start++; \
       if (location.start >= buffer.used) { \
         f_status macro_allocation_status = F_none; \

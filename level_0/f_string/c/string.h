@@ -38,11 +38,11 @@ extern "C" {
  * FLL forbids '\r' and '\r\n' as end of line characters, \r will be silently ignored.
  */
 #ifndef _di_f_string_has_eol_
-  #define f_string_eol '\n'
+  #define f_string_eol "\n"
 #endif // _di_f_string_has_eol_
 
 #ifndef _di_f_string_has_placeholder_
-  #define f_string_placeholder '\0'
+  #define f_string_placeholder "\0"
 #endif // _di_f_string_has_placeholder_
 
 #ifndef _di_string_format_pointers_

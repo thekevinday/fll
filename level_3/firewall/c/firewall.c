@@ -25,26 +25,26 @@ extern "C" {
       fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging.");
     #endif // _en_firewall_debug_
 
-    printf("%c%c", f_string_eol, f_string_eol);
+    printf("%c%c", f_string_eol[0], f_string_eol[0]);
     fl_color_print(f_type_output, context.important, context.reset, " Available Commands: ");
 
-    printf("%c  ", f_string_eol);
+    printf("%c  ", f_string_eol[0]);
     fl_color_print(f_type_output, context.standout, context.reset, firewall_command_start);
     printf("    Turn on the firewall");
 
-    printf("%c  ", f_string_eol);
+    printf("%c  ", f_string_eol[0]);
     fl_color_print(f_type_output, context.standout, context.reset, firewall_command_stop);
     printf("     Turn off the firewall");
 
-    printf("%c  ", f_string_eol);
+    printf("%c  ", f_string_eol[0]);
     fl_color_print(f_type_output, context.standout, context.reset, firewall_command_restart);
     printf("  Turn off and then turn on the firewall");
 
-    printf("%c  ", f_string_eol);
+    printf("%c  ", f_string_eol[0]);
     fl_color_print(f_type_output, context.standout, context.reset, firewall_command_lock);
     printf("     Prevent all communication");
 
-    printf("%c  ", f_string_eol);
+    printf("%c  ", f_string_eol[0]);
     fl_color_print(f_type_output, context.standout, context.reset, firewall_command_show);
     printf("     Show active firewall settings");
 

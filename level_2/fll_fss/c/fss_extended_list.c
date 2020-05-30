@@ -148,7 +148,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
         }
 
-        buffer->string[buffer->used] = f_string_eol;
+        buffer->string[buffer->used] = f_string_eol[0];
         buffer->used++;
       }
     }
