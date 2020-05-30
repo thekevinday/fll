@@ -1191,6 +1191,29 @@ extern "C" {
 #endif // _di_fl_string_dynamic_terminate_
 
 /**
+ * Guarantee that an end of string (NULL) exists at the end of the string.
+ *
+ * This ensures that the terminating NULL not only exists but is not counted in destination.used.
+ *
+ * This is intended to be used for anything requiring NULL terminated strings whose used length cannot be counted.
+ * This will reallocate more space if necessary.
+ *
+ * If destination size is 0, then it will be reallocated and have the NULL assigned at index 0.
+ *
+ * @param destination
+ *   The new string, which will be allocated or reallocated as necessary.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_string_too_large (with error bit) if string is too large to fit into the buffer.
+ */
+#ifndef _di_fl_string_dynamic_terminate_after_
+  extern f_return_status fl_string_dynamic_terminate_after(f_string_dynamic *destination);
+#endif // _di_fl_string_dynamic_terminate_after_
+
+/**
  * Append the source string onto the destination with the glue in between.
  *
  * If the destination string is empty, then no glue is appended.

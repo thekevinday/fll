@@ -5,7 +5,7 @@ This file contains FLL-wide todo notes.
   In which case, the language can be hardcoded in as a single language.
   Later versions after this first locale support will then consider supporting multiple languages not necessarily compiled in.
 
-- Create an fss simple content type (such that data->contents.array[at].start can be used instead of data->contents.array[at].array[0].start).
+- Consider creating an fss simple content type (such that data->contents.array[at].start can be used instead of data->contents.array[at].array[0].start).
 
 - FSS needs to allow escaping of comments, "\# " would escape a comment, every backslash after that would be literal.
 
@@ -29,11 +29,9 @@ This file contains FLL-wide todo notes.
 - implement the "data" unit that using the metric system more appropriately, such that a data is a single byte.
   1 megadata in base 10 is (10^6)*8 = # of bits, and 1 megadata in base 16 s (16^6)*8 = # of bits.
 
-- console processing code needs to ignore unknown codes (namely, negative/positive numbes like: -3 or +4) (do not consider these parameters).
+- console processing code needs to ignore unknown codes (namely, negative/positive numbers like: -3 or +4) (do not consider these parameters).
 
-- rename f_not_equal_to to f_equal_to_not (and do similar changes).
-
-- Research/Implement optimizaton by using pointers to reduce the complecity of processing multi-depth structures, such as fss_nest:
+- Research/Implement optimizaton by using pointers to reduce the complexity of processing multi-depth structures, such as fss_nest:
   this:
     nests->array[nests->used].array[index].array[0] = xxx;
   could become:
@@ -104,3 +102,8 @@ Go though all source code and ensure that, for all non-exceptional cases, any dy
 Then document this behavior.
 
 The status code processing code are all out of alphabetic order and need cleanup.
+
+Go back through all existing f_file and f_directory code, updating return codes and respective documentation.
+Update f_utf_file and create a f_utf_directory?
+
+Remove empty projects and cleanup private functions.

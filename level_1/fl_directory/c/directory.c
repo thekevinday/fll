@@ -7,37 +7,187 @@ extern "C" {
 
 #ifndef _di_fl_directory_clone_
   f_return_status fl_directory_clone(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
-    f_status status = F_none;
+    f_status status = f_directory_exists(source);
 
-    status = f_directory_exists(source);
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory);
 
-    const f_string_static static_source = { source, source_length, source_length };
-    const f_string_static static_destination = { destination, destination_length, destination_length };
+    struct stat source_stat;
 
-    status = private_fl_directory_clone(static_source, static_destination, role, size_block, exclusive, failures);
+    memset(&source_stat, 0, sizeof(struct stat));
 
-    return F_none;
+    status = f_file_stat(source, F_false, &source_stat);
+    if (F_status_is_error(status)) return status;
+
+    status = f_directory_exists(destination);
+    if (F_status_is_error(status)) return status;
+
+    if (status == F_true) {
+      if (exclusive) {
+        return F_status_set_error(F_directory_found);
+      }
+
+      status = f_file_change_mode(destination, source_stat.st_mode);
+      if (F_status_is_error(status)) return status;
+    }
+    else {
+      status = f_directory_create(destination, source_stat.st_mode);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (role) {
+      status = f_file_change_owner(destination, source_stat.st_uid, source_stat.st_gid, F_true);
+      if (F_status_is_error(status)) return status;
+    }
+
+    f_string_static static_source = { source, source_length, source_length };
+    f_string_static static_destination = { destination, destination_length, destination_length };
+
+    // do not allow null termination or trailing path separators in the string's length calculation.
+    {
+      f_string_length i = source_length;
+
+      for (; i > 0; i--, static_source.used--) {
+        if (source[i - 1] == 0) continue;
+        if (source[i - 1] == f_path_separator[0]) continue;
+        break;
+      } // for
+
+      i = destination_length;
+
+      for (; i > 0; i--, static_destination.used--) {
+        if (destination[i - 1] == 0) continue;
+        if (destination[i - 1] == f_path_separator[0]) continue;
+        break;
+      } // for
+    }
+
+    return private_fl_directory_clone(static_source, static_destination, role, size_block, exclusive, failures);
   }
 #endif // _di_fl_directory_clone_
 
-#ifndef _di_fl_directory_copy_
-  f_return_status fl_directory_copy(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
-    f_status status = F_none;
+#ifndef _di_fl_directory_clone_content_
+  f_return_status fl_directory_clone_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+    f_status status = f_directory_exists(source);
 
-    status = f_directory_exists(source);
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory);
 
-    const f_string_static static_source = { source, source_length, source_length };
-    const f_string_static static_destination = { destination, destination_length, destination_length };
+    status = f_directory_exists(destination);
+    if (F_status_is_error(status)) return status;
+    if (status == F_false) return F_status_set_error(F_directory);
 
-    status = private_fl_directory_copy(static_source, static_destination, mode, size_block, exclusive, failures);
+    f_string_static static_source = { source, source_length, source_length };
+    f_string_static static_destination = { destination, destination_length, destination_length };
 
-    return F_none;
+    // do not allow null termination or trailing path separators in the string's length calculation.
+    {
+      f_string_length i = source_length;
+
+      for (; i > 0; i--, static_source.used--) {
+        if (source[i - 1] == 0) continue;
+        if (source[i - 1] == f_path_separator[0]) continue;
+        break;
+      } // for
+
+      i = destination_length;
+
+      for (; i > 0; i--, static_destination.used--) {
+        if (destination[i - 1] == 0) continue;
+        if (destination[i - 1] == f_path_separator[0]) continue;
+        break;
+      } // for
+    }
+
+    return private_fl_directory_clone(static_source, static_destination, role, size_block, exclusive, failures);
+  }
+#endif // _di_fl_directory_clone_content_
+
+#ifndef _di_fl_directory_copy_
+  f_return_status fl_directory_copy(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+    f_status status = f_directory_exists(source);
+
+    if (F_status_is_error(status)) return status;
+    if (status == F_false) return F_status_set_error(F_directory);
+
+    status = f_directory_exists(destination);
+    if (F_status_is_error(status)) return status;
+
+    if (status == F_true) {
+      if (exclusive) {
+        return F_status_set_error(F_directory_found);
+      }
+
+      status = f_file_change_mode(destination, mode.directory);
+      if (F_status_is_error(status)) return status;
+    }
+    else {
+      status = f_directory_create(destination, mode.directory);
+      if (F_status_is_error(status)) return status;
+    }
+
+    f_string_static static_source = { source, source_length, source_length };
+    f_string_static static_destination = { destination, destination_length, destination_length };
+
+    // do not allow null termination or trailing path separators in the string's length calculation.
+    {
+      f_string_length i = source_length;
+
+      for (; i > 0; i--, static_source.used--) {
+        if (source[i - 1] == 0) continue;
+        if (source[i - 1] == f_path_separator[0]) continue;
+        break;
+      } // for
+
+      i = destination_length;
+
+      for (; i > 0; i--, static_destination.used--) {
+        if (destination[i - 1] == 0) continue;
+        if (destination[i - 1] == f_path_separator[0]) continue;
+        break;
+      } // for
+    }
+
+    return private_fl_directory_copy(static_source, static_destination, mode, size_block, exclusive, failures);
   }
 #endif // _di_fl_directory_copy_
+
+#ifndef _di_fl_directory_copy_content_
+  f_return_status fl_directory_copy_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
+    f_status status = f_directory_exists(source);
+
+    if (F_status_is_error(status)) return status;
+    if (status == F_false) return F_status_set_error(F_directory);
+
+    status = f_directory_exists(destination);
+    if (F_status_is_error(status)) return status;
+    if (status == F_false) return F_status_set_error(F_directory);
+
+    f_string_static static_source = { source, source_length, source_length };
+    f_string_static static_destination = { destination, destination_length, destination_length };
+
+    // do not allow null termination or trailing path separators in the string's length calculation.
+    {
+      f_string_length i = source_length;
+
+      for (; i > 0; i--, static_source.used--) {
+        if (source[i - 1] == 0) continue;
+        if (source[i - 1] == f_path_separator[0]) continue;
+        break;
+      } // for
+
+      i = destination_length;
+
+      for (; i > 0; i--, static_destination.used--) {
+        if (destination[i - 1] == 0) continue;
+        if (destination[i - 1] == f_path_separator[0]) continue;
+        break;
+      } // for
+    }
+
+    return private_fl_directory_copy(static_source, static_destination, mode, size_block, exclusive, failures);
+  }
+#endif // _di_fl_directory_copy_content_
 
 #ifndef _di_fl_directory_list_
   f_return_status fl_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing *listing) {
@@ -48,19 +198,6 @@ extern "C" {
     return private_fl_directory_list(path, filter, sort, dereference, listing);
   }
 #endif // _di_fl_directory_list_
-
-#ifndef _di_fl_directory_list_at_
-  f_return_status fl_directory_list_at(const int at_id, const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing *listing) {
-    #ifndef _di_level_2_parameter_checking_
-      if (listing == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_2_parameter_checking_
-
-    // @todo implement a directoy list that passes at_id to scandirat().
-    // but... DIR * appears to be needed, can I just instead pass the path string instead? (char *).
-
-    return private_fl_directory_list(path, filter, sort, dereference, listing);
-  }
-#endif // _di_fl_directory_list_at_
 
 #ifndef _di_fl_directory_path_pop_
   f_return_status fl_directory_path_pop(f_string_static *path) {

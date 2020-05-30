@@ -1062,6 +1062,38 @@ extern "C" {
   }
 #endif // _di_fl_string_dynamic_terminate_
 
+#ifndef _di_fl_string_dynamic_terminate_after_
+  f_return_status fl_string_dynamic_terminate_after(f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return F_status_set_error(F_parameter);
+      if (destination->used > destination->size) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (destination->used > 0) {
+      for (f_string_length i = destination->used; i > 0; i--, destination->used--) {
+        if (destination->string[i] == 0) continue;
+        break;
+      } // for
+    }
+
+    if (destination->used + 1 > f_string_length_size) return F_status_set_error(F_string_too_large);
+
+    const f_string_length total = destination->used + 1;
+
+    if (total > destination->size) {
+      f_status status = F_none;
+
+      f_macro_string_dynamic_resize(status, (*destination), total);
+      if (F_status_is_error(status)) return status;
+    }
+
+    destination->string[destination->used] = 0;
+    destination->used = total - 1;
+
+    return F_none;
+  }
+#endif // _di_fl_string_dynamic_terminate_after_
+
 #ifndef _di_fl_string_mash_
   f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length length, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_

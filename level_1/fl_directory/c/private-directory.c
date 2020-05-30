@@ -7,39 +7,7 @@ extern "C" {
 
 #if !defined(_di_fl_directory_clone_)
   f_return_status private_fl_directory_clone(const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
-    f_status status = f_directory_exists(source.string);
-
-    if (F_status_is_error(status)) return status;
-    if (status == F_false) return F_status_set_error(F_directory);
-
-    struct stat source_stat;
-
-    memset(&source_stat, 0, sizeof(struct stat));
-
-    status = f_file_stat(source.string, F_false, &source_stat);
-    if (F_status_is_error(status)) return status;
-
-    status = f_directory_exists(destination.string);
-    if (F_status_is_error(status)) return status;
-
-    if (status == F_true) {
-      if (exclusive) {
-        return F_status_set_error(F_directory_found);
-      }
-
-      status = f_file_change_mode(destination.string, source_stat.st_mode);
-      if (F_status_is_error(status)) return status;
-    }
-    else {
-      status = f_directory_create(destination.string, source_stat.st_mode);
-      if (F_status_is_error(status)) return status;
-    }
-
-    if (role) {
-      status = f_file_change_owner(destination.string, source_stat.st_uid, source_stat.st_gid, F_true);
-      if (F_status_is_error(status)) return status;
-    }
-
+    f_status status = F_none;
     f_directory_listing listing = f_directory_listing_initialize;
 
     status = private_fl_directory_list(source.string, 0, 0, F_false, &listing);
@@ -118,6 +86,45 @@ extern "C" {
 
       source_sub.string = path_source_sub;
       destination_sub.string = path_destination_sub;
+
+      status = f_directory_exists(source_sub.string);
+      if (F_status_is_error(status)) break;
+
+      if (status == F_false) {
+        status = F_status_set_error(F_directory);
+        break;
+      }
+
+      {
+        struct stat source_stat;
+
+        memset(&source_stat, 0, sizeof(struct stat));
+
+        status = f_file_stat(source_sub.string, F_false, &source_stat);
+        if (F_status_is_error(status)) break;
+
+        status = f_directory_exists(destination_sub.string);
+        if (F_status_is_error(status)) break;
+
+        if (status == F_true) {
+          if (exclusive) {
+            status = F_status_set_error(F_directory_found);
+            break;
+          }
+
+          status = f_file_change_mode(destination_sub.string, source_stat.st_mode);
+          if (F_status_is_error(status)) break;
+        }
+        else {
+          status = f_directory_create(destination_sub.string, source_stat.st_mode);
+          if (F_status_is_error(status)) break;
+        }
+
+        if (role) {
+          status = f_file_change_owner(destination_sub.string, source_stat.st_uid, source_stat.st_gid, F_true);
+          if (F_status_is_error(status)) break;
+        }
+      }
 
       status = private_fl_directory_clone(source_sub, destination_sub, role, size_block, exclusive, failures);
     } // for
@@ -226,27 +233,7 @@ extern "C" {
 
 #if !defined(_di_fl_directory_copy_)
   f_return_status private_fl_directory_copy(const f_string_static source, const f_string_static destination, const f_directory_mode mode, const f_number_unsigned size_block, const bool exclusive, f_directory_statuss *failures) {
-    f_status status = f_directory_exists(source.string);
-
-    if (F_status_is_error(status)) return status;
-    if (status == F_false) return F_status_set_error(F_directory);
-
-    status = f_directory_exists(destination.string);
-    if (F_status_is_error(status)) return status;
-
-    if (status == F_true) {
-      if (exclusive) {
-        return F_status_set_error(F_directory_found);
-      }
-
-      status = f_file_change_mode(destination.string, mode.directory);
-      if (F_status_is_error(status)) return status;
-    }
-    else {
-      status = f_directory_create(destination.string, mode.directory);
-      if (F_status_is_error(status)) return status;
-    }
-
+    f_status status = F_none;
     f_directory_listing listing = f_directory_listing_initialize;
 
     status = private_fl_directory_list(source.string, 0, 0, F_false, &listing);
@@ -325,6 +312,31 @@ extern "C" {
 
       source_sub.string = path_source_sub;
       destination_sub.string = path_destination_sub;
+
+      status = f_directory_exists(source_sub.string);
+      if (F_status_is_error(status)) break;
+
+      if (status == F_false) {
+        status = F_status_set_error(F_directory);
+        break;
+      }
+
+      status = f_directory_exists(destination_sub.string);
+      if (F_status_is_error(status)) break;
+
+      if (status == F_true) {
+        if (exclusive) {
+          status = F_status_set_error(F_directory_found);
+          break;
+        }
+
+        status = f_file_change_mode(destination_sub.string, mode.directory);
+        if (F_status_is_error(status)) break;
+      }
+      else {
+        status = f_directory_create(destination_sub.string, mode.directory);
+        if (F_status_is_error(status)) break;
+      }
 
       status = private_fl_directory_copy(source_sub, destination_sub, mode, size_block, exclusive, failures);
     } // for

@@ -62,7 +62,6 @@ extern "C" {
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
  *   F_file_read (with error bit) on file read error.
  *   F_file_write (with error bit) on file write error.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *
  * @see fl_directory_clone()
  */
@@ -121,7 +120,6 @@ extern "C" {
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
  *   F_file_read (with error bit) on file read error.
  *   F_file_write (with error bit) on file write error.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *
  * @see fl_directory_clone()
  */
@@ -175,7 +173,6 @@ extern "C" {
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
  *   F_file_read (with error bit) on file read error.
  *   F_file_write (with error bit) on file write error.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *
  * @see fl_directory_copy()
  */
@@ -232,7 +229,6 @@ extern "C" {
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
  *   F_file_read (with error bit) on file read error.
  *   F_file_write (with error bit) on file write error.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *
  * @see fl_directory_copy()
  */
