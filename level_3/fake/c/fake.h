@@ -181,9 +181,9 @@ extern "C" {
 
 #ifndef _di_fake_build_language_
   enum {
-    fake_build_language_bash = 1,
-    fake_build_language_c,
-    fake_build_language_cpp,
+    fake_build_language_type_bash = 1,
+    fake_build_language_type_c,
+    fake_build_language_type_cpp,
   };
 
   #define fake_build_language_bash "bash"
