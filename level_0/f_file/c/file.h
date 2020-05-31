@@ -19,6 +19,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <libgen.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -1002,6 +1003,54 @@ extern "C" {
 #ifndef _di_f_file_is_at_
   extern f_return_status f_file_is_at(const int at_id, const f_string path, const int type, const bool follow);
 #endif // _di_f_file_is_at_
+
+/**
+ * Get the base name of a file path.
+ *
+ * @param path
+ *   The path file name.
+ *   Need not be NULL terminated.
+ * @param length
+ *   The length of the path string.
+ * @param name_base
+ *   The resulting base name as per basename().
+ *   The base name is appended onto this.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_string_too_large (with error bit) if string is too large to store in the buffer.
+ *
+ * @see basename()
+ */
+#ifndef _di_f_file_name_base_
+  extern f_return_status f_file_name_base(const f_string path, const f_string_length length, f_string_dynamic *name_base);
+#endif // _di_f_file_name_base_
+
+/**
+ * Get the directory name of a file path.
+ *
+ * @param path
+ *   The path file name.
+ *   Need not be NULL terminated.
+ * @param length
+ *   The length of the path string.
+ * @param name_directory
+ *   The resulting base name as per dirname().
+ *   The directory name is appended onto this.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_string_too_large (with error bit) if string is too large to store in the buffer.
+ *
+ * @see dirname()
+ */
+#ifndef _di_f_file_name_directory_
+  extern f_return_status f_file_name_directory(const f_string path, const f_string_length length, f_string_dynamic *name_directory);
+#endif // _di_f_file_name_directory_
 
 /**
  * Create a symbolic link to a file.

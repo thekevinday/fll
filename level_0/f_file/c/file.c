@@ -7,6 +7,10 @@ extern "C" {
 
 #ifndef _di_f_file_access_
   f_return_status f_file_access(const f_string path) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     if (access(path, F_OK)) {
       if (errno == ENOENT) return F_false;
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
@@ -26,12 +30,20 @@ extern "C" {
 
 #ifndef _di_f_file_change_mode_
   f_return_status f_file_change_mode(const f_string path, const mode_t mode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     return private_f_file_change_mode(path, mode);
   }
 #endif // _di_f_file_change_mode_
 
 #ifndef _di_f_file_change_mode_at_
   f_return_status f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     return private_f_file_change_mode_at(at_id, path, mode);
   }
 #endif // _di_f_file_change_mode_at_
@@ -39,6 +51,7 @@ extern "C" {
 #ifndef _di_f_file_change_owner_
   f_return_status f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) {
     #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
       if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
       if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -50,6 +63,7 @@ extern "C" {
 #ifndef _di_f_file_change_owner_at_
   f_return_status f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) {
     #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
       if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
       if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -60,6 +74,11 @@ extern "C" {
 
 #ifndef _di_f_file_clone_
   f_return_status f_file_clone(const f_string source, const f_string destination, const bool role, const f_number_unsigned size_block, const bool exclusive) {
+    #ifndef _di_level_0_parameter_checking_
+      if (source == 0) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     f_status status = F_none;
     struct stat source_stat;
 
@@ -120,6 +139,11 @@ extern "C" {
 
 #ifndef _di_f_file_copy_
   f_return_status f_file_copy(const f_string source, const f_string destination, const f_mode mode, const f_number_unsigned size_block, const bool exclusive) {
+    #ifndef _di_level_0_parameter_checking_
+      if (source == 0) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     f_status status = F_none;
     struct stat source_stat;
 
@@ -224,18 +248,31 @@ extern "C" {
 
 #ifndef _di_f_file_create_
   f_return_status f_file_create(const f_string path, const mode_t mode, const bool exclusive) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     return private_f_file_create(path, mode, exclusive);
   }
 #endif // _di_f_file_create_
 
 #ifndef _di_f_file_create_at_
   f_return_status f_file_create_at(const int at_id, const f_string path, const mode_t mode, const bool exclusive) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     return private_f_file_create_at(at_id, path, mode, exclusive);
   }
 #endif // _di_f_file_create_at_
 
 #ifndef _di_f_file_create_device_
   f_return_status f_file_create_device(const f_string path, const mode_t mode, const unsigned int major, const unsigned int minor) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+
     if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
       return F_status_set_error(F_unsupported);
     }
@@ -248,6 +285,10 @@ extern "C" {
 
 #ifndef _di_f_file_create_device_at_
   f_return_status f_file_create_device_at(const int at_id, const f_string path, const mode_t mode, const unsigned int major, const unsigned int minor) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
       return F_status_set_error(F_unsupported);
     }
@@ -260,18 +301,30 @@ extern "C" {
 
 #ifndef _di_f_file_create_fifo_
   f_return_status f_file_create_fifo(const f_string path, const mode_t mode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     return private_f_file_create_fifo(path, mode);
   }
 #endif // _di_f_file_create_fifo_
 
 #ifndef _di_f_file_create_fifo_at_
   f_return_status f_file_create_fifo_at(const int at_id, const f_string path, const mode_t mode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     return private_f_file_create_fifo_at(at_id, path, mode);
   }
 #endif // _di_f_file_create_fifo_at_
 
 #ifndef _di_f_file_create_node_
   f_return_status f_file_create_node(const f_string path, const mode_t mode, const dev_t device) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
       return F_status_set_error(F_unsupported);
     }
@@ -282,6 +335,10 @@ extern "C" {
 
 #ifndef _di_f_file_create_node_at_
   f_return_status f_file_create_node_at(const int at_id, const f_string path, const mode_t mode, const dev_t device) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
       return F_status_set_error(F_unsupported);
     }
@@ -292,6 +349,10 @@ extern "C" {
 
 #ifndef _di_f_file_exists_
   f_return_status f_file_exists(const f_string path) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -315,6 +376,10 @@ extern "C" {
 
 #ifndef _di_f_file_exists_at_
   f_return_status f_file_exists_at(const int at_id, const f_string path, const bool follow) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -345,18 +410,32 @@ extern "C" {
 
 #ifndef _di_f_file_link_
   f_return_status f_file_link(const f_string target, const f_string point) {
+    #ifndef _di_level_0_parameter_checking_
+      if (target == 0) return F_status_set_error(F_parameter);
+      if (point == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     return private_f_file_link(target, point);
   }
 #endif // _di_f_file_link_
 
 #ifndef _di_f_file_link_at_
   f_return_status f_file_link_at(const int at_id, const f_string target, const f_string point) {
+    #ifndef _di_level_0_parameter_checking_
+      if (target == 0) return F_status_set_error(F_parameter);
+      if (point == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     return private_f_file_link_at(at_id, target, point);
   }
 #endif // _di_f_file_link_at_
 
 #ifndef _di_f_file_link_hard_
   f_return_status f_file_link_hard(const f_string target, const f_string point) {
+    #ifndef _di_level_0_parameter_checking_
+      if (target == 0) return F_status_set_error(F_parameter);
+      if (point == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
     if (link(target, point) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -385,6 +464,10 @@ extern "C" {
 
 #ifndef _di_f_file_link_hard_at_
   f_return_status f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string target, const f_string point, const int flag) {
+    #ifndef _di_level_0_parameter_checking_
+      if (target == 0) return F_status_set_error(F_parameter);
+      if (point == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
     if (linkat(at_id_target, target, at_id_point, point, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -415,6 +498,7 @@ extern "C" {
 #ifndef _di_f_file_link_read_
   f_return_status f_file_link_read(const f_string path, const struct stat link_stat, f_string_dynamic *target) {
     #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
       if (link_stat.st_size == 0) return F_status_set_error(F_parameter);
       if (target == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -436,6 +520,10 @@ extern "C" {
 
 #ifndef _di_f_file_is_
   f_return_status f_file_is(const f_string path, const int type) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -461,6 +549,10 @@ extern "C" {
 
 #ifndef _di_f_file_is_at_
   f_return_status f_file_is_at(const int at_id, const f_string path, const int type, const bool follow) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -485,9 +577,82 @@ extern "C" {
   }
 #endif // _di_f_file_is_at_
 
+#ifndef _di_f_file_name_base_
+  f_return_status f_file_name_base(const f_string path, const f_string_length length, f_string_dynamic *name_base) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+      if (name_base == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    // POSIX basename() modifies the path, so protect it (and add a terminating NULL).
+    char path_argument[length + 1];
+    f_string path_to_name;
+
+    memcpy(path_argument, path, length);
+    path_argument[length] = 0;
+
+    path_to_name = basename(path_argument);
+
+    f_string_length size = strnlen(path_to_name, length);
+
+    if (name_base->used + size > name_base->size) {
+      if (name_base->used + size > f_string_length_size) {
+        return F_status_set_error(F_string_too_large);
+      }
+
+      f_status status = F_none;
+
+      f_macro_string_dynamic_resize(status, (*name_base), name_base->used + size);
+      if (F_status_is_error(status)) return status;
+    }
+
+    memcpy(name_base->string + name_base->used, path_to_name, size);
+    name_base->used += size;
+
+    return F_none;
+  }
+#endif // _di_f_file_name_base_
+
+#ifndef _di_f_file_name_directory_
+  f_return_status f_file_name_directory(const f_string path, const f_string_length length, f_string_dynamic *name_directory) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+      if (name_directory == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    // POSIX dirname() modifies the path, so protect it (and add a terminating NULL).
+    char path_argument[length + 1];
+    f_string path_to_name;
+
+    memcpy(path_argument, path, length);
+    path_argument[length] = 0;
+
+    path_to_name = dirname(path_argument);
+
+    f_string_length size = strnlen(path_to_name, length);
+
+    if (name_directory->used + size > name_directory->size) {
+      if (name_directory->used + size > f_string_length_size) {
+        return F_status_set_error(F_string_too_large);
+      }
+
+      f_status status = F_none;
+
+      f_macro_string_dynamic_resize(status, (*name_directory), name_directory->used + size);
+      if (F_status_is_error(status)) return status;
+    }
+
+    memcpy(name_directory->string + name_directory->used, path_to_name, size);
+    name_directory->used += size;
+
+    return F_none;
+  }
+#endif // _di_f_file_name_directory_
+
 #ifndef _di_f_file_open_
   f_return_status f_file_open(const f_string path, const mode_t mode, f_file *file) {
     #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
       if (file == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -668,6 +833,9 @@ extern "C" {
 
 #ifndef _di_f_file_remove_
   f_return_status f_file_remove(const f_string path) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
     if (unlink(path) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -692,6 +860,9 @@ extern "C" {
 
 #ifndef _di_f_file_remove_at_
   f_return_status f_file_remove_at(const int at_id, const f_string path, const int flag) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
     if (unlinkat(at_id, path, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -741,6 +912,7 @@ extern "C" {
 #ifndef _di_f_file_size_
   f_return_status f_file_size(const f_string path, const bool dereference, f_string_length *size) {
     #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
       if (size == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -761,6 +933,7 @@ extern "C" {
 #ifndef _di_f_file_size_at_
   f_return_status f_file_size_at(const int at_id, const f_string path, const bool dereference, f_string_length *size) {
     #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
       if (at_id <= 0) return F_status_set_error(F_parameter);
       if (size == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -803,6 +976,7 @@ extern "C" {
 #ifndef _di_f_file_stat_
   f_return_status f_file_stat(const f_string path, const bool dereference, struct stat *file_stat) {
     #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
       if (file_stat == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -813,6 +987,7 @@ extern "C" {
 #ifndef _di_f_file_stat_at_
   f_return_status f_file_stat_at(const int at_id, const f_string path, const int flag, struct stat *file_stat) {
     #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
       if (at_id <= 0) return F_status_set_error(F_parameter);
       if (file_stat == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
