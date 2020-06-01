@@ -29,15 +29,16 @@
  *     - shared/
  *     - static/
  *   - settings/
+ *   - stage/
  *
  * The "data/" directory contains all file data, such as firmware or files commonly found under /usr/share in a standard GNU Linux system.
- * The "data/" directory may also contain build-time data.
  * The "documents/" directory contains all documentation after any build-time processing.
  * The "libraries/" and "programs/" directories contains the sub-directories "script/", "shared/", and "static/".
  * The "libraries/" directory will contain compiled libraries or library-like scripts in their respective sub-directories.
  * The "objects/" directory will contain any compile object files.
  * The "progams/" directory will contain compiled programs or program-like scripts in their respective sub-directories.
  * The "settings/" directory contains all configuration data, such as files commonly found under /etc in a standard GNU Linux system.
+ * The "stage/" directory will contain build-time data.
  *
  * @todo this will eventually support fakefile, which is akin to makefile.
  *       All of the setting data will be loaded and available for a fakefile.
@@ -117,6 +118,7 @@ extern "C" {
   #define fake_path_part_settings  "settings"  f_path_separator
   #define fake_path_part_shared    "shared"    f_path_separator
   #define fake_path_part_sources   "sources"   f_path_separator
+  #define fake_path_part_stage     "stage"     f_path_separator
   #define fake_path_part_static    "static"    f_path_separator
 
   #define fake_path_part_bash_length      5
@@ -135,6 +137,7 @@ extern "C" {
   #define fake_path_part_settings_length  9
   #define fake_path_part_shared_length    7
   #define fake_path_part_sources_length   8
+  #define fake_path_part_stage_length     6
   #define fake_path_part_static_length    7
 #endif // _di_fake_path_
 
@@ -380,6 +383,7 @@ extern "C" {
     f_string_dynamic path_build_programs_shared;
     f_string_dynamic path_build_programs_static;
     f_string_dynamic path_build_settings;
+    f_string_dynamic path_build_stage;
 
     f_string_dynamic path_data;
     f_string_dynamic path_data_build;
@@ -423,6 +427,7 @@ extern "C" {
       fake_verbosity_normal, \
       f_string_dynamic_initialize, \
       f_string_dynamics_initialize, \
+      f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \

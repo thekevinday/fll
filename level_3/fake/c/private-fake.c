@@ -19,7 +19,7 @@ extern "C" {
       };
 
       const uint8_t parameters_length[] = {
-        7,
+        8,
         2,
         3,
       };
@@ -32,6 +32,7 @@ extern "C" {
         &data->path_build_process,
         &data->path_build_programs,
         &data->path_build_settings,
+        &data->path_build_stage,
       };
 
       f_string_dynamic *parameters_value_1[] = {
@@ -70,6 +71,7 @@ extern "C" {
         fake_path_part_process,
         fake_path_part_programs,
         fake_path_part_settings,
+        fake_path_part_stage,
         fake_path_part_build,
         fake_path_part_settings,
         fake_path_part_documents,
@@ -87,6 +89,7 @@ extern "C" {
         fake_path_part_process_length,
         fake_path_part_programs_length,
         fake_path_part_settings_length,
+        fake_path_part_stage_length,
         fake_path_part_build_length,
         fake_path_part_settings_length,
         fake_path_part_documents_length,
@@ -104,6 +107,7 @@ extern "C" {
         &data->path_build_process,
         &data->path_build_programs,
         &data->path_build_settings,
+        &data->path_build_stage,
         &data->path_data_build,
         &data->path_data_settings,
         &data->path_documents,
@@ -113,7 +117,7 @@ extern "C" {
         &data->path_sources_cpp,
       };
 
-      for (i = 0; i < 14; i++) {
+      for (i = 0; i < 15; i++) {
         status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
@@ -366,6 +370,7 @@ extern "C" {
         &data->path_build_programs_shared,
         &data->path_build_programs_static,
         &data->path_build_settings,
+        &data->path_build_stage,
         &data->path_data_build,
         &data->path_data_settings,
         &data->path_licenses,
@@ -387,7 +392,7 @@ extern "C" {
         &data->file_documents_readme,
       };
 
-      for (i = 0; i < 32; i++) {
+      for (i = 0; i < 33; i++) {
         if (parameters_value[i]->used == 0) continue;
 
         status = fl_string_dynamic_terminate(parameters_value[i]);

@@ -207,6 +207,70 @@ extern "C" {
   #define fake_build_setting_bool_no_length  2
 #endif // _di_fake_build_setting_
 
+#ifndef _di_fake_build_stage_
+  typedef struct {
+    f_string_dynamic file_libraries_shared;
+    f_string_dynamic file_libraries_static;
+    f_string_dynamic file_objects_static;
+    f_string_dynamic file_process_post;
+    f_string_dynamic file_process_pre;
+    f_string_dynamic file_programs_shared;
+    f_string_dynamic file_programs_static;
+    f_string_dynamic file_skeleton;
+    f_string_dynamic file_sources_headers;
+    f_string_dynamic file_sources_settings;
+  } fake_build_stage;
+
+  #define fake_build_stage_initialize { \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+  }
+
+  #define fake_build_stage_total 10
+
+  #define fake_macro_build_stage_delete_simple(stage) \
+    f_macro_string_dynamic_delete_simple(stage.file_libraries_shared) \
+    f_macro_string_dynamic_delete_simple(stage.file_libraries_static) \
+    f_macro_string_dynamic_delete_simple(stage.file_objects_static) \
+    f_macro_string_dynamic_delete_simple(stage.file_process_post) \
+    f_macro_string_dynamic_delete_simple(stage.file_process_pre) \
+    f_macro_string_dynamic_delete_simple(stage.file_programs_shared) \
+    f_macro_string_dynamic_delete_simple(stage.file_programs_static) \
+    f_macro_string_dynamic_delete_simple(stage.file_skeleton) \
+    f_macro_string_dynamic_delete_simple(stage.file_sources_headers) \
+    f_macro_string_dynamic_delete_simple(stage.file_sources_settings)
+
+  #define fake_build_stage_libraries_shared "libraries_shared.built"
+  #define fake_build_stage_libraries_static "libraries_static.built"
+  #define fake_build_stage_objects_static   "objects_static.built"
+  #define fake_build_stage_process_post     "process_post.built"
+  #define fake_build_stage_process_pre      "process_pre.built"
+  #define fake_build_stage_programs_shared  "programs_shared.built"
+  #define fake_build_stage_programs_static  "programs_static.built"
+  #define fake_build_stage_skeleton         "skeleton.built"
+  #define fake_build_stage_sources_headers  "sources_headers.built"
+  #define fake_build_stage_sources_settings "sources_settings.built"
+
+  #define fake_build_stage_libraries_shared_length 22
+  #define fake_build_stage_libraries_static_length 22
+  #define fake_build_stage_objects_static_length   20
+  #define fake_build_stage_process_post_length     18
+  #define fake_build_stage_process_pre_length      17
+  #define fake_build_stage_programs_shared_length  21
+  #define fake_build_stage_programs_static_length  21
+  #define fake_build_stage_skeleton_length         14
+  #define fake_build_stage_sources_headers_length  21
+  #define fake_build_stage_sources_settings_length 22
+#endif // _di_fake_build_stage_
+
 /**
  * Copy over the data settings files.
  *
@@ -300,6 +364,41 @@ extern "C" {
 #ifndef _di_fake_build_setting_load_
   extern f_return_status fake_build_setting_load(const fake_data data, fake_build_setting *settings) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_setting_load_
+
+/**
+ * Load the stage file paths.
+ *
+ * @param data
+ *   The program data.
+ * @param stage
+ *   All stage file paths.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_stage_load_
+  extern f_return_status fake_build_stage_load(const fake_data data, fake_build_stage *stage) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_stage_load_
+
+/**
+ * Touch the given build stage file, but only if there are no current errors in status.
+ *
+ * @param data
+ *   The program data.
+ * @param file
+ *   The file path to touch.
+ * @param mode
+ *   The file mode to use.
+ * @param status
+ *   The return status.
+ *   This gets updated if f_file_touch() is executed.
+ *
+ * @see f_file_touch()
+ */
+#ifndef _di_fake_build_touch_
+  extern void fake_build_touch(const fake_data data, const f_string_dynamic file, const f_mode mode, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_touch_
 
 #ifdef __cplusplus
 } // extern "C"

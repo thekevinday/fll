@@ -133,13 +133,14 @@ extern "C" {
       &data.path_build_programs_shared,
       &data.path_build_programs_static,
       &data.path_build_settings,
+      &data.path_build_stage,
     };
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%cCreating base build directories.%c", f_string_eol[0], f_string_eol[0]);
     }
 
-    for (uint8_t i = 0; i < 14; i++) {
+    for (uint8_t i = 0; i < 15; i++) {
       if (directorys[i]->used == 0) continue;
 
       status = f_directory_create(directorys[i]->string, mode);
@@ -505,69 +506,104 @@ extern "C" {
     }
 
     f_status status = F_none;
-    fake_build_setting setting = fake_build_setting_initialize;
-
-    status = fake_build_setting_load(data, &setting);
-
-    if (F_status_is_error(status)) {
-      fake_macro_build_settings_delete_simple(setting);
-      return status;
-    }
-
-    status = fake_build_execute_process_script(data, setting, setting.process_pre);
-    if (F_status_is_error(status)) {
-      fake_macro_build_settings_delete_simple(setting);
-      return status;
-    }
-
     f_mode mode = f_mode_initialize;
+
+    fake_build_setting setting = fake_build_setting_initialize;
+    fake_build_stage stage = fake_build_stage_initialize;
 
     f_macro_mode_set_default_umask(mode, data.umask);
 
-    status = fake_build_skeleton(data, setting, mode.directory);
-    if (F_status_is_error(status)) {
-      fake_macro_build_settings_delete_simple(setting);
-      return status;
+    status = fake_build_setting_load(data, &setting);
+
+    if (F_status_is_fine(status)) {
+      status = fake_build_stage_load(data, &stage);
     }
 
-    status = fake_build_copy(data, setting, mode, "source setting", data.path_data_settings, data.path_build_settings, setting.build_sources_setting);
-    if (F_status_is_error(status)) {
-      fake_macro_build_settings_delete_simple(setting);
-      return status;
+    if (F_status_is_fine(status) && f_file_exists(stage.file_skeleton.string) != F_true) {
+      status = fake_build_skeleton(data, setting, mode.directory);
+
+      fake_build_touch(data, stage.file_skeleton, mode, &status);
+    }
+
+    if (F_status_is_fine(status) && f_file_exists(stage.file_process_pre.string) != F_true) {
+      status = fake_build_execute_process_script(data, setting, setting.process_pre);
+
+      fake_build_touch(data, stage.file_process_pre, mode, &status);
+    }
+
+    if (F_status_is_fine(status) && f_file_exists(stage.file_sources_settings.string) != F_true) {
+      status = fake_build_copy(data, setting, mode, "setting files", data.path_data_settings, data.path_build_settings, setting.build_sources_setting);
+
+      fake_build_touch(data, stage.file_sources_settings, mode, &status);
     }
 
     if (setting.build_language == fake_build_language_type_bash) {
       // @todo
     }
-    else if (setting.build_language == fake_build_language_type_c) {
-      status = fake_build_copy(data, setting, mode, "header files", data.path_sources_c, data.path_build_includes, setting.build_sources_headers);
-      if (F_status_is_error(status)) {
-        fake_macro_build_settings_delete_simple(setting);
-        return status;
+    else {
+      const f_string_dynamic *path_sources = 0;
+
+      if (setting.build_language == fake_build_language_type_c) {
+        path_sources = &data.path_sources_c;
       }
-    }
-    else if (setting.build_language == fake_build_language_type_cpp) {
-      status = fake_build_copy(data, setting, mode, "header files", data.path_sources_cpp, data.path_build_includes, setting.build_sources_headers);
-      if (F_status_is_error(status)) {
-        fake_macro_build_settings_delete_simple(setting);
-        return status;
+      else if (setting.build_language == fake_build_language_type_cpp) {
+        path_sources = &data.path_sources_cpp;
+      }
+
+      if (F_status_is_fine(status) && f_file_exists(stage.file_sources_headers.string) != F_true) {
+        status = fake_build_copy(data, setting, mode, "header files", *path_sources, data.path_build_includes, setting.build_sources_headers);
+
+        fake_build_touch(data, stage.file_sources_headers, mode, &status);
+      }
+
+      if (setting.build_shared) {
+        if (F_status_is_fine(status) && f_file_exists(stage.file_libraries_shared.string) != F_true) {
+          // @todo
+          //status = fake_build_libraries_shared();
+
+          fake_build_touch(data, stage.file_libraries_shared, mode, &status);
+        }
+
+        if (F_status_is_fine(status) && f_file_exists(stage.file_programs_shared.string) != F_true) {
+          // @todo
+          //status = fake_build_programs_shared();
+
+          fake_build_touch(data, stage.file_programs_shared, mode, &status);
+        }
+      }
+
+      if (setting.build_static) {
+        if (F_status_is_fine(status) && f_file_exists(stage.file_objects_static.string) != F_true) {
+          // @todo
+          //status = fake_build_objects_static();
+
+          fake_build_touch(data, stage.file_objects_static, mode, &status);
+        }
+
+        if (F_status_is_fine(status) && f_file_exists(stage.file_libraries_static.string) != F_true) {
+          // @todo
+          //status = fake_build_libraries_static();
+
+          fake_build_touch(data, stage.file_libraries_static, mode, &status);
+        }
+
+        if (F_status_is_fine(status) && f_file_exists(stage.file_programs_static.string) != F_true) {
+          // @todo
+          //status = fake_build_programs_static();
+
+          fake_build_touch(data, stage.file_programs_static, mode, &status);
+        }
       }
     }
 
-    // @todo: may have to process all data intended to be used in parameters, exploding them into console parameters.
-    // Steps:
-    // 1) copy sources setting to build setting. done.
-    // 2) copy sources headers to build headers. done.
-    // 3) if shared=yes and library sources exist, compile shared libraries and make links.
-    // 4) if shared=yes and program sources exist, compile shared programs.
-    // 5) if static=yes and library sources exist, compile static objects.
-    // 6) if static=yes and library sources exist, link static objects into static library (appending objects to path for static programs to compile against).
-    // 7) if static=yes and program sources exist, compile static programs (include any static objects).
-    // 8) touch build file designating that build fully completed.
+    if (F_status_is_fine(status) && f_file_exists(stage.file_process_post.string) != F_true) {
+      status = fake_build_execute_process_script(data, setting, setting.process_post);
 
-    status = fake_build_execute_process_script(data, setting, setting.process_post);
+      fake_build_touch(data, stage.file_process_post, mode, &status);
+    }
 
     fake_macro_build_settings_delete_simple(setting);
+    fake_macro_build_stage_delete_simple(stage);
 
     return status;
   }
@@ -1093,6 +1129,85 @@ extern "C" {
     return status;
   }
 #endif // _di_fake_build_setting_load_
+
+#ifndef _di_fake_build_stage_load_
+  f_return_status fake_build_stage_load(const fake_data data, fake_build_stage *stage) {
+    f_status status = F_none;
+
+    const f_string names[] = {
+      fake_build_stage_libraries_shared,
+      fake_build_stage_libraries_static,
+      fake_build_stage_objects_static,
+      fake_build_stage_process_post,
+      fake_build_stage_process_pre,
+      fake_build_stage_programs_shared,
+      fake_build_stage_programs_static,
+      fake_build_stage_skeleton,
+      fake_build_stage_sources_headers,
+      fake_build_stage_sources_settings,
+    };
+
+    const f_string_length lengths[] = {
+      fake_build_stage_libraries_shared_length,
+      fake_build_stage_libraries_static_length,
+      fake_build_stage_objects_static_length,
+      fake_build_stage_process_post_length,
+      fake_build_stage_process_pre_length,
+      fake_build_stage_programs_shared_length,
+      fake_build_stage_programs_static_length,
+      fake_build_stage_skeleton_length,
+      fake_build_stage_sources_headers_length,
+      fake_build_stage_sources_settings_length,
+    };
+
+    f_string_dynamic *values[] = {
+      &stage->file_libraries_shared,
+      &stage->file_libraries_static,
+      &stage->file_objects_static,
+      &stage->file_process_post,
+      &stage->file_process_pre,
+      &stage->file_programs_shared,
+      &stage->file_programs_static,
+      &stage->file_skeleton,
+      &stage->file_sources_headers,
+      &stage->file_sources_settings,
+    };
+
+    for (uint8_t i = 0; i < fake_build_stage_total; i++) {
+      status = fl_string_dynamic_append_nulless(data.path_build_stage, values[i]);
+      if (F_status_is_error(status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
+        break;
+      }
+
+      status = fl_string_append_nulless(names[i], lengths[i], values[i]);
+      if (F_status_is_error(status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
+        break;
+      }
+
+      status = fl_string_dynamic_terminate(values[i]);
+      if (F_status_is_error(status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+        break;
+      }
+    } // for
+
+    return status;
+  }
+#endif // _di_fake_build_stage_load_
+
+#ifndef _di_fake_build_touch_
+  void fake_build_touch(const fake_data data, const f_string_dynamic file, const f_mode mode, f_status *status) {
+    if (F_status_is_fine(*status)) {
+      *status = f_file_touch(file.string, mode.regular, F_false);
+
+      if (F_status_is_error(*status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_file_touch", F_true);
+      }
+    }
+  }
+#endif // _di_fake_build_touch_
 
 #ifdef __cplusplus
 } // extern "C"
