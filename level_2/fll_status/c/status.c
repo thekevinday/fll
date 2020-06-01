@@ -536,6 +536,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_search, length, FL_status_string_search_length) == F_equal_to) {
+        *code = F_search;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_space_not, length, FL_status_string_space_not_length) == F_equal_to) {
         *code = F_space_not;
         return F_none;

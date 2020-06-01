@@ -573,7 +573,7 @@ extern "C" {
 #endif // _di_f_file_copy_
 
 /**
- * Create a file based on the given path and file mode.
+ * Create a (regular) file based on the given path and file mode.
  *
  * The file will not be open after calling this.
  *
@@ -612,7 +612,7 @@ extern "C" {
 #endif // _di_f_file_create_
 
 /**
- * Create a file based on the given path and file mode.
+ * Create a (regular) file based on the given path and file mode.
  *
  * The file will not be open after calling this.
  *
@@ -902,7 +902,7 @@ extern "C" {
  * @param path
  *   The path file name.
  * @param flag
- *   Additional flag to pass, such as AT_EACCESS or AT_SYMLINK_NOFOLLOW.
+ *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
  *
  * @return
  *   F_true if file exists.
@@ -919,7 +919,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_exists_at_
-  extern f_return_status f_file_exists_at(const int at_id, const f_string path, const bool follow);
+  extern f_return_status f_file_exists_at(const int at_id, const f_string path, const int flag);
 #endif // _di_f_file_exists_at_
 
 /**
@@ -982,9 +982,8 @@ extern "C" {
  *   The path file name.
  * @param type
  *   The type of the file
- * @param follow
- *   Set to TRUE to follow symbolic links when determining if path is a file.
- *   Set to FALSE to not follow.
+ * @param flag
+ *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
  *
  * @return
  *   F_true if path was found and path is type.
@@ -1001,7 +1000,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_is_at_
-  extern f_return_status f_file_is_at(const int at_id, const f_string path, const int type, const bool follow);
+  extern f_return_status f_file_is_at(const int at_id, const f_string path, const int type, const int flag);
 #endif // _di_f_file_is_at_
 
 /**
@@ -1708,6 +1707,89 @@ extern "C" {
 #ifndef _di_f_file_write_
   extern f_return_status f_file_write(const f_file file, const f_string_dynamic buffer, f_string_length *written);
 #endif // _di_f_file_write_
+
+/**
+ * Update the files access and modification timestamp, creating the file if it does not already exist.
+ *
+ * When the file is created, it is created as a regular file.
+ *
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to use when (regular) file is created.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_loop (with error bit) on loop error.
+ *   F_name (with error bit) on path name error.
+ *   F_file_found (with error bit) if a file aleady exists at the path.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
+ *   F_read_only (with error bit) if filesystem is read-only.
+ *   F_search (with error bit) if search permission is denied for one of the paths to the file.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_file_open_max (with error bit) when system-wide max open files is reached.
+ *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see utimensat()
+ */
+#ifndef _di_f_file_touch_
+  extern f_return_status f_file_touch(const f_string path, const mode_t mode, const bool dereference);
+#endif // _di_f_file_touch_
+
+/**
+ * Update the files access and modification timestamp, creating the file if it does not already exist.
+ *
+ * When the file is created, it is created as a regular file.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to use when (regular) file is created.
+ * @param flag
+ *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_loop (with error bit) on loop error.
+ *   F_name (with error bit) on path name error.
+ *   F_file_found (with error bit) if a file aleady exists at the path (when calling utimensat()).
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
+ *   F_read_only (with error bit) if filesystem is read-only.
+ *   F_search (with error bit) if search permission is denied for one of the paths to the file.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_file_open_max (with error bit) when system-wide max open files is reached.
+ *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see utimensat()
+ */
+#ifndef _di_f_file_touch_at_
+  extern f_return_status f_file_touch_at(const int at_id, const f_string path, const mode_t mode, const int flag);
+#endif // _di_f_file_touch_at_
 
 /**
  * Write until a single block is filled or entire buffer is written.

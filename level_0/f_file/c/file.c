@@ -353,21 +353,17 @@ extern "C" {
       if (path == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    f_status status = F_none;
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
 
-    if (stat(path, &file_stat) < 0) {
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
-      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == ENOENT) return F_false;
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
+    status = private_f_file_stat(path, F_false, &file_stat);
 
-      return F_status_set_error(F_file_stat);
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_file_found_not) return F_false;
+
+      return status;
     }
 
     return F_true;
@@ -375,27 +371,22 @@ extern "C" {
 #endif // _di_f_file_exists_
 
 #ifndef _di_f_file_exists_at_
-  f_return_status f_file_exists_at(const int at_id, const f_string path, const bool follow) {
+  f_return_status f_file_exists_at(const int at_id, const f_string path, const int flag) {
     #ifndef _di_level_0_parameter_checking_
       if (path == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    f_status status = F_none;
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
 
-    if (fstatat(at_id, path, &file_stat, follow ? 0 : AT_SYMLINK_NOFOLLOW) < 0) {
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
-      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == ENOENT) return F_file_found_not;
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+    status = private_f_file_stat_at(at_id, path, flag, &file_stat);
 
-      return F_status_set_error(F_file_stat);
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_file_found_not) return F_false;
+
+      return status;
     }
 
     return F_true;
@@ -548,7 +539,7 @@ extern "C" {
 #endif // _di_f_file_is_
 
 #ifndef _di_f_file_is_at_
-  f_return_status f_file_is_at(const int at_id, const f_string path, const int type, const bool follow) {
+  f_return_status f_file_is_at(const int at_id, const f_string path, const int type, const int flag) {
     #ifndef _di_level_0_parameter_checking_
       if (path == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -557,7 +548,7 @@ extern "C" {
 
     memset(&file_stat, 0, sizeof(struct stat));
 
-    if (fstatat(at_id, path, &file_stat, follow ? 0 : AT_SYMLINK_NOFOLLOW) < 0) {
+    if (fstatat(at_id, path, &file_stat, flag) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
@@ -1006,6 +997,86 @@ extern "C" {
     return private_f_file_stat_by_id(id, file_stat);
   }
 #endif // _di_f_file_stat_by_id_
+
+#ifndef _di_f_file_touch_
+  f_return_status f_file_touch(const f_string path, const mode_t mode, const bool dereference) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status status = F_none;
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(struct stat));
+
+    status = private_f_file_stat(path, F_false, &file_stat);
+
+    if (F_status_set_fine(status) == F_file_found_not) {
+      return private_f_file_create(path, mode, dereference);
+    }
+    else if (F_status_is_error(status)) {
+      return status;
+    }
+
+    if (utimensat(f_file_at_current_working, path, 0, dereference ? 0 : f_file_at_symlink_follow_no) < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == ESRCH) return  F_status_set_error(F_search);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_file_touch_
+
+#ifndef _di_f_file_touch_at_
+  f_return_status f_file_touch_at(const int at_id, const f_string path, const mode_t mode, const int flag) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status status = F_none;
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(struct stat));
+
+    status = private_f_file_stat_at(at_id, path, flag, &file_stat);
+
+    if (F_status_set_fine(status) == F_file_found_not) {
+      return private_f_file_create_at(at_id, path, mode, F_false);
+    }
+    else if (F_status_is_error(status)) {
+      return status;
+    }
+
+    if (utimensat(at_id, path, 0, flag) < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == ESRCH) return  F_status_set_error(F_search);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_file_touch_at_
 
 #ifndef _di_f_file_write_
   f_return_status f_file_write(const f_file file, const f_string_dynamic buffer, f_string_length *written) {

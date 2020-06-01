@@ -131,7 +131,7 @@ extern "C" {
  * @param gid
  *   The new group id to use.
  * @param flag
- *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
  *
  * @return
  *   F_none on success.
@@ -780,10 +780,12 @@ extern "C" {
  *
  * @see f_file_copy()
  * @see f_file_stat()
+ * @see f_file_exists()
+ * @see f_file_touch()
  */
-#if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
+#if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_touch_)
   extern f_return_status private_f_file_stat(const f_string file_name, const bool dereference, struct stat *file_stat) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
+#endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_touch_)
 
 /**
  * Private implementation of f_file_close().
@@ -795,10 +797,9 @@ extern "C" {
  * @param file_name
  *   The name of the file.
  * @param flag
- *   Any valid flag, such as AT_EMPTY_PATH, AT_NO_AUTOMOUNT, or AT_SYMLINK_NO_FOLLOW.
+ *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
  * @param file_stat
  *   The statistics read.
- *
  *
  * @return
  *   F_none on success.
@@ -812,10 +813,12 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see f_file_stat_at()
+ * @see f_file_exists_at()
+ * @see f_file_touch_at()
  */
-#if !defined(_di_f_file_stat_at_)
+#if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
   extern f_return_status private_f_file_stat_at(const int at_id, const f_string file_name, const int flag, struct stat *file_stat) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_stat_at_)
+#endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
 
 /**
  * Private implementation of f_file_close().
