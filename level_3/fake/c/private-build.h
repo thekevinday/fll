@@ -16,13 +16,16 @@ extern "C" {
   typedef struct {
     uint8_t build_language;
 
+    bool build_script;
     bool build_shared;
     bool build_static;
 
     f_string_dynamic path_language;
     f_string_dynamic path_headers;
+    f_string_dynamic path_library_script;
     f_string_dynamic path_library_shared;
     f_string_dynamic path_library_static;
+    f_string_dynamic path_program_script;
     f_string_dynamic path_program_shared;
     f_string_dynamic path_program_static;
     f_string_dynamic process_post;
@@ -40,7 +43,7 @@ extern "C" {
     f_string_dynamics build_sources_library;
     f_string_dynamics build_sources_program;
     f_string_dynamics build_sources_setting;
-    f_string_dynamics build_sources_shell;
+    f_string_dynamics build_sources_script;
     f_string_dynamics defines_all;
     f_string_dynamics defines_shared;
     f_string_dynamics defines_static;
@@ -58,6 +61,9 @@ extern "C" {
     0, \
     F_true, \
     F_true, \
+    F_true, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
@@ -92,50 +98,53 @@ extern "C" {
     f_string_dynamics_initialize, \
   }
 
-  #define fake_macro_build_settings_delete_simple(settings) \
-    f_macro_string_dynamic_delete_simple(settings.path_headers) \
-    f_macro_string_dynamic_delete_simple(settings.path_language) \
-    f_macro_string_dynamic_delete_simple(settings.path_library_shared) \
-    f_macro_string_dynamic_delete_simple(settings.path_library_static) \
-    f_macro_string_dynamic_delete_simple(settings.path_program_shared) \
-    f_macro_string_dynamic_delete_simple(settings.path_program_static) \
-    f_macro_string_dynamic_delete_simple(settings.process_post) \
-    f_macro_string_dynamic_delete_simple(settings.process_pre) \
-    f_macro_string_dynamic_delete_simple(settings.project_level) \
-    f_macro_string_dynamic_delete_simple(settings.project_name) \
-    f_macro_string_dynamic_delete_simple(settings.version_major) \
-    f_macro_string_dynamic_delete_simple(settings.version_micro) \
-    f_macro_string_dynamic_delete_simple(settings.version_minor) \
-    f_macro_string_dynamics_delete_simple(settings.build_compiler) \
-    f_macro_string_dynamics_delete_simple(settings.build_libraries) \
-    f_macro_string_dynamics_delete_simple(settings.build_linker) \
-    f_macro_string_dynamics_delete_simple(settings.build_sources_headers) \
-    f_macro_string_dynamics_delete_simple(settings.build_sources_library) \
-    f_macro_string_dynamics_delete_simple(settings.build_sources_program) \
-    f_macro_string_dynamics_delete_simple(settings.build_sources_setting) \
-    f_macro_string_dynamics_delete_simple(settings.build_sources_shell) \
-    f_macro_string_dynamics_delete_simple(settings.defines_all) \
-    f_macro_string_dynamics_delete_simple(settings.defines_shared) \
-    f_macro_string_dynamics_delete_simple(settings.defines_static) \
-    f_macro_string_dynamics_delete_simple(settings.environment) \
-    f_macro_string_dynamics_delete_simple(settings.flags_all) \
-    f_macro_string_dynamics_delete_simple(settings.flags_library) \
-    f_macro_string_dynamics_delete_simple(settings.flags_program) \
-    f_macro_string_dynamics_delete_simple(settings.flags_shared) \
-    f_macro_string_dynamics_delete_simple(settings.flags_static) \
-    f_macro_string_dynamics_delete_simple(settings.modes) \
-    f_macro_string_dynamics_delete_simple(settings.modes_default)
+  #define fake_macro_build_settings_delete_simple(setting) \
+    f_macro_string_dynamic_delete_simple(setting.path_headers) \
+    f_macro_string_dynamic_delete_simple(setting.path_language) \
+    f_macro_string_dynamic_delete_simple(setting.path_library_script) \
+    f_macro_string_dynamic_delete_simple(setting.path_library_shared) \
+    f_macro_string_dynamic_delete_simple(setting.path_library_static) \
+    f_macro_string_dynamic_delete_simple(setting.path_program_script) \
+    f_macro_string_dynamic_delete_simple(setting.path_program_shared) \
+    f_macro_string_dynamic_delete_simple(setting.path_program_static) \
+    f_macro_string_dynamic_delete_simple(setting.process_post) \
+    f_macro_string_dynamic_delete_simple(setting.process_pre) \
+    f_macro_string_dynamic_delete_simple(setting.project_level) \
+    f_macro_string_dynamic_delete_simple(setting.project_name) \
+    f_macro_string_dynamic_delete_simple(setting.version_major) \
+    f_macro_string_dynamic_delete_simple(setting.version_micro) \
+    f_macro_string_dynamic_delete_simple(setting.version_minor) \
+    f_macro_string_dynamics_delete_simple(setting.build_compiler) \
+    f_macro_string_dynamics_delete_simple(setting.build_libraries) \
+    f_macro_string_dynamics_delete_simple(setting.build_linker) \
+    f_macro_string_dynamics_delete_simple(setting.build_sources_headers) \
+    f_macro_string_dynamics_delete_simple(setting.build_sources_library) \
+    f_macro_string_dynamics_delete_simple(setting.build_sources_program) \
+    f_macro_string_dynamics_delete_simple(setting.build_sources_setting) \
+    f_macro_string_dynamics_delete_simple(setting.build_sources_script) \
+    f_macro_string_dynamics_delete_simple(setting.defines_all) \
+    f_macro_string_dynamics_delete_simple(setting.defines_shared) \
+    f_macro_string_dynamics_delete_simple(setting.defines_static) \
+    f_macro_string_dynamics_delete_simple(setting.environment) \
+    f_macro_string_dynamics_delete_simple(setting.flags_all) \
+    f_macro_string_dynamics_delete_simple(setting.flags_library) \
+    f_macro_string_dynamics_delete_simple(setting.flags_program) \
+    f_macro_string_dynamics_delete_simple(setting.flags_shared) \
+    f_macro_string_dynamics_delete_simple(setting.flags_static) \
+    f_macro_string_dynamics_delete_simple(setting.modes) \
+    f_macro_string_dynamics_delete_simple(setting.modes_default)
 
   #define fake_build_setting_name_build_compiler         "build_compiler"
   #define fake_build_setting_name_build_language         "build_language"
   #define fake_build_setting_name_build_libraries        "build_libraries"
   #define fake_build_setting_name_build_linker           "build_linker"
+  #define fake_build_setting_name_build_script           "build_script"
   #define fake_build_setting_name_build_shared           "build_shared"
   #define fake_build_setting_name_build_sources_headers  "build_sources_headers"
   #define fake_build_setting_name_build_sources_library  "build_sources_library"
   #define fake_build_setting_name_build_sources_program  "build_sources_program"
   #define fake_build_setting_name_build_sources_settings "build_sources_setting"
-  #define fake_build_setting_name_build_sources_shell    "build_sources_shell"
+  #define fake_build_setting_name_build_sources_script   "build_sources_script"
   #define fake_build_setting_name_build_static           "build_static"
   #define fake_build_setting_name_defines_all            "defines_all"
   #define fake_build_setting_name_defines_shared         "defines_shared"
@@ -150,8 +159,10 @@ extern "C" {
   #define fake_build_setting_name_modes_default          "modes_default"
   #define fake_build_setting_name_path_language          "path_language"
   #define fake_build_setting_name_path_headers           "path_headers"
+  #define fake_build_setting_name_path_library_script    "path_library_script"
   #define fake_build_setting_name_path_library_shared    "path_library_shared"
   #define fake_build_setting_name_path_library_static    "path_library_static"
+  #define fake_build_setting_name_path_program_script    "path_program_script"
   #define fake_build_setting_name_path_program_shared    "path_program_shared"
   #define fake_build_setting_name_path_program_static    "path_program_static"
   #define fake_build_setting_name_process_post           "process_post"
@@ -166,12 +177,13 @@ extern "C" {
   #define fake_build_setting_name_build_language_length         14
   #define fake_build_setting_name_build_libraries_length        15
   #define fake_build_setting_name_build_linker_length           12
+  #define fake_build_setting_name_build_script_length           12
   #define fake_build_setting_name_build_shared_length           12
   #define fake_build_setting_name_build_sources_headers_length  21
   #define fake_build_setting_name_build_sources_library_length  21
   #define fake_build_setting_name_build_sources_program_length  21
   #define fake_build_setting_name_build_sources_settings_length 22
-  #define fake_build_setting_name_build_sources_shell_length    19
+  #define fake_build_setting_name_build_sources_script_length   20
   #define fake_build_setting_name_build_static_length           12
   #define fake_build_setting_name_environment_length            11
   #define fake_build_setting_name_defines_all_length            11
@@ -186,8 +198,10 @@ extern "C" {
   #define fake_build_setting_name_modes_default_length          13
   #define fake_build_setting_name_path_language_length          13
   #define fake_build_setting_name_path_headers_length           12
+  #define fake_build_setting_name_path_library_script_length    19
   #define fake_build_setting_name_path_library_shared_length    19
   #define fake_build_setting_name_path_library_static_length    19
+  #define fake_build_setting_name_path_program_script_length    19
   #define fake_build_setting_name_path_program_shared_length    19
   #define fake_build_setting_name_path_program_static_length    19
   #define fake_build_setting_name_process_post_length           12
@@ -198,7 +212,7 @@ extern "C" {
   #define fake_build_setting_name_version_micro_length          13
   #define fake_build_setting_name_version_minor_length          13
 
-  #define fake_build_setting_total 35
+  #define fake_build_setting_total 38
 
   #define fake_build_setting_bool_yes "yes"
   #define fake_build_setting_bool_no  "no"
@@ -209,15 +223,18 @@ extern "C" {
 
 #ifndef _di_fake_build_stage_
   typedef struct {
+    f_string_dynamic file_libraries_script;
     f_string_dynamic file_libraries_shared;
     f_string_dynamic file_libraries_static;
     f_string_dynamic file_objects_static;
     f_string_dynamic file_process_post;
     f_string_dynamic file_process_pre;
+    f_string_dynamic file_programs_script;
     f_string_dynamic file_programs_shared;
     f_string_dynamic file_programs_static;
     f_string_dynamic file_skeleton;
     f_string_dynamic file_sources_headers;
+    f_string_dynamic file_sources_script;
     f_string_dynamic file_sources_settings;
   } fake_build_stage;
 
@@ -232,52 +249,62 @@ extern "C" {
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
   }
 
-  #define fake_build_stage_total 10
+  #define fake_build_stage_total 13
 
   #define fake_macro_build_stage_delete_simple(stage) \
+    f_macro_string_dynamic_delete_simple(stage.file_libraries_script) \
     f_macro_string_dynamic_delete_simple(stage.file_libraries_shared) \
     f_macro_string_dynamic_delete_simple(stage.file_libraries_static) \
     f_macro_string_dynamic_delete_simple(stage.file_objects_static) \
     f_macro_string_dynamic_delete_simple(stage.file_process_post) \
     f_macro_string_dynamic_delete_simple(stage.file_process_pre) \
+    f_macro_string_dynamic_delete_simple(stage.file_programs_script) \
     f_macro_string_dynamic_delete_simple(stage.file_programs_shared) \
     f_macro_string_dynamic_delete_simple(stage.file_programs_static) \
     f_macro_string_dynamic_delete_simple(stage.file_skeleton) \
     f_macro_string_dynamic_delete_simple(stage.file_sources_headers) \
+    f_macro_string_dynamic_delete_simple(stage.file_sources_script) \
     f_macro_string_dynamic_delete_simple(stage.file_sources_settings)
 
+  #define fake_build_stage_libraries_script "libraries_script.built"
   #define fake_build_stage_libraries_shared "libraries_shared.built"
   #define fake_build_stage_libraries_static "libraries_static.built"
   #define fake_build_stage_objects_static   "objects_static.built"
   #define fake_build_stage_process_post     "process_post.built"
   #define fake_build_stage_process_pre      "process_pre.built"
+  #define fake_build_stage_programs_script  "programs_script.built"
   #define fake_build_stage_programs_shared  "programs_shared.built"
   #define fake_build_stage_programs_static  "programs_static.built"
   #define fake_build_stage_skeleton         "skeleton.built"
   #define fake_build_stage_sources_headers  "sources_headers.built"
+  #define fake_build_stage_sources_script   "sources_script.built"
   #define fake_build_stage_sources_settings "sources_settings.built"
 
+  #define fake_build_stage_libraries_script_length 22
   #define fake_build_stage_libraries_shared_length 22
   #define fake_build_stage_libraries_static_length 22
   #define fake_build_stage_objects_static_length   20
   #define fake_build_stage_process_post_length     18
   #define fake_build_stage_process_pre_length      17
+  #define fake_build_stage_programs_script_length  21
   #define fake_build_stage_programs_shared_length  21
   #define fake_build_stage_programs_static_length  21
   #define fake_build_stage_skeleton_length         14
   #define fake_build_stage_sources_headers_length  21
+  #define fake_build_stage_sources_script_length   20
   #define fake_build_stage_sources_settings_length 22
 #endif // _di_fake_build_stage_
 
 /**
- * Copy over the data settings files.
+ * Copy over the data setting files.
  *
  * @param data
  *   The program data.
- * @param settings
- *   All build related settings data from the build settings file.
  * @param mode
  *   The modes for each file type.
  * @param label
@@ -288,13 +315,17 @@ extern "C" {
  *   The specific build path to copy to.
  * @param files
  *   The files to copy from source to destination.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
  *
  * @return
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_copy_
-  extern f_return_status fake_build_copy(const fake_data data, const fake_build_setting settings, const f_mode mode, const f_string label, const f_string_static source, const f_string_static destination, const f_string_statics files) f_gcc_attribute_visibility_internal;
+  extern void fake_build_copy(const fake_data data, const f_mode mode, const f_string label, const f_string_static source, const f_string_static destination, const f_string_statics files, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_copy_
 
 /**
@@ -302,17 +333,21 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param settings
- *   All build related settings data from the build settings file.
+ * @param setting
+ *   All build related setting data from the build setting file.
  * @param mode
  *   The directory mode.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
  *
  * @return
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_skeleton_
-  extern f_return_status fake_build_skeleton(const fake_data data, const fake_build_setting settings, const mode_t mode) f_gcc_attribute_visibility_internal;
+  extern void fake_build_skeleton(const fake_data data, const fake_build_setting setting, const mode_t mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_skeleton_
 
 /**
@@ -320,19 +355,111 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param settings
- *   All build related settings data from the build settings file.
+ * @param setting
+ *   All build related setting data from the build setting file.
  * @param process_script
  *   The setting_data file name fo the appropriate process script.
- *   This is expected to be either settings.process_pre or settings.process_post.
+ *   This is expected to be either setting.process_pre or setting.process_post.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
  *
  * @return
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_execute_process_script_
-  extern f_return_status fake_build_execute_process_script(const fake_data data, const fake_build_setting settings, const f_string_static process_script) f_gcc_attribute_visibility_internal;
+  extern void fake_build_execute_process_script(const fake_data data, const fake_build_setting setting, const f_string_static process_script, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_execute_process_script_
+
+/**
+ * Build the script libraries.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   All build related setting data from the build setting file.
+ * @param mode
+ *   The file mode.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_libraries_script_
+  extern void fake_build_libraries_script(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_libraries_script_
+
+/**
+ * Build the shared libraries.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   All build related setting data from the build setting file.
+ * @param mode
+ *   The file mode.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_libraries_shared_
+  extern void fake_build_libraries_shared(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_libraries_shared_
+
+/**
+ * Build the static libraries.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   All build related setting data from the build setting file.
+ * @param mode
+ *   The file mode.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_libraries_static_
+  extern void fake_build_libraries_static(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_libraries_static_
+
+/**
+ * Build the static objects.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   All build related setting data from the build setting file.
+ * @param mode
+ *   The file mode.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_objects_static_
+  extern void fake_build_objects_static(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_objects_static_
 
 /**
  * Execute the build operation.
@@ -349,20 +476,88 @@ extern "C" {
 #endif // _di_fake_build_operate_
 
 /**
- * Find the build settings file, load it, validate it, and process it.
+ * Build the script programs.
  *
  * @param data
  *   The program data.
- * @param settings
- *   All build related settings data from the build settings file are loaded into this.
- *   These settings will have any specified mode property applied.
+ * @param setting
+ *   All build related setting data from the build setting file.
+ * @param mode
+ *   The file mode.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_programs_script_
+  extern void fake_build_programs_script(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_programs_script_
+
+/**
+ * Build the shared programs.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   All build related setting data from the build setting file.
+ * @param mode
+ *   The file mode.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_programs_shared_
+  extern void fake_build_programs_shared(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_programs_shared_
+
+/**
+ * Build the static programs.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   All build related setting data from the build setting file.
+ * @param mode
+ *   The file mode.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_programs_static_
+  extern void fake_build_programs_static(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_programs_static_
+
+/**
+ * Find the build setting file, load it, validate it, and process it.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   All build related setting data from the build setting file are loaded into this.
+ *   These setting will have any specified mode property applied.
+ * @param status
+ *   The return status.
  *
  * @return
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_setting_load_
-  extern f_return_status fake_build_setting_load(const fake_data data, fake_build_setting *settings) f_gcc_attribute_visibility_internal;
+  extern void fake_build_setting_load(const fake_data data, fake_build_setting *setting, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_setting_load_
 
 /**
@@ -372,13 +567,15 @@ extern "C" {
  *   The program data.
  * @param stage
  *   All stage file paths.
+ * @param status
+ *   The return status.
  *
  * @return
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_stage_load_
-  extern f_return_status fake_build_stage_load(const fake_data data, fake_build_stage *stage) f_gcc_attribute_visibility_internal;
+  extern void fake_build_stage_load(const fake_data data, fake_build_stage *stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_stage_load_
 
 /**
@@ -388,16 +585,13 @@ extern "C" {
  *   The program data.
  * @param file
  *   The file path to touch.
- * @param mode
- *   The file mode to use.
  * @param status
  *   The return status.
- *   This gets updated if f_file_touch() is executed.
  *
  * @see f_file_touch()
  */
 #ifndef _di_fake_build_touch_
-  extern void fake_build_touch(const fake_data data, const f_string_dynamic file, const f_mode mode, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_touch(const fake_data data, const f_string_dynamic file, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_touch_
 
 #ifdef __cplusplus

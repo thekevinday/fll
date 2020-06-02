@@ -21,7 +21,7 @@ extern "C" {
       const uint8_t parameters_length[] = {
         8,
         2,
-        3,
+        4,
       };
 
       f_string_dynamic *parameters_value_0[] = {
@@ -44,6 +44,7 @@ extern "C" {
         &data->path_sources_bash,
         &data->path_sources_c,
         &data->path_sources_cpp,
+        &data->path_sources_script,
       };
 
       f_string_dynamic **parameters_value[] = {
@@ -79,6 +80,7 @@ extern "C" {
         fake_path_part_bash,
         fake_path_part_c,
         fake_path_part_cpp,
+        fake_path_part_script,
       };
 
       const f_string_length parameters_length[] = {
@@ -97,6 +99,7 @@ extern "C" {
         fake_path_part_bash_length,
         fake_path_part_c_length,
         fake_path_part_cpp_length,
+        fake_path_part_script_length,
       };
 
       f_string_dynamic *parameters_value[] = {
@@ -115,9 +118,10 @@ extern "C" {
         &data->path_sources_bash,
         &data->path_sources_c,
         &data->path_sources_cpp,
+        &data->path_sources_script,
       };
 
-      for (i = 0; i < 15; i++) {
+      for (i = 0; i < 16; i++) {
         status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
@@ -377,6 +381,7 @@ extern "C" {
         &data->path_sources_bash,
         &data->path_sources_c,
         &data->path_sources_cpp,
+        &data->path_sources_script,
         &data->path_work_includes,
         &data->path_work_libraries,
         &data->path_work_libraries_script,
@@ -392,7 +397,7 @@ extern "C" {
         &data->file_documents_readme,
       };
 
-      for (i = 0; i < 33; i++) {
+      for (i = 0; i < 34; i++) {
         if (parameters_value[i]->used == 0) continue;
 
         status = fl_string_dynamic_terminate(parameters_value[i]);

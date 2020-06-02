@@ -397,6 +397,7 @@ extern "C" {
     f_string_dynamic path_sources_bash;
     f_string_dynamic path_sources_c;
     f_string_dynamic path_sources_cpp;
+    f_string_dynamic path_sources_script;
 
     f_string_dynamic path_work;
     f_string_dynamic path_work_includes;
@@ -427,6 +428,7 @@ extern "C" {
       fake_verbosity_normal, \
       f_string_dynamic_initialize, \
       f_string_dynamics_initialize, \
+      f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \

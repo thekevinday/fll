@@ -395,6 +395,7 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(data->path_sources_bash);
     f_macro_string_dynamic_delete_simple(data->path_sources_c);
     f_macro_string_dynamic_delete_simple(data->path_sources_cpp);
+    f_macro_string_dynamic_delete_simple(data->path_sources_script);
 
     f_macro_string_dynamic_delete_simple(data->path_work);
     f_macro_string_dynamic_delete_simple(data->path_work_includes);

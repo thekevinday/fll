@@ -28,14 +28,17 @@ build_libraries-monolithic -lfll
 build_sources_library fake.c private-fake.c private-clean.c private-build.c private-make.c private-print.c private-skeleton.c
 build_sources_program main.c
 build_sources_headers fake.h
+build_sources_script
 build_sources_setting
-build_sources_shell
+build_script yes
 build_shared yes
 build_static yes
 
 path_headers level_3
+path_library_script script
 path_library_shared shared
 path_library_static static
+path_poogram_script script
 path_poogram_shared shared
 path_poogram_static static
 
