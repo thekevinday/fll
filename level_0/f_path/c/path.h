@@ -34,6 +34,8 @@ extern "C" {
  * The path variable separator is intended to represent the path separator used in the PATH environment variable.
  * PATH="/bin:/usr/bin", the path variable separator is ':'.
  * The path variable separator must be a 1-byte wide character.
+ *
+ * The path extension separator is for the separator that separates the main part of a file path with its extension (which is generally a '.').
  */
 #ifndef _di_f_path_defines_
   #define f_path_separator          "/"
@@ -41,6 +43,10 @@ extern "C" {
 
   #define f_path_separator_length          1
   #define f_path_separator_variable_length 1
+
+  #define f_path_extension_separator "."
+
+  #define f_path_extension_separator_length 1
 
   #define f_path_environment         "PATH"
   #define f_path_home_wildcard       "~"
