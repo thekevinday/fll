@@ -206,7 +206,22 @@ extern "C" {
 
     last_slash = strrchr(program_path, '/');
 
-    if (last_slash != 0) {
+    if (last_slash == 0) {
+      name_size = strnlen(program_path, f_path_max);
+
+      if (name_size > 1) {
+        f_macro_string_new(status, program_name, name_size + 1);
+
+        if (F_status_is_error(status)) return status;
+
+        memcpy(program_name, program_path, name_size);
+        memset(program_name, name_size, 0);
+      }
+      else {
+        name_size = 0;
+      }
+    }
+    else {
       name_size = strnlen(last_slash, f_path_max);
 
       if (name_size > 1) {
@@ -214,7 +229,7 @@ extern "C" {
 
         if (F_status_is_error(status)) return status;
 
-        memcpy(program_name, last_slash + 1, sizeof(f_string_length) * name_size);
+        memcpy(program_name, last_slash + 1, name_size);
         memset(program_name, name_size, 0);
       }
       else {
@@ -251,9 +266,21 @@ extern "C" {
 
     status = f_file_exists(program_path);
     if (F_status_is_error(status)) {
+      if (name_size > 0) f_macro_string_delete_simple(program_name, name_size);
+
+      for (f_string_length i = 0; i < arguments.used; i++) {
+        f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+      } // for
+
       return status;
     }
     else if (status == F_false) {
+      if (name_size > 0) f_macro_string_delete_simple(program_name, name_size);
+
+      for (f_string_length i = 0; i < arguments.used; i++) {
+        f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+      } // for
+
       return F_status_set_error(F_file_found_not);
     }
 
@@ -318,7 +345,22 @@ extern "C" {
 
     last_slash = strrchr(program_path, '/');
 
-    if (last_slash != 0) {
+    if (last_slash == 0) {
+      name_size = strnlen(program_path, f_path_max);
+
+      if (name_size > 1) {
+        f_macro_string_new(status, program_name, name_size + 1);
+
+        if (F_status_is_error(status)) return status;
+
+        memcpy(program_name, program_path, name_size);
+        memset(program_name, name_size, 0);
+      }
+      else {
+        name_size = 0;
+      }
+    }
+    else {
       name_size = strnlen(last_slash, f_path_max);
 
       if (name_size > 1) {
@@ -326,7 +368,7 @@ extern "C" {
 
         if (F_status_is_error(status)) return status;
 
-        memcpy(program_name, last_slash + 1, sizeof(f_string_length) * name_size);
+        memcpy(program_name, last_slash + 1, name_size);
         memset(program_name, name_size, 0);
       }
       else {
@@ -362,10 +404,23 @@ extern "C" {
     fixed_arguments[arguments.used + 2] = 0;
 
     status = f_file_exists(program_path);
+
     if (F_status_is_error(status)) {
+      if (name_size > 0) f_macro_string_delete_simple(program_name, name_size);
+
+      for (f_string_length i = 0; i < arguments.used; i++) {
+        f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+      } // for
+
       return status;
     }
     else if (status == F_false) {
+      if (name_size > 0) f_macro_string_delete_simple(program_name, name_size);
+
+      for (f_string_length i = 0; i < arguments.used; i++) {
+        f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+      } // for
+
       return F_status_set_error(F_file_found_not);
     }
 
