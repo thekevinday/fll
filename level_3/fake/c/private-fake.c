@@ -400,10 +400,10 @@ extern "C" {
       for (i = 0; i < 34; i++) {
         if (parameters_value[i]->used == 0) continue;
 
-        status = fl_string_dynamic_terminate(parameters_value[i]);
+        status = fl_string_dynamic_terminate_after(parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
           return status;
         }
       } // for

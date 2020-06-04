@@ -12,6 +12,22 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_build_environment_
+  typedef struct {
+    f_string_dynamics names;
+    f_string_dynamics values;
+  } fake_build_environment;
+
+  #define fake_build_environment_initialize { \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+  }
+
+  #define fake_macro_build_environment_delete_simple(environment) \
+    f_macro_string_dynamics_delete_simple(environment.names) \
+    f_macro_string_dynamics_delete_simple(environment.values)
+#endif // _di_fake_build_environment_
+
 #ifndef _di_fake_build_setting_
   typedef struct {
     uint8_t build_language;
@@ -20,6 +36,12 @@ extern "C" {
     bool build_shared;
     bool build_static;
 
+    bool search_exclusive;
+    bool search_shared;
+    bool search_static;
+
+    f_string_dynamic build_compiler;
+    f_string_dynamic build_linker;
     f_string_dynamic path_language;
     f_string_dynamic path_headers;
     f_string_dynamic path_library_script;
@@ -36,9 +58,7 @@ extern "C" {
     f_string_dynamic version_micro;
     f_string_dynamic version_minor;
 
-    f_string_dynamics build_compiler;
     f_string_dynamics build_libraries;
-    f_string_dynamics build_linker;
     f_string_dynamics build_sources_headers;
     f_string_dynamics build_sources_library;
     f_string_dynamics build_sources_program;
@@ -62,6 +82,9 @@ extern "C" {
     F_true, \
     F_true, \
     F_true, \
+    F_true, \
+    F_true, \
+    F_true, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
@@ -77,8 +100,8 @@ extern "C" {
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
+    f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
     f_string_dynamics_initialize, \
     f_string_dynamics_initialize, \
     f_string_dynamics_initialize, \
@@ -98,7 +121,9 @@ extern "C" {
     f_string_dynamics_initialize, \
   }
 
-  #define fake_macro_build_settings_delete_simple(setting) \
+  #define fake_macro_build_setting_delete_simple(setting) \
+    f_macro_string_dynamic_delete_simple(setting.build_compiler) \
+    f_macro_string_dynamic_delete_simple(setting.build_linker) \
     f_macro_string_dynamic_delete_simple(setting.path_headers) \
     f_macro_string_dynamic_delete_simple(setting.path_language) \
     f_macro_string_dynamic_delete_simple(setting.path_library_script) \
@@ -114,9 +139,7 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(setting.version_major) \
     f_macro_string_dynamic_delete_simple(setting.version_micro) \
     f_macro_string_dynamic_delete_simple(setting.version_minor) \
-    f_macro_string_dynamics_delete_simple(setting.build_compiler) \
     f_macro_string_dynamics_delete_simple(setting.build_libraries) \
-    f_macro_string_dynamics_delete_simple(setting.build_linker) \
     f_macro_string_dynamics_delete_simple(setting.build_sources_headers) \
     f_macro_string_dynamics_delete_simple(setting.build_sources_library) \
     f_macro_string_dynamics_delete_simple(setting.build_sources_program) \
@@ -169,6 +192,9 @@ extern "C" {
   #define fake_build_setting_name_process_pre            "process_pre"
   #define fake_build_setting_name_project_level          "project_level"
   #define fake_build_setting_name_project_name           "project_name"
+  #define fake_build_setting_name_search_exclusive       "search_exclusive"
+  #define fake_build_setting_name_search_shared          "search_shared"
+  #define fake_build_setting_name_search_static          "search_static"
   #define fake_build_setting_name_version_major          "version_major"
   #define fake_build_setting_name_version_micro          "version_micro"
   #define fake_build_setting_name_version_minor          "version_minor"
@@ -208,17 +234,24 @@ extern "C" {
   #define fake_build_setting_name_process_pre_length            11
   #define fake_build_setting_name_project_level_length          13
   #define fake_build_setting_name_project_name_length           12
+  #define fake_build_setting_name_search_exclusive_length       16
+  #define fake_build_setting_name_search_shared_length          13
+  #define fake_build_setting_name_search_static_length          13
   #define fake_build_setting_name_version_major_length          13
   #define fake_build_setting_name_version_micro_length          13
   #define fake_build_setting_name_version_minor_length          13
 
-  #define fake_build_setting_total 38
+  #define fake_build_setting_total 41
 
   #define fake_build_setting_bool_yes "yes"
   #define fake_build_setting_bool_no  "no"
 
   #define fake_build_setting_bool_yes_length 3
   #define fake_build_setting_bool_no_length  2
+
+  #define fake_build_setting_default_version "0"
+
+  #define fake_build_setting_default_version_length 1
 #endif // _di_fake_build_setting_
 
 #ifndef _di_fake_build_stage_
@@ -300,6 +333,44 @@ extern "C" {
   #define fake_build_stage_sources_settings_length 22
 #endif // _di_fake_build_stage_
 
+#ifndef _di_fake_build_data_
+  typedef struct {
+    fake_build_setting setting;
+    fake_build_environment environment;
+  } fake_build_data;
+
+  #define fake_build_data_initialize { \
+    fake_build_setting_initialize, \
+    fake_build_environment_initialize, \
+  }
+
+  #define fake_macro_build_data_delete_simple(build) \
+    fake_macro_build_setting_delete_simple(build.setting) \
+    fake_macro_build_environment_delete_simple(build.environment)
+#endif // _di_fake_build_data_
+
+#ifndef _di_fake_build_parameter_
+  #define fake_build_parameter_library_include       "-I"
+  #define fake_build_parameter_library_link_file     "-l"
+  #define fake_build_parameter_library_link_path     "-L"
+  #define fake_build_parameter_library_name_prefix   "lib"
+  #define fake_build_parameter_library_name_suffix   ".so."
+  #define fake_build_parameter_library_output        "-o"
+  #define fake_build_parameter_library_separator     "."
+  #define fake_build_parameter_library_shared        "-shared"
+  #define fake_build_parameter_library_shared_prefix "-Wl,-soname,"
+
+  #define fake_build_parameter_library_include_length       2
+  #define fake_build_parameter_library_link_file_length     2
+  #define fake_build_parameter_library_link_path_length     2
+  #define fake_build_parameter_library_name_prefix_length   3
+  #define fake_build_parameter_library_name_suffix_length   4
+  #define fake_build_parameter_library_output_length        2
+  #define fake_build_parameter_library_separator_length     1
+  #define fake_build_parameter_library_shared_length        7
+  #define fake_build_parameter_library_shared_prefix_length 12
+#endif // _di_fake_build_parameter_
+
 /**
  * Copy over the data setting files.
  *
@@ -333,8 +404,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param setting
- *   All build related setting data from the build setting file.
+ * @param data_build
+ *   The build data.
  * @param mode
  *   The directory mode.
  * @param file_stage
@@ -347,7 +418,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_skeleton_
-  extern void fake_build_skeleton(const fake_data data, const fake_build_setting setting, const mode_t mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_skeleton(const fake_data data, const fake_build_data data_build, const mode_t mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_skeleton_
 
 /**
@@ -355,8 +426,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param setting
- *   All build related setting data from the build setting file.
+ * @param data_build
+ *   All build related data.
  * @param process_script
  *   The setting_data file name fo the appropriate process script.
  *   This is expected to be either setting.process_pre or setting.process_post.
@@ -370,16 +441,34 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_execute_process_script_
-  extern void fake_build_execute_process_script(const fake_data data, const fake_build_setting setting, const f_string_static process_script, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_execute_process_script(const fake_data data, const fake_build_data data_build, const f_string_static process_script, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_execute_process_script_
+
+/**
+ * Get the file name without the extension and without the path parts.
+ *
+ * @param data
+ *   The program data.
+ * @param path
+ *   The file path to get the file name from.
+ * @param name
+ *   The processed filename.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_get_file_name_without_extension_
+  extern f_return_status fake_build_get_file_name_without_extension(const fake_data data, const f_string_static path, f_string_dynamic *name);
+#endif // _di_fake_build_get_file_name_without_extension_
 
 /**
  * Build the script libraries.
  *
  * @param data
  *   The program data.
- * @param setting
- *   All build related setting data from the build setting file.
+ * @param data_build
+ *   All build related data.
  * @param mode
  *   The file mode.
  * @param file_stage
@@ -392,7 +481,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_libraries_script_
-  extern void fake_build_libraries_script(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_libraries_script(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_libraries_script_
 
 /**
@@ -400,8 +489,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param setting
- *   All build related setting data from the build setting file.
+ * @param data_build
+ *   All build related data.
  * @param mode
  *   The file mode.
  * @param file_stage
@@ -414,7 +503,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_libraries_shared_
-  extern void fake_build_libraries_shared(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_libraries_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_libraries_shared_
 
 /**
@@ -422,8 +511,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param setting
- *   All build related setting data from the build setting file.
+ * @param data_build
+ *   All build related data.
  * @param mode
  *   The file mode.
  * @param file_stage
@@ -436,16 +525,73 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_libraries_static_
-  extern void fake_build_libraries_static(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_libraries_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_libraries_static_
+
+/**
+ * Find the build setting file, load it, validate it, and process it.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   All build related setting data from the build setting file are loaded into this.
+ *   These setting will have any specified mode property applied.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_load_setting_
+  extern void fake_build_load_setting(const fake_data data, fake_build_setting *setting, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_load_setting_
+
+/**
+ * Load the environment used when executing commands.
+ *
+ * @param data
+ *   The program data.
+ * @param data_build
+ *   All build related data.
+ * @param environment
+ *   The environment data.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_load_environment_
+  extern void fake_build_load_environment(const fake_data data, const fake_build_data data_build, fake_build_environment *environment, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_load_environment_
+
+/**
+ * Load the stage file paths.
+ *
+ * @param data
+ *   The program data.
+ * @param stage
+ *   All stage file paths.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_load_stage_
+  extern void fake_build_load_stage(const fake_data data, fake_build_stage *stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_load_stage_
 
 /**
  * Build the static objects.
  *
  * @param data
  *   The program data.
- * @param setting
- *   All build related setting data from the build setting file.
+ * @param data_build
+ *   All build related data.
  * @param mode
  *   The file mode.
  * @param file_stage
@@ -458,7 +604,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_objects_static_
-  extern void fake_build_objects_static(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_objects_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_objects_static_
 
 /**
@@ -480,8 +626,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param setting
- *   All build related setting data from the build setting file.
+ * @param data_build
+ *   All build related data.
  * @param mode
  *   The file mode.
  * @param file_stage
@@ -494,7 +640,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_programs_script_
-  extern void fake_build_programs_script(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_programs_script(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_programs_script_
 
 /**
@@ -502,8 +648,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param setting
- *   All build related setting data from the build setting file.
+ * @param data_build
+ *   All build related data.
  * @param mode
  *   The file mode.
  * @param file_stage
@@ -516,7 +662,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_programs_shared_
-  extern void fake_build_programs_shared(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_programs_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_programs_shared_
 
 /**
@@ -524,8 +670,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param setting
- *   All build related setting data from the build setting file.
+ * @param data_build
+ *   All build related data.
  * @param mode
  *   The file mode.
  * @param file_stage
@@ -538,45 +684,8 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_programs_static_
-  extern void fake_build_programs_static(const fake_data data, const fake_build_setting setting, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_programs_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_programs_static_
-
-/**
- * Find the build setting file, load it, validate it, and process it.
- *
- * @param data
- *   The program data.
- * @param setting
- *   All build related setting data from the build setting file are loaded into this.
- *   These setting will have any specified mode property applied.
- * @param status
- *   The return status.
- *
- * @return
- *   F_none on success.
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_fake_build_setting_load_
-  extern void fake_build_setting_load(const fake_data data, fake_build_setting *setting, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_build_setting_load_
-
-/**
- * Load the stage file paths.
- *
- * @param data
- *   The program data.
- * @param stage
- *   All stage file paths.
- * @param status
- *   The return status.
- *
- * @return
- *   F_none on success.
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_fake_build_stage_load_
-  extern void fake_build_stage_load(const fake_data data, fake_build_stage *stage, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_build_stage_load_
 
 /**
  * Touch the given build stage file, but only if there are no current errors in status.

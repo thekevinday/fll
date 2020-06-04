@@ -226,12 +226,6 @@ extern "C" {
   #define fake_short_process_length  1
   #define fake_short_settings_length 1
 
-  #define fake_file_extension_built    ".built"
-  #define fake_file_extension_building ".building"
-
-  #define fake_file_extension_built_length    6
-  #define fake_file_extension_building_length 9
-
   #define fake_short_path_build   "b"
   #define fake_short_path_data    "D"
   #define fake_short_path_sources "S"
