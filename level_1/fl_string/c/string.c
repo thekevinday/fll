@@ -1070,8 +1070,8 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     if (destination->used > 0) {
-      for (f_string_length i = destination->used; i > 0; i--, destination->used--) {
-        if (destination->string[i] == 0) continue;
+      for (; destination->used > 0; destination->used--) {
+        if (destination->string[destination->used - 1] == 0) continue;
         break;
       } // for
     }
