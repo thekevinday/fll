@@ -54,4 +54,4 @@ flags_all -z now -g
 flags_shared
 flags_static
 flags_library -fPIC
-flags_program -fPIE -lfake
+flags_program -fPIE
