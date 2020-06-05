@@ -373,7 +373,6 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(data->path_build_libraries_shared);
     f_macro_string_dynamic_delete_simple(data->path_build_libraries_static);
     f_macro_string_dynamic_delete_simple(data->path_build_objects);
-    f_macro_string_dynamic_delete_simple(data->path_build_process);
     f_macro_string_dynamic_delete_simple(data->path_build_programs);
     f_macro_string_dynamic_delete_simple(data->path_build_programs_script);
     f_macro_string_dynamic_delete_simple(data->path_build_programs_shared);

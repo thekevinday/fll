@@ -350,25 +350,43 @@ extern "C" {
 #endif // _di_fake_build_data_
 
 #ifndef _di_fake_build_parameter_
-  #define fake_build_parameter_library_include       "-I"
-  #define fake_build_parameter_library_link_file     "-l"
-  #define fake_build_parameter_library_link_path     "-L"
-  #define fake_build_parameter_library_name_prefix   "lib"
-  #define fake_build_parameter_library_name_suffix   ".so."
-  #define fake_build_parameter_library_output        "-o"
-  #define fake_build_parameter_library_separator     "."
-  #define fake_build_parameter_library_shared        "-shared"
-  #define fake_build_parameter_library_shared_prefix "-Wl,-soname,"
+  #define fake_build_parameter_library_include            "-I"
+  #define fake_build_parameter_library_link_file          "-l"
+  #define fake_build_parameter_library_link_path          "-L"
+  #define fake_build_parameter_library_name_prefix        "lib"
+  #define fake_build_parameter_library_name_suffix_shared ".so."
+  #define fake_build_parameter_library_name_suffix_static ".a"
+  #define fake_build_parameter_library_output             "-o"
+  #define fake_build_parameter_library_separator          "."
+  #define fake_build_parameter_library_shared             "-shared"
+  #define fake_build_parameter_library_static             "-static"
+  #define fake_build_parameter_library_shared_prefix      "-Wl,-soname,"
 
-  #define fake_build_parameter_library_include_length       2
-  #define fake_build_parameter_library_link_file_length     2
-  #define fake_build_parameter_library_link_path_length     2
-  #define fake_build_parameter_library_name_prefix_length   3
-  #define fake_build_parameter_library_name_suffix_length   4
-  #define fake_build_parameter_library_output_length        2
-  #define fake_build_parameter_library_separator_length     1
-  #define fake_build_parameter_library_shared_length        7
-  #define fake_build_parameter_library_shared_prefix_length 12
+  #define fake_build_parameter_library_include_length            2
+  #define fake_build_parameter_library_link_file_length          2
+  #define fake_build_parameter_library_link_path_length          2
+  #define fake_build_parameter_library_name_prefix_length        3
+  #define fake_build_parameter_library_name_suffix_shared_length 4
+  #define fake_build_parameter_library_name_suffix_static_length 2
+  #define fake_build_parameter_library_output_length             2
+  #define fake_build_parameter_library_separator_length          1
+  #define fake_build_parameter_library_shared_length             7
+  #define fake_build_parameter_library_static_length             7
+  #define fake_build_parameter_library_shared_prefix_length      12
+
+  #define fake_build_parameter_object_compile     "-c"
+  #define fake_build_parameter_object_name_suffix ".o"
+  #define fake_build_parameter_object_output      "-o"
+  #define fake_build_parameter_object_static      "-static"
+
+  #define fake_build_parameter_object_compile_length     2
+  #define fake_build_parameter_object_name_suffix_length 2
+  #define fake_build_parameter_object_output_length      2
+  #define fake_build_parameter_object_static_length      7
+
+  #define fake_build_parameter_object_link_arguments "rcs"
+
+  #define fake_build_parameter_object_link_arguments_length 3
 #endif // _di_fake_build_parameter_
 
 /**
@@ -381,6 +399,9 @@ extern "C" {
  * @param is_shared
  *   Set to TRUE to designate that this is adding for a shared library/program.
  *   Set to FALSE to designate that this is adding for a static library/program.
+ * @param is_library
+ *   Set to TRUE to designate that this is adding for a library.
+ *   Set to FALSE to designate that this is adding for a program.
  * @param arguments
  *   The arguments array to append to.
  * @param status
@@ -389,7 +410,7 @@ extern "C" {
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_arguments_standard_add_
-  extern void fake_build_arguments_standard_add(const fake_data data, const fake_build_data data_build, const bool is_shared, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_arguments_standard_add(const fake_data data, const fake_build_data data_build, const bool is_shared, const bool is_library, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_arguments_standard_add_
 
 /**
@@ -419,6 +440,24 @@ extern "C" {
 #ifndef _di_fake_build_copy_
   extern void fake_build_copy(const fake_data data, const f_mode mode, const f_string label, const f_string_static source, const f_string_static destination, const f_string_statics files, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_copy_
+
+/**
+ * Execute the given command and arguments.
+ *
+ * Will print the command if in verbose mode.
+ *
+ * @param data
+ *   The program data.
+ * @param program
+ *   The program to be executed.
+ * @param arguments
+ *   The arguments to be passed to the program.
+ * @param status
+ *   The return status.
+ */
+#ifndef _di_fake_build_execute_
+  extern void fake_build_execute(const fake_data data, const fake_build_data data_build, const f_string_static program, const f_string_dynamics arguments, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_execute_
 
 /**
  * Create all of the base directories inside the build directory.

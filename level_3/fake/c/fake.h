@@ -371,7 +371,6 @@ extern "C" {
     f_string_dynamic path_build_libraries_shared;
     f_string_dynamic path_build_libraries_static;
     f_string_dynamic path_build_objects;
-    f_string_dynamic path_build_process;
     f_string_dynamic path_build_programs;
     f_string_dynamic path_build_programs_script;
     f_string_dynamic path_build_programs_shared;
@@ -422,7 +421,6 @@ extern "C" {
       fake_verbosity_normal, \
       f_string_dynamic_initialize, \
       f_string_dynamics_initialize, \
-      f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \

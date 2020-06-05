@@ -19,7 +19,7 @@ extern "C" {
       };
 
       const uint8_t parameters_length[] = {
-        8,
+        7,
         2,
         4,
       };
@@ -29,7 +29,6 @@ extern "C" {
         &data->path_build_includes,
         &data->path_build_libraries,
         &data->path_build_objects,
-        &data->path_build_process,
         &data->path_build_programs,
         &data->path_build_settings,
         &data->path_build_stage,
@@ -69,7 +68,6 @@ extern "C" {
         fake_path_part_includes,
         fake_path_part_libraries,
         fake_path_part_objects,
-        fake_path_part_process,
         fake_path_part_programs,
         fake_path_part_settings,
         fake_path_part_stage,
@@ -88,7 +86,6 @@ extern "C" {
         fake_path_part_includes_length,
         fake_path_part_libraries_length,
         fake_path_part_objects_length,
-        fake_path_part_process_length,
         fake_path_part_programs_length,
         fake_path_part_settings_length,
         fake_path_part_stage_length,
@@ -107,7 +104,6 @@ extern "C" {
         &data->path_build_includes,
         &data->path_build_libraries,
         &data->path_build_objects,
-        &data->path_build_process,
         &data->path_build_programs,
         &data->path_build_settings,
         &data->path_build_stage,
@@ -121,7 +117,7 @@ extern "C" {
         &data->path_sources_script,
       };
 
-      for (i = 0; i < 16; i++) {
+      for (i = 0; i < 15; i++) {
         status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
@@ -368,7 +364,6 @@ extern "C" {
         &data->path_build_libraries_shared,
         &data->path_build_libraries_static,
         &data->path_build_objects,
-        &data->path_build_process,
         &data->path_build_programs,
         &data->path_build_programs_script,
         &data->path_build_programs_shared,
@@ -397,7 +392,7 @@ extern "C" {
         &data->file_documents_readme,
       };
 
-      for (i = 0; i < 34; i++) {
+      for (i = 0; i < 33; i++) {
         if (parameters_value[i]->used == 0) continue;
 
         status = fl_string_dynamic_terminate_after(parameters_value[i]);
