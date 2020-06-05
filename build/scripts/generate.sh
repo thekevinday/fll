@@ -363,6 +363,7 @@ generate_operation_build(){
   local sources_bash=${variables[$(generate_id build_sources_bash)]}
   local sources_settings=${variables[$(generate_id build_sources_settings)]}
   local sources=
+  local links=
   local defines=${variables[$(generate_id defines_all)]}
   local defines_shared=${variables[$(generate_id defines_shared)]}
   local defines_static=${variables[$(generate_id defines_static)]}
@@ -511,8 +512,8 @@ generate_operation_build(){
         sources="$sources$path_c$i "
       done
 
-      echo $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $flags_all $arguments $flags_shared $flags_library
-      $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $flags_all $arguments $flags_shared $flags_library || failure=1
+      echo $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $arguments $flags_all $flags_shared $flags_library
+      $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $arguments $flags_all $flags_shared $flags_library || failure=1
 
       if [[ $failure == "" ]] ; then
         ln -vsf lib$name.so.$major.$minor.$micro ${path_build}libraries/shared/lib$name.so.$major || failure=1
@@ -522,18 +523,18 @@ generate_operation_build(){
 
     if [[ $failure == "" && $sources_program != "" ]] ; then
       sources=
+      links=
+
       if [[ $sources_library != "" ]] ; then
-        for i in $sources_library ; do
-          sources="$sources$path_c$i "
-        done
+        links="-l$name "
       fi
 
       for i in $sources_program ; do
         sources="$sources$path_c$i "
       done
 
-      echo $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $flags_all $arguments $flags_shared $flags_program
-      $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $flags_all $arguments $flags_shared $flags_program || failure=1
+      echo $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $arguments $flags_all $flags_shared $flags_program
+      $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $arguments $flags_all $flags_shared $flags_program || failure=1
     fi
   fi
 
@@ -554,8 +555,8 @@ generate_operation_build(){
 
         sources="$sources${path_build}objects/$i.o "
 
-        echo $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments_include $flags_all $arguments $flags_static $flags_library
-        $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments_include $flags_all $arguments $flags_static $flags_library || failure=1
+        echo $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments_include $arguments $flags_all $flags_static $flags_library
+        $compiler $path_c$i -c -static -o ${path_build}objects/$i.o $arguments_static $arguments_include $arguments $flags_all $flags_static $flags_library || failure=1
 
         if [[ $failure == "1" ]] ; then
           break;
@@ -570,18 +571,18 @@ generate_operation_build(){
 
     if [[ $failure == "" && $sources_program != "" ]] ; then
       sources=
+      links=
+
       if [[ $sources_library != "" ]] ; then
-        for i in $sources_library ; do
-          sources="$sources$path_c$i "
-        done
+        links="-l$name "
       fi
 
       for i in $sources_program ; do
         sources="$sources$path_c$i "
       done
 
-      echo $compiler -static -o ${path_build}programs/static/$name $sources $arguments_static $arguments_include $flags_all $arguments $flags_static $flags_program
-      $compiler -static -o ${path_build}programs/static/$name $sources $arguments_static $arguments_include $flags_all $arguments $flags_static $flags_program || failure=1
+      echo $compiler -static -o ${path_build}programs/static/$name $sources $arguments_static $arguments_include $links $arguments $flags_all $flags_static $flags_program
+      $compiler -static -o ${path_build}programs/static/$name $sources $arguments_static $arguments_include $links $arguments $flags_all $flags_static $flags_program || failure=1
     fi
   fi
 
