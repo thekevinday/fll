@@ -372,6 +372,27 @@ extern "C" {
 #endif // _di_fake_build_parameter_
 
 /**
+ * Add the standard arguments for building a library/program.
+ *
+ * @param data
+ *   The program data.
+ * @param data_build
+ *   The build data.
+ * @param is_shared
+ *   Set to TRUE to designate that this is adding for a shared library/program.
+ *   Set to FALSE to designate that this is adding for a static library/program.
+ * @param arguments
+ *   The arguments array to append to.
+ * @param status
+ *   The return status.
+ *
+ * @see fll_execute_arguments_add()
+ */
+#ifndef _di_fake_build_arguments_standard_add_
+  extern void fake_build_arguments_standard_add(const fake_data data, const fake_build_data data_build, const bool is_shared, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_arguments_standard_add_
+
+/**
  * Copy over the data setting files.
  *
  * @param data
