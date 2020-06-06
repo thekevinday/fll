@@ -25,6 +25,14 @@ extern "C" {
       status = f_directory_remove(data.path_build.string, f_directory_descriptors_max, F_true);
     }
 
+    if (F_status_set_fine(status) == F_file_found_not) {
+      if (data.verbosity == fake_verbosity_verbose) {
+        fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "The build directoy '%s' does not exist.", data.path_build.string);
+      }
+
+      status = F_none;
+    }
+
     if (F_status_is_error(status)) {
       fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "f_directory_remove", F_true);
       return status;

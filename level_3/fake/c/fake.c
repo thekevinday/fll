@@ -278,7 +278,7 @@ extern "C" {
 
         if (operations[i] == fake_operation_build) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, *data);
+            status = fake_validate_parameter_directories(arguments, *data, F_true);
             validate_parameter_directories = F_false;
           }
 
@@ -288,7 +288,7 @@ extern "C" {
         }
         else if (operations[i] == fake_operation_clean) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, *data);
+            status = fake_validate_parameter_directories(arguments, *data, F_false);
             validate_parameter_directories = F_false;
           }
 
@@ -298,7 +298,7 @@ extern "C" {
         }
         else if (operations[i] == fake_operation_make) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, *data);
+            status = fake_validate_parameter_directories(arguments, *data, F_true);
             validate_parameter_directories = F_false;
           }
 

@@ -707,7 +707,7 @@ extern "C" {
 #endif // _di_fake_process_console_parameters_
 
 #ifndef _di_fake_validate_directories_
-  f_return_status fake_validate_parameter_directories(const f_console_arguments arguments, const fake_data data) {
+  f_return_status fake_validate_parameter_directories(const f_console_arguments arguments, const fake_data data, const bool build_required) {
     const f_string parameters_name[] = {
       fake_long_path_build,
       fake_long_path_data,
@@ -737,7 +737,7 @@ extern "C" {
     };
 
     const bool parameters_required[] = {
-      F_true,
+      build_required,
       F_true,
       F_true,
       F_false,
