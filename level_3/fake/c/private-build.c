@@ -292,6 +292,13 @@ extern "C" {
       path_headers.used = directory_headers_length;
       path_headers.size = directory_headers_length + 1;
     }
+    else {
+      directory_headers[0] = 0;
+
+      path_headers.string = directory_headers;
+      path_headers.used = 0;
+      path_headers.size = directory_headers_length + 1;
+    }
 
     const f_string_static *directorys[] = {
       &data.path_build,
@@ -552,6 +559,7 @@ extern "C" {
 #ifndef _di_fake_build_libraries_shared_
   void fake_build_libraries_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
+    if (!data_build.setting.build_sources_library.used) return;
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%cCompiling shared library.%c", f_string_eol[0], f_string_eol[0]);
@@ -757,6 +765,7 @@ extern "C" {
 #ifndef _di_fake_build_libraries_static_
   void fake_build_libraries_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
+    if (!data_build.setting.build_sources_library.used) return;
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%cCompiling static library.%c", f_string_eol[0], f_string_eol[0]);
@@ -1843,6 +1852,7 @@ extern "C" {
 #ifndef _di_fake_build_objects_static_
   void fake_build_objects_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
+    if (!data_build.setting.build_sources_library.used) return;
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%cCompiling static objects.%c", f_string_eol[0], f_string_eol[0]);
@@ -1968,13 +1978,10 @@ extern "C" {
       }
     }
     else {
-      {
-        const f_string_static *path_sources = 0;
+      if (data_build.setting.build_sources_headers.used) {
+        const f_string_static *path_sources = &data.path_sources_c;
 
-        if (data_build.setting.build_language == fake_build_language_type_c) {
-          path_sources = &data.path_sources_c;
-        }
-        else if (data_build.setting.build_language == fake_build_language_type_cpp) {
+        if (data_build.setting.build_language == fake_build_language_type_cpp) {
           path_sources = &data.path_sources_cpp;
         }
 
@@ -1986,6 +1993,15 @@ extern "C" {
         if (data_build.setting.path_headers.used > 0) {
           memcpy(directory_headers, data.path_build_includes.string, data.path_build_includes.used);
           memcpy(directory_headers + data.path_build_includes.used, data_build.setting.path_headers.string, data_build.setting.path_headers.used);
+
+          directory_headers[directory_headers_length] = 0;
+
+          path_headers.string = directory_headers;
+          path_headers.used = directory_headers_length;
+          path_headers.size = directory_headers_length + 1;
+        }
+        else {
+          memcpy(directory_headers, data.path_build_includes.string, data.path_build_includes.used);
 
           directory_headers[directory_headers_length] = 0;
 
@@ -2038,6 +2054,7 @@ extern "C" {
 #ifndef _di_fake_build_programs_shared_
   void fake_build_programs_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
+    if (!data_build.setting.build_sources_program.used) return;
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%cCompiling shared program.%c", f_string_eol[0], f_string_eol[0]);
@@ -2046,12 +2063,9 @@ extern "C" {
     f_string_dynamics arguments = f_string_dynamics_initialize;
 
     {
-      const f_string_static *path_sources = 0;
+      const f_string_static *path_sources = &data.path_sources_c;
 
-      if (data_build.setting.build_language == fake_build_language_type_c) {
-        path_sources = &data.path_sources_c;
-      }
-      else if (data_build.setting.build_language == fake_build_language_type_cpp) {
+      if (data_build.setting.build_language == fake_build_language_type_cpp) {
         path_sources = &data.path_sources_cpp;
       }
 
@@ -2131,6 +2145,7 @@ extern "C" {
 #ifndef _di_fake_build_programs_static_
   void fake_build_programs_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
+    if (!data_build.setting.build_sources_program.used) return;
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%cCompiling static program.%c", f_string_eol[0], f_string_eol[0]);
@@ -2139,18 +2154,17 @@ extern "C" {
     f_string_dynamics arguments = f_string_dynamics_initialize;
 
     {
-      const f_string_static *path_sources = 0;
+      const f_string_static *path_sources = &data.path_sources_c;
 
-      if (data_build.setting.build_language == fake_build_language_type_c) {
-        path_sources = &data.path_sources_c;
-      }
-      else if (data_build.setting.build_language == fake_build_language_type_cpp) {
+      if (data_build.setting.build_language == fake_build_language_type_cpp) {
         path_sources = &data.path_sources_cpp;
       }
 
       f_string_length source_length = 0;
 
       for (f_array_length i = 0; i < data_build.setting.build_sources_program.used; i++) {
+        if (!data_build.setting.build_sources_program.array[i].used) continue;
+
         source_length = path_sources->used + data_build.setting.build_sources_program.array[i].used;
 
         char source[source_length + 1];
