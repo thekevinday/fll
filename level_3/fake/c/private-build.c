@@ -542,6 +542,12 @@ extern "C" {
       }
     } // for
 
+    status = fl_string_dynamic_terminate_after(name);
+    if (F_status_is_error(status)) {
+      fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+      return status;
+    }
+
     return F_none;
   }
 #endif // _di_fake_build_get_file_name_without_extension_
@@ -772,6 +778,7 @@ extern "C" {
     }
 
     f_string_dynamic file_name = f_string_dynamic_initialize;
+    f_string_dynamic source_path = f_string_dynamic_initialize;
     f_string_dynamics arguments = f_string_dynamics_initialize;
 
     *status = fll_execute_arguments_add(fake_build_parameter_object_link_arguments, fake_build_parameter_object_link_arguments_length, &arguments);
@@ -805,22 +812,62 @@ extern "C" {
       f_string_length source_length = 0;
 
       for (f_array_length i = 0; i < data_build.setting.build_sources_library.used; i++) {
+        source_path.used = 0;
+
         *status = fake_build_get_file_name_without_extension(data, data_build.setting.build_sources_library.array[i], &file_name);
         if (F_status_is_error(*status)) {
           fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
 
           f_macro_string_dynamic_delete_simple(file_name);
+          f_macro_string_dynamic_delete_simple(source_path);
           f_macro_string_dynamics_delete_simple(arguments);
           return;
         }
 
-        source_length = data.path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_length;
+        *status = f_file_name_directory(data_build.setting.build_sources_library.array[i].string, data_build.setting.build_sources_library.array[i].used, &source_path);
+        if (F_status_is_error(*status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_file_name_directory", F_true);
+          break;
+        }
+
+        if (source_path.used) {
+          *status = fl_string_dynamic_prepend(data.path_build_objects, &source_path);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
+            break;
+          }
+
+          *status = fl_string_append_assure(f_path_separator, f_path_separator_length, &source_path);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+            break;
+          }
+
+          *status = fl_string_dynamic_terminate_after(&source_path);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+            break;
+          }
+
+          source_length = source_path.used + file_name.used + fake_build_parameter_object_name_suffix_length;
+        }
+        else {
+          source_length = data.path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_length;
+        }
 
         char source[source_length + 1];
 
-        memcpy(source, data.path_build_objects.string, data.path_build_objects.used);
-        memcpy(source + data.path_build_objects.used, file_name.string, file_name.used);
-        memcpy(source + data.path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix, fake_build_parameter_object_name_suffix_length);
+        if (source_path.used) {
+          memcpy(source, source_path.string, source_path.used);
+          memcpy(source + source_path.used, file_name.string, file_name.used);
+          memcpy(source + source_path.used + file_name.used, fake_build_parameter_object_name_suffix, fake_build_parameter_object_name_suffix_length);
+        }
+        else {
+          memcpy(source, data.path_build_objects.string, data.path_build_objects.used);
+          memcpy(source + data.path_build_objects.used, file_name.string, file_name.used);
+          memcpy(source + data.path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix, fake_build_parameter_object_name_suffix_length);
+        }
+
         source[source_length] = 0;
 
         *status = fll_execute_arguments_add(source, source_length, &arguments);
@@ -830,6 +877,8 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
+        f_macro_string_dynamic_delete_simple(file_name);
+        f_macro_string_dynamic_delete_simple(source_path);
         f_macro_string_dynamics_delete_simple(arguments);
         return;
       }
@@ -838,6 +887,7 @@ extern "C" {
     fake_build_execute(data, data_build, data_build.setting.build_linker, arguments, status);
 
     f_macro_string_dynamic_delete_simple(file_name);
+    f_macro_string_dynamic_delete_simple(source_path);
     f_macro_string_dynamics_delete_simple(arguments);
 
     if (F_status_is_fine(*status)) {
@@ -1859,6 +1909,7 @@ extern "C" {
     }
 
     f_string_dynamic file_name = f_string_dynamic_initialize;
+    f_string_dynamic destination_path = f_string_dynamic_initialize;
     f_string_dynamics arguments = f_string_dynamics_initialize;
     f_string_length source_length = 0;
     f_string_length destination_length = 0;
@@ -1871,6 +1922,7 @@ extern "C" {
 
     for (f_array_length i = 0; i < data_build.setting.build_sources_library.used; i++) {
       file_name.used = 0;
+      destination_path.used = 0;
 
       source_length = path_sources->used + data_build.setting.build_sources_library.array[i].used;
 
@@ -1885,17 +1937,94 @@ extern "C" {
         fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
 
         f_macro_string_dynamic_delete_simple(file_name);
+        f_macro_string_dynamic_delete_simple(destination_path);
         f_macro_string_dynamics_delete_simple(arguments);
         return;
       }
 
-      destination_length = data.path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_length;
+      *status = f_file_name_directory(data_build.setting.build_sources_library.array[i].string, data_build.setting.build_sources_library.array[i].used, &destination_path);
+      if (F_status_is_error(*status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_file_name_directory", F_true);
+        break;
+      }
+
+      if (destination_path.used) {
+        *status = fl_string_dynamic_prepend(data.path_build_objects, &destination_path);
+        if (F_status_is_error(*status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
+          break;
+        }
+
+        *status = fl_string_append_assure(f_path_separator, f_path_separator_length, &destination_path);
+        if (F_status_is_error(*status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+          break;
+        }
+
+        *status = fl_string_dynamic_terminate_after(&destination_path);
+        if (F_status_is_error(*status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+          break;
+        }
+
+        *status = f_directory_exists(destination_path.string);
+
+        if (*status == F_false) {
+          if (data.verbosity != fake_verbosity_quiet) {
+            fprintf(f_type_error, "%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The path '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", destination_path.string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' exists but is not a directory.");
+          }
+
+          *status = F_status_set_error(F_failure);
+          break;
+        }
+        else if (*status == F_file_found_not) {
+          *status = f_directory_create(destination_path.string, mode.directory);
+
+          if (F_status_is_error(*status)) {
+            if (F_status_set_fine(*status) == F_file_found_not) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The path '");
+              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", destination_path.string);
+              fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' could not be created, a parent directory does not exist.");
+            }
+            else {
+              fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_directory_create", destination_path.string, "create", F_false, F_true);
+            }
+
+            break;
+          }
+
+          if (data.verbosity == fake_verbosity_verbose) {
+            fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "Directory '%s' created.", destination_path.string);
+          }
+        }
+        else if (F_status_is_error(*status)) {
+          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_directory_exists", destination_path.string, "create", F_false, F_true);
+          break;
+        }
+
+        destination_length = destination_path.used + file_name.used + fake_build_parameter_object_name_suffix_length;
+      }
+      else {
+        destination_length = data.path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_length;
+      }
 
       char destination[destination_length + 1];
 
-      memcpy(destination, data.path_build_objects.string, data.path_build_objects.used);
-      memcpy(destination + data.path_build_objects.used, file_name.string, file_name.used);
-      memcpy(destination + data.path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix, fake_build_parameter_object_name_suffix_length);
+      if (destination_path.used) {
+        memcpy(destination, destination_path.string, destination_path.used);
+        memcpy(destination + destination_path.used, file_name.string, file_name.used);
+        memcpy(destination + destination_path.used + file_name.used, fake_build_parameter_object_name_suffix, fake_build_parameter_object_name_suffix_length);
+      }
+      else {
+        memcpy(destination, data.path_build_objects.string, data.path_build_objects.used);
+        memcpy(destination + data.path_build_objects.used, file_name.string, file_name.used);
+        memcpy(destination + data.path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix, fake_build_parameter_object_name_suffix_length);
+      }
+
       destination[destination_length] = 0;
 
       const f_string values[] = {
@@ -1933,6 +2062,7 @@ extern "C" {
     } // for
 
     f_macro_string_dynamic_delete_simple(file_name);
+    f_macro_string_dynamic_delete_simple(destination_path);
     f_macro_string_dynamics_delete_simple(arguments);
 
     if (F_status_is_fine(*status)) {
