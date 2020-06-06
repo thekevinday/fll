@@ -27,7 +27,7 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_file_found_not) {
       if (data.verbosity == fake_verbosity_verbose) {
-        fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "The build directory '%s' does not exist.", data.path_build.string);
+        printf("The build directory '%s' does not exist.%c", data.path_build.string, f_string_eol[0]);
       }
 
       status = F_none;
@@ -50,9 +50,6 @@ extern "C" {
 
     if (result == 0) {
       printf("Removed '%s'.%c", path, f_string_eol[0]);
-
-      // @fixme this really should be the line below, but nftw()'s design does not allow for this. Get rid of nftw() and manually traverse directory.
-      //fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "Removed '%s'.", path);
     }
 
     return result;

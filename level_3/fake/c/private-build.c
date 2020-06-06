@@ -130,7 +130,8 @@ extern "C" {
     f_string_dynamic destination_file = f_string_dynamic_initialize;
 
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%cCopying %s.%c", f_string_eol[0], label, f_string_eol[0]);
+      printf("%c", f_string_eol[0]);
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Copying %s.", label);
     }
 
     f_macro_string_dynamic_new(*status, path_source, source.used);
@@ -205,7 +206,7 @@ extern "C" {
         }
 
         if (data.verbosity == fake_verbosity_verbose) {
-          fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "Copied file '%s' to '%s'.", path_source.string, destination_file.string);
+          printf("Copied file '%s' to '%s'.%c", path_source.string, destination_file.string, f_string_eol[0]);
         }
       }
       else if (F_status_is_error(*status)) {
@@ -231,8 +232,6 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (data.verbosity == fake_verbosity_verbose) {
-      f_print_string_dynamic(f_type_output, data.context.standout);
-
       printf("%s", program.string);
 
       for (f_array_length i = 0; i < arguments.used; i++) {
@@ -241,7 +240,6 @@ extern "C" {
         printf(" %s", arguments.array[i].string);
       } // for
 
-      f_print_string_dynamic(f_type_output, data.context.reset);
       printf("%c", f_string_eol[0]);
 
       // flush to stdout before executing command.
@@ -319,7 +317,8 @@ extern "C" {
     };
 
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%cCreating base build directories.%c", f_string_eol[0], f_string_eol[0]);
+      printf("%c", f_string_eol[0]);
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Creating base build directories.");
     }
 
     for (uint8_t i = 0; i < 15; i++) {
@@ -335,7 +334,7 @@ extern "C" {
       }
 
       if (data.verbosity == fake_verbosity_verbose) {
-        fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "Created directory '%s'.", directorys[i]->string);
+        printf("Created directory '%s'.%c", directorys[i]->string, f_string_eol[0]);
       }
     } // for
 
@@ -568,7 +567,8 @@ extern "C" {
     if (!data_build.setting.build_sources_library.used) return;
 
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%cCompiling shared library.%c", f_string_eol[0], f_string_eol[0]);
+      printf("%c", f_string_eol[0]);
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Compiling shared library.");
     }
 
     f_string_dynamics arguments = f_string_dynamics_initialize;
@@ -737,7 +737,7 @@ extern "C" {
       *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
       if (F_status_is_fine(*status) && data.verbosity == fake_verbosity_verbose) {
-        fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "Linked file '%s' to '%s'.", parameter_file_path, parameter_file_name_micro);
+        printf("Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_micro, f_string_eol[0]);
       }
     }
 
@@ -755,7 +755,7 @@ extern "C" {
       *status = f_file_link(parameter_file_name_minor, parameter_file_path);
 
       if (F_status_is_fine(*status) && data.verbosity == fake_verbosity_verbose) {
-        fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "Linked file '%s' to '%s'.", parameter_file_path, parameter_file_name_minor);
+        printf("Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_minor, f_string_eol[0]);
       }
     }
 
@@ -774,7 +774,8 @@ extern "C" {
     if (!data_build.setting.build_sources_library.used) return;
 
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%cCompiling static library.%c", f_string_eol[0], f_string_eol[0]);
+      printf("%c", f_string_eol[0]);
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Compiling static library.");
     }
 
     f_string_dynamic file_name = f_string_dynamic_initialize;
@@ -1905,7 +1906,8 @@ extern "C" {
     if (!data_build.setting.build_sources_library.used) return;
 
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%cCompiling static objects.%c", f_string_eol[0], f_string_eol[0]);
+      printf("%c", f_string_eol[0]);
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Compiling static objects.");
     }
 
     f_string_dynamic file_name = f_string_dynamic_initialize;
@@ -1998,7 +2000,7 @@ extern "C" {
           }
 
           if (data.verbosity == fake_verbosity_verbose) {
-            fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "Directory '%s' created.", destination_path.string);
+            printf("Directory '%s' created.%c", destination_path.string, f_string_eol[0]);
           }
         }
         else if (F_status_is_error(*status)) {
@@ -2187,7 +2189,8 @@ extern "C" {
     if (!data_build.setting.build_sources_program.used) return;
 
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%cCompiling shared program.%c", f_string_eol[0], f_string_eol[0]);
+      printf("%c", f_string_eol[0]);
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Compiling shared program.");
     }
 
     f_string_dynamics arguments = f_string_dynamics_initialize;
@@ -2278,7 +2281,8 @@ extern "C" {
     if (!data_build.setting.build_sources_program.used) return;
 
     if (data.verbosity != fake_verbosity_quiet) {
-      printf("%cCompiling static program.%c", f_string_eol[0], f_string_eol[0]);
+      printf("%c", f_string_eol[0]);
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Compiling static program.");
     }
 
     f_string_dynamics arguments = f_string_dynamics_initialize;
