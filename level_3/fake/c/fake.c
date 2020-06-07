@@ -24,7 +24,7 @@ extern "C" {
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, fake_short_defines, fake_long_defines, f_console_symbol_short_enable, f_console_symbol_long_enable, " Override custom defines with these defines.");
+    fll_program_print_help_option(context, fake_short_define, fake_long_define, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Override defines from settings file with this define.");
     fll_program_print_help_option(context, fake_short_mode, fake_long_mode, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use this mode when processing the build settings.");
     fll_program_print_help_option(context, fake_short_process, fake_long_process, f_console_symbol_short_enable, f_console_symbol_long_enable, " Process name for storing build states.");
     fll_program_print_help_option(context, fake_short_settings, fake_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use this settings file, from within the source settings directory.");
@@ -360,7 +360,7 @@ extern "C" {
 
     f_macro_string_lengths_delete_simple(data->remaining);
 
-    f_macro_string_dynamic_delete_simple(data->defines);
+    f_macro_string_dynamics_delete_simple(data->define);
     f_macro_string_dynamics_delete_simple(data->mode);
     f_macro_string_dynamic_delete_simple(data->process);
     f_macro_string_dynamic_delete_simple(data->settings);

@@ -119,7 +119,25 @@ extern "C" {
       } // for
     }
 
-    {
+    if (data.define.used) {
+      f_string_length length = 0;
+      f_array_length i = 0;
+
+      for (; i < data.define.used && F_status_is_fine(*status); i++) {
+        length = fake_build_parameter_define_prefix_length + data.define.array[i].used;
+
+        char string[length + 1];
+
+        memcpy(string, fake_build_parameter_define_prefix, fake_build_parameter_define_prefix_length);
+        memcpy(string + fake_build_parameter_define_prefix_length, data.define.array[i].string, data.define.array[i].used);
+
+        string[length] = 0;
+
+        *status = fll_execute_arguments_add(string, length, arguments);
+        if (F_status_is_error(*status)) break;
+      } // for
+    }
+    else {
       f_string_length length = 0;
       f_array_length i = 0;
 
@@ -443,6 +461,35 @@ extern "C" {
     }
 
     {
+      f_string_dynamic defines = f_string_dynamic_initialize;
+
+      if (data.define.used) {
+        for (f_array_length i = 0; i < data.define.used; i++) {
+          *status = fl_string_dynamic_mash(" ", 1, data.define.array[i], &defines);
+
+          if (F_status_is_error(*status)) {
+            break;
+          }
+        } // for
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_mash", F_true);
+
+          f_macro_string_dynamic_delete_simple(defines);
+          f_macro_string_dynamics_delete_simple(arguments);
+          return;
+        }
+
+        *status = fl_string_dynamic_terminate_after(&defines);
+        if (F_status_is_error(*status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+
+          f_macro_string_dynamic_delete_simple(defines);
+          f_macro_string_dynamics_delete_simple(arguments);
+          return;
+        }
+      }
+
       const f_string parameters_prefix[] = {
         f_console_symbol_short_enable,
         f_console_symbol_short_enable,
@@ -464,7 +511,7 @@ extern "C" {
       };
 
       const f_string parameters_name[] = {
-        fake_short_defines,
+        fake_short_define,
         fake_short_process,
         fake_short_settings,
         fake_short_path_build,
@@ -474,7 +521,7 @@ extern "C" {
       };
 
       const f_string_length parameters_name_length[] = {
-         fake_short_defines_length,
+         fake_short_define_length,
          fake_short_process_length,
          fake_short_settings_length,
          fake_short_path_build_length,
@@ -484,7 +531,7 @@ extern "C" {
       };
 
       const f_string parameters_value[] = {
-        data.defines.string,
+        defines.string,
         data.process.string,
         data.settings.string,
         data.path_build.string,
@@ -494,7 +541,7 @@ extern "C" {
       };
 
       const f_string_length parameters_value_length[] = {
-        data.defines.used,
+        defines.used,
         data.process.used,
         data.settings.used,
         data.path_build.used,
@@ -504,6 +551,8 @@ extern "C" {
       };
 
       *status = fll_execute_arguments_add_parameter_set(parameters_prefix, parameters_prefix_length, parameters_name, parameters_name_length, parameters_value, parameters_value_length, 7, &arguments);
+
+      f_macro_string_dynamic_delete_simple(defines);
 
       if (F_status_is_error(*status)) {
         fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add_parameter_set", F_true);

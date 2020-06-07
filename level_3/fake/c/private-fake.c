@@ -542,8 +542,8 @@ extern "C" {
       } // for
     }
 
-    if (data->parameters[fake_parameter_defines].result == f_console_result_found) {
-      fake_print_error_parameter_missing_value(data->context, data->verbosity, fake_long_defines);
+    if (data->parameters[fake_parameter_define].result == f_console_result_found) {
+      fake_print_error_parameter_missing_value(data->context, data->verbosity, fake_long_define);
       return F_status_set_error(F_parameter);
     }
 
@@ -627,24 +627,55 @@ extern "C" {
       } // for
     }
 
-    if (data->parameters[fake_parameter_defines].result == f_console_result_additional) {
-      status = fll_program_parameter_additional_rip_mash(" ", 1, arguments.argv, data->parameters[fake_parameter_defines].additional, &data->defines);
+    if (data->parameters[fake_parameter_define].result == f_console_result_additional) {
+      status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_define].additional, &data->define);
 
       if (F_status_is_error(status)) {
-        if (status == F_status_set_error(F_string_too_large)) {
-          if (data->verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the (combined) parameter '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_defines);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' is too long.");
-          }
-        }
-        else {
-          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_additional_rip_mash", F_true);
+        if (fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to process the parameter '");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_define);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "'.");
         }
 
         return status;
       }
+
+      f_array_length i = 0;
+      f_string_length j = 0;
+      f_string_length width_max = 0;
+
+      for (; i < data->define.used; i++) {
+        for (j = 0; j < data->define.array[i].used; j++) {
+          width_max = data->define.array[i].used - j;
+
+          status = f_utf_is_word(data->define.array[i].string + j, width_max);
+
+          if (F_status_is_error(status)) {
+            if (fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "f_utf_is_word", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to process the parameter '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_define);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "'.");
+            }
+
+            return status;
+          }
+
+          if (status == F_false) {
+            if (data->verbosity != fake_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_define);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameters value '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", data->define.array[i].string);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' contains non-word characters.");
+            }
+
+            return F_status_set_error(F_parameter);
+          }
+        } // for
+      } // for
     }
 
     if (data->parameters[fake_parameter_mode].result == f_console_result_found) {

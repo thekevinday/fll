@@ -171,12 +171,12 @@ extern "C" {
   #define fake_default_path_sources_length 8
   #define fake_default_path_work_length    0
 
-  #define fake_default_defines  ""
+  #define fake_default_define   ""
   #define fake_default_mode     ""
   #define fake_default_process  ""
   #define fake_default_settings "settings"
 
-  #define fake_default_defines_length  0
+  #define fake_default_define_length   0
   #define fake_default_mode_length     0
   #define fake_default_process_length  0
   #define fake_default_settings_length 8
@@ -232,12 +232,12 @@ extern "C" {
     fake_verbosity_debug,
   };
 
-  #define fake_short_defines  "d"
+  #define fake_short_define   "d"
   #define fake_short_mode     "m"
   #define fake_short_process  "p"
   #define fake_short_settings "s"
 
-  #define fake_short_defines_length  1
+  #define fake_short_define_length   1
   #define fake_short_mode_length     1
   #define fake_short_process_length  1
   #define fake_short_settings_length 1
@@ -252,12 +252,12 @@ extern "C" {
   #define fake_short_path_sources_length 1
   #define fake_short_path_work_length    1
 
-  #define fake_long_defines  "defines"
+  #define fake_long_define   "define"
   #define fake_long_mode     "mode"
   #define fake_long_process  "process"
   #define fake_long_settings "settings"
 
-  #define fake_long_defines_length  7
+  #define fake_long_define_length   6
   #define fake_long_mode_length     4
   #define fake_long_process_length  7
   #define fake_long_settings_length 8
@@ -307,7 +307,7 @@ extern "C" {
     fake_parameter_verbose,
     fake_parameter_version,
 
-    fake_parameter_defines,
+    fake_parameter_define,
     fake_parameter_mode,
     fake_parameter_process,
     fake_parameter_settings,
@@ -340,7 +340,7 @@ extern "C" {
       f_console_parameter_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(fake_short_defines, fake_long_defines, 0, 1, f_console_type_normal), \
+      f_console_parameter_initialize(fake_short_define, fake_long_define, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(fake_short_mode, fake_long_mode, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(fake_short_process, fake_long_process, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(fake_short_settings, fake_long_settings, 0, 1, f_console_type_normal), \
@@ -374,7 +374,7 @@ extern "C" {
     uint8_t operation;
     uint8_t verbosity;
 
-    f_string_dynamic defines;
+    f_string_dynamics define;
     f_string_dynamics mode;
     f_string_dynamic process;
     f_string_dynamic settings;
@@ -435,7 +435,7 @@ extern "C" {
       0, \
       0, \
       fake_verbosity_normal, \
-      f_string_dynamic_initialize, \
+      f_string_dynamics_initialize, \
       f_string_dynamics_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
