@@ -378,29 +378,9 @@ package_create_base_files() {
   fi
 }
 
-package_dependencies_append() {
-  local level="$1"
-  local dependency="$2"
-  local settings=
-  local libraries=
-
-  settings=${path_sources}${level}/${dependency}/data/build/settings
-  if [[ ! -f $settings ]] ; then
-    echo -e "${c_error}ERROR: failed to find dependency settings file $c_notice$settings$c_error.$c_reset"
-    failure=1
-    return
-  fi
-
-  libraries=$(grep -o '^build_sources_library\>.*$' $settings | sed -e 's|^build_sources_library\>||' -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-  if [[ $libraries != "" ]] ; then
-    if [[ $(echo $individual_dependencies | grep -o "\-l$dependency\>") == "" ]] ; then
-      individual_dependencies="-l$dependency $individual_dependencies"
-    fi
-  fi
-}
-
 package_dependencies_individual() {
   local level=
+  local level_current=
   local directory=
   local settings=
   local name=
@@ -417,8 +397,10 @@ package_dependencies_individual() {
   for directory in ${path_sources}level_0/* ${path_sources}level_1/* ${path_sources}level_2/* ${path_sources}level_3/* ; do
     name="$(echo $directory | sed -e "s|${path_sources}level_0/||" -e "s|${path_sources}level_1/||" -e "s|${path_sources}level_2/||" -e "s|${path_sources}level_3/||")"
 
+    level_current="$(echo $directory | grep -o '\<level_[[:digit:]]/' | sed -e 's|level_||' -e 's|/$||')"
+
     echo
-    echo -e "${c_highlight}Building Dependencies For $c_reset$c_notice${name}$c_reset${c_highlight}.$c_reset"
+    echo -e "${c_highlight}Building Dependencies for $c_reset$c_notice${name}$c_reset${c_highlight}.$c_reset"
 
     if [[ ! -f ${directory}/data/build/dependencies ]] ; then
       echo -e "${c_error}ERROR: cannot build dependencies, failed to find $c_notice${directory}/data/build/dependencies$c_error.$c_reset"
@@ -489,14 +471,14 @@ package_dependencies_individual() {
             continue
           fi
 
-          package_dependencies_append "$sub_sub_level" "$sub_sub_dependency"
+          package_dependencies_individual_append "$sub_sub_level" "$sub_sub_dependency"
         done
 
         if [[ $failure != "" ]] ; then
           break;
         fi
 
-        package_dependencies_append "$sub_level" "$sub_dependency"
+        package_dependencies_individual_append "$sub_level" "$sub_dependency"
 
         if [[ $failure != "" ]] ; then
           break;
@@ -507,7 +489,7 @@ package_dependencies_individual() {
         break;
       fi
 
-      package_dependencies_append "$level" "$dependency"
+      package_dependencies_individual_append "$level" "$dependency"
 
       if [[ $failure != "" ]] ; then
         break;
@@ -520,19 +502,59 @@ package_dependencies_individual() {
 
     individual_dependencies=$(echo "$individual_dependencies" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
     if [[ $individual_dependencies != "" ]] ; then
-      echo -e "  $individual_dependencies"
+      echo -e " $individual_dependencies"
       individual_dependencies=" $individual_dependencies"
     fi
 
     settings=${directory}/data/build/settings
-    sed -i -e "s|^build_libraries_fll\>.*\$|build_libraries_fll$individual_dependencies|" $settings
+    sed -i -e "s|^\s*build_libraries-individual\>.*\$|build_libraries-individual$individual_dependencies|" $settings
 
     if [[ $? -ne 0 ]] ; then
       echo -e "${c_error}ERROR: failed to update settings file $c_notice${settings}$c_error.$c_reset"
       failure=1
       return
     fi
+
+    # all level 3 are expected to support all modes: individual, level, and monolithic.
+    if [[ $level_current == "3" ]] ; then
+      sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to update settings file $c_notice${settings}$c_error.$c_reset"
+        failure=1
+        return
+      fi
+
+      sed -i -e "s|^\s*build_libraries-monolithic\>.*\$|build_libraries-monolithic -lfll|" $settings
+
+      if [[ $? -ne 0 ]] ; then
+        echo -e "${c_error}ERROR: failed to update settings file $c_notice${settings}$c_error.$c_reset"
+        failure=1
+        return
+      fi
+    fi
   done
+}
+
+package_dependencies_individual_append() {
+  local level="$1"
+  local dependency="$2"
+  local settings=
+  local libraries=
+
+  settings=${path_sources}${level}/${dependency}/data/build/settings
+  if [[ ! -f $settings ]] ; then
+    echo -e "${c_error}ERROR: failed to find dependency settings file $c_notice$settings$c_error.$c_reset"
+    failure=1
+    return
+  fi
+
+  libraries=$(grep -o '^\s*build_sources_library\>.*$' $settings | sed -e 's|^\s*build_sources_library\>||' -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+  if [[ $libraries != "" ]] ; then
+    if [[ $(echo -n $individual_dependencies | grep -o "\-l$dependency\>") == "" ]] ; then
+      individual_dependencies="-l$dependency $individual_dependencies"
+    fi
+  fi
 }
 
 package_dependencies_level() {
@@ -544,25 +566,26 @@ package_dependencies_level() {
   local header=
   local headers=
 
-  package_dependencies_level_update "level_0"
+  package_dependencies_level_update "level_0" ""
 
   if [[ $failure != "" ]] ; then
     return;
   fi
 
-  package_dependencies_level_update "level_1"
+  package_dependencies_level_update "level_1" " -lfll_0"
 
   if [[ $failure != "" ]] ; then
     return;
   fi
 
-  package_dependencies_level_update "level_2"
+  package_dependencies_level_update "level_2" " -lfll_1 -lfll_0"
 }
 
 package_dependencies_level_update() {
   local level="$1"
-  local level_libraries=
-  local level_headers=
+  local level_libraries="$2"
+  local level_sources_library=
+  local level_sources_headers=
   local monolithic_libraries=
   local monolithic_headers=
 
@@ -579,15 +602,15 @@ package_dependencies_level_update() {
       return
     fi
 
-    libraries=$(grep -o '^build_sources_library\>.*$' $settings | sed -e 's|^build_sources_library\>||' -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    libraries=$(grep -o '^\s*build_sources_library\>.*$' $settings | sed -e 's|^\s*build_sources_library\>||' -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
     for library in $libraries ; do
-      level_libraries="$level_libraries $library"
+      level_sources_library="$level_sources_library $library"
       monolithic_libraries="$monolithic_libraries $level/$library"
     done
 
-    headers=$(grep -o '^build_sources_headers\>.*$' $settings | sed -e 's|^build_sources_headers\>||' -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    headers=$(grep -o '^\s*build_sources_headers\>.*$' $settings | sed -e 's|^\s*build_sources_headers\>||' -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
     for header in $headers ; do
-      level_headers="$level_headers $header"
+      level_sources_headers="$level_sources_headers $header"
       monolithic_headers="$monolithic_headers $level/$header"
     done
   done
@@ -600,13 +623,7 @@ package_dependencies_level_update() {
     return
   fi
 
-  level_libraries=$(echo "$level_libraries" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-  if [[ $level_libraries != "" ]] ; then
-    echo "  $level_libraries"
-    level_libraries=" $level_libraries"
-  fi
-
-  sed -i -e "s|^build_sources_library\>.*\$|build_sources_library$level_libraries|" $settings
+  sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level$level_libraries|" $settings
 
   if [[ $? -ne 0 ]] ; then
     echo -e "${c_error}ERROR: failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
@@ -614,13 +631,27 @@ package_dependencies_level_update() {
     return
   fi
 
-  level_headers=$(echo "$level_headers" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-  if [[ $level_headers != "" ]] ; then
-    echo "  $level_headers"
-    level_headers=" $level_headers"
+  level_sources_library=$(echo "$level_sources_library" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+  if [[ $level_sources_library != "" ]] ; then
+    echo " $level_sources_library"
+    level_sources_library=" $level_sources_library"
   fi
 
-  sed -i -e "s|^build_sources_headers\>.*\$|build_sources_headers$level_headers|" $settings
+  sed -i -e "s|^\s*build_sources_library\>.*\$|build_sources_library$level_sources_library|" $settings
+
+  if [[ $? -ne 0 ]] ; then
+    echo -e "${c_error}ERROR: failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
+    failure=1
+    return
+  fi
+
+  level_sources_headers=$(echo "$level_sources_headers" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+  if [[ $level_sources_headers != "" ]] ; then
+    echo " $level_sources_headers"
+    level_sources_headers=" $level_sources_headers"
+  fi
+
+  sed -i -e "s|^\s*build_sources_headers\>.*\$|build_sources_headers$level_sources_headers|" $settings
 
   if [[ $? -ne 0 ]] ; then
     echo -e "${c_error}ERROR: failed to update headers for settings file $c_notice$settings$c_error.$c_reset"
@@ -690,11 +721,11 @@ package_dependencies_monolithic() {
   settings=${path_sources}/build/monolithic/settings
 
   if [[ $monolithic_libraries != "" ]] ; then
-    echo "  $monolithic_libraries"
+    echo " $monolithic_libraries"
     monolithic_libraries=" $monolithic_libraries"
   fi
 
-  sed -i -e "s|^build_sources_library\>.*\$|build_sources_library$monolithic_libraries|" $settings
+  sed -i -e "s|^\s*build_sources_library\>.*\$|build_sources_library$monolithic_libraries|" $settings
 
   if [[ $? -ne 0 ]] ; then
     echo -e "${c_error}ERROR: failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
@@ -704,11 +735,11 @@ package_dependencies_monolithic() {
 
 
   if [[ $monolithic_headers != "" ]] ; then
-    echo "  $monolithic_headers"
+    echo " $monolithic_headers"
     monolithic_headers=" $monolithic_headers"
   fi
 
-  sed -i -e "s|^build_sources_headers\>.*\$|build_sources_headers$monolithic_headers|" $settings
+  sed -i -e "s|^\s*build_sources_headers\>.*\$|build_sources_headers$monolithic_headers|" $settings
 
   if [[ $? -ne 0 ]] ; then
     echo -e "${c_error}ERROR: failed to update headers for settings file $c_notice$settings$c_error.$c_reset"
@@ -1166,10 +1197,10 @@ package_cleanup() {
   unset package_build
   unset package_create_base_files
   unset package_dependencies_individual
+  unset package_dependencies_individual_append
   unset package_dependencies_level
   unset package_dependencies_level_update
   unset package_dependencies_monolithic
-  unset package_dependencies_append
   unset package_operation_clean
   unset package_operation_copy_package
   unset package_operation_individual

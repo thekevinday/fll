@@ -19,7 +19,7 @@ build_compiler gcc
 build_language c
 build_linker ar
 build_libraries -lc
-build_libraries-individual -lfl_string -lf_directory -lf_file -lf_memory
+build_libraries-individual -lfl_string -lf_utf -lf_file -lf_directory -lf_memory
 build_sources_library directory.c
 build_sources_program
 build_sources_headers directory.h
