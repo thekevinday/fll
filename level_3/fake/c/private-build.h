@@ -32,6 +32,8 @@ extern "C" {
   typedef struct {
     uint8_t build_language;
 
+    uint8_t version_target;
+
     bool build_script;
     bool build_shared;
     bool build_static;
@@ -78,6 +80,7 @@ extern "C" {
   } fake_build_setting;
 
   #define fake_build_setting_initialize { \
+    0, \
     0, \
     F_true, \
     F_true, \
@@ -198,6 +201,7 @@ extern "C" {
   #define fake_build_setting_name_version_major          "version_major"
   #define fake_build_setting_name_version_micro          "version_micro"
   #define fake_build_setting_name_version_minor          "version_minor"
+  #define fake_build_setting_name_version_target         "version_target"
 
   #define fake_build_setting_name_build_compiler_length         14
   #define fake_build_setting_name_build_language_length         14
@@ -240,8 +244,9 @@ extern "C" {
   #define fake_build_setting_name_version_major_length          13
   #define fake_build_setting_name_version_micro_length          13
   #define fake_build_setting_name_version_minor_length          13
+  #define fake_build_setting_name_version_target_length         14
 
-  #define fake_build_setting_total 41
+  #define fake_build_setting_total 42
 
   #define fake_build_setting_bool_yes "yes"
   #define fake_build_setting_bool_no  "no"

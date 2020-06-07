@@ -5,6 +5,7 @@ project_name fss_status_code
 version_major 0
 version_minor 5
 version_micro 0
+version_target major
 
 environment
 

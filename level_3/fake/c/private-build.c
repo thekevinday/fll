@@ -673,13 +673,31 @@ extern "C" {
 
       parameter_file_path[parameter_file_path_length] = 0;
 
-      f_string_length parameter_linker_length = fake_build_parameter_library_shared_prefix_length + parameter_file_name_micro_length;
+      f_string_length parameter_linker_length = fake_build_parameter_library_shared_prefix_length;
+
+      if (data_build.setting.version_target == fake_build_version_type_major) {
+        parameter_linker_length += parameter_file_name_major_length;
+      }
+      else if (data_build.setting.version_target == fake_build_version_type_minor) {
+        parameter_linker_length += parameter_file_name_minor_length;
+      }
+      else if (data_build.setting.version_target == fake_build_version_type_micro) {
+        parameter_linker_length += parameter_file_name_micro_length;
+      }
 
       char parameter_linker[parameter_linker_length + 1];
 
       memcpy(parameter_linker, fake_build_parameter_library_shared_prefix, fake_build_parameter_library_shared_prefix_length);
 
-      memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_micro, parameter_file_name_micro_length);
+      if (data_build.setting.version_target == fake_build_version_type_major) {
+        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_major, parameter_file_name_major_length);
+      }
+      else if (data_build.setting.version_target == fake_build_version_type_minor) {
+        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_minor, parameter_file_name_minor_length);
+      }
+      else if (data_build.setting.version_target == fake_build_version_type_micro) {
+        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_micro, parameter_file_name_micro_length);
+      }
 
       parameter_linker[parameter_linker_length] = 0;
 
@@ -1168,6 +1186,7 @@ extern "C" {
           fake_build_setting_name_version_major,
           fake_build_setting_name_version_micro,
           fake_build_setting_name_version_minor,
+          fake_build_setting_name_version_target,
         };
 
         const f_string_length settings_length[] = {
@@ -1212,6 +1231,7 @@ extern "C" {
           fake_build_setting_name_version_major_length,
           fake_build_setting_name_version_micro_length,
           fake_build_setting_name_version_minor_length,
+          fake_build_setting_name_version_target_length,
         };
 
         f_string_dynamics build_compiler = f_string_dynamics_initialize;
@@ -1238,6 +1258,7 @@ extern "C" {
         f_string_dynamics version_major = f_string_dynamics_initialize;
         f_string_dynamics version_micro = f_string_dynamics_initialize;
         f_string_dynamics version_minor = f_string_dynamics_initialize;
+        f_string_dynamics version_target = f_string_dynamics_initialize;
 
         f_string_dynamics *settings_value[] = {
           &build_compiler,
@@ -1281,6 +1302,7 @@ extern "C" {
           &version_major,
           &version_micro,
           &version_minor,
+          &version_target,
         };
 
         f_string function = "fll_fss_snatch_apart";
@@ -1380,7 +1402,9 @@ extern "C" {
         }
         else {
           const f_string settings_single_name[] = {
+            fake_build_setting_name_build_compiler,
             fake_build_setting_name_build_language,
+            fake_build_setting_name_build_linker,
             fake_build_setting_name_build_script,
             fake_build_setting_name_build_shared,
             fake_build_setting_name_build_static,
@@ -1402,6 +1426,7 @@ extern "C" {
             fake_build_setting_name_version_major,
             fake_build_setting_name_version_micro,
             fake_build_setting_name_version_minor,
+            fake_build_setting_name_version_target,
           };
 
           const f_string_statics *settings_single_source[] = {
@@ -1429,11 +1454,7 @@ extern "C" {
             &version_major,
             &version_micro,
             &version_minor,
-          };
-
-          uint8_t *settings_single_language[] = {
-            0,
-            &setting->build_language,
+            &version_target,
           };
 
           bool *settings_single_bool[] = {
@@ -1487,7 +1508,40 @@ extern "C" {
             &setting->version_minor,
           };
 
-          // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++".
+          uint8_t *settings_single_language[] = {
+            0,
+            &setting->build_language,
+          };
+
+          uint8_t *settings_single_version[] = {
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            &setting->version_target,
+          };
+
+          // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", or "micro".
           uint8_t settings_single_type[] = {
             3,
             4,
@@ -1513,9 +1567,10 @@ extern "C" {
             3,
             3,
             3,
+            5,
           };
 
-          for (f_array_length i = 0; i < 24; i++) {
+          for (f_array_length i = 0; i < 25; i++) {
             if (settings_single_source[i]->used == 0) continue;
 
             if (settings_single_source[i]->used > 1) {
@@ -1588,6 +1643,37 @@ extern "C" {
                 }
               }
             }
+            else if (settings_single_type[i] == 5) {
+              if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_major, settings_single_source[i]->array[0].used, fake_build_version_major_length) == F_equal_to) {
+                *settings_single_version[i] = fake_build_version_type_major;
+              }
+              else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_micro, settings_single_source[i]->array[0].used, fake_build_version_micro_length) == F_equal_to) {
+                *settings_single_version[i] = fake_build_version_type_micro;
+              }
+              else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_minor, settings_single_source[i]->array[0].used, fake_build_version_minor_length) == F_equal_to) {
+                *settings_single_version[i] = fake_build_version_type_minor;
+              }
+              else {
+                *settings_single_version[i] = fake_build_version_type_major;
+
+                if (data.verbosity != fake_verbosity_quiet) {
+                  fprintf(f_type_warning, "%c", f_string_eol[0]);
+                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
+                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
+                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");
+                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
+                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' may only be one of '");
+                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_major);
+                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', '");
+                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_minor);
+                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', or '");
+                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_micro);
+                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', defaulting to '");
+                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_major);
+                  fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
+                }
+              }
+            }
             else {
               *status = fl_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);
               if (F_status_is_error(*status)) {
@@ -1636,6 +1722,7 @@ extern "C" {
         f_macro_string_dynamics_delete_simple(version_major);
         f_macro_string_dynamics_delete_simple(version_micro);
         f_macro_string_dynamics_delete_simple(version_minor);
+        f_macro_string_dynamics_delete_simple(version_target);
       }
 
       f_macro_fss_objects_delete_simple(objects);

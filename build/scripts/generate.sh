@@ -363,22 +363,23 @@ generate_id(){
     "version_major") echo -n 37;;
     "version_micro") echo -n 38;;
     "version_minor") echo -n 39;;
+    "version_target") echo -n 40;;
 
-    "build_libraries-$mode") echo -n 40;;
-    "build_sources_headers-$mode") echo -n 41;;
-    "build_sources_library-$mode") echo -n 42;;
-    "build_sources_program-$mode") echo -n 43;;
-    "build_sources_setting-$mode") echo -n 44;;
-    "build_sources_script-$mode") echo -n 45;;
-    "defines_all-$mode") echo -n 46;;
-    "defines_shared-$mode") echo -n 47;;
-    "defines_static-$mode") echo -n 48;;
-    "environment-$mode") echo -n 49;;
-    "flags_all-$mode") echo -n 50;;
-    "flags_library-$mode") echo -n 51;;
-    "flags_program-$mode") echo -n 52;;
-    "flags_shared-$mode") echo -n 53;;
-    "flags_static-$mode") echo -n 54;;
+    "build_libraries-$mode") echo -n 41;;
+    "build_sources_headers-$mode") echo -n 42;;
+    "build_sources_library-$mode") echo -n 43;;
+    "build_sources_program-$mode") echo -n 44;;
+    "build_sources_setting-$mode") echo -n 45;;
+    "build_sources_script-$mode") echo -n 46;;
+    "defines_all-$mode") echo -n 47;;
+    "defines_shared-$mode") echo -n 48;;
+    "defines_static-$mode") echo -n 49;;
+    "environment-$mode") echo -n 50;;
+    "flags_all-$mode") echo -n 51;;
+    "flags_library-$mode") echo -n 52;;
+    "flags_program-$mode") echo -n 53;;
+    "flags_shared-$mode") echo -n 54;;
+    "flags_static-$mode") echo -n 55;;
   esac
 }
 
@@ -440,6 +441,7 @@ generate_operation_build(){
   local major=${variables[$(generate_id version_major)]}
   local minor=${variables[$(generate_id version_minor)]}
   local micro=${variables[$(generate_id version_micro)]}
+  local target=${variables[$(generate_id version_target)]}
   local compiler=${variables[$(generate_id build_compiler)]}
   local linker=${variables[$(generate_id build_linker)]}
   local arguments_include="-I${path_build}includes"
@@ -468,9 +470,22 @@ generate_operation_build(){
   local flags_program=${variables[$(generate_id flags_program)]}
   local i=
   local n=
+  local version=
   local alt=$1
   local directory=
   local path_headers=${variables[$(generate_id path_headers)]}
+
+  if [[ $target == "" ]] ; then
+    target="major"
+  fi
+
+  if [[ $target == "major" ]] ; then
+    version="$major"
+  elif [[ $target == "minor" ]] ; then
+    version="${major}.$minor"
+  elif [[ $target == "micro" ]] ; then
+    version="${major}.${minor}.$micro"
+  fi
 
   if [[ $sources_library == "" ]] ; then
     sources_library=${variables[$(generate_id build_sources_library-$mode)]}
@@ -709,8 +724,8 @@ generate_operation_build(){
         sources="$sources$path_c$i "
       done
 
-      echo $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library
-      $compiler $sources -shared -Wl,-soname,lib$name.so.$major -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library || failure=1
+      echo $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library
+      $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library || failure=1
 
       if [[ $failure == "" ]] ; then
         ln -vsf lib$name.so.$major.$minor.$micro ${path_build}libraries/shared/lib$name.so.$major || failure=1

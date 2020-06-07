@@ -198,6 +198,22 @@ extern "C" {
   #define fake_build_language_cpp_length  3
 #endif // _di_fake_build_language_
 
+#ifndef _di_fake_build_version_
+  enum {
+    fake_build_version_type_major = 1,
+    fake_build_version_type_micro,
+    fake_build_version_type_minor,
+  };
+
+  #define fake_build_version_major "major"
+  #define fake_build_version_micro "micro"
+  #define fake_build_version_minor "minor"
+
+  #define fake_build_version_major_length 5
+  #define fake_build_version_micro_length 5
+  #define fake_build_version_minor_length 5
+#endif // _di_fake_build_version_
+
 #ifndef _di_fake_defines_
   enum {
     fake_operation_build = 1,
