@@ -44,8 +44,8 @@ extern "C" {
 
     f_string_dynamic build_compiler;
     f_string_dynamic build_linker;
-    f_string_dynamic path_language;
     f_string_dynamic path_headers;
+    f_string_dynamic path_language;
     f_string_dynamic path_library_script;
     f_string_dynamic path_library_shared;
     f_string_dynamic path_library_static;
@@ -180,8 +180,8 @@ extern "C" {
   #define fake_build_setting_name_flags_static           "flags_static"
   #define fake_build_setting_name_modes                  "modes"
   #define fake_build_setting_name_modes_default          "modes_default"
-  #define fake_build_setting_name_path_language          "path_language"
   #define fake_build_setting_name_path_headers           "path_headers"
+  #define fake_build_setting_name_path_language          "path_language"
   #define fake_build_setting_name_path_library_script    "path_library_script"
   #define fake_build_setting_name_path_library_shared    "path_library_shared"
   #define fake_build_setting_name_path_library_static    "path_library_static"
@@ -222,8 +222,8 @@ extern "C" {
   #define fake_build_setting_name_flags_static_length           12
   #define fake_build_setting_name_modes_length                  5
   #define fake_build_setting_name_modes_default_length          13
-  #define fake_build_setting_name_path_language_length          13
   #define fake_build_setting_name_path_headers_length           12
+  #define fake_build_setting_name_path_language_length          13
   #define fake_build_setting_name_path_library_script_length    19
   #define fake_build_setting_name_path_library_shared_length    19
   #define fake_build_setting_name_path_library_static_length    19
