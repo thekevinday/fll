@@ -2101,6 +2101,20 @@ extern "C" {
         break;
       }
 
+      if (data.process.used) {
+        *status = fl_string_append(data.process.string, data.process.used, values[i]);
+        if (F_status_is_error(*status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append", F_true);
+          break;
+        }
+
+        *status = fl_string_append(fake_build_parameter_stage_separator, fake_build_parameter_stage_separator_length, values[i]);
+        if (F_status_is_error(*status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append", F_true);
+          break;
+        }
+      }
+
       *status = fl_string_append_nulless(names[i], lengths[i], values[i]);
       if (F_status_is_error(*status)) {
         fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
@@ -2607,7 +2621,7 @@ extern "C" {
     *status = f_file_touch(file.string, mode.regular, F_false);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_file_touch", F_true);
+      fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_touch", file.string, "touch", F_true, F_true);
     }
   }
 #endif // _di_fake_build_touch_

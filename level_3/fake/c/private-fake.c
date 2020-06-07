@@ -482,6 +482,11 @@ extern "C" {
         &data->settings,
       };
 
+      bool parameters_validate_word[] = {
+        F_true,
+        F_false,
+      };
+
       for (uint8_t i = 0; i < 2; i++) {
         if (data->parameters[parameters_id[i]].result == f_console_result_found) {
           fake_print_error_parameter_missing_value(data->context, data->verbosity, parameters_name[i]);
@@ -497,6 +502,41 @@ extern "C" {
           f_string_length length = strnlen(arguments.argv[location], f_console_length_size);
 
           if (length > 0) {
+            if (parameters_validate_word[i]) {
+              f_string_length j = 0;
+              f_string_length width_max = 0;
+
+              for (j = 0; j < length; j++) {
+                width_max = length - j;
+
+                status = f_utf_is_word_dash_plus(arguments.argv[location] + j, width_max);
+
+                if (F_status_is_error(status)) {
+                  if (fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+                    fprintf(f_type_error, "%c", f_string_eol[0]);
+                    fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: failed to process the parameter '");
+                    fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_process);
+                    fl_color_print_line(f_type_error, data->context.error, data->context.reset, "'.");
+                  }
+
+                  return status;
+                }
+
+                if (status == F_false) {
+                  if (data->verbosity != fake_verbosity_quiet) {
+                    fprintf(f_type_error, "%c", f_string_eol[0]);
+                    fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the '");
+                    fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fake_long_process);
+                    fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameters value '");
+                    fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", arguments.argv[location]);
+                    fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' contains non-word, non-dash, and non-plus characters.");
+                  }
+
+                  return F_status_set_error(F_parameter);
+                }
+              } // for
+            }
+
             status = fl_string_append(arguments.argv[location], length, parameters_value[i]);
 
             if (F_status_is_error(status)) {

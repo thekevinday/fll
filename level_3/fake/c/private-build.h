@@ -392,6 +392,10 @@ extern "C" {
   #define fake_build_parameter_object_link_arguments "rcs"
 
   #define fake_build_parameter_object_link_arguments_length 3
+
+  #define fake_build_parameter_stage_separator "-"
+
+  #define fake_build_parameter_stage_separator_length 1
 #endif // _di_fake_build_parameter_
 
 /**
