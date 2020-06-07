@@ -1649,6 +1649,8 @@ extern "C" {
 
     f_macro_string_dynamic_delete_simple(buffer);
 
+    if (F_status_is_error(*status)) return;
+
     // error when required settings are not specified.
     {
       bool failed = F_false;
