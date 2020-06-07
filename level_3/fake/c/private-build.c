@@ -702,7 +702,7 @@ extern "C" {
         if (F_status_is_error(*status)) break;
       } // for
 
-      fake_build_arguments_standard_add(data, data_build, F_true, F_false, &arguments, status);
+      fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
 
       for (f_array_length i = 0; i < data_build.setting.flags_library.used && F_status_is_fine(*status); i++) {
         *status = fll_execute_arguments_add(data_build.setting.flags_library.array[i].string, data_build.setting.flags_library.array[i].used, &arguments);
@@ -2052,7 +2052,7 @@ extern "C" {
         if (F_status_is_error(*status)) break;
       } // for
 
-      fake_build_arguments_standard_add(data, data_build, F_false, F_false, &arguments, status);
+      fake_build_arguments_standard_add(data, data_build, F_false, F_true, &arguments, status);
 
       if (F_status_is_error(*status)) {
         fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
@@ -2258,7 +2258,7 @@ extern "C" {
       *status = fll_execute_arguments_add(link_project_library, link_project_library_length, &arguments);
     }
 
-    fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
+    fake_build_arguments_standard_add(data, data_build, F_true, F_false, &arguments, status);
 
     if (F_status_is_error(*status)) {
       fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
@@ -2363,7 +2363,7 @@ extern "C" {
       } // for
     }
 
-    fake_build_arguments_standard_add(data, data_build, F_false, F_true, &arguments, status);
+    fake_build_arguments_standard_add(data, data_build, F_false, F_false, &arguments, status);
 
     if (F_status_is_error(*status)) {
       fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
