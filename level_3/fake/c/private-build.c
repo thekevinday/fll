@@ -561,8 +561,8 @@ extern "C" {
   }
 #endif // _di_fake_build_libraries_script_
 
-#ifndef _di_fake_build_libraries_shared_
-  void fake_build_libraries_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
+#ifndef _di_fake_build_library_shared_
+  void fake_build_library_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
     if (!data_build.setting.build_sources_library.used) return;
 
@@ -779,10 +779,10 @@ extern "C" {
 
     fake_build_touch(data, file_stage, status);
   }
-#endif // _di_fake_build_libraries_shared_
+#endif // _di_fake_build_library_shared_
 
-#ifndef _di_fake_build_libraries_static_
-  void fake_build_libraries_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
+#ifndef _di_fake_build_library_static_
+  void fake_build_library_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
     if (!data_build.setting.build_sources_library.used) return;
 
@@ -908,7 +908,7 @@ extern "C" {
       fake_build_touch(data, file_stage, status);
     }
   }
-#endif // _di_fake_build_libraries_static_
+#endif // _di_fake_build_library_static_
 
 #ifndef _di_fake_build_load_environment_
   void fake_build_load_environment(const fake_data data, const fake_build_data data_build, fake_build_environment *environment, f_status *status) {
@@ -2230,17 +2230,17 @@ extern "C" {
       }
 
       if (data_build.setting.build_shared) {
-        fake_build_libraries_shared(data, data_build, mode, stage.file_libraries_shared, &status);
+        fake_build_library_shared(data, data_build, mode, stage.file_libraries_shared, &status);
 
-        fake_build_programs_shared(data, data_build, mode, stage.file_programs_shared, &status);
+        fake_build_program_shared(data, data_build, mode, stage.file_programs_shared, &status);
       }
 
       if (data_build.setting.build_static) {
         fake_build_objects_static(data, data_build, mode, stage.file_objects_static, &status);
 
-        fake_build_libraries_static(data, data_build, mode, stage.file_libraries_static, &status);
+        fake_build_library_static(data, data_build, mode, stage.file_libraries_static, &status);
 
-        fake_build_programs_static(data, data_build, mode, stage.file_programs_static, &status);
+        fake_build_program_static(data, data_build, mode, stage.file_programs_static, &status);
       }
 
       if (data_build.setting.build_script) {
@@ -2267,8 +2267,8 @@ extern "C" {
   }
 #endif // _di_fake_build_programs_script_
 
-#ifndef _di_fake_build_programs_shared_
-  void fake_build_programs_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
+#ifndef _di_fake_build_program_shared_
+  void fake_build_program_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
     if (!data_build.setting.build_sources_program.used) return;
 
@@ -2357,10 +2357,10 @@ extern "C" {
       fake_build_touch(data, file_stage, status);
     }
   }
-#endif // _di_fake_build_programs_shared_
+#endif // _di_fake_build_program_shared_
 
-#ifndef _di_fake_build_programs_static_
-  void fake_build_programs_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
+#ifndef _di_fake_build_program_static_
+  void fake_build_program_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
     if (!data_build.setting.build_sources_program.used) return;
 
@@ -2462,7 +2462,7 @@ extern "C" {
       fake_build_touch(data, file_stage, status);
     }
   }
-#endif // _di_fake_build_programs_static_
+#endif // _di_fake_build_program_static_
 
 #ifndef _di_fake_build_touch_
   void fake_build_touch(const fake_data data, const f_string_dynamic file, f_status *status) {

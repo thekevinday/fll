@@ -567,9 +567,9 @@ extern "C" {
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fake_build_libraries_shared_
-  extern void fake_build_libraries_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_build_libraries_shared_
+#ifndef _di_fake_build_library_shared_
+  extern void fake_build_library_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_library_shared_
 
 /**
  * Build the static libraries.
@@ -589,9 +589,9 @@ extern "C" {
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fake_build_libraries_static_
-  extern void fake_build_libraries_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_build_libraries_static_
+#ifndef _di_fake_build_library_static_
+  extern void fake_build_library_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_library_static_
 
 /**
  * Find the build setting file, load it, validate it, and process it.
@@ -726,9 +726,9 @@ extern "C" {
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fake_build_programs_shared_
-  extern void fake_build_programs_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_build_programs_shared_
+#ifndef _di_fake_build_program_shared_
+  extern void fake_build_program_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_program_shared_
 
 /**
  * Build the static programs.
@@ -748,9 +748,9 @@ extern "C" {
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fake_build_programs_static_
-  extern void fake_build_programs_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_build_programs_static_
+#ifndef _di_fake_build_program_static_
+  extern void fake_build_program_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_program_static_
 
 /**
  * Touch the given build stage file, but only if there are no current errors in status.
