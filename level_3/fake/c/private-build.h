@@ -54,7 +54,6 @@ extern "C" {
     f_string_dynamic path_program_static;
     f_string_dynamic process_post;
     f_string_dynamic process_pre;
-    f_string_dynamic project_level;
     f_string_dynamic project_name;
     f_string_dynamic version_major;
     f_string_dynamic version_micro;
@@ -104,7 +103,6 @@ extern "C" {
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
     f_string_dynamics_initialize, \
     f_string_dynamics_initialize, \
     f_string_dynamics_initialize, \
@@ -137,7 +135,6 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(setting.path_program_static) \
     f_macro_string_dynamic_delete_simple(setting.process_post) \
     f_macro_string_dynamic_delete_simple(setting.process_pre) \
-    f_macro_string_dynamic_delete_simple(setting.project_level) \
     f_macro_string_dynamic_delete_simple(setting.project_name) \
     f_macro_string_dynamic_delete_simple(setting.version_major) \
     f_macro_string_dynamic_delete_simple(setting.version_micro) \
@@ -193,7 +190,6 @@ extern "C" {
   #define fake_build_setting_name_path_program_static    "path_program_static"
   #define fake_build_setting_name_process_post           "process_post"
   #define fake_build_setting_name_process_pre            "process_pre"
-  #define fake_build_setting_name_project_level          "project_level"
   #define fake_build_setting_name_project_name           "project_name"
   #define fake_build_setting_name_search_exclusive       "search_exclusive"
   #define fake_build_setting_name_search_shared          "search_shared"
@@ -236,7 +232,6 @@ extern "C" {
   #define fake_build_setting_name_path_program_static_length    19
   #define fake_build_setting_name_process_post_length           12
   #define fake_build_setting_name_process_pre_length            11
-  #define fake_build_setting_name_project_level_length          13
   #define fake_build_setting_name_project_name_length           12
   #define fake_build_setting_name_search_exclusive_length       16
   #define fake_build_setting_name_search_shared_length          13
@@ -246,7 +241,7 @@ extern "C" {
   #define fake_build_setting_name_version_minor_length          13
   #define fake_build_setting_name_version_target_length         14
 
-  #define fake_build_setting_total 42
+  #define fake_build_setting_total 41
 
   #define fake_build_setting_bool_yes "yes"
   #define fake_build_setting_bool_no  "no"

@@ -1321,7 +1321,6 @@ extern "C" {
           fake_build_setting_name_path_program_static,
           fake_build_setting_name_process_post,
           fake_build_setting_name_process_pre,
-          fake_build_setting_name_project_level,
           fake_build_setting_name_project_name,
           fake_build_setting_name_search_exclusive,
           fake_build_setting_name_search_shared,
@@ -1366,7 +1365,6 @@ extern "C" {
           fake_build_setting_name_path_program_static_length,
           fake_build_setting_name_process_post_length,
           fake_build_setting_name_process_pre_length,
-          fake_build_setting_name_project_level_length,
           fake_build_setting_name_project_name_length,
           fake_build_setting_name_search_exclusive_length,
           fake_build_setting_name_search_shared_length,
@@ -1393,7 +1391,6 @@ extern "C" {
         f_string_dynamics path_program_static = f_string_dynamics_initialize;
         f_string_dynamics process_post = f_string_dynamics_initialize;
         f_string_dynamics process_pre = f_string_dynamics_initialize;
-        f_string_dynamics project_level = f_string_dynamics_initialize;
         f_string_dynamics project_name = f_string_dynamics_initialize;
         f_string_dynamics search_exclusive = f_string_dynamics_initialize;
         f_string_dynamics search_shared = f_string_dynamics_initialize;
@@ -1437,7 +1434,6 @@ extern "C" {
           &path_program_static,
           &process_post,
           &process_pre,
-          &project_level,
           &project_name,
           &search_exclusive,
           &search_shared,
@@ -1561,7 +1557,6 @@ extern "C" {
             fake_build_setting_name_path_program_static,
             fake_build_setting_name_process_post,
             fake_build_setting_name_process_pre,
-            fake_build_setting_name_project_level,
             fake_build_setting_name_project_name,
             fake_build_setting_name_search_exclusive,
             fake_build_setting_name_search_shared,
@@ -1589,7 +1584,6 @@ extern "C" {
             &path_program_static,
             &process_post,
             &process_pre,
-            &project_level,
             &project_name,
             &search_exclusive,
             &search_shared,
@@ -1607,7 +1601,6 @@ extern "C" {
             &setting->build_script,
             &setting->build_shared,
             &setting->build_static,
-            0,
             0,
             0,
             0,
@@ -1641,7 +1634,6 @@ extern "C" {
             &setting->path_program_static,
             &setting->process_post,
             &setting->process_pre,
-            &setting->project_level,
             &setting->project_name,
             0,
             0,
@@ -1657,7 +1649,6 @@ extern "C" {
           };
 
           uint8_t *settings_single_version[] = {
-            0,
             0,
             0,
             0,
@@ -1703,7 +1694,6 @@ extern "C" {
             3,
             3,
             3,
-            3,
             1,
             1,
             1,
@@ -1713,7 +1703,7 @@ extern "C" {
             5,
           };
 
-          for (f_array_length i = 0; i < 25; i++) {
+          for (f_array_length i = 0; i < 24; i++) {
             if (settings_single_source[i]->used == 0) continue;
 
             if (settings_single_source[i]->used > 1) {
@@ -1857,7 +1847,6 @@ extern "C" {
         f_macro_string_dynamics_delete_simple(path_program_static);
         f_macro_string_dynamics_delete_simple(process_post);
         f_macro_string_dynamics_delete_simple(process_pre);
-        f_macro_string_dynamics_delete_simple(project_level);
         f_macro_string_dynamics_delete_simple(project_name);
         f_macro_string_dynamics_delete_simple(search_exclusive);
         f_macro_string_dynamics_delete_simple(search_shared);
