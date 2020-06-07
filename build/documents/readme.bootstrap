@@ -1,16 +1,33 @@
-This package provides a _very_ primitive build system using a bash script called generate.sh.
-(Once the FLL project is fully bootstrap compiled, the Featureless Make project, called fake, can be used to build any part of this project instead of the primitive generate.sh script.)
+The Featureless Linux Library provides a special bootstrap script in case the Featureless Make is not currently installed.
+
+The GNU bash scripts, called generate.sh and install.sh, are provided to perform this bootstrap process.
 
 The syntax for generate.sh is:
-  generate.sh <command> [options]
-  - where command is one of the following: 'build' or 'clean'.
+  generate.sh <operation> [options]
+  - where operation is one of the following: 'build' or 'clean'.
   - No 'install' command is provided, all of the files to install may be found in the build/ directory after the build command is executed.
-  - To install, simply copy the files in the build directory to their appropriate destination.
+  - To install, either copy the files in the build directory to their appropriate destination or use the install.sh GNU bash script.
+  - For all operations and options, get help from the generate script by appending the "--help" to the script, such as: "./generate.sh --help".
+  - The monolithic build process is the simplest, which can be generated like the following: "./generate.sh build -m monolithic".
+  - When during development, consider using a work directory: "./generate.sh --work /tmp/work".
+
+The syntax for install.sh is:
+  install.sh [options]
+  - This defaults to /usr/local/ paths commonly found in GNU Linux systems.
+  - Accepts options for specifying specific install directory paths, such as a custom bin directory: "./install.sh --bindir /custom/program".
+  - This is a simple installer and is not intended to be an all-solution.
+  - For more powerful installation: manually install, use custom scripts, or use an appropriate build/install system.
+  - When during development, consider using a work directory: "./install.sh --work /tmp/work".
+  - The --work parameter in install.sh is essentially identical to the --prefix parameter, except that it is used for easier development scripting and also for communicating intent.
+  - Note: The Featureless Make is a build system only and not an install system, this script may still be needed to install when using the Featureless Make.
 
 Build Example:
   ./generate.sh build
 
 Install Example:
+  ./install.sh
+
+Manual Install Example:
   cp -vR build/includes/* /usr/include/
   cp -vR build/libaries/shared/* /usr/lib/
   cp -vR build/programs/shared/* /usr/bin/
@@ -18,7 +35,7 @@ Install Example:
 
 Alternatively, a primitive install script is provided to help install:
   ./install.sh
-  
+
 If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successful build, then there are no files of that type to install.
 
 Build Tree Structure Example (using the status_code-0.5.0 project):
@@ -42,23 +59,3 @@ build/
 │   └── static
 │       └── status_code
 └── settings
-
-The FLL project is broken up into 3 diffeent levels: level_0, level_1, and level_2.
-A third pseudo-level also exists for common programs built using this project, called level_3.
-
-With an exception of a few projects within level_0, each level should only depend on a project from a lower level.
-Therefore, a level_1 project can only depend on level_0 projects and a level_2 project can depend on only level_0 and level_1 projects.
-This does not technically apply to the pseudo-level, level_3, projects, but the pattern is generally followed.
-
-A few projects in level_0 are essentially required by everything and are depended on by virtually all projects, regardless of the level.
-These level_0 projects are:
-- f_type: provides core typedef, #define, and similar structures for the entire set of FLL projects.
-- f_status: provides status codes and other status codes to be used by the entire set of FLL projects.
-- f_memory: provides common memory allocation/deallocation to be used by the entire set of FLL projects.
-- f_string: provides common string management to be used by the entire set of the FLL projects.
-- f_utf: provides common UTF-8 related string management to be used by the entire set of the FLL projects.
-
-The above projects should be installed first, and in the provided order (f_type, then f_status, then f_memory, f_string, and finally f_utf).
-No other level_0 project should depend on another and can be installed in any order.
-
-See: data/build/dependencies for specific dependencies of this project.
