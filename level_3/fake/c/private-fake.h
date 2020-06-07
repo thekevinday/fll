@@ -99,16 +99,13 @@ extern "C" {
  *   The parameters passed to the process.
  * @param data
  *   The program data.
- * @param build_required
- *   Set to TRUE to require the build directory.
- *   Set to FALSE to not require the build directory.
  *
  * @return
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_validate_parameter_directories_
-  extern f_return_status fake_validate_parameter_directories(const f_console_arguments arguments, const fake_data data, const bool build_required) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_validate_parameter_directories(const f_console_arguments arguments, const fake_data data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_validate_parameter_directories_
 
 #ifdef __cplusplus
