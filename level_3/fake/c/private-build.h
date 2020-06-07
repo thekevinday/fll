@@ -359,7 +359,7 @@ extern "C" {
   #define fake_build_parameter_library_link_file          "-l"
   #define fake_build_parameter_library_link_path          "-L"
   #define fake_build_parameter_library_name_prefix        "lib"
-  #define fake_build_parameter_library_name_suffix_shared ".so."
+  #define fake_build_parameter_library_name_suffix_shared ".so"
   #define fake_build_parameter_library_name_suffix_static ".a"
   #define fake_build_parameter_library_output             "-o"
   #define fake_build_parameter_library_separator          "."
@@ -371,7 +371,7 @@ extern "C" {
   #define fake_build_parameter_library_link_file_length          2
   #define fake_build_parameter_library_link_path_length          2
   #define fake_build_parameter_library_name_prefix_length        3
-  #define fake_build_parameter_library_name_suffix_shared_length 4
+  #define fake_build_parameter_library_name_suffix_shared_length 3
   #define fake_build_parameter_library_name_suffix_static_length 2
   #define fake_build_parameter_library_output_length             2
   #define fake_build_parameter_library_separator_length          1
