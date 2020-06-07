@@ -355,6 +355,11 @@ extern "C" {
 #endif // _di_fake_build_data_
 
 #ifndef _di_fake_build_parameter_
+
+  #define fake_build_parameter_define_prefix "-D"
+
+  #define fake_build_parameter_define_prefix_length 2
+
   #define fake_build_parameter_library_include            "-I"
   #define fake_build_parameter_library_link_file          "-l"
   #define fake_build_parameter_library_link_path          "-L"

@@ -118,6 +118,56 @@ extern "C" {
         if (F_status_is_error(*status)) break;
       } // for
     }
+
+    {
+      f_string_length length = 0;
+      f_array_length i = 0;
+
+      for (; i < data_build.setting.defines_all.used && F_status_is_fine(*status); i++) {
+        length = fake_build_parameter_define_prefix_length + data_build.setting.defines_all.array[i].used;
+
+        char string[length + 1];
+
+        memcpy(string, fake_build_parameter_define_prefix, fake_build_parameter_define_prefix_length);
+        memcpy(string + fake_build_parameter_define_prefix_length, data_build.setting.defines_all.array[i].string, data_build.setting.defines_all.array[i].used);
+
+        string[length] = 0;
+
+        *status = fll_execute_arguments_add(string, length, arguments);
+        if (F_status_is_error(*status)) break;
+      } // for
+
+      if (is_shared) {
+        for (i = 0; i < data_build.setting.defines_shared.used && F_status_is_fine(*status); i++) {
+          length = fake_build_parameter_define_prefix_length + data_build.setting.defines_shared.array[i].used;
+
+          char string[length + 1];
+
+          memcpy(string, fake_build_parameter_define_prefix, fake_build_parameter_define_prefix_length);
+          memcpy(string + fake_build_parameter_define_prefix_length, data_build.setting.defines_shared.array[i].string, data_build.setting.defines_shared.array[i].used);
+
+          string[length] = 0;
+
+          *status = fll_execute_arguments_add(string, length, arguments);
+          if (F_status_is_error(*status)) break;
+        } // for
+      }
+      else {
+        for (i = 0; i < data_build.setting.defines_static.used && F_status_is_fine(*status); i++) {
+          length = fake_build_parameter_define_prefix_length + data_build.setting.defines_static.array[i].used;
+
+          char string[length + 1];
+
+          memcpy(string, fake_build_parameter_define_prefix, fake_build_parameter_define_prefix_length);
+          memcpy(string + fake_build_parameter_define_prefix_length, data_build.setting.defines_static.array[i].string, data_build.setting.defines_static.array[i].used);
+
+          string[length] = 0;
+
+          *status = fll_execute_arguments_add(string, length, arguments);
+          if (F_status_is_error(*status)) break;
+        } // for
+      }
+    }
   }
 #endif // _di_fake_build_arguments_standard_add_
 
