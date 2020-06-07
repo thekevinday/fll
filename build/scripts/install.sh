@@ -8,7 +8,7 @@
 # Settings files are not copied over, but a warning will be printed to inform the installer of their existence.
 # The dependencies of this script are: bash, grep, and sed.
 
-install_main(){
+install_main() {
   local public_name="Simple FLL Project Install Script"
   local system_name=install
   local called_name=$(basename $0)
@@ -263,7 +263,7 @@ install_main(){
   return 0
 }
 
-install_handle_colors(){
+install_handle_colors() {
   if [[ $do_color == "light" ]] ; then
     c_error="\\033[1;31m"
     c_warning="\\033[0;31m"
@@ -284,7 +284,7 @@ install_handle_colors(){
   fi
 }
 
-install_help(){
+install_help() {
   echo
   echo -e "${c_title}$public_name$c_reset"
   echo -e " ${c_notice}Version $version$c_reset"
@@ -318,7 +318,7 @@ install_help(){
   echo
 }
 
-install_id(){
+install_id() {
   local name=$1
 
   case $name in
@@ -331,7 +331,7 @@ install_id(){
   esac
 }
 
-install_load_settings(){
+install_load_settings() {
   local failure=
   local i=
 
@@ -353,7 +353,7 @@ install_load_settings(){
   done
 }
 
-install_perform_install(){
+install_perform_install() {
   local build_sources_library=${variables[$(install_id build_sources_library)]}
   local build_sources_program=${variables[$(install_id build_sources_program)]}
   local build_sources_headers=${variables[$(install_id build_sources_headers)]}
@@ -520,7 +520,7 @@ install_perform_install(){
   fi
 }
 
-install_cleanup(){
+install_cleanup() {
   unset install_main
   unset install_handle_colors
   unset install_help

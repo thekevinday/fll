@@ -7,7 +7,7 @@
 #
 # This script is only designed specifically for bootstrap compiling the FLL project and does not necessarily fully follow the fake (featureless make) build process.
 
-generate_main(){
+generate_main() {
   local public_name="Simple FLL Project Make Script"
   local system_name=generate
   local called_name=$(basename $0)
@@ -264,7 +264,7 @@ generate_main(){
   return 0
 }
 
-generate_handle_colors(){
+generate_handle_colors() {
   if [[ $do_color == "light" ]] ; then
     c_error="\\033[1;31m"
     c_warning="\\033[0;31m"
@@ -285,7 +285,7 @@ generate_handle_colors(){
   fi
 }
 
-generate_help(){
+generate_help() {
   echo
   echo -e "${c_title}$public_name$c_reset"
   echo -e " ${c_notice}Version $version$c_reset"
@@ -319,7 +319,7 @@ generate_help(){
   echo
 }
 
-generate_id(){
+generate_id() {
   local name=$1
 
   case $name in
@@ -383,7 +383,7 @@ generate_id(){
   esac
 }
 
-generate_load_settings(){
+generate_load_settings() {
   local failure=
   local i=
   local key=
@@ -406,7 +406,7 @@ generate_load_settings(){
   done
 }
 
-generate_load_settings_mode(){
+generate_load_settings_mode() {
   local i=
 
   for i in build_libraries-$mode build_sources_headers-$mode build_sources_library-$mode build_sources_program-$mode build_sources_setting-$mode build_sources_script-$mode defines_all-$mode defines_shared-$mode defines_static-$mode environment-$mode flags_all-$mode flags_library-$mode flags_program-$mode flags_shared-$mode flags_static-$mode ; do
@@ -414,7 +414,7 @@ generate_load_settings_mode(){
   done
 }
 
-generate_prepare_build(){
+generate_prepare_build() {
   local failure=
   local alt=$1
   local i=
@@ -435,7 +435,7 @@ generate_prepare_build(){
   touch ${project_built}.prepared
 }
 
-generate_operation_build(){
+generate_operation_build() {
   local failure=
   local name=${variables[$(generate_id project_name)]}
   local major=${variables[$(generate_id version_major)]}
@@ -808,7 +808,7 @@ generate_operation_build(){
   touch ${project_built}.built
 }
 
-generate_operation_clean(){
+generate_operation_clean() {
   local i=
 
   for i in ${path_build}{documents,includes,libraries,objects,programs,settings,stage} ; do
@@ -826,7 +826,7 @@ generate_operation_clean(){
   fi
 }
 
-generate_cleanup(){
+generate_cleanup() {
   unset generate_main
   unset generate_handle_colors
   unset generate_help
