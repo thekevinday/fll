@@ -1,0 +1,8 @@
+The build settings "dependencies" file follows the FSS-0000 (Basic) format.
+
+Each Object represents a specific project name as it would be linked against.
+Each Content must not be specified, only FSS-0000 Object names are allowed.
+
+This file only holds dependencies provided by the FLL project.
+Order matters, and the provided order represents the order of dependencies.
+The first entry therefore has no preceding dependency and the last dependency could potentially depend on all dependencies above it.

@@ -1,0 +1,67 @@
+The build settings "settings" file follows the FSS-0001 (Extended) format.
+
+Each Object represents a settings property name.
+There is only a distinct set of setting property names (see below).
+
+Each Content represents the values associated with that property.
+Additional restrictions are applied to each Content depending on each specific Object name (see below).
+
+Object Names and their respective Content purpose/restrictions:
+  "build_compiler": Must only be a valid filename.
+  "build_language": Must only be one of: "bash", "c", or "c++".
+  "build_linker": Must only be a valid filename.
+  "build_libraries": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
+  "build_script": Must only one of: "yes" or "no".
+  "build_shared": Must only one of: "yes" or "no".
+  "build_sources_headers": Must only contain any number of valid filenames.
+  "build_sources_library": Must only contain any number of valid filenames.
+  "build_sources_program": Must only contain any number of valid filenames.
+  "build_sources_setting": Must only contain any number of valid filenames.
+  "build_sources_script": Must only contain any number of valid filenames.
+  "build_static": Must only one of: "yes" or "no".
+  "defines_all": Must only contain any number of valid C/C++ macro names.
+  "defines_static": Must only contain any number of valid C/C++ macro names.
+  "defines_shared": Must only contain any number of valid C/C++ macro names.
+  "environment": Environment variable names, case-sensitive, usually uppercase. May only contain characters allowed in an environment variable.
+  "flags_all": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+  "flags_library": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+  "flags_program": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+  "flags_shared": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+  "flags_static": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+  "modes": Any valid word character, '-', or '+'.
+  "modes_default": May only be a single complete Content word defined in "modes" Object.
+  "path_headers": Must be a single valid path.
+  "path_language": Must be a single valid path.
+  "path_library_script": Must be a single valid path.
+  "path_library_shared": Must be a single valid path.
+  "path_library_static": Must be a single valid path.
+  "path_program_script": Must be a single valid path.
+  "path_program_shared": Must be a single valid path.
+  "path_program_static": Must be a single valid path.
+  "project_name": Must only contain characters allowed in a filename.
+  "process_post": Must contain only a single valid filename.
+  "process_pre": Must contain only a single valid filename.
+  "search_exclusive": Must only one of: "yes" or "no".
+  "search_shared": Must only one of: "yes" or "no".
+  "search_static": Must only one of: "yes" or "no".
+  "version_major": Must only be a single value containg valid filename characters.
+  "version_minor": Must only be a single value containg valid filename characters.
+  "version_micro": Must only be a single value containg valid filename characters.
+  "version_target": Must only be one of: "major", "minor", or "micro".
+
+The following Object names support having a "-" and a "mode" name, such as "build_libraries-individual" for a mode called "individual":
+  "build_libraries"
+  "build_sources_headers"
+  "build_sources_library"
+  "build_sources_program"
+  "build_sources_setting"
+  "build_sources_script"
+  "defines_all"
+  "defines_shared"
+  "defines_static"
+  "environment"
+  "flags_all"
+  "flags_library"
+  "flags_program"
+  "flags_shared"
+  "flags_static"
