@@ -1,22 +1,44 @@
-# fss-0000
+# fss-0001
 
 project_name fll_0
-project_level 0
 
 version_major 0
 version_minor 5
 version_micro 0
 
+environment
+
+process_pre
+process_post
+
+modes level
+modes_default level
+
 build_compiler gcc
+build_language c
 build_linker ar
 build_libraries -lc
-build_libraries_fll
-build_libraries_fll-level
+build_libraries-level
 build_sources_library console.c conversion.c directory.c private-directory.c environment.c private-environment.c file.c private-file.c memory.c path.c pipe.c print.c utf.c private-utf.c
 build_sources_program
-build_sources_headers color.h console.h conversion.h directory.h directory_type.h environment.h file.h fss.h memory.h path_fll.h path_filesystem.h path.h pipe.h print.h serialized.h socket.h status.h status_array.h string.h type.h type_array.h
+build_sources_headers color.h console.h conversion.h directory.h directory_type.h environment.h file.h fss.h memory.h path_fll.h path_filesystem.h path.h pipe.h print.h serialized.h socket.h status.h status_array.h string.h type.h type_array.h utf.h
+build_sources_script
+build_sources_setting
+build_script yes
 build_shared yes
 build_static yes
+
+path_headers level_0
+path_library_script script
+path_library_shared shared
+path_library_static static
+path_program_script script
+path_program_shared shared
+path_program_static static
+
+search_exlusive yes
+search_shared yes
+search_static yes
 
 defines_all
 defines_static

@@ -1,25 +1,45 @@
-# fss-0000
+# fss-0001
 
 project_name fss_status_code
-project_level 3
 
 version_major 0
 version_minor 5
 version_micro 0
 
+environment
+
+process_pre
+process_post
+
+modes individual level monolithic
+modes_default individual
+
 build_compiler gcc
 build_linker ar
 build_libraries -lc
-build_libraries_fll -lfll_execute -lfll_file -lfll_fss -lfll_program -lfll_status -lfl_console -lfl_color -lfl_file -lfl_fss -lfl_status -lfl_string -lfl_utf -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_path -lf_pipe -lf_print -lf_utf -lf_memory
-build_libraries_fll-level -lfll_2 -lfll_1 -lfll_0
-build_libraries_fll-monolithic -lfll
+build_libraries-individual -lfll_execute -lfll_file -lfll_fss -lfll_program -lfll_status -lfl_console -lfl_color -lfl_file -lfl_fss -lfl_status -lfl_string -lfl_utf -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_path -lf_pipe -lf_print -lf_utf -lf_memory
+build_libraries-level -lfll_2 -lfll_1 -lfll_0
+build_libraries-monolithic -lfll
 build_sources_library fss_status_code.c private-fss_status_code.c
 build_sources_program main.c
 build_sources_headers fss_status_code.h
-build_sources_bash
-build_sources_settings
+build_sources_script
+build_sources_setting
+build_script yes
 build_shared yes
 build_static yes
+
+path_headers level_3
+path_library_script script
+path_library_shared shared
+path_library_static static
+path_program_script script
+path_program_shared shared
+path_program_static static
+
+search_exlusive yes
+search_shared yes
+search_static yes
 
 defines_all
 defines_static
@@ -29,4 +49,4 @@ flags_all -z now -g
 flags_shared
 flags_static
 flags_library -fPIC
-flags_program -fPIE -lfss_status_code
+flags_program -fPIE

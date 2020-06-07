@@ -1,23 +1,43 @@
-# fss-0000
+# fss-0001
 
 project_name fl_status
-project_level 1
 
 version_major 0
 version_minor 5
 version_micro 0
 
+environment
+
+process_pre
+process_post
+
+modes individual
+modes_default individual
+
 build_compiler gcc
 build_linker ar
 build_libraries -lc
-build_libraries_fll -lf_utf -lf_memory
+build_libraries-individual -lf_utf -lf_memory
 build_sources_library status.c
 build_sources_program
 build_sources_headers status.h
-build_sources_bash
-build_sources_settings
+build_sources_script
+build_sources_setting
+build_script yes
 build_shared yes
 build_static yes
+
+path_headers level_1
+path_library_script script
+path_library_shared shared
+path_library_static static
+path_program_script script
+path_program_shared shared
+path_program_static static
+
+search_exlusive yes
+search_shared yes
+search_static yes
 
 defines_all
 defines_static
