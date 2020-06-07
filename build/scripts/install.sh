@@ -53,7 +53,7 @@ install_main() {
   local destination_programs_static=
   local destination_programs_shared=
 
-  local work_directory=
+  local work=
 
   local enable_shared=
   local enable_static=
@@ -87,8 +87,8 @@ install_main() {
           grab_next=includedir
         elif [[ $p == "-L" || $p == "--libdir" ]] ; then
           grab_next=libdir
-        elif [[ $p == "-w" || $p == "--work_directory" ]] ; then
-          grab_next=work_directory
+        elif [[ $p == "-w" || $p == "--work" ]] ; then
+          grab_next=work
         elif [[ $p == "--enable-shared" ]] ; then
           enable_shared="yes"
         elif [[ $p == "--disable-shared" ]] ; then
@@ -122,8 +122,8 @@ install_main() {
           destination_includes=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "libdir" ]] ; then
           destination_libraries=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
-        elif [[ $grab_next == "work_directory" ]] ; then
-          work_directory=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+        elif [[ $grab_next == "work" ]] ; then
+          work=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "destination_libraries_static" ]] ; then
           destination_libraries_static=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "destination_libraries_shared" ]] ; then
@@ -213,8 +213,8 @@ install_main() {
     destination_programs_shared=$destination_programs
   fi
 
-  if [[ $work_directory != "" && ! -d $work_directory ]] ; then
-    echo -e "${c_error}ERROR: the work directory $c_notice$work_directory$c_error is not a valid directory.$c_reset"
+  if [[ $work != "" && ! -d $work ]] ; then
+    echo -e "${c_error}ERROR: the work directory $c_notice$work$c_error is not a valid directory.$c_reset"
     install_cleanup
     return 1
   fi
@@ -298,13 +298,13 @@ install_help() {
   echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program."
   echo
   echo -e "${c_highlight}Install Options:$c_reset"
-  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}           Custom build directory."
-  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}        Custom build settings file."
-  echo -e " -${c_important}P$c_reset, --${c_important}prefix${c_reset}          Custom destination prefix."
-  echo -e " -${c_important}B$c_reset, --${c_important}bindir${c_reset}          Custom destination bin/ directory."
-  echo -e " -${c_important}I$c_reset, --${c_important}includedir${c_reset}      Custom destination include/ directory."
-  echo -e " -${c_important}L$c_reset, --${c_important}libdir${c_reset}          Custom destination lib/ directory."
-  echo -e " -${c_important}w$c_reset, --${c_important}work_directory${c_reset}  Install to this directory instead of system."
+  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}       Custom build directory."
+  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}    Custom build settings file."
+  echo -e " -${c_important}P$c_reset, --${c_important}prefix${c_reset}      Custom destination prefix."
+  echo -e " -${c_important}B$c_reset, --${c_important}bindir${c_reset}      Custom destination bin/ directory."
+  echo -e " -${c_important}I$c_reset, --${c_important}includedir${c_reset}  Custom destination include/ directory."
+  echo -e " -${c_important}L$c_reset, --${c_important}libdir${c_reset}      Custom destination lib/ directory."
+  echo -e " -${c_important}w$c_reset, --${c_important}work${c_reset}        Install to this directory instead of system."
   echo
   echo -e "${c_highlight}Special Options:$c_reset"
   echo -e " --${c_important}enable-shared${c_reset}     Forcibly do install shared files."
@@ -374,77 +374,77 @@ install_perform_install() {
     build_static="no"
   fi
 
-  if [[ $work_directory != "" ]] ; then
-    if [[ ! -d ${work_directory}programs ]] ; then
-      mkdir -v ${work_directory}programs
+  if [[ $work != "" ]] ; then
+    if [[ ! -d ${work}programs ]] ; then
+      mkdir -v ${work}programs
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}programs$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs$c_error.$c_reset"
         failure=1
       fi
     fi
 
-    if [[ ! -d ${work_directory}programs/shared ]] ; then
-      mkdir -v ${work_directory}programs/shared
+    if [[ ! -d ${work}programs/shared ]] ; then
+      mkdir -v ${work}programs/shared
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}programs/shared$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs/shared$c_error.$c_reset"
         failure=1
       fi
     fi
 
-    if [[ ! -d ${work_directory}programs/static ]] ; then
-      mkdir -v ${work_directory}programs/static
+    if [[ ! -d ${work}programs/static ]] ; then
+      mkdir -v ${work}programs/static
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}programs/static$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs/static$c_error.$c_reset"
         failure=1
       fi
     fi
 
-    if [[ ! -d ${work_directory}libraries ]] ; then
-      mkdir -v ${work_directory}libraries
+    if [[ ! -d ${work}libraries ]] ; then
+      mkdir -v ${work}libraries
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}libraries$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries$c_error.$c_reset"
         failure=1
       fi
     fi
 
-    if [[ ! -d ${work_directory}libraries/shared ]] ; then
-      mkdir -v ${work_directory}libraries/shared
+    if [[ ! -d ${work}libraries/shared ]] ; then
+      mkdir -v ${work}libraries/shared
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}libraries/shared$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries/shared$c_error.$c_reset"
         failure=1
       fi
     fi
 
-    if [[ ! -d ${work_directory}libraries/static ]] ; then
-      mkdir -v ${work_directory}libraries/static
+    if [[ ! -d ${work}libraries/static ]] ; then
+      mkdir -v ${work}libraries/static
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}libraries/static$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries/static$c_error.$c_reset"
         failure=1
       fi
     fi
 
-    if [[ ! -d ${work_directory}includes ]] ; then
-      mkdir -v ${work_directory}includes
+    if [[ ! -d ${work}includes ]] ; then
+      mkdir -v ${work}includes
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work_directory}includes$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}includes$c_error.$c_reset"
         failure=1
       fi
     fi
 
     if [[ $failure == "" ]] ; then
-      destination_prefix=$work_directory
-      destination_programs=${work_directory}programs/
+      destination_prefix=$work
+      destination_programs=${work}programs/
       destination_programs_static=${destination_programs}static/
       destination_programs_shared=${destination_programs}shared/
-      destination_includes=${work_directory}includes/
-      destination_libraries=${work_directory}libraries/
+      destination_includes=${work}includes/
+      destination_libraries=${work}libraries/
       destination_libraries_static=${destination_libraries}static/
       destination_libraries_shared=${destination_libraries}shared/
     fi
