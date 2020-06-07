@@ -37,7 +37,7 @@ path_program_script script
 path_program_shared shared
 path_program_static static
 
-search_exlusive yes
+search_exclusive yes
 search_shared yes
 search_static yes
 

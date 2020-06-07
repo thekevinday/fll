@@ -447,7 +447,7 @@ bootstrap_operation_build() {
   local arguments_include="-I${path_build}includes"
   local arguments_shared="-L${path_build}libraries/shared"
   local arguments_static="-L${path_build}libraries/static"
-  local search_exclusive=${variables[$(bootstrap_id search_exlusive)]}
+  local search_exclusive=${variables[$(bootstrap_id search_exclusive)]}
   local search_shared=${variables[$(bootstrap_id search_shared)]}
   local search_static=${variables[$(bootstrap_id search_static)]}
   local shared=${variables[$(bootstrap_id build_shared)]}
