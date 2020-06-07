@@ -1,4 +1,5 @@
 This package provides a _very_ primitive build system using a bash script called generate.sh.
+(Once the FLL project is fully bootstrap compiled, the Featureless Make project, called fake, can be used to build any part of this project instead of the primitive generate.sh script.)
 
 The syntax for generate.sh is:
   generate.sh <command> [options]
@@ -14,6 +15,9 @@ Install Example:
   cp -vR build/libaries/shared/* /usr/lib/
   cp -vR build/programs/shared/* /usr/bin/
   cp -vR build/settings/* /etc/
+
+Alternatively, a primitive install script is provided to help install:
+  ./install.sh
   
 If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successful build, then there are no files of that type to install.
 
@@ -44,6 +48,7 @@ A third pseudo-level also exists for common programs built using this project, c
 
 With an exception of a few projects within level_0, each level should only depend on a project from a lower level.
 Therefore, a level_1 project can only depend on level_0 projects and a level_2 project can depend on only level_0 and level_1 projects.
+This does not technically apply to the pseudo-level, level_3, projects, but the pattern is generally followed.
 
 A few projects in level_0 are essentially required by everything and are depended on by virtually all projects, regardless of the level.
 These level_0 projects are:
