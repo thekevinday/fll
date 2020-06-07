@@ -25,9 +25,9 @@ if [[ $1 == "individual" ]] ; then
   for i in f_type f_status f_memory f_string f_utf f_color f_console f_conversion f_directory f_environment f_file f_fss f_path f_pipe f_print f_serialized f_socket fl_color fl_console fl_directory fl_file fl_fss fl_print fl_serialized fl_socket fl_status fl_string fl_utf fl_utf_file fll_directory fll_execute fll_file fll_fss fll_program fll_status ; do
     cd package/individual/$i-$2/ &&
 
-    ./generate.sh clean &&
+    ./bootstrap.sh clean &&
 
-    ./generate.sh build -w $install_path -m individual &&
+    ./bootstrap.sh build -w $install_path -m individual &&
 
     ./install.sh -w $install_path &&
 
@@ -40,9 +40,9 @@ if [[ $1 == "level" ]] ; then
 
   cd package/level/fll-level_0-$2/ &&
 
-  ./generate.sh clean &&
+  ./bootstrap.sh clean &&
 
-  ./generate.sh build -w $install_path -m level &&
+  ./bootstrap.sh build -w $install_path -m level &&
 
   ./install.sh -w $install_path &&
 
@@ -50,9 +50,9 @@ if [[ $1 == "level" ]] ; then
 
   cd package/level/fll-level_1-$2/ &&
 
-  ./generate.sh clean &&
+  ./bootstrap.sh clean &&
 
-  ./generate.sh build -w $install_path -m level &&
+  ./bootstrap.sh build -w $install_path -m level &&
 
   ./install.sh -w $install_path &&
 
@@ -60,9 +60,9 @@ if [[ $1 == "level" ]] ; then
 
   cd package/level/fll-level_2-$2/ &&
 
-  ./generate.sh clean &&
+  ./bootstrap.sh clean &&
 
-  ./generate.sh build -w $install_path -m level &&
+  ./bootstrap.sh build -w $install_path -m level &&
 
   ./install.sh -w $install_path
 fi
@@ -72,9 +72,9 @@ if [[ $1 == "monolithic" ]] ; then
 
   cd package/monolithic/fll-$2/ &&
 
-  ./generate.sh clean &&
+  ./bootstrap.sh clean &&
 
-  ./generate.sh build -w $install_path -m monolithic &&
+  ./bootstrap.sh build -w $install_path -m monolithic &&
 
   ./install.sh -w $install_path
 fi
@@ -85,9 +85,9 @@ fi
 
 #cd package/programs/fake-$2/ &&
 
-#./generate.sh clean &&
+#./bootstrap.sh clean &&
 
-#./generate.sh build -w $install_path -m $1 &&
+#./bootstrap.sh build -w $install_path -m $1 &&
 
 #./install.sh -w $install_path
 

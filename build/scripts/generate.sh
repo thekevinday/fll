@@ -7,9 +7,9 @@
 #
 # This script is only designed specifically for bootstrap compiling the FLL project and does not necessarily fully follow the fake (featureless make) build process.
 
-generate_main() {
-  local public_name="Simple FLL Project Make Script"
-  local system_name=generate
+bootstrap_main() {
+  local public_name="Simple FLL Bootstrap Script"
+  local system_name=bootstrap
   local called_name=$(basename $0)
   local version=0.5.0
 
@@ -130,49 +130,49 @@ generate_main() {
   path_settings="${path_data}build/settings/"
   path_build_stage="${path_build}stage/"
 
-  generate_handle_colors
+  bootstrap_handle_colors
 
   if [[ $do_help == "yes" ]] ; then
-    generate_help
-    generate_cleanup
+    bootstrap_help
+    bootstrap_cleanup
     return 0
   fi
 
   # FSS and Featurless Make supports more flexible mode names, but for the purpose of this bootstrap script and avoiding potential problems, keep it simple.
   if [[ $mode != "" && $(echo "$mode" | grep -s -o "[^_[:alnum:]+-]") != "" ]] ; then
     echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error includes invalid characters, only alphanumeric, underscore, minus, and plus are allowed.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   fi
 
-  generate_load_settings
+  bootstrap_load_settings
 
   if [[ $mode == "" ]] ; then
-    mode=${variables[$(generate_id modes_default)]}
+    mode=${variables[$(bootstrap_id modes_default)]}
 
     if [[ $mode != "" && $(echo "$mode" | grep -s -o "[^_[:alnum:]+-]") != "" ]] ; then
       echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error includes invalid characters, only alphanumeric, underscore, minus, and plus are allowed.$c_reset"
-      generate_cleanup
+      bootstrap_cleanup
       return 1
     fi
   fi
 
-  generate_load_settings_mode
+  bootstrap_load_settings_mode
 
-  project_built="${path_build_stage}${variables[$(generate_id project_name)]}"
+  project_built="${path_build_stage}${variables[$(bootstrap_id project_name)]}"
   if [[ $process != "" ]] ; then
     project_built="${project_built}-$process"
   fi
 
-  if [[ ${variables[$(generate_id modes)]} == "" ]] ; then
+  if [[ ${variables[$(bootstrap_id modes)]} == "" ]] ; then
     if [[ $mode != "" ]] ; then
       echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error is not a valid mode, there are no available modes.$c_error$c_reset"
-      generate_cleanup
+      bootstrap_cleanup
       return 1
     fi
   else
     let i=0
-    for m in ${variables[$(generate_id modes)]} ; do
+    for m in ${variables[$(bootstrap_id modes)]} ; do
       if [[ "$mode" == "$m" ]] ; then
         let i=1
         break
@@ -180,91 +180,91 @@ generate_main() {
     done
 
     if [[ $i -eq 0 ]] ; then
-      echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error is not a valid mode, it must be one of: $c_notice${variables[$(generate_id modes)]}$c_error.$c_reset"
-      generate_cleanup
+      echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error is not a valid mode, it must be one of: $c_notice${variables[$(bootstrap_id modes)]}$c_error.$c_reset"
+      bootstrap_cleanup
       return 1
     fi
   fi
 
-  if [[ ${variables[$(generate_id project_name)]} == "" ]] ; then
+  if [[ ${variables[$(bootstrap_id project_name)]} == "" ]] ; then
     echo -e "${c_error}ERROR: the required setting '${c_notice}project_name$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   fi
 
-  if [[ ${variables[$(generate_id version_major)]} == "" ]] ; then
+  if [[ ${variables[$(bootstrap_id version_major)]} == "" ]] ; then
     echo -e "${c_error}ERROR: the required setting '${c_notice}version_major$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   fi
 
-  if [[ ${variables[$(generate_id version_minor)]} == "" ]] ; then
+  if [[ ${variables[$(bootstrap_id version_minor)]} == "" ]] ; then
     echo -e "${c_error}ERROR: the required setting '${c_notice}version_minor$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   fi
 
-  if [[ ${variables[$(generate_id version_micro)]} == "" ]] ; then
+  if [[ ${variables[$(bootstrap_id version_micro)]} == "" ]] ; then
     echo -e "${c_error}ERROR: the required setting '${c_notice}version_micro$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   fi
 
   if [[ $path_data == "" || ! -d $path_data ]] ; then
     echo -e "${c_error}ERROR: the data directory $c_notice$path_data$c_error is not a valid directory.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   fi
 
   if [[ $path_sources == "" || ! -d $path_sources ]] ; then
     echo -e "${c_error}ERROR: the sources directory $c_notice$path_sources$c_error is not a valid directory.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   fi
 
   if [[ $path_work != "" && ! -d $path_work ]] ; then
     echo -e "${c_error}ERROR: the work directory $c_notice$path_work$c_error is not a valid directory.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   fi
 
   if [[ $defines_override != "" && $(echo "$defines_override" | grep -s -o "[^_[:alnum:][:space:]]") != "" ]] ; then
     echo -e "${c_error}ERROR: the defines override $c_notice$defines_override$c_error includes invalid characters, only alphanumeric, whitespace, and underscore are allowed.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   fi
 
   if [[ $operation_failure == "fail-multiple" ]] ; then
     echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   elif [[ $operation == "build" ]] ; then
     if [[ -f ${project_built}.built ]] ; then
       echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
     else
       if [[ ! -f ${project_built}.prepared ]] ; then
-        generate_prepare_build
+        bootstrap_prepare_build
       fi
 
-      generate_operation_build
+      bootstrap_operation_build
     fi
   elif [[ $operation == "clean" ]] ; then
-    generate_operation_clean
+    bootstrap_operation_clean
   elif [[ $operation == "" ]] ; then
     echo -e "${c_error}ERROR: no operation was given.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   else
     echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     return 1
   fi
 
-  generate_cleanup
+  bootstrap_cleanup
   return 0
 }
 
-generate_handle_colors() {
+bootstrap_handle_colors() {
   if [[ $do_color == "light" ]] ; then
     c_error="\\033[1;31m"
     c_warning="\\033[0;31m"
@@ -285,7 +285,7 @@ generate_handle_colors() {
   fi
 }
 
-generate_help() {
+bootstrap_help() {
   echo
   echo -e "${c_title}$public_name$c_reset"
   echo -e " ${c_notice}Version $version$c_reset"
@@ -300,7 +300,7 @@ generate_help() {
   echo -e " +${c_important}n$c_reset, ++${c_important}no_color$c_reset  Do not use color."
   echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program."
   echo
-  echo -e "${c_highlight}Generate Options:$c_reset"
+  echo -e "${c_highlight}Bootstrap Options:$c_reset"
   echo -e " -${c_important}d$c_reset, --${c_important}defines${c_reset}    Override custom defines with these defines."
   echo -e " -${c_important}m$c_reset, --${c_important}mode${c_reset}       Use this mode when processing the build settings."
   echo -e " -${c_important}p$c_reset, --${c_important}process${c_reset}    Process name for storing build states."
@@ -319,7 +319,7 @@ generate_help() {
   echo
 }
 
-generate_id() {
+bootstrap_id() {
   local name=$1
 
   case $name in
@@ -383,7 +383,7 @@ generate_id() {
   esac
 }
 
-generate_load_settings() {
+bootstrap_load_settings() {
   local failure=
   local i=
   local key=
@@ -397,24 +397,24 @@ generate_load_settings() {
   fi
 
   if [[ $failure != "" ]] ; then
-    generate_cleanup
+    bootstrap_cleanup
     exit $failure
   fi
 
   for i in build_compiler build_language build_libraries build_linker build_script build_shared build_sources_headers build_sources_library build_sources_program build_sources_setting build_sources_script build_static defines_all defines_shared defines_static environment flags_all flags_library flags_program flags_shared flags_static modes modes_default path_language path_headers path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static process_post process_pre project_name search_exclusive search_shared search_static version_major version_micro version_minor ; do
-    variables[$(generate_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
+    variables[$(bootstrap_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 }
 
-generate_load_settings_mode() {
+bootstrap_load_settings_mode() {
   local i=
 
   for i in build_libraries-$mode build_sources_headers-$mode build_sources_library-$mode build_sources_program-$mode build_sources_setting-$mode build_sources_script-$mode defines_all-$mode defines_shared-$mode defines_static-$mode environment-$mode flags_all-$mode flags_library-$mode flags_program-$mode flags_shared-$mode flags_static-$mode ; do
-    variables[$(generate_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
+    variables[$(bootstrap_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 }
 
-generate_prepare_build() {
+bootstrap_prepare_build() {
   local failure=
   local alt=$1
   local i=
@@ -422,58 +422,58 @@ generate_prepare_build() {
   mkdir -vp ${path_build}{documents,includes,libraries/{script,shared,static},objects,programs/{script,shared,static},settings,stage} || failure=1
 
   if [[ $failure == "" ]] ; then
-    for i in ${variables[$(generate_id path_headers)]} ; do
+    for i in ${variables[$(bootstrap_id path_headers)]} ; do
       mkdir -vp ${path_build}includes/$i || failure=1
     done
   fi
 
   if [[ $failure != "" ]] ; then
-    generate_cleanup
+    bootstrap_cleanup
     exit $failure
   fi
 
   touch ${project_built}.prepared
 }
 
-generate_operation_build() {
+bootstrap_operation_build() {
   local failure=
-  local name=${variables[$(generate_id project_name)]}
-  local major=${variables[$(generate_id version_major)]}
-  local minor=${variables[$(generate_id version_minor)]}
-  local micro=${variables[$(generate_id version_micro)]}
-  local target=${variables[$(generate_id version_target)]}
-  local compiler=${variables[$(generate_id build_compiler)]}
-  local linker=${variables[$(generate_id build_linker)]}
+  local name=${variables[$(bootstrap_id project_name)]}
+  local major=${variables[$(bootstrap_id version_major)]}
+  local minor=${variables[$(bootstrap_id version_minor)]}
+  local micro=${variables[$(bootstrap_id version_micro)]}
+  local target=${variables[$(bootstrap_id version_target)]}
+  local compiler=${variables[$(bootstrap_id build_compiler)]}
+  local linker=${variables[$(bootstrap_id build_linker)]}
   local arguments_include="-I${path_build}includes"
   local arguments_shared="-L${path_build}libraries/shared"
   local arguments_static="-L${path_build}libraries/static"
-  local search_exclusive=${variables[$(generate_id search_exlusive)]}
-  local search_shared=${variables[$(generate_id search_shared)]}
-  local search_static=${variables[$(generate_id search_static)]}
-  local shared=${variables[$(generate_id build_shared)]}
-  local static=${variables[$(generate_id build_static)]}
-  local sources_library=${variables[$(generate_id build_sources_library)]}
-  local sources_program=${variables[$(generate_id build_sources_program)]}
-  local sources_headers=${variables[$(generate_id build_sources_headers)]}
-  local sources_bash=${variables[$(generate_id build_sources_bash)]}
-  local sources_setting=${variables[$(generate_id build_sources_setting)]}
+  local search_exclusive=${variables[$(bootstrap_id search_exlusive)]}
+  local search_shared=${variables[$(bootstrap_id search_shared)]}
+  local search_static=${variables[$(bootstrap_id search_static)]}
+  local shared=${variables[$(bootstrap_id build_shared)]}
+  local static=${variables[$(bootstrap_id build_static)]}
+  local sources_library=${variables[$(bootstrap_id build_sources_library)]}
+  local sources_program=${variables[$(bootstrap_id build_sources_program)]}
+  local sources_headers=${variables[$(bootstrap_id build_sources_headers)]}
+  local sources_bash=${variables[$(bootstrap_id build_sources_bash)]}
+  local sources_setting=${variables[$(bootstrap_id build_sources_setting)]}
   local sources=
-  local libraries=${variables[$(generate_id build_libraries)]}
+  local libraries=${variables[$(bootstrap_id build_libraries)]}
   local links=
-  local defines=${variables[$(generate_id defines_all)]}
-  local defines_shared=${variables[$(generate_id defines_shared)]}
-  local defines_static=${variables[$(generate_id defines_static)]}
-  local flags_all=${variables[$(generate_id flags_all)]}
-  local flags_shared=${variables[$(generate_id flags_shared)]}
-  local flags_static=${variables[$(generate_id flags_static)]}
-  local flags_library=${variables[$(generate_id flags_library)]}
-  local flags_program=${variables[$(generate_id flags_program)]}
+  local defines=${variables[$(bootstrap_id defines_all)]}
+  local defines_shared=${variables[$(bootstrap_id defines_shared)]}
+  local defines_static=${variables[$(bootstrap_id defines_static)]}
+  local flags_all=${variables[$(bootstrap_id flags_all)]}
+  local flags_shared=${variables[$(bootstrap_id flags_shared)]}
+  local flags_static=${variables[$(bootstrap_id flags_static)]}
+  local flags_library=${variables[$(bootstrap_id flags_library)]}
+  local flags_program=${variables[$(bootstrap_id flags_program)]}
   local i=
   local n=
   local version=
   local alt=$1
   local directory=
-  local path_headers=${variables[$(generate_id path_headers)]}
+  local path_headers=${variables[$(bootstrap_id path_headers)]}
 
   if [[ $target == "" ]] ; then
     target="major"
@@ -488,81 +488,81 @@ generate_operation_build() {
   fi
 
   if [[ $sources_library == "" ]] ; then
-    sources_library=${variables[$(generate_id build_sources_library-$mode)]}
+    sources_library=${variables[$(bootstrap_id build_sources_library-$mode)]}
   else
-    sources_library="$sources_library ${variables[$(generate_id build_sources_library-$mode)]}"
+    sources_library="$sources_library ${variables[$(bootstrap_id build_sources_library-$mode)]}"
   fi
 
   if [[ $sources_program == "" ]] ; then
-    sources_program=${variables[$(generate_id build_sources_program-$mode)]}
+    sources_program=${variables[$(bootstrap_id build_sources_program-$mode)]}
   else
-    sources_program="$sources_program ${variables[$(generate_id build_sources_program-$mode)]}"
+    sources_program="$sources_program ${variables[$(bootstrap_id build_sources_program-$mode)]}"
   fi
 
   if [[ $sources_headers == "" ]] ; then
-    sources_headers=${variables[$(generate_id build_sources_headers-$mode)]}
+    sources_headers=${variables[$(bootstrap_id build_sources_headers-$mode)]}
   else
-    sources_headers="$sources_headers ${variables[$(generate_id build_sources_headers-$mode)]}"
+    sources_headers="$sources_headers ${variables[$(bootstrap_id build_sources_headers-$mode)]}"
   fi
 
   if [[ $sources_setting == "" ]] ; then
-    sources_setting=${variables[$(generate_id build_sources_setting-$mode)]}
+    sources_setting=${variables[$(bootstrap_id build_sources_setting-$mode)]}
   else
-    sources_setting="$sources_setting ${variables[$(generate_id build_sources_setting-$mode)]}"
+    sources_setting="$sources_setting ${variables[$(bootstrap_id build_sources_setting-$mode)]}"
   fi
 
   if [[ $libraries == "" ]] ; then
-    libraries=${variables[$(generate_id build_libraries-$mode)]}
+    libraries=${variables[$(bootstrap_id build_libraries-$mode)]}
   else
-    libraries="$libraries ${variables[$(generate_id build_libraries-$mode)]}"
+    libraries="$libraries ${variables[$(bootstrap_id build_libraries-$mode)]}"
   fi
 
   if [[ $defines == "" ]] ; then
-    defines=${variables[$(generate_id defines_all-$mode)]}
+    defines=${variables[$(bootstrap_id defines_all-$mode)]}
   else
-    defines="$defines ${variables[$(generate_id defines_all-$mode)]}"
+    defines="$defines ${variables[$(bootstrap_id defines_all-$mode)]}"
   fi
 
   if [[ $defines_shared == "" ]] ; then
-    defines_shared=${variables[$(generate_id defines_shared-$mode)]}
+    defines_shared=${variables[$(bootstrap_id defines_shared-$mode)]}
   else
-    defines_shared="$defines_shared ${variables[$(generate_id defines_shared-$mode)]}"
+    defines_shared="$defines_shared ${variables[$(bootstrap_id defines_shared-$mode)]}"
   fi
 
   if [[ $defines_static == "" ]] ; then
-    defines_static=${variables[$(generate_id defines_static-$mode)]}
+    defines_static=${variables[$(bootstrap_id defines_static-$mode)]}
   else
-    defines_static="$defines_static ${variables[$(generate_id defines_static-$mode)]}"
+    defines_static="$defines_static ${variables[$(bootstrap_id defines_static-$mode)]}"
   fi
 
   if [[ $flags_all == "" ]] ; then
-    flags_all=${variables[$(generate_id flags_all-$mode)]}
+    flags_all=${variables[$(bootstrap_id flags_all-$mode)]}
   else
-    flags_all="$flags_all ${variables[$(generate_id flags_all-$mode)]}"
+    flags_all="$flags_all ${variables[$(bootstrap_id flags_all-$mode)]}"
   fi
 
   if [[ $flags_shared == "" ]] ; then
-    flags_shared=${variables[$(generate_id flags_shared-$mode)]}
+    flags_shared=${variables[$(bootstrap_id flags_shared-$mode)]}
   else
-    flags_shared="$flags_shared ${variables[$(generate_id flags_shared-$mode)]}"
+    flags_shared="$flags_shared ${variables[$(bootstrap_id flags_shared-$mode)]}"
   fi
 
   if [[ $flags_static == "" ]] ; then
-    flags_static=${variables[$(generate_id flags_static-$mode)]}
+    flags_static=${variables[$(bootstrap_id flags_static-$mode)]}
   else
-    flags_static="$flags_static ${variables[$(generate_id flags_static-$mode)]}"
+    flags_static="$flags_static ${variables[$(bootstrap_id flags_static-$mode)]}"
   fi
 
   if [[ $flags_library == "" ]] ; then
-    flags_library=${variables[$(generate_id flags_library-$mode)]}
+    flags_library=${variables[$(bootstrap_id flags_library-$mode)]}
   else
-    flags_library="$flags_library ${variables[$(generate_id flags_library-$mode)]}"
+    flags_library="$flags_library ${variables[$(bootstrap_id flags_library-$mode)]}"
   fi
 
   if [[ $flags_program == "" ]] ; then
-    flags_program=${variables[$(generate_id flags_program-$mode)]}
+    flags_program=${variables[$(bootstrap_id flags_program-$mode)]}
   else
-    flags_program="$flags_program ${variables[$(generate_id flags_program-$mode)]}"
+    flags_program="$flags_program ${variables[$(bootstrap_id flags_program-$mode)]}"
   fi
 
   if [[ $path_work != "" ]] ; then
@@ -616,20 +616,20 @@ generate_operation_build() {
 
   if [[ $shared != "yes" && $static != "yes" ]] ; then
     echo -e "${c_error}ERROR: Cannot Build, either build_shared or build_static must be set to 'yes'.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     exit -1
   fi
 
   if [[ $search_shared != "yes" && $search_static != "yes" ]] ; then
     echo -e "${c_error}ERROR: Cannot Build, either search_shared or search_static must be set to 'yes'.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     exit -1
   fi
 
   for i in $sources_library ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       echo -e "${c_error}ERROR: Cannot Build, invalid source_library path provided: '$i'.$c_reset"
-      generate_cleanup
+      bootstrap_cleanup
       exit -1
     fi
   done
@@ -637,7 +637,7 @@ generate_operation_build() {
   for i in $sources_program ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       echo -e "${c_error}ERROR: Cannot Build, invalid sources_program path provided: '$i'.$c_reset"
-      generate_cleanup
+      bootstrap_cleanup
       exit -1
     fi
   done
@@ -645,7 +645,7 @@ generate_operation_build() {
   for i in $sources_headers ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       echo -e "${c_error}ERROR: Cannot Build, invalid sources_headers path provided: '$i'.$c_reset"
-      generate_cleanup
+      bootstrap_cleanup
       exit -1
     fi
   done
@@ -653,7 +653,7 @@ generate_operation_build() {
   for i in $sources_bash ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       echo -e "${c_error}ERROR: Cannot Build, invalid sources_bash path provided: '$i'.$c_reset"
-      generate_cleanup
+      bootstrap_cleanup
       exit -1
     fi
   done
@@ -661,7 +661,7 @@ generate_operation_build() {
   for i in $sources_setting ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       echo -e "${c_error}ERROR: Cannot Build, invalid sources_setting path provided: '$i'.$c_reset"
-      generate_cleanup
+      bootstrap_cleanup
       exit -1
     fi
   done
@@ -801,14 +801,14 @@ generate_operation_build() {
 
   if [[ $failure != "" ]] ; then
     echo -e "${c_error}ERROR: failed to build.$c_reset"
-    generate_cleanup
+    bootstrap_cleanup
     exit $failure
   fi
 
   touch ${project_built}.built
 }
 
-generate_operation_clean() {
+bootstrap_operation_clean() {
   local i=
 
   for i in ${path_build}{documents,includes,libraries,objects,programs,settings,stage} ; do
@@ -826,17 +826,17 @@ generate_operation_clean() {
   fi
 }
 
-generate_cleanup() {
-  unset generate_main
-  unset generate_handle_colors
-  unset generate_help
-  unset generate_id
-  unset generate_load_settings
-  unset generate_load_settings_mode
-  unset generate_prepare_build
-  unset generate_operation_build
-  unset generate_operation_clean
-  unset generate_cleanup
+bootstrap_cleanup() {
+  unset bootstrap_main
+  unset bootstrap_handle_colors
+  unset bootstrap_help
+  unset bootstrap_id
+  unset bootstrap_load_settings
+  unset bootstrap_load_settings_mode
+  unset bootstrap_prepare_build
+  unset bootstrap_operation_build
+  unset bootstrap_operation_clean
+  unset bootstrap_cleanup
 }
 
-generate_main $*
+bootstrap_main $*

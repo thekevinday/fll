@@ -1,15 +1,15 @@
 The Featureless Linux Library provides a special bootstrap script in case the Featureless Make is not currently installed.
 
-The GNU bash scripts, called generate.sh and install.sh, are provided to perform this bootstrap process.
+The GNU bash scripts, called bootstrap.sh and install.sh, are provided to perform this bootstrap process.
 
-The syntax for generate.sh is:
-  generate.sh <operation> [options]
+The syntax for bootstrap.sh is:
+  bootstrap.sh <operation> [options]
   - where operation is one of the following: 'build' or 'clean'.
   - No 'install' command is provided, all of the files to install may be found in the build/ directory after the build command is executed.
   - To install, either copy the files in the build directory to their appropriate destination or use the install.sh GNU bash script.
-  - For all operations and options, get help from the generate script by appending the "--help" to the script, such as: "./generate.sh --help".
-  - The monolithic build process is the simplest, which can be generated like the following: "./generate.sh build -m monolithic".
-  - When during development, consider using a work directory: "./generate.sh --work /tmp/work".
+  - For all operations and options, get help from the bootstrap script by appending the "--help" to the script, such as: "./bootstrap.sh --help".
+  - The monolithic build process is the simplest, which can be generated like the following: "./bootstrap.sh build -m monolithic".
+  - When during development, consider using a work directory: "./bootstrap.sh --work /tmp/work".
 
 The syntax for install.sh is:
   install.sh [options]
@@ -22,7 +22,7 @@ The syntax for install.sh is:
   - Note: The Featureless Make is a build system only and not an install system, this script may still be needed to install when using the Featureless Make.
 
 Build Example:
-  ./generate.sh build
+  ./bootstrap.sh build
 
 Install Example:
   ./install.sh

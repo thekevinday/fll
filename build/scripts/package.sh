@@ -301,18 +301,18 @@ package_create_base_files() {
   fi
 
   if [[ $failure == "" ]] ; then
-    cp -vR ${path_build}scripts/generate.sh $package
+    cp -vR ${path_build}scripts/bootstrap.sh $package
 
     if [[ $? -ne 0 ]] ; then
-      echo -e "${c_error}ERROR: failed to copy script $c_notice${path_build}generate.sh$c_error to $c_notice$package$c_error.$c_reset"
+      echo -e "${c_error}ERROR: failed to copy script $c_notice${path_build}bootstrap.sh$c_error to $c_notice$package$c_error.$c_reset"
       failure=1
     fi
 
     if [[ $failure == "" ]] ; then
-      chmod ugo+x ${package}generate.sh
+      chmod ugo+x ${package}bootstrap.sh
 
       if [[ $? -ne 0 ]] ; then
-        echo -e "${c_error}ERROR: failed to set executable permissions on script $c_notice${package}generate.sh$c_error.$c_reset"
+        echo -e "${c_error}ERROR: failed to set executable permissions on script $c_notice${package}bootstrap.sh$c_error.$c_reset"
         failure=1
       fi
     fi

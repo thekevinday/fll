@@ -38,7 +38,7 @@ The above projects should be installed first, and in the provided order (f_type,
 No other level_0 project should depend on another and can be installed in any order.
 
 To facilitate building of this project, two different build systems are provided:
-- The bootstrap, via the generate.sh script.
+- The bootstrap, via the bootstrap.sh script.
 - The Featureless Make, which is a level_3 project provided by FLL.
 
 See: dependencies for specific dependencies of this project.
