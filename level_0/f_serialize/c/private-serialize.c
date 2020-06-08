@@ -1,12 +1,12 @@
-#include <level_1/serialized.h>
-#include "private-serialized.h"
+#include <level_0/serialize.h>
+#include "private-serialize.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if !defined(_di_fl_unserialize_simple_find_) || !defined(_di_fl_unserialize_simple_get_)
-  f_return_status private_fl_unserialize_simple_find(const f_string_static serialized, const f_array_length index, f_string_range *location) {
+#if !defined(_di_f_serialize_un_simple_find_) || !defined(_di_f_serialize_un_simple_get_)
+  f_return_status private_f_serialize_un_simple_find(const f_string_static serialize, const f_array_length index, f_string_range *location) {
     f_status status = F_none;
 
     f_array_length i = 0;
@@ -15,10 +15,10 @@ extern "C" {
 
     unsigned short width = 0;
 
-    while (i < serialized.used) {
-      width = f_macro_utf_byte_width(serialized.string[i]);
+    while (i < serialize.used) {
+      width = f_macro_utf_byte_width(serialize.string[i]);
 
-      if (serialized.string[i] == f_serialized_simple_splitter) {
+      if (serialize.string[i] == f_serialize_simple_splitter) {
         if (current == index) {
           if (start == i) {
             // provide an invalid start to stop range to communicate that there is no data.
@@ -36,7 +36,7 @@ extern "C" {
         start = i + width;
         current++;
       }
-      else if (i == serialized.used) {
+      else if (i == serialize.used) {
         if (current == index) {
           location->start = start;
           location->stop = i - 1;
@@ -45,14 +45,14 @@ extern "C" {
         return F_none_eos;
       }
 
-      if (i + width > serialized.used) return F_status_set_error(F_incomplete_utf_eos);
+      if (i + width > serialize.used) return F_status_set_error(F_incomplete_utf_eos);
 
       i += width;
     } // while
 
     return F_data_not_eos;
   }
-#endif // !defined(_di_fl_unserialize_simple_find_) || !defined(_di_fl_unserialize_simple_get_)
+#endif // !defined(_di_f_serialize_un_simple_find_) || !defined(_di_f_serialize_un_simple_get_)
 
 #ifdef __cplusplus
 } // extern "C"

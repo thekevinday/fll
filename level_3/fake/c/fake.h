@@ -72,9 +72,6 @@
 #include <level_2/fss_extended.h>
 #include <level_2/program.h>
 
-// Temporary include, remove this.
-#include <level_1/serialized.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

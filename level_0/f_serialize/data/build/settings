@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name fl_serialized
+project_name f_serialize
 
 version_major 0
 version_minor 5
@@ -19,17 +19,17 @@ build_compiler gcc
 build_language c
 build_linker ar
 build_libraries -lc
-build_libraries-individual -lf_utf -lf_memory
-build_sources_library serialized.c private-serialized.c
+build_libraries-individual -lf_memory
+build_sources_library serialize.c private-serialize.c
 build_sources_program
-build_sources_headers serialized.h
+build_sources_headers serialize.h
 build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
 build_static yes
 
-path_headers level_1
+path_headers level_0
 path_library_script script
 path_library_shared shared
 path_library_static static
