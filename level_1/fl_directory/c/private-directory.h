@@ -44,27 +44,17 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if directory is empty.
+ *   F_directory_descriptor (with error bit) on directory file descriptor error.
+ *   F_directory_open (with error bit) on directory open error.
+ *   F_directory_stream (with error bit) on directory stream error.
+ *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
+ *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_open_max (with error bit) too many open files.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_access_denied (with error bit) on access denied.
- *   F_loop (with error bit) on loop error.
- *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
- *   F_memory_out (with error bit) if out of memory.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory re-allocation error.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
- *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
- *   F_file_found (with error bit) of a directory aleady exists at the path.
- *   F_name (with error bit) on path name error.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   F_number_overflow (with error bit) on overflow error.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
- *   F_file_open_max (with error bit) when system-wide max open files is reached.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
- *   F_file_read (with error bit) on file read error.
- *   F_file_write (with error bit) on file write error.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
+ *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_clone()
  */
@@ -105,27 +95,17 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if directory is empty.
+ *   F_directory_descriptor (with error bit) on directory file descriptor error.
+ *   F_directory_open (with error bit) on directory open error.
+ *   F_directory_stream (with error bit) on directory stream error.
+ *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
+ *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_open_max (with error bit) too many open files.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_access_denied (with error bit) on access denied.
- *   F_loop (with error bit) on loop error.
- *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
- *   F_memory_out (with error bit) if out of memory.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory re-allocation error.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
- *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
- *   F_file_found (with error bit) of a directory aleady exists at the path.
- *   F_name (with error bit) on path name error.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   F_number_overflow (with error bit) on overflow error.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
- *   F_file_open_max (with error bit) when system-wide max open files is reached.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
- *   F_file_read (with error bit) on file read error.
- *   F_file_write (with error bit) on file write error.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
+ *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_clone()
  */
@@ -161,27 +141,17 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if directory is empty.
+ *   F_directory_descriptor (with error bit) on directory file descriptor error.
+ *   F_directory_open (with error bit) on directory open error.
+ *   F_directory_stream (with error bit) on directory stream error.
+ *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
+ *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_open_max (with error bit) too many open files.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_access_denied (with error bit) on access denied.
- *   F_loop (with error bit) on loop error.
- *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
- *   F_memory_out (with error bit) if out of memory.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory re-allocation error.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
- *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
- *   F_file_found (with error bit) of a directory aleady exists at the path.
- *   F_name (with error bit) on path name error.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   F_number_overflow (with error bit) on overflow error.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
- *   F_file_open_max (with error bit) when system-wide max open files is reached.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
- *   F_file_read (with error bit) on file read error.
- *   F_file_write (with error bit) on file write error.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
+ *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_copy()
  */
@@ -220,27 +190,17 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if directory is empty.
+ *   F_directory_descriptor (with error bit) on directory file descriptor error.
+ *   F_directory_open (with error bit) on directory open error.
+ *   F_directory_stream (with error bit) on directory stream error.
+ *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
+ *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_open_max (with error bit) too many open files.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_access_denied (with error bit) on access denied.
- *   F_loop (with error bit) on loop error.
- *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
- *   F_memory_out (with error bit) if out of memory.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory re-allocation error.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
- *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
- *   F_file_found (with error bit) of a directory aleady exists at the path.
- *   F_name (with error bit) on path name error.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   F_number_overflow (with error bit) on overflow error.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
- *   F_file_open_max (with error bit) when system-wide max open files is reached.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
- *   F_file_read (with error bit) on file read error.
- *   F_file_write (with error bit) on file write error.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
+ *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_copy()
  */
@@ -268,16 +228,17 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if directory is empty (@fixme: unlikely due to '.' and '..' probably always being returned.).
- *   F_failure (with error bit) if failed to read directory information.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_directory_open (with error bit) on directory open error.
+ *   F_data_not if directory is empty.
  *   F_directory_descriptor (with error bit) on directory file descriptor error.
+ *   F_directory_open (with error bit) on directory open error.
  *   F_directory_stream (with error bit) on directory stream error.
  *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
+ *   F_failure (with error bit) if failed to read directory information.
  *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
  *   F_file_open_max (with error bit) too many open files.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
  * @see fl_directory_list()
  */
@@ -305,6 +266,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
+ *
+ *   Errors from (with error bit): f_utf_is_control().
  *
  * @see fl_directory_path_push()
  * @see fl_directory_path_push_dynamic()

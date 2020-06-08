@@ -71,7 +71,6 @@
 // fll-1 includes
 #include <level_1/color.h>
 #include <level_1/console.h>
-#include <level_1/file.h>
 #include <level_1/fss.h>
 #include <level_1/fss_basic_list.h>
 #include <level_1/fss_extended.h>

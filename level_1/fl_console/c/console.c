@@ -6,6 +6,10 @@ extern "C" {
 
 #ifndef _fl_console_parameter_to_string_dynamic_directory_
   f_return_status fl_console_parameter_to_string_dynamic_directory(const f_string argument, f_string_dynamic *directory) {
+    #ifndef _di_level_0_parameter_checking_
+      if (argument == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_f
+
     f_status status = F_none;
     f_string_length length = strlen(argument);
 

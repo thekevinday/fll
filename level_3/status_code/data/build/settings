@@ -19,7 +19,7 @@ build_compiler gcc
 build_language c
 build_linker ar
 build_libraries -lc
-build_libraries-individual -lfll_status -lfll_program -lfl_utf -lfl_string -lfl_status -lfl_file -lfl_console -lfl_color -lf_print -lf_pipe -lf_file -lf_conversion -lf_console -lf_utf -lf_memory
+build_libraries-individual -lfll_status -lfll_program -lfl_utf -lfl_string -lfl_status -lfl_console -lfl_color -lf_print -lf_pipe -lf_file -lf_conversion -lf_console -lf_utf -lf_memory
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_sources_library status_code.c private-status_code.c

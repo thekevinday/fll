@@ -259,7 +259,7 @@ extern "C" {
         status = f_file_read(file, &data->buffer);
 
         if (F_status_is_error(status)) {
-          fss_extended_list_read_print_file_error(data->context, "fl_file_read", "-", F_status_set_fine(status));
+          fss_extended_list_read_print_file_error(data->context, "f_file_read", "-", F_status_set_fine(status));
 
           macro_fss_extended_list_read_depths_delete_simple(depths);
           fss_extended_list_read_delete_data(data);

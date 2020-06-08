@@ -176,13 +176,13 @@ extern "C" {
           status = F_status_set_fine(status);
 
           if (status == F_parameter) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling fl_file_write()");
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_write()");
           }
           else if (status == F_file_write) {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", arguments.argv[data->parameters[fss_basic_list_write_parameter_file].additional.array[0]]);
           }
           else {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fl_file_write()", status);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_write()", status);
           }
 
           fss_basic_list_write_delete_data(data);

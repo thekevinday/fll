@@ -91,7 +91,7 @@ extern "C" {
  *   Errors from (with error bit): f_conversion_string_to_hexidecimal_unsigned().
  *   Errors from (with error bit): f_file_read_until().
  *   Errors from (with error bit): fl_fss_identify()
- *   File errors (with error bit): f_file_seek().
+ *   Errors from (with error bit): f_file_seek().
  *
  * @see f_file_read_until()
  * @see fl_fss_identify()

@@ -16,6 +16,7 @@
 
 // fll-0 includes
 #include <level_0/console.h>
+#include <level_0/file.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
 #include <level_0/string.h>
@@ -25,7 +26,6 @@
 #include <level_1/color.h>
 #include <level_1/console.h>
 #include <level_1/status.h>
-#include <level_1/file.h>
 #include <level_1/fss_basic_list.h>
 #include <level_1/string.h>
 

@@ -52,6 +52,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_memory_allocation (with error bit) on allocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _fl_console_parameter_to_string_dynamic_directory_
   extern f_return_status fl_console_parameter_to_string_dynamic_directory(const f_string argument, f_string_dynamic *directory);
@@ -80,11 +81,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if string starts wth a null (length is 0).
- *   F_number (with error bit) if parameter is not a number.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_number_underflow (with error bit) on integer underflow.
- *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_conversion_string_to_number_signed().
  *
  * @see f_conversion_string_to_number_signed()
  */
@@ -115,11 +114,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if string starts wth a null (length is 0).
- *   F_number (with error bit) if parameter is not a number.
- *   F_number_negative (with error bit) on negative value.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_conversion_string_to_number_unsigned().
  *
  * @see f_conversion_string_to_number_unsigned()
  */

@@ -15,7 +15,6 @@ f_print
 fl_color
 fl_console
 fl_directory
-fl_file
 fl_fss
 fl_status
 fl_string

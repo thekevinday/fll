@@ -64,7 +64,6 @@
 #include <level_1/color.h>
 #include <level_1/console.h>
 #include <level_1/directory.h>
-#include <level_1/file.h>
 #include <level_1/string.h>
 
 // fll-2 includes

@@ -11,7 +11,6 @@ f_print
 f_utf
 fl_color
 fl_console
-fl_file
 fl_string
 fl_utf
 fll_program
