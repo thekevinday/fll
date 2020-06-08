@@ -48,7 +48,7 @@ extern "C" {
     register f_string_length i = 0;
 
     if (buffer.used < 10) {
-      // "# fss-0000" is always 10 characters.
+      // "# fss-0000" is always at least 10 characters.
       return FL_fss_header_not;
     }
 
@@ -84,27 +84,28 @@ extern "C" {
                       if (f_conversion_character_is_hexidecimal(buffer.string[i]) == F_true) {
                         i++;
 
-                        f_string_range length = f_string_range_initialize;
+                        f_string_range range = f_string_range_initialize;
 
-                        length.start = i - 4;
-                        length.stop = i;
+                        range.start = i - 4;
+                        range.stop = i;
 
-                        // 1: A possibly valid header type was found, now convert it into its proper format and save the header type
-                        f_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, length);
+                        // 1: A possibly valid header type was found, now convert it into its proper format and save the header type.
+                        f_status status = f_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
+                        if (F_status_is_error(status)) return status;
 
-                        // 2: At this point, we can still know the proper format for the file and still have a invalid header, handle accordingly
-                        if (buffer.string[i] == f_fss_type_header_close) {
-                          i++;
-                          header->length = i;
+                        if (status == F_none) {
+                          // 2: At this point, we can still know the proper format for the file and still have a invalid header, handle accordingly.
+                          if (buffer.string[i] == f_fss_type_header_close) {
+                            header->length = i + 1;
 
-                          return F_none;
-                        }
-                        else {
-                          // if "# fss-0000" is there, regardless of whats next, we can guess this to be of fss-0000, even if its fss-00001 (this is a guess afterall)
-                          i++;
-                          header->length = i;
+                            return F_none;
+                          }
+                          else {
+                            // if "# fss-0000" is there, regardless of whats next, we can guess this to be of fss-0000, even if its fss-00001 (this is a guess afterall).
+                            header->length = i + 1;
 
-                          return F_status_is_warning(FL_fss_accepted_invalid);
+                            return F_status_is_warning(FL_fss_accepted_invalid);
+                          }
                         }
                       }
                     }
@@ -115,7 +116,7 @@ extern "C" {
           }
         }
       }
-      // people can miss spaces, so lets accept in an attempt to interpret the file anyway, but return values at this point are to be flagged as invalid
+      // people can miss spaces, so lets accept in an attempt to interpret the file anyway, but return values at this point are to be flagged as invalid.
       else if (buffer.string[i] == f_fss_type_header_part2) {
         i++;
 
@@ -140,12 +141,13 @@ extern "C" {
                     if (f_conversion_character_is_hexidecimal(buffer.string[i]) == F_true) {
                       i++;
 
-                      f_string_range length = f_string_range_initialize;
+                      f_string_range range = f_string_range_initialize;
 
-                      length.start = i - 4;
-                      length.stop = i;
+                      range.start = i - 4;
+                      range.stop = i;
 
-                      f_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, length);
+                      f_status status = f_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
+                      if (F_status_is_error(status)) return status;
 
                       header->length = i + 1;
 
@@ -160,8 +162,8 @@ extern "C" {
       }
     }
 
-    // TODO: At some point add checksum and compressions checks here, but the above statements will have to be adjusted accordingly
-    // 3: eventually this will be processing the checksum and 4: will be processing the compression
+    // @todo At some point add checksum and compressions checks here, but the above statements will have to be adjusted accordingly.
+    // 3: eventually this will be processing the checksum and 4: will be processing the compression.
 
     return FL_fss_header_not;
   }
@@ -252,7 +254,6 @@ extern "C" {
       width_max = buffer.used - range.start;
     }
 
-    // @todo update to check against zero-width space.
     return f_utf_is_graph(buffer.string + range.start, width_max);
   }
 #endif // _di_fl_fss_is_graph_

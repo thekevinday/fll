@@ -213,6 +213,10 @@ extern "C" {
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (string[0] == 0) {
+      return F_data_not;
+    }
+
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
     f_number_unsigned converted = 0;
@@ -250,7 +254,7 @@ extern "C" {
           }
         }
       }
-      else if (string[i] != '\0') {
+      else if (string[i] != 0) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -268,6 +272,10 @@ extern "C" {
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (string[0] == 0) {
+      return F_data_not;
+    }
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
@@ -290,7 +298,7 @@ extern "C" {
           converted = digit;
         }
       }
-      else if (string[i] != '\0') {
+      else if (string[i] != 0) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -308,6 +316,10 @@ extern "C" {
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (string[0] == 0) {
+      return F_data_not;
+    }
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
@@ -351,7 +363,7 @@ extern "C" {
           }
         }
       }
-      else if (string[i] != '\0') {
+      else if (string[i] != 0) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -369,6 +381,10 @@ extern "C" {
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (string[0] == 0) {
+      return F_data_not;
+    }
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
@@ -394,7 +410,7 @@ extern "C" {
           converted = digit;
         }
       }
-      else if (string[i] != '\0') {
+      else if (string[i] != 0) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -412,6 +428,10 @@ extern "C" {
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (string[0] == 0) {
+      return F_data_not;
+    }
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
@@ -455,7 +475,7 @@ extern "C" {
           }
         }
       }
-      else if (string[i] != '\0') {
+      else if (string[i] != 0) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -473,6 +493,10 @@ extern "C" {
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (string[0] == 0) {
+      return F_data_not;
+    }
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
@@ -498,7 +522,7 @@ extern "C" {
           converted = digit;
         }
       }
-      else if (string[i] != '\0') {
+      else if (string[i] != 0) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -516,6 +540,10 @@ extern "C" {
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (string[0] == 0) {
+      return F_data_not;
+    }
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
@@ -559,7 +587,7 @@ extern "C" {
           }
         }
       }
-      else if (string[i] != '\0') {
+      else if (string[i] != 0) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -577,6 +605,10 @@ extern "C" {
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (string[0] == 0) {
+      return F_data_not;
+    }
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
@@ -602,7 +634,7 @@ extern "C" {
           converted = digit;
         }
       }
-      else if (string[i] != '\0') {
+      else if (string[i] != 0) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -620,6 +652,10 @@ extern "C" {
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (string[0] == 0) {
+      return F_data_not;
+    }
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
@@ -663,7 +699,7 @@ extern "C" {
           }
         }
       }
-      else if (string[i] != '\0') {
+      else if (string[i] != 0) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -681,6 +717,10 @@ extern "C" {
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (string[0] == 0) {
+      return F_data_not;
+    }
 
     uint8_t scale = 0;
     f_number_unsigned digit = 0;
@@ -706,7 +746,7 @@ extern "C" {
           converted = digit;
         }
       }
-      else if (string[i] != '\0') {
+      else if (string[i] != 0) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -725,8 +765,8 @@ extern "C" {
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (string[0] == '\0') {
-      return F_status_set_error(F_data_not);
+    if (string[0] == 0) {
+      return F_data_not;
     }
 
     uint8_t width = 0;
@@ -874,8 +914,8 @@ extern "C" {
       if (range.stop < range.start) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (string[0] == '\0') {
-      return F_status_set_error(F_data_not);
+    if (string[0] == 0) {
+      return F_data_not;
     }
 
     uint8_t width = 0;

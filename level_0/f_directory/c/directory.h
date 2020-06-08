@@ -107,20 +107,20 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_access_denied (with error bit) on access denied.
- *   F_loop (with error bit) on loop error.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_link_max (with error bit) max links limit reached or exceeded.
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
- *   F_file_found (with error bit) of a directory aleady exists at the path.
- *   F_name (with error bit) on path name error.
- *   F_directory_link_max (with error bit) max links limit reached or exceeded.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_failure (with error bit) for any other (mkdir()) error.
  *
  * @see mkdir()
  */
@@ -140,21 +140,21 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_access_denied (with error bit) on access denied.
- *   F_loop (with error bit) on loop error.
- *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
- *   F_memory_out (with error bit) if out of memory.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
- *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other (mkdir()) error.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
- *   F_file_found (with error bit) of a directory aleady exists at the path.
- *   F_name (with error bit) on path name error.
- *   F_directory_link_max (with error bit) max links limit reached or exceeded.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
+ *   F_directory_link_max (with error bit) max links limit reached or exceeded.
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_failure (with error bit) for any other (mkdirat()) error.
  *
  * @see mkdirat()
  */
@@ -169,14 +169,14 @@ extern "C" {
  *   The path file name.
  *
  * @return
- *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
- *   F_name (with error bit) if the name is somehow invalid.
- *   F_memory_out (with error bit) if out of memory.
- *   F_number_overflow (with error bit) on overflow error.
+ *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_loop (with error bit) if a loop occurred.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) if the name is somehow invalid.
+ *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see stat()
@@ -196,16 +196,16 @@ extern "C" {
  *   Any valid flag, such as f_directory_at_path_empty, f_directory_at_automount_no, or f_directory_at_symlink_follow_no.
  *
  * @return
- *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
- *   F_name (with error bit) if the name is somehow invalid.
- *   F_memory_out (with error bit) if out of memory.
- *   F_number_overflow (with error bit) on overflow error.
+ *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_loop (with error bit) if a loop occurred.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
+ *   F_loop (with error bit) if a loop occurred.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) if the name is somehow invalid.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fstatat()
  */
@@ -220,14 +220,14 @@ extern "C" {
  *   The path file name.
  *
  * @return
- *   F_true if path was found and path is a directory.
  *   F_false if path was found and path is not a directory (this includes symlinks).
  *   F_file_found_not if the path was not found.
- *   F_name (with error bit) if the name is somehow invalid.
- *   F_memory_out (with error bit) if out of memory.
- *   F_number_overflow (with error bit) on overflow error.
+ *   F_true if path was found and path is a directory.
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_loop (with error bit) if a loop occurred.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) if the name is somehow invalid.
+ *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see stat()
@@ -247,16 +247,16 @@ extern "C" {
  *   Any valid flag, such as f_directory_at_path_empty, f_directory_at_automount_no, or f_directory_at_symlink_follow_no.
  *
  * @return
- *   F_true if path was found and path is a directory.
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
- *   F_name (with error bit) if the name is somehow invalid.
- *   F_memory_out (with error bit) if out of memory.
- *   F_number_overflow (with error bit) on overflow error.
+ *   F_true if path was found and path is a directory.
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_loop (with error bit) if a loop occurred.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
+ *   F_loop (with error bit) if a loop occurred.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) if the name is somehow invalid.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fstatat()
  */
@@ -283,10 +283,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if directory is empty (@fixme: unlikely due to '.' and '..' probably always being returned.).
+ *   F_data_not if directory is empty.
  *   F_failure (with error bit) if failed to read directory information.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see alphasort()
  * @see scandir()
@@ -312,13 +312,26 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_directory_found_not (with error bit) if directory was not found.
  *   F_failure (with error bit) if failed to read directory information.
+ *   F_file_open_max (with error bit) too many open files.
+ *   F_file_type_directory_not (with error bit) file is not a directory.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *
  * @see open()
  */
 #ifndef _di_f_directory_open_
-  extern f_return_status private_f_directory_open(const f_string path, const bool dereference, int *id) f_gcc_attribute_visibility_internal;
+  extern f_return_status f_directory_open(const f_string path, const bool dereference, int *id) f_gcc_attribute_visibility_internal;
 #endif // _di_f_directory_open_
 
 /**
@@ -339,13 +352,27 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_directory_found_not (with error bit) if directory was not found.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_failure (with error bit) if failed to read directory information.
+ *   F_file_open_max (with error bit) too many open files.
+ *   F_file_type_directory_not (with error bit) file is not a directory.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *
  * @see openat()
  */
 #ifndef _di_f_directory_open_at_
-  extern f_return_status private_f_directory_open_at(const int at_id, const f_string path, const bool dereference, int *id) f_gcc_attribute_visibility_internal;
+  extern f_return_status f_directory_open_at(const int at_id, const f_string path, const bool dereference, int *id) f_gcc_attribute_visibility_internal;
 #endif // _di_f_directory_open_at_
 
 /**
@@ -363,22 +390,22 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
- *   F_input_output (with error bit) if an I/O error occurred.
- *   F_file_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
- *   F_loop (with error bit) on loop error.
- *   F_name (with error bit) on path name error.
- *   F_file_found_not (with error bit) if file not found.
- *   F_memory_out (with error bit) if out of memory.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_found_not (with error bit) if file not found.
+ *   F_file_open_max (with error bit) too many open files.
+ *   F_file_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
+ *   F_input_output (with error bit) if an I/O error occurred.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other (unlink()) error.
  *   F_number_overflow (with error bit) on integer overflow.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
- *   F_file_open_max (with error bit) too many open files.
+ *   F_failure (with error bit) for any other (remove()) error.
  *
  * @see nftw()
  * @see remove()
@@ -405,19 +432,19 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
- *   F_input_output (with error bit) if an I/O error occurred.
- *   F_file_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
- *   F_loop (with error bit) on loop error.
- *   F_name (with error bit) on path name error.
- *   F_file_found_not (with error bit) if file not found.
- *   F_memory_out (with error bit) if out of memory.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_file_found_not (with error bit) if file not found.
+ *   F_file_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
+ *   F_input_output (with error bit) if an I/O error occurred.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other (unlink()) error.
+ *   F_failure (with error bit) for any other (remove()) error.
  *
  * @see nftw()
  * @see remove()

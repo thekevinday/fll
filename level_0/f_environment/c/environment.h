@@ -61,8 +61,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_exist_not if name does not exist.
- *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
  * @see getenv()
  */
@@ -86,11 +86,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_exist_not if name does not exist.
  *   F_data_not if name.used is 0.
+ *   F_exist_not if name does not exist.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
  *
  * @see getenv()
  */
@@ -145,9 +145,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if name.used is 0.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_invalid (with error bit) if name is an invalid string.
  *   F_memory_out (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
  * @see setenv()
@@ -188,8 +188,8 @@ extern "C" {
  *   F_none on success.
  *   F_invalid (with error bit) if name is an invalid string.
  *   F_memory_out (with error bit) on out of memory.
- *   F_failure (with error bit) on any other error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_failure (with error bit) on any other error.
  *
  * @see unsetenv()
  */

@@ -60,7 +60,7 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_number_overflow (with error bit) on overflow error.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
  *   F_file_read (with error bit) on file read error.
@@ -121,7 +121,7 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_number_overflow (with error bit) on overflow error.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
  *   F_file_read (with error bit) on file read error.
@@ -177,7 +177,7 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_number_overflow (with error bit) on overflow error.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
  *   F_file_read (with error bit) on file read error.
@@ -236,7 +236,7 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_number_overflow (with error bit) on overflow error.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting create.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_busy (with error bit) if filesystem is too busy to perforrm write.
  *   F_file_read (with error bit) on file read error.

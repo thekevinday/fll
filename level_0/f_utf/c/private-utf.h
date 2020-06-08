@@ -140,8 +140,8 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_true if a UTF-8 character.
  *   F_false if not a UTF-8 character.
+ *   F_true if a UTF-8 character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is_valid()
@@ -160,8 +160,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_true if a UTF-8 whitespace.
  *   F_false if not a UTF-8 whitespace.
+ *   F_true if a UTF-8 whitespace.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is_whitespace()
@@ -228,8 +228,8 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_true if a UTF-8 control character.
  *   F_false if not a UTF-8 control character.
+ *   F_true if a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -249,8 +249,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_true if a UTF-8 non-printing or zero-width character.
  *   F_false if not a UTF-8 non-printing or zero-width character.
+ *   F_true if a UTF-8 non-printing or zero-width character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is_zero_width()

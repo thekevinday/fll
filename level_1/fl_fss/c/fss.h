@@ -66,9 +66,11 @@ extern "C" {
  *   The header data to populate with results of this function.
  *
  * @return
+ *   F_none on success
  *   FL_fss_header_not if no header is found.
  *   FL_fss_header_not (with error bit) if the an error occurred prior to identifying a valid header.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_conversion_string_to_hexidecimal_unsigned().
  */
 #ifndef _di_fl_fss_identify_
   extern f_return_status fl_fss_identify(const f_string_static buffer, f_fss_header *header);
@@ -86,9 +88,10 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors from (with error bit): f_conversion_string_to_hexidecimal_unsigned().
  *   Errors from (with error bit): f_file_read_until().
  *   Errors from (with error bit): fl_fss_identify()
- *   File errors (with error bit): F_file_seek, F_file_closed.
+ *   File errors (with error bit): f_file_seek().
  *
  * @see f_file_read_until()
  * @see fl_fss_identify()

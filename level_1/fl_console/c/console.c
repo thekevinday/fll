@@ -161,8 +161,8 @@ extern "C" {
       if (argument == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_f
 
-    if (argument[0] == '\0') {
-      return F_status_set_error(F_data_not);
+    if (argument[0] == 0) {
+      return F_data_not;
     }
 
     f_string_range range = f_string_range_initialize;
@@ -179,8 +179,8 @@ extern "C" {
       if (argument == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_f
 
-    if (argument[0] == '\0') {
-      return F_status_set_error(F_data_not);
+    if (argument[0] == 0) {
+      return F_data_not;
     }
 
     f_string_range range = f_string_range_initialize;

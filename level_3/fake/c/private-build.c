@@ -911,7 +911,7 @@ extern "C" {
           printf("%s", parameter_file_name_micro);
         }
 
-        printf(".%c", f_string_eol[0]);
+        printf("'.%c", f_string_eol[0]);
       }
     }
 

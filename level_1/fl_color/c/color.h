@@ -179,8 +179,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_save_
   extern f_return_status fl_color_save(f_string_dynamic *buffer, const f_color_format format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
@@ -212,8 +212,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_output (with error bit) on output error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_print_
   extern f_return_status fl_color_print(FILE *file, const f_string_static start_color, const f_string_static end_color, const int8_t *string, ...);
@@ -244,8 +244,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_output (with error bit) on output error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_print2_
   extern f_return_status fl_color_print2(FILE *file, const f_string_static start_color, const f_string_static extra_color, const f_string_static end_color, const int8_t *string, ...);
@@ -271,8 +271,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_output (with error bit) on output error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_print_line_
   extern f_return_status fl_color_print_line(FILE *file, const f_string_static start_color, const f_string_static end_color, const int8_t *string, ...);
@@ -303,8 +303,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_output (with error bit) on output error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_print2_line_
   extern f_return_status fl_color_print2_line(FILE *file, const f_string_static start_color, const f_string_static extra_color, const f_string_static end_color, const int8_t *string, ...);
@@ -322,8 +322,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_output (with error bit) on output error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_print_code_
   extern f_return_status fl_color_print_code(FILE *file, const f_string_static color);
@@ -343,8 +343,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_load_context_
   extern f_return_status fl_color_load_context(fl_color_context *context, const bool use_light_colors);

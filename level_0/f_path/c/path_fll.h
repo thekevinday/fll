@@ -8,7 +8,7 @@
  * Provide locations to all fll-specific paths
  * It is planned to have this file auto-generated from a single /etc/fll file such that one file can be used for all supported languages.
  *
- * FIXME: this is very outdated due to numerous structural changes while I was developing turtle kevux.
+ * @fixme this is very outdated due to numerous structural changes while I was developing turtle kevux.
  */
 #ifndef _F_path_fll_h
 #define _F_path_fll_h
