@@ -34,7 +34,7 @@ extern "C" {
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the filename is too long.
+ *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
@@ -67,7 +67,7 @@ extern "C" {
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the filename is too long.
+ *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
@@ -104,7 +104,7 @@ extern "C" {
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the filename is too long.
+ *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
@@ -144,7 +144,7 @@ extern "C" {
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the filename is too long.
+ *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
@@ -772,9 +772,9 @@ extern "C" {
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
- *   F_loop (with error bit) if a loop occurred.
+ *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the name is somehow invalid.
+ *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -806,9 +806,9 @@ extern "C" {
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
- *   F_loop (with error bit) if a loop occurred.
+ *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the name is somehow invalid.
+ *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -835,9 +835,9 @@ extern "C" {
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
- *   F_loop (with error bit) if a loop occurred.
+ *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the name is somehow invalid.
+ *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *

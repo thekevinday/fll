@@ -153,9 +153,7 @@ extern "C" {
       width_max = (stop2 - i2) + 1;
       status = f_utf_is_whitespace(string2 + i2, width_max);
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }

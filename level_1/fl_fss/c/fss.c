@@ -90,7 +90,7 @@ extern "C" {
                         range.stop = i;
 
                         // 1: A possibly valid header type was found, now convert it into its proper format and save the header type.
-                        f_status status = f_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
+                        const f_status status = f_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
                         if (F_status_is_error(status)) return status;
 
                         if (status == F_none) {
@@ -146,7 +146,7 @@ extern "C" {
                       range.start = i - 4;
                       range.stop = i;
 
-                      f_status status = f_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
+                      const f_status status = f_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
                       if (F_status_is_error(status)) return status;
 
                       header->length = i + 1;
@@ -273,10 +273,71 @@ extern "C" {
       width_max = buffer.used - range.start;
     }
 
-    // @todo update to check against control characters and zero-width space.
     return f_utf_is_whitespace(buffer.string + range.start, width_max);
   }
 #endif // _di_fl_fss_is_space_
+
+#ifndef _di_fl_fss_shift_delimiters_
+  f_return_status fl_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_range range) {
+    #ifndef _di_level_1_parameter_checking_
+      if (buffer->used <= 0) return F_status_set_error(F_parameter);
+      if (range.start < 0) return F_status_set_error(F_parameter);
+      if (range.stop < range.start) return F_status_set_error(F_parameter);
+      if (range.start >= buffer->used) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_string_length position = 0;
+    f_string_length distance = 0;
+    unsigned short utf_width = 0;
+    unsigned short i = 0;
+
+    position = range.start;
+
+    while (position < buffer->used && position <= range.stop) {
+      if (buffer->string[position] == f_fss_delimit_placeholder) {
+        distance++;
+      }
+
+      // do not waste time trying to process what is only going to be replaced with a delimit placeholder
+      if (position + distance >= buffer->used || position + distance > range.stop) {
+        break;
+      }
+
+      utf_width = f_macro_utf_byte_width_is(buffer->string[position]);
+      if (utf_width > 1) {
+        // not enough space in buffer or in range range to process UTF-8 character.
+        if (position + utf_width >= buffer->used || position + utf_width > range.stop) {
+          return F_status_set_error(F_utf);
+        }
+
+        if (distance > 0) {
+          while (utf_width > 0) {
+            buffer->string[position] = buffer->string[position + distance];
+            utf_width--;
+            position++;
+          }
+        }
+      }
+      else {
+        // shift everything down one for each placeholder found
+        if (distance > 0) {
+          buffer->string[position] = buffer->string[position + distance];
+        }
+
+        position++;
+      }
+    }
+
+    if (distance > 0) {
+      while (position < buffer->used + distance && position <= range.stop) {
+        buffer->string[position] = f_fss_delimit_placeholder;
+        position++;
+      }
+    }
+
+    return F_none;
+  }
+#endif // _di_fl_fss_shift_delimiters_
 
 #ifndef _di_fl_fss_skip_past_space_
   f_return_status fl_fss_skip_past_space(const f_string_static buffer, f_string_range *range) {
@@ -381,9 +442,7 @@ extern "C" {
       }
     } // for
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -490,68 +549,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fl_fss_skip_past_non_graph_
-
-#ifndef _di_fl_fss_shift_delimiters_
-  f_return_status fl_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_range range) {
-    #ifndef _di_level_1_parameter_checking_
-      if (buffer->used <= 0) return F_status_set_error(F_parameter);
-      if (range.start < 0) return F_status_set_error(F_parameter);
-      if (range.stop < range.start) return F_status_set_error(F_parameter);
-      if (range.start >= buffer->used) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    f_string_length position = 0;
-    f_string_length distance = 0;
-    unsigned short utf_width = 0;
-    unsigned short i = 0;
-
-    position = range.start;
-
-    while (position < buffer->used && position <= range.stop) {
-      if (buffer->string[position] == f_fss_delimit_placeholder) {
-        distance++;
-      }
-
-      // do not waste time trying to process what is only going to be replaced with a delimit placeholder
-      if (position + distance >= buffer->used || position + distance > range.stop) {
-        break;
-      }
-
-      utf_width = f_macro_utf_byte_width_is(buffer->string[position]);
-      if (utf_width > 1) {
-        // not enough space in buffer or in range range to process UTF-8 character.
-        if (position + utf_width >= buffer->used || position + utf_width > range.stop) {
-          return F_status_set_error(F_utf);
-        }
-
-        if (distance > 0) {
-          while (utf_width > 0) {
-            buffer->string[position] = buffer->string[position + distance];
-            utf_width--;
-            position++;
-          }
-        }
-      }
-      else {
-        // shift everything down one for each placeholder found
-        if (distance > 0) {
-          buffer->string[position] = buffer->string[position + distance];
-        }
-
-        position++;
-      }
-    }
-
-    if (distance > 0) {
-      while (position < buffer->used + distance && position <= range.stop) {
-        buffer->string[position] = f_fss_delimit_placeholder;
-        position++;
-      }
-    }
-
-    return F_none;
-  }
-#endif // _di_fl_fss_shift_delimiters_
 
 #ifdef __cplusplus
 } // extern "C"

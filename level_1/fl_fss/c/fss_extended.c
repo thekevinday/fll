@@ -75,16 +75,6 @@ extern "C" {
           return FL_fss_found_object;
         }
         else if (F_status_is_error(status)) {
-          f_status status2 = F_status_set_fine(status);
-
-          if (status2 == F_failure) {
-            return F_status_set_error(F_utf);
-          }
-
-          if (status2 == F_failure) {
-            return F_status_set_error(F_incomplete_utf);
-          }
-
           return status;
         }
         else if (buffer->string[location->start] != f_fss_delimit_slash) {
@@ -232,16 +222,6 @@ extern "C" {
                 return FL_fss_found_object_not;
               }
               else if (F_status_is_error(status)) {
-                f_status status2 = F_status_set_fine(status);
-
-                if (status2 == F_failure) {
-                  return F_status_set_error(F_utf);
-                }
-
-                if (status2 == F_failure) {
-                  return F_status_set_error(F_incomplete_utf);
-                }
-
                 return status;
               }
               else if (buffer->string[location->start] == f_string_eol[0]) {
@@ -404,7 +384,6 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           f_macro_string_lengths_delete_simple(delimits);
-
           return status;
         }
       }
@@ -438,7 +417,6 @@ extern "C" {
 
             if (buffer->string[location->start] == f_string_eol[0]) {
               fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
-
               return FL_fss_found_content;
             }
 
@@ -446,16 +424,6 @@ extern "C" {
             break;
           }
           else if (F_status_is_error(status)) {
-            f_status status2 = F_status_set_fine(status);
-
-            if (status2 == F_failure) {
-              return F_status_set_error(F_utf);
-            }
-
-            if (status2 == F_failure) {
-              return F_status_set_error(F_incomplete_utf);
-            }
-
             return status;
           }
           else if (buffer->string[location->start] != f_fss_delimit_slash) {
@@ -608,16 +576,6 @@ extern "C" {
                   return F_status_is_warning(F_unterminated_group);
                 }
                 else if (F_status_is_error(status)) {
-                  f_status status2 = F_status_set_fine(status);
-
-                  if (status2 == F_failure) {
-                    return F_status_set_error(F_utf);
-                  }
-
-                  if (status2 == F_failure) {
-                    return F_status_set_error(F_incomplete_utf);
-                  }
-
                   return status;
                 }
                 else if (buffer->string[location->start] == f_string_eol[0]) {
@@ -671,7 +629,6 @@ extern "C" {
             status = fl_fss_increment_buffer(*buffer, location, 1);
             if (F_status_is_error(status)) return status;
 
-
             while (location->start <= location->stop && location->start < buffer->used) {
               if (buffer->string[location->start] == f_string_eol[0]) {
                 fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
@@ -709,9 +666,7 @@ extern "C" {
               if (F_status_is_error(status)) return status;
             } // while
 
-            if (continue_main_loop) {
-              break;
-            }
+            if (continue_main_loop) break;
 
             fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, F_none_eos, F_none_stop)
           }
@@ -791,12 +746,8 @@ extern "C" {
 
     fl_macro_fss_skip_past_delimit_placeholders(object, (*location))
 
-    if (location->start > location->stop) {
-      return F_data_not_stop;
-    }
-    else if (location->start >= object.used) {
-      return F_data_not_eos;
-    }
+    if (location->start > location->stop) return F_data_not_stop;
+    else if (location->start >= object.used) return F_data_not_eos;
 
     start_position = location->start;
 
@@ -805,7 +756,6 @@ extern "C" {
 
     if (pre_allocate_size > buffer->size) {
       f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -852,7 +802,6 @@ extern "C" {
 
       if (pre_allocate_size > buffer->size) {
         f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
         if (F_status_is_error(status)) return status;
       }
 
@@ -941,14 +890,13 @@ extern "C" {
           else if (object.string[location->start] == f_fss_delimit_slash) {
             f_string_length slash_count = 0;
 
-            do {
+            for (;;) {
               buffer->string[buffer_position.stop] = object.string[location->start];
               buffer_position.stop++;
               slash_count++;
 
               status = fl_fss_increment_buffer(*buffer, location, 1);
               if (F_status_is_error(status)) return status;
-
 
               fl_macro_fss_skip_past_delimit_placeholders(object, (*location));
 
@@ -961,7 +909,6 @@ extern "C" {
 
                 if (pre_allocate_size > buffer->size) {
                   f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
                   if (F_status_is_error(status)) return status;
                 }
 
@@ -971,7 +918,7 @@ extern "C" {
                 slash_count = 0;
                 break;
               }
-            } while (F_true);
+            } // for
 
             while (slash_count > 0) {
               buffer->string[buffer_position.stop] = f_fss_delimit_slash;
@@ -1021,12 +968,8 @@ extern "C" {
       buffer->used = buffer_position.stop + 1;
     }
 
-    if (location->start > location->stop) {
-      return F_none_stop;
-    }
-    else if (location->start >= object.used) {
-      return F_none_eos;
-    }
+    if (location->start > location->stop) return F_none_stop;
+    else if (location->start >= object.used) return F_none_eos;
 
     return F_none;
   }
@@ -1045,6 +988,11 @@ extern "C" {
     f_string_length start_position = 0;
     f_string_length pre_allocate_size = 0;
 
+    fl_macro_fss_skip_past_delimit_placeholders(content, (*location))
+
+    if (location->start > location->stop) return F_data_not_stop;
+    else if (location->start >= content.used) return F_data_not_eos;
+
     // add an additional 1 to ensure that there is room for the terminating newline.
     pre_allocate_size = buffer->used + (content.used) + 1 + f_fss_default_allocation_step_string;
 
@@ -1053,17 +1001,7 @@ extern "C" {
 
     if (pre_allocate_size > buffer->size) {
       f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size);
-
       if (F_status_is_error(status)) return status;
-    }
-
-    fl_macro_fss_skip_past_delimit_placeholders(content, (*location))
-
-    if (location->start > location->stop) {
-      return F_data_not_stop;
-    }
-    else if (location->start >= content.used) {
-      return F_data_not_eos;
     }
 
     start_position = location->start;
@@ -1111,7 +1049,6 @@ extern "C" {
 
         if (pre_allocate_size > buffer->size) {
           f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
           if (F_status_is_error(status)) return status;
         }
 
@@ -1128,7 +1065,6 @@ extern "C" {
 
       if (pre_allocate_size > buffer->size) {
         f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
         if (F_status_is_error(status)) return status;
       }
 
@@ -1154,7 +1090,6 @@ extern "C" {
 
         if (pre_allocate_size > buffer->size) {
           f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
           if (F_status_is_error(status)) return status;
         }
 
@@ -1211,7 +1146,6 @@ extern "C" {
 
             if (pre_allocate_size > buffer->size) {
               f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
               if (F_status_is_error(status)) return status;
             }
 
@@ -1239,7 +1173,6 @@ extern "C" {
 
           if (pre_allocate_size > buffer->size) {
             f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
             if (F_status_is_error(status)) return status;
           }
 
@@ -1269,12 +1202,8 @@ extern "C" {
     buffer->string[buffer_position.stop] = ' ';
     buffer->used = buffer_position.stop + 1;
 
-    if (location->start > location->stop) {
-      return F_none_stop;
-    }
-    else if (location->start >= content.used) {
-      return F_none_eos;
-    }
+    if (location->start > location->stop) return F_none_stop;
+    else if (location->start >= content.used) return F_none_eos;
 
     return F_none;
   }

@@ -43,8 +43,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_serialize_simple_
   extern f_return_status fl_serialize_simple(const f_string_static value, f_string_dynamic *serialized);
@@ -68,8 +68,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_incomplete_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_unserialize_simple_
   extern f_return_status fl_unserialize_simple(const f_string_static serialized, f_string_dynamics *strings);
@@ -93,8 +93,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_incomplete_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_unserialize_simple_map_
   extern f_return_status fl_unserialize_simple_map(const f_string_static serialized, f_string_ranges *locations);
@@ -150,8 +150,8 @@ extern "C" {
  *   F_none_eos on success at end of string.
  *   F_data_not_eos if end of string reached before index was reached (dynamic->used is set to 0).
  *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_unserialize_simple_get_
   extern f_return_status fl_unserialize_simple_get(const f_string_static serialized, const f_array_length index, f_string_dynamic *dynamic);

@@ -45,9 +45,7 @@ extern "C" {
         return F_none_eos;
       }
 
-      if (i + width > serialized.used) {
-        return F_status_set_error(F_incomplete_utf_eos);
-      }
+      if (i + width > serialized.used) return F_status_set_error(F_incomplete_utf_eos);
 
       i += width;
     } // while

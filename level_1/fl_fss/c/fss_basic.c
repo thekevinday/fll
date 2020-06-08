@@ -21,7 +21,9 @@ extern "C" {
     // delimits must only be applied once a valid object is found
     f_string_lengths delimits = f_string_lengths_initialize;
 
-    fl_fss_skip_past_space(*buffer, location);
+    status = fl_fss_skip_past_space(*buffer, location);
+    if (F_status_is_error(status)) return status;
+
     fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
 
     // return found nothing if this line only contains whitespace and delimit placeholders
@@ -206,7 +208,6 @@ extern "C" {
                   slash_count--;
                 }
 
-
                 status = fl_fss_increment_buffer(*buffer, location, 1);
                 if (F_status_is_error(status)) return status;
               } // while
@@ -232,16 +233,6 @@ extern "C" {
                 return FL_fss_found_object_not;
               }
               else if (F_status_is_error(status)) {
-                f_status status2 = F_status_set_fine(status);
-
-                if (status2 == F_failure) {
-                  return F_status_set_error(F_utf);
-                }
-
-                if (status2 == F_failure) {
-                  return F_status_set_error(F_incomplete_utf);
-                }
-
                 return status;
               }
               else if (buffer->string[location->start] == f_string_eol[0]) {
@@ -386,6 +377,8 @@ extern "C" {
     f_string_lengths delimits = f_string_lengths_initialize;
 
     fl_fss_skip_past_space(*buffer, location);
+    if (F_status_is_error(status)) return status;
+
     fl_macro_fss_content_return_on_overflow((*buffer), (*location), (*found), delimits, F_none_eos, F_none_stop)
 
     // return found nothing if this line only contains whitespace and delimit placeholders
@@ -398,14 +391,14 @@ extern "C" {
     found->array[found->used].start = location->start;
 
     // search for valid content
-    do {
+    for (;;) {
       fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*location))
       fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, F_none_eos, F_none_stop)
 
       if (buffer->string[location->start] == f_fss_basic_close) break;
 
       location->start++;
-    } while (F_true);
+    } // for
 
     // Save the stop length
     found->array[found->used].stop = location->start - 1;
@@ -433,12 +426,8 @@ extern "C" {
 
     fl_macro_fss_skip_past_delimit_placeholders(object, (*location))
 
-    if (location->start > location->stop) {
-      return F_data_not_stop;
-    }
-    else if (location->start >= object.used) {
-      return F_data_not_eos;
-    }
+    if (location->start > location->stop) return F_data_not_stop;
+    else if (location->start >= object.used) return F_data_not_eos;
 
     start_position = location->start;
 
@@ -447,7 +436,6 @@ extern "C" {
 
     if (pre_allocate_size > buffer->size) {
       f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -478,7 +466,6 @@ extern "C" {
 
         if (pre_allocate_size > buffer->size) {
           f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
           if (F_status_is_error(status)) return status;
         }
 
@@ -533,7 +520,6 @@ extern "C" {
 
         if (pre_allocate_size > buffer->size) {
           f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
           if (F_status_is_error(status)) return status;
         }
 
@@ -556,7 +542,6 @@ extern "C" {
 
             if (pre_allocate_size > buffer->size) {
               f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
               if (F_status_is_error(status)) return status;
             }
 
@@ -566,14 +551,13 @@ extern "C" {
           else if (object.string[location->start] == f_fss_delimit_slash) {
             f_string_length slash_count = 0;
 
-            do {
+            for (;;) {
               buffer->string[buffer_position.stop] = object.string[location->start];
               buffer_position.stop++;
               slash_count++;
 
               status = fl_fss_increment_buffer(*buffer, location, 1);
               if (F_status_is_error(status)) return status;
-
 
               fl_macro_fss_skip_past_delimit_placeholders(object, (*location));
 
@@ -586,7 +570,6 @@ extern "C" {
 
                 if (pre_allocate_size > buffer->size) {
                   f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
                   if (F_status_is_error(status)) return status;
                 }
 
@@ -596,7 +579,7 @@ extern "C" {
                 slash_count = 0;
                 break;
               }
-            } while (F_true);
+            } // for
 
             while (slash_count > 0) {
               buffer->string[buffer_position.stop] = f_fss_delimit_slash;
@@ -646,12 +629,8 @@ extern "C" {
       buffer->used = buffer_position.stop + 1;
     }
 
-    if (location->start > location->stop) {
-      return F_none_stop;
-    }
-    else if (location->start >= object.used) {
-      return F_none_eos;
-    }
+    if (location->start > location->stop) return F_none_stop;
+    else if (location->start >= object.used) return F_none_eos;
 
     return F_none;
   }
@@ -669,6 +648,11 @@ extern "C" {
     f_string_range buffer_position = f_string_range_initialize;
     f_string_length pre_allocate_size = 0;
 
+    fl_macro_fss_skip_past_delimit_placeholders(content, (*location))
+
+    if (location->start > location->stop) return F_data_not_stop;
+    else if (location->start >= content.used) return F_data_not_eos;
+
     // add an additional 1 to ensure that there is room for the terminating newline.
     pre_allocate_size = buffer->used + (content.used) + 1 + f_fss_default_allocation_step_string;
 
@@ -677,7 +661,6 @@ extern "C" {
 
     if (pre_allocate_size > buffer->size) {
       f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -700,12 +683,8 @@ extern "C" {
     buffer->string[buffer_position.stop] = f_string_eol[0];
     buffer->used = buffer_position.stop + 1;
 
-    if (location->start > location->stop) {
-      return F_none_stop;
-    }
-    else if (location->start >= content.used) {
-      return F_none_eos;
-    }
+    if (location->start > location->stop) return F_none_stop;
+    else if (location->start >= content.used) return F_none_eos;
 
     return F_none;
   }

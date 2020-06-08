@@ -741,16 +741,12 @@ extern "C" {
     f_macro_fss_objects_delete_simple(objects);
 
     if (location->start > location->stop) {
-      if (depth == 0) {
-        return F_status_set_error(F_unterminated_stop);
-      }
+      if (depth == 0) return F_status_set_error(F_unterminated_stop);
 
       return F_status_set_error(F_unterminated_nest_stop);
     }
 
-    if (depth == 0) {
-      return F_status_set_error(F_unterminated_eos);
-    }
+    if (depth == 0) return F_status_set_error(F_unterminated_eos);
 
     return F_status_set_error(F_unterminated_nest_eos);
   }
@@ -771,12 +767,8 @@ extern "C" {
 
     fl_macro_fss_skip_past_delimit_placeholders(object, (*location))
 
-    if (location->start > location->stop) {
-      return F_data_not_stop;
-    }
-    else if (location->start >= object.used) {
-      return F_data_not_eos;
-    }
+    if (location->start > location->stop) return F_data_not_stop;
+    else if (location->start >= object.used) return F_data_not_eos;
 
     start_position = location->start;
 
@@ -801,16 +793,6 @@ extern "C" {
         break;
       }
       else if (F_status_is_error(status)) {
-        f_status status2 = F_status_set_fine(status);
-
-        if (status2 == F_failure) {
-          return F_status_set_error(F_utf);
-        }
-
-        if (status2 == F_failure) {
-          return F_status_set_error(F_incomplete_utf);
-        }
-
         return status;
       }
 
@@ -857,7 +839,6 @@ extern "C" {
 
           if (pre_allocate_size > buffer->size) {
             f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
             if (F_status_is_error(status)) return status;
           }
 
@@ -871,9 +852,7 @@ extern "C" {
         }
       }
       else if (object.string[location->start] == f_string_eol[0]) {
-        if (buffer_position.stop == buffer_position.start) {
-          return F_data_not_eol;
-        }
+        if (buffer_position.stop == buffer_position.start) return F_data_not_eol;
 
         break;
       }
@@ -891,12 +870,8 @@ extern "C" {
     buffer->string[buffer_position.stop + 1] = f_string_eol[0];
     buffer->used = buffer_position.stop + 2;
 
-    if (location->start > location->stop) {
-      return F_none_stop;
-    }
-    else if (location->start >= object.used) {
-      return F_none_eos;
-    }
+    if (location->start > location->stop) return F_none_stop;
+    else if (location->start >= object.used) return F_none_eos;
 
     return F_none;
   }
@@ -920,12 +895,8 @@ extern "C" {
 
     fl_macro_fss_skip_past_delimit_placeholders(content, (*location))
 
-    if (location->start > location->stop) {
-      return F_data_not_stop;
-    }
-    else if (location->start >= content.used) {
-      return F_data_not_eos;
-    }
+    if (location->start > location->stop) return F_data_not_stop;
+    else if (location->start >= content.used) return F_data_not_eos;
 
     start_position = location->start;
 
@@ -934,7 +905,6 @@ extern "C" {
 
     if (pre_allocate_size > buffer->size) {
       f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -994,7 +964,6 @@ extern "C" {
 
             if (pre_allocate_size > buffer->size) {
               f_macro_string_dynamic_resize(status, (*buffer), pre_allocate_size + f_fss_default_allocation_step_string);
-
               if (F_status_is_error(status)) return status;
             }
 
@@ -1066,16 +1035,6 @@ extern "C" {
         has_graph = F_true;
       }
       else if (F_status_is_error(status)) {
-        f_status status2 = F_status_set_fine(status);
-
-        if (status2 == F_failure) {
-          return F_status_set_error(F_utf);
-        }
-
-        if (status2 == F_failure) {
-          return F_status_set_error(F_incomplete_utf);
-        }
-
         return status;
       }
 
@@ -1091,12 +1050,8 @@ extern "C" {
     buffer->string[buffer_position.stop] = f_string_eol[0];
     buffer->used = buffer_position.stop + 1;
 
-    if (location->start > location->stop) {
-      return F_none_stop;
-    }
-    else if (location->start >= content.used) {
-      return F_none_eos;
-    }
+    if (location->start > location->stop) return F_none_stop;
+    else if (location->start >= content.used) return F_none_eos;
     */
 
     return F_none;

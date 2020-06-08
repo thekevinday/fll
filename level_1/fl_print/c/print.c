@@ -20,9 +20,7 @@ extern "C" {
       status = f_utf_is_whitespace(string + i, width_max);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -37,9 +35,7 @@ extern "C" {
       status = f_utf_is_whitespace(string + i, width_max);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -47,18 +43,14 @@ extern "C" {
       if (status == F_true) {
         f_string_length j = i + f_macro_utf_byte_width(string[i]);
 
-        if (j == length) {
-          return F_none;
-        }
+        if (j == length) return F_none;
 
         for (; j < length; j += f_macro_utf_byte_width(string[j])) {
           width_max = (length - j) + 1;
           status = f_utf_is_whitespace(string + j, width_max);
 
           if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
+            if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
             return status;
           }
@@ -68,23 +60,17 @@ extern "C" {
             for (; i < j; i++) {
               if (string[i] == 0) continue;
 
-              if (fputc(string[i], output) == 0) {
-                return F_status_set_error(F_output);
-              }
+              if (fputc(string[i], output) == 0) return F_status_set_error(F_output);
             } // for
 
             break;
           }
         } // for
 
-        if (status == F_true) {
-          break;
-        }
+        if (status == F_true) break;
       }
 
-      if (fputc(string[i], output) == 0) {
-        return F_status_set_error(F_output);
-      }
+      if (fputc(string[i], output) == 0) return F_status_set_error(F_output);
     } // for
 
     return F_none;
@@ -106,9 +92,7 @@ extern "C" {
       status = f_utf_is_whitespace(buffer.string + i, width_max);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -123,9 +107,7 @@ extern "C" {
       status = f_utf_is_whitespace(buffer.string + i, width_max);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -133,18 +115,14 @@ extern "C" {
       if (status == F_true) {
         f_string_length j = i + f_macro_utf_byte_width(buffer.string[i]);
 
-        if (j == buffer.used) {
-          return F_none;
-        }
+        if (j == buffer.used) return F_none;
 
         for (; j < buffer.used; j += f_macro_utf_byte_width(buffer.string[j])) {
           width_max = (buffer.used - j) + 1;
           status = f_utf_is_whitespace(buffer.string + j, width_max);
 
           if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
+            if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
             return status;
           }
@@ -154,9 +132,7 @@ extern "C" {
             for (; i < j; i++) {
               if (buffer.string[i] == 0) continue;
 
-              if (fputc(buffer.string[i], output) == 0) {
-                return F_status_set_error(F_output);
-              }
+              if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
             } // for
 
             break;
@@ -168,9 +144,7 @@ extern "C" {
         }
       }
 
-      if (fputc(buffer.string[i], output) == 0) {
-        return F_status_set_error(F_output);
-      }
+      if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
     } // for
 
     return F_none;
@@ -197,9 +171,7 @@ extern "C" {
       status = f_utf_is_whitespace(buffer.string + i, width_max);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -228,9 +200,7 @@ extern "C" {
       if (status == F_true) {
         f_string_length j = i + width_i;
 
-        if (j == range.stop) {
-          return F_none;
-        }
+        if (j == range.stop) return F_none;
 
         for (uint8_t width_j = f_macro_utf_byte_width(buffer.string[j]); j <= range.stop; j += width_j) {
           width_j = f_macro_utf_byte_width(buffer.string[j]);
@@ -238,9 +208,7 @@ extern "C" {
           status = f_utf_is_whitespace(buffer.string + j, width_max);
 
           if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
+            if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
             return status;
           }
@@ -256,9 +224,7 @@ extern "C" {
               width_i = f_macro_utf_byte_width(buffer.string[i]);
 
               for (uint8_t k = 0; k < width_i; k++) {
-                if (fputc(buffer.string[i + k], output) == 0) {
-                  return F_status_set_error(F_output);
-                }
+                if (fputc(buffer.string[i + k], output) == 0) return F_status_set_error(F_output);
               } // for
             } // for
 
@@ -272,9 +238,7 @@ extern "C" {
       }
 
       for (uint8_t k = 0; k < width_i; k++) {
-        if (fputc(buffer.string[i + k], output) == 0) {
-          return F_status_set_error(F_output);
-        }
+        if (fputc(buffer.string[i + k], output) == 0) return F_status_set_error(F_output);
       } // for
     } // for
 
@@ -296,9 +260,7 @@ extern "C" {
       status = f_utf_character_is_whitespace(string[i]);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -312,9 +274,7 @@ extern "C" {
       status = f_utf_character_is_whitespace(string[i]);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -322,17 +282,13 @@ extern "C" {
       if (status == F_true) {
         f_string_length j = i + 1;
 
-        if (j == length) {
-          return F_none;
-        }
+        if (j == length) return F_none;
 
         for (; j < length; j++) {
           status = f_utf_character_is_whitespace(string[j]);
 
           if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
+            if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
             return status;
           }
@@ -342,23 +298,17 @@ extern "C" {
             for (; i < j; i++) {
               if (string[i] == 0) continue;
 
-              if (fputc(string[i], output) == 0) {
-                return F_status_set_error(F_output);
-              }
+              if (fputc(string[i], output) == 0) return F_status_set_error(F_output);
             } // for
 
             break;
           }
         } // for
 
-        if (status == F_true) {
-          break;
-        }
+        if (status == F_true) break;
       }
 
-      if (fputc(string[i], output) == 0) {
-        return F_status_set_error(F_output);
-      }
+      if (fputc(string[i], output) == 0) return F_status_set_error(F_output);
     } // for
 
     return F_none;
@@ -378,9 +328,7 @@ extern "C" {
       status = f_utf_character_is_whitespace(buffer.string[i]);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -394,9 +342,7 @@ extern "C" {
       status = f_utf_character_is_whitespace(buffer.string[i]);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -404,17 +350,13 @@ extern "C" {
       if (status == F_true) {
         f_string_length j = i + 1;
 
-        if (j == buffer.used) {
-          return F_none;
-        }
+        if (j == buffer.used) return F_none;
 
         for (; j < buffer.used; j++) {
           status = f_utf_character_is_whitespace(buffer.string[j]);
 
           if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
+            if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
             return status;
           }
@@ -424,9 +366,7 @@ extern "C" {
             for (; i < j; i++) {
               if (buffer.string[i] == 0) continue;
 
-              if (fputc(buffer.string[i], output) == 0) {
-                return F_status_set_error(F_output);
-              }
+              if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
             } // for
 
             break;
@@ -438,9 +378,7 @@ extern "C" {
         }
       }
 
-      if (fputc(buffer.string[i], output) == 0) {
-        return F_status_set_error(F_output);
-      }
+      if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
     } // for
 
     return F_none;
@@ -464,9 +402,7 @@ extern "C" {
       status = f_utf_character_is_whitespace(buffer.string[i]);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -480,9 +416,7 @@ extern "C" {
       status = f_utf_character_is_whitespace(buffer.string[i]);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
+        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
         return status;
       }
@@ -490,17 +424,13 @@ extern "C" {
       if (status == F_true) {
         f_string_length j = i + 1;
 
-        if (j == range.stop) {
-          return F_none;
-        }
+        if (j == range.stop) return F_none;
 
         for (; j <= range.stop; j++) {
           status = f_utf_character_is_whitespace(buffer.string[j]);
 
           if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
+            if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
             return status;
           }
@@ -510,23 +440,17 @@ extern "C" {
             for (; i <= j; i++) {
               if (buffer.string[i] == 0) continue;
 
-              if (fputc(buffer.string[i], output) == 0) {
-                return F_status_set_error(F_output);
-              }
+              if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
             } // for
 
             break;
           }
         } // for
 
-        if (status == F_true) {
-          break;
-        }
+        if (status == F_true) break;
       }
 
-      if (fputc(buffer.string[i], output) == 0) {
-        return F_status_set_error(F_output);
-      }
+      if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
     } // for
 
     return F_none;

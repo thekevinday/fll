@@ -28,9 +28,6 @@ extern "C"{
  * Socket Types.
  */
 #ifndef _di_f_socket_types_
-  #define f_socket_id       int
-  #define f_socket_close_id unsigned short
-
   enum {
     f_socket_close_fast = 1,   // As in close();
     f_socket_close_read,       // As in shutdown(, SHUT_RD);

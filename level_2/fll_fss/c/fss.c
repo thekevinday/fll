@@ -79,7 +79,6 @@ extern "C" {
 
         for (k = 0; k < contents.array[i].used; k++) {
           status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[k], &values[j]->array[values[j]->used]);
-
           if (F_status_is_error(status)) return status;
 
           values[j]->used++;
@@ -119,7 +118,6 @@ extern "C" {
 
         for (k = 0; k < contents.array[i].used; k++) {
           status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[k], values[j]);
-
           if (F_status_is_error(status)) return status;
         } // for
       } // for
@@ -158,7 +156,6 @@ extern "C" {
         if (values[j]->used == 0) {
           for (k = 0; k < contents.array[i].used; k++) {
             status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], values[j]);
-
             if (F_status_is_error(status)) return status;
           } // for
         }
@@ -208,7 +205,6 @@ extern "C" {
 
         for (k = 0; k < contents.array[i].used; k++) {
           status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], &values[j]->array[values[j]->used]);
-
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -252,7 +248,6 @@ extern "C" {
 
         for (k = 0; k < contents.array[i].used; k++) {
           status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], values[j]);
-
           if (F_status_is_error(status)) return status;
         } // for
       } // for

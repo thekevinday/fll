@@ -120,7 +120,7 @@ extern "C" {
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
- *   F_failure (with error bit) for any other (mkdir()) error.
+ *   F_failure (with error bit) for any other error.
  *
  * @see mkdir()
  */
@@ -154,7 +154,7 @@ extern "C" {
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
- *   F_failure (with error bit) for any other (mkdirat()) error.
+ *   F_failure (with error bit) for any other error.
  *
  * @see mkdirat()
  */
@@ -173,9 +173,9 @@ extern "C" {
  *   F_file_found_not if the path was not found.
  *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_loop (with error bit) if a loop occurred.
+ *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the name is somehow invalid.
+ *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -201,9 +201,9 @@ extern "C" {
  *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
- *   F_loop (with error bit) if a loop occurred.
+ *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the name is somehow invalid.
+ *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -224,9 +224,9 @@ extern "C" {
  *   F_file_found_not if the path was not found.
  *   F_true if path was found and path is a directory.
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_loop (with error bit) if a loop occurred.
+ *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the name is somehow invalid.
+ *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -252,9 +252,9 @@ extern "C" {
  *   F_true if path was found and path is a directory.
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
- *   F_loop (with error bit) if a loop occurred.
+ *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) if the name is somehow invalid.
+ *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -405,7 +405,7 @@ extern "C" {
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_number_overflow (with error bit) on integer overflow.
- *   F_failure (with error bit) for any other (remove()) error.
+ *   F_failure (with error bit) for any other error.
  *
  * @see nftw()
  * @see remove()
@@ -444,7 +444,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other (remove()) error.
+ *   F_failure (with error bit) for any other error.
  *
  * @see nftw()
  * @see remove()

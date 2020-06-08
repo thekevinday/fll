@@ -15,7 +15,6 @@ extern "C" {
 
     if (serialized->used + value.used + 1 >= serialized->size) {
       f_macro_string_dynamic_resize(status, (*serialized), serialized->size + value.used + 1);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -53,7 +52,6 @@ extern "C" {
       if (serialized.string[i] == f_serialized_simple_splitter || i + 1 >= serialized.used) {
         if (strings->used >= strings->size) {
           f_macro_string_dynamics_resize(status, (*strings), strings->size + f_serialized_default_allocation_step);
-
           if (F_status_is_error(status)) return status;
         }
 
@@ -74,7 +72,6 @@ extern "C" {
 
           if (total > strings->array[strings->used].size) {
             f_macro_string_dynamic_new(status, strings->array[strings->used], total);
-
             if (F_status_is_error(status)) return status;
 
             strings->array[strings->used].size = total;
@@ -123,7 +120,6 @@ extern "C" {
       if (serialized.string[i] == f_serialized_simple_splitter || i + 1 >= serialized.used) {
         if (locations->used >= locations->size) {
           f_macro_string_ranges_resize(status, (*locations), locations->size + f_serialized_default_allocation_step);
-
           if (F_status_is_error(status)) return status;
         }
 
@@ -144,9 +140,7 @@ extern "C" {
 
         locations->used++;
 
-        if (i + width > serialized.used) {
-          return F_status_set_error(F_incomplete_utf_eos);
-        }
+        if (i + width > serialized.used) return F_status_set_error(F_incomplete_utf_eos);
 
         start = i + width;
       }
@@ -182,7 +176,6 @@ extern "C" {
     f_string_range range = f_string_range_initialize;
 
     f_status status = private_fl_unserialize_simple_find(serialized, index, &range);
-
     if (F_status_is_error(status)) return status;
 
     if (status == F_data_not_eos) {
@@ -196,7 +189,6 @@ extern "C" {
       f_status status_allocation = F_none;
 
       f_macro_string_dynamic_resize(status_allocation, (*dynamic), total);
-
       if (F_status_is_error(status_allocation)) return status_allocation;
     }
 

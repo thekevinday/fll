@@ -24,10 +24,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     if (length == 0) return F_data_not;
-
-    if (destination->used < length) {
-      return private_fl_string_append(source, length, destination);
-    }
+    if (destination->used < length) return private_fl_string_append(source, length, destination);
 
     f_string_length i = 1;
     f_string_length j = 1;
@@ -238,7 +235,7 @@ extern "C" {
     if (source.used == 0) return F_data_not;
 
     if (glue_length > 0 && destination->used > 0) {
-      f_status status = private_fl_string_append(glue, glue_length, destination);
+      const f_status status = private_fl_string_append(glue, glue_length, destination);
 
       if (F_status_is_error(status)) return status;
     }
@@ -256,7 +253,7 @@ extern "C" {
     if (source.used == 0) return F_data_not;
 
     if (glue_length > 0 && destination->used > 0) {
-      f_status status = private_fl_string_append_nulless(glue, glue_length, destination);
+      const f_status status = private_fl_string_append_nulless(glue, glue_length, destination);
 
       if (F_status_is_error(status)) return status;
     }
@@ -274,7 +271,7 @@ extern "C" {
     if (source.used == 0) return F_data_not;
 
     if (glue_length > 0 && destination->used > 0) {
-      f_status status = private_fl_string_prepend(glue, glue_length, destination);
+      const f_status status = private_fl_string_prepend(glue, glue_length, destination);
 
       if (F_status_is_error(status)) return status;
     }
@@ -292,7 +289,7 @@ extern "C" {
     if (source.used == 0) return F_data_not;
 
     if (glue_length > 0 && destination->used > 0) {
-      f_status status = private_fl_string_prepend_nulless(glue, glue_length, destination);
+      const f_status status = private_fl_string_prepend_nulless(glue, glue_length, destination);
 
       if (F_status_is_error(status)) return status;
     }

@@ -299,7 +299,7 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_file_found_not (with error bit) if file does not exist at the program_path.
- *   F_name (with error bit) if the program_path is too long.
+ *   F_name (with error bit) on path name error.
  *   F_memory_out (with error bit) if out of memory.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_directory (with error bit) on invalid directory in program_path.
@@ -342,7 +342,7 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_file_found_not (with error bit) if file does not exist at the program_path.
- *   F_name (with error bit) if the program_path is too long.
+ *   F_name (with error bit) on path name error.
  *   F_memory_out (with error bit) if out of memory.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_directory (with error bit) on invalid directory in program_path.
@@ -416,7 +416,7 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_file_found_not (with error bit) if file does not exist at the program_path.
- *   F_name (with error bit) if the program_path is too long.
+ *   F_name (with error bit) on path name error.
  *   F_memory_out (with error bit) if out of memory.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_directory (with error bit) on invalid directory in program_path.
