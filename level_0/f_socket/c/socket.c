@@ -1,11 +1,11 @@
-#include <level_1/socket.h>
+#include <level_0/socket.h>
 
 #ifdef __cplusplus
 extern "C"{
 #endif
 
-#ifndef _di_fl_socket_file_bind_
-  f_return_status fl_socket_file_bind(const f_string path, const int id, struct sockaddr_un *address) {
+#ifndef _di_f_socket_file_bind_
+  f_return_status f_socket_file_bind(const f_string path, const int id, struct sockaddr_un *address) {
     memset(&address, 0, sizeof(struct sockaddr_un));
     address->sun_family = AF_UNIX;
     strncpy(address->sun_path, path, sizeof(address->sun_path) - 1);
@@ -28,10 +28,10 @@ extern "C"{
 
     return F_none;
   }
-#endif // _di_fl_socket_file_bind_
+#endif // _di_f_socket_file_bind_
 
-#ifndef _di_fl_socket_listen_
-  f_return_status fl_socket_listen(const int id, const unsigned int max_backlog) {
+#ifndef _di_f_socket_listen_
+  f_return_status f_socket_listen(const int id, const unsigned int max_backlog) {
 
     if (listen(id, max_backlog) < 0) {
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
@@ -44,10 +44,10 @@ extern "C"{
 
     return F_none;
   }
-#endif // _di_fl_socket_listen_
+#endif // _di_f_socket_listen_
 
-#ifndef _di_fl_socket_close_client_
-  f_return_status fl_socket_close_client(const int id, const unsigned short action) {
+#ifndef _di_f_socket_close_client_
+  f_return_status f_socket_close_client(const int id, const unsigned short action) {
     unsigned int error_code = 0;
 
     if (action == f_socket_close_fast) {
@@ -81,7 +81,7 @@ extern "C"{
 
     return F_none;
   }
-#endif // _di_fl_socket_close_client_
+#endif // _di_f_socket_close_client_
 
 #ifdef __cplusplus
 } // extern "C"
