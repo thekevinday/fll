@@ -20,19 +20,21 @@ install_path="${original_path}fll/"
 mkdir -vp $install_path
 
 if [[ $1 == "individual" ]] ; then
-  bash build/scripts/package.sh build -i &&
+  bash build/scripts/package.sh build -i
 
-  for i in f_type f_status f_memory f_string f_utf f_color f_console f_conversion f_directory f_environment f_file f_fss f_path f_pipe f_print f_serialized f_socket fl_color fl_console fl_directory fl_fss fl_print fl_serialized fl_socket fl_status fl_string fl_utf fl_utf_file fll_directory fll_execute fll_file fll_fss fll_program fll_status ; do
-    cd package/individual/$i-$2/ &&
+  if [[ $? -eq 0 ]] ; then
+    for i in f_type f_status f_memory f_string f_utf f_color f_console f_conversion f_directory f_environment f_file f_fss f_path f_pipe f_print f_serialized f_socket fl_color fl_console fl_directory fl_fss fl_print fl_serialized fl_socket fl_status fl_string fl_utf fl_utf_file fll_directory fll_execute fll_file fll_fss fll_program fll_status ; do
+      cd package/individual/$i-$2/ &&
 
-    ./bootstrap.sh clean &&
+      ./bootstrap.sh clean &&
 
-    ./bootstrap.sh build -w $install_path -m individual &&
+      ./bootstrap.sh build -w $install_path -m individual &&
 
-    ./install.sh -w $install_path &&
+      ./install.sh -w $install_path &&
 
-    cd $original_path || break
-  done
+      cd $original_path || break
+    done
+  fi
 fi
 
 if [[ $1 == "level" ]] ; then
