@@ -1,5 +1,6 @@
-Featureless Settings Specification: 0005 - Somewhat Basic List
+# fss-0002
 
-This is a fss-0002 Basic List whose Content is then processed as fss-0001 Extended.
+Featureless Settings Specification: 0005 - Somewhat Basic List:
+  This is a fss-0002 Basic List whose Content is then processed as fss-0001 Extended.
 
-TODO: further document this.
+  TODO: further document this.

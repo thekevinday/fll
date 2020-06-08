@@ -1,5 +1,6 @@
-Featureless Settings Specification: 0006 - Somewhat Extended List
+# fss-0002
 
-This is a fss-0003 Extended List whose Content is then processed as fss-0000 Basic.
+Featureless Settings Specification: 0006 - Somewhat Extended List:
+  This is a fss-0003 Extended List whose Content is then processed as fss-0000 Basic.
 
-TODO: further document this.
+  TODO: further document this.
