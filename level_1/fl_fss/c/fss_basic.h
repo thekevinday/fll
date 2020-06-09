@@ -64,10 +64,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors from (with error bit): fl_fss_increment_buffer().
- *   Errors from (with error bit): fl_fss_is_graph().
- *   Errors from (with error bit): fl_fss_is_space().
- *   Errors from (with error bit): fl_fss_skip_past_space().
+ *   Errors from (with error bit): f_fss_increment_buffer().
+ *   Errors from (with error bit): f_fss_is_graph().
+ *   Errors from (with error bit): f_fss_is_space().
+ *   Errors from (with error bit): f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_basic_object_read_
   extern f_return_status fl_fss_basic_object_read(f_string_dynamic *buffer, f_string_range *location, f_fss_object *found);
@@ -106,10 +106,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors from (with error bit): fl_fss_increment_buffer().
- *   Errors from (with error bit): fl_fss_is_graph().
- *   Errors from (with error bit): fl_fss_is_space().
- *   Errors from (with error bit): fl_fss_skip_past_space().
+ *   Errors from (with error bit): f_fss_increment_buffer().
+ *   Errors from (with error bit): f_fss_is_graph().
+ *   Errors from (with error bit): f_fss_is_space().
+ *   Errors from (with error bit): f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_basic_content_read_
   extern f_return_status fl_fss_basic_content_read(f_string_dynamic *buffer, f_string_range *location, f_fss_content *found);
@@ -141,7 +141,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors from (with error bit): fl_fss_increment_buffer().
+ *   Errors from (with error bit): f_fss_increment_buffer().
  */
 #ifndef _di_fl_fss_basic_object_write_
   extern f_return_status fl_fss_basic_object_write(f_string_dynamic *buffer, const f_string_static object, f_string_range *location);
@@ -172,7 +172,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors from (with error bit): fl_fss_increment_buffer().
+ *   Errors from (with error bit): f_fss_increment_buffer().
  */
 #ifndef _di_fl_fss_basic_content_write_
   extern f_return_status fl_fss_basic_content_write(f_string_dynamic *buffer, const f_string_static content, f_string_range *location);

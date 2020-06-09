@@ -21,7 +21,7 @@ extern "C" {
     // delimits must only be applied once a valid object is found.
     f_string_lengths delimits = f_string_lengths_initialize;
 
-    fl_fss_skip_past_space(*buffer, location);
+    f_fss_skip_past_space(*buffer, location);
     fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
 
     // return found nothing if this line only contains whitespace and delimit placeholders.
@@ -37,7 +37,7 @@ extern "C" {
     if (buffer->string[location->start] == f_fss_comment) {
       fl_macro_fss_object_seek_till_newline((*buffer), (*location), delimits, F_data_not_eos, F_data_not_stop)
 
-      status = fl_fss_increment_buffer(*buffer, location, 1);
+      status = f_fss_increment_buffer(*buffer, location, 1);
       if (F_status_is_error(status)) return status;
 
       return FL_fss_found_object_not;
@@ -49,7 +49,7 @@ extern "C" {
         f_string_length first_slash = location->start;
         f_string_length slash_count = 1;
 
-        status = fl_fss_increment_buffer(*buffer, location, 1);
+        status = f_fss_increment_buffer(*buffer, location, 1);
         if (F_status_is_error(status)) return status;
 
         while (location->start < buffer->used && location->start <= location->stop && (buffer->string[location->start] == f_fss_delimit_placeholder || buffer->string[location->start] == f_fss_delimit_slash)) {
@@ -57,7 +57,7 @@ extern "C" {
             slash_count++;
           }
 
-          status = fl_fss_increment_buffer(*buffer, location, 1);
+          status = f_fss_increment_buffer(*buffer, location, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -66,17 +66,17 @@ extern "C" {
         if (buffer->string[location->start] == f_fss_basic_list_open) {
           f_string_length stop_point = location->start - 1;
 
-          status = fl_fss_increment_buffer(*buffer, location, 1);
+          status = f_fss_increment_buffer(*buffer, location, 1);
           if (F_status_is_error(status)) return status;
 
           while (location->start < buffer->used && location->start <= location->stop) {
-            if (buffer->string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
+            if (buffer->string[location->start] == f_string_eol[0] || (status = f_fss_is_graph(*buffer, *location)) == F_true) {
               break;
             }
 
             if (F_status_is_error(status)) return status;
 
-            status = fl_fss_increment_buffer(*buffer, location, 1);
+            status = f_fss_increment_buffer(*buffer, location, 1);
             if (F_status_is_error(status)) return status;
           } // while
 
@@ -107,7 +107,7 @@ extern "C" {
                   slash_count--;
                 }
 
-                status = fl_fss_increment_buffer(*buffer, location, 1);
+                status = f_fss_increment_buffer(*buffer, location, 1);
                 if (F_status_is_error(status)) return status;
               } // while
 
@@ -129,17 +129,17 @@ extern "C" {
       else if (buffer->string[location->start] == f_fss_basic_list_open) {
         f_string_length stop_point = location->start - 1;
 
-        status = fl_fss_increment_buffer(*buffer, location, 1);
+        status = f_fss_increment_buffer(*buffer, location, 1);
         if (F_status_is_error(status)) return status;
 
         while (location->start < buffer->used && location->start <= location->stop) {
-          if (buffer->string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
+          if (buffer->string[location->start] == f_string_eol[0] || (status = f_fss_is_graph(*buffer, *location)) == F_true) {
             break;
           }
 
           if (F_status_is_error(status)) return status;
 
-          status = fl_fss_increment_buffer(*buffer, location, 1);
+          status = f_fss_increment_buffer(*buffer, location, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -150,7 +150,7 @@ extern "C" {
 
           found->stop = stop_point;
 
-          status = fl_fss_increment_buffer(*buffer, location, 1);
+          status = f_fss_increment_buffer(*buffer, location, 1);
           if (F_status_is_error(status)) return status;
 
           return FL_fss_found_object;
@@ -159,19 +159,19 @@ extern "C" {
         continue;
       }
 
-      status = fl_fss_increment_buffer(*buffer, location, 1);
+      status = f_fss_increment_buffer(*buffer, location, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
     // seek to the end of the line when no valid object is found.
     while (location->start < buffer->used && location->start <= location->stop && buffer->string[location->start] != f_string_eol[0]) {
-      status = fl_fss_increment_buffer(*buffer, location, 1);
+      status = f_fss_increment_buffer(*buffer, location, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
     fl_macro_fss_object_return_on_overflow((*buffer), (*location), (*found), delimits, F_data_not_eos, F_data_not_stop)
 
-    status = fl_fss_increment_buffer(*buffer, location, 1);
+    status = f_fss_increment_buffer(*buffer, location, 1);
     if (F_status_is_error(status)) return status;
 
     return FL_fss_found_object_not;
@@ -210,7 +210,7 @@ extern "C" {
         found_newline = F_true;
         last_newline = location->start;
 
-        status = fl_fss_increment_buffer(*buffer, location, 1);
+        status = f_fss_increment_buffer(*buffer, location, 1);
         if (F_status_is_error(status)) return status;
 
         fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*location), (*found), delimits, F_none_eos, F_none_stop)
@@ -222,7 +222,7 @@ extern "C" {
         f_string_length first_slash = location->start;
         f_string_length slash_count = 1;
 
-        status = fl_fss_increment_buffer(*buffer, location, 1);
+        status = f_fss_increment_buffer(*buffer, location, 1);
         if (F_status_is_error(status)) return status;
 
         while (location->start < buffer->used && location->start <= location->stop && (buffer->string[location->start] == f_fss_delimit_placeholder || buffer->string[location->start] == f_fss_delimit_slash)) {
@@ -230,7 +230,7 @@ extern "C" {
             slash_count++;
           }
 
-          status = fl_fss_increment_buffer(*buffer, location, 1);
+          status = f_fss_increment_buffer(*buffer, location, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -244,17 +244,17 @@ extern "C" {
         if (buffer->string[location->start] == f_fss_basic_list_open) {
           f_string_length stop_point = location->start - 1;
 
-          status = fl_fss_increment_buffer(*buffer, location, 1);
+          status = f_fss_increment_buffer(*buffer, location, 1);
           if (F_status_is_error(status)) return status;
 
           while (location->start < buffer->used && location->start <= location->stop) {
-            if (buffer->string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
+            if (buffer->string[location->start] == f_string_eol[0] || (status = f_fss_is_graph(*buffer, *location)) == F_true) {
               break;
             }
 
             if (F_status_is_error(status)) return status;
 
-            status = fl_fss_increment_buffer(*buffer, location, 1);
+            status = f_fss_increment_buffer(*buffer, location, 1);
             if (F_status_is_error(status)) return status;
           } // while
 
@@ -303,7 +303,7 @@ extern "C" {
                 slash_count--;
               }
 
-              status = fl_fss_increment_buffer(*buffer, location, 1);
+              status = f_fss_increment_buffer(*buffer, location, 1);
               if (F_status_is_error(status)) return status;
             } // while
 
@@ -315,17 +315,17 @@ extern "C" {
         continue;
       }
       else if (buffer->string[location->start] == f_fss_basic_list_open) {
-        status = fl_fss_increment_buffer(*buffer, location, 1);
+        status = f_fss_increment_buffer(*buffer, location, 1);
         if (F_status_is_error(status)) return status;
 
         while (location->start < buffer->used && location->start <= location->stop) {
-          if (buffer->string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(*buffer, *location)) == F_true) {
+          if (buffer->string[location->start] == f_string_eol[0] || (status = f_fss_is_graph(*buffer, *location)) == F_true) {
             break;
           }
 
           if (F_status_is_error(status)) return status;
 
-          status = fl_fss_increment_buffer(*buffer, location, 1);
+          status = f_fss_increment_buffer(*buffer, location, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -357,7 +357,7 @@ extern "C" {
         continue;
       }
 
-      status = fl_fss_increment_buffer(*buffer, location, 1);
+      status = f_fss_increment_buffer(*buffer, location, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
@@ -415,7 +415,7 @@ extern "C" {
         // comments are not allowed and this format has no way of "wrapping" a comment.
         return F_status_set_error(FL_fss_found_comment);
       }
-      else if ((status = fl_fss_is_graph(object, *location)) == F_true) {
+      else if ((status = f_fss_is_graph(object, *location)) == F_true) {
         break;
       }
       else if (F_status_is_error(status)) {
@@ -427,7 +427,7 @@ extern "C" {
         buffer_position.stop++;
       }
 
-      status = fl_fss_increment_buffer(object, location, 1);
+      status = f_fss_increment_buffer(object, location, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
@@ -438,12 +438,12 @@ extern "C" {
         buffer->string[buffer_position.stop] = object.string[location->start];
         buffer_position.stop++;
 
-        status = fl_fss_increment_buffer(object, location, 1);
+        status = f_fss_increment_buffer(object, location, 1);
         if (F_status_is_error(status)) return status;
 
         while (location->start <= location->stop && location->start < object.used) {
           if (object.string[location->start] == f_fss_delimit_placeholder) {
-            status = fl_fss_increment_buffer(object, location, 1);
+            status = f_fss_increment_buffer(object, location, 1);
             if (F_status_is_error(status)) return status;
 
             continue;
@@ -454,7 +454,7 @@ extern "C" {
           buffer->string[buffer_position.stop] = object.string[location->start];
           buffer_position.stop++;
 
-          status = fl_fss_increment_buffer(object, location, 1);
+          status = f_fss_increment_buffer(object, location, 1);
           if (F_status_is_error(status)) return status;
 
           slash_count++;
@@ -490,7 +490,7 @@ extern "C" {
         buffer_position.stop++;
       }
 
-      status = fl_fss_increment_buffer(object, location, 1);
+      status = f_fss_increment_buffer(object, location, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
@@ -546,12 +546,12 @@ extern "C" {
         buffer_position.stop++;
 
         has_graph = F_true;
-        status = fl_fss_increment_buffer(content, location, 1);
+        status = f_fss_increment_buffer(content, location, 1);
         if (F_status_is_error(status)) return status;
 
         while (location->start <= location->stop && location->start < content.used) {
           if (content.string[location->start] == f_fss_delimit_placeholder) {
-            status = fl_fss_increment_buffer(content, location, 1);
+            status = f_fss_increment_buffer(content, location, 1);
             if (F_status_is_error(status)) return status;
 
             continue;
@@ -563,7 +563,7 @@ extern "C" {
           buffer->string[buffer_position.stop] = content.string[location->start];
           buffer_position.stop++;
 
-          status = fl_fss_increment_buffer(content, location, 1);
+          status = f_fss_increment_buffer(content, location, 1);
           if (F_status_is_error(status)) return status;
 
           slash_count++;
@@ -572,17 +572,17 @@ extern "C" {
         if (content.string[location->start] == f_fss_basic_list_open) {
           f_string_length start = location->start;
 
-          status = fl_fss_increment_buffer(content, location, 1);
+          status = f_fss_increment_buffer(content, location, 1);
           if (F_status_is_error(status)) return status;
 
           while (location->start < content.used && location->start <= location->stop) {
-            if (content.string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(content, *location)) == F_true) {
+            if (content.string[location->start] == f_string_eol[0] || (status = f_fss_is_graph(content, *location)) == F_true) {
               break;
             }
 
             if (F_status_is_error(status)) return status;
 
-            status = fl_fss_increment_buffer(content, location, 1);
+            status = f_fss_increment_buffer(content, location, 1);
             if (F_status_is_error(status)) return status;
           } // while
 
@@ -617,17 +617,17 @@ extern "C" {
 
         has_graph = F_true;
 
-        status = fl_fss_increment_buffer(content, location, 1);
+        status = f_fss_increment_buffer(content, location, 1);
         if (F_status_is_error(status)) return status;
 
         while (location->start < content.used && location->start <= location->stop) {
-          if (content.string[location->start] == f_string_eol[0] || (status = fl_fss_is_graph(content, *location)) == F_true) {
+          if (content.string[location->start] == f_string_eol[0] || (status = f_fss_is_graph(content, *location)) == F_true) {
             break;
           }
 
           if (F_status_is_error(status)) return status;
 
-          status = fl_fss_increment_buffer(content, location, 1);
+          status = f_fss_increment_buffer(content, location, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -657,7 +657,7 @@ extern "C" {
         has_graph = F_false;
         is_comment = F_false;
       }
-      else if ((status = fl_fss_is_graph(content, *location)) == F_true) {
+      else if ((status = f_fss_is_graph(content, *location)) == F_true) {
         has_graph = F_true;
       }
       else if (F_status_is_error(status)) {
@@ -669,7 +669,7 @@ extern "C" {
         buffer_position.stop++;
       }
 
-      status = fl_fss_increment_buffer(content, location, 1);
+      status = f_fss_increment_buffer(content, location, 1);
       if (F_status_is_error(status)) return status;
     } // while
 

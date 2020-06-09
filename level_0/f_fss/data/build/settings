@@ -19,8 +19,8 @@ build_compiler gcc
 build_language c
 build_linker ar
 build_libraries -lc
-build_libraries-individual -lf_memory
-build_sources_library
+build_libraries-individual -lf_utf -lf_memory
+build_sources_library fss.c
 build_sources_program
 build_sources_headers fss.h
 build_sources_script

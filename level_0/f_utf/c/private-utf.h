@@ -10,8 +10,8 @@
  * These are provided for internal reduction in redundant code.
  * These should not be exposed/used outside of this project.
  */
-#ifndef _PRIVATE_FL_utf_h
-#define _PRIVATE_FL_utf_h
+#ifndef _PRIVATE_F_utf_h
+#define _PRIVATE_F_utf_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,8 +28,8 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_true if a UTF-8 control character.
  *   F_false if not a UTF-8 control character.
+ *   F_true if a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -51,8 +51,8 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_true if a UTF-8 control character.
  *   F_false if not a UTF-8 control character.
+ *   F_true if a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -74,8 +74,8 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_true if a UTF-8 control character.
  *   F_false if not a UTF-8 control character.
+ *   F_true if a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -95,8 +95,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_true if a UTF-8 control picture character.
  *   F_false if not a UTF-8 control picture character.
+ *   F_true if a UTF-8 control picture character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is_control_picture()
@@ -117,8 +117,8 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_true if a UTF-8 control character.
  *   F_false if not a UTF-8 control character.
+ *   F_true if a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -182,8 +182,8 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_true if a UTF-8 control character.
  *   F_false if not a UTF-8 control character.
+ *   F_true if a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -205,8 +205,8 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_true if a UTF-8 control character.
  *   F_false if not a UTF-8 control character.
+ *   F_true if a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -228,8 +228,8 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_false if not a UTF-8 control character.
  *   F_true if a UTF-8 control character.
+ *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -264,4 +264,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_FL_utf_h
+#endif // _PRIVATE_F_utf_h
