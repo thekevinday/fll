@@ -13,7 +13,7 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Generating skeleton structure.");
+      fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "Generating skeleton structure.");
     }
 
     {

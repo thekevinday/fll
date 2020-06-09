@@ -370,6 +370,9 @@ extern "C" {
     uint8_t operation;
     uint8_t verbosity;
 
+    f_string_static color_section_set;
+    f_string_static color_section_reset;
+
     f_string_dynamics define;
     f_string_dynamics mode;
     f_string_dynamic process;
@@ -431,6 +434,8 @@ extern "C" {
       0, \
       0, \
       fake_verbosity_normal, \
+      f_string_static_initialize, \
+      f_string_static_initialize, \
       f_string_dynamics_initialize, \
       f_string_dynamics_initialize, \
       f_string_dynamic_initialize, \

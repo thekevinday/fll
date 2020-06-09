@@ -127,6 +127,9 @@ extern "C" {
         }
         else if (choice == fake_parameter_verbose) {
           data->verbosity = fake_verbosity_verbose;
+
+          data->color_section_set = data->context.important;
+          data->color_section_reset = data->context.reset;
         }
         else if (choice == fake_parameter_debug) {
           data->verbosity = fake_verbosity_debug;
