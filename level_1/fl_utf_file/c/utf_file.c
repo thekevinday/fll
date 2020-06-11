@@ -19,17 +19,16 @@ extern "C" {
 
     ssize_t size_read = 0;
     uint8_t width = 0;
-
-    f_utf_string_length i = 0;
-    f_utf_character character = 0;
+    int8_t width_last = -1;
 
     char buffer_read[file.size_read];
+    char buffer_char[4] = { 0, 0, 0, 0 };
 
     memset(&buffer_read, 0, sizeof(file.size_read));
 
     while ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
       if (buffer->used + size_read > buffer->size) {
-        if (buffer->size + size_read > f_string_length_size) {
+        if (buffer->size + size_read > f_utf_string_length_size) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -37,35 +36,17 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      for (i = 0; i < size_read; i += width) {
-        width = f_macro_utf_byte_width(buffer_read[i]);
-
-        // @fixme this needs to properly validate the UTF-8 width available and also carry ove the count across the outer loop.
-
-        character = f_macro_utf_character_from_char_1(buffer_read[i]);
-
-        if (width > 1 && i + 1 < size_read) {
-          character |= f_macro_utf_character_from_char_2(buffer_read[i]);
-
-          if (width > 2 && i + 2 < size_read) {
-          character |= f_macro_utf_character_from_char_3(buffer_read[i]);
-
-            if (width > 3 && i + 3 < size_read) {
-              character |= f_macro_utf_character_from_char_4(buffer_read[i]);
-            }
-          }
-        }
-
-        buffer->string[i] = character;
-        buffer->used++;
-      } // for
+      private_fl_utf_file_process_read_buffer(buffer_read, size_read, buffer, buffer_char, &width, &width_last);
     } // while
 
     if (size_read == 0) {
+      if (width != 0) {
+        return F_status_set_error(F_incomplete_utf_eof);
+      }
+
       return F_none_eof;
     }
-
-    if (size_read < 0) {
+    else if (size_read < 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -75,6 +56,9 @@ extern "C" {
       if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
       return F_status_set_error(F_failure);
+    }
+    else if (width != 0) {
+      return F_status_set_error(F_incomplete_utf_stop);
     }
 
     return F_none;
@@ -95,11 +79,10 @@ extern "C" {
 
     ssize_t size_read = 0;
     uint8_t width = 0;
-
-    f_utf_string_length i = 0;
-    f_utf_character character = 0;
+    int8_t width_last = -1;
 
     char buffer_read[file.size_read];
+    char buffer_char[4] = { 0, 0, 0, 0 };
 
     memset(&buffer_read, 0, sizeof(file.size_read));
 
@@ -113,35 +96,17 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      for (i = 0; i < size_read; i += width) {
-        width = f_macro_utf_byte_width(buffer_read[i]);
-
-        // @fixme this needs to properly validate the UTF-8 width available and also carry ove the count across the outer loop.
-
-        character = f_macro_utf_character_from_char_1(buffer_read[i]);
-
-        if (width > 1 && i + 1 < size_read) {
-          character |= f_macro_utf_character_from_char_2(buffer_read[i]);
-
-          if (width > 2 && i + 2 < size_read) {
-          character |= f_macro_utf_character_from_char_3(buffer_read[i]);
-
-            if (width > 3 && i + 3 < size_read) {
-              character |= f_macro_utf_character_from_char_4(buffer_read[i]);
-            }
-          }
-        }
-
-        buffer->string[i] = character;
-        buffer->used++;
-      } // for
+      private_fl_utf_file_process_read_buffer(buffer_read, size_read, buffer, buffer_char, &width, &width_last);
     }
 
     if (size_read == 0) {
+      if (width != 0) {
+        return F_status_set_error(F_incomplete_utf_eof);
+      }
+
       return F_none_eof;
     }
-
-    if (size_read < 0) {
+    else if (size_read < 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -151,6 +116,9 @@ extern "C" {
       if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
       return F_status_set_error(F_failure);
+    }
+    else if (width != 0) {
+      return F_status_set_error(F_incomplete_utf_stop);
     }
 
     return F_none;
@@ -171,9 +139,7 @@ extern "C" {
 
     ssize_t size_read = 0;
     uint8_t width = 0;
-
-    f_utf_string_length i = 0;
-    f_utf_character character = 0;
+    int8_t width_last = -1;
 
     f_utf_string_length buffer_size = file.size_read;
     f_utf_string_length buffer_count = 0;
@@ -183,6 +149,7 @@ extern "C" {
     }
 
     char buffer_read[buffer_size];
+    char buffer_char[4] = { 0, 0, 0, 0 };
 
     memset(&buffer_read, 0, sizeof(buffer_size));
 
@@ -196,36 +163,17 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      for (i = 0; i < size_read; i += width) {
-        width = f_macro_utf_byte_width(buffer_read[i]);
-
-        // @fixme this needs to properly validate the UTF-8 width available and also carry ove the count across the outer loop.
-
-        character = f_macro_utf_character_from_char_1(buffer_read[i]);
-
-        if (width > 1 && i + 1 < total) {
-          character |= f_macro_utf_character_from_char_2(buffer_read[i]);
-
-          if (width > 2 && i + 2 < total) {
-          character |= f_macro_utf_character_from_char_3(buffer_read[i]);
-
-            if (width > 3 && i + 3 < total) {
-              character |= f_macro_utf_character_from_char_4(buffer_read[i]);
-            }
-          }
-        }
-
-        buffer->string[i] = character;
-        buffer->used++;
-        buffer_count++;
-      } // for
+      private_fl_utf_file_process_read_buffer(buffer_read, size_read, buffer, buffer_char, &width, &width_last);
     } // while
 
     if (size_read == 0) {
+      if (width != 0) {
+        return F_status_set_error(F_incomplete_utf_eof);
+      }
+
       return F_none_eof;
     }
-
-    if (size_read < 0) {
+    else if (size_read < 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -235,6 +183,9 @@ extern "C" {
       if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
       return F_status_set_error(F_failure);
+    }
+    else if (width != 0) {
+      return F_status_set_error(F_incomplete_utf_stop);
     }
 
     return F_none;
@@ -256,7 +207,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_status status = private_fl_utf_file_write_until(file, buffer.string, buffer.used, written);
+    const f_status status = private_fl_utf_file_write_until(file, buffer.string, buffer.used, written);
     if (F_status_is_error(status)) return F_status_set_error(status);
 
     if (status == F_none && *written == buffer.used) return F_none_eos;
@@ -286,7 +237,7 @@ extern "C" {
       write_max = buffer.used;
     }
 
-    f_status status = private_fl_utf_file_write_until(file, buffer.string, write_max, written);
+    const f_status status = private_fl_utf_file_write_until(file, buffer.string, write_max, written);
     if (F_status_is_error(status)) return F_status_set_error(status);
 
     if (status == F_none && *written == buffer.used) return F_none_eos;
@@ -316,7 +267,7 @@ extern "C" {
       write_max = buffer.used;
     }
 
-    f_status status = private_fl_utf_file_write_until(file, buffer.string, write_max, written);
+    const f_status status = private_fl_utf_file_write_until(file, buffer.string, write_max, written);
     if (F_status_is_error(status)) return F_status_set_error(status);
 
     if (status == F_none && *written == buffer.used) return F_none_eos;
@@ -342,8 +293,6 @@ extern "C" {
       return F_data_not;
     }
 
-    // @todo consider adding a custom status return for when an invalid UTF-8 is written due to range limitations.
-
     const f_utf_string_length total = (range.stop - range.start) + 1;
     f_utf_string_length write_max = total;
 
@@ -351,7 +300,7 @@ extern "C" {
       write_max = buffer.used;
     }
 
-    f_status status = private_fl_utf_file_write_until(file, buffer.string + range.start, write_max, written);
+    const f_status status = private_fl_utf_file_write_until(file, buffer.string + range.start, write_max, written);
     if (F_status_is_error(status)) return F_status_set_error(status);
 
     if (status == F_none) {

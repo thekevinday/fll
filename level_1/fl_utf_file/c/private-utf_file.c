@@ -5,6 +5,70 @@
 extern "C" {
 #endif
 
+#if !defined(fl_utf_file_read) || !defined(fl_utf_file_read_until) || !defined(fl_utf_file_read_range)
+  void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic *buffer, char buffer_char[], uint8_t *width, int8_t *width_last) {
+    f_utf_character character = 0;
+    f_string_length i = 0;
+    uint8_t increment_by = 0;
+
+    for (; i < size_read; i += increment_by) {
+      increment_by = 0;
+
+      if (*width == 0) {
+        *width = f_macro_utf_byte_width(buffer_read[i]);
+        *width_last = -1;
+      }
+
+      if (*width_last < *width) {
+        buffer_char[0] = buffer_read[i];
+        *width_last = 1;
+        increment_by++;
+      }
+
+      if (*width > 1 && i + 1 < size_read) {
+        if (*width_last < *width) {
+          buffer_char[1] = buffer_read[i];
+          *width_last = 2;
+          increment_by++;
+        }
+
+        if (*width > 2 && i + 2 < size_read) {
+          if (*width_last < *width) {
+            buffer_char[2] = buffer_read[i];
+            *width_last = 3;
+            increment_by++;
+          }
+
+          if (*width > 3 && i + 3 < size_read) {
+            buffer_char[3] = buffer_read[i];
+            *width_last = 4;
+            increment_by++;
+          }
+        }
+      }
+
+      if (*width_last == *width) {
+        buffer->string[buffer->used] = f_macro_utf_character_from_char_1((buffer_char[0]));
+
+        if (*width > 1) {
+          buffer->string[buffer->used] |= f_macro_utf_character_from_char_2((buffer_char[1]));
+
+          if (*width > 2) {
+            buffer->string[buffer->used] |= f_macro_utf_character_from_char_3((buffer_char[2]));
+
+            if (*width > 3) {
+              buffer->string[buffer->used] |= f_macro_utf_character_from_char_4((buffer_char[3]));
+            }
+          }
+        }
+
+        buffer->used++;
+        *width = 0;
+      }
+    } // for
+  }
+#endif // !defined(fl_utf_file_read) || !defined(fl_utf_file_read_until) || !defined(fl_utf_file_read_range)
+
 #if !defined(fl_utf_file_write) || !defined(fl_utf_file_write_until) || !defined(fl_utf_file_write_range)
   f_return_status private_fl_utf_file_write_until(const f_file file, const f_utf_string string, const f_utf_string_length total, f_utf_string_length *written) {
     *written = 0;
@@ -25,6 +89,8 @@ extern "C" {
     uint8_t buffer_write[write_size];
     uint8_t width = 0;
     uint8_t width_written = 0;
+
+    // @todo this needs to identify an invalid UTF-8 string before writing and return an error if invalid.
 
     do {
       memset(buffer_write, 0, write_size);

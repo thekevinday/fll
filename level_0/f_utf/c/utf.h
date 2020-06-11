@@ -373,6 +373,16 @@ extern "C" {
       dynamic.used = 0; \
     }
 
+  #define f_macro_utf_string_dynamic_delete_simple(dynamic) \
+    f_memory_delete((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size); \
+    dynamic.size = 0; \
+    dynamic.used = 0;
+
+  #define f_macro_utf_string_dynamic_destroy_simple(dynamic) \
+    f_memory_destroy((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size); \
+    dynamic.size = 0; \
+    dynamic.used = 0;
+
   #define f_macro_utf_string_dynamic_resize(status, dynamic, new_length) \
     status = f_memory_resize((void **) & dynamic.string, sizeof(f_utf_string), dynamic.size, new_length); \
     if (status == F_none) { \
@@ -438,6 +448,30 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_destroy((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size); \
     if (status == F_none) dynamics.used = 0;
+
+  #define f_macro_utf_string_dynamics_delete_simple(dynamics) \
+    dynamics.used = dynamics.size; \
+    while (dynamics.used > 0) { \
+      dynamics.used--; \
+      f_macro_string_dynamic_delete_simple(dynamics.array[dynamics.used]); \
+      if (dynamics.used == 0) { \
+        if (f_memory_delete((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size)) { \
+          dynamics.size = 0; \
+        } \
+      } \
+    }
+
+  #define f_macro_utf_string_dynamics_destroy_simple(dynamics) \
+    dynamics.used = dynamics.size; \
+    while (dynamics.used > 0) { \
+      dynamics.used--; \
+      f_macro_string_dynamic_destroy_simple(dynamics.array[dynamics.used]); \
+      if (dynamics.used == 0) { \
+        if (f_memory_destroy((void **) & dynamics.array, sizeof(f_utf_string_dynamic), dynamics.size)) { \
+          dynamics.size = 0; \
+        } \
+      } \
+    }
 
   #define f_macro_utf_string_dynamics_resize(status, dynamics, new_length) \
     status = F_none; \
