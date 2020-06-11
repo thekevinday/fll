@@ -11,7 +11,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     return private_fl_string_append(source, length, destination);
   }
@@ -23,7 +23,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
     if (destination->used < length) return private_fl_string_append(source, length, destination);
 
     f_string_length i = 1;
@@ -58,7 +58,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (destination->used < length) {
       return private_fl_string_append_nulless(source, length, destination);
@@ -96,7 +96,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     return private_fl_string_append_nulless(source, length, destination);
   }
@@ -114,25 +114,13 @@ extern "C" {
   }
 #endif // _di_fl_string_compare_trim_
 
-#ifndef _di_fl_string_dynamic_compare_
-  f_return_status fl_string_dynamic_compare(const f_string_static string1, const f_string_static string2) {
-    return private_fl_string_compare(string1.string, string2.string, 0, 0, string1.used, string2.used);
-  }
-#endif // _di_fl_string_dynamic_compare_
-
-#ifndef _di_fl_string_dynamic_compare_trim_
-  f_return_status fl_string_dynamic_compare_trim(const f_string_static string1, const f_string_static string2) {
-    return private_fl_string_compare_trim(string1.string, string2.string, 0, 0, string1.used, string2.used);
-  }
-#endif // _di_fl_string_dynamic_compare_trim_
-
 #ifndef _di_fl_string_dynamic_append_
   f_return_status fl_string_dynamic_append(const f_string_static source, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     return private_fl_string_append(source.string, source.used, destination);
   }
@@ -144,7 +132,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (destination->used < source.used) {
       return private_fl_string_append(source.string, source.used, destination);
@@ -182,7 +170,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (destination->used < source.used) {
       return private_fl_string_append_nulless(source.string, source.used, destination);
@@ -220,11 +208,23 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     return private_fl_string_append_nulless(source.string, source.used, destination);
   }
 #endif // _di_fl_string_dynamic_append_nulless_
+
+#ifndef _di_fl_string_dynamic_compare_
+  f_return_status fl_string_dynamic_compare(const f_string_static string1, const f_string_static string2) {
+    return private_fl_string_compare(string1.string, string2.string, 0, 0, string1.used, string2.used);
+  }
+#endif // _di_fl_string_dynamic_compare_
+
+#ifndef _di_fl_string_dynamic_compare_trim_
+  f_return_status fl_string_dynamic_compare_trim(const f_string_static string1, const f_string_static string2) {
+    return private_fl_string_compare_trim(string1.string, string2.string, 0, 0, string1.used, string2.used);
+  }
+#endif // _di_fl_string_dynamic_compare_trim_
 
 #ifndef _di_fl_string_dynamic_mash_
   f_return_status fl_string_dynamic_mash(const f_string glue, const f_string_length glue_length, const f_string_static source, f_string_dynamic *destination) {
@@ -232,11 +232,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       const f_status status = private_fl_string_append(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -250,11 +249,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       const f_status status = private_fl_string_append_nulless(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -268,11 +266,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       const f_status status = private_fl_string_prepend(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -286,11 +283,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       const f_status status = private_fl_string_prepend_nulless(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -305,8 +301,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_string_append(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -319,10 +315,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
-    f_string_length length = (range.stop - range.start) + 1;
+    const f_string_length length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_fl_string_append(source.string + range.start, length, destination);
@@ -359,10 +355,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
-    f_string_length length = (range.stop - range.start) + 1;
+    const f_string_length length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_fl_string_append_nulless(source.string + range.start, length, destination);
@@ -399,12 +395,12 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_string_append_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
-#endif // _di_fl_string_dynamic_append_nulless_
+#endif // _di_fl_string_dynamic_partial_append_nulless_
 
 #ifndef _di_fl_string_dynamic_partial_compare_
   f_return_status fl_string_dynamic_partial_compare(const f_string_static string1, const f_string_static string2, const f_string_range range1, const f_string_range range2) {
@@ -435,12 +431,11 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_string_append(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -455,12 +450,11 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_string_append_nulless(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -475,12 +469,11 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_string_prepend(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -495,12 +488,11 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_string_prepend_nulless(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -515,10 +507,24 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
-    f_string_length length = (range.stop - range.start) + 1;
+    return private_fl_string_prepend(source.string + range.start, (range.stop - range.start) + 1, destination);
+  }
+#endif // _di_fl_string_dynamic_partial_prepend_
+
+#ifndef _di_fl_string_dynamic_partial_prepend_assure_
+  f_return_status fl_string_dynamic_partial_prepend_assure(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (source.used <= range.stop) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
+
+    const f_string_length length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_fl_string_prepend(source.string + range.start, length, destination);
@@ -548,19 +554,19 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fl_string_dynamic_partial_prepend_
+#endif // _di_fl_string_dynamic_partial_prepend_assure_
 
-#ifndef _di_fl_string_dynamic_partial_prepend_assure_
-  f_return_status fl_string_dynamic_partial_prepend_assure(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
+#ifndef _di_fl_string_dynamic_partial_prepend_assure_nulless_
+  f_return_status fl_string_dynamic_partial_prepend_assure_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return F_status_set_error(F_parameter);
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
-    f_string_length length = (range.stop - range.start) + 1;
+    const f_string_length length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_fl_string_prepend_nulless(source.string + range.start, length, destination);
@@ -590,20 +596,6 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fl_string_dynamic_partial_prepend_assure_
-
-#ifndef _di_fl_string_dynamic_partial_prepend_assure_nulless_
-  f_return_status fl_string_dynamic_partial_prepend_assure_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (source.used <= range.stop) return F_status_set_error(F_parameter);
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
-
-    return private_fl_string_prepend_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
-  }
 #endif // _di_fl_string_dynamic_partial_prepend_assure_nulless
 
 #ifndef _di_fl_string_dynamic_partial_prepend_nulless_
@@ -613,8 +605,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_string_prepend_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -626,7 +618,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     return private_fl_string_prepend(source.string, source.used, destination);
   }
@@ -638,7 +630,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (destination->used < source.used) {
       return private_fl_string_prepend(source.string, source.used, destination);
@@ -676,7 +668,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (destination->used < source.used) {
       return private_fl_string_prepend_nulless(source.string, source.used, destination);
@@ -714,7 +706,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     return private_fl_string_prepend_nulless(source.string, source.used, destination);
   }
@@ -728,8 +720,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_string_append(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -743,8 +735,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_string_append_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -758,8 +750,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (buffer.string[range->start] != seek_to_this) {
       if (buffer.string[range->start] == f_string_eol[0]) return F_none_eol;
@@ -782,8 +774,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     const unsigned short seek_width = f_macro_utf_character_width(seek_to_this);
 
@@ -845,8 +837,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_status status = F_none;
     unsigned short width = 0;
@@ -901,8 +893,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_status status = F_none;
     unsigned short width = 0;
@@ -957,8 +949,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (buffer.string[range->start] != seek_to_this) {
       range->start++;
@@ -979,8 +971,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     const unsigned short seek_width = f_macro_utf_character_width(seek_to_this);
 
@@ -1097,11 +1089,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_string_append(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -1115,11 +1106,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_string_append_nulless(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -1133,11 +1123,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_string_prepend(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -1151,11 +1140,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_string_prepend_nulless(glue, glue_length, destination);
-
       if (F_status_is_error(status)) return status;
     }
 
@@ -1169,23 +1157,11 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     return private_fl_string_prepend(source, length, destination);
   }
 #endif // _di_fl_string_prepend_
-
-#ifndef _di_fl_string_prepend_nulless_
-  f_return_status fl_string_prepend_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    if (length == 0) return F_data_not;
-
-    return private_fl_string_prepend_nulless(source, length, destination);
-  }
-#endif // _di_fl_string_prepend_nulless_
 
 #ifndef _di_fl_string_prepend_assure_
   f_return_status fl_string_prepend_assure(const f_string source, const f_string_length length, f_string_dynamic *destination) {
@@ -1193,11 +1169,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
-
-    if (destination->used < length) {
-      return private_fl_string_prepend(source, length, destination);
-    }
+    if (length == 0) return F_data_not_eos;
+    if (destination->used < length) return private_fl_string_prepend(source, length, destination);
 
     f_string_length i = 0;
     f_string_length j = 0;
@@ -1213,9 +1186,7 @@ extern "C" {
         continue;
       }
 
-      if (source[i] != destination->string[i]) {
-        return private_fl_string_prepend(source, length, destination);
-      }
+      if (source[i] != destination->string[i]) return private_fl_string_prepend(source, length, destination);
 
       i++;
       j++;
@@ -1231,11 +1202,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
-
-    if (destination->used < length) {
-      return private_fl_string_prepend_nulless(source, length, destination);
-    }
+    if (length == 0) return F_data_not_eos;
+    if (destination->used < length) return private_fl_string_prepend_nulless(source, length, destination);
 
     f_string_length i = 0;
     f_string_length j = 0;
@@ -1251,9 +1219,7 @@ extern "C" {
         continue;
       }
 
-      if (source[i] != destination->string[i]) {
-        return private_fl_string_prepend_nulless(source, length, destination);
-      }
+      if (source[i] != destination->string[i]) return private_fl_string_prepend_nulless(source, length, destination);
 
       i++;
       j++;
@@ -1263,13 +1229,25 @@ extern "C" {
   }
 #endif // _di_fl_string_prepend_assure_nulless_
 
+#ifndef _di_fl_string_prepend_nulless_
+  f_return_status fl_string_prepend_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (length == 0) return F_data_not_eos;
+
+    return private_fl_string_prepend_nulless(source, length, destination);
+  }
+#endif // _di_fl_string_prepend_nulless_
+
 #ifndef _di_fl_string_rip_
   f_return_status fl_string_rip(const f_string source, const f_string_length length, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     f_string_length begin = 0;
     f_string_length end = length - 1;
@@ -1289,7 +1267,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     f_string_length begin = 0;
     f_string_length end = length - 1;
@@ -1309,7 +1287,7 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != seek_to_this) {
       if (string[range->start] == f_string_eol[0]) return F_none_eol;
@@ -1329,7 +1307,7 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     const unsigned short seek_width = f_macro_utf_character_width(seek_to_this);
 
@@ -1380,7 +1358,7 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_status status = F_none;
     unsigned short width = 0;
@@ -1423,7 +1401,7 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_status status = F_none;
     unsigned short width = 0;
@@ -1469,7 +1447,7 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != seek_to_this) {
       range->start++;
@@ -1487,7 +1465,7 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     const unsigned short seek_width = f_macro_utf_character_width(seek_to_this);
 

@@ -376,7 +376,7 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_file_found_not (with error bit) if file does not exist at the program_path.
- *   f_string_length_size (with error bit) if the combined string (generated from PATH) is too large.
+ *   F_string_too_large (with error bit) if the combined string (generated from PATH) is too large.
  *
  * @see execvp()
  */
@@ -423,7 +423,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied for program_path.
  *   F_loop (with error bit) on loop error while checking the program_path.
  *   F_buffer_too_large (with error bit) if paths array (generated from PATH) is too large for further addressing.
- *   f_string_length_size (with error bit) if the combined string (generated from PATH) is too large.
+ *   F_string_too_large (with error bit) if the combined string (generated from PATH) is too large.
  *
  * @see execvpe()
  */

@@ -31,10 +31,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   f_string_length_size (with error bit) if the combined string is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_data_not if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  *
  * @see fl_utf_string_append()
  * @see fl_utf_string_mash()
@@ -59,10 +60,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   f_string_length_size (with error bit) if the combined string is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_data_not if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  *
  * @see fl_utf_string_append_nulless()
  * @see fl_utf_string_mash_nulless()
@@ -149,10 +151,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   f_string_length_size (with error bit) if the combined string is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  *
  * @see fl_utf_string_prepend()
  * @see fl_utf_string_dynamic_prepend()
@@ -175,10 +177,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   f_string_length_size (with error bit) if the combined string is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  *
  * @see fl_utf_string_prepend_nulless()
  * @see fl_utf_string_dynamic_prepend_nulless()
@@ -204,9 +206,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but only whitespace found.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_utf_string_dynamic_rip()
  * @see fl_utf_string_rip()

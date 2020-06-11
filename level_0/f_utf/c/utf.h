@@ -172,6 +172,9 @@ extern "C" {
 #ifndef _di_f_utf_string_length_
   typedef f_number_unsigned f_utf_string_length;
 
+  #define f_utf_string_length_size     0xfffffffffffffffe
+  #define f_utf_string_length_size_max f_type_number_size_max_unsigned
+
   #define f_macro_utf_string_length_new(status, string, length)    status = f_memory_new((void **) & string, sizeof(f_utf_string_length), length)
 
   #define f_macro_utf_string_length_delete(status, string, length) status = f_memory_delete((void **) & string, sizeof(f_utf_string_length), length)

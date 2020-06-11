@@ -26,18 +26,16 @@ extern "C" {
  *   The source string to append.
  * @param length
  *   Length of source to append.
- * @param stop
- *   Inclusive stop point of string to append.
  * @param destination
  *   The destination string the source and glue are appended onto.
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  *
  * @see fl_string_append()
  * @see fl_string_mash()
@@ -62,11 +60,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  *
  * @see fl_string_append_nulless()
  * @see fl_string_mash_nulless()
@@ -156,7 +154,7 @@ extern "C" {
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  *
  * @see fl_string_prepend()
  * @see fl_string_dynamic_prepend()
@@ -182,7 +180,7 @@ extern "C" {
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  *
  * @see fl_string_prepend_nulless()
  * @see fl_string_dynamic_prepend_nulless()

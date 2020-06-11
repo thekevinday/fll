@@ -11,23 +11,11 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     return private_fl_utf_string_append(source, length, destination);
   }
 #endif // _di_fl_utf_string_append_
-
-#ifndef _di_fl_utf_string_append_nulless_
-  f_return_status fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    if (length == 0) return F_data_not;
-
-    return private_fl_utf_string_append_nulless(source, length, destination);
-  }
-#endif // _di_fl_utf_string_append_nulless_
 
 #ifndef _di_fl_utf_string_append_assure_
   f_return_status fl_utf_string_append_assure(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
@@ -35,7 +23,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (destination->used < length) {
       return private_fl_utf_string_append(source, length, destination);
@@ -73,7 +61,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (destination->used < length) {
       return private_fl_utf_string_append_nulless(source, length, destination);
@@ -105,24 +93,26 @@ extern "C" {
   }
 #endif // _di_fl_utf_string_append_assure_nulless_
 
-#ifndef _di_fl_utf_string_compare_
-  f_return_status fl_utf_string_compare(const f_utf_string string1, const f_utf_string string2, const f_utf_string_length length1, const f_utf_string_length length2) {
+#ifndef _di_fl_utf_string_append_nulless_
+  f_return_status fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (length1 == 0) return F_status_set_error(F_parameter);
-      if (length2 == 0) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    if (length == 0) return F_data_not_eos;
+
+    return private_fl_utf_string_append_nulless(source, length, destination);
+  }
+#endif // _di_fl_utf_string_append_nulless_
+
+#ifndef _di_fl_utf_string_compare_
+  f_return_status fl_utf_string_compare(const f_utf_string string1, const f_utf_string string2, const f_utf_string_length length1, const f_utf_string_length length2) {
     return private_fl_utf_string_compare(string1, string2, 0, 0, length1, length2);
   }
 #endif // _di_fl_utf_string_compare_
 
 #ifndef _di_fl_utf_string_compare_trim_
   f_return_status fl_utf_string_compare_trim(const f_utf_string string1, const f_utf_string string2, const f_utf_string_length length1, const f_utf_string_length length2) {
-    #ifndef _di_level_1_parameter_checking_
-      if (length1 == 0) return F_status_set_error(F_parameter);
-      if (length2 == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
     return private_fl_utf_string_compare_trim(string1, string2, 0, 0, length1, length2);
   }
 #endif // _di_fl_utf_string_compare_trim_
@@ -133,7 +123,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     return private_fl_utf_string_append(source.string, source.used, destination);
   }
@@ -145,7 +135,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (destination->used < source.used) {
       return private_fl_utf_string_append(source.string, source.used, destination);
@@ -183,7 +173,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (destination->used < source.used) {
       return private_fl_utf_string_append_nulless(source.string, source.used, destination);
@@ -221,91 +211,11 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     return private_fl_utf_string_append_nulless(source.string, source.used, destination);
   }
 #endif // _di_fl_utf_string_dynamic_append_nulless_
-
-#ifndef _di_fl_utf_string_dynamic_mash_
-  f_return_status fl_utf_string_dynamic_mash(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_static source, f_utf_string_dynamic *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    if (source.used == 0) return F_data_not;
-
-    if (glue_length > 0 && destination->used > 0) {
-      f_status status = private_fl_utf_string_append(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
-    }
-
-    return private_fl_utf_string_append(source.string, source.used, destination);
-  }
-#endif // _di_fl_utf_string_dynamic_mash_
-
-#ifndef _di_fl_utf_string_dynamic_mash_nulless_
-  f_return_status fl_utf_string_dynamic_mash_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_static source, f_utf_string_dynamic *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    if (source.used == 0) return F_data_not;
-
-    if (glue_length > 0 && destination->used > 0) {
-      f_status status = private_fl_utf_string_append_nulless(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
-    }
-
-    return private_fl_utf_string_append_nulless(source.string, source.used, destination);
-  }
-#endif // _di_fl_utf_string_dynamic_mash_nulless_
-
-#ifndef _di_fl_utf_string_dynamic_mish_
-  f_return_status fl_utf_string_dynamic_mish(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_static source, f_utf_string_dynamic *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    if (source.used == 0) return F_data_not;
-
-    if (glue_length > 0 && destination->used > 0) {
-      f_status status = private_fl_utf_string_prepend(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
-    }
-
-    return private_fl_utf_string_prepend(source.string, source.used, destination);
-  }
-#endif // _di_fl_utf_string_dynamic_mish_
-
-#ifndef _di_fl_utf_string_dynamic_mish_nulless_
-  f_return_status fl_utf_string_dynamic_mish_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_static source, f_utf_string_dynamic *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    if (source.used == 0) return F_data_not;
-
-    if (glue_length > 0 && destination->used > 0) {
-      f_status status = private_fl_utf_string_prepend_nulless(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
-    }
-
-    return private_fl_utf_string_prepend_nulless(source.string, source.used, destination);
-  }
-#endif // _di_fl_utf_string_dynamic_mish_nulless_
 
 #ifndef _di_fl_utf_string_dynamic_compare_
   f_return_status fl_utf_string_dynamic_compare(const f_utf_string_static string1, const f_utf_string_static string2) {
@@ -319,6 +229,74 @@ extern "C" {
   }
 #endif // _di_f_utf_string_dynamic_compare_trim_
 
+#ifndef _di_fl_utf_string_dynamic_mash_
+  f_return_status fl_utf_string_dynamic_mash(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_static source, f_utf_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return F_data_not_eos;
+
+    if (glue_length > 0 && destination->used > 0) {
+      const f_status status = private_fl_utf_string_append(glue, glue_length, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return private_fl_utf_string_append(source.string, source.used, destination);
+  }
+#endif // _di_fl_utf_string_dynamic_mash_
+
+#ifndef _di_fl_utf_string_dynamic_mash_nulless_
+  f_return_status fl_utf_string_dynamic_mash_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_static source, f_utf_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return F_data_not_eos;
+
+    if (glue_length > 0 && destination->used > 0) {
+      const f_status status = private_fl_utf_string_append_nulless(glue, glue_length, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return private_fl_utf_string_append_nulless(source.string, source.used, destination);
+  }
+#endif // _di_fl_utf_string_dynamic_mash_nulless_
+
+#ifndef _di_fl_utf_string_dynamic_mish_
+  f_return_status fl_utf_string_dynamic_mish(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_static source, f_utf_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return F_data_not_eos;
+
+    if (glue_length > 0 && destination->used > 0) {
+      const f_status status = private_fl_utf_string_prepend(glue, glue_length, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return private_fl_utf_string_prepend(source.string, source.used, destination);
+  }
+#endif // _di_fl_utf_string_dynamic_mish_
+
+#ifndef _di_fl_utf_string_dynamic_mish_nulless_
+  f_return_status fl_utf_string_dynamic_mish_nulless(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string_static source, f_utf_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return F_data_not_eos;
+
+    if (glue_length > 0 && destination->used > 0) {
+      const f_status status = private_fl_utf_string_prepend_nulless(glue, glue_length, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return private_fl_utf_string_prepend_nulless(source.string, source.used, destination);
+  }
+#endif // _di_fl_utf_string_dynamic_mish_nulless_
+
 #ifndef _di_fl_utf_string_dynamic_partial_append_
   f_return_status fl_utf_string_dynamic_partial_append(const f_utf_string_static source, const f_utf_string_range range, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
@@ -326,8 +304,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_utf_string_append(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -340,10 +318,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
-    f_utf_string_length length = (range.stop - range.start) + 1;
+    const f_utf_string_length length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_fl_utf_string_append(source.string + range.start, length, destination);
@@ -380,10 +358,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
-    f_utf_string_length length = (range.stop - range.start) + 1;
+    const f_utf_string_length length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_fl_utf_string_append_nulless(source.string + range.start, length, destination);
@@ -420,8 +398,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_utf_string_append_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -456,15 +434,12 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_utf_string_append(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
     }
 
     return private_fl_utf_string_append(source.string + range.start, (range.stop - range.start) + 1, destination);
@@ -478,15 +453,12 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_utf_string_append_nulless(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
     }
 
     return private_fl_utf_string_append_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
@@ -500,15 +472,12 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_utf_string_prepend(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
     }
 
     return private_fl_utf_string_prepend(source.string + range.start, (range.stop - range.start) + 1, destination);
@@ -522,15 +491,12 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_utf_string_prepend_nulless(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
     }
 
     return private_fl_utf_string_prepend_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
@@ -544,8 +510,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_utf_string_prepend(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -558,10 +524,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
-    f_utf_string_length length = (range.stop - range.start) + 1;
+    const f_utf_string_length length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_fl_utf_string_prepend(source.string + range.start, length, destination);
@@ -600,10 +566,10 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
-    f_utf_string_length length = (range.stop - range.start) + 1;
+    const f_utf_string_length length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_fl_utf_string_prepend_nulless(source.string + range.start, length, destination);
@@ -642,8 +608,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_utf_string_prepend_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -655,7 +621,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     return private_fl_utf_string_prepend(source.string, source.used, destination);
   }
@@ -667,7 +633,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (destination->used < source.used) {
       return private_fl_utf_string_prepend(source.string, source.used, destination);
@@ -705,7 +671,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     if (destination->used < source.used) {
       return private_fl_utf_string_prepend_nulless(source.string, source.used, destination);
@@ -743,7 +709,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
 
     return private_fl_utf_string_prepend_nulless(source.string, source.used, destination);
   }
@@ -757,8 +723,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_utf_string_append(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -772,8 +738,8 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
-    if (range.start > range.stop) return F_data_not;
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
 
     return private_fl_utf_string_append_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -787,8 +753,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     if (f_macro_utf_character_width_is(buffer.string[range->start]) == 1) {
       return F_status_set_error(F_utf);
@@ -799,9 +765,7 @@ extern "C" {
 
       range->start++;
 
-      if (f_macro_utf_character_width_is(buffer.string[range->start]) == 1) {
-        return F_status_set_error(F_utf);
-      }
+      if (f_macro_utf_character_width_is(buffer.string[range->start]) == 1) return F_status_set_error(F_utf);
 
       if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
@@ -819,8 +783,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_utf_character seek_to_character = seek_to_this << 24;
 
@@ -853,8 +817,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_status status = F_none;
 
@@ -863,10 +827,7 @@ extern "C" {
     }
 
     while (buffer.string[range->start] == placeholder || (status = f_utf_character_is_graph(buffer.string[range->start])) == F_false) {
-      if (F_status_is_error(status)) {
-        return status;
-      }
-
+      if (F_status_is_error(status)) return status;
       if (buffer.string[range->start] == f_utf_character_eol) return F_none_eol;
 
       range->start++;
@@ -879,9 +840,7 @@ extern "C" {
       if (range->start > range->stop) return F_none_stop;
     } // while
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -895,8 +854,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_status status = F_none;
 
@@ -905,10 +864,7 @@ extern "C" {
     }
 
     while (buffer.string[range->start] == placeholder || (status = f_utf_character_is_whitespace(buffer.string[range->start])) == F_false) {
-      if (F_status_is_error(status)) {
-        return status;
-      }
-
+      if (F_status_is_error(status)) return status;
       if (buffer.string[range->start] == f_utf_character_eol) return F_none_eol;
 
       range->start++;
@@ -921,9 +877,7 @@ extern "C" {
       if (range->start > range->stop) return F_none_stop;
     } // while
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -937,8 +891,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     if (f_macro_utf_character_width_is(buffer.string[range->start]) == 1) {
       return F_status_set_error(F_utf);
@@ -967,8 +921,8 @@ extern "C" {
       if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_none_eos;
-    if (range->start > range->stop) return F_none_stop;
+    if (buffer.used == 0) return F_data_not_eos;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_utf_character seek_to_character = seek_to_this << 24;
 
@@ -998,9 +952,13 @@ extern "C" {
       if (destination->used > destination->size) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (destination->used > 0 && destination->string[destination->used - 1] == f_utf_character_eos) return F_none;
+    if (destination->used > 0 && destination->string[destination->used - 1] == f_utf_character_eos) {
+      return F_none;
+    }
 
-    if (destination->used + 1 > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
+    if (destination->used + 1 > f_utf_string_length_size) {
+      return F_status_set_error(F_string_too_large);
+    }
 
     const f_utf_string_length total = destination->used + 1;
 
@@ -1018,20 +976,51 @@ extern "C" {
   }
 #endif // _di_fl_utf_string_dynamic_terminate_
 
+#ifndef _di_fl_utf_string_dynamic_terminate_after_
+  f_return_status fl_utf_string_dynamic_terminate_after(f_utf_string_dynamic *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (destination == 0) return F_status_set_error(F_parameter);
+      if (destination->used > destination->size) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (destination->used > 0) {
+      for (; destination->used > 0; destination->used--) {
+        if (destination->string[destination->used - 1] == 0) continue;
+        break;
+      } // for
+    }
+
+    if (destination->used + 1 > f_utf_string_length_size) {
+      return F_status_set_error(F_string_too_large);
+    }
+
+    const f_utf_string_length total = destination->used + 1;
+
+    if (total > destination->size) {
+      f_status status = F_none;
+
+      f_macro_string_dynamic_resize(status, (*destination), total);
+      if (F_status_is_error(status)) return status;
+    }
+
+    destination->string[destination->used] = 0;
+    destination->used = total - 1;
+
+    return F_none;
+  }
+#endif // _di_fl_utf_string_dynamic_terminate_after_
+
 #ifndef _di_fl_utf_string_mash_
   f_return_status fl_utf_string_mash(const f_utf_string glue, const f_utf_string_length glue_length, const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_utf_string_append(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
     }
 
     return private_fl_utf_string_append(source, length, destination);
@@ -1044,14 +1033,11 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_utf_string_append_nulless(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
     }
 
     return private_fl_utf_string_append_nulless(source, length, destination);
@@ -1064,14 +1050,11 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_utf_string_prepend(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
     }
 
     return private_fl_utf_string_prepend(source, length, destination);
@@ -1084,14 +1067,11 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (glue_length > 0 && destination->used > 0) {
       f_status status = private_fl_utf_string_prepend_nulless(glue, glue_length, destination);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
     }
 
     return private_fl_utf_string_prepend_nulless(source, length, destination);
@@ -1104,7 +1084,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     return private_fl_utf_string_prepend(source, length, destination);
   }
@@ -1116,7 +1096,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (destination->used < length) {
       return private_fl_utf_string_prepend(source, length, destination);
@@ -1154,7 +1134,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     if (destination->used < length) {
       return private_fl_utf_string_prepend_nulless(source, length, destination);
@@ -1192,7 +1172,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     return private_fl_utf_string_prepend_nulless(source, length, destination);
   }
@@ -1204,7 +1184,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     f_utf_string_length begin = 0;
     f_utf_string_length end = length - 1;
@@ -1224,7 +1204,7 @@ extern "C" {
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (length == 0) return F_data_not_eos;
 
     f_utf_string_length begin = 0;
     f_utf_string_length end = length - 1;
@@ -1244,7 +1224,7 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     if (f_macro_utf_character_width_is(string[range->start]) == 1) {
       return F_status_set_error(F_utf);
@@ -1272,11 +1252,9 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_utf_character seek_to_character = seek_to_this << 24;
-
-    f_status status = F_none;
 
     for (; range->start <= range->stop; range->start++) {
       if (f_macro_utf_character_width_is(string[range->start]) == 1) {
@@ -1297,7 +1275,7 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_status status = F_none;
 
@@ -1306,10 +1284,7 @@ extern "C" {
     }
 
     while (string[range->start] == placeholder || (status = f_utf_character_is_graph(string[range->start])) == F_false) {
-      if (F_status_is_error(status)) {
-        return status;
-      }
-
+      if (F_status_is_error(status)) return status;
       if (string[range->start] == f_utf_character_eol) return F_none_eol;
 
       range->start++;
@@ -1321,9 +1296,7 @@ extern "C" {
       if (range->start > range->stop) return F_none_stop;
     } // while
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -1335,19 +1308,14 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     f_status status = F_none;
 
-    if (f_macro_utf_character_width_is(string[range->start]) == 1) {
-      return F_status_set_error(F_utf);
-    }
+    if (f_macro_utf_character_width_is(string[range->start]) == 1) return F_status_set_error(F_utf);
 
-    while (string[range->start] == placeholder || (status = f_utf_character_is_whitespace(string[range->start])) == F_false) {
-      if (F_status_is_error(status)) {
-        return status;
-      }
-
+    while (string[range->start] == placeholder || (status = f_utf_character_is_graph(string[range->start])) == F_true) {
+      if (F_status_is_error(status)) return status;
       if (string[range->start] == f_utf_character_eol) return F_none_eol;
 
       range->start++;
@@ -1359,9 +1327,7 @@ extern "C" {
       if (range->start > range->stop) return F_none_stop;
     } // while
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -1373,7 +1339,7 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
     if (f_macro_utf_character_width_is(string[range->start]) == 1) {
       return F_status_set_error(F_utf);
@@ -1399,11 +1365,9 @@ extern "C" {
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_none_stop;
+    if (range->start > range->stop) return F_data_not_stop;
 
-    f_utf_character seek_to_character = seek_to_this << 24;
-
-    f_status status = F_none;
+    const f_utf_character seek_to_character = seek_to_this << 24;
 
     if (f_macro_utf_character_width_is(string[0]) == 1) {
       return F_status_set_error(F_utf);

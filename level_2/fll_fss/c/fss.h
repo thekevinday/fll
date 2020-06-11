@@ -63,7 +63,7 @@ extern "C" {
  *   F_data_not when there is no buffer, objects or contents to process.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if any combined string is too large when processing values.
+ *   F_string_too_large (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_
   extern f_return_status fll_fss_snatch(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size);
@@ -102,7 +102,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_buffer_too_large (with error bit) on maximum buffer limit reached when processing values.
- *   f_string_length_size (with error bit) if any combined string is too large when processing values.
+ *   F_string_too_large (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_apart_
   extern f_return_status fll_fss_snatch_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamics *values[], const f_string_length size);
@@ -140,7 +140,7 @@ extern "C" {
  *   F_data_not when there is no buffer, objects or contents to process.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if any combined string is too large when processing values.
+ *   F_string_too_large (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_together_
   extern f_return_status fll_fss_snatch_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size);
@@ -183,7 +183,7 @@ extern "C" {
  *   F_data_not when there is no buffer, objects or contents to process.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if any combined string is too large when processing values.
+ *   F_string_too_large (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_mash_
   extern f_return_status fll_fss_snatch_mash(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size, const f_string glue, const f_string_length glue_length);
@@ -225,7 +225,7 @@ extern "C" {
  *   F_data_not when there is no buffer, objects or contents to process.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if any combined string is too large when processing values.
+ *   F_string_too_large (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_mash_apart_
   extern f_return_status fll_fss_snatch_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamics *values[], const f_string_length size, const f_string glue, const f_string_length glue_length);
@@ -267,7 +267,7 @@ extern "C" {
  *   F_data_not when there is no buffer, objects or contents to process.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if any combined string is too large when processing values.
+ *   F_string_too_large (with error bit) if any combined string is too large when processing values.
  */
 #ifndef _di_fll_fss_snatch_mash_together_
   extern f_return_status fll_fss_snatch_mash_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], f_string_dynamic *values[], const f_string_length size, const f_string glue, const f_string_length glue_length);

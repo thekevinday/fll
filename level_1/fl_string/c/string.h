@@ -9,7 +9,7 @@
  *
  * UTF-8 is handled within these functions via normal string characters (f_string).
  * Unlike f_utf_string, these f_string base functions do not force padding of ASCII or UTF-8 characters.
- * An ASCII character is 1-byte and a 4-byte wide UTF-8 character is 4-byte.
+ * With f_string, a 1-byte wide ASCII character is stored as 1 byte and a 4-byte wide UTF-8 character is stored as 4 bytes.
  *
  * This shortens the size of the string at the cost of complexity vs f_utf_string.
  *
@@ -46,11 +46,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_append_
   extern f_return_status fl_string_append(const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -70,11 +70,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_append_assure_
   extern f_return_status fl_string_append_assure(const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -95,11 +95,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_append_assure_nulless_
   extern f_return_status fl_string_append_assure_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -119,11 +119,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_append_nulless_
   extern f_return_status fl_string_append_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -173,6 +173,10 @@ extern "C" {
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_compare_trim_
   extern f_return_status fl_string_compare_trim(const f_string string1, const f_string string2, const f_string_length length1, const f_string_length length2);
@@ -188,11 +192,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_append_
   extern f_return_status fl_string_dynamic_append(const f_string_static source, f_string_dynamic *destination);
@@ -208,11 +212,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_append_assure_
   extern f_return_status fl_string_dynamic_append_assure(const f_string_static source, f_string_dynamic *destination);
@@ -230,11 +234,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_append_assure_nulless_
   extern f_return_status fl_string_dynamic_append_assure_nulless(const f_string_static source, f_string_dynamic *destination);
@@ -252,11 +256,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_append_nulless_
   extern f_return_status fl_string_dynamic_append_nulless(const f_string_static source, f_string_dynamic *destination);
@@ -298,6 +302,10 @@ extern "C" {
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_trim_
   extern f_return_status fl_string_dynamic_compare_trim(const f_string_static string1, const f_string_static string2);
@@ -319,15 +327,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
- *
- *   Errors from (with error bit): f_utf_is_graph().
- *
- * @see f_utf_is_graph()
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_mash_
   extern f_return_status fl_string_dynamic_mash(const f_string glue, const f_string_length glue_length, const f_string_static source, f_string_dynamic *destination);
@@ -351,11 +355,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_mash_nulless_
   extern f_return_status fl_string_dynamic_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string_static source, f_string_dynamic *destination);
@@ -377,11 +381,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_mish_
   extern f_return_status fl_string_dynamic_mish(const f_string glue, const f_string_length glue_length, const f_string_static source, f_string_dynamic *destination);
@@ -405,11 +409,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_mish_nulless_
   extern f_return_status fl_string_dynamic_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string_static source, f_string_dynamic *destination);
@@ -427,11 +431,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_append_
   extern f_return_status fl_string_dynamic_partial_append(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -451,11 +456,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_append_assure_
   extern f_return_status fl_string_dynamic_partial_append_assure(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -477,11 +483,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_append_assure_nulless_
   extern f_return_status fl_string_dynamic_partial_append_assure_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -501,11 +508,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_append_nulless_
   extern f_return_status fl_string_dynamic_partial_append_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -555,6 +563,10 @@ extern "C" {
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_trim_
   extern f_return_status fl_string_dynamic_partial_compare_trim(const f_string_static string1, const f_string_static string2, const f_string_range range1, const f_string_range range2);
@@ -578,11 +590,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_mash_
   extern f_return_status fl_string_dynamic_partial_mash(const f_string glue, const f_string_length glue_length, const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -608,11 +621,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_mash_nulless_
   extern f_return_status fl_string_dynamic_partial_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -636,11 +650,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_mish_
   extern f_return_status fl_string_dynamic_partial_mish(const f_string glue, const f_string_length glue_length, const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -666,11 +681,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_mish_nulless_
   extern f_return_status fl_string_dynamic_partial_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -690,11 +706,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_prepend_
   extern f_return_status fl_string_dynamic_partial_prepend(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -716,11 +733,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_prepend_assure_
   extern f_return_status fl_string_dynamic_partial_prepend_assure(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -742,11 +760,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_prepend_assure_nulless_
   extern f_return_status fl_string_dynamic_partial_prepend_assure_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -766,11 +785,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_prepend_nulless_
   extern f_return_status fl_string_dynamic_partial_prepend_nulless(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -788,11 +808,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_prepend_
   extern f_return_status fl_string_dynamic_prepend(const f_string_static source, f_string_dynamic *destination);
@@ -812,11 +833,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_prepend_assure_
   extern f_return_status fl_string_dynamic_prepend_assure(const f_string_static source, f_string_dynamic *destination);
@@ -836,11 +858,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_prepend_assure_nulless_
   extern f_return_status fl_string_dynamic_prepend_assure_nulless(const f_string_static source, f_string_dynamic *destination);
@@ -858,11 +881,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_prepend_nulless_
   extern f_return_status fl_string_dynamic_prepend_nulless(const f_string_static source, f_string_dynamic *destination);
@@ -883,11 +907,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_rip_
   extern f_return_status fl_string_dynamic_rip(const f_string_static source, const f_string_range range, f_string_dynamic *destination);
@@ -910,7 +935,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if nothing to rip, no allocations or reallocations are performed.
+ *   F_data_not_eos if source length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -935,6 +961,8 @@ extern "C" {
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_eos on success, but stopped at end of buffer.
  *   F_none_stop on success, but stopped stop location.
+ *   F_data_not_eos if buffer length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_
@@ -956,6 +984,8 @@ extern "C" {
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_eos on success, but stopped at end of buffer.
+ *   F_data_not_eos if buffer length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
@@ -984,6 +1014,8 @@ extern "C" {
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_eos on success, but stopped at end of buffer.
+ *   F_data_not_eos if buffer length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
@@ -1014,6 +1046,8 @@ extern "C" {
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_eos on success, but stopped at end of buffer.
  *   F_none_stop on success, but stopped stop location.
+ *   F_data_not_eos if buffer length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
@@ -1021,9 +1055,9 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors from (with error bit): f_utf_is_graph().
  *
- * @see f_utf_is_whitespace()
+ * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_non_graph_
   extern f_return_status fl_string_dynamic_seek_line_until_non_graph(const f_string_static buffer, f_string_range *range, const int8_t placeholder);
@@ -1044,6 +1078,8 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success, but stopped at end of buffer.
  *   F_none_stop on success, but stopped stop location.
+ *   F_data_not_eos if buffer length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
@@ -1068,6 +1104,8 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success, but stopped at end of buffer.
  *   F_none_stop on success, but stopped stop location.
+ *   F_data_not_eos if buffer length is 0.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
@@ -1144,11 +1182,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_mash_
   extern f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -1174,11 +1212,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_mash_nulless_
   extern f_return_status fl_string_mash_nulless(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -1202,11 +1240,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_mish_
   extern f_return_status fl_string_mish(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -1232,11 +1270,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_mish_nulless_
   extern f_return_status fl_string_mish_nulless(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -1256,11 +1294,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_prepend_
   extern f_return_status fl_string_prepend(const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -1282,11 +1320,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_prepend_assure_
   extern f_return_status fl_string_prepend_assure(const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -1309,11 +1347,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_prepend_assure_nulless_
   extern f_return_status fl_string_prepend_assure_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -1336,11 +1374,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0 (start > stop).
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   f_string_length_size (with error bit) if the combined string is too large.
+ *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_prepend_nulless_
   extern f_return_status fl_string_prepend_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -1361,10 +1399,14 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if nothing to rip, no allocations or reallocations are performed.
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_rip_
   extern f_return_status fl_string_rip(const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -1387,10 +1429,14 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if nothing to rip, no allocations or reallocations are performed.
+ *   F_data_not_eos if source length is 0.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_rip_nulless_
   extern f_return_status fl_string_rip_nulless(const f_string source, const f_string_length length, f_string_dynamic *destination);
@@ -1411,6 +1457,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_stop on success, but stopped stop location.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_seek_line_to_
@@ -1431,6 +1478,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1458,6 +1506,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_allocation (with error bit) on memory allocation error.
@@ -1487,6 +1536,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_stop on success, but stopped stop location.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_allocation (with error bit) on memory allocation error.
@@ -1515,6 +1565,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_stop on success, but stopped stop location.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1537,6 +1588,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_stop on success, but stopped stop location.
+ *   F_data_not_stop if range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.

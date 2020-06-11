@@ -7,6 +7,7 @@ extern "C" {
 
 #if !defined(_di_fl_utf_string_append_) || !defined(_di_fl_utf_string_dynamic_append_) || !defined(_di_fl_utf_string_append_mash_) || !defined(_di_fl_utf_string_dynamic_mash_)
   f_return_status private_fl_utf_string_append(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
+
     if (destination->used + length > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
 
     f_status status = F_none;
@@ -27,6 +28,7 @@ extern "C" {
 
 #if !defined(_di_fl_utf_string_append_nulless_) || !defined(_di_fl_utf_string_dynamic_append_nulless_) || !defined(_di_fl_utf_string_mash_nulless_) || !defined(_di_fl_utf_string_dynamic_mash_nulless_)
   f_return_status private_fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
+
     if (destination->used + length > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
 
     f_status status = F_none;
@@ -235,7 +237,10 @@ extern "C" {
 
 #if !defined(_di_fl_utf_string_prepend_) || !defined(_di_fl_utf_string_dynamic_prepend_)
   f_return_status private_fl_utf_string_prepend(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
-    if (destination->used + length > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
+
+    if (destination->used + length > f_utf_string_max_size) {
+      return F_status_set_error(F_string_too_large);
+    }
 
     f_status status = F_none;
 
@@ -261,7 +266,10 @@ extern "C" {
 
 #if !defined(_di_fl_utf_string_prepend_nulless_) || !defined(_di_fl_utf_string_dynamic_prepend_nulless_)
   f_return_status private_fl_utf_string_prepend_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
-    if (destination->used + length > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
+
+    if (destination->used + length > f_utf_string_max_size) {
+      return F_status_set_error(F_string_too_large);
+    }
 
     f_status status = F_none;
 
@@ -271,11 +279,13 @@ extern "C" {
     for (f_utf_string_length i = 0; i <= length; i++) {
       if (i == length) {
         if (i > first) {
-          f_utf_string_length size = i - first;
+          const f_utf_string_length size = i - first;
 
-          if (destination->used + size > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
+          if (destination->used + size > f_utf_string_max_size) {
+            return F_status_set_error(F_string_too_large);
+          }
 
-          f_utf_string_length total = destination->used + size;
+          const f_utf_string_length total = destination->used + size;
 
           if (total > destination->size) {
             f_macro_string_dynamic_resize(status, (*destination), total);
@@ -295,11 +305,13 @@ extern "C" {
       if (source[i] == f_utf_character_eos) {
         if (i > 0) {
           if (i > first) {
-            f_utf_string_length size = i - first;
+            const f_utf_string_length size = i - first;
 
-            if (destination->used + size > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
+            if (destination->used + size > f_utf_string_max_size) {
+              return F_status_set_error(F_string_too_large);
+            }
 
-            f_utf_string_length total = destination->used + size;
+            const f_utf_string_length total = destination->used + size;
 
             if (total > destination->size) {
               f_macro_string_dynamic_resize(status, (*destination), total);
@@ -330,7 +342,6 @@ extern "C" {
 
 #if !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_) || !defined(_di_fl_utf_string_rip_nulless_) || !defined(_di_fl_utf_string_dynamic_rip_nulless_)
   f_return_status private_fl_utf_string_rip_find_range(const f_utf_string source, f_utf_string_length *start, f_utf_string_length *stop) {
-    f_utf_string_length stop_original = *stop;
 
     f_status status = F_none;
 
@@ -342,7 +353,9 @@ extern "C" {
 
       status = f_utf_character_is_whitespace(source[*start]);
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
+        if (F_status_set_fine(status) == F_maybe) {
+          return F_status_set_error(F_utf);
+        }
 
         return status;
       }
@@ -360,7 +373,9 @@ extern "C" {
 
       status = f_utf_character_is_whitespace(source[*stop]);
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
+        if (F_status_set_fine(status) == F_maybe) {
+          return F_status_set_error(F_utf);
+        }
 
         return status;
       }
@@ -371,7 +386,9 @@ extern "C" {
     if (*stop == *start) {
       status = f_utf_character_is_whitespace(source[*stop]);
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
+        if (F_status_set_fine(status) == F_maybe) {
+          return F_status_set_error(F_utf);
+        }
 
         return status;
       }
