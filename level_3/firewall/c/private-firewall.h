@@ -102,36 +102,109 @@ typedef struct {
 
 /**
  * Perform commands.
+ *
+ * @param local
+ *   Local firewall settings.
+ * @param data
+ *   Firewall data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  */
 f_return_status firewall_perform_commands(const firewall_local_data local, const firewall_data data) f_gcc_attribute_visibility_internal;
 
 /**
  * Create custom chains.
+ *
+ * @param reserved
+ *   firewall chains.
+ * @param local
+ *   Local firewall settings.
+ * @param data
+ *   Firewall data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  */
 f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 
 /**
  * Deallocate chains.
+ *
+ * @param data
+ *   Firewall data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  */
 f_return_status firewall_delete_chains(const firewall_data data) f_gcc_attribute_visibility_internal;
 
 /**
  * Lock the firewall.
+ *
+ * @param data
+ *   Firewall data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  */
 f_return_status firewall_default_lock(const firewall_data data) f_gcc_attribute_visibility_internal;
 
 /**
  * Buffer firewall rules.
+ *
+ * @param filename
+ *   File name to read the rules from.
+ * @param optional
+ *   TRUE if this files is optional.
+ *   FALSE otherwise (more are errors returned when not optional).
+ * @param local
+ *   Local firewall settings.
+ * @param data
+ *   Firewall data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  */
 f_return_status firewall_buffer_rules(const f_string filename, const bool optional, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 
 /**
  * Process buffered rules.
+ *
+ * @param range
+ *   The current position within the buffer and the stop point.
+ * @param local
+ *   Local firewall settings.
+ * @param data
+ *   Firewall data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  */
-f_return_status firewall_process_rules(f_string_range *input, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
+f_return_status firewall_process_rules(f_string_range *range, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
 
 /**
  * Delete allocated data.
+ *
+ * @param local
+ *   Local firewall settings.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  */
 f_return_status firewall_delete_local_data(firewall_local_data *local) f_gcc_attribute_visibility_internal;
 

@@ -20,6 +20,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_
@@ -40,6 +41,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_string_dynamic_
@@ -84,6 +86,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_process_console_parameters_
@@ -102,6 +105,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_validate_parameter_directories_

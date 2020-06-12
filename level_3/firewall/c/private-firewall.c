@@ -1428,10 +1428,10 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
   return status;
 }
 
-f_return_status firewall_process_rules(f_string_range *input, firewall_local_data *local, firewall_data *data) {
+f_return_status firewall_process_rules(f_string_range *range, firewall_local_data *local, firewall_data *data) {
   f_status status = F_none;
 
-  status = fll_fss_extended_read(&local->buffer, input, &local->rule_objects, &local->rule_contents);
+  status = fll_fss_extended_read(&local->buffer, range, &local->rule_objects, &local->rule_contents);
 
   if (F_status_is_not_error(status)) {
     status = firewall_perform_commands(*local, *data);

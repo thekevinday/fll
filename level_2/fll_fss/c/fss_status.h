@@ -106,34 +106,65 @@ extern "C" {
   extern f_return_status fll_fss_status_from_string(const f_string string, f_status *code);
 #endif // _di_fll_fss_status_to_string_
 
+/**
+ * Convert code codes to their string equivalents.
+ *
+ * @param code
+ *   The code to process.
+ * @param string
+ *   The code name that represents the given code.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): fl_status_to_string().
+ *
+ * @see fl_status_to_string()
+ */
 #ifndef _di_fll_fss_status_to_string_
-  /**
-   * Convert code codes to their string equivalents.
-   */
   extern f_return_status fll_fss_status_to_string(const f_status code, f_string *string);
 #endif // _di_fll_status_to_string_
 
+/**
+ * Returns true or false depending on whether the given status code has the error bit set.
+ *
+ * @param code
+ *   The code to process.
+ *
+ * @return
+ *   F_true if status has the error bit set.
+ *   F_false otherwise.
+ */
 #ifndef _di_fll_fss_status_is_error_
-  /**
-   * Returns true or false depending on whether the standard context of the code code represents an code.
-   * Keep in mind that many of the code codes are context-specific and may be reported as an code here when it is in fact not an code.
-   */
   extern f_return_status fll_fss_status_is_error(const f_status code);
 #endif // _di_fll_fss_status_is_error_
 
+/**
+ * Returns true or false depending on whether the given status code has the warning bit set.
+ *
+ * @param code
+ *   The code to process.
+ *
+ * @return
+ *   F_true if status has the warning bit set.
+ *   F_false otherwise.
+ */
 #ifndef _di_fll_fss_status_is_warning_
-  /**
-   * Returns true or false depending on whether the standard context of the code code represents a warning.
-   * Keep in mind that many of the code codes are context-specific and may be reported as a warning here when it is in fact not a warning.
-   */
   extern f_return_status fll_fss_status_is_warning(const f_status code);
 #endif // _di_fll_fss_status_is_warning_
 
+/**
+ * Returns true or false depending on whether the given status code has neither the error bit nor the warning bit set.
+ *
+ * @param code
+ *   The code to process.
+ *
+ * @return
+ *   F_true if status does not have the error bit nor warning bit set.
+ *   F_false otherwise.
+ */
 #ifndef _di_fll_fss_status_is_fine_
-  /**
-   * Returns true or false depending on whether the standard context of the code code represents an normal return status and not an code.
-   * Keep in mind that many of the code codes are context-specific and may be reported as "fine" here when it is in fact not fine.
-   */
   extern f_return_status fll_fss_status_is_fine(const f_status code);
 #endif // _di_fll_fss_status_is_fine_
 

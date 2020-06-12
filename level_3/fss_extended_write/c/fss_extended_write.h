@@ -132,6 +132,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see fss_extended_write_delete_data()
@@ -150,6 +151,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see fss_extended_write_main()

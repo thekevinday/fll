@@ -28,8 +28,8 @@ extern "C" {
  * Identify whether or not the standard input pipe source contains piped data.
  *
  * @return
- *   F_false if there is no piped data.
  *   F_true if there is piped data.
+ *   F_false if there is no piped data.
  *   F_file_stat (with error bit) on stat() error.
  *
  * @see fstat()
@@ -44,8 +44,8 @@ extern "C" {
  * For most systems, standard warning does not exist and instead maps to standard output.
  *
  * @return
- *   F_false if there is no piped data.
  *   F_true if there is piped data.
+ *   F_false if there is no piped data.
  *   F_file_stat (with error bit) on stat() error.
  *
  * @see fstat()
@@ -58,8 +58,8 @@ extern "C" {
  * Identify whether or not the standard error pipe source contains piped data.
  *
  * @return
- *   F_false if there is no piped data.
  *   F_true if there is piped data.
+ *   F_false if there is no piped data.
  *   F_file_stat (with error bit) on stat() error.
  *
  * @see fstat()

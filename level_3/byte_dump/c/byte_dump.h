@@ -269,6 +269,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see byte_dump_main()

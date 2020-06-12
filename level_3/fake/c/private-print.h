@@ -55,8 +55,8 @@ extern "C" {
  *   Set to F_true to print the fallback error message for unknown errors.
  *
  * @return
- *   F_false is returned on successful print of known errors.
  *   F_true is returned if the status code has no print message.
+ *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fake_print_error_file_
   extern bool fake_print_error_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string name, const f_string operation, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
@@ -86,8 +86,8 @@ extern "C" {
  *   Set to F_true to print the fallback error message for unknown errors.
  *
  * @return
- *   F_false is returned on successful print of known errors.
  *   F_true is returned if the status code has no print message.
+ *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fake_print_error_operation_
   extern bool fake_print_error_operation(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string operation, const f_string how, const f_string source, const f_string destination, const bool fallback) f_gcc_attribute_visibility_internal;

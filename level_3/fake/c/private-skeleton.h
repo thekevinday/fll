@@ -20,6 +20,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_
@@ -36,6 +37,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with warning bit) are returned on certain problems that can be ignored.
  *   Status codes (with error bit) are returned on any problem.
  */
@@ -56,6 +58,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with warning bit) are returned on certain problems that can be ignored.
  *   Status codes (with error bit) are returned on any problem.
  */

@@ -205,7 +205,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fss_basic_list_read_main_preprocess_depth_
   extern f_return_status fss_basic_list_read_main_preprocess_depth(const f_console_arguments arguments, const fss_basic_list_read_data data, fss_basic_list_read_depths *depths) f_gcc_attribute_visibility_internal;
@@ -222,6 +221,11 @@ extern "C" {
  *   The name of the file being processed.
  * @param depths
  *   The processed depth parameters.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  *
  * @see fss_basic_list_read_main_preprocess_depth()
  */

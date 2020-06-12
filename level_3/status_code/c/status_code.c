@@ -50,11 +50,13 @@ extern "C" {
     if (data->parameters[status_code_parameter_help].result == f_console_result_found) {
       status_code_print_help(data->context);
       status_code_delete_data(data);
+
       return F_none;
     }
     else if (data->parameters[status_code_parameter_version].result == f_console_result_found) {
       fll_program_print_version(status_code_version);
       status_code_delete_data(data);
+
       return F_none;
     }
 
@@ -153,7 +155,6 @@ extern "C" {
 
 #ifndef _di_status_code_delete_data_
   f_return_status status_code_delete_data(status_code_data *data) {
-    f_status status = F_none;
     f_string_length i = 0;
 
     while (i < status_code_total_parameters) {

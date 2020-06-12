@@ -320,6 +320,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see firewall_delete_data()
@@ -329,7 +330,7 @@ extern "C" {
 #endif // _di_firewall_main_
 
 /**
- * Deallocate data.
+ * De-allocate data.
  *
  * Be sure to call this after executing firewall_main().
  *
@@ -338,6 +339,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see firewall_main()

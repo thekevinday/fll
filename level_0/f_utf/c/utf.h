@@ -615,8 +615,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 character.
  *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is_valid()
@@ -635,8 +635,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 alphabet character.
  *   F_true if a UTF-8 alphabet character.
+ *   F_false if not a UTF-8 alphabet character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -655,8 +655,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 alpha-numeric character.
  *   F_true if a UTF-8 alpha-numeric character.
+ *   F_false if not a UTF-8 alpha-numeric character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -673,8 +673,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 control character.
  *   F_true if a UTF-8 control character.
+ *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -693,8 +693,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 control picture character.
  *   F_true if a UTF-8 control picture character.
+ *   F_false if not a UTF-8 control picture character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_is_control_picture()
@@ -715,8 +715,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 character.
  *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is()
@@ -734,8 +734,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 graph.
  *   F_true if a UTF-8 graph.
+ *   F_false if not a UTF-8 graph.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see isgraph()
@@ -754,8 +754,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 numeric character.
  *   F_true if a UTF-8 numeric character.
+ *   F_false if not a UTF-8 numeric character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -779,8 +779,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 character.
  *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is()
@@ -801,8 +801,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 whitespace.
  *   F_true if a UTF-8 whitespace.
+ *   F_false if not a UTF-8 whitespace.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_is_whitespace()
@@ -822,8 +822,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 word character.
  *   F_true if a UTF-8 word character.
+ *   F_false if not a UTF-8 word character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -844,8 +844,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 word or dash character.
  *   F_true if a UTF-8 word or dash character.
+ *   F_false if not a UTF-8 word or dash character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -866,8 +866,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 word or dash character.
  *   F_true if a UTF-8 word or dash character.
+ *   F_false if not a UTF-8 word or dash character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -886,8 +886,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 non-printing or zero-width character.
  *   F_true if a UTF-8 non-printing or zero-width character.
+ *   F_false if not a UTF-8 non-printing or zero-width character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_is_zero_width()
@@ -907,8 +907,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_false if not a UTF-8 alpha character.
  *   F_true if a UTF-8 alpha character.
+ *   F_false if not a UTF-8 alpha character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
@@ -952,8 +952,8 @@ extern "C" {
  * @todo relocate this outside of f_utf into a more general path, perhaps f_memory (f_memory_is_big_endian).
  *
  * @return
- *   F_false if the system is little-endian.
  *   F_true if the system is big-endian.
+ *   F_false if the system is little-endian.
  */
 #ifndef _di_f_utf_is_big_endian_
   extern f_return_status f_utf_is_big_endian();
@@ -972,8 +972,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 character.
  *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -997,8 +997,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 alphabet character.
  *   F_true if a UTF-8 alphabet character.
+ *   F_false if not a UTF-8 alphabet character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
@@ -1021,8 +1021,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 alpha-numeric character.
- *   F_true if a UTF-8 alpha-numeric character.
+ *   F_true if a UTF-8 alphabet character.
+ *   F_false if not a UTF-8 alpha-numeric character.x
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
@@ -1043,8 +1043,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 control character.
  *   F_true if a UTF-8 control character.
+ *   F_false if not a UTF-8 control character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
@@ -1067,8 +1067,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 control picture character.
  *   F_true if a UTF-8 control picture character.
+ *   F_false if not a UTF-8 control picture character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see f_utf_character_is_control_picture()
@@ -1104,8 +1104,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 character.
  *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
  *
  * @see f_utf_character_is()
  * @see f_utf_character_is_valid()
@@ -1126,8 +1126,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 graph.
  *   F_true if a UTF-8 graph.
+ *   F_false if not a UTF-8 graph.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_maybe (with error bit) if this could be a graph but width is not long enough.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1153,8 +1153,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 numeric character.
  *   F_true if a UTF-8 numeric character.
+ *   F_false if not a UTF-8 numeric character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
@@ -1181,8 +1181,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a valid UTF-8 character.
  *   F_true if a valid UTF-8 character.
+ *   F_false if not a valid UTF-8 character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1205,8 +1205,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 whitespace.
  *   F_true if a UTF-8 whitespace.
+ *   F_false if not a UTF-8 whitespace.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1234,8 +1234,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 word character.
  *   F_true if a UTF-8 word character.
+ *   F_false if not a UTF-8 word character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
@@ -1260,8 +1260,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 word or dash character.
  *   F_true if a UTF-8 word or dash character.
+ *   F_false if not a UTF-8 word or dash character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
@@ -1286,8 +1286,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 word or dash character.
  *   F_true if a UTF-8 word or dash character.
+ *   F_false if not a UTF-8 word or dash character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
@@ -1310,8 +1310,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_false if not a UTF-8 whitespace.
  *   F_true if a UTF-8 whitespace.
+ *   F_false if not a UTF-8 whitespace.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
  *   F_parameter (with error bit) if a parameter is invalid.

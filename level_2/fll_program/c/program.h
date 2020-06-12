@@ -39,6 +39,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   Errors from (with error bit): fl_color_print().
+ *
+ * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_header_
   extern f_return_status fll_program_print_help_header(const fl_color_context context, const f_string name, const f_string version);
@@ -62,6 +66,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   Errors from (with error bit): fl_color_print().
+ *
+ * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_
   extern f_return_status fll_program_print_help_option(const fl_color_context context, const f_string option_short, const f_string option_long, const f_string symbol_short, const f_string symbol_long, const f_string description);
@@ -81,6 +89,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   Errors from (with error bit): fl_color_print().
+ *
+ * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_long_
   extern f_return_status fll_program_print_help_option_long(const fl_color_context context, const f_string option_long, const f_string symbol_long, const f_string description);
@@ -98,6 +110,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   Errors from (with error bit): fl_color_print().
+ *
+ * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_other_
   extern f_return_status fll_program_print_help_option_other(const fl_color_context context, const f_string option_other, const f_string description);
@@ -116,6 +132,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   Errors from (with error bit): fl_color_print().
+ *
+ * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_usage_
   extern f_return_status fll_program_print_help_usage(const fl_color_context context, const f_string name, const f_string parameters);
@@ -154,8 +174,18 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if "additional" parameters were expected but not found.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_console_parameter_prioritize_left().
+ *   Errors from (with error bit): f_console_parameter_prioritize_right().
+ *   Errors from (with error bit): f_console_parameter_process().
+ *   Errors from (with error bit): fl_color_load_context().
+ *
+ * @see f_console_parameter_prioritize_left()
+ * @see f_console_parameter_prioritize_right()
+ * @see f_console_parameter_process()
+ * @see fl_color_load_context()
  */
 #ifndef _di_fll_program_parameter_process_
   extern f_return_status fll_program_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context);
@@ -180,8 +210,18 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if "additional" parameters were expected but not found.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_console_parameter_prioritize_left().
+ *   Errors from (with error bit): f_console_parameter_prioritize_right().
+ *   Errors from (with error bit): f_console_parameter_process().
+ *   Errors from (with error bit): fl_color_load_context().
+ *
+ * @see f_console_parameter_prioritize_left()
+ * @see f_console_parameter_prioritize_right()
+ * @see f_console_parameter_process()
+ * @see fl_color_load_context()
  */
 #ifndef _di_fll_program_parameter_process_quietly_
   extern f_return_status fll_program_parameter_process_quietly(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context);
@@ -204,9 +244,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): fl_string_append().
  *
  * @see fl_string_append()
  */
@@ -231,10 +273,14 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
- *   F_string_too_large (with error bit) if the combined string is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors from (with error bit): fl_string_mash().
+ *
+ * @see fl_string_mash()
  */
 #ifndef _di_fll_program_parameter_additional_mash_
   extern f_return_status fll_program_parameter_additional_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination);
@@ -255,9 +301,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): fl_string_rip().
  *
  * @see fl_string_rip()
  */
@@ -283,10 +331,16 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
- *   F_string_too_large (with error bit) if the combined string is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors from (with error bit): fl_string_dynamic_mash().
+ *   Errors from (with error bit): fl_string_rip().
+ *
+ * @see fl_string_dynamic_mash()
+ * @see fl_string_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_mash_
   extern f_return_status fll_program_parameter_additional_rip_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination);

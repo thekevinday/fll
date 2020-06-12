@@ -107,7 +107,7 @@ extern "C" {
       return status;
     }
 
-    f_status code = (f_status) number;
+    const f_status code = (f_status) number;
     f_string string = 0;
 
     status = fll_fss_status_to_string(code, &string);

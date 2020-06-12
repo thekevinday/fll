@@ -359,6 +359,7 @@ typedef struct {
   f_return_status init_process_main_rule(const init_data data, f_string_dynamic *buffer, init_setting *setting) f_gcc_attribute_visibility_internal;
 #endif // _di_init_process_main_rule_
 */
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

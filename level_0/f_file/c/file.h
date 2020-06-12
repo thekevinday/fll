@@ -865,8 +865,8 @@ extern "C" {
  *   The path file name.
  *
  * @return
- *   F_false if path was not found.
  *   F_true if path was found.
+ *   F_false if path was not found.
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_loop (with error bit) on loop error.
@@ -895,8 +895,8 @@ extern "C" {
  *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
  *
  * @return
- *   F_false if file does not exist.
  *   F_true if file exists.
+ *   F_false if file does not exist.
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_false (with error bit) on unknown/unhandled errors.
@@ -946,9 +946,9 @@ extern "C" {
  *   The type of the file
  *
  * @return
+ *   F_true if path was found and path is type.
  *   F_false if path was found and path is not type.
  *   F_file_found_not if the path was not found.
- *   F_true if path was found and path is type.
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_loop (with error bit) on loop error.
@@ -976,9 +976,9 @@ extern "C" {
  *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
  *
  * @return
+ *   F_true if path was found and path is type.
  *   F_false if path was found and path is not type.
  *   F_file_found_not if the path was not found.
- *   F_true if path was found and path is type.
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_loop (with error bit) on loop error.

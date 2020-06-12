@@ -444,6 +444,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_copy_
@@ -484,6 +485,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_skeleton_
@@ -507,6 +509,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_execute_process_script_
@@ -525,6 +528,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_get_file_name_without_extension_
@@ -547,6 +551,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_libraries_script_
@@ -569,6 +574,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_library_shared_
@@ -591,6 +597,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_library_static_
@@ -610,6 +617,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_
@@ -630,6 +638,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_environment_
@@ -648,6 +657,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_stage_
@@ -670,6 +680,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_objects_static_
@@ -684,6 +695,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
@@ -706,6 +718,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_programs_script_
@@ -728,6 +741,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_program_shared_
@@ -750,6 +764,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_program_static_

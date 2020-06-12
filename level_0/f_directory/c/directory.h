@@ -169,9 +169,9 @@ extern "C" {
  *   The path file name.
  *
  * @return
+ *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
- *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
@@ -196,9 +196,9 @@ extern "C" {
  *   Any valid flag, such as f_directory_at_path_empty, f_directory_at_automount_no, or f_directory_at_symlink_follow_no.
  *
  * @return
+ *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
- *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_loop (with error bit) on loop error.
@@ -220,9 +220,9 @@ extern "C" {
  *   The path file name.
  *
  * @return
+ *   F_true if path was found and path is a directory.
  *   F_false if path was found and path is not a directory (this includes symlinks).
  *   F_file_found_not if the path was not found.
- *   F_true if path was found and path is a directory.
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_loop (with error bit) on loop error.
  *   F_memory_out (with error bit) if out of memory.
@@ -247,9 +247,9 @@ extern "C" {
  *   Any valid flag, such as f_directory_at_path_empty, f_directory_at_automount_no, or f_directory_at_symlink_follow_no.
  *
  * @return
+ *   F_true if path was found and path is a directory.
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
- *   F_true if path was found and path is a directory.
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_loop (with error bit) on loop error.

@@ -11,7 +11,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = F_none;
-    f_string_length length = strlen(string);
+    const f_string_length length = strlen(string);
 
     if (length == 0) {
       return F_data_not;
