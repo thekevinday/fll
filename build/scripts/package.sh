@@ -1055,7 +1055,7 @@ package_operation_individual() {
 
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_highlight}Processing Package$c_reset (individual) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
+      echo -e "${c_highlight}Packaging Project$c_reset (individual) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
     fi
 
     package_create_base_files
@@ -1093,7 +1093,7 @@ package_operation_level() {
 
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_highlight}Processing Package$c_reset (level) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
+      echo -e "${c_highlight}Packaging Project$c_reset (level) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
     fi
 
     if [[ ! -d $path_build$level ]] ; then
@@ -1199,7 +1199,7 @@ package_operation_monolithic() {
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
-    echo -e "${c_highlight}Processing Package$c_reset (monolithic) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
+    echo -e "${c_highlight}Packaging Project$c_reset (monolithic) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
   fi
 
   if [[ ! -d ${path_build}monolithic ]] ; then
@@ -1419,7 +1419,7 @@ package_operation_program() {
 
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_highlight}Processing Package$c_reset (program) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
+      echo -e "${c_highlight}Packaging Project$c_reset (program) $c_notice${name}-${version}$c_reset${c_highlight}.$c_reset"
     fi
 
     package_create_base_files

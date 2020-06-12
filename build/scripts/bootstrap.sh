@@ -46,6 +46,7 @@ bootstrap_main() {
   local path_c=sources/c/
   local path_work=
   local project_built=
+  local project_label=
   local defines_override=
   local process=
   local verbosity="normal"
@@ -277,6 +278,20 @@ bootstrap_main() {
     return 1
   fi
 
+  project_label="${variables[$(bootstrap_id project_name)]}"
+
+  if [[ "${variables[$(bootstrap_id version_major)]}" != "" ]] ; then
+    project_label="${project_label}-${variables[$(bootstrap_id version_major)]}"
+
+    if [[ "${variables[$(bootstrap_id version_minor)]}" != "" ]] ; then
+      project_label="${project_label}.${variables[$(bootstrap_id version_minor)]}"
+
+      if [[ "${variables[$(bootstrap_id version_micro)]}" != "" ]] ; then
+        project_label="${project_label}.${variables[$(bootstrap_id version_micro)]}"
+      fi
+    fi
+  fi
+
   if [[ $operation_failure == "fail-multiple" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
@@ -285,6 +300,11 @@ bootstrap_main() {
     bootstrap_cleanup
     return 1
   elif [[ $operation == "build" ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_highlight}Building Project:${c_reset} $c_notice$project_label${c_highlight}.$c_reset"
+    fi
+
     if [[ -f ${project_built}.built ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
@@ -297,6 +317,11 @@ bootstrap_main() {
       bootstrap_operation_build
     fi
   elif [[ $operation == "clean" ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_highlight}Cleaning Project:${c_reset} $c_notice$project_label${c_highlight}.$c_reset"
+    fi
+
     bootstrap_operation_clean
   elif [[ $operation == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
