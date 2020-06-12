@@ -23,7 +23,7 @@ if [[ $1 == "individual" ]] ; then
   bash build/scripts/package.sh build -i
 
   if [[ $? -eq 0 ]] ; then
-    for i in f_type f_status f_memory f_string f_utf f_color f_console f_conversion f_directory f_environment f_file f_fss f_path f_pipe f_print f_serialize f_socket fl_color fl_console fl_directory fl_fss fl_print fl_status fl_string fl_utf fl_utf_file fll_directory fll_execute fll_file fll_fss fll_program fll_status ; do
+    for i in f_type f_status f_memory f_string f_utf f_color f_console f_conversion f_directory f_environment f_file f_fss f_path f_pipe f_print f_serialize f_socket fl_color fl_console fl_directory fl_fss fl_print fl_status fl_string fl_utf fl_utf_file fll_execute fll_file fll_fss fll_program fll_status ; do
       echo && echo "Processing $i." &&
 
       cd package/individual/$i-$2/ &&
