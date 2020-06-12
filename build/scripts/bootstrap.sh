@@ -48,6 +48,7 @@ bootstrap_main() {
   local project_built=
   local defines_override=
   local process=
+  local verbosity="normal"
 
   local enable_shared=
   local enable_static=
@@ -66,9 +67,15 @@ bootstrap_main() {
           do_color=none
         elif [[ $p == "+l" || $p == "++light" ]] ; then
           do_color=light
+        elif [[ $p == "+q" || $p == "++quiet" ]] ; then
+          verbosity="quiet"
+          verbose=
         elif [[ $p == "+v" || $p == "++version" ]] ; then
           echo $version
           return
+        elif [[ $p == "+V" || $p == "++verbose" ]] ; then
+          verbosity="verbose"
+          verbose="-v"
         elif [[ $p == "-d" || $p == "--defines" ]] ; then
           grab_next=defines_override
         elif [[ $p == "-m" || $p == "--mode" ]] ; then
@@ -140,7 +147,10 @@ bootstrap_main() {
 
   # FSS and Featurless Make supports more flexible mode names, but for the purpose of this bootstrap script and avoiding potential problems, keep it simple.
   if [[ $mode != "" && $(echo "$mode" | grep -s -o "[^_[:alnum:]+-]") != "" ]] ; then
-    echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error includes invalid characters, only alphanumeric, underscore, minus, and plus are allowed.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error includes invalid characters, only alphanumeric, underscore, minus, and plus are allowed.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   fi
@@ -151,7 +161,10 @@ bootstrap_main() {
     mode=${variables[$(bootstrap_id modes_default)]}
 
     if [[ $mode != "" && $(echo "$mode" | grep -s -o "[^_[:alnum:]+-]") != "" ]] ; then
-      echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error includes invalid characters, only alphanumeric, underscore, minus, and plus are allowed.$c_reset"
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error includes invalid characters, only alphanumeric, underscore, minus, and plus are allowed.$c_reset"
+      fi
+
       bootstrap_cleanup
       return 1
     fi
@@ -166,7 +179,10 @@ bootstrap_main() {
 
   if [[ ${variables[$(bootstrap_id modes)]} == "" ]] ; then
     if [[ $mode != "" ]] ; then
-      echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error is not a valid mode, there are no available modes.$c_error$c_reset"
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error is not a valid mode, there are no available modes.$c_error$c_reset"
+      fi
+
       bootstrap_cleanup
       return 1
     fi
@@ -180,67 +196,99 @@ bootstrap_main() {
     done
 
     if [[ $i -eq 0 ]] ; then
-      echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error is not a valid mode, it must be one of: $c_notice${variables[$(bootstrap_id modes)]}$c_error.$c_reset"
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: the mode $c_notice$mode$c_error is not a valid mode, it must be one of: $c_notice${variables[$(bootstrap_id modes)]}$c_error.$c_reset"
+      fi
+
       bootstrap_cleanup
       return 1
     fi
   fi
 
   if [[ ${variables[$(bootstrap_id project_name)]} == "" ]] ; then
-    echo -e "${c_error}ERROR: the required setting '${c_notice}project_name$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: the required setting '${c_notice}project_name$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   fi
 
   if [[ ${variables[$(bootstrap_id version_major)]} == "" ]] ; then
-    echo -e "${c_error}ERROR: the required setting '${c_notice}version_major$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: the required setting '${c_notice}version_major$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   fi
 
   if [[ ${variables[$(bootstrap_id version_minor)]} == "" ]] ; then
-    echo -e "${c_error}ERROR: the required setting '${c_notice}version_minor$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: the required setting '${c_notice}version_minor$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   fi
 
   if [[ ${variables[$(bootstrap_id version_micro)]} == "" ]] ; then
-    echo -e "${c_error}ERROR: the required setting '${c_notice}version_micro$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: the required setting '${c_notice}version_micro$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   fi
 
   if [[ $path_data == "" || ! -d $path_data ]] ; then
-    echo -e "${c_error}ERROR: the data directory $c_notice$path_data$c_error is not a valid directory.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: the data directory $c_notice$path_data$c_error is not a valid directory.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   fi
 
   if [[ $path_sources == "" || ! -d $path_sources ]] ; then
-    echo -e "${c_error}ERROR: the sources directory $c_notice$path_sources$c_error is not a valid directory.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: the sources directory $c_notice$path_sources$c_error is not a valid directory.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   fi
 
   if [[ $path_work != "" && ! -d $path_work ]] ; then
-    echo -e "${c_error}ERROR: the work directory $c_notice$path_work$c_error is not a valid directory.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: the work directory $c_notice$path_work$c_error is not a valid directory.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   fi
 
   if [[ $defines_override != "" && $(echo "$defines_override" | grep -s -o "[^_[:alnum:][:space:]]") != "" ]] ; then
-    echo -e "${c_error}ERROR: the defines override $c_notice$defines_override$c_error includes invalid characters, only alphanumeric, whitespace, and underscore are allowed.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: the defines override $c_notice$defines_override$c_error includes invalid characters, only alphanumeric, whitespace, and underscore are allowed.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   fi
 
   if [[ $operation_failure == "fail-multiple" ]] ; then
-    echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   elif [[ $operation == "build" ]] ; then
     if [[ -f ${project_built}.built ]] ; then
-      echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
+      fi
     else
       if [[ ! -f ${project_built}.prepared ]] ; then
         bootstrap_prepare_build
@@ -251,11 +299,17 @@ bootstrap_main() {
   elif [[ $operation == "clean" ]] ; then
     bootstrap_operation_clean
   elif [[ $operation == "" ]] ; then
-    echo -e "${c_error}ERROR: no operation was given.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: no operation was given.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   else
-    echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
+    fi
+
     bootstrap_cleanup
     return 1
   fi
@@ -298,6 +352,8 @@ bootstrap_help() {
   echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen."
   echo -e " +${c_important}l$c_reset, ++${c_important}light$c_reset     Use color modes that show up better on light backgrounds."
   echo -e " +${c_important}n$c_reset, ++${c_important}no_color$c_reset  Do not use color."
+  echo -e " +${c_important}q$c_reset, ++${c_important}quiet$c_reset     Decrease verbosity beyond normal output."
+  echo -e " +${c_important}V$c_reset, ++${c_important}verbose$c_reset   Increase verbosity beyond normal output."
   echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program."
   echo
   echo -e "${c_highlight}Bootstrap Options:$c_reset"
@@ -389,10 +445,16 @@ bootstrap_load_settings() {
   local key=
 
   if [[ ! -d ${path_data}build/ ]] ; then
-    echo -e "${c_error}ERROR: no build settings directory '$c_notice${path_data}build/$c_error' could not be found or is not a valid directory.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: no build settings directory '$c_notice${path_data}build/$c_error' could not be found or is not a valid directory.$c_reset"
+    fi
+
     failure=1
   elif [[ ! -f $settings_file ]] ; then
-    echo -e "${c_error}ERROR: no settings file $c_notice$settings_file$c_error could not be found or is not a valid file.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: no settings file $c_notice$settings_file$c_error could not be found or is not a valid file.$c_reset"
+    fi
+
     failure=1
   fi
 
@@ -419,11 +481,11 @@ bootstrap_prepare_build() {
   local alt=$1
   local i=
 
-  mkdir -vp ${path_build}{documents,includes,libraries/{script,shared,static},objects,programs/{script,shared,static},settings,stage} || failure=1
+  mkdir $verbose -p ${path_build}{documents,includes,libraries/{script,shared,static},objects,programs/{script,shared,static},settings,stage} || failure=1
 
   if [[ $failure == "" ]] ; then
     for i in ${variables[$(bootstrap_id path_headers)]} ; do
-      mkdir -vp ${path_build}includes/$i || failure=1
+      mkdir $verbose -p ${path_build}includes/$i || failure=1
     done
   fi
 
@@ -615,20 +677,29 @@ bootstrap_operation_build() {
   fi
 
   if [[ $shared != "yes" && $static != "yes" ]] ; then
-    echo -e "${c_error}ERROR: Cannot Build, either build_shared or build_static must be set to 'yes'.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: Cannot Build, either build_shared or build_static must be set to 'yes'.$c_reset"
+    fi
+
     bootstrap_cleanup
     exit -1
   fi
 
   if [[ $search_shared != "yes" && $search_static != "yes" ]] ; then
-    echo -e "${c_error}ERROR: Cannot Build, either search_shared or search_static must be set to 'yes'.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: Cannot Build, either search_shared or search_static must be set to 'yes'.$c_reset"
+    fi
+
     bootstrap_cleanup
     exit -1
   fi
 
   for i in $sources_library ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
-      echo -e "${c_error}ERROR: Cannot Build, invalid source_library path provided: '$i'.$c_reset"
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: Cannot Build, invalid source_library path provided: '$i'.$c_reset"
+      fi
+
       bootstrap_cleanup
       exit -1
     fi
@@ -636,7 +707,10 @@ bootstrap_operation_build() {
 
   for i in $sources_program ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
-      echo -e "${c_error}ERROR: Cannot Build, invalid sources_program path provided: '$i'.$c_reset"
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: Cannot Build, invalid sources_program path provided: '$i'.$c_reset"
+      fi
+
       bootstrap_cleanup
       exit -1
     fi
@@ -644,7 +718,10 @@ bootstrap_operation_build() {
 
   for i in $sources_headers ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
-      echo -e "${c_error}ERROR: Cannot Build, invalid sources_headers path provided: '$i'.$c_reset"
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: Cannot Build, invalid sources_headers path provided: '$i'.$c_reset"
+      fi
+
       bootstrap_cleanup
       exit -1
     fi
@@ -652,7 +729,10 @@ bootstrap_operation_build() {
 
   for i in $sources_bash ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
-      echo -e "${c_error}ERROR: Cannot Build, invalid sources_bash path provided: '$i'.$c_reset"
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: Cannot Build, invalid sources_bash path provided: '$i'.$c_reset"
+      fi
+
       bootstrap_cleanup
       exit -1
     fi
@@ -660,7 +740,10 @@ bootstrap_operation_build() {
 
   for i in $sources_setting ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
-      echo -e "${c_error}ERROR: Cannot Build, invalid sources_setting path provided: '$i'.$c_reset"
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: Cannot Build, invalid sources_setting path provided: '$i'.$c_reset"
+      fi
+
       bootstrap_cleanup
       exit -1
     fi
@@ -684,12 +767,12 @@ bootstrap_operation_build() {
       directory=$(dirname $i)
 
       if [[ $directory == "." ]] ; then
-        cp -vR $path_settings$i ${path_build}settings/ || failure=1
+        cp $verbose -R $path_settings$i ${path_build}settings/ || failure=1
       else
-        mkdir -vp ${path_build}settings/$directory || failure=1
+        mkdir $verbose -p ${path_build}settings/$directory || failure=1
 
         if [[ $failure == "" ]] ; then
-          cp -vR $path_settings$i ${path_build}settings/${directory}/ || failure=1
+          cp $verbose -R $path_settings$i ${path_build}settings/${directory}/ || failure=1
         fi
       fi
     done
@@ -701,18 +784,18 @@ bootstrap_operation_build() {
         directory=$(dirname $i)
 
         if [[ $directory == "." ]] ; then
-          cp -vf $path_c$i ${path_build}includes/ || failure=1
+          cp $verbose -f $path_c$i ${path_build}includes/ || failure=1
         else
-          mkdir -vp ${path_build}includes/$directory || failure=1
+          mkdir $verbose -p ${path_build}includes/$directory || failure=1
 
           if [[ $failure == "" ]] ; then
-            cp -vf $path_c$i ${path_build}includes/$i || failure=1
+            cp $verbose -f $path_c$i ${path_build}includes/$i || failure=1
           fi
         fi
       done
     else
       for i in $sources_headers ; do
-        cp -vf $path_c$i ${path_build}includes/$path_headers/ || failure=1
+        cp $verbose -f $path_c$i ${path_build}includes/$path_headers/ || failure=1
       done
     fi
   fi
@@ -724,12 +807,15 @@ bootstrap_operation_build() {
         sources="$sources$path_c$i "
       done
 
-      echo $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library
+      if [[ $verbosity == "verbose" ]] ; then
+        echo $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library
+      fi
+
       $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library || failure=1
 
       if [[ $failure == "" ]] ; then
-        ln -vsf lib$name.so.$major.$minor.$micro ${path_build}libraries/shared/lib$name.so.$major || failure=1
-        ln -vsf lib$name.so.$major ${path_build}libraries/shared/lib$name.so || failure=1
+        ln $verbose -sf lib$name.so.$major.$minor.$micro ${path_build}libraries/shared/lib$name.so.$major || failure=1
+        ln $verbose -sf lib$name.so.$major ${path_build}libraries/shared/lib$name.so || failure=1
       fi
     fi
 
@@ -745,7 +831,10 @@ bootstrap_operation_build() {
         sources="$sources$path_c$i "
       done
 
-      echo $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $libraries $flags_all $flags_shared $flags_program
+      if [[ $verbosity == "verbose" ]] ; then
+        echo $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $libraries $flags_all $flags_shared $flags_program
+      fi
+
       $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $libraries $flags_all $flags_shared $flags_program || failure=1
     fi
   fi
@@ -758,7 +847,7 @@ bootstrap_operation_build() {
         n=$(basename $i | sed -e 's|\.c$||')
 
         if [[ $directory != "." && ! -d ${path_build}objects/$directory ]] ; then
-          mkdir -vp ${path_build}objects/$directory
+          mkdir $verbose -p ${path_build}objects/$directory
 
           if [[ $? -ne 0 ]] ; then
             failure=1
@@ -768,7 +857,10 @@ bootstrap_operation_build() {
 
         sources="$sources${path_build}objects/$directory/$n.o "
 
-        echo $compiler $path_c$i -c -static -o ${path_build}objects/$directory/$n.o $arguments_static $arguments_include $libraries $flags_all $flags_static $flags_library
+        if [[ $verbosity == "verbose" ]] ; then
+          echo $compiler $path_c$i -c -static -o ${path_build}objects/$directory/$n.o $arguments_static $arguments_include $libraries $flags_all $flags_static $flags_library
+        fi
+
         $compiler $path_c$i -c -static -o ${path_build}objects/$directory/$n.o $arguments_static $arguments_include $libraries $flags_all $flags_static $flags_library || failure=1
 
         if [[ $failure == "1" ]] ; then
@@ -777,7 +869,10 @@ bootstrap_operation_build() {
       done
 
       if [[ $failure == "" ]] ; then
-        echo $linker rcs ${path_build}libraries/static/lib$name.a $sources
+        if [[ $verbosity == "verbose" ]] ; then
+          echo $linker rcs ${path_build}libraries/static/lib$name.a $sources
+        fi
+
         $linker rcs ${path_build}libraries/static/lib$name.a $sources || failure=1
       fi
     fi
@@ -794,13 +889,19 @@ bootstrap_operation_build() {
         sources="$sources$path_c$i "
       done
 
-      echo $compiler $sources -static -o ${path_build}programs/static/$name $arguments_static $arguments_include $links $libraries $flags_all $flags_static $flags_program
+      if [[ $verbosity == "verbose" ]] ; then
+        echo $compiler $sources -static -o ${path_build}programs/static/$name $arguments_static $arguments_include $links $libraries $flags_all $flags_static $flags_program
+      fi
+
       $compiler $sources -static -o ${path_build}programs/static/$name $arguments_static $arguments_include $links $libraries $flags_all $flags_static $flags_program || failure=1
     fi
   fi
 
   if [[ $failure != "" ]] ; then
-    echo -e "${c_error}ERROR: failed to build.$c_reset"
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: failed to build.$c_reset"
+    fi
+
     bootstrap_cleanup
     exit $failure
   fi
@@ -813,16 +914,16 @@ bootstrap_operation_clean() {
 
   for i in ${path_build}{documents,includes,libraries,objects,programs,settings,stage} ; do
     if [[ -e $i ]] ; then
-      rm -vRf $i
+      rm $verbose -Rf $i
     fi
   done
 
   if [[ -f ${project_built}.prepared ]] ; then
-    rm -vf ${project_built}.prepared
+    rm $verbose -f ${project_built}.prepared
   fi
 
   if [[ -f ${project_built}.built ]] ; then
-    rm -vf ${project_built}.built
+    rm $verbose -f ${project_built}.built
   fi
 }
 
