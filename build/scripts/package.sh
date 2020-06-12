@@ -493,6 +493,7 @@ package_dependencies_individual() {
       failure=1
       return
     fi
+
     if [[ ! -f ${directory}/data/build/settings ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo -e "${c_error}ERROR: cannot build dependencies for $c_reset$c_notice${name}$c_reset${c_error}, failed to find $c_notice${directory}/data/build/settings$c_error.$c_reset"
@@ -606,7 +607,7 @@ package_dependencies_individual() {
 
     individual_dependencies=$(echo "$individual_dependencies" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
     if [[ $individual_dependencies != "" ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ $verbosity == "verbose" ]] ; then
         echo -e " $individual_dependencies"
       fi
 
