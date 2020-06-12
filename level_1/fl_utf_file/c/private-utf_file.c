@@ -121,6 +121,10 @@ extern "C" {
           width = f_macro_utf_character_width(string[*written + i]);
           width_written = width;
 
+          if (*written + width > write_max) {
+            return F_incomplete_utf_stop;
+          }
+
           buffer_write[used] = f_macro_utf_character_to_char_1(string[*written + i]);
 
           if (width > 1) {
