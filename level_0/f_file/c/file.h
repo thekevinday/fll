@@ -1695,7 +1695,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_
-  extern f_return_status f_file_write(const f_file file, const f_string_dynamic buffer, f_string_length *written);
+  extern f_return_status f_file_write(const f_file file, const f_string_static buffer, f_string_length *written);
 #endif // _di_f_file_write_
 
 /**
@@ -1811,7 +1811,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_block_
-  extern f_return_status f_file_write_block(const f_file file, const f_string_dynamic buffer, f_string_length *written);
+  extern f_return_status f_file_write_block(const f_file file, const f_string_static buffer, f_string_length *written);
 #endif // _di_f_file_write_block_
 
 /**
@@ -1845,7 +1845,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_until_
-  extern f_return_status f_file_write_until(const f_file file, const f_string_dynamic buffer, const f_string_length total, f_string_length *written);
+  extern f_return_status f_file_write_until(const f_file file, const f_string_static buffer, const f_string_length total, f_string_length *written);
 #endif // _di_f_file_write_until_
 
 /**
@@ -1879,7 +1879,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_range_
-  extern f_return_status f_file_write_range(const f_file file, const f_string_dynamic buffer, const f_string_range range, f_string_length *written);
+  extern f_return_status f_file_write_range(const f_file file, const f_string_static buffer, const f_string_range range, f_string_length *written);
 #endif // _di_f_file_write_range_
 
 #ifdef __cplusplus

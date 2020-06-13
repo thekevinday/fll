@@ -1079,10 +1079,10 @@ extern "C" {
 #endif // _di_f_file_touch_at_
 
 #ifndef _di_f_file_write_
-  f_return_status f_file_write(const f_file file, const f_string_dynamic buffer, f_string_length *written) {
+  f_return_status f_file_write(const f_file file, const f_string_static buffer, f_string_length *written) {
     #ifndef _di_level_0_parameter_checking_
       if (file.size_write == 0) return F_status_set_error(F_parameter);
-      if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
+      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
@@ -1115,10 +1115,10 @@ extern "C" {
 #endif // _di_f_file_write_
 
 #ifndef _di_f_file_write_block_
-  f_return_status f_file_write_block(const f_file file, const f_string_dynamic buffer, f_string_length *written) {
+  f_return_status f_file_write_block(const f_file file, const f_string_static buffer, f_string_length *written) {
     #ifndef _di_level_0_parameter_checking_
       if (file.size_write == 0) return F_status_set_error(F_parameter);
-      if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
+      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
@@ -1161,10 +1161,10 @@ extern "C" {
 #endif // _di_f_file_write_block_
 
 #ifndef _di_f_file_write_until_
-  f_return_status f_file_write_until(const f_file file, const f_string_dynamic buffer, const f_string_length total, f_string_length *written) {
+  f_return_status f_file_write_until(const f_file file, const f_string_static buffer, const f_string_length total, f_string_length *written) {
     #ifndef _di_level_0_parameter_checking_
       if (file.size_write == 0) return F_status_set_error(F_parameter);
-      if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
+      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
@@ -1207,10 +1207,10 @@ extern "C" {
 #endif // _di_f_file_write_until_
 
 #ifndef _di_f_file_write_range_
-  f_return_status f_file_write_range(const f_file file, const f_string_dynamic buffer, const f_string_range range, f_string_length *written) {
+  f_return_status f_file_write_range(const f_file file, const f_string_static buffer, const f_string_range range, f_string_length *written) {
     #ifndef _di_level_0_parameter_checking_
       if (file.size_write == 0) return F_status_set_error(F_parameter);
-      if (buffer.used >= buffer.size) return F_status_set_error(F_parameter);
+      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
