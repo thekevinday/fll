@@ -510,7 +510,9 @@ package_dependencies_individual() {
 
     individual_dependencies=
     for dependency in $dependencies ; do
-      if [[ $(echo "$dependency" | grep -o "^f_") != "" ]] ; then
+      if [[ $(echo "$dependency" | grep -o "^\s*#") != "" ]] ; then
+        continue
+      elif [[ $(echo "$dependency" | grep -o "^f_") != "" ]] ; then
         level=level_0
       elif [[ $(echo "$dependency" | grep -o "^fl_") != "" ]] ; then
         level=level_1
