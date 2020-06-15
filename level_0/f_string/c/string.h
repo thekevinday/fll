@@ -152,6 +152,8 @@ extern "C" {
  * Therefore, a range from 0 to 0 would be include position 0.
  * Set start to some value larger than stop to designate that there is no range (such as start = 1, stop = 0).
  *
+ * A special f_macro_string_range_initialize() is provided for the special purpose of easily initialize a static string range.
+ *
  * start: the start position.
  * stop: the stop position.
  */
@@ -162,6 +164,12 @@ extern "C" {
   } f_string_range;
 
   #define f_string_range_initialize { 1, 0 }
+
+  #define f_macro_string_range_initialize(length) { 0, length - 1 }
+
+  #define f_macro_string_range_clear(range) \
+    range.start = 1; \
+    range.stop = 0;
 #endif // _di_f_string_range_
 
 /**
@@ -252,6 +260,8 @@ extern "C" {
  *
  * The f_string_static type should never be directly allocated or deallocated.
  *
+ * A special f_macro_string_static_initialize() is provided for the special purpose of easily initialize a static string.
+ *
  * string: the string.
  * size: total amount of space available.
  * used: total number of space used.
@@ -270,6 +280,8 @@ extern "C" {
     string_static.string = 0; \
     string_static.size = 0; \
     string_static.used = 0;
+
+  #define f_macro_string_static_initialize(string, length) { string, length, length }
 #endif // _di_f_string_static_
 
 /**

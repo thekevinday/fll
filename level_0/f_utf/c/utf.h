@@ -212,6 +212,8 @@ extern "C" {
 /**
  * Designates a start and stop position that represents a sub-string inside of some parent string.
  * use this to avoid resizing, restructuring, and reallocating the parent string to separate the sub-string.
+ *
+ * A special f_macro_utf_string_range_initialize() is provided for the special purpose of easily initialize a static string range.
  */
 #ifndef _di_f_utf_string_range_
   typedef struct {
@@ -220,6 +222,8 @@ extern "C" {
   } f_utf_string_range;
 
   #define f_utf_string_range_initialize { 1, 0 }
+
+  #define f_macro_utf_string_range_initialize(length) { 0, length - 1 }
 
   #define f_macro_utf_string_range_new(status, utf_string_range, length)   status = f_memory_new((void **) & utf_string_range, sizeof(f_utf_string_range), length)
   #define f_macro_utf_string_range_delete(status, utf_string_range, size)  status = f_memory_delete((void **) & utf_string_range, sizeof(f_utf_string_range), size)
@@ -317,6 +321,8 @@ extern "C" {
  *
  * The f_utf_string_static type should never be directly allocated or deallocated.
  *
+ * A special f_macro_utf_string_static_initialize() is provided for the special purpose of easily initialize a static string.
+ *
  * string: the string.
  * size: total amount of space available.
  * used: total number of space used.
@@ -335,6 +341,8 @@ extern "C" {
     string_static.string = 0; \
     string_static.size = 0; \
     string_static.used = 0;
+
+  #define f_macro_utf_string_static_initialize(string, length) { string, length, length }
 #endif // _di_f_string_static_
 
 /**
