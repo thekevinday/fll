@@ -70,10 +70,10 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        if (values[j]->used + contents.array[i].used > f_string_length_size) return F_status_set_error(F_buffer_too_large);
+        if (values[j]->used + contents.used > values[j]->size) {
+          if (values[j]->used + contents.used > f_array_length_size) return F_status_set_error(F_buffer_too_large);
 
-        if (values[j]->used + contents.array[i].used > values[j]->used) {
-          f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + contents.array[i].used);
+          f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + contents.used);
           if (F_status_is_error(status)) return status;
         }
 
@@ -192,15 +192,19 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        if (values[j]->used + f_fss_default_allocation_step > f_string_length_size) {
-          if (values[j]->used + 1 > f_string_length_size) return F_status_set_error(F_buffer_too_large);
+        if (values[j]->used + 1 > values[j]->size) {
+          if (values[j]->used + f_fss_default_allocation_step > f_array_length_size) {
+            if (values[j]->used + 1 > f_array_length_size) {
+              return F_status_set_error(F_buffer_too_large);
+            }
 
-          f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + 1);
-          if (F_status_is_error(status)) return status;
-        }
-        else if (values[j]->used + 1 > values[j]->used) {
-          f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
-          if (F_status_is_error(status)) return status;
+            f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + 1);
+            if (F_status_is_error(status)) return status;
+          }
+          else {
+            f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
+            if (F_status_is_error(status)) return status;
+          }
         }
 
         for (k = 0; k < contents.array[i].used; k++) {
