@@ -904,11 +904,29 @@ package_dependencies_monolithic() {
 package_operation_clean() {
   local i=
 
-  for i in ${path_destination}{individual,level,monolithic,program} ; do
-    if [[ -d $i ]] ; then
-      rm $verbose -Rf $i
+  if [[ $mode_individual == "yes" ]] ; then
+    if [[ -d ${path_destination}individual ]] ; then
+      rm $verbose -Rf ${path_destination}individual
     fi
-  done
+  fi
+
+  if [[ $mode_level == "yes" ]] ; then
+    if [[ -d ${path_destination}level ]] ; then
+      rm $verbose -Rf ${path_destination}level
+    fi
+  fi
+
+  if [[ $mode_monolithic == "yes" ]] ; then
+    if [[ -d ${path_destination}monolithic ]] ; then
+      rm $verbose -Rf ${path_destination}monolithic
+    fi
+  fi
+
+  if [[ $mode_program == "yes" ]] ; then
+    if [[ -d ${path_destination}program ]] ; then
+      rm $verbose -Rf ${path_destination}program
+    fi
+  fi
 }
 
 package_operation_copy_package() {
