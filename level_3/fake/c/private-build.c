@@ -395,7 +395,10 @@ extern "C" {
       *status = f_directory_create(directorys[i]->string, mode);
 
       if (F_status_is_error(*status)) {
-        if (F_status_set_fine(*status) == F_file_found) continue;
+        if (F_status_set_fine(*status) == F_file_found) {
+          *status = F_none;
+          continue;
+        }
 
         fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_directory_create", directorys[i]->string, "create", F_false, F_true);
         return;
@@ -420,7 +423,7 @@ extern "C" {
     *status = fll_execute_arguments_add(fake_other_operation_build, fake_other_operation_build_length, &arguments);
 
     // ensure console color mode is passed to the scripts so that they can also react to color mode.
-    if (!F_status_is_error(*status) && data.context.mode != f_color_mode_none) {
+    if (F_status_is_not_error(*status) && data.context.mode != f_color_mode_none) {
       char argument[3] = { f_console_symbol_disable, 0, 0 };
 
       if (data.context.mode == f_color_mode_dark) {
@@ -437,7 +440,7 @@ extern "C" {
     }
 
     // ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
-    if (!F_status_is_error(*status) && data.verbosity != fake_verbosity_normal) {
+    if (F_status_is_not_error(*status) && data.verbosity != fake_verbosity_normal) {
       char argument[3] = { f_console_symbol_disable, 0, 0 };
 
       if (data.verbosity == fake_verbosity_quiet) {
@@ -572,11 +575,11 @@ extern "C" {
         *status = fl_string_dynamic_append_nulless(data.path_data_build, &path);
       }
 
-      if (!F_status_is_error(*status)) {
+      if (F_status_is_not_error(*status)) {
         *status = fl_string_dynamic_append_nulless(process_script, &path);
       }
 
-      if (!F_status_is_error(*status)) {
+      if (F_status_is_not_error(*status)) {
         function = "fl_string_dynamic_terminate_after";
         *status = fl_string_dynamic_terminate_after(&path);
       }
@@ -875,6 +878,15 @@ extern "C" {
       if (F_status_is_fine(*status) && data.verbosity == fake_verbosity_verbose) {
         printf("Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_micro, f_string_eol[0]);
       }
+      else if (F_status_is_error(*status)) {
+        if (F_status_set_fine(*status) == F_file_found) {
+          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_path, "link", F_true, F_true);
+          return;
+        }
+
+        fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_name_micro, "link", F_true, F_true);
+        return;
+      }
     }
 
     if (F_status_is_fine(*status)) {
@@ -913,11 +925,25 @@ extern "C" {
 
         printf("'.%c", f_string_eol[0]);
       }
-    }
+      else if (F_status_is_error(*status)) {
+        if (F_status_set_fine(*status) == F_file_found) {
+          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_path, "link", F_true, F_true);
 
-    if (F_status_is_error(*status)) {
-      fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", F_true);
-      return;
+          return;
+        }
+
+        if (data_build.setting.version_target == fake_build_version_type_major) {
+          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_name_major, "link", F_true, F_true);
+        }
+        else if (data_build.setting.version_target == fake_build_version_type_minor) {
+          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_name_minor, "link", F_true, F_true);
+        }
+        else if (data_build.setting.version_target == fake_build_version_type_micro) {
+          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_name_micro, "link", F_true, F_true);
+        }
+
+        return;
+      }
     }
 
     fake_build_touch(data, file_stage, status);
@@ -1054,7 +1080,7 @@ extern "C" {
 #endif // _di_fake_build_library_static_
 
 #ifndef _di_fake_build_load_environment_
-  void fake_build_load_environment(const fake_data data, const fake_build_data data_build, fake_build_environment *environment, f_status *status) {
+  void fake_build_load_environment(const fake_data data, const fake_build_data data_build, fake_environment *environment, f_status *status) {
     if (F_status_is_error(*status)) return;
 
     f_string_dynamics names = f_string_dynamics_initialize;
@@ -1093,7 +1119,7 @@ extern "C" {
         f_macro_string_dynamic_clear(part);
       } // for
 
-      if (!F_status_is_error(*status)) {
+      if (F_status_is_not_error(*status)) {
         if (names.used + data_build.setting.environment.used > names.size) {
           if (names.used + data_build.setting.environment.used > f_array_length_size) {
             if (data.verbosity != fake_verbosity_quiet) {
@@ -1160,7 +1186,7 @@ extern "C" {
       if (environment->names.used + 1 > environment->names.size) {
         f_macro_string_dynamics_resize(*status, environment->names, environment->names.size + f_memory_default_allocation_step);
 
-        if (!F_status_is_error(*status)) {
+        if (F_status_is_not_error(*status)) {
           f_macro_string_dynamics_resize(*status, environment->values, environment->values.size + f_memory_default_allocation_step);
         }
 
@@ -1205,668 +1231,31 @@ extern "C" {
   void fake_build_load_setting(const fake_data data, fake_build_setting *setting, f_status *status) {
     if (F_status_is_error(*status)) return;
 
-    f_file file = f_file_initialize;
-    f_string_dynamic buffer = f_string_dynamic_initialize;
-
-    *status = F_none;
-
     {
-      f_string name_function = f_string_initialize;
+      f_string_dynamic buffer = f_string_dynamic_initialize;
 
-      name_function = "f_file_exists";
-      *status = f_file_exists(data.file_data_build_settings.string);
-
-      if (*status == F_true) {
-        name_function = "f_file_open";
-        *status = f_file_open(data.file_data_build_settings.string, 0, &file);
-
-        if (*status == F_none) {
-          name_function = "f_file_read";
-          *status = f_file_read(file, &buffer);
-
-          f_file_close(&file.id);
-        }
-      }
-      else if (*status == F_false) {
-        *status = F_status_set_error(F_file_found_not);
-      }
-
-      if (F_status_is_error(*status)) {
-        fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), name_function, data.file_data_build_settings.string, "create", F_true, F_true);
-
-        f_macro_string_dynamic_delete_simple(buffer);
-        return;
-      }
-    }
-
-    if (buffer.used > 0) {
       f_fss_objects objects = f_fss_objects_initialize;
       f_fss_contents contents = f_fss_contents_initialize;
-      f_string_range range = f_string_range_initialize;
-      bool error_printed = F_false;
 
-      range.start = 0;
-      range.stop = buffer.used - 1;
+      *status = fake_file_buffer(data, data.file_data_build_settings.string, &buffer);
+      if (F_status_is_error(*status)) return;
+
+      f_string_range range = f_macro_string_range_initialize(buffer.used);
 
       *status = fll_fss_extended_read(&buffer, &range, &objects, &contents);
-
       if (F_status_is_error(*status)) {
-        f_macro_fss_objects_delete_simple(objects);
-        f_macro_fss_contents_delete_simple(contents);
-        f_macro_string_dynamic_delete_simple(buffer);
-
-        if (*status == F_status_set_error(F_incomplete_utf_stop)) {
-          if (data.verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%d", range.start);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, " of setting file '");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
-            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "').");
-          }
-        }
-        else if (*status == F_status_set_error(F_incomplete_utf_stop)) {
-          if (data.verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%d", range.start);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, " of setting file '");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
-            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "').");
-          }
-        }
-        else {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_fss_extended_read", F_true);
-        }
-
-        f_macro_fss_objects_delete_simple(objects);
-        f_macro_fss_contents_delete_simple(contents);
-        f_macro_string_dynamic_delete_simple(buffer);
-
-        return;
+        fake_print_error_fss(data.context, data.verbosity, *status, "fll_fss_extended_read", data.file_data_build_settings.string, range, F_true);
       }
 
-      {
-        const f_string settings_name[] = {
-          fake_build_setting_name_build_compiler,
-          fake_build_setting_name_build_language,
-          fake_build_setting_name_build_libraries,
-          fake_build_setting_name_build_linker,
-          fake_build_setting_name_build_script,
-          fake_build_setting_name_build_shared,
-          fake_build_setting_name_build_sources_headers,
-          fake_build_setting_name_build_sources_library,
-          fake_build_setting_name_build_sources_program,
-          fake_build_setting_name_build_sources_settings,
-          fake_build_setting_name_build_sources_script,
-          fake_build_setting_name_build_static,
-          fake_build_setting_name_defines_all,
-          fake_build_setting_name_defines_shared,
-          fake_build_setting_name_defines_static,
-          fake_build_setting_name_environment,
-          fake_build_setting_name_flags_all,
-          fake_build_setting_name_flags_library,
-          fake_build_setting_name_flags_program,
-          fake_build_setting_name_flags_shared,
-          fake_build_setting_name_flags_static,
-          fake_build_setting_name_modes,
-          fake_build_setting_name_modes_default,
-          fake_build_setting_name_path_headers,
-          fake_build_setting_name_path_language,
-          fake_build_setting_name_path_library_script,
-          fake_build_setting_name_path_library_shared,
-          fake_build_setting_name_path_library_static,
-          fake_build_setting_name_path_program_script,
-          fake_build_setting_name_path_program_shared,
-          fake_build_setting_name_path_program_static,
-          fake_build_setting_name_process_post,
-          fake_build_setting_name_process_pre,
-          fake_build_setting_name_project_name,
-          fake_build_setting_name_search_exclusive,
-          fake_build_setting_name_search_shared,
-          fake_build_setting_name_search_static,
-          fake_build_setting_name_version_major,
-          fake_build_setting_name_version_micro,
-          fake_build_setting_name_version_minor,
-          fake_build_setting_name_version_target,
-        };
+      fake_build_load_setting_process(data, data.file_data_build_settings.string, buffer, objects, contents, setting, status);
 
-        const f_string_length settings_length[] = {
-          fake_build_setting_name_build_compiler_length,
-          fake_build_setting_name_build_language_length,
-          fake_build_setting_name_build_libraries_length,
-          fake_build_setting_name_build_linker_length,
-          fake_build_setting_name_build_script_length,
-          fake_build_setting_name_build_shared_length,
-          fake_build_setting_name_build_sources_headers_length,
-          fake_build_setting_name_build_sources_library_length,
-          fake_build_setting_name_build_sources_program_length,
-          fake_build_setting_name_build_sources_settings_length,
-          fake_build_setting_name_build_sources_script_length,
-          fake_build_setting_name_build_static_length,
-          fake_build_setting_name_defines_all_length,
-          fake_build_setting_name_defines_shared_length,
-          fake_build_setting_name_defines_static_length,
-          fake_build_setting_name_environment_length,
-          fake_build_setting_name_flags_all_length,
-          fake_build_setting_name_flags_library_length,
-          fake_build_setting_name_flags_program_length,
-          fake_build_setting_name_flags_shared_length,
-          fake_build_setting_name_flags_static_length,
-          fake_build_setting_name_modes_length,
-          fake_build_setting_name_modes_default_length,
-          fake_build_setting_name_path_headers_length,
-          fake_build_setting_name_path_language_length,
-          fake_build_setting_name_path_library_script_length,
-          fake_build_setting_name_path_library_shared_length,
-          fake_build_setting_name_path_library_static_length,
-          fake_build_setting_name_path_program_script_length,
-          fake_build_setting_name_path_program_shared_length,
-          fake_build_setting_name_path_program_static_length,
-          fake_build_setting_name_process_post_length,
-          fake_build_setting_name_process_pre_length,
-          fake_build_setting_name_project_name_length,
-          fake_build_setting_name_search_exclusive_length,
-          fake_build_setting_name_search_shared_length,
-          fake_build_setting_name_search_static_length,
-          fake_build_setting_name_version_major_length,
-          fake_build_setting_name_version_micro_length,
-          fake_build_setting_name_version_minor_length,
-          fake_build_setting_name_version_target_length,
-        };
-
-        f_string_dynamics build_compiler = f_string_dynamics_initialize;
-        f_string_dynamics build_language = f_string_dynamics_initialize;
-        f_string_dynamics build_linker = f_string_dynamics_initialize;
-        f_string_dynamics build_script = f_string_dynamics_initialize;
-        f_string_dynamics build_shared = f_string_dynamics_initialize;
-        f_string_dynamics build_static = f_string_dynamics_initialize;
-        f_string_dynamics path_headers = f_string_dynamics_initialize;
-        f_string_dynamics path_language = f_string_dynamics_initialize;
-        f_string_dynamics path_library_script = f_string_dynamics_initialize;
-        f_string_dynamics path_library_shared = f_string_dynamics_initialize;
-        f_string_dynamics path_library_static = f_string_dynamics_initialize;
-        f_string_dynamics path_program_script = f_string_dynamics_initialize;
-        f_string_dynamics path_program_shared = f_string_dynamics_initialize;
-        f_string_dynamics path_program_static = f_string_dynamics_initialize;
-        f_string_dynamics process_post = f_string_dynamics_initialize;
-        f_string_dynamics process_pre = f_string_dynamics_initialize;
-        f_string_dynamics project_name = f_string_dynamics_initialize;
-        f_string_dynamics search_exclusive = f_string_dynamics_initialize;
-        f_string_dynamics search_shared = f_string_dynamics_initialize;
-        f_string_dynamics search_static = f_string_dynamics_initialize;
-        f_string_dynamics version_major = f_string_dynamics_initialize;
-        f_string_dynamics version_micro = f_string_dynamics_initialize;
-        f_string_dynamics version_minor = f_string_dynamics_initialize;
-        f_string_dynamics version_target = f_string_dynamics_initialize;
-
-        f_string_dynamics *settings_value[] = {
-          &build_compiler,
-          &build_language,
-          &setting->build_libraries,
-          &build_linker,
-          &build_script,
-          &build_shared,
-          &setting->build_sources_headers,
-          &setting->build_sources_library,
-          &setting->build_sources_program,
-          &setting->build_sources_setting,
-          &setting->build_sources_script,
-          &build_static,
-          &setting->defines_all,
-          &setting->defines_shared,
-          &setting->defines_static,
-          &setting->environment,
-          &setting->flags_all,
-          &setting->flags_library,
-          &setting->flags_program,
-          &setting->flags_shared,
-          &setting->flags_static,
-          &setting->modes,
-          &setting->modes_default,
-          &path_headers,
-          &path_language,
-          &path_library_script,
-          &path_library_shared,
-          &path_library_static,
-          &path_program_script,
-          &path_program_shared,
-          &path_program_static,
-          &process_post,
-          &process_pre,
-          &project_name,
-          &search_exclusive,
-          &search_shared,
-          &search_static,
-          &version_major,
-          &version_micro,
-          &version_minor,
-          &version_target,
-        };
-
-        f_string function = "fll_fss_snatch_apart";
-
-        *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, settings_value, fake_build_setting_total);
-
-        if (*status == F_none) {
-          f_string_dynamic settings_mode_name_dynamic[fake_build_setting_total];
-          f_string settings_mode_names[fake_build_setting_total];
-          f_string_length setting_mode_lengths[fake_build_setting_total];
-
-          const f_string_dynamics *modes = &setting->modes_default;
-          bool found = F_false;
-
-          f_array_length i = 0;
-          f_array_length j = 0;
-
-          // if any mode is specified, the entire defaults is replaced.
-          if (data.mode.used > 0) {
-            modes = &data.mode;
-          }
-
-          for (; i < modes->used; i++) {
-            found = F_false;
-
-            for (j = 0; j < setting->modes.used; j++) {
-              if (fl_string_dynamic_compare_trim(modes->array[i], setting->modes.array[j]) == F_equal_to) {
-                found = F_true;
-                break;
-              }
-            } // for
-
-            if (found == F_false) {
-              if (data.verbosity != fake_verbosity_quiet) {
-                fprintf(f_type_error, "%c", f_string_eol[0]);
-                fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the specified mode '");
-                fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", modes->array[i].string);
-                fl_color_print(f_type_error, data.context.error, data.context.reset, "' is not a valid mode, according to '");
-                fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
-                fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
-              }
-
-              error_printed = F_true;
-              *status = F_status_set_error(F_parameter);
-              break;
-            }
-
-            memset(&settings_mode_name_dynamic, 0, sizeof(f_string_dynamic) * fake_build_setting_total);
-            memset(&settings_mode_names, 0, sizeof(f_string) * fake_build_setting_total);
-            memset(&setting_mode_lengths, 0, sizeof(f_string_length) * fake_build_setting_total);
-
-            for (j = 0; j < fake_build_setting_total; j++) {
-              setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
-
-              f_macro_string_dynamic_new(*status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
-              if (F_status_is_error(*status)) {
-                function = "f_macro_string_dynamic_new";
-                break;
-              }
-
-              memcpy(settings_mode_name_dynamic[j].string, settings_name[j], settings_length[j]);
-              memcpy(settings_mode_name_dynamic[j].string + settings_length[j] + 1, modes->array[i].string, modes->array[i].used);
-              settings_mode_name_dynamic[j].string[settings_length[j]] = '-';
-
-              settings_mode_names[j] = settings_mode_name_dynamic[j].string;
-            } // for
-
-            if (*status == F_none) {
-              *status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, settings_value, fake_build_setting_total);
-
-              if (F_status_is_error(*status)) {
-                function = "fll_fss_snatch_apart";
-              }
-            }
-
-            for (j = 0; j < fake_build_setting_total; j++) {
-              f_macro_string_dynamic_delete_simple(settings_mode_name_dynamic[j]);
-            } // for
-
-            if (F_status_is_error(*status)) break;
-          } // for
-        }
-
-        if (F_status_is_error(*status)) {
-          if (*status == F_status_set_error(F_string_too_large)) {
-            if (data.verbosity != fake_verbosity_quiet) {
-              // @todo update FSS functions to return which setting index the problem happened on.
-              fprintf(f_type_error, "%c", f_string_eol[0]);
-              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: a setting in the build setting file '");
-              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
-              fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' is too long.");
-            }
-          }
-          else if (!error_printed) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), function, F_true);
-          }
-        }
-        else {
-          const f_string settings_single_name[] = {
-            fake_build_setting_name_build_compiler,
-            fake_build_setting_name_build_language,
-            fake_build_setting_name_build_linker,
-            fake_build_setting_name_build_script,
-            fake_build_setting_name_build_shared,
-            fake_build_setting_name_build_static,
-            fake_build_setting_name_path_headers,
-            fake_build_setting_name_path_language,
-            fake_build_setting_name_path_library_script,
-            fake_build_setting_name_path_library_shared,
-            fake_build_setting_name_path_library_static,
-            fake_build_setting_name_path_program_script,
-            fake_build_setting_name_path_program_shared,
-            fake_build_setting_name_path_program_static,
-            fake_build_setting_name_process_post,
-            fake_build_setting_name_process_pre,
-            fake_build_setting_name_project_name,
-            fake_build_setting_name_search_exclusive,
-            fake_build_setting_name_search_shared,
-            fake_build_setting_name_search_static,
-            fake_build_setting_name_version_major,
-            fake_build_setting_name_version_micro,
-            fake_build_setting_name_version_minor,
-            fake_build_setting_name_version_target,
-          };
-
-          const f_string_statics *settings_single_source[] = {
-            &build_compiler,
-            &build_language,
-            &build_linker,
-            &build_script,
-            &build_shared,
-            &build_static,
-            &path_headers,
-            &path_language,
-            &path_library_script,
-            &path_library_shared,
-            &path_library_static,
-            &path_program_script,
-            &path_program_shared,
-            &path_program_static,
-            &process_post,
-            &process_pre,
-            &project_name,
-            &search_exclusive,
-            &search_shared,
-            &search_static,
-            &version_major,
-            &version_micro,
-            &version_minor,
-            &version_target,
-          };
-
-          bool *settings_single_bool[] = {
-            0,
-            0,
-            0,
-            &setting->build_script,
-            &setting->build_shared,
-            &setting->build_static,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            &setting->search_exclusive,
-            &setting->search_shared,
-            &setting->search_static,
-          };
-
-          f_string_dynamic *settings_single_destination[] = {
-            &setting->build_compiler,
-            0,
-            &setting->build_linker,
-            0,
-            0,
-            0,
-            &setting->path_headers,
-            &setting->path_language,
-            &setting->path_library_script,
-            &setting->path_library_shared,
-            &setting->path_library_static,
-            &setting->path_program_script,
-            &setting->path_program_shared,
-            &setting->path_program_static,
-            &setting->process_post,
-            &setting->process_pre,
-            &setting->project_name,
-            0,
-            0,
-            0,
-            &setting->version_major,
-            &setting->version_micro,
-            &setting->version_minor,
-          };
-
-          uint8_t *settings_single_language[] = {
-            0,
-            &setting->build_language,
-          };
-
-          uint8_t *settings_single_version[] = {
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            &setting->version_target,
-          };
-
-          // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", or "micro".
-          uint8_t settings_single_type[] = {
-            3,
-            4,
-            3,
-            1,
-            1,
-            1,
-            2,
-            2,
-            2,
-            2,
-            2,
-            2,
-            2,
-            2,
-            3,
-            3,
-            3,
-            1,
-            1,
-            1,
-            3,
-            3,
-            3,
-            5,
-          };
-
-          for (f_array_length i = 0; i < 24; i++) {
-            if (settings_single_source[i]->used == 0) continue;
-
-            if (settings_single_source[i]->used > 1) {
-              if (data.verbosity != fake_verbosity_quiet) {
-                fprintf(f_type_warning, "%c", f_string_eol[0]);
-                fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
-                fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
-                fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");
-                fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
-                fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' may only have a single property, only using the first: '");
-                fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_source[i]->array[0].string);
-                fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
-              }
-            }
-
-            if (settings_single_type[i] == 1) {
-              if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_setting_bool_yes, settings_single_source[i]->array[0].used, fake_build_setting_bool_yes_length) == F_equal_to) {
-                *settings_single_bool[i] = F_true;
-              }
-              else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_setting_bool_no, settings_single_source[i]->array[0].used, fake_build_setting_bool_no_length) == F_equal_to) {
-                *settings_single_bool[i] = F_false;
-              }
-              else {
-                *settings_single_bool[i] = F_true;
-
-                if (data.verbosity != fake_verbosity_quiet) {
-                  fprintf(f_type_warning, "%c", f_string_eol[0]);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' may be either '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_setting_bool_yes);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' or '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_setting_bool_no);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', defaulting to '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_setting_bool_yes);
-                  fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
-                }
-              }
-            }
-            else if (settings_single_type[i] == 4) {
-              if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_bash, settings_single_source[i]->array[0].used, fake_build_language_bash_length) == F_equal_to) {
-                *settings_single_language[i] = fake_build_language_type_bash;
-              }
-              else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_c, settings_single_source[i]->array[0].used, fake_build_language_c_length) == F_equal_to) {
-                *settings_single_language[i] = fake_build_language_type_c;
-              }
-              else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_cpp, settings_single_source[i]->array[0].used, fake_build_language_cpp_length) == F_equal_to) {
-                *settings_single_language[i] = fake_build_language_type_cpp;
-              }
-              else {
-                *settings_single_language[i] = fake_build_language_type_c;
-
-                if (data.verbosity != fake_verbosity_quiet) {
-                  fprintf(f_type_warning, "%c", f_string_eol[0]);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' may only be one of '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_language_bash);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_language_c);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', or '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_language_cpp);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', defaulting to '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_language_c);
-                  fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
-                }
-              }
-            }
-            else if (settings_single_type[i] == 5) {
-              if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_major, settings_single_source[i]->array[0].used, fake_build_version_major_length) == F_equal_to) {
-                *settings_single_version[i] = fake_build_version_type_major;
-              }
-              else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_micro, settings_single_source[i]->array[0].used, fake_build_version_micro_length) == F_equal_to) {
-                *settings_single_version[i] = fake_build_version_type_micro;
-              }
-              else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_minor, settings_single_source[i]->array[0].used, fake_build_version_minor_length) == F_equal_to) {
-                *settings_single_version[i] = fake_build_version_type_minor;
-              }
-              else {
-                *settings_single_version[i] = fake_build_version_type_major;
-
-                if (data.verbosity != fake_verbosity_quiet) {
-                  fprintf(f_type_warning, "%c", f_string_eol[0]);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' may only be one of '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_major);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_minor);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', or '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_micro);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', defaulting to '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_major);
-                  fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
-                }
-              }
-            }
-            else {
-              *status = fl_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);
-              if (F_status_is_error(*status)) {
-                fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
-                break;
-              }
-
-              if (settings_single_type[i] == 2) {
-                *status = fl_string_append_assure(f_path_separator, f_path_separator_length, settings_single_destination[i]);
-                if (F_status_is_error(*status)) {
-                  fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
-                  break;
-                }
-              }
-
-              *status = fl_string_dynamic_terminate_after(settings_single_destination[i]);
-              if (F_status_is_error(*status)) {
-                fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
-                break;
-              }
-            }
-          } // for
-        }
-
-        f_macro_string_dynamics_delete_simple(build_compiler);
-        f_macro_string_dynamics_delete_simple(build_language);
-        f_macro_string_dynamics_delete_simple(build_linker);
-        f_macro_string_dynamics_delete_simple(build_script);
-        f_macro_string_dynamics_delete_simple(build_shared);
-        f_macro_string_dynamics_delete_simple(build_static);
-        f_macro_string_dynamics_delete_simple(path_headers);
-        f_macro_string_dynamics_delete_simple(path_language);
-        f_macro_string_dynamics_delete_simple(path_library_script);
-        f_macro_string_dynamics_delete_simple(path_library_shared);
-        f_macro_string_dynamics_delete_simple(path_library_static);
-        f_macro_string_dynamics_delete_simple(path_program_script);
-        f_macro_string_dynamics_delete_simple(path_program_shared);
-        f_macro_string_dynamics_delete_simple(path_program_static);
-        f_macro_string_dynamics_delete_simple(process_post);
-        f_macro_string_dynamics_delete_simple(process_pre);
-        f_macro_string_dynamics_delete_simple(project_name);
-        f_macro_string_dynamics_delete_simple(search_exclusive);
-        f_macro_string_dynamics_delete_simple(search_shared);
-        f_macro_string_dynamics_delete_simple(search_static);
-        f_macro_string_dynamics_delete_simple(version_major);
-        f_macro_string_dynamics_delete_simple(version_micro);
-        f_macro_string_dynamics_delete_simple(version_minor);
-        f_macro_string_dynamics_delete_simple(version_target);
-      }
-
+      f_macro_string_dynamic_delete_simple(buffer);
       f_macro_fss_objects_delete_simple(objects);
       f_macro_fss_contents_delete_simple(contents);
     }
 
-    f_macro_string_dynamic_delete_simple(buffer);
-
-    if (F_status_is_error(*status)) return;
-
     // error when required settings are not specified.
-    {
+    if (F_status_is_not_error(*status)) {
       bool failed = F_false;
 
       f_string_static *settings[] = {
@@ -1896,7 +1285,594 @@ extern "C" {
       }
     }
 
-    // provide some defaults.
+    fake_build_load_setting_defaults(data, setting, status);
+  }
+#endif // _di_fake_build_load_setting_
+
+#ifndef _di_fake_build_load_setting_process_
+  void fake_build_load_setting_process(const fake_data data, const f_string path_file, const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, fake_build_setting *setting, f_status *status) {
+    if (F_status_is_error(*status) && buffer.used) return;
+
+    bool error_printed = F_false;
+
+    const f_string settings_name[] = {
+      fake_build_setting_name_build_compiler,
+      fake_build_setting_name_build_language,
+      fake_build_setting_name_build_libraries,
+      fake_build_setting_name_build_linker,
+      fake_build_setting_name_build_script,
+      fake_build_setting_name_build_shared,
+      fake_build_setting_name_build_sources_headers,
+      fake_build_setting_name_build_sources_library,
+      fake_build_setting_name_build_sources_program,
+      fake_build_setting_name_build_sources_settings,
+      fake_build_setting_name_build_sources_script,
+      fake_build_setting_name_build_static,
+      fake_build_setting_name_defines_all,
+      fake_build_setting_name_defines_shared,
+      fake_build_setting_name_defines_static,
+      fake_build_setting_name_environment,
+      fake_build_setting_name_flags_all,
+      fake_build_setting_name_flags_library,
+      fake_build_setting_name_flags_program,
+      fake_build_setting_name_flags_shared,
+      fake_build_setting_name_flags_static,
+      fake_build_setting_name_modes,
+      fake_build_setting_name_modes_default,
+      fake_build_setting_name_path_headers,
+      fake_build_setting_name_path_language,
+      fake_build_setting_name_path_library_script,
+      fake_build_setting_name_path_library_shared,
+      fake_build_setting_name_path_library_static,
+      fake_build_setting_name_path_program_script,
+      fake_build_setting_name_path_program_shared,
+      fake_build_setting_name_path_program_static,
+      fake_build_setting_name_process_post,
+      fake_build_setting_name_process_pre,
+      fake_build_setting_name_project_name,
+      fake_build_setting_name_search_exclusive,
+      fake_build_setting_name_search_shared,
+      fake_build_setting_name_search_static,
+      fake_build_setting_name_version_major,
+      fake_build_setting_name_version_micro,
+      fake_build_setting_name_version_minor,
+      fake_build_setting_name_version_target,
+    };
+
+    const f_string_length settings_length[] = {
+      fake_build_setting_name_build_compiler_length,
+      fake_build_setting_name_build_language_length,
+      fake_build_setting_name_build_libraries_length,
+      fake_build_setting_name_build_linker_length,
+      fake_build_setting_name_build_script_length,
+      fake_build_setting_name_build_shared_length,
+      fake_build_setting_name_build_sources_headers_length,
+      fake_build_setting_name_build_sources_library_length,
+      fake_build_setting_name_build_sources_program_length,
+      fake_build_setting_name_build_sources_settings_length,
+      fake_build_setting_name_build_sources_script_length,
+      fake_build_setting_name_build_static_length,
+      fake_build_setting_name_defines_all_length,
+      fake_build_setting_name_defines_shared_length,
+      fake_build_setting_name_defines_static_length,
+      fake_build_setting_name_environment_length,
+      fake_build_setting_name_flags_all_length,
+      fake_build_setting_name_flags_library_length,
+      fake_build_setting_name_flags_program_length,
+      fake_build_setting_name_flags_shared_length,
+      fake_build_setting_name_flags_static_length,
+      fake_build_setting_name_modes_length,
+      fake_build_setting_name_modes_default_length,
+      fake_build_setting_name_path_headers_length,
+      fake_build_setting_name_path_language_length,
+      fake_build_setting_name_path_library_script_length,
+      fake_build_setting_name_path_library_shared_length,
+      fake_build_setting_name_path_library_static_length,
+      fake_build_setting_name_path_program_script_length,
+      fake_build_setting_name_path_program_shared_length,
+      fake_build_setting_name_path_program_static_length,
+      fake_build_setting_name_process_post_length,
+      fake_build_setting_name_process_pre_length,
+      fake_build_setting_name_project_name_length,
+      fake_build_setting_name_search_exclusive_length,
+      fake_build_setting_name_search_shared_length,
+      fake_build_setting_name_search_static_length,
+      fake_build_setting_name_version_major_length,
+      fake_build_setting_name_version_micro_length,
+      fake_build_setting_name_version_minor_length,
+      fake_build_setting_name_version_target_length,
+    };
+
+    f_string_dynamics build_compiler = f_string_dynamics_initialize;
+    f_string_dynamics build_language = f_string_dynamics_initialize;
+    f_string_dynamics build_linker = f_string_dynamics_initialize;
+    f_string_dynamics build_script = f_string_dynamics_initialize;
+    f_string_dynamics build_shared = f_string_dynamics_initialize;
+    f_string_dynamics build_static = f_string_dynamics_initialize;
+    f_string_dynamics path_headers = f_string_dynamics_initialize;
+    f_string_dynamics path_language = f_string_dynamics_initialize;
+    f_string_dynamics path_library_script = f_string_dynamics_initialize;
+    f_string_dynamics path_library_shared = f_string_dynamics_initialize;
+    f_string_dynamics path_library_static = f_string_dynamics_initialize;
+    f_string_dynamics path_program_script = f_string_dynamics_initialize;
+    f_string_dynamics path_program_shared = f_string_dynamics_initialize;
+    f_string_dynamics path_program_static = f_string_dynamics_initialize;
+    f_string_dynamics process_post = f_string_dynamics_initialize;
+    f_string_dynamics process_pre = f_string_dynamics_initialize;
+    f_string_dynamics project_name = f_string_dynamics_initialize;
+    f_string_dynamics search_exclusive = f_string_dynamics_initialize;
+    f_string_dynamics search_shared = f_string_dynamics_initialize;
+    f_string_dynamics search_static = f_string_dynamics_initialize;
+    f_string_dynamics version_major = f_string_dynamics_initialize;
+    f_string_dynamics version_micro = f_string_dynamics_initialize;
+    f_string_dynamics version_minor = f_string_dynamics_initialize;
+    f_string_dynamics version_target = f_string_dynamics_initialize;
+
+    f_string_dynamics *settings_value[] = {
+      &build_compiler,
+      &build_language,
+      &setting->build_libraries,
+      &build_linker,
+      &build_script,
+      &build_shared,
+      &setting->build_sources_headers,
+      &setting->build_sources_library,
+      &setting->build_sources_program,
+      &setting->build_sources_setting,
+      &setting->build_sources_script,
+      &build_static,
+      &setting->defines_all,
+      &setting->defines_shared,
+      &setting->defines_static,
+      &setting->environment,
+      &setting->flags_all,
+      &setting->flags_library,
+      &setting->flags_program,
+      &setting->flags_shared,
+      &setting->flags_static,
+      &setting->modes,
+      &setting->modes_default,
+      &path_headers,
+      &path_language,
+      &path_library_script,
+      &path_library_shared,
+      &path_library_static,
+      &path_program_script,
+      &path_program_shared,
+      &path_program_static,
+      &process_post,
+      &process_pre,
+      &project_name,
+      &search_exclusive,
+      &search_shared,
+      &search_static,
+      &version_major,
+      &version_micro,
+      &version_minor,
+      &version_target,
+    };
+
+    f_string function = "fll_fss_snatch_apart";
+
+    *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, fake_build_setting_total, settings_value);
+
+    if (*status == F_none) {
+      f_string_dynamic settings_mode_name_dynamic[fake_build_setting_total];
+      f_string settings_mode_names[fake_build_setting_total];
+      f_string_length setting_mode_lengths[fake_build_setting_total];
+
+      const f_string_dynamics *modes = &setting->modes_default;
+      bool found = F_false;
+
+      f_array_length i = 0;
+      f_array_length j = 0;
+
+      // if any mode is specified, the entire defaults is replaced.
+      if (data.mode.used > 0) {
+        modes = &data.mode;
+      }
+
+      for (; i < modes->used; i++) {
+        found = F_false;
+
+        for (j = 0; j < setting->modes.used; j++) {
+          if (fl_string_dynamic_compare_trim(modes->array[i], setting->modes.array[j]) == F_equal_to) {
+            found = F_true;
+            break;
+          }
+        } // for
+
+        if (found == F_false) {
+          if (data.verbosity != fake_verbosity_quiet) {
+            fprintf(f_type_error, "%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the specified mode '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", modes->array[i].string);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "' is not a valid mode, according to '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path_file);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+          }
+
+          error_printed = F_true;
+          *status = F_status_set_error(F_parameter);
+          break;
+        }
+
+        memset(&settings_mode_name_dynamic, 0, sizeof(f_string_dynamic) * fake_build_setting_total);
+        memset(&settings_mode_names, 0, sizeof(f_string) * fake_build_setting_total);
+        memset(&setting_mode_lengths, 0, sizeof(f_string_length) * fake_build_setting_total);
+
+        for (j = 0; j < fake_build_setting_total; j++) {
+          setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
+
+          f_macro_string_dynamic_new(*status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
+          if (F_status_is_error(*status)) {
+            function = "f_macro_string_dynamic_new";
+            break;
+          }
+
+          memcpy(settings_mode_name_dynamic[j].string, settings_name[j], settings_length[j]);
+          memcpy(settings_mode_name_dynamic[j].string + settings_length[j] + 1, modes->array[i].string, modes->array[i].used);
+          settings_mode_name_dynamic[j].string[settings_length[j]] = '-';
+
+          settings_mode_names[j] = settings_mode_name_dynamic[j].string;
+        } // for
+
+        if (*status == F_none) {
+          *status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, fake_build_setting_total, settings_value);
+
+          if (F_status_is_error(*status)) {
+            function = "fll_fss_snatch_apart";
+          }
+        }
+
+        for (j = 0; j < fake_build_setting_total; j++) {
+          f_macro_string_dynamic_delete_simple(settings_mode_name_dynamic[j]);
+        } // for
+
+        if (F_status_is_error(*status)) break;
+      } // for
+    }
+
+    if (F_status_is_error(*status)) {
+      if (*status == F_status_set_error(F_string_too_large)) {
+        if (data.verbosity != fake_verbosity_quiet) {
+          // @todo update FSS functions to return which setting index the problem happened on.
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: a setting in the build setting file '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path_file);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' is too long.");
+        }
+      }
+      else if (!error_printed) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), function, F_true);
+      }
+    }
+    else {
+      const f_string settings_single_name[] = {
+        fake_build_setting_name_build_compiler,
+        fake_build_setting_name_build_language,
+        fake_build_setting_name_build_linker,
+        fake_build_setting_name_build_script,
+        fake_build_setting_name_build_shared,
+        fake_build_setting_name_build_static,
+        fake_build_setting_name_path_headers,
+        fake_build_setting_name_path_language,
+        fake_build_setting_name_path_library_script,
+        fake_build_setting_name_path_library_shared,
+        fake_build_setting_name_path_library_static,
+        fake_build_setting_name_path_program_script,
+        fake_build_setting_name_path_program_shared,
+        fake_build_setting_name_path_program_static,
+        fake_build_setting_name_process_post,
+        fake_build_setting_name_process_pre,
+        fake_build_setting_name_project_name,
+        fake_build_setting_name_search_exclusive,
+        fake_build_setting_name_search_shared,
+        fake_build_setting_name_search_static,
+        fake_build_setting_name_version_major,
+        fake_build_setting_name_version_micro,
+        fake_build_setting_name_version_minor,
+        fake_build_setting_name_version_target,
+      };
+
+      const f_string_statics *settings_single_source[] = {
+        &build_compiler,
+        &build_language,
+        &build_linker,
+        &build_script,
+        &build_shared,
+        &build_static,
+        &path_headers,
+        &path_language,
+        &path_library_script,
+        &path_library_shared,
+        &path_library_static,
+        &path_program_script,
+        &path_program_shared,
+        &path_program_static,
+        &process_post,
+        &process_pre,
+        &project_name,
+        &search_exclusive,
+        &search_shared,
+        &search_static,
+        &version_major,
+        &version_micro,
+        &version_minor,
+        &version_target,
+      };
+
+      bool *settings_single_bool[] = {
+        0,
+        0,
+        0,
+        &setting->build_script,
+        &setting->build_shared,
+        &setting->build_static,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        &setting->search_exclusive,
+        &setting->search_shared,
+        &setting->search_static,
+      };
+
+      f_string_dynamic *settings_single_destination[] = {
+        &setting->build_compiler,
+        0,
+        &setting->build_linker,
+        0,
+        0,
+        0,
+        &setting->path_headers,
+        &setting->path_language,
+        &setting->path_library_script,
+        &setting->path_library_shared,
+        &setting->path_library_static,
+        &setting->path_program_script,
+        &setting->path_program_shared,
+        &setting->path_program_static,
+        &setting->process_post,
+        &setting->process_pre,
+        &setting->project_name,
+        0,
+        0,
+        0,
+        &setting->version_major,
+        &setting->version_micro,
+        &setting->version_minor,
+      };
+
+      uint8_t *settings_single_language[] = {
+        0,
+        &setting->build_language,
+      };
+
+      uint8_t *settings_single_version[] = {
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        &setting->version_target,
+      };
+
+      // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", or "micro".
+      uint8_t settings_single_type[] = {
+        3,
+        4,
+        3,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        1,
+        1,
+        1,
+        3,
+        3,
+        3,
+        5,
+      };
+
+      for (f_array_length i = 0; i < 24; i++) {
+        if (settings_single_source[i]->used == 0) continue;
+
+        if (settings_single_source[i]->used > 1) {
+          if (data.verbosity == fake_verbosity_verbose) {
+            fprintf(f_type_warning, "%c", f_string_eol[0]);
+            fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
+            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
+            fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");
+            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", path_file);
+            fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' may only have a single property, only using the first: '");
+            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_source[i]->array[0].string);
+            fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
+          }
+        }
+
+        if (settings_single_type[i] == 1) {
+          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_common_setting_bool_yes, settings_single_source[i]->array[0].used, fake_common_setting_bool_yes_length) == F_equal_to) {
+            *settings_single_bool[i] = F_true;
+          }
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_common_setting_bool_no, settings_single_source[i]->array[0].used, fake_common_setting_bool_no_length) == F_equal_to) {
+            *settings_single_bool[i] = F_false;
+          }
+          else {
+            *settings_single_bool[i] = F_true;
+
+            if (data.verbosity == fake_verbosity_verbose) {
+              fprintf(f_type_warning, "%c", f_string_eol[0]);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", path_file);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' may be either '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_common_setting_bool_yes);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' or '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_common_setting_bool_no);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', defaulting to '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_common_setting_bool_yes);
+              fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
+            }
+          }
+        }
+        else if (settings_single_type[i] == 4) {
+          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_bash, settings_single_source[i]->array[0].used, fake_build_language_bash_length) == F_equal_to) {
+            *settings_single_language[i] = fake_build_language_type_bash;
+          }
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_c, settings_single_source[i]->array[0].used, fake_build_language_c_length) == F_equal_to) {
+            *settings_single_language[i] = fake_build_language_type_c;
+          }
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_cpp, settings_single_source[i]->array[0].used, fake_build_language_cpp_length) == F_equal_to) {
+            *settings_single_language[i] = fake_build_language_type_cpp;
+          }
+          else {
+            *settings_single_language[i] = fake_build_language_type_c;
+
+            if (data.verbosity == fake_verbosity_verbose) {
+              fprintf(f_type_warning, "%c", f_string_eol[0]);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", path_file);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' may only be one of '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_language_bash);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_language_c);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', or '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_language_cpp);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', defaulting to '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_language_c);
+              fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
+            }
+          }
+        }
+        else if (settings_single_type[i] == 5) {
+          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_major, settings_single_source[i]->array[0].used, fake_build_version_major_length) == F_equal_to) {
+            *settings_single_version[i] = fake_build_version_type_major;
+          }
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_micro, settings_single_source[i]->array[0].used, fake_build_version_micro_length) == F_equal_to) {
+            *settings_single_version[i] = fake_build_version_type_micro;
+          }
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_minor, settings_single_source[i]->array[0].used, fake_build_version_minor_length) == F_equal_to) {
+            *settings_single_version[i] = fake_build_version_type_minor;
+          }
+          else {
+            *settings_single_version[i] = fake_build_version_type_major;
+
+            if (data.verbosity == fake_verbosity_verbose) {
+              fprintf(f_type_warning, "%c", f_string_eol[0]);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the setting '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_single_name[i]);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' in the file '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", path_file);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' may only be one of '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_major);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_minor);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', or '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_micro);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', defaulting to '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", fake_build_version_major);
+              fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
+            }
+          }
+        }
+        else {
+          // replace any potential existing value.
+          settings_single_destination[i]->used = 0;
+
+          *status = fl_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+            break;
+          }
+
+          if (settings_single_type[i] == 2) {
+            *status = fl_string_append_assure(f_path_separator, f_path_separator_length, settings_single_destination[i]);
+            if (F_status_is_error(*status)) {
+              fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+              break;
+            }
+          }
+
+          *status = fl_string_dynamic_terminate_after(settings_single_destination[i]);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+            break;
+          }
+        }
+      } // for
+    }
+
+    f_macro_string_dynamics_delete_simple(build_compiler);
+    f_macro_string_dynamics_delete_simple(build_language);
+    f_macro_string_dynamics_delete_simple(build_linker);
+    f_macro_string_dynamics_delete_simple(build_script);
+    f_macro_string_dynamics_delete_simple(build_shared);
+    f_macro_string_dynamics_delete_simple(build_static);
+    f_macro_string_dynamics_delete_simple(path_headers);
+    f_macro_string_dynamics_delete_simple(path_language);
+    f_macro_string_dynamics_delete_simple(path_library_script);
+    f_macro_string_dynamics_delete_simple(path_library_shared);
+    f_macro_string_dynamics_delete_simple(path_library_static);
+    f_macro_string_dynamics_delete_simple(path_program_script);
+    f_macro_string_dynamics_delete_simple(path_program_shared);
+    f_macro_string_dynamics_delete_simple(path_program_static);
+    f_macro_string_dynamics_delete_simple(process_post);
+    f_macro_string_dynamics_delete_simple(process_pre);
+    f_macro_string_dynamics_delete_simple(project_name);
+    f_macro_string_dynamics_delete_simple(search_exclusive);
+    f_macro_string_dynamics_delete_simple(search_shared);
+    f_macro_string_dynamics_delete_simple(search_static);
+    f_macro_string_dynamics_delete_simple(version_major);
+    f_macro_string_dynamics_delete_simple(version_micro);
+    f_macro_string_dynamics_delete_simple(version_minor);
+    f_macro_string_dynamics_delete_simple(version_target);
+  }
+#endif // _di_fake_build_load_setting_process_
+
+#ifndef _di_fake_build_load_setting_defaults_
+  void fake_build_load_setting_defaults(const fake_data data, fake_build_setting *setting, f_status *status) {
+    if (F_status_is_error(*status)) return;
+
     {
       f_string sources[] = {
         fake_build_setting_default_version,
@@ -1933,112 +1909,112 @@ extern "C" {
       } // for
     }
 
+    if (F_status_is_error(*status)) return;
+
     // Override setting file when any of these are specified in the command line.
-    if (F_status_is_fine(*status)) {
-      if (data.parameters[fake_parameter_shared_disabled].result == f_console_result_found) {
-        if (data.parameters[fake_parameter_shared_enabled].result == f_console_result_found) {
-          if (data.parameters[fake_parameter_shared_enabled].location > data.parameters[fake_parameter_shared_disabled].location) {
-            setting->build_shared = F_true;
-            setting->search_shared = F_true;
-          }
-          else {
-            setting->build_shared = F_false;
-            setting->search_shared = F_false;
-          }
-
-          if (data.verbosity == fake_verbosity_verbose) {
-            fprintf(f_type_warning, "%c", f_string_eol[0]);
-            fl_color_print(f_type_warning, data.context.error, data.context.reset, "WARNING: the parameters '");
-            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_shared_disabled);
-            fl_color_print(f_type_warning, data.context.error, data.context.reset, "' and '");
-            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_shared_enabled);
-            fl_color_print(f_type_warning, data.context.error, data.context.reset, "' contradict, defaulting to '");
-
-            if (setting->build_shared) {
-              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_shared_enabled);
-            }
-            else {
-              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_shared_disabled);
-            }
-
-            fl_color_print_line(f_type_warning, data.context.error, data.context.reset, "'.");
-          }
+    if (data.parameters[fake_parameter_shared_disabled].result == f_console_result_found) {
+      if (data.parameters[fake_parameter_shared_enabled].result == f_console_result_found) {
+        if (data.parameters[fake_parameter_shared_enabled].location > data.parameters[fake_parameter_shared_disabled].location) {
+          setting->build_shared = F_true;
+          setting->search_shared = F_true;
         }
         else {
           setting->build_shared = F_false;
           setting->search_shared = F_false;
         }
-      }
-      else if (data.parameters[fake_parameter_shared_enabled].result == f_console_result_found) {
-        setting->build_shared = F_true;
-        setting->search_shared = F_true;
-      }
 
-      if (data.parameters[fake_parameter_static_disabled].result == f_console_result_found) {
-        if (data.parameters[fake_parameter_static_enabled].result == f_console_result_found) {
-          if (data.parameters[fake_parameter_static_enabled].location > data.parameters[fake_parameter_static_disabled].location) {
-            setting->build_static = F_true;
-            setting->search_static = F_true;
+        if (data.verbosity == fake_verbosity_verbose) {
+          fprintf(f_type_warning, "%c", f_string_eol[0]);
+          fl_color_print(f_type_warning, data.context.error, data.context.reset, "WARNING: the parameters '");
+          fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_shared_disabled);
+          fl_color_print(f_type_warning, data.context.error, data.context.reset, "' and '");
+          fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_shared_enabled);
+          fl_color_print(f_type_warning, data.context.error, data.context.reset, "' contradict, defaulting to '");
+
+          if (setting->build_shared) {
+            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_shared_enabled);
           }
           else {
-            setting->build_static = F_false;
-            setting->search_static = F_false;
+            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_shared_disabled);
           }
 
-          if (data.verbosity == fake_verbosity_verbose) {
-            fprintf(f_type_warning, "%c", f_string_eol[0]);
-            fl_color_print(f_type_warning, data.context.error, data.context.reset, "WARNING: the parameters '");
-            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_static_disabled);
-            fl_color_print(f_type_warning, data.context.error, data.context.reset, "' and '");
-            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_static_enabled);
-            fl_color_print(f_type_warning, data.context.error, data.context.reset, "' contradict, defaulting to '");
+          fl_color_print_line(f_type_warning, data.context.error, data.context.reset, "'.");
+        }
+      }
+      else {
+        setting->build_shared = F_false;
+        setting->search_shared = F_false;
+      }
+    }
+    else if (data.parameters[fake_parameter_shared_enabled].result == f_console_result_found) {
+      setting->build_shared = F_true;
+      setting->search_shared = F_true;
+    }
 
-            if (setting->build_static) {
-              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_static_enabled);
-            }
-            else {
-              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_static_disabled);
-            }
-
-            fl_color_print_line(f_type_warning, data.context.error, data.context.reset, "'.");
-          }
+    if (data.parameters[fake_parameter_static_disabled].result == f_console_result_found) {
+      if (data.parameters[fake_parameter_static_enabled].result == f_console_result_found) {
+        if (data.parameters[fake_parameter_static_enabled].location > data.parameters[fake_parameter_static_disabled].location) {
+          setting->build_static = F_true;
+          setting->search_static = F_true;
         }
         else {
           setting->build_static = F_false;
           setting->search_static = F_false;
         }
-      }
-      else if (data.parameters[fake_parameter_static_enabled].result == f_console_result_found) {
-        setting->build_static = F_true;
-        setting->search_static = F_true;
-      }
 
-      if (setting->build_language == fake_build_language_type_c || setting->build_language == fake_build_language_type_cpp) {
-        if (setting->build_shared == F_false && setting->build_static == F_false) {
-          if (data.verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the build settings '");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_setting_name_build_shared);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "' and '");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_setting_name_build_static);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "' cannot both be false when using the language '");
+        if (data.verbosity == fake_verbosity_verbose) {
+          fprintf(f_type_warning, "%c", f_string_eol[0]);
+          fl_color_print(f_type_warning, data.context.error, data.context.reset, "WARNING: the parameters '");
+          fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_static_disabled);
+          fl_color_print(f_type_warning, data.context.error, data.context.reset, "' and '");
+          fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_static_enabled);
+          fl_color_print(f_type_warning, data.context.error, data.context.reset, "' contradict, defaulting to '");
 
-            if (setting->build_language == fake_build_language_type_c) {
-              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_language_c);
-            }
-            else {
-              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_language_cpp);
-            }
-
-            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+          if (setting->build_static) {
+            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_static_enabled);
+          }
+          else {
+            fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fake_long_static_disabled);
           }
 
-          *status = F_status_set_error(F_failure);
+          fl_color_print_line(f_type_warning, data.context.error, data.context.reset, "'.");
         }
+      }
+      else {
+        setting->build_static = F_false;
+        setting->search_static = F_false;
+      }
+    }
+    else if (data.parameters[fake_parameter_static_enabled].result == f_console_result_found) {
+      setting->build_static = F_true;
+      setting->search_static = F_true;
+    }
+
+    if (setting->build_language == fake_build_language_type_c || setting->build_language == fake_build_language_type_cpp) {
+      if (setting->build_shared == F_false && setting->build_static == F_false) {
+        if (data.verbosity != fake_verbosity_quiet) {
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the build settings '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_setting_name_build_shared);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "' and '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_setting_name_build_static);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "' cannot both be false when using the language '");
+
+          if (setting->build_language == fake_build_language_type_c) {
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_language_c);
+          }
+          else {
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_language_cpp);
+          }
+
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+        }
+
+        *status = F_status_set_error(F_failure);
       }
     }
   }
-#endif // _di_fake_build_load_setting_
+#endif // _di_fake_build_load_setting_defaults_
 
 #ifndef _di_fake_build_load_stage_
   void fake_build_load_stage(const fake_data data, fake_build_stage *stage, f_status *status) {

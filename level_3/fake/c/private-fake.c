@@ -6,6 +6,62 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_file_buffer_
+  f_return_status fake_file_buffer(const fake_data data, const f_string path_file, f_string_dynamic *buffer) {
+    f_file file = f_file_initialize;
+    f_string name_function = "f_file_exists";
+    f_status status = F_none;
+
+    status = f_file_exists(data.file_data_build_settings.string);
+
+    if (status == F_true) {
+      {
+        f_string_length size_file = 0;
+
+        name_function = "f_file_size";
+        status = f_file_size(path_file, F_true, &size_file);
+
+        if (F_status_is_not_error(status)) {
+          if (size_file > fake_common_initial_buffer_max) {
+            size_file = fake_common_initial_buffer_max;
+          }
+
+          f_macro_string_dynamic_new((status), (*buffer), size_file);
+          if (F_status_is_error(status)) {
+            fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), name_function, path_file, "allocate buffer size for", F_true, F_true);
+
+            f_macro_string_dynamic_delete_simple((*buffer));
+            return status;
+          }
+        }
+
+        status = F_true;
+      }
+
+      name_function = "f_file_open";
+      status = f_file_open(path_file, 0, &file);
+
+      if (F_status_is_not_error(status)) {
+        name_function = "f_file_read";
+        status = f_file_read(file, buffer);
+
+        f_file_close(&file.id);
+      }
+    }
+    else if (status == F_false) {
+      status = F_status_set_error(F_file_found_not);
+    }
+
+    if (F_status_is_error(status)) {
+      fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), name_function, path_file, "read", F_true, F_true);
+
+      f_macro_string_dynamic_delete_simple((*buffer));
+    }
+
+    return status;
+  }
+#endif // _di_fake_file_buffer_
+
 #ifndef _di_fake_path_generate_
   f_return_status fake_path_generate(fake_data *data) {
     f_status status = F_none;
@@ -138,7 +194,7 @@ extern "C" {
       const uint8_t parameters_length[] = {
         3,
         3,
-        3,
+        4,
         1,
       };
 
@@ -157,6 +213,7 @@ extern "C" {
       f_string_dynamic *parameters_value_2[] = {
         &data->file_data_build_defines,
         &data->file_data_build_dependencies,
+        &data->file_data_build_fakefile,
         &data->file_data_build_settings,
       };
 
@@ -191,6 +248,7 @@ extern "C" {
         fake_path_part_static,
         fake_file_defines,
         fake_file_dependencies,
+        fake_file_fakefile,
         fake_file_settings,
         fake_file_readme,
       };
@@ -204,6 +262,7 @@ extern "C" {
         fake_path_part_static_length,
         fake_file_defines_length,
         fake_file_dependencies_length,
+        fake_file_fakefile_length,
         fake_file_settings_length,
         fake_file_readme_length,
       };
@@ -217,11 +276,12 @@ extern "C" {
         &data->path_build_programs_static,
         &data->file_data_build_defines,
         &data->file_data_build_dependencies,
+        &data->file_data_build_fakefile,
         &data->file_data_build_settings,
         &data->file_documents_readme,
       };
 
-      for (i = 0; i < 10; i++) {
+      for (i = 0; i < 11; i++) {
         status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {

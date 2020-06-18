@@ -1,0 +1,11 @@
+# fss-0005
+
+settings:
+  load_build yes
+
+  define example value
+
+main:
+  print This is a line.
+
+  print This is another line.

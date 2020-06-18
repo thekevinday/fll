@@ -267,7 +267,7 @@ extern "C" {
 
       status = fake_process_console_parameters(arguments, data);
 
-      if (!F_status_is_error(status)) {
+      if (F_status_is_not_error(status)) {
         status = fake_path_generate(data);
       }
 
@@ -285,7 +285,7 @@ extern "C" {
             validate_parameter_directories = F_false;
           }
 
-          if (!F_status_is_error(status)) {
+          if (F_status_is_not_error(status)) {
             status = fake_build_operate(*data);
           }
         }
@@ -295,7 +295,7 @@ extern "C" {
             validate_parameter_directories = F_false;
           }
 
-          if (!F_status_is_error(status)) {
+          if (F_status_is_not_error(status)) {
             status = fake_clean_operate(*data);
           }
         }
@@ -305,12 +305,16 @@ extern "C" {
             validate_parameter_directories = F_false;
           }
 
-          if (data->verbosity != fake_verbosity_quiet) {
+          if (F_status_is_not_error(status)) {
+            status = fake_make_operate(*data);
+          }
+
+          /*if (data->verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the operation '");
             fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", fake_other_operation_make);
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' is not yet implemented.");
-          }
+          }*/
         }
         else if (operations[i] == fake_operation_skeleton) {
           status = fake_skeleton_operate(*data);
@@ -412,6 +416,7 @@ extern "C" {
 
     f_macro_string_dynamic_delete_simple(data->file_data_build_defines);
     f_macro_string_dynamic_delete_simple(data->file_data_build_dependencies);
+    f_macro_string_dynamic_delete_simple(data->file_data_build_fakefile);
     f_macro_string_dynamic_delete_simple(data->file_data_build_settings);
 
     f_macro_string_dynamic_delete_simple(data->file_documents_readme);

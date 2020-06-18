@@ -8,6 +8,18 @@
 #ifndef _PRIVATE_skeleton_h
 #define _PRIVATE_skeleton_h
 
+#ifndef _di_fake_skeleton_content_
+  #define fake_make_skeleton_content_defines      "# fss-0000\n\n"
+  #define fake_make_skeleton_content_dependencies "# fss-0000\n\n"
+  #define fake_make_skeleton_content_fakefile     "# fss-0005\n\nsettings:\n\nmain:\n\n"
+  #define fake_make_skeleton_content_settings     "# fss-0001\n\n"
+
+  #define fake_make_skeleton_content_defines_length      12
+  #define fake_make_skeleton_content_dependencies_length 12
+  #define fake_make_skeleton_content_fakefile_length     30
+  #define fake_make_skeleton_content_settings_length     12
+#endif // _di_fake_skeleton_content_
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -55,6 +67,8 @@ extern "C" {
  * @param executable
  *   Set to TRUE to make the file executable.
  *   Set to FALSE to not make the file executable.
+ * @param content
+ *   When creating a new file, write the content specified by this string to that file.
  *
  * @return
  *   F_none on success.
@@ -63,7 +77,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_file_create_
-  extern f_return_status fake_skeleton_operate_file_create(const fake_data data, const f_string_dynamic path, const bool executable) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_skeleton_operate_file_create(const fake_data data, const f_string_dynamic path, const bool executable, const f_string_static content) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_skeleton_operate_file_create_
 
 #ifdef __cplusplus

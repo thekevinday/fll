@@ -22,11 +22,32 @@ extern "C" {
 
 // @todo safety checks that ensures operations on files only happen inside the project directory, represented by "top".
 #ifndef _di_fake_make_setting_
+  typedef struct {
+    bool load_build;
+
+    f_string_map_multis define;
+    f_string_map_multis parameter;
+  } fake_make_setting;
+
+  #define fake_make_setting_initialize { \
+    0, \
+    f_string_map_multis_initialize, \
+    f_string_map_multis_initialize, \
+  }
+
+  #define fake_macro_make_setting_delete_simple(setting) \
+    f_macro_string_map_multis_delete_simple(setting.define) \
+    f_macro_string_map_multis_delete_simple(setting.parameter)
+
   #define fake_make_setting_define     "define"     // @todo 'define' means define this as an environment variable on run, only a single argument is supported. (consider a second parameter such as 'if_missing' or 'if_exists' to define this only if it is not already defined.)
   #define fake_make_setting_load_build "load_build" // @todo ("yes"/"no") as in use the build settings file, write code to import that first and match all settings from that into this.
+  #define fake_make_setting_parameter  "parameter"  // @todo see parameters below, first content is parameter name, second content is parameter values.
 
   #define fake_make_setting_define_length     6
   #define fake_make_setting_load_build_length 10
+  #define fake_make_setting_parameter_length  9
+
+  #define fake_make_setting_total_length 3
 #endif // _di_fake_make_setting_
 
 // @todo "operate" should use a call stack, but do not allow recursive calls (check to see if named operation is already on the call stack).
@@ -150,21 +171,106 @@ extern "C" {
   } fake_make_parameter;
 
   #define fake_make_parameter_initialize { \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
-    f_string_dynamics_initialize \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
   }
+
+  #define fake_macro_make_parameter_delete_simple(parameter) \
+    f_macro_string_dynamics_delete_simple(parameter.build) \
+    f_macro_string_dynamics_delete_simple(parameter.dark) \
+    f_macro_string_dynamics_delete_simple(parameter.data) \
+    f_macro_string_dynamics_delete_simple(parameter.define) \
+    f_macro_string_dynamics_delete_simple(parameter.light) \
+    f_macro_string_dynamics_delete_simple(parameter.mode) \
+    f_macro_string_dynamics_delete_simple(parameter.no_color) \
+    f_macro_string_dynamics_delete_simple(parameter.process) \
+    f_macro_string_dynamics_delete_simple(parameter.quiet) \
+    f_macro_string_dynamics_delete_simple(parameter.settings) \
+    f_macro_string_dynamics_delete_simple(parameter.sources) \
+    f_macro_string_dynamics_delete_simple(parameter.verbose) \
+    f_macro_string_dynamics_delete_simple(parameter.work)
 #endif // _di_fake_make_parameter_
+
+#ifndef _di_fake_make_data_
+  typedef struct {
+    fake_build_setting setting_build;
+    fake_make_setting setting_make;
+
+    fake_environment environment;
+    fake_make_parameter parameter;
+
+    f_fss_nameds fakefile;
+    f_string_dynamic buffer;
+    f_string_length main;
+  } fake_make_data;
+
+  #define fake_make_data_initialize { \
+    fake_build_setting_initialize, \
+    fake_make_setting_initialize, \
+    fake_environment_initialize, \
+    fake_make_parameter_initialize, \
+    f_fss_nameds_initialize, \
+    f_string_dynamic_initialize, \
+    0, \
+  }
+
+  #define fake_macro_make_data_delete_simple(data) \
+    fake_macro_build_setting_delete_simple(data.setting_build) \
+    fake_macro_make_setting_delete_simple(data.setting_make) \
+    fake_macro_environment_delete_simple(data.environment) \
+    fake_macro_make_parameter_delete_simple(data.parameter) \
+    f_macro_fss_nameds_delete_simple(data.fakefile) \
+    f_macro_string_dynamic_delete_simple(data.buffer)
+#endif // _di_fake_make_data_
+
+/**
+ * Find the fake file, load it, validate it, and process it.
+ *
+ * This will process any additional files as necessary, such as the build settings file.
+ *
+ * @param data
+ *   The program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ *
+ * @see fake_build_load_setting()
+ */
+#ifndef _di_fake_make_load_setting_
+  extern void fake_make_load_setting(const fake_data data, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_load_setting_
+
+/**
+ * Execute the make operation.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operate_
+  extern f_return_status fake_make_operate(const fake_data data) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_
 
 #ifdef __cplusplus
 } // extern "C"

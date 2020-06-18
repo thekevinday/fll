@@ -12,6 +12,51 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_common_
+  #define fake_common_initial_buffer_max 131072 // 128k max default initial buffer size.
+
+  #define fake_common_setting_bool_yes "yes"
+  #define fake_common_setting_bool_no  "no"
+
+  #define fake_common_setting_bool_yes_length 3
+  #define fake_common_setting_bool_no_length  2
+#endif // _di_fake_common_
+
+#ifndef _di_fake_environment_
+  typedef struct {
+    f_string_dynamics names;
+    f_string_dynamics values;
+  } fake_environment;
+
+  #define fake_environment_initialize { \
+    f_string_dynamics_initialize, \
+    f_string_dynamics_initialize, \
+  }
+
+  #define fake_macro_environment_delete_simple(environment) \
+    f_macro_string_dynamics_delete_simple(environment.names) \
+    f_macro_string_dynamics_delete_simple(environment.values)
+#endif // _di_fake_environment_
+
+/**
+ * Load the contents of a file into the given buffer, handling all potential errors.
+ *
+ * @param data
+ *   The program data.
+ * @param path_file
+ *   The path to the file to load.
+ * @param buffer
+ *   A buffer containing the contents of the file.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_file_buffer_
+  extern f_return_status fake_file_buffer(const fake_data data, const f_string path_file, f_string_dynamic *buffer) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_file_buffer_
+
 /**
  * Generate all appropriate paths based on runtime information.
  *

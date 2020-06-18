@@ -12,22 +12,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fake_build_environment_
-  typedef struct {
-    f_string_dynamics names;
-    f_string_dynamics values;
-  } fake_build_environment;
-
-  #define fake_build_environment_initialize { \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-  }
-
-  #define fake_macro_build_environment_delete_simple(environment) \
-    f_macro_string_dynamics_delete_simple(environment.names) \
-    f_macro_string_dynamics_delete_simple(environment.values)
-#endif // _di_fake_build_environment_
-
 #ifndef _di_fake_build_setting_
   typedef struct {
     uint8_t build_language;
@@ -243,12 +227,6 @@ extern "C" {
 
   #define fake_build_setting_total 41
 
-  #define fake_build_setting_bool_yes "yes"
-  #define fake_build_setting_bool_no  "no"
-
-  #define fake_build_setting_bool_yes_length 3
-  #define fake_build_setting_bool_no_length  2
-
   #define fake_build_setting_default_version "0"
 
   #define fake_build_setting_default_version_length 1
@@ -336,17 +314,17 @@ extern "C" {
 #ifndef _di_fake_build_data_
   typedef struct {
     fake_build_setting setting;
-    fake_build_environment environment;
+    fake_environment environment;
   } fake_build_data;
 
   #define fake_build_data_initialize { \
     fake_build_setting_initialize, \
-    fake_build_environment_initialize, \
+    fake_environment_initialize, \
   }
 
   #define fake_macro_build_data_delete_simple(build) \
     fake_macro_build_setting_delete_simple(build.setting) \
-    fake_macro_build_environment_delete_simple(build.environment)
+    fake_macro_environment_delete_simple(build.environment)
 #endif // _di_fake_build_data_
 
 #ifndef _di_fake_build_parameter_
@@ -625,6 +603,58 @@ extern "C" {
 #endif // _di_fake_build_load_setting_
 
 /**
+ * Assign build setting defaults.
+ *
+ * @param data
+ *   The program data.
+ * @param path_file
+ *   The path to the buffer.
+ * @param buffer
+ *   The loaded file data.
+ * @param setting
+ *   All build related setting data from the build setting file are loaded into this.
+ *   These setting will have any specified mode property applied.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_load_setting_defaults_
+  extern void fake_build_load_setting_defaults(const fake_data data, fake_build_setting *setting, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_load_setting_defaults_
+
+/**
+ * Load and process the setting buffer.
+ *
+ * @param data
+ *   The program data.
+ * @param path_file
+ *   The path to the buffer.
+ * @param buffer
+ *   The loaded file data.
+ * @param objects
+ *   The object mapping.
+ * @param contents
+ *   The content mapping.
+ * @param setting
+ *   All build related setting data from the build setting file are loaded into this.
+ *   These setting will have any specified mode property applied.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_load_setting_process_
+  extern void fake_build_load_setting_process(const fake_data data, const f_string path_file, const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, fake_build_setting *setting, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_build_load_setting_process_
+
+/**
  * Load the environment used when executing commands.
  *
  * @param data
@@ -642,7 +672,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_environment_
-  extern void fake_build_load_environment(const fake_data data, const fake_build_data data_build, fake_build_environment *environment, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_load_environment(const fake_data data, const fake_build_data data_build, fake_environment *environment, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_load_environment_
 
 /**

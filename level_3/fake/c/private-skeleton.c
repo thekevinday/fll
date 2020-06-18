@@ -1,5 +1,6 @@
 #include <level_3/fake.h>
 #include "private-fake.h"
+#include "private-build.h"
 #include "private-print.h"
 #include "private-skeleton.h"
 
@@ -52,29 +53,58 @@ extern "C" {
 
     f_string_dynamic file_data_build_process_post = f_string_dynamic_initialize;
     f_string_dynamic file_data_build_process_pre = f_string_dynamic_initialize;
+    f_string_dynamic content = f_string_dynamic_initialize;
 
-    if (!F_status_is_error(status)) {
-      status = fake_skeleton_operate_file_create(data, data.file_data_build_defines, F_false);
+    if (F_status_is_not_error(status)) {
+      content.string = fake_make_skeleton_content_defines;
+      content.used = fake_make_skeleton_content_defines_length;
+      content.size = content.used;
+
+      status = fake_skeleton_operate_file_create(data, data.file_data_build_defines, F_false, content);
+
+      content.used = 0;
     }
 
-    if (!F_status_is_error(status)) {
-      status = fake_skeleton_operate_file_create(data, data.file_data_build_dependencies, F_false);
+    if (F_status_is_not_error(status)) {
+      content.string = fake_make_skeleton_content_dependencies;
+      content.used = fake_make_skeleton_content_dependencies_length;
+      content.size = content.used;
+
+      status = fake_skeleton_operate_file_create(data, data.file_data_build_dependencies, F_false, content);
+
+      content.used = 0;
     }
 
-    if (!F_status_is_error(status)) {
-      status = fake_skeleton_operate_file_create(data, file_data_build_process_post, F_true);
+    if (F_status_is_not_error(status)) {
+      status = fake_skeleton_operate_file_create(data, file_data_build_process_post, F_true, content);
     }
 
-    if (!F_status_is_error(status)) {
-      status = fake_skeleton_operate_file_create(data, file_data_build_process_pre, F_true);
+    if (F_status_is_not_error(status)) {
+      status = fake_skeleton_operate_file_create(data, file_data_build_process_pre, F_true, content);
     }
 
-    if (!F_status_is_error(status)) {
-      status = fake_skeleton_operate_file_create(data, data.file_data_build_settings, F_false);
+    if (F_status_is_not_error(status)) {
+      content.string = fake_make_skeleton_content_settings;
+      content.used = fake_make_skeleton_content_settings_length;
+      content.size = content.used;
+
+      status = fake_skeleton_operate_file_create(data, data.file_data_build_settings, F_false, content);
+
+      content.used = 0;
     }
 
-    if (!F_status_is_error(status)) {
-      status = fake_skeleton_operate_file_create(data, data.file_documents_readme, F_false);
+    if (F_status_is_not_error(status)) {
+      status = fake_skeleton_operate_file_create(data, data.file_documents_readme, F_false, content);
+    }
+
+    if (F_status_is_not_error(status)) {
+      content.string = fake_make_skeleton_content_fakefile;
+      content.used = fake_make_skeleton_content_fakefile_length;
+      content.size = content.used;
+
+      status = fake_skeleton_operate_file_create(data, data.file_data_build_fakefile, F_false, content);
+
+      content.used = 0;
     }
 
     if (F_status_is_error(status)) {
@@ -143,7 +173,7 @@ extern "C" {
 #endif // _di_fake_skeleton_operate_directory_create_
 
 #ifndef _di_fake_skeleton_operate_file_create_
-  f_return_status fake_skeleton_operate_file_create(const fake_data data, const f_string_dynamic path, const bool executable) {
+  f_return_status fake_skeleton_operate_file_create(const fake_data data, const f_string_dynamic path, const bool executable, const f_string_static content) {
     f_status status = F_none;
 
     if (path.used == 0) return F_none;
@@ -202,6 +232,34 @@ extern "C" {
 
       if (data.verbosity == fake_verbosity_verbose) {
         printf("File '%s' created.%c", path.string, f_string_eol[0]);
+      }
+
+      if (content.used) {
+        f_file file = f_file_initialize;
+
+        file.flag = f_file_flag_append_wo;
+        file.size_write = content.used;
+
+        status = f_file_open(path.string, 0, &file);
+        if (F_status_is_error(status)) {
+          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_file_open", path.string, "pre-populate", F_true, F_true);
+
+          return status;
+        }
+
+        status = f_file_write(file, content, 0);
+        if (F_status_is_error(status)) {
+          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_file_write", path.string, "pre-populate", F_true, F_true);
+
+          f_file_close(&file.id);
+          return status;
+        }
+
+        if (data.verbosity == fake_verbosity_verbose) {
+          printf("File '%s' pre-populated.%c", path.string, f_string_eol[0]);
+        }
+
+        f_file_close(&file.id);
       }
     }
     else if (F_status_is_error(status)) {

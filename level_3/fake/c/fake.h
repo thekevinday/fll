@@ -39,9 +39,6 @@
  * The "progams/" directory will contain compiled programs or program-like scripts in their respective sub-directories.
  * The "settings/" directory contains all configuration data, such as files commonly found under /etc in a standard GNU Linux system.
  * The "stage/" directory will contain build-time data.
- *
- * @todo this will eventually support fakefile, which is akin to makefile.
- *       All of the setting data will be loaded and available for a fakefile.
  */
 #ifndef _fake_h
 
@@ -69,6 +66,7 @@
 // fll-2 includes
 #include <level_2/execute.h>
 #include <level_2/fss.h>
+#include <level_2/fss_basic_list.h>
 #include <level_2/fss_extended.h>
 #include <level_2/program.h>
 
@@ -140,6 +138,7 @@ extern "C" {
 #ifndef _di_fake_file_
   #define fake_file_defines      "defines"
   #define fake_file_dependencies "dependencies"
+  #define fake_file_fakefile     "fakefile"
   #define fake_file_process_post "process_post.sh"
   #define fake_file_process_pre  "process_pre.sh"
   #define fake_file_readme       "readme"
@@ -147,6 +146,7 @@ extern "C" {
 
   #define fake_file_defines_length      7
   #define fake_file_dependencies_length 12
+  #define fake_file_fakefile_length     8
   #define fake_file_process_post_length 15
   #define fake_file_process_pre_length  14
   #define fake_file_readme_length       6
@@ -420,7 +420,9 @@ extern "C" {
 
     f_string_dynamic file_data_build_defines;
     f_string_dynamic file_data_build_dependencies;
+    f_string_dynamic file_data_build_fakefile;
     f_string_dynamic file_data_build_settings;
+
     f_string_dynamic file_documents_readme;
 
     fl_color_context context;
@@ -438,6 +440,7 @@ extern "C" {
       f_string_static_initialize, \
       f_string_dynamics_initialize, \
       f_string_dynamics_initialize, \
+      f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
       f_string_dynamic_initialize, \
