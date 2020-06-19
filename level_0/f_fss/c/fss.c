@@ -4,25 +4,75 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_fss_decrement_buffer_
-  f_return_status f_fss_decrement_buffer(const f_string_static buffer, f_string_range *location, const f_string_length step) {
+#ifndef _di_f_fss_count_lines_
+  f_return_status f_fss_count_lines(const f_string_static buffer, const f_string_length before, f_string_length *line) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used <= 0) return F_status_set_error(F_parameter);
-      if (location->start < 0) return F_status_set_error(F_parameter);
-      if (location->stop < location->start) return F_status_set_error(F_parameter);
-      if (location->start >= buffer.used) return F_status_set_error(F_parameter);
+      if (before >= buffer.used) return F_status_set_error(F_parameter);
+      if (line == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_string_length i = before;
+
+    for (; i > 0; i--) {
+      if (buffer.string[i] == f_string_eol[0]) {
+        (*line)++;
+      }
+    } // for
+
+    if (buffer.string[0] == f_string_eol[0]) {
+      (*line)++;
+    }
+
+    return F_none;
+  }
+#endif // _di_f_fss_count_lines_
+
+#ifndef _di_f_fss_count_lines_range_
+  f_return_status f_fss_count_lines_range(const f_string_static buffer, const f_string_range range, const f_string_length before, f_string_length *line) {
+    #ifndef _di_level_0_parameter_checking_
+      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (range.start > range.stop) return F_status_set_error(F_parameter);
+      if (range.start >= buffer.used) return F_status_set_error(F_parameter);
+      if (before >= buffer.used) return F_status_set_error(F_parameter);
+      if (before > range.stop) return F_status_set_error(F_parameter);
+      if (line == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_string_length i = before;
+
+    for (; i > range.start; i--) {
+      if (buffer.string[i] == f_string_eol[0]) {
+        (*line)++;
+      }
+    } // for
+
+    if (buffer.string[range.start] == f_string_eol[0]) {
+      (*line)++;
+    }
+
+    return F_none;
+  }
+#endif // _di_f_fss_count_lines_range_
+
+#ifndef _di_f_fss_decrement_buffer_
+  f_return_status f_fss_decrement_buffer(const f_string_static buffer, f_string_range *range, const f_string_length step) {
+    #ifndef _di_level_0_parameter_checking_
+      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (range->stop < range->start) return F_status_set_error(F_parameter);
+      if (range->start >= buffer.used) return F_status_set_error(F_parameter);
       if (step < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (location->start < 1) return F_none_eos;
+    if (range->start < 1) return F_none_eos;
 
     f_string_length i = 0;
     unsigned short width = 0;
 
     do {
-      width = f_macro_utf_byte_width(buffer.string[location->start - 1]);
+      width = f_macro_utf_byte_width(buffer.string[range->start - 1]);
 
-      if (width > location->start) {
+      if (width > range->start) {
         if (width > 1) {
           return F_status_set_error(F_incomplete_utf_eos);
         }
@@ -31,7 +81,7 @@ extern "C" {
       }
 
       i++;
-      location->start -= width;
+      range->start -= width;
     } while (i < step);
 
     return F_none;
@@ -39,12 +89,11 @@ extern "C" {
 #endif // _di_f_fss_decrement_buffer_
 
 #ifndef _di_f_fss_increment_buffer_
-  f_return_status f_fss_increment_buffer(const f_string_static buffer, f_string_range *location, const f_string_length step) {
+  f_return_status f_fss_increment_buffer(const f_string_static buffer, f_string_range *range, const f_string_length step) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used <= 0) return F_status_set_error(F_parameter);
-      if (location->start < 0) return F_status_set_error(F_parameter);
-      if (location->stop < location->start) return F_status_set_error(F_parameter);
-      if (location->start >= buffer.used) return F_status_set_error(F_parameter);
+      if (range->stop < range->start) return F_status_set_error(F_parameter);
+      if (range->start >= buffer.used) return F_status_set_error(F_parameter);
       if (step < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -52,27 +101,27 @@ extern "C" {
     unsigned short width = 0;
 
     do {
-      width = f_macro_utf_byte_width(buffer.string[location->start]);
+      width = f_macro_utf_byte_width(buffer.string[range->start]);
 
-      if (location->start + width > location->stop) {
+      if (range->start + width > range->stop) {
         if (width > 1) {
           return F_status_set_error(F_incomplete_utf_stop);
         }
 
-        location->start += width;
+        range->start += width;
         return F_none_stop;
       }
-      else if (location->start + width >= buffer.used) {
+      else if (range->start + width >= buffer.used) {
         if (width > 1) {
           return F_status_set_error(F_incomplete_utf_eos);
         }
 
-        location->start += width;
+        range->start += width;
         return F_none_eos;
       }
 
       i++;
-      location->start += width;
+      range->start += width;
     } while (i < step);
 
     return F_none;
@@ -184,7 +233,6 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used <= 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
-      if (range->start < 0) return F_status_set_error(F_parameter);
       if (range->stop < range->start) return F_status_set_error(F_parameter);
       if (range->start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -293,7 +341,6 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used <= 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
-      if (range->start < 0) return F_status_set_error(F_parameter);
       if (range->stop < range->start) return F_status_set_error(F_parameter);
       if (range->start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

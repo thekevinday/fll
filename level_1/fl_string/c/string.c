@@ -234,7 +234,7 @@ extern "C" {
 
     if (source.used == 0) return F_data_not_eos;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       const f_status status = private_fl_string_append(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -251,7 +251,7 @@ extern "C" {
 
     if (source.used == 0) return F_data_not_eos;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       const f_status status = private_fl_string_append_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -268,7 +268,7 @@ extern "C" {
 
     if (source.used == 0) return F_data_not_eos;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       const f_status status = private_fl_string_prepend(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -285,7 +285,7 @@ extern "C" {
 
     if (source.used == 0) return F_data_not_eos;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       const f_status status = private_fl_string_prepend_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -434,7 +434,7 @@ extern "C" {
     if (source.used == 0) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       f_status status = private_fl_string_append(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -453,7 +453,7 @@ extern "C" {
     if (source.used == 0) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       f_status status = private_fl_string_append_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -472,7 +472,7 @@ extern "C" {
     if (source.used == 0) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       f_status status = private_fl_string_prepend(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -491,7 +491,7 @@ extern "C" {
     if (source.used == 0) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       f_status status = private_fl_string_prepend_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -1031,7 +1031,7 @@ extern "C" {
       if (destination->used > destination->size) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (destination->used > 0 && destination->string[destination->used - 1] == 0) return F_none;
+    if (destination->used && destination->string[destination->used - 1] == 0) return F_none;
 
     if (destination->used + 1 > f_string_length_size) return F_status_set_error(F_string_too_large);
 
@@ -1058,8 +1058,8 @@ extern "C" {
       if (destination->used > destination->size) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (destination->used > 0) {
-      for (; destination->used > 0; destination->used--) {
+    if (destination->used) {
+      for (; destination->used; destination->used--) {
         if (destination->string[destination->used - 1] == 0) continue;
         break;
       } // for
@@ -1091,7 +1091,7 @@ extern "C" {
 
     if (length == 0) return F_data_not_eos;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       f_status status = private_fl_string_append(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -1108,7 +1108,7 @@ extern "C" {
 
     if (length == 0) return F_data_not_eos;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       f_status status = private_fl_string_append_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -1125,7 +1125,7 @@ extern "C" {
 
     if (length == 0) return F_data_not_eos;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       f_status status = private_fl_string_prepend(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
@@ -1142,7 +1142,7 @@ extern "C" {
 
     if (length == 0) return F_data_not_eos;
 
-    if (glue_length > 0 && destination->used > 0) {
+    if (glue_length && destination->used) {
       f_status status = private_fl_string_prepend_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }

@@ -31,6 +31,52 @@ extern "C" {
 #endif
 
 /**
+ * Count the number of new lines from the buffer before the given location.
+ *
+ * Use this to calculate where a given range exists in relation to a line.
+ *
+ * This does not initialize line, instead it only performs addition to line.
+ *
+ * @param buffer
+ *   The string to process.
+ * @param before
+ *   The position in the buffer where to start counting before.
+ * @param line
+ *   The total lines found leading up to but not including before.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_count_lines_
+  extern f_return_status f_fss_count_lines(const f_string_static buffer, const f_string_length before, f_string_length *line);
+#endif // _di_f_fss_count_lines_
+
+/**
+ * Count the number of new lines from the given range in the buffer before the given location.
+ *
+ * Use this to calculate where a given range exists in relation to a line.
+ *
+ * This does not initialize line, instead it only performs addition to line.
+ *
+ * @param buffer
+ *   The string to process.
+ * @param range
+ *   The range within the buffer to process.
+ * @param before
+ *   The position in the buffer where to start counting before.
+ * @param line
+ *   The total lines found leading up to but not including before.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_count_lines_range_
+  extern f_return_status f_fss_count_lines_range(const f_string_static buffer, const f_string_range range, const f_string_length before, f_string_length *line);
+#endif // _di_f_fss_count_lines_range_
+
+/**
  * Continue to the previous character, based on step and character width.
  *
  * The start position must be at the start of a valid UTF-8 block.
