@@ -178,6 +178,7 @@ extern "C" {
       F_process_too_many,
       F_prohibited,
       F_read_only,
+      F_recurse,
       F_search,
       F_space_not,
       F_stop,

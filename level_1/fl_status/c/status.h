@@ -197,6 +197,7 @@ extern "C" {
     #define FL_status_string_process_too_many "F_process_too_many"
     #define FL_status_string_prohibited       "F_prohibited"
     #define FL_status_string_read_only        "F_read_only"
+    #define FL_status_string_recurse          "F_recurse"
     #define FL_status_string_search           "F_search"
     #define FL_status_string_space_not        "F_space_not"
     #define FL_status_string_stop             "F_stop"
@@ -244,6 +245,7 @@ extern "C" {
     #define FL_status_string_process_too_many_length 18
     #define FL_status_string_prohibited_length       12
     #define FL_status_string_read_only_length        11
+    #define FL_status_string_recurse_length          7
     #define FL_status_string_search_length           8
     #define FL_status_string_space_not_length        11
     #define FL_status_string_stop_length             6

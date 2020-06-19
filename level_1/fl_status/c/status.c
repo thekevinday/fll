@@ -320,6 +320,9 @@ extern "C" {
         case F_read_only:
           *string = FL_status_string_read_only;
           break;
+        case F_recurse:
+          *string = FL_status_string_recurse;
+          break;
         case F_search:
           *string = FL_status_string_search;
           break;

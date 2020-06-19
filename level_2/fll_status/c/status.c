@@ -536,6 +536,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_recurse, length, FL_status_string_recurse_length) == F_equal_to) {
+        *code = F_recurse;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_search, length, FL_status_string_search_length) == F_equal_to) {
         *code = F_search;
         return F_none;
