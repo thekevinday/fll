@@ -44,6 +44,118 @@ extern "C" {
   }
 #endif // _di_fake_print_error_
 
+#ifndef _di_fake_print_error_fakefile_section_
+  bool fake_print_error_fakefile_section(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const bool fallback) {
+
+    if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
+      fprintf(f_type_error, "%c", f_string_eol[0]);
+      fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
+      fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+      fl_color_print(f_type_error, context.error, context.reset, ") occurred while calling ");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
+      fl_color_print(f_type_error, context.error, context.reset, "() for section '");
+
+      fl_color_print_code(f_type_error, context.notable);
+      f_print_string_dynamic_partial(f_type_error, buffer, section_name);
+      fl_color_print_code(f_type_error, context.reset);
+
+      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+    }
+
+    return F_true;
+  }
+#endif // _di_fake_print_error_fakefile_section_
+
+#ifndef _di_fake_print_error_fakefile_section_line_
+  bool fake_print_error_fakefile_section_line(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const bool fallback) {
+
+    f_string_length line = 0;
+
+    f_fss_count_lines(buffer, operation_name.start, &line);
+
+    if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
+      fprintf(f_type_error, "%c", f_string_eol[0]);
+      fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
+      fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+      fl_color_print(f_type_error, context.error, context.reset, ") occurred while calling ");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
+      fl_color_print(f_type_error, context.error, context.reset, "() for section '");
+
+      fl_color_print_code(f_type_error, context.notable);
+      f_print_string_dynamic_partial(f_type_error, buffer, section_name);
+      fl_color_print_code(f_type_error, context.reset);
+
+      fl_color_print(f_type_error, context.error, context.reset, " on line ");
+      fl_color_print(f_type_error, context.notable, context.reset, "%llu", line);
+      fl_color_print(f_type_error, context.error, context.reset, ", operation '");
+
+      fl_color_print_code(f_type_error, context.notable);
+      f_print_string_dynamic_partial(f_type_error, buffer, operation_name);
+      fl_color_print_code(f_type_error, context.reset);
+
+      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+    }
+
+    return F_true;
+  }
+#endif // _di_fake_print_error_fakefile_section_line_
+
+#ifndef _di_fake_print_error_fakefile_section_operation_stack_max_
+  void fake_print_error_fakefile_section_operation_stack_max(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_array_length stack_max) {
+    if (verbosity == fake_verbosity_quiet) return;
+
+    f_string_length line = 0;
+
+    f_fss_count_lines(buffer, operation_name.start, &line);
+
+    fprintf(f_type_error, "%c", f_string_eol[0]);
+    fl_color_print(f_type_error, context.error, context.reset, "ERROR: The section operation '");
+
+    fl_color_print_code(f_type_error, context.notable);
+    f_print_string_dynamic_partial(f_type_error, buffer, operation_name);
+    fl_color_print_code(f_type_error, context.reset);
+
+    fl_color_print(f_type_error, context.error, context.reset, "' from section '");
+
+    fl_color_print_code(f_type_error, context.notable);
+    f_print_string_dynamic_partial(f_type_error, buffer, section_name);
+    fl_color_print_code(f_type_error, context.reset);
+
+    fl_color_print(f_type_error, context.error, context.reset, "' on line ");
+    fl_color_print(f_type_error, context.notable, context.reset, "%llu", line);
+    fl_color_print(f_type_error, context.error, context.reset, " cannot be processed because the max stack depth of ");
+    fl_color_print(f_type_error, context.notable, context.reset, "%llu", stack_max);
+    fl_color_print_line(f_type_error, context.error, context.reset, " has been reached.");
+  }
+#endif // _di_fake_print_error_fakefile_section_operation_stack_max_
+
+#ifndef _di_fake_print_error_fakefile_section_operation_unknown_
+  void fake_print_error_fakefile_section_operation_unknown(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) {
+    if (verbosity == fake_verbosity_quiet) return;
+
+    f_string_length line = 0;
+
+    f_fss_count_lines(buffer, operation_name.start, &line);
+
+    fprintf(f_type_error, "%c", f_string_eol[0]);
+    fl_color_print(f_type_error, context.error, context.reset, "ERROR: The section operation '");
+
+    fl_color_print_code(f_type_error, context.notable);
+    f_print_string_dynamic_partial(f_type_error, buffer, operation_name);
+    fl_color_print_code(f_type_error, context.reset);
+
+    fl_color_print(f_type_error, context.error, context.reset, "' from section '");
+
+    fl_color_print_code(f_type_error, context.notable);
+    f_print_string_dynamic_partial(f_type_error, buffer, section_name);
+    fl_color_print_code(f_type_error, context.reset);
+
+    fl_color_print(f_type_error, context.error, context.reset, "' on line ");
+    fl_color_print(f_type_error, context.notable, context.reset, "%llu", line);
+    fl_color_print_line(f_type_error, context.error, context.reset, " is not a known operation name.");
+  }
+#endif // _di_fake_print_error_fakefile_section_operation_unknown_
+
 #ifndef _di_fake_print_error_fakefile_settings_content_invalid_
   void fake_print_error_fakefile_settings_content_invalid(const fl_color_context context, const uint8_t verbosity, const f_string path_file, const f_string_dynamic buffer, const f_string_range range_object, const f_string_range range_content, const f_string settings_name) {
     if (verbosity != fake_verbosity_verbose) return;

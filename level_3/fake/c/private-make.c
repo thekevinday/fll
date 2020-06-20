@@ -89,6 +89,7 @@ extern "C" {
             }
 
             missing_settings = F_false;
+            continue;
           }
           else if (fl_string_dynamic_partial_compare(name_main, data_make->buffer, name_main_range, list_objects.array[i]) == F_equal_to) {
             if (!missing_main) {
@@ -97,8 +98,25 @@ extern "C" {
             }
 
             missing_main = F_false;
-            data_make->main = i;
+            data_make->main = data_make->fakefile.used;
           }
+
+          data_make->fakefile.array[data_make->fakefile.used].name = list_objects.array[i];
+
+          content_range.start = list_contents.array[i].array[0].start;
+          content_range.stop = list_contents.array[i].array[0].stop;
+
+          *status = fll_fss_extended_read(&data_make->buffer, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents);
+          if (F_status_is_error(*status)) {
+            fake_print_error_fss(data.context, data.verbosity, *status, "fll_fss_extended_read", data.file_data_build_fakefile.string, content_range, F_true);
+
+            f_macro_fss_set_delete_simple(settings);
+            f_macro_fss_objects_delete_simple(list_objects);
+            f_macro_fss_contents_delete_simple(list_contents);
+            return;
+          }
+
+          data_make->fakefile.used++;
         } // for
       }
 
@@ -183,14 +201,10 @@ extern "C" {
         if (F_status_is_error(*status)) {
           fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_fss_snatch_map_mash_apart", F_true);
 
-          //@todo fake_print_error_fss(data.context, data.verbosity, *status, "fll_fss_snatch_map", data.file_data_build_fakefile.string, content_range, F_true);
-
           f_macro_fss_set_delete_simple(settings);
           return;
         }
       }
-
-      // @todo load any defaults for unassigned values.
 
       f_macro_fss_set_delete_simple(settings);
     }
@@ -207,19 +221,206 @@ extern "C" {
     f_status status = F_none;
     f_mode mode = f_mode_initialize;
 
+    f_string_lengths list_stack = f_string_lengths_initialize;
     fake_make_data data_make = fake_make_data_initialize;
 
     f_macro_mode_set_default_umask(mode, data.umask);
 
     fake_make_load_setting(data, &data_make, &status);
 
-    // @todo
+    fake_make_operate_section(data, data_make, data_make.main, &list_stack, &status);
 
+    f_macro_string_lengths_delete_simple(list_stack);
     fake_macro_make_data_delete_simple(data_make);
 
     return status;
   }
 #endif // _di_fake_make_operate_
+
+#ifndef _di_fake_make_operation_expand_
+  void fake_make_operation_expand(const fake_data data, const fake_make_data data_make, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_fss_content content, f_string_dynamics *arguments, f_status *status) {
+    if (F_status_is_error(*status)) return;
+
+    if (data.verbosity == fake_verbosity_verbose) {
+      fl_color_print(f_type_output, data.context.standout, data.context.reset, "Expanding content values for section operation '");
+
+      fl_color_print_code(f_type_output, data.context.notable);
+      f_print_string_dynamic(f_type_output, operation_name);
+      fl_color_print_code(f_type_output, data.context.reset);
+
+      fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "'.");
+    }
+  }
+#endif // _di_fake_make_operation_expand_
+
+#ifndef _di_fake_make_operate_section_
+  void fake_make_operate_section(const fake_data data, const fake_make_data data_make, const f_array_length section_id, f_string_lengths *section_stack, f_status *status) {
+    if (F_status_is_error(*status)) return;
+
+    if (section_id > data_make.fakefile.used) {
+      *status = F_status_set_error(F_parameter);
+
+      fake_print_error(data.context, data.verbosity, F_parameter, "fake_make_operate_section", F_true);
+      return;
+    }
+
+    const f_fss_named *section = &data_make.fakefile.array[section_id];
+
+    if (data.verbosity != fake_verbosity_quiet) {
+      printf("%c", f_string_eol[0]);
+
+      fl_color_print(f_type_output, data.color_section_set, data.color_section_reset, "Processing Section '");
+
+      fl_color_print_code(f_type_output, data.context.notable);
+      f_print_string_dynamic_partial(f_type_output, data_make.buffer, section->name);
+      fl_color_print_code(f_type_output, data.context.reset);
+
+      fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "'.");
+    }
+
+    const f_string_static operations_name[] = {
+      f_macro_string_static_initialize(fake_make_operation_archive, fake_make_operation_archive_length),
+      f_macro_string_static_initialize(fake_make_operation_build, fake_make_operation_build_length),
+      f_macro_string_static_initialize(fake_make_operation_clean, fake_make_operation_clean_length),
+      f_macro_string_static_initialize(fake_make_operation_compile, fake_make_operation_compile_length),
+      f_macro_string_static_initialize(fake_make_operation_create, fake_make_operation_create_length),
+      f_macro_string_static_initialize(fake_make_operation_delete, fake_make_operation_delete_length),
+      f_macro_string_static_initialize(fake_make_operation_else, fake_make_operation_else_length),
+      f_macro_string_static_initialize(fake_make_operation_fail, fake_make_operation_fail_length),
+      f_macro_string_static_initialize(fake_make_operation_group, fake_make_operation_group_length),
+      f_macro_string_static_initialize(fake_make_operation_if, fake_make_operation_if_length),
+      f_macro_string_static_initialize(fake_make_operation_link, fake_make_operation_link_length),
+      f_macro_string_static_initialize(fake_make_operation_mode, fake_make_operation_mode_length),
+      f_macro_string_static_initialize(fake_make_operation_operate, fake_make_operation_operate_length),
+      f_macro_string_static_initialize(fake_make_operation_owner, fake_make_operation_owner_length),
+      f_macro_string_static_initialize(fake_make_operation_pop, fake_make_operation_pop_length),
+      f_macro_string_static_initialize(fake_make_operation_print, fake_make_operation_print_length),
+      f_macro_string_static_initialize(fake_make_operation_run, fake_make_operation_run_length),
+      f_macro_string_static_initialize(fake_make_operation_shell, fake_make_operation_shell_length),
+      f_macro_string_static_initialize(fake_make_operation_skeleton, fake_make_operation_skeleton_length),
+      f_macro_string_static_initialize(fake_make_operation_to, fake_make_operation_to_length),
+      f_macro_string_static_initialize(fake_make_operation_top, fake_make_operation_top_length),
+      f_macro_string_static_initialize(fake_make_operation_touch, fake_make_operation_touch_length),
+    };
+
+    const f_string_range operations_range[] = {
+      f_macro_string_range_initialize(fake_make_operation_archive_length),
+      f_macro_string_range_initialize(fake_make_operation_build_length),
+      f_macro_string_range_initialize(fake_make_operation_clean_length),
+      f_macro_string_range_initialize(fake_make_operation_compile_length),
+      f_macro_string_range_initialize(fake_make_operation_create_length),
+      f_macro_string_range_initialize(fake_make_operation_delete_length),
+      f_macro_string_range_initialize(fake_make_operation_else_length),
+      f_macro_string_range_initialize(fake_make_operation_fail_length),
+      f_macro_string_range_initialize(fake_make_operation_group_length),
+      f_macro_string_range_initialize(fake_make_operation_if_length),
+      f_macro_string_range_initialize(fake_make_operation_link_length),
+      f_macro_string_range_initialize(fake_make_operation_mode_length),
+      f_macro_string_range_initialize(fake_make_operation_operate_length),
+      f_macro_string_range_initialize(fake_make_operation_owner_length),
+      f_macro_string_range_initialize(fake_make_operation_pop_length),
+      f_macro_string_range_initialize(fake_make_operation_print_length),
+      f_macro_string_range_initialize(fake_make_operation_run_length),
+      f_macro_string_range_initialize(fake_make_operation_shell_length),
+      f_macro_string_range_initialize(fake_make_operation_skeleton_length),
+      f_macro_string_range_initialize(fake_make_operation_to_length),
+      f_macro_string_range_initialize(fake_make_operation_top_length),
+      f_macro_string_range_initialize(fake_make_operation_touch_length),
+    };
+
+    const f_array_length operations_type[] = {
+      fake_make_operation_type_archive ,
+      fake_make_operation_type_build,
+      fake_make_operation_type_clean,
+      fake_make_operation_type_compile,
+      fake_make_operation_type_create,
+      fake_make_operation_type_delete,
+      fake_make_operation_type_else,
+      fake_make_operation_type_fail,
+      fake_make_operation_type_group,
+      fake_make_operation_type_if,
+      fake_make_operation_type_link,
+      fake_make_operation_type_mode,
+      fake_make_operation_type_operate,
+      fake_make_operation_type_owner,
+      fake_make_operation_type_pop,
+      fake_make_operation_type_print,
+      fake_make_operation_type_run,
+      fake_make_operation_type_shell,
+      fake_make_operation_type_skeleton,
+      fake_make_operation_type_to,
+      fake_make_operation_type_top,
+      fake_make_operation_type_touch,
+    };
+
+    f_array_length operation = 0;
+    f_array_length operations[section->objects.used];
+
+    const f_string_static *operation_name = 0;
+
+    f_string_dynamics arguments[section->objects.used];
+
+    f_array_length i = 0;
+    f_array_length j = 0;
+
+    memset(operations, 0, sizeof(f_array_length) * section->objects.used);
+    memset(arguments, 0, sizeof(f_string_dynamics) * section->objects.used);
+
+    // pre-process the list to identify invalid commands so that nothing is processed if any operation is invalid.
+    for (; i < section->objects.used; i++) {
+      operation = 0;
+      operation_name = 0;
+
+      for (j = 0; j < fake_make_operation_total; j++) {
+        if (fl_string_dynamic_partial_compare(operations_name[j], data_make.buffer, operations_range[j], section->objects.array[i]) == F_equal_to) {
+          operation = operations_type[j];
+          operation_name = &operations_name[j];
+          break;
+        }
+      } // for
+
+      if (operation == 0) {
+        fake_print_error_fakefile_section_operation_unknown(data.context, data.verbosity, data_make.buffer, section->name, section->objects.array[i]);
+
+        *status = F_status_set_error(F_invalid);
+      }
+      else if (operation == fake_make_operation_type_operate) {
+        if (section_stack->used + 1 > fake_make_section_stack_max) {
+          fake_print_error_fakefile_section_operation_stack_max(data.context, data.verbosity, data_make.buffer, section->name, section->objects.array[i], fake_make_section_stack_max);
+
+          *status = F_status_set_error(F_recurse);
+        }
+      }
+
+      // find and report all unknown operations before exiting.
+      if (F_status_is_error(*status)) continue;
+
+      operations[i] = operation;
+
+      fake_make_operation_expand(data, data_make, section->name, operation, *operation_name, section->contents.array[i], &arguments[i], status);
+
+      //fake_make_operation_validate();
+    } // for
+
+    if (F_status_is_error(*status)) {
+      for (i = 0; i < section->objects.used; i++) {
+        f_macro_string_dynamics_delete_simple(arguments[i]);
+      } // for
+
+      return;
+    }
+
+    for (; i < section->objects.used; i++) {
+      // 3: expand the operation content into dynamic strings.
+      // 4: process any variables and then re-validate any operations with replacements.
+      // 5: perform the operation.
+    } // for
+
+    for (i = 0; i < section->objects.used; i++) {
+      f_macro_string_dynamics_delete_simple(arguments[i]);
+    } // for
+  }
+#endif // _di_fake_make_operate_section_
 
 #ifdef __cplusplus
 } // extern "C"

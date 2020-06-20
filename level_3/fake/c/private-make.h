@@ -18,6 +18,8 @@ extern "C" {
 
   #define fake_make_section_main_length     4
   #define fake_make_section_settings_length 8
+
+  #define fake_make_section_stack_max 8192 // maximum stack call depth.
 #endif // _di_fake_make_section_
 
 // @todo safety checks that ensures operations on files only happen inside the project directory, represented by "top".
@@ -47,7 +49,7 @@ extern "C" {
   #define fake_make_setting_load_build_length 10
   #define fake_make_setting_parameter_length  9
 
-  #define fake_make_setting_total_length 3
+  #define fake_make_setting_total 3
 #endif // _di_fake_make_setting_
 
 // @todo "operate" should use a call stack, but do not allow recursive calls (check to see if named operation is already on the call stack).
@@ -99,7 +101,7 @@ extern "C" {
   #define fake_make_operation_touch_length    5
 
   enum {
-    fake_make_operation_type_archive,
+    fake_make_operation_type_archive = 1,
     fake_make_operation_type_build,
     fake_make_operation_type_clean,
     fake_make_operation_type_compile,
@@ -122,6 +124,8 @@ extern "C" {
     fake_make_operation_type_top,
     fake_make_operation_type_touch,
   };
+
+  #define fake_make_operation_total 22
 #endif // _di_fake_make_operation_
 
 // @todo each one of these should be made available to be passed to the program as "$parameter_define[X]" for multi-value (define) or "$parameter_no_color" for single-value (no_color).
@@ -212,7 +216,7 @@ extern "C" {
 
     f_fss_nameds fakefile;
     f_string_dynamic buffer;
-    f_string_length main;
+    f_array_length main;
   } fake_make_data;
 
   #define fake_make_data_initialize { \
@@ -271,6 +275,45 @@ extern "C" {
 #ifndef _di_fake_make_operate_
   extern f_return_status fake_make_operate(const fake_data data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_
+
+/**
+ * Execute the make operation.
+ *
+ * @param data
+ *   The program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param section_id
+ *   The array location id within the fakefile of the section to operate on.
+ * @param status
+ *   The return status.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operation_expand_
+  extern void fake_make_operation_expand(const fake_data data, const fake_make_data data_make, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_fss_content content, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operation_expand_
+
+/**
+ * Process a make operation section.
+ *
+ * @param data
+ *   The program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param section_id
+ *   The array location id within the fakefile of the section to operate on.
+ * @param section_stack
+ *   The current operation stack.
+ * @param status
+ *   The return status.
+ *
+ *   F_invalid (with error bit set) is returned if any part of the section is invalid, such as an invalid operation name.
+ *   F_recurse (with error bit set) is returned if unable to recurse to another operation section (usually max stack depth reached).
+ */
+#ifndef _di_fake_make_operate_section_
+  void fake_make_operate_section(const fake_data data, const fake_make_data data_make, const f_array_length section_id, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_section_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -311,7 +311,7 @@ extern "C" {
 
           /*if (data->verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the operation '");
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The operation '");
             fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", fake_other_operation_make);
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' is not yet implemented.");
           }*/
@@ -323,7 +323,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           if (data->verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the operation '");
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The operation '");
             fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", operations_name[i]);
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' failed.");
           }

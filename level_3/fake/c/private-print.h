@@ -35,6 +35,98 @@ extern "C" {
 #endif // _di_fake_print_error_
 
 /**
+ * Print error messages when processing some fakefile section.
+ *
+ * @param context
+ *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
+ * @param status
+ *   The status code representing an error.
+ * @param function
+ *   The name of the function where the error happened.
+ * @param buffer
+ *   The buffer containing the fakefile data.
+ * @param section_name
+ *   The range within the buffer representing the section name.
+ * @param fallback
+ *   Set to F_true to print the fallback error message for unknown errors.
+ *
+ * @return
+ *   F_none is returned on successful print of known errors.
+ *   F_unknown is returned if the status code has no print message.
+ */
+#ifndef _di_fake_print_error_fakefile_section_
+  extern bool fake_print_error_fakefile_section(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const bool fallback) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_print_error_fakefile_section_
+
+/**
+ * Print error messages when processing some fakefile section, for a specific line and operation.
+ *
+ * @param context
+ *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
+ * @param status
+ *   The status code representing an error.
+ * @param function
+ *   The name of the function where the error happened.
+ * @param buffer
+ *   The buffer containing the fakefile data.
+ * @param section_name
+ *   The range within the buffer representing the section name.
+ * @param operation_name
+ *   The range within the buffer representing the operation name within the section.
+ * @param fallback
+ *   Set to F_true to print the fallback error message for unknown errors.
+ *
+ * @return
+ *   F_none is returned on successful print of known errors.
+ *   F_unknown is returned if the status code has no print message.
+ */
+#ifndef _di_fake_print_error_fakefile_section_line_
+  extern bool fake_print_error_fakefile_section_line(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const bool fallback) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_print_error_fakefile_section_line_
+
+/**
+ * Print error messages when processing some fakefile section, for a specific line and operation, and that the max stack depth is reached.
+ *
+ * @param context
+ *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
+ * @param buffer
+ *   The buffer containing the fakefile data.
+ * @param section_name
+ *   The range within the buffer representing the section name.
+ * @param operation_name
+ *   The range within the buffer representing the operation name within the section.
+ * @param stack_max
+ *   The max stack depth.
+ */
+#ifndef _di_fake_print_error_fakefile_section_operation_stack_max_
+  extern void fake_print_error_fakefile_section_operation_stack_max(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_array_length stack_max) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_print_error_fakefile_section_operation_stack_max_
+
+/**
+ * Print error messages when processing some fakefile section, for a specific line and operation, and that operation is invalid.
+ *
+ * @param context
+ *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
+ * @param buffer
+ *   The buffer containing the fakefile data.
+ * @param section_name
+ *   The range within the buffer representing the section name.
+ * @param operation_name
+ *   The range within the buffer representing the operation name within the section.
+ */
+#ifndef _di_fake_print_error_fakefile_section_operation_unknown_
+  extern void fake_print_error_fakefile_section_operation_unknown(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_print_error_fakefile_section_operation_unknown_
+
+/**
  * Print error message when fake settings content is invalid.
  *
  * @param context

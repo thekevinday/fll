@@ -506,7 +506,7 @@ extern "C" {
         if (data->parameters[parameters_id[i]].total > 1) {
           if (data->verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the operation '");
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The operation '");
             fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", parameters_name[i]);
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' specified too many times.");
           }
