@@ -15,15 +15,17 @@ Featureless Settings Specifications:
   - Object: considered the name or identifier of some particular data.
   - Content: the data associated with a given Object; all Content must have an associated Object.
 
-  Objects can include any characters allowed by the specifications.
-  Contents should allow any data and the specification has to allow it in some way.
-  The specification may chose, however, how a given Content is represented and parse.
+  Objects and Contents can include any characters allowed by the specifications.
+  The specification may choose, however, how a given Content is represented and parsed.
   For example, in FSS-0000 (Basic), Content is treated as a single item whereas in FSS-0001 (Extended), Content is broken apart in multiple sub parts.
 
+  In all cases, specifications that separate Objects from Contents using whitespace (not newlines), the first whitespace separating the Object and Content must not be consided part of the Object nor part of the Content.
+  All spaces after that may be part of the Content as allowed by the given specification.
+
   Unless explicitly defined by the specification, all specifications are newline sensitive ('\n' only).
-  Newline characters are only '\n' and are never anything else (\r is not considered newline in any manner).
+  Newline characters are only '\n' and are never anything else ('\r' is not considered newline in any manner).
   Whitespaces characters that are printable, such as tabs and spaces must be considered the same type.
-  Non-printing whitespaces characters are ignored or are treated as placeholders for processing.
+  Non-printing whitespaces characters (zero-width characters) are ignored or are treated as placeholders for processing.
   In terms of processing, it is recommended that the NULL character is not considered the end of a string, but this is only a suggestion.
 
   Unless explicitly defined, newlines designate the start of a potential new Object or the potential end of some Content.
@@ -33,7 +35,7 @@ Featureless Settings Specifications:
   Unless explicitly defined, whitespace immediately both before and after an object is not considered part of an object.
   This simplifies identifying the object, use quoted objects to support whitespace before/after an object.
 
-  Unless explicitly defined, quotes may only be either a single quote or a double quote and only a backslash may be used as a delimiter.
+  Unless explicitly defined, quotes may only be either a single quote (') or a double quote (") and only a backslash '\' may be used as a delimiter.
 
   Unless explicitly defined by the specification, character/data delimits are performed only when required and not unilaterally.
   In the case of Objects, delimits would only apply when that object could be potentially identified as an object when it otherwise should not.
@@ -46,19 +48,28 @@ Featureless Settings Specifications:
     "Object 1" "This is a single quoted Content." \"Additional unquoted Content\"
     Object_2 This is multiple\" Contents and the trailing quote does not need to be delimited.
 
+  Unless explicitly defined, delimits may be delimited by the delimit character (a backslash '\').
+  For example, FSS-0000 (Basic):
+    \"Object 1" has content starting at the '1', with an Object named '"Object'.
+    \\"Object 1" has content starting at the '1', with an Object named '\"Object'.
+    "Object 1\" is an unterminated object due to the escaped closing quote.
+    "Object 1\\" has content starting at the 'has', with an Object named "Object 1\".
+
   All specifications are expected to support or be of the character encoding UTF-8; however, there is no imposed restriction on supporting or using any other encoding.
   Those encodings must only support the appropriate characters required by a given standard for differentiating Objects, Contents, and delimits.
 
-  Unless explicitly defined, comments are designated by the pound symbol '#' but only if only whitespace is to the left of the pound.
+  Unless explicitly defined, comments are designated by the pound symbol '#' but only if only whitespace is to the left of the pound or the pound '#' is at the start of the line.
   There is no support for inline comments.
+  Unless explicitly defined, the start comment may be delimited by '\' in the same manner as Objects and Contents are.
+  This delimit only applies to the start of a comment (the pound '#' character) as there is no terminating character for a comment (other than a newline '\n').
 
-  Unless explicitly defined, all designation characters must be in ASCII.
-  With designation characters being any character code used to designate how to read a file (such as a colon ':' at the end of a basic list).
-  This keeps the processing and logic simple, for UTF-8.
-  Whitespace used for designation characters must include support UTF-8 whitespace characters, unless explicitly designate not to.
-  Control characters used for designation characters must include support UTF-8 control character support, unless explicitly designate not to.
+  Unless explicitly defined, all designation characters must represent ASCII codes.
+  With designation characters being any character code used to designate how to identify an Object or Content (such as a colon ':' at the end of a basic list).
+  This keeps the processing and logic simple, for both UTF-8 and ASCII.
+  Whitespace used for designation characters must include support for UTF-8 whitespace characters, unless explicitly designated not to by a standard.
+  Control characters used for designation characters must include support UTF-8 control character support, unless explicitly designated not to by a standard.
 
-  The UTF-8 BOM is not allowed as a "BOM", instead it must always be treated as the character represented by its code (unless explicitly allowed).
+  The UTF-8 BOM is not allowed as a Byte Order Mark; instead, it must always be treated as the character represented by its code (unless explicitly allowed by a standard).
 
   The follow specifications are defined in this project.
   Each of these specifications has a common name associated with the specification number.
