@@ -85,7 +85,6 @@ extern "C" {
           return status;
         }
 
-        // @fixme: count each slash.
         while (range->start <= range->stop && range->start < buffer->used) {
           if (buffer->string[range->start] == f_fss_delimit_placeholder) {
             status = f_fss_increment_buffer(*buffer, range, 1);
@@ -140,7 +139,6 @@ extern "C" {
         fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop)
 
         if (buffer->string[range->start] == f_fss_delimit_single_quote || buffer->string[range->start] == f_fss_delimit_double_quote) {
-          // @fixme: use slash count to determine if a slash needs to be delimited and if this quote is escaped or not.
           if (delimits.used >= delimits.size) {
             f_macro_string_lengths_resize(status, delimits, delimits.size + f_fss_default_allocation_step);
 

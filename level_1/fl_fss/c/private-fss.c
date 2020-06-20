@@ -176,7 +176,6 @@ extern "C" {
     // identify where the object begins.
     if (buffer->string[range->start] == f_fss_delimit_slash) {
       f_string_length first_slash = range->start;
-      f_string_length slash_count = 1;
 
       found->start = range->start;
 
@@ -217,8 +216,6 @@ extern "C" {
           break;
         }
 
-        slash_count++;
-
         status = f_fss_increment_buffer(*buffer, range, 1);
         if (F_status_is_error(status)) {
           return status;
@@ -228,40 +225,16 @@ extern "C" {
       fl_macro_fss_object_delimited_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop);
 
       if (buffer->string[range->start] == f_fss_delimit_single_quote || buffer->string[range->start] == f_fss_delimit_double_quote) {
-        f_string_length location_last = range->start;
 
-        quoted = buffer->string[range->start];
-
-        range->start = first_slash;
-
-        // when slash count is odd, then the quote is escaped.
-        if (slash_count % 2 != 0) {
-          quoted = 0;
-        }
-
-        if (delimits.used + (slash_count / 2) >= delimits.size) {
-          f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
+        // only the first slash before a quote needs to be escaped (or not) as once there is a slash before a quote, this cannot ever be a quoted object.
+        // this simplifies the number of slashes needed.
+        if (delimits.used + 1 > delimits.size) {
+          f_macro_string_lengths_resize(status, delimits, delimits.size + 1);
           if (F_status_is_error(status)) return status;
         }
 
-        while (slash_count > 0) {
-          if (buffer->string[range->start] == f_fss_delimit_slash) {
-            if (slash_count % 2 == 1) {
-              delimits.array[delimits.used] = range->start;
-              delimits.used++;
-            }
-
-            slash_count--;
-          }
-
-          status = f_fss_increment_buffer(*buffer, range, 1);
-          if (F_status_is_error(status)) {
-            f_macro_string_lengths_delete_simple(delimits);
-            return status;
-          }
-        } // while
-
-        range->start = location_last;
+        delimits.array[delimits.used] = first_slash;
+        delimits.used++;
 
         status = f_fss_increment_buffer(*buffer, range, 1);
         if (F_status_is_error(status)) {
@@ -279,7 +252,7 @@ extern "C" {
       found->start = range->start;
     }
 
-    // identify where the object ends
+    // identify where the object ends.
     if (quoted == 0) {
       status = F_none;
 
