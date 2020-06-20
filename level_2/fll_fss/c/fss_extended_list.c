@@ -5,19 +5,21 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_extended_list_read_
-  f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_range *location, f_fss_nest *nest) {
+  f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_range *range, f_fss_nest *nest) {
     #ifndef _di_level_3_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
-      if (location == 0) return F_status_set_error(F_parameter);
+      if (range == 0) return F_status_set_error(F_parameter);
       if (nest == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_3_parameter_checking_
 
     f_status status = F_none;
+    f_status status2 = F_none;
     f_string_length initial_used = 0;
     bool found_data = F_false;
 
     if (nest->used == 0) {
-      f_macro_fss_nest_resize(status, (*nest), f_fss_default_allocation_step);
+      f_macro_fss_nest_resize(status2, (*nest), f_fss_default_allocation_step);
+      if (F_status_is_error(status2)) return status2;
     }
     else {
       initial_used = nest->depth[0].used;
@@ -26,34 +28,28 @@ extern "C" {
     do {
       do {
         if (nest->depth[0].used >= nest->depth[0].size) {
-          f_macro_fss_items_resize(status, nest->depth[0], nest->depth[0].used + f_fss_default_allocation_step);
-
-          if (F_status_is_error(status)) {
-            return status;
-          }
+          f_macro_fss_items_resize(status2, nest->depth[0], nest->depth[0].used + f_fss_default_allocation_step);
+          if (F_status_is_error(status)) return status;
         }
 
-        status = fl_fss_extended_list_object_read(buffer, location, &nest->depth[0].array[nest->depth[0].used].object);
+        status = fl_fss_extended_list_object_read(buffer, range, &nest->depth[0].array[nest->depth[0].used].object);
+        if (F_status_is_error(status)) return status;
 
-        if (F_status_is_error(status)) {
-          return status;
-        }
-
-        if (location->start >= location->stop || location->start >= buffer->used) {
+        if (range->start >= range->stop || range->start >= buffer->used) {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
             // extended list requires content closure, so this could be an error.
             return FL_fss_found_object_content_not;
           }
 
           if (found_data) {
-            if (location->start >= buffer->used) {
+            if (range->start >= buffer->used) {
               return F_none_eos;
             }
 
             return F_none_stop;
           }
           else {
-            if (location->start >= buffer->used) {
+            if (range->start >= buffer->used) {
               return F_data_not_eos;
             }
 
@@ -63,7 +59,7 @@ extern "C" {
 
         if (status == FL_fss_found_object) {
           found_data = F_true;
-          status = fl_fss_extended_list_content_read(buffer, location, nest);
+          status = fl_fss_extended_list_content_read(buffer, range, nest);
 
           break;
         }
@@ -97,15 +93,15 @@ extern "C" {
       else if (status != FL_fss_found_object && status != FL_fss_found_content && status != FL_fss_found_content_not && status != FL_fss_found_object_content_not) {
         return status;
       }
-      // When content is found, the location->start is incremented, if content is found at location->stop, then location->start will be > location.stop.
-      else if (location->start >= location->stop || location->start >= buffer->used) {
-        if (location->start >= buffer->used) {
+      // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
+      else if (range->start >= range->stop || range->start >= buffer->used) {
+        if (range->start >= buffer->used) {
           return F_none_eos;
         }
 
         return F_none_stop;
       }
-    } while (location->start < f_string_length_size);
+    } while (range->start < f_string_length_size);
 
     return F_status_is_error(F_number_overflow);
   }

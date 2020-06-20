@@ -32,8 +32,8 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
- * @param location
- *   The location within the buffer that is currently being read.
+ * @param range
+ *   The range within the buffer that is currently being read.
  * @param nest
  *   An nested set of all objects and content.
  *
@@ -58,7 +58,7 @@ extern "C" {
  *   FL_fss_found_object_content_not on success and object was found but no content was found (start location is at end of object).
  */
 #ifndef _di_fll_fss_extended_list_read_
-  extern f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_range *location, f_fss_nest *nest);
+  extern f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_range *range, f_fss_nest *nest);
 #endif // _di_fll_fss_extended_list_read_
 
 /**

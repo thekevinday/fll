@@ -14,43 +14,30 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status status = F_none;
+    f_status status2 = F_none;
     f_string_length initial_used = objects->used;
     bool found_data = F_false;
 
     do {
       if (objects->used >= objects->size) {
-        f_macro_fss_objects_resize(status, (*objects), objects->used + f_fss_default_allocation_step);
+        f_macro_fss_objects_resize(status2, (*objects), objects->used + f_fss_default_allocation_step);
+        if (F_status_is_error(status2)) return status2;
 
-        if (F_status_is_error(status)) {
-          return status;
-        }
-
-        f_macro_fss_contents_resize(status, (*contents), contents->used + f_fss_default_allocation_step);
-
-        if (F_status_is_error(status)) {
-          return status;
-        }
+        f_macro_fss_contents_resize(status2, (*contents), contents->used + f_fss_default_allocation_step);
+        if (F_status_is_error(status2)) return status2;
       }
 
       do {
         status = fl_fss_basic_object_read(buffer, range, &objects->array[objects->used]);
-
-        if (F_status_is_error(status)) {
-          return status;
-        }
+        if (F_status_is_error(status)) return status;
 
         if (range->start >= range->stop || range->start >= buffer->used) {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
             objects->used++;
 
             if (contents->array[contents->used].used >= contents->array[contents->used].size) {
-              f_status status = F_none;
-
-              f_macro_fss_content_resize(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
-
-              if (F_status_is_error(status)) {
-                return status;
-              }
+              f_macro_fss_content_resize(status2, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+              if (F_status_is_error(status2)) return status2;
             }
 
             contents->used++;
@@ -76,11 +63,9 @@ extern "C" {
 
         if (status == FL_fss_found_object) {
           found_data = F_true;
-          status = fl_fss_basic_content_read(buffer, range, &contents->array[contents->used]);
 
-          if (F_status_is_error(status)) {
-            return status;
-          }
+          status = fl_fss_basic_content_read(buffer, range, &contents->array[contents->used]);
+          if (F_status_is_error(status)) return status;
 
           break;
         }
@@ -88,13 +73,8 @@ extern "C" {
           found_data = F_true;
 
           if (contents->array[contents->used].used >= contents->array[contents->used].size) {
-            f_status status = F_none;
-
-            f_macro_fss_content_resize(status, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
-
-            if (F_status_is_error(status)) {
-              return status;
-            }
+            f_macro_fss_content_resize(status2, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+            if (F_status_is_error(status2)) return status2;
           }
 
           break;

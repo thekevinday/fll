@@ -32,8 +32,8 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
- * @param location
- *   The location within the buffer that is currently being read.
+ * @param range
+ *   The range within the buffer that is currently being read.
  * @param objects
  *   This will be populated with all valid objects found.
  * @param contents
@@ -53,7 +53,7 @@ extern "C" {
  *   F_number_overflow (with error bit) if the maximimum buffer size is reached.
  */
 #ifndef _di_fll_fss_extended_read_
-  extern f_return_status fll_fss_extended_read(f_string_dynamic *buffer, f_string_range *location, f_fss_objects *objects, f_fss_contents *contents);
+  extern f_return_status fll_fss_extended_read(f_string_dynamic *buffer, f_string_range *range, f_fss_objects *objects, f_fss_contents *contents);
 #endif // _di_fll_fss_extended_read_
 
 /**

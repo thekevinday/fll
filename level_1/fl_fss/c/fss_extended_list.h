@@ -41,7 +41,7 @@ extern "C" {
  * @param buffer
  *   The buffer to read from.
  *   This will be updated with delimit placeholders as it is being processed.
- * @param location
+ * @param range
  *   The start/stop location within the buffer to be processed.
  *   The start location will be updated as the buffer is being processed.
  *   The start location will represent where the read stopped on return.
@@ -71,7 +71,7 @@ extern "C" {
  *   Errors from (with error bit): f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_list_object_read_
-  extern f_return_status fl_fss_extended_list_object_read(f_string_dynamic *buffer, f_string_range *location, f_fss_object *found);
+  extern f_return_status fl_fss_extended_list_object_read(f_string_dynamic *buffer, f_string_range *range, f_fss_object *found);
 #endif // _di_fl_fss_extended_list_object_read_
 
 /**
@@ -87,7 +87,7 @@ extern "C" {
  * @param buffer
  *   The buffer to read from.
  *   This will be updated with delimit placeholders as it is being processed.
- * @param location
+ * @param range
  *   The start/stop location within the buffer to be processed.
  *   The start location will be updated as the buffer is being processed.
  *   The start location will represent where the read stopped on return.
@@ -117,7 +117,7 @@ extern "C" {
  *   Errors from (with error bit): f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_list_content_read_
-  extern f_return_status fl_fss_extended_list_content_read(f_string_dynamic *buffer, f_string_range *location, f_fss_nest *found);
+  extern f_return_status fl_fss_extended_list_content_read(f_string_dynamic *buffer, f_string_range *range, f_fss_nest *found);
 #endif // _di_fl_fss_extended_list_content_read_
 
 /**
@@ -129,7 +129,7 @@ extern "C" {
  *
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
- * @param location
+ * @param range
  *   The start/stop location within the object string to write as an object.
  * @param buffer
  *   The buffer where the object is written to.
@@ -149,7 +149,7 @@ extern "C" {
  *   Errors from (with error bit): f_fss_increment_buffer().
  */
 #ifndef _di_fl_fss_extended_list_object_write_
-  extern f_return_status fl_fss_extended_list_object_write(const f_string_static object, f_string_range *location, f_string_dynamic *buffer);
+  extern f_return_status fl_fss_extended_list_object_write(const f_string_static object, f_string_range *range, f_string_dynamic *buffer);
 #endif // _di_fl_fss_extended_list_object_write_
 
 /**
@@ -160,7 +160,7 @@ extern "C" {
  *
  * @param content
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
- * @param location
+ * @param range
  *   The start/stop location within the content string to write as an content.
  * @param buffer
  *   The buffer where the content is written to.
@@ -180,7 +180,7 @@ extern "C" {
  *   Errors from (with error bit): f_fss_increment_buffer().
  */
 #ifndef _di_fl_fss_extended_list_content_write_
-  extern f_return_status fl_fss_extended_list_content_write(const f_string_static content, f_string_range *location, f_string_dynamic *buffer);
+  extern f_return_status fl_fss_extended_list_content_write(const f_string_static content, f_string_range *range, f_string_dynamic *buffer);
 #endif // _di_fl_fss_extended_list_content_write_
 
 #ifdef __cplusplus

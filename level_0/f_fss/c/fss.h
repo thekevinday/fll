@@ -157,7 +157,7 @@ extern "C" {
 #endif // _di_f_fss_is_graph_
 
 /**
- * Identify whether or not a character in the buffer is a space (ASCII or UTF-8) character.
+ * Identify whether or not a character in the buffer is a non-zero-width whitespace or control (ASCII or UTF-8) character.
  *
  * @param buffer
  *   The string to process.
@@ -171,13 +171,39 @@ extern "C" {
  *   F_false if the character in the buffer is not a space character.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_space().
+ *   Errors from (with error bit): f_utf_is_control().
+ *   Errors from (with error bit): f_utf_is_whitespace().
  *
- * @see f_utf_is_space()
+ * @see f_utf_is_control()
+ * @see f_utf_is_whitespace()
  */
 #ifndef _di_f_fss_is_space_
   extern f_return_status f_fss_is_space(const f_string_static buffer, const f_string_range range);
 #endif // _di_f_fss_is_space_
+
+/**
+ * Identify whether or not a character in the buffer is a non-zero-width whitespace or control (ASCII or UTF-8) character.
+ *
+ * @param buffer
+ *   The string to process.
+ * @param range
+ *   The character at the start position will be checked against the graph.
+ * @param header
+ *   The header data to populate with results of this function.
+ *
+ * @return
+ *   F_true if the character in the buffer is a space character.
+ *   F_false if the character in the buffer is not a space character.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_control().
+ *   Errors from (with error bit): f_utf_is_whitespace().
+ *
+ * @see f_utf_is_zero_width()
+ */
+#ifndef _di_f_fss_is_zero_width_
+  extern f_return_status f_fss_is_zero_width(const f_string_static buffer, const f_string_range range);
+#endif // _di_f_fss_is_zero_width_
 
 /**
  * Shift all of the delimiters to the end of the used buffer.

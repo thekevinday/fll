@@ -23,6 +23,7 @@
 
 // fll-1 includes
 #include <level_1/fss_status.h>
+#include <level_1/fss_macro.h>
 
 #ifdef __cplusplus
 extern "C" {
