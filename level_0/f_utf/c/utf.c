@@ -259,7 +259,29 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_zero_width_
   f_return_status f_utf_character_is_zero_width(const f_utf_character character) {
-    if (f_macro_utf_character_width_is(character) == 1) {
+    unsigned short width = f_macro_utf_character_width_is(character);
+
+    if (width == 0) {
+      uint8_t ascii = f_macro_utf_character_to_char_1(character);
+
+      // These control characters are considered zero-width spaces.
+      if (ascii >= 0x00 && ascii <= 0x08) {
+        return F_true;
+      }
+      else if (ascii == 0x0a) {
+        return F_true;
+      }
+      else if (ascii >= 0x0c && ascii <= 0x1f) {
+        return F_true;
+      }
+      else if (ascii == 0x7f) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 1) {
       return F_status_is_error(F_utf);
     }
 
@@ -741,7 +763,17 @@ extern "C" {
     uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
-      // There are no zero-width spaces in ASCII.
+      // These control characters are considered zero-width spaces.
+      if (*character >= 0x00 && *character <= 0x08) {
+        return F_true;
+      }
+      else if (*character >= 0x0c && *character <= 0x1f) {
+        return F_true;
+      }
+      else if (*character == 0x7f) {
+        return F_true;
+      }
+
       return F_false;
     }
 

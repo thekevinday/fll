@@ -22,7 +22,7 @@ build_libraries -lc
 build_libraries-individual -lf_memory
 build_sources_library utf.c private-utf.c
 build_sources_program
-build_sources_headers utf.h
+build_sources_headers utf.h utf-common.h
 build_sources_script
 build_sources_setting
 build_script yes
