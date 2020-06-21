@@ -755,7 +755,7 @@ extern "C" {
 #endif // !defined(_di_f_file_open_at_)
 
 /**
- * Private implementation of f_file_close().
+ * Private implementation of f_file_stat().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -788,7 +788,7 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_touch_)
 
 /**
- * Private implementation of f_file_close().
+ * Private implementation of f_file_stat_at().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -821,7 +821,7 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
 
 /**
- * Private implementation of f_file_close().
+ * Private implementation of f_file_stat_by_id().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -849,7 +849,7 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
 /**
- * Private implementation of private_f_file_write_until().
+ * Private implementation of f_file_write_until().
  *
  * Intended to be shared to each of the different implementation variations.
  *
