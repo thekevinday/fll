@@ -33,18 +33,18 @@ extern "C" {
 
   #define f_statuss_initialize { 0, 0, 0 }
 
-  #define f_macro_statuss_clear(status) f_macro_memory_structure_clear(statuses)
+  #define f_macro_statuss_clear(statuss) f_macro_memory_structure_clear(statuss)
 
-  #define f_macro_statuss_new(status, statuses, length) f_macro_memory_structure_new(status, statuses, f_status, length)
+  #define f_macro_statuss_new(status, statuss, length) f_macro_memory_structure_new(status, statuss, f_status, length)
 
-  #define f_macro_statuss_delete(status, statuses)  f_macro_memory_structure_delete(status, statuses, f_status)
-  #define f_macro_statuss_destroy(status, statuses) f_macro_memory_structure_destroy(status, statuses, f_status)
+  #define f_macro_statuss_delete(status, statuss)  f_macro_memory_structure_delete(status, statuss, f_status)
+  #define f_macro_statuss_destroy(status, statuss) f_macro_memory_structure_destroy(status, statuss, f_status)
 
-  #define f_macro_statuss_delete_simple(statuses)  f_macro_memory_structure_delete_simple(statuses, f_status)
-  #define f_macro_statuss_destroy_simple(statuses) f_macro_memory_structure_destroy_simple(statuses, f_status)
+  #define f_macro_statuss_delete_simple(statuss)  f_macro_memory_structure_delete_simple(statuss, f_status)
+  #define f_macro_statuss_destroy_simple(statuss) f_macro_memory_structure_destroy_simple(statuss, f_status)
 
-  #define f_macro_statuss_resize(status, statuses, new_length) f_macro_memory_structure_resize(status, statuses, f_status, new_length)
-  #define f_macro_statuss_adjust(status, statuses, new_length) f_macro_memory_structure_adjust(status, statuses, f_status, new_length)
+  #define f_macro_statuss_resize(status, statuss, new_length) f_macro_memory_structure_resize(status, statuss, f_status, new_length)
+  #define f_macro_statuss_adjust(status, statuss, new_length) f_macro_memory_structure_adjust(status, statuss, f_status, new_length)
 #endif // _di_f_statuss_
 
 /**
@@ -64,18 +64,18 @@ extern "C" {
 
   #define f_statusss_initialize { 0, 0, 0 }
 
-  #define f_macro_statusss_clear(statuses) f_macro_memory_structures_clear(statuses)
+  #define f_macro_statusss_clear(statusss) f_macro_memory_structures_clear(statusss)
 
-  #define f_macro_statusss_new(status, statuses, length) f_macro_memory_structures_new(status, statuses, f_status, length)
+  #define f_macro_statusss_new(status, statusss, length) f_macro_memory_structures_new(status, statusss, f_status, f_statuss, length)
 
-  #define f_macro_statusss_delete(status, statuses)  f_macro_memory_structures_delete(status, statuses, f_status)
-  #define f_macro_statusss_destroy(status, statuses) f_macro_memory_structures_destroy(status, statuses, f_status)
+  #define f_macro_statusss_delete(status, statusss)  f_macro_memory_structures_delete(status, statusss, f_status, f_statuss)
+  #define f_macro_statusss_destroy(status, statusss) f_macro_memory_structures_destroy(status, statusss, f_status, f_statuss)
 
-  #define f_macro_statusss_delete_simple(statuses)  f_macro_memory_structures_delete_simple(statuses, f_status)
-  #define f_macro_statusss_destroy_simple(statuses) f_macro_memory_structures_destroy_simple(statuses, f_status)
+  #define f_macro_statusss_delete_simple(statusss)  f_macro_memory_structures_delete_simple(statusss, f_status, f_statuss)
+  #define f_macro_statusss_destroy_simple(statusss) f_macro_memory_structures_destroy_simple(statusss, f_status, f_statuss)
 
-  #define f_macro_statusss_resize(status, statuses, new_length) f_macro_memory_structures_resize(status, statuses, f_status, new_length)
-  #define f_macro_statusss_adjust(status, statuses, new_length) f_macro_memory_structures_adjust(status, statuses, f_status, new_length)
+  #define f_macro_statusss_resize(status, statusss, new_length) f_macro_memory_structures_resize(status, statusss, f_status, f_statuss, new_length)
+  #define f_macro_statusss_adjust(status, statusss, new_length) f_macro_memory_structures_adjust(status, statusss, f_status, f_statuss, new_length)
 #endif // _di_f_statuss_
 
 #ifdef __cplusplus

@@ -68,16 +68,16 @@ extern "C" {
 
   #define f_macro_array_lengthss_clear(lengths) f_macro_memory_structures_clear(lengths)
 
-  #define f_macro_array_lengthss_new(status, lengths, length) f_macro_memory_structures_new(status, lengths, f_array_lengths, length)
+  #define f_macro_array_lengthss_new(status, lengths, length) f_macro_memory_structures_new(status, lengths, f_array_length, f_array_lengths, length)
 
-  #define f_macro_array_lengthss_delete(status, lengths)  f_macro_memory_structures_delete(status, lengths, f_array_lengths)
-  #define f_macro_array_lengthss_destroy(status, lengths) f_macro_memory_structures_destroy(status, lengths, f_array_lengths)
+  #define f_macro_array_lengthss_delete(status, lengths)  f_macro_memory_structures_delete(status, lengths, f_array_length, f_array_lengths)
+  #define f_macro_array_lengthss_destroy(status, lengths) f_macro_memory_structures_destroy(status, lengths, f_array_length, f_array_lengths)
 
-  #define f_macro_array_lengthss_delete_simple(lengths)  f_macro_memory_structures_delete_simple(lengths, f_array_lengths)
-  #define f_macro_array_lengthss_destroy_simple(lengths) f_macro_memory_structures_destroy_simple(lengths, f_array_lengths)
+  #define f_macro_array_lengthss_delete_simple(lengths)  f_macro_memory_structures_delete_simple(lengths, f_array_length, f_array_lengths)
+  #define f_macro_array_lengthss_destroy_simple(lengths) f_macro_memory_structures_destroy_simple(lengths, f_array_length, f_array_lengths)
 
-  #define f_macro_array_lengthss_resize(status, lengths, new_length) f_macro_memory_structures_resize(status, lengths, f_array_lengths, new_length)
-  #define f_macro_array_lengthss_adjust(status, lengths, new_length) f_macro_memory_structures_adjust(status, lengths, f_array_lengths, new_length)
+  #define f_macro_array_lengthss_resize(status, lengths, new_length) f_macro_memory_structures_resize(status, lengths, f_array_length, f_array_lengths, new_length)
+  #define f_macro_array_lengthss_adjust(status, lengths, new_length) f_macro_memory_structures_adjust(status, lengths, f_array_length, f_array_lengths, new_length)
 #endif // _di_f_array_lengthss_
 
 #ifdef __cplusplus

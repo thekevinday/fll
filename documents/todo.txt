@@ -79,25 +79,6 @@ This file contains FLL-wide todo notes.
   Variable name will be made uppercase and will be only alphabetic or underscore.
 
 
-A new wiki-like syntax meant to be simpler:
-  - url:"http:// a b c/"
-  - code:" code goes here"
-  - quote:"This is a quote"
-  - var:"some_variable_name"
-  - emphasis:"This text is important"
-
-  Escaping only neds to be done like these two cases:
-  1) escaping main syntax:
-    - url\:"http:// a b c/"
-    - after the first '\:', every '\' is a literal '\'.
-      - url\\\\\:"http:// a b c/" would be read as: 'url\\\\:"http:// a b c/"'.
-  2) escaping the quoted part
-    - quote:"This is a \"quote\""
-    - There is no way to know the terminating '"' so all quotes inside must be escaped.
-    - after the first '\"', every '\' is a literal '\'.
-      - quote:"" would be read as: 'url\\\\:"http:// a b c/"'.
-  - Create this as a new FSS format, FSS-Text (FSS-000D).
-
 Go though all source code and ensure that, for all non-exceptional cases, any dynamic strings appends to existing buffers instead of overwriting them (based on buffer->used).
 Then document this behavior.
 

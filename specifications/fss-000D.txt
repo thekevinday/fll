@@ -1,0 +1,48 @@
+# fss-0002
+
+Featureless Settings Specification: 000D - Iki Text:
+  Iki is an unstructured WIKI-like syntax meant to be simpler than WIKI syntax.
+  This fss specification represents a plain text file not following any special FSS structure but instead supports the IKI syntax.
+  The IKI syntax may be used in any FSS specification and the specific vocabulary is defined by appending
+
+  There is no requirement for any specific IKI vocabulary by this standard only that the given syntax is supported.
+  To specify the IKI vocabulary being used append the IKI vocabulary header immediately after the fss header like such: "# fss-000d iki-0001".
+
+  The IKI syntax provides a vocabulary name with specific context associated with it followed by quoted code that is represented by the given vocabulary name.
+
+  When IKI is encapsulated inside any FSS format, the parent FSS format rules apply and must take precedence.
+  Therefore additional escaping may be required.
+  As for this FSS format (FSS-000D), there is no structure and therefore only the IKI syntax rules apply.
+
+  For compatibility with the FSS terminology, the Vocabulary Name is to be considered the Object and the Vocabulary value is to be considered the Content.
+
+  Key\:
+    \o = any printable word character, including "_", "-", "+".
+    \c = any printing character, including whitespace, and any delimited quote (used as the opening quote) or a any quote (undelimited) not used as the opening quote.
+    \q = either a single quote (') or a double quote (").
+    \x = any character.
+    * = 0 or more occurrences.
+
+  Structure\:
+    \x*\o:\q\c\q
+
+  Example\:
+    # fss-000d iki-0000
+
+    This is my sentence, anything can go here but sometimes I want to emphasis:"emphasize some text".
+
+    Other times I want to render a url such as this example url: url:'http://www.example.com/url with space/'.
+
+    There are no comments, except for maybe the FSS header.
+
+    Quotes may be included, such as: code:"const char *string = \"My \\\"quoted\\\" C string.\";".
+
+  Objects would be\:
+    1) emphasis
+    2) url
+    3) code
+
+  Contents would be\:
+    1.1) emphasize some text
+    2.1) http://www.example.com/url with space/
+    3.1) const char *string = "My \"quoted\" C string.";
