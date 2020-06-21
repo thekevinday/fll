@@ -77,63 +77,6 @@ extern "C" {
 #endif // _di_f_fss_count_lines_range_
 
 /**
- * Continue to the previous character, based on step and character width.
- *
- * The start position must be at the start of a valid UTF-8 block.
- *
- * @param buffer
- *   The string to process.
- * @param range
- *   The start and stop positions to be incremented.
- *   The start position will be incremented by step.
- * @param step
- *   The number of steps to decrement the start position.
- *   The steps refer to characters and not integers.
- *   Essentially this number is considered against the width of every character found.
- *   (For ASCII each step would be (sizeof(int8_t), which is 1).
- *   (For UTF-8 character of width 3, each step would be (3 * sizeof(int8_t)).
- *
- * @return
- *   F_none on success.
- *   F_none_stop if the stop range is reached before all steps are completed.
- *   F_none_eos if the end of buffer is reached before all steps are completed.
- *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_decrement_buffer_
-  extern f_return_status f_fss_decrement_buffer(const f_string_static buffer, f_string_range *range, const f_string_length step);
-#endif // _di_f_fss_decrement_buffer_
-
-/**
- * Continue to the next character, based on step and character width.
- *
- * The start position must be at the start of a valid UTF-8 block.
- *
- * @param buffer
- *   The string to process.
- * @param range
- *   The start and stop positions to be incremented.
- *   The start position will be incremented by step.
- * @param step
- *   The number of steps to increment the start position.
- *   The steps refer to characters and not integers.
- *   Essentially this number is considered against the width of every character found.
- *   (For ASCII each step would be (sizeof(int8_t), which is 1).
- *   (For UTF-8 character of width 3, each step would be (3 * sizeof(int8_t)).
- *
- * @return
- *   F_none on success.
- *   F_none_stop if the stop range is reached before all steps are completed.
- *   F_none_eos if the end of buffer is reached before all steps are completed.
- *   F_incomplete_utf_stop (with error bit) if the stop range is reached before the complete UTF-8 character can be processed.
- *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_increment_buffer_
-  extern f_return_status f_fss_increment_buffer(const f_string_static buffer, f_string_range *range, const f_string_length step);
-#endif // _di_f_fss_increment_buffer_
-
-/**
  * Identify whether or not a character in the buffer is a graph (ASCII or UTF-8) character.
  *
  * @param buffer

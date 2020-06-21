@@ -51,6 +51,67 @@ extern "C" {
 #endif
 
 /**
+ * Continue to the previous character, based on step and character width.
+ *
+ * For navigating a range within the given buffer by a specific number of characters that could be of any width allowed by UTF-8.
+ *
+ * The start position must be at the start of a valid UTF-8 block.
+ *
+ * @param buffer
+ *   The string to process.
+ * @param range
+ *   The start and stop positions to be incremented.
+ *   The start position will be incremented by step.
+ * @param step
+ *   The number of steps to decrement the start position.
+ *   The steps refer to characters and not integers.
+ *   Essentially this number is considered against the width of every character found.
+ *   (For ASCII each step would be sizeof(int8_t), which is 1.
+ *   (For UTF-8 character of width 3, each step would be (3 * sizeof(int8_t)).
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop if the stop range is reached before all steps are completed.
+ *   F_none_eos if the end of buffer is reached before all steps are completed.
+ *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_buffer_decrement_
+  extern f_return_status f_utf_buffer_decrement(const f_string_static buffer, f_string_range *range, const f_string_length step);
+#endif // _di_f_utf_buffer_decrement_
+
+/**
+ * Continue to the next character, based on step and character width.
+ *
+ * For navigating a range within the given buffer by a specific number of characters that could be of any width allowed by UTF-8.
+ *
+ * The start position must be at the start of a valid UTF-8 block.
+ *
+ * @param buffer
+ *   The string to process.
+ * @param range
+ *   The start and stop positions to be incremented.
+ *   The start position will be incremented by step.
+ * @param step
+ *   The number of steps to increment the start position.
+ *   The steps refer to characters and not integers.
+ *   Essentially this number is considered against the width of every character found.
+ *   (For ASCII each step would be sizeof(int8_t), which is 1.
+ *   (For UTF-8 character of width 3, each step would be (3 * sizeof(int8_t)).
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop if the stop range is reached before all steps are completed.
+ *   F_none_eos if the end of buffer is reached before all steps are completed.
+ *   F_incomplete_utf_stop (with error bit) if the stop range is reached before the complete UTF-8 character can be processed.
+ *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_buffer_increment_
+  extern f_return_status f_utf_buffer_increment(const f_string_static buffer, f_string_range *range, const f_string_length step);
+#endif // _di_f_utf_buffer_increment_
+
+/**
  * Check to see if the entire byte block of the character is a UTF-8 character.
  *
  * This does not validate if the UTF-8 character is a valid UTF-8 character, for that use f_utf_character_is_valid().
@@ -64,7 +125,6 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see f_utf_character_is_valid()
- * @see f_utf_is()
  */
 #ifndef _di_f_utf_character_is_
   extern f_return_status f_utf_character_is(const f_utf_character character);
@@ -72,8 +132,6 @@ extern "C" {
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet character.
- *
- * @todo Incomplete, UTF-8 codes not yet checked!
  *
  * @param character
  *   The character to validate.
@@ -84,7 +142,6 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
- * @see f_utf_is_alpha()
  */
 #ifndef _di_f_utf_character_is_alpha_
   extern f_return_status f_utf_character_is_alpha(const f_utf_character character);
@@ -92,8 +149,6 @@ extern "C" {
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabetic or numeric character.
- *
- * @todo Incomplete, UTF-8 codes not yet checked!
  *
  * @param character
  *   The character to validate.
@@ -104,11 +159,25 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
- * @see f_utf_is_alphanumeric()
  */
 #ifndef _di_f_utf_character_is_alpha_numeric_
   extern f_return_status f_utf_character_is_alpha_numeric(const f_utf_character character);
 #endif // _di_f_utf_character_is_alpha_numeric_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 combining character.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 control picture character.
+ *   F_false if not a UTF-8 control picture character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ */
+#ifndef _di_f_utf_character_is_combining_
+  extern f_return_status f_utf_character_is_combining(const f_utf_character character);
+#endif // _di_f_utf_character_is_combining_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 control character.
@@ -122,7 +191,6 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see iscntrl()
- * @see f_utf_is_control()
  */
 #ifndef _di_f_utf_character_is_control_
   extern f_return_status f_utf_character_is_control(const f_utf_character character);
@@ -140,12 +208,29 @@ extern "C" {
  *   F_true if a UTF-8 control picture character.
  *   F_false if not a UTF-8 control picture character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
- *
- * @see f_utf_is_control_picture()
  */
 #ifndef _di_f_utf_character_is_control_picture_
   extern f_return_status f_utf_character_is_control_picture(const f_utf_character character);
 #endif // _di_f_utf_character_is_control_picture_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 emoji character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 emoji character.
+ *   F_false if not a UTF-8 emoji character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ */
+#ifndef _di_f_utf_character_is_emoji_
+  extern f_return_status f_utf_character_is_emoji(const f_utf_character character);
+#endif // _di_f_utf_character_is_emoji_
 
 /**
  * Check to see if the entire byte block of the character is a 1-width UTF-8 character fragment.
@@ -154,6 +239,17 @@ extern "C" {
  * However, the character could have been cut-off, so whether or not this is actually valid should be determined by the caller.
  *
  * For normal validation functions, try using f_utf_character_is() or f_utf_character_is_valid().
+ *
+ * According to rfc3629, the valid octect sequences for UTF-8 are:
+ *   UTF8-octets = *( UTF8-char )
+ *   UTF8-char   = UTF8-1 / UTF8-2 / UTF8-3 / UTF8-4
+ *   UTF8-1      = %x00-7F
+ *   UTF8-2      = %xC2-DF UTF8-tail
+ *   UTF8-3      = %xE0 %xA0-BF UTF8-tail / %xE1-EC 2( UTF8-tail ) /
+ *                 %xED %x80-9F UTF8-tail / %xEE-EF 2( UTF8-tail )
+ *   UTF8-4      = %xF0 %x90-BF 2( UTF8-tail ) / %xF1-F3 3( UTF8-tail ) /
+ *                 %xF4 %x80-8F 2( UTF8-tail )
+ *   UTF8-tail   = %x80-BF
  *
  * @param character
  *   The character to validate.
@@ -165,7 +261,6 @@ extern "C" {
  *
  * @see f_utf_character_is()
  * @see f_utf_character_is_valid()
- * @see f_utf_is_fragment()
  */
 #ifndef _di_f_utf_character_is_fragment_
   extern f_return_status f_utf_character_is_fragment(const f_utf_character character);
@@ -192,8 +287,6 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 numeric character.
  *
- * @todo Incomplete, UTF-8 codes not yet checked!
- *
  * @param character
  *   The character to validate.
  *
@@ -208,6 +301,46 @@ extern "C" {
 #ifndef _di_f_utf_character_is_numeric_
   extern f_return_status f_utf_character_is_numeric(const f_utf_character character);
 #endif // _di_f_utf_character_is_numeric_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 punctuation character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 punctuation character.
+ *   F_false if not a UTF-8 punctuation character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_is_punctuation()
+ */
+#ifndef _di_f_utf_character_is_punctuation_
+  extern f_return_status f_utf_character_is_punctuation(const f_utf_character character);
+#endif // _di_f_utf_character_is_punctuation_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 symbol character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 symbol character.
+ *   F_false if not a UTF-8 symbol character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_is_symbol()
+ */
+#ifndef _di_f_utf_character_is_symbol_
+  extern f_return_status f_utf_character_is_symbol(const f_utf_character character);
+#endif // _di_f_utf_character_is_symbol_
 
 /**
  * Check to see if the entire byte block of the character is a valid UTF-8 character.
@@ -254,6 +387,24 @@ extern "C" {
 #ifndef _di_f_utf_character_is_whitespace_
   extern f_return_status f_utf_character_is_whitespace(const f_utf_character character);
 #endif // _di_f_utf_character_is_whitespace_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 whitespace modifier character.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 modifier character.
+ *   F_false if not a UTF-8 modifier character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ * @see f_utf_is_whitespace_modifier()
+ */
+#ifndef _di_f_utf_character_is_whitespace_modifier_
+  extern f_return_status f_utf_character_is_whitespace_modifier(const f_utf_character character);
+#endif // _di_f_utf_character_is_whitespace_modifier_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 word character.
@@ -420,9 +571,6 @@ extern "C" {
  *   F_false if not a UTF-8 character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see f_utf_is_valid()
- * @see f_utf_character_is()
  */
 #ifndef _di_f_utf_is_
   extern f_return_status f_utf_is(const f_string character, const f_string_length width_max);
@@ -430,8 +578,6 @@ extern "C" {
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet character.
- *
- * @todo Incomplete, UTF-8 codes not yet checked!
  *
  * @param character
  *   The character to validate.
@@ -446,7 +592,6 @@ extern "C" {
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
- * @see f_utf_character_is_alpha()
  */
 #ifndef _di_f_utf_is_alpha_
   extern f_return_status f_utf_is_alpha(const f_string character, const f_string_length width_max);
@@ -454,8 +599,6 @@ extern "C" {
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet or numeric character.
- *
- * @todo Incomplete, UTF-8 codes not yet checked!
  *
  * @param character
  *   The character to validate.
@@ -470,11 +613,29 @@ extern "C" {
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
- * @see f_utf_character_is_alpha_numeric()
  */
 #ifndef _di_f_utf_is_alpha_numeric_
   extern f_return_status f_utf_is_alpha_numeric(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_alpha_numeric_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 combining character.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 control picture character.
+ *   F_false if not a UTF-8 control picture character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ */
+#ifndef _di_f_utf_is_combining_
+  extern f_return_status f_utf_is_combining(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_combining_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 control character.
@@ -514,12 +675,33 @@ extern "C" {
  *   F_true if a UTF-8 control picture character.
  *   F_false if not a UTF-8 control picture character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *
- * @see f_utf_character_is_control_picture()
  */
 #ifndef _di_f_utf_is_control_picture_
   extern f_return_status f_utf_is_control_picture(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_control_picture_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 emoji character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 emoji character.
+ *   F_false if not a UTF-8 emoji character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see iscntrl()
+ */
+#ifndef _di_f_utf_is_emoji_
+  extern f_return_status f_utf_is_emoji(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_emoji_
 
 /**
  * Check to see if the entire byte block of the character is a 1-width UTF-8 character fragment.
@@ -550,10 +732,6 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 character.
  *   F_false if not a UTF-8 character.
- *
- * @see f_utf_character_is()
- * @see f_utf_character_is_valid()
- * @see f_utf_character_is_fragment()
  */
 #ifndef _di_f_utf_is_fragment_
   extern f_return_status f_utf_is_fragment(const f_string character, const f_string_length width_max);
@@ -578,7 +756,6 @@ extern "C" {
  *
  * @see isgraph()
  * @see iscntrl()
- * @see f_utf_character_is_graph()
  */
 #ifndef _di_f_utf_is_graph_
   extern f_return_status f_utf_is_graph(const f_string character, const f_string_length width_max);
@@ -586,8 +763,6 @@ extern "C" {
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 numeric character.
- *
- * @todo Incomplete, UTF-8 codes not yet checked!
  *
  * @param character
  *   The character to validate.
@@ -602,11 +777,56 @@ extern "C" {
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
- * @see f_utf_character_is_numeric()
  */
 #ifndef _di_f_utf_is_numeric_
   extern f_return_status f_utf_is_numeric(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_numeric_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 punctuation character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 punctuation character.
+ *   F_false if not a UTF-8 punctuation character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see iscntrl()
+ */
+#ifndef _di_f_utf_is_punctuation_
+  extern f_return_status f_utf_is_punctuation(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_punctuation_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 symbol character.
+ *
+ * @todo Incomplete, UTF-8 codes not yet checked!
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 symbol character.
+ *   F_false if not a UTF-8 symbol character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see iscntrl()
+ */
+#ifndef _di_f_utf_is_symbol_
+  extern f_return_status f_utf_is_symbol(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_symbol_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 character and if that character is a valid UTF-8.
@@ -629,10 +849,6 @@ extern "C" {
  *   F_false if not a valid UTF-8 character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see f_utf_is()
- * @see f_utf_is_fragment()
- * @see f_utf_character_is_valid()
  */
 #ifndef _di_f_utf_is_valid_
   extern f_return_status f_utf_is_valid(const f_string character, const f_string_length width_max);
@@ -657,7 +873,6 @@ extern "C" {
  *
  * @see isspace()
  * @see iscntrl()
- * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_f_utf_is_whitespace_
   extern f_return_status f_utf_is_whitespace(const f_string character, const f_string_length width_max);
@@ -683,7 +898,6 @@ extern "C" {
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
- * @see f_utf_character_is_word()
  */
 #ifndef _di_f_utf_is_word_
   extern f_return_status f_utf_is_word(const f_string character, const f_string_length width_max);
@@ -709,7 +923,6 @@ extern "C" {
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
- * @see f_utf_character_is_word_dash()
  */
 #ifndef _di_f_utf_is_word_dash_
   extern f_return_status f_utf_is_word_dash(const f_string character, const f_string_length width_max);
@@ -735,7 +948,6 @@ extern "C" {
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
- * @see f_utf_character_is_word_dash_plus()
  */
 #ifndef _di_f_utf_is_word_dash_plus_
   extern f_return_status f_utf_is_word_dash_plus(const f_string character, const f_string_length width_max);
@@ -762,7 +974,6 @@ extern "C" {
  *
  * @see isspace()
  * @see iscntrl()
- * @see f_utf_character_is_zero_width()
  */
 #ifndef _di_f_utf_is_zero_width_
   extern f_return_status f_utf_is_zero_width(const f_string character, const f_string_length width_max);

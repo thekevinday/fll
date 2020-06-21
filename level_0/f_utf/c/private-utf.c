@@ -8,23 +8,143 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
   f_return_status private_f_utf_character_is_alpha(const f_utf_character character, const uint8_t width) {
 
-    // @todo: handle all Unicode "alpha".
+    if (private_f_utf_character_is_zero_width(character, width)) {
+      return F_false;
+    }
 
-    return F_false;
+    if (private_f_utf_character_is_control(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_control_picture(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_combining(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_whitespace(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_whitespace_modifier(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_numeric(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_punctuation(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_symbol(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_emoji(character, width)) {
+      return F_false;
+    }
+
+    return F_true;
   }
 #endif // !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
 
 #if !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
   f_return_status private_f_utf_character_is_alpha_numeric(const f_utf_character character, const uint8_t width) {
 
-    // @todo: handle all Unicode "alpha_numeric".
+    if (private_f_utf_character_is_numeric(character, width)) {
+      return F_true;
+    }
+
+    if (private_f_utf_character_is_zero_width(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_control(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_control_picture(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_whitespace(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_whitespace_modifier(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_punctuation(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_symbol(character, width)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_emoji(character, width)) {
+      return F_false;
+    }
 
     return F_false;
   }
 #endif // !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
 
+#if !defined(_di_f_utf_character_is_combining_) || !defined(_di_f_utf_is_combining_)
+  f_return_status private_f_utf_character_is_combining(const f_utf_character character, const uint8_t width) {
+
+    if (width == 2) {
+
+      // Diacritical Marks: U+0300 to U+036F.
+      if (character >= 0xcc800000 && character <= 0xcdaf0000) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 3) {
+
+      // Diacritical Marks Extended: U+1AB0 to U+1AC0.
+      if (character >= 0xe1aab000 && character <= 0xe1ab8000) {
+        return F_true;
+      }
+
+      // Diacritical Marks Supplement: U+1DC0 to U+1DF9.
+      if (character >= 0xe1b78000 && character <= 0xe1b7b900) {
+        return F_true;
+      }
+
+      // Diacritical Marks Supplement: U+1DFB to U+1DFF.
+      if (character >= 0xe1b7bb00 && character <= 0xe1b7bf00) {
+        return F_true;
+      }
+
+      // Diacritical Marks For Symbols: U+20D0 to U+20F0.
+      if (character >= 0xe2839000 && character <= 0xe283b000) {
+        return F_true;
+      }
+
+      // Combining Half Marks: U+FE20 to U+FE2F.
+      if (character >= 0xefb8a000 && character <= 0xefb8af00) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    return F_false;
+  }
+#endif // !defined(_di_f_utf_character_is_combining_) || !defined(_di_f_utf_is_combining_)
+
 #if !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
   f_return_status private_f_utf_character_is_control(const f_utf_character character, const uint8_t width) {
+
     if (width == 2) {
       // Latin-1 Supplement: U+0080 to U+009F.
       if (character >= 0xc2800000 && character <= 0xc29f0000) {
@@ -35,7 +155,6 @@ extern "C" {
     }
 
     if (width == 3) {
-      // @todo these might not be "control characters" and instead be "marking characters" or "combining characters".
       // Special: U+FFF9 to U+FFFB.
       if (character >= 0xefbfb900 && character <= 0xefbfbb00) {
         return F_true;
@@ -56,29 +175,538 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
 
 #if !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
-  f_return_status private_f_utf_character_is_control_picture(const f_utf_character character) {
-    // Control Pictures: U+2400 to U+2426.
-    if (character >= 0xe2908000 && character <= 0xe290a600) {
-      return F_true;
-    }
+  f_return_status private_f_utf_character_is_control_picture(const f_utf_character character, const uint8_t width) {
 
-    // Specials: U+FFFC to U+FFFD.
-    if (character == 0xefbfbc00 || character == 0xefbfbd00) {
-      return F_true;
+    if (width == 3) {
+      // Control Pictures: U+2400 to U+2426.
+      if (character >= 0xe2908000 && character <= 0xe290a600) {
+        return F_true;
+      }
+
+      // Specials: U+FFFC to U+FFFD.
+      if (character == 0xefbfbc00 || character == 0xefbfbd00) {
+        return F_true;
+      }
     }
 
     return F_false;
   }
 #endif // !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
 
+#if !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
+  f_return_status private_f_utf_character_is_emoji(const f_utf_character character, const uint8_t width) {
+
+    // @todo ugh..emojis are all over the place, I only got as far as creating a list of Unicodes, convert these Unicodes to UTF-8 codes. (be sure too use width == comparisons.)
+/*
+    // reduce the number of checks by grouping checks by first byte.
+    uint8_t byte_first = f_macro_utf_character_to_char_1(character);
+
+    // U+00A9, U+00AE, U+203C, U+2049.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2042, U+2122, U+2139.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2194 to U+2199.
+    if (character >= 0xe2908000 && character <= 0xe290a600) {
+      return F_true;
+    }
+
+    // U+21A9, U+21AA, U+231A, U+231B.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2328, U+23CF.
+    if (character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+23E9 to U+23F3.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+23F8 to U+23FA.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+24C2, U+25AA, U+25AB, U+25B6.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+25C0.
+    if (character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+25FB to U+25FE.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+2600 to U+2604.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+260E, U+2611, U+2614, U+2615.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2618, U+261D, U+2620, U+2622.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2623, U+2626, U+262A, U+262E.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+262F.
+    if (character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2638 to U+263A.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+2640, U+2642.
+    if (character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2648 to U+2653.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+265F, U+2660, U+2663, U+2665.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2666, U+2668, U+267B, U+267E.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+267F.
+    if (character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2692 to U+2697.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+2699, U+269B, U+269C, U+26A0.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+26A1, U+26A7, U+26AA, U+26AB.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+26B0, U+26B1, U+26BD, U+26BE.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+26C4, U+26C5, U+26C8, U+26CE.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+26CF, U+26D1, U+26D3, U+26D4.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+26E9, U+26EA.
+    if (character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+26F0 to U+26F5.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+26F7 to U+26FA.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+26FD, U+2702, U+2705.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2708 to U+270D.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+270F, U+2712, U+2714, U+2716.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+271D, U+2721, U+2728, U+2733.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2734, U+2744, U+2747, U+274C.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+274E.
+    if (character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2753 to U+2755.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+2757, U+2763, U+2764.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2795 to U+2797.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+27A1, U+27B0, U+27BF, U+2934.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2935.
+    if (character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+2B05 to U+2B07.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+2B1B, U+2B1C, U+2B50, U+2B55.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+3030, U+303D, U+303D, U+3297.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+3299, U+1F004.
+    if (character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F0CF to U+1F171.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F17E, U+1F17F, U+1F18E.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F191 to U+1F19A.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F201, U+1F202, U+1F21A, U+1F22F.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F232 to U+1F23A.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F250, U+1F251.
+    if (character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F300 to U+1F321.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F324 to U+1F393.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F396, U+1F397.
+    if (character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F399 to U+1F39B.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F39E to U+1F3F0.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F3F3 to U+1F3F5.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F3F7 to U+1F4FD.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F4FF to U+1F53D.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F549 to U+1F54E.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F550 to U+1F567.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F56F, U+1F570.
+    if (character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F573 to U+1F57A.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F587.
+    if (character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F58A to U+1F58D.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F590, U+1F595, U+1F596, U+1F5A4.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F5A5, U+1F5A8, U+1F5B1, U+1F5B2.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F5BC.
+    if (character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F5C2 to U+1F5C4.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F5D1 to U+1F5D3.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F5DC to U+1F5DE.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F5E1, U+1F5E3, U+1F5E8, U+1F5EF.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F5F3.
+    if (character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F5FA to U+1F6C5.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F6CB to U+1F6D2.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F6D5 to U+1F6D7.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F6E0 to U+1F6E5.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F6E9, U+1F6EB, U+1F6EC, U+1F6F0.
+    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F6F3 to U+1F6FC.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F7E0 to U+1F7EB.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F90C to U+1F93A.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F93C to U+1F945.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F947 to U+1F978.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F97A to U+1F9CB.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1F9CD to U+1FA74.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1FA70 to U+1FA74.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1FA78 to U+1FA7A.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1FA80 to U+1FA86.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1FA90 to U+1FAA8.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1FAB0 to U+1FAB6.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1FAC0 to U+1FAC2.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+
+    // U+1FAD0 to U+1FAD6.
+    if (character >= 0x00000000 && character <= 0x00000000) {
+      return F_true;
+    }
+*/
+    return F_false;
+  }
+#endif // !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
+
 #if !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
   f_return_status private_f_utf_character_is_numeric(const f_utf_character character, const uint8_t width) {
 
-    // @todo: handle all Unicode "numeric".
+    if (width == 3) {
+
+      // U+2150 to U+218b.
+      if (character >= 0xe2859000 && character <= 0xe2868b00) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 4) {
+
+      // U+102E0 to U+102FB.
+      if (character >= 0xf0908ba0 && character <= 0xf0908bbb) {
+        return F_true;
+      }
+    }
 
     return F_false;
   }
 #endif // !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
+
+#if !defined(_di_f_utf_character_is_punctuation_) || !defined(_di_f_utf_is_punctuation_)
+  f_return_status private_f_utf_character_is_punctuation(const f_utf_character character, const uint8_t width) {
+
+    // @todo UTF-8 punctuation.
+
+    return F_false;
+  }
+#endif // !defined(_di_f_utf_character_is_punctuation_) || !defined(_di_f_utf_is_punctuation_)
+
+#if !defined(_di_f_utf_character_is_symbol_) || !defined(_di_f_utf_is_symbol_)
+  f_return_status private_f_utf_character_is_symbol(const f_utf_character character, const uint8_t width) {
+
+    // @todo: handle all Unicode "symbol".
+
+    return F_false;
+  }
+#endif // !defined(_di_f_utf_character_is_symbol_) || !defined(_di_f_utf_is_symbol_)
 
 #if !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
   f_return_status private_f_utf_character_is_valid(const f_utf_character character, const uint8_t width) {
@@ -684,8 +1312,8 @@ extern "C" {
           return F_false;
         }
 
-        // Combining Diacritical Marks Supplement: U+1ABF to U+1AFF.
-        if (bytes >= 0xaabf && bytes <= 0xabbf) {
+        // Diacritical Marks Supplement: U+1AC1 to U+1AFF.
+        if (bytes >= 0xab81 && bytes <= 0xabbf) {
           return F_false;
         }
 
@@ -925,7 +1553,7 @@ extern "C" {
           return F_false;
         }
 
-        // Combining Diacritical Marks for Symbols: U+20F1 to U+20FF.
+        // Diacritical Marks for Symbols: U+20F1 to U+20FF.
         if (bytes >= 0x83b1 && bytes <= 0x83bf) {
           return F_false;
         }
@@ -2410,7 +3038,8 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
 
 #if !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
-  f_return_status private_f_utf_character_is_whitespace(const f_utf_character character) {
+  f_return_status private_f_utf_character_is_whitespace(const f_utf_character character, const uint8_t width) {
+
     // reduce the number of checks by grouping checks by first byte.
     uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
@@ -2452,10 +3081,28 @@ extern "C" {
   }
 #endif // !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
 
+#if !defined(_di_f_utf_character_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_modifier_)
+  f_return_status private_f_utf_character_is_whitespace_modifier(const f_utf_character character, const uint8_t width) {
+
+    // U+02B0 to U+02FF.
+    if (width == 2) {
+      if (character >= 0xcab00000 && character <= 0xcbbf0000) {
+        return F_true;
+      }
+    }
+
+    return F_false;
+  }
+#endif // !defined(_di_f_utf_character_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_modifier_)
+
 #if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
   f_return_status private_f_utf_character_is_word(const f_utf_character character, const uint8_t width) {
 
-    // @todo: handle all Unicode "word".
+    if (private_f_utf_character_is_alpha_numeric(character, width)) {
+      return F_true;
+    }
+
+    // @todo UTF-8 underscores?
 
     return F_false;
   }
@@ -2464,7 +3111,11 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
   f_return_status private_f_utf_character_is_word_dash(const f_utf_character character, const uint8_t width) {
 
-    // @todo: handle all Unicode "word_dash".
+    if (private_f_utf_character_is_word(character, width)) {
+      return F_true;
+    }
+
+    // @todo UTF-8 dashes?
 
     return F_false;
   }
@@ -2473,14 +3124,18 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
   f_return_status private_f_utf_character_is_word_dash_plus(const f_utf_character character, const uint8_t width) {
 
-    // @todo: handle all Unicode "word_dash_plus".
+    if (private_f_utf_character_is_word_dash(character, width)) {
+      return F_true;
+    }
+
+    // @todo UTF-8 pluses?
 
     return F_false;
   }
 #endif // !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 #if !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
-  f_return_status private_f_utf_character_is_zero_width(const f_utf_character character) {
+  f_return_status private_f_utf_character_is_zero_width(const f_utf_character character, const uint8_t width) {
     // reduce the number of checks by grouping checks by first byte.
     uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 

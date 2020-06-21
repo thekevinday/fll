@@ -5,6 +5,79 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_utf_buffer_decrement_
+  f_return_status f_utf_buffer_decrement(const f_string_static buffer, f_string_range *range, const f_string_length step) {
+    #ifndef _di_level_0_parameter_checking_
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (range == 0) return F_status_set_error(F_parameter);
+      if (range->start > range->stop) return F_status_set_error(F_parameter);
+      if (range->start >= buffer.used) return F_status_set_error(F_parameter);
+      if (step < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_string_length i = 0;
+    unsigned short width = 0;
+
+    do {
+      width = f_macro_utf_byte_width(buffer.string[range->start - 1]);
+
+      if (width > range->start) {
+        if (width > 1) {
+          return F_status_set_error(F_incomplete_utf_eos);
+        }
+
+        return F_none_eos;
+      }
+
+      i++;
+      range->start -= width;
+    } while (i < step);
+
+    return F_none;
+  }
+#endif // _di_f_utf_buffer_decrement_
+
+#ifndef _di_f_utf_buffer_increment_
+  f_return_status f_utf_buffer_increment(const f_string_static buffer, f_string_range *range, const f_string_length step) {
+    #ifndef _di_level_0_parameter_checking_
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (range == 0) return F_status_set_error(F_parameter);
+      if (range->start > range->stop) return F_status_set_error(F_parameter);
+      if (range->start >= buffer.used) return F_status_set_error(F_parameter);
+      if (step < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_string_length i = 0;
+    unsigned short width = 0;
+
+    do {
+      width = f_macro_utf_byte_width(buffer.string[range->start]);
+
+      if (range->start + width > range->stop) {
+        if (width > 1) {
+          return F_status_set_error(F_incomplete_utf_stop);
+        }
+
+        range->start += width;
+        return F_none_stop;
+      }
+      else if (range->start + width >= buffer.used) {
+        if (width > 1) {
+          return F_status_set_error(F_incomplete_utf_eos);
+        }
+
+        range->start += width;
+        return F_none_eos;
+      }
+
+      i++;
+      range->start += width;
+    } while (i < step);
+
+    return F_none;
+  }
+#endif // _di_f_utf_buffer_increment_
+
 #ifndef _di_f_utf_character_is_
   f_return_status f_utf_character_is(const f_utf_character character) {
     unsigned short width = f_macro_utf_character_width_is(character);
@@ -61,6 +134,27 @@ extern "C" {
   }
 #endif // _di_f_utf_character_is_alpha_numeric_
 
+#ifndef _di_f_utf_character_is_combining_
+  f_return_status f_utf_character_is_combining(const f_utf_character character) {
+    unsigned short width = f_macro_utf_character_width_is(character);
+
+    if (width == 0) {
+      // There are no combining characters in ASCII.
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_utf);
+    }
+
+    if (width != 3) {
+      return F_false;
+    }
+
+    return private_f_utf_character_is_combining(character, width);
+  }
+#endif // _di_f_utf_character_is_combining_
+
 #ifndef _di_f_utf_character_is_control_
   f_return_status f_utf_character_is_control(const f_utf_character character) {
     unsigned short width = f_macro_utf_character_width_is(character);
@@ -98,9 +192,29 @@ extern "C" {
       return F_false;
     }
 
-    return private_f_utf_character_is_control_picture(character);
+    return private_f_utf_character_is_control_picture(character, width);
   }
 #endif // _di_f_utf_character_is_control_picture_
+
+#ifndef _di_f_utf_character_is_emoji_
+  f_return_status f_utf_character_is_emoji(const f_utf_character character) {
+    unsigned short width = f_macro_utf_character_width_is(character);
+
+    if (width == 0) {
+      if (isdigit(f_macro_utf_character_to_char_1(character))) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_utf);
+    }
+
+    return private_f_utf_character_is_emoji(character, width);
+  }
+#endif // _di_f_utf_character_is_emoji_
 
 #ifndef _di_f_utf_character_is_fragment_
   f_return_status f_utf_character_is_fragment(const f_utf_character character) {
@@ -132,12 +246,11 @@ extern "C" {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace(character) == F_true) {
+    if (private_f_utf_character_is_whitespace(character, width) == F_true) {
       return F_false;
     }
 
-    // This test is in isolation so zero-width characters must be treated as a non-graph.
-    if (private_f_utf_character_is_zero_width(character) == F_true) {
+    if (private_f_utf_character_is_zero_width(character, width) == F_true) {
       return F_false;
     }
 
@@ -164,6 +277,26 @@ extern "C" {
     return private_f_utf_character_is_numeric(character, width);
   }
 #endif // _di_f_utf_character_is_numeric_
+
+#ifndef _di_f_utf_character_is_punctuation_
+  f_return_status f_utf_character_is_punctuation(const f_utf_character character) {
+    unsigned short width = f_macro_utf_character_width_is(character);
+
+    if (width == 0) {
+      if (isdigit(f_macro_utf_character_to_char_1(character))) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_utf);
+    }
+
+    return private_f_utf_character_is_punctuation(character, width);
+  }
+#endif // _di_f_utf_character_is_punctuation_
 
 #ifndef _di_f_utf_character_is_valid_
   f_return_status f_utf_character_is_valid(const f_utf_character character) {
@@ -193,7 +326,7 @@ extern "C" {
       return F_status_is_error(F_utf);
     }
 
-    return private_f_utf_character_is_whitespace(character);
+    return private_f_utf_character_is_whitespace(character, width);
   }
 #endif // _di_f_utf_character_is_whitespace_
 
@@ -285,7 +418,7 @@ extern "C" {
       return F_status_is_error(F_utf);
     }
 
-    return private_f_utf_character_is_zero_width(character);
+    return private_f_utf_character_is_zero_width(character, width);
   }
 #endif // _di_f_utf_character_is_zero_width_
 
@@ -446,6 +579,37 @@ extern "C" {
   }
 #endif // _di_f_utf_is_alpha_numeric_
 
+#ifndef _di_f_utf_is_combining_
+  f_return_status f_utf_is_combining(const f_string character, const f_string_length width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    uint8_t width = f_macro_utf_byte_width_is(*character);
+
+    // There are no ASCII combining characters.
+    if (width == 0) {
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_incomplete_utf);
+    }
+
+    f_utf_character character_utf = 0;
+
+    {
+      f_status status = 0;
+
+      status = f_utf_char_to_character(character, width_max, &character_utf);
+
+      if (status != F_none) return status;
+    }
+
+    return private_f_utf_character_is_combining(character_utf, width);
+  }
+#endif // _di_f_utf_is_combining_
+
 #ifndef _di_f_utf_is_control_
   f_return_status f_utf_is_control(const f_string character, const f_string_length width_max) {
     #ifndef _di_level_0_parameter_checking_
@@ -488,7 +652,7 @@ extern "C" {
 
     uint8_t width = f_macro_utf_byte_width_is(*character);
 
-    // There are not ASCII control pictures.
+    // There are no ASCII control pictures.
     if (width == 0) {
       return F_false;
     }
@@ -507,9 +671,59 @@ extern "C" {
       if (status != F_none) return status;
     }
 
-    return private_f_utf_character_is_control_picture(character_utf);
+    return private_f_utf_character_is_control_picture(character_utf, width);
   }
 #endif // _di_f_utf_is_control_picture_
+
+#ifndef _di_f_utf_is_emoji_
+  f_return_status f_utf_is_emoji(const f_string character, const f_string_length width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    uint8_t width = f_macro_utf_byte_width_is(*character);
+
+    if (width == 0) {
+      if (isdigit(*character)) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_incomplete_utf);
+    }
+
+    f_utf_character character_utf = 0;
+
+    {
+      f_status status = 0;
+
+      status = f_utf_char_to_character(character, width_max, &character_utf);
+
+      if (status != F_none) return status;
+    }
+
+    return private_f_utf_character_is_emoji(character_utf, width);
+  }
+#endif // _di_f_utf_is_emoji_
+
+#ifndef _di_f_utf_is_fragment_
+  f_return_status f_utf_is_fragment(const f_string character, const f_string_length width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    uint8_t width = f_macro_utf_byte_width_is(*character);
+
+    if (width == 1) {
+      return F_true;
+    }
+
+    return F_false;
+  }
+#endif // _di_f_utf_is_fragment_
 
 #ifndef _di_f_utf_is_graph_
   f_return_status f_utf_is_graph(const f_string character, const f_string_length width_max) {
@@ -545,12 +759,12 @@ extern "C" {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace(character_utf) == F_true) {
+    if (private_f_utf_character_is_whitespace(character_utf, width) == F_true) {
       return F_false;
     }
 
     // This test is in isolation so zero-width characters must be treated as a non-graph.
-    if (private_f_utf_character_is_zero_width(character_utf) == F_true) {
+    if (private_f_utf_character_is_zero_width(character_utf, width) == F_true) {
       return F_false;
     }
 
@@ -591,6 +805,40 @@ extern "C" {
     return private_f_utf_character_is_numeric(character_utf, width);
   }
 #endif // _di_f_utf_is_numeric_
+
+#ifndef _di_f_utf_is_punctuation_
+  f_return_status f_utf_is_punctuation(const f_string character, const f_string_length width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    uint8_t width = f_macro_utf_byte_width_is(*character);
+
+    if (width == 0) {
+      if (isdigit(*character)) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_incomplete_utf);
+    }
+
+    f_utf_character character_utf = 0;
+
+    {
+      f_status status = 0;
+
+      status = f_utf_char_to_character(character, width_max, &character_utf);
+
+      if (status != F_none) return status;
+    }
+
+    return private_f_utf_character_is_punctuation(character_utf, width);
+  }
+#endif // _di_f_utf_is_punctuation_
 
 #ifndef _di_f_utf_is_valid_
   f_return_status f_utf_is_valid(const f_string character, const f_string_length width_max) {
@@ -651,6 +899,40 @@ extern "C" {
     return f_utf_character_is_whitespace(character_utf);
   }
 #endif // _di_f_utf_is_whitespace_
+
+#ifndef _di_f_utf_is_whitespace_modifier_
+  f_return_status f_utf_is_whitespace_modifier(const f_string character, const f_string_length width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    uint8_t width = f_macro_utf_byte_width_is(*character);
+
+    if (width == 0) {
+      if (isdigit(*character)) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_incomplete_utf);
+    }
+
+    f_utf_character character_utf = 0;
+
+    {
+      f_status status = 0;
+
+      status = f_utf_char_to_character(character, width_max, &character_utf);
+
+      if (status != F_none) return status;
+    }
+
+    return private_f_utf_character_is_whitespace_modifier(character_utf, width);
+  }
+#endif // _di_f_utf_is_whitespace_modifier_
 
 #ifndef _di_f_utf_is_word_
   f_return_status f_utf_is_word(const f_string character, const f_string_length width_max) {
@@ -791,7 +1073,7 @@ extern "C" {
       if (status != F_none) return status;
     }
 
-    return private_f_utf_character_is_zero_width(character_utf);
+    return private_f_utf_character_is_zero_width(character_utf, width);
   }
 #endif // _di_f_utf_is_zero_width_
 

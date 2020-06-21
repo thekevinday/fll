@@ -164,7 +164,7 @@ extern "C" {
     if (buffer->string[range->start] == f_fss_comment) {
       fl_macro_fss_object_seek_till_newline((*buffer), (*range), delimits, F_data_not_eos, F_data_not_stop);
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
 
       return FL_fss_found_object_not;
@@ -179,7 +179,7 @@ extern "C" {
 
       found->start = range->start;
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
 
       while (range->start <= range->stop && range->start < buffer->used) {
@@ -187,7 +187,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (status == F_true) {
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
           continue;
@@ -200,7 +200,7 @@ extern "C" {
           if (status == F_true) {
             found->stop = range->start - 1;
 
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) return status;
 
             if (buffer->string[range->start] == f_string_eol[0]) {
@@ -216,7 +216,7 @@ extern "C" {
           break;
         }
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) {
           return status;
         }
@@ -236,7 +236,7 @@ extern "C" {
         delimits.array[delimits.used] = first_slash;
         delimits.used++;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) {
           f_macro_string_lengths_delete_simple(delimits);
           return status;
@@ -246,7 +246,7 @@ extern "C" {
     else if (buffer->string[range->start] == f_fss_delimit_single_quote || buffer->string[range->start] == f_fss_delimit_double_quote) {
       quoted = buffer->string[range->start];
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
 
       found->start = range->start;
@@ -266,7 +266,7 @@ extern "C" {
 
         if (status == F_true) break;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) {
           f_macro_string_lengths_delete_simple(delimits);
           return status;
@@ -282,7 +282,7 @@ extern "C" {
         return FL_fss_found_object_content_not;
       }
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) {
         f_macro_string_lengths_delete_simple(delimits);
         return status;
@@ -298,7 +298,7 @@ extern "C" {
           f_string_length first_slash = range->start;
           f_string_length slash_count = 1;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) {
             f_macro_string_lengths_delete_simple(delimits);
             return status;
@@ -307,7 +307,7 @@ extern "C" {
           while (range->start <= range->stop && range->start < buffer->used) {
 
             if (buffer->string[range->start] == f_fss_delimit_placeholder) {
-              status = f_fss_increment_buffer(*buffer, range, 1);
+              status = f_utf_buffer_increment(*buffer, range, 1);
               if (F_status_is_error(status)) {
                 f_macro_string_lengths_delete_simple(delimits);
                 return status;
@@ -321,7 +321,7 @@ extern "C" {
 
             slash_count++;
 
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               return status;
@@ -355,7 +355,7 @@ extern "C" {
                   slash_count--;
                 }
 
-                status = f_fss_increment_buffer(*buffer, range, 1);
+                status = f_utf_buffer_increment(*buffer, range, 1);
                 if (F_status_is_error(status)) {
                   f_macro_string_lengths_delete_simple(delimits);
                   return status;
@@ -370,7 +370,7 @@ extern "C" {
               if ((status = f_fss_is_graph(*buffer, *range)) == F_true) {
 
                 while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
-                  status = f_fss_increment_buffer(*buffer, range, 1);
+                  status = f_utf_buffer_increment(*buffer, range, 1);
                   if (F_status_is_error(status)) {
                     f_macro_string_lengths_delete_simple(delimits);
                     return status;
@@ -381,7 +381,7 @@ extern "C" {
 
                 f_macro_string_lengths_delete_simple(delimits);
 
-                status = f_fss_increment_buffer(*buffer, range, 1);
+                status = f_utf_buffer_increment(*buffer, range, 1);
                 if (F_status_is_error(status)) return status;
 
                 return FL_fss_found_object_not;
@@ -402,7 +402,7 @@ extern "C" {
 
               found->stop = length - 1;
 
-              status = f_fss_increment_buffer(*buffer, range, 1);
+              status = f_utf_buffer_increment(*buffer, range, 1);
               if (F_status_is_error(status)) return status;
 
               return FL_fss_found_object;
@@ -427,7 +427,7 @@ extern "C" {
                   slash_count--;
                 }
 
-                status = f_fss_increment_buffer(*buffer, range, 1);
+                status = f_utf_buffer_increment(*buffer, range, 1);
                 if (F_status_is_error(status)) {
                   f_macro_string_lengths_delete_simple(delimits);
                   return status;
@@ -441,7 +441,7 @@ extern "C" {
         else if (buffer->string[range->start] == quoted) {
           found->stop = range->start - 1;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) {
             f_macro_string_lengths_delete_simple(delimits);
             return status;
@@ -457,7 +457,7 @@ extern "C" {
             else if ((status = f_fss_is_space(*buffer, *range)) == F_true) {
               fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
-              status = f_fss_increment_buffer(*buffer, range, 1);
+              status = f_utf_buffer_increment(*buffer, range, 1);
               if (F_status_is_error(status)) return status;
 
               return FL_fss_found_object;
@@ -469,7 +469,7 @@ extern "C" {
             else if (buffer->string[range->start] != f_fss_delimit_placeholder) {
 
               while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
-                status = f_fss_increment_buffer(*buffer, range, 1);
+                status = f_utf_buffer_increment(*buffer, range, 1);
                 if (F_status_is_error(status)) {
                   f_macro_string_lengths_delete_simple(delimits);
                   return status;
@@ -481,13 +481,13 @@ extern "C" {
 
               f_macro_string_lengths_delete_simple(delimits);
 
-              status = f_fss_increment_buffer(*buffer, range, 1);
+              status = f_utf_buffer_increment(*buffer, range, 1);
               if (F_status_is_error(status)) return status;
 
               return FL_fss_found_object_not;
             }
 
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) return status;
           } // while
 
@@ -500,7 +500,7 @@ extern "C" {
           return FL_fss_found_object_not;
         }
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) {
           f_macro_string_lengths_delete_simple(delimits);
           return status;
@@ -512,7 +512,7 @@ extern "C" {
 
     // seek to the end of the line when no valid object is found
     while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) {
         f_macro_string_lengths_delete_simple(delimits);
         return status;
@@ -523,7 +523,7 @@ extern "C" {
 
     f_macro_string_lengths_delete_simple(delimits);
 
-    status = f_fss_increment_buffer(*buffer, range, 1);
+    status = f_utf_buffer_increment(*buffer, range, 1);
     if (F_status_is_error(status)) return status;
 
     return FL_fss_found_object_not;

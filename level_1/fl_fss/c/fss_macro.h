@@ -20,7 +20,7 @@ extern "C" {
   { \
     f_status macro_allocation_status = F_none; \
     \
-    f_string_length i = 0; \
+    f_array_length i = 0; \
     \
     while (i < delimits.used) { \
       buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
@@ -63,7 +63,7 @@ extern "C" {
   #define fl_macro_fss_object_delimited_return_on_overflow(buffer, location, found, delimits, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
       f_status macro_allocation_status = F_none; \
-      f_string_length i = 0; \
+      f_array_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
@@ -76,7 +76,7 @@ extern "C" {
     } \
     else if (location.start > location.stop) { \
       f_status macro_allocation_status = F_none; \
-      f_string_length i = 0; \
+      f_array_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
@@ -111,7 +111,7 @@ extern "C" {
   #define fl_macro_fss_content_delimited_return_on_overflow(buffer, location, found, delimits, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
       f_status macro_allocation_status = F_none; \
-      f_string_length i = 0; \
+      f_array_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
@@ -124,7 +124,7 @@ extern "C" {
     } \
     else if (location.start > location.stop) { \
       f_status macro_allocation_status = F_none; \
-      f_string_length i = 0; \
+      f_array_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
@@ -178,7 +178,7 @@ extern "C" {
   #define fl_macro_fss_nest_delimited_return_on_overflow(buffer, location, found, delimits, positions, objects, eos_status, stop_status) \
     if (location.start >= buffer.used) { \
       f_status macro_allocation_status = F_none; \
-      f_string_length i = 0; \
+      f_array_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
@@ -192,7 +192,7 @@ extern "C" {
     } \
     else if (location.start > location.stop) { \
       f_status macro_allocation_status = F_none; \
-      f_string_length i = 0; \
+      f_array_length i = 0; \
       \
       while (i < delimits.used) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
@@ -232,7 +232,7 @@ extern "C" {
       location.start++; \
       if (location.start >= buffer.used) { \
         f_status macro_allocation_status = F_none; \
-        f_string_length i = 0; \
+        f_array_length i = 0; \
         \
         while (i < delimits.used) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
@@ -244,7 +244,7 @@ extern "C" {
       } \
       if (location.start > location.stop) { \
         f_status macro_allocation_status = F_none; \
-        f_string_length i = 0; \
+        f_array_length i = 0; \
         \
         while (i < delimits.used) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
@@ -284,7 +284,7 @@ extern "C" {
       location.start++; \
       if (location.start >= buffer.used) { \
         f_status macro_allocation_status = F_none; \
-        f_string_length i = 0; \
+        f_array_length i = 0; \
         \
         while (i < delimits.used) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
@@ -297,7 +297,7 @@ extern "C" {
       } \
       if (location.start > location.stop) { \
         f_status macro_allocation_status = F_none; \
-        f_string_length i = 0; \
+        f_array_length i = 0; \
         \
         while (i < delimits.used) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \

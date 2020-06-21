@@ -75,7 +75,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors from (with error bit): f_fss_increment_buffer().
+ *   Errors from (with error bit): f_utf_buffer_increment().
  *   Errors from (with error bit): f_fss_is_graph().
  *   Errors from (with error bit): f_fss_is_space().
  *   Errors from (with error bit): f_fss_skip_past_space().

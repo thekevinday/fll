@@ -79,7 +79,7 @@ extern "C" {
       if (buffer->string[range->start] == f_fss_delimit_slash) {
         f_string_length last_slash = range->start;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) {
           f_macro_string_lengths_delete_simple(delimits);
           return status;
@@ -87,7 +87,7 @@ extern "C" {
 
         while (range->start <= range->stop && range->start < buffer->used) {
           if (buffer->string[range->start] == f_fss_delimit_placeholder) {
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               return status;
@@ -101,7 +101,7 @@ extern "C" {
           if (status == F_true) {
             found->array[found->used].stop = range->start - 1;
 
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               return status;
@@ -127,7 +127,7 @@ extern "C" {
 
           last_slash = range->start;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -151,7 +151,7 @@ extern "C" {
           delimits.array[delimits.used] = last_slash;
           delimits.used++;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) {
             f_macro_string_lengths_delete_simple(delimits);
             return status;
@@ -161,7 +161,7 @@ extern "C" {
       else if (buffer->string[range->start] == f_fss_delimit_single_quote || buffer->string[range->start] == f_fss_delimit_double_quote) {
         quoted = buffer->string[range->start];
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) {
           f_macro_string_lengths_delete_simple(delimits);
           return status;
@@ -183,7 +183,7 @@ extern "C" {
 
           if (status == F_true) break;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) {
             f_macro_string_lengths_delete_simple(delimits);
             return status;
@@ -202,7 +202,7 @@ extern "C" {
           return FL_fss_found_content;
         }
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) {
           f_macro_string_lengths_delete_simple(delimits);
           return status;
@@ -217,7 +217,7 @@ extern "C" {
             f_string_length first_slash = range->start;
             f_string_length slash_count = 1;
 
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               return status;
@@ -225,7 +225,7 @@ extern "C" {
 
             while (range->start <= range->stop && range->start < buffer->used) {
               if (buffer->string[range->start] == f_fss_delimit_placeholder) {
-                status = f_fss_increment_buffer(*buffer, range, 1);
+                status = f_utf_buffer_increment(*buffer, range, 1);
                 if (F_status_is_error(status)) {
                   f_macro_string_lengths_delete_simple(delimits);
                   return status;
@@ -239,7 +239,7 @@ extern "C" {
 
               slash_count++;
 
-              status = f_fss_increment_buffer(*buffer, range, 1);
+              status = f_utf_buffer_increment(*buffer, range, 1);
               if (F_status_is_error(status)) {
                 f_macro_string_lengths_delete_simple(delimits);
                 return status;
@@ -272,7 +272,7 @@ extern "C" {
                     slash_count--;
                   }
 
-                  status = f_fss_increment_buffer(*buffer, range, 1);
+                  status = f_utf_buffer_increment(*buffer, range, 1);
                   if (F_status_is_error(status)) {
                     f_macro_string_lengths_delete_simple(delimits);
                     return status;
@@ -288,7 +288,7 @@ extern "C" {
 
                 if (status == F_true) {
                   while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
-                    status = f_fss_increment_buffer(*buffer, range, 1);
+                    status = f_utf_buffer_increment(*buffer, range, 1);
                     if (F_status_is_error(status)) {
                       f_macro_string_lengths_delete_simple(delimits);
                       return status;
@@ -297,7 +297,7 @@ extern "C" {
 
                   fl_macro_fss_content_return_on_overflow((*buffer), (*range), (*found), delimits, F_unterminated_group_eos, F_unterminated_group_stop)
 
-                  status = f_fss_increment_buffer(*buffer, range, 1);
+                  status = f_utf_buffer_increment(*buffer, range, 1);
                   if (F_status_is_error(status)) {
                     f_macro_string_lengths_delete_simple(delimits);
                     return status;
@@ -321,7 +321,7 @@ extern "C" {
 
                 found->array[found->used].stop = location - 1;
 
-                status = f_fss_increment_buffer(*buffer, range, 1);
+                status = f_utf_buffer_increment(*buffer, range, 1);
                 if (F_status_is_error(status)) {
                   f_macro_string_lengths_delete_simple(delimits);
                   return status;
@@ -350,7 +350,7 @@ extern "C" {
                     slash_count--;
                   }
 
-                  status = f_fss_increment_buffer(*buffer, range, 1);
+                  status = f_utf_buffer_increment(*buffer, range, 1);
                   if (F_status_is_error(status)) {
                     f_macro_string_lengths_delete_simple(delimits);
                     return status;
@@ -364,7 +364,7 @@ extern "C" {
           else if (buffer->string[range->start] == quoted) {
             found->array[found->used].stop = range->start - 1;
 
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(delimits);
               return status;
@@ -383,7 +383,7 @@ extern "C" {
               status = f_fss_is_space(*buffer, *range);
 
               if (status == F_true) {
-                status = f_fss_increment_buffer(*buffer, range, 1);
+                status = f_utf_buffer_increment(*buffer, range, 1);
                 if (F_status_is_error(status)) {
                   f_macro_string_lengths_delete_simple(delimits);
                   return status;
@@ -400,7 +400,7 @@ extern "C" {
               else if (buffer->string[range->start] != f_fss_delimit_placeholder) {
 
                 while (range->start < buffer->used && range->start <= range->stop) {
-                  status = f_fss_increment_buffer(*buffer, range, 1);
+                  status = f_utf_buffer_increment(*buffer, range, 1);
                   if (F_status_is_error(status)) {
                     f_macro_string_lengths_delete_simple(delimits);
                     return status;
@@ -411,7 +411,7 @@ extern "C" {
                   if (buffer->string[range->start] == f_string_eol[0]) break;
                 } // while
 
-                status = f_fss_increment_buffer(*buffer, range, 1);
+                status = f_utf_buffer_increment(*buffer, range, 1);
                 if (F_status_is_error(status)) {
                   f_macro_string_lengths_delete_simple(delimits);
                   return status;
@@ -420,7 +420,7 @@ extern "C" {
                 return F_unterminated_group;
               }
 
-              status = f_fss_increment_buffer(*buffer, range, 1);
+              status = f_utf_buffer_increment(*buffer, range, 1);
               if (F_status_is_error(status)) {
                 f_macro_string_lengths_delete_simple(delimits);
                 return status;
@@ -444,7 +444,7 @@ extern "C" {
 
               found->array[found->used].stop = range->start - 1;
 
-              status = f_fss_increment_buffer(*buffer, range, 1);
+              status = f_utf_buffer_increment(*buffer, range, 1);
               if (F_status_is_error(status)) {
                 f_macro_string_lengths_delete_simple(delimits);
                 return status;
@@ -456,7 +456,7 @@ extern "C" {
             }
           }
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) {
             f_macro_string_lengths_delete_simple(delimits);
             return status;
@@ -478,7 +478,7 @@ extern "C" {
 
     // seek to the end of the line when no valid content is found
     while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) {
         f_macro_string_lengths_delete_simple(delimits);
         return status;
@@ -488,7 +488,7 @@ extern "C" {
     fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop)
 
     if (found->used == already_used) {
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) {
         f_macro_string_lengths_delete_simple(delimits);
         return status;
@@ -499,7 +499,7 @@ extern "C" {
 
     fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
-    status = f_fss_increment_buffer(*buffer, range, 1);
+    status = f_utf_buffer_increment(*buffer, range, 1);
     if (F_status_is_error(status)) {
       f_macro_string_lengths_delete_simple(delimits);
       return status;
@@ -543,7 +543,7 @@ extern "C" {
     if (object.string[range->start] == f_fss_delimit_slash) {
       while (range->start <= range->stop && range->start < object.used) {
         if (object.string[range->start] == f_fss_delimit_placeholder) {
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
           continue;
@@ -554,7 +554,7 @@ extern "C" {
         buffer->string[buffer_position.stop] = object.string[range->start];
         buffer_position.stop++;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
       } // while
 
@@ -571,7 +571,7 @@ extern "C" {
         buffer->string[buffer_position.stop + 1] = object.string[range->start];
         buffer_position.stop += 2;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
       }
     }
@@ -587,7 +587,7 @@ extern "C" {
       buffer->string[buffer_position.stop + 1] = object.string[range->start];
       buffer_position.stop += 2;
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
     }
     else if (object.string[range->start] == f_fss_comment) {
@@ -596,7 +596,7 @@ extern "C" {
 
     while (range->start <= range->stop && range->start < object.used) {
       if (object.string[range->start] == f_fss_delimit_placeholder) {
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
 
         continue;
@@ -616,11 +616,11 @@ extern "C" {
         f_string_length first_space = range->start;
 
         if (!quoted) {
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
           while (range->start <= range->stop && range->start < object.used && isspace(object.string[range->start])) {
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) return status;
           } // while
 
@@ -648,7 +648,7 @@ extern "C" {
 
         while (range->start <= range->stop && range->start < object.used) {
           if (object.string[range->start] == f_fss_delimit_placeholder) {
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) return status;
 
             continue;
@@ -673,7 +673,7 @@ extern "C" {
               buffer_position.stop++;
               slash_count++;
 
-              status = f_fss_increment_buffer(*buffer, range, 1);
+              status = f_utf_buffer_increment(*buffer, range, 1);
               if (F_status_is_error(status)) return status;
 
               fl_macro_fss_skip_past_delimit_placeholders(object, (*range));
@@ -718,7 +718,7 @@ extern "C" {
 
           buffer->string[buffer_position.stop] = object.string[range->start];
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
           buffer_position.stop++;
@@ -735,7 +735,7 @@ extern "C" {
 
       buffer->string[buffer_position.stop] = object.string[range->start];
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
 
       buffer_position.stop++;
@@ -789,12 +789,12 @@ extern "C" {
       buffer->string[buffer_position.stop] = f_fss_delimit_slash;
       buffer_position.stop++;
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
 
       while (range->start <= range->stop && range->start < content.used) {
         if (content.string[range->start] == f_fss_delimit_placeholder) {
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
           continue;
@@ -807,7 +807,7 @@ extern "C" {
         buffer->string[buffer_position.stop] = f_fss_delimit_slash;
         buffer_position.stop++;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
       } // while
 
@@ -834,7 +834,7 @@ extern "C" {
         buffer->string[buffer_position.stop + 1] = content.string[range->start];
         buffer_position.stop += 2;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
       }
     }
@@ -850,7 +850,7 @@ extern "C" {
       buffer->string[buffer_position.stop + 1] = content.string[range->start];
       buffer_position.stop += 2;
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
     }
 
@@ -884,7 +884,7 @@ extern "C" {
       buffer->string[buffer_position.stop] = content.string[range->start];
       buffer_position.stop++;
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
@@ -896,12 +896,12 @@ extern "C" {
           buffer->string[buffer_position.stop] = f_fss_delimit_slash;
           buffer_position.stop++;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
           while (range->start <= range->stop && range->start < content.used) {
             if (content.string[range->start] == f_fss_delimit_placeholder) {
-              status = f_fss_increment_buffer(*buffer, range, 1);
+              status = f_utf_buffer_increment(*buffer, range, 1);
               if (F_status_is_error(status)) return status;
 
               continue;
@@ -915,7 +915,7 @@ extern "C" {
             buffer_position.stop++;
             slash_count++;
 
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) return status;
           } // while
 
@@ -969,7 +969,7 @@ extern "C" {
           buffer_position.stop++;
         }
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
       } // while
 

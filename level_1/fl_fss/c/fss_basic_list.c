@@ -43,7 +43,7 @@ extern "C" {
     if (buffer->string[range->start] == f_fss_comment) {
       fl_macro_fss_object_seek_till_newline((*buffer), (*range), delimits, F_data_not_eos, F_data_not_stop)
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
 
       return FL_fss_found_object_not;
@@ -55,7 +55,7 @@ extern "C" {
         f_string_length first_slash = range->start;
         f_string_length slash_count = 1;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
 
         while (range->start < buffer->used && range->start <= range->stop && (buffer->string[range->start] == f_fss_delimit_placeholder || buffer->string[range->start] == f_fss_delimit_slash)) {
@@ -63,7 +63,7 @@ extern "C" {
             slash_count++;
           }
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -72,7 +72,7 @@ extern "C" {
         if (buffer->string[range->start] == f_fss_basic_list_open) {
           f_string_length stop_point = range->start - 1;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
           while (range->start < buffer->used && range->start <= range->stop) {
@@ -83,7 +83,7 @@ extern "C" {
             if (F_status_is_error(status)) return status;
             if (status == F_false) break;
 
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) return status;
           } // while
 
@@ -114,7 +114,7 @@ extern "C" {
                   slash_count--;
                 }
 
-                status = f_fss_increment_buffer(*buffer, range, 1);
+                status = f_utf_buffer_increment(*buffer, range, 1);
                 if (F_status_is_error(status)) return status;
               } // while
 
@@ -136,7 +136,7 @@ extern "C" {
       else if (buffer->string[range->start] == f_fss_basic_list_open) {
         f_string_length stop_point = range->start - 1;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
 
         while (range->start < buffer->used && range->start <= range->stop) {
@@ -147,7 +147,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
           if (status == F_false) break;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -158,7 +158,7 @@ extern "C" {
 
           found->stop = stop_point;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
           return FL_fss_found_object;
@@ -167,19 +167,19 @@ extern "C" {
         continue;
       }
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
     // seek to the end of the line when no valid object is found.
     while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
     fl_macro_fss_object_return_on_overflow((*buffer), (*range), (*found), delimits, F_data_not_eos, F_data_not_stop);
 
-    status = f_fss_increment_buffer(*buffer, range, 1);
+    status = f_utf_buffer_increment(*buffer, range, 1);
     if (F_status_is_error(status)) return status;
 
     return FL_fss_found_object_not;
@@ -217,7 +217,7 @@ extern "C" {
         found_newline = F_true;
         last_newline = range->start;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
 
         fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop)
@@ -229,7 +229,7 @@ extern "C" {
         f_string_length first_slash = range->start;
         f_string_length slash_count = 1;
 
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
 
         while (range->start < buffer->used && range->start <= range->stop && (buffer->string[range->start] == f_fss_delimit_placeholder || buffer->string[range->start] == f_fss_delimit_slash)) {
@@ -237,7 +237,7 @@ extern "C" {
             slash_count++;
           }
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -251,7 +251,7 @@ extern "C" {
         if (buffer->string[range->start] == f_fss_basic_list_open) {
           f_string_length stop_point = range->start - 1;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
           while (range->start < buffer->used && range->start <= range->stop) {
@@ -262,7 +262,7 @@ extern "C" {
             if (F_status_is_error(status)) return status;
             if (status == F_false) break;
 
-            status = f_fss_increment_buffer(*buffer, range, 1);
+            status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) return status;
           } // while
 
@@ -311,7 +311,7 @@ extern "C" {
                 slash_count--;
               }
 
-              status = f_fss_increment_buffer(*buffer, range, 1);
+              status = f_utf_buffer_increment(*buffer, range, 1);
               if (F_status_is_error(status)) return status;
             } // while
 
@@ -323,7 +323,7 @@ extern "C" {
         continue;
       }
       else if (buffer->string[range->start] == f_fss_basic_list_open) {
-        status = f_fss_increment_buffer(*buffer, range, 1);
+        status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
 
         while (range->start < buffer->used && range->start <= range->stop) {
@@ -334,7 +334,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
           if (status == F_false) break;
 
-          status = f_fss_increment_buffer(*buffer, range, 1);
+          status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -366,7 +366,7 @@ extern "C" {
         continue;
       }
 
-      status = f_fss_increment_buffer(*buffer, range, 1);
+      status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
@@ -436,7 +436,7 @@ extern "C" {
         buffer_position.stop++;
       }
 
-      status = f_fss_increment_buffer(object, range, 1);
+      status = f_utf_buffer_increment(object, range, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
@@ -447,12 +447,12 @@ extern "C" {
         buffer->string[buffer_position.stop] = object.string[range->start];
         buffer_position.stop++;
 
-        status = f_fss_increment_buffer(object, range, 1);
+        status = f_utf_buffer_increment(object, range, 1);
         if (F_status_is_error(status)) return status;
 
         while (range->start <= range->stop && range->start < object.used) {
           if (object.string[range->start] == f_fss_delimit_placeholder) {
-            status = f_fss_increment_buffer(object, range, 1);
+            status = f_utf_buffer_increment(object, range, 1);
             if (F_status_is_error(status)) return status;
 
             continue;
@@ -463,7 +463,7 @@ extern "C" {
           buffer->string[buffer_position.stop] = object.string[range->start];
           buffer_position.stop++;
 
-          status = f_fss_increment_buffer(object, range, 1);
+          status = f_utf_buffer_increment(object, range, 1);
           if (F_status_is_error(status)) return status;
 
           slash_count++;
@@ -499,7 +499,7 @@ extern "C" {
         buffer_position.stop++;
       }
 
-      status = f_fss_increment_buffer(object, range, 1);
+      status = f_utf_buffer_increment(object, range, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
@@ -555,12 +555,12 @@ extern "C" {
         buffer_position.stop++;
 
         has_graph = F_true;
-        status = f_fss_increment_buffer(content, range, 1);
+        status = f_utf_buffer_increment(content, range, 1);
         if (F_status_is_error(status)) return status;
 
         while (range->start <= range->stop && range->start < content.used) {
           if (content.string[range->start] == f_fss_delimit_placeholder) {
-            status = f_fss_increment_buffer(content, range, 1);
+            status = f_utf_buffer_increment(content, range, 1);
             if (F_status_is_error(status)) return status;
 
             continue;
@@ -572,7 +572,7 @@ extern "C" {
           buffer->string[buffer_position.stop] = content.string[range->start];
           buffer_position.stop++;
 
-          status = f_fss_increment_buffer(content, range, 1);
+          status = f_utf_buffer_increment(content, range, 1);
           if (F_status_is_error(status)) return status;
 
           slash_count++;
@@ -581,7 +581,7 @@ extern "C" {
         if (content.string[range->start] == f_fss_basic_list_open) {
           f_string_length start = range->start;
 
-          status = f_fss_increment_buffer(content, range, 1);
+          status = f_utf_buffer_increment(content, range, 1);
           if (F_status_is_error(status)) return status;
 
           while (range->start < content.used && range->start <= range->stop) {
@@ -592,7 +592,7 @@ extern "C" {
             if (F_status_is_error(status)) return status;
             if (status == F_false) break;
 
-            status = f_fss_increment_buffer(content, range, 1);
+            status = f_utf_buffer_increment(content, range, 1);
             if (F_status_is_error(status)) return status;
           } // while
 
@@ -627,7 +627,7 @@ extern "C" {
 
         has_graph = F_true;
 
-        status = f_fss_increment_buffer(content, range, 1);
+        status = f_utf_buffer_increment(content, range, 1);
         if (F_status_is_error(status)) return status;
 
         while (range->start < content.used && range->start <= range->stop) {
@@ -638,7 +638,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
           if (status == F_false) break;
 
-          status = f_fss_increment_buffer(content, range, 1);
+          status = f_utf_buffer_increment(content, range, 1);
           if (F_status_is_error(status)) return status;
         } // while
 
@@ -680,7 +680,7 @@ extern "C" {
         buffer_position.stop++;
       }
 
-      status = f_fss_increment_buffer(content, range, 1);
+      status = f_utf_buffer_increment(content, range, 1);
       if (F_status_is_error(status)) return status;
     } // while
 
