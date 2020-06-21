@@ -9,21 +9,23 @@
  *
  * This is auto-included by iki.h and should not need to be explicitly included.
  */
-#ifndef _F_iki_h
-#define _F_iki_h
-
-// libc includes
-#include <stdio.h>
-#include <sys/stat.h>
-
-// fll-0 includes
-#include <level_0/status.h>
-#include <level_0/string.h>
-#include <level_0/type.h>
+#ifndef _F_iki_common_h
+#define _F_iki_common_h
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * IKI-specific syntax.
+ */
+#ifndef _di_f_iki_syntax_
+  #define f_iki_syntax_separator   ':'
+  #define f_iki_syntax_placeholder  0
+  #define f_iki_syntax_quote_double '"'
+  #define f_iki_syntax_quote_single '\''
+  #define f_iki_syntax_slash        '\\'
+#endif //_di_f_iki_syntax_
 
 #ifndef _di_iki_vocabulary_0000_
   #define iki_vocabulary_0000_emphasis "emphasis"
@@ -44,9 +46,11 @@ extern "C" {
 #endif // _di_iki_vocabulary_0000_
 
 #ifndef _di_iki_vocabulary_0001_
-  #define iki_vocabulary_0001_variable "var"
+  #define iki_vocabulary_0001_define    "define"
+  #define iki_vocabulary_0001_parameter "parameter"
 
-  #define iki_vocabulary_0001_variable_length 3
+  #define iki_vocabulary_0001_define_length    6
+  #define iki_vocabulary_0001_parameter_length 9
 #endif // _di_iki_vocabulary_0001_
 
 /**
@@ -155,8 +159,112 @@ extern "C" {
   #define f_macro_iki_contents_adjust(status, content, new_length) f_macro_string_rangess_adjust(status, content, new_length)
 #endif // _di_iki_contents_
 
+/**
+ * Provide a default allocation step.
+ *
+ * For a UTF-8 friendly allocation step, set to at least 4.
+ */
+#ifndef _di_f_iki_default_allocation_step_
+  #define f_iki_default_allocation_step 4
+#endif // _di_f_iki_default_allocation_step_
+
+/**
+ * Reallocate delimits array if necessary for appending a new delimit.
+ *
+ * status:   The return status to use.
+ * delimits: The delimit array to conditionally reallocate.
+ */
+#ifndef _di_f_macro_iki_allocate_delimits_if_necessary_
+  #define f_macro_iki_allocate_delimits_if_necessary(status, delimits) \
+    status = F_none; \
+    if (delimits.used + 1 > delimits.size) { \
+      if (delimits.used + f_iki_default_allocation_step > f_string_length_size) { \
+        if (delimits.used + 1 > f_string_length_size) { \
+          status = F_status_set_error(F_string_too_large); \
+        } \
+        else { \
+          f_macro_string_lengths_resize(status, delimits, delimits.size + 1); \
+        } \
+      } \
+      else { \
+        f_macro_string_lengths_resize(status, delimits, delimits.size + f_iki_default_allocation_step); \
+      } \
+    }
+#endif // _di_f_macro_iki_allocate_delimits_if_necessary_
+
+/**
+ * Reallocate delimits array if necessary for appending a new ranges.
+ *
+ * status: The return status to use.
+ * ranges: The delimit array to conditionally reallocate.
+ */
+#ifndef _di_f_macro_iki_allocate_ranges_if_necessary_
+  #define f_macro_iki_allocate_ranges_if_necessary(status, ranges) \
+    status = F_none; \
+    if (ranges.used + 1 > ranges.size) { \
+      if (ranges.used + f_iki_default_allocation_step > f_string_length_size) { \
+        if (ranges.used + 1 > f_string_length_size) { \
+          status = F_status_set_error(F_string_too_large); \
+        } \
+        else { \
+          f_macro_string_ranges_resize(status, ranges, ranges.size + 1); \
+        } \
+      } \
+      else { \
+        f_macro_string_ranges_resize(status, ranges, ranges.size + f_iki_default_allocation_step); \
+      } \
+    }
+#endif // _di_f_macro_iki_allocate_ranges_if_necessary_
+
+/**
+ * Determine what the max width is based on the buffer and the range.
+ *
+ * buffer:    (A pointer) The buffer to determine width against.
+ * range:     (A pointer) The range within that buffer to determine against.
+ * width_max: The determined width max.
+ */
+#ifndef _di_f_macro_iki_determine_width_max_
+  #define f_macro_iki_determine_width_max(buffer, range, width_max) \
+    width_max = (range->stop - range->start) + 1; \
+    if (width_max > buffer->used - range->start) { \
+      width_max = buffer->used - range->start; \
+    }
+#endif // _di_f_macro_iki_determine_width_max_
+/**
+ * Seek until whitespace is found.
+ *
+ * status: The return status to use.
+ * buffer: (A pointer) The buffer to seek through.
+ * range:  (A pointer) The range within that buffer to seek through.
+ */
+#ifndef _di_f_macro_iki_seek_whitespace_
+  #define f_macro_iki_seek_whitespace(status, buffer, range, width_max) \
+    while (range->start <= range->stop && range->start < buffer->used) { \
+      f_macro_iki_determine_width_max(buffer, range, width_max); \
+      status = f_utf_is_whitespace(buffer->string + range->start, width_max); \
+      if (status == F_true) break; \
+      else if (F_status_is_error(status)) break; \
+      status = f_utf_buffer_increment(*buffer, range, 1); \
+      if (F_status_is_error(status)) break; \
+    }
+#endif // _di_f_macro_iki_seek_whitespace_
+
+/**
+ * Skip past all delimit placeholders.
+ *
+ * status: The return status to use.
+ * buffer: (A pointer) The buffer to skip through.
+ * range:  (A pointer) The range within that buffer to skip through.
+ */
+#ifndef _di_f_macro_iki_skip_past_delimit_placeholders_
+  #define f_macro_iki_skip_past_delimit_placeholders(status, buffer, range) \
+    do { \
+      status = f_utf_buffer_increment(*buffer, range, 1); \
+    } while (F_status_is_fine(status) && buffer->string[range->start] == f_iki_syntax_placeholder);
+#endif // _di_f_macro_iki_skip_past_delimit_placeholders_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _F_iki_h
+#endif // _F_iki_common_h
