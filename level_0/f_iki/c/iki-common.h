@@ -54,6 +54,32 @@ extern "C" {
 #endif // _di_iki_vocabulary_0001_
 
 /**
+ * This holds an array of string ranges that represent the entire vocabulary name, content, and syntax.
+ *
+ * array: The array of variable.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_iki_variable_
+  typedef f_string_ranges f_iki_variable;
+
+  #define f_iki_variable_initialize f_string_ranges_initialize
+
+  #define f_macro_iki_variable_clear(variable) f_macro_string_ranges_clear(variable)
+
+  #define f_macro_iki_variable_new(status, variable, length) f_macro_string_ranges_new(status, variable, length)
+
+  #define f_macro_iki_variable_delete(status, variable)  f_macro_string_ranges_delete(status, variable)
+  #define f_macro_iki_variable_destroy(status, variable) f_macro_string_ranges_destroy(status, variable)
+
+  #define f_macro_iki_variable_delete_simple(variable)  f_macro_string_ranges_delete_simple(variable)
+  #define f_macro_iki_variable_destroy_simple(variable) f_macro_string_ranges_destroy_simple(variable)
+
+  #define f_macro_iki_variable_resize(status, variable, new_length) f_macro_string_ranges_resize(status, variable, new_length)
+  #define f_macro_iki_variable_adjust(status, variable, new_length) f_macro_string_ranges_destroy(status, variable, new_length)
+#endif // _di_iki_variable_
+
+/**
  * This holds an array of string ranges that represent the vocabulary names.
  *
  * array: The array of vocabulary names.

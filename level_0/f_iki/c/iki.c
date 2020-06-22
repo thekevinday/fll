@@ -5,16 +5,17 @@ extern "C" {
 #endif
 
 #ifndef _di_f_iki_read_
-  f_return_status f_iki_read(f_string_static *buffer, f_string_range *range, f_iki_vocabulary *vocabulary, f_iki_content *content) {
-    #ifndef _di_level_1_parameter_checking_
+  f_return_status f_iki_read(f_string_static *buffer, f_string_range *range, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content) {
+    #ifndef _di_level_0_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
+      if (variable == 0) return F_status_set_error(F_parameter);
       if (vocabulary == 0) return F_status_set_error(F_parameter);
       if (content == 0) return F_status_set_error(F_parameter);
       if (buffer->used == 0) return F_status_set_error(F_parameter);
       if (range->start > range->stop) return F_status_set_error(F_parameter);
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
+    #endif // _di_level_0_parameter_checking_
 
     f_status status = F_none;
 
@@ -92,6 +93,7 @@ extern "C" {
           // found a valid vocabulary name.
           if (buffer->string[range->start] == f_iki_syntax_quote_single || buffer->string[range->start] == f_iki_syntax_quote_double) {
             quote = buffer->string[range->start];
+            range->start++;
             break;
           }
 
@@ -241,17 +243,24 @@ extern "C" {
               found_vocabulary.start = range->start;
             }
             else {
-              f_macro_iki_allocate_ranges_if_necessary(status, (*vocabulary));
+              f_macro_iki_allocate_ranges_if_necessary(status, (*variable));
+
+              if (F_status_is_fine(status)) {
+                f_macro_iki_allocate_ranges_if_necessary(status, (*vocabulary));
+              }
+
+              if (F_status_is_fine(status)) {
+                f_macro_iki_allocate_ranges_if_necessary(status, (*content));
+              }
+
               if (F_status_is_error(status)) {
                 f_macro_string_lengths_delete(status, delimits);
                 return status;
               }
 
-              f_macro_iki_allocate_ranges_if_necessary(status, (*content));
-              if (F_status_is_error(status)) {
-                f_macro_string_lengths_delete(status, delimits);
-                return status;
-              }
+              variable->array[variable->used].start = found_vocabulary.start;
+              variable->array[variable->used].stop = range->start;
+              variable->used++;
 
               vocabulary->array[vocabulary->used].start = found_vocabulary.start;
               vocabulary->array[vocabulary->used].stop = found_vocabulary.stop;
