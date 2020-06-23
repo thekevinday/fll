@@ -228,7 +228,7 @@ extern "C" {
 
     fake_make_load_setting(data, &data_make, &status);
 
-    fake_make_operate_section(data, data_make, data_make.main, &list_stack, &status);
+    fake_make_operate_section(data, data_make.main, &data_make, &list_stack, &status);
 
     f_macro_string_lengths_delete_simple(list_stack);
     fake_macro_make_data_delete_simple(data_make);
@@ -238,8 +238,9 @@ extern "C" {
 #endif // _di_fake_make_operate_
 
 #ifndef _di_fake_make_operation_expand_
-  void fake_make_operation_expand(const fake_data data, const fake_make_data data_make, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_fss_content content, f_string_dynamics *arguments, f_status *status) {
+  void fake_make_operation_expand(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_fss_content content, fake_make_data *data_make, f_string_dynamics *arguments, f_status *status) {
     if (F_status_is_error(*status)) return;
+    if (content.used == 0) return;
 
     if (data.verbosity == fake_verbosity_verbose) {
       fl_color_print(f_type_output, data.context.standout, data.context.reset, "Expanding content values for section operation '");
@@ -250,21 +251,162 @@ extern "C" {
 
       fl_color_print_line(f_type_output, data.context.standout, data.context.reset, "'.");
     }
+
+    // pre-allocate the known arguments size.
+    if (arguments->used + content.used > arguments->size) {
+      if (arguments->used + content.used > F_buffer_too_large) {
+        *status = F_status_set_error(F_buffer_too_large);
+      }
+      else {
+        f_macro_string_dynamics_resize((*status), (*arguments), arguments->used + content.used);
+      }
+
+      if (F_status_is_error(*status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true);
+        return;
+      }
+    }
+
+    f_iki_variable iki_variable = f_iki_variable_initialize;
+    f_iki_vocabulary iki_vocabulary = f_iki_vocabulary_initialize;
+    f_iki_content iki_content = f_iki_content_initialize;
+    f_string_range range = f_string_range_initialize;
+
+    for (f_array_length i = 0; i < content.used; i++) {
+      if (content.array[i].start > content.array[i].stop) {
+        continue;
+      }
+
+      range = content.array[i];
+
+      *status = fl_iki_read(&data_make->buffer, &range, &iki_variable, &iki_vocabulary, &iki_content);
+      if (F_status_is_error(*status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_iki_read", F_true);
+        break;
+      }
+
+      if (arguments->used + 1 > arguments->size) {
+        if (arguments->used + f_memory_default_allocation_step <= F_buffer_too_large) {
+          f_macro_string_dynamics_resize((*status), (*arguments), arguments->used + f_memory_default_allocation_step);
+        }
+        else if (arguments->used + 1 <= F_buffer_too_large) {
+          f_macro_string_dynamics_resize((*status), (*arguments), arguments->used + 1);
+        }
+        else {
+          *status = F_status_set_error(F_buffer_too_large);
+        }
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true);
+          return;
+        }
+      }
+
+      if (iki_variable.used) {
+        if (content.array[i].start < iki_variable.array[0].start) {
+          range.start = content.array[i].start;
+          range.stop = iki_variable.array[0].start - 1;
+
+          *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_partial_append_nulless", F_true);
+            break;
+          }
+
+          *status = fl_string_append_assure(" ", 1, &arguments->array[arguments->used]);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+            break;
+          }
+        }
+
+        for (f_array_length j = 0; j < iki_variable.used; j++) {
+          if (j > 0) {
+            *status = fl_string_append_assure(" ", 1, &arguments->array[arguments->used]);
+            if (F_status_is_error(*status)) {
+              fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+              break;
+            }
+          }
+
+          // @todo: compare vocabulary name against known set.
+          //        then use that value to determine how to substitute.
+
+          // these next few blocks are just examples for testing.
+          *status = fl_string_append_assure("@todo:", 6, &arguments->array[arguments->used]);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+            break;
+          }
+
+          range.start = iki_content.array[j].start;
+          range.stop = iki_content.array[j].stop;
+
+          *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_partial_append_nulless", F_true);
+            break;
+          }
+        } // for
+
+        if (iki_variable.array[iki_variable.used - 1].stop < content.array[i].stop) {
+          *status = fl_string_append_assure(" ", 1, &arguments->array[arguments->used]);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+            break;
+          }
+
+          range.start = iki_variable.array[iki_variable.used - 1].stop + 1;
+          range.stop = content.array[i].stop;
+
+          *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_partial_append_nulless", F_true);
+            break;
+          }
+        }
+
+        // @todo there needs to always expand into multiple values using whitespace to determine separation, by supporting single and double quote detection (and escaping).
+      }
+      else {
+        *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, content.array[i], &arguments->array[arguments->used]);
+        if (F_status_is_error(*status)) {
+          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_nulless", F_true);
+          break;
+        }
+      }
+
+      *status = fl_string_dynamic_terminate_after(&arguments->array[arguments->used]);
+      if (F_status_is_error(*status)) {
+        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_terminate_after", F_true);
+        break;
+      }
+
+      arguments->used++;
+
+      f_macro_iki_variable_delete_simple(iki_variable);
+      f_macro_iki_vocabulary_delete_simple(iki_vocabulary);
+      f_macro_iki_content_delete_simple(iki_content);
+    } // for
+
+    f_macro_iki_variable_delete_simple(iki_variable);
+    f_macro_iki_vocabulary_delete_simple(iki_vocabulary);
+    f_macro_iki_content_delete_simple(iki_content);
   }
 #endif // _di_fake_make_operation_expand_
 
 #ifndef _di_fake_make_operate_section_
-  void fake_make_operate_section(const fake_data data, const fake_make_data data_make, const f_array_length section_id, f_string_lengths *section_stack, f_status *status) {
+  void fake_make_operate_section(const fake_data data, const f_array_length section_id, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) {
     if (F_status_is_error(*status)) return;
 
-    if (section_id > data_make.fakefile.used) {
+    if (section_id > data_make->fakefile.used) {
       *status = F_status_set_error(F_parameter);
 
       fake_print_error(data.context, data.verbosity, F_parameter, "fake_make_operate_section", F_true);
       return;
     }
 
-    const f_fss_named *section = &data_make.fakefile.array[section_id];
+    const f_fss_named *section = &data_make->fakefile.array[section_id];
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
@@ -272,7 +414,7 @@ extern "C" {
       fl_color_print(f_type_output, data.color_section_set, data.color_section_reset, "Processing Section '");
 
       fl_color_print_code(f_type_output, data.context.notable);
-      f_print_string_dynamic_partial(f_type_output, data_make.buffer, section->name);
+      f_print_string_dynamic_partial(f_type_output, data_make->buffer, section->name);
       fl_color_print_code(f_type_output, data.context.reset);
 
       fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "'.");
@@ -366,13 +508,15 @@ extern "C" {
     memset(operations, 0, sizeof(f_array_length) * section->objects.used);
     memset(arguments, 0, sizeof(f_string_dynamics) * section->objects.used);
 
+    bool has_error = F_false;
+
     // pre-process the list to identify invalid commands so that nothing is processed if any operation is invalid.
     for (; i < section->objects.used; i++) {
       operation = 0;
       operation_name = 0;
 
       for (j = 0; j < fake_make_operation_total; j++) {
-        if (fl_string_dynamic_partial_compare(operations_name[j], data_make.buffer, operations_range[j], section->objects.array[i]) == F_equal_to) {
+        if (fl_string_dynamic_partial_compare(operations_name[j], data_make->buffer, operations_range[j], section->objects.array[i]) == F_equal_to) {
           operation = operations_type[j];
           operation_name = &operations_name[j];
           break;
@@ -380,27 +524,40 @@ extern "C" {
       } // for
 
       if (operation == 0) {
-        fake_print_error_fakefile_section_operation_unknown(data.context, data.verbosity, data_make.buffer, section->name, section->objects.array[i]);
+        fake_print_error_fakefile_section_operation_unknown(data.context, data.verbosity, data_make->buffer, section->name, section->objects.array[i]);
 
         *status = F_status_set_error(F_invalid);
       }
       else if (operation == fake_make_operation_type_operate) {
         if (section_stack->used + 1 > fake_make_section_stack_max) {
-          fake_print_error_fakefile_section_operation_stack_max(data.context, data.verbosity, data_make.buffer, section->name, section->objects.array[i], fake_make_section_stack_max);
+          fake_print_error_fakefile_section_operation_stack_max(data.context, data.verbosity, data_make->buffer, section->name, section->objects.array[i], fake_make_section_stack_max);
 
           *status = F_status_set_error(F_recurse);
         }
       }
 
       // find and report all unknown operations before exiting.
-      if (F_status_is_error(*status)) continue;
+      if (F_status_is_error(*status)) {
+        has_error = F_true;
+        *status = F_none;
+        continue;
+      }
 
       operations[i] = operation;
 
-      fake_make_operation_expand(data, data_make, section->name, operation, *operation_name, section->contents.array[i], &arguments[i], status);
+      fake_make_operation_expand(data, section->name, operation, *operation_name, section->contents.array[i], data_make, &arguments[i], status);
+      if (F_status_is_error(*status)) {
+        has_error = F_true;
+        *status = F_none;
+        continue;
+      }
 
       //fake_make_operation_validate();
     } // for
+
+    if (F_status_is_fine(*status) && has_error) {
+      *status = F_status_set_error(F_failure);
+    }
 
     if (F_status_is_error(*status)) {
       for (i = 0; i < section->objects.used; i++) {

@@ -55,12 +55,14 @@
 #include <level_0/console.h>
 #include <level_0/directory.h>
 #include <level_0/file.h>
+#include <level_0/iki.h>
 #include <level_0/path.h>
 
 // fll-1 includes
 #include <level_1/color.h>
 #include <level_1/console.h>
 #include <level_1/directory.h>
+#include <level_1/iki.h>
 #include <level_1/string.h>
 
 // fll-2 includes

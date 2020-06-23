@@ -15,7 +15,7 @@ main:
 
   invalid
 
-  print This is another line.
+  print This is another line. 'parameter\:"verbose" parameter:"verbose2\""' parameter:'verbose3\\'
 
   another invalid
 

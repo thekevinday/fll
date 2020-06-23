@@ -12,12 +12,14 @@ f_directory
 f_environment
 f_fss
 f_file
+f_iki
 f_path
 f_print
 fl_color
 fl_console
 fl_directory
 fl_fss
+fl_iki
 fl_status
 fl_string
 fl_utf
