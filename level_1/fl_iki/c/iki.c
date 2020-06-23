@@ -8,7 +8,7 @@ extern "C" {
   f_return_status fl_iki_read(f_string_static *buffer, f_string_range *range, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content) {
     f_status status = F_none;
 
-    for (;;) {
+    do {
       status = f_iki_read(buffer, range, variable, vocabulary, content);
       if (F_status_is_error(status)) return status;
 
@@ -19,7 +19,7 @@ extern "C" {
       if (status == F_none_eos || status == F_none_stop) {
         return status;
       }
-    } // for
+    } while (range->start <= range->stop && range->start < buffer->used);
 
     return F_none;
   }

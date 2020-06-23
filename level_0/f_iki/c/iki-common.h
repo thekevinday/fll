@@ -256,38 +256,32 @@ extern "C" {
       width_max = buffer->used - range->start; \
     }
 #endif // _di_f_macro_iki_determine_width_max_
+
 /**
- * Seek until whitespace is found.
+ * Seek until whitespace is found or not found.
  *
- * status: The return status to use.
- * buffer: (A pointer) The buffer to seek through.
- * range:  (A pointer) The range within that buffer to seek through.
+ * This will ignore the delimit placeholder.
+ *
+ * status:    The return status to use.
+ * buffer:    (A pointer) The buffer to seek through.
+ * range:     (A pointer) The range within that buffer to seek through.
+ * condition: Set to TRUE to seek until whitespace is found and FALSE to seek until non-whitespace.
  */
 #ifndef _di_f_macro_iki_seek_whitespace_
-  #define f_macro_iki_seek_whitespace(status, buffer, range, width_max) \
+  #define f_macro_iki_seek_whitespace(status, buffer, range, width_max, condition) \
     while (range->start <= range->stop && range->start < buffer->used) { \
+      if (buffer->string[range->start] == f_iki_syntax_placeholder) { \
+        range->start++; \
+        continue; \
+      } \
       f_macro_iki_determine_width_max(buffer, range, width_max); \
       status = f_utf_is_whitespace(buffer->string + range->start, width_max); \
-      if (status == F_true) break; \
+      if (status == condition) break; \
       else if (F_status_is_error(status)) break; \
       status = f_utf_buffer_increment(*buffer, range, 1); \
       if (F_status_is_error(status)) break; \
     }
 #endif // _di_f_macro_iki_seek_whitespace_
-
-/**
- * Skip past all delimit placeholders.
- *
- * status: The return status to use.
- * buffer: (A pointer) The buffer to skip through.
- * range:  (A pointer) The range within that buffer to skip through.
- */
-#ifndef _di_f_macro_iki_skip_past_delimit_placeholders_
-  #define f_macro_iki_skip_past_delimit_placeholders(status, buffer, range) \
-    do { \
-      status = f_utf_buffer_increment(*buffer, range, 1); \
-    } while (F_status_is_fine(status) && buffer->string[range->start] == f_iki_syntax_placeholder);
-#endif // _di_f_macro_iki_skip_past_delimit_placeholders_
 
 #ifdef __cplusplus
 } // extern "C"
