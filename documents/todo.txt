@@ -88,3 +88,7 @@ Go back through all existing f_file and f_directory code, updating return codes 
 Update f_utf_file and create a f_utf_directory?
 
 Remove empty projects and cleanup private functions.
+
+The f_conversion project:
+- needs to have its parameter orders corrected.
+- needs to follow the private-conversion.? design.
