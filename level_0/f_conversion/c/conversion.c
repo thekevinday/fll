@@ -910,8 +910,7 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
-      if (range.start < 0) return F_status_set_error(F_parameter);
-      if (range.stop < range.start) return F_status_set_error(F_parameter);
+      if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (string[0] == 0) {
@@ -1021,6 +1020,10 @@ extern "C" {
     f_string_range location_offset = f_string_range_initialize;
     location_offset.start = range.start + offset;
     location_offset.stop = range.stop;
+
+    if (range.start + offset > range.stop) {
+      return F_status_set_error(F_number);
+    }
 
     if (mode == 10) {
       status = f_conversion_string_to_decimal_unsigned(string, number, location_offset);
