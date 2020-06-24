@@ -34,7 +34,7 @@ extern "C" {
     if (fallback && verbosity != fake_verbosity_quiet) {
       fprintf(f_type_error, "%c", f_string_eol[0]);
       fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
-      fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+      fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
       fl_color_print(f_type_error, context.error, context.reset, ") in function ");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
       fl_color_print_line(f_type_error, context.error, context.reset, "().");
@@ -50,7 +50,7 @@ extern "C" {
     if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
       fprintf(f_type_error, "%c", f_string_eol[0]);
       fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
-      fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+      fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
       fl_color_print(f_type_error, context.error, context.reset, ") occurred while calling ");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
       fl_color_print(f_type_error, context.error, context.reset, "() for section '");
@@ -76,7 +76,7 @@ extern "C" {
     if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
       fprintf(f_type_error, "%c", f_string_eol[0]);
       fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
-      fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+      fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
       fl_color_print(f_type_error, context.error, context.reset, ") occurred while calling ");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
       fl_color_print(f_type_error, context.error, context.reset, "() for section '");
@@ -184,10 +184,7 @@ extern "C" {
 
 #ifndef _di_fake_print_error_file_
   bool fake_print_error_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string name, const f_string operation, const bool is_file, const bool fallback) {
-    f_string file_or_directory = 0;
-
-    if (is_file) file_or_directory = "file";
-    else file_or_directory = "directory";
+    const f_string file_or_directory = is_file ? "file" : "directory";
 
     if (status == F_file_found_not) {
       if (verbosity != fake_verbosity_quiet) {
@@ -340,7 +337,7 @@ extern "C" {
     if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
       fprintf(f_type_error, "%c", f_string_eol[0]);
       fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
-      fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+      fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
       fl_color_print(f_type_error, context.error, context.reset, ") occurred while trying to %s %s '", operation, file_or_directory);
       fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
       fl_color_print_line(f_type_error, context.error, context.reset, "'.");
@@ -382,7 +379,7 @@ extern "C" {
     if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
       fprintf(f_type_error, "%c", f_string_eol[0]);
       fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
-      fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+      fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
       fl_color_print(f_type_error, context.error, context.reset, ") in function ");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
       fl_color_print_line(f_type_error, context.error, context.reset, "().");
@@ -597,7 +594,7 @@ extern "C" {
     if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
       fprintf(f_type_error, "%c", f_string_eol[0]);
       fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
-      fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+      fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
       fl_color_print(f_type_error, context.error, context.reset, ") occurred while trying to %s '", operation);
       fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
 

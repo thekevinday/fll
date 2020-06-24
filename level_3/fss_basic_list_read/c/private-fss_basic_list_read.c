@@ -10,7 +10,7 @@ extern "C" {
 
     if (fll_file_error_print(f_type_error, context, function_name, file_name, status) == F_false) {
       fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (");
-      fl_color_print(f_type_error, context.notable, context.reset, "%u", status);
+      fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
       fl_color_print(f_type_error, context.error, context.reset, ") has occurred while calling ");
       fl_color_print(f_type_error, context.notable, context.reset, "%s()", function_name);
       fl_color_print_line(f_type_error, context.error, context.reset, ".");
@@ -70,7 +70,7 @@ extern "C" {
     }
     else {
       fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (");
-      fl_color_print(f_type_error, context.notable, context.reset, "%u", status);
+      fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
       fl_color_print(f_type_error, context.error, context.reset, ") has occurred while calling ");
       fl_color_print(f_type_error, context.notable, context.reset, "%s()", function_name);
       fl_color_print(f_type_error, context.error, context.reset, "' for the parameter '");

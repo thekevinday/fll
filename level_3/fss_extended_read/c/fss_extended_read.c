@@ -272,7 +272,6 @@ extern "C" {
         file.id = f_type_descriptor_input;
 
         status = f_file_read(file, &data->buffer);
-
         if (F_status_is_error(status)) {
           fss_extended_read_print_file_error(data->context, "f_file_read", "-", F_status_set_fine(status));
 
@@ -282,7 +281,6 @@ extern "C" {
         }
 
         status = fss_extended_read_main_process_file(arguments, data, "-", depths);
-
         if (F_status_is_error(status)) {
           macro_fss_extended_read_depths_delete_simple(depths);
           fss_extended_read_delete_data(data);
@@ -316,8 +314,12 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               fss_extended_read_print_file_error(data->context, "f_file_size_by_id", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
+
+              f_file_close(&file.id);
+
               macro_fss_extended_read_depths_delete_simple(depths);
               fss_extended_read_delete_data(data);
+              return status;
             }
 
             // Skip past empty files.
@@ -340,7 +342,6 @@ extern "C" {
           }
 
           status = fss_extended_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[counter]], depths);
-
           if (F_status_is_error(status)) {
             macro_fss_extended_read_depths_delete_simple(depths);
             fss_extended_read_delete_data(data);

@@ -884,7 +884,7 @@ extern "C" {
     }
 
     fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
-    fl_color_print(f_type_error, context.notable, context.reset, "%d", status);
+    fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
     fl_color_print(f_type_error, context.error, context.reset, ") occurred for file '");
     fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
     fl_color_print_line(f_type_error, context.error, context.reset, "'.");

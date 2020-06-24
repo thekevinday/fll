@@ -151,6 +151,8 @@ extern "C" {
 /**
  * Print file/directory error messages.
  *
+ * @todo the fll_file_error_print() needs to be reviewed and possibly changed.
+ *
  * @param context
  *   The color context.
  * @param verbosity
@@ -162,7 +164,7 @@ extern "C" {
  * @param name
  *   The name of the file or directory.
  * @param operation
- *   The operation that failes, such as 'create' or 'access'.
+ *   The operation that fails, such as 'create' or 'access'.
  * @param is_file
  *   Set to TRUE if this is a file and FALSE if this is a directory.
  * @param fallback
