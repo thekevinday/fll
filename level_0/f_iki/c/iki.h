@@ -1,7 +1,7 @@
 /**
  * FLL - Level 0
  *
- * Project: Iki
+ * Project: IKI
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
