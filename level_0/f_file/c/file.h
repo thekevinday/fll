@@ -107,6 +107,18 @@ extern "C" {
   } f_file;
 
   #define f_file_initialize { 0, f_file_flag_read_only, f_file_default_read_size, f_file_default_write_size }
+
+  #define f_macro_file_clear(file) \
+    file.id = 0; \
+    file.flag = 0; \
+    file.size_read = 0; \
+    file.size_write = 0;
+
+  #define f_macro_file_reset(file) \
+    file.id = 0; \
+    file.flag = f_file_flag_read_only; \
+    file.size_read = f_file_default_read_size; \
+    file.size_write = f_file_default_write_size;
 #endif // _di_f_file_
 
 /**
