@@ -505,14 +505,12 @@ package_dependencies_individual() {
 
     dependencies=
     if [[ -f ${directory}/data/build/dependencies ]] ; then
-      dependencies=$(cat ${directory}/data/build/dependencies)
+      dependencies=$(cat ${directory}/data/build/dependencies | sed -e "/^\s*#/d" -e "s|#\.*$||")
     fi
 
     individual_dependencies=
     for dependency in $dependencies ; do
-      if [[ $(echo "$dependency" | grep -o "^\s*#") != "" ]] ; then
-        continue
-      elif [[ $(echo "$dependency" | grep -o "^f_") != "" ]] ; then
+      if [[ $(echo "$dependency" | grep -o "^f_") != "" ]] ; then
         level=level_0
       elif [[ $(echo "$dependency" | grep -o "^fl_") != "" ]] ; then
         level=level_1
@@ -537,7 +535,7 @@ package_dependencies_individual() {
 
       sub_dependencies=
       if [[ -f ${path_sources}${level}/${dependency}/data/build/dependencies ]] ; then
-        sub_dependencies=$(cat ${path_sources}${level}/${dependency}/data/build/dependencies)
+        sub_dependencies=$(cat ${path_sources}${level}/${dependency}/data/build/dependencies | sed -e "/^\s*#/d" -e "s|#\.*$||")
       fi
 
       for sub_dependency in $sub_dependencies ; do
@@ -564,7 +562,7 @@ package_dependencies_individual() {
 
         sub_sub_dependencies=
         if [[ -f ${path_sources}${sub_level}/${sub_dependency}/data/build/dependencies ]] ; then
-          sub_sub_dependencies=$(cat ${path_sources}${sub_level}/${sub_dependency}/data/build/dependencies)
+          sub_sub_dependencies=$(cat ${path_sources}${sub_level}/${sub_dependency}/data/build/dependencies | sed -e "/^\s*#/d" -e "s|#\.*$||")
         fi
 
         for sub_sub_dependency in $sub_sub_dependencies ; do
