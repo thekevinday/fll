@@ -365,7 +365,7 @@ install_id() {
     "build_sources_library") echo -n 1;;
     "build_sources_program") echo -n 2;;
     "build_sources_headers") echo -n 3;;
-    "build_sources_settings") echo -n 4;;
+    "build_sources_setting") echo -n 4;;
     "build_shared") echo -n 5;;
     "build_static") echo -n 6;;
   esac
@@ -394,7 +394,7 @@ install_load_settings() {
     exit $failure
   fi
 
-  for i in build_sources_library build_sources_program build_sources_headers build_sources_settings build_shared build_static ; do
+  for i in build_sources_library build_sources_program build_sources_headers build_sources_setting build_shared build_static ; do
     variables[$(install_id $i)]=$(grep -s -o "^[[:space:]]*$i\>.*$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 }
@@ -403,7 +403,7 @@ install_perform_install() {
   local build_sources_library=${variables[$(install_id build_sources_library)]}
   local build_sources_program=${variables[$(install_id build_sources_program)]}
   local build_sources_headers=${variables[$(install_id build_sources_headers)]}
-  local build_sources_settings=${variables[$(install_id build_sources_settings)]}
+  local build_sources_setting=${variables[$(install_id build_sources_setting)]}
   local build_shared=${variables[$(install_id build_shared)]}
   local build_static=${variables[$(install_id build_static)]}
   local failure=
@@ -606,7 +606,7 @@ install_perform_install() {
     fi
   fi
 
-  if [[ $failure == "" && $build_sources_settings != "" && $verbosity != "quiet" ]] ; then
+  if [[ $failure == "" && $build_sources_setting != "" && $verbosity != "quiet" ]] ; then
     echo
     echo -e "${c_warning}Settings Files Detected, see: $c_reset$c_notice$path_build$path_settings$c_reset${c_warning}.$c_reset"
   fi
