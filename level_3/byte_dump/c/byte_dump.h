@@ -21,19 +21,21 @@
 #include <unistd.h>
 
 // fll-0 includes
+#include <level_0/type.h>
+#include <level_0/status.h>
+#include <level_0/memory.h>
+#include <level_0/string.h>
+#include <level_0/utf.h>
 #include <level_0/console.h>
 #include <level_0/conversion.h>
 #include <level_0/file.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
-#include <level_0/status.h>
-#include <level_0/string.h>
-#include <level_0/type.h>
-#include <level_0/utf.h>
 
 // fll-1 includes
 #include <level_1/color.h>
 #include <level_1/console.h>
+#include <level_1/conversion.h>
 #include <level_1/string.h>
 #include <level_1/utf.h>
 

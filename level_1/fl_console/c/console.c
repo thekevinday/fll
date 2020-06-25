@@ -6,9 +6,9 @@ extern "C" {
 
 #ifndef _fl_console_parameter_to_string_dynamic_directory_
   f_return_status fl_console_parameter_to_string_dynamic_directory(const f_string argument, f_string_dynamic *directory) {
-    #ifndef _di_level_0_parameter_checking_
+    #ifndef _di_level_1_parameter_checking_
       if (argument == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_f
+    #endif // _di_level_1_parameter_checking_
 
     f_status status = F_none;
     f_string_length length = strlen(argument);
@@ -158,42 +158,6 @@ extern "C" {
     return F_none;
   }
 #endif // _fl_console_parameter_to_string_dynamic_directory_
-
-#ifndef _fl_console_parameter_to_number_signed_
-  f_return_status fl_console_parameter_to_number_signed(const f_string argument, f_number_signed *number) {
-    #ifndef _di_level_0_parameter_checking_
-      if (argument == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_f
-
-    if (argument[0] == 0) {
-      return F_data_not;
-    }
-
-    f_string_range range = f_string_range_initialize;
-    range.start = 0;
-    range.stop = strlen(argument) - 1;
-
-    return f_conversion_string_to_number_signed(argument, number, range);
-  }
-#endif // _fl_console_parameter_to_number_signed_
-
-#ifndef _fl_console_parameter_to_number_unsigned_
-  f_return_status fl_console_parameter_to_number_unsigned(const f_string argument, f_number_unsigned *number) {
-    #ifndef _di_level_0_parameter_checking_
-      if (argument == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_f
-
-    if (argument[0] == 0) {
-      return F_data_not;
-    }
-
-    f_string_range range = f_string_range_initialize;
-    range.start = 0;
-    range.stop = strlen(argument) - 1;
-
-    return f_conversion_string_to_number_unsigned(argument, number, range);
-  }
-#endif // _fl_console_parameter_to_number_unsigned_
 
 #ifdef __cplusplus
 } // extern "C"

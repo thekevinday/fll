@@ -16,31 +16,6 @@ extern "C" {
 #endif
 
 /**
- * Private implementation of fl_fss_identify().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param buffer
- *   The string to process.
- * @param header
- *   The header data to populate with results of this function.
- *
- * @return
- *   F_none on success
- *   FL_fss_header_not if no header is found.
- *   FL_fss_accepted_invalid (with warning bit) if header is technically invalid but can be identified.
- *   FL_fss_header_not (with error bit) if the an error occurred prior to identifying a valid header.
- *
- *   Errors from (with error bit): f_conversion_string_to_hexidecimal_unsigned().
- *
- * @see fl_fss_identify()
- * @see fl_fss_identify_file()
- */
-#if !defined(_di_fl_fss_identify_) || !defined(_di_fl_fss_identify_file_)
-  extern f_return_status private_fl_fss_identify(const f_string_static buffer, f_fss_header *header) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_identify_) || !defined(_di_fl_fss_identify_file_)
-
-/**
  * Private implementation of fl_fss_basic_object_read().
  *
  * Intended to be shared to each of the different implementation variations.

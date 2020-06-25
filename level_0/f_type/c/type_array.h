@@ -6,13 +6,15 @@
  * Licenses: lgplv2.1
  *
  * Provides datatypes that require memory operations.
+ *
+ * Because memory requires status.h, this is moved to a separate file to reduce potential circular dependency issues.
  */
 #ifndef _F_type_array_h
 #define _F_type_array_h
 
 // fll-0 includes
-#include <level_0/memory.h>
 #include <level_0/type.h>
+#include <level_0/memory.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -14,10 +14,12 @@
 #include <stdio.h>
 
 // fll-0 includes
-#include <level_0/console.h>
-#include <level_0/status.h>
-#include <level_0/string.h>
 #include <level_0/type.h>
+#include <level_0/status.h>
+#include <level_0/memory.h>
+#include <level_0/string.h>
+#include <level_0/utf.h>
+#include <level_0/console.h>
 
 // fll-1 includes
 #include <level_1/color.h>

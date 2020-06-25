@@ -6,6 +6,8 @@
  * Licenses: lgplv2.1
  *
  * Provides status arrays that require memory operations.
+ *
+ * Because memory requires status.h, this is moved to a separate file to reduce potential circular dependency issues.
  */
 #ifndef _F_status_array_h
 #define _F_status_array_h

@@ -161,17 +161,22 @@ extern "C" {
       }
       else if (data->parameters[iki_read_parameter_line].result == f_console_result_additional) {
         const f_string_length index = data->parameters[iki_read_parameter_line].additional.array[data->parameters[iki_read_parameter_line].additional.used - 1];
+        const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
-        status = fl_console_parameter_to_number_unsigned(arguments.argv[index], &data->line);
+        f_number_unsigned number = 0;
+
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
         if (F_status_is_error(status)) {
-          iki_read_print_error_number_argument(data->context, data->verbosity, F_status_set_fine(status), "fl_console_parameter_to_number_unsigned", iki_read_long_line, arguments.argv[index]);
+          iki_read_print_error_number_argument(data->context, data->verbosity, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", iki_read_long_line, arguments.argv[index]);
           fprintf(f_type_error, "%c", f_string_eol[0]);
 
           iki_read_delete_data(data);
           return F_status_set_error(F_parameter);
         }
 
-        // additional
+        data->line = number;
+
+        // additional @todo
       }
 
       if (data->parameters[iki_read_parameter_name].result == f_console_result_found) {

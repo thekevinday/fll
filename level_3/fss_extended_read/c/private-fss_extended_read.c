@@ -120,10 +120,11 @@ extern "C" {
       else {
         position_depth = data.parameters[fss_extended_read_parameter_depth].additional.array[i];
 
-        status = fl_console_parameter_to_number_unsigned(arguments.argv[position_depth], &depths->array[i].depth);
+        const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[position_depth]));
 
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[position_depth], &depths->array[i].depth, range);
         if (F_status_is_error(status)) {
-          fss_extended_read_print_number_argument_error(data.context, "fl_console_parameter_to_number_unsigned", fss_extended_read_long_depth, arguments.argv[position_depth], F_status_set_fine(status));
+          fss_extended_read_print_number_argument_error(data.context, "fl_conversion_string_to_number_unsigned", fss_extended_read_long_depth, arguments.argv[position_depth], F_status_set_fine(status));
           return status;
         }
       }
@@ -140,10 +141,11 @@ extern "C" {
 
           depths->array[i].index_at = data.parameters[fss_extended_read_parameter_at].additional.array[position_at];
 
-          status = fl_console_parameter_to_number_unsigned(arguments.argv[depths->array[i].index_at], &depths->array[i].value_at);
+          const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[depths->array[i].index_at]));
 
+          status = fl_conversion_string_to_number_unsigned(arguments.argv[depths->array[i].index_at], &depths->array[i].value_at, range);
           if (F_status_is_error(status)) {
-            fss_extended_read_print_number_argument_error(data.context, "fl_console_parameter_to_number_unsigned", fss_extended_read_long_at, arguments.argv[depths->array[i].index_at], F_status_set_fine(status));
+            fss_extended_read_print_number_argument_error(data.context, "fl_conversion_string_to_number_unsigned", fss_extended_read_long_at, arguments.argv[depths->array[i].index_at], F_status_set_fine(status));
             return status;
           }
         } // for
@@ -297,10 +299,12 @@ extern "C" {
     f_string_length select = 0;
 
     if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-      status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[fss_extended_read_parameter_select].additional.array[data->parameters[fss_extended_read_parameter_select].additional.used - 1]], &select);
+      const f_string_length index = data->parameters[fss_extended_read_parameter_select].additional.array[data->parameters[fss_extended_read_parameter_select].additional.used - 1];
+      const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
+      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &select, range);
       if (F_status_is_error(status)) {
-        fss_extended_read_print_number_argument_error(data->context, "fl_console_parameter_to_number_unsigned", fss_extended_read_long_select, arguments.argv[data->parameters[fss_extended_read_parameter_select].additional.array[0]], F_status_set_fine(status));
+        fss_extended_read_print_number_argument_error(data->context, "fl_conversion_string_to_number_unsigned", fss_extended_read_long_select, arguments.argv[index], F_status_set_fine(status));
         return status;
       }
     }
@@ -308,10 +312,12 @@ extern "C" {
     f_string_length line = 0;
 
     if (data->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
-      status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[fss_extended_read_parameter_line].additional.array[data->parameters[fss_extended_read_parameter_line].additional.used - 1]], &line);
+      const f_string_length index = data->parameters[fss_extended_read_parameter_line].additional.array[data->parameters[fss_extended_read_parameter_line].additional.used - 1];
+      const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
+      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &line, range);
       if (F_status_is_error(status)) {
-        fss_extended_read_print_number_argument_error(data->context, "fl_console_parameter_to_number_unsigned", fss_extended_read_long_line, arguments.argv[data->parameters[fss_extended_read_parameter_line].additional.array[0]], F_status_set_fine(status));
+        fss_extended_read_print_number_argument_error(data->context, "fl_conversion_string_to_number_unsigned", fss_extended_read_long_line, arguments.argv[index], F_status_set_fine(status));
         return status;
       }
     }

@@ -18,10 +18,10 @@
 #include <sys/stat.h>
 
 // fll-0 includes
+#include <level_0/type.h>
 #include <level_0/status.h>
 #include <level_0/memory.h>
 #include <level_0/string.h>
-#include <level_0/type.h>
 #include <level_0/utf.h>
 #include <level_0/iki.h>
 
@@ -30,7 +30,7 @@ extern "C" {
 #endif
 
 /**
- * Read all iki Vocabulary and Content in the given range of the given buffer.
+ * Read all IKI Vocabulary and Content in the given range of the given buffer.
  *
  * This does not verify if any vocabulary name is known.
  * This only finds complete vocabulary names and their respective content.

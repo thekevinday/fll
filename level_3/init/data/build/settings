@@ -19,7 +19,7 @@ build_compiler gcc
 build_language c
 build_linker ar
 build_libraries -lc
-build_libraries-individual -lfll_program -lfll_fss -lfll_execute -lf_path -lfl_string -lfl_status -lfl_fss -lfl_console -lf_conversion -lfl_color -lf_print -lf_pipe -lf_fss -lf_file -lf_environment -lf_directory -lf_console -lf_utf -lf_memory
+build_libraries-individual -lfll_program -lfll_fss -lfl_conversion -lfll_execute -lf_path -lfl_string -lfl_status -lfl_fss -lfl_console -lf_conversion -lfl_color -lf_print -lf_pipe -lf_fss -lf_file -lf_environment -lf_directory -lf_console -lf_utf -lf_memory
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_sources_library init.c private-init.c

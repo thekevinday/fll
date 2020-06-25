@@ -170,9 +170,12 @@ extern "C" {
         return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_width].result == f_console_result_additional) {
-        f_number_unsigned number = 0;
-        status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_width].additional.array[data->parameters[byte_dump_parameter_width].additional.used - 1]], &number);
+        const f_string_length index = data->parameters[byte_dump_parameter_width].additional.array[data->parameters[byte_dump_parameter_width].additional.used - 1];
+        const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
+        f_number_unsigned number = 0;
+
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
           fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
@@ -198,9 +201,12 @@ extern "C" {
         return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional) {
-        f_number_unsigned number = 0;
-        status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_first].additional.array[data->parameters[byte_dump_parameter_first].additional.used - 1]], &number);
+        const f_string_length index = data->parameters[byte_dump_parameter_first].additional.array[data->parameters[byte_dump_parameter_first].additional.used - 1];
+        const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
+        f_number_unsigned number = 0;
+
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
         if (F_status_is_error(status) || number > f_type_number_size_unsigned) {
           fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
           fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
@@ -226,9 +232,12 @@ extern "C" {
         return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
-        f_number_unsigned number = 0;
-        status = fl_console_parameter_to_number_unsigned(arguments.argv[data->parameters[byte_dump_parameter_last].additional.array[data->parameters[byte_dump_parameter_last].additional.used - 1]], &number);
+        const f_string_length index = data->parameters[byte_dump_parameter_last].additional.array[data->parameters[byte_dump_parameter_last].additional.used - 1];
+        const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
+        f_number_unsigned number = 0;
+
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
         if (F_status_is_error(status) || number < 0 || number > f_type_number_size_unsigned) {
           fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
           fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);

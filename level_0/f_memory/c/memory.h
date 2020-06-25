@@ -20,8 +20,8 @@
 #include <string.h>
 
 // fll-0 includes
-#include <level_0/status.h>
 #include <level_0/type.h>
+#include <level_0/status.h>
 
 // fll-0 memory includes
 #include <level_0/memory-structure.h>

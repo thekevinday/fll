@@ -16,12 +16,13 @@
 #include <sys/stat.h>
 
 // fll-0 includes
+#include <level_0/type.h>
+#include <level_0/status.h>
+#include <level_0/memory.h>
+#include <level_0/string.h>
+#include <level_0/utf.h>
 #include <level_0/console.h>
 #include <level_0/conversion.h>
-#include <level_0/status.h>
-#include <level_0/string.h>
-#include <level_0/type.h>
-#include <level_0/utf.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,72 +58,6 @@ extern "C" {
 #ifndef _fl_console_parameter_to_string_dynamic_directory_
   extern f_return_status fl_console_parameter_to_string_dynamic_directory(const f_string argument, f_string_dynamic *directory);
 #endif // _fl_console_parameter_to_string_dynamic_directory_
-
-/**
- * Convert a console parameter additional argument to a signed integer.
- *
- * This will detect based types as follows:
- * - hexidecimals begin with either '0x' or '0X'.
- * - duodecimals begin with either '0d' or '0D'.
- * - octals begin with either '0o' or '0O'.
- * - binaries begin with either '0b' or '0B'.
- * - decimal is used for all other cases.
- *
- * Leading 0's and whitespace are ignored.
- * Whitespace after the first digit is considered invalid.
- *
- * @param argv
- *   The argument string expected to be a number.
- *   This is generally passed from the argv[].
- * @param number
- *   The converted number is stored here.
- *   This only gets modified on success.
- *
- * @return
- *   F_none on success.
- *   F_data_not if string starts wth a null (length is 0).
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors from (with error bit): f_conversion_string_to_number_signed().
- *
- * @see f_conversion_string_to_number_signed()
- */
-#ifndef _fl_console_parameter_to_number_signed_
-  extern f_return_status fl_console_parameter_to_number_signed(const f_string argument, f_number_signed *number);
-#endif // _fl_console_parameter_to_number_signed_
-
-/**
- * Convert a console parameter additional argument to an unsigned integer.
- *
- * This will detect based types as follows:
- * - hexidecimals begin with either '0x' or '0X'.
- * - duodecimals begin with either '0d' or '0D'.
- * - octals begin with either '0o' or '0O'.
- * - binaries begin with either '0b' or '0B'.
- * - decimal is used for all other cases.
- *
- * Leading 0's and whitespace are ignored.
- * Whitespace after the first digit is considered invalid.
- *
- * @param argv
- *   The argument string expected to be a number.
- *   This is generally passed from the argv[].
- * @param number
- *   The converted number is stored here.
- *   This only gets modified on success.
- *
- * @return
- *   F_none on success.
- *   F_data_not if string starts wth a null (length is 0).
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors from (with error bit): f_conversion_string_to_number_unsigned().
- *
- * @see f_conversion_string_to_number_unsigned()
- */
-#ifndef _fl_console_parameter_to_number_unsigned_
-  extern f_return_status fl_console_parameter_to_number_unsigned(const f_string argument, f_number_unsigned *number);
-#endif // _fl_console_parameter_to_number_unsigned_
 
 #ifdef __cplusplus
 } // extern "C"
