@@ -41,7 +41,7 @@ bootstrap_main() {
   local path_build=build/
   local path_build_stage=build/stage/
   local path_data=data/
-  local path_settings=data/build/settings/
+  local path_settings="${path_data}settings/"
   local path_sources=sources/
   local path_c=sources/c/
   local path_work=
@@ -135,7 +135,7 @@ bootstrap_main() {
 
   settings_file="${path_data}build/$settings_name"
   settings_defines="${path_data}build/defines"
-  path_settings="${path_data}build/settings/"
+  path_settings="${path_data}settings/"
   path_build_stage="${path_build}stage/"
 
   bootstrap_handle_colors
