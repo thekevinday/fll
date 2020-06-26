@@ -18,6 +18,9 @@ Featureless Settings Specification: 000D - Iki Text:
 
   Whitespace (or start of file), must exist before any valid variable name.
 
+  The IKI format will use IKI-0000 to represent an IKI with no explicitly defined vocabulary.
+  Whereas IKI-0001 and beyond represent a specific IKI vocabulary.
+
   Key\:
     \s = whitespace.
     \o = any printable word character, including "_", "-", "+".
@@ -37,7 +40,7 @@ Featureless Settings Specification: 000D - Iki Text:
 
     Other times I want to render a url such as this example url: url:'http://www.example.com/url with space/'.
 
-    There are no comments, except for maybe the FSS header.
+    There are no comments, except for maybe the FSS header (which would not resolve to any IKI syntax anyway).
 
     Quotes may be included, such as: code:"const char *string = \"My \\\"quoted\\\" C string.\";".
 

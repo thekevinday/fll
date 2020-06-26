@@ -27,31 +27,31 @@ extern "C" {
   #define f_iki_syntax_slash        '\\'
 #endif //_di_f_iki_syntax_
 
-#ifndef _di_iki_vocabulary_0000_
-  #define iki_vocabulary_0000_emphasis "emphasis"
-  #define iki_vocabulary_0000_code     "code"
-  #define iki_vocabulary_0000_quote    "quote"
-  #define iki_vocabulary_0000_uri      "uri"
-  #define iki_vocabulary_0000_url      "url"
-  #define iki_vocabulary_0000_urn      "urn"
-  #define iki_vocabulary_0000_variable "var"
-
-  #define iki_vocabulary_0000_emphasis_length 8
-  #define iki_vocabulary_0000_code_length     4
-  #define iki_vocabulary_0000_quote_length    5
-  #define iki_vocabulary_0000_uri_length      3
-  #define iki_vocabulary_0000_url_length      3
-  #define iki_vocabulary_0000_urn_length      3
-  #define iki_vocabulary_0000_variable_length 3
-#endif // _di_iki_vocabulary_0000_
-
 #ifndef _di_iki_vocabulary_0001_
-  #define iki_vocabulary_0001_define    "define"
-  #define iki_vocabulary_0001_parameter "parameter"
+  #define iki_vocabulary_0001_emphasis "emphasis"
+  #define iki_vocabulary_0001_code     "code"
+  #define iki_vocabulary_0001_quote    "quote"
+  #define iki_vocabulary_0001_uri      "uri"
+  #define iki_vocabulary_0001_url      "url"
+  #define iki_vocabulary_0001_urn      "urn"
+  #define iki_vocabulary_0001_variable "var"
 
-  #define iki_vocabulary_0001_define_length    6
-  #define iki_vocabulary_0001_parameter_length 9
+  #define iki_vocabulary_0001_emphasis_length 8
+  #define iki_vocabulary_0001_code_length     4
+  #define iki_vocabulary_0001_quote_length    5
+  #define iki_vocabulary_0001_uri_length      3
+  #define iki_vocabulary_0001_url_length      3
+  #define iki_vocabulary_0001_urn_length      3
+  #define iki_vocabulary_0001_variable_length 3
 #endif // _di_iki_vocabulary_0001_
+
+#ifndef _di_iki_vocabulary_0002_
+  #define iki_vocabulary_0002_define    "define"
+  #define iki_vocabulary_0002_parameter "parameter"
+
+  #define iki_vocabulary_0002_define_length    6
+  #define iki_vocabulary_0002_parameter_length 9
+#endif // _di_iki_vocabulary_0002_
 
 /**
  * This holds an array of string ranges that represent the entire vocabulary name, content, and syntax.
