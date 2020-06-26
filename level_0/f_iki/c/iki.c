@@ -167,16 +167,7 @@ extern "C" {
             return status;
           }
 
-          if (status == F_false) {
-            status = f_utf_buffer_increment(*buffer, range, 1);
-            if (F_status_is_error(status)) {
-              f_macro_string_lengths_delete(status, delimits);
-              return status;
-            }
-
-            find_next = F_true;
-            break;
-          }
+          if (status == F_false) break;
         }
 
         status = f_utf_buffer_increment(*buffer, range, 1);
@@ -433,13 +424,6 @@ extern "C" {
         } // while
       }
       else {
-
-        status = f_utf_buffer_increment(*buffer, range, 1);
-        if (F_status_is_error(status)) {
-          f_macro_string_lengths_delete(status, delimits);
-          return status;
-        }
-
         vocabulary_delimited = F_false;
         find_next = F_true;
       }
