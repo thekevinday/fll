@@ -24,7 +24,7 @@ Featureless Settings Specification: 000D - Iki Text:
   Key\:
     \s = whitespace.
     \o = any printable word character, including "_", "-", "+".
-    \c = any printing character, including whitespace, and any delimited quote (used as the opening quote) or a any quote (undelimited) not used as the opening quote.
+    \c = any character, including whitespace and non-printing, and any delimited quote (used as the opening quote) or a any quote (undelimited) not used as the opening quote.
     \q = either a single quote (') or a double quote (").
     \x = any character.
     * = 0 or more occurrences.
