@@ -56,7 +56,7 @@ extern "C" {
 #endif // _di_iki_read_version_
 
 #ifndef _di_iki_read_name_
-  #define iki_read_name      "IKI_read"
+  #define iki_read_name      "iki_read"
   #define iki_read_name_long "IKI Read"
 #endif // _di_iki_read_name_
 
@@ -248,6 +248,7 @@ extern "C" {
     f_string_lengths remaining;
     bool process_pipe;
 
+    f_number_unsigned at;
     f_number_unsigned line;
 
     uint8_t mode;
@@ -265,6 +266,7 @@ extern "C" {
       f_console_parameter_initialize_iki_read, \
       f_string_lengths_initialize, \
       F_false, \
+      0, \
       0, \
       0, \
       0, \

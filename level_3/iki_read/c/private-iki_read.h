@@ -89,7 +89,32 @@ extern "C" {
 #endif // _di_iki_read_print_error_number_argument_
 
 /**
- * Process a given file.
+ * Determine the range based on the --at parameter.
+ *
+ * If the --at parameter is not specified in the console arguments, then range is untouched.
+ * The range.start will be greater than data->buffer.used if the --at range is not found before buffer end is reached.
+ *
+ * @param arguments
+ *   The console arguments passed to the program.
+ * @param file_name
+ *   The name of the file being processed.
+ * @param data
+ *   The program specific data.
+ * @param range
+ *   The range value to represent the --at values.
+ *
+ * @return
+ *   F_true is returned if the range is processed.
+ *   F_false is returned if the range is not processed.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_iki_read_process_at_
+  extern f_return_status iki_read_process_at(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_string_range *range) f_gcc_attribute_visibility_internal;
+#endif // _di_iki_read_process_at_
+
+/**
+ * Process a given buffer.
  *
  * @param arguments
  *   The console arguments passed to the program.
@@ -100,12 +125,67 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but nothing done.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_iki_read_main_process_file_
-  extern f_return_status iki_read_main_process_file(const f_console_arguments arguments, const f_string file_name, iki_read_data *data) f_gcc_attribute_visibility_internal;
-#endif // _di_iki_read_main_process_file_
+#ifndef _di_iki_read_process_buffer_
+  extern f_return_status iki_read_process_buffer(const f_console_arguments arguments, const f_string file_name, iki_read_data *data) f_gcc_attribute_visibility_internal;
+#endif // _di_iki_read_process_buffer_
+
+/**
+ * Process a given buffer, printing the given range.
+ *
+ * @param arguments
+ *   The console arguments passed to the program.
+ * @param file_name
+ *   The name of the file being processed.
+ * @param data
+ *   The program specific data.
+ * @param variable
+ *   The ranges representing a variable.
+ * @param vocabulary
+ *   The ranges representing a vocabulary.
+ * @param content
+ *   The ranges representing content.
+ * @param ranges
+ *   The ranges to print when matched.
+ *   Should be one of: variable, vocabulary, or content.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but nothing to print.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_iki_read_process_buffer_ranges_
+  extern f_return_status iki_read_process_buffer_ranges(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) f_gcc_attribute_visibility_internal;
+#endif // _di_iki_read_process_buffer_ranges_
+
+/**
+ * Process a given buffer, printing the total.
+ *
+ * @param arguments
+ *   The console arguments passed to the program.
+ * @param file_name
+ *   The name of the file being processed.
+ * @param data
+ *   The program specific data.
+ * @param variable
+ *   The ranges representing a variable.
+ * @param vocabulary
+ *   The ranges representing a vocabulary.
+ * @param content
+ *   The ranges representing content.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_iki_read_process_buffer_total_
+  extern f_return_status iki_read_process_buffer_total(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content) f_gcc_attribute_visibility_internal;
+#endif // _di_iki_read_process_buffer_total_
 
 #ifdef __cplusplus
 } // extern "C"

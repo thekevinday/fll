@@ -91,8 +91,13 @@ extern "C" {
       f_console_parameter_ids choices = { ids, 3 };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
-
       if (F_status_is_error(status)) {
+        iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_process", F_true);
+
+        if (data->verbosity == iki_read_verbosity_verbose) {
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+        }
+
         iki_read_delete_data(data);
         return F_status_set_error(status);
       }
@@ -121,7 +126,8 @@ extern "C" {
         fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
         fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, f_console_standard_long_quiet);
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
-        fprintf(f_type_error, "%c", f_string_eol[0]);
+
+        status = F_status_set_error(F_parameter);
       }
 
       data->verbosity = iki_read_verbosity_verbose;
@@ -133,271 +139,307 @@ extern "C" {
       data->verbosity = iki_read_verbosity_normal;
     }
 
-    if (data->remaining.used > 0 || data->process_pipe) {
-      if (data->parameters[iki_read_parameter_at].result == f_console_result_found) {
-        if (data->verbosity != iki_read_verbosity_quiet) {
-          fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_at);
-          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
-          fprintf(f_type_error, "%c", f_string_eol[0]);
-        }
-
-        iki_read_delete_data(data);
-        return F_status_set_error(F_parameter);
-      }
-
-      if (data->parameters[iki_read_parameter_line].result == f_console_result_found) {
-        if (data->verbosity != iki_read_verbosity_quiet) {
-          fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_line);
-          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
-          fprintf(f_type_error, "%c", f_string_eol[0]);
-        }
-
-        iki_read_delete_data(data);
-        return F_status_set_error(F_parameter);
-      }
-      else if (data->parameters[iki_read_parameter_line].result == f_console_result_additional) {
-        const f_string_length index = data->parameters[iki_read_parameter_line].additional.array[data->parameters[iki_read_parameter_line].additional.used - 1];
-        const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
-
-        f_number_unsigned number = 0;
-
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
-        if (F_status_is_error(status)) {
-          iki_read_print_error_number_argument(data->context, data->verbosity, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", iki_read_long_line, arguments.argv[index]);
-          fprintf(f_type_error, "%c", f_string_eol[0]);
-
-          iki_read_delete_data(data);
-          return F_status_set_error(F_parameter);
-        }
-
-        data->line = number;
-
-        // additional @todo
-      }
-
-      if (data->parameters[iki_read_parameter_name].result == f_console_result_found) {
-        if (data->verbosity != iki_read_verbosity_quiet) {
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_name);
-          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a string.");
-          fprintf(f_type_error, "%c", f_string_eol[0]);
-        }
-
-        iki_read_delete_data(data);
-        return F_status_set_error(F_parameter);
-      }
-
-      if (data->parameters[iki_read_parameter_substitute].result != f_console_result_none) {
-        if (data->parameters[iki_read_parameter_substitute].result == f_console_result_found || data->parameters[iki_read_parameter_substitute].additional.used % 3 != 0) {
+    if (F_status_is_fine(status)) {
+      if (data->remaining.used > 0 || data->process_pipe) {
+        if (data->parameters[iki_read_parameter_at].result == f_console_result_found) {
           if (data->verbosity != iki_read_verbosity_quiet) {
+            fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_substitute);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires 3 strings.");
-            fprintf(f_type_error, "%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_at);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
           }
 
-          iki_read_delete_data(data);
-          return F_status_set_error(F_parameter);
+          status = F_status_set_error(F_parameter);
         }
-      }
+        else if (data->parameters[iki_read_parameter_at].result == f_console_result_additional) {
+          const f_string_length index = data->parameters[iki_read_parameter_at].additional.array[data->parameters[iki_read_parameter_at].additional.used - 1];
+          const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
-      if (data->parameters[iki_read_parameter_literal].result == f_console_result_found) {
-        if (data->parameters[iki_read_parameter_object].result == f_console_result_found) {
+          f_number_unsigned number = 0;
+
+          status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+          if (F_status_is_error(status)) {
+            iki_read_print_error_number_argument(data->context, data->verbosity, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", iki_read_long_line, arguments.argv[index]);
+
+            status = F_status_set_error(F_parameter);
+          }
+
+          data->at = number;
+
+          if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_at);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+        }
+
+        if (data->parameters[iki_read_parameter_line].result == f_console_result_found) {
           if (data->verbosity != iki_read_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
-            fprintf(f_type_error, "%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_line);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
           }
 
-          iki_read_delete_data(data);
-          return F_status_set_error(F_parameter);
+          status = F_status_set_error(F_parameter);
+        }
+        else if (data->parameters[iki_read_parameter_line].result == f_console_result_additional) {
+          const f_string_length index = data->parameters[iki_read_parameter_line].additional.array[data->parameters[iki_read_parameter_line].additional.used - 1];
+          const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
+
+          f_number_unsigned number = 0;
+
+          status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+          if (F_status_is_error(status)) {
+            iki_read_print_error_number_argument(data->context, data->verbosity, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", iki_read_long_line, arguments.argv[index]);
+
+            status = F_status_set_error(F_parameter);
+          }
+
+          data->line = number;
         }
 
-        if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
+        if (data->parameters[iki_read_parameter_name].result == f_console_result_found) {
           if (data->verbosity != iki_read_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_raw);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
-            fprintf(f_type_error, "%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_name);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a string.");
           }
 
-          iki_read_delete_data(data);
-          return F_status_set_error(F_parameter);
+          status = F_status_set_error(F_parameter);
         }
 
-        if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
+        if (data->parameters[iki_read_parameter_substitute].result != f_console_result_none) {
+          if (data->parameters[iki_read_parameter_substitute].result == f_console_result_found || data->parameters[iki_read_parameter_substitute].additional.used % 3 != 0) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_substitute);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires 3 strings.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+
+          if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_substitute);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+        }
+
+        if (data->parameters[iki_read_parameter_expand].result == f_console_result_found) {
+          if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_expand);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+        }
+
+        if (data->parameters[iki_read_parameter_literal].result == f_console_result_found) {
+          if (data->parameters[iki_read_parameter_object].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+
+          if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_raw);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+
+          if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+
+          data->mode = iki_read_mode_literal;
+        }
+        else if (data->parameters[iki_read_parameter_object].result == f_console_result_found) {
+          if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_raw);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+
+          if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+
+          data->mode = iki_read_mode_object;
+        }
+        else if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
+          if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_raw);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+
+          data->mode = iki_read_mode_raw;
+        }
+        else if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
+          data->mode = iki_read_mode_total;
+        }
+        else {
+          data->mode = iki_read_mode_content;
+        }
+
+        if (F_status_is_error(status)) {
           if (data->verbosity != iki_read_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
-            fprintf(f_type_error, "%c", f_string_eol[0]);
           }
 
           iki_read_delete_data(data);
           return F_status_set_error(F_parameter);
         }
 
-        data->mode = iki_read_mode_literal;
-      }
-      else if (data->parameters[iki_read_parameter_object].result == f_console_result_found) {
-        if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
-          if (data->verbosity != iki_read_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_raw);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
-            fprintf(f_type_error, "%c", f_string_eol[0]);
+        if (data->process_pipe) {
+          f_file file = f_file_initialize;
+
+          file.id = f_type_descriptor_input;
+
+          status = f_file_read(file, &data->buffer);
+
+          if (F_status_is_error(status)) {
+            iki_read_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_read", "-", "process", F_true, F_true);
+          }
+          else {
+            status = iki_read_process_buffer(arguments, "-", data);
           }
 
-          iki_read_delete_data(data);
-          return F_status_set_error(F_parameter);
+          // Clear buffers before continuing.
+          f_macro_string_dynamic_delete_simple(data->buffer);
         }
 
-        if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
-          if (data->verbosity != iki_read_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-          }
+        if (F_status_is_fine(status) && data->remaining.used > 0) {
+          f_string_length i = 0;
+          f_string_length total = 0;
+          f_file file = f_file_initialize;
 
-          iki_read_delete_data(data);
-          return F_status_set_error(F_parameter);
+          for (; i < data->remaining.used; i++) {
+            f_macro_file_reset(file);
+            total = 0;
+
+            status = f_file_open(arguments.argv[data->remaining.array[i]], 0, &file);
+            if (F_status_is_error(status)) {
+              iki_read_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_open", arguments.argv[data->remaining.array[i]], "process", F_true, F_true);
+              break;
+            }
+
+            status = f_file_size_by_id(file.id, &total);
+            if (F_status_is_error(status)) {
+              iki_read_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_size_by_id", arguments.argv[data->remaining.array[i]], "process", F_true, F_true);
+
+              f_file_close(&file.id);
+              break;
+            }
+
+            // Skip past empty files.
+            if (total == 0) {
+              f_file_close(&file.id);
+              continue;
+            }
+
+            status = f_file_read_until(file, &data->buffer, total);
+
+            f_file_close(&file.id);
+
+            if (F_status_is_error(status)) {
+              iki_read_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_read_until", arguments.argv[data->remaining.array[i]], "process", F_true, F_true);
+              break;
+            }
+
+            status = iki_read_process_buffer(arguments, arguments.argv[data->remaining.array[i]], data);
+            if (F_status_is_error(status)) break;
+
+            // Clear buffers before repeating the loop.
+            f_macro_string_dynamic_delete_simple(data->buffer);
+          } // for
         }
-
-        data->mode = iki_read_mode_object;
-      }
-      else if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
-        if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
-          if (data->verbosity != iki_read_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_raw);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-          }
-
-          iki_read_delete_data(data);
-          return F_status_set_error(F_parameter);
-        }
-
-        data->mode = iki_read_mode_raw;
-      }
-      else if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
-        data->mode = iki_read_mode_total;
       }
       else {
-        data->mode = iki_read_mode_content;
-      }
-
-      if (data->process_pipe) {
-        f_file file = f_file_initialize;
-
-        file.id = f_type_descriptor_input;
-
-        status = f_file_read(file, &data->buffer);
-
-        if (F_status_is_error(status)) {
-          iki_read_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_read", "-", "process", F_true, F_true);
-
-          iki_read_delete_data(data);
-          return status;
+        if (data->verbosity != iki_read_verbosity_quiet) {
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more files.");
         }
 
-        status = iki_read_main_process_file(arguments, "-", data);
-        if (F_status_is_error(status)) {
-          iki_read_delete_data(data);
-          return status;
-        }
-
-        // Clear buffers before continuing.
-        f_macro_string_dynamic_delete_simple(data->buffer);
-      }
-
-      if (data->remaining.used > 0) {
-        f_string_length i = 0;
-        f_string_length total = 0;
-        f_file file = f_file_initialize;
-
-        for (; i < data->remaining.used; i++) {
-          f_macro_file_reset(file);
-          total = 0;
-
-          status = f_file_open(arguments.argv[data->remaining.array[i]], 0, &file);
-          if (F_status_is_error(status)) {
-            iki_read_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_open", arguments.argv[data->remaining.array[i]], "process", F_true, F_true);
-
-            iki_read_delete_data(data);
-            return status;
-          }
-
-          status = f_file_size_by_id(file.id, &total);
-          if (F_status_is_error(status)) {
-            iki_read_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_size_by_id", arguments.argv[data->remaining.array[i]], "process", F_true, F_true);
-
-            f_file_close(&file.id);
-
-            iki_read_delete_data(data);
-            return status;
-          }
-
-          // Skip past empty files.
-          if (total == 0) {
-            f_file_close(&file.id);
-            continue;
-          }
-
-          status = f_file_read_until(file, &data->buffer, total);
-
-          f_file_close(&file.id);
-
-          if (F_status_is_error(status)) {
-            iki_read_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_read_until", arguments.argv[data->remaining.array[i]], "process", F_true, F_true);
-
-            iki_read_delete_data(data);
-            return status;
-          }
-
-          status = iki_read_main_process_file(arguments, arguments.argv[data->remaining.array[i]], data);
-          if (F_status_is_error(status)) {
-            iki_read_delete_data(data);
-            return status;
-          }
-
-          // Clear buffers before repeating the loop.
-          f_macro_string_dynamic_delete_simple(data->buffer);
-        } // for
+        status = F_status_set_error(F_parameter);
       }
     }
-    else {
-      if (data->verbosity != iki_read_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more files.");
+
+    // ensure a newline is always put at the end of the program execution, unless in quite mode.
+    if (data->verbosity != iki_read_verbosity_quiet) {
+      if (F_status_is_error(status) || data->mode == 0) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
       }
-
-      status = F_status_set_error(F_parameter);
     }
 
     iki_read_delete_data(data);
