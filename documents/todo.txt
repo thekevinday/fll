@@ -92,3 +92,6 @@ Remove empty projects and cleanup private functions.
 The f_conversion project:
 - needs to have its parameter orders corrected.
 - needs to follow the private-conversion.? design.
+
+The iki_read level 3 project is provides a more up to date style.
+Review all level 3 projects and more closely follow the practices in this project where reasonably possible.
