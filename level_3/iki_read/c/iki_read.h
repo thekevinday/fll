@@ -81,9 +81,9 @@ extern "C" {
   #define iki_read_short_literal    "L"
   #define iki_read_short_name       "n"
   #define iki_read_short_object     "o"
-  #define iki_read_short_raw        "r"
   #define iki_read_short_substitute "s"
   #define iki_read_short_total      "t"
+  #define iki_read_short_whole      "w"
 
   #define iki_read_long_at         "at"
   #define iki_read_long_expand     "expand"
@@ -91,9 +91,9 @@ extern "C" {
   #define iki_read_long_literal    "literal"
   #define iki_read_long_name       "name"
   #define iki_read_long_object     "object"
-  #define iki_read_long_raw        "raw"
   #define iki_read_long_substitute "substitute"
   #define iki_read_long_total      "total"
+  #define iki_read_long_whole      "whole"
 
   enum {
     iki_read_parameter_help,
@@ -110,7 +110,7 @@ extern "C" {
     iki_read_parameter_literal,
     iki_read_parameter_name,
     iki_read_parameter_object,
-    iki_read_parameter_raw,
+    iki_read_parameter_whole,
     iki_read_parameter_substitute,
     iki_read_parameter_total,
   };
@@ -130,7 +130,7 @@ extern "C" {
       f_console_parameter_initialize(iki_read_short_literal, iki_read_long_literal, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(iki_read_short_name, iki_read_long_name, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(iki_read_short_object, iki_read_long_object, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(iki_read_short_raw, iki_read_long_raw, 0, 0, f_console_type_normal), \
+      f_console_parameter_initialize(iki_read_short_whole, iki_read_long_whole, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(iki_read_short_substitute, iki_read_long_substitute, 0, 3, f_console_type_normal), \
       f_console_parameter_initialize(iki_read_short_total, iki_read_long_total, 0, 0, f_console_type_normal), \
     }

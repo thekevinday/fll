@@ -19,10 +19,10 @@ extern "C" {
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, iki_read_short_at, iki_read_long_at, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Select variable at this numeric index.");
-    fll_program_print_help_option(context, iki_read_short_line, iki_read_long_line, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print only the variables at the given line.");
-    fll_program_print_help_option(context, iki_read_short_name, iki_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, "Select variables with this name.");
-    fll_program_print_help_option(context, iki_read_short_raw, iki_read_long_raw, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print raw of the data instead of just the variable data.");
+    fll_program_print_help_option(context, iki_read_short_at, iki_read_long_at, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Select variable at this numeric index.");
+    fll_program_print_help_option(context, iki_read_short_line, iki_read_long_line, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print only the variables at the given line.");
+    fll_program_print_help_option(context, iki_read_short_name, iki_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Select variables with this name.");
+    fll_program_print_help_option(context, iki_read_short_whole, iki_read_long_whole, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print all of the data instead of just the variable data.");
 
     printf("%c", f_string_eol[0]);
 
@@ -322,12 +322,12 @@ extern "C" {
           data->mode = iki_read_mode_content;
         }
 
-        if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
+        if (data->parameters[iki_read_parameter_whole].result == f_console_result_found) {
           if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
             if (data->verbosity != iki_read_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_raw);
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_whole);
               fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
               fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
               fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");

@@ -165,7 +165,7 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_ranges_
 
 /**
- * Process a given buffer, printing the given buffer in raw mode based on the given ranges.
+ * Process a given buffer, printing the given buffer in whole mode based on the given ranges.
  *
  * The entire variable is replaced with the range from the associated ranges.
  *
@@ -193,9 +193,9 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_iki_read_process_buffer_ranges_raw_
-  extern f_return_status iki_read_process_buffer_ranges_raw(const f_console_arguments arguments, const f_string file_name, const f_string_range buffer_range, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) f_gcc_attribute_visibility_internal;
-#endif // _di_iki_read_process_buffer_ranges_raw_
+#ifndef _di_iki_read_process_buffer_ranges_whole_
+  extern f_return_status iki_read_process_buffer_ranges_whole(const f_console_arguments arguments, const f_string file_name, const f_string_range buffer_range, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) f_gcc_attribute_visibility_internal;
+#endif // _di_iki_read_process_buffer_ranges_whole_
 
 /**
  * Process a given buffer, printing the total.
