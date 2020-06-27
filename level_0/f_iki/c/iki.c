@@ -444,6 +444,8 @@ extern "C" {
             return status;
           }
 
+          if (range->start > range->stop || range->start >= buffer->used) break;
+
           f_macro_iki_determine_width_max(buffer, range, width_max);
 
           status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max);
@@ -465,6 +467,10 @@ extern "C" {
         find_next = F_false;
       }
     } while (range->start <= range->stop && range->start < buffer->used);
+
+    for (f_array_length i = 0; i < delimits.used; i++) {
+      buffer->string[delimits.array[i]] = f_iki_syntax_placeholder;
+    } // for
 
     f_macro_string_lengths_delete(status, delimits);
     if (F_status_is_error(status)) return status;
