@@ -310,20 +310,46 @@ extern "C" {
     f_iki_vocabulary vocabulary = f_iki_vocabulary_initialize;
     f_iki_content content = f_iki_content_initialize;
 
-    if (data->mode == iki_read_mode_content) {
-      status = iki_read_process_buffer_ranges(arguments, file_name, data, &variable, &vocabulary, &content, &content);
-    }
-    else if (data->mode == iki_read_mode_literal) {
-      status = iki_read_process_buffer_ranges(arguments, file_name, data, &variable, &vocabulary, &content, &variable);
-    }
-    else if (data->mode == iki_read_mode_object) {
-      status = iki_read_process_buffer_ranges(arguments, file_name, data, &variable, &vocabulary, &content, &vocabulary);
-    }
-    else if (data->mode == iki_read_mode_raw) {
-      // @todo
+    if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
+      f_string_range buffer_range = f_macro_string_range_initialize(data->buffer.used);
+
+      if (iki_read_process_at(arguments, file_name, data, &buffer_range)) {
+        if (buffer_range.start > data->buffer.used) {
+          return F_data_not;
+        }
+      }
+
+      if (data->mode == iki_read_mode_content) {
+        status = iki_read_process_buffer_ranges_raw(arguments, file_name, buffer_range, data, &variable, &vocabulary, &content, &content);
+      }
+      else if (data->mode == iki_read_mode_literal) {
+        status = iki_read_process_buffer_ranges_raw(arguments, file_name, buffer_range, data, &variable, &vocabulary, &content, &variable);
+      }
+      else if (data->mode == iki_read_mode_object) {
+        status = iki_read_process_buffer_ranges_raw(arguments, file_name, buffer_range, data, &variable, &vocabulary, &content, &vocabulary);
+      }
     }
     else if (data->mode == iki_read_mode_total) {
       status = iki_read_process_buffer_total(arguments, file_name, data, &variable, &vocabulary, &content);
+    }
+    else {
+      f_string_range buffer_range = f_macro_string_range_initialize(data->buffer.used);
+
+      if (iki_read_process_at(arguments, file_name, data, &buffer_range)) {
+        if (buffer_range.start > data->buffer.used) {
+          return F_data_not;
+        }
+      }
+
+      if (data->mode == iki_read_mode_content) {
+        status = iki_read_process_buffer_ranges(arguments, file_name, data, &buffer_range, &variable, &vocabulary, &content, &content);
+      }
+      else if (data->mode == iki_read_mode_literal) {
+        status = iki_read_process_buffer_ranges(arguments, file_name, data, &buffer_range, &variable, &vocabulary, &content, &variable);
+      }
+      else if (data->mode == iki_read_mode_object) {
+        status = iki_read_process_buffer_ranges(arguments, file_name, data, &buffer_range, &variable, &vocabulary, &content, &vocabulary);
+      }
     }
 
     f_macro_iki_variable_delete_simple(variable);
@@ -335,19 +361,12 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_
 
 #ifndef _di_iki_read_process_buffer_ranges_
-  f_return_status iki_read_process_buffer_ranges(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) {
+  f_return_status iki_read_process_buffer_ranges(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_string_range *buffer_range, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) {
     f_status status = F_none;
-    f_string_range range = f_macro_string_range_initialize(data->buffer.used);
 
     bool unmatched = F_true;
 
-    if (iki_read_process_at(arguments, file_name, data, &range)) {
-      if (range.start > data->buffer.used) {
-        return F_data_not;
-      }
-    }
-
-    status = fl_iki_read(&data->buffer, &range, variable, vocabulary, content);
+    status = fl_iki_read(&data->buffer, buffer_range, variable, vocabulary, content);
     if (F_status_is_error(status)) {
       iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_iki_read", F_true);
       return status;
@@ -360,7 +379,7 @@ extern "C" {
       f_array_length i = 0;
       f_array_length j = 0;
 
-      range.start = 0;
+      buffer_range->start = 0;
 
       for (; i < data->parameters[iki_read_parameter_name].additional.used; i++) {
         index = data->parameters[iki_read_parameter_name].additional.array[i];
@@ -374,10 +393,10 @@ extern "C" {
           return status;
         }
 
-        range.stop = name.used - 1;
+        buffer_range->stop = name.used - 1;
 
         for (j = 0; j < vocabulary->used; j++) {
-          status = fl_string_dynamic_partial_compare(name, data->buffer, range, vocabulary->array[j]);
+          status = fl_string_dynamic_partial_compare(name, data->buffer, *buffer_range, vocabulary->array[j]);
 
           if (status == F_equal_to) {
             unmatched = F_false;
@@ -405,6 +424,58 @@ extern "C" {
     return F_none;
   }
 #endif // _di_iki_read_process_buffer_ranges_
+
+#ifndef _di_iki_read_process_buffer_ranges_raw_
+  f_return_status iki_read_process_buffer_ranges_raw(const f_console_arguments arguments, const f_string file_name, const f_string_range buffer_range, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) {
+    f_status status = F_none;
+    f_string_range range = buffer_range;
+
+    status = fl_iki_read(&data->buffer, &range, variable, vocabulary, content);
+    if (F_status_is_error(status)) {
+      iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_iki_read", F_true);
+      return status;
+    }
+
+    if (data->parameters[iki_read_parameter_name].result == f_console_result_additional) {
+      // @todo (may be better to merge this logic in the block below.)
+    }
+    else if (variable->used) {
+      f_string_length i = buffer_range.start;
+      f_array_length j = 0;
+
+      range = buffer_range;
+
+      while (i <= range.stop && j < variable->used) {
+        if (i < variable->array[j].start) {
+          range.stop = variable->array[j].start - 1;
+
+          f_print_string_dynamic_partial(f_type_output, data->buffer, range);
+
+          range.start = variable->array[j].stop + 1;
+          range.stop = buffer_range.stop;
+
+          i = variable->array[j].start;
+        }
+
+        // @todo handle expansion and substitution.
+        f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[j]);
+
+        i = variable->array[j].stop + 1;
+        j++;
+      } // while
+
+      if (i <= buffer_range.stop) {
+        range.start = i;
+        f_print_string_dynamic_partial(f_type_output, data->buffer, range);
+      }
+    }
+    else {
+      f_print_string_dynamic_partial(f_type_output, data->buffer, buffer_range);
+    }
+
+    return F_none;
+  }
+#endif // _di_iki_read_process_buffer_ranges_raw_
 
 #ifndef _di_iki_read_process_buffer_total_
   f_return_status iki_read_process_buffer_total(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content) {

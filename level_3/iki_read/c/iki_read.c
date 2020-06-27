@@ -22,18 +22,18 @@ extern "C" {
     fll_program_print_help_option(context, iki_read_short_at, iki_read_long_at, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Select variable at this numeric index.");
     fll_program_print_help_option(context, iki_read_short_line, iki_read_long_line, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print only the variables at the given line.");
     fll_program_print_help_option(context, iki_read_short_name, iki_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, "Select variables with this name.");
+    fll_program_print_help_option(context, iki_read_short_raw, iki_read_long_raw, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print raw of the data instead of just the variable data.");
 
     printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(context, iki_read_short_literal, iki_read_long_literal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print the entire variable instead of the content.");
     fll_program_print_help_option(context, iki_read_short_object, iki_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print the variable name instead of the variable content.");
-    fll_program_print_help_option(context, iki_read_short_raw, iki_read_long_raw, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print the raw data instead of the variable data.");
     fll_program_print_help_option(context, iki_read_short_total, iki_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the total number of variables.");
 
     printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(context, iki_read_short_substitute, iki_read_long_substitute, f_console_symbol_short_enable, f_console_symbol_long_enable,"Substitute the entire variable for the given name and content value with the given string.");
-    fll_program_print_help_option(context, iki_read_short_expand, iki_read_long_expand, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Expand all values.");
+    fll_program_print_help_option(context, iki_read_short_expand, iki_read_long_expand, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Expand variables into their respective content.");
 
     fll_program_print_help_usage(context, iki_read_name, "filename(s)");
 
@@ -41,7 +41,7 @@ extern "C" {
 
     printf("%c", f_string_eol[0], f_string_eol[0]);
 
-    printf("  This program will find and print all content following the IKI standard, without focusing on any particular vocabulary specification.%c", f_string_eol[0]);
+    printf("  This program will find and print variables, vocabularies, or content following the IKI standard, without focusing on any particular vocabulary specification.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
@@ -74,6 +74,18 @@ extern "C" {
     printf("%c", f_string_eol[0]);
 
     printf("  The vocabulary and replacement are case-sensitive and must exactly match.%c", f_string_eol[0]);
+
+    printf("%c", f_string_eol[0]);
+
+    printf("  All substitution is applied before any expansion when both the ", f_string_eol[0]);
+    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_substitute);
+    printf(" option and the ");
+    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_expand);
+    printf(" option are specified.%c", f_string_eol[0]);
+
+    printf("%c", f_string_eol[0]);
+
+    printf("  The default behavior is to only display content portion of the IKI variable.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
@@ -272,19 +284,6 @@ extern "C" {
             status = F_status_set_error(F_parameter);
           }
 
-          if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
-            if (data->verbosity != iki_read_verbosity_quiet) {
-              fprintf(f_type_error, "%c", f_string_eol[0]);
-              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
-              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_raw);
-              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
-            }
-
-            status = F_status_set_error(F_parameter);
-          }
-
           if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
             if (data->verbosity != iki_read_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -301,19 +300,6 @@ extern "C" {
           data->mode = iki_read_mode_literal;
         }
         else if (data->parameters[iki_read_parameter_object].result == f_console_result_found) {
-          if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
-            if (data->verbosity != iki_read_verbosity_quiet) {
-              fprintf(f_type_error, "%c", f_string_eol[0]);
-              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
-              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_raw);
-              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
-            }
-
-            status = F_status_set_error(F_parameter);
-          }
-
           if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
             if (data->verbosity != iki_read_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -329,7 +315,14 @@ extern "C" {
 
           data->mode = iki_read_mode_object;
         }
-        else if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
+        else if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
+          data->mode = iki_read_mode_total;
+        }
+        else {
+          data->mode = iki_read_mode_content;
+        }
+
+        if (data->parameters[iki_read_parameter_raw].result == f_console_result_found) {
           if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
             if (data->verbosity != iki_read_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -342,14 +335,6 @@ extern "C" {
 
             status = F_status_set_error(F_parameter);
           }
-
-          data->mode = iki_read_mode_raw;
-        }
-        else if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
-          data->mode = iki_read_mode_total;
-        }
-        else {
-          data->mode = iki_read_mode_content;
         }
 
         if (F_status_is_error(status)) {

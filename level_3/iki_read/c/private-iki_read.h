@@ -142,6 +142,8 @@ extern "C" {
  *   The name of the file being processed.
  * @param data
  *   The program specific data.
+ * @param buffer_range
+ *   The range within the buffer to process.
  * @param variable
  *   The ranges representing a variable.
  * @param vocabulary
@@ -159,8 +161,41 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_
-  extern f_return_status iki_read_process_buffer_ranges(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) f_gcc_attribute_visibility_internal;
+  extern f_return_status iki_read_process_buffer_ranges(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_string_range *buffer_range, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_process_buffer_ranges_
+
+/**
+ * Process a given buffer, printing the given buffer in raw mode based on the given ranges.
+ *
+ * The entire variable is replaced with the range from the associated ranges.
+ *
+ * @param arguments
+ *   The console arguments passed to the program.
+ * @param file_name
+ *   The name of the file being processed.
+ * @param buffer_range
+ *   The range within the buffer to process.
+ * @param data
+ *   The program specific data.
+ * @param variable
+ *   The ranges representing a variable.
+ * @param vocabulary
+ *   The ranges representing a vocabulary.
+ * @param content
+ *   The ranges representing content.
+ * @param ranges
+ *   The ranges to print when matched.
+ *   Should be one of: variable, vocabulary, or content.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but nothing to print.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_iki_read_process_buffer_ranges_raw_
+  extern f_return_status iki_read_process_buffer_ranges_raw(const f_console_arguments arguments, const f_string file_name, const f_string_range buffer_range, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) f_gcc_attribute_visibility_internal;
+#endif // _di_iki_read_process_buffer_ranges_raw_
 
 /**
  * Process a given buffer, printing the total.

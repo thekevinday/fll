@@ -65,7 +65,6 @@ extern "C" {
     iki_read_mode_content = 1,
     iki_read_mode_literal,
     iki_read_mode_object,
-    iki_read_mode_raw,
     iki_read_mode_total,
   };
 
@@ -145,27 +144,24 @@ extern "C" {
   #define iki_read_replacement_with       "with"
 
   typedef struct {
-    f_string_dynamic vocabulary;
-    f_string_dynamic replace;
-    f_string_dynamic with;
+    f_string_static vocabulary;
+    f_string_static replace;
+    f_string_static with;
   } iki_read_replacement;
 
   #define iki_read_replacement_initialize \
     { \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
+      f_string_static_initialize, \
+      f_string_static_initialize, \
+      f_string_static_initialize, \
     }
 
-  #define macro_iki_read_replacement_delete_simple(replacement) \
-    f_macro_string_dynamic_delete_simple(replacement.vocabulary); \
-    f_macro_string_dynamic_delete_simple(replacement.replace); \
-    f_macro_string_dynamic_delete_simple(replacement.with);
-
-  #define macro_iki_read_replacement_destroy_simple(replacement) \
-    f_macro_string_dynamic_destroy_simple(replacement.vocabulary); \
-    f_macro_string_dynamic_destroy_simple(replacement.replace); \
-    f_macro_string_dynamic_destroy_simple(replacement.with);
+  #define macro_iki_read_replacement_initialize(vocabulary, replace, with) \
+    { \
+      f_macro_string_static_initialize(vocabulary), \
+      f_macro_string_static_initialize(replace), \
+      f_macro_string_static_initialize(with), \
+    }
 #endif // _di_iki_read_replacement_
 
 #ifndef _di_iki_read_replacements_
@@ -186,7 +182,6 @@ extern "C" {
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
-      macro_iki_read_replacement_delete_simple(replacements.array[replacements.used]); \
     } \
     if (replacements.used == 0) f_macro_memory_structure_delete_simple(replacements, iki_read_replacement)
 
@@ -194,7 +189,6 @@ extern "C" {
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
-      macro_iki_read_replacement_destroy_simple(replacements.array[replacements.used]); \
     } \
     if (replacements.used == 0) f_macro_memory_structure_destroy_simple(replacements, iki_read_replacement)
 
@@ -203,7 +197,6 @@ extern "C" {
     if (new_length < replacements.size) { \
       f_array_length i = replacements.size - new_length; \
       for (; i < replacements.size; i++) { \
-        macro_iki_read_replacement_delete(status, replacements.array[i]); \
         if (status != F_none) break; \
       } \
     } \
@@ -224,7 +217,6 @@ extern "C" {
     if (new_length < replacements.size) { \
       f_array_length i = replacements.size - new_length; \
       for (; i < replacements.size; i++) { \
-        macro_iki_read_replacement_delete(status, replacements.array[i]); \
         if (status != F_none) break; \
       } \
     } \
