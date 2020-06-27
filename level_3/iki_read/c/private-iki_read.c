@@ -301,26 +301,24 @@ extern "C" {
   f_return_status iki_read_process_at(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_string_range *range) {
     if (data->parameters[iki_read_parameter_line].result != f_console_result_additional) return F_false;
 
-    if (data->line < data->buffer.used) {
-      f_string_length line = 0;
+    f_string_length line = 0;
 
-      range->start = 0;
-      if (data->line > 0) {
-        for (; line < data->line && range->start < data->buffer.used; range->start++) {
-          if (data->buffer.string[range->start] == f_string_eol[0]) line++;
-        } // for
-      }
-
-      range->stop = range->start;
-      for (; range->stop < data->buffer.used; range->stop++) {
-        if (data->buffer.string[range->stop] == f_string_eol[0]) break;
+    range->start = 0;
+    if (data->line > 0) {
+      for (; line < data->line && range->start < data->buffer.used; range->start++) {
+        if (data->buffer.string[range->start] == f_string_eol[0]) line++;
       } // for
     }
-    else {
-      range->start = data->buffer.used + 1;
+
+    if (line == data->line) {
+      for (range->stop = range->start; range->stop < data->buffer.used; range->stop++) {
+        if (data->buffer.string[range->stop] == f_string_eol[0]) break;
+      } // for
+
+      return F_true;
     }
 
-    return F_true;
+    return F_data_not;
   }
 #endif // _di_iki_read_process_at_
 
@@ -335,10 +333,15 @@ extern "C" {
     if (data->parameters[iki_read_parameter_whole].result == f_console_result_found) {
       f_string_range buffer_range = f_macro_string_range_initialize(data->buffer.used);
 
-      if (iki_read_process_at(arguments, file_name, data, &buffer_range)) {
+      status = iki_read_process_at(arguments, file_name, data, &buffer_range);
+
+      if (status == F_true) {
         if (buffer_range.start > data->buffer.used) {
           return F_data_not;
         }
+      }
+      else if (status == F_data_not) {
+        return F_data_not;
       }
 
       if (data->mode == iki_read_mode_content) {
@@ -357,10 +360,15 @@ extern "C" {
     else {
       f_string_range buffer_range = f_macro_string_range_initialize(data->buffer.used);
 
-      if (iki_read_process_at(arguments, file_name, data, &buffer_range)) {
+      status = iki_read_process_at(arguments, file_name, data, &buffer_range);
+
+      if (status == F_true) {
         if (buffer_range.start > data->buffer.used) {
           return F_data_not;
         }
+      }
+      else if (status == F_data_not) {
+        return F_data_not;
       }
 
       if (data->mode == iki_read_mode_content) {
@@ -587,11 +595,17 @@ extern "C" {
     f_status status = F_none;
     f_string_range range = f_macro_string_range_initialize(data->buffer.used);
 
-    if (iki_read_process_at(arguments, file_name, data, &range)) {
+    status = iki_read_process_at(arguments, file_name, data, &range);
+
+    if (status == F_true) {
       if (range.start > data->buffer.used) {
         printf("0\n");
         return F_none;
       }
+    }
+    else if (status == F_data_not) {
+      printf("0\n");
+      return F_none;
     }
 
     status = fl_iki_read(&data->buffer, &range, variable, vocabulary, content);

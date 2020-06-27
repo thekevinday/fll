@@ -106,6 +106,7 @@ extern "C" {
  * @return
  *   F_true is returned if the range is processed.
  *   F_false is returned if the range is not processed.
+ *   F_data_not if the range is processed, but the requested line is out of range.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
