@@ -680,8 +680,8 @@ extern "C" {
 
     if (width == 4) {
 
-      // U+102E0 to U+102FB.
-      if (character >= 0xf0908ba0 && character <= 0xf0908bbb) {
+      // U+102E1 to U+102FB.
+      if (character >= 0xf0908ba1 && character <= 0xf0908bbb) {
         return F_true;
       }
     }
