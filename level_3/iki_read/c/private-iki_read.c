@@ -402,7 +402,7 @@ extern "C" {
       return status;
     }
 
-    bool content_only = data->mode == iki_read_mode_content;
+    const bool content_only = data->mode == iki_read_mode_content;
 
     iki_read_substitutions substitutionss[variable->used];
 
@@ -515,6 +515,8 @@ extern "C" {
       f_print_string_dynamic_partial(f_type_output, data->buffer, buffer_range);
       return F_none;
     }
+
+    const bool content_only = data->mode == iki_read_mode_content;
 
     iki_read_substitutions substitutionss[variable->used];
 
@@ -630,7 +632,7 @@ extern "C" {
           }
           else {
             if (substitutionss[j].used) {
-              iki_read_substitutions_print(*data, *variable, *content, *ranges, substitutionss[j], j, F_true);
+              iki_read_substitutions_print(*data, *variable, *content, *ranges, substitutionss[j], j, content_only);
             }
             else {
               f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[j]);
@@ -639,7 +641,7 @@ extern "C" {
         }
         else {
           if (substitutionss[j].used) {
-            iki_read_substitutions_print(*data, *variable, *content, *ranges, substitutionss[j], j, F_true);
+            iki_read_substitutions_print(*data, *variable, *content, *ranges, substitutionss[j], j, content_only);
           }
           else {
             f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[j]);
