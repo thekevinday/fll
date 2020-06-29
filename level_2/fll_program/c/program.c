@@ -271,10 +271,8 @@ extern "C" {
           status = F_none;
         }
         else {
-          if (destination->used >= destination->size) {
-            f_macro_string_dynamics_resize(status, (*destination), destination->size + f_console_default_allocation_step);
-            if (F_status_is_error(status)) return status;
-          }
+          f_macro_memory_structure_macro_increment(status, (*destination), 1, f_console_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+          if (F_status_is_error(status)) break;
 
           destination->array[destination->used] = ripped;
           destination->used++;

@@ -328,6 +328,39 @@ extern "C" {
     }
 #endif // _di_f_macro_memory_structures_adjust_
 
+/**
+ * Provide a macro for calling other macros for incrementing a buffer.
+ *
+ * If the used + step is greater than size, then increase by step_default.
+ * If step_default exceeds f_array_length_size, then attempt to increment by step.
+ * If step exceeds f_array_length_size, set status to error_too_large.
+ *
+ * Be sure to check size for error after calling this.
+ *
+ * status:          the status to return.
+ * structures:      the structures to operate on.
+ * step:            the step to increase by, must be less than or equal to step_default.
+ * step_default:    the default step to increase by if memory allows.
+ * macro_resize:    the resize structure macro to call that excepts the exact arguments: (status, structure, new_length).
+ * error_too_large: the error status to return when f_array_length_size would be exceeded.
+ */
+#ifndef _di_f_macro_memory_structure_macro_increment_
+  #define f_macro_memory_structure_macro_increment(status, structure, step, step_default, macro_resize, error_too_large) \
+    if (structure.used + step > structure.size) { \
+      if (structure.used + step_default > f_array_length_size) { \
+        if (structure.used + step > structure.size > f_array_length_size) { \
+          status = F_status_set_error(error_too_large); \
+        } \
+        else { \
+          macro_resize(status, structure, structure.size + step); \
+        } \
+      } \
+      else { \
+        macro_resize(status, structure, structure.size + step_default); \
+      } \
+    }
+#endif // _di_f_macro_memory_structure_macro_increment_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

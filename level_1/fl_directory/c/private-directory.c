@@ -165,20 +165,8 @@ extern "C" {
 
       const f_status status_failure = status;
 
-      if (failures->used + 1 > failures->size) {
-        if (failures->size + f_memory_default_allocation_step > f_array_length_size) {
-          if (failures->size + 1 > f_array_length_size) {
-            return F_status_set_error(F_buffer_too_large);
-          }
-
-          f_macro_directory_statuss_resize(status, (*failures), failures->used + 1);
-          if (F_status_is_error(status)) return status;
-        }
-        else {
-          f_macro_directory_statuss_resize(status, (*failures), failures->used + f_memory_default_allocation_step);
-          if (F_status_is_error(status)) return status;
-        }
-      }
+      f_macro_memory_structure_macro_increment(status, (*failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_resize, F_buffer_too_large);
+      if (F_status_is_error(status)) return status;
 
       f_directory_status failure = f_directory_status_initialize;
       f_string_length size = 0;
@@ -387,20 +375,8 @@ extern "C" {
 
       const f_status status_failure = status;
 
-      if (failures->used + 1 > failures->size) {
-        if (failures->size + f_memory_default_allocation_step > f_array_length_size) {
-          if (failures->size + 1 > f_array_length_size) {
-            return F_status_set_error(F_buffer_too_large);
-          }
-
-          f_macro_directory_statuss_resize(status, (*failures), failures->used + 1);
-          if (F_status_is_error(status)) return status;
-        }
-        else {
-          f_macro_directory_statuss_resize(status, (*failures), failures->used + f_memory_default_allocation_step);
-          if (F_status_is_error(status)) return status;
-        }
-      }
+      f_macro_memory_structure_macro_increment(status, (*failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_resize, F_buffer_too_large);
+      if (F_status_is_error(status)) return status;
 
       f_directory_status failure = f_directory_status_initialize;
       f_string_length size = 0;

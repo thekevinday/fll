@@ -223,6 +223,52 @@ extern "C" {
   extern f_return_status iki_read_process_buffer_total(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_process_buffer_total_
 
+/**
+ * Process the arguments, associating substitions with a given vocabulary.
+ *
+ * @param arguments
+ *   The console arguments passed to the program.
+ * @param file_name
+ *   The name of the file being processed.
+ * @param data
+ *   The program specific data.
+ * @param vocabulary
+ *   The ranges representing a vocabulary.
+ * @param substitutionss
+ *   An array of substitutionss with each index representing an index for in the respective vocabulary array.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_iki_read_substitutions_identify_
+  extern f_return_status iki_read_substitutions_identify(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_iki_vocabulary *vocabulary, iki_read_substitutions *substitutionss) f_gcc_attribute_visibility_internal;
+#endif // _di_iki_read_substitutions_identify_
+
+/**
+ * Print any applicable substition and if there is non then print the given range at the given index.
+ *
+ * @param data
+ *   The program specific data.
+ * @param variable
+ *   The ranges representing a variable.
+ * @param content
+ *   The ranges representing a content.
+ * @param ranges
+ *   The ranges containing the desired range to print as specified by index.
+ * @param substitutions
+ *   The substitions associated with the variable for the given range at the given index to use for potential printing.
+ * @param index
+ *   The index used to identify the desired range in variable, content, and ranges.
+ * @param content_only
+ *   Set to TRUE to only print the content when printing substituted text.
+ *   Set to FALSE to print the entire variable when printing substituted text.
+ */
+#ifndef _di_iki_read_substitutions_print_
+  extern void iki_read_substitutions_print(const iki_read_data data, const f_iki_variable variable, const f_iki_content content, const f_string_ranges ranges, const iki_read_substitutions substitutions, const f_string_length index, const bool content_only) f_gcc_attribute_visibility_internal;
+#endif // _di_iki_read_substitutions_print_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

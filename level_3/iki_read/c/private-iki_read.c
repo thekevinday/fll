@@ -402,13 +402,31 @@ extern "C" {
       return status;
     }
 
+    bool content_only = data->mode == iki_read_mode_content;
+
+    iki_read_substitutions substitutionss[variable->used];
+
+    memset(substitutionss, 0, sizeof(iki_read_substitutions) * variable->used);
+
+    if (data->mode == iki_read_mode_literal || data->mode == iki_read_mode_content) {
+      status = iki_read_substitutions_identify(arguments, file_name, data, vocabulary, substitutionss);
+      if (F_status_is_error(status)) {
+        iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
+
+        for (f_array_length i = 0; i < variable->used; i++) {
+          macro_iki_read_substitutions_delete_simple(substitutionss[i]);
+        } // for
+
+        return status;
+      }
+    }
+
     if (data->parameters[iki_read_parameter_name].result == f_console_result_additional) {
       f_string_dynamic name = f_string_dynamic_initialize;
 
       f_array_length index = 0;
       f_array_length i = 0;
       f_array_length j = 0;
-
       buffer_range->start = 0;
 
       for (; i < data->parameters[iki_read_parameter_name].additional.used; i++) {
@@ -418,6 +436,10 @@ extern "C" {
         status = fl_string_append_nulless(arguments.argv[index], strlen(arguments.argv[index]), &name);
         if (F_status_is_error(status)) {
           iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+
+          for (f_array_length i = 0; i < variable->used; i++) {
+            macro_iki_read_substitutions_delete_simple(substitutionss[i]);
+          } // for
 
           f_macro_string_dynamic_delete_simple(name);
           return status;
@@ -431,7 +453,13 @@ extern "C" {
           if (status == F_equal_to) {
             unmatched = F_false;
 
-            f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[j]);
+            if (substitutionss[j].used) {
+              iki_read_substitutions_print(*data, *variable, *content, *ranges, substitutionss[j], j, content_only);
+            }
+            else {
+              f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[j]);
+            }
+
             printf("%c", f_string_eol[0]);
           }
         } // for
@@ -439,19 +467,36 @@ extern "C" {
 
       f_macro_string_dynamic_delete_simple(name);
 
-      if (unmatched) return F_data_not;
+      if (unmatched) status = F_data_not;
+      else status = F_none;
     }
     else if (ranges->used) {
-      for (f_array_length i = 0; i < ranges->used; i++) {
-        f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[i]);
+      f_array_length i = 0;
+      f_string_length j = 0;
+
+      for (; i < ranges->used; i++) {
+
+        if (substitutionss[i].used) {
+          iki_read_substitutions_print(*data, *variable, *content, *ranges, substitutionss[i], i, content_only);
+        }
+        else {
+          f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[i]);
+        }
+
         printf("%c", f_string_eol[0]);
       } // for
+
+      status = F_none;
     }
     else {
-      return F_data_not;
+      status = F_data_not;
     }
 
-    return F_none;
+    for (f_array_length i = 0; i < variable->used; i++) {
+      macro_iki_read_substitutions_delete_simple(substitutionss[i]);
+    } // for
+
+    return status;
   }
 #endif // _di_iki_read_process_buffer_ranges_
 
@@ -471,9 +516,30 @@ extern "C" {
       return F_none;
     }
 
+    iki_read_substitutions substitutionss[variable->used];
+
+    memset(substitutionss, 0, sizeof(iki_read_substitutions) * variable->used);
+
+    if (data->mode == iki_read_mode_literal || data->mode == iki_read_mode_content) {
+      status = iki_read_substitutions_identify(arguments, file_name, data, vocabulary, substitutionss);
+      if (F_status_is_error(status)) {
+        iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
+
+        for (f_array_length i = 0; i < variable->used; i++) {
+          macro_iki_read_substitutions_delete_simple(substitutionss[i]);
+        } // for
+
+        return status;
+      }
+    }
+
     f_string_dynamics names = f_string_dynamics_initialize;
     f_string_range name_range = f_string_range_initialize;
+    f_string_range substitution_range = f_string_range_initialize;
+
     bool name_missed = F_true;
+
+    substitution_range.start = 0;
 
     if (data->parameters[iki_read_parameter_name].result == f_console_result_additional) {
       f_array_length i = 0;
@@ -494,96 +560,105 @@ extern "C" {
         } // for
 
         if (name_missed) {
-          if (names.used + 1 > names.size) {
-            if (names.used + f_iki_default_allocation_step > f_array_length_size) {
-              if (names.used + 1 > names.size > f_array_length_size) {
-                iki_read_print_error(data->context, data->verbosity, F_buffer_too_large, "iki_read_process_buffer_ranges_whole", F_true);
-
-                f_macro_string_dynamics_delete_simple(names);
-                return F_status_set_error(F_buffer_too_large);
-              }
-              else {
-                f_macro_string_dynamics_resize(status, names, names.used + 1);
-              }
-            }
-            else {
-              f_macro_string_dynamics_resize(status, names, names.used + f_iki_default_allocation_step);
-            }
-
-            if (F_status_is_error(status)) {
-              iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "iki_read_process_buffer_ranges_whole", F_true);
-
-              f_macro_string_dynamics_delete_simple(names);
-              return status;
-            }
+          f_macro_memory_structure_macro_increment(status, names, 1, f_iki_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+          if (F_status_is_error(status)) {
+            iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "iki_read_process_buffer_ranges_whole", F_true);
+            break;
           }
 
           status = fl_string_append_nulless(arguments.argv[index], length_argument, &names.array[names.used]);
           if (F_status_is_error(status)) {
             iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_append_nulless", F_true);
-
-            f_macro_string_dynamics_delete_simple(names);
-            return status;
+            break;
           }
 
           names.used++;
         }
       } // for
-    }
 
-    f_string_length i = buffer_range.start;
-    f_array_length j = 0;
-    f_array_length k = 0;
-
-    range = buffer_range;
-    name_range.start = 0;
-
-    while (i <= range.stop && j < variable->used) {
-      if (i < variable->array[j].start) {
-        range.stop = variable->array[j].start - 1;
-
-        f_print_string_dynamic_partial(f_type_output, data->buffer, range);
-
-        range.start = variable->array[j].stop + 1;
-        range.stop = buffer_range.stop;
-
-        i = variable->array[j].start;
-      }
-
-      // @todo handle expansion and substitution.
-      if (names.used) {
-        name_missed = F_true;
-
-        for (k = 0; k < names.used; k++) {
-          name_range.stop = names.array[k].used - 1;
-
-          status = fl_string_dynamic_partial_compare(data->buffer, names.array[k], vocabulary->array[j], name_range);
-
-          if (status == F_equal_to) {
-            name_missed = F_false;
-            break;
-          }
+      if (F_status_is_error(status)) {
+        for (i = 0; i < variable->used; i++) {
+          macro_iki_read_substitutions_delete_simple(substitutionss[i]);
         } // for
 
-        if (name_missed) {
-          f_print_string_dynamic_partial(f_type_output, data->buffer, variable->array[j]);
+        f_macro_string_dynamics_delete_simple(names);
+        return status;
+      }
+    }
+
+    {
+      f_string_length i = buffer_range.start;
+      f_array_length j = 0;
+      f_array_length k = 0;
+
+      range = buffer_range;
+      name_range.start = 0;
+
+      while (i <= range.stop && j < variable->used) {
+        if (i < variable->array[j].start) {
+          range.stop = variable->array[j].start - 1;
+
+          f_print_string_dynamic_partial(f_type_output, data->buffer, range);
+
+          range.start = variable->array[j].stop + 1;
+          range.stop = buffer_range.stop;
+
+          i = variable->array[j].start;
+        }
+
+        if (names.used) {
+          name_missed = F_true;
+
+          for (k = 0; k < names.used; k++) {
+            name_range.stop = names.array[k].used - 1;
+
+            status = fl_string_dynamic_partial_compare(data->buffer, names.array[k], vocabulary->array[j], name_range);
+
+            if (status == F_equal_to) {
+              name_missed = F_false;
+              break;
+            }
+          } // for
+
+          if (name_missed) {
+            if (substitutionss[j].used) {
+              iki_read_substitutions_print(*data, *variable, *content, *variable, substitutionss[j], j, F_false);
+            }
+            else {
+              f_print_string_dynamic_partial(f_type_output, data->buffer, variable->array[j]);
+            }
+          }
+          else {
+            if (substitutionss[j].used) {
+              iki_read_substitutions_print(*data, *variable, *content, *ranges, substitutionss[j], j, F_true);
+            }
+            else {
+              f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[j]);
+            }
+          }
         }
         else {
-          f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[j]);
+          if (substitutionss[j].used) {
+            iki_read_substitutions_print(*data, *variable, *content, *ranges, substitutionss[j], j, F_true);
+          }
+          else {
+            f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[j]);
+          }
         }
-      }
-      else {
-        f_print_string_dynamic_partial(f_type_output, data->buffer, ranges->array[j]);
-      }
 
-      i = variable->array[j].stop + 1;
-      j++;
-    } // while
+        i = variable->array[j].stop + 1;
+        j++;
+      } // while
 
-    if (i <= buffer_range.stop) {
-      range.start = i;
-      f_print_string_dynamic_partial(f_type_output, data->buffer, range);
+      if (i <= buffer_range.stop) {
+        range.start = i;
+        f_print_string_dynamic_partial(f_type_output, data->buffer, range);
+      }
     }
+
+    for (f_array_length i = 0; i < variable->used; i++) {
+      macro_iki_read_substitutions_delete_simple(substitutionss[i]);
+    } // for
 
     f_macro_string_dynamics_delete_simple(names);
     return F_none;
@@ -657,6 +732,93 @@ extern "C" {
     return F_none;
   }
 #endif // _di_iki_read_process_buffer_total_
+
+#ifndef _di_iki_read_substitutions_identify_
+  f_return_status iki_read_substitutions_identify(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_iki_vocabulary *vocabulary, iki_read_substitutions *substitutionss) {
+    if (data->parameters[iki_read_parameter_substitute].result != f_console_result_additional) return F_none;
+
+    f_status status = F_none;
+
+    f_array_length i = 0;
+    f_array_length j = 0;
+
+    f_array_length index = 0;
+    f_array_length index_2 = 0;
+
+    f_string_length length = 0;
+
+    f_console_parameter *parameter = &data->parameters[iki_read_parameter_substitute];
+
+    for (; i < parameter->additional.used; i += 3) {
+      index = parameter->additional.array[i];
+      length = strnlen(arguments.argv[index], f_console_length_size);
+
+      for (j = 0; j < vocabulary->used; j++) {
+        status = fl_string_compare(arguments.argv[index], data->buffer.string + vocabulary->array[j].start, length, (vocabulary->array[j].stop - vocabulary->array[j].start) + 1);
+
+        if (status == F_equal_to) {
+          f_macro_memory_structure_macro_increment(status, substitutionss[j], 1, f_iki_default_allocation_step, macro_iki_read_substitutions_resize, F_buffer_too_large);
+          if (F_status_is_error(status)) return status;
+
+          index = parameter->additional.array[i + 1];
+          index_2 = substitutionss[j].used;
+          substitutionss[j].array[index_2].replace.string = arguments.argv[index];
+          substitutionss[j].array[index_2].replace.used = strnlen(arguments.argv[index], f_console_length_size);
+          substitutionss[j].array[index_2].replace.size = substitutionss[j].array[index_2].replace.used;
+
+          index = parameter->additional.array[i + 2];
+          substitutionss[j].array[index_2].with.string = arguments.argv[index];
+          substitutionss[j].array[index_2].with.used = strnlen(arguments.argv[index], f_console_length_size);
+          substitutionss[j].array[index_2].with.size = substitutionss[j].array[index_2].with.used;
+
+          substitutionss[j].used++;
+        }
+      } // for
+    } // for
+
+    return F_none;
+  }
+#endif // _di_iki_read_substitutions_identify_
+
+#ifndef _di_iki_read_substitutions_print_
+  void iki_read_substitutions_print(const iki_read_data data, const f_iki_variable variable, const f_iki_content content, const f_string_ranges ranges, const iki_read_substitutions substitutions, const f_string_length index, const bool content_only) {
+    f_status status = F_none;
+
+    f_string_length i = 0;
+    f_string_range range = f_string_range_initialize;
+
+    range.start = 0;
+
+    for (; i < substitutions.used; i++) {
+      range.stop = substitutions.array[i].replace.used - 1;
+
+      status = fl_string_dynamic_partial_compare(substitutions.array[i].replace, data.buffer, range, content.array[index]);
+      if (status == F_equal_to) break;
+    } // for
+
+    if (status == F_equal_to) {
+      if (content_only) {
+        f_print_string_dynamic(f_type_output, substitutions.array[i].with);
+      }
+      else {
+        range.start = variable.array[index].start;
+        range.stop = content.array[index].start - 1;
+
+        f_print_string_dynamic_partial(f_type_output, data.buffer, range);
+
+        f_print_string_dynamic(f_type_output, substitutions.array[i].with);
+
+        range.start = content.array[index].stop + 1;
+        range.stop = variable.array[index].stop;
+
+        f_print_string_dynamic_partial(f_type_output, data.buffer, range);
+      }
+    }
+    else {
+      f_print_string_dynamic_partial(f_type_output, data.buffer, ranges.array[index]);
+    }
+  }
+#endif // _di_iki_read_substitutions_print_
 
 #ifdef __cplusplus
 } // extern "C"

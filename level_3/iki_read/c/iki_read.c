@@ -33,7 +33,6 @@ extern "C" {
     printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(context, iki_read_short_substitute, iki_read_long_substitute, f_console_symbol_short_enable, f_console_symbol_long_enable,"Substitute the entire variable for the given name and content value with the given string.");
-    fll_program_print_help_option(context, iki_read_short_expand, iki_read_long_expand, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Expand variables into their respective content.");
 
     fll_program_print_help_usage(context, iki_read_name, "filename(s)");
 
@@ -50,38 +49,30 @@ extern "C" {
     printf(" option, requires 3 additional parameters: ");
 
     fl_color_print(f_type_output, context.notable, context.reset, "<");
-    printf("%s", iki_read_replacement_vocabulary);
+    printf("%s", iki_read_substitution_vocabulary);
     fl_color_print(f_type_output, context.notable, context.reset, ">");
     printf(" ");
     fl_color_print(f_type_output, context.notable, context.reset, "<");
-    printf("%s", iki_read_replacement_replace);
+    printf("%s", iki_read_substitution_replace);
     fl_color_print(f_type_output, context.notable, context.reset, ">");
     printf(" ");
     fl_color_print(f_type_output, context.notable, context.reset, "<");
-    printf("%s", iki_read_replacement_with);
+    printf("%s", iki_read_substitution_with);
     fl_color_print(f_type_output, context.notable, context.reset, ">");
     printf(".%c", f_string_eol[0]);
 
-    fl_color_print(f_type_output, context.notable, context.reset, "    %s", iki_read_replacement_vocabulary);
+    fl_color_print(f_type_output, context.notable, context.reset, "    %s", iki_read_substitution_vocabulary);
     printf(": The name of the vocabulary whose content is to be substituted.%c", f_string_eol[0]);
 
-    fl_color_print(f_type_output, context.notable, context.reset, "    %s", iki_read_replacement_replace);
+    fl_color_print(f_type_output, context.notable, context.reset, "    %s", iki_read_substitution_replace);
     printf(":    The content matching this exact string will be substituted.%c", f_string_eol[0]);
 
-    fl_color_print(f_type_output, context.notable, context.reset, "    %s", iki_read_replacement_with);
+    fl_color_print(f_type_output, context.notable, context.reset, "    %s", iki_read_substitution_with);
     printf(":       The new string to use as the substitute.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
     printf("  The vocabulary and replacement are case-sensitive and must exactly match.%c", f_string_eol[0]);
-
-    printf("%c", f_string_eol[0]);
-
-    printf("  All substitution is applied before any expansion when both the ", f_string_eol[0]);
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_substitute);
-    printf(" option and the ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_expand);
-    printf(" option are specified.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
@@ -246,21 +237,6 @@ extern "C" {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
               fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_substitute);
-              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
-              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
-            }
-
-            status = F_status_set_error(F_parameter);
-          }
-        }
-
-        if (data->parameters[iki_read_parameter_expand].result == f_console_result_found) {
-          if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
-            if (data->verbosity != iki_read_verbosity_quiet) {
-              fprintf(f_type_error, "%c", f_string_eol[0]);
-              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_expand);
               fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
               fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
               fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");

@@ -50,10 +50,8 @@ extern "C" {
       width = f_macro_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter || i + 1 >= serialize.used) {
-        if (strings->used >= strings->size) {
-          f_macro_string_dynamics_resize(status, (*strings), strings->size + f_serialize_default_allocation_step);
-          if (F_status_is_error(status)) return status;
-        }
+        f_macro_memory_structure_macro_increment(status, (*strings), 1, f_serialize_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+        if (F_status_is_error(status)) return status;
 
         if (start == i) {
           strings->array[strings->used].used = 0;
@@ -118,10 +116,8 @@ extern "C" {
       width = f_macro_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter || i + 1 >= serialize.used) {
-        if (locations->used >= locations->size) {
-          f_macro_string_ranges_resize(status, (*locations), locations->size + f_serialize_default_allocation_step);
-          if (F_status_is_error(status)) return status;
-        }
+        f_macro_memory_structure_macro_increment(status, (*locations), 1, f_serialize_default_allocation_step, f_macro_string_ranges_resize, F_buffer_too_large);
+        if (F_status_is_error(status)) return status;
 
         if (start == i) {
           // provide an invalid start to stop range to communicate that there is no data.

@@ -83,6 +83,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_incomplete_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
+ *   F_buffer_too_large (with error bit) if a buffer would exceed maximum length.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -108,6 +109,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_incomplete_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
+ *   F_buffer_too_large (with error bit) if a buffer would exceed memory max length.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  */

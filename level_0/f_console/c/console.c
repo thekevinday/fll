@@ -286,8 +286,7 @@ extern "C" {
         if (!found) {
           // populate list of remaining parameters.parameter not associated with anything.
           if (remaining->used >= remaining->size) {
-            f_macro_string_lengths_resize(status, (*remaining), remaining->size + f_console_default_allocation_step);
-
+            f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_console_default_allocation_step, f_macro_string_lengths_resize, F_buffer_too_large);
             if (F_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(needs_additional);
               return status;

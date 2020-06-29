@@ -96,6 +96,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if directory is empty.
+ *   F_buffer_too_large (with error bit) if a buffer would exceed max length.
  *   F_directory_descriptor (with error bit) on directory file descriptor error.
  *   F_directory_open (with error bit) on directory open error.
  *   F_directory_stream (with error bit) on directory stream error.

@@ -76,7 +76,6 @@ extern "C" {
   };
 
   #define iki_read_short_at         "a"
-  #define iki_read_short_expand     "e"
   #define iki_read_short_line       "l"
   #define iki_read_short_literal    "L"
   #define iki_read_short_name       "n"
@@ -86,7 +85,6 @@ extern "C" {
   #define iki_read_short_whole      "w"
 
   #define iki_read_long_at         "at"
-  #define iki_read_long_expand     "expand"
   #define iki_read_long_line       "line"
   #define iki_read_long_literal    "literal"
   #define iki_read_long_name       "name"
@@ -105,7 +103,6 @@ extern "C" {
     iki_read_parameter_version,
 
     iki_read_parameter_at,
-    iki_read_parameter_expand,
     iki_read_parameter_line,
     iki_read_parameter_literal,
     iki_read_parameter_name,
@@ -125,7 +122,6 @@ extern "C" {
       f_console_parameter_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_initialize(iki_read_short_at, iki_read_long_at, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(iki_read_short_expand, iki_read_long_expand, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(iki_read_short_line, iki_read_long_line, 0, 1, f_console_type_normal), \
       f_console_parameter_initialize(iki_read_short_literal, iki_read_long_literal, 0, 0, f_console_type_normal), \
       f_console_parameter_initialize(iki_read_short_name, iki_read_long_name, 0, 1, f_console_type_normal), \
@@ -135,64 +131,61 @@ extern "C" {
       f_console_parameter_initialize(iki_read_short_total, iki_read_long_total, 0, 0, f_console_type_normal), \
     }
 
-  #define iki_read_total_parameters 16
+  #define iki_read_total_parameters 15
 #endif // _di_iki_read_defines_
 
-#ifndef _di_iki_read_replacement_
-  #define iki_read_replacement_vocabulary "vocabulary"
-  #define iki_read_replacement_replace    "replace"
-  #define iki_read_replacement_with       "with"
+#ifndef _di_iki_read_substitution_
+  #define iki_read_substitution_vocabulary "vocabulary"
+  #define iki_read_substitution_replace    "replace"
+  #define iki_read_substitution_with       "with"
 
   typedef struct {
-    f_string_static vocabulary;
     f_string_static replace;
     f_string_static with;
-  } iki_read_replacement;
+  } iki_read_substitution;
 
-  #define iki_read_replacement_initialize \
+  #define iki_read_substitution_initialize \
     { \
-      f_string_static_initialize, \
       f_string_static_initialize, \
       f_string_static_initialize, \
     }
 
-  #define macro_iki_read_replacement_initialize(vocabulary, replace, with) \
+  #define macro_iki_read_substitution_initialize(replace, with) \
     { \
-      f_macro_string_static_initialize(vocabulary), \
       f_macro_string_static_initialize(replace), \
       f_macro_string_static_initialize(with), \
     }
-#endif // _di_iki_read_replacement_
+#endif // _di_iki_read_substitution_
 
-#ifndef _di_iki_read_replacements_
+#ifndef _di_iki_read_substitutions_
   typedef struct {
-    iki_read_replacement *array;
+    iki_read_substitution *array;
 
     f_array_length size;
     f_array_length used;
-  } iki_read_replacements;
+  } iki_read_substitutions;
 
-  #define iki_read_replacements_initialize {0, 0, 0}
+  #define iki_read_substitutions_initialize {0, 0, 0}
 
-  #define macro_iki_read_replacements_clear(replacements) f_macro_memory_structure_clear(replacements)
+  #define macro_iki_read_substitutions_clear(replacements) f_macro_memory_structure_clear(replacements)
 
-  #define macro_iki_read_replacements_new(status, replacements, length) f_macro_memory_structure_new(status, replacements, iki_read_replacement, length)
+  #define macro_iki_read_substitutions_new(status, replacements, length) f_macro_memory_structure_new(status, replacements, iki_read_substitution, length)
 
-  #define macro_iki_read_replacements_delete_simple(replacements) \
+  #define macro_iki_read_substitutions_delete_simple(replacements) \
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
     } \
-    if (replacements.used == 0) f_macro_memory_structure_delete_simple(replacements, iki_read_replacement)
+    if (replacements.used == 0) f_macro_memory_structure_delete_simple(replacements, iki_read_substitution)
 
-  #define macro_iki_read_replacements_destroy_simple(replacements) \
+  #define macro_iki_read_substitutions_destroy_simple(replacements) \
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
     } \
-    if (replacements.used == 0) f_macro_memory_structure_destroy_simple(replacements, iki_read_replacement)
+    if (replacements.used == 0) f_macro_memory_structure_destroy_simple(replacements, iki_read_substitution)
 
-  #define macro_iki_read_replacements_resize(status, replacements, new_length) \
+  #define macro_iki_read_substitutions_resize(status, replacements, new_length) \
     status = F_none; \
     if (new_length < replacements.size) { \
       f_array_length i = replacements.size - new_length; \
@@ -200,19 +193,19 @@ extern "C" {
         if (status != F_none) break; \
       } \
     } \
-    if (status == F_none) status = f_memory_resize((void **) & replacements.array, sizeof(iki_read_replacement), replacements.size, new_length); \
+    if (status == F_none) status = f_memory_resize((void **) & replacements.array, sizeof(iki_read_substitution), replacements.size, new_length); \
     if (status == F_none) { \
       if (new_length > replacements.size) { \
         f_array_length i = replacements.size; \
         for (; i < new_length; i++) { \
-          memset(&replacements.array[i], 0, sizeof(iki_read_replacement)); \
+          memset(&replacements.array[i], 0, sizeof(iki_read_substitution)); \
         } \
       } \
       replacements.size = new_length; \
       if (replacements.used > replacements.size) replacements.used = new_length; \
     }
 
-  #define macro_iki_read_replacements_adjust(status, replacements, new_length) \
+  #define macro_iki_read_substitutions_adjust(status, replacements, new_length) \
     status = F_none; \
     if (new_length < replacements.size) { \
       f_array_length i = replacements.size - new_length; \
@@ -220,18 +213,18 @@ extern "C" {
         if (status != F_none) break; \
       } \
     } \
-    if (status == F_none) status = f_memory_adjust((void **) & replacements.array, sizeof(iki_read_replacement), replacements.size, new_length); \
+    if (status == F_none) status = f_memory_adjust((void **) & replacements.array, sizeof(iki_read_substitution), replacements.size, new_length); \
     if (status == F_none) { \
       if (new_length > replacements.size) { \
         f_array_length i = replacements.size; \
         for (; i < new_length; i++) { \
-          memset(&replacements.array[i], 0, sizeof(iki_read_replacement)); \
+          memset(&replacements.array[i], 0, sizeof(iki_read_substitution)); \
         } \
       } \
       replacements.size = new_length; \
       if (replacements.used > replacements.size) replacements.used = new_length; \
     }
-#endif // _di_iki_read_replacements_
+#endif // _di_iki_read_substitutions_
 
 #ifndef _di_iki_read_data_
   typedef struct {
@@ -248,7 +241,7 @@ extern "C" {
 
     f_string_dynamic buffer;
 
-    iki_read_replacements replacements;
+    iki_read_substitutions replacements;
 
     fl_color_context context;
   } iki_read_data;
@@ -263,7 +256,7 @@ extern "C" {
       0, \
       0, \
       f_string_dynamic_initialize, \
-      iki_read_replacements_initialize, \
+      iki_read_substitutions_initialize, \
       fl_color_context_initialize, \
     }
 #endif // _di_iki_read_data_

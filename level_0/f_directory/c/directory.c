@@ -191,7 +191,7 @@ extern "C" {
       }
 
       if (names->used >= names->size) {
-        f_macro_string_dynamics_resize(status, (*names), names->size + f_directory_default_allocation_step);
+        f_macro_memory_structure_macro_increment(status, (*names), 1, f_directory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
         if (F_status_is_error(status)) break;
       }
 

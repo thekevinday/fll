@@ -284,6 +284,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if directory is empty.
+ *   F_buffer_too_large (with error bit) if the directory buffer max length would be exceeded.
  *   F_failure (with error bit) if failed to read directory information.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.

@@ -17,20 +17,8 @@ extern "C" {
     if (length == 0) {
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
-      if (paths->used + 1 > paths->size) {
-        if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
-          if (paths->size + 1 > f_array_length_size) {
-            return F_status_set_error(F_buffer_too_large);
-          }
-
-          f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-          if (F_status_is_error(status)) return status;
-        }
-        else {
-          f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-          if (F_status_is_error(status)) return status;
-        }
-      }
+      f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+      if (F_status_is_error(status)) return status;
 
       f_macro_string_dynamic_clear(paths->array[paths->used]);
       paths->used++;
@@ -44,20 +32,8 @@ extern "C" {
 
     for (i = 0; i <= length; i++) {
       if (i == length || path[i] == f_path_separator_variable[0]) {
-        if (paths->used + 1 > paths->size) {
-          if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
-            if (paths->size + 1 > f_array_length_size) {
-              return F_status_set_error(F_buffer_too_large);
-            }
-
-            f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-            if (F_status_is_error(status)) return status;
-          }
-          else {
-            f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-            if (F_status_is_error(status)) return status;
-          }
-        }
+        f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+        if (F_status_is_error(status)) return status;
 
         if (i == 0) {
           f_macro_string_dynamic_clear(paths->array[paths->used]);
@@ -115,20 +91,8 @@ extern "C" {
     if (path.used == 0) {
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
-      if (paths->used + 1 > paths->size) {
-        if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
-          if (paths->size + 1 > f_array_length_size) {
-            return F_status_set_error(F_buffer_too_large);
-          }
-
-          f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-          if (F_status_is_error(status)) return status;
-        }
-        else {
-          f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-          if (F_status_is_error(status)) return status;
-        }
-      }
+      f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+      if (F_status_is_error(status)) return status;
 
       f_macro_string_dynamic_clear(paths->array[paths->used]);
       paths->used++;
@@ -145,20 +109,8 @@ extern "C" {
 
     for (i = 0; i <= path.used; i++) {
       if (i == path.used || path.string[i] == f_path_separator_variable[0]) {
-        if (paths->used + 1 > paths->size) {
-          if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
-            if (paths->size + 1 > f_array_length_size) {
-              return F_status_set_error(F_buffer_too_large);
-            }
-
-            f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-            if (F_status_is_error(status)) return status;
-          }
-          else {
-            f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-            if (F_status_is_error(status)) return status;
-          }
-        }
+        f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+        if (F_status_is_error(status)) return status;
 
         if (i == 0) {
           f_macro_string_dynamic_clear(paths->array[paths->used]);
@@ -216,20 +168,8 @@ extern "C" {
     if (length == 0) {
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
-      if (paths->used + 1 > paths->size) {
-        if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
-          if (paths->size + 1 > f_array_length_size) {
-            return F_status_set_error(F_buffer_too_large);
-          }
-
-          f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-          if (F_status_is_error(status)) return status;
-        }
-        else {
-          f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-          if (F_status_is_error(status)) return status;
-        }
-      }
+      f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+      if (F_status_is_error(status)) return status;
 
       paths->array[paths->used].string = 0;
       paths->array[paths->used].used = 0;
@@ -250,20 +190,8 @@ extern "C" {
       j--;
 
       if (j == 0 || path[j] == f_path_separator_variable[0]) {
-        if (paths->used + 1 > paths->size) {
-          if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
-            if (paths->size + 1 > f_array_length_size) {
-              return F_status_set_error(F_buffer_too_large);
-            }
-
-            f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-            if (F_status_is_error(status)) return status;
-          }
-          else {
-            f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-            if (F_status_is_error(status)) return status;
-          }
-        }
+        f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+        if (F_status_is_error(status)) return status;
 
         if (path[j] == f_path_separator_variable[0]) {
           total = last - i;
@@ -335,20 +263,8 @@ extern "C" {
     if (path.used == 0) {
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
-      if (paths->used + 1 > paths->size) {
-        if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
-          if (paths->size + 1 > f_array_length_size) {
-            return F_status_set_error(F_buffer_too_large);
-          }
-
-          f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-          if (F_status_is_error(status)) return status;
-        }
-        else {
-          f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-          if (F_status_is_error(status)) return status;
-        }
-      }
+      f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+      if (F_status_is_error(status)) return status;
 
       f_macro_string_dynamic_clear(paths->array[paths->used]);
       paths->used++;
@@ -368,20 +284,8 @@ extern "C" {
       j--;
 
       if (j == 0 || path.string[j] == f_path_separator_variable[0]) {
-        if (paths->used + 1 > paths->size) {
-          if (paths->size + f_memory_default_allocation_step > f_array_length_size) {
-            if (paths->size + 1 > f_array_length_size) {
-              return F_status_set_error(F_buffer_too_large);
-            }
-
-            f_macro_string_dynamics_resize(status, (*paths), paths->used + 1);
-            if (F_status_is_error(status)) return status;
-          }
-          else {
-            f_macro_string_dynamics_resize(status, (*paths), paths->used + f_memory_default_allocation_step);
-            if (F_status_is_error(status)) return status;
-          }
-        }
+        f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+        if (F_status_is_error(status)) return status;
 
         if (path.string[j] == f_path_separator_variable[0]) {
           total = last - i;
