@@ -142,7 +142,7 @@ extern "C" {
  *   F_false if not a UTF-8 alphabet character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
+ * @see isalpha()
  */
 #ifndef _di_f_utf_character_is_alpha_
   extern f_return_status f_utf_character_is_alpha(const f_utf_character character);
@@ -159,7 +159,7 @@ extern "C" {
  *   F_false if not a UTF-8 alpha-numeric character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
+ * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_alpha_numeric_
   extern f_return_status f_utf_character_is_alpha_numeric(const f_utf_character character);
@@ -226,8 +226,6 @@ extern "C" {
  *   F_true if a UTF-8 emoji character.
  *   F_false if not a UTF-8 emoji character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
- *
- * @see iscntrl()
  */
 #ifndef _di_f_utf_character_is_emoji_
   extern f_return_status f_utf_character_is_emoji(const f_utf_character character);
@@ -296,7 +294,7 @@ extern "C" {
  *   F_false if not a UTF-8 numeric character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
+ * @see isdigit()
  * @see f_utf_is_numeric()
  */
 #ifndef _di_f_utf_character_is_numeric_
@@ -316,7 +314,6 @@ extern "C" {
  *   F_false if not a UTF-8 punctuation character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_is_punctuation()
  */
 #ifndef _di_f_utf_character_is_punctuation_
@@ -336,7 +333,6 @@ extern "C" {
  *   F_false if not a UTF-8 symbol character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_is_symbol()
  */
 #ifndef _di_f_utf_character_is_symbol_
@@ -363,7 +359,6 @@ extern "C" {
  *
  * @see f_utf_character_is()
  * @see f_utf_character_is_fragment()
- * @see f_utf_is_valid()
  */
 #ifndef _di_f_utf_character_is_valid_
   extern f_return_status f_utf_character_is_valid(const f_utf_character character);
@@ -374,6 +369,10 @@ extern "C" {
  *
  * Non-printing or zero-width characters are not considered whitespace.
  * This does include line separators like '\n'.
+ * This does not include phonetic spaces, like whitespace modifiers.
+ *
+ * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
+ * However, because they are not renderred as whitespace, they are technically not white space.
  *
  * @param character
  *   The character to validate.
@@ -383,7 +382,7 @@ extern "C" {
  *   F_false if not a UTF-8 whitespace.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see f_utf_is_whitespace()
+ * @see isspace()
  */
 #ifndef _di_f_utf_character_is_whitespace_
   extern f_return_status f_utf_character_is_whitespace(const f_utf_character character);
@@ -392,6 +391,11 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 whitespace modifier character.
  *
+ * These are phonetic spaces.
+ *
+ * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
+ * Therefore, these are valid spaces in the technical sense, even if they are not visibly whitespace.
+ *
  * @param character
  *   The character to validate.
  *
@@ -399,9 +403,6 @@ extern "C" {
  *   F_true if a UTF-8 modifier character.
  *   F_false if not a UTF-8 modifier character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
- *
- * @see iscntrl()
- * @see f_utf_is_whitespace_modifier()
  */
 #ifndef _di_f_utf_character_is_whitespace_modifier_
   extern f_return_status f_utf_character_is_whitespace_modifier(const f_utf_character character);
@@ -422,7 +423,7 @@ extern "C" {
  *   F_false if not a UTF-8 word character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
+ * @see isalnum()
  * @see f_utf_is_word()
  */
 #ifndef _di_f_utf_character_is_word_
@@ -444,7 +445,7 @@ extern "C" {
  *   F_false if not a UTF-8 word or dash character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
+ * @see isalnum()
  * @see f_utf_is_word_dash()
  */
 #ifndef _di_f_utf_character_is_word_dash_
@@ -466,7 +467,7 @@ extern "C" {
  *   F_false if not a UTF-8 word or dash character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
+ * @see isalnum()
  * @see f_utf_is_word_dash()
  */
 #ifndef _di_f_utf_character_is_word_dash_plus_
@@ -485,34 +486,10 @@ extern "C" {
  *   F_true if a UTF-8 non-printing or zero-width character.
  *   F_false if not a UTF-8 non-printing or zero-width character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
- *
- * @see f_utf_is_zero_width()
  */
 #ifndef _di_f_utf_character_is_zero_width_
   extern f_return_status f_utf_character_is_zero_width(const f_utf_character character);
 #endif // _di_f_utf_character_is_zero_width_
-
-/**
- * Check to see if the entire byte block of the character is an word character.
- *
- * A word character is alphanumeric or underscore '_'.
- *
- * @todo Incomplete, UTF-8 codes not yet checked!
- *
- * @param character
- *   The character to validate.
- *
- * @return
- *   F_true if a UTF-8 alpha character.
- *   F_false if not a UTF-8 alpha character.
- *   F_utf (with error bit) if character is an invalid UTF-8 character.
- *
- * @see iscntrl()
- * @see f_utf_is_word()
- */
-#ifndef _di_f_utf_character_is_word_
-  extern f_return_status f_utf_character_is_word(const f_utf_character character);
-#endif // _di_f_utf_character_is_word_
 
 /**
  * Convert a specialized f_utf_character type to a int8_t, stored as a string (character buffer).
@@ -592,7 +569,7 @@ extern "C" {
  *   F_false if not a UTF-8 alphabet character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
- * @see iscntrl()
+ * @see isalpha()
  */
 #ifndef _di_f_utf_is_alpha_
   extern f_return_status f_utf_is_alpha(const f_string character, const f_string_length width_max);
@@ -613,7 +590,7 @@ extern "C" {
  *   F_false if not a UTF-8 alpha-numeric character.x
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
- * @see iscntrl()
+ * @see isalnum()
  */
 #ifndef _di_f_utf_is_alpha_numeric_
   extern f_return_status f_utf_is_alpha_numeric(const f_string character, const f_string_length width_max);
@@ -654,7 +631,6 @@ extern "C" {
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
  * @see iscntrl()
- * @see f_utf_character_is_control()
  */
 #ifndef _di_f_utf_is_control_
   extern f_return_status f_utf_is_control(const f_string character, const f_string_length width_max);
@@ -697,8 +673,6 @@ extern "C" {
  *   F_true if a UTF-8 emoji character.
  *   F_false if not a UTF-8 emoji character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *
- * @see iscntrl()
  */
 #ifndef _di_f_utf_is_emoji_
   extern f_return_status f_utf_is_emoji(const f_string character, const f_string_length width_max);
@@ -756,7 +730,6 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see isgraph()
- * @see iscntrl()
  */
 #ifndef _di_f_utf_is_graph_
   extern f_return_status f_utf_is_graph(const f_string character, const f_string_length width_max);
@@ -777,7 +750,7 @@ extern "C" {
  *   F_false if not a UTF-8 numeric character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
- * @see iscntrl()
+ * @see isdigit()
  */
 #ifndef _di_f_utf_is_numeric_
   extern f_return_status f_utf_is_numeric(const f_string character, const f_string_length width_max);
@@ -799,8 +772,6 @@ extern "C" {
  *   F_true if a UTF-8 punctuation character.
  *   F_false if not a UTF-8 punctuation character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *
- * @see iscntrl()
  */
 #ifndef _di_f_utf_is_punctuation_
   extern f_return_status f_utf_is_punctuation(const f_string character, const f_string_length width_max);
@@ -822,8 +793,6 @@ extern "C" {
  *   F_true if a UTF-8 symbol character.
  *   F_false if not a UTF-8 symbol character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *
- * @see iscntrl()
  */
 #ifndef _di_f_utf_is_symbol_
   extern f_return_status f_utf_is_symbol(const f_string character, const f_string_length width_max);
@@ -858,6 +827,13 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 general space character.
  *
+ * Non-printing or zero-width characters are not considered whitespace.
+ * This does include line separators like '\n'.
+ * This does not include phonetic spaces, like whitespace modifiers.
+ *
+ * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
+ * However, because they are not renderred as whitespace, they are technically not white space.
+ *
  * @param character
  *   The character to validate.
  *   There must be enough space allocated to compare against, as limited by width_max.
@@ -873,11 +849,36 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see isspace()
- * @see iscntrl()
  */
 #ifndef _di_f_utf_is_whitespace_
   extern f_return_status f_utf_is_whitespace(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_whitespace_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 whitespace modifier character.
+ *
+ * These are phonetic spaces.
+ *
+ * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
+ * Therefore, these are valid spaces in the technical sense, even if they are not visibly whitespace.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 whitespace.
+ *   F_false if not a UTF-8 whitespace.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_is_whitespace_modifier_
+  extern f_return_status f_utf_is_whitespace_modifier(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_whitespace_modifier_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 word character.
@@ -898,7 +899,7 @@ extern "C" {
  *   F_false if not a UTF-8 word character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
- * @see iscntrl()
+ * @see isalnum()
  */
 #ifndef _di_f_utf_is_word_
   extern f_return_status f_utf_is_word(const f_string character, const f_string_length width_max);
@@ -923,7 +924,7 @@ extern "C" {
  *   F_false if not a UTF-8 word or dash character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
- * @see iscntrl()
+ * @see isalnum()
  */
 #ifndef _di_f_utf_is_word_dash_
   extern f_return_status f_utf_is_word_dash(const f_string character, const f_string_length width_max);
@@ -948,7 +949,7 @@ extern "C" {
  *   F_false if not a UTF-8 word or dash character.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
- * @see iscntrl()
+ * @see isalnum()
  */
 #ifndef _di_f_utf_is_word_dash_plus_
   extern f_return_status f_utf_is_word_dash_plus(const f_string character, const f_string_length width_max);
@@ -972,9 +973,6 @@ extern "C" {
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
  *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see isspace()
- * @see iscntrl()
  */
 #ifndef _di_f_utf_is_zero_width_
   extern f_return_status f_utf_is_zero_width(const f_string character, const f_string_length width_max);

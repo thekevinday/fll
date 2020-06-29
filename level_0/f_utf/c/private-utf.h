@@ -32,7 +32,6 @@ extern "C" {
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_alpha()
  * @see f_utf_is_alpha()
  */
@@ -55,7 +54,6 @@ extern "C" {
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_control()
  * @see f_utf_is_control()
  */
@@ -100,7 +98,6 @@ extern "C" {
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_control()
  * @see f_utf_is_control()
  */
@@ -145,7 +142,6 @@ extern "C" {
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_emoji()
  * @see f_utf_is_emoji()
  */
@@ -168,7 +164,6 @@ extern "C" {
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_numeric()
  * @see f_utf_is_numeric()
  */
@@ -191,7 +186,6 @@ extern "C" {
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_punctuation()
  * @see f_utf_is_punctuation()
  */
@@ -214,7 +208,6 @@ extern "C" {
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_symbol()
  * @see f_utf_is_symbol()
  */
@@ -277,11 +270,10 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_true if a UTF-8 control character.
- *   F_false if not a UTF-8 control character.
+ *   F_true if a UTF-8 phonetic whitespace.
+ *   F_false if not a UTF-8 phonetic whitespace.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_whitespace_modifier()
  * @see f_utf_is_whitespace_modifier()
  */
@@ -304,7 +296,6 @@ extern "C" {
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_word()
  * @see f_utf_is_word()
  */
@@ -327,7 +318,6 @@ extern "C" {
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_word_dash()
  * @see f_utf_is_word_dash()
  */
@@ -350,7 +340,6 @@ extern "C" {
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see iscntrl()
  * @see f_utf_character_is_word_dash()
  * @see f_utf_is_word_dash()
  */

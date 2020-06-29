@@ -242,15 +242,15 @@ extern "C" {
       return F_status_is_error(F_utf);
     }
 
-    if (private_f_utf_character_is_control(character, width) == F_true) {
+    if (private_f_utf_character_is_control(character, width)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace(character, width) == F_true) {
+    if (private_f_utf_character_is_whitespace(character, width)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_zero_width(character, width) == F_true) {
+    if (private_f_utf_character_is_zero_width(character, width)) {
       return F_false;
     }
 
@@ -283,7 +283,33 @@ extern "C" {
     unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
-      if (isdigit(f_macro_utf_character_to_char_1(character))) {
+      // ASCII: '!' to '#'.
+      if (character > 0x20000000 && character < 0x24000000) {
+        return F_true;
+      }
+
+      // ASCII: '%' to '*'.
+      if (character > 0x24000000 && character < 0x2b000000) {
+        return F_true;
+      }
+
+      // ASCII: ',' to '/'.
+      if (character > 0x2b000000 && character < 0x30000000) {
+        return F_true;
+      }
+
+      // ASCII: ':', ';', '?', or '@'.
+      if (character == 0x3a000000 || character == 0x3b000000 || character == 0x3f000000 || character == 0x40000000) {
+        return F_true;
+      }
+
+      // ASCII: '[' to ']'.
+      if (character > 0x5a000000 && character < 0x5d000000) {
+        return F_true;
+      }
+
+      // ASCII: '_', '{', or '}'.
+      if (character == 0x5f000000 || character == 0x7b000000 || character == 0x7d000000) {
         return F_true;
       }
 
@@ -297,6 +323,37 @@ extern "C" {
     return private_f_utf_character_is_punctuation(character, width);
   }
 #endif // _di_f_utf_character_is_punctuation_
+
+#ifndef _di_f_utf_character_is_symbol_
+  f_return_status f_utf_character_is_symbol(const f_utf_character character) {
+    unsigned short width = f_macro_utf_character_width_is(character);
+
+    if (width == 0) {
+      // ASCII: '$' or '+'.
+      if (character == 0x24000000 || character == 0x2b000000) {
+        return F_true;
+      }
+
+      // ASCII: '<' to '>'.
+      if (character > 0x3c000000 && character < 0x3e000000) {
+        return F_true;
+      }
+
+      // ASCII: '^', '`', '|', or '~'.
+      if (character == 0x5e000000 || character == 0x60000000 || character == 0x7c000000 || character == 0x7e000000) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_utf);
+    }
+
+    return private_f_utf_character_is_symbol(character, width);
+  }
+#endif // _di_f_utf_character_is_symbol_
 
 #ifndef _di_f_utf_character_is_valid_
   f_return_status f_utf_character_is_valid(const f_utf_character character) {
@@ -329,6 +386,23 @@ extern "C" {
     return private_f_utf_character_is_whitespace(character, width);
   }
 #endif // _di_f_utf_character_is_whitespace_
+
+#ifndef _di_f_utf_character_is_whitespace_modifier_
+  f_return_status f_utf_character_is_whitespace_modifier(const f_utf_character character) {
+    unsigned short width = f_macro_utf_character_width_is(character);
+
+    if (width == 0) {
+      // There are no ASCII whitespace modifiers.
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_utf);
+    }
+
+    return private_f_utf_character_is_whitespace_modifier(character, width);
+  }
+#endif // _di_f_utf_character_is_whitespace_modifier_
 
 #ifndef _di_f_utf_character_is_word_
   f_return_status f_utf_character_is_word(const f_utf_character character) {
@@ -755,16 +829,16 @@ extern "C" {
       if (status != F_none) return status;
     }
 
-    if (private_f_utf_character_is_control(character_utf, width) == F_true) {
+    if (private_f_utf_character_is_control(character_utf, width)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace(character_utf, width) == F_true) {
+    if (private_f_utf_character_is_whitespace(character_utf, width)) {
       return F_false;
     }
 
     // This test is in isolation so zero-width characters must be treated as a non-graph.
-    if (private_f_utf_character_is_zero_width(character_utf, width) == F_true) {
+    if (private_f_utf_character_is_zero_width(character_utf, width)) {
       return F_false;
     }
 
@@ -815,7 +889,33 @@ extern "C" {
     uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
-      if (isdigit(*character)) {
+      // ASCII: '!' to '#'.
+      if (character[0] > 0x20 && character[0] < 0x24) {
+        return F_true;
+      }
+
+      // ASCII: '%' to '*'.
+      if (character[0] > 0x24 && character[0] < 0x2b) {
+        return F_true;
+      }
+
+      // ASCII: ',' to '/'.
+      if (character[0] > 0x2b && character[0] < 0x30) {
+        return F_true;
+      }
+
+      // ASCII: ':', ';', '?', or '@'.
+      if (character[0] == 0x3a || character[0] == 0x3b || character[0] == 0x3f || character[0] == 0x40) {
+        return F_true;
+      }
+
+      // ASCII: '[' to ']'.
+      if (character[0] > 0x5a && character[0] < 0x5d) {
+        return F_true;
+      }
+
+      // ASCII: '_', '{', or '}'.
+      if (character[0] == 0x5f || character[0] == 0x7b || character[0] == 0x7d) {
         return F_true;
       }
 
@@ -839,6 +939,51 @@ extern "C" {
     return private_f_utf_character_is_punctuation(character_utf, width);
   }
 #endif // _di_f_utf_is_punctuation_
+
+#ifndef _di_f_utf_is_symbol_
+  f_return_status f_utf_is_symbol(const f_string character, const f_string_length width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    uint8_t width = f_macro_utf_byte_width_is(*character);
+
+    if (width == 0) {
+      // ASCII: '$' or '+'.
+      if (character[0] == 0x24 || character[0] == 0x2b) {
+        return F_true;
+      }
+
+      // ASCII: '<' to '>'.
+      if (character[0] > 0x3c && character[0] < 0x3e) {
+        return F_true;
+      }
+
+      // ASCII: '^', '`', '|', or '~'.
+      if (character[0] == 0x5e || character[0] == 0x60 || character[0] == 0x7c || character[0] == 0x7e) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_incomplete_utf);
+    }
+
+    f_utf_character character_utf = 0;
+
+    {
+      f_status status = 0;
+
+      status = f_utf_char_to_character(character, width_max, &character_utf);
+
+      if (status != F_none) return status;
+    }
+
+    return private_f_utf_character_is_symbol(character_utf, width);
+  }
+#endif // _di_f_utf_is_symbol_
 
 #ifndef _di_f_utf_is_valid_
   f_return_status f_utf_is_valid(const f_string character, const f_string_length width_max) {
@@ -909,10 +1054,7 @@ extern "C" {
     uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
-      if (isdigit(*character)) {
-        return F_true;
-      }
-
+      // There are no ASCII whitespace modifiers.
       return F_false;
     }
 
