@@ -44,7 +44,7 @@ extern "C" {
       return F_false;
     }
 
-    if (private_f_utf_character_is_emoji(character, width)) {
+    if (private_f_utf_character_is_phonetic(character, width)) {
       return F_false;
     }
 
@@ -87,7 +87,7 @@ extern "C" {
       return F_false;
     }
 
-    if (private_f_utf_character_is_emoji(character, width)) {
+    if (private_f_utf_character_is_phonetic(character, width)) {
       return F_false;
     }
 
@@ -146,6 +146,7 @@ extern "C" {
   f_return_status private_f_utf_character_is_control(const f_utf_character character, const uint8_t width) {
 
     if (width == 2) {
+
       // Latin-1 Supplement: U+0080 to U+009F.
       if (character >= 0xc2800000 && character <= 0xc29f0000) {
         return F_true;
@@ -155,6 +156,17 @@ extern "C" {
     }
 
     if (width == 3) {
+
+      // General Punctuation: U+200E and U+200F.
+      if (character == 0xe2808e00 || character == 0xe2808f00) {
+        return F_true;
+      }
+
+      // General Punctuation: U+2066 to U+2069.
+      if (character >= 0xe281a600 && character <= 0xe281a900) {
+        return F_true;
+      }
+
       // Special: U+FFF9 to U+FFFB.
       if (character >= 0xefbfb900 && character <= 0xefbfbb00) {
         return F_true;
@@ -164,6 +176,7 @@ extern "C" {
     }
 
     if (width == 4) {
+
       // Tags: U+E0001 and U+E007F.
       if (character == 0xf3a08081 || character == 0xf3a081bf) {
         return F_true;
@@ -196,471 +209,487 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
   f_return_status private_f_utf_character_is_emoji(const f_utf_character character, const uint8_t width) {
 
-    // @todo ugh..emojis are all over the place, I only got as far as creating a list of Unicodes, convert these Unicodes to UTF-8 codes. (be sure too use width == comparisons.)
-/*
     // reduce the number of checks by grouping checks by first byte.
     uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
-    // U+00A9, U+00AE, U+203C, U+2049.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
+    if (width == 2) {
+      // Latin-1 Supplement: U+00A9, U+00AE.
+      if (character == 0xc2a90000 || character == 0xc2ae0000) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 3) {
+      // General Punctuation: U+203C, U+2049.
+      if (character == 0xe280bc00 || character == 0xe2818900) {
+        return F_true;
+      }
+
+      // Letterlike Symbols: U+2122, U+2139
+      if (character == 0xe2818900 || character == 0xe284b900) {
+        return F_true;
+      }
+
+      // Arrows: U+2194 to U+2199.
+      if (character >= 0xe2869400 && character <= 0xe2869900) {
+        return F_true;
+      }
+
+      // Arrows: U+21A9, U+21AA.
+      if (character == 0xe286a900 || character == 0xe286aa00) {
+        return F_true;
+      }
+
+      // Miscellaneous Technical: U+231A, U+231B.
+      if (character == 0xe28c9a00 || character == 0xe28c9b00) {
+        return F_true;
+      }
+
+  /*
+      // U+2328, U+23CF.
+      if (character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+23E9 to U+23F3.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+23F8 to U+23FA.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+24C2, U+25AA, U+25AB, U+25B6.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+25C0.
+      if (character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+25FB to U+25FE.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+2600 to U+2604.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+260E, U+2611, U+2614, U+2615.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2618, U+261D, U+2620, U+2622.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2623, U+2626, U+262A, U+262E.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+262F.
+      if (character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2638 to U+263A.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+2640, U+2642.
+      if (character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2648 to U+2653.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+265F, U+2660, U+2663, U+2665.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2666, U+2668, U+267B, U+267E.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+267F.
+      if (character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2692 to U+2697.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+2699, U+269B, U+269C, U+26A0.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+26A1, U+26A7, U+26AA, U+26AB.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+26B0, U+26B1, U+26BD, U+26BE.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+26C4, U+26C5, U+26C8, U+26CE.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+26CF, U+26D1, U+26D3, U+26D4.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+26E9, U+26EA.
+      if (character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+26F0 to U+26F5.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+26F7 to U+26FA.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+26FD, U+2702, U+2705.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2708 to U+270D.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+270F, U+2712, U+2714, U+2716.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+271D, U+2721, U+2728, U+2733.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2734, U+2744, U+2747, U+274C.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+274E.
+      if (character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2753 to U+2755.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+2757, U+2763, U+2764.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2795 to U+2797.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+27A1, U+27B0, U+27BF, U+2934.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2935.
+      if (character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+2B05 to U+2B07.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+2B1B, U+2B1C, U+2B50, U+2B55.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+3030, U+303D, U+303D, U+3297.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+3299, U+1F004.
+      if (character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F0CF to U+1F171.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F17E, U+1F17F, U+1F18E.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F191 to U+1F19A.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F201, U+1F202, U+1F21A, U+1F22F.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F232 to U+1F23A.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F250, U+1F251.
+      if (character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F300 to U+1F321.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F324 to U+1F393.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F396, U+1F397.
+      if (character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F399 to U+1F39B.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F39E to U+1F3F0.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F3F3 to U+1F3F5.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F3F7 to U+1F4FD.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F4FF to U+1F53D.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F549 to U+1F54E.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F550 to U+1F567.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F56F, U+1F570.
+      if (character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F573 to U+1F57A.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F587.
+      if (character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F58A to U+1F58D.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F590, U+1F595, U+1F596, U+1F5A4.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F5A5, U+1F5A8, U+1F5B1, U+1F5B2.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F5BC.
+      if (character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F5C2 to U+1F5C4.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F5D1 to U+1F5D3.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F5DC to U+1F5DE.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F5E1, U+1F5E3, U+1F5E8, U+1F5EF.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F5F3.
+      if (character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F5FA to U+1F6C5.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F6CB to U+1F6D2.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F6D5 to U+1F6D7.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F6E0 to U+1F6E5.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F6E9, U+1F6EB, U+1F6EC, U+1F6F0.
+      if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F6F3 to U+1F6FC.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F7E0 to U+1F7EB.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F90C to U+1F93A.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F93C to U+1F945.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F947 to U+1F978.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F97A to U+1F9CB.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1F9CD to U+1FA74.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1FA70 to U+1FA74.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1FA78 to U+1FA7A.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1FA80 to U+1FA86.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1FA90 to U+1FAA8.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1FAB0 to U+1FAB6.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1FAC0 to U+1FAC2.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+
+      // U+1FAD0 to U+1FAD6.
+      if (character >= 0x00000000 && character <= 0x00000000) {
+        return F_true;
+      }
+  */
     }
 
-    // U+2042, U+2122, U+2139.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2194 to U+2199.
-    if (character >= 0xe2908000 && character <= 0xe290a600) {
-      return F_true;
-    }
-
-    // U+21A9, U+21AA, U+231A, U+231B.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2328, U+23CF.
-    if (character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+23E9 to U+23F3.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+23F8 to U+23FA.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+24C2, U+25AA, U+25AB, U+25B6.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+25C0.
-    if (character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+25FB to U+25FE.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+2600 to U+2604.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+260E, U+2611, U+2614, U+2615.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2618, U+261D, U+2620, U+2622.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2623, U+2626, U+262A, U+262E.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+262F.
-    if (character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2638 to U+263A.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+2640, U+2642.
-    if (character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2648 to U+2653.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+265F, U+2660, U+2663, U+2665.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2666, U+2668, U+267B, U+267E.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+267F.
-    if (character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2692 to U+2697.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+2699, U+269B, U+269C, U+26A0.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+26A1, U+26A7, U+26AA, U+26AB.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+26B0, U+26B1, U+26BD, U+26BE.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+26C4, U+26C5, U+26C8, U+26CE.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+26CF, U+26D1, U+26D3, U+26D4.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+26E9, U+26EA.
-    if (character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+26F0 to U+26F5.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+26F7 to U+26FA.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+26FD, U+2702, U+2705.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2708 to U+270D.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+270F, U+2712, U+2714, U+2716.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+271D, U+2721, U+2728, U+2733.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2734, U+2744, U+2747, U+274C.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+274E.
-    if (character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2753 to U+2755.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+2757, U+2763, U+2764.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2795 to U+2797.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+27A1, U+27B0, U+27BF, U+2934.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2935.
-    if (character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+2B05 to U+2B07.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+2B1B, U+2B1C, U+2B50, U+2B55.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+3030, U+303D, U+303D, U+3297.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+3299, U+1F004.
-    if (character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F0CF to U+1F171.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F17E, U+1F17F, U+1F18E.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F191 to U+1F19A.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F201, U+1F202, U+1F21A, U+1F22F.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F232 to U+1F23A.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F250, U+1F251.
-    if (character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F300 to U+1F321.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F324 to U+1F393.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F396, U+1F397.
-    if (character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F399 to U+1F39B.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F39E to U+1F3F0.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F3F3 to U+1F3F5.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F3F7 to U+1F4FD.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F4FF to U+1F53D.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F549 to U+1F54E.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F550 to U+1F567.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F56F, U+1F570.
-    if (character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F573 to U+1F57A.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F587.
-    if (character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F58A to U+1F58D.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F590, U+1F595, U+1F596, U+1F5A4.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F5A5, U+1F5A8, U+1F5B1, U+1F5B2.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F5BC.
-    if (character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F5C2 to U+1F5C4.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F5D1 to U+1F5D3.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F5DC to U+1F5DE.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F5E1, U+1F5E3, U+1F5E8, U+1F5EF.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F5F3.
-    if (character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F5FA to U+1F6C5.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F6CB to U+1F6D2.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F6D5 to U+1F6D7.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F6E0 to U+1F6E5.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F6E9, U+1F6EB, U+1F6EC, U+1F6F0.
-    if (character == 0x00000000 || character == 0x00000000 || character == 0x00000000 || character == 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F6F3 to U+1F6FC.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F7E0 to U+1F7EB.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F90C to U+1F93A.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F93C to U+1F945.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F947 to U+1F978.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F97A to U+1F9CB.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1F9CD to U+1FA74.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1FA70 to U+1FA74.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1FA78 to U+1FA7A.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1FA80 to U+1FA86.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1FA90 to U+1FAA8.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1FAB0 to U+1FAB6.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1FAC0 to U+1FAC2.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-
-    // U+1FAD0 to U+1FAD6.
-    if (character >= 0x00000000 && character <= 0x00000000) {
-      return F_true;
-    }
-*/
     return F_false;
   }
 #endif // !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
@@ -670,7 +699,7 @@ extern "C" {
 
     if (width == 3) {
 
-      // U+2150 to U+218b.
+      // Number Forms: U+2150 to U+218B.
       if (character >= 0xe2859000 && character <= 0xe2868b00) {
         return F_true;
       }
@@ -680,7 +709,7 @@ extern "C" {
 
     if (width == 4) {
 
-      // U+102E1 to U+102FB.
+      // Coptic Epact Numbers: U+102E1 to U+102FB.
       if (character >= 0xf0908ba1 && character <= 0xf0908bbb) {
         return F_true;
       }
@@ -690,10 +719,46 @@ extern "C" {
   }
 #endif // !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
 
+#if !defined(_di_f_utf_character_is_phonetic_) || !defined(_di_f_utf_is_phonetic_)
+  f_return_status private_f_utf_character_is_phonetic(const f_utf_character character, const uint8_t width) {
+
+    if (width == 3) {
+
+      // Phonetic Extensions: U+1D00 to U+1D7F.
+      if (character >= 0xe1b48000 && character <= 0xe1b5bf00) {
+        return F_true;
+      }
+
+      // Phonetic Extensions Supplement: U+1D80 to U+1DBF.
+      if (character >= 0xe1b6bf00 && character <= 0xe1b6bf00) {
+        return F_true;
+      }
+    }
+
+    return F_false;
+  }
+#endif // !defined(_di_f_utf_character_is_phonetic_) || !defined(_di_f_utf_is_phonetic_)
+
 #if !defined(_di_f_utf_character_is_punctuation_) || !defined(_di_f_utf_is_punctuation_)
   f_return_status private_f_utf_character_is_punctuation(const f_utf_character character, const uint8_t width) {
 
-    // @todo UTF-8 punctuation.
+    if (width == 3) {
+
+      // General Punctuation: U+2010 to U+2027.
+      if (character >= 0xe2809000 && character <= 0xe280a700) {
+        return F_true;
+      }
+
+      // General Punctuation: U+2030 to U+205E.
+      if (character >= 0xe280b000 && character <= 0xe2819e00) {
+        return F_true;
+      }
+
+      // Supplemental Punctuation: U+2E00 to U+2E52.
+      if (character == 0xe2b88000 || character == 0xe2b99200) {
+        return F_true;
+      }
+    }
 
     return F_false;
   }
@@ -722,12 +787,14 @@ extern "C" {
       }
 
       if (byte_first == 0xcd) {
+
         // Greek and Coptic: U+0378, U+0379.
         if (byte == 0xb8 || byte == 0xb9) {
           return F_false;
         }
       }
       else if (byte_first == 0xce) {
+
         // Greek and Coptic: U+0380 to U+0383.
         if (byte >= 0x80 && byte <= 0x83) {
           return F_false;
@@ -739,18 +806,21 @@ extern "C" {
         }
       }
       else if (byte_first == 0xd4) {
+
         // Armenian: U+0530.
         if (byte == 0xb0) {
           return F_false;
         }
       }
       else if (byte_first == 0xd5) {
+
         // Armenian: U+0557, U+0558, U+0560, U+0588.
         if (byte == 0x97 || byte == 0x98 || byte == 0xa0 || byte == 0x88) {
           return F_false;
         }
       }
       else if (byte_first == 0xd6) {
+
         // Armenian: U+058B, U+058C.
         if (byte == 0x8b || byte == 0x8c) {
           return F_false;
@@ -762,6 +832,7 @@ extern "C" {
         }
       }
       else if (byte_first == 0xd7) {
+
         // Hebrew: U+05C8 to U+05CF.
         if (byte >= 0x88 && byte <= 0x8F) {
           return F_false;
@@ -778,30 +849,35 @@ extern "C" {
         }
       }
       else if (byte_first == 0xd8) {
+
         // Arabic: U+061D.
         if (byte == 0x9d) {
           return F_false;
         }
       }
       else if (byte_first == 0xdc) {
+
         // Syriac: U+070E.
         if (byte == 0x8e) {
           return F_false;
         }
       }
       else if (byte_first == 0xdd) {
+
         // Syriac: U+074B, U+074C.
         if (byte == 0x8b || byte == 0x8c) {
           return F_false;
         }
       }
       else if (byte_first == 0xde) {
+
         // Thaana: U+07B2 to U+07BF.
         if (byte >= 0xb2 && byte <= 0xbf) {
           return F_false;
         }
       }
       else if (byte_first == 0xdf) {
+
         // NKo: U+07FB to U+07FF.
         if (byte >= 0xbb && byte <= 0xbf) {
           return F_false;
@@ -1292,6 +1368,7 @@ extern "C" {
         }
       }
       else if (byte_first == 0xe1) {
+
         // Batak: U+1BF4 to U+1BFB.
         if (bytes >= 0xafb4 && bytes <= 0xafbb) {
           return F_false;
@@ -1548,6 +1625,7 @@ extern "C" {
         }
       }
       else if (byte_first == 0xe2) {
+
         // CJK Radicals Supplement: U+2E9A, U+2EF4 to U+2EFF.
         if (bytes == 0xba9a || bytes >= 0xbbb4 && bytes <= 0xbbbf) {
           return F_false;
@@ -1684,6 +1762,7 @@ extern "C" {
         }
       }
       else if (byte_first == 0xe3) {
+
         // Bopomofo: U+3100 to U+3104.
         if (bytes >= 0x8480 && bytes <= 0x8484) {
           return F_false;
@@ -1720,18 +1799,21 @@ extern "C" {
         }
       }
       else if (byte_first == 0xe4) {
+
         // CJK Unified Ideographs Extension A: U+4DB6, U+4DBF.
         if (bytes >= 0xb6b6 && bytes <= 0xb6bf) {
           return F_false;
         }
       }
       else if (byte_first == 0xe9) {
+
         // CJK Unified Ideographs: U+9FD6, U+9FFF.
         if (bytes >= 0xbf96 && bytes <= 0xbfbf) {
           return F_false;
         }
       }
       else if (byte_first == 0xea) {
+
         // Balinese: U+1B4C to U+1B4F.
         if (bytes >= 0xad8c && bytes <= 0xad8f) {
           return F_false;
@@ -1903,6 +1985,7 @@ extern "C" {
         }
       }
       else if (byte_first == 0xee) {
+
         // @todo update this range to only 0xee.
         // consider all private use codes as valid, U+E000 to U+F8FF.
         if (character >= 0xee808000 && character <= 0xefa3bf00) {
@@ -1910,6 +1993,7 @@ extern "C" {
         }
       }
       else if (byte_first == 0xef) {
+
         // @todo update this range to only 0xef
         // consider all private use codes as valid, U+E000 to U+F8FF.
         if (character >= 0xee808000 && character <= 0xefa3bf00) {
@@ -2023,6 +2107,7 @@ extern "C" {
 
       if (byte_first == 0xf0) {
         if (byte_second == 0x90) {
+
           // Aegean Numbers: U+10103 to U+10106.
           if (bytes >= 0x8483 && bytes <= 0x8486) {
             return F_false;
@@ -2374,6 +2459,7 @@ extern "C" {
           }
         }
         else if (byte_second == 0x91) {
+
           // Ahom: U+1172C to U+1172F.
           if (bytes >= 0x9cac && bytes <= 0x9caf) {
             return F_false;
@@ -2600,6 +2686,7 @@ extern "C" {
           }
         }
         else if (byte_second == 0x92) {
+
           // Cuneiform: U+1239A to U+123FF.
           if (bytes >= 0x8e9a && bytes <= 0x8fbf) {
             return F_false;
@@ -2616,18 +2703,21 @@ extern "C" {
           }
         }
         else if (byte_second == 0x93) {
+
           // Egyptian Hieroglyphs: U+1342F.
           if (bytes == 0x90af) {
             return F_false;
           }
         }
         else if (byte_second == 0x94) {
+
           // Anatolian Hieroglyphs: U+14647 to U+1467F.
           if (bytes >= 0x9987 && bytes <= 0x99bf) {
             return F_false;
           }
         }
         else if (byte_second == 0x96) {
+
           // Bamum Supplement: U+16A39 to U+16A3F.
           if (bytes >= 0xa8b9 && bytes <= 0xa8bf) {
             return F_false;
@@ -2684,6 +2774,7 @@ extern "C" {
           }
         }
         else if (byte_second == 0x9b) {
+
           // Duployan: U+1BC6B to U+1BC6F.
           if (bytes >= 0xb1ab && bytes <= 0xb1af) {
             return F_false;
@@ -2715,6 +2806,7 @@ extern "C" {
           }
         }
         else if (byte_second == 0x9d) {
+
           // Ancient Greek Musical Notation: U+1D246 to U+1D24F.
           if (bytes >= 0x8986 && bytes <= 0x898f) {
             return F_false;
@@ -2786,6 +2878,7 @@ extern "C" {
           }
         }
         else if (byte_second == 0x9e) {
+
           // Adlam: U+1E94B to U+1E94F.
           if (bytes >= 0xa58b && bytes <= 0xa58f) {
             return F_false;
@@ -2822,6 +2915,7 @@ extern "C" {
           }
         }
         else if (byte_second == 0x9f) {
+
           // Alchemical Symbols: U+1F774 to U+1F77F.
           if (bytes >= 0x9db4 && bytes <= 0x9dbf) {
             return F_false;
@@ -2968,6 +3062,7 @@ extern "C" {
           }
         }
         else if (byte_second == 0x98) {
+
           // Tangut: U+187ED to U+187FF.
           if (bytes >= 0x9fad && bytes <= 0x9fbf) {
             return F_false;
@@ -2979,12 +3074,14 @@ extern "C" {
           }
         }
         else if (byte_second == 0xaa) {
+
           // CJK Unified Ideographs Extension B: U+2A6D7 to U+2A6DF.
           if (bytes >= 0x9b97 && bytes <= 0x9b9f) {
             return F_false;
           }
         }
         else if (byte_second == 0xab) {
+
           // CJK Unified Ideographs Extension C: U+2B735 to U+2B73F.
           if (bytes >= 0x9cb5 && bytes <= 0x9cbf) {
             return F_false;
@@ -2996,12 +3093,14 @@ extern "C" {
           }
         }
         else if (byte_second == 0xac) {
+
           // CJK Unified Ideographs Extension E: U+2CF92 to U+2CF9F.
           if (bytes >= 0xbe92 && bytes <= 0xbe9f) {
             return F_false;
           }
         }
         else if (byte_second == 0xaf) {
+
           // CJK Compatibility Ideographs Supplement: U+2FA1E to U+2FA1F.
           if (bytes >= 0xa89e && bytes <= 0xa89f) {
             return F_false;
@@ -3009,6 +3108,7 @@ extern "C" {
         }
       }
       else if (byte_first == 0xf3) {
+
         // Consider all private use codes as valid, U+F0000 to U+FFFFF.
         if (bytes >= 0x8080 && bytes <= 0xbfbf) {
           return F_true;
@@ -3020,12 +3120,14 @@ extern "C" {
         }
       }
       else if (byte_first == 0xf4) {
+
         // Consider all private use codes as valid, U+100000 to U+10FFFF.
         if (bytes >= 0x8080 && bytes <= 0xbfbf) {
           return F_true;
         }
       }
       else {
+
         // Unicode (and therefore UTF-8) does not support representing any character greater than this (U+10FFFF).
         if (character > 0xf48fbfbf) {
           return F_false;
@@ -3044,12 +3146,14 @@ extern "C" {
     uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
     if (byte_first == 0xc2) {
+
       // Latin-1 Supplement: U+00A0, U+0085.
       if (character == 0xc2a00000 || 0xc2850000) {
         return F_true;
       }
     }
     else if (byte_first == 0xe2) {
+
       // General Punctuation: U+2000, U+2001, U+2002, U+2003.
       if (character == 0xe2808000 || character == 0xe2808100 || character == 0xe2808200 || character == 0xe2808300) {
         return F_true;
@@ -3071,6 +3175,7 @@ extern "C" {
       }
     }
     else if (byte_first == 0xe3) {
+
       // CJK Symbols and Punctuation: U+3000.
       if (character == 0xe3808000) {
         return F_true;
@@ -3084,8 +3189,9 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_modifier_)
   f_return_status private_f_utf_character_is_whitespace_modifier(const f_utf_character character, const uint8_t width) {
 
-    // U+02B0 to U+02FF.
     if (width == 2) {
+
+      // Spacing Modifier Letters: U+02B0 to U+02FF.
       if (character >= 0xcab00000 && character <= 0xcbbf0000) {
         return F_true;
       }
@@ -3102,7 +3208,23 @@ extern "C" {
       return F_true;
     }
 
-    // @todo UTF-8 underscores?
+    if (width == 3) {
+
+      // General Punctuation: U+203F (‿), U+2017 (‗), U+203E (‾), U+2040 (⁀).
+      if (character == 0xe280bf00 || character == 0xe2809700 || character == 0xe280be00 || character == 0xe2818000) {
+        return F_true;
+      }
+
+      // General Punctuation: U+2054 (⁔), U+FE4D (﹍), U+FE4E (﹎), U+FE4F (﹏).
+      if (character == 0xe2819400 || character == 0xefb98d00 || character == 0xefb98e00 || character == 0xefb98f00) {
+        return F_true;
+      }
+
+      // General Punctuation: U+FF3F (＿).
+      if (character == 0xefbcbf00) {
+        return F_true;
+      }
+    }
 
     return F_false;
   }
@@ -3115,7 +3237,13 @@ extern "C" {
       return F_true;
     }
 
-    // @todo UTF-8 dashes?
+    if (width == 3) {
+
+      // General Punctuation: U+2010 to U+2015.
+      if (character >= 0xe2809000 && character <= 0xe2809500) {
+        return F_true;
+      }
+    }
 
     return F_false;
   }
@@ -3128,8 +3256,6 @@ extern "C" {
       return F_true;
     }
 
-    // @todo UTF-8 pluses?
-
     return F_false;
   }
 #endif // !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
@@ -3140,18 +3266,21 @@ extern "C" {
     uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
     if (byte_first == 0xe1) {
+
       // Mongolian: U+180E.
       if (character == 0xe1a08e00) {
         return F_true;
       }
     }
     else if (byte_first == 0xe2) {
+
       // General Punctuation: U+200B, U+200C, U+200D, U+2060.
       if (character == 0xe2808b00 || character == 0xe2808c00 || character == 0xe2808d00 || character == 0xe281a000) {
         return F_true;
       }
     }
     else if (byte_first == 0xef) {
+
       // Arabic Presentation Forms-B: U+FEFF.
       if (character == 0xefbbbf00) {
         return F_true;

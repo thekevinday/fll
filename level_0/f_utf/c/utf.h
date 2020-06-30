@@ -277,7 +277,6 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see isgraph()
- * @see f_utf_is_graph()
  */
 #ifndef _di_f_utf_character_is_graph_
   extern f_return_status f_utf_character_is_graph(const f_utf_character character);
@@ -295,11 +294,25 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see isdigit()
- * @see f_utf_is_numeric()
  */
 #ifndef _di_f_utf_character_is_numeric_
   extern f_return_status f_utf_character_is_numeric(const f_utf_character character);
 #endif // _di_f_utf_character_is_numeric_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 phonetic character.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 phonetic character.
+ *   F_false if not a UTF-8 phonetic character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ */
+#ifndef _di_f_utf_character_is_phonetic_
+  extern f_return_status f_utf_character_is_phonetic(const f_utf_character character);
+#endif // _di_f_utf_character_is_phonetic_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 punctuation character.
@@ -313,8 +326,6 @@ extern "C" {
  *   F_true if a UTF-8 punctuation character.
  *   F_false if not a UTF-8 punctuation character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
- *
- * @see f_utf_is_punctuation()
  */
 #ifndef _di_f_utf_character_is_punctuation_
   extern f_return_status f_utf_character_is_punctuation(const f_utf_character character);
@@ -332,8 +343,6 @@ extern "C" {
  *   F_true if a UTF-8 symbol character.
  *   F_false if not a UTF-8 symbol character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
- *
- * @see f_utf_is_symbol()
  */
 #ifndef _di_f_utf_character_is_symbol_
   extern f_return_status f_utf_character_is_symbol(const f_utf_character character);
@@ -413,8 +422,6 @@ extern "C" {
  *
  * A word character is alpha-numeric or an underscore '_'.
  *
- * @todo Incomplete, UTF-8 codes not yet checked!
- *
  * @param character
  *   The character to validate.
  *
@@ -424,7 +431,6 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see isalnum()
- * @see f_utf_is_word()
  */
 #ifndef _di_f_utf_character_is_word_
   extern f_return_status f_utf_character_is_word(const f_utf_character character);
@@ -435,8 +441,6 @@ extern "C" {
  *
  * A word dash character is alpha-numeric, an underscore '_' or a dash '-'.
  *
- * @todo Incomplete, UTF-8 codes not yet checked!
- *
  * @param character
  *   The character to validate.
  *
@@ -446,7 +450,6 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see isalnum()
- * @see f_utf_is_word_dash()
  */
 #ifndef _di_f_utf_character_is_word_dash_
   extern f_return_status f_utf_character_is_word_dash(const f_utf_character character);
@@ -457,7 +460,7 @@ extern "C" {
  *
  * A word dash character is alpha-numeric, an underscore '_', a dash '-', or a plus '+'.
  *
- * @todo Incomplete, UTF-8 codes not yet checked!
+ * This does not include "invisible plus".
  *
  * @param character
  *   The character to validate.
@@ -468,7 +471,6 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
  * @see isalnum()
- * @see f_utf_is_word_dash()
  */
 #ifndef _di_f_utf_character_is_word_dash_plus_
   extern f_return_status f_utf_character_is_word_dash_plus(const f_utf_character character);
@@ -757,6 +759,25 @@ extern "C" {
 #endif // _di_f_utf_is_numeric_
 
 /**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 phonetic character.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 phonetic character.
+ *   F_false if not a UTF-8 phonetic character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ */
+#ifndef _di_f_utf_is_phonetic_
+  extern f_return_status f_utf_is_phonetic(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_phonetic_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 punctuation character.
  *
  * @todo Incomplete, UTF-8 codes not yet checked!
@@ -885,8 +906,6 @@ extern "C" {
  *
  * A word character is alpha-numeric or an underscore '_'.
  *
- * @todo Incomplete, UTF-8 codes not yet checked!
- *
  * @param character
  *   The character to validate.
  *   There must be enough space allocated to compare against, as limited by width_max.
@@ -909,8 +928,6 @@ extern "C" {
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 word or dash character.
  *
  * A word dash character is alpha-numeric, an underscore '_' or a dash '-'.
- *
- * @todo Incomplete, UTF-8 codes not yet checked!
  *
  * @param character
  *   The character to validate.
@@ -935,7 +952,7 @@ extern "C" {
  *
  * A word dash character is alpha-numeric, an underscore '_', a dash '-', or a plus '+'.
  *
- * @todo Incomplete, UTF-8 codes not yet checked!
+ * This does not include "invisible plus".
  *
  * @param character
  *   The character to validate.
