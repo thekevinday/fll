@@ -7,6 +7,8 @@
  *
  * Provides UTF-8 capabilities.
  *
+ * @todo consider is_graph() functions being their own data set (review unicode to see which of checking only for graph() vs checking for all not-graph will be the smaller set).
+ *
  * Identifiers:
  * - UTF_8-1: 1000 0000
  * - UTF_8-2: 1100 0000
@@ -149,7 +151,30 @@ extern "C" {
 #endif // _di_f_utf_character_is_alpha_
 
 /**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabetic or digit character.
+ *
+ * Digit characters are decimal digits and letter numbers.
+ *
+ * This does not include number-like, such as 1/2 (½) or superscript 2 (²).
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 alpha-digit character.
+ *   F_false if not a UTF-8 alpha-digit character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see isalnum()
+ */
+#ifndef _di_f_utf_character_is_alpha_digit_
+  extern f_return_status f_utf_character_is_alpha_digit(const f_utf_character character);
+#endif // _di_f_utf_character_is_alpha_digit_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabetic or numeric character.
+ *
+ * Numeric characters are decimal digits, letter numbers, and number-like, such as 1/2 (½) or superscript 2 (²).
  *
  * @param character
  *   The character to validate.
@@ -213,6 +238,27 @@ extern "C" {
 #ifndef _di_f_utf_character_is_control_picture_
   extern f_return_status f_utf_character_is_control_picture(const f_utf_character character);
 #endif // _di_f_utf_character_is_control_picture_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 digit character.
+ *
+ * Digit characters are decimal digits and letter numbers.
+ *
+ * This does not include number-like, such as 1/2 (½) or superscript 2 (²).
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 digit character.
+ *   F_false if not a UTF-8 digit character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see isdigit()
+ */
+#ifndef _di_f_utf_character_is_digit_
+  extern f_return_status f_utf_character_is_digit(const f_utf_character character);
+#endif // _di_f_utf_character_is_digit_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 emoji character.
@@ -284,6 +330,8 @@ extern "C" {
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 numeric character.
+ *
+ * Numeric characters are decimal digits, letter numbers, and number-like, such as 1/2 (½) or superscript 2 (²).
  *
  * @param character
  *   The character to validate.
@@ -379,6 +427,7 @@ extern "C" {
  * Non-printing or zero-width characters are not considered whitespace.
  * This does include line separators like '\n'.
  * This does not include phonetic spaces, like whitespace modifiers.
+ * This does not include non-true whitespace characters, such as Ogham Space Mark ( ).
  *
  * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
  * However, because they are not renderred as whitespace, they are technically not white space.
@@ -416,6 +465,25 @@ extern "C" {
 #ifndef _di_f_utf_character_is_whitespace_modifier_
   extern f_return_status f_utf_character_is_whitespace_modifier(const f_utf_character character);
 #endif // _di_f_utf_character_is_whitespace_modifier_
+
+/**
+ * Check to see if the entire byte block of the character is an other type of UTF-8 space character.
+ *
+ * This is a list of whitespace that are not actual whitespace (because they are graph characters) but are considered whitespace, such as Ogham Space Mark ( ).
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 (other) whitespace.
+ *   F_false if not a UTF-8 (other) whitespace.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see isspace()
+ */
+#ifndef _di_f_utf_character_is_whitespace_other_
+  extern f_return_status f_utf_character_is_whitespace_other(const f_utf_character character);
+#endif // _di_f_utf_character_is_whitespace_other_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 word character.
@@ -578,7 +646,34 @@ extern "C" {
 #endif // _di_f_utf_is_alpha_
 
 /**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet or digit character.
+ *
+ * Digit characters are decimal digits and letter numbers.
+ *
+ * This does not include number-like, such as 1/2 (½) or superscript 2 (²).
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 alphabet character.
+ *   F_false if not a UTF-8 alpha-numeric character.x
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see isalnum()
+ */
+#ifndef _di_f_utf_is_alpha_digit_
+  extern f_return_status f_utf_is_alpha_digit(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_alpha_digit_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet or numeric character.
+ *
+ * Numeric characters are decimal digits, letter numbers, and number-like, such as 1/2 (½) or superscript 2 (²).
  *
  * @param character
  *   The character to validate.
@@ -660,6 +755,27 @@ extern "C" {
 #endif // _di_f_utf_is_control_picture_
 
 /**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 digit character.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 digit character.
+ *   F_false if not a UTF-8 digit character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see isdigit()
+ */
+#ifndef _di_f_utf_is_digit_
+  extern f_return_status f_utf_is_digit(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_digit_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 emoji character.
  *
  * @todo Incomplete, UTF-8 codes not yet checked!
@@ -739,6 +855,8 @@ extern "C" {
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 numeric character.
+ *
+ * Numeric characters are decimal digits, letter numbers, and number-like, such as 1/2 (½) or superscript 2 (²).
  *
  * @param character
  *   The character to validate.
@@ -851,6 +969,7 @@ extern "C" {
  * Non-printing or zero-width characters are not considered whitespace.
  * This does include line separators like '\n'.
  * This does not include phonetic spaces, like whitespace modifiers.
+ * This does not include non-true whitespace characters, such as Ogham Space Mark ( ).
  *
  * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
  * However, because they are not renderred as whitespace, they are technically not white space.
@@ -902,9 +1021,32 @@ extern "C" {
 #endif // _di_f_utf_is_whitespace_modifier_
 
 /**
+ * Check to see if the entire byte block of the character is an other type of UTF-8 space character.
+ *
+ * This is a list of whitespace that are not actual whitespace (because they are graph characters) but are considered whitespace, such as Ogham Space Mark ( ).
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 whitespace.
+ *   F_false if not a UTF-8 whitespace.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_utf_is_whitespace_other_
+  extern f_return_status f_utf_is_whitespace_other(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_whitespace_other_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 word character.
  *
- * A word character is alpha-numeric or an underscore '_'.
+ * A word character is alpha-digit or an underscore '_'.
  *
  * @param character
  *   The character to validate.
@@ -927,7 +1069,7 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 word or dash character.
  *
- * A word dash character is alpha-numeric, an underscore '_' or a dash '-'.
+ * A word dash character is alpha-digit, an underscore '_' or a dash '-'.
  *
  * @param character
  *   The character to validate.
@@ -950,7 +1092,7 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 word, dash, or plus character.
  *
- * A word dash character is alpha-numeric, an underscore '_', a dash '-', or a plus '+'.
+ * A word dash character is alpha-digit, an underscore '_', a dash '-', or a plus '+'.
  *
  * This does not include "invisible plus".
  *
