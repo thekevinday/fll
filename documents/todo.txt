@@ -95,3 +95,8 @@ The f_conversion project:
 
 The iki_read level 3 project is provides a more up to date style.
 Review all level 3 projects and more closely follow the practices in this project where reasonably possible.
+
+Consider implementing a specification for accessibility characters using non-printing characters as a code word followed by another UTF-8 character to represent its code.
+Followed by a UTF-8 character s done to ensure type safety.
+This is likely to be limited to programs/terminals that accept it as to avoid printing extra noise.
+A simpler compatible version might be made that only utilies non-printing characters.
