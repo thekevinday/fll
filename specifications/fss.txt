@@ -37,24 +37,54 @@ Featureless Settings Specifications:
   This simplifies identifying the object, use quoted objects to support whitespace before/after an object.
 
   Unless explicitly defined, quotes may only be either a single quote (') or a double quote (") and only a backslash '\' may be used as a delimiter.
-
-  Unless explicitly defined by the specification, character/data delimits are performed only when required and not unilaterally.
-  In the case of Objects, delimits would only apply when that object could be potentially identified as an object when it otherwise should not.
-  For example, FSS-0001 (Extended) needs quotes to group parts that include spaces, if there is no initial quote, then a quote following the data must not be delimited.
-  Such as these following two lines\:
-    "Object 1" "This is a single quoted Content." \"Additional unquoted Content"
-    Object_2 This is multiple" Contents and the trailing quote does not need to be delimited.
-
-  Unlike this specification, a more traditional delimit process would have the above two lines instead represented as\:
-    "Object 1" "This is a single quoted Content." \"Additional unquoted Content\"
-    Object_2 This is multiple\" Contents and the trailing quote does not need to be delimited.
-
-  Unless explicitly defined, delimits may be delimited by the delimit character (a backslash '\').
-  For example, FSS-0000 (Basic):
+  For example, FSS-0000 (Basic)\:
     \"Object 1" has content starting at the '1', with an Object named '"Object'.
     \\"Object 1" has content starting at the '1', with an Object named '\"Object'.
     "Object 1\" is an unterminated object due to the escaped closing quote.
     "Object 1\\" has content starting at the 'has', with an Object named "Object 1\".
+
+  Unless explicitly defined by the specification, character/data delimits are performed only when required and not unilaterally.
+  In the case of Objects, delimits would only apply when that object could be potentially identified as an object when it otherwise should not.
+  For example, FSS-0001 (Extended) needs quotes to group parts that include spaces, if there is no initial quote, then a quote following the data must not be delimited.
+  Such as these following three lines\:
+    "Object 1" "This is a single quoted Content." \"Additional unquoted Content."
+    Object_2 This is multiple" Contents and the trailing quote does not need to be delimited.
+    "Object \"3" 'Wouldn't require delimits if no whitespace or end of string after.'
+
+  Unlike this specification, a more traditional delimit process would have the above three lines instead represented as\:
+    "Object 1" "This is a single quoted Content." \"Additional unquoted Content.\"
+    Object_2 This is multiple\" Contents and the trailing quote does not need to be delimited.
+    "Object \\"3" 'Wouldn\'t require delimits if no whitespace or end of string after.'
+
+  These examples would resolve as follows\:
+    1) Object\:
+      - Object 1
+       Content\:
+      - This is a single quoted Content.
+      - "Additional
+      - unquoted
+      - Content"
+    2) Object\:
+      - Object_2
+       Content\:
+      - This
+      - is
+      - multiple"
+      - Contents
+      - and
+      - the
+      - trailing
+      - quote
+      - does
+      - not
+      - need
+      - to
+      - be
+      - delimited.
+    3) Object\:
+      - Object \"3
+       Content\:
+      - Wouldn't require delimits if no whitespace or end of string after.
 
   All specifications are expected to support or be of the character encoding UTF-8; however, there is no imposed restriction on supporting or using any other encoding.
   Those encodings must only support the appropriate characters required by a given standard for differentiating Objects, Contents, and delimits.
@@ -70,7 +100,13 @@ Featureless Settings Specifications:
   Whitespace used for designation characters must include support for UTF-8 whitespace characters, unless explicitly designated not to by a standard.
   Control characters used for designation characters must include support UTF-8 control character support, unless explicitly designated not to by a standard.
 
-  The UTF-8 BOM is not allowed as a Byte Order Mark; instead, it must always be treated as the character represented by its code (unless explicitly allowed by a standard).
+  The UTF-8 BOM is not allowed as a Byte Order Mark; instead, it must always be treated as the character represented by its code (unless explicitly allowed to represent a BOM by a standard).
+
+  Unless explicitly defined, whitespace is to be considered all not visible characters that take up space (including newlines '\n').
+  Any visible/graph character that is considered a whitespace (such as U+1680 ' ') is not to be considered a whitespace by the FSS.
+
+  @todo document that certain special UTF-8 characters are not allowed in certain terminology groups, such as "word characters", "number characters", etc.. so that potential confusion can be avoided.
+  This is a common behavior for character security reasons, each character used for any special purposes must be visibly distinct, with whitespace and non-printing characters as the exception.
 
   The follow specifications are defined in this project.
   Each of these specifications has a common name associated with the specification number.

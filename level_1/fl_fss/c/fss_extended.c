@@ -252,42 +252,57 @@ extern "C" {
               location = range->start;
               range->start = first_slash;
 
-              if (slash_count % 2 == 0) {
-                if (delimits.used + (slash_count / 2) >= delimits.size) {
-                  f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
+              // check to see if there is a whitespace, EOS, or EOL after the quote, if not, then this is not a closing quote and delimits do not apply.
+              {
+                f_string_length location = range->start;
 
-                  if (F_status_is_error(status)) {
-                    f_macro_string_lengths_delete_simple(delimits);
-                    return status;
+                if (range->start + 1 <= range->stop && range->start + 1 < buffer->used) {
+                  range->start++;
+
+                  fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*range));
+
+                  if (range->start <= range->stop && range->start < buffer->used) {
+                    status = f_fss_is_space(*buffer, *range);
+                    if (F_status_is_error(status)) {
+                      return status;
+                    }
+                  }
+                  else {
+                    // EOS or EOL was reached, so it is a valid closing quote.
+                    // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE (@todo maybe none on stop?).
+                    status = F_true;
                   }
                 }
+                else {
+                  // EOS or EOL was reached, so it is a valid closing quote.
+                    // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE (@todo maybe none on stop?).
+                  status = F_true;
+                }
 
-                while (slash_count > 0) {
-                  if (buffer->string[range->start] == f_fss_delimit_slash) {
-                    if (slash_count % 2 == 1) {
-                      delimits.array[delimits.used] = range->start;
-                      delimits.used++;
+                range->start = location;
+              }
+
+              if (status == F_true) {
+                if (slash_count % 2 == 0) {
+                  if (delimits.used + (slash_count / 2) >= delimits.size) {
+                    f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
+
+                    if (F_status_is_error(status)) {
+                      f_macro_string_lengths_delete_simple(delimits);
+                      return status;
+                    }
+                  }
+
+                  while (slash_count > 0) {
+                    if (buffer->string[range->start] == f_fss_delimit_slash) {
+                      if (slash_count % 2 == 1) {
+                        delimits.array[delimits.used] = range->start;
+                        delimits.used++;
+                      }
+
+                      slash_count--;
                     }
 
-                    slash_count--;
-                  }
-
-                  status = f_utf_buffer_increment(*buffer, range, 1);
-                  if (F_status_is_error(status)) {
-                    f_macro_string_lengths_delete_simple(delimits);
-                    return status;
-                  }
-                } // while
-
-                range->start = location + 1;
-
-                fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*range));
-                fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop)
-
-                status = f_fss_is_graph(*buffer, *range);
-
-                if (status == F_true) {
-                  while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
                     status = f_utf_buffer_increment(*buffer, range, 1);
                     if (F_status_is_error(status)) {
                       f_macro_string_lengths_delete_simple(delimits);
@@ -295,7 +310,171 @@ extern "C" {
                     }
                   } // while
 
-                  fl_macro_fss_content_return_on_overflow((*buffer), (*range), (*found), delimits, F_unterminated_group_eos, F_unterminated_group_stop)
+                  range->start = location + 1;
+
+                  fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*range));
+                  fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop)
+
+                  status = f_fss_is_graph(*buffer, *range);
+
+                  if (status == F_true) {
+                    while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
+                      status = f_utf_buffer_increment(*buffer, range, 1);
+                      if (F_status_is_error(status)) {
+                        f_macro_string_lengths_delete_simple(delimits);
+                        return status;
+                      }
+                    } // while
+
+                    fl_macro_fss_content_return_on_overflow((*buffer), (*range), (*found), delimits, F_unterminated_group_eos, F_unterminated_group_stop)
+
+                    status = f_utf_buffer_increment(*buffer, range, 1);
+                    if (F_status_is_error(status)) {
+                      f_macro_string_lengths_delete_simple(delimits);
+                      return status;
+                    }
+
+                    return F_unterminated_group;
+                  }
+                  else if (F_status_is_error(status)) {
+                    f_macro_string_lengths_delete_simple(delimits);
+                    return status;
+                  }
+                  else if (buffer->string[range->start] == f_fss_extended_close) {
+                    fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
+
+                    found->array[found->used].stop = location - 1;
+
+                    range->start++;
+                    found->used++;
+                    return FL_fss_found_content;
+                  }
+
+                  found->array[found->used].stop = location - 1;
+
+                  status = f_utf_buffer_increment(*buffer, range, 1);
+                  if (F_status_is_error(status)) {
+                    f_macro_string_lengths_delete_simple(delimits);
+                    return status;
+                  }
+
+                  found->used++;
+                  continue;
+                }
+                else {
+                  if (delimits.used + (slash_count / 2) >= delimits.size) {
+                    f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
+
+                    if (F_status_is_error(status)) {
+                      f_macro_string_lengths_delete_simple(delimits);
+                      return status;
+                    }
+                  }
+
+                  while (slash_count > 0) {
+                    if (buffer->string[range->start] == f_fss_delimit_slash) {
+                      if (slash_count % 2 == 1) {
+                        delimits.array[delimits.used] = range->start;
+                        delimits.used++;
+                      }
+
+                      slash_count--;
+                    }
+
+                    status = f_utf_buffer_increment(*buffer, range, 1);
+                    if (F_status_is_error(status)) {
+                      f_macro_string_lengths_delete_simple(delimits);
+                      return status;
+                    }
+                  } // while
+
+                  range->start = location;
+                }
+              }
+            }
+          }
+          else if (buffer->string[range->start] == quoted) {
+            // check to see if there is a whitespace, EOS, or EOL after the quote, if not, then this is not a closing quote.
+            {
+              f_string_length location = range->start;
+
+              status = F_false;
+
+              if (range->start + 1 <= range->stop && range->start + 1 < buffer->used) {
+                range->start++;
+
+                fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*range));
+
+                if (range->start <= range->stop && range->start < buffer->used) {
+                  status = f_fss_is_space(*buffer, *range);
+                  if (F_status_is_error(status)) {
+                    return status;
+                  }
+                }
+                else {
+                  // EOS or EOL was reached, so it is a valid closing quote.
+                  // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE (@todo maybe none on stop?).
+                  status = F_true;
+                }
+              }
+              else {
+                // EOS or EOL was reached, so it is a valid closing quote.
+                  // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE (@todo maybe none on stop?).
+                status = F_true;
+              }
+
+              range->start = location;
+            }
+
+            if (status == F_true) {
+              found->array[found->used].stop = range->start - 1;
+
+              status = f_utf_buffer_increment(*buffer, range, 1);
+              if (F_status_is_error(status)) {
+                f_macro_string_lengths_delete_simple(delimits);
+                return status;
+              }
+
+              while (range->start <= range->stop && range->start < buffer->used) {
+
+                if (buffer->string[range->start] == f_fss_extended_close) {
+                  fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
+
+                  range->start++;
+                  found->used++;
+                  return FL_fss_found_content;
+                }
+
+                status = f_fss_is_space(*buffer, *range);
+
+                if (status == F_true) {
+                  status = f_utf_buffer_increment(*buffer, range, 1);
+                  if (F_status_is_error(status)) {
+                    f_macro_string_lengths_delete_simple(delimits);
+                    return status;
+                  }
+
+                  found->used++;
+                  continue_main_loop = F_true;
+                  break;
+                }
+                else if (F_status_is_error(status)) {
+                  f_macro_string_lengths_delete_simple(delimits);
+                  return status;
+                }
+                else if (buffer->string[range->start] != f_fss_delimit_placeholder) {
+
+                  while (range->start < buffer->used && range->start <= range->stop) {
+                    status = f_utf_buffer_increment(*buffer, range, 1);
+                    if (F_status_is_error(status)) {
+                      f_macro_string_lengths_delete_simple(delimits);
+                      return status;
+                    }
+
+                    fl_macro_fss_content_return_on_overflow((*buffer), (*range), (*found), delimits, F_unterminated_group_eos, F_unterminated_group_stop)
+
+                    if (buffer->string[range->start] == f_string_eol[0]) break;
+                  } // while
 
                   status = f_utf_buffer_increment(*buffer, range, 1);
                   if (F_status_is_error(status)) {
@@ -305,21 +484,6 @@ extern "C" {
 
                   return F_unterminated_group;
                 }
-                else if (F_status_is_error(status)) {
-                  f_macro_string_lengths_delete_simple(delimits);
-                  return status;
-                }
-                else if (buffer->string[range->start] == f_fss_extended_close) {
-                  fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
-
-                  found->array[found->used].stop = location - 1;
-
-                  range->start++;
-                  found->used++;
-                  return FL_fss_found_content;
-                }
-
-                found->array[found->used].stop = location - 1;
 
                 status = f_utf_buffer_increment(*buffer, range, 1);
                 if (F_status_is_error(status)) {
@@ -327,111 +491,13 @@ extern "C" {
                   return status;
                 }
 
-                found->used++;
-                continue;
-              }
-              else {
-                if (delimits.used + (slash_count / 2) >= delimits.size) {
-                  f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
+                fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop)
+              } // while
 
-                  if (F_status_is_error(status)) {
-                    f_macro_string_lengths_delete_simple(delimits);
-                    return status;
-                  }
-                }
-
-                while (slash_count > 0) {
-                  if (buffer->string[range->start] == f_fss_delimit_slash) {
-                    if (slash_count % 2 == 1) {
-                      delimits.array[delimits.used] = range->start;
-                      delimits.used++;
-                    }
-
-                    slash_count--;
-                  }
-
-                  status = f_utf_buffer_increment(*buffer, range, 1);
-                  if (F_status_is_error(status)) {
-                    f_macro_string_lengths_delete_simple(delimits);
-                    return status;
-                  }
-                } // while
-
-                range->start = location;
-              }
-            }
-          }
-          else if (buffer->string[range->start] == quoted) {
-            found->array[found->used].stop = range->start - 1;
-
-            status = f_utf_buffer_increment(*buffer, range, 1);
-            if (F_status_is_error(status)) {
-              f_macro_string_lengths_delete_simple(delimits);
-              return status;
-            }
-
-            while (range->start <= range->stop && range->start < buffer->used) {
-
-              if (buffer->string[range->start] == f_fss_extended_close) {
-                fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
-
-                range->start++;
-                found->used++;
-                return FL_fss_found_content;
-              }
-
-              status = f_fss_is_space(*buffer, *range);
-
-              if (status == F_true) {
-                status = f_utf_buffer_increment(*buffer, range, 1);
-                if (F_status_is_error(status)) {
-                  f_macro_string_lengths_delete_simple(delimits);
-                  return status;
-                }
-
-                found->used++;
-                continue_main_loop = F_true;
-                break;
-              }
-              else if (F_status_is_error(status)) {
-                f_macro_string_lengths_delete_simple(delimits);
-                return status;
-              }
-              else if (buffer->string[range->start] != f_fss_delimit_placeholder) {
-
-                while (range->start < buffer->used && range->start <= range->stop) {
-                  status = f_utf_buffer_increment(*buffer, range, 1);
-                  if (F_status_is_error(status)) {
-                    f_macro_string_lengths_delete_simple(delimits);
-                    return status;
-                  }
-
-                  fl_macro_fss_content_return_on_overflow((*buffer), (*range), (*found), delimits, F_unterminated_group_eos, F_unterminated_group_stop)
-
-                  if (buffer->string[range->start] == f_string_eol[0]) break;
-                } // while
-
-                status = f_utf_buffer_increment(*buffer, range, 1);
-                if (F_status_is_error(status)) {
-                  f_macro_string_lengths_delete_simple(delimits);
-                  return status;
-                }
-
-                return F_unterminated_group;
-              }
-
-              status = f_utf_buffer_increment(*buffer, range, 1);
-              if (F_status_is_error(status)) {
-                f_macro_string_lengths_delete_simple(delimits);
-                return status;
-              }
+              if (continue_main_loop) break;
 
               fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop)
-            } // while
-
-            if (continue_main_loop) break;
-
-            fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop)
+            }
           }
           else if (buffer->string[range->start] == f_fss_extended_close) {
 
