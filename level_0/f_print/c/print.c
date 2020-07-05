@@ -49,7 +49,7 @@ extern "C" {
   f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_static buffer, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
       if (range.start < 0) return F_status_set_error(F_parameter);
-      if (range.stop < range.start) return F_status_set_error(F_parameter);
+      if (range.start > range.stop) return F_status_set_error(F_parameter);
       if (buffer.used <= 0) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
       if (range.stop >= buffer.used) return F_status_set_error(F_parameter);
