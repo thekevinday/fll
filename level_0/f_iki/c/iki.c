@@ -26,27 +26,12 @@ extern "C" {
     }
 
     // skip past all initial non-word, non-dash, and non-plus.
-    while (range->start <= range->stop && range->start < buffer->used) {
-      if (buffer->string[range->start] == f_iki_syntax_placeholder) {
-        range->start++;
-        continue;
-      }
+    f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, F_true);
 
-      f_macro_iki_determine_width_max(buffer, range, width_max);
-
-      status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max);
-      if (F_status_is_error(status)) return status;
-
-      if (status == F_true) break;
-
-      f_macro_iki_seek_whitespace(status, buffer, range, width_max, F_true);
-      if (F_status_is_error(status)) return status;
-
-      f_macro_iki_seek_whitespace(status, buffer, range, width_max, F_false);
-      if (F_status_is_error(status)) return status;
-    } // while
-
-    if (range->start > range->stop) {
+    if (F_status_is_error(status)) {
+      return status;
+    }
+    else if (range->start > range->stop) {
       return F_data_not_stop;
     }
     else if (range->start >= buffer->used) {
@@ -106,8 +91,8 @@ extern "C" {
             break;
           }
 
-          // this is not a valid vocabulary name so seek until a whitespace to prepare for the next main loop pass.
-          f_macro_iki_seek_whitespace(status, buffer, range, width_max, F_true);
+          // this is not a valid vocabulary name so seek until a non-word, non-dash, or non-plus character.
+          f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, F_false);
           if (F_status_is_error(status)) {
             f_macro_string_lengths_delete(status, delimits);
             return status;
@@ -326,28 +311,7 @@ extern "C" {
                     range->start++;
 
                     // skip past all initial non-word, non-dash, and non-plus.
-                    while (range->start <= range->stop && range->start < buffer->used) {
-                      if (buffer->string[range->start] == f_iki_syntax_placeholder) {
-                        range->start++;
-                        continue;
-                      }
-
-                      f_macro_iki_determine_width_max(buffer, range, width_max);
-
-                      status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max);
-                      if (F_status_is_error(status)) {
-                        f_macro_string_lengths_delete(status, delimits);
-                        return status;
-                      }
-
-                      if (status == F_true) break;
-
-                      status = f_utf_buffer_increment(*buffer, range, 1);
-                      if (F_status_is_error(status)) {
-                        f_macro_string_lengths_delete(status, delimits);
-                        return status;
-                      }
-                    } // while
+                    f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, F_true);
 
                     found_vocabulary.start = range->start;
                   }
@@ -429,39 +393,7 @@ extern "C" {
       }
 
       if (find_next) {
-
-        while (range->start <= range->stop && range->start < buffer->used) {
-
-          f_macro_iki_seek_whitespace(status, buffer, range, width_max, F_true);
-          if (F_status_is_error(status)) {
-            f_macro_string_lengths_delete(status, delimits);
-            return status;
-          }
-
-          f_macro_iki_seek_whitespace(status, buffer, range, width_max, F_false);
-          if (F_status_is_error(status)) {
-            f_macro_string_lengths_delete(status, delimits);
-            return status;
-          }
-
-          if (range->start > range->stop || range->start >= buffer->used) break;
-
-          f_macro_iki_determine_width_max(buffer, range, width_max);
-
-          status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max);
-          if (F_status_is_error(status)) {
-            f_macro_string_lengths_delete(status, delimits);
-            return status;
-          }
-
-          if (status == F_true) break;
-
-          status = f_utf_buffer_increment(*buffer, range, 1);
-          if (F_status_is_error(status)) {
-            f_macro_string_lengths_delete(status, delimits);
-            return status;
-          }
-        } // while
+        f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, F_true);
 
         found_vocabulary.start = range->start;
         find_next = F_false;

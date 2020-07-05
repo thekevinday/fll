@@ -16,22 +16,23 @@ Featureless Settings Specification: 000D - Iki Text:
 
   For compatibility with the FSS terminology, the Vocabulary Name is to be considered the Object and the Vocabulary value is to be considered the Content.
 
-  Whitespace (or start of file), must exist before any valid variable name.
+  Whitespace, non-word (and non "_", "-", "+") character punctuations, or the start of file must exist before any valid variable name.
+  Whitespace and non-word (and non "_", "-", "+") character punctuations may not exist as part of the variable name.
 
   The IKI format will use IKI-0000 to represent an IKI with no explicitly defined vocabulary.
   Whereas IKI-0001 and beyond represent a specific IKI vocabulary.
 
   Key\:
-    \s = whitespace.
-    \o = any printable word character, including "_", "-", "+".
+    \o = any printable word character, including "_", "-", "+" (and Unicode equivalents).
     \c = any character, including whitespace and non-printing, and any delimited quote (used as the opening quote) or a any quote (undelimited) not used as the opening quote.
     \q = either a single quote (') or a double quote (").
     \x = any character.
+    \W = any non-word character, discluding "_", "-", "+" (and Unicode equivalents).
     * = 0 or more occurrences.
     ~ = one or more occurrences, or 0 if at start of file.
 
   Structure\:
-    \x*\s~\o:\q\c\q
+    \x*\W~\o:\q\c\q
 
   Example\:
     # fss-000d iki-0000

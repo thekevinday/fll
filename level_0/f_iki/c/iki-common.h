@@ -265,6 +265,7 @@ extern "C" {
  * status:    The return status to use.
  * buffer:    (A pointer) The buffer to seek through.
  * range:     (A pointer) The range within that buffer to seek through.
+ * width_max: The width_max variable to use fo calculating width_max.
  * condition: Set to TRUE to seek until whitespace is found and FALSE to seek until non-whitespace.
  */
 #ifndef _di_f_macro_iki_seek_whitespace_
@@ -282,6 +283,33 @@ extern "C" {
       if (F_status_is_error(status)) break; \
     }
 #endif // _di_f_macro_iki_seek_whitespace_
+
+/**
+ * Seek until a word, dash, or plus is found or not found.
+ *
+ * This will ignore the delimit placeholder.
+ *
+ * status:    The return status to use.
+ * buffer:    (A pointer) The buffer to seek through.
+ * range:     (A pointer) The range within that buffer to seek through.
+ * width_max: The width_max variable to use fo calculating width_max.
+ * condition: Set to TRUE to seek until a word character, dash character, or plus character is found and FALSE to seek until the opposite is found.
+ */
+#ifndef _di_f_macro_iki_seek_word_dash_plus_
+  #define f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, condition) \
+    while (range->start <= range->stop && range->start < buffer->used) { \
+      if (buffer->string[range->start] == f_iki_syntax_placeholder) { \
+        range->start++; \
+        continue; \
+      } \
+      f_macro_iki_determine_width_max(buffer, range, width_max); \
+      status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max); \
+      if (status == condition) break; \
+      else if (F_status_is_error(status)) break; \
+      status = f_utf_buffer_increment(*buffer, range, 1); \
+      if (F_status_is_error(status)) break; \
+    }
+#endif // _di_f_macro_iki_seek_word_dash_plus_
 
 #ifdef __cplusplus
 } // extern "C"
