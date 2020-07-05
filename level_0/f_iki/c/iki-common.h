@@ -303,7 +303,7 @@ extern "C" {
         continue; \
       } \
       f_macro_iki_determine_width_max(buffer, range, width_max); \
-      status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max); \
+      status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false); \
       if (status == condition) break; \
       else if (F_status_is_error(status)) break; \
       status = f_utf_buffer_increment(*buffer, range, 1); \

@@ -18,9 +18,13 @@ Featureless Settings Specification: 000D - Iki Text:
 
   Whitespace, non-word (and non "_", "-", "+") character punctuations, or the start of file must exist before any valid variable name.
   Whitespace and non-word (and non "_", "-", "+") character punctuations may not exist as part of the variable name.
+  The only Unicode dash-like characters allowed as a "dash" are those intended to connect, such as the Unicode hyphens (U+2010 and U+2011).
 
   The IKI format will use IKI-0000 to represent an IKI with no explicitly defined vocabulary.
   Whereas IKI-0001 and beyond represent a specific IKI vocabulary.
+
+  Unicode punctuation connector characters are supported just like "_", except when they connect outside the current line (such as U+FE33 "︳").
+  Unicode invisible punctuations (such as invisible plus: U+2064) are not considered a punctuations in this standard (because they a zero-width characters), therefore they are not to be considered a valid '_', '-', or '+' Unicode equivalents.
 
   Key\:
     \o = any printable word character, including "_", "-", "+" (and Unicode equivalents).

@@ -26,7 +26,7 @@ Featureless Settings Specifications:
   Unless explicitly defined by the specification, all specifications are newline sensitive ('\n' only).
   Newline characters are only '\n' and are never anything else ('\r' is not considered newline in any manner).
   Whitespaces characters that are printable, such as tabs and spaces must be considered the same type.
-  Non-printing whitespaces characters (zero-width characters) are ignored or are treated as placeholders for processing.
+  Non-printing whitespaces characters (zero-width characters) are ignored or are treated as placeholders for processing (this includes zero-width punctutations characters and similar).
   In terms of processing, it is recommended that the NULL character is not considered the end of a string, but this is only a suggestion.
 
   Unless explicitly defined, newlines designate the start of a potential new Object or the potential end of some Content.
@@ -97,16 +97,25 @@ Featureless Settings Specifications:
   Unless explicitly defined, all designation characters must represent ASCII codes.
   With designation characters being any character code used to designate how to identify an Object or Content (such as a colon ':' at the end of a basic list).
   This keeps the processing and logic simple, for both UTF-8 and ASCII.
-  Whitespace used for designation characters must include support for UTF-8 whitespace characters, unless explicitly designated not to by a standard.
-  Control characters used for designation characters must include support UTF-8 control character support, unless explicitly designated not to by a standard.
+  Whitespace used for designation characters must include support for UTF-8 whitespace characters, unless explicitly stated otherwise.
+  Control characters used for designation characters must include support UTF-8 control character support, unless explicitly stated otherwise.
 
   The UTF-8 BOM is not allowed as a Byte Order Mark; instead, it must always be treated as the character represented by its code (unless explicitly allowed to represent a BOM by a standard).
 
   Unless explicitly defined, whitespace is to be considered all not visible characters that take up space (including newlines '\n').
-  Any visible/graph character that is considered a whitespace (such as U+1680 ' ') is not to be considered a whitespace by the FSS.
+  Any visible/graph character that is considered a whitespace (such as U+1680 ' ') is not to be considered a whitespace.
+
+  When used for syntax matching purposes, zero-width Unicode characters are only to be considered zero-width unless explicitly stated otherwise.
+  For example, the "invisible plus" character (U+2064) is not to be considered as a plus (unless explicitly stated otherwise).
+
+  The only Unicode dash-like characters allowed as a "dash" are those intended to connect, such as the Unicode hyphens (U+2010 and U+2011) (unless explicitly stated otherwise).
+
+  In any specification where security is intended, if there exists a Unicode character that matches an ASCII character, that Unicode character may potentially be prohibeted by that standard in favor of the ASCII equivalent.
+  One such example is in the case of a URL, where the name could be used to trick a person (http://this-site.com/ vs http://this‐site.com/).
+  This (potential insecure behavior) is allowed in general because a well written program would be able to detect and communicate the possible misunderstanding and thereby avoid mistakes without imposing any character restrictions.
 
   @todo document that certain special UTF-8 characters are not allowed in certain terminology groups, such as "word characters", "number characters", etc.. so that potential confusion can be avoided.
-  This is a common behavior for character security reasons, each character used for any special purposes must be visibly distinct, with whitespace and non-printing characters as the exception.
+  This is a common behavior for security reasons, each character used for any special purposes must be visibly distinct, with whitespace and non-printing characters as the exception to the words "visibly distinct".
 
   The follow specifications are defined in this project.
   Each of these specifications has a common name associated with the specification number.

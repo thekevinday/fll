@@ -378,6 +378,10 @@ extern "C" {
  *   The character to validate.
  * @param width
  *   The number of bytes repesenting the character width.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
+ *   When FALSE, zero-width punctuation characters are not considered a character.
  *
  * @return
  *   F_true if a UTF-8 control character.
@@ -388,7 +392,7 @@ extern "C" {
  * @see f_utf_is_word()
  */
 #if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
-  extern f_return_status private_f_utf_character_is_word(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_f_utf_character_is_word(const f_utf_character character, const uint8_t width, const bool strict) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
 
 /**
@@ -400,6 +404,10 @@ extern "C" {
  *   The character to validate.
  * @param width
  *   The number of bytes repesenting the character width.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
+ *   When FALSE, zero-width punctuation characters are not considered a character.
  *
  * @return
  *   F_true if a UTF-8 control character.
@@ -410,7 +418,7 @@ extern "C" {
  * @see f_utf_is_word_dash()
  */
 #if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
-  extern f_return_status private_f_utf_character_is_word_dash(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_f_utf_character_is_word_dash(const f_utf_character character, const uint8_t width, const bool strict) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
 
 /**
@@ -422,17 +430,21 @@ extern "C" {
  *   The character to validate.
  * @param width
  *   The number of bytes repesenting the character width.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
+ *   When FALSE, zero-width punctuation characters are not considered a character.
  *
  * @return
  *   F_true if a UTF-8 control character.
  *   F_false if not a UTF-8 control character.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- * @see f_utf_character_is_word_dash()
- * @see f_utf_is_word_dash()
+ * @see f_utf_character_is_word_dash_plus()
+ * @see f_utf_is_word_dash_plus()
  */
 #if !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
-  extern f_return_status private_f_utf_character_is_word_dash_plus(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_f_utf_character_is_word_dash_plus(const f_utf_character character, const uint8_t width, const bool strict) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 /**

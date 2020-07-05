@@ -80,7 +80,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_
   f_return_status f_utf_character_is(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       return F_false;
@@ -96,7 +96,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_alpha_
   f_return_status f_utf_character_is_alpha(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isalpha(f_macro_utf_character_to_char_1(character))) {
@@ -116,7 +116,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_alpha_digit_
   f_return_status f_utf_character_is_alpha_digit(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isalnum(f_macro_utf_character_to_char_1(character))) {
@@ -136,7 +136,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_alpha_numeric_
   f_return_status f_utf_character_is_alpha_numeric(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isalnum(f_macro_utf_character_to_char_1(character))) {
@@ -156,7 +156,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_combining_
   f_return_status f_utf_character_is_combining(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       // There are no combining characters in ASCII.
@@ -177,7 +177,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_control_
   f_return_status f_utf_character_is_control(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (iscntrl(f_macro_utf_character_to_char_1(character))) {
@@ -197,7 +197,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_control_picture_
   f_return_status f_utf_character_is_control_picture(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       // There are no control picture characters in ASCII.
@@ -218,7 +218,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_digit_
   f_return_status f_utf_character_is_digit(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isdigit(f_macro_utf_character_to_char_1(character))) {
@@ -238,7 +238,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_emoji_
   f_return_status f_utf_character_is_emoji(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isdigit(f_macro_utf_character_to_char_1(character))) {
@@ -258,7 +258,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_fragment_
   f_return_status f_utf_character_is_fragment(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 1) return F_true;
 
@@ -268,7 +268,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_graph_
   f_return_status f_utf_character_is_graph(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isgraph(f_macro_utf_character_to_char_1(character))) {
@@ -300,7 +300,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_numeric_
   f_return_status f_utf_character_is_numeric(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isdigit(f_macro_utf_character_to_char_1(character))) {
@@ -320,7 +320,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_phonetic_
   f_return_status f_utf_character_is_phonetic(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       // There are no ASCII phonetic characters.
@@ -337,7 +337,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_punctuation_
   f_return_status f_utf_character_is_punctuation(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       // ASCII: '!' to '#'.
@@ -383,7 +383,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_symbol_
   f_return_status f_utf_character_is_symbol(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       // ASCII: '$' or '+'.
@@ -414,7 +414,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_valid_
   f_return_status f_utf_character_is_valid(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0 || width == 1) {
       return F_false;
@@ -426,7 +426,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_whitespace_
   f_return_status f_utf_character_is_whitespace(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isspace(f_macro_utf_character_to_char_1(character))) {
@@ -446,7 +446,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_whitespace_modifier_
   f_return_status f_utf_character_is_whitespace_modifier(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       // There are no ASCII whitespace modifiers.
@@ -463,7 +463,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_whitespace_other_
   f_return_status f_utf_character_is_whitespace_other(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       // There are no ASCII whitespace other.
@@ -479,8 +479,8 @@ extern "C" {
 #endif // _di_f_utf_character_is_whitespace_other_
 
 #ifndef _di_f_utf_character_is_word_
-  f_return_status f_utf_character_is_word(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+  f_return_status f_utf_character_is_word(const f_utf_character character, const bool strict) {
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isalnum(f_macro_utf_character_to_char_1(character)) || character == '_') {
@@ -494,13 +494,13 @@ extern "C" {
       return F_status_is_error(F_utf);
     }
 
-    return private_f_utf_character_is_word(character, width);
+    return private_f_utf_character_is_word(character, width, strict);
   }
 #endif // _di_f_utf_character_is_word_
 
 #ifndef _di_f_utf_character_is_word_dash_
-  f_return_status f_utf_character_is_word_dash(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+  f_return_status f_utf_character_is_word_dash(const f_utf_character character, const bool strict) {
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isalnum(f_macro_utf_character_to_char_1(character)) || character == '_' || character == '-') {
@@ -514,13 +514,13 @@ extern "C" {
       return F_status_is_error(F_utf);
     }
 
-    return private_f_utf_character_is_word_dash(character, width);
+    return private_f_utf_character_is_word_dash(character, width, strict);
   }
 #endif // _di_f_utf_character_is_word_dash_
 
 #ifndef _di_f_utf_character_is_word_dash_plus_
-  f_return_status f_utf_character_is_word_dash_plus(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+  f_return_status f_utf_character_is_word_dash_plus(const f_utf_character character, const bool strict) {
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
       if (isalnum(f_macro_utf_character_to_char_1(character)) || character == '_' || character == '-' || character == '+') {
@@ -534,16 +534,16 @@ extern "C" {
       return F_status_is_error(F_utf);
     }
 
-    return private_f_utf_character_is_word_dash_plus(character, width);
+    return private_f_utf_character_is_word_dash_plus(character, width, strict);
   }
 #endif // _di_f_utf_character_is_word_dash_plus_
 
 #ifndef _di_f_utf_character_is_zero_width_
   f_return_status f_utf_character_is_zero_width(const f_utf_character character) {
-    unsigned short width = f_macro_utf_character_width_is(character);
+    const unsigned short width = f_macro_utf_character_width_is(character);
 
     if (width == 0) {
-      uint8_t ascii = f_macro_utf_character_to_char_1(character);
+      const uint8_t ascii = f_macro_utf_character_to_char_1(character);
 
       // These control characters are considered zero-width spaces.
       if (ascii >= 0x00 && ascii <= 0x08) {
@@ -1281,7 +1281,7 @@ extern "C" {
 #endif // _di_f_utf_is_whitespace_other_
 
 #ifndef _di_f_utf_is_word_
-  f_return_status f_utf_is_word(const f_string character, const f_string_length width_max) {
+  f_return_status f_utf_is_word(const f_string character, const f_string_length width_max, const bool strict) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1310,12 +1310,12 @@ extern "C" {
       if (status != F_none) return status;
     }
 
-    return private_f_utf_character_is_word(character_utf, width);
+    return private_f_utf_character_is_word(character_utf, width, strict);
   }
 #endif // _di_f_utf_is_word_
 
 #ifndef _di_f_utf_is_word_dash_
-  f_return_status f_utf_is_word_dash(const f_string character, const f_string_length width_max) {
+  f_return_status f_utf_is_word_dash(const f_string character, const f_string_length width_max, const bool strict) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1344,12 +1344,12 @@ extern "C" {
       if (status != F_none) return status;
     }
 
-    return private_f_utf_character_is_word_dash(character_utf, width);
+    return private_f_utf_character_is_word_dash(character_utf, width, strict);
   }
 #endif // _di_f_utf_is_word_dash_
 
 #ifndef _di_f_utf_is_word_dash_plus_
-  f_return_status f_utf_is_word_dash_plus(const f_string character, const f_string_length width_max) {
+  f_return_status f_utf_is_word_dash_plus(const f_string character, const f_string_length width_max, const bool strict) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1378,7 +1378,7 @@ extern "C" {
       if (status != F_none) return status;
     }
 
-    return private_f_utf_character_is_word_dash_plus(character_utf, width);
+    return private_f_utf_character_is_word_dash_plus(character_utf, width, strict);
   }
 #endif // _di_f_utf_is_word_dash_plus_
 

@@ -146,7 +146,7 @@ extern "C" {
         else {
           f_macro_iki_determine_width_max(buffer, range, width_max);
 
-          status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max);
+          status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
           if (F_status_is_error(status)) {
             f_macro_string_lengths_delete(status, delimits);
             return status;

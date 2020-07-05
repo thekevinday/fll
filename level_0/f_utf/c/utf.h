@@ -490,8 +490,14 @@ extern "C" {
  *
  * A word character is alpha-numeric or an underscore '_'.
  *
+ * This does not include zero-width punctuation.
+ *
  * @param character
  *   The character to validate.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
+ *   When FALSE, zero-width punctuation characters are not considered a character.
  *
  * @return
  *   F_true if a UTF-8 word character.
@@ -501,7 +507,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_word_
-  extern f_return_status f_utf_character_is_word(const f_utf_character character);
+  extern f_return_status f_utf_character_is_word(const f_utf_character character, const bool strict);
 #endif // _di_f_utf_character_is_word_
 
 /**
@@ -509,8 +515,19 @@ extern "C" {
  *
  * A word dash character is alpha-numeric, an underscore '_' or a dash '-'.
  *
+ * Unicode appears to refer to dashes that connect words as a hyphen.
+ * Therefore, only these hyphens are considered dashes for the purposes of this function.
+ * All other dash-like Unicode characters are not considered a dash here.
+ * The dash here is intended for combining words, which matches the context of the Unicode "hyphen".
+ *
+ * This does not include zero-width punctuation.
+ *
  * @param character
  *   The character to validate.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
+ *   When FALSE, zero-width punctuation characters are not considered a character.
  *
  * @return
  *   F_true if a UTF-8 word or dash character.
@@ -520,18 +537,27 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_word_dash_
-  extern f_return_status f_utf_character_is_word_dash(const f_utf_character character);
+  extern f_return_status f_utf_character_is_word_dash(const f_utf_character character, const bool strict);
 #endif // _di_f_utf_character_is_word_dash_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 word, dash, or plus character.
  *
- * A word dash character is alpha-numeric, an underscore '_', a dash '-', or a plus '+'.
+ * A word dash plus character is alpha-digit, an underscore '_', a dash '-', or a plus '+'.
  *
- * This does not include "invisible plus".
+ * Unicode appears to refer to dashes that connect words as a hyphen.
+ * Therefore, only these hyphens are considered dashes for the purposes of this function.
+ * All other dash-like Unicode characters are not considered a dash here.
+ * The dash here is intended for combining words, which matches the context of the Unicode "hyphen".
+ *
+ * This does not include zero-width punctuation, such as "invisible plus" (U+2064) (even in strict mode).
  *
  * @param character
  *   The character to validate.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
+ *   When FALSE, zero-width punctuation characters are not considered a character.
  *
  * @return
  *   F_true if a UTF-8 word or dash character.
@@ -541,7 +567,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_word_dash_plus_
-  extern f_return_status f_utf_character_is_word_dash_plus(const f_utf_character character);
+  extern f_return_status f_utf_character_is_word_dash_plus(const f_utf_character character, const bool strict);
 #endif // _di_f_utf_character_is_word_dash_plus_
 
 /**
@@ -1048,12 +1074,18 @@ extern "C" {
  *
  * A word character is alpha-digit or an underscore '_'.
  *
+ * This does not include zero-width punctuation.
+ *
  * @param character
  *   The character to validate.
  *   There must be enough space allocated to compare against, as limited by width_max.
  * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
+ *   When FALSE, zero-width punctuation characters are not considered a character.
  *
  * @return
  *   F_true if a UTF-8 word character.
@@ -1063,7 +1095,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_is_word_
-  extern f_return_status f_utf_is_word(const f_string character, const f_string_length width_max);
+  extern f_return_status f_utf_is_word(const f_string character, const f_string_length width_max, const bool strict);
 #endif // _di_f_utf_is_word_
 
 /**
@@ -1071,12 +1103,23 @@ extern "C" {
  *
  * A word dash character is alpha-digit, an underscore '_' or a dash '-'.
  *
+ * Unicode appears to refer to dashes that connect words as a hyphen.
+ * Therefore, only these hyphens are considered dashes for the purposes of this function.
+ * All other dash-like Unicode characters are not considered a dash here.
+ * The dash here is intended for combining words, which matches the context of the Unicode "hyphen".
+ *
+ * This does not include zero-width punctuation.
+ *
  * @param character
  *   The character to validate.
  *   There must be enough space allocated to compare against, as limited by width_max.
  * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
+ *   When FALSE, zero-width punctuation characters are not considered a character.
  *
  * @return
  *   F_true if a UTF-8 word or dash character.
@@ -1086,15 +1129,20 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_is_word_dash_
-  extern f_return_status f_utf_is_word_dash(const f_string character, const f_string_length width_max);
+  extern f_return_status f_utf_is_word_dash(const f_string character, const f_string_length width_max, const bool strict);
 #endif // _di_f_utf_is_word_dash_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 word, dash, or plus character.
  *
- * A word dash character is alpha-digit, an underscore '_', a dash '-', or a plus '+'.
+ * A word dash plus character is alpha-digit, an underscore '_', a dash '-', or a plus '+'.
  *
- * This does not include "invisible plus".
+ * Unicode appears to refer to dashes that connect words as a hyphen.
+ * Therefore, only these hyphens are considered dashes for the purposes of this function.
+ * All other dash-like Unicode characters are not considered a dash here.
+ * The dash here is intended for combining words, which matches the context of the Unicode "hyphen".
+ *
+ * This does not include zero-width punctuation, such as "invisible plus" (U+2064) (even in strict mode).
  *
  * @param character
  *   The character to validate.
@@ -1102,6 +1150,10 @@ extern "C" {
  * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
+ *   When FALSE, zero-width punctuation characters are not considered a character.
  *
  * @return
  *   F_true if a UTF-8 word or dash character.
@@ -1111,7 +1163,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_is_word_dash_plus_
-  extern f_return_status f_utf_is_word_dash_plus(const f_string character, const f_string_length width_max);
+  extern f_return_status f_utf_is_word_dash_plus(const f_string character, const f_string_length width_max, const bool strict);
 #endif // _di_f_utf_is_word_dash_plus_
 
 /**

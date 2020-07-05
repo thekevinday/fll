@@ -266,7 +266,7 @@ extern "C" {
   f_return_status private_f_utf_character_is_emoji(const f_utf_character character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
-    uint8_t byte_first = f_macro_utf_character_to_char_1(character);
+    const uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
     if (width == 2) {
       // Latin-1 Supplement: U+00A9, U+00AE.
@@ -800,7 +800,7 @@ extern "C" {
   f_return_status private_f_utf_character_is_punctuation(const f_utf_character character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
-    uint8_t byte_first = f_macro_utf_character_to_char_1(character);
+    const uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
     if (width == 2) {
 
@@ -1475,7 +1475,7 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
   f_return_status private_f_utf_character_is_valid(const f_utf_character character, const uint8_t width) {
     // reduce the number of checks by grouping checks by first byte.
-    uint8_t byte_first = f_macro_utf_character_to_char_1(character);
+    const uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
     if (width == 2) {
       uint8_t byte = f_macro_utf_character_to_char_2(character);
@@ -3850,7 +3850,7 @@ extern "C" {
     }
     else if (width == 3) {
       // reduce the number of checks by grouping checks by first byte.
-      uint8_t byte_first = f_macro_utf_character_to_char_1(character);
+      const uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
       if (byte_first == 0xe2) {
 
@@ -3905,27 +3905,41 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_whitespace_other_) || !defined(_di_f_utf_is_whitespace_other_)
 
 #if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
-  f_return_status private_f_utf_character_is_word(const f_utf_character character, const uint8_t width) {
+  f_return_status private_f_utf_character_is_word(const f_utf_character character, const uint8_t width, const bool strict) {
 
     if (private_f_utf_character_is_alpha_digit(character, width)) {
       return F_true;
     }
 
     if (width == 3) {
+      // reduce the number of checks by grouping checks by first byte.
+      const uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
-      // General Punctuation: U+203F (‿), U+2017 (‗), U+203E (‾), U+2040 (⁀).
-      if (character == 0xe280bf00 || character == 0xe2809700 || character == 0xe280be00 || character == 0xe2818000) {
-        return F_true;
+      if (byte_first == 0xe2) {
+
+        // General Punctuation: U+203F (‿), U+203E (‾), U+2040 (⁀), U+2054 (⁔).
+        if (character == 0xe280bf00 || character == 0xe280be00 || character == 0xe2818000 || character == 0xe2819400) {
+          return F_true;
+        }
       }
+      else if (byte_first == 0xef) {
 
-      // General Punctuation: U+2054 (⁔), U+FE4D (﹍), U+FE4E (﹎), U+FE4F (﹏).
-      if (character == 0xe2819400 || character == 0xefb98d00 || character == 0xefb98e00 || character == 0xefb98f00) {
-        return F_true;
-      }
+        // General Punctuation: U+FE4D (﹍), U+FE4E (﹎), U+FE4F (﹏).
+        if (character == 0xefb98d00 || character == 0xefb98e00 || character == 0xefb98f00) {
+          return F_true;
+        }
 
-      // General Punctuation: U+FF3F (＿).
-      if (character == 0xefbcbf00) {
-        return F_true;
+        // General Punctuation: U+FF3F (＿).
+        if (character == 0xefbcbf00) {
+          return F_true;
+        }
+
+        if (strict) {
+
+          // General Punctuation: U+FE33 (︳), U+FE34 (︴).
+          if (character == 0xefbcbf00 || character == 0xefbcbf00) {
+          }
+        }
       }
     }
 
@@ -3934,16 +3948,16 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
 
 #if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
-  f_return_status private_f_utf_character_is_word_dash(const f_utf_character character, const uint8_t width) {
+  f_return_status private_f_utf_character_is_word_dash(const f_utf_character character, const uint8_t width, const bool strict) {
 
-    if (private_f_utf_character_is_word(character, width)) {
+    if (private_f_utf_character_is_word(character, width, strict)) {
       return F_true;
     }
 
     if (width == 3) {
 
-      // General Punctuation: U+2010 to U+2015.
-      if (character >= 0xe2809000 && character <= 0xe2809500) {
+      // General Punctuation: U+2010, U+2011.
+      if (character == 0xe2809000 || character == 0xe2809100) {
         return F_true;
       }
     }
@@ -3953,10 +3967,18 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
 
 #if !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
-  f_return_status private_f_utf_character_is_word_dash_plus(const f_utf_character character, const uint8_t width) {
+  f_return_status private_f_utf_character_is_word_dash_plus(const f_utf_character character, const uint8_t width, const bool strict) {
 
-    if (private_f_utf_character_is_word_dash(character, width)) {
+    if (private_f_utf_character_is_word_dash(character, width, strict)) {
       return F_true;
+    }
+
+    if (strict) {
+
+      // General Punctuation: U+2064.
+      if (character == 0xe281a400) {
+        return F_true;
+      }
     }
 
     return F_false;
@@ -3966,7 +3988,7 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
   f_return_status private_f_utf_character_is_zero_width(const f_utf_character character, const uint8_t width) {
     // reduce the number of checks by grouping checks by first byte.
-    uint8_t byte_first = f_macro_utf_character_to_char_1(character);
+    const uint8_t byte_first = f_macro_utf_character_to_char_1(character);
 
     if (byte_first == 0xe1) {
 
