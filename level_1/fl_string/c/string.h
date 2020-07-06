@@ -544,6 +544,112 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_
 
 /**
+ * Compare two strings, similar to strncmp(), but restricted to the given range for the second string.
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param range2
+ *   A range within the string2 to restrict the comparison to.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_string_dynamic_partial_compare_dynamic_
+  extern f_return_status fl_string_dynamic_partial_compare_dynamic(const f_string_static string1, const f_string_static string2, const f_string_range range2);
+#endif // _di_fl_string_dynamic_partial_compare_dynamic_
+
+/**
+ * Compare two strings, similar to strncmp(), but restricted to the given range for the second string.
+ *
+ * This operates with the first string being a traditional string.
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param length1
+ *   The length of string1.
+ * @param range2
+ *   A range within the string2 to restrict the comparison to.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_string_dynamic_partial_compare_string_
+  extern f_return_status fl_string_dynamic_partial_compare_string(const f_string string1, const f_string_static string2, const f_string_length length1, const f_string_range range2);
+#endif // _di_fl_string_dynamic_partial_compare_string_
+
+/**
+ * Compare two strings, similar to strncmp(), but restricted to the given range for the second string.
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ * Ignores leading and trailing whitespace.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param range2
+ *   A range within the string2 to restrict the comparison to.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
+ */
+#ifndef _di_fl_string_dynamic_partial_compare_trim_dynamic_
+  extern f_return_status fl_string_dynamic_partial_compare_trim_dynamic(const f_string_static string1, const f_string_static string2, const f_string_range range2);
+#endif // _di_fl_string_dynamic_partial_compare_trim_dynamic_
+
+/**
+ * Compare two strings, similar to strncmp(), but restricted to the given range for the second string.
+ *
+ * This operates with the first string being a traditional string.
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ * Ignores leading and trailing whitespace.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param length1
+ *   The length of string1.
+ * @param range2
+ *   A range within the string2 to restrict the comparison to.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
+ */
+#ifndef _di_fl_string_dynamic_partial_compare_trim_string_
+  extern f_return_status fl_string_dynamic_partial_compare_trim_string(const f_string string1, const f_string_static string2, const f_string_length length1, const f_string_range range2);
+#endif // _di_fl_string_dynamic_partial_compare_trim_string_
+
+/**
  * Compare two strings, similar to strncmp(), but restricted to the given ranges.
  *
  * This does not stop on NULL.

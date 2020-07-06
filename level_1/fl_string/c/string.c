@@ -413,6 +413,26 @@ extern "C" {
   }
 #endif // _di_fl_string_dynamic_partial_compare_
 
+#ifndef _di_fl_string_dynamic_partial_compare_dynamic_
+  f_return_status fl_string_dynamic_partial_compare_dynamic(const f_string_static string1, const f_string_static string2, const f_string_range range2) {
+    #ifndef _di_level_1_parameter_checking_
+      if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    return private_fl_string_compare(string1.string, string2.string, 0, range2.start, string1.used, range2.stop + 1);
+  }
+#endif // _di_fl_string_dynamic_partial_compare_dynamic_
+
+#ifndef _di_fl_string_dynamic_partial_compare_string_
+  f_return_status fl_string_dynamic_partial_compare_string(const f_string string1, const f_string_static string2, const f_string_length length1, const f_string_range range2) {
+    #ifndef _di_level_1_parameter_checking_
+      if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    return private_fl_string_compare(string1, string2.string, 0, range2.start, length1, range2.stop + 1);
+  }
+#endif // _di_fl_string_dynamic_partial_compare_string_
+
 #ifndef _di_fl_string_dynamic_partial_compare_trim_
   f_return_status fl_string_dynamic_partial_compare_trim(const f_string_static string1, const f_string_static string2, const f_string_range range1, const f_string_range range2) {
     #ifndef _di_level_1_parameter_checking_
@@ -423,6 +443,26 @@ extern "C" {
     return private_fl_string_compare_trim(string1.string, string2.string, range1.start, range2.start, range1.stop + 1, range2.stop + 1);
   }
 #endif // _di_fl_string_dynamic_partial_compare_trim_
+
+#ifndef _di_fl_string_dynamic_partial_compare_trim_dynamic_
+  f_return_status fl_string_dynamic_partial_compare_trim_dynamic(const f_string_static string1, const f_string_static string2, const f_string_range range2) {
+    #ifndef _di_level_1_parameter_checking_
+      if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    return private_fl_string_compare_trim(string1.string, string2.string, 0, range2.start, string1.used, range2.stop + 1);
+  }
+#endif // _di_fl_string_dynamic_partial_compare_trim_dynamic_
+
+#ifndef _di_fl_string_dynamic_partial_compare_trim_string_
+  f_return_status fl_string_dynamic_partial_compare_trim_string(const f_string string1, const f_string_static string2, const f_string_length length1, const f_string_range range2) {
+    #ifndef _di_level_1_parameter_checking_
+      if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    return private_fl_string_compare_trim(string1, string2.string, 0, range2.start, length1, range2.stop + 1);
+  }
+#endif // _di_fl_string_dynamic_partial_compare_trim_string_
 
 #ifndef _di_fl_string_dynamic_partial_mash_
   f_return_status fl_string_dynamic_partial_mash(const f_string glue, const f_string_length glue_length, const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
