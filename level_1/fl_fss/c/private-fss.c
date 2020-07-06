@@ -1,4 +1,3 @@
-#include <level_1/fss.h>
 #include "private-fss.h"
 
 #ifdef __cplusplus
