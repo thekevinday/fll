@@ -257,9 +257,9 @@ extern "C" {
  *
  * @see fake_build_load_setting()
  */
-#ifndef _di_fake_make_load_setting_
-  extern void fake_make_load_setting(const fake_data data, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_make_load_setting_
+#ifndef _di_fake_make_load_fakefile_
+  extern void fake_make_load_fakefile(const fake_data data, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_load_fakefile_
 
 /**
  * Execute the make operation.

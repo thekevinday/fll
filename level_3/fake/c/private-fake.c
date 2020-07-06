@@ -569,7 +569,7 @@ extern "C" {
               for (j = 0; j < length; j++) {
                 width_max = length - j;
 
-                status = f_utf_is_word_dash_plus(arguments.argv[location] + j, width_max);
+                status = f_utf_is_word_dash_plus(arguments.argv[location] + j, width_max, F_false);
 
                 if (F_status_is_error(status)) {
                   if (fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
@@ -749,7 +749,7 @@ extern "C" {
         for (j = 0; j < data->define.array[i].used; j++) {
           width_max = data->define.array[i].used - j;
 
-          status = f_utf_is_word(data->define.array[i].string + j, width_max);
+          status = f_utf_is_word(data->define.array[i].string + j, width_max, F_false);
 
           if (F_status_is_error(status)) {
             if (fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "f_utf_is_word", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
@@ -804,7 +804,7 @@ extern "C" {
         for (j = 0; j < data->mode.array[i].used; j++) {
           width_max = data->mode.array[i].used - j;
 
-          status = f_utf_is_word_dash_plus(data->mode.array[i].string + j, width_max);
+          status = f_utf_is_word_dash_plus(data->mode.array[i].string + j, width_max, F_false);
 
           if (F_status_is_error(status)) {
             if (fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {

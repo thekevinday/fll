@@ -10,8 +10,8 @@
 extern "C" {
 #endif
 
-#ifndef _di_fake_make_load_setting_
-  void fake_make_load_setting(const fake_data data, fake_make_data *data_make, f_status *status) {
+#ifndef _di_fake_make_load_fakefile_
+  void fake_make_load_fakefile(const fake_data data, fake_make_data *data_make, f_status *status) {
     if (F_status_is_error(*status)) return;
 
     *status = fake_file_buffer(data, data.file_data_build_fakefile.string, &data_make->buffer);
@@ -103,8 +103,7 @@ extern "C" {
 
           data_make->fakefile.array[data_make->fakefile.used].name = list_objects.array[i];
 
-          content_range.start = list_contents.array[i].array[0].start;
-          content_range.stop = list_contents.array[i].array[0].stop;
+          content_range = list_contents.array[i].array[0];
 
           *status = fll_fss_extended_read(&data_make->buffer, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents);
           if (F_status_is_error(*status)) {
@@ -139,12 +138,12 @@ extern "C" {
         return;
       }
 
-      // look for load_build to determine if settings from the build settings file should be loaded.
-      const f_string_range range_load_build = f_macro_string_range_initialize(fake_make_setting_load_build_length);
-
       data_make->setting_make.load_build = F_true;
 
       if (settings.objects.used) {
+        // look for load_build to determine if settings from the build settings file should be loaded.
+        const f_string_range range_load_build = f_macro_string_range_initialize(fake_make_setting_load_build_length);
+
         const f_string_range range_yes = f_macro_string_range_initialize(fake_common_setting_bool_yes_length);
         const f_string_range range_no = f_macro_string_range_initialize(fake_common_setting_bool_no_length);
 
@@ -209,7 +208,7 @@ extern "C" {
       f_macro_fss_set_delete_simple(settings);
     }
   }
-#endif // _di_fake_make_load_setting_
+#endif // _di_fake_make_load_fakefile_
 
 #ifndef _di_fake_make_operate_
   f_return_status fake_make_operate(const fake_data data) {
@@ -226,7 +225,7 @@ extern "C" {
 
     f_macro_mode_set_default_umask(mode, data.umask);
 
-    fake_make_load_setting(data, &data_make, &status);
+    fake_make_load_fakefile(data, &data_make, &status);
 
     fake_make_operate_section(data, data_make.main, &data_make, &list_stack, &status);
 
@@ -267,12 +266,28 @@ extern "C" {
       }
     }
 
+    const f_string_static vocabulary_define = f_macro_string_static_initialize(iki_vocabulary_0002_define, iki_vocabulary_0002_define_length);
+    const f_string_static vocabulary_parameter = f_macro_string_static_initialize(iki_vocabulary_0002_parameter, iki_vocabulary_0002_parameter_length);
+
+    const f_string_range range_define = f_macro_string_range_initialize(iki_vocabulary_0002_define_length);
+    const f_string_range range_parameter = f_macro_string_range_initialize(iki_vocabulary_0002_parameter_length);
+
     f_iki_variable iki_variable = f_iki_variable_initialize;
     f_iki_vocabulary iki_vocabulary = f_iki_vocabulary_initialize;
     f_iki_content iki_content = f_iki_content_initialize;
+
     f_string_range range = f_string_range_initialize;
 
-    for (f_array_length i = 0; i < content.used; i++) {
+    f_string_map_multis *map_multis = 0;
+
+    f_array_length i = 0;
+    f_array_length j = 0;
+    f_array_length k = 0;
+    f_array_length l = 0;
+
+    f_string_length previous = 0;
+
+    for (; i < content.used; i++) {
       if (content.array[i].start > content.array[i].stop) {
         continue;
       }
@@ -303,7 +318,7 @@ extern "C" {
       }
 
       if (iki_variable.used) {
-        if (content.array[i].start < iki_variable.array[0].start) {
+        if (iki_variable.array[0].start > 0 && content.array[i].start < iki_variable.array[0].start) {
           range.start = content.array[i].start;
           range.stop = iki_variable.array[0].start - 1;
 
@@ -312,50 +327,90 @@ extern "C" {
             fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_partial_append_nulless", F_true);
             break;
           }
-
-          *status = fl_string_append_assure(" ", 1, &arguments->array[arguments->used]);
-          if (F_status_is_error(*status)) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
-            break;
-          }
         }
 
-        for (f_array_length j = 0; j < iki_variable.used; j++) {
-          if (j > 0) {
-            *status = fl_string_append_assure(" ", 1, &arguments->array[arguments->used]);
+        for (j = 0, previous = iki_variable.array[0].start; j < iki_variable.used; j++) {
+
+          if (previous + 1 < iki_variable.array[j].start) {
+            range.start = previous + 1;
+            range.stop = iki_variable.array[j].start - 1;
+
+            *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
             if (F_status_is_error(*status)) {
-              fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+              fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_partial_append_nulless", F_true);
               break;
             }
           }
 
-          // @todo: compare vocabulary name against known set.
-          //        then use that value to determine how to substitute.
+          *status = fl_string_dynamic_partial_compare(vocabulary_define, data_make->buffer, range_define, iki_vocabulary.array[j]);
 
-          // these next few blocks are just examples for testing.
-          *status = fl_string_append_assure("@todo:", 6, &arguments->array[arguments->used]);
-          if (F_status_is_error(*status)) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+          if (*status == F_equal_to_not) {
+            *status = fl_string_dynamic_partial_compare(vocabulary_parameter, data_make->buffer, range_parameter, iki_vocabulary.array[j]);
+
+            if (*status == F_equal_to) {
+              map_multis = &data_make->setting_make.parameter;
+            }
+          }
+          else if (*status == F_equal_to) {
+            map_multis = &data_make->setting_make.define;
+          }
+
+          if (*status == F_equal_to_not) {
+            *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, iki_variable.array[j], &arguments->array[arguments->used]);
+            if (F_status_is_error(*status)) {
+              fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_partial_append_nulless", F_true);
+              break;
+            }
+
+            previous = iki_variable.array[j].stop;
+            continue;
+          }
+          else if (F_status_is_error(*status)) {
+            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_partial_compare", F_true);
             break;
           }
 
-          range.start = iki_content.array[j].start;
-          range.stop = iki_content.array[j].stop;
+          // @todo: consider designing a way to designate appending map as a single value string or multiple separate strings.
+          //        this could potential be done by considering single vs double quotes.
+          //        then arguments->used would have to be incremented based on this number.
+          if (map_multis->used) {
+            for (k = 0; k < map_multis->used; k++) {
+              *status = fl_string_dynamic_partial_compare_dynamic(map_multis->array[k].name, data_make->buffer, iki_content.array[j]);
 
-          *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
-          if (F_status_is_error(*status)) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_partial_append_nulless", F_true);
-            break;
+              if (*status == F_equal_to) {
+                for (l = 0; l < map_multis->array[k].value.used; l++) {
+                  if (l > 0) {
+                    *status = fl_string_append(" ", 1, &arguments->array[arguments->used]);
+                    if (F_status_is_error(*status)) {
+                      fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append", F_true);
+                      break;
+                    }
+                  }
+
+                  *status = fl_string_dynamic_append_nulless(map_multis->array[k].value.array[l], &arguments->array[arguments->used]);
+                  if (F_status_is_error(*status)) {
+                    fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+                    break;
+                  }
+                } // for
+
+                break;
+              }
+              else if (F_status_is_error(*status)) {
+                fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_compare", F_true);
+                break;
+              }
+            } // for
+
+            if (F_status_is_error(*status)) break;
           }
+
+          previous = iki_variable.array[j].stop;
         } // for
 
-        if (iki_variable.array[iki_variable.used - 1].stop < content.array[i].stop) {
-          *status = fl_string_append_assure(" ", 1, &arguments->array[arguments->used]);
-          if (F_status_is_error(*status)) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
-            break;
-          }
+        if (F_status_is_error(*status)) break;
 
+        if (iki_variable.array[iki_variable.used - 1].stop < content.array[i].stop) {
           range.start = iki_variable.array[iki_variable.used - 1].stop + 1;
           range.stop = content.array[i].stop;
 
@@ -365,8 +420,6 @@ extern "C" {
             break;
           }
         }
-
-        // @todo there needs to always expand into multiple values using whitespace to determine separation, by supporting single and double quote detection (and escaping).
       }
       else {
         *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, content.array[i], &arguments->array[arguments->used]);
