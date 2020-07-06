@@ -19,10 +19,10 @@
 #include <level_0/string.h>
 #include <level_0/utf.h>
 #include <level_0/fss.h>
-#include <level_0/file.h>
 
 // fll-1 includes
 #include <level_1/conversion.h>
+#include <level_1/fss.h>
 #include <level_1/fss_macro.h>
 #include <level_1/fss_status.h>
 #include <level_1/string.h>

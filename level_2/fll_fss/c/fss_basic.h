@@ -19,6 +19,7 @@
 #include <level_0/utf.h>
 
 // fll-1 includes
+#include <level_1/fss.h>
 #include <level_1/fss_macro.h>
 #include <level_1/fss_status.h>
 #include <level_1/fss_basic.h>
