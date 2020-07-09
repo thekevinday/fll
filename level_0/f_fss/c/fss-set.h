@@ -202,18 +202,16 @@ extern "C" {
   #define f_macro_fss_sets_resize(status, sets, new_length) \
     status = F_none; \
     if (new_length < sets.size) { \
-      f_array_length i = sets.size - new_length; \
-      for (; i < sets.size; i++) { \
-        f_macro_fss_set_delete(status, sets.array[i]); \
+      for (f_array_length _macro__i = sets.size - new_length; _macro__i < sets.size; _macro__i++) { \
+        f_macro_fss_set_delete(status, sets.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_resize((void **) & sets.array, sizeof(f_fss_set), sets.size, new_length); \
     if (status == F_none) { \
       if (new_length > sets.size) { \
-        f_array_length i = sets.size; \
-        for (; i < new_length; i++) { \
-          memset(&sets.array[i], 0, sizeof(f_fss_set)); \
+        for (f_array_length _macro__i = sets.size; _macro__i < new_length; _macro__i++) { \
+          memset(&sets.array[_macro__i], 0, sizeof(f_fss_set)); \
         } \
       } \
       sets.size = new_length; \
@@ -230,18 +228,16 @@ extern "C" {
   #define f_macro_fss_sets_adjust(status, sets, new_length) \
     status = F_none; \
     if (new_length < sets.size) { \
-      f_array_length i = sets.size - new_length; \
-      for (; i < sets.size; i++) { \
-        f_macro_fss_set_destroy(status, sets.array[i]); \
+      for (f_array_length _macro__i = sets.size - new_length; _macro__i < sets.size; _macro__i++) { \
+        f_macro_fss_set_destroy(status, sets.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_adjust((void **) & sets.array, sizeof(f_fss_set), sets.size, new_length); \
     if (status == F_none) { \
       if (new_length > sets.size) { \
-        f_array_length i = sets.size; \
-        for (; i < new_length; i++) { \
-          memset(&sets.array[i], 0, sizeof(f_fss_set)); \
+        for (f_array_length _macro__i = sets.size; _macro__i < new_length; _macro__i++) { \
+          memset(&sets.array[_macro__i], 0, sizeof(f_fss_set)); \
         } \
       } \
       sets.size = new_length; \

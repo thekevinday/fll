@@ -205,18 +205,16 @@ extern "C" {
   #define f_macro_string_dynamics_resize(status, dynamics, new_length) \
     status = F_none; \
     if (new_length < dynamics.size) { \
-      f_array_length i = dynamics.size - new_length; \
-      for (; i < dynamics.size; i++) { \
-        f_macro_string_dynamic_delete(status, dynamics.array[i]); \
+      for (f_array_length _macro__i = dynamics.size - new_length; _macro__i < dynamics.size; _macro__i++) { \
+        f_macro_string_dynamic_delete(status, dynamics.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_resize((void **) & dynamics.array, sizeof(f_string_dynamic), dynamics.size, new_length); \
     if (status == F_none) { \
       if (new_length > dynamics.size) { \
-        f_array_length i = dynamics.size; \
-        for (; i < new_length; i++) { \
-          memset(&dynamics.array[i], 0, sizeof(f_string_dynamic)); \
+        for (f_array_length _macro__i = dynamics.size; _macro__i < new_length; _macro__i++) { \
+          memset(&dynamics.array[_macro__i], 0, sizeof(f_string_dynamic)); \
         } \
       } \
       dynamics.size = new_length; \
@@ -226,18 +224,16 @@ extern "C" {
   #define f_macro_string_dynamics_adjust(status, dynamics, new_length) \
     status = F_none; \
     if (new_length < dynamics.size) { \
-      f_array_length i = dynamics.size - new_length; \
-      for (; i < dynamics.size; i++) { \
-        f_macro_string_dynamic_destroy(status, dynamics.array[i], f_string_dynamic); \
+      for (f_array_length _macro__i = dynamics.size - new_length; _macro__i < dynamics.size; _macro__i++) { \
+        f_macro_string_dynamic_destroy(status, dynamics.array[_macro__i], f_string_dynamic); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_adjust((void **) & dynamics.array, sizeof(f_string_dynamic), dynamics.size, new_length); \
     if (status == F_none) { \
       if (new_length > dynamics.size) { \
-        f_array_length i = dynamics.size; \
-        for (; i < new_length; i++) { \
-          memset(&dynamics.array[i], 0, sizeof(f_string_dynamic)); \
+        for (f_array_length _macro__i = dynamics.size; _macro__i < new_length; _macro__i++) { \
+          memset(&dynamics.array[_macro__i], 0, sizeof(f_string_dynamic)); \
         } \
       } \
       dynamics.size = new_length; \

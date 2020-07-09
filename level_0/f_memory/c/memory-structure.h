@@ -276,18 +276,16 @@ extern "C" {
   #define f_macro_memory_structures_resize(status, structures, type_structure, type_structures, new_length, length_variable) \
     status = F_none; \
     if (new_length < structures.size) { \
-      length_variable i = structures.size - new_length; \
-      for (; i < structures.size; i++) { \
-        f_macro_memory_structure_delete(status, structures.array[i], type_structure); \
+      for (length_variable _macro__i = structures.size - new_length; _macro__i < structures.size; _macro__i++) { \
+        f_macro_memory_structure_delete(status, structures.array[_macro__i], type_structure); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_resize((void **) & structures.array, sizeof(type_structures), structures.size, new_length); \
     if (status == F_none) { \
       if (new_length > structures.size) { \
-        length_variable i = structures.size; \
-        for (; i < new_length; i++) { \
-          memset(&structures.array[i], 0, sizeof(type_structures)); \
+        for (length_variable _macro__i = structures.size; _macro__i < new_length; _macro__i++) { \
+          memset(&structures.array[_macro__i], 0, sizeof(type_structures)); \
         } \
       } \
       structures.size = new_length; \
@@ -309,18 +307,16 @@ extern "C" {
   #define f_macro_memory_structures_adjust(status, structures, type_structure, type_structures, new_length, length_variable) \
     status = F_none; \
     if (new_length < structures.size) { \
-      length_variable i = structures.size - new_length; \
-      for (; i < structures.size; i++) { \
-        f_macro_memory_structure_destroy(status, structures.array[i], type_structure); \
+      for (length_variable _macro__i = structures.size - new_length; _macro__i < structures.size; _macro__i++) { \
+        f_macro_memory_structure_destroy(status, structures.array[_macro__i], type_structure); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_adjust((void **) & structures.array, sizeof(type_structures), structures.size, new_length); \
     if (status == F_none) { \
       if (new_length > structures.size) { \
-        length_variable i = structures.size; \
-        for (; i < new_length; i++) { \
-          memset(&structures.array[i], 0, sizeof(type_structures)); \
+        for (length_variable _macro__i = structures.size; _macro__i < new_length; _macro__i++) { \
+          memset(&structures.array[_macro__i], 0, sizeof(type_structures)); \
         } \
       } \
       structures.size = new_length; \

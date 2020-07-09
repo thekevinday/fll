@@ -190,18 +190,16 @@ extern "C" {
   #define f_macro_directory_statuss_resize(status, structures, new_length) \
     status = F_none; \
     if (new_length < structures.size) { \
-      f_array_length i = structures.size - new_length; \
-      for (; i < structures.size; i++) { \
-        f_macro_directory_status_delete(status, structures.array[i]); \
+      for (f_array_length _macro__i = structures.size - new_length; _macro__i < structures.size; _macro__i++) { \
+        f_macro_directory_status_delete(status, structures.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_resize((void **) & structures.array, sizeof(f_directory_status), structures.size, new_length); \
     if (status == F_none) { \
       if (new_length > structures.size) { \
-        f_array_length i = structures.size; \
-        for (; i < new_length; i++) { \
-          memset(&structures.array[i], 0, sizeof(f_directory_status)); \
+        for (f_array_length _macro__i = structures.size; _macro__i < new_length; _macro__i++) { \
+          memset(&structures.array[_macro__i], 0, sizeof(f_directory_status)); \
         } \
       } \
       structures.size = new_length; \
@@ -211,18 +209,16 @@ extern "C" {
   #define f_macro_directory_statuss_adjust(status, structures, new_length) \
     status = F_none; \
     if (new_length < structures.size) { \
-      f_array_length i = structures.size - new_length; \
-      for (; i < structures.size; i++) { \
-        f_macro_directory_status_destroy(status, structures.array[i]); \
+      for (f_array_length _macro__i = structures.size - new_length; _macro__i < structures.size; _macro__i++) { \
+        f_macro_directory_status_destroy(status, structures.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_adjust((void **) & structures.array, sizeof(f_directory_status), structures.size, new_length); \
     if (status == F_none) { \
       if (new_length > structures.size) { \
-        f_array_length i = structures.size; \
-        for (; i < new_length; i++) { \
-          memset(&structures.array[i], 0, sizeof(f_directory_status)); \
+        for (f_array_length _macro__i = structures.size; _macro__i < new_length; _macro__i++) { \
+          memset(&structures.array[_macro__i], 0, sizeof(f_directory_status)); \
         } \
       } \
       structures.size = new_length; \
