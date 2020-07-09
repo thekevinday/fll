@@ -649,7 +649,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
 
                 input.stop = local_buffer.used - 1;
 
-                status = fll_fss_basic_read(&local_buffer, &input, &basic_objects, &basic_contents);
+                status = fll_fss_basic_read(&local_buffer, &input, &basic_objects, &basic_contents, 0);
               }
 
               if (F_status_set_error(status)) {
@@ -970,7 +970,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
     }
 
     if (new_chain) {
-      if (data->chains.used >= data->chains.size) {
+      if (data->chains.used == data->chains.size) {
         f_macro_string_dynamics_resize(status, data->chains, data->chains.used + firewall_default_allocation_step);
 
         if (F_status_is_error(status)) {
@@ -1431,7 +1431,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
 f_return_status firewall_process_rules(f_string_range *range, firewall_local_data *local, firewall_data *data) {
   f_status status = F_none;
 
-  status = fll_fss_extended_read(&local->buffer, range, &local->rule_objects, &local->rule_contents);
+  status = fll_fss_extended_read(&local->buffer, range, &local->rule_objects, &local->rule_contents, 0, 0);
 
   if (F_status_is_not_error(status)) {
     status = firewall_perform_commands(*local, *data);

@@ -39,6 +39,9 @@ extern "C" {
  *   This will be populated with all valid objects found.
  * @param contents
  *   This will be populated with all valid contents found.
+ * @param quoted_objects
+ *   An array of all objects discovered with quotes and the quote discovered.
+ *   Set pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -54,7 +57,7 @@ extern "C" {
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  */
 #ifndef _di_fll_fss_basic_read_
-  extern f_return_status fll_fss_basic_read(f_string_dynamic *buffer, f_string_range *range, f_fss_objects *objects, f_fss_contents *contents);
+  extern f_return_status fll_fss_basic_read(f_string_dynamic *buffer, f_string_range *range, f_fss_objects *objects, f_fss_contents *contents, f_fss_quoteds *quoted_objects);
 #endif // _di_fll_fss_basic_read_
 
 /**

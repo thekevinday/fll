@@ -249,7 +249,7 @@ extern "C" {
       input.start = 0;
       input.stop = data->buffer.used - 1;
 
-      status = fll_fss_extended_read(&data->buffer, &input, &data->objects, &data->contents);
+      status = fll_fss_extended_read(&data->buffer, &input, &data->objects, &data->contents, 0, 0);
 
       if (F_status_is_error(status)) {
         status = F_status_set_fine(status);

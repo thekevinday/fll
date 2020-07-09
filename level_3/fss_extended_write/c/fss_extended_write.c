@@ -16,10 +16,10 @@ extern "C" {
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, fss_extended_write_short_object, fss_extended_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Write an object instead of content.");
-    fll_program_print_help_option(context, fss_extended_write_short_file, fss_extended_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Specify a file to send output to.");
-    fll_program_print_help_option(context, fss_extended_write_short_string, fss_extended_write_long_string, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Specify a string to convert.");
-    fll_program_print_help_option(context, fss_extended_write_short_partial, fss_extended_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, " For 'content', do not output the end of content character.");
+    fll_program_print_help_option(context, fss_extended_write_short_file, fss_extended_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
+    fll_program_print_help_option(context, fss_extended_write_short_object, fss_extended_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " Write an object instead of content.");
+    fll_program_print_help_option(context, fss_extended_write_short_partial, fss_extended_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, "Do not output the final end of object or end of content character.");
+    fll_program_print_help_option(context, fss_extended_write_short_string, fss_extended_write_long_string, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a string to convert.");
 
     fll_program_print_help_usage(context, fss_extended_write_name, "");
 
@@ -37,39 +37,12 @@ extern "C" {
       f_console_parameter_ids choices = { ids, 3 };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
-
       if (F_status_is_error(status)) {
         fss_extended_write_delete_data(data);
-        return F_status_set_error(status);
+        return status;
       }
 
       status = F_none;
-    }
-
-    if (F_status_is_error(status)) {
-      status = F_status_set_fine(status);
-
-      if (status == F_data_not) {
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
-        // TODO: there is a way to identify which parameter is incorrect
-        //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
-        //       nothing can be 0 as that represents the program name, unless arguments.argv[] is improperly created
-      }
-      else if (status == F_memory_allocation || status == F_memory_reallocation) {
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
-      }
-      else if (status == F_utf) {
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling f_console_parameter_process().");
-      }
-      else if (status == F_parameter) {
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_console_parameter_process().");
-      }
-      else {
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_console_parameter_process().", status);
-      }
-
-      fss_extended_write_delete_data(data);
-      return F_status_set_error(status);
     }
 
     if (data->parameters[fss_extended_write_parameter_help].result == f_console_result_found) {
@@ -82,7 +55,7 @@ extern "C" {
       f_array_length counter = 0;
       bool object = (data->parameters[fss_extended_write_parameter_object].result == f_console_result_found);
 
-      f_string_dynamic  buffer = f_string_dynamic_initialize;
+      f_string_dynamic buffer = f_string_dynamic_initialize;
       f_string_range range = f_string_range_initialize;
 
       if (data->process_pipe) {
@@ -117,79 +90,114 @@ extern "C" {
           return F_status_set_error(status);
         }
 
-        range.start = 0;
-        range.stop = input.used - 1;
+        if (input.used) {
+          range.start = 0;
+          range.stop = input.used - 1;
 
-        if (object) {
-          status = fl_fss_extended_object_write(input, &range, &buffer);
+          if (object) {
+            status = fl_fss_extended_object_write(input, 0, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
-            return F_status_set_error(status);
-          }
-        }
-        else {
-          status = fl_fss_extended_content_write(input, &range, &buffer);
-
-          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
-            return F_status_set_error(status);
-          }
-
-          if (data->parameters[fss_extended_write_parameter_partial].result == f_console_result_none) {
-            if (buffer.used >= buffer.size) {
-              f_macro_string_dynamic_resize(status, buffer, buffer.used + f_fss_default_allocation_step_string);
-
-              if (F_status_is_error(status)) {
-                return status;
-              }
+            if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
+              f_macro_string_dynamic_delete_simple(buffer);
+              f_macro_string_dynamic_delete_simple(input);
+              fss_extended_write_delete_data(data);
+              return F_status_set_error(status);
             }
 
-            buffer.string[buffer.used] = f_fss_extended_close;
-            buffer.used++;
+            if (data->parameters[fss_extended_write_parameter_partial].result == f_console_result_found) {
+              buffer.used--;
+            }
+          }
+          else {
+            status = fl_fss_extended_content_write(input, 0, &range, &buffer);
+
+            if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
+              f_macro_string_dynamic_delete_simple(buffer);
+              f_macro_string_dynamic_delete_simple(input);
+              fss_extended_write_delete_data(data);
+              return F_status_set_error(status);
+            }
+
+            // remove the last whitespace separator before possibly appending the newline.
+            if (buffer.used) {
+              buffer.used--;
+            }
+
+            if (data->parameters[fss_extended_write_parameter_partial].result == f_console_result_none) {
+              if (buffer.used == buffer.size) {
+                f_macro_string_dynamic_resize(status, buffer, buffer.used + f_fss_default_allocation_step_string);
+
+                if (F_status_is_error(status)) {
+                  f_macro_string_dynamic_delete_simple(buffer);
+                  f_macro_string_dynamic_delete_simple(input);
+                  fss_extended_write_delete_data(data);
+                  return status;
+                }
+              }
+
+              buffer.string[buffer.used] = f_fss_extended_close;
+              buffer.used++;
+            }
           }
         }
 
         f_macro_string_dynamic_delete_simple(input);
       }
       else if (data->parameters[fss_extended_write_parameter_string].result == f_console_result_additional) {
+        const f_console_parameter *parameter = &data->parameters[fss_extended_write_parameter_string];
         f_string_dynamic input = f_string_dynamic_initialize;
 
         if (object) {
-          input.string = arguments.argv[data->parameters[fss_extended_write_parameter_string].additional.array[0]];
-          input.used = strlen(input.string);
+          input.string = arguments.argv[parameter->additional.array[0]];
+          input.used = strnlen(input.string, f_console_length_size);
 
-          range.start = 0;
-          range.stop = input.used - 1;
-
-          status = fl_fss_extended_object_write(input, &range, &buffer);
-
-          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
-            return F_status_set_error(status);
-          }
-        }
-        else {
-          f_string_length i = 0;
-
-          while (i < data->parameters[fss_extended_write_parameter_string].additional.used) {
-            input.string = arguments.argv[data->parameters[fss_extended_write_parameter_string].additional.array[i]];
-            input.used = strlen(input.string);
-
+          if (input.used) {
             range.start = 0;
             range.stop = input.used - 1;
 
-            status = fl_fss_extended_content_write(input, &range, &buffer);
-
+            status = fl_fss_extended_object_write(input, 0, &range, &buffer);
             if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
+              f_macro_string_dynamic_delete_simple(buffer);
+              fss_extended_write_delete_data(data);
               return F_status_set_error(status);
             }
 
-            i++;
-          } // while
+            if (data->parameters[fss_extended_write_parameter_partial].result == f_console_result_found) {
+              buffer.used--;
+            }
+          }
+        }
+        else {
+          for (f_string_length i = 0; i < parameter->additional.used; i++) {
+            input.string = arguments.argv[parameter->additional.array[i]];
+            input.used = strnlen(input.string, f_console_length_size);
+
+            if (input.used) {
+              range.start = 0;
+              range.stop = input.used - 1;
+
+              status = fl_fss_extended_content_write(input, 0, &range, &buffer);
+
+              if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
+                f_macro_string_dynamic_delete_simple(buffer);
+                fss_extended_write_delete_data(data);
+                return F_status_set_error(status);
+              }
+            }
+          } // for
+
+          // remove the last whitespace separator before possibly appending the newline.
+          if (buffer.used) {
+            buffer.used--;
+          }
 
           if (data->parameters[fss_extended_write_parameter_partial].result == f_console_result_none) {
-            if (buffer.used >= buffer.size) {
+            if (buffer.used == buffer.size) {
               f_macro_string_dynamic_resize(status, buffer, buffer.used + f_fss_default_allocation_step_string);
 
               if (F_status_is_error(status)) {
+                f_macro_string_dynamic_delete_simple(buffer);
+                fss_extended_write_delete_data(data);
                 return status;
               }
             }
@@ -230,6 +238,7 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
           }
 
+          f_macro_string_dynamic_delete_simple(buffer);
           fss_extended_write_delete_data(data);
           return status;
         }
@@ -250,6 +259,7 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_write()", status);
           }
 
+          f_macro_string_dynamic_delete_simple(buffer);
           fss_extended_write_delete_data(data);
           return F_status_set_error(status);
         }
@@ -257,6 +267,8 @@ extern "C" {
       else {
         f_print_string_dynamic(f_type_output, buffer);
       }
+
+      f_macro_string_dynamic_delete_simple(buffer);
     }
 
     fss_extended_write_delete_data(data);
@@ -267,13 +279,11 @@ extern "C" {
 #ifndef _di_fss_extended_write_delete_data_
   f_return_status fss_extended_write_delete_data(fss_extended_write_data *data) {
     f_status status = F_none;
-    f_string_length i = 0;
 
-    while (i < fss_extended_write_total_parameters) {
+    for (f_string_length i = 0; i < fss_extended_write_total_parameters; i++) {
       f_macro_string_lengths_delete_simple(data->parameters[i].locations);
       f_macro_string_lengths_delete_simple(data->parameters[i].additional);
-      i++;
-    } // while
+    } // for
 
     f_macro_string_lengths_delete_simple(data->remaining);
     fl_macro_color_context_delete_simple(data->context);

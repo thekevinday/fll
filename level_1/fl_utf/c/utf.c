@@ -956,7 +956,7 @@ extern "C" {
       return F_none;
     }
 
-    if (destination->used + 1 > f_utf_string_length_size) {
+    if (destination->used == f_utf_string_length_size) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -990,7 +990,7 @@ extern "C" {
       } // for
     }
 
-    if (destination->used + 1 > f_utf_string_length_size) {
+    if (destination->used == f_utf_string_length_size) {
       return F_status_set_error(F_string_too_large);
     }
 

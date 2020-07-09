@@ -19,7 +19,7 @@ extern "C" {
     bool found_data = F_false;
 
     do {
-      if (objects->used >= objects->size) {
+      if (objects->used == objects->size) {
         f_macro_fss_objects_resize(status2, (*objects), objects->used + f_fss_default_allocation_step);
 
         if (F_status_is_error(status)) {
@@ -44,7 +44,7 @@ extern "C" {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
             objects->used++;
 
-            if (contents->array[contents->used].used >= contents->array[contents->used].size) {
+            if (contents->array[contents->used].used == contents->array[contents->used].size) {
               f_macro_fss_content_resize(status2, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
               if (F_status_is_error(status2)) return status2;
             }
@@ -83,7 +83,7 @@ extern "C" {
         else if (status == FL_fss_found_object_content_not) {
           found_data = F_true;
 
-          if (contents->array[contents->used].used >= contents->array[contents->used].size) {
+          if (contents->array[contents->used].used == contents->array[contents->used].size) {
             f_macro_fss_content_resize(status2, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
             if (F_status_is_error(status2)) return status2;
           }
@@ -164,7 +164,7 @@ extern "C" {
         }
       }
       else {
-        if (buffer->used >= buffer->size) {
+        if (buffer->used == buffer->size) {
           f_macro_string_dynamic_resize(status, (*buffer), buffer->size + f_fss_default_allocation_step_string);
           if (F_status_is_error(status)) return status;
         }

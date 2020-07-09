@@ -52,13 +52,15 @@ extern "C" {
 #endif // _di_fss_basic_write_name_
 
 #ifndef _di_fss_basic_write_defines_
-  #define fss_basic_write_short_object "o"
-  #define fss_basic_write_short_file   "f"
-  #define fss_basic_write_short_string "s"
+  #define fss_basic_write_short_object  "o"
+  #define fss_basic_write_short_file    "f"
+  #define fss_basic_write_short_string  "s"
+  #define fss_basic_write_short_partial "p"
 
-  #define fss_basic_write_long_object "object"
-  #define fss_basic_write_long_file   "file"
-  #define fss_basic_write_long_string "string"
+  #define fss_basic_write_long_object  "object"
+  #define fss_basic_write_long_file    "file"
+  #define fss_basic_write_long_string  "string"
+  #define fss_basic_write_long_partial "partial"
 
   enum {
     fss_basic_write_parameter_help,
@@ -67,8 +69,9 @@ extern "C" {
     fss_basic_write_parameter_no_color,
     fss_basic_write_parameter_version,
 
-    fss_basic_write_parameter_object,
     fss_basic_write_parameter_file,
+    fss_basic_write_parameter_object,
+    fss_basic_write_parameter_partial,
     fss_basic_write_parameter_string,
   };
 
@@ -79,12 +82,13 @@ extern "C" {
       f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
       f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_initialize(fss_basic_write_short_object, fss_basic_write_long_object, 0, F_false, f_console_type_normal), \
       f_console_parameter_initialize(fss_basic_write_short_file, fss_basic_write_long_file, 0, F_true, f_console_type_normal), \
+      f_console_parameter_initialize(fss_basic_write_short_object, fss_basic_write_long_object, 0, F_false, f_console_type_normal), \
+      f_console_parameter_initialize(fss_basic_write_short_partial, fss_basic_write_long_partial, 0, F_true, f_console_type_normal), \
       f_console_parameter_initialize(fss_basic_write_short_string, fss_basic_write_long_string, 0, F_true, f_console_type_normal), \
     }
 
-  #define fss_basic_write_total_parameters 8
+  #define fss_basic_write_total_parameters 9
 #endif // _di_fss_basic_write_defines_
 
 #ifndef _di_fss_basic_write_data_

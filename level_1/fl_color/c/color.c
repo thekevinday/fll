@@ -120,7 +120,7 @@ extern "C" {
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (start_color.used != 0) {
+    if (start_color.used) {
       f_status status = f_print_string_dynamic(file, start_color);
       if (F_status_is_error(status)) return status;
     }
@@ -133,7 +133,7 @@ extern "C" {
 
     va_end(ap);
 
-    if (end_color.used != 0) {
+    if (end_color.used) {
       f_status status = f_print_string_dynamic(file, end_color);
 
       if (F_status_is_error(status)) return status;
@@ -150,7 +150,7 @@ extern "C" {
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (start_color.used != 0) {
+    if (start_color.used) {
       f_status status = f_print_string_dynamic(file, start_color);
       if (F_status_is_error(status)) return status;
 
@@ -166,7 +166,7 @@ extern "C" {
 
     va_end(ap);
 
-    if (end_color.used != 0) {
+    if (end_color.used) {
       f_status status = f_print_string_dynamic(file, end_color);
       if (F_status_is_error(status)) return status;
     }
@@ -182,7 +182,7 @@ extern "C" {
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (start_color.used != 0) {
+    if (start_color.used) {
       f_status status = f_print_string_dynamic(file, start_color);
       if (F_status_is_error(status)) return status;
     }
@@ -195,7 +195,7 @@ extern "C" {
 
     va_end(ap);
 
-    if (end_color.used != 0) {
+    if (end_color.used) {
       f_status status = f_print_string_dynamic(file, end_color);
       if (F_status_is_error(status)) return status;
     }
@@ -214,7 +214,7 @@ extern "C" {
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (start_color.used != 0) {
+    if (start_color.used) {
       f_status status = f_print_string_dynamic(file, start_color);
       if (F_status_is_error(status)) return status;
 
@@ -230,7 +230,7 @@ extern "C" {
 
     va_end(ap);
 
-    if (end_color.used != 0) {
+    if (end_color.used) {
       f_status status = f_print_string_dynamic(file, end_color);
       if (F_status_is_error(status)) return status;
     }
@@ -244,7 +244,7 @@ extern "C" {
 
 #ifndef _di_fl_color_print_code_
   f_return_status fl_color_print_code(FILE *file, const f_string_static color) {
-    if (color.used != 0) {
+    if (color.used) {
       f_status status = f_print_string_dynamic(file, color);
       if (F_status_is_error(status)) return status;
     }

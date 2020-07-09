@@ -47,10 +47,10 @@ extern "C" {
  * FSS-specific delimiters.
  */
 #ifndef _di_f_fss_delimiters_
-  #define f_fss_delimit_slash        '\\'
-  #define f_fss_delimit_single_quote '\''
-  #define f_fss_delimit_double_quote '"'
   #define f_fss_delimit_placeholder  f_string_placeholder[0]
+  #define f_fss_delimit_quote_single '\''
+  #define f_fss_delimit_quote_double '"'
+  #define f_fss_delimit_slash        '\\'
 #endif //_di_f_fss_delimiters_
 
 /**

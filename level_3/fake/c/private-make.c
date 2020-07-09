@@ -76,17 +76,26 @@ extern "C" {
               continue;
             }
 
+            f_fss_quotedss quoted_contents = f_fss_quotedss_initialize;
+
             content_range = list_contents.array[i].array[0];
 
-            *status = fll_fss_extended_read(&data_make->buffer, &content_range, &settings.objects, &settings.contents);
+            *status = fll_fss_extended_read(&data_make->buffer, &content_range, &settings.objects, &settings.contents, 0, &quoted_contents);
             if (F_status_is_error(*status)) {
               fake_print_error_fss(data.context, data.verbosity, *status, "fll_fss_extended_read", data.file_data_build_fakefile.string, content_range, F_true);
 
+              f_macro_fss_quotedss_delete_simple(quoted_contents);
               f_macro_fss_set_delete_simple(settings);
               f_macro_fss_objects_delete_simple(list_objects);
               f_macro_fss_contents_delete_simple(list_contents);
               return;
             }
+
+            if (quoted_contents.used) {
+              // @todo
+            }
+
+            f_macro_fss_quotedss_delete_simple(quoted_contents);
 
             missing_settings = F_false;
             continue;
@@ -105,7 +114,7 @@ extern "C" {
 
           content_range = list_contents.array[i].array[0];
 
-          *status = fll_fss_extended_read(&data_make->buffer, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents);
+          *status = fll_fss_extended_read(&data_make->buffer, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, 0);
           if (F_status_is_error(*status)) {
             fake_print_error_fss(data.context, data.verbosity, *status, "fll_fss_extended_read", data.file_data_build_fakefile.string, content_range, F_true);
 
@@ -300,7 +309,7 @@ extern "C" {
         break;
       }
 
-      if (arguments->used + 1 > arguments->size) {
+      if (arguments->used == arguments->size) {
         if (arguments->used + f_memory_default_allocation_step <= F_buffer_too_large) {
           f_macro_string_dynamics_resize((*status), (*arguments), arguments->used + f_memory_default_allocation_step);
         }
@@ -378,21 +387,23 @@ extern "C" {
               *status = fl_string_dynamic_partial_compare_dynamic(map_multis->array[k].name, data_make->buffer, iki_content.array[j]);
 
               if (*status == F_equal_to) {
-                for (l = 0; l < map_multis->array[k].value.used; l++) {
-                  if (l > 0) {
-                    *status = fl_string_append(" ", 1, &arguments->array[arguments->used]);
+                if (map_multis->array[k].value.used) {
+                  for (l = 0; l < map_multis->array[k].value.used; l++) {
+                    if (l > 0) {
+                      *status = fl_string_append(" ", 1, &arguments->array[arguments->used]);
+                      if (F_status_is_error(*status)) {
+                        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append", F_true);
+                        break;
+                      }
+                    }
+
+                    *status = fl_string_dynamic_append_nulless(map_multis->array[k].value.array[l], &arguments->array[arguments->used]);
                     if (F_status_is_error(*status)) {
-                      fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append", F_true);
+                      fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
                       break;
                     }
-                  }
-
-                  *status = fl_string_dynamic_append_nulless(map_multis->array[k].value.array[l], &arguments->array[arguments->used]);
-                  if (F_status_is_error(*status)) {
-                    fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
-                    break;
-                  }
-                } // for
+                  } // for
+                }
 
                 break;
               }
@@ -582,7 +593,7 @@ extern "C" {
         *status = F_status_set_error(F_invalid);
       }
       else if (operation == fake_make_operation_type_operate) {
-        if (section_stack->used + 1 > fake_make_section_stack_max) {
+        if (section_stack->used == fake_make_section_stack_max) {
           fake_print_error_fakefile_section_operation_stack_max(data.context, data.verbosity, data_make->buffer, section->name, section->objects.array[i], fake_make_section_stack_max);
 
           *status = F_status_set_error(F_recurse);
@@ -609,7 +620,7 @@ extern "C" {
     } // for
 
     if (F_status_is_fine(*status) && has_error) {
-      *status = F_status_set_error(F_failure);
+      *status = F_none;
     }
 
     if (F_status_is_error(*status)) {

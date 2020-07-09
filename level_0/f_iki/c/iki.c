@@ -8,11 +8,11 @@ extern "C" {
   f_return_status f_iki_read(f_string_static *buffer, f_string_range *range, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
+      if (buffer->used == 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
       if (variable == 0) return F_status_set_error(F_parameter);
       if (vocabulary == 0) return F_status_set_error(F_parameter);
       if (content == 0) return F_status_set_error(F_parameter);
-      if (buffer->used == 0) return F_status_set_error(F_parameter);
       if (range->start > range->stop) return F_status_set_error(F_parameter);
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

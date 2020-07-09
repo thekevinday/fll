@@ -80,7 +80,7 @@ extern "C" {
 #ifndef _di_fl_print_trim_string_dynamic_
   f_return_status fl_print_trim_string_dynamic(FILE *output, const f_string_static buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     register f_string_length i = 0;
@@ -156,7 +156,7 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
       if (range.stop >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -318,7 +318,7 @@ extern "C" {
 #ifndef _di_fl_print_trim_utf_string_dynamic_
   f_return_status fl_print_trim_utf_string_dynamic(FILE *output, const f_utf_string_static buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     register f_utf_string_length i = 0;
@@ -390,7 +390,7 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
       if (range.stop >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_

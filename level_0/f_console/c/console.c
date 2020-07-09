@@ -78,7 +78,7 @@ extern "C" {
       if (needs_additional.used > 0) {
         i = needs_additional.array[0];
 
-        if (parameters.parameter[i].additional.used >= parameters.parameter[i].additional.size) {
+        if (parameters.parameter[i].additional.used == parameters.parameter[i].additional.size) {
           f_macro_string_lengths_resize(status, parameters.parameter[i].additional, parameters.parameter[i].additional.size + f_console_default_allocation_step);
 
           if (F_status_is_error(status)) {
@@ -193,7 +193,7 @@ extern "C" {
               continue;
             }
 
-            if (parameters.parameter[i].locations.used >= parameters.parameter[i].locations.size) {
+            if (parameters.parameter[i].locations.used == parameters.parameter[i].locations.size) {
               f_macro_string_lengths_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
 
               if (F_status_is_error(status)) {
@@ -246,7 +246,7 @@ extern "C" {
 
           if (strncmp(arguments.argv[location], parameters.parameter[i].symbol_other, string_length + 1) != 0) continue;
 
-          if (parameters.parameter[i].locations.used >= parameters.parameter[i].locations.size) {
+          if (parameters.parameter[i].locations.used == parameters.parameter[i].locations.size) {
             f_macro_string_lengths_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
 
             if (F_status_is_error(status)) {
@@ -285,7 +285,7 @@ extern "C" {
 
         if (!found) {
           // populate list of remaining parameters.parameter not associated with anything.
-          if (remaining->used >= remaining->size) {
+          if (remaining->used == remaining->size) {
             f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_console_default_allocation_step, f_macro_string_lengths_resize, F_buffer_too_large);
             if (F_status_is_error(status)) {
               f_macro_string_lengths_delete_simple(needs_additional);

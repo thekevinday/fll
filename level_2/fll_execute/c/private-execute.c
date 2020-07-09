@@ -9,7 +9,7 @@ extern "C" {
   f_return_status private_fll_execute_arguments_add(const f_string source, const f_string_length length, f_string_dynamics *arguments) {
     f_status status = F_none;
 
-    if (arguments->used >= arguments->size) {
+    if (arguments->used == arguments->size) {
       if (arguments->size + f_memory_default_allocation_step > f_array_length_size) {
         if (arguments->size + 1 > f_array_length_size) return F_buffer_too_large;
         f_macro_string_dynamics_resize(status, (*arguments), arguments->size + 1);

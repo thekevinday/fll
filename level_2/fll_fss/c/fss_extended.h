@@ -38,6 +38,12 @@ extern "C" {
  *   This will be populated with all valid objects found.
  * @param contents
  *   This will be populated with all valid contents found.
+ * @param quoted_objects
+ *   An array of all objects discovered with quotes and the quote discovered.
+ *   Set pointer address to 0 to disable.
+ * @param quoted_contents
+ *   An array of all contents discovered with quotes and the quote discovered.
+ *   Set pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -53,7 +59,7 @@ extern "C" {
  *   F_number_overflow (with error bit) if the maximimum buffer size is reached.
  */
 #ifndef _di_fll_fss_extended_read_
-  extern f_return_status fll_fss_extended_read(f_string_dynamic *buffer, f_string_range *range, f_fss_objects *objects, f_fss_contents *contents);
+  extern f_return_status fll_fss_extended_read(f_string_dynamic *buffer, f_string_range *range, f_fss_objects *objects, f_fss_contents *contents, f_fss_quoteds *quoted_objects, f_fss_quotedss *quoted_contents);
 #endif // _di_fll_fss_extended_read_
 
 /**

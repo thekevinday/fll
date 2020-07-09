@@ -99,4 +99,18 @@ Review all level 3 projects and more closely follow the practices in this projec
 Consider implementing a specification for accessibility characters using non-printing characters as a code word followed by another UTF-8 character to represent its code.
 Followed by a UTF-8 character s done to ensure type safety.
 This is likely to be limited to programs/terminals that accept it as to avoid printing extra noise.
-A simpler compatible version might be made that only utilies non-printing characters.
+A simpler compatible version might be made that only utilizes non-printing characters.
+
+Improve the FSS write functions as follows:
+- allow specifying both object and content at the same time, such as "fss_basic_write -o 'my object' -c 'my content'".
+  - This adds a new parameter -c/--content.
+  - This removes the parameter -s/--string.
+  - Both -o/--object and -c/--content will require a parameter (set an empty sting for an empty value).
+  - There can be only one -o/--object, but there can be multiple -c/--content (for fss-0000 (basic), multiple content would be appended together).
+- allow for designating how the pipe shall be handled, -O/--pipe_object or -C/--pipe_content (pipe data can exclusively only be an object or content but not both).
+- look into supporting NULL separation for providing the possibility of having the piped data contain both object and content such that a single null separates the object from the content.
+  - if the data starts with a null then it is content. ("\0My Content" = content only, "my object" = object only, "my object\0My content" = object and content.
+  - if implemented, would be designated by the -p/--pipe parameter.
+  - might not be possible as pipe might naturally terminate on NULL (investigate this).
+- Add -d/--double and -s/--single parameters to designate that this is to be quoted and then using single quotes or double quotes.
+  - consider adding -D/--double_if and -S/--single_if for only adding single or double quotes if quoting is required.

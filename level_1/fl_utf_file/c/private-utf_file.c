@@ -128,7 +128,7 @@ extern "C" {
           buffer_write[used] = f_macro_utf_character_to_char_1(string[*written + i]);
 
           if (width > 1) {
-            if (used + 1 > write_size) {
+            if (used == write_size) {
               width_written = 1;
               used += 1;
               break;

@@ -539,7 +539,7 @@ extern "C" {
         names = &listing->unknown;
       }
 
-      if (names->used >= names->size) {
+      if (names->used == names->size) {
         f_macro_string_dynamics_resize(status, (*names), names->size + f_directory_default_allocation_step);
         if (F_status_is_error(status)) break;
       }
@@ -548,7 +548,7 @@ extern "C" {
       if (F_status_is_error(status)) break;
 
       if (names->array[names->used].used > 0 && names->array[names->used].string[names->array[names->used].used - 1] != 0) {
-        if (names->array[names->used].used + 1 > f_string_length_size) {
+        if (names->array[names->used].used == f_string_length_size) {
           status = F_status_set_error(F_string_too_large);
           break;
         }

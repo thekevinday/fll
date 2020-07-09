@@ -47,6 +47,9 @@ extern "C" {
  *   A start location past the stop location or buffer used means that the entire range was processed.
  * @param found
  *   A set of all locations where a valid object was found.
+ * @param quoted
+ *   This will store whether or not this object is quoted and what quote is in use.
+ *   Set pointer address to 0 to not use.
  *
  * @return
  *   FL_fss_found_object on success and object was found (start location is at end of object).
@@ -55,8 +58,9 @@ extern "C" {
  *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
  *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
- *   F_unterminated_group_eos (with warning bit) if EOS was reached before the a group termination was reached.
- *   F_unterminated_group_stop (with warning bit) if stop point was reached before the a group termination was reached.
+ *   F_unterminated_group_eos if EOS was reached before the a group termination was reached.
+ *   F_unterminated_group_stop if stop point was reached before the a group termination was reached.
+ *   F_buffer_too_large (with error bit) if a buffer is too large.
  *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
@@ -70,7 +74,7 @@ extern "C" {
  *   Errors from (with error bit): f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_basic_object_read_
-  extern f_return_status fl_fss_basic_object_read(f_string_dynamic *buffer, f_string_range *range, f_fss_object *found);
+  extern f_return_status fl_fss_basic_object_read(f_string_dynamic *buffer, f_string_range *range, f_fss_object *found, f_fss_quoted *quoted);
 #endif // _di_fl_fss_basic_object_read_
 
 /**
@@ -97,8 +101,9 @@ extern "C" {
  *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
  *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
- *   F_unterminated_group_eos (with warning bit) if EOS was reached before the a group termination was reached.
- *   F_unterminated_group_stop (with warning bit) if stop point was reached before the a group termination was reached.
+ *   F_unterminated_group_eos if EOS was reached before the a group termination was reached.
+ *   F_unterminated_group_stop if stop point was reached before the a group termination was reached.
+ *   F_buffer_too_large (with error bit) if a buffer is too large.
  *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
@@ -124,11 +129,13 @@ extern "C" {
  *
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
+ * @param quoted
+ *   If 0, then double quotes are auto-inserted, when required.
+ *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param range
  *   The start/stop location within the object string to write as an object.
- * @param buffer
+ * @param destination
  *   The buffer where the object is written to.
- *   This will be auto-incremented and must not be a static string.
  *
  * @return
  *   F_none on success.
@@ -144,7 +151,7 @@ extern "C" {
  *   Errors from (with error bit): f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_basic_object_write_
-  extern f_return_status fl_fss_basic_object_write(f_string_dynamic *buffer, const f_string_static object, f_string_range *range);
+  extern f_return_status fl_fss_basic_object_write(const f_string_static object, const f_fss_quoted quoted, f_string_range *range, f_string_dynamic *destination);
 #endif // _di_fl_fss_basic_object_write_
 
 /**
@@ -157,10 +164,8 @@ extern "C" {
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
  * @param range
  *   The start/stop location within the content string to write as an content.
- * @param buffer
+ * @param destination
  *   The buffer where the content is written to.
- *   This will be auto-incremented and must not be a static string.
- *
  * @return
  *   F_none on success.
  *   F_none_eos on success after reaching the end of the buffer.
@@ -175,7 +180,7 @@ extern "C" {
  *   Errors from (with error bit): f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_basic_content_write_
-  extern f_return_status fl_fss_basic_content_write(f_string_dynamic *buffer, const f_string_static content, f_string_range *range);
+  extern f_return_status fl_fss_basic_content_write(const f_string_static content, f_string_range *range, f_string_dynamic *destination);
 #endif // _di_fl_fss_basic_content_write_
 
 #ifdef __cplusplus

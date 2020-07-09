@@ -27,7 +27,7 @@ extern "C" {
 
     do {
       do {
-        if (nest->depth[0].used >= nest->depth[0].size) {
+        if (nest->depth[0].used == nest->depth[0].size) {
           f_macro_fss_items_resize(status2, nest->depth[0], nest->depth[0].used + f_fss_default_allocation_step);
           if (F_status_is_error(status)) return status;
         }
@@ -139,7 +139,7 @@ extern "C" {
         }
       }
       else {
-        if (buffer->used >= buffer->size) {
+        if (buffer->used == buffer->size) {
           f_macro_string_dynamic_resize(status, (*buffer), buffer->size + f_fss_default_allocation_step_string);
           if (F_status_is_error(status)) return status;
         }

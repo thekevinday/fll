@@ -98,7 +98,7 @@
     f_status status  = F_none;
 
     // @todo: resume replacing code below.
-    status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents);
+    status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents, 0, 0);
 
     if (F_status_is_not_error(status)) {
       //status = init_perform_commands(*local, *data); // @fixme
@@ -514,7 +514,7 @@
       location.start = objects.array[position].start;
       location.stop = objects.array[position].stop;
 
-      status = fll_fss_extended_read(&buffer, &location, &objects, &contents);
+      status = fll_fss_extended_read(&buffer, &location, &objects, &contents, 0, 0);
 
       position++;
     } // while
@@ -522,7 +522,7 @@
     // @fixme: resume here, below is just notes and copy&pasted code as examples/reminders.
 
     /*
-    status = fll_fss_extended_read(&buffer, &location, &objects, &contents);
+    status = fll_fss_extended_read(&buffer, &location, &objects, &contents, 0, 0);
 
     if (F_status_is_error(status_process)) {
       if (status == F_memory_allocation || status == F_memory_reallocation) {
@@ -542,7 +542,7 @@
     /*
     f_status status  = F_none;
 
-    status = fll_fss_extended_read(buffer, location, objects, contents);
+    status = fll_fss_extended_read(buffer, location, objects, contents, 0, 0);
 
     if (F_status_is_not_error(status)) {
       // @todo: process objects and contents.

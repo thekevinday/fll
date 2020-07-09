@@ -342,7 +342,7 @@ extern "C" {
           status = F_none;
         }
         else {
-          if (destination->used >= destination->size) {
+          if (destination->used == destination->size) {
             f_macro_string_dynamics_resize(status, (*destination), destination->size + f_console_default_allocation_step);
             if (F_status_is_error(status)) return status;
           }

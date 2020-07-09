@@ -28,7 +28,7 @@ extern "C" {
 #ifndef _di_f_print_string_dynamic_
   f_return_status f_print_string_dynamic(FILE *output, const f_string_static buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     register f_string_length i = 0;
@@ -50,7 +50,7 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
       if (range.stop >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

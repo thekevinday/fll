@@ -203,9 +203,9 @@ extern "C" {
 #ifndef _di_f_macro_iki_allocate_delimits_if_necessary_
   #define f_macro_iki_allocate_delimits_if_necessary(status, delimits) \
     status = F_none; \
-    if (delimits.used + 1 > delimits.size) { \
+    if (delimits.used == delimits.size) { \
       if (delimits.used + f_iki_default_allocation_step > f_string_length_size) { \
-        if (delimits.used + 1 > f_string_length_size) { \
+        if (delimits.used == f_string_length_size) { \
           status = F_status_set_error(F_string_too_large); \
         } \
         else { \
@@ -227,9 +227,9 @@ extern "C" {
 #ifndef _di_f_macro_iki_allocate_ranges_if_necessary_
   #define f_macro_iki_allocate_ranges_if_necessary(status, ranges) \
     status = F_none; \
-    if (ranges.used + 1 > ranges.size) { \
+    if (ranges.used == ranges.size) { \
       if (ranges.used + f_iki_default_allocation_step > f_string_length_size) { \
-        if (ranges.used + 1 > f_string_length_size) { \
+        if (ranges.used == f_string_length_size) { \
           status = F_status_set_error(F_string_too_large); \
         } \
         else { \

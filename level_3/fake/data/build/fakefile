@@ -1,5 +1,4 @@
-# fss-0005 iki-0001
-# @todo consider creating iki-0002 to support both "parameter" and "define" as opposed to "var" as documented below.
+# fss-0005 iki-0002
 
 settings:
   load_build yes
@@ -9,12 +8,14 @@ settings:
   # from this, adding 'parameter:"verbose"' in main would be replaced with '+v' if and when the +V/++verbose parameter is passed to fake otherwise it is removed.
   # gcc parameter:"verbose"    would become    gcc +v
   parameter verbose +v
+  parameter verbose4 +v and then "  some"
 
 main:
-  print This is a line.
+  print This is a line "(define = 'define:"example"') parameter:"verbose4"."
 
   invalid
 
+  print This works? 'parameter\:"verbose" parameter:"verbose2' parameter:'verbose3' should_-+miss:"abc"
   print This is another line. 'parameter\:"verbose" parameter:"verbose2\""' parameter:'verbose3\\'
 
   another invalid

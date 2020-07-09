@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_f_fss_count_lines_
   f_return_status f_fss_count_lines(const f_string_static buffer, const f_string_length before, f_string_length *line) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (before >= buffer.used) return F_status_set_error(F_parameter);
       if (line == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -31,7 +31,7 @@ extern "C" {
 #ifndef _di_f_fss_count_lines_range_
   f_return_status f_fss_count_lines_range(const f_string_static buffer, const f_string_range range, const f_string_length before, f_string_length *line) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
       if (before >= buffer.used) return F_status_set_error(F_parameter);
@@ -58,7 +58,7 @@ extern "C" {
 #ifndef _di_f_fss_is_graph_
   f_return_status f_fss_is_graph(const f_string_static buffer, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
@@ -77,7 +77,7 @@ extern "C" {
 #ifndef _di_f_fss_is_space_
   f_return_status f_fss_is_space(const f_string_static buffer, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
@@ -91,7 +91,6 @@ extern "C" {
       width_max = buffer.used - range.start;
     }
 
-    // Handle (ASCII) zero-width spaces and control characters (isspace() or iscntrl() might consider some of these spaces).
     status = f_utf_is_zero_width(buffer.string + range.start, width_max);
 
     if (status != F_false) {
@@ -115,7 +114,7 @@ extern "C" {
 #ifndef _di_f_fss_is_zero_width_
   f_return_status f_fss_is_zero_width(const f_string_static buffer, const f_string_range range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
@@ -197,9 +196,9 @@ extern "C" {
 #ifndef _di_f_fss_skip_past_space_
   f_return_status f_fss_skip_past_space(const f_string_static buffer, f_string_range *range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
-      if (range->stop < range->start) return F_status_set_error(F_parameter);
+      if (range->start > range->stop) return F_status_set_error(F_parameter);
       if (range->start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -271,9 +270,9 @@ extern "C" {
 #ifndef _di_f_fss_skip_past_non_graph_
   f_return_status f_fss_skip_past_non_graph(const f_string_static buffer, f_string_range *range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
-      if (range->stop < range->start) return F_status_set_error(F_parameter);
+      if (range->start > range->stop) return F_status_set_error(F_parameter);
       if (range->start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 

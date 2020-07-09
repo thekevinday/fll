@@ -9,7 +9,7 @@ extern "C" {
   f_return_status fll_fss_identify(const f_string_static buffer, f_fss_header *header) {
     #ifndef _di_level_2_parameter_checking_
       if (header == 0) return F_status_set_error(F_parameter);
-      if (buffer.used <= 0) return F_status_set_error(F_parameter);
+      if (buffer.used == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     return private_fll_fss_identify(buffer, header);
@@ -104,6 +104,8 @@ extern "C" {
 
     f_status status = F_none;
     f_string_length length_object = 0;
+    f_string_dynamics *value = 0;
+    f_fss_content *content = 0;
 
     f_array_length i = 0;
     f_array_length j = 0;
@@ -118,12 +120,39 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
+value = values[j];
+content = &contents.array[i];
         if (values[j]->used + contents.array[i].used > values[j]->size) {
           if (values[j]->used + contents.array[i].used > f_array_length_size) {
             return F_status_set_error(F_buffer_too_large);
           }
 
-          f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + contents.array[i].used);
+          //f_macro_string_dynamics_resize(status, (*values[j]), (values[j]->used + contents.array[i].used));
+          //f_macro_string_dynamics_resize(status, (*value), (value->used + content->used));
+          f_macro_string_dynamics_resize(status, (*value), (values[j]->used + content->used));
+
+/*
+    status = F_none;
+    if ((values[j]->used + contents.array[i].used) < values[j]->size) {
+      f_array_length xxx = values[j]->size - (values[j]->used + contents.array[i].used);
+      for (; xxx < values[j]->size; xxx++) {
+        f_macro_string_dynamic_delete(status, values[j]->array[i]);
+        if (status != F_none) break;
+      }
+    }
+    if (status == F_none) status = f_memory_resize((void **) & values[j]->array, sizeof(f_string_dynamic), values[j]->size, (values[j]->used + contents.array[i].used));
+    if (status == F_none) {
+      if ((values[j]->used + contents.array[i].used) > values[j]->size) {
+        f_array_length xxx = values[j]->size;
+        for (; xxx < (values[j]->used + contents.array[i].used); xxx++) {
+          memset(&values[j]->array[i], 0, sizeof(f_string_dynamic));
+        }
+      }
+      values[j]->size = (values[j]->used + contents.array[i].used);
+      if (values[j]->used > values[j]->size) values[j]->used = (values[j]->used + contents.array[i].used);
+    }
+*/
+
           if (F_status_is_error(status)) return status;
         }
 
@@ -204,9 +233,9 @@ extern "C" {
           continue;
         }
 
-        if (values[j]->used + 1 > values[j]->size) {
+        if (values[j]->used == values[j]->size) {
           if (values[j]->used + f_fss_default_allocation_step > f_array_length_size) {
-            if (values[j]->used + 1 > f_array_length_size) {
+            if (values[j]->used == f_array_length_size) {
               f_macro_string_dynamic_delete_simple(name);
               return F_status_set_error(F_buffer_too_large);
             }
@@ -282,9 +311,9 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        if (values[j]->used + 1 > values[j]->size) {
+        if (values[j]->used == values[j]->size) {
           if (values[j]->used + f_fss_default_allocation_step > f_array_length_size) {
-            if (values[j]->used + 1 > f_array_length_size) {
+            if (values[j]->used == f_array_length_size) {
               return F_status_set_error(F_buffer_too_large);
             }
 
@@ -357,9 +386,9 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        if (values[j]->used + 1 > values[j]->size) {
+        if (values[j]->used == values[j]->size) {
           if (values[j]->used + f_fss_default_allocation_step > f_array_length_size) {
-            if (values[j]->used + 1 > f_array_length_size) {
+            if (values[j]->used == f_array_length_size) {
               return F_status_set_error(F_buffer_too_large);
             }
 
@@ -457,9 +486,9 @@ extern "C" {
           map_multi = &values[j]->array[k];
         }
         else {
-          if (values[j]->used + 1 > values[j]->size) {
+          if (values[j]->used == values[j]->size) {
             if (values[j]->used + f_fss_default_allocation_step > f_array_length_size) {
-              if (values[j]->used + 1 > f_array_length_size) {
+              if (values[j]->used == f_array_length_size) {
                 return F_status_set_error(F_buffer_too_large);
               }
 
@@ -484,8 +513,8 @@ extern "C" {
           if (contents.array[i].used == 1) continue;
         }
 
-        if (map_multi->value.used + 1 > map_multi->value.size) {
-          if (map_multi->value.used + 1 > f_array_length_size) {
+        if (map_multi->value.used == map_multi->value.size) {
+          if (map_multi->value.used == f_array_length_size) {
             return F_status_set_error(F_buffer_too_large);
           }
 
@@ -572,9 +601,9 @@ extern "C" {
           map = &values[j]->array[k];
         }
         else {
-          if (values[j]->used + 1 > values[j]->size) {
+          if (values[j]->used == values[j]->size) {
             if (values[j]->used + f_fss_default_allocation_step > f_array_length_size) {
-              if (values[j]->used + 1 > f_array_length_size) {
+              if (values[j]->used == f_array_length_size) {
                 f_macro_string_dynamic_delete_simple(name);
                 return F_status_set_error(F_buffer_too_large);
               }
@@ -693,9 +722,9 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        if (values[j]->used + 1 > values[j]->size) {
+        if (values[j]->used == values[j]->size) {
           if (values[j]->used + f_fss_default_allocation_step > f_array_length_size) {
-            if (values[j]->used + 1 > f_array_length_size) {
+            if (values[j]->used == f_array_length_size) {
               return F_status_set_error(F_buffer_too_large);
             }
 

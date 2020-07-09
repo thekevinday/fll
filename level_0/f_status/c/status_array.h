@@ -76,8 +76,8 @@ extern "C" {
   #define f_macro_statusss_delete_simple(statusss)  f_macro_memory_structures_delete_simple(statusss, f_status, f_statuss)
   #define f_macro_statusss_destroy_simple(statusss) f_macro_memory_structures_destroy_simple(statusss, f_status, f_statuss)
 
-  #define f_macro_statusss_resize(status, statusss, new_length) f_macro_memory_structures_resize(status, statusss, f_status, f_statuss, new_length)
-  #define f_macro_statusss_adjust(status, statusss, new_length) f_macro_memory_structures_adjust(status, statusss, f_status, f_statuss, new_length)
+  #define f_macro_statusss_resize(status, statusss, new_length) f_macro_memory_structures_resize(status, statusss, f_status, f_statuss, new_length, f_array_length)
+  #define f_macro_statusss_adjust(status, statusss, new_length) f_macro_memory_structures_adjust(status, statusss, f_status, f_statuss, new_length, f_array_length)
 #endif // _di_f_statuss_
 
 #ifdef __cplusplus

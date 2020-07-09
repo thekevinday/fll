@@ -16,9 +16,10 @@ extern "C" {
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, fss_basic_list_write_short_object, fss_basic_list_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Write an object instead of content.");
-    fll_program_print_help_option(context, fss_basic_list_write_short_file, fss_basic_list_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Specify a file to send output to.");
-    fll_program_print_help_option(context, fss_basic_list_write_short_string, fss_basic_list_write_long_string, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Specify a string to convert.");
+    fll_program_print_help_option(context, fss_basic_list_write_short_file, fss_basic_list_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
+    fll_program_print_help_option(context, fss_basic_list_write_short_object, fss_basic_list_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " Write an object instead of content.");
+    fll_program_print_help_option(context, fss_basic_list_write_short_partial, fss_basic_list_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, "Do not output the final end of object or end of content character.");
+    fll_program_print_help_option(context, fss_basic_list_write_short_string, fss_basic_list_write_long_string, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a string to convert.");
 
     fll_program_print_help_usage(context, fss_basic_list_write_name, "");
 
@@ -36,7 +37,6 @@ extern "C" {
       f_console_parameter_ids choices = { ids, 3 };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
-
       if (F_status_is_error(status)) {
         fss_basic_list_write_delete_data(data);
         return F_status_set_error(status);
@@ -59,7 +59,7 @@ extern "C" {
       f_string_range range = f_string_range_initialize;
 
       if (data->process_pipe) {
-        f_file file  = f_file_initialize;
+        f_file file = f_file_initialize;
         f_string_dynamic input = f_string_dynamic_initialize;
 
         file.id = f_type_descriptor_input;
@@ -85,26 +85,44 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
           }
 
+          f_macro_string_dynamic_delete_simple(buffer);
           f_macro_string_dynamic_delete_simple(input);
           fss_basic_list_write_delete_data(data);
           return F_status_set_error(status);
         }
 
-        range.start = 0;
-        range.stop = input.used - 1;
+        if (input.used) {
+          range.start = 0;
+          range.stop = input.used - 1;
 
-        if (object) {
-          status = fl_fss_basic_list_object_write(input, &range, &buffer);
+          if (object) {
+            status = fl_fss_basic_list_object_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
-            return F_status_set_error(status);
+            if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
+              f_macro_string_dynamic_delete_simple(buffer);
+              f_macro_string_dynamic_delete_simple(input);
+              fss_basic_list_write_delete_data(data);
+              return F_status_set_error(status);
+            }
+
+            // this should remove both the closing newline and the colon.
+            if (data->parameters[fss_basic_list_write_parameter_partial].result == f_console_result_found) {
+              buffer.used -= 2;
+            }
           }
-        }
-        else {
-          status = fl_fss_basic_list_content_write(input, &range, &buffer);
+          else {
+            status = fl_fss_basic_list_content_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
-            return F_status_set_error(status);
+            if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
+              f_macro_string_dynamic_delete_simple(buffer);
+              f_macro_string_dynamic_delete_simple(input);
+              fss_basic_list_write_delete_data(data);
+              return F_status_set_error(status);
+            }
+
+            if (data->parameters[fss_basic_list_write_parameter_partial].result == f_console_result_found) {
+              buffer.used--;
+            }
           }
         }
 
@@ -116,21 +134,36 @@ extern "C" {
         input.string = arguments.argv[data->parameters[fss_basic_list_write_parameter_string].additional.array[0]];
         input.used = strlen(input.string);
 
-        range.start = 0;
-        range.stop = input.used - 1;
+        if (input.used) {
+          range.start = 0;
+          range.stop = input.used - 1;
 
-        if (object) {
-          status = fl_fss_basic_list_object_write(input, &range, &buffer);
+          if (object) {
+            status = fl_fss_basic_list_object_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
-            return F_status_set_error(status);
+            if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
+              f_macro_string_dynamic_delete_simple(buffer);
+              fss_basic_list_write_delete_data(data);
+              return F_status_set_error(status);
+            }
+
+            // this should remove both the closing newline and the colon.
+            if (data->parameters[fss_basic_list_write_parameter_partial].result == f_console_result_found) {
+              buffer.used -= 2;
+            }
           }
-        }
-        else {
-          status = fl_fss_basic_list_content_write(input, &range, &buffer);
+          else {
+            status = fl_fss_basic_list_content_write(input, &range, &buffer);
 
-          if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
-            return F_status_set_error(status);
+            if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
+              f_macro_string_dynamic_delete_simple(buffer);
+              fss_basic_list_write_delete_data(data);
+              return F_status_set_error(status);
+            }
+
+            if (data->parameters[fss_basic_list_write_parameter_partial].result == f_console_result_found) {
+              buffer.used--;
+            }
           }
         }
 
@@ -165,6 +198,7 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
           }
 
+          f_macro_string_dynamic_delete_simple(buffer);
           fss_basic_list_write_delete_data(data);
           return F_status_set_error(status);
         }
@@ -185,6 +219,7 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_write()", status);
           }
 
+          f_macro_string_dynamic_delete_simple(buffer);
           fss_basic_list_write_delete_data(data);
           return F_status_set_error(status);
         }
@@ -192,6 +227,8 @@ extern "C" {
       else {
         f_print_string_dynamic(f_type_output, buffer);
       }
+
+      f_macro_string_dynamic_delete_simple(buffer);
     }
 
     fss_basic_list_write_delete_data(data);

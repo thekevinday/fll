@@ -1183,7 +1183,7 @@ extern "C" {
         }
       }
 
-      if (environment->names.used + 1 > environment->names.size) {
+      if (environment->names.used == environment->names.size) {
         f_macro_string_dynamics_resize(*status, environment->names, environment->names.size + f_memory_default_allocation_step);
 
         if (F_status_is_not_error(*status)) {
@@ -1242,7 +1242,7 @@ extern "C" {
 
       f_string_range range = f_macro_string_range_initialize(buffer.used);
 
-      *status = fll_fss_extended_read(&buffer, &range, &objects, &contents);
+      *status = fll_fss_extended_read(&buffer, &range, &objects, &contents, 0, 0);
       if (F_status_is_error(*status)) {
         fake_print_error_fss(data.context, data.verbosity, *status, "fll_fss_extended_read", data.file_data_build_settings.string, range, F_true);
       }
