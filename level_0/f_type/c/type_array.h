@@ -83,6 +83,68 @@ extern "C" {
 #endif // _di_f_array_lengthss_
 
 /**
+ * An array of f_cell.
+ *
+ * array: the array of f_cell.
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
+#ifndef _di_f_cells_
+  typedef struct {
+    f_cell *array;
+
+    f_array_length size;
+    f_array_length used;
+  } f_cells;
+
+  #define f_cells_initialize {0, 0, 0}
+
+  #define f_macro_cells_clear(ranges) f_macro_memory_structure_clear(ranges)
+
+  #define f_macro_cells_new(status, ranges, length) f_macro_memory_structure_new(status, ranges, f_cell, length)
+
+  #define f_macro_cells_delete(status, ranges)  f_macro_memory_structure_delete(status, ranges, f_cell)
+  #define f_macro_cells_destroy(status, ranges) f_macro_memory_structure_destroy(status, ranges, f_cell)
+
+  #define f_macro_cells_delete_simple(ranges)  f_macro_memory_structure_delete_simple(ranges, f_cell)
+  #define f_macro_cells_destroy_simple(ranges) f_macro_memory_structure_destroy_simple(ranges, f_cell)
+
+  #define f_macro_cells_resize(status, ranges, new_length) f_macro_memory_structure_resize(status, ranges, f_cell, new_length)
+  #define f_macro_cells_adjust(status, ranges, new_length) f_macro_memory_structure_adjust(status, ranges, f_cell, new_length)
+#endif // _di_f_cells_
+
+/**
+ * This holds an array of f_cells.
+ *
+ * array: The array of f_cell arrays.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_cellss_
+  typedef struct {
+    f_cells *array;
+
+    f_array_length size;
+    f_array_length used;
+  } f_cellss;
+
+  #define f_cellss_initialize { 0, 0, 0 }
+
+  #define f_macro_cellss_clear(rangess) f_macro_memory_structures_clear(rangess)
+
+  #define f_macro_cellss_new(status, rangess, length) f_macro_memory_structures_new(status, rangess, f_cells, length)
+
+  #define f_macro_cellss_delete(status, rangess)  f_macro_memory_structures_delete(status, rangess, f_cell, f_cells)
+  #define f_macro_cellss_destroy(status, rangess) f_macro_memory_structures_destroy(status, rangess, f_cell, f_cells)
+
+  #define f_macro_cellss_delete_simple(rangess)  f_macro_memory_structures_delete_simple(rangess, f_cell, f_cells)
+  #define f_macro_cellss_destroy_simple(rangess) f_macro_memory_structures_destroy_simple(rangess, f_cell, f_cells)
+
+  #define f_macro_cellss_resize(status, rangess, new_length) f_macro_memory_structures_resize(status, rangess, f_cell, f_cells, new_length, f_array_length)
+  #define f_macro_cellss_adjust(status, rangess, new_length) f_macro_memory_structures_adjust(status, rangess, f_cell, f_cells, new_length, f_array_length)
+#endif // _di_f_cellss_
+
+/**
  * An array of array int8_t.
  *
  * array: An array of int8_t.

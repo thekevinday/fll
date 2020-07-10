@@ -202,6 +202,25 @@ extern "C" {
 #endif // _di_f_array_
 
 /**
+ * A structure designating a row and column, just like a cell in a table.
+ *
+ * row:    the row position.
+ * column: the column position.
+ */
+#ifndef _di_f_cell_
+  typedef struct {
+    f_array_length row;
+    f_array_length column;
+  } f_cell;
+
+  #define f_cell_initialize { 0, 0 }
+
+  #define f_macro_cell_clear(cell) \
+    cell.row = 0; \
+    cell.column = 0;
+#endif // _di_f_cell_
+
+/**
  * GCC-specific features.
  *
  * Use these macros for GCC-specific tweaks so that if GCC is not supported then they can be easily disabled.
