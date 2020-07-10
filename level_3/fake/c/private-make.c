@@ -205,7 +205,7 @@ extern "C" {
           &data_make->setting_make.parameter,
         };
 
-        *status = fll_fss_snatch_map_mash_apart(data_make->buffer, settings.objects, settings.contents, settings_name, settings_length, 2, " ", 1, settings_value);
+        *status = fll_fss_snatch_map_mash_apart(data_make->buffer, settings.objects, settings.contents, settings_name, settings_length, 2, " ", 1, settings_value, 0);
         if (F_status_is_error(*status)) {
           fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_fss_snatch_map_mash_apart", F_true);
 

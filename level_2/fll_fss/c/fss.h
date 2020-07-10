@@ -102,6 +102,9 @@ extern "C" {
  *   The total size of the names, lengths, and values arrays.
  * @param values
  *   An array of values where "snatched" content is stored.
+ * @param indexs
+ *   An array representing the index within the objects where the match was made.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -115,7 +118,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_
-  extern f_return_status fll_fss_snatch(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_dynamic *values[]);
+  extern f_return_status fll_fss_snatch(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_dynamic *values[], f_array_length *indexs[]);
 #endif // _di_fll_fss_snatch_
 
 /**
@@ -145,6 +148,9 @@ extern "C" {
  *   The total size of the names, lengths, and values arrays.
  * @param values
  *   An array of values where "snatched" content is stored.
+ * @param indexs
+ *   An array representing the index within the objects where the match was made.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -158,7 +164,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_apart_
-  extern f_return_status fll_fss_snatch_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_dynamics *values[]);
+  extern f_return_status fll_fss_snatch_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_dynamics *values[], f_array_lengths *indexs[]);
 #endif // _di_fll_fss_snatch_apart_
 
 /**
@@ -190,6 +196,9 @@ extern "C" {
  *   The total size of the names, lengths, and values arrays.
  * @param values
  *   An array of map arrays where "snatched" content is stored.
+ * @param indexs
+ *   An array representing the index within the objects where the match was made.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -203,7 +212,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_
-  extern f_return_status fll_fss_snatch_map(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_maps *values[]);
+  extern f_return_status fll_fss_snatch_map(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_maps *values[], f_array_lengths *indexs[]);
 #endif // _di_fll_fss_snatch_map_
 
 /**
@@ -237,6 +246,9 @@ extern "C" {
  *   The total size of the names, lengths, and values arrays.
  * @param values
  *   An array of multi map arrays where "snatched" content is stored.
+ * @param indexs
+ *   An array representing the index within the objects where the match was made.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -250,7 +262,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_apart_
-  extern f_return_status fll_fss_snatch_map_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_map_multis *values[]);
+  extern f_return_status fll_fss_snatch_map_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_map_multis *values[], f_array_lengths *indexs[]);
 #endif // _di_fll_fss_snatch_map_apart_
 
 /**
@@ -287,6 +299,9 @@ extern "C" {
  *   The length of the glue string
  * @param values
  *   An array of multi map value arrays where "snatched" content is stored.
+ * @param indexs
+ *   An array representing the index within the objects where the match was made.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -297,7 +312,7 @@ extern "C" {
  *   Errors from (with error bit): fl_string_dynamic_partial_mash_nulless().
  */
 #ifndef _di_fll_fss_snatch_map_mash_
-  extern f_return_status fll_fss_snatch_map_mash(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_maps *values[]);
+  extern f_return_status fll_fss_snatch_map_mash(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_maps *values[], f_array_lengths *indexs[]);
 #endif // _di_fll_fss_snatch_map_mash_
 
 /**
@@ -335,6 +350,9 @@ extern "C" {
  *   The length of the glue string
  * @param values
  *   An array of multi map value arrays where "snatched" content is stored.
+ * @param indexs
+ *   An array representing the index within the objects where the match was made.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -348,7 +366,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_mash_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_mash_apart_
-  extern f_return_status fll_fss_snatch_map_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_map_multis *values[]);
+  extern f_return_status fll_fss_snatch_map_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_map_multis *values[], f_array_lengths *indexs[]);
 #endif // _di_fll_fss_snatch_map_mash_apart__
 
 /**
@@ -385,6 +403,9 @@ extern "C" {
  *   The length of the glue string
  * @param values
  *   An array of map arrays where "snatched" content is stored.
+ * @param indexs
+ *   An array representing the index within the objects where the match was made.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -398,7 +419,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_mash_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_together_
-  extern f_return_status fll_fss_snatch_map_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_maps *values[]);
+  extern f_return_status fll_fss_snatch_map_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_maps *values[], f_array_lengths *indexs[]);
 #endif // _di_fll_fss_snatch_map_together_
 
 /**
@@ -432,6 +453,9 @@ extern "C" {
  *   The length of the glue string.
  * @param values
  *   An array of values where "snatched" content is stored.
+ * @param indexs
+ *   An array representing the index within the objects where the match was made.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -442,7 +466,7 @@ extern "C" {
  *   Errors from (with error bit): fl_string_dynamic_partial_mash_nulless().
  */
 #ifndef _di_fll_fss_snatch_mash_
-  extern f_return_status fll_fss_snatch_mash(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamic *values[]);
+  extern f_return_status fll_fss_snatch_mash(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamic *values[], f_array_length *indexs[]);
 #endif // _di_fll_fss_snatch_mash_
 
 /**
@@ -477,6 +501,9 @@ extern "C" {
  *   The length of the glue string
  * @param values
  *   An array of values where "snatched" content is stored.
+ * @param indexs
+ *   An array representing the index within the objects where the match was made.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -490,7 +517,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_mash_nulless()
  */
 #ifndef _di_fll_fss_snatch_mash_apart_
-  extern f_return_status fll_fss_snatch_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamics *values[]);
+  extern f_return_status fll_fss_snatch_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamics *values[], f_array_lengths *indexs[]);
 #endif // _di_fll_fss_snatch_mash_apart_
 
 /**
@@ -518,6 +545,9 @@ extern "C" {
  *   The total size of the names, lengths, and values arrays.
  * @param values
  *   An array of values where "snatched" content is stored.
+ * @param indexs
+ *   An array representing the index within the objects where the match was made.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -531,7 +561,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_together_
-  extern f_return_status fll_fss_snatch_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamic *values[]);
+  extern f_return_status fll_fss_snatch_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamic *values[], f_array_length *indexs[]);
 #endif // _di_fll_fss_snatch_together_
 
 #ifdef __cplusplus

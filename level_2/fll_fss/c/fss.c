@@ -46,10 +46,11 @@ extern "C" {
 #endif // _di_fll_fss_identify_file_
 
 #ifndef _di_fll_fss_snatch_
-  f_return_status fll_fss_snatch(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_dynamic *values[]) {
+  f_return_status fll_fss_snatch(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_dynamic *values[], f_array_length *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
+      if (values == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     if (buffer.used == 0) return F_data_not;
@@ -84,6 +85,10 @@ extern "C" {
 
         status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], values[j]);
         if (F_status_is_error(status)) return status;
+
+        if (indexs) {
+          *indexs[j] = i;
+        }
       } // for
     } // for
 
@@ -92,10 +97,11 @@ extern "C" {
 #endif // _di_fll_fss_snatch_
 
 #ifndef _di_fll_fss_snatch_apart_
-  f_return_status fll_fss_snatch_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_dynamics *values[]) {
+  f_return_status fll_fss_snatch_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_dynamics *values[], f_array_lengths *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
+      if (values == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     if (buffer.used == 0) return F_data_not;
@@ -129,8 +135,12 @@ extern "C" {
           }
 
           f_macro_string_dynamics_resize(status, (*value), (values[j]->used + content->used));
-
           if (F_status_is_error(status)) return status;
+
+          if (indexs) {
+            f_macro_array_lengths_resize(status, (*indexs[j]), (indexs[j]->used + content->used));
+            if (F_status_is_error(status)) return status;
+          }
         }
 
         for (k = 0; k < contents.array[i].used; k++) {
@@ -138,6 +148,11 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           values[j]->used++;
+
+          if (indexs) {
+            indexs[j]->array[indexs[j]->used] = i;
+            indexs[j]->used++;
+          }
         } // for
       } // for
     } // for
@@ -147,10 +162,11 @@ extern "C" {
 #endif // _di_fll_fss_snatch_apart_
 
 #ifndef _di_fll_fss_snatch_map_
-  f_return_status fll_fss_snatch_map(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_maps *values[]) {
+  f_return_status fll_fss_snatch_map(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_maps *values[], f_array_lengths *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
+      if (values == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     if (buffer.used == 0) return F_data_not;
@@ -222,12 +238,22 @@ extern "C" {
               f_macro_string_dynamic_delete_simple(name);
               return status;
             }
+
+            if (indexs) {
+              f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + 1);
+              if (F_status_is_error(status)) return status;
+            }
           }
           else {
             f_macro_string_maps_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
             if (F_status_is_error(status)) {
               f_macro_string_dynamic_delete_simple(name);
               return status;
+            }
+
+            if (indexs) {
+              f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + f_fss_default_allocation_step);
+              if (F_status_is_error(status)) return status;
             }
           }
         }
@@ -248,6 +274,11 @@ extern "C" {
 
         values[j]->used++;
 
+        if (indexs) {
+          indexs[j]->array[indexs[j]->used] = i;
+          indexs[j]->used++;
+        }
+
         f_macro_string_dynamic_clear(name);
       } // for
     } // for
@@ -258,10 +289,11 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_
 
 #ifndef _di_fll_fss_snatch_map_apart_
-  f_return_status fll_fss_snatch_map_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_map_multis *values[]) {
+  f_return_status fll_fss_snatch_map_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, f_string_map_multis *values[], f_array_lengths *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
+      if (values == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     if (buffer.used == 0) return F_data_not;
@@ -296,10 +328,20 @@ extern "C" {
 
             f_macro_string_map_multis_resize(status, (*values[j]), values[j]->used + 1);
             if (F_status_is_error(status)) return status;
+
+            if (indexs) {
+              f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + 1);
+              if (F_status_is_error(status)) return status;
+            }
           }
           else {
             f_macro_string_map_multis_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
             if (F_status_is_error(status)) return status;
+
+            if (indexs) {
+              f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + f_fss_default_allocation_step);
+              if (F_status_is_error(status)) return status;
+            }
           }
         }
 
@@ -309,6 +351,11 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         values[j]->used++;
+
+        if (indexs) {
+          indexs[j]->array[indexs[j]->used] = i;
+          indexs[j]->used++;
+        }
 
         if (contents.array[i].used > 1) {
           if (map_multi->value.used + contents.array[i].used - 1 > map_multi->value.size) {
@@ -333,10 +380,11 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_apart_
 
 #ifndef _di_fll_fss_snatch_map_mash_
-  f_return_status fll_fss_snatch_map_mash(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_maps *values[]) {
+  f_return_status fll_fss_snatch_map_mash(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_maps *values[], f_array_lengths *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
+      if (values == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     if (buffer.used == 0) return F_data_not;
@@ -371,10 +419,20 @@ extern "C" {
 
             f_macro_string_maps_resize(status, (*values[j]), values[j]->used + 1);
             if (F_status_is_error(status)) return status;
+
+            if (indexs) {
+              f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + 1);
+              if (F_status_is_error(status)) return status;
+            }
           }
           else {
             f_macro_string_maps_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
             if (F_status_is_error(status)) return status;
+
+            if (indexs) {
+              f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + f_fss_default_allocation_step);
+              if (F_status_is_error(status)) return status;
+            }
           }
         }
 
@@ -384,6 +442,11 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         values[j]->used++;
+
+        if (indexs) {
+          indexs[j]->array[indexs[j]->used] = i;
+          indexs[j]->used++;
+        }
 
         if (contents.array[i].used > 1) {
           for (k = 1; k < contents.array[i].used; k++) {
@@ -399,10 +462,11 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_mash_
 
 #ifndef _di_fll_fss_snatch_map_mash_apart_
-  f_return_status fll_fss_snatch_map_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_map_multis *values[]) {
+  f_return_status fll_fss_snatch_map_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_map_multis *values[], f_array_lengths *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
+      if (values == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     if (buffer.used == 0) return F_data_not;
@@ -471,10 +535,20 @@ extern "C" {
 
               f_macro_string_map_multis_resize(status, (*values[j]), values[j]->used + 1);
               if (F_status_is_error(status)) return status;
+
+              if (indexs) {
+                f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + 1);
+                if (F_status_is_error(status)) return status;
+              }
             }
             else {
               f_macro_string_map_multis_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
               if (F_status_is_error(status)) return status;
+
+              if (indexs) {
+                f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + f_fss_default_allocation_step);
+                if (F_status_is_error(status)) return status;
+              }
             }
           }
 
@@ -484,6 +558,11 @@ extern "C" {
           map_multi->name.size = name.size;
 
           values[j]->used++;
+
+          if (indexs) {
+            indexs[j]->array[indexs[j]->used] = i;
+            indexs[j]->used++;
+          }
 
           f_macro_string_dynamic_clear(name);
 
@@ -514,10 +593,11 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_mash_apart_
 
 #ifndef _di_fll_fss_snatch_map_together_
-  f_return_status fll_fss_snatch_map_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_maps *values[]) {
+  f_return_status fll_fss_snatch_map_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_maps *values[], f_array_lengths *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
+      if (values == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     if (buffer.used == 0) return F_data_not;
@@ -590,12 +670,22 @@ extern "C" {
                 f_macro_string_dynamic_delete_simple(name);
                 return status;
               }
+
+              if (indexs) {
+                f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + 1);
+                if (F_status_is_error(status)) return status;
+              }
             }
             else {
               f_macro_string_maps_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
               if (F_status_is_error(status)) {
                 f_macro_string_dynamic_delete_simple(name);
                 return status;
+              }
+
+              if (indexs) {
+                f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + f_fss_default_allocation_step);
+                if (F_status_is_error(status)) return status;
               }
             }
           }
@@ -607,6 +697,11 @@ extern "C" {
           map->name.size = name.size;
 
           values[j]->used++;
+
+          if (indexs) {
+            indexs[j]->array[indexs[j]->used] = i;
+            indexs[j]->used++;
+          }
 
           f_macro_string_dynamic_clear(name);
         }
@@ -627,10 +722,11 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_together_
 
 #ifndef _di_fll_fss_snatch_mash_
-  f_return_status fll_fss_snatch_mash(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamic *values[]) {
+  f_return_status fll_fss_snatch_mash(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamic *values[], f_array_length *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
+      if (values == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     if (buffer.used == 0) return F_data_not;
@@ -665,6 +761,10 @@ extern "C" {
           status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], values[j]);
           if (F_status_is_error(status)) return status;
         } // for
+
+        if (indexs) {
+          *indexs[j] = i;
+        }
       } // for
     } // for
 
@@ -673,10 +773,11 @@ extern "C" {
 #endif // _di_fll_fss_snatch_mash_
 
 #ifndef _di_fll_fss_snatch_mash_apart_
-  f_return_status fll_fss_snatch_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamics *values[]) {
+  f_return_status fll_fss_snatch_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamics *values[], f_array_lengths *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
+      if (values == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     if (buffer.used == 0) return F_data_not;
@@ -707,10 +808,20 @@ extern "C" {
 
             f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + 1);
             if (F_status_is_error(status)) return status;
+
+            if (indexs) {
+              f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + 1);
+              if (F_status_is_error(status)) return status;
+            }
           }
           else {
             f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
             if (F_status_is_error(status)) return status;
+
+            if (indexs) {
+              f_macro_array_lengths_resize(status, (*indexs[j]), indexs[j]->used + f_fss_default_allocation_step);
+              if (F_status_is_error(status)) return status;
+            }
           }
         }
 
@@ -720,6 +831,11 @@ extern "C" {
         } // for
 
         values[j]->used++;
+
+        if (indexs) {
+          indexs[j]->array[indexs[j]->used] = i;
+          indexs[j]->used++;
+        }
       } // for
     } // for
 
@@ -728,10 +844,11 @@ extern "C" {
 #endif // _di_fll_fss_snatch_mash_apart_
 
 #ifndef _di_fll_fss_snatch_together_
-  f_return_status fll_fss_snatch_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamic *values[]) {
+  f_return_status fll_fss_snatch_together(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_dynamic *values[], f_array_length *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (size == 0) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
+      if (values == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     if (buffer.used == 0) return F_data_not;
@@ -758,6 +875,10 @@ extern "C" {
           status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], values[j]);
           if (F_status_is_error(status)) return status;
         } // for
+
+        if (indexs) {
+          *indexs[j] = i;
+        }
       } // for
     } // for
 

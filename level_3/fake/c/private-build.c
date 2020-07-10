@@ -1454,7 +1454,7 @@ extern "C" {
 
     f_string function = "fll_fss_snatch_apart";
 
-    *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, fake_build_setting_total, settings_value);
+    *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, fake_build_setting_total, settings_value, 0);
 
     if (*status == F_none) {
       f_string_dynamic settings_mode_name_dynamic[fake_build_setting_total];
@@ -1518,7 +1518,7 @@ extern "C" {
         } // for
 
         if (*status == F_none) {
-          *status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, fake_build_setting_total, settings_value);
+          *status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, fake_build_setting_total, settings_value, 0);
 
           if (F_status_is_error(*status)) {
             function = "fll_fss_snatch_apart";
