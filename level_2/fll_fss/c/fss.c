@@ -120,38 +120,15 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-value = values[j];
-content = &contents.array[i];
+        value = values[j];
+        content = &contents.array[i];
+
         if (values[j]->used + contents.array[i].used > values[j]->size) {
           if (values[j]->used + contents.array[i].used > f_array_length_size) {
             return F_status_set_error(F_buffer_too_large);
           }
 
-          //f_macro_string_dynamics_resize(status, (*values[j]), (values[j]->used + contents.array[i].used));
-          //f_macro_string_dynamics_resize(status, (*value), (value->used + content->used));
           f_macro_string_dynamics_resize(status, (*value), (values[j]->used + content->used));
-
-/*
-    status = F_none;
-    if ((values[j]->used + contents.array[i].used) < values[j]->size) {
-      f_array_length xxx = values[j]->size - (values[j]->used + contents.array[i].used);
-      for (; xxx < values[j]->size; xxx++) {
-        f_macro_string_dynamic_delete(status, values[j]->array[i]);
-        if (status != F_none) break;
-      }
-    }
-    if (status == F_none) status = f_memory_resize((void **) & values[j]->array, sizeof(f_string_dynamic), values[j]->size, (values[j]->used + contents.array[i].used));
-    if (status == F_none) {
-      if ((values[j]->used + contents.array[i].used) > values[j]->size) {
-        f_array_length xxx = values[j]->size;
-        for (; xxx < (values[j]->used + contents.array[i].used); xxx++) {
-          memset(&values[j]->array[i], 0, sizeof(f_string_dynamic));
-        }
-      }
-      values[j]->size = (values[j]->used + contents.array[i].used);
-      if (values[j]->used > values[j]->size) values[j]->used = (values[j]->used + contents.array[i].used);
-    }
-*/
 
           if (F_status_is_error(status)) return status;
         }
