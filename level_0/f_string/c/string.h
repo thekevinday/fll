@@ -22,11 +22,11 @@
 #include <level_0/type.h>
 
 // fll-0 string includes
-#include <level_0/string-common.h>
-#include <level_0/string-dynamic.h>
-#include <level_0/string-map.h>
-#include <level_0/string-quantity.h>
-#include <level_0/string-range.h>
+#include <level_0/string_common.h>
+#include <level_0/string_dynamic.h>
+#include <level_0/string_map.h>
+#include <level_0/string_quantity.h>
+#include <level_0/string_range.h>
 
 #ifdef __cplusplus
 extern "C" {

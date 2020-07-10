@@ -22,7 +22,7 @@ build_libraries -lc
 build_libraries-level
 build_sources_library console.c conversion.c directory.c private-directory.c environment.c private-environment.c file.c private-file.c fss.c iki.c memory.c path.c pipe.c print.c serialize.c private-serialize.c socket.c utf.c private-utf.c
 build_sources_program
-build_sources_headers color.h console.h conversion.h directory.h directory_type.h environment.h file.h fss.h fss-common.h fss-named.h fss-nest.h fss-quoted.h fss-set.h iki.h iki-common.h memory.h memory-structure.h path.h pipe.h print.h serialize.h socket.h status.h status_array.h string.h string-common.h string-dynamic.h string-map.h string-quantity.h string-range.h type.h type_array.h utf.h utf-common.h
+build_sources_headers color.h console.h conversion.h directory.h directory_type.h environment.h file.h fss.h fss-common.h fss-named.h fss-nest.h fss-quoted.h fss-set.h iki.h iki-common.h memory.h memory-structure.h path.h pipe.h print.h serialize.h socket.h status.h status_array.h string.h string_common.h string_dynamic.h string_map.h string_quantity.h string_range.h type.h type_array.h utf.h utf-common.h
 build_sources_script
 build_sources_setting
 build_script yes
