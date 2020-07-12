@@ -1078,6 +1078,67 @@ extern "C" {
   }
 #endif // _di_f_file_touch_at_
 
+#ifndef _di_f_file_type_
+  f_return_status f_file_type(const f_string path, int *type) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+      if (type == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(struct stat));
+
+    if (stat(path, &file_stat) < 0) {
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOENT) return F_file_found_not;
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+
+      return F_status_set_error(F_file_stat);
+    }
+
+    *type = f_macro_file_type_get(file_stat.st_mode);
+
+    return F_none;
+  }
+#endif // _di_f_file_type_
+
+#ifndef _di_f_file_type_at_
+  f_return_status f_file_type_at(const int at_id, const f_string path, const int flag, int *type) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+      if (type == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(struct stat));
+
+    if (fstatat(at_id, path, &file_stat, flag) < 0) {
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOENT) return F_file_found_not;
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+
+      return F_status_set_error(F_file_stat);
+    }
+
+    *type = f_macro_file_type_get(file_stat.st_mode);
+
+    return F_none;
+  }
+#endif // _di_f_file_type_at_
+
 #ifndef _di_f_file_write_
   f_return_status f_file_write(const f_file file, const f_string_static buffer, f_string_length *written) {
     #ifndef _di_level_0_parameter_checking_

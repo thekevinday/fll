@@ -956,7 +956,7 @@ extern "C" {
  * @param path
  *   The path file name.
  * @param type
- *   The type of the file
+ *   The type of the file.
  *
  * @return
  *   F_true if path was found and path is type.
@@ -984,7 +984,7 @@ extern "C" {
  * @param path
  *   The path file name.
  * @param type
- *   The type of the file
+ *   The type of the file.
  * @param flag
  *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
  *
@@ -1793,6 +1793,63 @@ extern "C" {
 #ifndef _di_f_file_touch_at_
   extern f_return_status f_file_touch_at(const int at_id, const f_string path, const mode_t mode, const int flag);
 #endif // _di_f_file_touch_at_
+
+/**
+ * Get the file type for the file at the given path.
+ *
+ * This does not require access on the file itself.
+ * This only requires access via the parent directories in the path.
+ *
+ * @param path
+ *   The path file name.
+ * @param type
+ *   The type of the file.
+ *
+ * @return
+ *   F_none if path was found and and the type was loaded in the type parameter.
+ *   F_file_found_not if the path was not found.
+ *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory (with error bit) on invalid directory.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see stat()
+ */
+#ifndef _di_f_file_type_
+  extern f_return_status f_file_type(const f_string path, int *type);
+#endif //  _di_f_file_type_
+
+/**
+ * Get the file type for the file at the given path within the parent directory.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param flag
+ *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ * @param type
+ *   The type of the file.
+ *
+ * @return
+ *   F_none if path was found and and the type was loaded in the type parameter.
+ *   F_file_found_not if the path was not found.
+ *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory (with error bit) on invalid directory.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstatat()
+ */
+#ifndef _di_f_file_type_at_
+  extern f_return_status f_file_type_at(const int at_id, const f_string path, const int flag, int *type);
+#endif // _di_f_file_type_at_
 
 /**
  * Write until a single block is filled or entire buffer is written.
