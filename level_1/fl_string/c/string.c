@@ -220,11 +220,23 @@ extern "C" {
   }
 #endif // _di_fl_string_dynamic_compare_
 
+#ifndef _di_fl_string_dynamic_compare_string_
+  f_return_status fl_string_dynamic_compare_string(const f_string string1, const f_string_static string2, const f_string_length length1) {
+    return private_fl_string_compare(string1, string2.string, 0, 0, length1, string2.used);
+  }
+#endif // _di_fl_string_dynamic_compare_string_
+
 #ifndef _di_fl_string_dynamic_compare_trim_
   f_return_status fl_string_dynamic_compare_trim(const f_string_static string1, const f_string_static string2) {
     return private_fl_string_compare_trim(string1.string, string2.string, 0, 0, string1.used, string2.used);
   }
 #endif // _di_fl_string_dynamic_compare_trim_
+
+#ifndef _di_fl_string_dynamic_compare_trim_string_
+  f_return_status fl_string_dynamic_compare_trim_string(const f_string string1, const f_string_static string2, const f_string_length length1) {
+    return private_fl_string_compare_trim(string1, string2.string, 0, 0, length1, string2.used);
+  }
+#endif // _di_fl_string_dynamic_compare_trim_string_
 
 #ifndef _di_fl_string_dynamic_mash_
   f_return_status fl_string_dynamic_mash(const f_string glue, const f_string_length glue_length, const f_string_static source, f_string_dynamic *destination) {

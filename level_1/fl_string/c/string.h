@@ -289,6 +289,35 @@ extern "C" {
 /**
  * Compare two strings, similar to strncmp().
  *
+ * This operates with the first string being a traditional string.
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ * Ignores leading and trailing whitespace.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param length1
+ *   The length of string1.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
+ */
+#ifndef _di_fl_string_dynamic_compare_string_
+  extern f_return_status fl_string_dynamic_compare_string(const f_string string1, const f_string_static string2, const f_string_length length1);
+#endif // _di_fl_string_dynamic_compare_string_
+
+/**
+ * Compare two strings, similar to strncmp().
+ *
  * This does not stop on NULL.
  * NULL characters are ignored.
  * Ignores leading and trailing whitespace.
@@ -310,6 +339,35 @@ extern "C" {
 #ifndef _di_fl_string_dynamic_compare_trim_
   extern f_return_status fl_string_dynamic_compare_trim(const f_string_static string1, const f_string_static string2);
 #endif // _di_fl_string_dynamic_compare_trim_
+
+/**
+ * Compare two strings, similar to strncmp().
+ *
+ * This operates with the first string being a traditional string.
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ * Ignores leading and trailing whitespace.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param length1
+ *   The length of string1.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
+ */
+#ifndef _di_fl_string_dynamic_compare_trim_string_
+  extern f_return_status fl_string_dynamic_compare_trim_string(const f_string string1, const f_string_static string2, const f_string_length length1);
+#endif // _di_fl_string_dynamic_compare_trim_string_
 
 /**
  * Append the source string onto the destination with the glue in between.
