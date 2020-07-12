@@ -367,7 +367,7 @@ extern "C" {
  */
 #ifndef _di_fll_fss_snatch_map_mash_apart_
   extern f_return_status fll_fss_snatch_map_mash_apart(const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, const f_string names[], const f_string_length lengths[], const f_string_length size, const f_string glue, const f_string_length glue_length, f_string_map_multis *values[], f_array_lengths *indexs[]);
-#endif // _di_fll_fss_snatch_map_mash_apart__
+#endif // _di_fll_fss_snatch_map_mash_apart_
 
 /**
  * Perform simple search through all objects against the given set, saving all values to a map when matched.
