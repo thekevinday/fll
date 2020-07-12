@@ -70,7 +70,7 @@ extern "C" {
 
   #define f_macro_array_lengthss_clear(lengths) f_macro_memory_structures_clear(lengths)
 
-  #define f_macro_array_lengthss_new(status, lengths, length) f_macro_memory_structures_new(status, lengths, f_array_length, f_array_lengths, length)
+  #define f_macro_array_lengthss_new(status, lengths, length) f_macro_memory_structures_new(status, lengths, f_array_length, length)
 
   #define f_macro_array_lengthss_delete(status, lengths)  f_macro_memory_structures_delete(status, lengths, f_array_length, f_array_lengths)
   #define f_macro_array_lengthss_destroy(status, lengths) f_macro_memory_structures_destroy(status, lengths, f_array_length, f_array_lengths)
@@ -194,7 +194,7 @@ extern "C" {
 
   #define f_macro_int8_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-  #define f_macro_int8_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, int8_t, f_int8_ts, length)
+  #define f_macro_int8_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, int8_t, length)
 
   #define f_macro_int8_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, int8_t, f_int8_ts)
   #define f_macro_int8_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, int8_t, f_int8_ts)
@@ -256,7 +256,7 @@ extern "C" {
 
   #define f_macro_uint8_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-  #define f_macro_uint8_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, uint8_t, f_uint8_ts, length)
+  #define f_macro_uint8_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, uint8_t, length)
 
   #define f_macro_uint8_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, uint8_t, f_uint8_ts)
   #define f_macro_uint8_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, uint8_t, f_uint8_ts)
@@ -318,7 +318,7 @@ extern "C" {
 
   #define f_macro_int16_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-  #define f_macro_int16_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, int16_t, f_int16_ts, length)
+  #define f_macro_int16_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, int16_t, length)
 
   #define f_macro_int16_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, int16_t, f_int16_ts)
   #define f_macro_int16_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, int16_t, f_int16_ts)
@@ -380,7 +380,7 @@ extern "C" {
 
   #define f_macro_uint16_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-  #define f_macro_uint16_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, uint16_t, f_uint16_ts, length)
+  #define f_macro_uint16_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, uint16_t, length)
 
   #define f_macro_uint16_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, uint16_t, f_uint16_ts)
   #define f_macro_uint16_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, uint16_t, f_uint16_ts)
@@ -442,7 +442,7 @@ extern "C" {
 
   #define f_macro_int32_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-  #define f_macro_int32_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, int32_t, f_int32_ts, length)
+  #define f_macro_int32_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, int32_t, length)
 
   #define f_macro_int32_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, int32_t, f_int32_ts)
   #define f_macro_int32_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, int32_t, f_int32_ts)
@@ -504,7 +504,7 @@ extern "C" {
 
   #define f_macro_uint32_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-  #define f_macro_uint32_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, uint32_t, f_uint32_ts, length)
+  #define f_macro_uint32_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, uint32_t, length)
 
   #define f_macro_uint32_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, uint32_t, f_uint32_ts)
   #define f_macro_uint32_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, uint32_t, f_uint32_ts)
@@ -566,7 +566,7 @@ extern "C" {
 
   #define f_macro_int64_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-  #define f_macro_int64_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, int64_t, f_int64_ts, length)
+  #define f_macro_int64_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, int64_t, length)
 
   #define f_macro_int64_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, int64_t, f_int64_ts)
   #define f_macro_int64_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, int64_t, f_int64_ts)
@@ -628,7 +628,7 @@ extern "C" {
 
   #define f_macro_uint64_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-  #define f_macro_uint64_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, uint64_t, f_uint64_ts, length)
+  #define f_macro_uint64_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, uint64_t, length)
 
   #define f_macro_uint64_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, uint64_t, f_uint64_ts)
   #define f_macro_uint64_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, uint64_t, f_uint64_ts)
@@ -691,7 +691,7 @@ extern "C" {
 
     #define f_macro_int128_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-    #define f_macro_int128_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, __int128_t, f_int128_ts, length)
+    #define f_macro_int128_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, __int128_t, length)
 
     #define f_macro_int128_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, __int128_t, f_int128_ts)
     #define f_macro_int128_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, __int128_t, f_int128_ts)
@@ -753,7 +753,7 @@ extern "C" {
 
     #define f_macro_uint128_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-    #define f_macro_uint128_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, __uint128_t, f_uint128_ts, length)
+    #define f_macro_uint128_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, __uint128_t, length)
 
     #define f_macro_uint128_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, __uint128_t, f_uint128_ts)
     #define f_macro_uint128_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, __uint128_t, f_uint128_ts)
@@ -815,7 +815,7 @@ extern "C" {
 
     #define f_macro_int128_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-    #define f_macro_int128_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, int64_t, f_int128_ts, length)
+    #define f_macro_int128_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, int64_t, length)
 
     #define f_macro_int128_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, int64_t, f_int128_ts)
     #define f_macro_int128_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, int64_t, f_int128_ts)
@@ -877,7 +877,7 @@ extern "C" {
 
     #define f_macro_uint128_tss_clear(numbers) f_macro_memory_structures_clear(numbers)
 
-    #define f_macro_uint128_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, uint64_t, f_uint128_ts, length)
+    #define f_macro_uint128_tss_new(status, numbers, length) f_macro_memory_structures_new(status, numbers, uint64_t, length)
 
     #define f_macro_uint128_tss_delete(status, numbers)  f_macro_memory_structures_delete(status, numbers, uint64_t, f_uint128_ts)
     #define f_macro_uint128_tss_destroy(status, numbers) f_macro_memory_structures_destroy(status, numbers, uint64_t, f_uint128_ts)

@@ -277,17 +277,24 @@ extern "C" {
 #endif // _di_fake_make_operate_
 
 /**
- * Execute the make operation.
+ * For a given make operation section, expand the content into an arguments array.
  *
  * @param data
  *   The program data.
  * @param section_name
+ *   The section name.
  * @param operation
+ *   The operation being performed.
  * @param operation_name
+ *   The operation name.
  * @param content
+ *   The content array.
+ * @param quotedss
+ *   The array of quoted associated with the content.
  * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param arguments
+ *   The expanded arguments.
  * @param section_id
  *   The array location id within the fakefile of the section to operate on.
  * @param status
@@ -296,7 +303,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operation_expand_
-  extern void fake_make_operation_expand(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_fss_content content, fake_make_data *data_make, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operation_expand(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_fss_content content, const f_fss_quoteds quoteds, fake_make_data *data_make, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operation_expand_
 
 /**

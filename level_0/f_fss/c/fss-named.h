@@ -17,14 +17,15 @@ extern "C" {
 #endif
 
 /**
- * This holds a named set of fss objects and contents.
+ * This holds a named set of fss objects, contents, and quotedss.
  *
- * The objects and contents should each be of the same used and size.
+ * The objects, contents, and quotedss should each be of the same used and size.
  * Any deviation to this would require implementing custom equivelents to the standard management macros.
  *
  * object: The name representing this set.
  * objects: The array of objects.
  * contents: The array of contents.
+ * quotedss: The array of quoted for each content.
  */
 #ifndef _di_f_fss_named_
   typedef struct {
@@ -32,51 +33,70 @@ extern "C" {
 
     f_fss_objects objects;
     f_fss_contents contents;
+    f_fss_quotedss quotedss;
   } f_fss_named;
 
-  #define f_fss_named_initialize { f_fss_object_initialize, f_fss_objects_initialize, f_fss_contents_initialize }
+  #define f_fss_named_initialize { f_fss_object_initialize, f_fss_objects_initialize, f_fss_contents_initialize, f_fss_quotedss_initialize }
 
   #define f_macro_fss_named_clear(set) \
     f_macro_fss_object_clear(set.object) \
     f_macro_fss_objects_clear(set.objects) \
-    f_macro_fss_contents_clear(set.contents)
+    f_macro_fss_contents_clear(set.contents) \
+    f_macro_fss_quotedss_clear(set.quotedss)
 
   #define f_macro_fss_named_new(status, set, length) \
     f_macro_fss_objects_new(status, set.objects, length) \
     if (F_status_is_fine(status)) { \
       f_macro_fss_contents_new(status, set.contents, length) \
+    } \
+    if (F_status_is_fine(status)) { \
+      f_macro_fss_quotedss_new(status, set.quotedss, length) \
     }
 
   #define f_macro_fss_named_delete(status, set) \
     f_macro_fss_objects_delete(status, set.objects) \
     if (F_status_is_fine(status)) { \
       f_macro_fss_contents_delete(status, set.contents) \
+    } \
+    if (F_status_is_fine(status)) { \
+      f_macro_fss_quotedss_delete(status, set.quotedss) \
     }
 
   #define f_macro_fss_named_destroy(status, set) \
     f_macro_fss_objects_destroy(status, set.objects) \
     if (F_status_is_fine(status)) { \
       f_macro_fss_contents_destroy(status, set.contents) \
+    } \
+    if (F_status_is_fine(status)) { \
+      f_macro_fss_quotedss_destroy(status, set.quotedss) \
     }
 
   #define f_macro_fss_named_delete_simple(set) \
     f_macro_fss_objects_delete_simple(set.objects) \
-    f_macro_fss_contents_delete_simple(set.contents)
+    f_macro_fss_contents_delete_simple(set.contents) \
+    f_macro_fss_quotedss_delete_simple(set.quotedss)
 
   #define f_macro_fss_named_destroy_simple(set) \
     f_macro_fss_objects_destroy_simple(set.objects) \
-    f_macro_fss_contents_destroy_simple(set.contents)
+    f_macro_fss_contents_destroy_simple(set.contents) \
+    f_macro_fss_quotedss_destroy_simple(set.quotedss)
 
   #define f_macro_fss_named_resize(status, set, new_length) \
     f_macro_fss_objects_resize(status, set.objects, new_length) \
     if (F_status_is_fine(status)) { \
       f_macro_fss_contents_resize(status, set.contents, new_length) \
+    } \
+    if (F_status_is_fine(status)) { \
+      f_macro_fss_quotedss_resize(status, set.quotedss, new_length) \
     }
 
   #define f_macro_fss_named_adjust(status, set, new_length) \
     f_macro_fss_objects_adjust(status, set.objects, new_length) \
     if (F_status_is_fine(status)) { \
       f_macro_fss_contents_adjust(status, set.contents, new_length) \
+    } \
+    if (F_status_is_fine(status)) { \
+      f_macro_fss_quotedss_adjust(status, set.quotedss, new_length) \
     }
 #endif // _di_f_fss_named_
 
