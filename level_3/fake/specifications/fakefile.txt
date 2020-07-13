@@ -1,3 +1,16 @@
 # fss-0002
 
 Fakefile Specification:
+  The "fakefile" file follows the FSS-0005 (Somewhat Basic List) format with a sub-fomat of IKI-0002 (Simple Script).
+
+  The IKI-0002 vocabulary context is further clarified as follows\:
+  - define\:
+    The define object represents environment variables passed to the program or created by the program.
+    The value represents the environment variable name and is case-sensitive.
+    This IKI variable gets substituted with the environment variable's value or NULL if not defined.
+    The "settings" list supports declaring custom environment variables (which overwrite any existing environment variable with the same name).
+
+  - parameter\:
+    The parameter object represents a variable that is to be substituted.
+    The value represents the variable name and is case-sensitive.
+    This IKI variable gets substituted with the value defined in the "settings" list or NULL if not defined.
