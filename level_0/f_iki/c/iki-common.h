@@ -28,16 +28,22 @@ extern "C" {
 #endif //_di_f_iki_syntax_
 
 #ifndef _di_iki_vocabulary_0001_
-  #define iki_vocabulary_0001_emphasis "emphasis"
+  #define iki_vocabulary_0001_address  "address"
   #define iki_vocabulary_0001_code     "code"
+  #define iki_vocabulary_0001_email    "email"
+  #define iki_vocabulary_0001_name     "name"
+  #define iki_vocabulary_0001_phone    "phone"
   #define iki_vocabulary_0001_quote    "quote"
   #define iki_vocabulary_0001_uri      "uri"
   #define iki_vocabulary_0001_url      "url"
   #define iki_vocabulary_0001_urn      "urn"
   #define iki_vocabulary_0001_variable "var"
 
-  #define iki_vocabulary_0001_emphasis_length 8
+  #define iki_vocabulary_0001_address_length  7
   #define iki_vocabulary_0001_code_length     4
+  #define iki_vocabulary_0001_email_length    5
+  #define iki_vocabulary_0001_name_length     4
+  #define iki_vocabulary_0001_phone_length    5
   #define iki_vocabulary_0001_quote_length    5
   #define iki_vocabulary_0001_uri_length      3
   #define iki_vocabulary_0001_url_length      3
@@ -52,6 +58,8 @@ extern "C" {
   #define iki_vocabulary_0002_define_length    6
   #define iki_vocabulary_0002_parameter_length 9
 #endif // _di_iki_vocabulary_0002_
+
+// @todo: consider IKI-0003 = vocabulary based on context from HTML5 and accessibility-related?
 
 /**
  * This holds an array of string ranges that represent the entire vocabulary name, content, and syntax.

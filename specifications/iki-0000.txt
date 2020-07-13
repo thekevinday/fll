@@ -1,0 +1,6 @@
+# fss-0002
+
+IKI Specification: 0000 - Unrestricted:
+  This specification provides no restrictions on the vocabulary.
+
+  See the iki.txt specification file for details on the syntax rules.

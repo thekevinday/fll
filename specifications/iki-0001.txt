@@ -1,0 +1,17 @@
+# fss-0002
+
+IKI Specification: 0001 - Basic:
+  This specification provides a small set of vocabulary names meant to be associated with common uses, such as e-mail addresses and URLs.
+
+  Vocabulary\:
+  - address: any mailing address, except for e-mail and URI.
+  - code: all text contained within represent code and should be presented as such.
+  - email: any valid e-mail address.
+  - phone: any valid phone number.
+  - quote: all text within represents some quote.
+  - uri: any valid URI (allows URL and URN).
+  - url: any valid URL.
+  - urn: any valid URN.
+  - var: all text contained within represents some sort of variable.
+
+  See the iki.txt specification file for details on the syntax rules.

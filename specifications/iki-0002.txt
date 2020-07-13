@@ -1,0 +1,13 @@
+# fss-0002
+
+IKI Specification: 0002 - Simple Script:
+  This specification provides a small set of vocabulary names meant to be used for substitution in simple scripts.
+
+  This specification only loosely defines the vocabulary context.
+  Flexibility on interpretation is intended so that the context can be more fine-tuned for a given script design.
+
+  Vocabulary\:
+  - define: intended to be used for global properties, much like a C/C++ #define.
+  - parameter: intended to be used for parameters or variables.
+
+  See the iki.txt specification file for details on the syntax rules.
