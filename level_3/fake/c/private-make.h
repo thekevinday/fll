@@ -126,6 +126,35 @@ extern "C" {
   };
 
   #define fake_make_operation_total 22
+
+  #define fake_make_operation_argument_file      "file"
+  #define fake_make_operation_argument_directory "directory"
+  #define fake_make_operation_argument_error     "error"
+  #define fake_make_operation_argument_ignore    "ignore"
+  #define fake_make_operation_argument_point     "point"
+  #define fake_make_operation_argument_recursive "recursive"
+  #define fake_make_operation_argument_target    "target"
+  #define fake_make_operation_argument_warning   "warning"
+
+  #define fake_make_operation_argument_file_length      4
+  #define fake_make_operation_argument_directory_length 9
+  #define fake_make_operation_argument_error_length     5
+  #define fake_make_operation_argument_ignore_length    6
+  #define fake_make_operation_argument_point_length     5
+  #define fake_make_operation_argument_recursive_length 9
+  #define fake_make_operation_argument_target_length    6
+  #define fake_make_operation_argument_warning_length   7
+
+  enum {
+    fake_make_operation_if_type_if = 1,
+    fake_make_operation_if_type_else,
+  };
+
+  enum {
+    fake_make_operation_fail_type_exit = 1,
+    fake_make_operation_fail_type_warn,
+    fake_make_operation_fail_type_ignore,
+  };
 #endif // _di_fake_make_operation_
 
 // @todo each one of these should be made available to be passed to the program as "$parameter_define[X]" for multi-value (define) or "$parameter_no_color" for single-value (no_color).
@@ -217,6 +246,8 @@ extern "C" {
     f_fss_nameds fakefile;
     f_string_dynamic buffer;
     f_array_length main;
+
+    uint8_t fail;
   } fake_make_data;
 
   #define fake_make_data_initialize { \
@@ -226,6 +257,7 @@ extern "C" {
     fake_make_parameter_initialize, \
     f_fss_nameds_initialize, \
     f_string_dynamic_initialize, \
+    0, \
     0, \
   }
 
@@ -262,7 +294,10 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_
 
 /**
- * Execute the make operation.
+ * Execute the make sections and their respective operations.
+ *
+ * The first section operated on is the 'main' section.
+ * The 'settings' section is only loaded into settings and is never operated on.
  *
  * @param data
  *   The program data.
@@ -277,7 +312,7 @@ extern "C" {
 #endif // _di_fake_make_operate_
 
 /**
- * For a given make operation section, expand the content into an arguments array.
+ * For a given make section operation, expand the content into an arguments array for that operation.
  *
  * @param data
  *   The program data.
@@ -295,19 +330,17 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param arguments
  *   The expanded arguments.
- * @param section_id
- *   The array location id within the fakefile of the section to operate on.
  * @param status
  *   The return status.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fake_make_operation_expand_
-  extern void fake_make_operation_expand(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_fss_content content, const f_fss_quoteds quoteds, fake_make_data *data_make, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_make_operation_expand_
+#ifndef _di_fake_make_operate_expand_
+  extern void fake_make_operate_expand(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_fss_content content, const f_fss_quoteds quoteds, fake_make_data *data_make, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_expand_
 
 /**
- * Process a make operation section.
+ * Perform the make operations within the given section.
  *
  * @param data
  *   The program data.
@@ -326,6 +359,61 @@ extern "C" {
 #ifndef _di_fake_make_operate_section_
   void fake_make_operate_section(const fake_data data, const f_array_length section_id, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_section_
+
+/**
+ * Perform a specific make operation within the given section.
+ *
+ * @todo
+ *
+ * @param data
+ *   The program data.
+ * @param section_name
+ *   The section name.
+ * @param operation
+ *   The operation being performed.
+ * @param operation_name
+ *   The operation name.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param arguments
+ *   The expanded arguments.
+ * @param status
+ *   The return status.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operate_perform_
+  //extern void fake_make_operate_perform(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_perform_
+
+/**
+ * For a given make section operation, validate the given operation.
+ *
+ * This performs pre-operation validations.
+ * Additional issues may occure when running operations that are not detected nor detectable by this.
+ *
+ * @param data
+ *   The program data.
+ * @param section_name
+ *   The section name.
+ * @param operation
+ *   The operation being performed.
+ * @param operation_name
+ *   The operation name.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param arguments
+ *   The expanded arguments.
+ * @param operation_if
+ *   The if-condition status for the current operation.
+ * @param status
+ *   The return status.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operate_validate_
+  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_validate_
 
 #ifdef __cplusplus
 } // extern "C"

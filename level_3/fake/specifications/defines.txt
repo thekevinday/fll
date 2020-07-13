@@ -1,4 +1,4 @@
-# fss-002
+# fss-0002
 
 Defines Specification:
   The build settings "defines" file follows the FSS-0000 (Basic) format.

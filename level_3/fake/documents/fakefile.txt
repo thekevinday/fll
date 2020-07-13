@@ -1,0 +1,6 @@
+# fss-0002
+
+Fakefile Documentation:
+  This describes intent and purposes of the fakefile file settings.
+  For specific details on the allowed formatting, see the fakefile.txt under the specifications folder.
+

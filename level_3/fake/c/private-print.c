@@ -628,13 +628,49 @@ extern "C" {
     if (verbosity != fake_verbosity_quiet) {
       fprintf(f_type_error, "%c", f_string_eol[0]);
 
-      fl_color_print(f_type_error, context.error, context.reset, "ERROR: the parameter '");
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: The parameter '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, parameter);
 
       fl_color_print_line(f_type_error, context.error, context.reset, "' specified too many times.");
     }
   }
 #endif // _di_fake_print_error_parameter_too_many_
+
+#ifndef _di_fake_print_error_section_operation_
+  void fake_print_error_section_operation(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_static operation_name, const f_string message, ...) {
+    if (data.verbosity != fake_verbosity_quiet) {
+      fprintf(f_type_error, "%c", f_string_eol[0]);
+
+      fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Section '");
+
+      fl_color_print_code(f_type_error, data.context.notable);
+      f_print_string_dynamic_partial(f_type_error, buffer, section_name);
+      fl_color_print_code(f_type_error, data.context.reset);
+
+      fl_color_print(f_type_error, data.context.error, data.context.reset, "' operation '");
+
+      fl_color_print_code(f_type_error, data.context.notable);
+      f_print_string_dynamic(f_type_error, operation_name);
+      fl_color_print_code(f_type_error, data.context.reset);
+
+      fl_color_print(f_type_error, data.context.error, data.context.reset, "' ");
+
+      f_print_string_dynamic(f_type_error, data.context.error);
+
+      va_list ap;
+
+      va_start(ap, message);
+
+      vfprintf(f_type_error, message, ap);
+
+      va_end(ap);
+
+      f_print_string_dynamic(f_type_error, data.context.reset);
+
+      fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
+    }
+  }
+#endif // _di_fake_print_error_section_operation_
 
 #ifndef _di_fake_print_warning_fakefile_object_multiple_
   void fake_print_warning_fakefile_object_multiple(const fl_color_context context, const uint8_t verbosity, const f_string path_file, const f_string label, const f_string name_object) {

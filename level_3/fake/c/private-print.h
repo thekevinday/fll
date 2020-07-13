@@ -264,6 +264,26 @@ extern "C" {
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**
+ * Print a specific error message for a named section operation.
+ *
+ * @param data
+ *   The program data.
+ * @param buffer
+ *   A buffer containing the contents of the fakefile file.
+ * @param section_name
+ *   The range within the buffer representing the section name.
+ * @param operation_name
+ *   The name of the operation designated to have an error.
+ * @param message
+ *   The error message.
+ * @param ...
+ *   Variable arguments, processed in the same way fprintf() processes them.
+ */
+#ifndef _di_fake_print_error_section_operation_
+  extern void fake_print_error_section_operation(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_static operation_name, const f_string message, ...) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_print_error_section_operation_
+
+/**
  * Print warning message when fakefile has too many objects with the same name.
  *
  * @param context
