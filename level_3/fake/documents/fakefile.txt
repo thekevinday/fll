@@ -4,3 +4,198 @@ Fakefile Documentation:
   This describes intent and purposes of the fakefile file settings.
   For specific details on the allowed formatting, see the fakefile.txt under the specifications folder.
 
+  All files specified are relative to the project root.
+
+  The reserved Section Names are defined as follows\:
+  - settings\:
+    Any configuration specific to this fakefile is stored here.
+    This includes the declaration of define and parameter IKI variable substitution values.
+
+    The build settings may also be specified in the Settings Section.
+
+    The following settings are available (in addition to the build settings)\:
+    - define\:
+        This represents an environment variable to define on run.
+        The environment variable name is case-sensitive.
+        This replaces the value of any existing environment variable with this name.
+        @todo: consider changing how/when define is applied and validated. It may be better to expand each operation immediately before execution in order to open the possibility of an environment define variable being changed.
+
+    - load_build\:
+        This represents whether or not to load the load the build settings file.
+        The first Content value may be "true" to load the build settings and "false" to not load the build settings file.
+
+    - parameter\:
+        This defines an IKI variable name to substitute with the value.
+        The first Content value represents the IKI variable name.
+        All Content values after the first represent the values the matching IKI variable is replaced with.
+
+  - main\:
+    This is the main entry point when processing the fakefile.
+    This is processed top-down until the end of the list is reached.
+
+    The following operations are available\:
+    - archive\:
+      Execute the archive program, such as "ar".
+
+      All Content are passed as arguments to the respective "ar" program.
+
+    - build\:
+      Run the fake build operation as if "fake build" was run instead of "fake make".
+      Command line arguments are automatically passed to the fake build operation.
+
+      Accepts an optional Content that is a path to a build settings file to use instead of the default.
+
+    - clean\:
+      Run the fake clean operation as if "fake clean" was run instead of "fake make".
+      Command line arguments are automatically passed to the fake build operation.
+
+    - compile\:
+      Execute the compiler program, such as "gcc".
+
+      All Content are passed as arguments to the respective "gcc" program.
+
+    - create\:
+      Create a file or directory.
+
+      The first Content must be either "file" or "directory".
+      Use "file" to designate that this is a regular file being created.
+      The "directory" to designate that this is a directory file being created.
+
+      The second Content must be the file to be created.
+
+      An optional third Content may be specified for "directory".
+      This third Content, if specified, may only be "recursive".
+      When specified, this will create all directories specified in the given directory file path.
+
+    - delete\:
+      Delete a file or directory.
+
+      The first Content must be either "file" or "directory".
+      Use "file" to designate that this is a regular file being deleted.
+      The "directory" to designate that this is a directory file being deleted.
+
+      The second Content must be the file to be created.
+
+      An optional third Content may be specified for "directory".
+      This third Content, if specified, may only be "recursive".
+      When specified, this will create all directories specified in the given directory file path.
+      If the directory is not empty, then "recursive" must be specified to delete the directory.
+
+    - else\:
+      Performs a programmatic "else" condition.
+      Must be specified following a valid if operation (and the operation it affects).
+
+      This has no Content.
+
+      An else operation may not follow this.
+      An if operation may immediately follow to represent an "else if" condition.
+
+    - fail\:
+      Toggle how the to handle an operation failure.
+
+      The first Content may be one of the following\:
+        exit: Set failure handler to exit on failure.
+        warn: Set failure handler to print a warning on failure but continue on.
+        ignore: Set failure handler to continue on regardless of failure.
+
+    - group\:
+      Change the group role for a given file.
+
+      The first Content represents the group to assign.
+      The second Content represents the file to assign the group to.
+
+      An optional third Content may be specified.
+      This third Content, if specified, may only be "recursive".
+      When specified, this will recursively apply the role to all files within the given file, if that file is a directory file path.
+
+    - if\:
+      Performs a programmatic "if" condition.
+      May be specified following a valid "else" operation.
+
+      The Content represents a set of conditions to perform.
+      @todo: determine what these conditions will be, such as "if equals 'some string'", "if defined 'some_variable'", "if exists 'some_file'", "if fail", "if succeed", or "if a == b".
+
+    - link\:
+      Create a symbolic link from some point to some target.
+
+      The first Content represents the target file.
+      The second Content represents the point file.
+
+    - mode\:
+      Change the mode permissions for a given file.
+
+      The first Content represents the mode to assign.
+      The second Content represents the file to assign the mode to.
+
+      An optional third Content may be specified.
+      This third Content, if specified, may only be "recursive".
+      When specified, this will recursively apply the mode to all files within the given file, if that file is a directory file path.
+
+    - operate\:
+      Begin execution of another Section.
+
+      The first Content represents the name of the Section Object to execute.
+      This may be neither the "settings" Section no the "main" Section.
+      Recursion is prohibeted, a Section that is already called may not be called again.
+
+    - owner\:
+      Change the owner role for a given file.
+
+      The first Content represents the role to assign.
+      The second Content represents the file to assign the role to.
+
+      An optional third Content may be specified.
+      This third Content, if specified, may only be "recursive".
+      When specified, this will recursively apply the role to all files within the given file, if that file is a directory file path.
+
+    - pop\:
+      Pop a directory path of the path stack, thereby changing to the previous directory on the stack.
+      This is a change directory command similar to a back button in a browser.
+
+      This has no Content.
+
+      This does not generate an error if the path stack is empty.
+      If the directory popping to no longer exists, then an error occurs.
+
+    - print\:
+      Print the content to the output screen.
+      This always prints a newline.
+
+      All Content is printed, and if no Content is provided, an empty line is printed.
+
+    - run\:
+      Manually execute a remote program or script.
+      This program must be in the appropriate PATH environment or otherwise automatically detected when calling without a specific path to the program or script.
+
+      The first Content represents the program or script name.
+      All Content after the first are passed to the program or script when running.
+
+    - shell\:
+      Manually execute a remote program or script using a specific path to the program or script.
+      This does not require the program to exist in PATH, but the path to the program or script must be relative to the project path.
+      @todo: consider relaxing this restriction on the relativeness of the path, possibly adding a configurable setting to allow enabling/disabling this restriction.
+
+      The first Content represents the program or script name.
+      All Content after the first are passed to the program or script when running.
+
+    - skeleton\:
+      Run the fake skeleton operation as if "fake skeleton" was run instead of "fake make".
+      Command line arguments are automatically passed to the fake skeleton operation.
+
+    - to\:
+      Change to the directory within the project root path tree, pushing the previous directory onto the path stack.
+      The previous path is saved onto the path stack and may later be "popped" off.
+
+      The first Content represents the path to change directory into.
+
+    - top\:
+      Change to the project root path, clearing the directory path stack.
+
+      This has no Content.
+      If the project root path no longer exists, then an error occurs.
+
+    - touch\:
+      Manually create a new file or a directory within the project root or update its last changed timestamp if the file already exists.
+
+      The first Content must be either "file" or "directory".
+      The second Content must be the file name.
