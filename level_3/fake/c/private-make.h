@@ -134,7 +134,7 @@ extern "C" {
   #define fake_make_operation_argument_point     "point"
   #define fake_make_operation_argument_recursive "recursive"
   #define fake_make_operation_argument_target    "target"
-  #define fake_make_operation_argument_warning   "warning"
+  #define fake_make_operation_argument_warn      "warn"
 
   #define fake_make_operation_argument_file_length      4
   #define fake_make_operation_argument_directory_length 9
@@ -143,7 +143,7 @@ extern "C" {
   #define fake_make_operation_argument_point_length     5
   #define fake_make_operation_argument_recursive_length 9
   #define fake_make_operation_argument_target_length    6
-  #define fake_make_operation_argument_warning_length   7
+  #define fake_make_operation_argument_warn_length      4
 
   enum {
     fake_make_operation_if_type_if = 1,

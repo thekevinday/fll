@@ -787,7 +787,7 @@ extern "C" {
     else if (operation == fake_make_operation_type_fail) {
       if (arguments.used) {
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_error, arguments.array[0], fake_make_operation_argument_error_length) == F_equal_to_not) {
-          if (fl_string_dynamic_compare_string(fake_make_operation_argument_warning, arguments.array[0], fake_make_operation_argument_warning_length) == F_equal_to_not) {
+          if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn, arguments.array[0], fake_make_operation_argument_warn_length) == F_equal_to_not) {
             if (fl_string_dynamic_compare_string(fake_make_operation_argument_ignore, arguments.array[0], fake_make_operation_argument_ignore_length) == F_equal_to_not) {
               fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "unsupported fail type '%s'", arguments.array[0].string);
               *status = F_status_set_error(F_failure);
