@@ -406,13 +406,16 @@ extern "C" {
  *   The expanded arguments.
  * @param operation_if
  *   The if-condition status for the current operation.
+ * @param process
+ *   Set to TRUE if this is a process validation, FALSE if this is a pre-process validation.
+ *   A pre-process validation does not check for content because content is not yet expanded.
  * @param status
  *   The return status.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, const bool process, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_
 
 #ifdef __cplusplus
