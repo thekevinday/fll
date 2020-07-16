@@ -15,19 +15,23 @@ Fakefile Documentation:
 
     The following settings are available (in addition to the build settings)\:
     - define\:
-        This represents an environment variable to define on run.
-        The environment variable name is case-sensitive.
-        This replaces the value of any existing environment variable with this name.
-        @todo: consider changing how/when define is applied and validated. It may be better to expand each operation immediately before execution in order to open the possibility of an environment define variable being changed.
+      This represents an environment variable to define on run.
+      The environment variable name is case-sensitive.
+      This replaces the value of any existing environment variable with this name.
 
     - load_build\:
-        This represents whether or not to load the load the build settings file.
-        The first Content value may be "true" to load the build settings and "false" to not load the build settings file.
+      This represents whether or not to load the load the build settings file.
+      The first Content value may be "true" to load the build settings and "false" to not load the build settings file.
 
     - parameter\:
-        This defines an IKI variable name to substitute with the value.
-        The first Content value represents the IKI variable name.
-        All Content values after the first represent the values the matching IKI variable is replaced with.
+      This defines an IKI variable name to substitute with the value.
+      This replaces the value of any existing environment variable with this name.
+
+      The first Content value represents the IKI variable name.
+      All Content values after the first represent the values the matching IKI variable is replaced with.
+
+      The parameter variable name "return" is used to store the return result of an "run" or "shell" operation.
+      Setting this here only sets the default "return" parameter variable value.
 
   - main\:
     This is the main entry point when processing the fakefile.
@@ -35,7 +39,8 @@ Fakefile Documentation:
 
     The following operations are available\:
     - archive\:
-      Execute the archive program, such as "ar".
+      Execute the linker program, such as "ar".
+      This uses "archive" instead of "link" to avoid confusion between this and generating a symbolic link to some file.
 
       All Content are passed as arguments to the respective "ar" program.
 
@@ -66,6 +71,11 @@ Fakefile Documentation:
       An optional third Content may be specified for "directory".
       This third Content, if specified, may only be "recursive".
       When specified, this will create all directories specified in the given directory file path.
+
+    - define\:
+      This represents an environment variable to define on run.
+      The environment variable name is case-sensitive.
+      This replaces the value of any existing environment variable with this name.
 
     - delete\:
       Delete a file or directory.
@@ -170,6 +180,9 @@ Fakefile Documentation:
       The first Content represents the program or script name.
       All Content after the first are passed to the program or script when running.
 
+      After this executes the return result is made available via the "return" parameter variable name.
+      Any existing value associated with "return" gets replaced.
+
     - shell\:
       Manually execute a remote program or script using a specific path to the program or script.
       This does not require the program to exist in PATH, but the path to the program or script must be relative to the project path.
@@ -177,6 +190,9 @@ Fakefile Documentation:
 
       The first Content represents the program or script name.
       All Content after the first are passed to the program or script when running.
+
+      After this executes the return result is made available via the "return" parameter variable name.
+      Any existing value associated with "return" gets replaced.
 
     - skeleton\:
       Run the fake skeleton operation as if "fake skeleton" was run instead of "fake make".

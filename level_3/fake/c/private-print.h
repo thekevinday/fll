@@ -89,6 +89,24 @@ extern "C" {
 #endif // _di_fake_print_error_fakefile_section_line_
 
 /**
+ * Print error messages when processing some fakefile section, for a specific line and operation, and that operation failed.
+ *
+ * @param context
+ *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
+ * @param buffer
+ *   The buffer containing the fakefile data.
+ * @param section_name
+ *   The range within the buffer representing the section name.
+ * @param operation_name
+ *   The range within the buffer representing the operation name within the section.
+ */
+#ifndef _di_fake_print_error_fakefile_section_operation_failed_
+  extern void fake_print_error_fakefile_section_operation_failed(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_print_error_fakefile_section_operation_failed_
+
+/**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that the max stack depth is reached.
  *
  * @param context

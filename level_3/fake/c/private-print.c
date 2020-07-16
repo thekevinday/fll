@@ -100,6 +100,33 @@ extern "C" {
   }
 #endif // _di_fake_print_error_fakefile_section_line_
 
+#ifndef _di_fake_print_error_fakefile_section_operation_failed_
+  void fake_print_error_fakefile_section_operation_failed(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) {
+    if (verbosity == fake_verbosity_quiet) return;
+
+    f_string_length line = 0;
+
+    f_fss_count_lines(buffer, operation_name.start, &line);
+
+    fprintf(f_type_error, "%c", f_string_eol[0]);
+    fl_color_print(f_type_error, context.error, context.reset, "ERROR: The section operation '");
+
+    fl_color_print_code(f_type_error, context.notable);
+    f_print_string_dynamic_partial(f_type_error, buffer, operation_name);
+    fl_color_print_code(f_type_error, context.reset);
+
+    fl_color_print(f_type_error, context.error, context.reset, "' from section '");
+
+    fl_color_print_code(f_type_error, context.notable);
+    f_print_string_dynamic_partial(f_type_error, buffer, section_name);
+    fl_color_print_code(f_type_error, context.reset);
+
+    fl_color_print(f_type_error, context.error, context.reset, "' on line ");
+    fl_color_print(f_type_error, context.notable, context.reset, "%llu", line);
+    fl_color_print_line(f_type_error, context.error, context.reset, " failed.");
+  }
+#endif // _di_fake_print_error_fakefile_section_operation_failed_
+
 #ifndef _di_fake_print_error_fakefile_section_operation_stack_max_
   void fake_print_error_fakefile_section_operation_stack_max(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_array_length stack_max) {
     if (verbosity == fake_verbosity_quiet) return;
@@ -693,12 +720,12 @@ extern "C" {
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
 
-    fl_color_print(f_type_warning, context.warning, context.reset, "WARNING: the setting object '");
+    fl_color_print(f_type_warning, context.warning, context.reset, "WARNING: the setting '");
     fl_color_print(f_type_warning, context.notable, context.reset, "%s", name_object);
     fl_color_print(f_type_warning, context.warning, context.reset, "' in the file '");
     fl_color_print(f_type_warning, context.notable, context.reset, "%s", path_file);
 
-    fl_color_print_line(f_type_warning, context.warning, context.reset, "' may only have a single content, only using the first.");
+    fl_color_print_line(f_type_warning, context.warning, context.reset, "' may only have a single property, only using the first.");
   }
 #endif // _di_fake_print_warning_settings_content_multiple_
 

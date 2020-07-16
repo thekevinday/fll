@@ -41,47 +41,51 @@ extern "C" {
     f_macro_string_map_multis_delete_simple(setting.define) \
     f_macro_string_map_multis_delete_simple(setting.parameter)
 
-  #define fake_make_setting_define     "define"     // @todo 'define' means define this as an environment variable on run, only a single argument is supported. (consider a second parameter such as 'if_missing' or 'if_exists' to define this only if it is not already defined.)
-  #define fake_make_setting_load_build "load_build" // @todo ("yes"/"no") as in use the build settings file, write code to import that first and match all settings from that into this.
-  #define fake_make_setting_parameter  "parameter"  // @todo see parameters below, first content is parameter name, second content is parameter values.
+  #define fake_make_setting_define     "define"
+  #define fake_make_setting_load_build "load_build"
+  #define fake_make_setting_parameter  "parameter"
+  #define fake_make_setting_return     "return"
 
   #define fake_make_setting_define_length     6
   #define fake_make_setting_load_build_length 10
   #define fake_make_setting_parameter_length  9
+  #define fake_make_setting_return_length     6
 
   #define fake_make_setting_total 3
 #endif // _di_fake_make_setting_
 
 // @todo "operate" should use a call stack, but do not allow recursive calls (check to see if named operation is already on the call stack).
 #ifndef _di_fake_make_operation_
-  #define fake_make_operation_archive  "archive"  // run the ar linker (all arguments are passed as arguments, except for reserved parameter words, with $ in front, such as $build_1).
-  #define fake_make_operation_build    "build"    // run the fake build operation ($1 = path to settings file, if missing use default, auto-passes verbosity and other Fake parameters.).
-  #define fake_make_operation_clean    "clean"    // run the fake clean operation (auto-passes verbosity and other Fake parameters.).
-  #define fake_make_operation_compile  "compile"  // run the gcc compiler (all arguments are passed as arguments, except for reserved parameter words, with $ in front, such as $build_1).
-  #define fake_make_operation_create   "create"   // create a file or directory ($1 = 'file' or 'directory') ($2 = path to file or directory) ($3 = 'recursive' (optional) for 'directory' only).
-  #define fake_make_operation_delete   "delete"   // delete a file or directory ($1 = 'file' or 'directory') ($2 = path to file or directory) ($3 = 'recursive' (optional) for 'directory' only).
-  #define fake_make_operation_else     "else"     // execute next line if immediately previous "if" condition fails (if exists file_name.txt, if defined environment_name, if equals "some string or define" "another string or define", if succeed for previous run/shell command succeeding, if fail for previous run/shell command failing).
-  #define fake_make_operation_fail     "fail"     // what to do when a command fails, either 'exit', 'warn' or 'ignore'.
-  #define fake_make_operation_group    "group"    // change group on file or directory ($1 = path to file or directory).
-  #define fake_make_operation_if       "if"       // execute next line if condition succeeds (if exists file_name.txt, if defined environment_name, if equals "some string or define" "another string or define", if succeed for previous run/shell command succeeding, if fail for previous run/shell command failing).
-  #define fake_make_operation_link     "link"     // create a symbolic link ($1 = target) ($2 = point). (@todo also don't allow linking outside project directory).
-  #define fake_make_operation_mode     "mode"     // change mode of a file or directory ($1 = path to file or directory).
-  #define fake_make_operation_operate  "operate"  // enter into a given named operation except for reserved .
-  #define fake_make_operation_owner    "owner"    // change owner on file or directory ($1 = path to file or directory).
-  #define fake_make_operation_pop      "pop"      // pop the previous directory off the stack, changing to the popped directory.
-  #define fake_make_operation_print    "print"    // print to an output or file ($1 = color, out, error, warning) ($2 = if $1 = color, then out, error, warning; else string to print) ($3 = if $1 = color, then string to print).
-  #define fake_make_operation_run      "run"      // execute command via PATH ($1 = program name, all other arguments are passed as arguments, except for reserved parameter words, with $ in front, such as $build_1).
-  #define fake_make_operation_shell    "shell"    // execute command at path ($1 = path to program/script, all other arguments are passed as arguments, except for reserved parameter words, with $ in front, such as $build_1).
-  #define fake_make_operation_skeleton "skeleton" // run the fake skeleton operation (auto-passes verbosity and other Fake parameters.).
-  #define fake_make_operation_to       "to"       // change into a given directory, adding it to the directory stack ($1 = directory name).
-  #define fake_make_operation_top      "top"      // change to project root, clearing directory stack.
-  #define fake_make_operation_touch    "touch"    // perform touch operation on file or directoy ($1 = path to file or directory).
+  #define fake_make_operation_archive  "archive"
+  #define fake_make_operation_build    "build"
+  #define fake_make_operation_clean    "clean"
+  #define fake_make_operation_compile  "compile"
+  #define fake_make_operation_create   "create"
+  #define fake_make_operation_define   "define"
+  #define fake_make_operation_delete   "delete"
+  #define fake_make_operation_else     "else"
+  #define fake_make_operation_fail     "fail"
+  #define fake_make_operation_group    "group"
+  #define fake_make_operation_if       "if"
+  #define fake_make_operation_link     "link"
+  #define fake_make_operation_mode     "mode"
+  #define fake_make_operation_operate  "operate"
+  #define fake_make_operation_owner    "owner"
+  #define fake_make_operation_pop      "pop"
+  #define fake_make_operation_print    "print"
+  #define fake_make_operation_run      "run"
+  #define fake_make_operation_shell    "shell"
+  #define fake_make_operation_skeleton "skeleton"
+  #define fake_make_operation_to       "to"
+  #define fake_make_operation_top      "top"
+  #define fake_make_operation_touch    "touch"
 
   #define fake_make_operation_archive_length  7
   #define fake_make_operation_build_length    5
   #define fake_make_operation_clean_length    5
   #define fake_make_operation_compile_length  7
   #define fake_make_operation_create_length   6
+  #define fake_make_operation_define_length   6
   #define fake_make_operation_delete_length   6
   #define fake_make_operation_else_length     4
   #define fake_make_operation_fail_length     4
@@ -106,6 +110,7 @@ extern "C" {
     fake_make_operation_type_clean,
     fake_make_operation_type_compile,
     fake_make_operation_type_create,
+    fake_make_operation_type_define,
     fake_make_operation_type_delete,
     fake_make_operation_type_else,
     fake_make_operation_type_fail,
@@ -125,7 +130,7 @@ extern "C" {
     fake_make_operation_type_touch,
   };
 
-  #define fake_make_operation_total 22
+  #define fake_make_operation_total 23
 
   #define fake_make_operation_argument_file      "file"
   #define fake_make_operation_argument_directory "directory"
@@ -168,6 +173,7 @@ extern "C" {
   #define fake_make_parameter_variable_no_color "no_color"
   #define fake_make_parameter_variable_process  "process"
   #define fake_make_parameter_variable_quiet    "quiet"
+  #define fake_make_parameter_variable_return   "return"
   #define fake_make_parameter_variable_settings "settings"
   #define fake_make_parameter_variable_sources  "sources"
   #define fake_make_parameter_variable_verbose  "verbose"
@@ -182,6 +188,7 @@ extern "C" {
   #define fake_make_file_parameter_variable_no_color_length 8
   #define fake_make_file_parameter_variable_process_length  7
   #define fake_make_file_parameter_variable_quiet_length    5
+  #define fake_make_file_parameter_variable_return_length   6
   #define fake_make_file_parameter_variable_settings_length 8
   #define fake_make_file_parameter_variable_sources_length  7
   #define fake_make_file_parameter_variable_verbose_length  7
@@ -245,6 +252,7 @@ extern "C" {
 
     f_fss_nameds fakefile;
     f_string_dynamic buffer;
+
     f_array_length main;
 
     uint8_t fail;
@@ -363,8 +371,6 @@ extern "C" {
 /**
  * Perform a specific make operation within the given section.
  *
- * @todo
- *
  * @param data
  *   The program data.
  * @param section_name
@@ -373,18 +379,36 @@ extern "C" {
  *   The operation being performed.
  * @param operation_name
  *   The operation name.
- * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param arguments
  *   The expanded arguments.
+ * @param operation_if
+ *   The if-condition status for the current operation.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param status
  *   The return status.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_perform_
-  //extern void fake_make_operate_perform(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_perform(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_perform_
+
+/**
+ * Handle the return code, converting it to a number.
+ *
+ * @param data
+ *   The program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param status
+ *   The return status.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operate_perform_process_return_
+  extern void fake_make_operate_perform_process_return(const fake_data data, const f_number_signed return_code, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_perform_process_return_
 
 /**
  * For a given make section operation, validate the given operation.
@@ -417,6 +441,25 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_
   extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, const bool process, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_
+
+/**
+ * Validate that the given define variable name is valid.
+ *
+ * A valid define variable name mst begin with an alpha-character or an underscore.
+ * Every character after that may be alphanumeric or underscore.
+ * All other characters, including Unicode characters, are invalid.
+ *
+ * @param name
+ *   The variable name string to validate.
+ *
+ * @return
+ *   F_true on valid.
+ *   F_false on invalid.
+ *   F_none if there is no string to validate (used = 0).
+ */
+#ifndef _di_fake_make_operate_validate_define_name_
+  extern f_return_status fake_make_operate_validate_define_name(const f_string_static name) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_validate_define_name_
 
 #ifdef __cplusplus
 } // extern "C"

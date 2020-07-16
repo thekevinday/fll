@@ -199,7 +199,7 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "Copying %s.", label);
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Copying %s.", label);
     }
 
     f_macro_string_dynamic_new(*status, path_source, source.used);
@@ -386,7 +386,7 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "Creating base build directories.");
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Creating base build directories.");
     }
 
     for (uint8_t i = 0; i < 15; i++) {
@@ -670,7 +670,7 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "Compiling shared library.");
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Compiling shared library.");
     }
 
     f_string_dynamics arguments = f_string_dynamics_initialize;
@@ -957,7 +957,7 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "Compiling static library.");
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Compiling static library.");
     }
 
     f_string_dynamic file_name = f_string_dynamic_initialize;
@@ -2113,7 +2113,7 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "Compiling static objects.");
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Compiling static objects.");
     }
 
     f_string_dynamic file_name = f_string_dynamic_initialize;
@@ -2283,7 +2283,7 @@ extern "C" {
   f_return_status fake_build_operate(const fake_data data) {
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "Building project.");
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Building project.");
     }
 
     f_status status = F_none;
@@ -2396,7 +2396,7 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "Compiling shared program.");
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Compiling shared program.");
     }
 
     f_string_dynamics arguments = f_string_dynamics_initialize;
@@ -2488,7 +2488,7 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.color_section_set, data.color_section_reset, "Compiling static program.");
+      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Compiling static program.");
     }
 
     f_string_dynamics arguments = f_string_dynamics_initialize;

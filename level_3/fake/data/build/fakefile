@@ -3,47 +3,25 @@
 settings:
   load_build yes
 
-  define example value
-
-  # from this, adding 'parameter:"verbose"' in main would be replaced with '+v' if and when the +V/++verbose parameter is passed to fake otherwise it is removed.
-  # gcc parameter:"verbose"    would become    gcc +v
   parameter verbose +v
-  parameter verbose4 +v and then "  some"
 
 main:
-  print This is a line "(define = 'define:"example"')." parameter:"verbose4"
+  print Begin processing the \"main" program.
 
-  invalid
+  print
+  print First, cleaning any previous work.
+  clean
 
-  print This works? 'parameter\:"verbose" parameter:"verbose2' parameter:'verbose3' should_-+miss:"abc"
-  print This is another line. 'parameter\:"verbose" parameter:"verbose2\""' parameter:'verbose3\\'
+  print Result = \'parameter:"result"'
 
-  another invalid
+  print
+  print Second, building the skeleton.
+  skeleton
 
-  archive  // run the ar linker (all arguments are passed as arguments, except for reserved parameter words, with $ in front, such as $build_1).
-  build    // run the fake build operation ($1 = path to settings file, if missing use default, auto-passes verbosity and other Fake parameters.).
-  clean    // run the fake clean operation (auto-passes verbosity and other Fake parameters.).
-  compile  // run the gcc compiler (all arguments are passed as arguments, except for reserved parameter words, with $ in front, such as $build_1).
-  create   // create a file or directory ($1 = file or directory) ($2 = path to file or directory) ($3 = recursive (optional) for directory only).
-  delete   // delete a file or directory ($1 = file or directory) ($2 = path to file or directory) ($3 = recursive (optional) for directory only).
-  else     // execute next line if immediately previous if condition fails (if exists file_name.txt, if defined environment_name, if equals some string or define another string or define, if succeed for previous run/shell command succeeding, if fail for previous run/shell command failing).
-  fail     // what to do when a command fails, either exit, warn or ignore.
-  group    // change group on file or directory ($1 = path to file or directory).
-  if       // execute next line if condition succeeds (if exists file_name.txt, if defined environment_name, if equals some string or define another string or define, if succeed for previous run/shell command succeeding, if fail for previous run/shell command failing).
-  link     // create a symbolic link ($1 = target) ($2 = point). (@todo also dont allow linking outside project directory).
-  mode     // change mode of a file or directory ($1 = path to file or directory).
-  operate  // enter into a given named operation except for reserved .
-  owner    // change owner on file or directory ($1 = path to file or directory).
-  pop      // pop the previous directory off the stack, changing to the popped directory.
-  print    // print to an output or file ($1 = color, out, error, warning) ($2 = if $1 = color, then out, error, warning; else string to print) ($3 = if $1 = color, then string to print).
-  run      // execute command via PATH ($1 = program name, all other arguments are passed as arguments, except for reserved parameter words, with $ in front, such as $build_1).
-  shell    // execute command at path ($1 = path to program/script, all other arguments are passed as arguments, except for reserved parameter words, with $ in front, such as $build_1).
-  skeleton // run the fake skeleton operation (auto-passes verbosity and other Fake parameters.).
-  to       // change into a given directory, adding it to the directory stack ($1 = directory name).
-  top      // change to project root, clearing directory stack.
-  touch    // perform touch operation on file or directoy ($1 = path to file or directory).
+  print Result = \'parameter:"result"'
 
+  print
+  print Third, executing the build process.
+  build
 
-  and
-    so
-      forth
+  print Result = \'parameter:"result"'

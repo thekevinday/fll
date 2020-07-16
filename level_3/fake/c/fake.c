@@ -127,9 +127,6 @@ extern "C" {
         }
         else if (choice == fake_parameter_verbose) {
           data->verbosity = fake_verbosity_verbose;
-
-          data->color_section_set = data->context.important;
-          data->color_section_reset = data->context.reset;
         }
         else if (choice == fake_parameter_debug) {
           data->verbosity = fake_verbosity_debug;
@@ -308,13 +305,6 @@ extern "C" {
           if (F_status_is_not_error(status)) {
             status = fake_make_operate(*data);
           }
-
-          /*if (data->verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The operation '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", fake_other_operation_make);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' is not yet implemented.");
-          }*/
         }
         else if (operations[i] == fake_operation_skeleton) {
           status = fake_skeleton_operate(*data);
