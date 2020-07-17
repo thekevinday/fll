@@ -314,6 +314,28 @@ extern "C" {
     f_string_lengths list_stack = f_string_lengths_initialize;
     fake_make_data data_make = fake_make_data_initialize;
 
+    f_macro_string_dynamics_new(status, data_make.path.stack, f_memory_default_allocation_step);
+    if (F_status_is_error(status)) {
+      fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true);
+      return status;
+    }
+
+    status = f_path_current(F_true, &data_make.path.stack.array[0]);
+    if (F_status_is_error(status)) {
+      fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "f_path_current", F_true);
+
+      fake_macro_make_data_delete_simple(data_make);
+      return status;
+    }
+
+    status = f_directory_open(data_make.path.stack.array[0].string, F_false, &data_make.path.top);
+    if (F_status_is_error(status)) {
+      fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "f_directory_open", F_true);
+
+      fake_macro_make_data_delete_simple(data_make);
+      return status;
+    }
+
     f_macro_mode_set_default_umask(mode, data.umask);
 
     data_make.fail = fake_make_operation_fail_type_exit;
@@ -321,6 +343,24 @@ extern "C" {
     fake_make_load_fakefile(data, &data_make, &status);
 
     fake_make_operate_section(data, data_make.main, &data_make, &list_stack, &status);
+
+    if (data_make.path.current > 0) {
+      f_file_close(&data_make.path.current);
+    }
+
+    {
+      f_status status_path = f_path_change_at(data_make.path.top);
+      if (F_status_is_error(status_path) && data.verbosity == fake_verbosity_verbose) {
+        fprintf(f_type_warning, "%c", f_string_eol[0]);
+        fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: Failed change back to orignal path '");
+        fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", data_make.path.stack.array[0].string);
+        fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', status code = ");
+        fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%llu", F_status_set_fine(status_path));
+        fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, ".");
+      }
+    }
+
+    f_file_close(&data_make.path.top);
 
     f_macro_string_lengths_delete_simple(list_stack);
     fake_macro_make_data_delete_simple(data_make);

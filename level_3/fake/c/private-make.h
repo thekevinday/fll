@@ -242,13 +242,33 @@ extern "C" {
     f_macro_string_dynamics_delete_simple(parameter.work)
 #endif // _di_fake_make_parameter_
 
+#ifndef _di_fake_make_path_
+  typedef struct {
+    int top;
+    int current;
+
+    f_string_dynamics stack;
+  } fake_make_path;
+
+  #define fake_make_path_initialize { \
+    0, \
+    0, \
+    f_string_dynamics_initialize, \
+  }
+
+  #define fake_macro_make_path_delete_simple(path) \
+    f_macro_string_dynamics_delete_simple(path.stack)
+#endif // _di_fake_make_path_
+
 #ifndef _di_fake_make_data_
   typedef struct {
     fake_build_setting setting_build;
     fake_make_setting setting_make;
 
     fake_environment environment;
+
     fake_make_parameter parameter;
+    fake_make_path path;
 
     f_fss_nameds fakefile;
     f_string_dynamic buffer;
@@ -263,6 +283,7 @@ extern "C" {
     fake_make_setting_initialize, \
     fake_environment_initialize, \
     fake_make_parameter_initialize, \
+    fake_make_path_initialize, \
     f_fss_nameds_initialize, \
     f_string_dynamic_initialize, \
     0, \
@@ -274,6 +295,7 @@ extern "C" {
     fake_macro_make_setting_delete_simple(data.setting_make) \
     fake_macro_environment_delete_simple(data.environment) \
     fake_macro_make_parameter_delete_simple(data.parameter) \
+    fake_macro_make_path_delete_simple(data.path) \
     f_macro_fss_nameds_delete_simple(data.fakefile) \
     f_macro_string_dynamic_delete_simple(data.buffer)
 #endif // _di_fake_make_data_
