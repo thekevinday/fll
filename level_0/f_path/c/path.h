@@ -11,7 +11,9 @@
 #define _F_path_h
 
 // libc includes
+#include <limits.h>
 #include <linux/limits.h> // defines PATH_MAX
+#include <stdlib.h>
 #include <string.h>
 
 // fll-0 includes
@@ -61,6 +63,89 @@ extern "C" {
 #endif // _di_f_path_defines_
 
 /**
+ * Change to a path.
+ *
+ * @param path
+ *   The file path.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_file_found_not if the path was not found.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see chdir()
+ */
+#ifndef _di_f_path_change_
+  extern f_return_status f_path_change(const f_string path);
+#endif // _di_f_path_change_
+
+/**
+ * Change to a path at the given open file descriptor.
+ *
+ * @param at_id
+ *   An open directory file descriptor, in which path is relative to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_file_found_not if the path was not found.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see fchdir()
+ */
+#ifndef _di_f_path_change_at_
+  extern f_return_status f_path_change_at(const int at_id);
+#endif // _di_f_path_change_at_
+
+/**
+ * Get the current path.
+ *
+ * @param real
+ *   If F_true, then get the real path and will result in an absolute path (resolving symlinks, etc..).
+ *   Otherwise, this gets the path as it appears to be.
+ * @param path
+ *   The (allocated) file path.
+ *   This will have a max size of f_path_max + 1.
+ *   This will be NULL terminated at real->used + 1.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_buffer_too_small (with error bit) if the buffer is too small to store the path.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_file_found_not if the path was not found.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see getcwd()
+ */
+#ifndef _di_f_path_current_
+  extern f_return_status f_path_current(const bool real, f_string_dynamic *path);
+#endif // _di_f_path_current_
+
+/**
  * Separate a given PATH-style string into multiple separate paths.
  *
  * @param path
@@ -107,6 +192,39 @@ extern "C" {
 #ifndef _di_f_path_explode_dynamic_
   extern f_return_status f_path_explode_dynamic(const f_string_static path, f_string_dynamics *paths);
 #endif // _di_f_path_explode_dynamic_
+
+/**
+ * Get the real path for some path.
+ *
+ * All symbolic links and relative path parts are expanded to yield the real full path.
+ *
+ * @param path
+ *   The source path to determine what the real path is.
+ * @param real
+ *   The (allocated) real file path.
+ *   This will have a max size of f_path_max + 1.
+ *   This will be NULL terminated at real->used + 1.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_buffer_too_small (with error bit) if the buffer is too small to store the path.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_file_found_not if the path was not found.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see realpath()
+ */
+#ifndef _di_f_path_real_
+  extern f_return_status f_path_real(const f_string path, f_string_dynamic *real);
+#endif // _di_f_path_real_
 
 /**
  * Separate a given PATH-style string into multiple separate paths.

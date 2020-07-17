@@ -93,15 +93,15 @@ extern "C" {
 #ifndef _di_f_directory_limitations_
   #define f_directory_default_allocation_step f_memory_default_allocation_step
 
-  #define f_directory_name_max        NAME_MAX
   #define f_directory_descriptors_max 255
+  #define f_directory_name_max        NAME_MAX
 #endif // _di_f_directory_limitations_
 
 /**
  * Create a directory at the given path.
  *
  * @param path
- *   The path file name.
+ *   The file path to the directory.
  * @param mode
  *   The directory mode to use when creating.
  *
@@ -134,7 +134,7 @@ extern "C" {
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
- *   The path file name.
+ *   The file path to the directory.
  * @param mode
  *   The directory mode to use when creating.
  *
@@ -166,7 +166,7 @@ extern "C" {
  * Identify whether or not a file exists at the given path and if that file is a directory or a symlink to a directory.
  *
  * @param path
- *   The path file name.
+ *   The file path to the directory.
  *
  * @return
  *   F_true if path was found and path is a directory (or a symlink to a directory).
@@ -191,7 +191,7 @@ extern "C" {
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
- *   The path file name.
+ *   The file path to the directory.
  * @param flag
  *   Any valid flag, such as f_directory_at_path_empty, f_directory_at_automount_no, or f_directory_at_symlink_follow_no.
  *
@@ -217,7 +217,7 @@ extern "C" {
  * Identify whether or not a file exists at the given path and if that file is a directory.
  *
  * @param path
- *   The path file name.
+ *   The file path to the directory.
  *
  * @return
  *   F_true if path was found and path is a directory.
@@ -242,7 +242,7 @@ extern "C" {
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
- *   The path file name.
+ *   The file path to the directory.
  * @param flag
  *   Any valid flag, such as f_directory_at_path_empty, f_directory_at_automount_no, or f_directory_at_symlink_follow_no.
  *
@@ -270,7 +270,7 @@ extern "C" {
  * Allows specifying a custom filter and custom sort.
  *
  * @param path
- *   Filesystem path to the directory.
+ *   The file path to the directory.
  * @param filter
  *   A filter function of the form: int xxx(const struct direct *).
  *   Set to 0 to not use (NULL).
@@ -303,7 +303,7 @@ extern "C" {
  * This opens with O_PATH and O_CLOEXEC.
  *
  * @param path
- *   The path file name.
+ *   The file path to the directory.
  * @param dereference
  *   Set to TRUE to dereferenc symlinks (often is what is desired).
  *   Set to FALSE to operate on the symlink itself.
@@ -332,7 +332,7 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_directory_open_
-  extern f_return_status f_directory_open(const f_string path, const bool dereference, int *id) f_gcc_attribute_visibility_internal;
+  extern f_return_status f_directory_open(const f_string path, const bool dereference, int *id);
 #endif // _di_f_directory_open_
 
 /**
@@ -343,7 +343,7 @@ extern "C" {
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
- *   The path file name.
+ *   The file path to the directory.
  * @param dereference
  *   Set to TRUE to dereferenc symlinks (often is what is desired).
  *   Set to FALSE to operate on the symlink itself.
@@ -373,14 +373,14 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_directory_open_at_
-  extern f_return_status f_directory_open_at(const int at_id, const f_string path, const bool dereference, int *id) f_gcc_attribute_visibility_internal;
+  extern f_return_status f_directory_open_at(const int at_id, const f_string path, const bool dereference, int *id);
 #endif // _di_f_directory_open_at_
 
 /**
  * Remove a directory and possibly its contents.
  *
  * @param path
- *   The path file name.
+ *   The file path to the directory.
  * @param recursion_max
  *   Represents the max recursion depth, set to 0 to disable recursive delete.
  * @param preserve
@@ -419,7 +419,7 @@ extern "C" {
  * Remove a directory and possibly its contents.
  *
  * @param path
- *   The path file name.
+ *   The file path to the directory.
  * @param recursion_max
  *   Represents the max recursion depth, set to 0 to disable recursive delete.
  * @param preserve

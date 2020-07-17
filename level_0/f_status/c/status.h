@@ -144,6 +144,7 @@ extern "C" {
     // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
     #ifndef _di_F_status_basic_
       F_none = 197,
+      F_absolute,
       F_address,
       F_block,
       F_bound_out,
@@ -179,6 +180,7 @@ extern "C" {
       F_prohibited,
       F_read_only,
       F_recurse,
+      F_relative,
       F_search,
       F_space_not,
       F_stop,

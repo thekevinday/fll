@@ -366,6 +366,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_absolute, length, FL_status_string_absolute_length) == F_equal_to) {
+        *code = F_absolute;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_address, length, FL_status_string_address_length) == F_equal_to) {
         *code = F_address;
         return F_none;
@@ -538,6 +543,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_recurse, length, FL_status_string_recurse_length) == F_equal_to) {
         *code = F_recurse;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_relative, length, FL_status_string_relative_length) == F_equal_to) {
+        *code = F_relative;
         return F_none;
       }
 

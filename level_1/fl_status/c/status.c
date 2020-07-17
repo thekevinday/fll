@@ -218,6 +218,9 @@ extern "C" {
         case F_none:
           *string = FL_status_string_none;
           break;
+        case F_absolute:
+          *string = FL_status_string_absolute;
+          break;
         case F_address:
           *string = FL_status_string_address;
           break;
@@ -322,6 +325,9 @@ extern "C" {
           break;
         case F_recurse:
           *string = FL_status_string_recurse;
+          break;
+        case F_relative:
+          *string = FL_status_string_relative;
           break;
         case F_search:
           *string = FL_status_string_search;

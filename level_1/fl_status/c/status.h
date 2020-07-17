@@ -164,6 +164,7 @@ extern "C" {
 
   #ifndef _di_F_status_basic_
     #define FL_status_string_none             "F_none"
+    #define FL_status_string_absolute         "F_absolute"
     #define FL_status_string_address          "F_address"
     #define FL_status_string_block            "F_block"
     #define FL_status_string_bound_out        "F_bound_out"
@@ -199,6 +200,7 @@ extern "C" {
     #define FL_status_string_prohibited       "F_prohibited"
     #define FL_status_string_read_only        "F_read_only"
     #define FL_status_string_recurse          "F_recurse"
+    #define FL_status_string_relative         "F_relative"
     #define FL_status_string_search           "F_search"
     #define FL_status_string_space_not        "F_space_not"
     #define FL_status_string_stop             "F_stop"
@@ -212,6 +214,7 @@ extern "C" {
     #define FL_status_string_write_only       "F_write_only"
 
     #define FL_status_string_none_length             6
+    #define FL_status_string_absolute_length         10
     #define FL_status_string_address_length          9
     #define FL_status_string_block_length            7
     #define FL_status_string_bound_out_length        11
@@ -246,7 +249,8 @@ extern "C" {
     #define FL_status_string_process_too_many_length 18
     #define FL_status_string_prohibited_length       12
     #define FL_status_string_read_only_length        11
-    #define FL_status_string_recurse_length          7
+    #define FL_status_string_recurse_length          9
+    #define FL_status_string_relative_length         10
     #define FL_status_string_search_length           8
     #define FL_status_string_space_not_length        11
     #define FL_status_string_stop_length             6
