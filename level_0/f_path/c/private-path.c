@@ -27,7 +27,7 @@ extern "C" {
     if (length + 1 > real->size) {
       f_status status = F_none;
 
-      f_macro_string_dynamic_new(status, (*real), length + 1);
+      f_macro_string_dynamic_resize(status, (*real), length + 1);
       if (F_status_is_error(status)) return status;
     }
 
