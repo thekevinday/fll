@@ -35,6 +35,40 @@ extern "C" {
 #endif // _di_fake_print_error_
 
 /**
+ * Print build operation file error messages.
+ *
+ * @param context
+ *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
+ * @param status
+ *   The error status code to report on.
+ * @param function
+ *   The name of the function where the error happened.
+ * @param operation
+ *   The operation performed.
+ * @param source
+ *   The operation source.
+ *   Set to 0 to disable.
+ * @param destination
+ *   The operation destination, if applicable.
+ *   Requires source to be non-zero.
+ *   Set to 0 to disable.
+ * @param how
+ *   The how the operation is perform, such as "to" in "copy" source "to" destination.
+ *   Requires source and destination to be non-zero.
+ * @param fallback
+ *   Set to F_true to print the fallback error message for unknown errors.
+ *
+ * @return
+ *   F_true is returned if the status code has no print message.
+ *   F_false is returned on successful print of known errors.
+ */
+#ifndef _di_fake_print_error_operation_file_
+  extern bool fake_print_error_build_operation_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string operation, const f_string source, const f_string destination, const f_string how, const bool fallback) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_print_error_operation_file_
+
+/**
  * Print error messages when processing some fakefile section.
  *
  * @param context
@@ -71,21 +105,19 @@ extern "C" {
  *   The status code representing an error.
  * @param function
  *   The name of the function where the error happened.
+ *   Set to 0 to disable.
  * @param buffer
  *   The buffer containing the fakefile data.
  * @param section_name
  *   The range within the buffer representing the section name.
  * @param operation_name
  *   The range within the buffer representing the operation name within the section.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
- *
- * @return
- *   F_none is returned on successful print of known errors.
- *   F_unknown is returned if the status code has no print message.
+ * @param string
+ *   A string used by certain error conditions.
+ *   Set to 0 disable.
  */
 #ifndef _di_fake_print_error_fakefile_section_line_
-  extern bool fake_print_error_fakefile_section_line(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_fakefile_section_line(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_string string) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_fakefile_section_line_
 
 /**
@@ -105,6 +137,30 @@ extern "C" {
 #ifndef _di_fake_print_error_fakefile_section_operation_failed_
   extern void fake_print_error_fakefile_section_operation_failed(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_fakefile_section_operation_failed_
+
+/**
+ * Print error messages when processing some fakefile section, for a specific line and operation, and that operation has a path outside of the project root.
+ *
+ * @param context
+ *   The color context.
+ * @param verbosity
+ *   The verbosity level, which determines if and what should be printed.
+ * @param status
+ *   The status code representing an error.
+ * @param function
+ *   The name of the function where the error happened.
+ * @param buffer
+ *   The buffer containing the fakefile data.
+ * @param section_name
+ *   The range within the buffer representing the section name.
+ * @param operation_name
+ *   The range within the buffer representing the operation name within the section.
+ * @param path
+ *   The path that is outside of the project path.
+ */
+#ifndef _di_fake_print_error_fakefile_section_operation_path_outside_
+  extern void fake_print_error_fakefile_section_operation_path_outside(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_string path) f_gcc_attribute_visibility_internal;
+#endif // _fake_print_error_fakefile_section_operation_path_outside_
 
 /**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that the max stack depth is reached.
@@ -218,40 +274,9 @@ extern "C" {
  *   F_true is returned if the status code has no print message.
  *   F_false is returned on successful print of known errors.
  */
-#ifndef _di_fake_print_error_fss
+#ifndef _di_fake_print_error_fss_
   extern bool fake_print_error_fss(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string path_file, const f_string_range range, const bool fallback) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_print_error_fss
-
-/**
- * Print operation error messages.
- *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
- * @param status
- *   The error status code to report on.
- * @param function
- *   The name of the function where the error happened.
- * @param operation
- *   The operation performed.
- * @param how
- *   The how the operation is perform, such as "to" in "copy" source "to" destination.
- * @param source
- *   The operation source.
- * @param destination
- *   The operation destination, if applicable.
- *   Set to 0 to disable.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
- *
- * @return
- *   F_true is returned if the status code has no print message.
- *   F_false is returned on successful print of known errors.
- */
-#ifndef _di_fake_print_error_operation_
-  extern bool fake_print_error_operation(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string operation, const f_string how, const f_string source, const f_string destination, const bool fallback) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_print_error_operation_
+#endif // _di_fake_print_error_fss_
 
 /**
  * Print an error message for when the parameter is missing its accompanying value.

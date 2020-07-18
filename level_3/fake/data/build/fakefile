@@ -25,3 +25,12 @@ main:
   build
 
   print Result = \'parameter:"result"'
+
+  to sources
+  print should have changed to sources
+
+  to invalid
+  print should have errored before this
+
+  to /tmp
+  print should not be allowed to leave project root.

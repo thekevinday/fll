@@ -44,6 +44,227 @@ extern "C" {
   }
 #endif // _di_fake_print_error_
 
+#ifndef _di_fake_print_error_build_operation_file_
+  bool fake_print_error_build_operation_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string operation, const f_string how, const f_string source, const f_string destination, const bool fallback) {
+
+    if (status == F_file_found_not) {
+      if (verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to find '");
+
+        if (f_file_exists(source) == F_true) {
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+        else {
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+        }
+
+        fl_color_print(f_type_error, context.error, context.reset, "' while trying to %s '", operation);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_parameter) {
+      if (verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
+        fl_color_print(f_type_error, context.error, context.reset, "() to %s '", operation);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_name) {
+      if (verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid name for '");
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' or '");
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_memory_out) {
+      if (verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory, while trying to %s '", operation);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_number_overflow) {
+      if (verbosity != fake_verbosity_quiet) {
+
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Overflow while trying to %s '", operation);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_directory) {
+      if (verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid directory while trying to %s '", operation);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_access_denied) {
+      if (verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Access denied while trying to %s '", operation);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_loop) {
+      if (verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Loop while trying to %s '", operation);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_prohibited) {
+      if (verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Prohibited by system while trying to %s '", operation);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_directory_found_not) {
+      if (verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to %s '", operation);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "' due to an invalid directory in the path.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_failure) {
+      if (verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to %s '", operation);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+        if (destination) {
+          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+        }
+
+        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
+      fprintf(f_type_error, "%c", f_string_eol[0]);
+      fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
+      fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
+      fl_color_print(f_type_error, context.error, context.reset, ") occurred while trying to %s '", operation);
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+
+      if (destination) {
+        fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
+      }
+
+      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+    }
+
+    return F_true;
+  }
+#endif // _di_fake_print_error_build_operation_file_
+
 #ifndef _di_fake_print_error_fakefile_section_
   bool fake_print_error_fakefile_section(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const bool fallback) {
 
@@ -67,36 +288,52 @@ extern "C" {
 #endif // _di_fake_print_error_fakefile_section_
 
 #ifndef _di_fake_print_error_fakefile_section_line_
-  bool fake_print_error_fakefile_section_line(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const bool fallback) {
+  void fake_print_error_fakefile_section_line(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_string string) {
+    if (verbosity == fake_verbosity_quiet) return;
 
     f_string_length line = 0;
 
     f_fss_count_lines(buffer, operation_name.start, &line);
 
-    if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
-      fprintf(f_type_error, "%c", f_string_eol[0]);
+    fprintf(f_type_error, "%c", f_string_eol[0]);
+
+    if (status == F_parameter) {
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid parameter");
+    }
+    else if (status == F_memory_allocation || status == F_memory_reallocation) {
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: Unable to allocate memory");
+    }
+    else if (status == F_buffer_too_large) {
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: Maximum size reached for %s array", string ? string : "");
+    }
+    else {
       fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
       fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
-      fl_color_print(f_type_error, context.error, context.reset, ") occurred while calling ");
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
-      fl_color_print(f_type_error, context.error, context.reset, "() for section '");
-
-      fl_color_print_code(f_type_error, context.notable);
-      f_print_string_dynamic_partial(f_type_error, buffer, section_name);
-      fl_color_print_code(f_type_error, context.reset);
-
-      fl_color_print(f_type_error, context.error, context.reset, " on line ");
-      fl_color_print(f_type_error, context.notable, context.reset, "%llu", line);
-      fl_color_print(f_type_error, context.error, context.reset, ", operation '");
-
-      fl_color_print_code(f_type_error, context.notable);
-      f_print_string_dynamic_partial(f_type_error, buffer, operation_name);
-      fl_color_print_code(f_type_error, context.reset);
-
-      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.error, context.reset, ") occurred");
     }
 
-    return F_true;
+    if (function) {
+      fl_color_print(f_type_error, context.error, context.reset, " while calling ");
+      fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
+      fl_color_print(f_type_error, context.error, context.reset, "() for section '");
+    }
+    else {
+      fl_color_print(f_type_error, context.error, context.reset, " while operating section '");
+    }
+
+    fl_color_print_code(f_type_error, context.notable);
+    f_print_string_dynamic_partial(f_type_error, buffer, section_name);
+    fl_color_print_code(f_type_error, context.reset);
+
+    fl_color_print(f_type_error, context.error, context.reset, " on line ");
+    fl_color_print(f_type_error, context.notable, context.reset, "%llu", line);
+    fl_color_print(f_type_error, context.error, context.reset, ", operation '");
+
+    fl_color_print_code(f_type_error, context.notable);
+    f_print_string_dynamic_partial(f_type_error, buffer, operation_name);
+    fl_color_print_code(f_type_error, context.reset);
+
+    fl_color_print_line(f_type_error, context.error, context.reset, "'.");
   }
 #endif // _di_fake_print_error_fakefile_section_line_
 
@@ -416,226 +653,40 @@ extern "C" {
   }
 #endif // _di_fake_print_error_fss
 
-#ifndef _di_fake_print_error_operation_
-  bool fake_print_error_operation(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string operation, const f_string how, const f_string source, const f_string destination, const bool fallback) {
+#ifndef _di_fake_print_error_fakefile_section_operation_path_outside_
+  void fake_print_error_fakefile_section_operation_path_outside(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_string path) {
+    if (verbosity != fake_verbosity_quiet) {
 
-    if (status == F_file_found_not) {
-      if (verbosity != fake_verbosity_quiet) {
+      if (F_status_set_fine(status) == F_false) {
+        f_string_length line = 0;
+
+        f_fss_count_lines(buffer, operation_name.start, &line);
+
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to find '");
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: the path '");
+        fl_color_print(f_type_error, context.notable, context.reset, "%s", path);
+        fl_color_print(f_type_error, context.error, context.reset, "' is outside the project root for section '");
 
-        if (f_file_exists(source) == F_true) {
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-        else {
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-        }
+        fl_color_print_code(f_type_error, context.notable);
+        f_print_string_dynamic_partial(f_type_error, buffer, section_name);
+        fl_color_print_code(f_type_error, context.reset);
 
-        fl_color_print(f_type_error, context.error, context.reset, "' while trying to %s '", operation);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
+        fl_color_print(f_type_error, context.error, context.reset, " on line ");
+        fl_color_print(f_type_error, context.notable, context.reset, "%llu", line);
+        fl_color_print(f_type_error, context.error, context.reset, ", operation '");
 
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
+        fl_color_print_code(f_type_error, context.notable);
+        f_print_string_dynamic_partial(f_type_error, buffer, operation_name);
+        fl_color_print_code(f_type_error, context.reset);
 
         fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
-
-      return F_false;
-    }
-
-    if (status == F_parameter) {
-      if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
-        fl_color_print(f_type_error, context.error, context.reset, "() to %s '", operation);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-
-        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      else {
+        fake_print_error_fakefile_section_line(context, verbosity, status, function, buffer, section_name, operation_name, path);
       }
-
-      return F_false;
     }
-
-    if (status == F_name) {
-      if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid name for '");
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' or '");
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-
-        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
-      }
-
-      return F_false;
-    }
-
-    if (status == F_memory_out) {
-      if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory, while trying to %s '", operation);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-
-        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
-      }
-
-      return F_false;
-    }
-
-    if (status == F_number_overflow) {
-      if (verbosity != fake_verbosity_quiet) {
-
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Overflow while trying to %s '", operation);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-
-        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
-      }
-
-      return F_false;
-    }
-
-    if (status == F_directory) {
-      if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid directory while trying to %s '", operation);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-
-        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
-      }
-
-      return F_false;
-    }
-
-    if (status == F_access_denied) {
-      if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Access denied while trying to %s '", operation);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-
-        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
-      }
-
-      return F_false;
-    }
-
-    if (status == F_loop) {
-      if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Loop while trying to %s '", operation);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-
-        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
-      }
-
-      return F_false;
-    }
-
-    if (status == F_prohibited) {
-      if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Prohibited by system while trying to %s '", operation);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-
-        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
-      }
-
-      return F_false;
-    }
-
-    if (status == F_directory_found_not) {
-      if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to %s '", operation);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-
-        fl_color_print_line(f_type_error, context.error, context.reset, "' due to an invalid directory in the path.");
-      }
-
-      return F_false;
-    }
-
-    if (status == F_failure) {
-      if (verbosity != fake_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to %s '", operation);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-        if (destination) {
-          fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-          fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-        }
-
-        fl_color_print_line(f_type_error, context.error, context.reset, "'.");
-      }
-
-      return F_false;
-    }
-
-    if (fake_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != fake_verbosity_quiet) {
-      fprintf(f_type_error, "%c", f_string_eol[0]);
-      fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
-      fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
-      fl_color_print(f_type_error, context.error, context.reset, ") occurred while trying to %s '", operation);
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", source);
-
-      if (destination) {
-        fl_color_print(f_type_error, context.error, context.reset, "' %s '", how);
-        fl_color_print(f_type_error, context.notable, context.reset, "%s", destination);
-      }
-
-      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
-    }
-
-    return F_true;
   }
-#endif // _di_fake_print_error_operation_
+#endif // _di_fake_print_error_fakefile_section_operation_path_outside_
 
 #ifndef _di_fake_print_error_parameter_missing_value_
   void fake_print_error_parameter_missing_value(const fl_color_context context, const uint8_t verbosity, const f_string parameter) {

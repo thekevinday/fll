@@ -271,7 +271,9 @@ extern "C" {
     fake_make_path path;
 
     f_fss_nameds fakefile;
+
     f_string_dynamic buffer;
+    f_string_dynamic path_real; // used as a cache for determining a real path.
 
     f_array_length main;
 
@@ -286,6 +288,7 @@ extern "C" {
     fake_make_path_initialize, \
     f_fss_nameds_initialize, \
     f_string_dynamic_initialize, \
+    f_string_dynamic_initialize, \
     0, \
     0, \
   }
@@ -297,8 +300,30 @@ extern "C" {
     fake_macro_make_parameter_delete_simple(data.parameter) \
     fake_macro_make_path_delete_simple(data.path) \
     f_macro_fss_nameds_delete_simple(data.fakefile) \
-    f_macro_string_dynamic_delete_simple(data.buffer)
+    f_macro_string_dynamic_delete_simple(data.buffer) \
+    f_macro_string_dynamic_delete_simple(data.path_real)
 #endif // _di_fake_make_data_
+
+/**
+ * Assure that a path is within the project root path.
+ *
+ * @param data
+ *   The program data.
+ * @param path
+ *   file path to get the real path of.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   The data_make.path_real will be updated to reflect the full path to this file.
+ *
+ * @return
+ *   F_true if inside the project.
+ *   F_false (with error bit) if path exists outside of the root project path.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_assure_inside_project_
+  extern f_return_status fake_make_assure_inside_project(const fake_data data, const f_string_static path, fake_make_data *data_make) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_assure_inside_project_
 
 /**
  * Find the fake file, load it, validate it, and process it.
@@ -312,7 +337,6 @@ extern "C" {
  * @param status
  *   The return status.
  *
- * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
@@ -398,9 +422,11 @@ extern "C" {
  * @param section_name
  *   The section name.
  * @param operation
- *   The operation being performed.
+ *   The operation type.
  * @param operation_name
  *   The operation name.
+ * @param operation_range
+ *   The range within the buffer pointing to the operation.
  * @param arguments
  *   The expanded arguments.
  * @param operation_if
@@ -413,7 +439,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_perform_
-  extern void fake_make_operate_perform(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_perform(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_range operation_range, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_perform_
 
 /**
@@ -452,16 +478,13 @@ extern "C" {
  *   The expanded arguments.
  * @param operation_if
  *   The if-condition status for the current operation.
- * @param process
- *   Set to TRUE if this is a process validation, FALSE if this is a pre-process validation.
- *   A pre-process validation does not check for content because content is not yet expanded.
  * @param status
  *   The return status.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, const bool process, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_
 
 /**

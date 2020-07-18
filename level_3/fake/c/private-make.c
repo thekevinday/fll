@@ -10,6 +10,35 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_make_assure_inside_project_
+  f_return_status fake_make_assure_inside_project(const fake_data data, const f_string_static path, fake_make_data *data_make) {
+
+    data_make->path_real.used = 0;
+
+    f_status status = f_path_real(path.string, &data_make->path_real);
+    if (F_status_is_error(status)) return status;
+
+    const f_string_range range = f_macro_string_range_initialize(data_make->path.stack.array[0].used);
+
+    if (range.start <= range.stop) {
+      status = fl_string_dynamic_partial_compare(data_make->path.stack.array[0], path, range, range);
+      if (F_status_is_error(status)) return status;
+
+      if (status) {
+        if (data_make->path_real.used == data_make->path.stack.array[0].used) {
+          return F_true;
+        }
+
+        if (data_make->path_real.string[data_make->path.stack.array[0].used] == f_path_separator[0]) {
+          return F_true;
+        }
+      }
+    }
+
+    return F_status_set_error(F_false);
+  }
+#endif // _di_fake_make_assure_inside_project_
+
 #ifndef _di_fake_make_load_fakefile_
   void fake_make_load_fakefile(const fake_data data, fake_make_data *data_make, f_status *status) {
     if (F_status_is_error(*status)) return;
@@ -733,97 +762,69 @@ extern "C" {
     memset(operations, 0, sizeof(uint8_t) * section->objects.used);
     memset(arguments, 0, sizeof(f_string_dynamics) * section->objects.used);
 
-    bool error_none = F_true;
-    bool process = F_true;
+    for (i = 0; i < section->objects.used; i++) {
+      operation = 0;
+      operation_name = 0;
 
-    do {
-      // pre-process the list to identify invalid commands so that nothing is processed if any operation can be detected as invalid by the pre-process validation.
-      process = !process;
-
-      for (i = 0; i < section->objects.used; i++) {
-        operation = 0;
-        operation_name = 0;
-
-        for (j = 0; j < fake_make_operation_total; j++) {
-          if (fl_string_dynamic_partial_compare(operations_name[j], data_make->buffer, operations_range[j], section->objects.array[i]) == F_equal_to) {
-            operation = operations_type[j];
-            operation_name = &operations_name[j];
-            break;
-          }
-        } // for
-
-        if (operation == 0) {
-          fake_print_error_fakefile_section_operation_unknown(data.context, data.verbosity, data_make->buffer, section->name, section->objects.array[i]);
-
-          *status = F_status_set_error(F_invalid);
+      for (j = 0; j < fake_make_operation_total; j++) {
+        if (fl_string_dynamic_partial_compare(operations_name[j], data_make->buffer, operations_range[j], section->objects.array[i]) == F_equal_to) {
+          operation = operations_type[j];
+          operation_name = &operations_name[j];
+          break;
         }
-        else if (operation == fake_make_operation_type_operate) {
-          if (section_stack->used == fake_make_section_stack_max) {
-            fake_print_error_fakefile_section_operation_stack_max(data.context, data.verbosity, data_make->buffer, section->name, section->objects.array[i], fake_make_section_stack_max);
+      } // for
 
-            *status = F_status_set_error(F_recurse);
-          }
+      if (operation == 0) {
+        fake_print_error_fakefile_section_operation_unknown(data.context, data.verbosity, data_make->buffer, section->name, section->objects.array[i]);
+
+        *status = F_status_set_error(F_invalid);
+      }
+      else if (operation == fake_make_operation_type_operate) {
+        if (section_stack->used == fake_make_section_stack_max) {
+          fake_print_error_fakefile_section_operation_stack_max(data.context, data.verbosity, data_make->buffer, section->name, section->objects.array[i], fake_make_section_stack_max);
+
+          *status = F_status_set_error(F_recurse);
         }
+      }
 
-        // find and report all unknown operations before exiting.
-        if (F_status_is_error(*status)) {
-          error_none = F_false;
-          *status = F_none;
-          continue;
+      if (F_status_is_error(*status)) break;
+
+      operations[i] = operation;
+
+      fake_make_operate_expand(data, section->name, operation, *operation_name, section->contents.array[i], section->quotedss.array[i], data_make, &arguments[i], status);
+      if (F_status_is_error(*status)) break;
+
+      fake_make_operate_validate(data, section->name, operation, *operation_name, *data_make, arguments[i], operation_if, status);
+
+      if (operation_if) {
+        if (operation_if == fake_make_operation_if_type_if) {
+          operation_if = fake_make_operation_if_type_else;
         }
-
-        operations[i] = operation;
-
-        if (process) {
-          fake_make_operate_expand(data, section->name, operation, *operation_name, section->contents.array[i], section->quotedss.array[i], data_make, &arguments[i], status);
-          if (F_status_is_error(*status)) {
-            error_none = F_false;
-            continue;
-          }
-        }
-
-        fake_make_operate_validate(data, section->name, operation, *operation_name, *data_make, arguments[i], operation_if, process, status);
-
-        if (operation_if) {
-          if (operation_if == fake_make_operation_if_type_if) {
-            operation_if = fake_make_operation_if_type_else;
-          }
-          else if (operation_if == fake_make_operation_if_type_else) {
-            if (operation == fake_make_operation_type_if) {
-              operation_if = fake_make_operation_if_type_if;
-            }
-            else {
-              operation_if = 0;
-            }
+        else if (operation_if == fake_make_operation_if_type_else) {
+          if (operation == fake_make_operation_type_if) {
+            operation_if = fake_make_operation_if_type_if;
           }
           else {
             operation_if = 0;
           }
         }
-        else if (operation == fake_make_operation_type_if) {
-          operation_if = fake_make_operation_if_type_if;
+        else {
+          operation_if = 0;
         }
+      }
+      else if (operation == fake_make_operation_type_if) {
+        operation_if = fake_make_operation_if_type_if;
+      }
 
-        if (F_status_is_error(*status)) {
-          error_none = F_false;
-          *status = F_none;
-          continue;
-        }
+      if (F_status_is_error(*status)) break;
 
-        if (error_none && process) {
-          fake_make_operate_perform(data, section->name, operation, *operation_name, arguments[i], operation_if, data_make, status);
+      fake_make_operate_perform(data, section->name, operation, *operation_name, section->objects.array[i], arguments[i], operation_if, data_make, status);
 
-          if (F_status_is_error(*status)) {
-            fake_print_error_fakefile_section_operation_failed(data.context, data.verbosity, data_make->buffer, section->name, section->objects.array[i]);
-            break;
-          }
-        }
-      } // for
-    } while (error_none && !process);
-
-    if (!error_none && F_status_is_fine(*status)) {
-      *status = F_status_set_error(F_failure);
-    }
+      if (F_status_is_error(*status)) {
+        fake_print_error_fakefile_section_operation_failed(data.context, data.verbosity, data_make->buffer, section->name, section->objects.array[i]);
+        break;
+      }
+    } // for
 
     for (i = 0; i < section->objects.used; i++) {
       f_macro_string_dynamics_delete_simple(arguments[i]);
@@ -832,7 +833,7 @@ extern "C" {
 #endif // _di_fake_make_operate_section_
 
 #ifndef _di_fake_make_operate_perform_
-  void fake_make_operate_perform(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) {
+  void fake_make_operate_perform(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_range operation_range, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) {
     if (F_status_is_error(*status)) return;
 
     if (operation == fake_make_operation_type_archive) {
@@ -865,6 +866,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_create) {
+      // fake_make_assure_inside_project
       // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
       //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
       //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
@@ -877,6 +879,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_delete) {
+      // fake_make_assure_inside_project
       // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
       //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
       //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
@@ -893,6 +896,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_group) {
+      // fake_make_assure_inside_project
       // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
       //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
       //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
@@ -905,6 +909,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_link) {
+      // fake_make_assure_inside_project
       // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
       //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
       //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
@@ -912,6 +917,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_mode) {
+      // fake_make_assure_inside_project
       // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
       //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
       //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
@@ -924,6 +930,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_owner) {
+      // fake_make_assure_inside_project
       // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
       //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
       //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
@@ -970,16 +977,70 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_to) {
-      // @todo: change directory.
+      *status = fake_make_assure_inside_project(data, arguments.array[0], data_make);
+      if (F_status_is_error(*status)) {
+        fake_print_error_fakefile_section_operation_path_outside(data.context, data.verbosity, *status, "fake_make_assure_inside_project", data_make->buffer, section_name, operation_range, arguments.array[0].string);
+
+        if (F_status_set_fine(*status) == F_false) {
+          *status = F_status_set_error(F_failure);
+        }
+
+        return;
+      }
+
+      *status = f_path_change(arguments.array[0].string);
+      if (F_status_is_error(*status)) {
+        fake_print_error_fakefile_section_line(data.context, data.verbosity, F_status_set_fine(*status), "f_path_change", data_make->buffer, section_name, operation_range, arguments.array[0].string);
+      }
+      else {
+        if (data_make->path.stack.used == data_make->path.stack.size) {
+          if (data_make->path.stack.used + 1 >= f_array_length_size) {
+            *status = F_status_set_error(F_buffer_too_large);
+            fake_print_error_fakefile_section_line(data.context, data.verbosity, F_buffer_too_large, "f_macro_string_dynamics_resize", data_make->buffer, section_name, operation_range, "path stack");
+            return;
+          }
+
+          if (data_make->path.stack.used + f_memory_default_allocation_step >= f_array_length_size) {
+            f_macro_string_dynamics_resize(*status, data_make->path.stack, data_make->path.stack.size + 1);
+          }
+          else {
+            f_macro_string_dynamics_resize(*status, data_make->path.stack, data_make->path.stack.size + f_memory_default_allocation_step);
+          }
+
+          if (F_status_is_error(*status)) {
+            fake_print_error_fakefile_section_line(data.context, data.verbosity, F_status_set_fine(*status), "f_macro_string_dynamics_resize", data_make->buffer, section_name, operation_range, 0);
+            return;
+          }
+        }
+
+        // copy the entire real path, including the trailing NULL.
+        data_make->path_real.used++;
+
+        fl_string_dynamic_append_nulless(data_make->path_real, &data_make->path.stack.array[data_make->path.stack.used]);
+
+        // reset the used to disclude the trailing NULL.
+        data_make->path_real.used--;
+
+        if (F_status_is_error(*status)) {
+          fake_print_error_fakefile_section_line(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", data_make->buffer, section_name, operation_range, 0);
+          return;
+        }
+
+        data_make->path.stack.used++;
+
+        // @todo: if verbose, then print the directory change (strip out the project root part of the path when printing).
+      }
+
       return;
     }
 
     if (operation == fake_make_operation_type_top) {
-      // @todo: change directory.
+      *status = f_path_change_at(data_make->path.top);
       return;
     }
 
     if (operation == fake_make_operation_type_touch) {
+      // fake_make_assure_inside_project
       // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
       //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
       //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
@@ -998,6 +1059,8 @@ extern "C" {
     if (F_status_is_error(*status)) {
       // @todo: convert F_status_set_fine(*status) to a string and assign that instead of 1. (need a convert function from llu to string.)
       status2 = fl_string_append("1", 1, &data_make->setting_make.parameter.array[0].value.array[0]);
+
+      // fake_print_error_fakefile_section_line(data.context, data.verbosity, F_status_set_fine(*status), "fake_clean_operate", data_make.buffer, section_name, operation_range, arguments.array[0].string);
     }
     else {
       // @todo: convert return_code to a string and assign that instead of 0. (need a convert function from llu to string.)
@@ -1019,7 +1082,7 @@ extern "C" {
 #endif // _di_fake_make_operate_perform_process_return_
 
 #ifndef _di_fake_make_operate_validate_
-  void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, const bool process, f_status *status) {
+  void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, f_status *status) {
     if (F_status_is_error(*status)) return;
 
     if (operation == fake_make_operation_type_archive || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell || operation == fake_make_operation_type_touch) {
@@ -1033,7 +1096,7 @@ extern "C" {
         fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
         *status = F_status_set_error(F_failure);
       }
-      else if (arguments.used && process) {
+      else if (arguments.used) {
         if (arguments.array[0].used) {
           f_status status_file = f_file_is(arguments.array[0].string, f_file_type_regular);
 
@@ -1066,29 +1129,27 @@ extern "C" {
     }
     else if (operation == fake_make_operation_type_create || operation == fake_make_operation_type_delete) {
       if (arguments.used) {
-        if (process) {
-          if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to) {
-            if (arguments.used > 2) {
-              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
-              *status = F_status_set_error(F_failure);
-            }
-          }
-          else if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory, arguments.array[0], fake_make_operation_argument_directory_length) == F_equal_to) {
-            if (arguments.used > 3) {
-              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
-              *status = F_status_set_error(F_failure);
-            }
-            else if (arguments.used == 3) {
-              if (fl_string_dynamic_compare_string(fake_make_operation_argument_recursive, arguments.array[0], fake_make_operation_argument_recursive_length) == F_equal_to_not) {
-                fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "third argument must be either '%s' or not provided at all", fake_make_operation_argument_recursive);
-                *status = F_status_set_error(F_failure);
-              }
-            }
-          }
-          else {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "unsupported file type '%s'", arguments.array[0].string);
+        if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to) {
+          if (arguments.used > 2) {
+            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
             *status = F_status_set_error(F_failure);
           }
+        }
+        else if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory, arguments.array[0], fake_make_operation_argument_directory_length) == F_equal_to) {
+          if (arguments.used > 3) {
+            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
+            *status = F_status_set_error(F_failure);
+          }
+          else if (arguments.used == 3) {
+            if (fl_string_dynamic_compare_string(fake_make_operation_argument_recursive, arguments.array[0], fake_make_operation_argument_recursive_length) == F_equal_to_not) {
+              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "third argument must be either '%s' or not provided at all", fake_make_operation_argument_recursive);
+              *status = F_status_set_error(F_failure);
+            }
+          }
+        }
+        else {
+          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "unsupported file type '%s'", arguments.array[0].string);
+          *status = F_status_set_error(F_failure);
         }
       }
       else {
@@ -1098,10 +1159,8 @@ extern "C" {
     }
     else if (operation == fake_make_operation_type_define) {
       if (arguments.used) {
-        if (process) {
-          // @todo: validate that first argument is a valid define name.
-          // @todo: if arguments.used is 1, then value is assigned to null.
-        }
+        // @todo: validate that first argument is a valid define name.
+        // @todo: if arguments.used is 1, then value is assigned to null.
       }
       else {
         fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "requires arguments");
@@ -1120,13 +1179,11 @@ extern "C" {
     }
     else if (operation == fake_make_operation_type_fail) {
       if (arguments.used) {
-        if (process) {
-          if (fl_string_dynamic_compare_string(fake_make_operation_argument_error, arguments.array[0], fake_make_operation_argument_error_length) == F_equal_to_not) {
-            if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn, arguments.array[0], fake_make_operation_argument_warn_length) == F_equal_to_not) {
-              if (fl_string_dynamic_compare_string(fake_make_operation_argument_ignore, arguments.array[0], fake_make_operation_argument_ignore_length) == F_equal_to_not) {
-                fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "unsupported fail type '%s'", arguments.array[0].string);
-                *status = F_status_set_error(F_failure);
-              }
+        if (fl_string_dynamic_compare_string(fake_make_operation_argument_error, arguments.array[0], fake_make_operation_argument_error_length) == F_equal_to_not) {
+          if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn, arguments.array[0], fake_make_operation_argument_warn_length) == F_equal_to_not) {
+            if (fl_string_dynamic_compare_string(fake_make_operation_argument_ignore, arguments.array[0], fake_make_operation_argument_ignore_length) == F_equal_to_not) {
+              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "unsupported fail type '%s'", arguments.array[0].string);
+              *status = F_status_set_error(F_failure);
             }
           }
         }
@@ -1142,24 +1199,22 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
       else if (arguments.used > 1) {
-        if (process) {
-          f_status status_file = f_file_is(arguments.array[1].string, f_file_type_regular);
+        f_status status_file = f_file_is(arguments.array[1].string, f_file_type_regular);
 
-          if (F_status_is_error(status_file)) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[1].string);
-            *status = status_file;
-          }
+        if (F_status_is_error(status_file)) {
+          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[1].string);
+          *status = status_file;
+        }
 
-          if (!status_file) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "the file '%s' must be a regular file", arguments.array[1].string);
+        if (!status_file) {
+          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "the file '%s' must be a regular file", arguments.array[1].string);
+          *status = F_status_set_error(F_failure);
+        }
+
+        if (arguments.used == 3) {
+          if (fl_string_dynamic_compare_string(fake_make_operation_argument_recursive, arguments.array[2], fake_make_operation_argument_recursive_length) == F_equal_to_not) {
+            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "third argument must be either '%s' or not provided at all", fake_make_operation_argument_recursive);
             *status = F_status_set_error(F_failure);
-          }
-
-          if (arguments.used == 3) {
-            if (fl_string_dynamic_compare_string(fake_make_operation_argument_recursive, arguments.array[2], fake_make_operation_argument_recursive_length) == F_equal_to_not) {
-              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "third argument must be either '%s' or not provided at all", fake_make_operation_argument_recursive);
-              *status = F_status_set_error(F_failure);
-            }
           }
         }
       }
@@ -1181,46 +1236,44 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
       else if (arguments.used == 2) {
-        if (process) {
-          f_status status_file = F_none;
+        f_status status_file = F_none;
 
-          if (arguments.array[0].used) {
-            status_file = f_file_exists(arguments.array[0].string);
+        if (arguments.array[0].used) {
+          status_file = f_file_exists(arguments.array[0].string);
 
-            if (F_status_is_error(status_file) || !status_file) {
-              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[0].string);
+          if (F_status_is_error(status_file) || !status_file) {
+            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[0].string);
 
-              if (status_file == F_false) {
-                *status = F_status_set_error(F_failure);
-              }
-              else {
-                *status = status_file;
-              }
+            if (status_file == F_false) {
+              *status = F_status_set_error(F_failure);
+            }
+            else {
+              *status = status_file;
             }
           }
-          else {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "%s filename argument must not be an empty string", fake_make_operation_argument_target);
-            *status = F_status_set_error(F_failure);
-          }
+        }
+        else {
+          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "%s filename argument must not be an empty string", fake_make_operation_argument_target);
+          *status = F_status_set_error(F_failure);
+        }
 
-          if (arguments.array[1].used) {
-            status_file = f_file_exists(arguments.array[1].string);
+        if (arguments.array[1].used) {
+          status_file = f_file_exists(arguments.array[1].string);
 
-            if (F_status_is_error(status_file) || !status_file) {
-              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[1].string);
+          if (F_status_is_error(status_file) || !status_file) {
+            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[1].string);
 
-              if (status_file == F_false) {
-                *status = F_status_set_error(F_failure);
-              }
-              else {
-                *status = status_file;
-              }
+            if (status_file == F_false) {
+              *status = F_status_set_error(F_failure);
+            }
+            else {
+              *status = status_file;
             }
           }
-          else {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "%s filename argument must not be an empty string", fake_make_operation_argument_point);
-            *status = F_status_set_error(F_failure);
-          }
+        }
+        else {
+          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "%s filename argument must not be an empty string", fake_make_operation_argument_point);
+          *status = F_status_set_error(F_failure);
         }
       }
       else {
@@ -1238,23 +1291,21 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
       else if (arguments.used) {
-        if (process) {
-          if (arguments.array[0].used) {
-            f_status status_file = f_file_is(arguments.array[0].string, f_file_type_directory);
+        if (arguments.array[0].used) {
+          f_status status_file = f_file_is(arguments.array[0].string, f_file_type_directory);
 
-            if (F_status_is_error(status_file)) {
-              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[0].string);
-              *status = status_file;
-            }
+          if (F_status_is_error(status_file)) {
+            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[0].string);
+            *status = status_file;
+          }
 
-            if (!status_file) {
-              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "the file '%s' must be a directory file", arguments.array[0].string);
-              *status = F_status_set_error(F_failure);
-            }
+          if (!status_file) {
+            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "the file '%s' must be a directory file", arguments.array[0].string);
+            *status = F_status_set_error(F_failure);
           }
-          else {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "filename argument must not be an empty string");
-          }
+        }
+        else {
+          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "filename argument must not be an empty string");
         }
       }
       else {

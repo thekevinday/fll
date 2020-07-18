@@ -235,7 +235,7 @@ extern "C" {
         if (F_status_is_error(*status)) {
           if (data.verbosity == fake_verbosity_verbose) {
             for (f_string_length j = 0; j < failures.used; j++) {
-              fake_print_error_operation(data.context, data.verbosity, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
+              fake_print_error_build_operation_file(data.context, data.verbosity, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
             } // for
 
             if (F_status_set_fine(*status) != F_failure) {
@@ -245,7 +245,7 @@ extern "C" {
             break;
           }
           else if (data.verbosity != fake_verbosity_quiet) {
-            fake_print_error_operation(data.context, data.verbosity, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
+            fake_print_error_build_operation_file(data.context, data.verbosity, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
           }
 
           break;
@@ -269,7 +269,7 @@ extern "C" {
         *status = f_file_copy(path_source.string, destination_file.string, mode, f_file_default_read_size, F_false);
 
         if (F_status_is_error(*status)) {
-          fake_print_error_operation(data.context, data.verbosity, F_status_set_fine(*status), "f_file_copy", "copy", "to", path_source.string, destination_file.string, F_true);
+          fake_print_error_build_operation_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_copy", "copy", "to", path_source.string, destination_file.string, F_true);
           break;
         }
 
