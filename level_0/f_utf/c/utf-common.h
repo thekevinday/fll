@@ -192,7 +192,7 @@ extern "C" {
 
   #define f_utf_string_range_initialize { 1, 0 }
 
-  #define f_macro_utf_string_range_initialize(length) { 0, length - 1 }
+  #define f_macro_utf_string_range_initialize(length) { length ? 0 : 1, length ? length - 1 : 0 }
 
   #define f_macro_utf_string_range_new(status, utf_string_range, length)   status = f_memory_new((void **) & utf_string_range, sizeof(f_utf_string_range), length)
   #define f_macro_utf_string_range_delete(status, utf_string_range, size)  status = f_memory_delete((void **) & utf_string_range, sizeof(f_utf_string_range), size)

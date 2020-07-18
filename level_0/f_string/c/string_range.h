@@ -36,7 +36,7 @@ extern "C" {
 
   #define f_string_range_initialize { 1, 0 }
 
-  #define f_macro_string_range_initialize(length) { 0, length - 1 }
+  #define f_macro_string_range_initialize(length) { length ? 0 : 1, length ? length - 1 : 0 }
 
   #define f_macro_string_range_clear(range) \
     range.start = 1; \
