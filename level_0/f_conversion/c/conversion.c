@@ -204,6 +204,230 @@ extern "C" {
   }
 #endif // _di_f_conversion_character_to_octal_
 
+#ifndef _di_f_conversion_number_signed_to_string_
+  f_return_status f_conversion_number_signed_to_string(const f_number_signed number, const uint8_t base, f_string_dynamic *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (destination == 0) return F_status_set_error(F_parameter);
+      if (base < 2 || base > 16) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status status = F_none;
+
+    if (number == 0) {
+      f_macro_string_dynamic_resize(status, (*destination), destination->used + 2);
+      if (F_status_is_error(status)) return status;
+
+      destination->string[destination->used] = '0';
+      destination->string[destination->used + 1] = 0;
+      destination->used += 2;
+
+      return F_none;
+    }
+
+    bool negative = F_false;
+    f_number_unsigned current = number;
+
+    if (number < 0) {
+      current = 0 - number;
+      negative = F_true;
+    }
+
+    f_string_length total = 0;
+
+    for (register f_number_signed work = current; work; total++) {
+      work /= base;
+    } // for
+
+    if (negative) {
+      f_macro_string_dynamic_resize(status, (*destination), destination->used + total + 2);
+    }
+    else {
+      f_macro_string_dynamic_resize(status, (*destination), destination->used + total + 1);
+    }
+
+    if (F_status_is_error(status)) return status;
+
+    f_number_unsigned work = 0;
+    f_number_unsigned power = 1;
+
+    if (negative) {
+      destination->string[destination->used] = '-';
+      destination->used++;
+    }
+
+    for (register uint8_t i = 1; i < total; i++) {
+      power *= base;
+    } // for
+
+    for (; power; total--) {
+      work = current / power;
+      current -= work * power;
+      power /= base;
+
+      switch (work) {
+        case 0:
+          destination->string[destination->used] = '0';
+          break;
+        case 1:
+          destination->string[destination->used] = '1';
+          break;
+        case 2:
+          destination->string[destination->used] = '2';
+          break;
+        case 3:
+          destination->string[destination->used] = '3';
+          break;
+        case 4:
+          destination->string[destination->used] = '4';
+          break;
+        case 5:
+          destination->string[destination->used] = '5';
+          break;
+        case 6:
+          destination->string[destination->used] = '6';
+          break;
+        case 7:
+          destination->string[destination->used] = '7';
+          break;
+        case 8:
+          destination->string[destination->used] = '8';
+          break;
+        case 9:
+          destination->string[destination->used] = '9';
+          break;
+        case 10:
+          destination->string[destination->used] = 'a';
+          break;
+        case 11:
+          destination->string[destination->used] = 'b';
+          break;
+        case 12:
+          destination->string[destination->used] = 'c';
+          break;
+        case 13:
+          destination->string[destination->used] = 'd';
+          break;
+        case 14:
+          destination->string[destination->used] = 'e';
+          break;
+        case 15:
+          destination->string[destination->used] = 'f';
+          break;
+      }
+
+      destination->used++;
+    } // for
+
+    destination->string[destination->used] = 0;
+    destination->used++;
+
+    return F_none;
+  }
+#endif // _di_f_conversion_decimal_signed_to_string_
+
+#ifndef _di_f_conversion_number_unsigned_to_string_
+  f_return_status f_conversion_number_unsigned_to_string(const f_number_unsigned number, const uint8_t base, f_string_dynamic *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (destination == 0) return F_status_set_error(F_parameter);
+      if (base < 2 || base > 16) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status status = F_none;
+
+    if (number == 0) {
+      f_macro_string_dynamic_resize(status, (*destination), destination->used + 2);
+      if (F_status_is_error(status)) return status;
+
+      destination->string[destination->used] = '0';
+      destination->string[destination->used + 1] = 0;
+      destination->used += 2;
+
+      return F_none;
+    }
+
+    f_string_length total = 0;
+
+    for (register f_number_unsigned work = number; work; total++) {
+      work /= base;
+    } // for
+
+    f_macro_string_dynamic_resize(status, (*destination), destination->used + total + 1);
+    if (F_status_is_error(status)) return status;
+
+    f_number_unsigned current = number;
+    f_number_unsigned work = 0;
+    f_number_unsigned power = 1;
+
+    for (register uint8_t i = 1; i < total; i++) {
+      power *= base;
+    } // for
+
+    for (; power; total--) {
+      work = current / power;
+      current -= work * power;
+      power /= base;
+
+      switch (work) {
+        case 0:
+          destination->string[destination->used] = '0';
+          break;
+        case 1:
+          destination->string[destination->used] = '1';
+          break;
+        case 2:
+          destination->string[destination->used] = '2';
+          break;
+        case 3:
+          destination->string[destination->used] = '3';
+          break;
+        case 4:
+          destination->string[destination->used] = '4';
+          break;
+        case 5:
+          destination->string[destination->used] = '5';
+          break;
+        case 6:
+          destination->string[destination->used] = '6';
+          break;
+        case 7:
+          destination->string[destination->used] = '7';
+          break;
+        case 8:
+          destination->string[destination->used] = '8';
+          break;
+        case 9:
+          destination->string[destination->used] = '9';
+          break;
+        case 10:
+          destination->string[destination->used] = 'a';
+          break;
+        case 11:
+          destination->string[destination->used] = 'b';
+          break;
+        case 12:
+          destination->string[destination->used] = 'c';
+          break;
+        case 13:
+          destination->string[destination->used] = 'd';
+          break;
+        case 14:
+          destination->string[destination->used] = 'e';
+          break;
+        case 15:
+          destination->string[destination->used] = 'f';
+          break;
+      }
+
+      destination->used++;
+    } // for
+
+    destination->string[destination->used] = 0;
+    destination->used++;
+
+    return F_none;
+  }
+#endif // _di_f_conversion_decimal_unsigned_to_string_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -243,6 +243,52 @@ extern "C" {
   extern f_return_status f_conversion_character_to_octal(const int8_t character, f_number_unsigned *number);
 #endif // _di_f_conversion_character_to_octal_
 
+/**
+ * Convert a signed number into the decimal digit string that it represents.
+ *
+ * The generated number is appended to the destination string.
+ *
+ * This only supports the following base units: 2 through 16.
+ *
+ * @param number
+ *   The number to convert.
+ * @param base
+ *   The base unit, usually 10.
+ * @param destination
+ *   The destination the converted string is saved into.
+ *
+ * @return
+ *   F_none if the number was converted to a string.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ */
+#ifndef _di_f_conversion_number_signed_to_string_
+  extern f_return_status f_conversion_number_signed_to_string(const f_number_signed number, const uint8_t base, f_string_dynamic *destination);
+#endif // _di_f_conversion_number_signed_to_string_
+
+/**
+ * Convert an unsigned number into the decimal digit string that it represents.
+ *
+ * The generated number is appended to the destination string.
+ *
+ * This only supports the following base units: 2 through 16.
+ *
+ * @param number
+ *   The number to convert.
+ * @param base
+ *   The base unit, usually 10.
+ * @param destination
+ *   The destination the converted string is saved into.
+ *
+ * @return
+ *   F_none if the number was converted to a string.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ */
+#ifndef _di_f_conversion_number_unsigned_to_string_
+  extern f_return_status f_conversion_number_unsigned_to_string(const f_number_unsigned number, const uint8_t base, f_string_dynamic *destination);
+#endif // _di_f_conversion_number_unsigned_to_string_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
