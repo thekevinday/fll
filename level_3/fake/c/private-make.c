@@ -961,7 +961,6 @@ extern "C" {
           return;
         }
 
-        printf("%c", f_string_eol[0]);
         printf("Changed to project path '");
 
         if (data_make->path_cache.used) {
@@ -990,16 +989,12 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_run) {
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      *status = fake_make_operation_process_run(data, *data_make, arguments, F_false);
       return;
     }
 
     if (operation == fake_make_operation_type_shell) {
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      *status = fake_make_operation_process_run(data, *data_make, arguments, F_true);
       return;
     }
 
@@ -1064,7 +1059,6 @@ extern "C" {
             return;
           }
 
-          printf("%c", f_string_eol[0]);
           printf("Changed to project path '");
 
           if (data_make->path_cache.used) {
@@ -1090,7 +1084,6 @@ extern "C" {
       }
 
       if (data.verbosity == fake_verbosity_verbose) {
-        printf("%c", f_string_eol[0]);
         printf("Changed to project path ''.%c", f_string_eol[0]);
       }
 
@@ -1145,6 +1138,90 @@ extern "C" {
     }
   }
 #endif // _di_fake_make_operate_perform_process_return_
+
+#ifndef _di_fake_make_operation_process_run_
+  f_return_status fake_make_operation_process_run(const fake_data data, const fake_make_data data_make, const f_string_statics arguments, const bool as_shell) {
+
+    if (data.verbosity == fake_verbosity_verbose) {
+      for (f_array_length i = 0; i < arguments.used; i++) {
+        if (arguments.array[i].used == 0) continue;
+
+        printf("%s", arguments.array[i].string);
+
+        if (i + 1 < arguments.used) {
+          printf(" ");
+        }
+      } // for
+
+      printf("%c", f_string_eol[0]);
+
+      // flush to stdout before executing command.
+      fflush(f_type_output);
+    }
+
+    const f_string_static *program = &arguments.array[0];
+
+    f_string_dynamics args = f_string_dynamics_initialize;
+
+    f_status status = F_none;
+
+    f_macro_string_dynamics_new(status, args, arguments.used - 1);
+    if (F_status_is_error(status)) {
+      fake_print_error(data, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true);
+      return status;
+    }
+
+    for (f_array_length i = 0; i < args.size; i++) {
+      status = fl_string_dynamic_append(arguments.array[i + 1], &args.array[i]);
+      if (F_status_is_error(status)) {
+        fake_print_error(data, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
+
+        f_macro_string_dynamics_delete_simple(args);
+        break;
+      }
+
+      status = fl_string_dynamic_terminate(&args.array[i]);
+      if (F_status_is_error(status)) {
+        fake_print_error(data, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+
+        f_macro_string_dynamics_delete_simple(args);
+        break;
+      }
+
+      args.used++;
+    } // for
+
+    int result = 0;
+
+    if (as_shell) {
+      status = fll_execute_path_environment(program->string, args, data_make.environment.names, data_make.environment.values, &result);
+    }
+    else {
+      status = fll_execute_program_environment(program->string, args, data_make.environment.names, data_make.environment.values, &result);
+    }
+
+    f_macro_string_dynamics_delete_simple(args);
+
+    if (result != 0) {
+      status = F_status_set_error(F_failure);
+    }
+    else if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_file_found_not) {
+        if (data.verbosity != fake_verbosity_quiet) {
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: failed to find program '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", program->string);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' for executing.");
+        }
+      }
+      else {
+        fake_print_error(data, F_status_set_fine(status), "fll_execute_program_environment", F_true);
+      }
+    }
+
+    return status;
+  }
+#endif // _di_fake_make_operation_process_run_
 
 #ifndef _di_fake_make_operate_validate_
   void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, f_status *status) {

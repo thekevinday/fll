@@ -6,8 +6,5 @@ settings:
   parameter verbose +v
 
 main:
-  skeleton
-
-  clean
 
   build

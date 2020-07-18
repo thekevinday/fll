@@ -444,7 +444,7 @@ extern "C" {
  *   The return status.
  */
 #ifndef _di_fake_build_execute_
-  extern void fake_build_execute(const fake_data data, const fake_build_data data_build, const f_string_static program, const f_string_dynamics arguments, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_execute(const fake_data data, const fake_build_data data_build, const f_string_static program, const f_string_statics arguments, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_execute_
 
 /**

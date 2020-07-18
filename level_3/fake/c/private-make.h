@@ -457,6 +457,26 @@ extern "C" {
 #endif // _di_fake_make_operate_perform_process_return_
 
 /**
+ * Execute either the run operation or the shell operation.
+ *
+ * @param data
+ *   The program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param arguments
+ *   The arguments for the run or shell operation.
+ * @param as_shell
+ *   When TRUE, this is a shell operation.
+ *   When FALSE, this is a run operation.
+ *
+ * @return
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operation_process_run_
+  extern f_return_status fake_make_operation_process_run(const fake_data data, const fake_make_data data_make, const f_string_statics arguments, const bool as_shell) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operation_process_run_
+
+/**
  * For a given make section operation, validate the given operation.
  *
  * This performs pre-operation validations.

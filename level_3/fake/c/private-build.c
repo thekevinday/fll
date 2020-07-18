@@ -296,7 +296,7 @@ extern "C" {
 #endif // _di_fake_build_copy_
 
 #ifndef _di_fake_build_execute_
-  void fake_build_execute(const fake_data data, const fake_build_data data_build, const f_string_static program, const f_string_dynamics arguments, f_status *status) {
+  void fake_build_execute(const fake_data data, const fake_build_data data_build, const f_string_static program, const f_string_statics arguments, f_status *status) {
     if (F_status_is_error(*status)) return;
 
     if (data.verbosity == fake_verbosity_verbose) {
