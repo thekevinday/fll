@@ -19,6 +19,16 @@ Fakefile Documentation:
       The environment variable name is case-sensitive.
       This replaces the value of any existing environment variable with this name.
 
+    - fail\:
+      Designates the fail mode when running external programs, such as through the "run" or "shell" operations.
+
+      There are three options:
+      - exit: Designates to exit the program on failure, printing an error message.
+      - warn: Designates to continue on and if in verbose mode then print a warning.
+      - ignore: Designates to do nothing.
+
+      The return code for programs can still be retrieved through using the reserved iki vaiable "return".
+
     - load_build\:
       This represents whether or not to load the load the build settings file.
       The first Content value may be "true" to load the build settings and "false" to not load the build settings file.

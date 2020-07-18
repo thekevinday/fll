@@ -34,6 +34,7 @@ Fakefile Specification:
 
   The Settings Objects are\:
   - define: First Content represents variable name (case-sensitive), remaining Content represents varaiable value for IKI substitution.
+  - fail: Only one Content, which must be either "exit", "warn" or "ignore" (quotes not required) (case-sensitive).
   - load_build: Only one Content, which must be either "yes" or "no" (quotes not required) (case-sensitive).
   - parameter: First Content represents variable name (case-sensitive), remaining Content represents varaiable value for IKI substitution.
 
