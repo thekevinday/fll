@@ -481,14 +481,14 @@ extern "C" {
     fixed_arguments[0] = program_name;
 
     f_status status = F_none;
-    f_string_length i = 0;
+    f_array_length i = 0;
 
     for (; i < arguments.used; i++) {
       f_macro_string_new(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
 
       if (F_status_is_error(status)) {
-        for (f_string_length j = 0; j < i; j++) {
-          f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[j].used + 1);
+        for (f_array_length j = 0; j < i; j++) {
+          f_macro_string_delete_simple(fixed_arguments[j + 1], arguments.array[j].used + 1);
         } // for
 
         return status;
@@ -506,7 +506,7 @@ extern "C" {
     process_id = fork();
 
     if (process_id < 0) {
-      for (f_string_length i = 0; i < arguments.used; i++) {
+      for (i = 0; i < arguments.used; i++) {
         f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
       } // for
 
@@ -517,16 +517,20 @@ extern "C" {
     if (process_id == 0) {
       execvp(program_name, fixed_arguments);
 
+      for (i = 0; i < arguments.used; i++) {
+        f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+      } // for
+
       // according to manpages, calling _exit() is safer and should be called here instead of exit()
       _exit(-1);
     }
 
-    // have the parent wait for the child process to finish
-    waitpid(process_id, result, 0);
-
-    for (f_string_length i = 0; i < arguments.used; i++) {
+    for (i = 0; i < arguments.used; i++) {
       f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
     } // for
+
+    // have the parent wait for the child process to finish
+    waitpid(process_id, result, 0);
 
     if (result != 0 && *result != 0) return F_status_set_error(F_failure);
 
@@ -551,14 +555,14 @@ extern "C" {
     fixed_arguments[0] = program_name;
 
     f_status status = F_none;
-    f_string_length i = 0;
+    f_array_length i = 0;
 
     for (; i < arguments.used; i++) {
       f_macro_string_new(status, fixed_arguments[i + 1], arguments.array[i].used + 1);
 
       if (F_status_is_error(status)) {
-        for (f_string_length j = 0; j < i; j++) {
-          f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[j].used + 1);
+        for (f_array_length j = 0; j < i; j++) {
+          f_macro_string_delete_simple(fixed_arguments[j + 1], arguments.array[j].used + 1);
         } // for
 
         return status;
@@ -587,6 +591,10 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
+      for (i = 0; i < arguments.used; i++) {
+        f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+      } // for
+
       f_macro_string_dynamic_delete_simple(path);
       f_macro_string_dynamics_delete_simple(paths);
       return status;
@@ -594,6 +602,10 @@ extern "C" {
 
     f_macro_string_dynamic_delete(status, path);
     if (F_status_is_error(status)) {
+      for (i = 0; i < arguments.used; i++) {
+        f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+      } // for
+
       f_macro_string_dynamics_delete_simple(paths);
       return status;
     }
@@ -633,12 +645,20 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
+        for (i = 0; i < arguments.used; i++) {
+          f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+        } // for
+
         f_macro_string_dynamics_delete_simple(paths);
         return status;
       }
     } // for
 
     if (found == 0) {
+      for (i = 0; i < arguments.used; i++) {
+        f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+      } // for
+
       f_macro_string_dynamics_delete_simple(paths);
       return F_status_set_error(F_file_found_not);
     }
@@ -649,6 +669,10 @@ extern "C" {
 
     f_macro_string_dynamics_delete(status, paths);
     if (F_status_is_error(status)) {
+      for (i = 0; i < arguments.used; i++) {
+        f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+      } // for
+
       return status;
     }
 
@@ -657,7 +681,7 @@ extern "C" {
     process_id = fork();
 
     if (process_id < 0) {
-      for (f_string_length i = 0; i < arguments.used; i++) {
+      for (i = 0; i < arguments.used; i++) {
         f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
       } // for
 
@@ -668,22 +692,26 @@ extern "C" {
     if (process_id == 0) {
       clearenv();
 
-      for (f_array_length i = 0; i < names.used; i++) {
+      for (i = 0; i < names.used; i++) {
         f_environment_set_dynamic(names.array[i], values.array[i], F_true);
       }
 
       execvp(program_path, fixed_arguments);
 
+      for (i = 0; i < arguments.used; i++) {
+        f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
+      } // for
+
       // according to manpages, calling _exit() is safer and should be called here instead of exit()
       _exit(-1);
     }
 
-    // have the parent wait for the child process to finish
-    waitpid(process_id, result, 0);
-
-    for (f_string_length i = 0; i < arguments.used; i++) {
+    for (i = 0; i < arguments.used; i++) {
       f_macro_string_delete_simple(fixed_arguments[i + 1], arguments.array[i].used + 1);
     } // for
+
+    // have the parent wait for the child process to finish
+    waitpid(process_id, result, 0);
 
     if (result != 0 && *result != 0) return F_status_set_error(F_failure);
 
