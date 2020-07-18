@@ -27,11 +27,14 @@ extern "C" {
   typedef struct {
     bool load_build;
 
+    uint8_t fail;
+
     f_string_map_multis define;
     f_string_map_multis parameter;
   } fake_make_setting;
 
   #define fake_make_setting_initialize { \
+    0, \
     0, \
     f_string_map_multis_initialize, \
     f_string_map_multis_initialize, \
@@ -42,16 +45,16 @@ extern "C" {
     f_macro_string_map_multis_delete_simple(setting.parameter)
 
   #define fake_make_setting_define     "define"
+  #define fake_make_setting_fail       "fail"
   #define fake_make_setting_load_build "load_build"
   #define fake_make_setting_parameter  "parameter"
   #define fake_make_setting_return     "return"
 
   #define fake_make_setting_define_length     6
+  #define fake_make_setting_fail_length       4
   #define fake_make_setting_load_build_length 10
   #define fake_make_setting_parameter_length  9
   #define fake_make_setting_return_length     6
-
-  #define fake_make_setting_total 3
 #endif // _di_fake_make_setting_
 
 // @todo "operate" should use a call stack, but do not allow recursive calls (check to see if named operation is already on the call stack).
@@ -135,6 +138,7 @@ extern "C" {
   #define fake_make_operation_argument_file      "file"
   #define fake_make_operation_argument_directory "directory"
   #define fake_make_operation_argument_error     "error"
+  #define fake_make_operation_argument_exit      "exit"
   #define fake_make_operation_argument_ignore    "ignore"
   #define fake_make_operation_argument_point     "point"
   #define fake_make_operation_argument_recursive "recursive"
@@ -144,6 +148,7 @@ extern "C" {
   #define fake_make_operation_argument_file_length      4
   #define fake_make_operation_argument_directory_length 9
   #define fake_make_operation_argument_error_length     5
+  #define fake_make_operation_argument_exit_length      4
   #define fake_make_operation_argument_ignore_length    6
   #define fake_make_operation_argument_point_length     5
   #define fake_make_operation_argument_recursive_length 9
@@ -276,8 +281,6 @@ extern "C" {
     f_string_dynamic path_cache;
 
     f_array_length main;
-
-    uint8_t fail;
   } fake_make_data;
 
   #define fake_make_data_initialize { \
@@ -289,7 +292,6 @@ extern "C" {
     f_fss_nameds_initialize, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
-    0, \
     0, \
   }
 
@@ -436,9 +438,31 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fake_make_operate_perform_
-  extern void fake_make_operate_perform(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_make_operate_perform_
+#ifndef _di_fake_make_operate_process_
+  extern void fake_make_operate_process(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_process_
+
+/**
+ * Execute either the run operation or the shell operation.
+ *
+ * @param data
+ *   The program data.
+ * @param program
+ *   The program to be executed.
+ * @param arguments
+ *   The arguments for the run or shell operation.
+ * @param as_shell
+ *   When TRUE, this is a shell operation.
+ *   When FALSE, this is a run operation.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *
+ * @return
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operate_process_execute_
+  extern f_return_status fake_make_operate_process_execute(const fake_data data, const f_string_static program, const f_string_statics arguments, const bool as_shell, fake_make_data *data_make) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_process_execute_
 
 /**
  * Handle the return code, converting it to a number.
@@ -452,29 +476,29 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fake_make_operate_perform_process_return_
-  extern void fake_make_operate_perform_process_return(const fake_data data, const f_number_signed return_code, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_make_operate_perform_process_return_
+#ifndef _di_fake_make_operate_process_return_
+  extern void fake_make_operate_process_return(const fake_data data, const int return_code, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_process_return_
 
 /**
  * Execute either the run operation or the shell operation.
  *
  * @param data
  *   The program data.
- * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param as_shell
  *   When TRUE, this is a shell operation.
  *   When FALSE, this is a run operation.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
  *
  * @return
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fake_make_operation_process_run_
-  extern f_return_status fake_make_operation_process_run(const fake_data data, const fake_make_data data_make, const f_string_statics arguments, const bool as_shell) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_make_operation_process_run_
+#ifndef _di_fake_make_operate_process_run_
+  extern f_return_status fake_make_operate_process_run(const fake_data data, const f_string_statics arguments, const bool as_shell, fake_make_data *data_make) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_process_run_
 
 /**
  * For a given make section operation, validate the given operation.

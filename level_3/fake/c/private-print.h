@@ -149,6 +149,24 @@ extern "C" {
 #endif // _di_fake_print_error_fakefile_section_operation_unknown_
 
 /**
+ * Print error message when fake settings content is empty.
+ *
+ * @param data
+ *   The program data.
+ * @param path_file
+ *   The path to the fakefile.
+ * @param buffer
+ *   The buffer containing the loaded file content.
+ * @param range_object
+ *   The range within the buffer representing the object.
+ * @param settings_name
+ *   The name of the setting that has an invalid value.
+ */
+#ifndef _di_fake_print_error_fakefile_settings_content_empty_
+  extern void fake_print_error_fakefile_settings_content_empty(const fake_data data, const f_string path_file, const f_string_dynamic buffer, const f_string_range range_object, const f_string settings_name) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_print_error_fakefile_settings_content_empty_
+
+/**
  * Print error message when fake settings content is invalid.
  *
  * @param data

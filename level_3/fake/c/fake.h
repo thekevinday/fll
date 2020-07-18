@@ -64,6 +64,7 @@
 // fll-1 includes
 #include <level_1/color.h>
 #include <level_1/console.h>
+#include <level_1/conversion.h>
 #include <level_1/directory.h>
 #include <level_1/iki.h>
 #include <level_1/string.h>

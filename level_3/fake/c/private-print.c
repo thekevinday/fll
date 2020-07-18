@@ -391,6 +391,26 @@ extern "C" {
   }
 #endif // _di_fake_print_error_fakefile_section_operation_unknown_
 
+#ifndef _di_fake_print_error_fakefile_settings_content_empty_
+  void fake_print_error_fakefile_settings_content_empty(const fake_data data, const f_string path_file, const f_string_dynamic buffer, const f_string_range range_object, const f_string settings_name) {
+    if (data.verbosity != fake_verbosity_verbose) return;
+
+    fprintf(f_type_error, "%c", f_string_eol[0]);
+
+    fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the fakefile '");
+    fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", path_file);
+    fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' has empty content for the '");
+    fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", settings_name);
+    fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' object '");
+
+    fl_color_print_code(f_type_warning, data.context.notable);
+    f_print_string_dynamic_partial(f_type_warning, buffer, range_object);
+    fl_color_print_code(f_type_warning, data.context.reset);
+
+    fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
+  }
+#endif // _di_fake_print_error_fakefile_settings_content_empty_
+
 #ifndef _di_fake_print_error_fakefile_settings_content_invalid_
   void fake_print_error_fakefile_settings_content_invalid(const fake_data data, const f_string path_file, const f_string_dynamic buffer, const f_string_range range_object, const f_string_range range_content, const f_string settings_name) {
     if (data.verbosity != fake_verbosity_verbose) return;

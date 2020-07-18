@@ -2,8 +2,9 @@
 
 settings:
   load_build yes
+  fail exit
 
-  parameter verbose +v
+  parameter verbose +V
 
 main:
 
