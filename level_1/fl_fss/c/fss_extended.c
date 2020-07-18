@@ -48,6 +48,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status status = F_none;
+    f_status status_allocate = F_none;
 
     status = f_fss_skip_past_space(*buffer, range);
     if (F_status_is_error(status)) return status;
@@ -82,17 +83,18 @@ extern "C" {
               return F_status_set_error(F_buffer_too_large);
             }
             else {
-              f_macro_fss_content_resize(status, (*found), found->size + f_fss_default_allocation_step);
+              f_macro_fss_content_resize(status_allocate, (*found), found->size + f_fss_default_allocation_step);
             }
           }
           else {
-            f_macro_fss_content_resize(status, (*found), found->size + f_fss_default_allocation_step);
+            f_macro_fss_content_resize(status_allocate, (*found), found->size + f_fss_default_allocation_step);
           }
 
-          if (F_status_is_error(status)) return status;
+          if (F_status_is_error(status_allocate)) return status_allocate;
 
           if (quoteds) {
-            f_macro_fss_quoteds_resize(status, (*quoteds), found->size);
+            f_macro_fss_quoteds_resize(status_allocate, (*quoteds), found->size);
+            if (F_status_is_error(status_allocate)) return status_allocate;
           }
         }
 
