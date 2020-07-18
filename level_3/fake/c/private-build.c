@@ -204,7 +204,7 @@ extern "C" {
 
     f_macro_string_dynamic_new(*status, path_source, source.used);
     if (F_status_is_error(*status)) {
-      fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_macro_string_dynamic_new", F_true);
+      fake_print_error(data, F_status_set_fine(*status), "f_macro_string_dynamic_new", F_true);
 
       f_macro_string_dynamic_delete_simple(path_source);
       return;
@@ -219,13 +219,13 @@ extern "C" {
 
       *status = fl_string_dynamic_append_nulless(files.array[i], &path_source);
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
         break;
       }
 
       *status = fl_string_dynamic_terminate_after(&path_source);
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
         break;
       }
 
@@ -235,17 +235,17 @@ extern "C" {
         if (F_status_is_error(*status)) {
           if (data.verbosity == fake_verbosity_verbose) {
             for (f_string_length j = 0; j < failures.used; j++) {
-              fake_print_error_build_operation_file(data.context, data.verbosity, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
+              fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
             } // for
 
             if (F_status_set_fine(*status) != F_failure) {
-              fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_directory_copy_content", F_true);
+              fake_print_error(data, F_status_set_fine(*status), "fl_directory_copy_content", F_true);
             }
 
             break;
           }
           else if (data.verbosity != fake_verbosity_quiet) {
-            fake_print_error_build_operation_file(data.context, data.verbosity, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
+            fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
           }
 
           break;
@@ -256,20 +256,20 @@ extern "C" {
 
         *status = fl_string_dynamic_append_nulless(destination, &destination_file);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
           break;
         }
 
         *status = f_file_name_base(path_source.string, path_source.used, &destination_file);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_file_name_base", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "f_file_name_base", F_true);
           break;
         }
 
         *status = f_file_copy(path_source.string, destination_file.string, mode, f_file_default_read_size, F_false);
 
         if (F_status_is_error(*status)) {
-          fake_print_error_build_operation_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_copy", "copy", "to", path_source.string, destination_file.string, F_true);
+          fake_print_error_build_operation_file(data, F_status_set_fine(*status), "f_file_copy", "copy", "to", path_source.string, destination_file.string, F_true);
           break;
         }
 
@@ -278,7 +278,7 @@ extern "C" {
         }
       }
       else if (F_status_is_error(*status)) {
-        fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_directory_is", path_source.string, "create", F_false, F_true);
+        fake_print_error_file(data, F_status_set_fine(*status), "f_directory_is", path_source.string, "create", F_false, F_true);
         break;
       }
 
@@ -332,7 +332,7 @@ extern "C" {
           }
         }
         else {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_program_environment", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fll_execute_program_environment", F_true);
         }
       }
     }
@@ -400,7 +400,7 @@ extern "C" {
           continue;
         }
 
-        fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_directory_create", directorys[i]->string, "create", F_false, F_true);
+        fake_print_error_file(data, F_status_set_fine(*status), "f_directory_create", directorys[i]->string, "create", F_false, F_true);
         return;
       }
 
@@ -457,7 +457,7 @@ extern "C" {
     }
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+      fake_print_error(data, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       f_macro_string_dynamics_delete_simple(arguments);
       return;
@@ -476,7 +476,7 @@ extern "C" {
         } // for
 
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_mash", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_mash", F_true);
 
           f_macro_string_dynamic_delete_simple(defines);
           f_macro_string_dynamics_delete_simple(arguments);
@@ -485,7 +485,7 @@ extern "C" {
 
         *status = fl_string_dynamic_terminate_after(&defines);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
 
           f_macro_string_dynamic_delete_simple(defines);
           f_macro_string_dynamics_delete_simple(arguments);
@@ -558,7 +558,7 @@ extern "C" {
       f_macro_string_dynamic_delete_simple(defines);
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add_parameter_set", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fll_execute_arguments_add_parameter_set", F_true);
 
         f_macro_string_dynamics_delete_simple(arguments);
         return;
@@ -585,7 +585,7 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), function, F_true);
+        fake_print_error(data, F_status_set_fine(*status), function, F_true);
 
         f_macro_string_dynamic_delete_simple(path);
         f_macro_string_dynamics_delete_simple(arguments);
@@ -611,7 +611,7 @@ extern "C" {
         }
       }
       else {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_path_environment", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fll_execute_path_environment", F_true);
       }
     }
     else {
@@ -630,7 +630,7 @@ extern "C" {
 
     f_status status = f_file_name_base(path.string, path.used, name);
     if (F_status_is_error(status)) {
-      fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "f_file_name_base", F_true);
+      fake_print_error(data, F_status_set_fine(status), "f_file_name_base", F_true);
       return status;
     }
 
@@ -645,7 +645,7 @@ extern "C" {
 
     status = fl_string_dynamic_terminate_after(name);
     if (F_status_is_error(status)) {
-      fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+      fake_print_error(data, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
       return status;
     }
 
@@ -698,7 +698,7 @@ extern "C" {
       } // for
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
         f_macro_string_dynamics_delete_simple(arguments);
         return;
@@ -837,7 +837,7 @@ extern "C" {
       fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
         f_macro_string_dynamics_delete_simple(arguments);
         return;
@@ -880,11 +880,11 @@ extern "C" {
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
-          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_path, "link", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_file_link", parameter_file_path, "link", F_true, F_true);
           return;
         }
 
-        fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_name_micro, "link", F_true, F_true);
+        fake_print_error_file(data, F_status_set_fine(*status), "f_file_link", parameter_file_name_micro, "link", F_true, F_true);
         return;
       }
     }
@@ -927,19 +927,19 @@ extern "C" {
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
-          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_path, "link", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_file_link", parameter_file_path, "link", F_true, F_true);
 
           return;
         }
 
         if (data_build.setting.version_target == fake_build_version_type_major) {
-          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_name_major, "link", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_file_link", parameter_file_name_major, "link", F_true, F_true);
         }
         else if (data_build.setting.version_target == fake_build_version_type_minor) {
-          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_name_minor, "link", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_file_link", parameter_file_name_minor, "link", F_true, F_true);
         }
         else if (data_build.setting.version_target == fake_build_version_type_micro) {
-          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_link", parameter_file_name_micro, "link", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_file_link", parameter_file_name_micro, "link", F_true, F_true);
         }
 
         return;
@@ -999,7 +999,7 @@ extern "C" {
 
         *status = fake_build_get_file_name_without_extension(data, data_build.setting.build_sources_library.array[i], &file_name);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
 
           f_macro_string_dynamic_delete_simple(file_name);
           f_macro_string_dynamic_delete_simple(source_path);
@@ -1009,26 +1009,26 @@ extern "C" {
 
         *status = f_file_name_directory(data_build.setting.build_sources_library.array[i].string, data_build.setting.build_sources_library.array[i].used, &source_path);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_file_name_directory", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "f_file_name_directory", F_true);
           break;
         }
 
         if (source_path.used) {
           *status = fl_string_dynamic_prepend(data.path_build_objects, &source_path);
           if (F_status_is_error(*status)) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
+            fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
             break;
           }
 
           *status = fl_string_append_assure(f_path_separator, f_path_separator_length, &source_path);
           if (F_status_is_error(*status)) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+            fake_print_error(data, F_status_set_fine(*status), "fl_string_append_assure", F_true);
             break;
           }
 
           *status = fl_string_dynamic_terminate_after(&source_path);
           if (F_status_is_error(*status)) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+            fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
             break;
           }
 
@@ -1058,7 +1058,7 @@ extern "C" {
       } // for
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
         f_macro_string_dynamic_delete_simple(file_name);
         f_macro_string_dynamic_delete_simple(source_path);
@@ -1099,7 +1099,7 @@ extern "C" {
 
       f_macro_string_dynamics_new(*status, names, 2);
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_macro_string_dynamics_new", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "f_macro_string_dynamics_new", F_true);
 
         f_macro_string_dynamics_delete_simple(names);
         return;
@@ -1139,7 +1139,7 @@ extern "C" {
 
           f_macro_string_dynamics_resize(*status, names, names.used + data_build.setting.environment.used);
           if (F_status_is_error(*status)) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true);
+            fake_print_error(data, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true);
 
             f_macro_string_dynamic_delete_simple(part);
             f_macro_string_dynamics_delete_simple(names);
@@ -1163,7 +1163,7 @@ extern "C" {
       f_macro_string_dynamic_delete_simple(part);
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
 
         f_macro_string_dynamics_delete_simple(names);
         return;
@@ -1222,7 +1222,7 @@ extern "C" {
     f_macro_string_dynamic_delete_simple(variable_value);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data.context, data.verbosity, *status, function, F_true);
+      fake_print_error(data, *status, function, F_true);
     }
   }
 #endif // _di_fake_build_load_environment_
@@ -1244,7 +1244,7 @@ extern "C" {
 
       *status = fll_fss_extended_read(&buffer, &range, &objects, &contents, 0, 0);
       if (F_status_is_error(*status)) {
-        fake_print_error_fss(data.context, data.verbosity, *status, "fll_fss_extended_read", data.file_data_build_settings.string, range, F_true);
+        fake_print_error_fss(data, *status, "fll_fss_extended_read", data.file_data_build_settings.string, range, F_true);
       }
 
       fake_build_load_setting_process(data, data.file_data_build_settings.string, buffer, objects, contents, setting, status);
@@ -1544,7 +1544,7 @@ extern "C" {
         }
       }
       else if (!error_printed) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), function, F_true);
+        fake_print_error(data, F_status_set_fine(*status), function, F_true);
       }
     }
     else {
@@ -1821,21 +1821,21 @@ extern "C" {
 
           *status = fl_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);
           if (F_status_is_error(*status)) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+            fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
             break;
           }
 
           if (settings_single_type[i] == 2) {
             *status = fl_string_append_assure(f_path_separator, f_path_separator_length, settings_single_destination[i]);
             if (F_status_is_error(*status)) {
-              fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+              fake_print_error(data, F_status_set_fine(*status), "fl_string_append_assure", F_true);
               break;
             }
           }
 
           *status = fl_string_dynamic_terminate_after(settings_single_destination[i]);
           if (F_status_is_error(*status)) {
-            fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+            fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
             break;
           }
         }
@@ -1897,13 +1897,13 @@ extern "C" {
 
         *status = fl_string_append_assure(sources[i], lengths[i], destinations[i]);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_append_assure", F_true);
           break;
         }
 
         *status = fl_string_dynamic_terminate_after(destinations[i]);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
           break;
         }
       } // for
@@ -2073,33 +2073,33 @@ extern "C" {
     for (uint8_t i = 0; i < fake_build_stage_total; i++) {
       *status = fl_string_dynamic_append_nulless(data.path_build_stage, values[i]);
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
         break;
       }
 
       if (data.process.used) {
         *status = fl_string_append(data.process.string, data.process.used, values[i]);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
           break;
         }
 
         *status = fl_string_append(fake_build_parameter_stage_separator, fake_build_parameter_stage_separator_length, values[i]);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
           break;
         }
       }
 
       *status = fl_string_append_nulless(names[i], lengths[i], values[i]);
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
         break;
       }
 
       *status = fl_string_dynamic_terminate_after(values[i]);
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
         break;
       }
     } // for
@@ -2142,7 +2142,7 @@ extern "C" {
 
       *status = fake_build_get_file_name_without_extension(data, data_build.setting.build_sources_library.array[i], &file_name);
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
 
         f_macro_string_dynamic_delete_simple(file_name);
         f_macro_string_dynamic_delete_simple(destination_path);
@@ -2152,26 +2152,26 @@ extern "C" {
 
       *status = f_file_name_directory(data_build.setting.build_sources_library.array[i].string, data_build.setting.build_sources_library.array[i].used, &destination_path);
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "f_file_name_directory", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "f_file_name_directory", F_true);
         break;
       }
 
       if (destination_path.used) {
         *status = fl_string_dynamic_prepend(data.path_build_objects, &destination_path);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
           break;
         }
 
         *status = fl_string_append_assure(f_path_separator, f_path_separator_length, &destination_path);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_append_assure", F_true);
           break;
         }
 
         *status = fl_string_dynamic_terminate_after(&destination_path);
         if (F_status_is_error(*status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
           break;
         }
 
@@ -2199,7 +2199,7 @@ extern "C" {
               fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' could not be created, a parent directory does not exist.");
             }
             else {
-              fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_directory_create", destination_path.string, "create", F_false, F_true);
+              fake_print_error_file(data, F_status_set_fine(*status), "f_directory_create", destination_path.string, "create", F_false, F_true);
             }
 
             break;
@@ -2210,7 +2210,7 @@ extern "C" {
           }
         }
         else if (F_status_is_error(*status)) {
-          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_directory_exists", destination_path.string, "create", F_false, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_directory_exists", destination_path.string, "create", F_false, F_true);
           break;
         }
 
@@ -2259,7 +2259,7 @@ extern "C" {
       fake_build_arguments_standard_add(data, data_build, F_false, F_true, &arguments, status);
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
         break;
       }
 
@@ -2465,7 +2465,7 @@ extern "C" {
     fake_build_arguments_standard_add(data, data_build, F_true, F_false, &arguments, status);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+      fake_print_error(data, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       f_macro_string_dynamics_delete_simple(arguments);
       return;
@@ -2570,7 +2570,7 @@ extern "C" {
     fake_build_arguments_standard_add(data, data_build, F_false, F_false, &arguments, status);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data.context, data.verbosity, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+      fake_print_error(data, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       f_macro_string_dynamics_delete_simple(arguments);
       return;
@@ -2597,7 +2597,7 @@ extern "C" {
     *status = f_file_touch(file.string, mode.regular, F_false);
 
     if (F_status_is_error(*status)) {
-      fake_print_error_file(data.context, data.verbosity, F_status_set_fine(*status), "f_file_touch", file.string, "touch", F_true, F_true);
+      fake_print_error_file(data, F_status_set_fine(*status), "f_file_touch", file.string, "touch", F_true, F_true);
     }
   }
 #endif // _di_fake_build_touch_

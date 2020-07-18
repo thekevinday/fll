@@ -45,7 +45,7 @@ extern "C" {
         status = fake_skeleton_operate_directory_create(data, *parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "fake_skeleton_operate_directory_create", F_true);
+          fake_print_error(data, F_status_set_fine(status), "fake_skeleton_operate_directory_create", F_true);
           return status;
         }
       } // for
@@ -153,7 +153,7 @@ extern "C" {
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' could not be created, a parent directory does not exist.");
         }
         else {
-          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_directory_create", path.string, "create", F_false, F_true);
+          fake_print_error_file(data, F_status_set_fine(status), "f_directory_create", path.string, "create", F_false, F_true);
         }
 
         return status;
@@ -164,7 +164,7 @@ extern "C" {
       }
     }
     else if (F_status_is_error(status)) {
-      fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_directory_exists", path.string, "create", F_false, F_true);
+      fake_print_error_file(data, F_status_set_fine(status), "f_directory_exists", path.string, "create", F_false, F_true);
       return status;
     }
 
@@ -224,7 +224,7 @@ extern "C" {
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' could not be created, a parent directory does not exist.");
         }
         else {
-          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_file_create", path.string, "create", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(status), "f_file_create", path.string, "create", F_true, F_true);
         }
 
         return status;
@@ -242,14 +242,14 @@ extern "C" {
 
         status = f_file_open(path.string, 0, &file);
         if (F_status_is_error(status)) {
-          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_file_open", path.string, "pre-populate", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(status), "f_file_open", path.string, "pre-populate", F_true, F_true);
 
           return status;
         }
 
         status = f_file_write(file, content, 0);
         if (F_status_is_error(status)) {
-          fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_file_write", path.string, "pre-populate", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(status), "f_file_write", path.string, "pre-populate", F_true, F_true);
 
           f_file_close(&file.id);
           return status;
@@ -263,7 +263,7 @@ extern "C" {
       }
     }
     else if (F_status_is_error(status)) {
-      fake_print_error_file(data.context, data.verbosity, F_status_set_fine(status), "f_file_is", path.string, "create", F_true, F_true);
+      fake_print_error_file(data, F_status_set_fine(status), "f_file_is", path.string, "create", F_true, F_true);
       return status;
     }
 

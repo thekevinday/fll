@@ -34,7 +34,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fake_print_error(data.context, data.verbosity, F_status_set_fine(status), "f_directory_remove", F_true);
+      fake_print_error(data, F_status_set_fine(status), "f_directory_remove", F_true);
       return status;
     }
 

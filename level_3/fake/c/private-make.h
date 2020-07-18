@@ -425,8 +425,6 @@ extern "C" {
  *   The operation type.
  * @param operation_name
  *   The operation name.
- * @param operation_range
- *   The range within the buffer pointing to the operation.
  * @param arguments
  *   The expanded arguments.
  * @param operation_if
@@ -439,7 +437,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_perform_
-  extern void fake_make_operate_perform(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_range operation_range, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_perform(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_perform_
 
 /**

@@ -15,10 +15,8 @@ extern "C" {
 /**
  * Print generic error messages.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param status
  *   The status code representing an error.
  * @param function
@@ -31,16 +29,14 @@ extern "C" {
  *   F_unknown is returned if the status code has no print message.
  */
 #ifndef _di_fake_print_error_
-  extern f_return_status fake_print_error(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_print_error(const fake_data data, const f_status status, const f_string function, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_
 
 /**
  * Print build operation file error messages.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param status
  *   The error status code to report on.
  * @param function
@@ -65,68 +61,32 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fake_print_error_operation_file_
-  extern bool fake_print_error_build_operation_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string operation, const f_string source, const f_string destination, const f_string how, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern bool fake_print_error_build_operation_file(const fake_data data, const f_status status, const f_string function, const f_string operation, const f_string source, const f_string destination, const f_string how, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_operation_file_
-
-/**
- * Print error messages when processing some fakefile section.
- *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
- * @param status
- *   The status code representing an error.
- * @param function
- *   The name of the function where the error happened.
- * @param buffer
- *   The buffer containing the fakefile data.
- * @param section_name
- *   The range within the buffer representing the section name.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
- *
- * @return
- *   F_none is returned on successful print of known errors.
- *   F_unknown is returned if the status code has no print message.
- */
-#ifndef _di_fake_print_error_fakefile_section_
-  extern bool fake_print_error_fakefile_section(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const bool fallback) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_print_error_fakefile_section_
 
 /**
  * Print error messages when processing some fakefile section, for a specific line and operation.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param status
  *   The status code representing an error.
  * @param function
  *   The name of the function where the error happened.
  *   Set to 0 to disable.
- * @param buffer
- *   The buffer containing the fakefile data.
- * @param section_name
- *   The range within the buffer representing the section name.
- * @param operation_name
- *   The range within the buffer representing the operation name within the section.
  * @param string
  *   A string used by certain error conditions.
  *   Set to 0 disable.
  */
 #ifndef _di_fake_print_error_fakefile_section_line_
-  extern void fake_print_error_fakefile_section_line(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_string string) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_fakefile_section_line(const fake_data data, const f_status status, const f_string function, const f_string string) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_fakefile_section_line_
 
 /**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that operation failed.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param buffer
  *   The buffer containing the fakefile data.
  * @param section_name
@@ -135,40 +95,30 @@ extern "C" {
  *   The range within the buffer representing the operation name within the section.
  */
 #ifndef _di_fake_print_error_fakefile_section_operation_failed_
-  extern void fake_print_error_fakefile_section_operation_failed(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_fakefile_section_operation_failed(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_fakefile_section_operation_failed_
 
 /**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that operation has a path outside of the project root.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param status
  *   The status code representing an error.
  * @param function
  *   The name of the function where the error happened.
- * @param buffer
- *   The buffer containing the fakefile data.
- * @param section_name
- *   The range within the buffer representing the section name.
- * @param operation_name
- *   The range within the buffer representing the operation name within the section.
  * @param path
  *   The path that is outside of the project path.
  */
 #ifndef _di_fake_print_error_fakefile_section_operation_path_outside_
-  extern void fake_print_error_fakefile_section_operation_path_outside(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_string path) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_fakefile_section_operation_path_outside(const fake_data data, const f_status status, const f_string function, const f_string path) f_gcc_attribute_visibility_internal;
 #endif // _fake_print_error_fakefile_section_operation_path_outside_
 
 /**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that the max stack depth is reached.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param buffer
  *   The buffer containing the fakefile data.
  * @param section_name
@@ -179,16 +129,14 @@ extern "C" {
  *   The max stack depth.
  */
 #ifndef _di_fake_print_error_fakefile_section_operation_stack_max_
-  extern void fake_print_error_fakefile_section_operation_stack_max(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_array_length stack_max) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_fakefile_section_operation_stack_max(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_array_length stack_max) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_fakefile_section_operation_stack_max_
 
 /**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that operation is invalid.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param buffer
  *   The buffer containing the fakefile data.
  * @param section_name
@@ -197,16 +145,14 @@ extern "C" {
  *   The range within the buffer representing the operation name within the section.
  */
 #ifndef _di_fake_print_error_fakefile_section_operation_unknown_
-  extern void fake_print_error_fakefile_section_operation_unknown(const fl_color_context context, const uint8_t verbosity, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_fakefile_section_operation_unknown(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_fakefile_section_operation_unknown_
 
 /**
  * Print error message when fake settings content is invalid.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param path_file
  *   The path to the fakefile.
  * @param buffer
@@ -219,7 +165,7 @@ extern "C" {
  *   The name of the setting that has an invalid value.
  */
 #ifndef _di_fake_print_error_fakefile_settings_content_invalid_
-  extern void fake_print_error_fakefile_settings_content_invalid(const fl_color_context context, const uint8_t verbosity, const f_string path_file, const f_string_dynamic buffer, const f_string_range range_object, const f_string_range range_content, const f_string settings_name) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_fakefile_settings_content_invalid(const fake_data data, const f_string path_file, const f_string_dynamic buffer, const f_string_range range_object, const f_string_range range_content, const f_string settings_name) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_fakefile_settings_content_invalid_
 
 /**
@@ -227,10 +173,8 @@ extern "C" {
  *
  * @todo the fll_file_error_print() needs to be reviewed and possibly changed.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param status
  *   The error status code to report on.
  * @param function
@@ -249,16 +193,14 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fake_print_error_file_
-  extern bool fake_print_error_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string name, const f_string operation, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern bool fake_print_error_file(const fake_data data, const f_status status, const f_string function, const f_string name, const f_string operation, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_file_
 
 /**
  * Print FSS error messages.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param status
  *   The error status code to report on.
  * @param function
@@ -275,35 +217,31 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fake_print_error_fss_
-  extern bool fake_print_error_fss(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string path_file, const f_string_range range, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern bool fake_print_error_fss(const fake_data data, const f_status status, const f_string function, const f_string path_file, const f_string_range range, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_fss_
 
 /**
  * Print an error message for when the parameter is missing its accompanying value.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param parameter
  *   The parameter name.
  */
 #ifndef _di_fake_print_error_parameter_missing_value_
-  extern void fake_print_error_parameter_missing_value(const fl_color_context context, const uint8_t verbosity, const f_string parameter) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_parameter_missing_value(const fake_data data, const f_string parameter) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_parameter_missing_value_
 
 /**
  * Print an error message for when the parameter is specified too many times.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param parameter
  *   The parameter name.
  */
 #ifndef _di_fake_print_error_parameter_too_many_
-  extern void fake_print_error_parameter_too_many(const fl_color_context context, const uint8_t verbosity, const f_string parameter) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_parameter_too_many(const fake_data data, const f_string parameter) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**
@@ -329,10 +267,8 @@ extern "C" {
 /**
  * Print warning message when fakefile has too many objects with the same name.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param path_file
  *   The path to the fakefile.
  * @param buffer
@@ -343,16 +279,14 @@ extern "C" {
  *   The name of the object.
  */
 #ifndef _di_fake_print_warning_fakefile_object_multiple_
-  extern void fake_print_warning_fakefile_object_multiple(const fl_color_context context, const uint8_t verbosity, const f_string path_file, const f_string label, const f_string name_object) f_gcc_attribute_visibility_internal;
+  extern void fake_print_warning_fakefile_object_multiple(const fake_data data, const f_string path_file, const f_string label, const f_string name_object) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_warning_fakefile_object_multiple_
 
 /**
  * Print warning message when settings content has too many values.
  *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
+ * @param data
+ *   The program data.
  * @param path_file
  *   The path to the fakefile.
  * @param buffer
@@ -361,7 +295,7 @@ extern "C" {
  *   The name of the object.
  */
 #ifndef _di_fake_print_warning_settings_content_multiple_
-  extern void fake_print_warning_settings_content_multiple(const fl_color_context context, const uint8_t verbosity, const f_string path_file, const f_string name_object) f_gcc_attribute_visibility_internal;
+  extern void fake_print_warning_settings_content_multiple(const fake_data data, const f_string path_file, const f_string name_object) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_warning_settings_content_multiple_
 
 #ifdef __cplusplus

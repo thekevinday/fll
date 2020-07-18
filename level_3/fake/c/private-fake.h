@@ -94,34 +94,6 @@ extern "C" {
 #endif // _di_fake_path_generate_string_dynamic_
 
 /**
- * Print an error message for when the parameter is missing its accompanying value.
- *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
- * @param parameter
- *   The parameter name.
- */
-#ifndef _di_fake_print_error_parameter_missing_value_
-  extern void fake_print_error_parameter_missing_value(const fl_color_context context, const uint8_t verbosity, const f_string parameter) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_print_error_parameter_missing_value_
-
-/**
- * Print an error message for when the parameter is specified too many times.
- *
- * @param context
- *   The color context.
- * @param verbosity
- *   The verbosity level, which determines if and what should be printed.
- * @param parameter
- *   The parameter name.
- */
-#ifndef _di_fake_print_error_parameter_too_many_
-  extern void fake_print_error_parameter_too_many(const fl_color_context context, const uint8_t verbosity, const f_string parameter) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_print_error_parameter_too_many_
-
-/**
  * Validate console arguments and print any relating error messages.
  *
  * @param arguments

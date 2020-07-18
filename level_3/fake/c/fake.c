@@ -99,7 +99,7 @@ extern "C" {
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
         if (F_status_is_error(status)) {
-          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_process", F_true);
+          fake_print_error(*data, F_status_set_fine(status), "fll_program_parameter_process", F_true);
           fake_delete_data(data);
           return status;
         }
@@ -117,7 +117,7 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          fake_print_error(data->context, data->verbosity, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+          fake_print_error(*data, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
           fake_delete_data(data);
           return status;
         }
