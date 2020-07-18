@@ -646,7 +646,14 @@ extern "C" {
           range.start = iki_variable.array[iki_variable.used - 1].stop + 1;
           range.stop = content.array[i].stop;
 
-          *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
+          // if arguments.used was not incremented, then use the value, otherwise arguments.used is past the value to append to, so subtract 1.
+          if (used_arguments == arguments->used) {
+            *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
+          }
+          else {
+            *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used - 1]);
+          }
+
           if (F_status_is_error(*status)) {
             fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_partial_append_nulless", F_true);
             break;
