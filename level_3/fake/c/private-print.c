@@ -300,7 +300,7 @@ extern "C" {
   void fake_print_error_fakefile_section_operation_failed(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) {
     if (data.verbosity == fake_verbosity_quiet) return;
 
-    f_string_length line = 0;
+    f_string_length line = 1;
 
     f_fss_count_lines(buffer, operation_name.start, &line);
 
@@ -327,7 +327,7 @@ extern "C" {
   void fake_print_error_fakefile_section_operation_stack_max(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_array_length stack_max) {
     if (data.verbosity == fake_verbosity_quiet) return;
 
-    f_string_length line = 0;
+    f_string_length line = 1;
 
     f_fss_count_lines(buffer, operation_name.start, &line);
 
@@ -356,7 +356,7 @@ extern "C" {
   void fake_print_error_fakefile_section_operation_unknown(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) {
     if (data.verbosity == fake_verbosity_quiet) return;
 
-    f_string_length line = 0;
+    f_string_length line = 1;
 
     f_fss_count_lines(buffer, operation_name.start, &line);
 
