@@ -6,31 +6,8 @@ settings:
   parameter verbose +v
 
 main:
-  print Begin processing the \"main" program.
-
-  print
-  print First, cleaning any previous work.
-  clean
-
-  print Result = \'parameter:"result"'
-
-  print
-  print Second, building the skeleton.
   skeleton
 
-  print Result = \'parameter:"result"'
+  clean
 
-  print
-  print Third, executing the build process.
   build
-
-  print Result = \'parameter:"result"'
-
-  to sources
-  print should have changed to sources
-
-  to invalid
-  print should have errored before this
-
-  to /tmp
-  print should not be allowed to leave project root.

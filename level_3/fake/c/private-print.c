@@ -12,9 +12,16 @@ extern "C" {
     if (status == F_parameter) {
       if (data.verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Invalid parameter when calling function ");
-        fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", function);
-        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "().");
+        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Invalid parameter");
+
+        if (function) {
+          fl_color_print(f_type_error, data.context.error, data.context.reset, " when calling function ");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", function);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "().");
+        }
+        else {
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
+        }
       }
 
       return F_none;
@@ -23,9 +30,16 @@ extern "C" {
     if (status == F_memory_allocation || status == F_memory_reallocation) {
       if (data.verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unable to allocate memory in function ");
-        fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", function);
-        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "().");
+        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unable to allocate memory");
+
+        if (function) {
+          fl_color_print(f_type_error, data.context.error, data.context.reset, " in function ");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", function);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "().");
+        }
+        else {
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
+        }
       }
 
       return F_none;
@@ -35,9 +49,16 @@ extern "C" {
       fprintf(f_type_error, "%c", f_string_eol[0]);
       fl_color_print(f_type_error, data.context.error, data.context.reset, "UNKNOWN ERROR: (");
       fl_color_print(f_type_error, data.context.notable, data.context.reset, "%llu", status);
-      fl_color_print(f_type_error, data.context.error, data.context.reset, ") in function ");
-      fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", function);
-      fl_color_print_line(f_type_error, data.context.error, data.context.reset, "().");
+      fl_color_print(f_type_error, data.context.error, data.context.reset, ")");
+
+        if (function) {
+          fl_color_print(f_type_error, data.context.error, data.context.reset, " in function ");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", function);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "().");
+        }
+        else {
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
+        }
     }
 
     return F_unknown;
@@ -265,36 +286,27 @@ extern "C" {
   }
 #endif // _di_fake_print_error_build_operation_file_
 
-#ifndef _di_fake_print_error_fakefile_section_line_
-  void fake_print_error_fakefile_section_line(const fake_data data, const f_status status, const f_string function, const f_string string) {
+#ifndef _di_fake_print_error_fakefile_path_stack_
+  void fake_print_error_fakefile_path_stack(const fake_data data, const f_status status, const f_string function, const f_string string) {
     if (data.verbosity == fake_verbosity_quiet) return;
 
-    fprintf(f_type_error, "%c", f_string_eol[0]);
+    if (status == F_buffer_too_large) {
+      fprintf(f_type_error, "%c", f_string_eol[0]);
+      fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Maximum size reached for %s array", string);
 
-    if (status == F_parameter) {
-      fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Invalid parameter");
-    }
-    else if (status == F_memory_allocation || status == F_memory_reallocation) {
-      fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unable to allocate memory");
-    }
-    else if (status == F_buffer_too_large) {
-      fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Maximum size reached for%s%s array", string ? " " : "", string ? string : "");
+      if (function) {
+        fl_color_print(f_type_error, data.context.error, data.context.reset, " while calling ");
+        fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", function);
+        fl_color_print(f_type_error, data.context.error, data.context.reset, "()");
+      }
+
+      fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
     }
     else {
-      fl_color_print(f_type_error, data.context.error, data.context.reset, "UNKNOWN ERROR: (");
-      fl_color_print(f_type_error, data.context.notable, data.context.reset, "%llu", status);
-      fl_color_print(f_type_error, data.context.error, data.context.reset, ") occurred");
+      fake_print_error(data, status, function, F_true);
     }
-
-    if (function) {
-      fl_color_print(f_type_error, data.context.error, data.context.reset, " while calling ");
-      fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", function);
-      fl_color_print(f_type_error, data.context.error, data.context.reset, "()");
-    }
-
-    fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
   }
-#endif // _di_fake_print_error_fakefile_section_line_
+#endif // _di_fake_print_error_fakefile_path_stack_
 
 #ifndef _di_fake_print_error_fakefile_section_operation_failed_
   void fake_print_error_fakefile_section_operation_failed(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name) {
@@ -653,42 +665,6 @@ extern "C" {
     fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' specified too many times.");
   }
 #endif // _di_fake_print_error_parameter_too_many_
-
-#ifndef _di_fake_print_error_section_operation_
-  void fake_print_error_section_operation(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_static operation_name, const f_string message, ...) {
-    if (data.verbosity == fake_verbosity_quiet) return;
-
-    fprintf(f_type_error, "%c", f_string_eol[0]);
-
-    fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Section '");
-
-    fl_color_print_code(f_type_error, data.context.notable);
-    f_print_string_dynamic_partial(f_type_error, buffer, section_name);
-    fl_color_print_code(f_type_error, data.context.reset);
-
-    fl_color_print(f_type_error, data.context.error, data.context.reset, "' operation '");
-
-    fl_color_print_code(f_type_error, data.context.notable);
-    f_print_string_dynamic(f_type_error, operation_name);
-    fl_color_print_code(f_type_error, data.context.reset);
-
-    fl_color_print(f_type_error, data.context.error, data.context.reset, "' ");
-
-    f_print_string_dynamic(f_type_error, data.context.error);
-
-    va_list ap;
-
-    va_start(ap, message);
-
-    vfprintf(f_type_error, message, ap);
-
-    va_end(ap);
-
-    f_print_string_dynamic(f_type_error, data.context.reset);
-
-    fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
-  }
-#endif // _di_fake_print_error_section_operation_
 
 #ifndef _di_fake_print_warning_fakefile_object_multiple_
   void fake_print_warning_fakefile_object_multiple(const fake_data data, const f_string path_file, const f_string label, const f_string name_object) {

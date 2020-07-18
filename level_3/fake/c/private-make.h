@@ -273,7 +273,7 @@ extern "C" {
     f_fss_nameds fakefile;
 
     f_string_dynamic buffer;
-    f_string_dynamic path_real; // used as a cache for determining a real path.
+    f_string_dynamic path_cache;
 
     f_array_length main;
 
@@ -301,7 +301,7 @@ extern "C" {
     fake_macro_make_path_delete_simple(data.path) \
     f_macro_fss_nameds_delete_simple(data.fakefile) \
     f_macro_string_dynamic_delete_simple(data.buffer) \
-    f_macro_string_dynamic_delete_simple(data.path_real)
+    f_macro_string_dynamic_delete_simple(data.path_cache)
 #endif // _di_fake_make_data_
 
 /**
@@ -313,7 +313,7 @@ extern "C" {
  *   file path to get the real path of.
  * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
- *   The data_make.path_real will be updated to reflect the full path to this file.
+ *   The data_make.path_cache will be updated to reflect the full path to this file.
  *
  * @return
  *   F_true if inside the project.
@@ -503,6 +503,24 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_define_name_
   extern f_return_status fake_make_operate_validate_define_name(const f_string_static name) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_define_name_
+
+/**
+ * Get a path, relative to the project root.
+ *
+ * @param data
+ *   The program data.
+ * @param path
+ *   The NULL terminated path to get the relative path of.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   The relative path is stored in data_make.path_cache.
+ *
+ * @return
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_path_relative_
+  extern f_return_status fake_make_path_relative(const fake_data data, const f_string_static path, fake_make_data *data_make) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_path_relative_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -13,23 +13,27 @@ extern "C" {
 #ifndef _di_fake_make_assure_inside_project_
   f_return_status fake_make_assure_inside_project(const fake_data data, const f_string_static path, fake_make_data *data_make) {
 
-    data_make->path_real.used = 0;
+    data_make->path_cache.used = 0;
 
-    f_status status = f_path_real(path.string, &data_make->path_real);
+    f_status status = f_path_real(path.string, &data_make->path_cache);
     if (F_status_is_error(status)) return status;
+
+    if (data_make->path_cache.used < data_make->path.stack.array[0].used) {
+      return F_status_set_error(F_false);
+    }
 
     const f_string_range range = f_macro_string_range_initialize(data_make->path.stack.array[0].used);
 
     if (range.start <= range.stop) {
-      status = fl_string_dynamic_partial_compare(data_make->path.stack.array[0], path, range, range);
+      status = fl_string_dynamic_partial_compare(data_make->path.stack.array[0], data_make->path_cache, range, range);
       if (F_status_is_error(status)) return status;
 
       if (status) {
-        if (data_make->path_real.used == data_make->path.stack.array[0].used) {
+        if (data_make->path_cache.used == data_make->path.stack.array[0].used) {
           return F_true;
         }
 
-        if (data_make->path_real.string[data_make->path.stack.array[0].used] == f_path_separator[0]) {
+        if (data_make->path_cache.string[data_make->path.stack.array[0].used] == f_path_separator[0]) {
           return F_true;
         }
       }
@@ -364,6 +368,8 @@ extern "C" {
       fake_macro_make_data_delete_simple(data_make);
       return status;
     }
+
+    data_make.path.stack.used = 1;
 
     f_macro_mode_set_default_umask(mode, data.umask);
 
@@ -816,9 +822,9 @@ extern "C" {
         operation_if = fake_make_operation_if_type_if;
       }
 
-      if (F_status_is_error(*status)) break;
-
-      fake_make_operate_perform(data, section->name, operation, *operation_name, arguments[i], operation_if, data_make, status);
+      if (F_status_is_fine(*status)) {
+        fake_make_operate_perform(data, section->name, operation, *operation_name, arguments[i], operation_if, data_make, status);
+      }
 
       if (F_status_is_error(*status)) {
         fake_print_error_fakefile_section_operation_failed(data, data_make->buffer, section->name, section->objects.array[i]);
@@ -938,7 +944,35 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_pop) {
-      // @todo: change directory.
+      f_macro_string_dynamic_delete_simple(data_make->path.stack.array[data_make->path.stack.used - 1]);
+
+      data_make->path.stack.used--;
+
+      *status = f_path_change(data_make->path.stack.array[data_make->path.stack.used - 1].string);
+      if (F_status_is_error(*status)) {
+        fake_print_error_fakefile_path_stack(data, F_status_set_fine(*status), "f_path_change", data_make->path.stack.array[data_make->path.stack.used - 1].string);
+        return;
+      }
+
+      if (data.verbosity == fake_verbosity_verbose) {
+        *status = fake_make_path_relative(data, data_make->path.stack.array[data_make->path.stack.used - 1], data_make);
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, F_status_set_fine(*status), "fake_make_path_relative", F_true);
+          return;
+        }
+
+        printf("%c", f_string_eol[0]);
+        printf("Changed to project path '");
+
+        if (data_make->path_cache.used) {
+          fl_color_print_code(f_type_output, data.context.notable);
+          f_print_string_dynamic(f_type_output, data_make->path_cache);
+          fl_color_print_code(f_type_error, data.context.reset);
+        }
+
+        printf("'.%c", f_string_eol[0]);
+      }
+
       return;
     }
 
@@ -979,7 +1013,7 @@ extern "C" {
     if (operation == fake_make_operation_type_to) {
       *status = fake_make_assure_inside_project(data, arguments.array[0], data_make);
       if (F_status_is_error(*status)) {
-        fake_print_error_fakefile_section_operation_path_outside(data, *status, "fake_make_assure_inside_project", arguments.array[0].string);
+        fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", arguments.array[0].string);
 
         if (F_status_set_fine(*status) == F_false) {
           *status = F_status_set_error(F_failure);
@@ -990,13 +1024,13 @@ extern "C" {
 
       *status = f_path_change(arguments.array[0].string);
       if (F_status_is_error(*status)) {
-        fake_print_error_fakefile_section_line(data, F_status_set_fine(*status), "f_path_change", arguments.array[0].string);
+        fake_print_error_fakefile_path_stack(data, F_status_set_fine(*status), "f_path_change", arguments.array[0].string);
       }
       else {
         if (data_make->path.stack.used == data_make->path.stack.size) {
           if (data_make->path.stack.used + 1 >= f_array_length_size) {
             *status = F_status_set_error(F_buffer_too_large);
-            fake_print_error_fakefile_section_line(data, F_buffer_too_large, "f_macro_string_dynamics_resize", "path stack");
+            fake_print_error_fakefile_path_stack(data, F_buffer_too_large, "f_macro_string_dynamics_resize", "path stack");
             return;
           }
 
@@ -1008,27 +1042,41 @@ extern "C" {
           }
 
           if (F_status_is_error(*status)) {
-            fake_print_error_fakefile_section_line(data, F_status_set_fine(*status), "f_macro_string_dynamics_resize", 0);
+            fake_print_error(data, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true);
             return;
           }
         }
 
         // copy the entire real path, including the trailing NULL.
-        data_make->path_real.used++;
+        data_make->path_cache.used++;
 
-        fl_string_dynamic_append_nulless(data_make->path_real, &data_make->path.stack.array[data_make->path.stack.used]);
-
-        // reset the used to disclude the trailing NULL.
-        data_make->path_real.used--;
+        fl_string_dynamic_append(data_make->path_cache, &data_make->path.stack.array[data_make->path.stack.used]);
 
         if (F_status_is_error(*status)) {
-          fake_print_error_fakefile_section_line(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", 0);
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
           return;
         }
 
-        data_make->path.stack.used++;
+        if (data.verbosity == fake_verbosity_verbose) {
+          *status = fake_make_path_relative(data, data_make->path.stack.array[data_make->path.stack.used], data_make);
+          if (F_status_is_error(*status)) {
+            fake_print_error(data, F_status_set_fine(*status), "fake_make_path_relative", F_true);
+            return;
+          }
 
-        // @todo: if verbose, then print the directory change (strip out the project root part of the path when printing).
+          printf("%c", f_string_eol[0]);
+          printf("Changed to project path '");
+
+          if (data_make->path_cache.used) {
+            fl_color_print_code(f_type_output, data.context.notable);
+            f_print_string_dynamic(f_type_output, data_make->path_cache);
+            fl_color_print_code(f_type_error, data.context.reset);
+          }
+
+          printf("'.%c", f_string_eol[0]);
+        }
+
+        data_make->path.stack.used++;
       }
 
       return;
@@ -1036,6 +1084,23 @@ extern "C" {
 
     if (operation == fake_make_operation_type_top) {
       *status = f_path_change_at(data_make->path.top);
+      if (F_status_is_error(*status)) {
+        fake_print_error_fakefile_path_stack(data, F_status_set_fine(*status), "f_path_change", arguments.array[0].string);
+        return;
+      }
+
+      if (data.verbosity == fake_verbosity_verbose) {
+        printf("%c", f_string_eol[0]);
+        printf("Changed to project path ''.%c", f_string_eol[0]);
+      }
+
+      // clear stack, except for the project root.
+      for (f_array_length i = 1; i < data_make->path.stack.used; i++) {
+        f_macro_string_dynamic_delete_simple(data_make->path.stack.array[i]);
+      } // for
+
+      data_make->path.stack.used = 1;
+
       return;
     }
 
@@ -1060,7 +1125,7 @@ extern "C" {
       // @todo: convert F_status_set_fine(*status) to a string and assign that instead of 1. (need a convert function from llu to string.)
       status2 = fl_string_append("1", 1, &data_make->setting_make.parameter.array[0].value.array[0]);
 
-      // fake_print_error_fakefile_section_line(data, F_status_set_fine(*status), "fake_clean_operate", data_make.buffer, section_name, operation_range, arguments.array[0].string);
+      // fake_print_error_fakefile_path_stack(data, F_status_set_fine(*status), "fake_clean_operate", data_make.buffer, section_name, operation_range, arguments.array[0].string);
     }
     else {
       // @todo: convert return_code to a string and assign that instead of 0. (need a convert function from llu to string.)
@@ -1087,13 +1152,17 @@ extern "C" {
 
     if (operation == fake_make_operation_type_archive || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell || operation == fake_make_operation_type_touch) {
       if (arguments.used == 0) {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "requires arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Requires arguments.");
+
         *status = F_status_set_error(F_failure);
       }
     }
     else if (operation == fake_make_operation_type_build) {
       if (arguments.used > 1) {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+
         *status = F_status_set_error(F_failure);
       }
       else if (arguments.used) {
@@ -1101,29 +1170,52 @@ extern "C" {
           f_status status_file = f_file_is(arguments.array[0].string, f_file_type_regular);
 
           if (F_status_is_error(status_file)) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[0].string);
+            printf("%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+
             *status = status_file;
           }
 
           if (!status_file) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "the file '%s' must be a regular file", arguments.array[0].string);
+            printf("%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The file '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' must be a regular file.");
+
             *status = F_status_set_error(F_failure);
           }
         }
         else {
-          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "filename argument must not be an empty string");
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Filename argument must not be an empty string.");
+
+          *status = F_status_set_error(F_failure);
         }
       }
     }
     else if (operation == fake_make_operation_type_clean || operation == fake_make_operation_type_pop || operation == fake_make_operation_type_top || operation == fake_make_operation_type_skeleton) {
       if (arguments.used) {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+
         *status = F_status_set_error(F_failure);
+      }
+      else if (operation == fake_make_operation_type_pop) {
+        if (data_make.path.stack.used == 1) {
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Must not attempt to pop project root off of path stack.");
+
+          *status = F_status_set_error(F_failure);
+        }
       }
     }
     else if (operation == fake_make_operation_type_compile) {
       if (arguments.used == 0) {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "requires arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Requires arguments.");
+
         *status = F_status_set_error(F_failure);
       }
     }
@@ -1131,29 +1223,43 @@ extern "C" {
       if (arguments.used) {
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to) {
           if (arguments.used > 2) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
+            printf("%c", f_string_eol[0]);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+
             *status = F_status_set_error(F_failure);
           }
         }
         else if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory, arguments.array[0], fake_make_operation_argument_directory_length) == F_equal_to) {
           if (arguments.used > 3) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
+            printf("%c", f_string_eol[0]);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+
             *status = F_status_set_error(F_failure);
           }
           else if (arguments.used == 3) {
             if (fl_string_dynamic_compare_string(fake_make_operation_argument_recursive, arguments.array[0], fake_make_operation_argument_recursive_length) == F_equal_to_not) {
-              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "third argument must be either '%s' or not provided at all", fake_make_operation_argument_recursive);
+              printf("%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Third argument must be either '");
+              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_make_operation_argument_recursive);
+              fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' or not provided at all.");
+
               *status = F_status_set_error(F_failure);
             }
           }
         }
         else {
-          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "unsupported file type '%s'", arguments.array[0].string);
+          printf("%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unsupported file type '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+
           *status = F_status_set_error(F_failure);
         }
       }
       else {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "requires arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Requires arguments.");
+
         *status = F_status_set_error(F_failure);
       }
     }
@@ -1163,17 +1269,23 @@ extern "C" {
         // @todo: if arguments.used is 1, then value is assigned to null.
       }
       else {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "requires arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Requires arguments.");
+
         *status = F_status_set_error(F_failure);
       }
     }
     else if (operation == fake_make_operation_type_else) {
       if (operation_if == fake_make_operation_if_type_else) {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "must not be used after another else condition");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Must not be used after another else condition.");
+
         *status = F_status_set_error(F_failure);
       }
       else if (!operation_if) {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has no preceding if condition");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has no preceding if condition.");
+
         *status = F_status_set_error(F_failure);
       }
     }
@@ -1182,57 +1294,83 @@ extern "C" {
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_error, arguments.array[0], fake_make_operation_argument_error_length) == F_equal_to_not) {
           if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn, arguments.array[0], fake_make_operation_argument_warn_length) == F_equal_to_not) {
             if (fl_string_dynamic_compare_string(fake_make_operation_argument_ignore, arguments.array[0], fake_make_operation_argument_ignore_length) == F_equal_to_not) {
-              fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "unsupported fail type '%s'", arguments.array[0].string);
+              printf("%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unsupported file type '");
+              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+              fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+
               *status = F_status_set_error(F_failure);
             }
           }
         }
       }
       else {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "requires arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Requires arguments.");
+
         *status = F_status_set_error(F_failure);
       }
     }
     else if (operation == fake_make_operation_type_group || operation == fake_make_operation_type_mode || operation == fake_make_operation_type_owner) {
       if (arguments.used > 3) {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+
         *status = F_status_set_error(F_failure);
       }
       else if (arguments.used > 1) {
         f_status status_file = f_file_is(arguments.array[1].string, f_file_type_regular);
 
         if (F_status_is_error(status_file)) {
-          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[1].string);
+          printf("%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+
           *status = status_file;
         }
 
         if (!status_file) {
-          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "the file '%s' must be a regular file", arguments.array[1].string);
+          printf("%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The file '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' must be a regular file.");
+
           *status = F_status_set_error(F_failure);
         }
 
         if (arguments.used == 3) {
           if (fl_string_dynamic_compare_string(fake_make_operation_argument_recursive, arguments.array[2], fake_make_operation_argument_recursive_length) == F_equal_to_not) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "third argument must be either '%s' or not provided at all", fake_make_operation_argument_recursive);
+            printf("%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Third argument must be either '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_make_operation_argument_recursive);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' or not provided at all.");
+
             *status = F_status_set_error(F_failure);
           }
         }
       }
       else {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "requires arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Requires arguments.");
+
         *status = F_status_set_error(F_failure);
       }
     }
     else if (operation == fake_make_operation_type_if) {
       if (operation_if == fake_make_operation_if_type_if) {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "must not be used after another if condition");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Must not be used after another if condition.");
+
         *status = F_status_set_error(F_failure);
       }
     }
     else if (operation == fake_make_operation_type_link) {
       // @todo validate link is outside that the link is or is not outside the project directory.
       if (arguments.used > 2) {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+
         *status = F_status_set_error(F_failure);
       }
       else if (arguments.used == 2) {
@@ -1242,7 +1380,10 @@ extern "C" {
           status_file = f_file_exists(arguments.array[0].string);
 
           if (F_status_is_error(status_file) || !status_file) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[0].string);
+            printf("%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
 
             if (status_file == F_false) {
               *status = F_status_set_error(F_failure);
@@ -1253,7 +1394,9 @@ extern "C" {
           }
         }
         else {
-          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "%s filename argument must not be an empty string", fake_make_operation_argument_target);
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: The %s filename argument must not be an empty string.", fake_make_operation_argument_target);
+
           *status = F_status_set_error(F_failure);
         }
 
@@ -1261,7 +1404,10 @@ extern "C" {
           status_file = f_file_exists(arguments.array[1].string);
 
           if (F_status_is_error(status_file) || !status_file) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[1].string);
+            printf("%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
 
             if (status_file == F_false) {
               *status = F_status_set_error(F_failure);
@@ -1272,12 +1418,16 @@ extern "C" {
           }
         }
         else {
-          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "%s filename argument must not be an empty string", fake_make_operation_argument_point);
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Filename argument must not be an empty string.", fake_make_operation_argument_point);
+
           *status = F_status_set_error(F_failure);
         }
       }
       else {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "requires arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Requires arguments.");
+
         *status = F_status_set_error(F_failure);
       }
     }
@@ -1287,7 +1437,9 @@ extern "C" {
     }
     else if (operation == fake_make_operation_type_to) {
       if (arguments.used > 1) {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "has too many arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+
         *status = F_status_set_error(F_failure);
       }
       else if (arguments.used) {
@@ -1295,21 +1447,32 @@ extern "C" {
           f_status status_file = f_file_is(arguments.array[0].string, f_file_type_directory);
 
           if (F_status_is_error(status_file)) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "failed to find file '%s'", arguments.array[0].string);
+            printf("%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+
             *status = status_file;
           }
 
           if (!status_file) {
-            fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "the file '%s' must be a directory file", arguments.array[0].string);
+            printf("%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The file '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' must be a directory file.");
+
             *status = F_status_set_error(F_failure);
           }
         }
         else {
-          fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "filename argument must not be an empty string");
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Filename argument must not be an empty string.");
         }
       }
       else {
-        fake_print_error_section_operation(data, data_make.buffer,section_name, operation_name, "requires arguments");
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Requires arguments.");
+
         *status = F_status_set_error(F_failure);
       }
     }
@@ -1335,6 +1498,33 @@ extern "C" {
     return F_true;
   }
 #endif // _di_fake_make_operate_validate_define_name_
+
+#ifndef _di_fake_make_path_relative_
+  f_return_status fake_make_path_relative(const fake_data data, const f_string_static path, fake_make_data *data_make) {
+    data_make->path_cache.used = 0;
+
+    if (!path.used || path.used == data_make->path.stack.array[0].used) {
+      return F_none;
+    }
+
+    if (path.used < data_make->path.stack.array[0].used) {
+      return F_status_set_error(F_failure);
+    }
+
+    f_string_range range = f_string_range_initialize;
+
+    range.start = data_make->path.stack.array[0].used + 1;
+    range.stop = range.start + (path.used - range.start) - 1;
+
+    f_status status = fl_string_dynamic_partial_append(path, range, &data_make->path_cache);
+    if (F_status_is_error(status)) return status;
+
+    status = fl_string_dynamic_terminate(&data_make->path_cache);
+    if (F_status_is_error(status)) return status;
+
+    return status;
+  }
+#endif // _di_fake_make_path_relative_
 
 #ifdef __cplusplus
 } // extern "C"

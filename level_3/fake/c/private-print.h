@@ -21,6 +21,7 @@ extern "C" {
  *   The status code representing an error.
  * @param function
  *   The name of the function where the error happened.
+ *   Set to 0 to disable.
  * @param fallback
  *   Set to F_true to print the fallback error message for unknown errors.
  *
@@ -76,11 +77,10 @@ extern "C" {
  *   Set to 0 to disable.
  * @param string
  *   A string used by certain error conditions.
- *   Set to 0 disable.
  */
-#ifndef _di_fake_print_error_fakefile_section_line_
-  extern void fake_print_error_fakefile_section_line(const fake_data data, const f_status status, const f_string function, const f_string string) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_print_error_fakefile_section_line_
+#ifndef _di_fake_print_error_fakefile_path_stack_
+  extern void fake_print_error_fakefile_path_stack(const fake_data data, const f_status status, const f_string function, const f_string string) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_print_error_fakefile_path_stack_
 
 /**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that operation failed.
@@ -243,26 +243,6 @@ extern "C" {
 #ifndef _di_fake_print_error_parameter_too_many_
   extern void fake_print_error_parameter_too_many(const fake_data data, const f_string parameter) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_error_parameter_too_many_
-
-/**
- * Print a specific error message for a named section operation.
- *
- * @param data
- *   The program data.
- * @param buffer
- *   A buffer containing the contents of the fakefile file.
- * @param section_name
- *   The range within the buffer representing the section name.
- * @param operation_name
- *   The name of the operation designated to have an error.
- * @param message
- *   The error message.
- * @param ...
- *   Variable arguments, processed in the same way fprintf() processes them.
- */
-#ifndef _di_fake_print_error_section_operation_
-  extern void fake_print_error_section_operation(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_static operation_name, const f_string message, ...) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_print_error_section_operation_
 
 /**
  * Print warning message when fakefile has too many objects with the same name.
