@@ -152,7 +152,25 @@ extern "C" {
             return status;
           }
 
-          if (status == F_false) break;
+          // current word-dash-plus block is not a valid variable name, try again.
+          if (status == F_false) {
+            f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, F_true);
+
+            if (F_status_is_error(status)) {
+              f_macro_string_lengths_delete(status, delimits);
+              return status;
+            }
+            else if (range->start > range->stop) {
+              f_macro_string_lengths_delete(status, delimits);
+              return F_data_not_stop;
+            }
+            else if (range->start >= buffer->used) {
+              f_macro_string_lengths_delete(status, delimits);
+              return F_data_not_eos;
+            }
+
+            found_vocabulary.start = range->start;
+          }
         }
 
         status = f_utf_buffer_increment(*buffer, range, 1);
