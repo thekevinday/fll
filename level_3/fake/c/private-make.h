@@ -29,7 +29,6 @@ extern "C" {
 
     uint8_t fail;
 
-    f_string_map_multis define;
     f_string_map_multis parameter;
   } fake_make_setting;
 
@@ -37,11 +36,9 @@ extern "C" {
     0, \
     0, \
     f_string_map_multis_initialize, \
-    f_string_map_multis_initialize, \
   }
 
   #define fake_macro_make_setting_delete_simple(setting) \
-    f_macro_string_map_multis_delete_simple(setting.define) \
     f_macro_string_map_multis_delete_simple(setting.parameter)
 
   #define fake_make_setting_define     "define"
@@ -380,7 +377,7 @@ extern "C" {
  *   The operation name.
  * @param content
  *   The content array.
- * @param quotedss
+ * @param quoteds
  *   The array of quoted associated with the content.
  * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
@@ -394,6 +391,54 @@ extern "C" {
 #ifndef _di_fake_make_operate_expand_
   extern void fake_make_operate_expand(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_fss_content content, const f_fss_quoteds quoteds, fake_make_data *data_make, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_expand_
+
+/**
+ * Perform the expand operation, specifically for the environment variables.
+ *
+ * @param data
+ *   The program data.
+ * @param quoted
+ *   The quoted associated with the content.
+ * @param range_name
+ *   The range representing the variable content name string within the data_make->buffer.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param arguments
+ *   The expanded arguments.
+ *
+ * @return
+ *   F_true on success and match expanded.
+ *   F_false on no matches to expand.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operate_expand_environment_
+  extern f_return_status fake_make_operate_expand_environment(const fake_data data, const f_fss_quoted quoted, const f_string_range range_name, fake_make_data *data_make, f_string_dynamics *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_expand_environment_
+
+/**
+ * Perform the expand operation, specifically for the build settings.
+ *
+ * @param data
+ *   The program data.
+ * @param quoted
+ *   The quoted associated with the content.
+ * @param range_name
+ *   The range representing the variable content name string within the data_make->buffer.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param arguments
+ *   The expanded arguments.
+ *
+ * @return
+ *   F_true on success and match expanded.
+ *   F_false on no matches to expand.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operate_expand_build_
+  extern f_return_status fake_make_operate_expand_build(const fake_data data, const f_fss_quoted quoted, const f_string_range range_name, fake_make_data *data_make, f_string_dynamics *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_operate_expand_build_
 
 /**
  * Perform the make operations within the given section.

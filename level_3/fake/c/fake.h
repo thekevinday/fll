@@ -57,6 +57,7 @@
 #include <level_0/utf.h>
 #include <level_0/console.h>
 #include <level_0/directory.h>
+#include <level_0/environment.h>
 #include <level_0/file.h>
 #include <level_0/iki.h>
 #include <level_0/path.h>
