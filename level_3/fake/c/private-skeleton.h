@@ -11,12 +11,12 @@
 #ifndef _di_fake_skeleton_content_
   #define fake_make_skeleton_content_defines      "# fss-0000\n\n"
   #define fake_make_skeleton_content_dependencies "# fss-0000\n\n"
-  #define fake_make_skeleton_content_fakefile     "# fss-0005\n\nsettings:\n\nmain:\n\n"
+  #define fake_make_skeleton_content_fakefile     "# fss-0005 iki-0002\n\nsettings:\n  fail exit\n\nmain:\n\n"
   #define fake_make_skeleton_content_settings     "# fss-0001\n\n"
 
   #define fake_make_skeleton_content_defines_length      12
   #define fake_make_skeleton_content_dependencies_length 12
-  #define fake_make_skeleton_content_fakefile_length     30
+  #define fake_make_skeleton_content_fakefile_length     51
   #define fake_make_skeleton_content_settings_length     12
 #endif // _di_fake_skeleton_content_
 
