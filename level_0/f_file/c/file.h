@@ -1723,7 +1723,7 @@ extern "C" {
  * @param mode
  *   The file mode to use when (regular) file is created.
  * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to TRUE to dereference symlinks (often is what is desired).
  *   Set to FALSE to operate on the symlink itself.
  *
  * @return
