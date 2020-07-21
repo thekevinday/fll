@@ -1533,10 +1533,33 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_touch) {
-      // fake_make_assure_inside_project
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      f_mode mode = f_mode_initialize;
+
+      f_macro_mode_set_default_umask(mode, data.umask);
+
+      if (data.verbosity == fake_verbosity_verbose) {
+        printf("Touching %s '", arguments.array[0].string);
+        fl_color_print(f_type_output, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
+        printf("'.%c", f_string_eol[0]);
+      }
+
+      if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to) {
+        *status = f_file_touch(arguments.array[1].string, mode.regular, F_false);
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, F_status_set_fine(*status), "f_file_touch", F_true);
+          return;
+        }
+      }
+      else if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory, arguments.array[0], fake_make_operation_argument_directory_length) == F_equal_to) {
+        *status = f_directory_touch(arguments.array[1].string, mode.directory);
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, F_status_set_fine(*status), "f_directory_touch", F_true);
+          return;
+        }
+      }
+
       return;
     }
   }
@@ -1714,7 +1737,7 @@ extern "C" {
   void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, f_status *status) {
     if (F_status_is_error(*status)) return;
 
-    if (operation == fake_make_operation_type_archive || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell || operation == fake_make_operation_type_touch) {
+    if (operation == fake_make_operation_type_archive || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell) {
       if (arguments.used == 0) {
         printf("%c", f_string_eol[0]);
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Requires arguments.");
@@ -2032,6 +2055,34 @@ extern "C" {
           printf("%c", f_string_eol[0]);
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Filename argument must not be an empty string.");
         }
+      }
+      else {
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Requires arguments.");
+
+        *status = F_status_set_error(F_failure);
+      }
+    }
+    else if (operation == fake_make_operation_type_touch) {
+      if (arguments.used > 2) {
+        printf("%c", f_string_eol[0]);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+
+        *status = F_status_set_error(F_failure);
+      }
+      else if (arguments.used == 2) {
+        if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to_not) {
+          if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory, arguments.array[0], fake_make_operation_argument_directory_length) == F_equal_to_not) {
+            printf("%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unsupported file type '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+
+            *status = F_status_set_error(F_failure);
+          }
+        }
+
+        // @todo: fake_make_assure_inside_project
       }
       else {
         printf("%c", f_string_eol[0]);
