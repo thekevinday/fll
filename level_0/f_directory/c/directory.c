@@ -7,27 +7,7 @@ extern "C" {
 
 #ifndef _di_f_directory_create_
   f_return_status f_directory_create(const f_string path, const mode_t mode) {
-
-    if (mkdir(path, mode) < 0) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
-      if (errno == EEXIST) return F_status_set_error(F_file_found);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == EMLINK) return F_status_set_error(F_directory_link_max);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
-      if (errno == ENOSPC) return F_status_set_error(F_space_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == EPERM) return F_status_set_error(F_prohibited);
-      if (errno == EROFS) return F_status_set_error(F_read_only);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
+    return private_f_directory_create(path, mode);
   }
 #endif // _di_f_directory_create_
 
@@ -37,27 +17,7 @@ extern "C" {
       if (at_id <= 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (mkdirat(at_id, path, mode) < 0) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
-      if (errno == EEXIST) return F_status_set_error(F_file_found);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == EMLINK) return F_status_set_error(F_directory_link_max);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
-      if (errno == ENOSPC) return F_status_set_error(F_space_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == EPERM) return F_status_set_error(F_prohibited);
-      if (errno == EROFS) return F_status_set_error(F_read_only);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
+    return private_f_directory_create_at(at_id, path, mode);
   }
 #endif // _di_f_directory_create_at_
 
@@ -387,6 +347,106 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_directory_remove_custom_
+
+#ifndef _di_f_directory_touch_
+  f_return_status f_directory_touch(const f_string path, const mode_t mode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status status = F_none;
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(struct stat));
+
+    if (stat(path, &file_stat) < 0) {
+
+      if (errno == ENOENT) {
+        return private_f_directory_create(path, mode);
+      }
+
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+
+      return F_status_set_error(F_file_stat);
+    }
+
+    if (utimensat(f_directory_at_current_working, path, 0, 0) < 0) {
+
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == ESRCH) return  F_status_set_error(F_search);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_directory_touch_
+
+#ifndef _di_f_directory_touch_at_
+  f_return_status f_directory_touch_at(const int at_id, const f_string path, const mode_t mode, const int flag) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status status = F_none;
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(struct stat));
+
+    if (fstatat(at_id, path, &file_stat, flag) < 0) {
+
+      if (errno == ENOENT) {
+        return private_f_directory_create_at(at_id, path, mode);
+      }
+
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+
+      return F_status_set_error(F_file_stat);
+    }
+
+    if (utimensat(at_id, path, 0, flag) < 0) {
+
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == ESRCH) return  F_status_set_error(F_search);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_directory_touch_at_
 
 #ifdef __cplusplus
 } // extern "C"
