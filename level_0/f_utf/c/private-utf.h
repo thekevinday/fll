@@ -84,6 +84,28 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
 
 /**
+ * Private implementation of f_utf_character_is_ascii().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   F_true if a UTF-8 control picture character.
+ *   F_false if not a UTF-8 control picture character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_character_is_ascii()
+ * @see f_utf_is_ascii()
+ */
+#if !defined(_di_f_utf_character_is_ascii_) || !defined(_di_f_utf_is_ascii_)
+  extern f_return_status private_f_utf_character_is_ascii(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_character_is_ascii_) || !defined(_di_f_utf_is_ascii_)
+
+/**
  * Private implementation of f_utf_character_is_combining().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -238,6 +260,28 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_phonetic_) || !defined(_di_f_utf_is_phonetic_)
 
 /**
+ * Private implementation of f_utf_character_is_private().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_character_is_private()
+ * @see f_utf_is_private()
+ */
+#if !defined(_di_f_utf_character_is_private_) || !defined(_di_f_utf_is_private_)
+  extern f_return_status private_f_utf_character_is_private(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_character_is_private_) || !defined(_di_f_utf_is_private_)
+
+/**
  * Private implementation of f_utf_character_is_punctuation().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -280,6 +324,28 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_symbol_) || !defined(_di_f_utf_is_symbol_)
   extern f_return_status private_f_utf_character_is_symbol(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_utf_character_is_symbol_) || !defined(_di_f_utf_is_symbol_)
+
+/**
+ * Private implementation of f_utf_character_is_unassigned().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   F_true if a UTF-8 character.
+ *   F_false if not a UTF-8 character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_character_is_unassigned()
+ * @see f_utf_is_unassigned()
+ */
+#if !defined(_di_f_utf_character_is_unassigned_) || !defined(_di_f_utf_is_unassigned_)
+  extern f_return_status private_f_utf_character_is_unassigned(const f_utf_character character, const uint8_t width) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_character_is_unassigned_) || !defined(_di_f_utf_is_unassigned_)
 
 /**
  * Private implementation of f_utf_character_is_valid().

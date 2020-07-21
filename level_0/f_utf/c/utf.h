@@ -117,7 +117,7 @@ extern "C" {
 #endif // _di_f_utf_buffer_increment_
 
 /**
- * Check to see if the entire byte block of the character is a UTF-8 character.
+ * Check to see if the entire byte block of the character is a non-ASCII UTF-8 character.
  *
  * This does not validate if the UTF-8 character is a valid UTF-8 character, for that use f_utf_character_is_valid().
  *
@@ -191,6 +191,21 @@ extern "C" {
 #ifndef _di_f_utf_character_is_alpha_numeric_
   extern f_return_status f_utf_character_is_alpha_numeric(const f_utf_character character);
 #endif // _di_f_utf_character_is_alpha_numeric_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII character.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if an ASCII character.
+ *   F_false if not an ASCII character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ */
+#ifndef _di_f_utf_character_is_ascii_
+  extern f_return_status f_utf_character_is_ascii(const f_utf_character character);
+#endif // _di_f_utf_character_is_ascii_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 combining character.
@@ -365,6 +380,21 @@ extern "C" {
 #endif // _di_f_utf_character_is_phonetic_
 
 /**
+ * Check to see if the entire byte block of the character is a UTF-8 private character.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 private character.
+ *   F_false if not a UTF-8 private character.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ */
+#ifndef _di_f_utf_character_is_private_
+  extern f_return_status f_utf_character_is_private(const f_utf_character character);
+#endif // _di_f_utf_character_is_private_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 punctuation character.
  *
  * @todo Incomplete, UTF-8 codes not yet checked!
@@ -399,14 +429,33 @@ extern "C" {
 #endif // _di_f_utf_character_is_symbol_
 
 /**
- * Check to see if the entire byte block of the character is a valid UTF-8 character.
+ * Check to see if the entire byte block of the character is a unassigned (well-formed) UTF-8 character.
+ *
+ * This does unassignedate if the UTF-8 character is a unassigned UTF-8 character.
+ * To not do this, use f_utf_character_is().
+ *
+ * @param character
+ *   The character to unassignedate.
+ *
+ * @return
+ *   F_true if a UTF-8 unassigned character.
+ *   F_false if not a UTF-8 unassigned character.
+ *   F_utf (with error bit) if character is an inunassigned UTF-8 character.
+ *
+ * @see f_utf_character_is()
+ * @see f_utf_character_is_fragment()
+ */
+#ifndef _di_f_utf_character_is_unassigned_
+  extern f_return_status f_utf_character_is_unassigned(const f_utf_character character);
+#endif // _di_f_utf_character_is_value_
+
+/**
+ * Check to see if the entire byte block of the character is a valid (well-formed) UTF-8 character.
  *
  * This does validate if the UTF-8 character is a valid UTF-8 character.
  * To not do this, use f_utf_character_is().
  *
- * This function can be expensive due to how Unicode has invalid codes spread randomly through it.
- * For simpler error checking, try f_utf_is_fragment(), to just check that the width is valid or not.
- * (First characters should not have a width of 1, and all other characters should have a width of 1.)
+ * Valid ASCII character codes are considered valid by this function.
  *
  * @param character
  *   The character to validate.
@@ -631,7 +680,7 @@ extern "C" {
 #endif // _di_f_utf_is_big_endian_
 
 /**
- * Check to see if the entire byte block of the character is a UTF-8 character.
+ * Check to see if the entire byte block of the character is a non-ASCII UTF-8 character.
  *
  * This does not check the validity of the character, for that instead use f_utf_is_valid().
  *
@@ -720,6 +769,25 @@ extern "C" {
 #ifndef _di_f_utf_is_alpha_numeric_
   extern f_return_status f_utf_is_alpha_numeric(const f_string character, const f_string_length width_max);
 #endif // _di_f_utf_is_alpha_numeric_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII character.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if an ASCII character.
+ *   F_false if not an ASCII character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ */
+#ifndef _di_f_utf_is_ascii_
+  extern f_return_status f_utf_is_ascii(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_ascii_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 combining character.
@@ -924,6 +992,25 @@ extern "C" {
 #endif // _di_f_utf_is_phonetic_
 
 /**
+ * Check to see if the entire byte block of the character is a UTF-8 private character.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 punctuation character.
+ *   F_false if not a UTF-8 punctuation character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ */
+#ifndef _di_f_utf_is_private_
+  extern f_return_status f_utf_is_private(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_private_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 punctuation character.
  *
  * @todo Incomplete, UTF-8 codes not yet checked!
@@ -966,13 +1053,34 @@ extern "C" {
 #endif // _di_f_utf_is_symbol_
 
 /**
- * Check to see if the entire byte block of the character is a UTF-8 character and if that character is a valid UTF-8.
+ * Check to see if the entire byte block of the character is a unassigned UTF-8 character.
  *
- * This does check the validity of the character, to not do this use f_utf_is().
+ * Unassigned as of Unicode version 13.0.
  *
- * This function can be expensive due to how Unicode has invalid codes spread randomly through it.
- * For simpler error checking, try f_utf_is_fragment(), to just check that the width is valid or not.
- * (First characters should have a width of not 1, and all other characters should not have a width of 1.)
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if an unassigned UTF-8 character.
+ *   F_false if not an unassigned UTF-8 character.
+ *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_parameter (with error bit) if a parameter is inunassigned.
+ */
+#ifndef _di_f_utf_is_unassigned_
+  extern f_return_status f_utf_is_unassigned(const f_string character, const f_string_length width_max);
+#endif // _di_f_utf_is_unassigned_
+
+/**
+ * Check to see if the entire byte block of the character is a valid (well-formed) UTF-8 character.
+ *
+ * This does validate if the UTF-8 character is a valid UTF-8 character.
+ * To not do this, use f_utf_is().
+ *
+ * Valid ASCII character codes are considered valid by this function.
  *
  * @param character
  *   The character to validate.
