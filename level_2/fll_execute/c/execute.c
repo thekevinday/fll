@@ -587,7 +587,7 @@ extern "C" {
       }
     }
     else {
-      status = f_path_explode_dynamic(path, &paths);
+      status = f_environment_path_explode_dynamic(path, &paths);
     }
 
     if (F_status_is_error(status)) {
