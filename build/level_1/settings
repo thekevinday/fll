@@ -20,7 +20,7 @@ build_language c
 build_linker ar
 build_libraries -lc
 build_libraries-level -lfll_0
-build_sources_library color.c console.c conversion.c directory.c private-directory.c environment.c fss_basic.c fss_basic_list.c fss_extended.c fss_extended_list.c private-fss.c iki.c print.c status.c string.c private-string.c utf.c private-utf.c utf_file.c private-utf_file.c
+build_sources_library color.c console.c conversion.c directory.c private-directory.c environment.c private-fss.c fss_basic.c fss_basic_list.c fss_extended.c fss_extended_list.c iki.c print.c status.c string.c private-string.c utf.c private-utf.c utf_file.c private-utf_file.c
 build_sources_program
 build_sources_headers color.h console.h conversion.h directory.h environment.h fss.h fss_basic.h fss_basic_list.h fss_extended.h fss_extended_list.h fss_macro.h fss_status.h iki.h print.h status.h string.h utf.h utf_file.h
 build_sources_script

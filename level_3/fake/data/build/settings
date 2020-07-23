@@ -19,7 +19,7 @@ build_compiler gcc
 build_language c
 build_linker ar
 build_libraries -lc
-build_libraries-individual -lfll_execute -lfll_fss -lfll_path -lfll_program -lfl_utf -lfl_string -lfl_status -lfl_iki -lfl_fss -lfl_directory -lfl_conversion -lfl_console -lfl_color -lf_print -lf_path -lf_iki -lf_file -lf_fss -lf_environment -lf_directory -lf_conversion -lf_console -lf_utf -lf_memory
+build_libraries-individual -lfll_program -lfll_path -lfll_execute -lfl_environment -lfll_fss -lfl_utf -lfl_string -lfl_status -lfl_iki -lfl_fss -lfl_directory -lfl_conversion -lfl_console -lfl_color -lf_print -lf_path -lf_iki -lf_file -lf_fss -lf_environment -lf_directory -lf_conversion -lf_console -lf_utf -lf_memory
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_sources_library fake.c private-fake.c private-clean.c private-build.c private-make.c private-print.c private-skeleton.c
