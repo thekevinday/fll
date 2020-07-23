@@ -28,6 +28,7 @@
 #include <level_0/path.h>
 
 // fll-1 includes
+#include <level_1/environment.h>
 #include <level_1/string.h>
 
 #ifdef __cplusplus

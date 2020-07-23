@@ -559,19 +559,19 @@ extern "C" {
  *   The operation being performed.
  * @param operation_name
  *   The operation name.
- * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param arguments
  *   The expanded arguments.
  * @param operation_if
  *   The if-condition status for the current operation.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param status
  *   The return status.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_
 
 /**

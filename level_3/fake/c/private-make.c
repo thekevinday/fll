@@ -15,7 +15,7 @@ extern "C" {
 
     data_make->path_cache.used = 0;
 
-    f_status status = f_path_real(path.string, &data_make->path_cache);
+    f_status status = fll_path_canonical(path.string, &data_make->path_cache);
     if (F_status_is_error(status)) return status;
 
     if (data_make->path_cache.used < data_make->path.stack.array[0].used) {
@@ -1235,7 +1235,7 @@ extern "C" {
       fake_make_operate_expand(data, section->name, operation, *operation_name, section->contents.array[i], section->quotedss.array[i], data_make, &arguments[i], status);
       if (F_status_is_error(*status)) break;
 
-      fake_make_operate_validate(data, section->name, operation, *operation_name, *data_make, arguments[i], operation_if, status);
+      fake_make_operate_validate(data, section->name, operation, *operation_name, arguments[i], operation_if, data_make, status);
 
       if (operation_if) {
         if (operation_if == fake_make_operation_if_type_if) {
@@ -1547,7 +1547,13 @@ extern "C" {
         *status = f_file_touch(arguments.array[1].string, mode.regular, F_false);
 
         if (F_status_is_error(*status)) {
-          fake_print_error(data, F_status_set_fine(*status), "f_file_touch", F_true);
+          if (F_status_is_fine(fll_path_canonical(arguments.array[1].string, &data_make->path_cache))) {
+            fake_print_error_file(data, F_status_set_fine(*status), "f_file_touch", data_make->path_cache.string, "touch", F_true, F_true);
+          }
+          else {
+            fake_print_error_file(data, F_status_set_fine(*status), "f_file_touch", arguments.array[1].string, "touch", F_true, F_true);
+          }
+
           return;
         }
       }
@@ -1555,7 +1561,13 @@ extern "C" {
         *status = f_directory_touch(arguments.array[1].string, mode.directory);
 
         if (F_status_is_error(*status)) {
-          fake_print_error(data, F_status_set_fine(*status), "f_directory_touch", F_true);
+          if (F_status_is_fine(fll_path_canonical(arguments.array[1].string, &data_make->path_cache))) {
+            fake_print_error_file(data, F_status_set_fine(*status), "f_directory_touch", data_make->path_cache.string, "touch", F_false, F_true);
+          }
+          else {
+            fake_print_error_file(data, F_status_set_fine(*status), "f_directory_touch", arguments.array[1].string, "touch", F_false, F_true);
+          }
+
           return;
         }
       }
@@ -1734,7 +1746,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_run_
 
 #ifndef _di_fake_make_operate_validate_
-  void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const fake_make_data data_make, const f_string_dynamics arguments, const uint8_t operation_if, f_status *status) {
+  void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) {
     if (F_status_is_error(*status)) return;
 
     if (operation == fake_make_operation_type_archive || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell) {
@@ -1790,7 +1802,7 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
       else if (operation == fake_make_operation_type_pop) {
-        if (data_make.path.stack.used == 1) {
+        if (data_make->path.stack.used == 1) {
           printf("%c", f_string_eol[0]);
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Must not attempt to pop project root off of path stack.");
 
@@ -2082,7 +2094,14 @@ extern "C" {
           }
         }
 
-        // @todo: fake_make_assure_inside_project
+        *status = fake_make_assure_inside_project(data, arguments.array[1], data_make);
+        if (F_status_is_error(*status)) {
+          fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", arguments.array[1].string);
+
+          if (F_status_set_fine(*status) == F_false) {
+            *status = F_status_set_error(F_failure);
+          }
+        }
       }
       else {
         printf("%c", f_string_eol[0]);

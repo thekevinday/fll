@@ -146,12 +146,16 @@ extern "C" {
 #endif // _di_f_path_current_
 
 /**
- * Get the real path for some path.
+ * Get the real path for the given path.
  *
- * All symbolic links and relative path parts are expanded to yield the real full path.
+ * This does check to see if the path exists or not (path must exist).
+ * This processes all relative parts.
+ * This processes all symbolic links.
+ * This has a max size of f_path_max + 1.
  *
  * @param path
  *   The source path to determine what the real path is.
+ *   This is a NULL terminated string.
  * @param real
  *   The (allocated) real file path.
  *   This will have a max size of f_path_max + 1.

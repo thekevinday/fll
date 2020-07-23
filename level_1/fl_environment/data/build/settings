@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name fll_execute
+project_name fl_environment
 
 version_major 0
 version_minor 5
@@ -19,17 +19,17 @@ build_compiler gcc
 build_language c
 build_linker ar
 build_libraries -lc
-build_libraries-individual -lfl_environment -lfl_string -lf_utf -lf_path -lf_file -lf_environment -lf_memory
-build_sources_library execute.c private-execute.c
+build_libraries-individual -lf_environment -lf_path -lf_utf -lf_memory
+build_sources_library environment.c
 build_sources_program
-build_sources_headers execute.h
+build_sources_headers environment.h
 build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
 build_static yes
 
-path_headers level_2
+path_headers level_1
 path_library_script script
 path_library_shared shared
 path_library_static static

@@ -26,4 +26,5 @@ fl_string
 fl_utf
 fll_fss
 fll_execute
+fll_path
 fll_program

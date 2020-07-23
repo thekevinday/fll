@@ -75,6 +75,7 @@
 #include <level_2/fss.h>
 #include <level_2/fss_basic_list.h>
 #include <level_2/fss_extended.h>
+#include <level_2/path.h>
 #include <level_2/program.h>
 
 #ifdef __cplusplus
