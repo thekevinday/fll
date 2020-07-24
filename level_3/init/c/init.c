@@ -155,7 +155,7 @@ extern "C" {
 
             signal_problem_count++;
             if (signal_problem_count > problem_count_max_signal_size) {
-              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: max signal problem count has been reached, sleeping for a period of time.", errno);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Max signal problem count has been reached, sleeping for a period of time.", errno);
               sleep(init_panic_signal_sleep_seconds);
               signal_problem_count = 0;
             }

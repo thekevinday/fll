@@ -257,7 +257,7 @@ extern "C" {
       }
 
       if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: the '");
+        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The '");
         fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_select);
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter requires a positive number.");
 
@@ -358,7 +358,7 @@ extern "C" {
       macro_fss_extended_read_depths_delete_simple(depths);
     }
     else {
-      fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more files.");
+      fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: You failed to specify one or more files.");
       status = F_status_set_error(F_parameter);
     }
 

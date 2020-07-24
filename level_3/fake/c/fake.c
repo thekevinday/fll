@@ -335,7 +335,7 @@ extern "C" {
     else {
       if (data->verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify an operation.");
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: You failed to specify an operation.");
         fprintf(f_type_error, "%c", f_string_eol[0]);
       }
 

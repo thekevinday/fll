@@ -72,7 +72,7 @@ extern "C" {
     if (status == F_file_found_not) {
       if (verbosity != iki_read_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to find %s '", file_or_directory);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to find %s '", file_or_directory);
         fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
         fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       }
@@ -83,7 +83,7 @@ extern "C" {
     if (status == F_file_found) {
       if (verbosity != iki_read_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, context.error, context.reset, "ERROR: the %s '", file_or_directory);
+        fl_color_print(f_type_error, context.error, context.reset, "ERROR: The %s '", file_or_directory);
         fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
         fl_color_print_line(f_type_error, context.error, context.reset, "' already exists.");
       }
@@ -185,7 +185,7 @@ extern "C" {
       if (status == F_directory_found_not) {
         if (verbosity != iki_read_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
+          fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to %s %s '", operation, file_or_directory);
           fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
           fl_color_print_line(f_type_error, context.error, context.reset, "' due to an invalid directory in the path.");
         }
@@ -197,7 +197,7 @@ extern "C" {
       if (status == F_directory_found_not) {
         if (verbosity != iki_read_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
+          fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to %s %s '", operation, file_or_directory);
           fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
           fl_color_print_line(f_type_error, context.error, context.reset, "' due to an invalid directory in the path.");
         }
@@ -208,7 +208,7 @@ extern "C" {
       if (status == F_failure) {
         if (verbosity != iki_read_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
+          fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to %s %s '", operation, file_or_directory);
           fl_color_print(f_type_error, context.notable, context.reset, "%s", name);
           fl_color_print_line(f_type_error, context.error, context.reset, "'.");
         }

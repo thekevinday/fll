@@ -94,7 +94,7 @@ extern "C" {
     }
 
     if (data->remaining.used == 0 && !data->process_pipe) {
-      fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify a status code.");
+      fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: You failed to specify a status code.");
 
       status_code_delete_data(data);
       return F_status_set_error(F_parameter);

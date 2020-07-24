@@ -324,10 +324,10 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
           }
           else if (status == F_data_not) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: could not find any network devices");
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Could not find any network devices");
           }
           else if (status == F_failure) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: failed to read the device directory '%s'", network_devices);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Failed to read the device directory '%s'", network_devices);
           }
 
           firewall_delete_local_data(&local);

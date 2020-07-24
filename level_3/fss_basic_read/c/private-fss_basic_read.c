@@ -265,12 +265,12 @@ extern "C" {
           fl_color_print_line(f_type_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
         }
         else if (status == F_incomplete_utf_stop) {
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ENCODING ERROR: Error occurred on invalid UTF-8 character at stop position (at ");
           fl_color_print(f_type_error, data->context.notable, data->context.reset, "%d", input.start);
           fl_color_print_line(f_type_error, data->context.error, data->context.reset, ").");
         }
         else if (status == F_incomplete_utf_eos) {
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ENCODING ERROR: Error occurred on invalid UTF-8 character at end of string (at ");
           fl_color_print(f_type_error, data->context.notable, data->context.reset, "%d", input.start);
           fl_color_print_line(f_type_error, data->context.error, data->context.reset, ").");
         }

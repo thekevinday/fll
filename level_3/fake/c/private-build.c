@@ -326,7 +326,7 @@ extern "C" {
         if (F_status_set_fine(*status) == F_file_found_not) {
           if (data.verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: failed to find program '");
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find program '");
             fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", program.string);
             fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' for executing.");
           }
@@ -1269,7 +1269,7 @@ extern "C" {
       for (uint8_t i = 0; i < 1; i++) {
         if (settings[i]->used == 0) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the setting '");
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The setting '");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", names[i]);
           fl_color_print(f_type_error, data.context.error, data.context.reset, "' is required but is not specified in the settings file '");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
@@ -1485,7 +1485,7 @@ extern "C" {
         if (found == F_false) {
           if (data.verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the specified mode '");
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The specified mode '");
             fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", modes->array[i].string);
             fl_color_print(f_type_error, data.context.error, data.context.reset, "' is not a valid mode, according to '");
             fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path_file);
@@ -1538,7 +1538,7 @@ extern "C" {
         if (data.verbosity != fake_verbosity_quiet) {
           // @todo update FSS functions to return which setting index the problem happened on.
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: a setting in the build setting file '");
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: A setting in the build setting file '");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path_file);
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' is too long.");
         }
@@ -1994,7 +1994,7 @@ extern "C" {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
         if (data.verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the build settings '");
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The build settings '");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_setting_name_build_shared);
           fl_color_print(f_type_error, data.context.error, data.context.reset, "' and '");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_build_setting_name_build_static);

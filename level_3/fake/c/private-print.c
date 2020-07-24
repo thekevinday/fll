@@ -444,7 +444,7 @@ extern "C" {
     if (status == F_file_found_not) {
       if (data.verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: failed to find %s '", file_or_directory);
+        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find %s '", file_or_directory);
         fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", name);
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
       }
@@ -455,7 +455,7 @@ extern "C" {
     if (status == F_file_found) {
       if (data.verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the %s '", file_or_directory);
+        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The %s '", file_or_directory);
         fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", name);
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' already exists.");
       }
@@ -557,7 +557,7 @@ extern "C" {
       if (status == F_directory_found_not) {
         if (data.verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to %s %s '", operation, file_or_directory);
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", name);
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' due to an invalid directory in the path.");
         }
@@ -569,7 +569,7 @@ extern "C" {
       if (status == F_directory_found_not) {
         if (data.verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to %s %s '", operation, file_or_directory);
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", name);
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' due to an invalid directory in the path.");
         }
@@ -580,7 +580,7 @@ extern "C" {
       if (status == F_failure) {
         if (data.verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: failed to %s %s '", operation, file_or_directory);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to %s %s '", operation, file_or_directory);
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", name);
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
         }
@@ -650,7 +650,7 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_false) {
       fprintf(f_type_error, "%c", f_string_eol[0]);
-      fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the path '");
+      fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The path '");
       fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path);
       fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' is outside the project root.");
     }

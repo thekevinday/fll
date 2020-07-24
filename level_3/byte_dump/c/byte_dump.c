@@ -376,7 +376,7 @@ extern "C" {
       }
     }
     else {
-      fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: you failed to specify one or more filenames.");
+      fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: You failed to specify one or more filenames.");
       status = F_status_set_error(F_parameter);
     }
 

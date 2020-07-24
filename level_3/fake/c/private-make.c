@@ -158,7 +158,7 @@ extern "C" {
       if (missing_main) {
         if (data.verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: the fakefile '");
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The fakefile '");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", data.file_data_build_fakefile.string);
           fl_color_print(f_type_error, data.context.error, data.context.reset, "' is missing the required '");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_make_section_main);
@@ -383,7 +383,7 @@ extern "C" {
           else {
             if (data.verbosity != fake_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
-              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: invalid characters in the define setting name '");
+              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Invalid characters in the define setting name '");
 
               fl_color_print_code(f_type_error, data.context.notable);
               f_print_string_dynamic(f_type_error, define.array[i].name);
@@ -1609,7 +1609,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_file_found_not) {
         if (data.verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: failed to find program '");
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find program '");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", program.string);
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' for executing.");
         }

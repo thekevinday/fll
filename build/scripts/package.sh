@@ -300,7 +300,7 @@ package_create_base_files() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to create directory $c_notice$package$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to create directory $c_notice$package$c_error.$c_reset"
       fi
 
       failure=1
@@ -309,7 +309,7 @@ package_create_base_files() {
 
   if [[ $failure == "" && ! -d ${path_build}documents ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the build directory $c_notice${path_build}documents$c_error cannot be found or is invalid.$c_reset"
+      echo -e "${c_error}ERROR: The build directory $c_notice${path_build}documents$c_error cannot be found or is invalid.$c_reset"
     fi
 
     failure=1
@@ -320,7 +320,7 @@ package_create_base_files() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to copy directory $c_notice${path_build}documents$c_error to $c_notice$package$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to copy directory $c_notice${path_build}documents$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
       failure=1
@@ -333,7 +333,7 @@ package_create_base_files() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy directory $c_notice${path_build}licenses$c_error to $c_notice$package$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to copy directory $c_notice${path_build}licenses$c_error to $c_notice$package$c_error.$c_reset"
         fi
 
         failure=1
@@ -343,7 +343,7 @@ package_create_base_files() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy directory $c_notice${path_build}../licenses$c_error to $c_notice$package$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to copy directory $c_notice${path_build}../licenses$c_error to $c_notice$package$c_error.$c_reset"
         fi
 
         failure=1
@@ -362,7 +362,7 @@ package_create_base_files() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to copy script $c_notice${path_build}bootstrap.sh$c_error to $c_notice$package$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to copy script $c_notice${path_build}bootstrap.sh$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
       failure=1
@@ -373,7 +373,7 @@ package_create_base_files() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to set executable permissions on script $c_notice${package}bootstrap.sh$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to set executable permissions on script $c_notice${package}bootstrap.sh$c_error.$c_reset"
         fi
 
         failure=1
@@ -385,7 +385,7 @@ package_create_base_files() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy script $c_notice${path_build}install.sh$c_error to $c_notice$package$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to copy script $c_notice${path_build}install.sh$c_error to $c_notice$package$c_error.$c_reset"
         fi
 
         failure=1
@@ -397,7 +397,7 @@ package_create_base_files() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to set executable permissions on script $c_notice${package}install.sh$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to set executable permissions on script $c_notice${package}install.sh$c_error.$c_reset"
         fi
 
         failure=1
@@ -410,7 +410,7 @@ package_create_base_files() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to create directory $c_notice${package}build$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}build$c_error.$c_reset"
       fi
 
       failure=1
@@ -422,7 +422,7 @@ package_create_base_files() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to create directory $c_notice${package}sources$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}sources$c_error.$c_reset"
       fi
 
       failure=1
@@ -434,7 +434,7 @@ package_create_base_files() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to create directory $c_notice${package}documents$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}documents$c_error.$c_reset"
       fi
 
       failure=1
@@ -446,7 +446,7 @@ package_create_base_files() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to create directory $c_notice${package}licenses$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}licenses$c_error.$c_reset"
       fi
 
       failure=1
@@ -526,7 +526,7 @@ package_dependencies_individual() {
 
       if [[ ! -d ${path_sources}${level}/${dependency}/data/build/ ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to find dependency data directory $c_notice${path_sources}${level}/${dependency}/data/build/$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to find dependency data directory $c_notice${path_sources}${level}/${dependency}/data/build/$c_error.$c_reset"
         fi
 
         failure=1
@@ -553,7 +553,7 @@ package_dependencies_individual() {
 
         if [[ ! -d ${path_sources}${sub_level}/${sub_dependency}/data/build/ ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: failed to find dependency data directory $c_notice${path_sources}${sub_level}/${sub_dependency}/data/build/$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to find dependency data directory $c_notice${path_sources}${sub_level}/${sub_dependency}/data/build/$c_error.$c_reset"
           fi
 
           failure=1
@@ -619,7 +619,7 @@ package_dependencies_individual() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to update settings file $c_notice${settings}$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to update settings file $c_notice${settings}$c_error.$c_reset"
       fi
 
       failure=1
@@ -632,7 +632,7 @@ package_dependencies_individual() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to update settings file $c_notice${settings}$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to update settings file $c_notice${settings}$c_error.$c_reset"
         fi
 
         failure=1
@@ -643,7 +643,7 @@ package_dependencies_individual() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to update settings file $c_notice${settings}$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to update settings file $c_notice${settings}$c_error.$c_reset"
         fi
 
         failure=1
@@ -662,7 +662,7 @@ package_dependencies_individual_append() {
   settings=${path_sources}${level}/${dependency}/data/build/settings
   if [[ ! -f $settings ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: failed to find dependency settings file $c_notice$settings$c_error.$c_reset"
+      echo -e "${c_error}ERROR: Failed to find dependency settings file $c_notice$settings$c_error.$c_reset"
     fi
 
     failure=1
@@ -720,7 +720,7 @@ package_dependencies_level_update() {
     settings=${directory}/data/build/settings
     if [[ ! -f $settings ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to find settings file $c_notice$settings$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to find settings file $c_notice$settings$c_error.$c_reset"
       fi
 
       failure=1
@@ -744,7 +744,7 @@ package_dependencies_level_update() {
 
   if [[ ! -f $settings ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: failed to find settings file $c_notice$settings$c_error.$c_reset"
+      echo -e "${c_error}ERROR: Failed to find settings file $c_notice$settings$c_error.$c_reset"
     fi
 
     failure=1
@@ -755,7 +755,7 @@ package_dependencies_level_update() {
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
+      echo -e "${c_error}ERROR: Failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
     fi
 
     failure=1
@@ -772,7 +772,7 @@ package_dependencies_level_update() {
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
+      echo -e "${c_error}ERROR: Failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
     fi
 
     failure=1
@@ -789,7 +789,7 @@ package_dependencies_level_update() {
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: failed to update headers for settings file $c_notice$settings$c_error.$c_reset"
+      echo -e "${c_error}ERROR: Failed to update headers for settings file $c_notice$settings$c_error.$c_reset"
     fi
 
     failure=1
@@ -871,7 +871,7 @@ package_dependencies_monolithic() {
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
+      echo -e "${c_error}ERROR: Failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
     fi
 
     failure=1
@@ -891,7 +891,7 @@ package_dependencies_monolithic() {
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: failed to update headers for settings file $c_notice$settings$c_error.$c_reset"
+      echo -e "${c_error}ERROR: Failed to update headers for settings file $c_notice$settings$c_error.$c_reset"
     fi
 
     failure=1
@@ -933,7 +933,7 @@ package_operation_copy_package() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to copy the data directory $c_notice${package}sources/data$c_error to $c_notice$package$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to copy the data directory $c_notice${package}sources/data$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
       failure=1
@@ -944,7 +944,7 @@ package_operation_copy_package() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to remove directory $c_notice${package}sources/data$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to remove directory $c_notice${package}sources/data$c_error.$c_reset"
       fi
 
       failure=1
@@ -957,7 +957,7 @@ package_operation_copy_package() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to move sources documents directory $c_notice${path_sources}sources/documents$c_error to $c_notice$package$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to move sources documents directory $c_notice${path_sources}sources/documents$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
       failure=1
@@ -968,7 +968,7 @@ package_operation_copy_package() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to remove sources documents directory $c_notice${path_sources}sources/documents$c_error to $c_notice$package$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to remove sources documents directory $c_notice${path_sources}sources/documents$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
       failure=1
@@ -981,7 +981,7 @@ package_operation_copy_package() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to move sources licenses directory $c_notice${path_sources}sources/licenses$c_error to $c_notice$package$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to move sources licenses directory $c_notice${path_sources}sources/licenses$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
       failure=1
@@ -992,7 +992,7 @@ package_operation_copy_package() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to remove sources licenses directory $c_notice${path_sources}sources/licenses$c_error to $c_notice$package$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to remove sources licenses directory $c_notice${path_sources}sources/licenses$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
       failure=1
@@ -1005,7 +1005,7 @@ package_operation_copy_package() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to move sources specifications directory $c_notice${path_sources}sources/specifications$c_error to $c_notice$package$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to move sources specifications directory $c_notice${path_sources}sources/specifications$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
       failure=1
@@ -1016,7 +1016,7 @@ package_operation_copy_package() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to remove sources specifications directory $c_notice${path_sources}sources/specifications$c_error to $c_notice$package$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to remove sources specifications directory $c_notice${path_sources}sources/specifications$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
       failure=1
@@ -1060,7 +1060,7 @@ package_operation_individual() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to create directory $c_notice${path_destination}individual$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to create directory $c_notice${path_destination}individual$c_error.$c_reset"
       fi
 
       package_cleanup
@@ -1083,7 +1083,7 @@ package_operation_individual() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to copy sources directory $c_notice$directory$c_error to $c_notice${package}sources$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to copy sources directory $c_notice$directory$c_error to $c_notice${package}sources$c_error.$c_reset"
       fi
 
       failure=1
@@ -1131,7 +1131,7 @@ package_operation_level() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to create directory $c_notice${package}data$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}data$c_error.$c_reset"
         fi
 
         failure=1
@@ -1147,7 +1147,7 @@ package_operation_level() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to move the directory $c_notice$path_build$level$c_error as $c_notice$path_build${level}build$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to move the directory $c_notice$path_build$level$c_error as $c_notice$path_build${level}build$c_error.$c_reset"
       fi
 
       failure=1
@@ -1159,7 +1159,7 @@ package_operation_level() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to create directory $c_notice${package}sources$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}sources$c_error.$c_reset"
         fi
 
         failure=1
@@ -1172,7 +1172,7 @@ package_operation_level() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy files from sources directory $c_notice$directory$c_error to $c_notice${package}sources$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to copy files from sources directory $c_notice$directory$c_error to $c_notice${package}sources$c_error.$c_reset"
         fi
 
         failure=1
@@ -1183,7 +1183,7 @@ package_operation_level() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to remove directory $c_notice${package}sources/data/build$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to remove directory $c_notice${package}sources/data/build$c_error.$c_reset"
         fi
 
         failure=1
@@ -1237,7 +1237,7 @@ package_operation_monolithic() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to create directory $c_notice${package}data$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}data$c_error.$c_reset"
       fi
 
       package_cleanup
@@ -1253,7 +1253,7 @@ package_operation_monolithic() {
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: failed to move the directory $c_notice$path_build$level$c_error as $c_notice$path_build${level}build$c_error.$c_reset"
+      echo -e "${c_error}ERROR: Failed to move the directory $c_notice$path_build$level$c_error as $c_notice$path_build${level}build$c_error.$c_reset"
     fi
 
     package_cleanup
@@ -1265,7 +1265,7 @@ package_operation_monolithic() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to create directory $c_notice${package}sources$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}sources$c_error.$c_reset"
       fi
 
       package_cleanup
@@ -1284,7 +1284,7 @@ package_operation_monolithic() {
 
             if [[ $? -ne 0 ]] ; then
               if [[ $verbosity != "quiet" ]] ; then
-                echo -e "${c_error}ERROR: failed to create package data directory $c_notice${package}data/$level$c_error.$c_reset"
+                echo -e "${c_error}ERROR: Failed to create package data directory $c_notice${package}data/$level$c_error.$c_reset"
               fi
 
               failure=1
@@ -1296,7 +1296,7 @@ package_operation_monolithic() {
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_error}ERROR: failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/data$level$c_error.$c_reset"
+              echo -e "${c_error}ERROR: Failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/data$level$c_error.$c_reset"
             fi
 
             failure=1
@@ -1307,7 +1307,7 @@ package_operation_monolithic() {
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_error}ERROR: failed to remove directory $c_notice${package}sources/data/build$c_error.$c_reset"
+              echo -e "${c_error}ERROR: Failed to remove directory $c_notice${package}sources/data/build$c_error.$c_reset"
             fi
 
             failure=1
@@ -1319,7 +1319,7 @@ package_operation_monolithic() {
 
             if [[ $? -ne 0 ]] ; then
               if [[ $verbosity != "quiet" ]] ; then
-                echo -e "${c_error}ERROR: failed to copy the data directory $c_notice${package}sources/data/$level/data$c_error to $c_notice${package}data/$level$c_error.$c_reset"
+                echo -e "${c_error}ERROR: Failed to copy the data directory $c_notice${package}sources/data/$level/data$c_error to $c_notice${package}data/$level$c_error.$c_reset"
               fi
 
               failure=1
@@ -1331,7 +1331,7 @@ package_operation_monolithic() {
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_error}ERROR: failed to remove directory $c_notice${package}sources/data$c_error.$c_reset"
+              echo -e "${c_error}ERROR: Failed to remove directory $c_notice${package}sources/data$c_error.$c_reset"
             fi
 
             failure=1
@@ -1342,7 +1342,7 @@ package_operation_monolithic() {
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_error}ERROR: failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/documents$c_error.$c_reset"
+              echo -e "${c_error}ERROR: Failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/documents$c_error.$c_reset"
             fi
 
             failure=1
@@ -1353,7 +1353,7 @@ package_operation_monolithic() {
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_error}ERROR: failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/licenses$c_error.$c_reset"
+              echo -e "${c_error}ERROR: Failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/licenses$c_error.$c_reset"
             fi
 
             failure=1
@@ -1364,7 +1364,7 @@ package_operation_monolithic() {
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_error}ERROR: failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/specifications$c_error.$c_reset"
+              echo -e "${c_error}ERROR: Failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/specifications$c_error.$c_reset"
             fi
 
             failure=1
@@ -1376,7 +1376,7 @@ package_operation_monolithic() {
 
             if [[ $? -ne 0 ]] ; then
               if [[ $verbosity != "quiet" ]] ; then
-                echo -e "${c_error}ERROR: failed to create package sources directory $c_notice${package}sources/$pathname/$level$c_error.$c_reset"
+                echo -e "${c_error}ERROR: Failed to create package sources directory $c_notice${package}sources/$pathname/$level$c_error.$c_reset"
               fi
 
               failure=1
@@ -1388,7 +1388,7 @@ package_operation_monolithic() {
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_error}ERROR: failed to copy files from sources directory $c_notice$subdirectory$c_error to $c_notice${package}sources/$pathname/$level$c_error.$c_reset"
+              echo -e "${c_error}ERROR: Failed to copy files from sources directory $c_notice$subdirectory$c_error to $c_notice${package}sources/$pathname/$level$c_error.$c_reset"
             fi
 
             failure=1
@@ -1424,7 +1424,7 @@ package_operation_program() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to create directory $c_notice${path_destination}program$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to create directory $c_notice${path_destination}program$c_error.$c_reset"
       fi
 
       package_cleanup
@@ -1447,7 +1447,7 @@ package_operation_program() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to copy sources directory $c_notice$directory$c_error to $c_notice${package}sources$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to copy sources directory $c_notice$directory$c_error to $c_notice${package}sources$c_error.$c_reset"
       fi
 
       failure=1

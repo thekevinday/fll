@@ -826,7 +826,7 @@ extern "C" {
 #ifndef _di_byte_dump_print_file_error_
   void byte_dump_print_file_error(const fl_color_context context, const f_string function, const f_string file_name, const f_status status) {
     if (status == F_false) {
-      fl_color_print(f_type_error, context.error, context.reset, "ERROR: failed to find file '");
+      fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to find file '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
       fl_color_print_line(f_type_error, context.error, context.reset, "'.");
       return;
