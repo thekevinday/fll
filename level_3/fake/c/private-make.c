@@ -1443,7 +1443,7 @@ extern "C" {
     if (operation == fake_make_operation_type_to) {
       *status = fake_make_assure_inside_project(data, arguments.array[0], data_make);
       if (F_status_is_error(*status)) {
-        fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", arguments.array[0].string);
+        fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[0].string);
 
         if (F_status_set_fine(*status) == F_false) {
           *status = F_status_set_error(F_failure);
@@ -2096,7 +2096,7 @@ extern "C" {
 
         *status = fake_make_assure_inside_project(data, arguments.array[1], data_make);
         if (F_status_is_error(*status)) {
-          fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", arguments.array[1].string);
+          fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[1].string);
 
           if (F_status_set_fine(*status) == F_false) {
             *status = F_status_set_error(F_failure);
