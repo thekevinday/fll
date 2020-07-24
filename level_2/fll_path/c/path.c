@@ -13,7 +13,7 @@ extern "C" {
     f_status status = F_none;
     f_string_length at = 0;
 
-    uint8_t previous_1 = 0;
+    uint8_t previous_1 = '/';
     uint8_t previous_2 = 0;
 
     f_string_length size_chunk = 0;
@@ -22,7 +22,6 @@ extern "C" {
     canonical->used = 0;
 
     if (path[0] == '/') {
-      previous_1 = '/';
       at = 1;
     }
     else {
@@ -32,6 +31,7 @@ extern "C" {
       if (!path[0]) {
         return F_none;
       }
+      at = 0;
     }
 
     status = fl_string_append_assure("/", 1, canonical);
@@ -77,8 +77,10 @@ extern "C" {
         else {
           size_chunk++;
 
-          status = fl_string_append(path + position, size_chunk, canonical);
-          if (F_status_is_error(status)) return status;
+          if (size_chunk) {
+            status = fl_string_append(path + position, size_chunk, canonical);
+            if (F_status_is_error(status)) return status;
+          }
         }
 
         previous_1 = '/';
@@ -94,7 +96,7 @@ extern "C" {
             position -= 2;
             size_chunk = 2;
           }
-          else if (previous_1) {
+          else if (previous_1 && previous_1 != '/') {
             position--;
             size_chunk = 1;
           }
