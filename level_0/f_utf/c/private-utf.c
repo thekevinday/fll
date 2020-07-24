@@ -262,19 +262,369 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
   f_return_status private_f_utf_character_is_digit(const f_utf_character character, const uint8_t width) {
 
-    // @todo: add decimal digit UTF-8 numbers.
-
     if (width == 2) {
       uint16_t bytes = (uint16_t) ((character & 0xffff0000) >> 16);
 
       // Arabic: U+0660 to U+0669.
-      if (character >= 0xd9a00000 && character <= 0xd9a90000) {
+      if (bytes >= 0xd9a0 && bytes <= 0xd9a9) {
         return F_true;
       }
 
       // Extended Arabic: U+06F0 to U+06F9.
-      if (character >= 0xdbb00000 && character <= 0xdbb90000) {
+      if (bytes >= 0xdbb0 && bytes <= 0xdbb9) {
         return F_true;
+      }
+
+      // NKo: U+07C0 to U+07C9.
+      if (bytes >= 0xdf80 && bytes <= 0xdf89) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    // reduce the number of checks by grouping checks by first byte.
+    const uint8_t byte_first = f_macro_utf_character_to_char_1(character);
+
+    if (width == 3) {
+      uint16_t bytes = (uint16_t) ((character & 0x00ffff00) >> 8);
+
+      if (byte_first == 0xe0) {
+
+        // Devanagari: U+0966 to U+096F.
+        if (bytes >= 0xa5a6 && bytes <= 0xa5af) {
+          return F_true;
+        }
+
+        // Bengali: U+09E6 to U+09EF.
+        if (bytes >= 0xa7a6 && bytes <= 0xa7af) {
+          return F_true;
+        }
+
+        // Gurmukhi: U+0A66 to U+0A6F.
+        if (bytes >= 0xa9a6 && bytes <= 0xa9af) {
+          return F_true;
+        }
+
+        // Gujarati: U+0AE6 to U+0AEF.
+        if (bytes >= 0xaba6 && bytes <= 0xabaf) {
+          return F_true;
+        }
+
+        // Oriya: U+0B66 to U+0B6F.
+        if (bytes >= 0xada6 && bytes <= 0xadaf) {
+          return F_true;
+        }
+
+        // Tamil: U+0BE6 to U+0BEF.
+        if (bytes >= 0xafa6 && bytes <= 0xafaf) {
+          return F_true;
+        }
+
+        // Telugu: U+0C66 to U+0C6F.
+        if (bytes >= 0xb1a6 && bytes <= 0xb1af) {
+          return F_true;
+        }
+
+        // Kannada: U+0CE6 to U+0CEF.
+        if (bytes >= 0xb3a6 && bytes <= 0xb3af) {
+          return F_true;
+        }
+
+        // Malayalam: U+0D66 to U+0D6F.
+        if (bytes >= 0xb5a6 && bytes <= 0xb5af) {
+          return F_true;
+        }
+
+        // Sinhala: U+0DE6 to U+0DEF.
+        if (bytes >= 0xb7a6 && bytes <= 0xb7af) {
+          return F_true;
+        }
+
+        // Thai: U+0E50 to U+0E59.
+        if (bytes >= 0xb990 && bytes <= 0xb999) {
+          return F_true;
+        }
+
+        // Lao: U+0ED0 to U+0ED9.
+        if (bytes >= 0xbb90 && bytes <= 0xbb99) {
+          return F_true;
+        }
+
+        // Tibetan: U+0F20 to U+0F29.
+        if (bytes >= 0xbca0 && bytes <= 0xbca9) {
+          return F_true;
+        }
+
+        // Myanmar: U+1040 to U+1049.
+        if (bytes >= 0x8180 && bytes <= 0x8189) {
+          return F_true;
+        }
+
+        // Myanmar (Shan): U+1090 to U+1099.
+        if (bytes >= 0x8290 && bytes <= 0x8299) {
+          return F_true;
+        }
+      }
+      else if (byte_first == 0xe1) {
+
+        // Khmer: U+17E0 to U+17E9.
+        if (bytes >= 0x9fa0 && bytes <= 0x9fa9) {
+          return F_true;
+        }
+
+        // Mongolian: U+1810 to U+1819.
+        if (bytes >= 0xa090 && bytes <= 0xa099) {
+          return F_true;
+        }
+
+        // Limbu: U+1946 to U+194F.
+        if (bytes >= 0xa586 && bytes <= 0xa58f) {
+          return F_true;
+        }
+
+        // New Tai Lue: U+19D0 to U+19D9.
+        if (bytes >= 0xa790 && bytes <= 0xa799) {
+          return F_true;
+        }
+
+        // Tai Tham (Hora): U+1A80 to U+1A89.
+        if (bytes >= 0xaa80 && bytes <= 0xaa89) {
+          return F_true;
+        }
+
+        // Tai Tham (Tham): U+1A90 to U+1A99.
+        if (bytes >= 0xaa90 && bytes <= 0xaa99) {
+          return F_true;
+        }
+
+        // Balinese: U+1B50 to U+1B59.
+        if (bytes >= 0xad90 && bytes <= 0xad99) {
+          return F_true;
+        }
+
+        // Sundanese: U+1BB0 to U+1BB9.
+        if (bytes >= 0xaeb0 && bytes <= 0xaeb9) {
+          return F_true;
+        }
+
+        // Lepcha: U+1C40 to U+1C49.
+        if (bytes >= 0xb180 && bytes <= 0xb189) {
+          return F_true;
+        }
+
+        // Ol Chiki: U+1C50 to U+1C59.
+        if (bytes >= 0xb190 && bytes <= 0xb199) {
+          return F_true;
+        }
+      }
+      else if (byte_first == 0xea) {
+
+        // Vai: U+A620 to U+A629.
+        if (bytes >= 0x98a0 && bytes <= 0x98a9) {
+          return F_true;
+        }
+
+        // Saurashtra: U+A8D0 to U+A8D9.
+        if (bytes >= 0xa390 && bytes <= 0xa399) {
+          return F_true;
+        }
+
+        // Kayah Li: U+A900 to U+A909.
+        if (bytes >= 0xa480 && bytes <= 0xa489) {
+          return F_true;
+        }
+
+        // Javanese: U+A9D0 to U+A9D9.
+        if (bytes >= 0xa790 && bytes <= 0xa799) {
+          return F_true;
+        }
+
+        // Myanmar Extended-B: U+A9F0 to U+A9F9.
+        if (bytes >= 0xa7b0 && bytes <= 0xa7b9) {
+          return F_true;
+        }
+
+        // Cham: U+AA50 to U+AA59.
+        if (bytes >= 0xa990 && bytes <= 0xa999) {
+          return F_true;
+        }
+
+        // Meetei Mayek: U+ABF0 to U+ABF9.
+        if (bytes >= 0xafb0 && bytes <= 0xafb9) {
+          return F_true;
+        }
+      }
+      else if (byte_first == 0xef) {
+
+        // Halfwidth and Fullwidth Forms: U+FF10 to U+FF19.
+        if (bytes >= 0xbc90 && bytes <= 0xbc99) {
+          return F_true;
+        }
+      }
+
+      return F_false;
+    }
+
+    // reduce the number of checks by grouping checks by first byte.
+    const uint8_t byte_second = f_macro_utf_character_to_char_2(character);
+
+    if (width == 4) {
+      uint16_t bytes = (uint16_t) ((character & 0xffff0000) >> 16);
+
+      if (byte_first == 0xf0) {
+        if (byte_second == 0x90) {
+
+          // Osmanya: U+104A0 to U+104A9.
+          if (bytes >= 0x92a0 && bytes <= 0x92a9) {
+            return F_true;
+          }
+
+          // Hanifi Rohingya: U+10D30 to U+10D39.
+          if (bytes >= 0xb4b0 && bytes <= 0xb4b9) {
+            return F_true;
+          }
+        }
+        else if (byte_second == 0x91) {
+
+          // Brahmi: U+11066 to U+1106F.
+          if (bytes >= 0x81a6 && bytes <= 0x81af) {
+            return F_true;
+          }
+
+          // Sora Sompeng: U+110F0 to U+110F9.
+          if (bytes >= 0x83b0 && bytes <= 0x83b9) {
+            return F_true;
+          }
+
+          // Chakma: U+11136 to U+1113F.
+          if (bytes >= 0x84b6 && bytes <= 0x84bf) {
+            return F_true;
+          }
+
+          // Sharada: U+111D0 to U+111D9.
+          if (bytes >= 0x8790 && bytes <= 0x8799) {
+            return F_true;
+          }
+
+          // Khudawadi: U+112F0 to U+112F9.
+          if (bytes >= 0x8bb0 && bytes <= 0x8bb9) {
+            return F_true;
+          }
+
+          // Newa: U+11450 to U+11459.
+          if (bytes >= 0x9190 && bytes <= 0x9199) {
+            return F_true;
+          }
+
+          // Tirhuta: U+9199 to U+114D9.
+          if (bytes >= 0x9390 && bytes <= 0x9399) {
+            return F_true;
+          }
+
+          // Modi: U+11650 to U+11659.
+          if (bytes >= 0x9990 && bytes <= 0x9999) {
+            return F_true;
+          }
+
+          // Takri: U+116C0 to U+116C9.
+          if (bytes >= 0x9b80 && bytes <= 0x9b89) {
+            return F_true;
+          }
+
+          // Ahom: U+11730 to U+11739.
+          if (bytes >= 0x9cb0 && bytes <= 0x9cb9) {
+            return F_true;
+          }
+
+          // Warang Citi: U+118E0 to U+118E9.
+          if (bytes >= 0xa3a0 && bytes <= 0xa3a9) {
+            return F_true;
+          }
+
+          // Dives Akuru: U+11950 to U+11959.
+          if (bytes >= 0xa590 && bytes <= 0xa599) {
+            return F_true;
+          }
+
+          // Bhaiksuki: U+11C50 to U+11C59.
+          if (bytes >= 0xb190 && bytes <= 0xb199) {
+            return F_true;
+          }
+
+          // Masaram Gondi: U+11D50 to U+11D59.
+          if (bytes >= 0xb590 && bytes <= 0xb599) {
+            return F_true;
+          }
+
+          // Gunjala Gondi: U+11DA0 to U+11DA9.
+          if (bytes >= 0xb6a0 && bytes <= 0xb6a9) {
+            return F_true;
+          }
+        }
+        else if (byte_second == 0x96) {
+
+          // Mro: U+16A60 to U+16A69.
+          if (bytes >= 0xa9a0 && bytes <= 0xa9a9) {
+            return F_true;
+          }
+
+          // Pahawh Hmong: U+16B50 to U+16B59.
+          if (bytes >= 0xad90 && bytes <= 0xad99) {
+            return F_true;
+          }
+        }
+        else if (byte_second == 0x9d) {
+
+          // Mathematical Alphanumeric (Bold) Symbols: U+1D7CE to U+1D7D7.
+          if (bytes >= 0xd9f8e && bytes <= 0xd9f97) {
+            return F_true;
+          }
+
+          // Mathematical Alphanumeric (Double-Struck) Symbols: U+1D7D8 to U+1D7E1.
+          if (bytes >= 0x9f98 && bytes <= 0x9fa1) {
+            return F_true;
+          }
+
+          // Mathematical Alphanumeric (Sans-Serif) Symbols: U+1D7E2 to U+1D7EB.
+          if (bytes >= 0x9fa2 && bytes <= 0x9fab) {
+            return F_true;
+          }
+
+          // Mathematical Alphanumeric (Sans-Serif Bold) Symbols: U+1D7EC to U+1D7F5.
+          if (bytes >= 0x9fac && bytes <= 0x9fb5) {
+            return F_true;
+          }
+
+          // Mathematical Alphanumeric (Monospace) Symbols: U+1D7F6 to U+1D7FF.
+          if (bytes >= 0x9fb6 && bytes <= 0x9fbf) {
+            return F_true;
+          }
+        }
+        else if (byte_second == 0x9e) {
+
+          // Nyiakeng Puachue Hmong: U+1E140 to U+1E149.
+          if (bytes >= 0x8580 && bytes <= 0x8589) {
+            return F_true;
+          }
+
+          // Wancho: U+1E2F0 to U+1E2F9.
+          if (bytes >= 0x8bb0 && bytes <= 0x8bb9) {
+            return F_true;
+          }
+
+          // Adlam: U+1E950 to U+1E959.
+          if (bytes >= 0xa590 && bytes <= 0xa599) {
+            return F_true;
+          }
+        }
+        else if (byte_second == 0x9f) {
+
+          // Symbols for Legacy Computing (Segmented): U+1FBF0 to U+1FBF9.
+          if (bytes >= 0xafb0 && bytes <= 0xafb9) {
+            return F_true;
+          }
+        }
       }
     }
 
@@ -778,7 +1128,10 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
   f_return_status private_f_utf_character_is_numeric(const f_utf_character character, const uint8_t width) {
 
-    // @todo: add decimal digit UTF-8 numbers.
+    if (private_f_utf_character_is_digit(character, width)) {
+      return F_true;
+    }
+
     // @todo: add letter UTF-8 numbers.
     // @todo: add other UTF-8 numbers.
 
