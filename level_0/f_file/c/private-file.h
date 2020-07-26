@@ -79,7 +79,7 @@ extern "C" {
 #endif // !defined(_di_f_file_change_mode_at_)
 
 /**
- * Private implementation of f_file_change_owner().
+ * Private implementation of f_file_change_role().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -109,15 +109,15 @@ extern "C" {
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
  *
- * @see f_file_change_owner()
+ * @see f_file_change_role()
  * @see f_file_copy()
  */
-#if !defined(_di_f_file_change_owner_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_change_owner_) || !defined(_di_f_file_copy_)
+#if !defined(_di_f_file_change_role_) || !defined(_di_f_file_copy_)
+  extern f_return_status private_f_file_change_role(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_change_role_) || !defined(_di_f_file_copy_)
 
 /**
- * Private implementation of f_file_change_owner_at().
+ * Private implementation of f_file_change_role_at().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -149,11 +149,11 @@ extern "C" {
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
  *
- * @see f_file_change_owner_at()
+ * @see f_file_change_role_at()
  */
-#if !defined(_di_f_file_change_owner_at_)
-  extern f_return_status private_f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_change_owner_at_)
+#if !defined(_di_f_file_change_role_at_)
+  extern f_return_status private_f_file_change_role_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_change_role_at_)
 
 /**
  * Private implementation of f_file_close().

@@ -50,8 +50,8 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_change_mode_at_) || !defined(_di_f_file_copy_at_)
 
-#if !defined(_di_f_file_change_owner_) || !defined(_di_f_file_copy_)
-  f_return_status private_f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) {
+#if !defined(_di_f_file_change_role_) || !defined(_di_f_file_copy_)
+  f_return_status private_f_file_change_role(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) {
     int result = 0;
 
     if (dereference) {
@@ -97,10 +97,10 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_change_owner_) || !defined(_di_f_file_copy_)
+#endif // !defined(_di_f_file_change_role_) || !defined(_di_f_file_copy_)
 
-#if !defined(_di_f_file_change_owner_at_) || !defined(_di_f_file_copy_at_)
-  f_return_status private_f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) {
+#if !defined(_di_f_file_change_role_at_) || !defined(_di_f_file_copy_at_)
+  f_return_status private_f_file_change_role_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) {
     int result = 0;
 
     if (uid != -1) {
@@ -132,7 +132,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_change_owner_at_) || !defined(_di_f_file_copy_at_)
+#endif // !defined(_di_f_file_change_role_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
   f_return_status private_f_file_close(int *id) {

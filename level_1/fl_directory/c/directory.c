@@ -41,7 +41,7 @@ extern "C" {
     }
 
     if (role) {
-      status = f_file_change_owner(destination, source_stat.st_uid, source_stat.st_gid, F_true);
+      status = f_file_change_role(destination, source_stat.st_uid, source_stat.st_gid, F_true);
       if (F_status_is_error(status)) return status;
     }
 

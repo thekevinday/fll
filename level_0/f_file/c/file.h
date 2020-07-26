@@ -382,14 +382,18 @@ extern "C" {
 #endif // _di_f_file_change_mode_at_
 
 /**
- * Change owner and group of a given file at the specified path.
+ * Change owner and/or group of a given file at the specified path.
+ *
+ * At least one of uid or gid must not be -1.
  *
  * @param path
  *   The path file name.
  * @param uid
  *   The new user id to use.
+ *   Set to -1 to not change.
  * @param gid
  *   The new group id to use.
+ *   Set to -1 to not change.
  * @param dereference
  *   Set to TRUE to dereferenc symlinks (often is what is desired).
  *   Set to FALSE to operate on the symlink itself.
@@ -413,12 +417,14 @@ extern "C" {
  * @see chown()
  * @see lchown()
  */
-#ifndef _di_f_file_change_owner_
-  extern f_return_status f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid, const bool dereference);
-#endif // _di_f_file_change_owner_
+#ifndef _di_f_file_change_role_
+  extern f_return_status f_file_change_role(const f_string path, const uid_t uid, const gid_t gid, const bool dereference);
+#endif // _di_f_file_change_role_
 
 /**
- * Change owner and group of a given file at the specified path.
+ * Change owner and/or group of a given file at the specified path.
+ *
+ * At least one of uid or gid must not be -1.
  *
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
@@ -426,8 +432,10 @@ extern "C" {
  *   The path file name.
  * @param uid
  *   The new user id to use.
+ *   Set to -1 to not change.
  * @param gid
  *   The new group id to use.
+ *   Set to -1 to not change.
  * @param flag
  *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
  *
@@ -450,9 +458,9 @@ extern "C" {
  *
  * @see fchownat()
  */
-#ifndef _di_f_file_change_owner_at_
-  extern f_return_status f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag);
-#endif // _di_f_file_change_owner_at_
+#ifndef _di_f_file_change_role_at_
+  extern f_return_status f_file_change_role_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag);
+#endif // _di_f_file_change_role_at_
 
 /**
  * Copy a file, as well as its file mode and possibly the owner and group.

@@ -48,29 +48,29 @@ extern "C" {
   }
 #endif // _di_f_file_change_mode_at_
 
-#ifndef _di_f_file_change_owner_
-  f_return_status f_file_change_owner(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) {
+#ifndef _di_f_file_change_role_
+  f_return_status f_file_change_role(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) {
     #ifndef _di_level_0_parameter_checking_
       if (path == 0) return F_status_set_error(F_parameter);
       if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
       if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_file_change_owner(path, uid, gid, dereference);
+    return private_f_file_change_role(path, uid, gid, dereference);
   }
-#endif // _di_f_file_change_owner_
+#endif // _di_f_file_change_role_
 
-#ifndef _di_f_file_change_owner_at_
-  f_return_status f_file_change_owner_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) {
+#ifndef _di_f_file_change_role_at_
+  f_return_status f_file_change_role_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) {
     #ifndef _di_level_0_parameter_checking_
       if (path == 0) return F_status_set_error(F_parameter);
       if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
       if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_file_change_owner_at(at_id, path, uid, gid, flag);
+    return private_f_file_change_role_at(at_id, path, uid, gid, flag);
   }
-#endif // _di_f_file_change_owner_at_
+#endif // _di_f_file_change_role_at_
 
 #ifndef _di_f_file_clone_
   f_return_status f_file_clone(const f_string source, const f_string destination, const bool role, const f_number_unsigned size_block, const bool exclusive) {
@@ -97,7 +97,7 @@ extern "C" {
       }
 
       if (role) {
-        status = private_f_file_change_owner(destination, source_stat.st_uid, source_stat.st_gid, F_false);
+        status = private_f_file_change_role(destination, source_stat.st_uid, source_stat.st_gid, F_false);
         if (F_status_is_error(status)) return status;
       }
 
@@ -116,7 +116,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       if (role) {
-        status = private_f_file_change_owner(destination, source_stat.st_uid, source_stat.st_gid, F_false);
+        status = private_f_file_change_role(destination, source_stat.st_uid, source_stat.st_gid, F_false);
         if (F_status_is_error(status)) return status;
       }
 

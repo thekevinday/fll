@@ -121,7 +121,7 @@ extern "C" {
         }
 
         if (role) {
-          status = f_file_change_owner(destination_sub.string, source_stat.st_uid, source_stat.st_gid, F_true);
+          status = f_file_change_role(destination_sub.string, source_stat.st_uid, source_stat.st_gid, F_true);
           if (F_status_is_error(status)) break;
         }
       }

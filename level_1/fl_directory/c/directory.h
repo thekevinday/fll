@@ -98,7 +98,7 @@ extern "C" {
  *   Errors from (with error bit): f_directory_create().
  *   Errors from (with error bit): f_directory_exists().
  *   Errors from (with error bit): f_file_change_mode().
- *   Errors from (with error bit): f_file_change_owner().
+ *   Errors from (with error bit): f_file_change_role().
  *   Errors from (with error bit): f_file_stat().
  *
  * @see f_file_clone()
@@ -220,7 +220,7 @@ extern "C" {
  *   Errors from (with error bit): f_directory_create().
  *   Errors from (with error bit): f_directory_exists().
  *   Errors from (with error bit): f_file_change_mode().
- *   Errors from (with error bit): f_file_change_owner().
+ *   Errors from (with error bit): f_file_change_role().
  *   Errors from (with error bit): f_file_stat().
  *
  * @see f_file_copy()
