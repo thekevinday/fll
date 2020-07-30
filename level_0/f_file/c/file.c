@@ -399,6 +399,65 @@ extern "C" {
   }
 #endif // _di_f_file_flush_
 
+#ifndef _di_f_file_is_
+  f_return_status f_file_is(const f_string path, const int type) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(struct stat));
+
+    if (stat(path, &file_stat) < 0) {
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOENT) return F_file_found_not;
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+
+      return F_status_set_error(F_file_stat);
+    }
+
+    if (f_macro_file_type_get(file_stat.st_mode) == type) return F_true;
+
+    return F_false;
+  }
+#endif // _di_f_file_is_
+
+#ifndef _di_f_file_is_at_
+  f_return_status f_file_is_at(const int at_id, const f_string path, const int type, const int flag) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    struct stat file_stat;
+
+    memset(&file_stat, 0, sizeof(struct stat));
+
+    if (fstatat(at_id, path, &file_stat, flag) < 0) {
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOENT) return F_file_found_not;
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+
+      return F_status_set_error(F_file_stat);
+    }
+
+    if (file_stat.st_mode == (S_IFMT & S_IFDIR)) return F_true;
+
+    return F_false;
+  }
+#endif // _di_f_file_is_at_
+
 #ifndef _di_f_file_link_
   f_return_status f_file_link(const f_string target, const f_string point) {
     #ifndef _di_level_0_parameter_checking_
@@ -509,64 +568,321 @@ extern "C" {
   }
 #endif // _di_f_file_link_read_at_
 
-#ifndef _di_f_file_is_
-  f_return_status f_file_is(const f_string path, const int type) {
+#ifndef _di_f_file_mode_from_string_
+  f_return_status f_file_mode_from_string(const f_string string, f_file_mode *mode, uint8_t *replace) {
     #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return F_status_set_error(F_parameter);
+      if (string == 0) return F_status_set_error(F_parameter);
+      if (string[0] == 0) return F_status_set_error(F_parameter);
+      if (mode == 0) return F_status_set_error(F_parameter);
+      if (replace == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    struct stat file_stat;
+    uint8_t syntax = 0;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    *mode = 0;
+    *replace = 0;
 
-    if (stat(path, &file_stat) < 0) {
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
-      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == ENOENT) return F_file_found_not;
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
+    switch (string[0]) {
 
-      return F_status_set_error(F_file_stat);
+      case '+':
+      case '-':
+      case '=':
+        switch (string[1]) {
+
+          case 'r':
+          case 'w':
+          case 'x':
+          case 'X':
+          case 's':
+          case 't':
+            syntax = 1;
+            break;
+
+          case '0':
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
+          case '7':
+            syntax = 2;
+            break;
+
+          default:
+            return F_status_set_error(F_syntax);
+        }
+
+        syntax = 1;
+        break;
+
+      case 'u':
+      case 'g':
+      case 'o':
+      case 'a':
+        syntax = 1;
+        break;
+
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+        syntax = 2;
+        break;
+
+      default:
+        return F_status_set_error(F_syntax);
     }
 
-    if (f_macro_file_type_get(file_stat.st_mode) == type) return F_true;
+    if (syntax == 1) {
+      uint8_t on = 0; // 1 = user, 2 = group, 4 = world/sticky, 7 = all.
+      uint8_t how = 0; // 1 = add, 2 = replace, 3 = subtract, 4 = umask add, 5 = umask replace, 6 = umask subtract.
+      bool active = F_false;
 
-    return F_false;
-  }
-#endif // _di_f_file_is_
+      f_file_mode mask = 0;
+      f_file_mode what = 0;
 
-#ifndef _di_f_file_is_at_
-  f_return_status f_file_is_at(const int at_id, const f_string path, const int type, const int flag) {
-    #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+      for (f_string_length i = 0; syntax && i < string[i]; i++) {
 
-    struct stat file_stat;
+        switch (string[i]) {
+          case 'o':
+            if (active) {
+              syntax = 0;
+              break;
+            }
 
-    memset(&file_stat, 0, sizeof(struct stat));
+            on = 1;
+            mask |= f_file_mode_block_world;
+            break;
 
-    if (fstatat(at_id, path, &file_stat, flag) < 0) {
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
-      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == ENOENT) return F_file_found_not;
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+          case 'g':
+            if (active) {
+              syntax = 0;
+              break;
+            }
 
-      return F_status_set_error(F_file_stat);
+            on = 2;
+            mask |= f_file_mode_block_group;
+            break;
+
+          case 'u':
+            if (active) {
+              syntax = 0;
+              break;
+            }
+
+            on = 4;
+            mask |= f_file_mode_block_owner;
+            break;
+
+          case 'a':
+            if (active) {
+              syntax = 0;
+              break;
+            }
+
+            on = 7;
+            mask = f_file_mode_block_owner | f_file_mode_block_group | f_file_mode_block_world;
+            break;
+
+          case '+':
+          case '-':
+          case '=':
+            active = F_true;
+
+            if (string[i] == '+') {
+              how = on ? 1 : 4;
+            }
+            else if (string[i] == '-') {
+              how = on ? 3 : 6;
+            }
+            else {
+              how = on ? 2 : 5;
+
+              // only the parts designated by the mask should be replaced.
+              *mode -= (*mode) & mask;
+            }
+
+            if (!on) {
+              on = 7;
+              mask = f_file_mode_block_owner | f_file_mode_block_group | f_file_mode_block_world;
+            }
+
+            for (i++; i < string[i]; i++) {
+
+              if (string[i] == 'r') {
+                what = f_file_mode_mask_bit_read;
+              }
+              else if (string[i] == 'w') {
+                what = f_file_mode_mask_bit_write;
+              }
+              else if (string[i] == 'x') {
+                what = f_file_mode_mask_bit_execute;
+              }
+              else if (string[i] == 'X') {
+                what = f_file_mode_mask_bit_execute_only;
+              }
+              else if (string[i] == 's') {
+                if (on & 4) {
+                  what = f_file_mode_mask_bit_set_owner;
+                }
+                else if (on & 2) {
+                  what = f_file_mode_mask_bit_set_group;
+                }
+                else {
+                  what = 0;
+                }
+              }
+              else if (string[i] == 't') {
+                if (on & 1) {
+                  what = f_file_mode_mask_bit_sticky;
+                }
+                else {
+                  what = 0;
+                }
+              }
+              else if (string[i] == ',') {
+                active = F_false;
+                on = 0;
+                how = 0;
+                mask = 0;
+                break;
+              }
+              else if (string[i] == '+' || string[i] == '-' || string[i] == '=') {
+                // have the outer loop resume at this character after it increments.
+                i--;
+                break;
+              }
+              else {
+                syntax = 0;
+                break;
+              }
+
+              if (how == 1 || how == 2) {
+                *mode |= what & mask & f_file_mode_mask_how_add;
+              }
+              else if (how == 3) {
+                *mode |= what & mask & f_file_mode_mask_how_subtract;
+              }
+              else if (how == 4 || how == 5) {
+                *mode |= what & mask & f_file_mode_mask_how_umask_add;
+              }
+              else if (how == 6) {
+                *mode |= what & mask & f_file_mode_mask_how_umask_subtract;
+              }
+            } // for
+
+            break;
+
+        default:
+          syntax = 0;
+          break;
+        }
+      } // for
+    }
+    else if (syntax == 2) {
+      // 1 = add, 2 = replace, 3 = subtract, 4 = umask add, 5 = umask replace, 6 = umask subtract.
+      uint8_t how = 0;
+
+      mode_t classic = 0;
+
+      f_string_length i = 0;
+
+      if (string[0] == '+') {
+        how = 1;
+        i = 1;
+      }
+      else if (string[0] == '-') {
+        how = 3;
+        i = 1;
+      }
+      else if (string[0] == '=' || string[0] == '0') {
+        how = 2;
+        i = 1;
+      }
+      else {
+        how = 5;
+      }
+
+      for (; string[i] == '0'; i++) {
+        // seek past leading '0's.
+      } // for
+
+      if (string[i]) {
+        f_string_length j = 0;
+
+        for (; string[i + j] && j < 4; j++) {
+
+          if (j) {
+            classic <<= 3;
+          }
+
+          switch (string[i]) {
+            case '0':
+              // already is a zero.
+              break;
+
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+              // this assumes ASCII/UTF-8.
+              classic |= string[i] - 0x30;
+
+              break;
+
+            default:
+              j = 4;
+              break;
+          }
+        } // for
+
+        if (j == 4) {
+          syntax = 0;
+        }
+
+        // @fixme: classic is a different structure than mode masks, properly expand. (maybe just use f_file_mode instead of classic and shift by 6 instead of 3.)
+        if (syntax) {
+          if (how == 1) {
+            *mode = classic & f_file_mode_mask_how_add;
+          }
+          else if (how == 2) {
+            *mode = classic & f_file_mode_mask_how_add;
+            *replace = f_file_mode_replace_all;
+          }
+          else if (how == 3) {
+            *mode = classic & f_file_mode_mask_how_subtract;
+          }
+          else if (how == 5) {
+            *mode = classic & f_file_mode_mask_how_add;
+            *replace = f_file_mode_replace_umask_all;
+          }
+        }
+      }
+      else {
+        *replace = f_file_mode_replace_all;
+      }
     }
 
-    if (file_stat.st_mode == (S_IFMT & S_IFDIR)) return F_true;
+    if (syntax) {
+      return F_none;
+    }
 
-    return F_false;
+    *mode = 0;
+    *replace = 0;
+
+    return F_status_set_error(F_syntax);
   }
-#endif // _di_f_file_is_at_
+#endif // _di_f_file_mode_from_string_
+
+// @todo: needs f_file_mode_to_mode_t() to convert f_file_mode to a mode_t (requires f_file_mode, a source mode_t, and a destination mode_t).
 
 #ifndef _di_f_file_name_base_
   f_return_status f_file_name_base(const f_string path, const f_string_length length, f_string_dynamic *name_base) {

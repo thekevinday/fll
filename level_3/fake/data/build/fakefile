@@ -9,4 +9,5 @@ settings:
 
 main:
 
-  build
+  #build
+  owner a b

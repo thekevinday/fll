@@ -124,9 +124,8 @@ Fakefile Documentation:
       The first Content represents the group to assign.
       The second Content represents the file to assign the group to.
 
-      An optional third Content may be specified.
-      This third Content, if specified, may only be "recursive".
-      When specified, this will recursively apply the role to all files within the given file, if that file is a directory file path.
+    - groups\:
+      Identical to group operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
 
     - if\:
       Performs a programmatic "if" condition.
@@ -147,9 +146,8 @@ Fakefile Documentation:
       The first Content represents the mode to assign.
       The second Content represents the file to assign the mode to.
 
-      An optional third Content may be specified.
-      This third Content, if specified, may only be "recursive".
-      When specified, this will recursively apply the mode to all files within the given file, if that file is a directory file path.
+    - modes\:
+      Identical to mode operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
 
     - operate\:
       Begin execution of another Section.
@@ -164,9 +162,8 @@ Fakefile Documentation:
       The first Content represents the role to assign.
       The second Content represents the file to assign the role to.
 
-      An optional third Content may be specified.
-      This third Content, if specified, may only be "recursive".
-      When specified, this will recursively apply the role to all files within the given file, if that file is a directory file path.
+    - owners\:
+      Identical to owner operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
 
     - pop\:
       Pop a directory path of the path stack, thereby changing to the previous directory on the stack.

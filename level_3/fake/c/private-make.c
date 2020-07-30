@@ -43,6 +43,133 @@ extern "C" {
   }
 #endif // _di_fake_make_assure_inside_project_
 
+#ifndef _di_fake_make_get_id_group_
+  f_return_status fake_make_get_id_group(const fake_data data, const f_string_static buffer, gid_t *id) {
+    const f_string_range range = f_macro_string_range_initialize(buffer.used);
+
+    f_number_unsigned number = 0;
+
+    f_status status = fl_conversion_string_to_number_unsigned(buffer.string, &number, range);
+
+    if (F_status_is_error(status)) {
+      status = F_status_set_fine(status);
+
+      if (status == F_number) {
+        status = f_account_id_group_by_name(buffer.string, id);
+
+        if (F_status_is_error(status)) {
+          fake_print_error(data, status, "f_account_id_group_by_name", F_true);
+          return F_status_set_error(status);
+        }
+        else if (status == F_exist_not) {
+          if (data.verbosity != fake_verbosity_quiet) {
+            fprintf(f_type_error, "%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The group name '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", buffer.string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' was not found.");
+          }
+
+          return F_status_set_error(F_failure);
+        }
+
+        return F_none;
+      }
+
+      fake_print_error(data, status, "fl_conversion_string_to_number_unsigned", F_true);
+      return F_status_set_error(status);
+    }
+    else if (number > f_type_size_32_unsigned) {
+      if (data.verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The number '");
+        fl_color_print(f_type_error, data.context.notable, data.context.reset, "%llu", number);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' is too large.");
+      }
+    }
+
+    *id = (gid_t) number;
+    return status;
+  }
+#endif // _di_fake_make_get_id_group_
+
+#ifndef _di_fake_make_get_id_mode_
+  f_return_status fake_make_get_id_mode(const fake_data data, const f_string_static buffer, f_file_mode *mode, uint8_t *replace) {
+    if (!buffer.used) {
+      fake_print_error(data, F_parameter, "fake_make_get_id_mode", F_true);
+      return F_status_set_error(F_parameter);
+    }
+
+    f_status status = f_file_mode_from_string(buffer.string, mode, replace);
+
+    if (F_status_is_error(status)) {
+      if (data.verbosity != fake_verbosity_quiet) {
+        if (F_status_set_fine(status) == F_syntax) {
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The mode '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", buffer.string);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' is invalid.");
+        }
+        else {
+          fake_print_error(data, status, "f_file_mode_from_string", F_true);
+        }
+      }
+
+      return status;
+    }
+
+    return F_none;
+  }
+#endif // _di_fake_make_get_id_mode_
+
+#ifndef _di_fake_make_get_id_owner_
+  f_return_status fake_make_get_id_owner(const fake_data data, const f_string_static buffer, uid_t *id) {
+    const f_string_range range = f_macro_string_range_initialize(buffer.used);
+
+    f_number_unsigned number = 0;
+
+    f_status status = fl_conversion_string_to_number_unsigned(buffer.string, &number, range);
+
+    if (F_status_is_error(status)) {
+      status = F_status_set_fine(status);
+
+      if (status == F_number) {
+        status = f_account_id_user_by_name(buffer.string, id);
+
+        if (F_status_is_error(status)) {
+          fake_print_error(data, status, "f_account_id_user_by_name", F_true);
+          return F_status_set_error(status);
+        }
+        else if (status == F_exist_not) {
+          if (data.verbosity != fake_verbosity_quiet) {
+            fprintf(f_type_error, "%c", f_string_eol[0]);
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The user name '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", buffer.string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' was not found.");
+          }
+
+          return F_status_set_error(F_failure);
+        }
+
+        return F_none;
+      }
+
+      fake_print_error(data, status, "fl_conversion_string_to_number_unsigned", F_true);
+      return F_status_set_error(status);
+    }
+    else if (number > f_type_size_32_unsigned) {
+      if (data.verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The number '");
+        fl_color_print(f_type_error, data.context.notable, data.context.reset, "%llu", number);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' is too large.");
+      }
+    }
+
+    *id = (uid_t) number;
+    return status;
+  }
+#endif // _di_fake_make_get_id_owner_
+
 #ifndef _di_fake_make_load_fakefile_
   void fake_make_load_fakefile(const fake_data data, fake_make_data *data_make, f_status *status) {
     if (F_status_is_error(*status)) return;
@@ -1122,11 +1249,14 @@ extern "C" {
       f_macro_string_static_initialize(fake_make_operation_else, fake_make_operation_else_length),
       f_macro_string_static_initialize(fake_make_operation_fail, fake_make_operation_fail_length),
       f_macro_string_static_initialize(fake_make_operation_group, fake_make_operation_group_length),
+      f_macro_string_static_initialize(fake_make_operation_group, fake_make_operation_groups_length),
       f_macro_string_static_initialize(fake_make_operation_if, fake_make_operation_if_length),
       f_macro_string_static_initialize(fake_make_operation_link, fake_make_operation_link_length),
       f_macro_string_static_initialize(fake_make_operation_mode, fake_make_operation_mode_length),
+      f_macro_string_static_initialize(fake_make_operation_mode, fake_make_operation_modes_length),
       f_macro_string_static_initialize(fake_make_operation_operate, fake_make_operation_operate_length),
       f_macro_string_static_initialize(fake_make_operation_owner, fake_make_operation_owner_length),
+      f_macro_string_static_initialize(fake_make_operation_owner, fake_make_operation_owners_length),
       f_macro_string_static_initialize(fake_make_operation_pop, fake_make_operation_pop_length),
       f_macro_string_static_initialize(fake_make_operation_print, fake_make_operation_print_length),
       f_macro_string_static_initialize(fake_make_operation_run, fake_make_operation_run_length),
@@ -1148,11 +1278,14 @@ extern "C" {
       f_macro_string_range_initialize(fake_make_operation_else_length),
       f_macro_string_range_initialize(fake_make_operation_fail_length),
       f_macro_string_range_initialize(fake_make_operation_group_length),
+      f_macro_string_range_initialize(fake_make_operation_groups_length),
       f_macro_string_range_initialize(fake_make_operation_if_length),
       f_macro_string_range_initialize(fake_make_operation_link_length),
       f_macro_string_range_initialize(fake_make_operation_mode_length),
+      f_macro_string_range_initialize(fake_make_operation_modes_length),
       f_macro_string_range_initialize(fake_make_operation_operate_length),
       f_macro_string_range_initialize(fake_make_operation_owner_length),
+      f_macro_string_range_initialize(fake_make_operation_owners_length),
       f_macro_string_range_initialize(fake_make_operation_pop_length),
       f_macro_string_range_initialize(fake_make_operation_print_length),
       f_macro_string_range_initialize(fake_make_operation_run_length),
@@ -1174,11 +1307,14 @@ extern "C" {
       fake_make_operation_type_else,
       fake_make_operation_type_fail,
       fake_make_operation_type_group,
+      fake_make_operation_type_groups,
       fake_make_operation_type_if,
       fake_make_operation_type_link,
       fake_make_operation_type_mode,
+      fake_make_operation_type_modes,
       fake_make_operation_type_operate,
       fake_make_operation_type_owner,
+      fake_make_operation_type_owners,
       fake_make_operation_type_pop,
       fake_make_operation_type_print,
       fake_make_operation_type_run,
@@ -1337,10 +1473,35 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_group) {
-      // fake_make_assure_inside_project
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      gid_t id = 0;
+
+      *status = fake_make_get_id_group(data, arguments.array[0], &id);
+      if (F_status_is_error(*status)) return;
+
+      for (f_array_length i = 1; i < arguments.used; i++) {
+        *status = f_file_change_role(arguments.array[i].string, -1, id, F_false);
+        if (F_status_is_error(*status)) {
+          fake_print_error_file(data, *status, "f_file_change_role", arguments.array[i].string, "change group of", F_true, F_true);
+        }
+      } // for
+
+      return;
+    }
+
+    if (operation == fake_make_operation_type_groups) {
+      gid_t id = 0;
+
+      *status = fake_make_get_id_group(data, arguments.array[0], &id);
+      if (F_status_is_error(*status)) return;
+
+      for (f_array_length i = 1; i < arguments.used; i++) {
+        // @todo: recursive.
+        *status = f_file_change_role(arguments.array[i].string, -1, id, F_false);
+        if (F_status_is_error(*status)) {
+          fake_print_error_file(data, *status, "f_file_change_role", arguments.array[i].string, "change group of", F_true, F_true);
+        }
+      } // for
+
       return;
     }
 
@@ -1358,10 +1519,33 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_mode) {
-      // fake_make_assure_inside_project
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      f_file_mode mode_rule = 0;
+      uint8_t replace = 0;
+
+      *status = fake_make_get_id_mode(data, arguments.array[0], &mode_rule, &replace);
+      if (F_status_is_error(*status)) return;
+
+      mode_t mode = 0;
+
+      for (f_array_length i = 1; i < arguments.used; i++) {
+        // @todo: get the file mode.
+
+        if (replace) {
+          // @todo when replace is specified, then determine what is to be replaced when converting to mode_t.
+        }
+
+        // @todo: check the zeroing logic, read each file's mode, and updat accordingly.
+        //*status = f_file_change_mode(arguments.array[i].string, mode);
+        //if (F_status_is_error(*status)) {
+        //  fake_print_error_file(data, *status, "f_file_change_mode", arguments.array[i].string, "change mode of", F_true, F_true);
+        //}
+      } // for
+
+      return;
+    }
+
+    if (operation == fake_make_operation_type_modes) {
+      // @todo
       return;
     }
 
@@ -1371,10 +1555,35 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_owner) {
-      // fake_make_assure_inside_project
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      uid_t id = 0;
+
+      *status = fake_make_get_id_owner(data, arguments.array[0], &id);
+      if (F_status_is_error(*status)) return;
+
+      for (f_array_length i = 1; i < arguments.used; i++) {
+        *status = f_file_change_role(arguments.array[i].string, id, -1, F_false);
+        if (F_status_is_error(*status)) {
+          fake_print_error_file(data, *status, "f_file_change_role", arguments.array[i].string, "change owner of", F_true, F_true);
+        }
+      } // for
+
+      return;
+    }
+
+    if (operation == fake_make_operation_type_owners) {
+      uid_t id = 0;
+
+      *status = fake_make_get_id_owner(data, arguments.array[0], &id);
+      if (F_status_is_error(*status)) return;
+
+      for (f_array_length i = 1; i < arguments.used; i++) {
+        // @todo recursive.
+        *status = f_file_change_role(arguments.array[i].string, id, -1, F_false);
+        if (F_status_is_error(*status)) {
+          fake_print_error_file(data, *status, "f_file_change_role", arguments.array[i].string, "change owner of", F_true, F_true);
+        }
+      } // for
+
       return;
     }
 
@@ -1768,12 +1977,16 @@ extern "C" {
         if (arguments.array[0].used) {
           f_status status_file = f_file_is(arguments.array[0].string, f_file_type_regular);
 
-          if (F_status_is_error(status_file)) {
+          if (status_file == F_file_found_not) {
             printf("%c", f_string_eol[0]);
             fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
             fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
             fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
 
+            *status = F_status_set_error(status_file);
+          }
+          else if (F_status_is_error(status_file)) {
+            fake_print_error_file(data, *status, "f_file_is", data.file_data_build_fakefile.string, "find", F_true, F_true);
             *status = status_file;
           }
 
@@ -1910,42 +2123,27 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
     }
-    else if (operation == fake_make_operation_type_group || operation == fake_make_operation_type_mode || operation == fake_make_operation_type_owner) {
-      if (arguments.used > 3) {
-        printf("%c", f_string_eol[0]);
-        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+    else if (operation == fake_make_operation_type_group || operation == fake_make_operation_type_groups || operation == fake_make_operation_type_mode || operation == fake_make_operation_type_modes || operation == fake_make_operation_type_owner || operation == fake_make_operation_type_owners) {
+      printf("DEBUG: arguments.used = %llu\n");
+      if (arguments.used > 1) {
+        f_status status_file = F_none;
 
-        *status = F_status_set_error(F_failure);
-      }
-      else if (arguments.used > 1) {
-        f_status status_file = f_file_is(arguments.array[1].string, f_file_type_regular);
+        for (f_array_length i = 1; i < arguments.used; i++) {
+          status_file = f_file_is(arguments.array[i].string, f_file_type_regular);
 
-        if (F_status_is_error(status_file)) {
-          printf("%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
-          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
-          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+          printf("DEBUG: at %llu, looking at '%s', %llu\n", i, arguments.array[i].string, F_status_set_fine(status_file));
 
-          *status = status_file;
-        }
-
-        if (!status_file) {
-          printf("%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The file '");
-          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
-          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' must be a regular file.");
-
-          *status = F_status_set_error(F_failure);
-        }
-
-        if (arguments.used == 3) {
-          if (fl_string_dynamic_compare_string(fake_make_operation_argument_recursive, arguments.array[2], fake_make_operation_argument_recursive_length) == F_equal_to_not) {
+          if (status_file == F_file_found_not) {
             printf("%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Third argument must be either '");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_make_operation_argument_recursive);
-            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' or not provided at all.");
+            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
 
-            *status = F_status_set_error(F_failure);
+            *status = status_file;
+          }
+          else if (F_status_is_error(status_file)) {
+            fake_print_error_file(data, *status, "f_file_is", arguments.array[i].string, "find", F_true, F_true);
+            *status = status_file;
           }
         }
       }
@@ -2045,12 +2243,16 @@ extern "C" {
         if (arguments.array[0].used) {
           f_status status_file = f_file_is(arguments.array[0].string, f_file_type_directory);
 
-          if (F_status_is_error(status_file)) {
+          if (status_file == F_file_found_not) {
             printf("%c", f_string_eol[0]);
             fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
             fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
             fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
 
+            *status = status_file;
+          }
+          else if (F_status_is_error(status_file)) {
+            fake_print_error_file(data, *status, "f_file_is", data.file_data_build_fakefile.string, "find", F_true, F_true);
             *status = status_file;
           }
 

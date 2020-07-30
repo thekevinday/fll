@@ -66,11 +66,14 @@ extern "C" {
   #define fake_make_operation_else     "else"
   #define fake_make_operation_fail     "fail"
   #define fake_make_operation_group    "group"
+  #define fake_make_operation_groups   "groups"
   #define fake_make_operation_if       "if"
   #define fake_make_operation_link     "link"
   #define fake_make_operation_mode     "mode"
+  #define fake_make_operation_modes    "modes"
   #define fake_make_operation_operate  "operate"
   #define fake_make_operation_owner    "owner"
+  #define fake_make_operation_owners   "owners"
   #define fake_make_operation_pop      "pop"
   #define fake_make_operation_print    "print"
   #define fake_make_operation_run      "run"
@@ -90,11 +93,14 @@ extern "C" {
   #define fake_make_operation_else_length     4
   #define fake_make_operation_fail_length     4
   #define fake_make_operation_group_length    5
+  #define fake_make_operation_groups_length   6
   #define fake_make_operation_if_length       2
   #define fake_make_operation_link_length     4
   #define fake_make_operation_mode_length     4
+  #define fake_make_operation_modes_length    5
   #define fake_make_operation_operate_length  7
   #define fake_make_operation_owner_length    5
+  #define fake_make_operation_owners_length   6
   #define fake_make_operation_pop_length      3
   #define fake_make_operation_print_length    5
   #define fake_make_operation_run_length      3
@@ -115,11 +121,14 @@ extern "C" {
     fake_make_operation_type_else,
     fake_make_operation_type_fail,
     fake_make_operation_type_group,
+    fake_make_operation_type_groups,
     fake_make_operation_type_if,
     fake_make_operation_type_link,
     fake_make_operation_type_mode,
+    fake_make_operation_type_modes,
     fake_make_operation_type_operate,
     fake_make_operation_type_owner,
+    fake_make_operation_type_owners,
     fake_make_operation_type_pop,
     fake_make_operation_type_print,
     fake_make_operation_type_run,
@@ -130,7 +139,7 @@ extern "C" {
     fake_make_operation_type_touch,
   };
 
-  #define fake_make_operation_total 23
+  #define fake_make_operation_total 26
 
   #define fake_make_operation_argument_file      "file"
   #define fake_make_operation_argument_directory "directory"
@@ -323,6 +332,70 @@ extern "C" {
 #ifndef _di_fake_make_assure_inside_project_
   extern f_return_status fake_make_assure_inside_project(const fake_data data, const f_string_static path, fake_make_data *data_make) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_assure_inside_project_
+
+/**
+ * Get the group id from either a string representing the number or a string representing the name.
+ *
+ * @param data
+ *   The program data.
+ * @param buffer
+ *   The string containing the name or number.
+ * @param id
+ *   The detected group id.
+ *
+ * @return
+ *   F_none on success.
+ *   F_exist_not if there is no group by the given name.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_get_id_group_
+  f_return_status fake_make_get_id_group(const fake_data data, const f_string_static buffer, gid_t *id) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_get_id_group_
+
+/**
+ * Get the mode id from either a string representing the number or a string representing the mode.
+ *
+ * @param data
+ *   The program data.
+ * @param buffer
+ *   The string containing the name or number.
+ * @param mode
+ *   The determined mode.
+ *   This uses bitwise data.
+ * @param replace
+ *   The determined modes that are to be replaced, such as: f_file_mode_replace_owner.
+ *   This uses bitwise data.
+ *
+ * @return
+ *   F_none on success.
+ *   F_exist_not if there is no mode by the given name.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_get_id_mode_
+  f_return_status fake_make_get_id_mode(const fake_data data, const f_string_static buffer, f_file_mode *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_get_id_mode_
+
+/**
+ * Get the user id from either a string representing the number or a string representing the name.
+ *
+ * @param data
+ *   The program data.
+ * @param buffer
+ *   The string containing the name or number.
+ * @param id
+ *   The detected user id.
+ *
+ * @return
+ *   F_none on success.
+ *   F_exist_not if there is no user by the given name.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_get_id_owner_
+  f_return_status fake_make_get_id_owner(const fake_data data, const f_string_static buffer, uid_t *id) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_get_id_owner_
 
 /**
  * Find the fake file, load it, validate it, and process it.

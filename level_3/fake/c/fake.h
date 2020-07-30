@@ -55,6 +55,7 @@
 #include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/utf.h>
+#include <level_0/account.h>
 #include <level_0/console.h>
 #include <level_0/directory.h>
 #include <level_0/environment.h>

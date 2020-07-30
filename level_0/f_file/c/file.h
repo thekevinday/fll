@@ -245,8 +245,50 @@ extern "C" {
 
 /**
  * File mode related functionality.
+ *
+ * The f_file_mode type properties are 8-bit types with the following structure:
+ *   @todo finish documentation.
+ *
+ *   There should only be a single bit for each 'r', 'w', 'x', and 'X' bit (as well as 'S', 's', and 't'):
+ *     'r' = read bit.
+ *     'w' = write bit.
+ *     'x' = execute bit.
+ *     'X' = execute only if already execute bit.
+ *     'S' = set user bit (setuid).
+ *     's' = set group bit (setgid).
+ *     't' = sticky bit.
  */
 #ifndef _di_f_file_mode_
+  typedef uint32_t f_file_mode;
+
+  #define f_file_mode_block_special 0x77000000 // 0111 0111 0000 0000 0000 0000 0000 0000
+  #define f_file_mode_block_owner   0x00ff0000 // 0000 0000 1111 1111 0000 0000 0000 0000
+  #define f_file_mode_block_group   0x0000ff00 // 0000 0000 0000 0000 1111 1111 0000 0000
+  #define f_file_mode_block_world   0x000000ff // 0000 0000 0000 0000 0000 0000 1111 1111
+  #define f_file_mode_block_all     0x77ffffff // 0111 0111 1111 1111 1111 1111 1111 1111
+
+  #define f_file_mode_mask_how_add            0x070f0f0f // 0000 0111 0000 1111 0000 1111 0000 1111
+  #define f_file_mode_mask_how_subtract       0x70f0f0f0 // 0111 0000 1111 0000 1111 0000 1111 0000
+  #define f_file_mode_mask_how_umask_add      0x0f0f0f0f // 0000 1111 0000 1111 0000 1111 0000 1111
+  #define f_file_mode_mask_how_umask_subtract 0x78f0f0f0 // 0111 1000 1111 0000 1111 0000 1111 0000
+
+  #define f_file_mode_mask_bit_execute      0x00111111 // 0000 0000 0001 0001 0001 0001 0001 0001
+  #define f_file_mode_mask_bit_execute_only 0x00888888 // 0000 0000 1000 1000 1000 1000 1000 1000
+  #define f_file_mode_mask_bit_read         0x00444444 // 0000 0000 0100 0100 0100 0100 0100 0100
+  #define f_file_mode_mask_bit_set_group    0x22000000 // 0010 0010 0000 0000 0000 0000 0000 0000
+  #define f_file_mode_mask_bit_set_owner    0x44000000 // 0100 0100 0000 0000 0000 0000 0000 0000
+  #define f_file_mode_mask_bit_sticky       0x11000000 // 0001 0001 0000 0000 0000 0000 0000 0000
+  #define f_file_mode_mask_bit_write        0x00222222 // 0000 0000 0010 0010 0010 0010 0010 0010
+
+  #define f_file_mode_replace_owner       0x1  // 0000 0001
+  #define f_file_mode_replace_group       0x2  // 0000 0010
+  #define f_file_mode_replace_world       0x4  // 0000 0100
+  #define f_file_mode_replace_umask_owner 0x8  // 0000 1000
+  #define f_file_mode_replace_umask_group 0x10 // 0001 0000
+  #define f_file_mode_replace_umask_world 0x20 // 0010 0000
+
+  #define f_file_mode_replace_all       0x7  // 0000 0111
+  #define f_file_mode_replace_umask_all 0x38 // 0011 1000
 
   // file permission modes.
   #define f_file_mode_owner_rwx S_IRWXU
@@ -1017,54 +1059,6 @@ extern "C" {
 #endif // _di_f_file_is_at_
 
 /**
- * Get the base name of a file path.
- *
- * @param path
- *   The path file name.
- *   Need not be NULL terminated.
- * @param length
- *   The length of the path string.
- * @param name_base
- *   The resulting base name as per basename().
- *   The base name is appended onto this.
- *
- * @return
- *   F_none on success.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if string is too large to store in the buffer.
- *
- * @see basename()
- */
-#ifndef _di_f_file_name_base_
-  extern f_return_status f_file_name_base(const f_string path, const f_string_length length, f_string_dynamic *name_base);
-#endif // _di_f_file_name_base_
-
-/**
- * Get the directory name of a file path.
- *
- * @param path
- *   The path file name.
- *   Need not be NULL terminated.
- * @param length
- *   The length of the path string.
- * @param name_directory
- *   The resulting base name as per dirname().
- *   The directory name is appended onto this.
- *
- * @return
- *   F_none on success.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if string is too large to store in the buffer.
- *
- * @see dirname()
- */
-#ifndef _di_f_file_name_directory_
-  extern f_return_status f_file_name_directory(const f_string path, const f_string_length length, f_string_dynamic *name_directory);
-#endif // _di_f_file_name_directory_
-
-/**
  * Create a symbolic link to a file.
  *
  * This will not replace existing files/links.
@@ -1286,6 +1280,124 @@ extern "C" {
 #ifndef _di_f_file_link_read_at_
   extern f_return_status f_file_link_read_at(const int at_id, const f_string path, const struct stat link_stat, f_string_dynamic *target);
 #endif // _di_f_file_link_read_at_
+
+/**
+ * Get the file mode id from a string syntax.
+ *
+ * The string syntax is defined as follows:
+ *   '([ugoa]*[-+=]{0,1}([rwxXst]|[ugo])+([,][ugoa]*[-+=]{0,1}([rwxXst]|[ugo])+)*)|([-+=]0*[0-7]{1,4})'.
+ *
+ * Such that:
+ *   'u' = apply to user.
+ *   'g' = apply to group.
+ *   'o' = apply to other/world.
+ *   'a' = apply to all (user, group, and other/world).
+ *   '-' = remove the specified modes.
+ *   '+' = add the specified modes.
+ *   '=' = overwrite all existing modes with this set.
+ *   'r' = read mode.
+ *   'w' = write mode.
+ *   'x' = execute mode.
+ *   'X' = execute mode, only if already executable.
+ *   's' = set-gid/set-uid mode.
+ *   't' = sticky-bit mode.
+ *   '0' = no mode.
+ *   '1' = execute mode.
+ *   '2' = write mode.
+ *   '3' = execute and write mode.
+ *   '4' = read mode.
+ *   '5' = execute and read mode.
+ *   '6' = read and write mode.
+ *   '7' = execute, read, and write mode.
+ *
+ * When there are 4 digits with a non-zero leading digit (such as 2000 or 002000):
+ *   '1' = sticky-bit mode.
+ *   '2' = set-gid mode.
+ *   '3' = sticky-bit and set-gid mode.
+ *   '4' = set-uid mode.
+ *   '5' = sticky-bit and set-uid mode.
+ *   '6' = set-uid and set-gid mode.
+ *   '7' = sticky-bit, set-uid, and set-gid mode.
+ *
+ * When using digits, each set of 0-7 represents the following:
+ *   [1-7] = apply to other/world.
+ *   [1-7][0-7] = first ([1-7]) to group and second ([0-7]) to other/world.
+ *   [1-7][0-7][0-7] = first ([1-7]) to owner, second ([0-7]) to group, and third ([0-7]) to other/world.
+ *   [1-7][0-7][0-7][0-7] = first ([1-7]) to stick/set-uid/set-gid, second ([0-7]) to owner, third ([0-7]) to owner, and fourth ([0-7]) to other/world.
+ *
+ * When there is a leading 0 when using digits, then this mask will ignore the current umask settings.
+ * Otherwise, the current umask is intended to be respected.
+ *
+ * When '+', '-', or '=' are specified without a leading 'a', 'u', 'g', or 'o', then the mode operations should be performed against the current umask.
+ * These are designated with the umask hows, such as f_file_mode_how_umask_replace.
+ *
+ * @param string
+ *   A NULL terminated string designating the desired mode, following the above string syntax.
+ * @param mode
+ *   The determined mode.
+ *   This uses bitwise data.
+ * @param replace
+ *   The determined modes that are to be replaced, such as: f_file_mode_replace_owner.
+ *   This uses bitwise data.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_syntax (with error bit) if the string fails to follow the syntax rules.
+ *
+ *   The parameters how, mode_normal, and mode_executable are all set to 0 on error.
+ */
+#ifndef _di_f_file_mode_from_string_
+  extern f_return_status f_file_mode_from_string(const f_string string, f_file_mode *mode, uint8_t *replace);
+#endif // _di_f_file_mode_from_string_
+
+/**
+ * Get the base name of a file path.
+ *
+ * @param path
+ *   The path file name.
+ *   Need not be NULL terminated.
+ * @param length
+ *   The length of the path string.
+ * @param name_base
+ *   The resulting base name as per basename().
+ *   The base name is appended onto this.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if string is too large to store in the buffer.
+ *
+ * @see basename()
+ */
+#ifndef _di_f_file_name_base_
+  extern f_return_status f_file_name_base(const f_string path, const f_string_length length, f_string_dynamic *name_base);
+#endif // _di_f_file_name_base_
+
+/**
+ * Get the directory name of a file path.
+ *
+ * @param path
+ *   The path file name.
+ *   Need not be NULL terminated.
+ * @param length
+ *   The length of the path string.
+ * @param name_directory
+ *   The resulting base name as per dirname().
+ *   The directory name is appended onto this.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if string is too large to store in the buffer.
+ *
+ * @see dirname()
+ */
+#ifndef _di_f_file_name_directory_
+  extern f_return_status f_file_name_directory(const f_string path, const f_string_length length, f_string_dynamic *name_directory);
+#endif // _di_f_file_name_directory_
 
 /**
  * Open a particular file and save its stream.
@@ -1691,37 +1803,6 @@ extern "C" {
 #endif // _di_f_file_stat_by_id_
 
 /**
- * Write until entire buffer is written.
- *
- * @param file
- *   The file to write to.
- *   The file must already be open.
- * @param buffer
- *   The buffer to write to the file.
- * @param written
- *   The total bytes written.
- *   Set pointer to 0 to not use.
- *
- * @return
- *   F_none on success.
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
- *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file (with error bit) if file descriptor is in an error state.
- *   F_file_closed (with error bit) if file is not open.
- *   F_file_descriptor (with error bit) if the file descriptor is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupted (with error bit) if interrupt was received.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see write()
- */
-#ifndef _di_f_file_write_
-  extern f_return_status f_file_write(const f_file file, const f_string_static buffer, f_string_length *written);
-#endif // _di_f_file_write_
-
-/**
  * Update the files access and modification timestamp, creating the file if it does not already exist.
  *
  * When the file is created, it is created as a regular file.
@@ -1860,6 +1941,37 @@ extern "C" {
 #ifndef _di_f_file_type_at_
   extern f_return_status f_file_type_at(const int at_id, const f_string path, const int flag, int *type);
 #endif // _di_f_file_type_at_
+
+/**
+ * Write until entire buffer is written.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param written
+ *   The total bytes written.
+ *   Set pointer to 0 to not use.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file (with error bit) if file descriptor is in an error state.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see write()
+ */
+#ifndef _di_f_file_write_
+  extern f_return_status f_file_write(const f_file file, const f_string_static buffer, f_string_length *written);
+#endif // _di_f_file_write_
 
 /**
  * Write until a single block is filled or entire buffer is written.

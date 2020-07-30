@@ -50,12 +50,15 @@ Fakefile Specification:
   - delete: Two or three Content. First Content is either "file" or "directory" (case-sensitive), second Content is path to file, and third Content is "recursive" (case-sensitive) or is not provided.
   - else: Zero Content.
   - fail: One Content. First Content must be one of "exit", "warn", or "ignore" (case-sensitive).
-  - group: Two or three Content. First Content is group name or number, second Content is path to file, and third Content is "recursive" (case-sensitive) or is not provided.
+  - group: Two or more Content. First Content is group name or number, remaining Content are paths to files.
+  - groups: Two or more Content. First Content is group name or number, remaining Content are paths to files.
   - if: One or more Content. First Content is the condition, remaining Content are specific to the condition.
   - link: Two Content. First Content is the link target file and second Content is the pointer file (the link).
-  - mode: Two or three Content. First Content is group name or number, second Content is path to file, and third Content is "recursive" (case-sensitive) or is not provided.
+  - mode: Two or more Content. First Content is group name or number, remaining Content are paths to files.
+  - modes: Two or more Content. First Content is group name or number, remaining Content are paths to files.
   - operate: One Content. First Content is the name of a valid Section Object, except for the reserved Section Objects.
-  - owner: Two or Three Content. First Content is group name or number, second Content is path to file, and third Content is "recursive" (case-sensitive) or is not provided.
+  - owner: Two or more Content. First Content is group name or number, remaining Content are paths to files.
+  - owners: Two or more Content. First Content is group name or number, remaining Content are paths to files.
   - pop: Zero Content.
   - print: Zero or more Content.
   - run: One or more Content. First Content is the name of the program (or script) and all remaining Content are passed as arguments to the named program (or script).
