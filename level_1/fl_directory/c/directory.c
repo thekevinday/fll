@@ -32,7 +32,7 @@ extern "C" {
         return F_status_set_error(F_directory_found);
       }
 
-      status = f_file_change_mode(destination, source_stat.st_mode);
+      status = f_file_mode_set(destination, source_stat.st_mode);
       if (F_status_is_error(status)) return status;
     }
     else {
@@ -41,7 +41,7 @@ extern "C" {
     }
 
     if (role) {
-      status = f_file_change_role(destination, source_stat.st_uid, source_stat.st_gid, F_true);
+      status = f_file_role_change(destination, source_stat.st_uid, source_stat.st_gid, F_true);
       if (F_status_is_error(status)) return status;
     }
 
@@ -137,7 +137,7 @@ extern "C" {
         return F_status_set_error(F_directory_found);
       }
 
-      status = f_file_change_mode(destination, mode.directory);
+      status = f_file_mode_set(destination, mode.directory);
       if (F_status_is_error(status)) return status;
     }
     else {

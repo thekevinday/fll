@@ -112,7 +112,7 @@ extern "C" {
             break;
           }
 
-          status = f_file_change_mode(destination_sub.string, source_stat.st_mode);
+          status = f_file_mode_set(destination_sub.string, source_stat.st_mode);
           if (F_status_is_error(status)) break;
         }
         else {
@@ -121,7 +121,7 @@ extern "C" {
         }
 
         if (role) {
-          status = f_file_change_role(destination_sub.string, source_stat.st_uid, source_stat.st_gid, F_true);
+          status = f_file_role_change(destination_sub.string, source_stat.st_uid, source_stat.st_gid, F_true);
           if (F_status_is_error(status)) break;
         }
       }
@@ -328,7 +328,7 @@ extern "C" {
           break;
         }
 
-        status = f_file_change_mode(destination_sub.string, mode.directory);
+        status = f_file_mode_set(destination_sub.string, mode.directory);
         if (F_status_is_error(status)) break;
       }
       else {

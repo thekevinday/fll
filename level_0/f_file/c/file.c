@@ -28,50 +28,6 @@ extern "C" {
   }
 #endif // _di_f_file_access_
 
-#ifndef _di_f_file_change_mode_
-  f_return_status f_file_change_mode(const f_string path, const mode_t mode) {
-    #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_file_change_mode(path, mode);
-  }
-#endif // _di_f_file_change_mode_
-
-#ifndef _di_f_file_change_mode_at_
-  f_return_status f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode) {
-    #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_file_change_mode_at(at_id, path, mode);
-  }
-#endif // _di_f_file_change_mode_at_
-
-#ifndef _di_f_file_change_role_
-  f_return_status f_file_change_role(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) {
-    #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return F_status_set_error(F_parameter);
-      if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
-      if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_file_change_role(path, uid, gid, dereference);
-  }
-#endif // _di_f_file_change_role_
-
-#ifndef _di_f_file_change_role_at_
-  f_return_status f_file_change_role_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) {
-    #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return F_status_set_error(F_parameter);
-      if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
-      if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_file_change_role_at(at_id, path, uid, gid, flag);
-  }
-#endif // _di_f_file_change_role_at_
-
 #ifndef _di_f_file_clone_
   f_return_status f_file_clone(const f_string source, const f_string destination, const bool role, const f_number_unsigned size_block, const bool exclusive) {
     #ifndef _di_level_0_parameter_checking_
@@ -92,12 +48,12 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       if (!exclusive) {
-        status = private_f_file_change_mode(destination, source_stat.st_mode);
+        status = private_f_file_mode_set(destination, source_stat.st_mode);
         if (F_status_is_error(status)) return status;
       }
 
       if (role) {
-        status = private_f_file_change_role(destination, source_stat.st_uid, source_stat.st_gid, F_false);
+        status = private_f_file_role_change(destination, source_stat.st_uid, source_stat.st_gid, F_false);
         if (F_status_is_error(status)) return status;
       }
 
@@ -112,11 +68,11 @@ extern "C" {
         return status;
       }
 
-      status = private_f_file_change_mode(destination, source_stat.st_mode);
+      status = private_f_file_mode_set(destination, source_stat.st_mode);
       if (F_status_is_error(status)) return status;
 
       if (role) {
-        status = private_f_file_change_role(destination, source_stat.st_uid, source_stat.st_gid, F_false);
+        status = private_f_file_role_change(destination, source_stat.st_uid, source_stat.st_gid, F_false);
         if (F_status_is_error(status)) return status;
       }
 
@@ -158,7 +114,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       if (!exclusive) {
-        status = private_f_file_change_mode(destination, (~f_file_type_mask) & mode.regular);
+        status = private_f_file_mode_set(destination, (~f_file_type_mask) & mode.regular);
         if (F_status_is_error(status)) return status;
       }
 
@@ -173,7 +129,7 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, (~f_file_type_mask) & mode.directory);
+      status = private_f_file_mode_set(destination, (~f_file_type_mask) & mode.directory);
       if (F_status_is_error(status)) return status;
 
       return F_none;
@@ -208,7 +164,7 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, (~f_file_type_mask) & mode.fifo);
+      status = private_f_file_mode_set(destination, (~f_file_type_mask) & mode.fifo);
       if (F_status_is_error(status)) return status;
 
       return F_none;
@@ -222,7 +178,7 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, (~f_file_type_mask) & mode.socket);
+      status = private_f_file_mode_set(destination, (~f_file_type_mask) & mode.socket);
       if (F_status_is_error(status)) return status;
 
       return F_none;
@@ -236,7 +192,7 @@ extern "C" {
         }
       }
 
-      status = private_f_file_change_mode(destination, (~f_file_type_mask) & mode.block);
+      status = private_f_file_mode_set(destination, (~f_file_type_mask) & mode.block);
       if (F_status_is_error(status)) return status;
 
       return F_none;
@@ -568,6 +524,316 @@ extern "C" {
   }
 #endif // _di_f_file_link_read_at_
 
+#ifndef _di_f_file_mode_determine_
+  f_return_status f_file_mode_determine(const mode_t mode_file, const f_file_mode mode_change, const uint8_t mode_replace, const bool directory_is, const mode_t umask, mode_t *mode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (mode == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_file_mode change = mode_change & f_file_mode_block_special;
+
+    *mode = 0;
+
+    if (mode_replace & f_file_mode_replace_special) {
+      if (change & f_file_mode_mask_bit_set_owner & f_file_mode_mask_how_add) {
+        *mode = f_file_mode_special_set_user;
+      }
+
+      if (change & f_file_mode_mask_bit_set_group & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_special_set_group;
+      }
+
+      if (change & f_file_mode_mask_bit_sticky & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_special_sticky;
+      }
+    }
+    else {
+      *mode = mode_file & f_file_mode_special_all;
+
+      if (mode_change & f_file_mode_block_special) {
+        if (change & f_file_mode_mask_bit_set_owner & f_file_mode_mask_how_subtract) {
+          if (*mode & f_file_mode_special_set_user) {
+            *mode -= f_file_mode_special_set_user;
+          }
+        }
+        else if (change & f_file_mode_mask_bit_set_owner & f_file_mode_mask_how_add) {
+          if (!(*mode & f_file_mode_special_set_user)) {
+            *mode |= f_file_mode_special_set_user;
+          }
+        }
+
+        if (change & f_file_mode_mask_bit_set_group & f_file_mode_mask_how_subtract) {
+          if (*mode & f_file_mode_special_set_group) {
+            *mode -= f_file_mode_special_set_group;
+          }
+        }
+        else if (change & f_file_mode_mask_bit_set_group & f_file_mode_mask_how_add) {
+          if (!(*mode & f_file_mode_special_set_group)) {
+            *mode |= f_file_mode_special_set_group;
+          }
+        }
+
+        if (change & f_file_mode_mask_bit_sticky & f_file_mode_mask_how_subtract) {
+          if (*mode & f_file_mode_special_sticky) {
+            *mode -= f_file_mode_special_sticky;
+          }
+        }
+        else if (change & f_file_mode_mask_bit_sticky & f_file_mode_mask_how_add) {
+          if (!(*mode & f_file_mode_special_sticky)) {
+            *mode |= f_file_mode_special_sticky;
+          }
+        }
+      }
+    }
+
+    change = mode_change & f_file_mode_block_owner;
+
+    if (mode_replace & f_file_mode_replace_owner) {
+      if (change & f_file_mode_mask_bit_read & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_owner_r;
+      }
+
+      if (change & f_file_mode_mask_bit_write & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_owner_w;
+      }
+
+      if (change & f_file_mode_mask_bit_execute & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_owner_x;
+      }
+      else if (change & f_file_mode_mask_bit_execute_only & f_file_mode_mask_how_add) {
+        if (directory_is || (mode_file & f_file_mode_owner_x)) {
+          *mode |= f_file_mode_owner_x;
+        }
+      }
+    }
+    else {
+      *mode |= mode_file & f_file_mode_owner_rwx;
+
+      if (mode_change & f_file_mode_block_owner) {
+        if (change & f_file_mode_mask_bit_read & f_file_mode_mask_how_subtract) {
+          if (*mode & f_file_mode_owner_r) {
+            *mode -= f_file_mode_owner_r;
+          }
+        }
+        else if (change & f_file_mode_mask_bit_read & f_file_mode_mask_how_add) {
+          if (!(*mode & f_file_mode_owner_r)) {
+            *mode |= f_file_mode_owner_r;
+          }
+        }
+
+        if (change & f_file_mode_mask_bit_write & f_file_mode_mask_how_subtract) {
+          if (*mode & f_file_mode_owner_w) {
+            *mode -= f_file_mode_owner_w;
+          }
+        }
+        else if (change & f_file_mode_mask_bit_write & f_file_mode_mask_how_add) {
+          if (!(*mode & f_file_mode_owner_w)) {
+            *mode |= f_file_mode_owner_w;
+          }
+        }
+
+        if (change & f_file_mode_mask_bit_execute) {
+          change &= f_file_mode_mask_bit_execute;
+
+          if (change & f_file_mode_mask_how_subtract) {
+            if (*mode & f_file_mode_owner_x) {
+              *mode -= f_file_mode_owner_x;
+            }
+          }
+          else if (change & f_file_mode_mask_how_add) {
+            if (!(*mode & f_file_mode_owner_x)) {
+              *mode |= f_file_mode_owner_x;
+            }
+          }
+        }
+        else if (change & f_file_mode_mask_bit_execute_only) {
+          change &= f_file_mode_mask_bit_execute_only;
+
+          if (directory_is || (mode_file & f_file_mode_owner_x)) {
+            if (change & f_file_mode_mask_how_subtract) {
+              if (*mode & f_file_mode_owner_x) {
+                *mode -= f_file_mode_owner_x;
+              }
+            }
+            else if (change & f_file_mode_mask_how_add) {
+              if (!(*mode & f_file_mode_owner_x)) {
+                *mode |= f_file_mode_owner_x;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    change = mode_change & f_file_mode_block_group;
+
+    if (mode_replace & f_file_mode_replace_group) {
+      if (change & f_file_mode_mask_bit_read & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_group_r;
+      }
+
+      if (change & f_file_mode_mask_bit_write & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_group_w;
+      }
+
+      if (change & f_file_mode_mask_bit_execute & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_group_x;
+      }
+      else if (change & f_file_mode_mask_bit_execute_only & f_file_mode_mask_how_add) {
+        if (directory_is || (mode_file & f_file_mode_group_x)) {
+          *mode |= f_file_mode_group_x;
+        }
+      }
+    }
+    else {
+      *mode |= mode_file & f_file_mode_group_rwx;
+
+      if (mode_change & f_file_mode_block_group) {
+
+        if (change & f_file_mode_mask_bit_read & f_file_mode_mask_how_subtract) {
+          if (*mode & f_file_mode_group_r) {
+            *mode -= f_file_mode_group_r;
+          }
+        }
+        else if (change & f_file_mode_mask_bit_read & f_file_mode_mask_how_add) {
+          if (!(*mode & f_file_mode_group_r)) {
+            *mode |= f_file_mode_group_r;
+          }
+        }
+
+        if (change & f_file_mode_mask_bit_write & f_file_mode_mask_how_subtract) {
+          if (*mode & f_file_mode_group_w) {
+            *mode -= f_file_mode_group_w;
+          }
+        }
+        else if (change & f_file_mode_mask_bit_write & f_file_mode_mask_how_add) {
+          if (!(*mode & f_file_mode_group_w)) {
+            *mode |= f_file_mode_group_w;
+          }
+        }
+
+        if (change & f_file_mode_mask_bit_execute) {
+          change &= f_file_mode_mask_bit_execute;
+
+          if (change & f_file_mode_mask_how_subtract) {
+            if (*mode & f_file_mode_group_x) {
+              *mode -= f_file_mode_group_x;
+            }
+          }
+          else if (change & f_file_mode_mask_how_add) {
+            if (!(*mode & f_file_mode_group_x)) {
+              *mode |= f_file_mode_group_x;
+            }
+          }
+        }
+        else if (change & f_file_mode_mask_bit_execute_only) {
+          change &= f_file_mode_mask_bit_execute_only;
+
+          if (directory_is || (mode_file & f_file_mode_group_x)) {
+            if (change & f_file_mode_mask_how_subtract) {
+              if (*mode & f_file_mode_group_x) {
+                *mode -= f_file_mode_group_x;
+              }
+            }
+            else if (change & f_file_mode_mask_how_add) {
+              if (!(*mode & f_file_mode_group_x)) {
+                *mode |= f_file_mode_group_x;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    change = mode_change & f_file_mode_block_world;
+
+    if (mode_replace & f_file_mode_replace_world) {
+
+      if (change & f_file_mode_mask_bit_read & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_world_r;
+      }
+
+      if (change & f_file_mode_mask_bit_write & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_world_w;
+      }
+
+      if (change & f_file_mode_mask_bit_execute & f_file_mode_mask_how_add) {
+        *mode |= f_file_mode_world_x;
+      }
+      else if (change & f_file_mode_mask_bit_execute_only & f_file_mode_mask_how_add) {
+        if (directory_is || (mode_file & f_file_mode_world_x)) {
+          *mode |= f_file_mode_world_x;
+        }
+      }
+    }
+    else {
+      *mode |= mode_file & f_file_mode_world_rwx;
+
+      if (mode_change & f_file_mode_block_world) {
+
+        if (change & f_file_mode_mask_bit_read & f_file_mode_mask_how_subtract) {
+          if (*mode & f_file_mode_world_r) {
+            *mode -= f_file_mode_world_r;
+          }
+        }
+        else if (change & f_file_mode_mask_bit_read & f_file_mode_mask_how_add) {
+          if (!(*mode & f_file_mode_world_r)) {
+            *mode |= f_file_mode_world_r;
+          }
+        }
+
+        if (change & f_file_mode_mask_bit_write & f_file_mode_mask_how_subtract) {
+          if (*mode & f_file_mode_world_w) {
+            *mode -= f_file_mode_world_w;
+          }
+        }
+        else if (change & f_file_mode_mask_bit_write & f_file_mode_mask_how_add) {
+          if (!(*mode & f_file_mode_world_w)) {
+            *mode |= f_file_mode_world_w;
+          }
+        }
+
+        if (change & f_file_mode_mask_bit_execute) {
+          change &= f_file_mode_mask_bit_execute;
+
+          if (change & f_file_mode_mask_how_subtract) {
+            if (*mode & f_file_mode_world_x) {
+              *mode -= f_file_mode_world_x;
+            }
+          }
+          else if (change & f_file_mode_mask_how_add) {
+            if (!(*mode & f_file_mode_world_x)) {
+              *mode |= f_file_mode_world_x;
+            }
+          }
+        }
+        else if (change & f_file_mode_mask_bit_execute_only) {
+          change &= f_file_mode_mask_bit_execute_only;
+
+          if (directory_is || (mode_file & f_file_mode_world_x)) {
+            if (change & f_file_mode_mask_how_subtract) {
+              if (*mode & f_file_mode_world_x) {
+                *mode -= f_file_mode_world_x;
+              }
+            }
+            else if (change & f_file_mode_mask_how_add) {
+              if (!(*mode & f_file_mode_world_x)) {
+                *mode |= f_file_mode_world_x;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (mode_replace & f_file_mode_replace_umask) {
+      *mode -= *mode & umask;
+    }
+
+    return F_none;
+  }
+#endif // _di_f_file_mode_determine_
+
 #ifndef _di_f_file_mode_from_string_
   f_return_status f_file_mode_from_string(const f_string string, f_file_mode *mode, uint8_t *replace) {
     #ifndef _di_level_0_parameter_checking_
@@ -583,12 +849,10 @@ extern "C" {
     *replace = 0;
 
     switch (string[0]) {
-
       case '+':
       case '-':
       case '=':
         switch (string[1]) {
-
           case 'r':
           case 'w':
           case 'x':
@@ -613,7 +877,6 @@ extern "C" {
             return F_status_set_error(F_syntax);
         }
 
-        syntax = 1;
         break;
 
       case 'u':
@@ -640,12 +903,13 @@ extern "C" {
 
     if (syntax == 1) {
       uint8_t on = 0; // 1 = user, 2 = group, 4 = world/sticky, 7 = all.
-      uint8_t how = 0; // 1 = add, 2 = replace, 3 = subtract, 4 = umask add, 5 = umask replace, 6 = umask subtract.
+      uint8_t how = 0; // 1 = add, 2 = replace, 3 = subtract.
       bool active = F_false;
 
-      f_file_mode mask = 0;
+      f_file_mode mask = f_file_mode_block_special;
       f_file_mode what = 0;
 
+      // @todo: this needs to record all of the possible combinations of add, subtract, and assignment (=).
       for (f_string_length i = 0; syntax && i < string[i]; i++) {
 
         switch (string[i]) {
@@ -686,7 +950,7 @@ extern "C" {
             }
 
             on = 7;
-            mask = f_file_mode_block_owner | f_file_mode_block_group | f_file_mode_block_world;
+            mask = f_file_mode_block_all;
             break;
 
           case '+':
@@ -705,11 +969,24 @@ extern "C" {
 
               // only the parts designated by the mask should be replaced.
               *mode -= (*mode) & mask;
+
+              if (mask == f_file_mode_block_all) {
+                *replace = f_file_mode_replace_all;
+              }
+              else if (mask & f_file_mode_block_world) {
+                *replace |= f_file_mode_block_special & f_file_mode_block_world;
+              }
+              else if (mask & f_file_mode_block_group) {
+                *replace |= f_file_mode_block_special & f_file_mode_block_group;
+              }
+              else if (mask & f_file_mode_block_owner) {
+                *replace |= f_file_mode_block_special & f_file_mode_block_owner;
+              }
             }
 
             if (!on) {
               on = 7;
-              mask = f_file_mode_block_owner | f_file_mode_block_group | f_file_mode_block_world;
+              mask = f_file_mode_block_all;
             }
 
             for (i++; i < string[i]; i++) {
@@ -749,7 +1026,7 @@ extern "C" {
                 active = F_false;
                 on = 0;
                 how = 0;
-                mask = 0;
+                mask = f_file_mode_block_special;
                 break;
               }
               else if (string[i] == '+' || string[i] == '-' || string[i] == '=') {
@@ -769,10 +1046,12 @@ extern "C" {
                 *mode |= what & mask & f_file_mode_mask_how_subtract;
               }
               else if (how == 4 || how == 5) {
-                *mode |= what & mask & f_file_mode_mask_how_umask_add;
+                *mode |= what & mask & f_file_mode_mask_how_add;
+                *replace |= f_file_mode_replace_umask;
               }
               else if (how == 6) {
-                *mode |= what & mask & f_file_mode_mask_how_umask_subtract;
+                *mode |= what & mask & f_file_mode_mask_how_subtract;
+                *replace |= f_file_mode_replace_umask;
               }
             } // for
 
@@ -785,12 +1064,12 @@ extern "C" {
       } // for
     }
     else if (syntax == 2) {
-      // 1 = add, 2 = replace, 3 = subtract, 4 = umask add, 5 = umask replace, 6 = umask subtract.
+      // 1 = add, 2 = replace, 3 = subtract.
       uint8_t how = 0;
 
-      mode_t classic = 0;
-
       f_string_length i = 0;
+
+      *replace = 0;
 
       if (string[0] == '+') {
         how = 1;
@@ -800,17 +1079,23 @@ extern "C" {
         how = 3;
         i = 1;
       }
-      else if (string[0] == '=' || string[0] == '0') {
+      else if (string[0] == '=') {
         how = 2;
         i = 1;
+
+        *replace = f_file_mode_replace_standard;
       }
       else {
-        how = 5;
+        how = 2;
+
+        *replace = f_file_mode_replace_standard | f_file_mode_replace_directory;
       }
 
-      for (; string[i] == '0'; i++) {
-        // seek past leading '0's.
-      } // for
+      if (string[i] == '0') {
+        for (; string[i] == '0'; i++) {
+          // seek past leading '0's.
+        } // for
+      }
 
       if (string[i]) {
         f_string_length j = 0;
@@ -818,7 +1103,7 @@ extern "C" {
         for (; string[i + j] && j < 4; j++) {
 
           if (j) {
-            classic <<= 3;
+            *mode <<= 8;
           }
 
           switch (string[i]) {
@@ -834,11 +1119,17 @@ extern "C" {
             case '6':
             case '7':
               // this assumes ASCII/UTF-8.
-              classic |= string[i] - 0x30;
+              if (how == 3) {
+                *mode |= (string[i + j] - 0x30) << 4;
+              }
+              else {
+                *mode |= string[i + j] - 0x30;
+              }
 
               break;
 
             default:
+              // designate that this is invalid.
               j = 4;
               break;
           }
@@ -847,27 +1138,12 @@ extern "C" {
         if (j == 4) {
           syntax = 0;
         }
-
-        // @fixme: classic is a different structure than mode masks, properly expand. (maybe just use f_file_mode instead of classic and shift by 6 instead of 3.)
-        if (syntax) {
-          if (how == 1) {
-            *mode = classic & f_file_mode_mask_how_add;
-          }
-          else if (how == 2) {
-            *mode = classic & f_file_mode_mask_how_add;
-            *replace = f_file_mode_replace_all;
-          }
-          else if (how == 3) {
-            *mode = classic & f_file_mode_mask_how_subtract;
-          }
-          else if (how == 5) {
-            *mode = classic & f_file_mode_mask_how_add;
-            *replace = f_file_mode_replace_umask_all;
+        else if (how == 2) {
+          // if there are only '0's then the setuid/setgid/sticky bits are to be replaced.
+          if (*mode == 0) {
+            *replace = f_file_mode_replace_standard;
           }
         }
-      }
-      else {
-        *replace = f_file_mode_replace_all;
       }
     }
 
@@ -882,7 +1158,25 @@ extern "C" {
   }
 #endif // _di_f_file_mode_from_string_
 
-// @todo: needs f_file_mode_to_mode_t() to convert f_file_mode to a mode_t (requires f_file_mode, a source mode_t, and a destination mode_t).
+#ifndef _di_f_file_mode_set_
+  f_return_status f_file_mode_set(const f_string path, const mode_t mode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_file_mode_set(path, mode);
+  }
+#endif // _di_f_file_mode_set_
+
+#ifndef _di_f_file_mode_set_at_
+  f_return_status f_file_mode_set_at(const int at_id, const f_string path, const mode_t mode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_file_mode_set_at(at_id, path, mode);
+  }
+#endif // _di_f_file_mode_set_at_
 
 #ifndef _di_f_file_name_base_
   f_return_status f_file_name_base(const f_string path, const f_string_length length, f_string_dynamic *name_base) {
@@ -1192,6 +1486,30 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_file_remove_at_
+
+#ifndef _di_f_file_role_change_
+  f_return_status f_file_role_change(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+      if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
+      if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_file_role_change(path, uid, gid, dereference);
+  }
+#endif // _di_f_file_role_change_
+
+#ifndef _di_f_file_role_change_at_
+  f_return_status f_file_role_change_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+      if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
+      if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_file_role_change_at(at_id, path, uid, gid, flag);
+  }
+#endif // _di_f_file_role_change_at_
 
 #ifndef _di_f_file_seek_
   f_return_status f_file_seek(const int id, const int whence, const f_string_length offset, f_string_length *seeked) {

@@ -257,20 +257,23 @@ extern "C" {
  *     'S' = set user bit (setuid).
  *     's' = set group bit (setgid).
  *     't' = sticky bit.
+ *
+ *   The mode replace codes are meant to be used for the user, group, and world modes.
+ *   Generally "special" bits are preserved unless explicitly changed so there is also a "special" mode replace code as well.
+ *   The "umask" equivalent specifies that the mask should allow for umask influence.
  */
 #ifndef _di_f_file_mode_
   typedef uint32_t f_file_mode;
 
+                                               // 0000 0000 0000 0111 0000 0101 0000 0101
   #define f_file_mode_block_special 0x77000000 // 0111 0111 0000 0000 0000 0000 0000 0000
   #define f_file_mode_block_owner   0x00ff0000 // 0000 0000 1111 1111 0000 0000 0000 0000
   #define f_file_mode_block_group   0x0000ff00 // 0000 0000 0000 0000 1111 1111 0000 0000
   #define f_file_mode_block_world   0x000000ff // 0000 0000 0000 0000 0000 0000 1111 1111
   #define f_file_mode_block_all     0x77ffffff // 0111 0111 1111 1111 1111 1111 1111 1111
 
-  #define f_file_mode_mask_how_add            0x070f0f0f // 0000 0111 0000 1111 0000 1111 0000 1111
-  #define f_file_mode_mask_how_subtract       0x70f0f0f0 // 0111 0000 1111 0000 1111 0000 1111 0000
-  #define f_file_mode_mask_how_umask_add      0x0f0f0f0f // 0000 1111 0000 1111 0000 1111 0000 1111
-  #define f_file_mode_mask_how_umask_subtract 0x78f0f0f0 // 0111 1000 1111 0000 1111 0000 1111 0000
+  #define f_file_mode_mask_how_add      0x070f0f0f // 0000 0111 0000 1111 0000 1111 0000 1111
+  #define f_file_mode_mask_how_subtract 0x70f0f0f0 // 0111 0000 1111 0000 1111 0000 1111 0000
 
   #define f_file_mode_mask_bit_execute      0x00111111 // 0000 0000 0001 0001 0001 0001 0001 0001
   #define f_file_mode_mask_bit_execute_only 0x00888888 // 0000 0000 1000 1000 1000 1000 1000 1000
@@ -280,15 +283,16 @@ extern "C" {
   #define f_file_mode_mask_bit_sticky       0x11000000 // 0001 0001 0000 0000 0000 0000 0000 0000
   #define f_file_mode_mask_bit_write        0x00222222 // 0000 0000 0010 0010 0010 0010 0010 0010
 
-  #define f_file_mode_replace_owner       0x1  // 0000 0001
-  #define f_file_mode_replace_group       0x2  // 0000 0010
-  #define f_file_mode_replace_world       0x4  // 0000 0100
-  #define f_file_mode_replace_umask_owner 0x8  // 0000 1000
-  #define f_file_mode_replace_umask_group 0x10 // 0001 0000
-  #define f_file_mode_replace_umask_world 0x20 // 0010 0000
+  #define f_file_mode_replace_owner     0x1  // 0000 0001
+  #define f_file_mode_replace_group     0x2  // 0000 0010
+  #define f_file_mode_replace_world     0x4  // 0000 0100
+  #define f_file_mode_replace_special   0x7  // 0000 1000
+  #define f_file_mode_replace_umask     0x10 // 0001 0000
+  #define f_file_mode_replace_directory 0x20 // 0010 0000
 
-  #define f_file_mode_replace_all       0x7  // 0000 0111
-  #define f_file_mode_replace_umask_all 0x38 // 0011 1000
+  #define f_file_mode_replace_all      0x3f // 0011 1111
+  #define f_file_mode_replace_other    0x38 // 0011 1000
+  #define f_file_mode_replace_standard 0x7  // 0000 0111
 
   // file permission modes.
   #define f_file_mode_owner_rwx S_IRWXU
@@ -321,11 +325,14 @@ extern "C" {
   #define f_file_mode_all_w   (f_file_mode_owner_w | f_file_mode_group_w | f_file_mode_world_w)
   #define f_file_mode_all_x   (f_file_mode_owner_x | f_file_mode_group_x | f_file_mode_world_x)
 
-  // file mode sticky-bits and all bits.
-  #define f_file_mode_special_user  S_ISUID
-  #define f_file_mode_special_group S_ISGID
-  #define f_file_mode_special_world S_ISVTX
-  #define f_file_mode_special_all   (S_ISUID | S_ISGID | S_ISVTX | S_IRWXU | S_IRWXG | S_IRWXO)
+  // file mode set-uid/set-gid/sticky-bits and all bits.
+  #define f_file_mode_special_set_user  S_ISUID
+  #define f_file_mode_special_set_group S_ISGID
+  #define f_file_mode_special_sticky    S_ISVTX
+  #define f_file_mode_special_all       (S_ISUID | S_ISGID | S_ISVTX)
+
+  // all permissions modes and special modes.
+  #define f_file_mode_all (f_file_mode_special_all | f_file_mode_all_rwx)
 
   // special file mode combinations.
   #define f_file_mode_user_access    (f_file_mode_owner_rwx | f_file_mode_group_rwx | f_file_mode_world_x)
@@ -358,151 +365,6 @@ extern "C" {
 #ifndef _di_f_file_access_
   extern f_return_status f_file_access(const f_string path);
 #endif // _di_f_file_access_
-
-/**
- * Change mode of a given file at the specified path.
- *
- * This does not set mode based on umask(), be sure to apply umask if so desired.
- * (such as: mode & ~mask).
- *
- * @param path
- *   The path file name.
- * @param mode
- *   The new mode to use.
- *
- * @return
- *   F_none on success.
- *   F_access_denied (with error bit) on access denied.
- *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
- *   F_directory (with error bit) on invalid directory.
- *   F_file_found_not (with error bit) if file at path was not found.
- *   F_input_output (with error bit) on I/O error.
- *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) on path name error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other error.
- *
- * @see chmod()
- */
-#ifndef _di_f_file_change_mode_
-  extern f_return_status f_file_change_mode(const f_string path, const mode_t mode);
-#endif // _di_f_file_change_mode_
-
-/**
- * Change mode of a given file at the specified path.
- *
- * This does not set mode based on umask(), be sure to apply umask if so desired.
- * (such as: mode & ~mask).
- *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
- * @param path
- *   The path file name.
- * @param mode
- *   The new mode to use.
- *
- * @return
- *   F_none on success.
- *   F_access_denied (with error bit) on access denied.
- *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
- *   F_file_found_not (with error bit) if file at path was not found.
- *   F_directory (with error bit) on invalid directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) on path name error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other error.
- *
- * @see fchmodat()
- */
-#ifndef _di_f_file_change_mode_at_
-  extern f_return_status f_file_change_mode_at(const int at_id, const f_string path, const mode_t mode);
-#endif // _di_f_file_change_mode_at_
-
-/**
- * Change owner and/or group of a given file at the specified path.
- *
- * At least one of uid or gid must not be -1.
- *
- * @param path
- *   The path file name.
- * @param uid
- *   The new user id to use.
- *   Set to -1 to not change.
- * @param gid
- *   The new group id to use.
- *   Set to -1 to not change.
- * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
- *   Set to FALSE to operate on the symlink itself.
- *
- * @return
- *   F_none on success.
- *   F_access_denied (with error bit) on access denied.
- *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
- *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_directory (with error bit) on invalid directory.
- *   F_file_found_not (with error bit) if file at path was not found.
- *   F_input_output (with error bit) on I/O error.
- *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) on path name error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other error.
- *
- * @see chown()
- * @see lchown()
- */
-#ifndef _di_f_file_change_role_
-  extern f_return_status f_file_change_role(const f_string path, const uid_t uid, const gid_t gid, const bool dereference);
-#endif // _di_f_file_change_role_
-
-/**
- * Change owner and/or group of a given file at the specified path.
- *
- * At least one of uid or gid must not be -1.
- *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
- * @param path
- *   The path file name.
- * @param uid
- *   The new user id to use.
- *   Set to -1 to not change.
- * @param gid
- *   The new group id to use.
- *   Set to -1 to not change.
- * @param flag
- *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
- *
- * @return
- *   F_none on success.
- *   F_access_denied (with error bit) on access denied.
- *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
- *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_directory (with error bit) on invalid directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
- *   F_file_found_not (with error bit) if file at path was not found.
- *   F_input_output (with error bit) on I/O error.
- *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
- *   F_name (with error bit) on path name error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other error.
- *
- * @see fchownat()
- */
-#ifndef _di_f_file_change_role_at_
-  extern f_return_status f_file_change_role_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag);
-#endif // _di_f_file_change_role_at_
 
 /**
  * Copy a file, as well as its file mode and possibly the owner and group.
@@ -1282,10 +1144,37 @@ extern "C" {
 #endif // _di_f_file_link_read_at_
 
 /**
+ * Determine how the mode should be applied based on different file properties and the given mode properties.
+ *
+ * @param mode_file
+ *   The mode_t value representing the file's current mode.
+ *   This is expected to be populated from (struct stat).st_mode.
+ * @param mode_change
+ *   The file mode values to change.
+ * @param mode_replace
+ *   The mode modes that should be replaced instead of simply changed.
+ * @param directory_is
+ *   Set to TRUE if the file is a directory, FALSE otherwise.
+ * @param umask
+ *   The current umask, which will be used if necessary.
+ * @param mode
+ *   The determined mode.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_mode_from_string()
+ */
+#ifndef _di_f_file_mode_determine_
+  extern f_return_status f_file_mode_determine(const mode_t mode_file, const f_file_mode mode_change, const uint8_t mode_replace, const bool directory_is, const mode_t umask, mode_t *mode);
+#endif // _di_f_file_mode_determine_
+
+/**
  * Get the file mode id from a string syntax.
  *
  * The string syntax is defined as follows:
- *   '([ugoa]*[-+=]{0,1}([rwxXst]|[ugo])+([,][ugoa]*[-+=]{0,1}([rwxXst]|[ugo])+)*)|([-+=]0*[0-7]{1,4})'.
+ *   '([ugoa]*[-+=]{0,1}([rwxXst]|[ugo])+([,][ugoa]*[-+=]{0,1}([rwxXst]|[ugo])+)*)|([-+=]{0,1}0*[0-7]{1,4})'.
  *
  * Such that:
  *   'u' = apply to user.
@@ -1298,7 +1187,7 @@ extern "C" {
  *   'r' = read mode.
  *   'w' = write mode.
  *   'x' = execute mode.
- *   'X' = execute mode, only if already executable.
+ *   'X' = execute mode, only if already executable directory or is file with owner already has executable bit.
  *   's' = set-gid/set-uid mode.
  *   't' = sticky-bit mode.
  *   '0' = no mode.
@@ -1320,16 +1209,27 @@ extern "C" {
  *   '7' = sticky-bit, set-uid, and set-gid mode.
  *
  * When using digits, each set of 0-7 represents the following:
- *   [1-7] = apply to other/world.
- *   [1-7][0-7] = first ([1-7]) to group and second ([0-7]) to other/world.
- *   [1-7][0-7][0-7] = first ([1-7]) to owner, second ([0-7]) to group, and third ([0-7]) to other/world.
- *   [1-7][0-7][0-7][0-7] = first ([1-7]) to stick/set-uid/set-gid, second ([0-7]) to owner, third ([0-7]) to owner, and fourth ([0-7]) to other/world.
+ *   [0]+  = set all bits to 0.
+ *   [0-7] = apply to other/world.
+ *   [0-7][0-7] = first ([1-7]) to group and second ([0-7]) to other/world.
+ *   [0-7][0-7][0-7] = first ([1-7]) to owner, second ([0-7]) to group, and third ([0-7]) to other/world.
+ *   [0-7][0-7][0-7][0-7] = first ([1-7]) to stick/set-uid/set-gid, second ([0-7]) to owner, third ([0-7]) to owner, and fourth ([0-7]) to other/world.
  *
- * When there is a leading 0 when using digits, then this mask will ignore the current umask settings.
- * Otherwise, the current umask is intended to be respected.
+ * When using digits, the umask is always ignored.
+ * When there is a leading '0' or '=' when using digits, then the special bits should be replaced.
+ * Otherwise, the current special bits are intended to be respected (designated by f_file_mode_replace_directory).
  *
- * When '+', '-', or '=' are specified without a leading 'a', 'u', 'g', or 'o', then the mode operations should be performed against the current umask.
+ * When using non-digits and '+', '-', or '=' are specified without a leading 'a', 'u', 'g', or 'o', then the mode operations should be performed against the current umask.
  * These are designated with the umask hows, such as f_file_mode_how_umask_replace.
+ *
+ * There are problems with the chmod documentation (as of GNU coreutils 8.30):
+ * 1) "The operator + causes the selected file mode bits to be added to the existing file mode bits of each file; - causes them to be removed; and = causes them to be added and causes unmentioned bits to be re‐moved except that a directory's unmentioned set user and group ID bits are not affected."
+ *   - This means that "chmod =1 some_directory" would not change the setuid/setgid/sticky bits, however, in practice it does change it!
+ * 2) "For directories chmod preserves set-user-ID and set-group-ID bits unless you explicitly specify other‐wise. You can set or clear the bits with symbolic modes like u+s and g-s. To clear these bits for directories with a numeric mode requires an additional leading zero, or leading = like 00755, or =755"
+ *   - This directly contradicts quote "1" above, which effectively states "=755" would preserve the bits while quote "2" states that it clears the bits.
+ *   - This means that "chmod 1 some_directory" would not change the setuid/setgid/sticky bits, however, in practice it does change it!
+ *
+ * Considering the behavior, assume that when "=" or a leading "0" is provided, this will change the setuid/setgid/sticky bits, otherwise it preserves those bits for directories.
  *
  * @param string
  *   A NULL terminated string designating the desired mode, following the above string syntax.
@@ -1346,10 +1246,76 @@ extern "C" {
  *   F_syntax (with error bit) if the string fails to follow the syntax rules.
  *
  *   The parameters how, mode_normal, and mode_executable are all set to 0 on error.
+ *
+ * @see private_f_file_mode_determine()
  */
 #ifndef _di_f_file_mode_from_string_
   extern f_return_status f_file_mode_from_string(const f_string string, f_file_mode *mode, uint8_t *replace);
 #endif // _di_f_file_mode_from_string_
+
+/**
+ * Change mode of a given file at the specified path.
+ *
+ * This does not set mode based on umask(), be sure to apply umask if so desired.
+ * (such as: mode & ~mask).
+ *
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The new mode to use.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
+ *   F_directory (with error bit) on invalid directory.
+ *   F_file_found_not (with error bit) if file at path was not found.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see chmod()
+ */
+#ifndef _di_f_file_mode_set_
+  extern f_return_status f_file_mode_set(const f_string path, const mode_t mode);
+#endif // _di_f_file_mode_set_
+
+/**
+ * Change mode of a given file at the specified path.
+ *
+ * This does not set mode based on umask(), be sure to apply umask if so desired.
+ * (such as: mode & ~mask).
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The new mode to use.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
+ *   F_file_found_not (with error bit) if file at path was not found.
+ *   F_directory (with error bit) on invalid directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see fchmodat()
+ */
+#ifndef _di_f_file_mode_set_at_
+  extern f_return_status f_file_mode_set_at(const int at_id, const f_string path, const mode_t mode);
+#endif // _di_f_file_mode_set_at_
 
 /**
  * Get the base name of a file path.
@@ -1608,6 +1574,87 @@ extern "C" {
 #ifndef _di_f_file_remove_at_
   extern f_return_status f_file_remove_at(const int at_id, const f_string path, const int flag);
 #endif // _di_f_file_remove_at_
+
+/**
+ * Change owner and/or group of a given file at the specified path.
+ *
+ * At least one of uid or gid must not be -1.
+ *
+ * @param path
+ *   The path file name.
+ * @param uid
+ *   The new user id to use.
+ *   Set to -1 to not change.
+ * @param gid
+ *   The new group id to use.
+ *   Set to -1 to not change.
+ * @param dereference
+ *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
+ *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_directory (with error bit) on invalid directory.
+ *   F_file_found_not (with error bit) if file at path was not found.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see chown()
+ * @see lchown()
+ */
+#ifndef _di_f_file_role_change_
+  extern f_return_status f_file_role_change(const f_string path, const uid_t uid, const gid_t gid, const bool dereference);
+#endif // _di_f_file_role_change_
+
+/**
+ * Change owner and/or group of a given file at the specified path.
+ *
+ * At least one of uid or gid must not be -1.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param uid
+ *   The new user id to use.
+ *   Set to -1 to not change.
+ * @param gid
+ *   The new group id to use.
+ *   Set to -1 to not change.
+ * @param flag
+ *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
+ *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_directory (with error bit) on invalid directory.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
+ *   F_file_found_not (with error bit) if file at path was not found.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see fchownat()
+ */
+#ifndef _di_f_file_role_change_at_
+  extern f_return_status f_file_role_change_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag);
+#endif // _di_f_file_role_change_at_
 
 /**
  * Given an open file descriptor, seek to a given location.

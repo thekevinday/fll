@@ -1479,9 +1479,9 @@ extern "C" {
       if (F_status_is_error(*status)) return;
 
       for (f_array_length i = 1; i < arguments.used; i++) {
-        *status = f_file_change_role(arguments.array[i].string, -1, id, F_false);
+        *status = f_file_role_change(arguments.array[i].string, -1, id, F_false);
         if (F_status_is_error(*status)) {
-          fake_print_error_file(data, *status, "f_file_change_role", arguments.array[i].string, "change group of", F_true, F_true);
+          fake_print_error_file(data, *status, "f_file_role_change", arguments.array[i].string, "change group of", F_true, F_true);
         }
       } // for
 
@@ -1496,9 +1496,9 @@ extern "C" {
 
       for (f_array_length i = 1; i < arguments.used; i++) {
         // @todo: recursive.
-        *status = f_file_change_role(arguments.array[i].string, -1, id, F_false);
+        *status = f_file_role_change(arguments.array[i].string, -1, id, F_false);
         if (F_status_is_error(*status)) {
-          fake_print_error_file(data, *status, "f_file_change_role", arguments.array[i].string, "change group of", F_true, F_true);
+          fake_print_error_file(data, *status, "f_file_role_change", arguments.array[i].string, "change group of", F_true, F_true);
         }
       } // for
 
@@ -1527,18 +1527,29 @@ extern "C" {
 
       mode_t mode = 0;
 
-      for (f_array_length i = 1; i < arguments.used; i++) {
-        // @todo: get the file mode.
+      struct stat stat_file;
 
-        if (replace) {
-          // @todo when replace is specified, then determine what is to be replaced when converting to mode_t.
+      for (f_array_length i = 1; i < arguments.used; i++) {
+        mode = 0;
+        memset(&stat_file, 0, sizeof(struct stat));
+
+        *status = f_file_stat(arguments.array[i].string, F_true, &stat_file);
+        if (F_status_is_error(*status)) {
+          fake_print_error_file(data, *status, "f_file_stat", arguments.array[i].string, "change mode of", F_true, F_true);
+          break;
         }
 
-        // @todo: check the zeroing logic, read each file's mode, and updat accordingly.
-        //*status = f_file_change_mode(arguments.array[i].string, mode);
-        //if (F_status_is_error(*status)) {
-        //  fake_print_error_file(data, *status, "f_file_change_mode", arguments.array[i].string, "change mode of", F_true, F_true);
-        //}
+        *status = f_file_mode_determine(stat_file.st_mode, mode_rule, replace, f_macro_file_type_is_directory(stat_file.st_mode), data.umask, &mode);
+        if (F_status_is_error(*status)) {
+          fake_print_error_file(data, *status, "f_file_mode_determine", arguments.array[i].string, "change mode of", F_true, F_true);
+          break;
+        }
+
+        *status = f_file_mode_set(arguments.array[i].string, mode);
+        if (F_status_is_error(*status)) {
+          fake_print_error_file(data, *status, "f_file_mode_set", arguments.array[i].string, "change mode of", F_true, F_true);
+          break;
+        }
       } // for
 
       return;
@@ -1561,9 +1572,9 @@ extern "C" {
       if (F_status_is_error(*status)) return;
 
       for (f_array_length i = 1; i < arguments.used; i++) {
-        *status = f_file_change_role(arguments.array[i].string, id, -1, F_false);
+        *status = f_file_role_change(arguments.array[i].string, id, -1, F_false);
         if (F_status_is_error(*status)) {
-          fake_print_error_file(data, *status, "f_file_change_role", arguments.array[i].string, "change owner of", F_true, F_true);
+          fake_print_error_file(data, *status, "f_file_role_change", arguments.array[i].string, "change owner of", F_true, F_true);
         }
       } // for
 
@@ -1578,9 +1589,9 @@ extern "C" {
 
       for (f_array_length i = 1; i < arguments.used; i++) {
         // @todo recursive.
-        *status = f_file_change_role(arguments.array[i].string, id, -1, F_false);
+        *status = f_file_role_change(arguments.array[i].string, id, -1, F_false);
         if (F_status_is_error(*status)) {
-          fake_print_error_file(data, *status, "f_file_change_role", arguments.array[i].string, "change owner of", F_true, F_true);
+          fake_print_error_file(data, *status, "f_file_role_change", arguments.array[i].string, "change owner of", F_true, F_true);
         }
       } // for
 
@@ -2124,14 +2135,11 @@ extern "C" {
       }
     }
     else if (operation == fake_make_operation_type_group || operation == fake_make_operation_type_groups || operation == fake_make_operation_type_mode || operation == fake_make_operation_type_modes || operation == fake_make_operation_type_owner || operation == fake_make_operation_type_owners) {
-      printf("DEBUG: arguments.used = %llu\n");
       if (arguments.used > 1) {
         f_status status_file = F_none;
 
         for (f_array_length i = 1; i < arguments.used; i++) {
           status_file = f_file_is(arguments.array[i].string, f_file_type_regular);
-
-          printf("DEBUG: at %llu, looking at '%s', %llu\n", i, arguments.array[i].string, F_status_set_fine(status_file));
 
           if (status_file == F_file_found_not) {
             printf("%c", f_string_eol[0]);

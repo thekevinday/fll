@@ -10,4 +10,5 @@ settings:
 main:
 
   #build
-  owner a b
+  touch file b
+  mode =755 b
