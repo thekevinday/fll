@@ -9,6 +9,4 @@ settings:
 
 main:
 
-  #build
-  touch file b
-  mode =755 b
+  build

@@ -247,7 +247,6 @@ extern "C" {
  * File mode related functionality.
  *
  * The f_file_mode type properties are 8-bit types with the following structure:
- *   @todo finish documentation.
  *
  *   There should only be a single bit for each 'r', 'w', 'x', and 'X' bit (as well as 'S', 's', and 't'):
  *     'r' = read bit.
@@ -257,20 +256,17 @@ extern "C" {
  *     'S' = set user bit (setuid).
  *     's' = set group bit (setgid).
  *     't' = sticky bit.
- *
- *   The mode replace codes are meant to be used for the user, group, and world modes.
- *   Generally "special" bits are preserved unless explicitly changed so there is also a "special" mode replace code as well.
- *   The "umask" equivalent specifies that the mask should allow for umask influence.
  */
 #ifndef _di_f_file_mode_
   typedef uint32_t f_file_mode;
 
-                                               // 0000 0000 0000 0111 0000 0101 0000 0101
-  #define f_file_mode_block_special 0x77000000 // 0111 0111 0000 0000 0000 0000 0000 0000
-  #define f_file_mode_block_owner   0x00ff0000 // 0000 0000 1111 1111 0000 0000 0000 0000
-  #define f_file_mode_block_group   0x0000ff00 // 0000 0000 0000 0000 1111 1111 0000 0000
-  #define f_file_mode_block_world   0x000000ff // 0000 0000 0000 0000 0000 0000 1111 1111
-  #define f_file_mode_block_all     0x77ffffff // 0111 0111 1111 1111 1111 1111 1111 1111
+  #define f_file_mode_block_special  0x77000000 // 0111 0111 0000 0000 0000 0000 0000 0000
+  #define f_file_mode_block_owner    0x00ff0000 // 0000 0000 1111 1111 0000 0000 0000 0000
+  #define f_file_mode_block_group    0x0000ff00 // 0000 0000 0000 0000 1111 1111 0000 0000
+  #define f_file_mode_block_world    0x000000ff // 0000 0000 0000 0000 0000 0000 1111 1111
+
+  #define f_file_mode_block_all      0x77ffffff // 0111 0111 1111 1111 1111 1111 1111 1111
+  #define f_file_mode_block_standard 0x00ffffff // 0000 0000 1111 1111 1111 1111 1111 1111
 
   #define f_file_mode_mask_how_add      0x070f0f0f // 0000 0111 0000 1111 0000 1111 0000 1111
   #define f_file_mode_mask_how_subtract 0x70f0f0f0 // 0111 0000 1111 0000 1111 0000 1111 0000
@@ -286,12 +282,11 @@ extern "C" {
   #define f_file_mode_replace_owner     0x1  // 0000 0001
   #define f_file_mode_replace_group     0x2  // 0000 0010
   #define f_file_mode_replace_world     0x4  // 0000 0100
-  #define f_file_mode_replace_special   0x7  // 0000 1000
-  #define f_file_mode_replace_umask     0x10 // 0001 0000
-  #define f_file_mode_replace_directory 0x20 // 0010 0000
+  #define f_file_mode_replace_special   0x8  // 0000 1000
+  #define f_file_mode_replace_directory 0x10 // 0001 0000
 
-  #define f_file_mode_replace_all      0x3f // 0011 1111
-  #define f_file_mode_replace_other    0x38 // 0011 1000
+  #define f_file_mode_replace_all      0x1f // 0001 1111
+  #define f_file_mode_replace_other    0x18 // 0001 1000
   #define f_file_mode_replace_standard 0x7  // 0000 0111
 
   // file permission modes.
@@ -1146,6 +1141,8 @@ extern "C" {
 /**
  * Determine how the mode should be applied based on different file properties and the given mode properties.
  *
+ * This does not set mode based on umask(), which is already applied if f_file_mode_from_string() was used to create mode_change.
+ *
  * @param mode_file
  *   The mode_t value representing the file's current mode.
  *   This is expected to be populated from (struct stat).st_mode.
@@ -1155,8 +1152,6 @@ extern "C" {
  *   The mode modes that should be replaced instead of simply changed.
  * @param directory_is
  *   Set to TRUE if the file is a directory, FALSE otherwise.
- * @param umask
- *   The current umask, which will be used if necessary.
  * @param mode
  *   The determined mode.
  *
@@ -1167,7 +1162,7 @@ extern "C" {
  * @see f_file_mode_from_string()
  */
 #ifndef _di_f_file_mode_determine_
-  extern f_return_status f_file_mode_determine(const mode_t mode_file, const f_file_mode mode_change, const uint8_t mode_replace, const bool directory_is, const mode_t umask, mode_t *mode);
+  extern f_return_status f_file_mode_determine(const mode_t mode_file, const f_file_mode mode_change, const uint8_t mode_replace, const bool directory_is, mode_t *mode);
 #endif // _di_f_file_mode_determine_
 
 /**
@@ -1231,8 +1226,12 @@ extern "C" {
  *
  * Considering the behavior, assume that when "=" or a leading "0" is provided, this will change the setuid/setgid/sticky bits, otherwise it preserves those bits for directories.
  *
+ * @fixme the possibilities are a bit extensive and this needs additional review; remove this fixme when this review is completed.
+ *
  * @param string
  *   A NULL terminated string designating the desired mode, following the above string syntax.
+ * @param umask
+ *   The umask to be applied to the file mode, when applicable.
  * @param mode
  *   The determined mode.
  *   This uses bitwise data.
@@ -1250,7 +1249,7 @@ extern "C" {
  * @see private_f_file_mode_determine()
  */
 #ifndef _di_f_file_mode_from_string_
-  extern f_return_status f_file_mode_from_string(const f_string string, f_file_mode *mode, uint8_t *replace);
+  extern f_return_status f_file_mode_from_string(const f_string string, const mode_t umask, f_file_mode *mode, uint8_t *replace);
 #endif // _di_f_file_mode_from_string_
 
 /**

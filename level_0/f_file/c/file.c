@@ -525,7 +525,7 @@ extern "C" {
 #endif // _di_f_file_link_read_at_
 
 #ifndef _di_f_file_mode_determine_
-  f_return_status f_file_mode_determine(const mode_t mode_file, const f_file_mode mode_change, const uint8_t mode_replace, const bool directory_is, const mode_t umask, mode_t *mode) {
+  f_return_status f_file_mode_determine(const mode_t mode_file, const f_file_mode mode_change, const uint8_t mode_replace, const bool directory_is, mode_t *mode) {
     #ifndef _di_level_0_parameter_checking_
       if (mode == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -826,16 +826,12 @@ extern "C" {
       }
     }
 
-    if (mode_replace & f_file_mode_replace_umask) {
-      *mode -= *mode & umask;
-    }
-
     return F_none;
   }
 #endif // _di_f_file_mode_determine_
 
 #ifndef _di_f_file_mode_from_string_
-  f_return_status f_file_mode_from_string(const f_string string, f_file_mode *mode, uint8_t *replace) {
+  f_return_status f_file_mode_from_string(const f_string string, const mode_t umask, f_file_mode *mode, uint8_t *replace) {
     #ifndef _di_level_0_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (string[0] == 0) return F_status_set_error(F_parameter);
@@ -904,60 +900,86 @@ extern "C" {
     if (syntax == 1) {
       uint8_t on = 0; // 1 = user, 2 = group, 4 = world/sticky, 7 = all.
       uint8_t how = 0; // 1 = add, 2 = replace, 3 = subtract.
-      bool active = F_false;
 
-      f_file_mode mask = f_file_mode_block_special;
+      f_file_mode mode_mask = 0;
+      f_file_mode mode_umask = 0;
       f_file_mode what = 0;
 
-      // @todo: this needs to record all of the possible combinations of add, subtract, and assignment (=).
-      for (f_string_length i = 0; syntax && i < string[i]; i++) {
+      // translate the umask into an f_file_mode umask equivalent.
+      if (umask & f_file_mode_special_set_user) {
+        mode_umask = f_file_mode_block_special & f_file_mode_mask_bit_set_owner;
+      }
+
+      if (umask & f_file_mode_special_set_group) {
+        mode_umask |= f_file_mode_block_special & f_file_mode_mask_bit_set_group;
+      }
+
+      if (umask & f_file_mode_special_sticky) {
+        mode_umask |= f_file_mode_block_special & f_file_mode_mask_bit_sticky;
+      }
+
+      if (umask & f_file_mode_owner_r) {
+        mode_umask |= f_file_mode_block_owner & f_file_mode_mask_bit_read;
+      }
+
+      if (umask & f_file_mode_owner_w) {
+        mode_umask |= f_file_mode_block_owner & f_file_mode_mask_bit_write;
+      }
+
+      if (umask & f_file_mode_owner_x) {
+        mode_umask |= f_file_mode_block_owner & f_file_mode_mask_bit_execute;
+      }
+
+      if (umask & f_file_mode_group_r) {
+        mode_umask |= f_file_mode_block_group & f_file_mode_mask_bit_read;
+      }
+
+      if (umask & f_file_mode_group_w) {
+        mode_umask |= f_file_mode_block_group & f_file_mode_mask_bit_write;
+      }
+
+      if (umask & f_file_mode_group_x) {
+        mode_umask |= f_file_mode_block_group & f_file_mode_mask_bit_execute;
+      }
+
+      if (umask & f_file_mode_world_r) {
+        mode_umask |= f_file_mode_block_world & f_file_mode_mask_bit_read;
+      }
+
+      if (umask & f_file_mode_world_w) {
+        mode_umask |= f_file_mode_block_world & f_file_mode_mask_bit_write;
+      }
+
+      if (umask & f_file_mode_world_x) {
+        mode_umask |= f_file_mode_block_world & f_file_mode_mask_bit_execute;
+      }
+
+      for (f_string_length i = 0; syntax && string[i]; i++) {
 
         switch (string[i]) {
           case 'o':
-            if (active) {
-              syntax = 0;
-              break;
-            }
-
-            on = 1;
-            mask |= f_file_mode_block_world;
+            on |= 1;
+            mode_mask |= f_file_mode_block_world;
             break;
 
           case 'g':
-            if (active) {
-              syntax = 0;
-              break;
-            }
-
-            on = 2;
-            mask |= f_file_mode_block_group;
+            on |= 2;
+            mode_mask |= f_file_mode_block_group;
             break;
 
           case 'u':
-            if (active) {
-              syntax = 0;
-              break;
-            }
-
-            on = 4;
-            mask |= f_file_mode_block_owner;
+            on |= 4;
+            mode_mask |= f_file_mode_block_owner;
             break;
 
           case 'a':
-            if (active) {
-              syntax = 0;
-              break;
-            }
-
             on = 7;
-            mask = f_file_mode_block_all;
+            mode_mask = f_file_mode_block_standard;
             break;
 
           case '+':
           case '-':
           case '=':
-            active = F_true;
-
             if (string[i] == '+') {
               how = on ? 1 : 4;
             }
@@ -967,29 +989,31 @@ extern "C" {
             else {
               how = on ? 2 : 5;
 
-              // only the parts designated by the mask should be replaced.
-              *mode -= (*mode) & mask;
+              // clear by mask to prepare for replacement, which includes clearing the special block.
+              mode_mask |= f_file_mode_block_special;
+              *mode -= (*mode) & mode_mask;
 
-              if (mask == f_file_mode_block_all) {
-                *replace = f_file_mode_replace_all;
+              *replace |= f_file_mode_replace_special;
+
+              if (mode_mask & f_file_mode_block_owner) {
+                *replace |= f_file_mode_replace_owner;
               }
-              else if (mask & f_file_mode_block_world) {
-                *replace |= f_file_mode_block_special & f_file_mode_block_world;
+
+              if (mode_mask & f_file_mode_block_group) {
+                *replace |= f_file_mode_replace_group;
               }
-              else if (mask & f_file_mode_block_group) {
-                *replace |= f_file_mode_block_special & f_file_mode_block_group;
-              }
-              else if (mask & f_file_mode_block_owner) {
-                *replace |= f_file_mode_block_special & f_file_mode_block_owner;
+
+              if (mode_mask & f_file_mode_block_world) {
+                *replace |= f_file_mode_replace_world;
               }
             }
 
             if (!on) {
               on = 7;
-              mask = f_file_mode_block_all;
+              mode_mask = f_file_mode_block_all;
             }
 
-            for (i++; i < string[i]; i++) {
+            for (i++; string[i]; i++) {
 
               if (string[i] == 'r') {
                 what = f_file_mode_mask_bit_read;
@@ -1004,6 +1028,8 @@ extern "C" {
                 what = f_file_mode_mask_bit_execute_only;
               }
               else if (string[i] == 's') {
+                mode_mask |= f_file_mode_block_special;
+
                 if (on & 4) {
                   what = f_file_mode_mask_bit_set_owner;
                 }
@@ -1015,6 +1041,8 @@ extern "C" {
                 }
               }
               else if (string[i] == 't') {
+                mode_mask |= f_file_mode_block_special;
+
                 if (on & 1) {
                   what = f_file_mode_mask_bit_sticky;
                 }
@@ -1023,15 +1051,13 @@ extern "C" {
                 }
               }
               else if (string[i] == ',') {
-                active = F_false;
+                if (how > 3) {
+                  *mode -= *mode & mode_umask;
+                }
+
                 on = 0;
                 how = 0;
-                mask = f_file_mode_block_special;
-                break;
-              }
-              else if (string[i] == '+' || string[i] == '-' || string[i] == '=') {
-                // have the outer loop resume at this character after it increments.
-                i--;
+                mode_mask = 0;
                 break;
               }
               else {
@@ -1039,27 +1065,23 @@ extern "C" {
                 break;
               }
 
-              if (how == 1 || how == 2) {
-                *mode |= what & mask & f_file_mode_mask_how_add;
+              if (how == 1 || how == 2 || how == 4 || how == 5) {
+                *mode |= what & mode_mask & f_file_mode_mask_how_add;
               }
-              else if (how == 3) {
-                *mode |= what & mask & f_file_mode_mask_how_subtract;
-              }
-              else if (how == 4 || how == 5) {
-                *mode |= what & mask & f_file_mode_mask_how_add;
-                *replace |= f_file_mode_replace_umask;
-              }
-              else if (how == 6) {
-                *mode |= what & mask & f_file_mode_mask_how_subtract;
-                *replace |= f_file_mode_replace_umask;
+              else if (how == 3 || how == 6) {
+                *mode |= what & mode_mask & f_file_mode_mask_how_subtract;
               }
             } // for
 
+            if (how > 3) {
+              *mode -= *mode & mode_umask;
+            }
+
             break;
 
-        default:
-          syntax = 0;
-          break;
+          default:
+            syntax = 0;
+            break;
         }
       } // for
     }
@@ -1139,9 +1161,9 @@ extern "C" {
           syntax = 0;
         }
         else if (how == 2) {
-          // if there are only '0's then the setuid/setgid/sticky bits are to be replaced.
+          // if there are only '0's then the standard and setuid/setgid/sticky bits are to be replaced.
           if (*mode == 0) {
-            *replace = f_file_mode_replace_standard;
+            *replace = f_file_mode_replace_standard | f_file_mode_replace_special;
           }
         }
       }

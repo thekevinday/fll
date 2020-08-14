@@ -99,7 +99,7 @@ extern "C" {
       return F_status_set_error(F_parameter);
     }
 
-    f_status status = f_file_mode_from_string(buffer.string, mode, replace);
+    f_status status = f_file_mode_from_string(buffer.string, data.umask, mode, replace);
 
     if (F_status_is_error(status)) {
       if (data.verbosity != fake_verbosity_quiet) {
@@ -1539,7 +1539,7 @@ extern "C" {
           break;
         }
 
-        *status = f_file_mode_determine(stat_file.st_mode, mode_rule, replace, f_macro_file_type_is_directory(stat_file.st_mode), data.umask, &mode);
+        *status = f_file_mode_determine(stat_file.st_mode, mode_rule, replace, f_macro_file_type_is_directory(stat_file.st_mode), &mode);
         if (F_status_is_error(*status)) {
           fake_print_error_file(data, *status, "f_file_mode_determine", arguments.array[i].string, "change mode of", F_true, F_true);
           break;
