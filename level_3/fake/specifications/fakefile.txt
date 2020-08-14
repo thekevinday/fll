@@ -54,8 +54,8 @@ Fakefile Specification:
   - groups: Two or more Content. First Content is group name or number, remaining Content are paths to files.
   - if: One or more Content. First Content is the condition, remaining Content are specific to the condition.
   - link: Two Content. First Content is the link target file and second Content is the pointer file (the link).
-  - mode: Two or more Content. First Content is group name or number, remaining Content are paths to files.
-  - modes: Two or more Content. First Content is group name or number, remaining Content are paths to files.
+  - mode: Two or more Content. First Content is the mode, remaining Content are paths to files.
+  - modes: Two or more Content. First Content is the mode, remaining Content are paths to files.
   - operate: One Content. First Content is the name of a valid Section Object, except for the reserved Section Objects.
   - owner: Two or more Content. First Content is group name or number, remaining Content are paths to files.
   - owners: Two or more Content. First Content is group name or number, remaining Content are paths to files.

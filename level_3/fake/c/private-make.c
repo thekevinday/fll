@@ -1556,7 +1556,40 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_modes) {
-      // @todo
+      f_file_mode mode_rule = 0;
+      uint8_t replace = 0;
+
+      *status = fake_make_get_id_mode(data, arguments.array[0], &mode_rule, &replace);
+      if (F_status_is_error(*status)) return;
+
+      mode_t mode = 0;
+
+      struct stat stat_file;
+
+      for (f_array_length i = 1; i < arguments.used; i++) {
+        // @todo recursive.
+        mode = 0;
+        memset(&stat_file, 0, sizeof(struct stat));
+
+        *status = f_file_stat(arguments.array[i].string, F_true, &stat_file);
+        if (F_status_is_error(*status)) {
+          fake_print_error_file(data, *status, "f_file_stat", arguments.array[i].string, "change mode of", F_true, F_true);
+          break;
+        }
+
+        *status = f_file_mode_determine(stat_file.st_mode, mode_rule, replace, f_macro_file_type_is_directory(stat_file.st_mode), &mode);
+        if (F_status_is_error(*status)) {
+          fake_print_error_file(data, *status, "f_file_mode_determine", arguments.array[i].string, "change mode of", F_true, F_true);
+          break;
+        }
+
+        *status = f_file_mode_set(arguments.array[i].string, mode);
+        if (F_status_is_error(*status)) {
+          fake_print_error_file(data, *status, "f_file_mode_set", arguments.array[i].string, "change mode of", F_true, F_true);
+          break;
+        }
+      } // for
+
       return;
     }
 
