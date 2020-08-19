@@ -33,6 +33,8 @@ Fakefile Specification:
   - main: contains a list of Operation Objects and Content in FSS-0001 (Extended) format.
 
   The Settings Objects are\:
+  - archiver: Only one Content, which must only be a valid filename.
+  - compiler: Only one Content, which must only be a valid filename.
   - define: First Content represents variable name (case-sensitive), remaining Content represents varaiable value for IKI substitution.
   - fail: Only one Content, which must be either "exit", "warn" or "ignore" (quotes not required) (case-sensitive).
   - load_build: Only one Content, which must be either "yes" or "no" (quotes not required) (case-sensitive).
@@ -45,9 +47,11 @@ Fakefile Specification:
   - build: Zero or One Content. First Content represents path to the settings file, relative to the project root.
   - clean: Zero Content.
   - compile: One or more Content as parameters to compiler.
-  - create: Two or three Content. First Content is either "file" or "directory" (case-sensitive), second Content is path to file, and third Content is "recursive" (case-sensitive) or is not provided.
+  - create: Two Content. First Content is either "file" or "directory" (case-sensitive), second Content is path to file.
+  - creates: Two Content. First Content is either "file" or "directory" (case-sensitive), second Content is path to file.
   - define: Two or more Content.
-  - delete: Two or three Content. First Content is either "file" or "directory" (case-sensitive), second Content is path to file, and third Content is "recursive" (case-sensitive) or is not provided.
+  - delete: One or more Content representing paths to files.
+  - deletes: One or more Content representing paths to files.
   - else: Zero Content.
   - fail: One Content. First Content must be one of "exit", "warn", or "ignore" (case-sensitive).
   - group: Two or more Content. First Content is group name or number, remaining Content are paths to files.

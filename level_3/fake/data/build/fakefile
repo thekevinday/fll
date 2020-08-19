@@ -4,6 +4,9 @@ settings:
   load_build yes
   fail exit
 
+  compiler gcc
+  linker ar
+
   parameter verbose +v
   parameter verbose_fll +V
 

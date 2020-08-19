@@ -14,6 +14,9 @@ Fakefile Documentation:
     The build settings may also be specified in the Settings Section.
 
     The following settings are available (in addition to the build settings)\:
+    - compiler\:
+      This represents the name of the compiler program to use, such as "gcc".
+
     - define\:
       This represents an environment variable to define on run.
       The environment variable name is case-sensitive.
@@ -28,6 +31,9 @@ Fakefile Documentation:
       - ignore: Designates to do nothing.
 
       The return code for programs can still be retrieved through using the reserved iki vaiable "return".
+
+    - linker\:
+      This represents the name of the linker program to use, such as "ar".
 
     - load_build\:
       This represents whether or not to load the load the build settings file.
@@ -74,13 +80,12 @@ Fakefile Documentation:
 
       The first Content must be either "file" or "directory".
       Use "file" to designate that this is a regular file being created.
-      The "directory" to designate that this is a directory file being created.
+      Use "directory" to designate that this is a directory file being created.
 
-      The second Content must be the file to be created.
+      The second Content must be the file to be created (be it a regular "file" or a "directory" file).
 
-      An optional third Content may be specified for "directory".
-      This third Content, if specified, may only be "recursive".
-      When specified, this will create all directories specified in the given directory file path.
+    - creates\:
+      Identical to "create", except that this will create all directories specified in the given directory file path.
 
     - define\:
       This represents an environment variable to define on run.
@@ -94,12 +99,12 @@ Fakefile Documentation:
       Use "file" to designate that this is a regular file being deleted.
       The "directory" to designate that this is a directory file being deleted.
 
-      The second Content must be the file to be created.
+      The second Content must be the file to be deleted.
 
-      An optional third Content may be specified for "directory".
-      This third Content, if specified, may only be "recursive".
-      When specified, this will create all directories specified in the given directory file path.
-      If the directory is not empty, then "recursive" must be specified to delete the directory.
+      When the first content is "directory" and that directory is not empty, then this will not delete the directory.
+
+    - deletes\:
+      Identical to "delete", except that when the first content is "directory" and that directory is not empty, then this will delete the directory.
 
     - else\:
       Performs a programmatic "else" condition.

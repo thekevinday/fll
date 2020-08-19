@@ -41,14 +41,18 @@ extern "C" {
   #define fake_macro_make_setting_delete_simple(setting) \
     f_macro_string_map_multis_delete_simple(setting.parameter)
 
+  #define fake_make_setting_compiler   "compiler"
   #define fake_make_setting_define     "define"
   #define fake_make_setting_fail       "fail"
+  #define fake_make_setting_linker     "linker"
   #define fake_make_setting_load_build "load_build"
   #define fake_make_setting_parameter  "parameter"
   #define fake_make_setting_return     "return"
 
+  #define fake_make_setting_compiler_length   8
   #define fake_make_setting_define_length     6
   #define fake_make_setting_fail_length       4
+  #define fake_make_setting_linker_length     6
   #define fake_make_setting_load_build_length 10
   #define fake_make_setting_parameter_length  9
   #define fake_make_setting_return_length     6

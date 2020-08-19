@@ -430,26 +430,6 @@ extern "C" {
 #endif // _di_fake_build_copy_
 
 /**
- * Execute the given command and arguments.
- *
- * Will print the command if in verbose mode.
- *
- * @param data
- *   The program data.
- * @param data_build
- *   The build data.
- * @param program
- *   The program to be executed.
- * @param arguments
- *   The arguments to be passed to the program.
- * @param status
- *   The return status.
- */
-#ifndef _di_fake_build_execute_
-  extern void fake_build_execute(const fake_data data, const fake_build_data data_build, const f_string_static program, const f_string_statics arguments, f_status *status) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_build_execute_
-
-/**
  * Create all of the base directories inside the build directory.
  *
  * @param data

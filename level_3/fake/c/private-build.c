@@ -295,50 +295,6 @@ extern "C" {
   }
 #endif // _di_fake_build_copy_
 
-#ifndef _di_fake_build_execute_
-  void fake_build_execute(const fake_data data, const fake_build_data data_build, const f_string_static program, const f_string_statics arguments, f_status *status) {
-    if (F_status_is_error(*status)) return;
-
-    if (data.verbosity == fake_verbosity_verbose) {
-      printf("%s", program.string);
-
-      for (f_array_length i = 0; i < arguments.used; i++) {
-        if (arguments.array[i].used == 0) continue;
-
-        printf(" %s", arguments.array[i].string);
-      } // for
-
-      printf("%c", f_string_eol[0]);
-
-      // flush to stdout before executing command.
-      fflush(f_type_output);
-    }
-
-    {
-      int result = 0;
-
-      *status = fll_execute_program_environment(program.string, arguments, data_build.environment.names, data_build.environment.values, &result);
-
-      if (result != 0) {
-        *status = F_status_set_error(F_failure);
-      }
-      else if (F_status_is_error(*status)) {
-        if (F_status_set_fine(*status) == F_file_found_not) {
-          if (data.verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find program '");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", program.string);
-            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' for executing.");
-          }
-        }
-        else {
-          fake_print_error(data, F_status_set_fine(*status), "fll_execute_program_environment", F_true);
-        }
-      }
-    }
-  }
-#endif // _di_fake_build_execute_
-
 #ifndef _di_fake_build_skeleton_
   void fake_build_skeleton(const fake_data data, const fake_build_data data_build, const mode_t mode, const f_string_static file_stage, f_status *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
@@ -844,7 +800,7 @@ extern "C" {
       }
     }
 
-    fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+    fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
     f_macro_string_dynamics_delete_simple(arguments);
 
@@ -1067,7 +1023,7 @@ extern "C" {
       }
     }
 
-    fake_build_execute(data, data_build, data_build.setting.build_linker, arguments, status);
+    fake_execute(data, data_build.environment, data_build.setting.build_linker, arguments, status);
 
     f_macro_string_dynamic_delete_simple(file_name);
     f_macro_string_dynamic_delete_simple(source_path);
@@ -2263,7 +2219,7 @@ extern "C" {
         break;
       }
 
-      fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
       if (F_status_is_error(*status)) break;
 
       f_macro_string_dynamics_delete_simple(arguments);
@@ -2471,7 +2427,7 @@ extern "C" {
       return;
     }
 
-    fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+    fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
     f_macro_string_dynamics_delete_simple(arguments);
 
@@ -2576,7 +2532,7 @@ extern "C" {
       return;
     }
 
-    fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+    fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
     f_macro_string_dynamics_delete_simple(arguments);
 

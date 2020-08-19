@@ -334,40 +334,33 @@ extern "C" {
         }
       }
 
+      f_string_range *range_compiler = 0;
+      f_string_range *range_linker = 0;
+
       data_make->setting_make.parameter.array[0].value.used = 1;
       data_make->setting_make.load_build = F_true;
       data_make->setting_make.fail = fake_make_operation_fail_type_exit;
 
       if (settings.objects.used) {
-        bool unmatched_load = F_true;
         bool unmatched_fail = F_true;
+        bool unmatched_load = F_true;
 
         for (f_array_length i = 0; i < settings.objects.used; i++) {
-          if (fl_string_dynamic_partial_compare_string(fake_make_setting_load_build, data_make->buffer, fake_make_setting_load_build_length, settings.objects.array[i]) == F_equal_to) {
-            if (unmatched_load) {
+          if (fl_string_dynamic_partial_compare_string(fake_make_setting_compiler, data_make->buffer, fake_make_setting_compiler_length, settings.objects.array[i]) == F_equal_to) {
+            if (range_compiler) {
+              fake_print_warning_settings_content_multiple(data, data.file_data_build_fakefile.string, fake_make_setting_compiler);
+            }
+            else {
               if (settings.contents.array[i].used) {
-                if (fl_string_dynamic_partial_compare_string(fake_common_setting_bool_yes, data_make->buffer, fake_common_setting_bool_yes_length, settings.contents.array[i].array[0]) == F_equal_to) {
-                  data_make->setting_make.load_build = F_true;
-                }
-                else if (fl_string_dynamic_partial_compare_string(fake_common_setting_bool_no, data_make->buffer, fake_common_setting_bool_no_length, settings.contents.array[i].array[0]) == F_equal_to) {
-                  data_make->setting_make.load_build = F_false;
-                }
-                else {
-                  fake_print_error_fakefile_settings_content_invalid(data, data.file_data_build_fakefile.string, data_make->buffer, settings.objects.array[i], settings.contents.array[i].array[0], fake_make_section_settings);
-                }
-
-                unmatched_load = F_false;
+                range_compiler = &settings.contents.array[i].array[0];
 
                 if (settings.contents.array[i].used > 1) {
-                  fake_print_warning_settings_content_multiple(data, data.file_data_build_fakefile.string, fake_make_setting_load_build);
+                  fake_print_warning_settings_content_multiple(data, data.file_data_build_fakefile.string, fake_make_setting_compiler);
                 }
               }
               else {
                 fake_print_error_fakefile_settings_content_empty(data, data.file_data_build_fakefile.string, data_make->buffer, settings.objects.array[i], fake_make_section_settings);
               }
-            }
-            else {
-              fake_print_warning_settings_content_multiple(data, data.file_data_build_fakefile.string, fake_make_setting_load_build);
             }
           }
           else if (fl_string_dynamic_partial_compare_string(fake_make_setting_fail, data_make->buffer, fake_make_setting_fail_length, settings.objects.array[i]) == F_equal_to) {
@@ -398,6 +391,50 @@ extern "C" {
             }
             else {
               fake_print_warning_settings_content_multiple(data, data.file_data_build_fakefile.string, fake_make_setting_fail);
+            }
+          }
+          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_linker, data_make->buffer, fake_make_setting_linker_length, settings.objects.array[i]) == F_equal_to) {
+            if (range_linker) {
+              fake_print_warning_settings_content_multiple(data, data.file_data_build_fakefile.string, fake_make_setting_linker);
+            }
+            else {
+              if (settings.contents.array[i].used) {
+                range_linker = &settings.contents.array[i].array[0];
+
+                if (settings.contents.array[i].used > 1) {
+                  fake_print_warning_settings_content_multiple(data, data.file_data_build_fakefile.string, fake_make_setting_linker);
+                }
+              }
+              else {
+                fake_print_error_fakefile_settings_content_empty(data, data.file_data_build_fakefile.string, data_make->buffer, settings.objects.array[i], fake_make_section_settings);
+              }
+            }
+          }
+          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_load_build, data_make->buffer, fake_make_setting_load_build_length, settings.objects.array[i]) == F_equal_to) {
+            if (unmatched_load) {
+              if (settings.contents.array[i].used) {
+                if (fl_string_dynamic_partial_compare_string(fake_common_setting_bool_yes, data_make->buffer, fake_common_setting_bool_yes_length, settings.contents.array[i].array[0]) == F_equal_to) {
+                  data_make->setting_make.load_build = F_true;
+                }
+                else if (fl_string_dynamic_partial_compare_string(fake_common_setting_bool_no, data_make->buffer, fake_common_setting_bool_no_length, settings.contents.array[i].array[0]) == F_equal_to) {
+                  data_make->setting_make.load_build = F_false;
+                }
+                else {
+                  fake_print_error_fakefile_settings_content_invalid(data, data.file_data_build_fakefile.string, data_make->buffer, settings.objects.array[i], settings.contents.array[i].array[0], fake_make_section_settings);
+                }
+
+                unmatched_load = F_false;
+
+                if (settings.contents.array[i].used > 1) {
+                  fake_print_warning_settings_content_multiple(data, data.file_data_build_fakefile.string, fake_make_setting_load_build);
+                }
+              }
+              else {
+                fake_print_error_fakefile_settings_content_empty(data, data.file_data_build_fakefile.string, data_make->buffer, settings.objects.array[i], fake_make_section_settings);
+              }
+            }
+            else {
+              fake_print_warning_settings_content_multiple(data, data.file_data_build_fakefile.string, fake_make_setting_load_build);
             }
           }
           else if (fl_string_dynamic_partial_compare_string(fake_make_setting_parameter, data_make->buffer, fake_make_setting_parameter_length, settings.objects.array[i]) == F_equal_to) {
@@ -442,6 +479,31 @@ extern "C" {
 
       if (data_make->setting_make.load_build) {
         fake_build_load_setting(data, &data_make->setting_build, status);
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, *status, "fake_build_load_setting", F_true);
+
+          f_macro_fss_set_delete_simple(settings);
+          return;
+        }
+      }
+
+      // if either compiler or linker is specified, each will replace any existing build_compiler or build_linker, respectively.
+      if (range_compiler) {
+        data_make->setting_build.build_compiler.used = 0;
+        *status = fl_string_dynamic_partial_append(data_make->buffer, *range_compiler, &data_make->setting_build.build_compiler);
+      }
+
+      if (F_status_is_fine(*status) && range_linker) {
+        data_make->setting_build.build_linker.used = 0;
+        *status = fl_string_dynamic_partial_append(data_make->buffer, *range_linker, &data_make->setting_build.build_linker);
+      }
+
+      if (F_status_is_error(*status)) {
+        fake_print_error(data, *status, "fl_string_dynamic_partial_append", F_true);
+
+        f_macro_fss_set_delete_simple(settings);
+        return;
       }
 
       f_string_map_multis define = f_string_map_multis_initialize;
@@ -1414,9 +1476,24 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (operation == fake_make_operation_type_archive) {
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      if (data_make->setting_build.build_linker.used) {
+        fake_execute(data, data_make->environment, data_make->setting_build.build_linker, arguments, status);
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, F_status_set_fine(*status), "fake_execute", F_true);
+          return;
+        }
+      }
+      else {
+        if (data.verbosity != fake_verbosity_quiet) {
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: No linker has been specified, cannot perform '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, fake_make_operation_archive);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' section operation.");
+        }
+
+        *status = F_status_set_error(F_failure);
+      }
 
       return;
     }
@@ -1436,9 +1513,25 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_compile) {
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      if (data_make->setting_build.build_compiler.used) {
+        fake_execute(data, data_make->environment, data_make->setting_build.build_compiler, arguments, status);
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, F_status_set_fine(*status), "fake_execute", F_true);
+          return;
+        }
+      }
+      else {
+        if (data.verbosity != fake_verbosity_quiet) {
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: No compiler has been specified, cannot perform '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, fake_make_operation_compile);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' section operation.");
+        }
+
+        *status = F_status_set_error(F_failure);
+      }
+
       return;
     }
 
@@ -1446,7 +1539,7 @@ extern "C" {
       // fake_make_assure_inside_project
       // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
       //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      //fake_execute(data, data_make->environment, data_build.setting.build_compiler, arguments, status);
       return;
     }
 
@@ -1459,7 +1552,7 @@ extern "C" {
       // fake_make_assure_inside_project
       // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
       //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      //fake_execute(data, data_make->environment, data_build.setting.build_compiler, arguments, status);
       return;
     }
 
@@ -1512,9 +1605,7 @@ extern "C" {
 
     if (operation == fake_make_operation_type_link) {
       // fake_make_assure_inside_project
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_build_execute(data, data_build, data_build.setting.build_compiler, arguments, status);
+      // @todo: create symlink.
       return;
     }
 
