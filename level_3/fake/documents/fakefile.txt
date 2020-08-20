@@ -75,36 +75,20 @@ Fakefile Documentation:
 
       All Content are passed as arguments to the respective "gcc" program.
 
-    - create\:
-      Create a file or directory.
-
-      The first Content must be either "file" or "directory".
-      Use "file" to designate that this is a regular file being created.
-      Use "directory" to designate that this is a directory file being created.
-
-      The second Content must be the file to be created (be it a regular "file" or a "directory" file).
-
-    - creates\:
-      Identical to "create", except that this will create all directories specified in the given directory file path.
-
     - define\:
       This represents an environment variable to define on run.
       The environment variable name is case-sensitive.
       This replaces the value of any existing environment variable with this name.
 
     - delete\:
-      Delete a file or directory.
+      Delete one or more files or directories.
 
-      The first Content must be either "file" or "directory".
-      Use "file" to designate that this is a regular file being deleted.
-      The "directory" to designate that this is a directory file being deleted.
+      All Content must be the file or directory to be deleted.
 
-      The second Content must be the file to be deleted.
-
-      When the first content is "directory" and that directory is not empty, then this will not delete the directory.
+      If the path is a directory and is not empty, then this will not delete the directory.
 
     - deletes\:
-      Identical to "delete", except that when the first content is "directory" and that directory is not empty, then this will delete the directory.
+      Identical to "delete", except that when the path is a directory and is not empty, then this will delete the directory.
 
     - else\:
       Performs a programmatic "else" condition.
@@ -226,4 +210,4 @@ Fakefile Documentation:
       Manually create a new file or a directory within the project root or update its last changed timestamp if the file already exists.
 
       The first Content must be either "file" or "directory".
-      The second Content must be the file name.
+      The remaining Content must be a path to the file.

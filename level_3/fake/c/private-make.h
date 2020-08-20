@@ -22,7 +22,6 @@ extern "C" {
   #define fake_make_section_stack_max 8192 // maximum stack call depth.
 #endif // _di_fake_make_section_
 
-// @todo safety checks that ensures operations on files only happen inside the project directory, represented by "top".
 #ifndef _di_fake_make_setting_
   typedef struct {
     bool load_build;
@@ -64,9 +63,9 @@ extern "C" {
   #define fake_make_operation_build    "build"
   #define fake_make_operation_clean    "clean"
   #define fake_make_operation_compile  "compile"
-  #define fake_make_operation_create   "create"
   #define fake_make_operation_define   "define"
   #define fake_make_operation_delete   "delete"
+  #define fake_make_operation_deletes  "deletes"
   #define fake_make_operation_else     "else"
   #define fake_make_operation_fail     "fail"
   #define fake_make_operation_group    "group"
@@ -91,9 +90,9 @@ extern "C" {
   #define fake_make_operation_build_length    5
   #define fake_make_operation_clean_length    5
   #define fake_make_operation_compile_length  7
-  #define fake_make_operation_create_length   6
   #define fake_make_operation_define_length   6
   #define fake_make_operation_delete_length   6
+  #define fake_make_operation_deletes_length  7
   #define fake_make_operation_else_length     4
   #define fake_make_operation_fail_length     4
   #define fake_make_operation_group_length    5
@@ -119,9 +118,9 @@ extern "C" {
     fake_make_operation_type_build,
     fake_make_operation_type_clean,
     fake_make_operation_type_compile,
-    fake_make_operation_type_create,
     fake_make_operation_type_define,
     fake_make_operation_type_delete,
+    fake_make_operation_type_deletes,
     fake_make_operation_type_else,
     fake_make_operation_type_fail,
     fake_make_operation_type_group,

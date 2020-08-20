@@ -463,6 +463,17 @@ extern "C" {
       return F_false;
     }
 
+    if (status == F_directory_empty_not) {
+      if (data.verbosity != fake_verbosity_quiet) {
+        fprintf(f_type_error, "%c", f_string_eol[0]);
+        fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The %s '", file_or_directory);
+        fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", name);
+        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' is not empty.");
+      }
+
+      return F_false;
+    }
+
     if (status == F_parameter) {
       if (data.verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);

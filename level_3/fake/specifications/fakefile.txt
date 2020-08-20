@@ -47,8 +47,6 @@ Fakefile Specification:
   - build: Zero or One Content. First Content represents path to the settings file, relative to the project root.
   - clean: Zero Content.
   - compile: One or more Content as parameters to compiler.
-  - create: Two Content. First Content is either "file" or "directory" (case-sensitive), second Content is path to file.
-  - creates: Two Content. First Content is either "file" or "directory" (case-sensitive), second Content is path to file.
   - define: Two or more Content.
   - delete: One or more Content representing paths to files.
   - deletes: One or more Content representing paths to files.
@@ -70,4 +68,4 @@ Fakefile Specification:
   - skeleton: Zero Content.
   - to: One Content. First Content is the directory path.
   - top: Zero Content.
-  - touch: One Content. First Content is the file path.
+  - touch: Two or more Content. First content is one of "file" or "directory", remaining Content are paths to files.

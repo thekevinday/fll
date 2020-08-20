@@ -1305,9 +1305,9 @@ extern "C" {
       f_macro_string_static_initialize(fake_make_operation_build, fake_make_operation_build_length),
       f_macro_string_static_initialize(fake_make_operation_clean, fake_make_operation_clean_length),
       f_macro_string_static_initialize(fake_make_operation_compile, fake_make_operation_compile_length),
-      f_macro_string_static_initialize(fake_make_operation_create, fake_make_operation_create_length),
       f_macro_string_static_initialize(fake_make_operation_define, fake_make_operation_define_length),
       f_macro_string_static_initialize(fake_make_operation_delete, fake_make_operation_delete_length),
+      f_macro_string_static_initialize(fake_make_operation_deletes, fake_make_operation_deletes_length),
       f_macro_string_static_initialize(fake_make_operation_else, fake_make_operation_else_length),
       f_macro_string_static_initialize(fake_make_operation_fail, fake_make_operation_fail_length),
       f_macro_string_static_initialize(fake_make_operation_group, fake_make_operation_group_length),
@@ -1334,9 +1334,9 @@ extern "C" {
       f_macro_string_range_initialize(fake_make_operation_build_length),
       f_macro_string_range_initialize(fake_make_operation_clean_length),
       f_macro_string_range_initialize(fake_make_operation_compile_length),
-      f_macro_string_range_initialize(fake_make_operation_create_length),
       f_macro_string_range_initialize(fake_make_operation_define_length),
       f_macro_string_range_initialize(fake_make_operation_delete_length),
+      f_macro_string_range_initialize(fake_make_operation_deletes_length),
       f_macro_string_range_initialize(fake_make_operation_else_length),
       f_macro_string_range_initialize(fake_make_operation_fail_length),
       f_macro_string_range_initialize(fake_make_operation_group_length),
@@ -1363,9 +1363,9 @@ extern "C" {
       fake_make_operation_type_build,
       fake_make_operation_type_clean,
       fake_make_operation_type_compile,
-      fake_make_operation_type_create,
       fake_make_operation_type_define,
       fake_make_operation_type_delete,
+      fake_make_operation_type_deletes,
       fake_make_operation_type_else,
       fake_make_operation_type_fail,
       fake_make_operation_type_group,
@@ -1535,24 +1535,73 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_create) {
-      // fake_make_assure_inside_project
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_execute(data, data_make->environment, data_build.setting.build_compiler, arguments, status);
-      return;
-    }
-
     if (operation == fake_make_operation_type_define) {
       // @todo: walk through each existing define to see if it already exists and replace it, otherwise create a new one.
       return;
     }
 
-    if (operation == fake_make_operation_type_delete) {
-      // fake_make_assure_inside_project
-      // *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
-      //fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
-      //fake_execute(data, data_make->environment, data_build.setting.build_compiler, arguments, status);
+    if (operation == fake_make_operation_type_delete || operation == fake_make_operation_type_deletes) {
+      const int recursion_max = operation == fake_make_operation_type_delete ? 0 : f_directory_descriptors_max;
+      struct stat file_stat;
+
+      for (f_array_length i = 0; i < arguments.used; i++) {
+        memset(&file_stat, 0, sizeof(struct stat));
+
+        *status = f_file_stat(arguments.array[i].string, F_false, &file_stat);
+
+        if (F_status_is_error(*status)) {
+          if (F_status_set_fine(*status) == F_file_found_not) {
+            if (data.verbosity == fake_verbosity_verbose) {
+              fprintf(f_type_warning, "%c", f_string_eol[0]);
+              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the file '");
+              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
+              fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "' was not found.");
+            }
+
+            *status = F_none;
+          }
+          else {
+            fake_print_error_file(data, F_status_set_fine(*status), "f_file_stat", arguments.array[i].string, "delete", F_true, F_true);
+            return;
+          }
+        }
+        else if (f_macro_file_type_is_directory(file_stat.st_mode)) {
+          if (data.verbosity == fake_verbosity_verbose) {
+            *status = f_directory_remove_custom(arguments.array[i].string, recursion_max, F_false, fake_clean_remove_recursively_verbosely);
+          }
+          else {
+            *status = f_directory_remove(arguments.array[i].string, recursion_max, F_false);
+          }
+
+          if (F_status_set_fine(*status) == F_file_found_not) {
+            if (data.verbosity == fake_verbosity_verbose) {
+              printf("The directory '%s' does not exist.%c", arguments.array[i].string, f_string_eol[0]);
+            }
+
+            *status = F_none;
+          }
+
+          if (F_status_is_error(*status)) {
+            fake_print_error_file(data, F_status_set_fine(*status), "f_directory_remove", arguments.array[i].string, "delete", F_false, F_true);
+            return;
+          }
+          else {
+            printf("Removed '%s'.\n", arguments.array[i].string);
+          }
+        }
+        else {
+          *status = f_file_remove(arguments.array[i].string);
+
+          if (F_status_is_error(*status)) {
+            fake_print_error_file(data, F_status_set_fine(*status), "f_file_remove", arguments.array[i].string, "delete", F_true, F_true);
+            return;
+          }
+          else {
+            printf("Removed '%s'.\n", arguments.array[i].string);
+          }
+        }
+      } // for
+
       return;
     }
 
@@ -1573,6 +1622,7 @@ extern "C" {
 
       for (f_array_length i = 1; i < arguments.used; i++) {
         *status = f_file_role_change(arguments.array[i].string, -1, id, F_false);
+
         if (F_status_is_error(*status)) {
           fake_print_error_file(data, *status, "f_file_role_change", arguments.array[i].string, "change group of", F_true, F_true);
         }
@@ -1590,6 +1640,7 @@ extern "C" {
       for (f_array_length i = 1; i < arguments.used; i++) {
         // @todo: recursive.
         *status = f_file_role_change(arguments.array[i].string, -1, id, F_false);
+
         if (F_status_is_error(*status)) {
           fake_print_error_file(data, *status, "f_file_role_change", arguments.array[i].string, "change group of", F_true, F_true);
         }
@@ -1604,8 +1655,12 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_link) {
-      // fake_make_assure_inside_project
-      // @todo: create symlink.
+      *status = f_file_link(arguments.array[0].string, arguments.array[1].string);
+
+      if (F_status_is_error(*status)) {
+        fake_print_error_file(data, *status, "f_file_link", arguments.array[1].string, "create link", F_true, F_true);
+      }
+
       return;
     }
 
@@ -1881,40 +1936,42 @@ extern "C" {
 
       f_macro_mode_set_default_umask(mode, data.umask);
 
-      if (data.verbosity == fake_verbosity_verbose) {
-        printf("Touching %s '", arguments.array[0].string);
-        fl_color_print(f_type_output, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
-        printf("'.%c", f_string_eol[0]);
-      }
-
-      if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to) {
-        *status = f_file_touch(arguments.array[1].string, mode.regular, F_false);
-
-        if (F_status_is_error(*status)) {
-          if (F_status_is_fine(fll_path_canonical(arguments.array[1].string, &data_make->path_cache))) {
-            fake_print_error_file(data, F_status_set_fine(*status), "f_file_touch", data_make->path_cache.string, "touch", F_true, F_true);
-          }
-          else {
-            fake_print_error_file(data, F_status_set_fine(*status), "f_file_touch", arguments.array[1].string, "touch", F_true, F_true);
-          }
-
-          return;
+      for (f_array_length i = 1; i < arguments.used; i++) {
+        if (data.verbosity == fake_verbosity_verbose) {
+          printf("Touching %s '", arguments.array[0].string);
+          fl_color_print(f_type_output, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
+          printf("'.%c", f_string_eol[0]);
         }
-      }
-      else if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory, arguments.array[0], fake_make_operation_argument_directory_length) == F_equal_to) {
-        *status = f_directory_touch(arguments.array[1].string, mode.directory);
 
-        if (F_status_is_error(*status)) {
-          if (F_status_is_fine(fll_path_canonical(arguments.array[1].string, &data_make->path_cache))) {
-            fake_print_error_file(data, F_status_set_fine(*status), "f_directory_touch", data_make->path_cache.string, "touch", F_false, F_true);
-          }
-          else {
-            fake_print_error_file(data, F_status_set_fine(*status), "f_directory_touch", arguments.array[1].string, "touch", F_false, F_true);
-          }
+        if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to) {
+          *status = f_file_touch(arguments.array[i].string, mode.regular, F_false);
 
-          return;
+          if (F_status_is_error(*status)) {
+            if (F_status_is_fine(fll_path_canonical(arguments.array[i].string, &data_make->path_cache))) {
+              fake_print_error_file(data, F_status_set_fine(*status), "f_file_touch", data_make->path_cache.string, "touch", F_true, F_true);
+            }
+            else {
+              fake_print_error_file(data, F_status_set_fine(*status), "f_file_touch", arguments.array[i].string, "touch", F_true, F_true);
+            }
+
+            return;
+          }
         }
-      }
+        else if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory, arguments.array[0], fake_make_operation_argument_directory_length) == F_equal_to) {
+          *status = f_directory_touch(arguments.array[i].string, mode.directory);
+
+          if (F_status_is_error(*status)) {
+            if (F_status_is_fine(fll_path_canonical(arguments.array[i].string, &data_make->path_cache))) {
+              fake_print_error_file(data, F_status_set_fine(*status), "f_directory_touch", data_make->path_cache.string, "touch", F_false, F_true);
+            }
+            else {
+              fake_print_error_file(data, F_status_set_fine(*status), "f_directory_touch", arguments.array[i].string, "touch", F_false, F_true);
+            }
+
+            return;
+          }
+        }
+      } // for
 
       return;
     }
@@ -2166,42 +2223,19 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
     }
-    else if (operation == fake_make_operation_type_create || operation == fake_make_operation_type_delete) {
+    else if (operation == fake_make_operation_type_delete || operation == fake_make_operation_type_deletes) {
       if (arguments.used) {
-        if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to) {
-          if (arguments.used > 2) {
-            printf("%c", f_string_eol[0]);
-            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+        for (f_array_length i = 0; i < arguments.used; i++) {
+          *status = fake_make_assure_inside_project(data, arguments.array[i], data_make);
 
-            *status = F_status_set_error(F_failure);
-          }
-        }
-        else if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory, arguments.array[0], fake_make_operation_argument_directory_length) == F_equal_to) {
-          if (arguments.used > 3) {
-            printf("%c", f_string_eol[0]);
-            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
+          if (F_status_is_error(*status)) {
+            fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
 
-            *status = F_status_set_error(F_failure);
-          }
-          else if (arguments.used == 3) {
-            if (fl_string_dynamic_compare_string(fake_make_operation_argument_recursive, arguments.array[0], fake_make_operation_argument_recursive_length) == F_equal_to_not) {
-              printf("%c", f_string_eol[0]);
-              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Third argument must be either '");
-              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_make_operation_argument_recursive);
-              fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' or not provided at all.");
-
+            if (F_status_set_fine(*status) == F_false) {
               *status = F_status_set_error(F_failure);
             }
           }
-        }
-        else {
-          printf("%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unsupported file type '");
-          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
-          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
-
-          *status = F_status_set_error(F_failure);
-        }
+        } // for
       }
       else {
         printf("%c", f_string_eol[0]);
@@ -2295,7 +2329,6 @@ extern "C" {
       }
     }
     else if (operation == fake_make_operation_type_link) {
-      // @todo validate link is outside that the link is or is not outside the project directory.
       if (arguments.used > 2) {
         printf("%c", f_string_eol[0]);
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
@@ -2303,54 +2336,22 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
       else if (arguments.used == 2) {
-        f_status status_file = F_none;
+        *status = fake_make_assure_inside_project(data, arguments.array[0], data_make);
+        if (F_status_is_error(*status)) {
+          fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[0].string);
 
-        if (arguments.array[0].used) {
-          status_file = f_file_exists(arguments.array[0].string);
-
-          if (F_status_is_error(status_file) || !status_file) {
-            printf("%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
-            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
-
-            if (status_file == F_false) {
-              *status = F_status_set_error(F_failure);
-            }
-            else {
-              *status = status_file;
-            }
+          if (F_status_set_fine(*status) == F_false) {
+            *status = F_status_set_error(F_failure);
           }
         }
-        else {
-          printf("%c", f_string_eol[0]);
-          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: The %s filename argument must not be an empty string.", fake_make_operation_argument_target);
 
-          *status = F_status_set_error(F_failure);
-        }
+        *status = fake_make_assure_inside_project(data, arguments.array[1], data_make);
+        if (F_status_is_error(*status)) {
+          fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[1].string);
 
-        if (arguments.array[1].used) {
-          status_file = f_file_exists(arguments.array[1].string);
-
-          if (F_status_is_error(status_file) || !status_file) {
-            printf("%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find file '");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
-            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
-
-            if (status_file == F_false) {
-              *status = F_status_set_error(F_failure);
-            }
-            else {
-              *status = status_file;
-            }
+          if (F_status_set_fine(*status) == F_false) {
+            *status = F_status_set_error(F_failure);
           }
-        }
-        else {
-          printf("%c", f_string_eol[0]);
-          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Filename argument must not be an empty string.", fake_make_operation_argument_point);
-
-          *status = F_status_set_error(F_failure);
         }
       }
       else {
@@ -2410,13 +2411,7 @@ extern "C" {
       }
     }
     else if (operation == fake_make_operation_type_touch) {
-      if (arguments.used > 2) {
-        printf("%c", f_string_eol[0]);
-        fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Has too many arguments.");
-
-        *status = F_status_set_error(F_failure);
-      }
-      else if (arguments.used == 2) {
+      if (arguments.used > 1) {
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to_not) {
           if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory, arguments.array[0], fake_make_operation_argument_directory_length) == F_equal_to_not) {
             printf("%c", f_string_eol[0]);
@@ -2428,14 +2423,16 @@ extern "C" {
           }
         }
 
-        *status = fake_make_assure_inside_project(data, arguments.array[1], data_make);
-        if (F_status_is_error(*status)) {
-          fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[1].string);
+        for (f_array_length i = 1; i < arguments.used; i++) {
+          *status = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+          if (F_status_is_error(*status)) {
+            fake_print_error_fakefile_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
 
-          if (F_status_set_fine(*status) == F_false) {
-            *status = F_status_set_error(F_failure);
+            if (F_status_set_fine(*status) == F_false) {
+              *status = F_status_set_error(F_failure);
+            }
           }
-        }
+        } // for
       }
       else {
         printf("%c", f_string_eol[0]);
