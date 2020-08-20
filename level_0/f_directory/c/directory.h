@@ -394,6 +394,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_empty_not (with error bit) if the directory is not empty.
  *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
  *   F_file_found_not (with error bit) if file not found.
  *   F_file_open_max (with error bit) too many open files.
@@ -405,7 +406,6 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
- *   F_number_overflow (with error bit) on integer overflow.
  *   F_failure (with error bit) for any other error.
  *
  * @see nftw()
@@ -436,7 +436,10 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_empty_not (with error bit) if the directory is not empty.
+ *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
  *   F_file_found_not (with error bit) if file not found.
+ *   F_file_open_max (with error bit) too many open files.
  *   F_file_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_loop (with error bit) on loop error.

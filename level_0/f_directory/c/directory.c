@@ -290,9 +290,9 @@ extern "C" {
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOTEMPTY) return F_status_set_error(F_directory_empty_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
-      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
 
       return F_status_set_error(F_failure);
     }
@@ -337,7 +337,7 @@ extern "C" {
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
+      if (errno == ENOTEMPTY) return F_status_set_error(F_directory_empty_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
 
