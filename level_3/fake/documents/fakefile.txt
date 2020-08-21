@@ -14,13 +14,27 @@ Fakefile Documentation:
     The build settings may also be specified in the Settings Section.
 
     The following settings are available (in addition to the build settings)\:
+    - archiver\:
+      This represents the name of the linker program to use, such as "ar".
+
+      When specified and "load_build" is "true", then this will override the "build_linker" specified in the loaded build settings.
+
     - compiler\:
       This represents the name of the compiler program to use, such as "gcc".
+
+      When specified and "load_build" is "true", then this will override the "build_compiler" specified in the loaded build settings.
 
     - define\:
       This represents an environment variable to define on run.
       The environment variable name is case-sensitive.
       This replaces the value of any existing environment variable with this name.
+
+    - environment\:
+      This represents all environment variables that are exposed when executing sub-programs.
+      This is not auto-populated for environment variables defined in the "define" setting.
+
+      When defined with no Content, then this means that no environment variables are exposed.
+      Environment variables may still be exposed if "load_build" is "true" and the build setting file defines any environment variable names.
 
     - fail\:
       Designates the fail mode when running external programs, such as through the "run" or "shell" operations.
@@ -31,9 +45,6 @@ Fakefile Documentation:
       - ignore: Designates to do nothing.
 
       The return code for programs can still be retrieved through using the reserved iki vaiable "return".
-
-    - linker\:
-      This represents the name of the linker program to use, such as "ar".
 
     - load_build\:
       This represents whether or not to load the load the build settings file.

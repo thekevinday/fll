@@ -363,6 +363,103 @@ extern "C" {
               }
             }
           }
+          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_environment, data_make->buffer, fake_make_setting_environment_length, settings.objects.array[i]) == F_equal_to) {
+            f_string_dynamic name_define = f_string_dynamic_initialize;
+
+            f_array_length j = 0;
+            f_array_length k = 0;
+
+            for (; j < settings.contents.array[i].used; j++) {
+
+              *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, settings.contents.array[i].array[j], &name_define);
+              if (F_status_is_error(*status)) {
+                fake_print_error(data, *status, "fl_string_dynamic_partial_append_nulless", F_true);
+
+                f_macro_string_dynamic_delete_simple(name_define);
+                f_macro_fss_set_delete_simple(settings);
+                return;
+              }
+
+              *status = fl_string_dynamic_terminate_after(&name_define);
+              if (F_status_is_error(*status)) {
+                fake_print_error(data, *status, "fl_string_dynamic_terminate_after", F_true);
+
+                f_macro_string_dynamic_delete_simple(name_define);
+                f_macro_fss_set_delete_simple(settings);
+                return;
+              }
+
+              if (fake_make_operate_validate_define_name(name_define) == F_true) {
+                for (k = 0; k < data_make->setting_build.environment.used; k++) {
+                  if (fl_string_dynamic_compare(name_define, data_make->setting_build.environment.array[k]) == F_equal_to) {
+                    break;
+                  }
+                } // for
+
+                if (k == data_make->setting_build.environment.used) {
+                  if (data_make->setting_build.environment.used + 1 > data_make->setting_build.environment.size) {
+                    if (data_make->setting_build.environment.used + 1 > f_array_length_size) {
+                      *status = F_status_set_error(F_buffer_too_large);
+
+                      fake_print_error(data, *status, "f_macro_string_dynamics_resize", F_true);
+
+                      f_macro_string_dynamic_delete_simple(name_define);
+                      f_macro_fss_set_delete_simple(settings);
+                      return;
+                    }
+
+                    if (data_make->setting_build.environment.used + f_fss_default_allocation_step > f_array_length_size) {
+                      f_macro_string_dynamics_resize((*status), data_make->setting_build.environment, (data_make->setting_build.environment.used + 1));
+                    }
+                    else {
+                      f_macro_string_dynamics_resize((*status), data_make->setting_build.environment, (data_make->setting_build.environment.used + f_fss_default_allocation_step));
+                    }
+
+                    if (F_status_is_error(*status)) {
+                      fake_print_error(data, *status, "f_macro_string_dynamics_resize", F_true);
+
+                      f_macro_string_dynamic_delete_simple(name_define);
+                      f_macro_fss_set_delete_simple(settings);
+                      return;
+                    }
+                  }
+
+                  // Include the terminating NULL when copying.
+                  name_define.used++;
+
+                  *status = fl_string_dynamic_append(name_define, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
+                  if (F_status_is_error(*status)) {
+                    fake_print_error(data, *status, "fl_string_dynamic_append", F_true);
+
+                    f_macro_string_dynamic_delete_simple(name_define);
+                    f_macro_fss_set_delete_simple(settings);
+                    return;
+                  }
+
+                  // Ensure that the terminating NULL is after the end of the string used size.
+                  data_make->setting_build.environment.array[data_make->setting_build.environment.used].used--;
+                  data_make->setting_build.environment.used++;
+                }
+                else if (data.verbosity == fake_verbosity_verbose) {
+                  fprintf(f_type_warning, "%c", f_string_eol[0]);
+                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: The environment name '");
+                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", name_define.string);
+                  fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "' is already added.");
+                }
+              }
+              else if (data.verbosity == fake_verbosity_verbose) {
+                fprintf(f_type_warning, "%c", f_string_eol[0]);
+                fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: The environment name '");
+                fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", name_define.string);
+                fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "' is invalid, ignoring.");
+              }
+
+              name_define.used = 0;
+            } // for
+
+            *status = F_none;
+            f_macro_string_dynamic_delete_simple(name_define);
+          }
           else if (fl_string_dynamic_partial_compare_string(fake_make_setting_fail, data_make->buffer, fake_make_setting_fail_length, settings.objects.array[i]) == F_equal_to) {
             if (unmatched_fail) {
               if (settings.contents.array[i].used) {
@@ -541,7 +638,6 @@ extern "C" {
         f_string_dynamic combined = f_string_dynamic_initialize;
 
         for (f_array_length i = 0; i < define.used; i++) {
-
           status_validate = fake_make_operate_validate_define_name(define.array[i].name);
 
           if (status_validate) {
@@ -1311,14 +1407,14 @@ extern "C" {
       f_macro_string_static_initialize(fake_make_operation_else, fake_make_operation_else_length),
       f_macro_string_static_initialize(fake_make_operation_fail, fake_make_operation_fail_length),
       f_macro_string_static_initialize(fake_make_operation_group, fake_make_operation_group_length),
-      f_macro_string_static_initialize(fake_make_operation_group, fake_make_operation_groups_length),
+      f_macro_string_static_initialize(fake_make_operation_groups, fake_make_operation_groups_length),
       f_macro_string_static_initialize(fake_make_operation_if, fake_make_operation_if_length),
       f_macro_string_static_initialize(fake_make_operation_link, fake_make_operation_link_length),
       f_macro_string_static_initialize(fake_make_operation_mode, fake_make_operation_mode_length),
-      f_macro_string_static_initialize(fake_make_operation_mode, fake_make_operation_modes_length),
+      f_macro_string_static_initialize(fake_make_operation_modes, fake_make_operation_modes_length),
       f_macro_string_static_initialize(fake_make_operation_operate, fake_make_operation_operate_length),
       f_macro_string_static_initialize(fake_make_operation_owner, fake_make_operation_owner_length),
-      f_macro_string_static_initialize(fake_make_operation_owner, fake_make_operation_owners_length),
+      f_macro_string_static_initialize(fake_make_operation_owners, fake_make_operation_owners_length),
       f_macro_string_static_initialize(fake_make_operation_pop, fake_make_operation_pop_length),
       f_macro_string_static_initialize(fake_make_operation_print, fake_make_operation_print_length),
       f_macro_string_static_initialize(fake_make_operation_run, fake_make_operation_run_length),
@@ -1536,7 +1632,20 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_define) {
-      // @todo: walk through each existing define to see if it already exists and replace it, otherwise create a new one.
+      if (arguments.used > 1) {
+        *status = f_environment_set(arguments.array[0].string, arguments.array[1].string, F_true);
+      }
+      else {
+        *status = f_environment_set(arguments.array[0].string, "", F_true);
+      }
+
+      if (F_status_is_error(*status)) {
+        fake_print_error(data, F_status_set_fine(*status), "f_environment_set", F_true);
+      }
+      else if (data.verbosity == fake_verbosity_verbose) {
+        printf("Defined environment variable '%s'.%c", arguments.array[0].string, f_string_eol[0]);
+      }
+
       return;
     }
 
@@ -1585,8 +1694,8 @@ extern "C" {
             fake_print_error_file(data, F_status_set_fine(*status), "f_directory_remove", arguments.array[i].string, "delete", F_false, F_true);
             return;
           }
-          else {
-            printf("Removed '%s'.\n", arguments.array[i].string);
+          else if (data.verbosity == fake_verbosity_verbose) {
+            printf("Removed '%s'.%c", arguments.array[i].string, f_string_eol[0]);
           }
         }
         else {
@@ -1596,8 +1705,8 @@ extern "C" {
             fake_print_error_file(data, F_status_set_fine(*status), "f_file_remove", arguments.array[i].string, "delete", F_true, F_true);
             return;
           }
-          else {
-            printf("Removed '%s'.\n", arguments.array[i].string);
+          else if (data.verbosity == fake_verbosity_verbose) {
+            printf("Removed '%s'.%c", arguments.array[i].string, f_string_eol[0]);
           }
         }
       } // for
@@ -1611,6 +1720,32 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_fail) {
+      if (fl_string_dynamic_compare_string(fake_make_operation_argument_error, arguments.array[0], fake_make_operation_argument_error_length) == F_equal_to) {
+        data_make->setting_make.fail = fake_make_operation_fail_type_exit;
+      }
+      else if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn, arguments.array[0], fake_make_operation_argument_warn_length) == F_equal_to) {
+        data_make->setting_make.fail = fake_make_operation_fail_type_warn;
+      }
+      else if (fl_string_dynamic_compare_string(fake_make_operation_argument_ignore, arguments.array[0], fake_make_operation_argument_ignore_length) == F_equal_to) {
+        data_make->setting_make.fail = fake_make_operation_fail_type_ignore;
+      }
+
+      if (data.verbosity == fake_verbosity_verbose) {
+        printf("Set failure state to '");
+
+        if (data_make->setting_make.fail == fake_make_operation_fail_type_exit) {
+          printf(fake_make_operation_argument_exit);
+        }
+        else if (data_make->setting_make.fail == fake_make_operation_fail_type_warn) {
+          printf(fake_make_operation_argument_warn);
+        }
+        else if (data_make->setting_make.fail == fake_make_operation_fail_type_ignore) {
+          printf(fake_make_operation_argument_ignore);
+        }
+
+        printf("'.%c", f_string_eol[0]);
+      }
+
       return;
     }
 
@@ -1625,6 +1760,9 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fake_print_error_file(data, *status, "f_file_role_change", arguments.array[i].string, "change group of", F_true, F_true);
+        }
+        else if (data.verbosity == fake_verbosity_verbose) {
+          printf("Changed group of '%s' to %llu.%c", arguments.array[i].string, id, f_string_eol[0]);
         }
       } // for
 
@@ -1644,6 +1782,9 @@ extern "C" {
         if (F_status_is_error(*status)) {
           fake_print_error_file(data, *status, "f_file_role_change", arguments.array[i].string, "change group of", F_true, F_true);
         }
+        else if (data.verbosity == fake_verbosity_verbose) {
+          printf("Changed group of '%s' to %llu.%c", arguments.array[i].string, id, f_string_eol[0]);
+        }
       } // for
 
       return;
@@ -1659,6 +1800,9 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         fake_print_error_file(data, *status, "f_file_link", arguments.array[1].string, "create link", F_true, F_true);
+      }
+      else if (data.verbosity == fake_verbosity_verbose) {
+        printf("Created symbolic link from '%s' to '%s'.%c", arguments.array[1].string, arguments.array[0].string, f_string_eol[0]);
       }
 
       return;
@@ -1696,6 +1840,10 @@ extern "C" {
           fake_print_error_file(data, *status, "f_file_mode_set", arguments.array[i].string, "change mode of", F_true, F_true);
           break;
         }
+
+        if (data.verbosity == fake_verbosity_verbose) {
+          printf("Changed mode of '%s' to %#o.%c", arguments.array[i].string, mode, f_string_eol[0]);
+        }
       } // for
 
       return;
@@ -1719,20 +1867,24 @@ extern "C" {
 
         *status = f_file_stat(arguments.array[i].string, F_true, &stat_file);
         if (F_status_is_error(*status)) {
-          fake_print_error_file(data, *status, "f_file_stat", arguments.array[i].string, "change mode of", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_file_stat", arguments.array[i].string, "change mode of", F_true, F_true);
           break;
         }
 
         *status = f_file_mode_determine(stat_file.st_mode, mode_rule, replace, f_macro_file_type_is_directory(stat_file.st_mode), &mode);
         if (F_status_is_error(*status)) {
-          fake_print_error_file(data, *status, "f_file_mode_determine", arguments.array[i].string, "change mode of", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_file_mode_determine", arguments.array[i].string, "change mode of", F_true, F_true);
           break;
         }
 
         *status = f_file_mode_set(arguments.array[i].string, mode);
         if (F_status_is_error(*status)) {
-          fake_print_error_file(data, *status, "f_file_mode_set", arguments.array[i].string, "change mode of", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_file_mode_set", arguments.array[i].string, "change mode of", F_true, F_true);
           break;
+        }
+
+        if (data.verbosity == fake_verbosity_verbose) {
+          printf("Changed mode of '%s' to %#o.%c", arguments.array[i].string, mode, f_string_eol[0]);
         }
       } // for
 
@@ -1753,7 +1905,12 @@ extern "C" {
       for (f_array_length i = 1; i < arguments.used; i++) {
         *status = f_file_role_change(arguments.array[i].string, id, -1, F_false);
         if (F_status_is_error(*status)) {
-          fake_print_error_file(data, *status, "f_file_role_change", arguments.array[i].string, "change owner of", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_file_role_change", arguments.array[i].string, "change owner of", F_true, F_true);
+          break;
+        }
+
+        if (data.verbosity == fake_verbosity_verbose) {
+          printf("Changed owner of '%s' to %d.%c", arguments.array[i].string, id, f_string_eol[0]);
         }
       } // for
 
@@ -1770,7 +1927,11 @@ extern "C" {
         // @todo recursive.
         *status = f_file_role_change(arguments.array[i].string, id, -1, F_false);
         if (F_status_is_error(*status)) {
-          fake_print_error_file(data, *status, "f_file_role_change", arguments.array[i].string, "change owner of", F_true, F_true);
+          fake_print_error_file(data, F_status_set_fine(*status), "f_file_role_change", arguments.array[i].string, "change owner of", F_true, F_true);
+        }
+
+        if (data.verbosity == fake_verbosity_verbose) {
+          printf("Changed owner of '%s' to %o.%c", arguments.array[i].string, id, f_string_eol[0]);
         }
       } // for
 
@@ -1796,13 +1957,7 @@ extern "C" {
         }
 
         printf("Changed to project path '");
-
-        if (data_make->path_cache.used) {
-          fl_color_print_code(f_type_output, data.context.notable);
-          f_print_string_dynamic(f_type_output, data_make->path_cache);
-          fl_color_print_code(f_type_error, data.context.reset);
-        }
-
+        f_print_string_dynamic(f_type_output, data_make->path_cache);
         printf("'.%c", f_string_eol[0]);
       }
 
@@ -1894,13 +2049,7 @@ extern "C" {
           }
 
           printf("Changed to project path '");
-
-          if (data_make->path_cache.used) {
-            fl_color_print_code(f_type_output, data.context.notable);
-            f_print_string_dynamic(f_type_output, data_make->path_cache);
-            fl_color_print_code(f_type_error, data.context.reset);
-          }
-
+          f_print_string_dynamic(f_type_output, data_make->path_cache);
           printf("'.%c", f_string_eol[0]);
         }
 
@@ -1927,7 +2076,6 @@ extern "C" {
       } // for
 
       data_make->path.stack.used = 1;
-
       return;
     }
 
@@ -1937,12 +2085,6 @@ extern "C" {
       f_macro_mode_set_default_umask(mode, data.umask);
 
       for (f_array_length i = 1; i < arguments.used; i++) {
-        if (data.verbosity == fake_verbosity_verbose) {
-          printf("Touching %s '", arguments.array[0].string);
-          fl_color_print(f_type_output, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
-          printf("'.%c", f_string_eol[0]);
-        }
-
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to) {
           *status = f_file_touch(arguments.array[i].string, mode.regular, F_false);
 
@@ -1954,7 +2096,7 @@ extern "C" {
               fake_print_error_file(data, F_status_set_fine(*status), "f_file_touch", arguments.array[i].string, "touch", F_true, F_true);
             }
 
-            return;
+            break;
           }
         }
         else if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory, arguments.array[0], fake_make_operation_argument_directory_length) == F_equal_to) {
@@ -1968,9 +2110,16 @@ extern "C" {
               fake_print_error_file(data, F_status_set_fine(*status), "f_directory_touch", arguments.array[i].string, "touch", F_false, F_true);
             }
 
-            return;
+            break;
           }
         }
+
+        if (data.verbosity == fake_verbosity_verbose) {
+          printf("Touched %s '", arguments.array[0].string);
+          f_print_string_dynamic(f_type_output, arguments.array[i]);
+          printf("'.%c", f_string_eol[0]);
+        }
+
       } // for
 
       return;
@@ -1980,6 +2129,51 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_process_execute_
   f_return_status fake_make_operate_process_execute(const fake_data data, const f_string_static program, const f_string_statics arguments, const bool as_shell, fake_make_data *data_make) {
+    f_status status = F_none;
+
+    // reset the environment.
+    for (f_array_length i = 0; i < data_make->environment.names.used; i++) {
+      data_make->environment.names.array[i].used = 0;
+      data_make->environment.values.array[i].used = 0;
+    } // for
+
+    data_make->environment.names.used = 0;
+    data_make->environment.values.used = 0;
+
+    // load all environment variables found.
+    for (f_array_length i = 0; i < data_make->setting_build.environment.used; i++) {
+
+      // pre-allocate name and value if necessary.
+      if (data_make->environment.names.used + 1 > data_make->environment.names.size) {
+        f_macro_string_dynamics_resize(status, data_make->environment.names, data_make->environment.names.size + f_memory_default_allocation_step);
+
+        if (F_status_is_not_error(status)) {
+          f_macro_string_dynamics_resize(status, data_make->environment.values, data_make->environment.values.size + f_memory_default_allocation_step);
+        }
+
+        if (F_status_is_error(status)) {
+          fake_print_error(data, F_status_set_fine(status), "f_macro_string_dynamics_resize", F_true);
+          return status;
+        }
+      }
+
+      status = f_environment_get(data_make->setting_build.environment.array[i].string, &data_make->environment.values.array[data_make->environment.values.used]);
+      if (F_status_is_error(status)) {
+        fake_print_error(data, F_status_set_fine(status), "f_environment_get", F_true);
+        return status;
+      }
+
+      if (status == F_exist_not) continue;
+
+      fl_string_dynamic_append(data_make->setting_build.environment.array[i], &data_make->environment.names.array[data_make->environment.names.used]);
+      if (F_status_is_error(status)) {
+        fake_print_error(data, F_status_set_fine(status), "f_environment_get", F_true);
+        return status;
+      }
+
+      data_make->environment.names.used++;
+      data_make->environment.values.used++;
+    } // for
 
     if (data.verbosity == fake_verbosity_verbose) {
       printf("%s", program.string);
@@ -1997,7 +2191,6 @@ extern "C" {
     }
 
     int result = 0;
-    f_status status = F_none;
 
     if (as_shell) {
       status = fll_execute_path_environment(program.string, arguments, data_make->environment.names, data_make->environment.values, &result);
@@ -2112,36 +2305,38 @@ extern "C" {
     f_status status = F_none;
     f_string_dynamics args = f_string_dynamics_initialize;
 
-    f_macro_string_dynamics_new(status, args, arguments.used - 1);
-    if (F_status_is_error(status)) {
-      fake_print_error(data, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true);
-      return status;
+    if (arguments.used > 1) {
+      f_macro_string_dynamics_new(status, args, arguments.used - 1);
+      if (F_status_is_error(status)) {
+        fake_print_error(data, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true);
+        return status;
+      }
+
+      for (f_array_length i = 0; i < args.size; i++) {
+
+        status = fl_string_dynamic_append(arguments.array[i + 1], &args.array[i]);
+        if (F_status_is_error(status)) {
+          fake_print_error(data, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
+
+          f_macro_string_dynamics_delete_simple(args);
+          return status;
+        }
+
+        status = fl_string_dynamic_terminate(&args.array[i]);
+        if (F_status_is_error(status)) {
+          fake_print_error(data, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+
+          f_macro_string_dynamics_delete_simple(args);
+          return status;
+        }
+
+        args.used++;
+      } // for
     }
-
-    for (f_array_length i = 0; i < args.size; i++) {
-      status = fl_string_dynamic_append(arguments.array[i + 1], &args.array[i]);
-      if (F_status_is_error(status)) {
-        fake_print_error(data, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
-
-        f_macro_string_dynamics_delete_simple(args);
-        break;
-      }
-
-      status = fl_string_dynamic_terminate(&args.array[i]);
-      if (F_status_is_error(status)) {
-        fake_print_error(data, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
-
-        f_macro_string_dynamics_delete_simple(args);
-        break;
-      }
-
-      args.used++;
-    } // for
 
     status = fake_make_operate_process_execute(data, *program, args, as_shell, data_make);
 
     f_macro_string_dynamics_delete_simple(args);
-
     return status;
   }
 #endif // _di_fake_make_operate_process_run_
@@ -2246,8 +2441,26 @@ extern "C" {
     }
     else if (operation == fake_make_operation_type_define) {
       if (arguments.used) {
-        // @todo: validate that first argument is a valid define name.
-        // @todo: if arguments.used is 1, then value is assigned to null.
+        *status = fake_make_operate_validate_define_name(arguments.array[0]);
+
+        if (*status == F_none) {
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Define name must not be an empty string.");
+
+          *status = F_status_set_error(F_failure);
+        }
+        else if (*status == F_false) {
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Invalid characters in the define setting name '");
+
+          fl_color_print_code(f_type_error, data.context.notable);
+          f_print_string_dynamic(f_type_error, arguments.array[0]);
+          fl_color_print_code(f_type_error, data.context.reset);
+
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "', only alpha-numeric ASCII characters and underscore (without a leading digit) is allowed.");
+
+          *status = F_status_set_error(F_failure);
+        }
       }
       else {
         printf("%c", f_string_eol[0]);
@@ -2276,7 +2489,7 @@ extern "C" {
           if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn, arguments.array[0], fake_make_operation_argument_warn_length) == F_equal_to_not) {
             if (fl_string_dynamic_compare_string(fake_make_operation_argument_ignore, arguments.array[0], fake_make_operation_argument_ignore_length) == F_equal_to_not) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unsupported file type '");
+              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unsupported fail type '");
               fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
               fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
 
@@ -2450,7 +2663,7 @@ extern "C" {
   f_return_status fake_make_operate_validate_define_name(const f_string_static name) {
     if (!name.used) return F_none;
 
-    if (!(isascii(name.string[0]) || name.string[0] == '_')) {
+    if (!(isalpha(name.string[0]) || name.string[0] == '_')) {
       return F_false;
     }
 

@@ -1139,7 +1139,7 @@ extern "C" {
         }
       }
 
-      if (environment->names.used == environment->names.size) {
+      if (environment->names.used + 1 > environment->names.size) {
         f_macro_string_dynamics_resize(*status, environment->names, environment->names.size + f_memory_default_allocation_step);
 
         if (F_status_is_not_error(*status)) {
