@@ -45,6 +45,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if length is 0.
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -68,6 +69,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if buffer.used is 0.
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -93,6 +95,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if buffer.used is 0.
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
