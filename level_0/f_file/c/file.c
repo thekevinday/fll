@@ -1513,8 +1513,7 @@ extern "C" {
   f_return_status f_file_role_change(const f_string path, const uid_t uid, const gid_t gid, const bool dereference) {
     #ifndef _di_level_0_parameter_checking_
       if (path == 0) return F_status_set_error(F_parameter);
-      if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
-      if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
+      if (uid == -1 && gid == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     return private_f_file_role_change(path, uid, gid, dereference);
@@ -1525,8 +1524,7 @@ extern "C" {
   f_return_status f_file_role_change_at(const int at_id, const f_string path, const uid_t uid, const gid_t gid, const int flag) {
     #ifndef _di_level_0_parameter_checking_
       if (path == 0) return F_status_set_error(F_parameter);
-      if (uid < 0 && gid < 0) return F_status_set_error(F_parameter);
-      if (uid < -1 || gid < -1) return F_status_set_error(F_parameter);
+      if (uid == -1 && gid == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     return private_f_file_role_change_at(at_id, path, uid, gid, flag);
