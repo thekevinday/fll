@@ -4,15 +4,15 @@ Fakefile Specification:
   The "fakefile" file follows the FSS-0005 (Somewhat Basic List) format with a sub-fomat of IKI-0002 (Simple Script).
 
   A fakefile is broken up into multiple Basic Lists, referred to as Sections, with two special purpose reserved Sections.
-  The Sections are broken up into multiple Extended Objects and their respective Contents, referred to as Operations.
+  The Sections are broken up into multiple Extended Objects and their respective Contents, referred to as Section Operations.
 
-  Each of these non-reserved Sections acts as a set to perform some set of Operations.
-  Each of these Operations perform a single command or action based on a set of reserved Operation types.
-  Each of these Operations have a set of Arguments associated with them.
+  Each of these non-reserved Sections acts as a set to perform some set of Section Operations.
+  Each of these Section Operations perform a single command or action based on a set of reserved Section Operation types.
+  Each of these Section Operations have a set of Arguments associated with them.
 
   How these Arguments are interpreted and processed are specific to each Operation type.
-  The Operations are represented by the Extended Object name and the Extended Content represents the Operation Arguments.
-  Each of these Operations support IKI variable substitution within their respective Arguments.
+  The Section Operations are represented by the Extended Object name and the Extended Content represents the Operation Arguments.
+  Each of these Section Operations support IKI variable substitution within their respective Arguments.
   The Operation Extended Object does not support IKI variable substitution.
   The reserved Settings Section does not support IKI variable substitution.
 
@@ -43,8 +43,9 @@ Fakefile Specification:
 
   The build settings may also be specified in the Settings Section.
 
-  The Operation Objects are\:
+  The Section Operation Objects are\:
   - archive: One or more Content.
+  - break: Zero or One Content. If specified, First content must be one of "success" or "failure".
   - build: Zero or One Content. First Content represents path to the settings file, relative to the project root.
   - clean: Zero Content.
   - compile: One or more Content as parameters to compiler.
@@ -52,6 +53,7 @@ Fakefile Specification:
   - delete: One or more Content representing paths to files.
   - deletes: One or more Content representing paths to files.
   - else: Zero Content.
+  - exit: Zero or One Content. If specified, First content must be one of "succeed" or "fail".
   - fail: One Content. First Content must be one of "exit", "warn", or "ignore" (case-sensitive).
   - group: Two or more Content. First Content is group name or number, remaining Content are paths to files.
   - groups: Two or more Content. First Content is group name or number, remaining Content are paths to files.
@@ -70,3 +72,18 @@ Fakefile Specification:
   - to: One Content. First Content is the directory path.
   - top: Zero Content.
   - touch: Two or more Content. First content is one of "file" or "directory", remaining Content are paths to files.
+
+  The "if" Section Operation conditions are\:
+  - ==: Two or more Content.
+  - >: Two or more Content.
+  - <: Two or more Content.
+  - <=: Two or more Content.
+  - <=: Two or more Content.
+  - <>: Two or more Content.
+  - defined: First Content is either "parameter" or "environment". Second or more Content are valid names, such that for "parameter" it is a valid IKI name and for "environment" it is a valid environment variable name.
+  - fail: has no other Content.
+  - group: First Content is the name of a group. Second or more Content are paths to files.
+  - is: First Content is a comma separate list of "block", "character", "directory", "fifo", "link", "regular" , or "socket". Second or more are paths to files.
+  - mode: First Content is either "is" or "has". Second Content is a valid file mode. Third or more Content are paths to files.
+  - owner: First Content is the name of an owner. Second or more Content are paths to files.
+  - succeed: has no other Content.

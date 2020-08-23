@@ -77,6 +77,13 @@ Fakefile Documentation:
 
       Accepts an optional Content that is a path to a build settings file to use instead of the default.
 
+    - break\:
+      Perform an exit from the current make operation.
+      This only exists the current depth.
+      If the depth is at the top (aka: 0), then this is identical to the "exit" section operation.
+      The second Content may be either 'succeed' or 'fail' to designate on whether or not to exit as success or failure.
+      When set to "failure" this will trigger any failure (with message), depending on the current fail state.
+
     - clean\:
       Run the fake clean operation as if "fake clean" was run instead of "fake make".
       Command line arguments are automatically passed to the fake build operation.
@@ -110,6 +117,14 @@ Fakefile Documentation:
       An else operation may not follow this.
       An if operation may immediately follow to represent an "else if" condition.
 
+    - exit\:
+      Perform an exit from the entire make operation.
+      This always exits completely, regardless of the operation depth.
+      The second Content may be either 'success' or 'failure' to designate on whether or not to exit as success or failure.
+
+      When set to "failure" this will trigger a failure message.
+      When set to "failure", the fail state will be forcibly changed to "fail" regardless of the currrent fail state.
+
     - fail\:
       Toggle how the to handle an operation failure.
 
@@ -132,7 +147,68 @@ Fakefile Documentation:
       May be specified following a valid "else" operation.
 
       The Content represents a set of conditions to perform.
-      @todo: determine what these conditions will be, such as "if equals 'some string'", "if defined 'some_variable'", "if exists 'some_file'", "if fail", "if succeed", or "if a == b".
+
+      conditions\:
+        == "left" "right"\:
+          compare all parameters to be equal.
+          requires 2 or more after the "==".
+          for example, "if == 'a' 'b' 'c' 'd'" would test: 'a' == 'b' && 'b' == 'c' && 'c' == 'd'.
+
+        > "left string" "right string"\:
+          compare "left" to "right" for greater than.
+          requires 2 or more after the ">".
+          for example, "if > 0 1 2 3" would test: 0 > 1 && 1 > 2 && 2 > 3.
+
+        < "left string" "right string"\:
+          compare "left" to "right" for less than.
+          requires 2 or more after the ">".
+          for example, "if < 0 1 2 3" would test: 0 < 1 && 1 < 2 && 2 < 3.
+
+        >= "left string" "right string"\:
+          compare "left" to "right" for greater than or equal to.
+          requires 2 or more after the ">=".
+          for example, "if >= 0 1 2 3" would test: 0 >= 1 && 1 >= 2 && 2 >= 3.
+
+        <= "left string" "right string"\:
+          compare "left" to "right" for less than or equal to.
+          requires 2 or more after the ">=".
+          for example, "if <= 0 1 2 3" would test: 0 <= 1 && 1 <= 2 && 2 <= 3.
+
+        <> "left" "right"\:
+          compare all parameters to be not equal.
+          requires 2 or more after the "==".
+          for example, "if <> 'a' 'b' 'c'" would test: 'a' <> 'b' && 'b' <> 'c' && 'a' <> 'c'.
+
+        exists "file path"\:
+          test if file exists.
+          for example, "if exists "a.txt" "b.txt" would test if both the file a.txt and b.txt exist.
+
+        is block,character,directory,fifo,link,regular,socket "file path"\:
+          test if file exist and is of the given type, comma separated options with one or more files.
+          for example, "if is regular,directory "a.txt" "b.txt" would test if both the file a.txt and b.txt exist and are either of type "regular" or type "directory".
+
+        fail\:
+          test if the previous section operation failed.
+
+        succeed\:
+          test if the previous section operation succeeded.
+
+        mode is/has "some mode" "some file"\:
+          test if one or more files has the exact mode ("is") or has at least the given modes ("has").
+          for example, "if mode is u+r a.txt b.txt" would test if both file a.txt and b.txt only have owner set to read.
+          for example, "if mode has u+r a.txt b.txt" would test if both file a.txt and b.txt has owner set to read, and all other modes can be anything.
+
+        owner "some mode" "some file"\:
+          test if one or more files has the given owner.
+          for example, "if owner me a.txt b.txt" would test if both file a.txt and b.txt have an owner named "me".
+
+        group "some mode" "some file"\:
+          for example, "if owner we a.txt b.txt" would test if both file a.txt and b.txt have a group named "we".
+
+        defined parameter/environment "some define name"\:
+          test if one or more names are defined as a "parameter" or an "environment" variable.
+          for example, "if defined parameter verbose silent" would test if both the "verbose" and the "silent" variables are defined via the "parameter" setting.
+          for example, "if defined environment PWD SHELL" would test if both the "PWD" and the "SHELL" variables are defined via the "environment" variables.
 
     - link\:
       Create a symbolic link from some point to some target.

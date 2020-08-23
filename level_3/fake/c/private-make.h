@@ -63,12 +63,14 @@ extern "C" {
 #ifndef _di_fake_make_operation_
   #define fake_make_operation_archive  "archive"
   #define fake_make_operation_build    "build"
+  #define fake_make_operation_break    "break"
   #define fake_make_operation_clean    "clean"
   #define fake_make_operation_compile  "compile"
   #define fake_make_operation_define   "define"
   #define fake_make_operation_delete   "delete"
   #define fake_make_operation_deletes  "deletes"
   #define fake_make_operation_else     "else"
+  #define fake_make_operation_exit     "exit"
   #define fake_make_operation_fail     "fail"
   #define fake_make_operation_group    "group"
   #define fake_make_operation_groups   "groups"
@@ -89,6 +91,7 @@ extern "C" {
   #define fake_make_operation_touch    "touch"
 
   #define fake_make_operation_archive_length  7
+  #define fake_make_operation_break_length    5
   #define fake_make_operation_build_length    5
   #define fake_make_operation_clean_length    5
   #define fake_make_operation_compile_length  7
@@ -96,6 +99,7 @@ extern "C" {
   #define fake_make_operation_delete_length   6
   #define fake_make_operation_deletes_length  7
   #define fake_make_operation_else_length     4
+  #define fake_make_operation_exit_length     4
   #define fake_make_operation_fail_length     4
   #define fake_make_operation_group_length    5
   #define fake_make_operation_groups_length   6
@@ -117,6 +121,7 @@ extern "C" {
 
   enum {
     fake_make_operation_type_archive = 1,
+    fake_make_operation_type_break,
     fake_make_operation_type_build,
     fake_make_operation_type_clean,
     fake_make_operation_type_compile,
@@ -124,6 +129,7 @@ extern "C" {
     fake_make_operation_type_delete,
     fake_make_operation_type_deletes,
     fake_make_operation_type_else,
+    fake_make_operation_type_exit,
     fake_make_operation_type_fail,
     fake_make_operation_type_group,
     fake_make_operation_type_groups,
@@ -144,8 +150,9 @@ extern "C" {
     fake_make_operation_type_touch,
   };
 
-  #define fake_make_operation_total 26
+  #define fake_make_operation_total 28
 
+  #define fake_make_operation_argument_failure   "failure"
   #define fake_make_operation_argument_file      "file"
   #define fake_make_operation_argument_directory "directory"
   #define fake_make_operation_argument_error     "error"
@@ -153,9 +160,11 @@ extern "C" {
   #define fake_make_operation_argument_ignore    "ignore"
   #define fake_make_operation_argument_point     "point"
   #define fake_make_operation_argument_recursive "recursive"
+  #define fake_make_operation_argument_success   "success"
   #define fake_make_operation_argument_target    "target"
   #define fake_make_operation_argument_warn      "warn"
 
+  #define fake_make_operation_argument_failure_length   7
   #define fake_make_operation_argument_file_length      4
   #define fake_make_operation_argument_directory_length 9
   #define fake_make_operation_argument_error_length     5
@@ -163,6 +172,7 @@ extern "C" {
   #define fake_make_operation_argument_ignore_length    6
   #define fake_make_operation_argument_point_length     5
   #define fake_make_operation_argument_recursive_length 9
+  #define fake_make_operation_argument_success_length   7
   #define fake_make_operation_argument_target_length    6
   #define fake_make_operation_argument_warn_length      4
 
@@ -276,6 +286,29 @@ extern "C" {
     f_macro_string_dynamics_delete_simple(path.stack)
 #endif // _di_fake_make_path_
 
+#ifndef _di_fake_make_print_
+  typedef struct {
+    const char *prefix;
+    f_string_static context;
+
+    FILE *to;
+  } fake_make_print;
+
+  #define fake_make_print_initialize { \
+    0, \
+    f_string_static_initialize, \
+    0, \
+  }
+
+  #define fake_macro_make_print_initialize(prefix, context, to) { prefix, context, to }
+
+  #define fake_make_print_error   "ERROR"
+  #define fake_make_print_warning "WARNING"
+
+  #define fake_make_print_error_length   5
+  #define fake_make_print_warning_length 7
+#endif // _di_fake_make_print_
+
 #ifndef _di_fake_make_data_
   typedef struct {
     fake_build_setting setting_build;
@@ -285,6 +318,7 @@ extern "C" {
 
     fake_make_parameter parameter;
     fake_make_path path;
+    fake_make_print print;
 
     f_fss_nameds fakefile;
 
@@ -300,6 +334,7 @@ extern "C" {
     fake_environment_initialize, \
     fake_make_parameter_initialize, \
     fake_make_path_initialize, \
+    fake_make_print_initialize, \
     f_fss_nameds_initialize, \
     f_string_dynamic_initialize, \
     f_string_dynamic_initialize, \
