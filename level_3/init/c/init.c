@@ -4,7 +4,7 @@
  * Licenses:      lgplv2.1
  * Programmers:   Kevin Day
  */
-#include <level_3/init.h>
+#include "init.h"
 #include "private-init.h"
 
 #ifdef __cplusplus

@@ -1,4 +1,4 @@
-#include <level_1/color.h>
+#include "color.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,5 +1,4 @@
-#include <level_0/status.h>
-#include <level_3/firewall.h>
+#include "firewall.h"
 
 int main(const int argc, const f_string *argv) {
   const f_console_arguments arguments = { argc, argv };
