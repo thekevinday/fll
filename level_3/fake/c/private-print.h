@@ -240,13 +240,13 @@ extern "C" {
  * @param function
  *   The name of the function where the error happened.
  *   Set to 0 to disable.
- * @param string
- *   A string used by certain error conditions.
+ * @param path
+ *   The path to the directory.
  * @param print
  *   Designates how the section error/warning should be printed.
  */
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  extern void fake_print_message_section_operation_path_stack_max(const fake_data data, const f_status status, const f_string function, const f_string string, const fake_make_print print) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_path_stack_max(const fake_data data, const f_status status, const f_string function, const f_string path, const fake_make_print print) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_path_stack_max_
 
 /**

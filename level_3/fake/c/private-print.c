@@ -593,12 +593,14 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_path_outside_
 
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  void fake_print_message_section_operation_path_stack_max(const fake_data data, const f_status status, const f_string function, const f_string string, const fake_make_print print) {
+  void fake_print_message_section_operation_path_stack_max(const fake_data data, const f_status status, const f_string function, const f_string path, const fake_make_print print) {
     if (data.verbosity == fake_verbosity_quiet || !print.to) return;
 
     if (status == F_buffer_too_large) {
       fprintf(print.to, "%c", f_string_eol[0]);
-      fl_color_print(print.to, print.context, data.context.reset, "%s: Maximum size reached for %s array", print.prefix, string);
+      fl_color_print(print.to, print.context, data.context.reset, "%s: Maximum stack size reached while processing path '", print.prefix);
+      fl_color_print(print.to, data.context.notable, data.context.reset, "%s", path);
+      fl_color_print(print.to, print.context, data.context.reset, "'");
 
       if (function) {
         fl_color_print(print.to, print.context, data.context.reset, " while calling ");
@@ -609,7 +611,7 @@ extern "C" {
       fl_color_print_line(print.to, print.context, data.context.reset, ".");
     }
     else {
-      fake_print_error(data, status, function, F_true);
+      fake_print_message_file(data, status, function, path, "change path to", F_false, F_true, print);
     }
   }
 #endif // _di_fake_print_message_section_operation_path_stack_max_
