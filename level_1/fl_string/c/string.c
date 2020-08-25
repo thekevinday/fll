@@ -764,6 +764,100 @@ extern "C" {
   }
 #endif // _di_fl_string_dynamic_prepend_nulless_
 
+#ifndef _di_fl_string_dynamic_size_decrease_
+  f_return_status fl_string_dynamic_size_decrease(const f_string_length length, f_string_dynamic *string) {
+    #ifndef _di_level_1_parameter_checking_
+      if (length == 0) return F_status_set_error(F_parameter);
+      if (string == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = F_none;
+
+    if (string->used - length > 0) {
+      f_macro_string_dynamic_resize(status, (*string), string->size - length);
+    }
+    else if (string->used - length <= 0) {
+      f_macro_string_dynamic_delete(status, (*string));
+    }
+
+    return status;
+  }
+#endif // _di_fl_string_dynamic_size_decrease_
+
+#ifndef _di_fl_string_dynamic_size_increase_
+  f_return_status fl_string_dynamic_size_increase(const f_string_length length, f_string_dynamic *string) {
+    #ifndef _di_level_1_parameter_checking_
+      if (length == 0) return F_status_set_error(F_parameter);
+      if (string == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = F_none;
+
+    if (string->used + length > string->size) {
+      if (string->used + length > f_string_length_size) {
+        if (string->used == f_string_length_size) {
+          status = F_status_set_error(F_string_too_large);
+        }
+        else {
+          f_macro_string_dynamic_resize(status, (*string), f_string_length_size);
+        }
+      }
+      else {
+        f_macro_string_dynamic_resize(status, (*string), string->size + length);
+      }
+    }
+
+    return status;
+  }
+#endif // _di_fl_string_dynamic_size_increase_
+
+#ifndef _di_fl_string_dynamics_size_decrease_
+  f_return_status fl_string_dynamics_size_decrease(const f_array_length length, f_string_dynamics *strings) {
+    #ifndef _di_level_1_parameter_checking_
+      if (length == 0) return F_status_set_error(F_parameter);
+      if (strings == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = F_none;
+
+    if (strings->used - length > 0) {
+      f_macro_string_dynamics_resize(status, (*strings), strings->size - length);
+    }
+    else if (strings->used - length <= 0) {
+      f_macro_string_dynamics_delete(status, (*strings));
+    }
+
+    return status;
+  }
+#endif // _di_fl_string_dynamics_size_decrease_
+
+#ifndef _di_fl_string_dynamics_size_increase_
+  f_return_status fl_string_dynamics_size_increase(const f_array_length length, f_string_dynamics *strings) {
+    #ifndef _di_level_1_parameter_checking_
+      if (length == 0) return F_status_set_error(F_parameter);
+      if (strings == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = F_none;
+
+    if (strings->used + length > strings->size) {
+      if (strings->used + length > f_array_length_size) {
+        if (strings->used == f_array_length_size) {
+          status = F_status_set_error(F_string_too_large);
+        }
+        else {
+          f_macro_string_dynamics_resize(status, (*strings), f_array_length_size);
+        }
+      }
+      else {
+        f_macro_string_dynamics_resize(status, (*strings), strings->size + length);
+      }
+    }
+
+    return status;
+  }
+#endif // _di_fl_string_dynamics_size_increase_
+
 #ifndef _di_fl_string_dynamic_rip_
   f_return_status fl_string_dynamic_rip(const f_string_static source, const f_string_range range, f_string_dynamic *destination) {
     #ifndef _di_level_1_parameter_checking_
@@ -1134,6 +1228,53 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fl_string_dynamic_terminate_after_
+
+#ifndef _di_fl_string_lengths_size_decrease_
+  f_return_status fl_string_lengths_size_decrease(const f_array_length length, f_string_lengths *lengths) {
+    #ifndef _di_level_1_parameter_checking_
+      if (length == 0) return F_status_set_error(F_parameter);
+      if (lengths == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = F_none;
+
+    if (lengths->used - length > 0) {
+      f_macro_string_lengths_resize(status, (*lengths), lengths->size - length);
+    }
+    else if (lengths->used - length <= 0) {
+      f_macro_string_lengths_delete(status, (*lengths));
+    }
+
+    return status;
+  }
+#endif // _di_fl_string_lengths_size_decrease_
+
+#ifndef _di_fl_string_lengths_size_increase_
+  f_return_status fl_string_lengths_size_increase(const f_array_length length, f_string_lengths *lengths) {
+    #ifndef _di_level_1_parameter_checking_
+      if (length == 0) return F_status_set_error(F_parameter);
+      if (lengths == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status status = F_none;
+
+    if (lengths->used + length > lengths->size) {
+      if (lengths->used + length > f_array_length_size) {
+        if (lengths->used == f_array_length_size) {
+          status = F_status_set_error(F_string_too_large);
+        }
+        else {
+          f_macro_string_lengths_resize(status, (*lengths), f_array_length_size);
+        }
+      }
+      else {
+        f_macro_string_lengths_resize(status, (*lengths), lengths->size + length);
+      }
+    }
+
+    return status;
+  }
+#endif // _di_fl_string_lengths_size_increase_
 
 #ifndef _di_fl_string_mash_
   f_return_status fl_string_mash(const f_string glue, const f_string_length glue_length, const f_string source, const f_string_length length, f_string_dynamic *destination) {
