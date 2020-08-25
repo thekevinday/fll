@@ -564,7 +564,7 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param section_id
+ * @param id_section
  *   The array location id within the fakefile of the section to operate on.
  * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
@@ -577,7 +577,7 @@ extern "C" {
  *   F_recurse (with error bit set) is returned if unable to recurse to another operation section (usually max stack depth reached).
  */
 #ifndef _di_fake_make_operate_section_
-  void fake_make_operate_section(const fake_data data, const f_array_length section_id, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
+  void fake_make_operate_section(const fake_data data, const f_array_length id_section, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_section_
 
 /**
@@ -597,13 +597,15 @@ extern "C" {
  *   The if-condition status for the current operation.
  * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param section_stack
+ *   The current operation stack.
  * @param status
  *   The return status.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_
-  extern void fake_make_operate_process(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_process(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_process_
 
 /**
@@ -684,13 +686,15 @@ extern "C" {
  *   The if-condition status for the current operation.
  * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param section_stack
+ *   The current operation stack.
  * @param status
  *   The return status.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_
 
 /**

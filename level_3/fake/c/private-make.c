@@ -398,25 +398,10 @@ extern "C" {
 
                 if (k == data_make->setting_build.environment.used) {
                   if (data_make->setting_build.environment.used + 1 > data_make->setting_build.environment.size) {
-                    if (data_make->setting_build.environment.used + 1 > f_array_length_size) {
-                      *status = F_status_set_error(F_buffer_too_large);
-
-                      fake_print_error(data, *status, "f_macro_string_dynamics_resize", F_true);
-
-                      f_macro_string_dynamic_delete_simple(name_define);
-                      f_macro_fss_set_delete_simple(settings);
-                      return;
-                    }
-
-                    if (data_make->setting_build.environment.used + f_fss_default_allocation_step > f_array_length_size) {
-                      f_macro_string_dynamics_resize((*status), data_make->setting_build.environment, (data_make->setting_build.environment.used + 1));
-                    }
-                    else {
-                      f_macro_string_dynamics_resize((*status), data_make->setting_build.environment, (data_make->setting_build.environment.used + f_fss_default_allocation_step));
-                    }
+                    *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, &data_make->setting_build.environment);
 
                     if (F_status_is_error(*status)) {
-                      fake_print_error(data, *status, "f_macro_string_dynamics_resize", F_true);
+                      fake_print_error(data, *status, "fl_string_lengths_size_increase", F_true);
 
                       f_macro_string_dynamic_delete_simple(name_define);
                       f_macro_fss_set_delete_simple(settings);
@@ -700,7 +685,7 @@ extern "C" {
     f_status status = F_none;
     f_mode mode = f_mode_initialize;
 
-    f_string_lengths list_stack = f_string_lengths_initialize;
+    f_string_lengths section_stack = f_string_lengths_initialize;
     fake_make_data data_make = fake_make_data_initialize;
 
     f_macro_string_dynamics_new(status, data_make.path.stack, f_memory_default_allocation_step);
@@ -745,7 +730,7 @@ extern "C" {
       data_make.print.to = 0;
     }
 
-    fake_make_operate_section(data, data_make.main, &data_make, &list_stack, &status);
+    fake_make_operate_section(data, data_make.main, &data_make, &section_stack, &status);
 
     if (data_make.path.current > 0) {
       f_file_close(&data_make.path.current);
@@ -753,6 +738,7 @@ extern "C" {
 
     {
       f_status status_path = f_path_change_at(data_make.path.top);
+
       if (F_status_is_error(status_path) && data.verbosity == fake_verbosity_verbose) {
         fprintf(f_type_warning, "%c", f_string_eol[0]);
         fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: Failed change back to orignal path '");
@@ -765,7 +751,7 @@ extern "C" {
 
     f_file_close(&data_make.path.top);
 
-    f_macro_string_lengths_delete_simple(list_stack);
+    f_macro_string_lengths_delete_simple(section_stack);
     fake_macro_make_data_delete_simple(data_make);
 
     return status;
@@ -835,18 +821,9 @@ extern "C" {
       }
 
       if (arguments->used == arguments->size) {
-        if (arguments->used + f_memory_default_allocation_step <= F_buffer_too_large) {
-          f_macro_string_dynamics_resize((*status), (*arguments), arguments->used + f_memory_default_allocation_step);
-        }
-        else if (arguments->used + 1 <= F_buffer_too_large) {
-          f_macro_string_dynamics_resize((*status), (*arguments), arguments->used + 1);
-        }
-        else {
-          *status = F_status_set_error(F_buffer_too_large);
-        }
-
+        *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
         if (F_status_is_error(*status)) {
-          fake_print_message(data, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true, data_make->print);
+          fake_print_message(data, F_status_set_fine(*status), "fl_string_lengths_size_increase", F_true, data_make->print);
           return;
         }
       }
@@ -1290,22 +1267,17 @@ extern "C" {
       status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
     }
     else {
-      if (arguments->used + 1 > arguments->size) {
-        if (arguments->used + 1 > F_buffer_too_large) {
-          status = F_status_set_error(F_buffer_too_large);
-        }
-        else {
-          f_macro_string_dynamics_resize((status), (*arguments), arguments->used + 1);
-        }
-      }
-
-      status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
+      status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
 
       if (F_status_is_fine(status)) {
-        status = fl_string_dynamic_terminate_after(&arguments->array[arguments->used]);
+        status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
 
         if (F_status_is_fine(status)) {
-          arguments->used++;
+          status = fl_string_dynamic_terminate_after(&arguments->array[arguments->used]);
+
+          if (F_status_is_fine(status)) {
+            arguments->used++;
+          }
         }
       }
     }
@@ -1351,22 +1323,17 @@ extern "C" {
       status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
     }
     else {
-      if (arguments->used + 1 > arguments->size) {
-        if (arguments->used + 1 > F_buffer_too_large) {
-          status = F_status_set_error(F_buffer_too_large);
-        }
-        else {
-          f_macro_string_dynamics_resize((status), (*arguments), arguments->used + 1);
-        }
-      }
-
-      status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
+      status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
 
       if (F_status_is_fine(status)) {
-        status = fl_string_dynamic_terminate_after(&arguments->array[arguments->used]);
+        status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
 
         if (F_status_is_fine(status)) {
-          arguments->used++;
+          status = fl_string_dynamic_terminate_after(&arguments->array[arguments->used]);
+
+          if (F_status_is_fine(status)) {
+            arguments->used++;
+          }
         }
       }
     }
@@ -1382,17 +1349,31 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_environment_
 
 #ifndef _di_fake_make_operate_section_
-  void fake_make_operate_section(const fake_data data, const f_array_length section_id, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) {
+  void fake_make_operate_section(const fake_data data, const f_array_length id_section, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) {
     if (F_status_is_error(*status)) return;
 
-    if (section_id > data_make->fakefile.used) {
+    if (id_section > data_make->fakefile.used) {
       *status = F_status_set_error(F_parameter);
 
       fake_print_message(data, F_parameter, "fake_make_operate_section", F_true, data_make->print);
       return;
     }
 
-    const f_fss_named *section = &data_make->fakefile.array[section_id];
+    // add the operation id to the operation stack.
+    if (section_stack->used + 1 > section_stack->size) {
+      *status = fl_string_lengths_size_increase(f_memory_default_allocation_step, section_stack);
+
+      if (F_status_is_error(*status)) {
+        fake_print_message(data, F_status_set_fine(*status), "fl_string_lengths_size_increase", F_true, data_make->print);
+        return;
+      }
+    }
+
+
+    section_stack->array[section_stack->used] = id_section;
+    section_stack->used++;
+
+    const f_fss_named *section = &data_make->fakefile.array[id_section];
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
@@ -1407,6 +1388,7 @@ extern "C" {
     }
 
     if (!section->objects.used) {
+      section_stack->used--;
       return;
     }
 
@@ -1548,7 +1530,7 @@ extern "C" {
         fake_make_operate_expand(data, section->name, operation, *operation_name, section->contents.array[i], section->quotedss.array[i], data_make, &arguments[i], status);
 
         if (F_status_is_fine(*status)) {
-          fake_make_operate_validate(data, section->name, operation, *operation_name, arguments[i], operation_if, data_make, status);
+          fake_make_operate_validate(data, section->name, operation, *operation_name, arguments[i], operation_if, data_make, section_stack, status);
 
           if (operation_if) {
             if (operation_if == fake_make_operation_if_type_if) {
@@ -1571,7 +1553,7 @@ extern "C" {
           }
 
           if (F_status_is_fine(*status)) {
-            fake_make_operate_process(data, section->name, operation, *operation_name, arguments[i], operation_if, data_make, status);
+            fake_make_operate_process(data, section->name, operation, *operation_name, arguments[i], operation_if, data_make, section_stack, status);
           }
         }
       }
@@ -1623,11 +1605,13 @@ extern "C" {
     for (i = 0; i < section->objects.used; i++) {
       f_macro_string_dynamics_delete_simple(arguments[i]);
     } // for
+
+    section_stack->used--;
   }
 #endif // _di_fake_make_operate_section_
 
 #ifndef _di_fake_make_operate_process_
-  void fake_make_operate_process(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) {
+  void fake_make_operate_process(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) {
     if (F_status_is_error(*status)) return;
 
     if (operation == fake_make_operation_type_archive) {
@@ -2018,7 +2002,19 @@ extern "C" {
         return;
       }
 
-      // @todo: call other list, adding it to the stack.
+      f_array_length id_section = 0;
+
+      for (; id_section < data_make->fakefile.used; id_section++) {
+        if (fl_string_dynamic_partial_compare_string(arguments.array[0].string, data_make->buffer, arguments.array[0].used, data_make->fakefile.array[id_section].name) == F_equal_to) {
+          break;
+        }
+      } // for
+
+      if (id_section == data_make->fakefile.used) {
+        return;
+      }
+
+      fake_make_operate_section(data, id_section, data_make, section_stack, status);
 
       // Ensure that a break only happens within its active operation stack.
       if (*status == F_signal_abort) {
@@ -2159,20 +2155,13 @@ extern "C" {
       }
       else {
         if (data_make->path.stack.used == data_make->path.stack.size) {
-          if (data_make->path.stack.used + 1 >= f_array_length_size) {
-            *status = F_status_set_error(F_buffer_too_large);
-            fake_print_message_section_operation_path_stack_max(data, F_buffer_too_large, "f_macro_string_dynamics_resize", "path stack", data_make->print);
+          *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, &data_make->path.stack);
+
+          if (F_status_set_fine(*status) == F_buffer_too_large) {
+            fake_print_message_section_operation_path_stack_max(data, F_buffer_too_large, "fl_string_lengths_size_increase", "path stack", data_make->print);
             return;
           }
-
-          if (data_make->path.stack.used + f_memory_default_allocation_step >= f_array_length_size) {
-            f_macro_string_dynamics_resize(*status, data_make->path.stack, data_make->path.stack.size + 1);
-          }
-          else {
-            f_macro_string_dynamics_resize(*status, data_make->path.stack, data_make->path.stack.size + f_memory_default_allocation_step);
-          }
-
-          if (F_status_is_error(*status)) {
+          else if (F_status_is_error(*status)) {
             fake_print_message(data, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true, data_make->print);
             return;
           }
@@ -2488,7 +2477,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_run_
 
 #ifndef _di_fake_make_operate_validate_
-  void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_status *status) {
+  void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) {
     if (F_status_is_error(*status)) return;
 
     if (operation == fake_make_operation_type_archive || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell) {
@@ -2884,8 +2873,55 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_operate) {
-      // @todo: validate if list name exists (and is not reserved, such as 'settings' and 'main').
-      // @todo: should recursion be checked here as well?
+      if (arguments.used > 1) {
+        if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has too many arguments.", data_make->print.prefix);
+        }
+
+        *status = F_status_set_error(F_failure);
+      }
+      else if (arguments.used == 1) {
+        f_array_length id_section = 0;
+
+        for (; id_section < data_make->fakefile.used; id_section++) {
+          if (fl_string_dynamic_partial_compare_string(arguments.array[0].string, data_make->buffer, arguments.array[0].used, data_make->fakefile.array[id_section].name) == F_equal_to) {
+            break;
+          }
+        } // for
+
+        if (id_section == data_make->fakefile.used) {
+          printf("%c", f_string_eol[0]);
+          fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: No operation section named '", data_make->print.prefix);
+          fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' was found.");
+        }
+        else {
+          for (f_array_length i = 0; i < section_stack->used; i++) {
+            if (section_stack->array[i] == id_section) {
+              printf("%c", f_string_eol[0]);
+              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The section operation '", data_make->print.prefix);
+
+              fl_color_print_code(data_make->print.to, data.context.notable);
+              f_print_string_dynamic_partial(data_make->print.to, data_make->buffer, data_make->fakefile.array[id_section].name);
+              fl_color_print_code(data_make->print.to, data.context.reset);
+
+              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' is already in the operation stack, recursion is not allowed.");
+
+              *status = F_status_set_error(F_failure);
+              break;
+            }
+          } // for
+        }
+      }
+      else {
+        if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+        }
+
+        *status = F_status_set_error(F_failure);
+      }
       return;
     }
 

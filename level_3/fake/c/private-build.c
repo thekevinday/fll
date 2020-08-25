@@ -1140,13 +1140,25 @@ extern "C" {
         }
       }
 
-      if (environment->names.used + 1 > environment->names.size) {
-        f_macro_string_dynamics_resize(*status, environment->names, environment->names.size + f_memory_default_allocation_step);
-
-        if (F_status_is_not_error(*status)) {
-          f_macro_string_dynamics_resize(*status, environment->values, environment->values.size + f_memory_default_allocation_step);
+      if (F_status_is_not_error(*status) && environment->names.used + 1 > environment->names.size) {
+        if (environment->names.size + f_memory_default_allocation_step > f_array_length_size) {
+          if (environment->names.size + 1 > f_array_length_size) {
+            *status = F_status_set_error(F_buffer_too_large);
+          }
+          else {
+            f_macro_string_dynamics_resize(*status, environment->names, environment->names.size + 1);
+          }
+        }
+        else {
+          f_macro_string_dynamics_resize(*status, environment->names, environment->names.size + f_memory_default_allocation_step);
         }
 
+        if (F_status_is_error(*status)) {
+          function = "f_macro_string_dynamics_resize";
+          break;
+        }
+
+        f_macro_string_dynamics_resize(*status, environment->values, environment->names.size);
         if (F_status_is_error(*status)) {
           function = "f_macro_string_dynamics_resize";
           break;
