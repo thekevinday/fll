@@ -83,7 +83,7 @@ Fakefile Specification:
   - defined: First Content is either "parameter" or "environment". Second or more Content are valid names, such that for "parameter" it is a valid IKI name and for "environment" it is a valid environment variable name.
   - fail: has no other Content.
   - group: First Content is the name of a group. Second or more Content are paths to files.
-  - is: First Content is a comma separate list of "block", "character", "directory", "fifo", "link", "regular" , or "socket". Second or more are paths to files.
+  - is: First Content is a list of "block", "character", "directory", "fifo", "link", "regular" , or "socket" followed by "for" and then the Remaining Content that are paths to files.
   - mode: First Content is either "is" or "has". Second Content is a valid file mode. Third or more Content are paths to files.
   - owner: First Content is the name of an owner. Second or more Content are paths to files.
   - succeed: has no other Content.

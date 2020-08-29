@@ -176,9 +176,61 @@ extern "C" {
   #define fake_make_operation_argument_target_length    6
   #define fake_make_operation_argument_warn_length      4
 
+  #define fake_make_operation_argument_if_defined       "defined"
+  #define fake_make_operation_argument_if_equal         "=="
+  #define fake_make_operation_argument_if_equal_not     "<>"
+  #define fake_make_operation_argument_if_exists        "exists"
+  #define fake_make_operation_argument_if_failure       "failure"
+  #define fake_make_operation_argument_if_greater       ">"
+  #define fake_make_operation_argument_if_greater_equal ">="
+  #define fake_make_operation_argument_if_group         "group"
+  #define fake_make_operation_argument_if_is            "is"
+  #define fake_make_operation_argument_if_is_for        "for"
+  #define fake_make_operation_argument_if_less          "<"
+  #define fake_make_operation_argument_if_less_equal    "<="
+  #define fake_make_operation_argument_if_mode          "mode"
+  #define fake_make_operation_argument_if_owner         "owner"
+  #define fake_make_operation_argument_if_success       "success"
+
+  #define fake_make_operation_argument_if_defined_length       7
+  #define fake_make_operation_argument_if_equal_length         2
+  #define fake_make_operation_argument_if_equal_not_length     2
+  #define fake_make_operation_argument_if_exists_length        6
+  #define fake_make_operation_argument_if_failure_length       7
+  #define fake_make_operation_argument_if_greater_length       1
+  #define fake_make_operation_argument_if_greater_equal_length 2
+  #define fake_make_operation_argument_if_group_length         5
+  #define fake_make_operation_argument_if_is_length            2
+  #define fake_make_operation_argument_if_is_for_length        3
+  #define fake_make_operation_argument_if_less_length          1
+  #define fake_make_operation_argument_if_less_equal_length    2
+  #define fake_make_operation_argument_if_mode_length          4
+  #define fake_make_operation_argument_if_owner_length         5
+  #define fake_make_operation_argument_if_success_length       7
+
   enum {
-    fake_make_operation_if_type_if = 1,
-    fake_make_operation_if_type_else,
+    fake_make_operation_if_type_else_false = 1,
+    fake_make_operation_if_type_else_false_next,
+    fake_make_operation_if_type_else_true,
+    fake_make_operation_if_type_else_true_next,
+    fake_make_operation_if_type_false,
+    fake_make_operation_if_type_false_next,
+    fake_make_operation_if_type_if_defined,
+    fake_make_operation_if_type_if_equal,
+    fake_make_operation_if_type_if_equal_not,
+    fake_make_operation_if_type_if_exists,
+    fake_make_operation_if_type_if_failure,
+    fake_make_operation_if_type_if_greater,
+    fake_make_operation_if_type_if_greater_equal,
+    fake_make_operation_if_type_if_group,
+    fake_make_operation_if_type_if_is,
+    fake_make_operation_if_type_if_less,
+    fake_make_operation_if_type_if_less_equal,
+    fake_make_operation_if_type_if_mode,
+    fake_make_operation_if_type_if_owner,
+    fake_make_operation_if_type_if_success,
+    fake_make_operation_if_type_true,
+    fake_make_operation_if_type_true_next,
   };
 
   enum {
@@ -593,6 +645,8 @@ extern "C" {
  *   The operation name.
  * @param arguments
  *   The expanded arguments.
+ * @param success
+ *   Whether or not a previous section operation succeeded or failed.
  * @param operation_if
  *   The if-condition status for the current operation.
  * @param data_make
@@ -605,7 +659,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_
-  extern void fake_make_operate_process(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_process(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_dynamics arguments, const bool success, uint8_t *operation_if, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_process_
 
 /**
@@ -694,7 +748,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, const uint8_t operation_if, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, uint8_t *operation_if, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_
 
 /**

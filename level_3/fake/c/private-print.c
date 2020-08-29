@@ -558,7 +558,7 @@ extern "C" {
     f_fss_count_lines(buffer, operation_name.start, &line);
 
     fprintf(print.to, "%c", f_string_eol[0]);
-    fl_color_print(print.to, print.context, data.context.reset, "%s The section operation '", print.prefix);
+    fl_color_print(print.to, print.context, data.context.reset, "%s: The section operation '", print.prefix);
 
     fl_color_print_code(print.to, data.context.notable);
     f_print_string_dynamic_partial(print.to, buffer, operation_name);

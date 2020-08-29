@@ -14,4 +14,10 @@ settings:
 
 main:
 
-  build
+  #build
+
+  print beginning
+  if is block xxx character directory fifo link fifo regular socket invalid for a b c
+    print success detected.
+  else
+    print no success detected.
