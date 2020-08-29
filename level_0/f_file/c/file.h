@@ -45,8 +45,8 @@ extern "C" {
  * Provide common file-typ specific data types.
  */
 #ifndef _di_f_file_types_
-  #define f_file_default_read_size  8192 // default to 8k read sizes.
-  #define f_file_default_write_size 8192 // default to 8k write sizes.
+  #define f_file_default_read_size  8192 // default to 8k read sizes. // @fixme: rename and move into _di_f_file_type_
+  #define f_file_default_write_size 8192 // default to 8k write sizes. // @fixme: rename and move into _di_f_file_type_
 #endif // _di_f_file_types_
 
 /**
@@ -70,6 +70,8 @@ extern "C" {
 
 /**
  * Provide file type macros.
+ *
+ * These type macros are of size 32-bit (int32_t).
  */
 #ifndef _di_f_file_type_
   #define f_file_type_mask S_IFMT
@@ -1142,6 +1144,8 @@ extern "C" {
  * Determine how the mode should be applied based on different file properties and the given mode properties.
  *
  * This does not set mode based on umask(), which is already applied if f_file_mode_from_string() was used to create mode_change.
+ *
+ * @fixme apparently "u+g" is valid such that the mode from the group (g) is applied to the user (u) mode.
  *
  * @param mode_file
  *   The mode_t value representing the file's current mode.
