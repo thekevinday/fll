@@ -1749,11 +1749,11 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
+ * @param seek_to
+ *   A single-width character representing a character to seek to.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
- * @param seek_to_this
- *   A single-width character representing a character to seek to.
  *
  * @return
  *   F_none on success.
@@ -1763,7 +1763,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_seek_line_to_
-  extern f_return_status fl_string_seek_line_to(const f_string string, f_string_range *range, const int8_t seek_to_this);
+  extern f_return_status fl_string_seek_line_to(const f_string string, const int8_t seek_to, f_string_range *range);
 #endif // _di_fl_string_seek_line_to_
 
 /**
@@ -1771,11 +1771,11 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
+ * @param seek_to
+ *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
- * @param seek_to_this
- *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
  *
  * @return
  *   F_none on success.
@@ -1791,7 +1791,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_seek_line_to_utf_character_
-  extern f_return_status fl_string_seek_line_to_utf_character(const f_string string, f_string_range *range, const f_utf_character seek_to_this);
+  extern f_return_status fl_string_seek_line_to_utf_character(const f_string string, const f_utf_character seek_to, f_string_range *range);
 #endif // _di_fl_string_seek_line_to_utf_character_
 
 /**
@@ -1799,11 +1799,11 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
+ * @param placeholder
+ *   A single-width character representing a placeholder to ignore (may be NULL).
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
- * @param placeholder
- *   A single-width character representing a placeholder to ignore (may be NULL).
  *
  * @return
  *   F_none on success.
@@ -1820,7 +1820,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_seek_line_until_graph_
-  extern f_return_status fl_string_seek_line_until_graph(const f_string string, f_string_range *range, const int8_t placeholder);
+  extern f_return_status fl_string_seek_line_until_graph(const f_string string, const int8_t placeholder, f_string_range *range);
 #endif // _di_fl_string_seek_line_until_graph_
 
 /**
@@ -1828,11 +1828,11 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
+ * @param placeholder
+ *   A single-width character representing a placeholder to ignore (may be NULL).
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
- * @param placeholder
- *   A single-width character representing a placeholder to ignore (may be NULL).
  *
  * @return
  *   F_none on success.
@@ -1850,7 +1850,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_seek_line_until_non_graph_
-  extern f_return_status fl_string_seek_line_until_non_graph(const f_string string, f_string_range *range, const int8_t placeholder);
+  extern f_return_status fl_string_seek_line_until_non_graph(const f_string string, const int8_t placeholder, f_string_range *range);
 #endif // _di_fl_string_seek_line_until_non_graph_
 
 /**
@@ -1858,11 +1858,11 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
+ * @param seek_to
+ *   A single-width character representing a character to seek to.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
- * @param seek_to_this
- *   A single-width character representing a character to seek to.
  *
  * @return
  *   F_none on success.
@@ -1873,7 +1873,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_seek_to_
-  extern f_return_status fl_string_seek_to(const f_string string, f_string_range *range, const int8_t seek_to_this);
+  extern f_return_status fl_string_seek_to(const f_string string, const int8_t seek_to, f_string_range *range);
 #endif // _di_fl_string_seek_to_
 
 /**
@@ -1881,11 +1881,11 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
+ * @param seek_to
+ *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
- * @param seek_to_this
- *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
  *
  * @return
  *   F_none on success.
@@ -1901,7 +1901,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_seek_to_utf_character_
-  extern f_return_status fl_string_seek_to_utf_character(const f_string string, f_string_range *range, const f_utf_character seek_to_this);
+  extern f_return_status fl_string_seek_to_utf_character(const f_string string, const f_utf_character seek_to, f_string_range *range);
 #endif // _di_fl_string_seek_to_utf_character_
 
 #ifdef __cplusplus

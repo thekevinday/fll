@@ -1475,14 +1475,14 @@ extern "C" {
 #endif // _di_fl_string_rip_nulless_
 
 #ifndef _di_fl_string_seek_line_to_
-  f_return_status fl_string_seek_line_to(const f_string string, f_string_range *range, const int8_t seek_to_this) {
+  f_return_status fl_string_seek_line_to(const f_string string, const int8_t seek_to, f_string_range *range) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (string[range->start] != seek_to_this) {
+    while (string[range->start] != seek_to) {
       if (string[range->start] == f_string_eol[0]) return F_none_eol;
 
       range->start++;
@@ -1495,14 +1495,14 @@ extern "C" {
 #endif // _di_fl_string_seek_line_to_
 
 #ifndef _di_fl_string_seek_line_to_utf_character_
-  f_return_status fl_string_seek_line_to_utf_character(const f_string string, f_string_range *range, const f_utf_character seek_to_this) {
+  f_return_status fl_string_seek_line_to_utf_character(const f_string string, const f_utf_character seek_to, f_string_range *range) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (range->start > range->stop) return F_data_not_stop;
 
-    const unsigned short seek_width = f_macro_utf_character_width(seek_to_this);
+    const unsigned short seek_width = f_macro_utf_character_width(seek_to);
 
     f_status status = F_none;
 
@@ -1521,7 +1521,7 @@ extern "C" {
         if (string[range->start] == f_string_eol[0]) return F_none_eol;
 
         if (seek_width == width) {
-          if (string[range->start] == seek_to_this) return F_none;
+          if (string[range->start] == seek_to) return F_none;
         }
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
@@ -1536,7 +1536,7 @@ extern "C" {
           status = f_utf_char_to_character(string + range->start, width_max, &character);
 
           if (F_status_is_error(status)) return status;
-          if (character == seek_to_this) return F_none;
+          if (character == seek_to) return F_none;
         }
       }
     } // for
@@ -1546,7 +1546,7 @@ extern "C" {
 #endif // _di_fl_string_seek_line_to_utf_character_
 
 #ifndef _di_fl_string_seek_line_until_graph_
-  f_return_status fl_string_seek_line_until_graph(const f_string string, f_string_range *range, const int8_t placeholder) {
+  f_return_status fl_string_seek_line_until_graph(const f_string string, const int8_t placeholder, f_string_range *range) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -1589,7 +1589,7 @@ extern "C" {
 #endif // _di_fl_string_seek_line_until_graph_
 
 #ifndef _di_fl_string_seek_line_until_non_graph_
-  f_return_status fl_string_seek_line_until_non_graph(const f_string string, f_string_range *range, const int8_t placeholder) {
+  f_return_status fl_string_seek_line_until_non_graph(const f_string string, const int8_t placeholder, f_string_range *range) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -1635,14 +1635,14 @@ extern "C" {
 #endif // _di_fl_string_seek_line_until_non_graph_
 
 #ifndef _di_fl_string_seek_to_
-  f_return_status fl_string_seek_to(const f_string string, f_string_range *range, const int8_t seek_to_this) {
+  f_return_status fl_string_seek_to(const f_string string, const int8_t seek_to, f_string_range *range) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (string[range->start] != seek_to_this) {
+    while (string[range->start] != seek_to) {
       range->start++;
 
       if (range->start > range->stop) return F_none_stop;
@@ -1653,14 +1653,14 @@ extern "C" {
 #endif // _di_fl_string_seek_to_
 
 #ifndef _di_fl_string_seek_to_utf_character_
-  f_return_status fl_string_seek_to_utf_character(const f_string string, f_string_range *range, const f_utf_character seek_to_this) {
+  f_return_status fl_string_seek_to_utf_character(const f_string string, const f_utf_character seek_to, f_string_range *range) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (range->start > range->stop) return F_data_not_stop;
 
-    const unsigned short seek_width = f_macro_utf_character_width(seek_to_this);
+    const unsigned short seek_width = f_macro_utf_character_width(seek_to);
 
     f_status status = F_none;
 
@@ -1677,7 +1677,7 @@ extern "C" {
         width = 1;
 
         if (seek_width == width) {
-          if (string[range->start] == seek_to_this) return F_none;
+          if (string[range->start] == seek_to) return F_none;
         }
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
@@ -1692,7 +1692,7 @@ extern "C" {
           status = f_utf_char_to_character(string + range->start, width_max, &character);
 
           if (F_status_is_error(status)) return status;
-          if (character == seek_to_this) return F_none;
+          if (character == seek_to) return F_none;
         }
       }
     } // for
