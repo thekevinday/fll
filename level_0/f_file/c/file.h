@@ -84,6 +84,22 @@ extern "C" {
   #define f_file_type_regular   S_IFREG
   #define f_file_type_socket    S_IFSOCK
 
+  #define f_file_type_name_block     "block"
+  #define f_file_type_name_character "character"
+  #define f_file_type_name_directory "directory"
+  #define f_file_type_name_fifo      "fifo"
+  #define f_file_type_name_link      "link"
+  #define f_file_type_name_regular   "regular"
+  #define f_file_type_name_socket    "socket"
+
+  #define f_file_type_name_block_length     5
+  #define f_file_type_name_character_length 9
+  #define f_file_type_name_directory_length 9
+  #define f_file_type_name_fifo_length      4
+  #define f_file_type_name_link_length      4
+  #define f_file_type_name_regular_length   7
+  #define f_file_type_name_socket_length    6
+
   #define f_macro_file_type_get(mode) (f_file_type_mask & mode)
 
   #define f_macro_file_type_is_block(mode)     f_macro_file_type_get(mode) == f_file_type_block
