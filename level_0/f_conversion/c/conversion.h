@@ -28,7 +28,7 @@ extern "C" {
 /**
  * Provide custom conversion scale limits based on selected type sizes.
  *
- * Utilize the f_type_number_* defines to determine the expected sizes to use for the sxcales.
+ * Utilize the f_type_number_* defines to determine the expected sizes to use for the scales.
  *
  * 64-bit is the designed default.
  */

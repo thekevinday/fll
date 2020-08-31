@@ -1538,6 +1538,9 @@ extern "C" {
       else if (operation_if == fake_make_operation_if_type_false_next) {
         operation_if = fake_make_operation_if_type_false;
       }
+      else if (operation_if == fake_make_operation_if_type_false_always_next) {
+        operation_if = fake_make_operation_if_type_false_always;
+      }
 
       fake_make_operate_validate(data, section->name, operation, *operation_name, arguments[i], &operation_if, data_make, section_stack, status);
 
@@ -1545,6 +1548,10 @@ extern "C" {
 
         if (operation_if == fake_make_operation_if_type_false) {
           operation_if = fake_make_operation_if_type_else_true_next;
+          continue;
+        }
+        else if (operation_if == fake_make_operation_if_type_false_always) {
+          operation_if = fake_make_operation_if_type_else_false_next_always;
           continue;
         }
         else if (operation_if == fake_make_operation_if_type_else_false) {
@@ -1576,6 +1583,16 @@ extern "C" {
               break;
           }
         }
+
+        if (operation_if == fake_make_operation_if_type_false) {
+          operation_if = fake_make_operation_if_type_else_true_next;
+        }
+        else if (operation_if == fake_make_operation_if_type_false_always) {
+          operation_if = fake_make_operation_if_type_else_false_next_always;
+        }
+        else if (operation_if == fake_make_operation_if_type_else_false) {
+          operation_if = 0;
+        }
       }
 
       if (operation_if == fake_make_operation_if_type_else_true || operation_if == fake_make_operation_if_type_else_false) {
@@ -1587,8 +1604,8 @@ extern "C" {
       else if (operation_if == fake_make_operation_if_type_true) {
         operation_if = fake_make_operation_if_type_else_false_next;
       }
-      else if (operation_if == fake_make_operation_if_type_false) {
-        operation_if = fake_make_operation_if_type_else_true_next;
+      else if (operation_if == fake_make_operation_if_type_false_always) {
+        operation_if = fake_make_operation_if_type_else_false_next_always;
       }
 
       if (F_status_is_error(*status)) {
@@ -1666,8 +1683,8 @@ extern "C" {
       *status = F_status_set_error(F_failure);
     }
 
-    // ensure an error is returned during recursion if the last known section operation failed.
-    if (success == F_false && F_status_is_fine(*status)) {
+    // ensure an error is returned during recursion if the last known section operation failed, except for the main operation.
+    if (success == F_false && F_status_is_fine(*status) && section_stack->used > 1) {
       *status = F_status_set_error(F_failure);
     }
 
@@ -1830,7 +1847,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_else) {
-      if (*operation_if == fake_make_operation_if_type_else_false_next) {
+      if (*operation_if == fake_make_operation_if_type_else_false_next || *operation_if == fake_make_operation_if_type_else_false_next_always) {
         *operation_if = fake_make_operation_if_type_else_false;
       }
       else if (*operation_if != fake_make_operation_if_type_else_true_next) {
@@ -1959,8 +1976,6 @@ extern "C" {
         return;
       }
 
-      // @todo: these conversions need to be UTF-8 friendly.
-
       if (*operation_if == fake_make_operation_if_type_if_success) {
         if (success) {
           *operation_if = fake_make_operation_if_type_true_next;
@@ -1985,7 +2000,49 @@ extern "C" {
 
       if (*operation_if == fake_make_operation_if_type_if_mode) {
         *operation_if = fake_make_operation_if_type_false_next;
-        // @todo: handle first mode parameter and then filepath parameters.
+
+        bool is = F_false;
+
+        if (fl_string_dynamic_compare_string(fake_make_operation_argument_is, arguments.array[1], fake_make_operation_argument_is_length) == F_equal_to) {
+          is = F_true;
+        }
+
+        f_file_mode mode_rule = 0;
+        mode_t mode_match = 0;
+        uint8_t replace = 0;
+
+        // @fixme: mode_rule needs to be converted to a mode_t.
+        *status = fake_make_get_id_mode(data, data_make->print, arguments.array[1], &mode_rule, &replace);
+        if (F_status_is_error(*status)) return;
+
+        mode_t mode_file = 0;
+
+        for (f_array_length i = 2; i < arguments.used; i++, mode_file = 0) {
+
+          *status = f_file_mode_read(arguments.array[i].string, &mode_file);
+          if (F_status_is_error(*status)) {
+            fake_print_message_file(data, F_status_set_fine(*status), "f_file_mode_read", arguments.array[i].string, "get mode of", F_true, F_true, data_make->print);
+            break;
+          }
+
+          if (is) {
+            if (mode_match == mode_file) {
+              // @todo success
+            }
+            else {
+              // @todo failure
+            }
+          }
+          else {
+            if (mode_match & mode_file) {
+              // @todo success
+            }
+            else {
+              // @todo failure
+            }
+          }
+        } // for
+
         return;
       }
 
@@ -2055,20 +2112,18 @@ extern "C" {
       if (F_status_is_error(*status)) return;
 
       mode_t mode = 0;
-
-      struct stat stat_file;
+      mode_t mode_file = 0;
 
       for (f_array_length i = 1; i < arguments.used; i++) {
         mode = 0;
-        memset(&stat_file, 0, sizeof(struct stat));
 
-        *status = f_file_stat(arguments.array[i].string, F_true, &stat_file);
+        *status = f_file_mode_read(arguments.array[i].string, &mode_file);
         if (F_status_is_error(*status)) {
-          fake_print_message_file(data, F_status_set_fine(*status), "f_file_stat", arguments.array[i].string, "change mode of", F_true, F_true, data_make->print);
+          fake_print_message_file(data, F_status_set_fine(*status), "f_file_mode_read", arguments.array[i].string, "change mode of", F_true, F_true, data_make->print);
           break;
         }
 
-        *status = f_file_mode_determine(stat_file.st_mode, mode_rule, replace, f_macro_file_type_is_directory(stat_file.st_mode), &mode);
+        *status = f_file_mode_determine(mode_file, mode_rule, replace, f_macro_file_type_is_directory(mode_file), &mode);
         if (F_status_is_error(*status)) {
           fake_print_message_file(data, F_status_set_fine(*status), "f_file_mode_determine", arguments.array[i].string, "change mode of", F_true, F_true, data_make->print);
           break;
@@ -2100,21 +2155,19 @@ extern "C" {
       if (F_status_is_error(*status)) return;
 
       mode_t mode = 0;
-
-      struct stat stat_file;
+      mode_t mode_file = 0;
 
       for (f_array_length i = 1; i < arguments.used; i++) {
         // @todo recursive.
         mode = 0;
-        memset(&stat_file, 0, sizeof(struct stat));
 
-        *status = f_file_stat(arguments.array[i].string, F_true, &stat_file);
+        *status = f_file_mode_read(arguments.array[i].string, &mode_file);
         if (F_status_is_error(*status)) {
-          fake_print_message_file(data, F_status_set_fine(*status), "f_file_stat", arguments.array[i].string, "change mode of", F_true, F_true, data_make->print);
+          fake_print_message_file(data, F_status_set_fine(*status), "f_file_mode_read", arguments.array[i].string, "change mode of", F_true, F_true, data_make->print);
           break;
         }
 
-        *status = f_file_mode_determine(stat_file.st_mode, mode_rule, replace, f_macro_file_type_is_directory(stat_file.st_mode), &mode);
+        *status = f_file_mode_determine(mode_file, mode_rule, replace, f_macro_file_type_is_directory(mode_file), &mode);
         if (F_status_is_error(*status)) {
           fake_print_message_file(data, F_status_set_fine(*status), "f_file_mode_determine", arguments.array[i].string, "change mode of", F_true, F_true, data_make->print);
           break;
@@ -2695,7 +2748,6 @@ extern "C" {
             *status = F_status_set_error(status_file);
           }
           else if (F_status_is_error(status_file)) {
-            // @todo: print warning file.
             fake_print_message_file(data, *status, "f_file_is", data.file_data_build_fakefile.string, "find", F_true, F_true, data_make->print);
             *status = status_file;
           }
@@ -2850,7 +2902,7 @@ extern "C" {
         return;
       }
 
-      if (*operation_if == fake_make_operation_if_type_true || *operation_if == fake_make_operation_if_type_false) {
+      if (*operation_if == fake_make_operation_if_type_true || *operation_if == fake_make_operation_if_type_false || *operation_if == fake_make_operation_if_type_false_always) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
           fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Must not be used inside an ", data_make->print.prefix);
@@ -2864,7 +2916,7 @@ extern "C" {
         return;
       }
 
-      if (*operation_if != fake_make_operation_if_type_else_true_next && *operation_if != fake_make_operation_if_type_else_false_next) {
+      if (*operation_if != fake_make_operation_if_type_else_true_next && *operation_if != fake_make_operation_if_type_else_false_next && *operation_if != fake_make_operation_if_type_else_false_next_always) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
           fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has no preceding if condition.", data_make->print.prefix);
@@ -2987,7 +3039,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_if) {
-      if (*operation_if == fake_make_operation_if_type_true || *operation_if == fake_make_operation_if_type_false) {
+      if (*operation_if == fake_make_operation_if_type_true || *operation_if == fake_make_operation_if_type_false || *operation_if == fake_make_operation_if_type_false_always) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
           fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Must not be used after another '", data_make->print.prefix);
@@ -3065,7 +3117,7 @@ extern "C" {
           3,
           2,
           2,
-          3,
+          4,
           3,
           1,
         };
@@ -3088,7 +3140,7 @@ extern "C" {
           }
 
           *status = F_status_set_error(F_failure);
-          *operation_if = fake_make_operation_if_type_false_next; // @todo: there really needs to be a fail_always to not execute either block on these kinds of errors.
+          *operation_if = fake_make_operation_if_type_false_always_next;
 
           return;
         }
@@ -3102,7 +3154,7 @@ extern "C" {
               }
 
               *status = F_status_set_error(F_failure);
-              *operation_if = fake_make_operation_if_type_false_next; // @todo: there really needs to be a fail_always to not execute either block on these kinds of errors.
+              *operation_if = fake_make_operation_if_type_false_always_next;
             }
 
             return;
@@ -3110,13 +3162,28 @@ extern "C" {
 
           if (*operation_if == fake_make_operation_if_type_if_mode || *operation_if == fake_make_operation_if_type_if_owner || *operation_if == fake_make_operation_if_type_if_group || *operation_if == fake_make_operation_if_type_if_is || *operation_if == fake_make_operation_if_type_if_exists) {
             if (*operation_if == fake_make_operation_if_type_if_mode) {
+
+              if (fl_string_dynamic_compare_string(fake_make_operation_argument_is, arguments.array[1], fake_make_operation_argument_is_length) == F_equal_to_not) {
+                if (fl_string_dynamic_compare_string(fake_make_operation_argument_has, arguments.array[1], fake_make_operation_argument_has_length) == F_equal_to_not) {
+                  if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+                    printf("%c", f_string_eol[0]);
+                    fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Unsupported mode type '", data_make->print.prefix);
+                    fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
+                    fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+                  }
+
+                  *status = F_status_set_error(F_failure);
+                  return;
+                }
+              }
+
               f_file_mode mode_rule = 0;
               uint8_t replace = 0;
 
-              *status = fake_make_get_id_mode(data, data_make->print, arguments.array[1], &mode_rule, &replace);
+              *status = fake_make_get_id_mode(data, data_make->print, arguments.array[2], &mode_rule, &replace);
               if (F_status_is_error(*status)) return;
 
-              i = 2;
+              i = 3;
             }
 
             if (*operation_if == fake_make_operation_if_type_if_owner) {
@@ -3138,14 +3205,10 @@ extern "C" {
             }
 
             if (*operation_if == fake_make_operation_if_type_if_is) {
-              // block     = 0x1  (0000 0001)
-              // character = 0x2  (0000 0010)
-              // directory = 0x4  (0000 0100)
-              // fifo      = 0x8  (0000 1000)
-              // link      = 0x10 (0001 0000)
-              // regular   = 0x20 (0010 0000)
-              // socket    = 0x40 (0100 0000)
-              // invalid   = 0x80 (1000 0000)
+              // block     = 0x1 (0000 0001) link    = 0x10 (0001 0000)
+              // character = 0x2 (0000 0010) regular = 0x20 (0010 0000)
+              // directory = 0x4 (0000 0100) socket  = 0x40 (0100 0000)
+              // fifo      = 0x8 (0000 1000) invalid = 0x80 (1000 0000)
               uint8_t type_file = 0;
 
               for (i = 1; i < arguments.used; i++) {
@@ -3189,7 +3252,7 @@ extern "C" {
 
               if (type_file & 0x80) {
                 *status = F_status_set_error(F_failure);
-                *operation_if = fake_make_operation_if_type_false_next; // @todo: there really needs to be a fail_always to not execute either block on these kinds of errors.
+                *operation_if = fake_make_operation_if_type_false_always_next;
 
                 return;
               }
@@ -3206,7 +3269,7 @@ extern "C" {
                 if (F_status_is_error(status_file)) {
                   fake_print_message_section_operation_path_outside(data, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string, data_make->print);
 
-                  *operation_if = fake_make_operation_if_type_false_next; // @todo: there really needs to be a fail_always to not execute either block on these kinds of errors.
+                  *operation_if = fake_make_operation_if_type_false_always_next;
 
                   if (F_status_is_fine(*status)) {
                     if (F_status_set_fine(status_file) == F_false) {
@@ -3228,7 +3291,7 @@ extern "C" {
                   if (F_status_is_error(status_file)) {
                     fake_print_message_file(data, F_status_set_fine(status_file), "f_file_exists", arguments.array[i].string, "find", F_true, F_true, data_make->print);
 
-                    *operation_if = fake_make_operation_if_type_false_next; // @todo: there really needs to be a fail_always to not execute either block on these kinds of errors.
+                    *operation_if = fake_make_operation_if_type_false_always_next;
 
                     if (F_status_is_fine(*status)) {
                       *status = F_status_set_error(status_file);
@@ -3242,17 +3305,80 @@ extern "C" {
           }
 
           if (*operation_if == fake_make_operation_if_type_if_defined) {
-            // @todo: handle first parameter/environment parameter and then define name parameters.
+            if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment, arguments.array[1], fake_make_operation_argument_environment_length) == F_equal_to_not) {
+              if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter, arguments.array[1], fake_make_operation_argument_parameter_length) == F_equal_to_not) {
+                if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+                  printf("%c", f_string_eol[0]);
+                  fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Unsupported define type '", data_make->print.prefix);
+                  fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
+                  fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+                }
+
+                *status = F_status_set_error(F_failure);
+              }
+            }
+
             return;
           }
 
-          // @todo: for each of these, handle converting all arguments to integers/numbers and then processing conditions in order.
-          //fake_make_operation_if_type_if_equal
-          //fake_make_operation_if_type_if_equal_not (needs to be applied to all, so use separate logic block.)
-          //fake_make_operation_if_type_if_greater
-          //fake_make_operation_if_type_if_greater_equal
-          //fake_make_operation_if_type_if_less
-          //fake_make_operation_if_type_if_less_equal
+          if (*operation_if == fake_make_operation_if_type_if_equal || *operation_if == fake_make_operation_if_type_if_equal_not) {
+            // nothing to validate.
+            return;
+          }
+
+          if (*operation_if == fake_make_operation_if_type_if_greater || *operation_if == fake_make_operation_if_type_if_greater_equal || *operation_if == fake_make_operation_if_type_if_less || *operation_if == fake_make_operation_if_type_if_less_equal) {
+            f_status status_number = F_none;
+            f_string_range range = f_string_range_initialize;
+            f_number_unsigned number = 0;
+            bool is_negative = F_false;
+
+            // @fixme there needs to handle converting numbers with decimals (like 1.01), perhaps operate on them as strings or provide a special processor.
+            for (i = 1; i < arguments.used; i++, status_number = F_none) {
+              if (arguments.array[i].used) {
+                range.start = 0;
+                range.stop = arguments.array[i].used - 1;
+
+                if (arguments.array[i].string[0] == '+') {
+                  range.start = 1;
+                }
+                else if (arguments.array[i].string[0] == '-') {
+                  range.start = 1;
+                  is_negative = F_true;
+                }
+
+                if (range.start > range.stop) {
+                  status_number = F_status_set_error(F_failure);
+                }
+                else {
+                  status_number = fl_conversion_string_to_number_unsigned(arguments.array[i].string, &number, range);
+                }
+              }
+              else {
+                status_number = F_status_set_error(F_failure);
+              }
+
+              if (F_status_is_error(status_number)) {
+                *status = F_status_set_error(F_failure);
+
+                if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+                  printf("%c", f_string_eol[0]);
+
+                  if (number > f_type_number_size_unsigned) {
+                    fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The number '", data_make->print.prefix);
+                    fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%c%s", arguments.array[i].string);
+                    fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' may only be between the ranges -%llu to %llu.", f_type_number_size_unsigned, f_type_number_size_unsigned);
+                  }
+                  else {
+                    fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Invalid or unsupported number provided '", data_make->print.prefix);
+                    fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
+                    fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+                  }
+                }
+              }
+            } // for
+
+            return;
+          }
         }
       }
 
@@ -3262,7 +3388,7 @@ extern "C" {
       }
 
       *status = F_status_set_error(F_failure);
-      *operation_if = fake_make_operation_if_type_false_next;
+      *operation_if = fake_make_operation_if_type_false_always_next;
 
       return;
     }

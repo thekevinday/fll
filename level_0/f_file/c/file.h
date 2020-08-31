@@ -1169,7 +1169,7 @@ extern "C" {
  * @param mode_change
  *   The file mode values to change.
  * @param mode_replace
- *   The mode modes that should be replaced instead of simply changed.
+ *   The modes designated to be replaced instead of simply changed.
  * @param directory_is
  *   Set to TRUE if the file is a directory, FALSE otherwise.
  * @param mode
@@ -1248,6 +1248,8 @@ extern "C" {
  *
  * @fixme the possibilities are a bit extensive and this needs additional review; remove this fixme when this review is completed.
  *
+ * @fixme apparently "u+g" is valid such that the mode from the group (g) is applied to the user (u) mode.
+ *
  * @param string
  *   A NULL terminated string designating the desired mode, following the above string syntax.
  * @param umask
@@ -1271,6 +1273,58 @@ extern "C" {
 #ifndef _di_f_file_mode_from_string_
   extern f_return_status f_file_mode_from_string(const f_string string, const mode_t umask, f_file_mode *mode, uint8_t *replace);
 #endif // _di_f_file_mode_from_string_
+
+/**
+ * Get the current file mode as an f_file_mode.
+ *
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The read file mode.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory (with error bit) on invalid directory.
+ *   F_file_found_not (with error bit) if the file was not found.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstat()
+ */
+#ifndef _di_f_file_mode_read_
+  extern f_return_status f_file_mode_read(const f_string path, mode_t *mode);
+#endif // _di_f_file_mode_read_
+
+/**
+ * Get the current file mode as an f_file_mode.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The read file mode.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory (with error bit) on invalid directory.
+ *   F_file_found_not (with error bit) if the file was not found.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstatat()
+ */
+#ifndef _di_f_file_mode_read_at_
+  extern f_return_status f_file_mode_read_at(const int at_id, const f_string path, mode_t *mode);
+#endif // _di_f_file_mode_read_at_
 
 /**
  * Change mode of a given file at the specified path.
@@ -1335,6 +1389,26 @@ extern "C" {
 #ifndef _di_f_file_mode_set_at_
   extern f_return_status f_file_mode_set_at(const int at_id, const f_string path, const mode_t mode);
 #endif // _di_f_file_mode_set_at_
+
+/**
+ * Convert an f_file_mode type to a mode_t type.
+ *
+ * @param mode_from
+ *   The file mode to convert from.
+ * @param mode_replace
+ *   The modes designated to be replaced instead of simply changed.
+ * @param mode_to
+ *   The determined mode.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_mode_from_string()
+ */
+#ifndef _di_f_file_mode_determine_
+  extern f_return_status f_file_mode_to_mode(const f_file_mode mode_from, const uint8_t mode_replace, mode_t *mode_to);
+#endif // _di_f_file_mode_determine_
 
 /**
  * Get the base name of a file path.

@@ -1180,6 +1180,50 @@ extern "C" {
   }
 #endif // _di_f_file_mode_from_string_
 
+#ifndef _di_f_file_mode_read_
+  f_return_status f_file_mode_read(const f_string path, mode_t *mode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+      if (mode == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    struct stat stat_file;
+
+    memset(&stat_file, 0, sizeof(struct stat));
+
+    f_status status = private_f_file_stat(path, F_true, &stat_file);
+    if (F_status_is_error(status)) {
+      return status;
+    }
+
+    *mode = stat_file.st_mode;
+
+    return F_none;
+  }
+#endif // _di_f_file_mode_read_
+
+#ifndef _di_f_file_mode_read_at_
+  f_return_status f_file_mode_read_at(const int at_id, const f_string path, mode_t *mode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+      if (mode == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    struct stat stat_file;
+
+    memset(&stat_file, 0, sizeof(struct stat));
+
+    f_status status = private_f_file_stat(path, F_true, &stat_file);
+    if (F_status_is_error(status)) {
+      return status;
+    }
+
+    *mode = stat_file.st_mode;
+
+    return F_none;
+  }
+#endif // _di_f_file_mode_read_at_
+
 #ifndef _di_f_file_mode_set_
   f_return_status f_file_mode_set(const f_string path, const mode_t mode) {
     #ifndef _di_level_0_parameter_checking_
@@ -1199,6 +1243,18 @@ extern "C" {
     return private_f_file_mode_set_at(at_id, path, mode);
   }
 #endif // _di_f_file_mode_set_at_
+
+#ifndef _di_f_file_mode_determine_
+  f_return_status f_file_mode_to_mode(const f_file_mode mode_from, const uint8_t mode_replace, mode_t *mode_to) {
+    #ifndef _di_level_0_parameter_checking_
+      if (mode_to == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    // @todo
+
+    return F_none;
+  }
+#endif // _di_f_file_mode_determine_
 
 #ifndef _di_f_file_name_base_
   f_return_status f_file_name_base(const f_string path, const f_string_length length, f_string_dynamic *name_base) {

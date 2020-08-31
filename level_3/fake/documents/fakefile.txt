@@ -153,31 +153,37 @@ Fakefile Documentation:
           compare all parameters to be equal.
           requires 2 or more after the "==".
           for example, "if == 'a' 'b' 'c' 'd'" would test: 'a' == 'b' && 'b' == 'c' && 'c' == 'd'.
+          this performs only string-based comparisons.
 
         > "left string" "right string"\:
           compare "left" to "right" for greater than.
           requires 2 or more after the ">".
           for example, "if > 0 1 2 3" would test: 0 > 1 && 1 > 2 && 2 > 3.
+          this performs only number-based comparisons.
 
         < "left string" "right string"\:
           compare "left" to "right" for less than.
           requires 2 or more after the ">".
           for example, "if < 0 1 2 3" would test: 0 < 1 && 1 < 2 && 2 < 3.
+          this performs only number-based comparisons.
 
         >= "left string" "right string"\:
           compare "left" to "right" for greater than or equal to.
           requires 2 or more after the ">=".
           for example, "if >= 0 1 2 3" would test: 0 >= 1 && 1 >= 2 && 2 >= 3.
+          this performs only number-based comparisons.
 
         <= "left string" "right string"\:
           compare "left" to "right" for less than or equal to.
           requires 2 or more after the ">=".
           for example, "if <= 0 1 2 3" would test: 0 <= 1 && 1 <= 2 && 2 <= 3.
+          this performs only number-based comparisons.
 
         <> "left" "right"\:
           compare all parameters to be not equal.
           requires 2 or more after the "==".
           for example, "if <> 'a' 'b' 'c'" would test: 'a' <> 'b' && 'b' <> 'c' && 'a' <> 'c'.
+          this performs only string-based comparisons.
 
         exists "file path"\:
           test if file exists.

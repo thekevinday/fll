@@ -315,6 +315,7 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_rip_
   extern f_return_status fll_program_parameter_additional_rip(const f_string *argv, const f_string_lengths additional, f_string_dynamics *destination);
 #endif // _di_fll_program_parameter_additional_rip_
+
 /**
  * Mash together all additional arguments associated with a given console parameter.
  *

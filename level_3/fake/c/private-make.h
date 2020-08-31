@@ -59,7 +59,6 @@ extern "C" {
   #define fake_make_setting_return_length      6
 #endif // _di_fake_make_setting_
 
-// @todo "operate" should use a call stack, but do not allow recursive calls (check to see if named operation is already on the call stack).
 #ifndef _di_fake_make_operation_
   #define fake_make_operation_archive  "archive"
   #define fake_make_operation_build    "build"
@@ -152,29 +151,37 @@ extern "C" {
 
   #define fake_make_operation_total 28
 
-  #define fake_make_operation_argument_failure   "failure"
-  #define fake_make_operation_argument_file      "file"
-  #define fake_make_operation_argument_directory "directory"
-  #define fake_make_operation_argument_error     "error"
-  #define fake_make_operation_argument_exit      "exit"
-  #define fake_make_operation_argument_ignore    "ignore"
-  #define fake_make_operation_argument_point     "point"
-  #define fake_make_operation_argument_recursive "recursive"
-  #define fake_make_operation_argument_success   "success"
-  #define fake_make_operation_argument_target    "target"
-  #define fake_make_operation_argument_warn      "warn"
+  #define fake_make_operation_argument_environment "environment"
+  #define fake_make_operation_argument_failure     "failure"
+  #define fake_make_operation_argument_file        "file"
+  #define fake_make_operation_argument_directory   "directory"
+  #define fake_make_operation_argument_error       "error"
+  #define fake_make_operation_argument_exit        "exit"
+  #define fake_make_operation_argument_has         "has"
+  #define fake_make_operation_argument_ignore      "ignore"
+  #define fake_make_operation_argument_is          "is"
+  #define fake_make_operation_argument_parameter   "parameter"
+  #define fake_make_operation_argument_point       "point"
+  #define fake_make_operation_argument_recursive   "recursive"
+  #define fake_make_operation_argument_success     "success"
+  #define fake_make_operation_argument_target      "target"
+  #define fake_make_operation_argument_warn        "warn"
 
-  #define fake_make_operation_argument_failure_length   7
-  #define fake_make_operation_argument_file_length      4
-  #define fake_make_operation_argument_directory_length 9
-  #define fake_make_operation_argument_error_length     5
-  #define fake_make_operation_argument_exit_length      4
-  #define fake_make_operation_argument_ignore_length    6
-  #define fake_make_operation_argument_point_length     5
-  #define fake_make_operation_argument_recursive_length 9
-  #define fake_make_operation_argument_success_length   7
-  #define fake_make_operation_argument_target_length    6
-  #define fake_make_operation_argument_warn_length      4
+  #define fake_make_operation_argument_environment_length 11
+  #define fake_make_operation_argument_failure_length     7
+  #define fake_make_operation_argument_file_length        4
+  #define fake_make_operation_argument_directory_length   9
+  #define fake_make_operation_argument_error_length       5
+  #define fake_make_operation_argument_exit_length        4
+  #define fake_make_operation_argument_has_length         3
+  #define fake_make_operation_argument_ignore_length      6
+  #define fake_make_operation_argument_is_length          2
+  #define fake_make_operation_argument_parameter_length   9
+  #define fake_make_operation_argument_point_length       5
+  #define fake_make_operation_argument_recursive_length   9
+  #define fake_make_operation_argument_success_length     7
+  #define fake_make_operation_argument_target_length      6
+  #define fake_make_operation_argument_warn_length        4
 
   #define fake_make_operation_argument_if_defined       "defined"
   #define fake_make_operation_argument_if_equal         "=="
@@ -211,9 +218,12 @@ extern "C" {
   enum {
     fake_make_operation_if_type_else_false = 1,
     fake_make_operation_if_type_else_false_next,
+    fake_make_operation_if_type_else_false_next_always,
     fake_make_operation_if_type_else_true,
     fake_make_operation_if_type_else_true_next,
     fake_make_operation_if_type_false,
+    fake_make_operation_if_type_false_always,
+    fake_make_operation_if_type_false_always_next,
     fake_make_operation_if_type_false_next,
     fake_make_operation_if_type_if_defined,
     fake_make_operation_if_type_if_equal,

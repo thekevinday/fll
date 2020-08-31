@@ -256,14 +256,14 @@ extern "C" {
 
       if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional && data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
         if (data->first > data->last) {
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "' value cannot be greater than the parameter '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' value.");
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "' value cannot be greater than the parameter '");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' value.");
 
-            byte_dump_delete_data(data);
-            return F_status_set_error(status);
+          byte_dump_delete_data(data);
+          return F_status_set_error(status);
         }
 
         // store last position as a relative offset from first instead of an absolute position.
