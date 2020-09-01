@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_status_code_print_help_
-  f_return_status fss_status_code_print_help(const fl_color_context context) {
+  f_return_status fss_status_code_print_help(const fl_color_context_t context) {
     fll_program_print_help_header(context, fss_status_code_name_long, fss_status_code_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -29,13 +29,13 @@ extern "C" {
 #endif // _di_fss_status_code_print_help_
 
 #ifndef _di_fss_status_code_main_
-  f_return_status fss_status_code_main(const f_console_arguments arguments, fss_status_code_data *data) {
-    f_status status = F_none;
+  f_return_status fss_status_code_main(const f_console_arguments_t arguments, fss_status_code_data_t *data) {
+    f_status_t status = F_none;
 
     {
-      f_console_parameters parameters = { data->parameters, fss_status_code_total_parameters };
-      f_console_parameter_id ids[3] = { fss_status_code_parameter_no_color, fss_status_code_parameter_light, fss_status_code_parameter_dark };
-      f_console_parameter_ids choices = { ids, 3 };
+      f_console_parameters_t parameters = { data->parameters, fss_status_code_total_parameters };
+      f_console_parameter_id_t ids[3] = { fss_status_code_parameter_no_color, fss_status_code_parameter_light, fss_status_code_parameter_dark };
+      f_console_parameter_ids_t choices = { ids, 3 };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
@@ -98,7 +98,7 @@ extern "C" {
       return F_status_set_error(F_parameter);
     }
 
-    f_status status2 = F_none;
+    f_status_t status2 = F_none;
 
     if (data->parameters[fss_status_code_parameter_is_error].result == f_console_result_found || data->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found || data->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
       if (data->process_pipe) {
@@ -106,7 +106,7 @@ extern "C" {
       }
 
       if (data->remaining.used > 0) {
-        for (f_array_length i = 0; i < data->remaining.used; i++) {
+        for (f_array_length_t i = 0; i < data->remaining.used; i++) {
           status2 = fss_status_code_process_check(*data, arguments.argv[data->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
@@ -121,7 +121,7 @@ extern "C" {
       }
 
       if (data->remaining.used > 0) {
-        for (f_array_length i = 0; i < data->remaining.used; i++) {
+        for (f_array_length_t i = 0; i < data->remaining.used; i++) {
           status2 = fss_status_code_process_number(*data, arguments.argv[data->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
@@ -136,7 +136,7 @@ extern "C" {
       }
 
       if (data->remaining.used > 0) {
-        for (f_array_length i = 0; i < data->remaining.used; i++) {
+        for (f_array_length_t i = 0; i < data->remaining.used; i++) {
           status2 = fss_status_code_process_normal(*data, arguments.argv[data->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
@@ -152,17 +152,17 @@ extern "C" {
 #endif // _di_fss_status_code_main_
 
 #ifndef _di_fss_status_code_delete_data_
-  f_return_status fss_status_code_delete_data(fss_status_code_data *data) {
-    f_string_length i = 0;
+  f_return_status fss_status_code_delete_data(fss_status_code_data_t *data) {
+    f_string_length_t i = 0;
 
     while (i < fss_status_code_total_parameters) {
-      f_macro_string_lengths_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
       i++;
     } // while
 
-    f_macro_string_lengths_delete_simple(data->remaining);
-    fl_macro_color_context_delete_simple(data->context);
+    f_macro_string_lengths_t_delete_simple(data->remaining);
+    fl_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
   }

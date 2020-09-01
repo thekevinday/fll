@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_object_read_
-  f_return_status fl_fss_basic_object_read(f_string_dynamic *buffer, f_string_range *range, f_fss_object *found, f_fss_quoted *quoted) {
+  f_return_status fl_fss_basic_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quoted_t *quoted) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (buffer->used == 0) return F_status_set_error(F_parameter);
@@ -16,17 +16,17 @@ extern "C" {
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
-    f_string_lengths delimits = f_string_lengths_initialize;
+    f_status_t status = F_none;
+    f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
     status = private_fl_fss_basic_object_read(buffer, range, found, quoted, &delimits);
     if (F_status_is_error(status)) {
-      f_macro_string_lengths_delete_simple(delimits);
+      f_macro_string_lengths_t_delete_simple(delimits);
       return status;
     }
 
     if (status == FL_fss_found_object_not || status == F_data_not || status == F_data_not_eos || status == F_data_not_stop) {
-      f_macro_string_lengths_delete_simple(delimits);
+      f_macro_string_lengths_t_delete_simple(delimits);
       return status;
     }
 
@@ -37,7 +37,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_read_
 
 #ifndef _di_fl_fss_basic_content_read_
-  f_return_status fl_fss_basic_content_read(f_string_dynamic *buffer, f_string_range *range, f_fss_content *found) {
+  f_return_status fl_fss_basic_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (buffer->used == 0) return F_status_set_error(F_parameter);
@@ -47,10 +47,10 @@ extern "C" {
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     // delimits must only be applied once a valid object is found.
-    f_string_lengths delimits = f_string_lengths_initialize;
+    f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
     status = f_fss_skip_past_space(*buffer, range);
     if (F_status_is_error(status)) return status;
@@ -92,7 +92,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_content_read_
 
 #ifndef _di_fl_fss_basic_object_write_
-  f_return_status fl_fss_basic_object_write(const f_string_static object, const f_fss_quoted quoted, f_string_range *range, f_string_dynamic *destination) {
+  f_return_status fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -102,29 +102,29 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_write_
 
 #ifndef _di_fl_fss_basic_content_write_
-  f_return_status fl_fss_basic_content_write(const f_string_static content, f_string_range *range, f_string_dynamic *destination) {
+  f_return_status fl_fss_basic_content_write(const f_string_static_t content, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     fl_macro_fss_skip_past_delimit_placeholders(content, (*range));
 
     if (range->start > range->stop) return F_data_not_stop;
     else if (range->start >= content.used) return F_data_not_eos;
 
-    f_string_range input_position = f_string_range_initialize;
-    f_string_range buffer_position = f_string_range_initialize;
+    f_string_range_t input_position = f_string_range_initialize;
+    f_string_range_t buffer_position = f_string_range_initialize;
 
     // ensure that there is room for the terminating newline.
-    f_string_length size_allocate = destination->used + content.used + 1 + f_fss_default_allocation_step_string;
+    f_string_length_t size_allocate = destination->used + content.used + 1 + f_fss_default_allocation_step_string;
 
     buffer_position.start = destination->used;
     buffer_position.stop = destination->used;
 
     if (size_allocate > destination->size) {
-      f_macro_string_dynamic_resize(status, (*destination), size_allocate);
+      f_macro_string_dynamic_t_resize(status, (*destination), size_allocate);
       if (F_status_is_error(status)) return status;
     }
 

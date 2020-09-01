@@ -18,18 +18,18 @@ extern "C" {
  * column: The column position associated with the character cell.
  * row:    The row position associated with the character cell.
  */
-#ifndef _di_byte_dump_cell_
+#ifndef _di_byte_dump_cell_t_
   typedef struct {
     uint8_t  column;
     uint64_t row;
-  } byte_dump_cell;
+  } byte_dump_cell_t;
 
-  #define byte_dump_cell_initialize \
+  #define byte_dump_cell_t_initialize \
     { \
       0, \
       0, \
     }
-#endif // _di_byte_dump_cell_
+#endif // _di_byte_dump_cell_t_
 
 /**
  * A data structure for character data that overflowed from a previous line.
@@ -42,13 +42,13 @@ extern "C" {
  * invalid: The specific invalid value provided representing the overflowed bytes.
  *          This is used to print the placeholders.
  */
-#ifndef _di_byte_dump_previous_
+#ifndef _di_byte_dump_previous_t_
   typedef struct {
     uint8_t bytes;
     uint8_t invalid;
-  } byte_dump_previous;
+  } byte_dump_previous_t;
 
-  #define byte_dump_previous_initialize \
+  #define byte_dump_previous_t_initialize \
     { \
       0, \
       0, \
@@ -70,7 +70,7 @@ extern "C" {
  *   F_failure (with error bit) on failure, usually when read() fails.
  */
 #ifndef _di_byte_dump_file_
-  extern f_return_status byte_dump_file(const byte_dump_data data, const f_string file_name, f_file file) f_gcc_attribute_visibility_internal;
+  extern f_return_status byte_dump_file(const byte_dump_data_t data, const f_string_t file_name, f_file_t file) f_gcc_attribute_visibility_internal;
 #endif // _di_byte_dump_file_
 
 /**
@@ -111,7 +111,7 @@ extern "C" {
  * @see byte_dump_print_text()
  */
 #ifndef _di_byte_dump_print_character_fragment_
-  extern bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_static characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, byte_dump_previous *previous, byte_dump_cell *cell, uint8_t *offset) f_gcc_attribute_visibility_internal;
+  extern bool byte_dump_print_character_fragment(const byte_dump_data_t data, const f_utf_string_static_t characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, uint8_t *offset) f_gcc_attribute_visibility_internal;
 #endif // _di_byte_dump_print_character_fragment_
 
 /**
@@ -133,7 +133,7 @@ extern "C" {
  *   Will be reduced to 0 once used.
  */
 #ifndef _di_byte_dump_print_text_
-  extern void byte_dump_print_text(const byte_dump_data data, const f_utf_string_static characters, const uint8_t invalid[], byte_dump_previous *previous, uint8_t *offset) f_gcc_attribute_visibility_internal;
+  extern void byte_dump_print_text(const byte_dump_data_t data, const f_utf_string_static_t characters, const uint8_t invalid[], byte_dump_previous_t *previous, uint8_t *offset) f_gcc_attribute_visibility_internal;
 #endif // _di_byte_dump_print_text_
 
 /**
@@ -155,7 +155,7 @@ extern "C" {
  *   F_false if error has not been printed.
  */
 #ifndef _di_byte_dump_print_file_error_
-  extern void byte_dump_print_file_error(const fl_color_context context, const f_string function, const f_string file_name, const f_status status) f_gcc_attribute_visibility_internal;
+  extern void byte_dump_print_file_error(const fl_color_context_t context, const f_string_t function, const f_string_t file_name, const f_status_t status) f_gcc_attribute_visibility_internal;
 #endif // _di_byte_dump_print_file_error_
 
 #ifdef __cplusplus

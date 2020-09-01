@@ -68,24 +68,24 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_iki_variable_
-  typedef f_string_ranges f_iki_variable;
+#ifndef _di_iki_variable_t_
+  typedef f_string_ranges_t f_iki_variable_t;
 
-  #define f_iki_variable_initialize f_string_ranges_initialize
+  #define f_iki_variable_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_iki_variable_clear(variable) f_macro_string_ranges_clear(variable)
+  #define f_macro_iki_variable_t_clear(variable) f_macro_string_ranges_t_clear(variable)
 
-  #define f_macro_iki_variable_new(status, variable, length) f_macro_string_ranges_new(status, variable, length)
+  #define f_macro_iki_variable_t_new(status, variable, length) f_macro_string_ranges_t_new(status, variable, length)
 
-  #define f_macro_iki_variable_delete(status, variable)  f_macro_string_ranges_delete(status, variable)
-  #define f_macro_iki_variable_destroy(status, variable) f_macro_string_ranges_destroy(status, variable)
+  #define f_macro_iki_variable_t_delete(status, variable)  f_macro_string_ranges_t_delete(status, variable)
+  #define f_macro_iki_variable_t_destroy(status, variable) f_macro_string_ranges_t_destroy(status, variable)
 
-  #define f_macro_iki_variable_delete_simple(variable)  f_macro_string_ranges_delete_simple(variable)
-  #define f_macro_iki_variable_destroy_simple(variable) f_macro_string_ranges_destroy_simple(variable)
+  #define f_macro_iki_variable_t_delete_simple(variable)  f_macro_string_ranges_t_delete_simple(variable)
+  #define f_macro_iki_variable_t_destroy_simple(variable) f_macro_string_ranges_t_destroy_simple(variable)
 
-  #define f_macro_iki_variable_resize(status, variable, new_length) f_macro_string_ranges_resize(status, variable, new_length)
-  #define f_macro_iki_variable_adjust(status, variable, new_length) f_macro_string_ranges_destroy(status, variable, new_length)
-#endif // _di_iki_variable_
+  #define f_macro_iki_variable_t_resize(status, variable, new_length) f_macro_string_ranges_t_resize(status, variable, new_length)
+  #define f_macro_iki_variable_t_adjust(status, variable, new_length) f_macro_string_ranges_t_destroy(status, variable, new_length)
+#endif // _di_iki_variable_t_
 
 /**
  * This holds an array of string ranges that represent the vocabulary names.
@@ -94,50 +94,50 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_iki_vocabulary_
-  typedef f_string_ranges f_iki_vocabulary;
+#ifndef _di_iki_vocabulary_t_
+  typedef f_string_ranges_t f_iki_vocabulary_t;
 
-  #define f_iki_vocabulary_initialize f_string_ranges_initialize
+  #define f_iki_vocabulary_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_iki_vocabulary_clear(vocabulary) f_macro_string_ranges_clear(vocabulary)
+  #define f_macro_iki_vocabulary_t_clear(vocabulary) f_macro_string_ranges_t_clear(vocabulary)
 
-  #define f_macro_iki_vocabulary_new(status, vocabulary, length) f_macro_string_ranges_new(status, vocabulary, length)
+  #define f_macro_iki_vocabulary_t_new(status, vocabulary, length) f_macro_string_ranges_t_new(status, vocabulary, length)
 
-  #define f_macro_iki_vocabulary_delete(status, vocabulary)  f_macro_string_ranges_delete(status, vocabulary)
-  #define f_macro_iki_vocabulary_destroy(status, vocabulary) f_macro_string_ranges_destroy(status, vocabulary)
+  #define f_macro_iki_vocabulary_t_delete(status, vocabulary)  f_macro_string_ranges_t_delete(status, vocabulary)
+  #define f_macro_iki_vocabulary_t_destroy(status, vocabulary) f_macro_string_ranges_t_destroy(status, vocabulary)
 
-  #define f_macro_iki_vocabulary_delete_simple(vocabulary)  f_macro_string_ranges_delete_simple(vocabulary)
-  #define f_macro_iki_vocabulary_destroy_simple(vocabulary) f_macro_string_ranges_destroy_simple(vocabulary)
+  #define f_macro_iki_vocabulary_t_delete_simple(vocabulary)  f_macro_string_ranges_t_delete_simple(vocabulary)
+  #define f_macro_iki_vocabulary_t_destroy_simple(vocabulary) f_macro_string_ranges_t_destroy_simple(vocabulary)
 
-  #define f_macro_iki_vocabulary_resize(status, vocabulary, new_length) f_macro_string_ranges_resize(status, vocabulary, new_length)
-  #define f_macro_iki_vocabulary_adjust(status, vocabulary, new_length) f_macro_string_ranges_destroy(status, vocabulary, new_length)
-#endif // _di_iki_vocabulary_
+  #define f_macro_iki_vocabulary_t_resize(status, vocabulary, new_length) f_macro_string_ranges_t_resize(status, vocabulary, new_length)
+  #define f_macro_iki_vocabulary_t_adjust(status, vocabulary, new_length) f_macro_string_ranges_t_destroy(status, vocabulary, new_length)
+#endif // _di_iki_vocabulary_t_
 
 /**
- * This holds an array of f_iki_vocabulary.
+ * This holds an array of f_iki_vocabulary_t.
  *
  * array: The array of content.
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_iki_vocabularys_
-  typedef f_string_rangess f_iki_vocabularys;
+#ifndef _di_iki_vocabularys_t_
+  typedef f_string_rangess_t f_iki_vocabularys_t;
 
-  #define f_iki_vocabularys_initialize f_string_rangess_initialize
+  #define f_iki_vocabularys_t_initialize f_string_rangess_t_initialize
 
-  #define f_macro_iki_vocabularys_clear(content) f_macro_string_rangess_clear(content)
+  #define f_macro_iki_vocabularys_t_clear(content) f_macro_string_rangess_t_clear(content)
 
-  #define f_macro_iki_vocabularys_new(status, content, length) f_macro_string_rangess_new(status, content, length)
+  #define f_macro_iki_vocabularys_t_new(status, content, length) f_macro_string_rangess_t_new(status, content, length)
 
-  #define f_macro_iki_vocabularys_delete(status, content)  f_macro_string_rangess_delete(status, content)
-  #define f_macro_iki_vocabularys_destroy(status, content) f_macro_string_rangess_destroy(status, content)
+  #define f_macro_iki_vocabularys_t_delete(status, content)  f_macro_string_rangess_t_delete(status, content)
+  #define f_macro_iki_vocabularys_t_destroy(status, content) f_macro_string_rangess_t_destroy(status, content)
 
-  #define f_macro_iki_vocabularys_delete_simple(content)  f_macro_string_rangess_delete_simple(content)
-  #define f_macro_iki_vocabularys_destroy_simple(content) f_macro_string_rangess_destroy_simple(content)
+  #define f_macro_iki_vocabularys_t_delete_simple(content)  f_macro_string_rangess_t_delete_simple(content)
+  #define f_macro_iki_vocabularys_t_destroy_simple(content) f_macro_string_rangess_t_destroy_simple(content)
 
-  #define f_macro_iki_vocabularys_resize(status, content, new_length) f_macro_string_rangess_resize(status, content, new_length)
-  #define f_macro_iki_vocabularys_adjust(status, content, new_length) f_macro_string_rangess_adjust(status, content, new_length)
-#endif // _di_iki_vocabularys_
+  #define f_macro_iki_vocabularys_t_resize(status, content, new_length) f_macro_string_rangess_t_resize(status, content, new_length)
+  #define f_macro_iki_vocabularys_t_adjust(status, content, new_length) f_macro_string_rangess_t_adjust(status, content, new_length)
+#endif // _di_iki_vocabularys_t_
 
 /**
  * This holds an array of string ranges that represent the content.
@@ -148,50 +148,50 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_iki_content_
-  typedef f_string_ranges f_iki_content;
+#ifndef _di_iki_content_t_
+  typedef f_string_ranges_t f_iki_content_t;
 
-  #define f_iki_content_initialize f_string_ranges_initialize
+  #define f_iki_content_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_iki_content_clear(content) f_macro_string_ranges_clear(content)
+  #define f_macro_iki_content_t_clear(content) f_macro_string_ranges_t_clear(content)
 
-  #define f_macro_iki_content_new(status, content, length) f_macro_string_ranges_new(status, content, length)
+  #define f_macro_iki_content_t_new(status, content, length) f_macro_string_ranges_t_new(status, content, length)
 
-  #define f_macro_iki_content_delete(status, content)  f_macro_string_ranges_delete(status, content)
-  #define f_macro_iki_content_destroy(status, content) f_macro_string_ranges_destroy(status, content)
+  #define f_macro_iki_content_t_delete(status, content)  f_macro_string_ranges_t_delete(status, content)
+  #define f_macro_iki_content_t_destroy(status, content) f_macro_string_ranges_t_destroy(status, content)
 
-  #define f_macro_iki_content_delete_simple(content)  f_macro_string_ranges_delete_simple(content)
-  #define f_macro_iki_content_destroy_simple(content) f_macro_string_ranges_destroy_simple(content)
+  #define f_macro_iki_content_t_delete_simple(content)  f_macro_string_ranges_t_delete_simple(content)
+  #define f_macro_iki_content_t_destroy_simple(content) f_macro_string_ranges_t_destroy_simple(content)
 
-  #define f_macro_iki_content_resize(status, content, new_length) f_macro_string_ranges_resize(status, content, new_length)
-  #define f_macro_iki_content_adjust(status, content, new_length) f_macro_string_ranges_adjust(status, content, new_length)
-#endif // _di_iki_content_
+  #define f_macro_iki_content_t_resize(status, content, new_length) f_macro_string_ranges_t_resize(status, content, new_length)
+  #define f_macro_iki_content_t_adjust(status, content, new_length) f_macro_string_ranges_t_adjust(status, content, new_length)
+#endif // _di_iki_content_t_
 
 /**
- * This holds an array of f_iki_content.
+ * This holds an array of f_iki_content_t.
  *
  * array: The array of content.
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_iki_contents_
-  typedef f_string_rangess f_iki_contents;
+#ifndef _di_iki_contents_t_
+  typedef f_string_rangess_t f_iki_contents_t;
 
-  #define f_iki_contents_initialize f_string_rangess_initialize
+  #define f_iki_contents_t_initialize f_string_rangess_t_initialize
 
-  #define f_macro_iki_contents_clear(content) f_macro_string_rangess_clear(content)
+  #define f_macro_iki_contents_t_clear(content) f_macro_string_rangess_t_clear(content)
 
-  #define f_macro_iki_contents_new(status, content, length) f_macro_string_rangess_new(status, content, length)
+  #define f_macro_iki_contents_t_new(status, content, length) f_macro_string_rangess_t_new(status, content, length)
 
-  #define f_macro_iki_contents_delete(status, content)  f_macro_string_rangess_delete(status, content)
-  #define f_macro_iki_contents_destroy(status, content) f_macro_string_rangess_destroy(status, content)
+  #define f_macro_iki_contents_t_delete(status, content)  f_macro_string_rangess_t_delete(status, content)
+  #define f_macro_iki_contents_t_destroy(status, content) f_macro_string_rangess_t_destroy(status, content)
 
-  #define f_macro_iki_contents_delete_simple(content)  f_macro_string_rangess_delete_simple(content)
-  #define f_macro_iki_contents_destroy_simple(content) f_macro_string_rangess_destroy_simple(content)
+  #define f_macro_iki_contents_t_delete_simple(content)  f_macro_string_rangess_t_delete_simple(content)
+  #define f_macro_iki_contents_t_destroy_simple(content) f_macro_string_rangess_t_destroy_simple(content)
 
-  #define f_macro_iki_contents_resize(status, content, new_length) f_macro_string_rangess_resize(status, content, new_length)
-  #define f_macro_iki_contents_adjust(status, content, new_length) f_macro_string_rangess_adjust(status, content, new_length)
-#endif // _di_iki_contents_
+  #define f_macro_iki_contents_t_resize(status, content, new_length) f_macro_string_rangess_t_resize(status, content, new_length)
+  #define f_macro_iki_contents_t_adjust(status, content, new_length) f_macro_string_rangess_t_adjust(status, content, new_length)
+#endif // _di_iki_contents_t_
 
 /**
  * Provide a default allocation step.
@@ -212,16 +212,16 @@ extern "C" {
   #define f_macro_iki_allocate_delimits_if_necessary(status, delimits) \
     status = F_none; \
     if (delimits.used == delimits.size) { \
-      if (delimits.used + f_iki_default_allocation_step > f_string_length_size) { \
-        if (delimits.used == f_string_length_size) { \
+      if (delimits.used + f_iki_default_allocation_step > f_string_length_t_size) { \
+        if (delimits.used == f_string_length_t_size) { \
           status = F_status_set_error(F_string_too_large); \
         } \
         else { \
-          f_macro_string_lengths_resize(status, delimits, delimits.size + 1); \
+          f_macro_string_lengths_t_resize(status, delimits, delimits.size + 1); \
         } \
       } \
       else { \
-        f_macro_string_lengths_resize(status, delimits, delimits.size + f_iki_default_allocation_step); \
+        f_macro_string_lengths_t_resize(status, delimits, delimits.size + f_iki_default_allocation_step); \
       } \
     }
 #endif // _di_f_macro_iki_allocate_delimits_if_necessary_
@@ -236,16 +236,16 @@ extern "C" {
   #define f_macro_iki_allocate_ranges_if_necessary(status, ranges) \
     status = F_none; \
     if (ranges.used == ranges.size) { \
-      if (ranges.used + f_iki_default_allocation_step > f_string_length_size) { \
-        if (ranges.used == f_string_length_size) { \
+      if (ranges.used + f_iki_default_allocation_step > f_string_length_t_size) { \
+        if (ranges.used == f_string_length_t_size) { \
           status = F_status_set_error(F_string_too_large); \
         } \
         else { \
-          f_macro_string_ranges_resize(status, ranges, ranges.size + 1); \
+          f_macro_string_ranges_t_resize(status, ranges, ranges.size + 1); \
         } \
       } \
       else { \
-        f_macro_string_ranges_resize(status, ranges, ranges.size + f_iki_default_allocation_step); \
+        f_macro_string_ranges_t_resize(status, ranges, ranges.size + f_iki_default_allocation_step); \
       } \
     }
 #endif // _di_f_macro_iki_allocate_ranges_if_necessary_

@@ -6,8 +6,8 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  f_return_status private_fl_fss_basic_object_read(f_string_dynamic *buffer, f_string_range *range, f_fss_object *found, f_fss_quoted *quoted, f_string_lengths *delimits) {
-    f_status status = F_none;
+  f_return_status private_fl_fss_basic_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quoted_t *quoted, f_string_lengths_t *delimits) {
+    f_status_t status = F_none;
 
     status = f_fss_skip_past_space(*buffer, range);
     if (F_status_is_error(status)) return status;
@@ -43,7 +43,7 @@ extern "C" {
     }
 
     // delimits must only be applied once a valid object is found->
-    const f_string_length delimit_initial = delimits->used;
+    const f_string_length_t delimit_initial = delimits->used;
 
     // handle quoted support.
     int8_t quote = 0;
@@ -54,7 +54,7 @@ extern "C" {
 
     // identify where the object begins.
     if (buffer->string[range->start] == f_fss_delimit_slash) {
-      f_string_length first_slash = range->start;
+      f_string_length_t first_slash = range->start;
 
       found->start = range->start;
 
@@ -115,16 +115,16 @@ extern "C" {
         // only the first slash before a quoted needs to be escaped (or not) as once there is a slash before a quoted, this cannot ever be a quote object.
         // this simplifies the number of slashes needed.
         if (delimits->used == delimits->size) {
-          if (delimits->size + f_fss_default_allocation_step > f_array_length_size) {
-            if (delimits->size + 1 > f_array_length_size) {
+          if (delimits->size + f_fss_default_allocation_step > f_array_length_t_size) {
+            if (delimits->size + 1 > f_array_length_t_size) {
               return F_status_set_error(F_buffer_too_large);
             }
 
-            f_macro_string_lengths_resize(status, (*delimits), delimits->size + 1);
+            f_macro_string_lengths_t_resize(status, (*delimits), delimits->size + 1);
             if (F_status_is_error(status)) return status;
           }
           else {
-            f_macro_string_lengths_resize(status, (*delimits), delimits->size + f_fss_default_allocation_step);
+            f_macro_string_lengths_t_resize(status, (*delimits), delimits->size + f_fss_default_allocation_step);
             if (F_status_is_error(status)) return status;
           }
         }
@@ -175,8 +175,8 @@ extern "C" {
       while (range->start <= range->stop && range->start < buffer->used) {
 
         if (buffer->string[range->start] == f_fss_delimit_slash) {
-          f_string_length first_slash = range->start;
-          f_string_length slash_count = 1;
+          f_string_length_t first_slash = range->start;
+          f_string_length_t slash_count = 1;
 
           status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
@@ -211,7 +211,7 @@ extern "C" {
           }
 
           if (buffer->string[range->start] == quote) {
-            f_string_length location = range->start;
+            f_string_length_t location = range->start;
 
             // check to see if there is a whitespace, EOS, or EOL after the quoted, if not, then this is not a closing quoted and delimits do not apply.
             if (range->start + 1 <= range->stop && range->start + 1 < buffer->used) {
@@ -249,11 +249,11 @@ extern "C" {
 
               if (slash_count % 2 == 0) {
                 if (delimits->used + (slash_count / 2) >= delimits->size) {
-                  if (delimits->used + (slash_count / 2) >= f_array_length_size) {
+                  if (delimits->used + (slash_count / 2) >= f_array_length_t_size) {
                     return F_status_set_error(F_buffer_too_large);
                   }
 
-                  f_macro_string_lengths_resize(status, (*delimits), delimits->size + (slash_count / 2));
+                  f_macro_string_lengths_t_resize(status, (*delimits), delimits->size + (slash_count / 2));
                   if (F_status_is_error(status)) return status;
                 }
 
@@ -319,11 +319,11 @@ extern "C" {
               }
               else {
                 if (delimits->used + (slash_count / 2) >= delimits->size) {
-                  if (delimits->used + (slash_count / 2) >= f_array_length_size) {
+                  if (delimits->used + (slash_count / 2) >= f_array_length_t_size) {
                     return F_status_set_error(F_buffer_too_large);
                   }
 
-                  f_macro_string_lengths_resize(status, (*delimits), delimits->size + (slash_count / 2) + 1);
+                  f_macro_string_lengths_t_resize(status, (*delimits), delimits->size + (slash_count / 2) + 1);
                   if (F_status_is_error(status)) return status;
                 }
 
@@ -352,7 +352,7 @@ extern "C" {
         else if (buffer->string[range->start] == quote) {
           // check to see if there is a whitespace, EOS, or EOL after the quoted, if not, then this is not a closing quoted.
           {
-            f_string_length location = range->start;
+            f_string_length_t location = range->start;
 
             if (range->start + 1 <= range->stop && range->start + 1 < buffer->used) {
               range->start++;
@@ -488,8 +488,8 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_)
 
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
-  f_return_status private_fl_fss_basic_object_write(const f_string_static object, const f_fss_quoted quoted, f_string_range *range, f_string_dynamic *destination) {
-    f_status status = F_none;
+  f_return_status private_fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) {
+    f_status_t status = F_none;
 
     fl_macro_fss_skip_past_delimit_placeholders(object, (*range));
 
@@ -497,16 +497,16 @@ extern "C" {
     else if (range->start >= object.used) return F_data_not_eos;
 
     // ensure that there is room for the start and stop quotes or a slash delimit and the object open character.
-    f_string_length size_allocate = destination->used + (range->stop - range->start) + 3 + f_fss_default_allocation_step_string;
+    f_string_length_t size_allocate = destination->used + (range->stop - range->start) + 3 + f_fss_default_allocation_step_string;
 
     if (size_allocate > destination->size) {
-      f_macro_string_dynamic_resize(status, (*destination), size_allocate);
+      f_macro_string_dynamic_t_resize(status, (*destination), size_allocate);
       if (F_status_is_error(status)) return status;
     }
 
-    const f_string_length position_start = range->start;
+    const f_string_length_t position_start = range->start;
 
-    f_string_range destination_position = f_string_range_initialize;
+    f_string_range_t destination_position = f_string_range_initialize;
 
     destination_position.start = destination->used;
     destination_position.stop  = destination->used;
@@ -550,7 +550,7 @@ extern "C" {
           size_allocate++;
 
           if (size_allocate > destination->size) {
-            f_macro_string_dynamic_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+            f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
             if (F_status_is_error(status)) return status;
           }
 
@@ -567,7 +567,7 @@ extern "C" {
       size_allocate++;
 
       if (size_allocate > destination->size) {
-        f_macro_string_dynamic_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+        f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
 
         if (F_status_is_error(status)) return status;
       }
@@ -602,8 +602,8 @@ extern "C" {
 
       if (quote) {
         if (object.string[range->start] == f_fss_delimit_slash) {
-          f_string_range next = *range;
-          f_string_length slashes = 1;
+          f_string_range_t next = *range;
+          f_string_length_t slashes = 1;
 
           bool must_delimit = F_false;
 
@@ -650,7 +650,7 @@ extern "C" {
           }
 
           if (must_delimit) {
-            for (f_string_length i = 0; i < slashes; i++) {
+            for (f_string_length_t i = 0; i < slashes; i++) {
               destination->string[destination_position.stop] = f_fss_delimit_slash;
               destination_position.stop++;
             } // for
@@ -659,7 +659,7 @@ extern "C" {
               size_allocate++;
 
               if (size_allocate > destination->size) {
-                f_macro_string_dynamic_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+                f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
                 if (F_status_is_error(status)) return status;
               }
 
@@ -669,7 +669,7 @@ extern "C" {
           }
         }
         else if (object.string[range->start] == destination->string[destination_position.start]) {
-          f_string_range next = *range;
+          f_string_range_t next = *range;
           bool must_delimit = F_false;
 
           status = f_utf_buffer_increment(object, &next, 1);
@@ -695,7 +695,7 @@ extern "C" {
             size_allocate++;
 
             if (size_allocate > destination->size) {
-              f_macro_string_dynamic_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+              f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
               if (F_status_is_error(status)) return status;
             }
 
@@ -711,7 +711,7 @@ extern "C" {
           size_allocate++;
 
           if (size_allocate > destination->size) {
-            f_macro_string_dynamic_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+            f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
             if (F_status_is_error(status)) return status;
           }
 
@@ -749,7 +749,7 @@ extern "C" {
               size_allocate++;
 
               if (size_allocate > destination->size) {
-                f_macro_string_dynamic_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+                f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
                 if (F_status_is_error(status)) return status;
               }
 
@@ -761,7 +761,7 @@ extern "C" {
             size_allocate++;
 
             if (size_allocate > destination->size) {
-              f_macro_string_dynamic_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+              f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
               if (F_status_is_error(status)) return status;
             }
 

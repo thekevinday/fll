@@ -56,7 +56,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _fl_console_parameter_to_string_dynamic_directory_
-  extern f_return_status fl_console_parameter_to_string_dynamic_directory(const f_string argument, f_string_dynamic *directory);
+  extern f_return_status fl_console_parameter_to_string_dynamic_directory(const f_string_t argument, f_string_dynamic_t *directory);
 #endif // _fl_console_parameter_to_string_dynamic_directory_
 
 #ifdef __cplusplus

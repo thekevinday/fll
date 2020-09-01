@@ -18,31 +18,31 @@ typedef struct {
   bool is_stop;
   bool is_lock;
 
-  f_array_length device;
+  f_array_length_t device;
 
-  f_string_dynamic buffer;
-  f_array_length chain;
-  f_array_lengths chain_ids;
-  f_fss_objects chain_objects;
-  f_fss_contents chain_contents;
-  f_fss_objects rule_objects;
-  f_fss_contents rule_contents;
-} firewall_local_data;
+  f_string_dynamic_t buffer;
+  f_array_length_t chain;
+  f_array_lengths_t chain_ids;
+  f_fss_objects_t chain_objects;
+  f_fss_contents_t chain_contents;
+  f_fss_objects_t rule_objects;
+  f_fss_contents_t rule_contents;
+} firewall_local_data_t;
 
-#define firewall_local_data_initialize \
+#define firewall_local_data_t_initialize \
   { \
     F_true, \
     F_false, \
     F_false, \
     F_false, \
     0, \
-    f_string_dynamic_initialize, \
+    f_string_dynamic_t_initialize, \
     0, \
-    f_array_lengths_initialize, \
-    f_fss_objects_initialize, \
-    f_fss_contents_initialize, \
-    f_fss_objects_initialize, \
-    f_fss_contents_initialize, \
+    f_array_lengths_t_initialize, \
+    f_fss_objects_t_initialize, \
+    f_fss_contents_t_initialize, \
+    f_fss_objects_t_initialize, \
+    f_fss_contents_t_initialize, \
   }
 
 typedef struct {
@@ -50,12 +50,12 @@ typedef struct {
   bool has_stop;
   bool has_lock;
 
-  f_array_length main_at;
-  f_array_length stop_at;
-  f_array_length lock_at;
-} firewall_reserved_chains;
+  f_array_length_t main_at;
+  f_array_length_t stop_at;
+  f_array_length_t lock_at;
+} firewall_reserved_chains_t;
 
-#define firewall_reserved_chains_initialize \
+#define firewall_reserved_chains_t_initialize \
   { \
     F_false, \
     F_false, \
@@ -66,9 +66,9 @@ typedef struct {
   }
 
 #define firewall_macro_delete_fss_buffers(status, buffer, objects, contents) \
-  f_macro_string_dynamic_delete(status, buffer); \
-  f_macro_fss_objects_delete(status, objects); \
-  f_macro_fss_contents_delete(status, contents);
+  f_macro_string_dynamic_t_delete(status, buffer); \
+  f_macro_fss_objects_t_delete(status, objects); \
+  f_macro_fss_contents_t_delete(status, contents);
 
 #define firewall_macro_concat_string(destination, source, length) \
   memcpy((void *)(destination), source, length);
@@ -98,7 +98,7 @@ typedef struct {
   arguments.array[arguments.used].used   = argument.used; \
   arguments.used++; \
   \
-  f_macro_string_dynamic_clear(argument);
+  f_macro_string_dynamic_t_clear(argument);
 
 /**
  * Perform commands.
@@ -113,7 +113,7 @@ typedef struct {
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_return_status firewall_perform_commands(const firewall_local_data local, const firewall_data data) f_gcc_attribute_visibility_internal;
+f_return_status firewall_perform_commands(const firewall_local_data_t local, const firewall_data_t data) f_gcc_attribute_visibility_internal;
 
 /**
  * Create custom chains.
@@ -130,7 +130,7 @@ f_return_status firewall_perform_commands(const firewall_local_data local, const
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
+f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserved, firewall_local_data_t *local, firewall_data_t *data) f_gcc_attribute_visibility_internal;
 
 /**
  * Deallocate chains.
@@ -143,7 +143,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains *reserved
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_return_status firewall_delete_chains(const firewall_data data) f_gcc_attribute_visibility_internal;
+f_return_status firewall_delete_chains(const firewall_data_t data) f_gcc_attribute_visibility_internal;
 
 /**
  * Lock the firewall.
@@ -156,7 +156,7 @@ f_return_status firewall_delete_chains(const firewall_data data) f_gcc_attribute
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_return_status firewall_default_lock(const firewall_data data) f_gcc_attribute_visibility_internal;
+f_return_status firewall_default_lock(const firewall_data_t data) f_gcc_attribute_visibility_internal;
 
 /**
  * Buffer firewall rules.
@@ -176,7 +176,7 @@ f_return_status firewall_default_lock(const firewall_data data) f_gcc_attribute_
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_return_status firewall_buffer_rules(const f_string filename, const bool optional, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
+f_return_status firewall_buffer_rules(const f_string_t filename, const bool optional, firewall_local_data_t *local, firewall_data_t *data) f_gcc_attribute_visibility_internal;
 
 /**
  * Process buffered rules.
@@ -193,7 +193,7 @@ f_return_status firewall_buffer_rules(const f_string filename, const bool option
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_return_status firewall_process_rules(f_string_range *range, firewall_local_data *local, firewall_data *data) f_gcc_attribute_visibility_internal;
+f_return_status firewall_process_rules(f_string_range_t *range, firewall_local_data_t *local, firewall_data_t *data) f_gcc_attribute_visibility_internal;
 
 /**
  * Delete allocated data.
@@ -206,7 +206,7 @@ f_return_status firewall_process_rules(f_string_range *range, firewall_local_dat
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_return_status firewall_delete_local_data(firewall_local_data *local) f_gcc_attribute_visibility_internal;
+f_return_status firewall_delete_local_data(firewall_local_data_t *local) f_gcc_attribute_visibility_internal;
 
 #ifdef __cplusplus
 } // extern "C"

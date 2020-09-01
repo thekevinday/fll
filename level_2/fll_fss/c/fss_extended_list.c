@@ -5,20 +5,20 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_extended_list_read_
-  f_return_status fll_fss_extended_list_read(f_string_dynamic *buffer, f_string_range *range, f_fss_nest *nest) {
+  f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest) {
     #ifndef _di_level_3_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
       if (nest == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_3_parameter_checking_
 
-    f_status status = F_none;
-    f_status status2 = F_none;
-    f_string_length initial_used = 0;
+    f_status_t status = F_none;
+    f_status_t status2 = F_none;
+    f_string_length_t initial_used = 0;
     bool found_data = F_false;
 
     if (nest->used == 0) {
-      f_macro_fss_nest_resize(status2, (*nest), f_fss_default_allocation_step);
+      f_macro_fss_nest_t_resize(status2, (*nest), f_fss_default_allocation_step);
       if (F_status_is_error(status2)) return status2;
     }
     else {
@@ -28,7 +28,7 @@ extern "C" {
     do {
       do {
         if (nest->depth[0].used == nest->depth[0].size) {
-          f_macro_fss_items_resize(status2, nest->depth[0], nest->depth[0].used + f_fss_default_allocation_step);
+          f_macro_fss_items_t_resize(status2, nest->depth[0], nest->depth[0].used + f_fss_default_allocation_step);
           if (F_status_is_error(status)) return status;
         }
 
@@ -101,7 +101,7 @@ extern "C" {
 
         return F_none_stop;
       }
-    } while (range->start < f_string_length_size);
+    } while (range->start < f_string_length_t_size);
 
     return F_status_is_error(F_number_overflow);
   }
@@ -109,15 +109,15 @@ extern "C" {
 
 /*
 #ifndef _di_fll_fss_extended_list_write_
-  f_return_status fll_fss_extended_list_write(const f_string_static object, const f_string_statics contents, f_string_dynamic *buffer) {
+  f_return_status fll_fss_extended_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer) {
     #ifndef _di_level_3_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (contents.used > contents.size) return F_status_set_error(F_parameter);
     #endif // _di_level_3_parameter_checking_
 
-    f_status status = 0;
-    f_array_length current = 0;
-    f_string_range range = f_string_range_initialize;
+    f_status_t status = 0;
+    f_array_length_t current = 0;
+    f_string_range_t range = f_string_range_initialize;
 
     range.start = 0;
     range.stop = object.used - 1;

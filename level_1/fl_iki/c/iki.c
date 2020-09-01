@@ -5,8 +5,8 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_iki_read_
-  f_return_status fl_iki_read(f_string_static *buffer, f_string_range *range, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content) {
-    f_status status = F_none;
+  f_return_status fl_iki_read(f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) {
+    f_status_t status = F_none;
 
     do {
       status = f_iki_read(buffer, range, variable, vocabulary, content);

@@ -74,7 +74,7 @@ extern "C" {
  *   Errors from (with error bit): f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_basic_object_read_
-  extern f_return_status fl_fss_basic_object_read(f_string_dynamic *buffer, f_string_range *range, f_fss_object *found, f_fss_quoted *quoted);
+  extern f_return_status fl_fss_basic_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quoted_t *quoted);
 #endif // _di_fl_fss_basic_object_read_
 
 /**
@@ -117,7 +117,7 @@ extern "C" {
  *   Errors from (with error bit): f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_basic_content_read_
-  extern f_return_status fl_fss_basic_content_read(f_string_dynamic *buffer, f_string_range *range, f_fss_content *found);
+  extern f_return_status fl_fss_basic_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found);
 #endif // _di_fl_fss_basic_content_read_
 
 /**
@@ -151,7 +151,7 @@ extern "C" {
  *   Errors from (with error bit): f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_basic_object_write_
-  extern f_return_status fl_fss_basic_object_write(const f_string_static object, const f_fss_quoted quoted, f_string_range *range, f_string_dynamic *destination);
+  extern f_return_status fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_basic_object_write_
 
 /**
@@ -180,7 +180,7 @@ extern "C" {
  *   Errors from (with error bit): f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_basic_content_write_
-  extern f_return_status fl_fss_basic_content_write(const f_string_static content, f_string_range *range, f_string_dynamic *destination);
+  extern f_return_status fl_fss_basic_content_write(const f_string_static_t content, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_basic_content_write_
 
 #ifdef __cplusplus

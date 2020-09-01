@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_read_print_help_
-  f_return_status iki_read_print_help(const fl_color_context context) {
+  f_return_status iki_read_print_help(const fl_color_context_t context) {
     fll_program_print_help_header(context, iki_read_name_long, iki_read_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -85,13 +85,13 @@ extern "C" {
 #endif // _di_iki_read_print_help_
 
 #ifndef _di_iki_read_main_
-  f_return_status iki_read_main(const f_console_arguments arguments, iki_read_data *data) {
-    f_status status = F_none;
+  f_return_status iki_read_main(const f_console_arguments_t arguments, iki_read_data_t *data) {
+    f_status_t status = F_none;
 
     {
-      f_console_parameters parameters = { data->parameters, iki_read_total_parameters };
-      f_console_parameter_id ids[3] = { iki_read_parameter_no_color, iki_read_parameter_light, iki_read_parameter_dark };
-      f_console_parameter_ids choices = { ids, 3 };
+      f_console_parameters_t parameters = { data->parameters, iki_read_total_parameters };
+      f_console_parameter_id_t ids[3] = { iki_read_parameter_no_color, iki_read_parameter_light, iki_read_parameter_dark };
+      f_console_parameter_ids_t choices = { ids, 3 };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
       if (F_status_is_error(status)) {
@@ -155,10 +155,10 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else if (data->parameters[iki_read_parameter_at].result == f_console_result_additional) {
-          const f_string_length index = data->parameters[iki_read_parameter_at].additional.array[data->parameters[iki_read_parameter_at].additional.used - 1];
-          const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
+          const f_string_length_t index = data->parameters[iki_read_parameter_at].additional.array[data->parameters[iki_read_parameter_at].additional.used - 1];
+          const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
-          f_number_unsigned number = 0;
+          f_number_unsigned_t number = 0;
 
           status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
           if (F_status_is_error(status)) {
@@ -194,10 +194,10 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else if (data->parameters[iki_read_parameter_line].result == f_console_result_additional) {
-          const f_string_length index = data->parameters[iki_read_parameter_line].additional.array[data->parameters[iki_read_parameter_line].additional.used - 1];
-          const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
+          const f_string_length_t index = data->parameters[iki_read_parameter_line].additional.array[data->parameters[iki_read_parameter_line].additional.used - 1];
+          const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
-          f_number_unsigned number = 0;
+          f_number_unsigned_t number = 0;
 
           status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
           if (F_status_is_error(status)) {
@@ -323,7 +323,7 @@ extern "C" {
         }
 
         if (data->process_pipe) {
-          f_file file = f_file_initialize;
+          f_file_t file = f_file_t_initialize;
 
           file.id = f_type_descriptor_input;
 
@@ -337,16 +337,16 @@ extern "C" {
           }
 
           // Clear buffers before continuing.
-          f_macro_string_dynamic_delete_simple(data->buffer);
+          f_macro_string_dynamic_t_delete_simple(data->buffer);
         }
 
         if (F_status_is_fine(status) && data->remaining.used > 0) {
-          f_string_length i = 0;
-          f_string_length total = 0;
-          f_file file = f_file_initialize;
+          f_string_length_t i = 0;
+          f_string_length_t total = 0;
+          f_file_t file = f_file_t_initialize;
 
           for (; i < data->remaining.used; i++) {
-            f_macro_file_reset(file);
+            f_macro_file_t_reset(file);
             total = 0;
 
             status = f_file_open(arguments.argv[data->remaining.array[i]], 0, &file);
@@ -382,7 +382,7 @@ extern "C" {
             if (F_status_is_error(status)) break;
 
             // Clear buffers before repeating the loop.
-            f_macro_string_dynamic_delete_simple(data->buffer);
+            f_macro_string_dynamic_t_delete_simple(data->buffer);
           } // for
         }
       }
@@ -409,19 +409,19 @@ extern "C" {
 #endif // _di_iki_read_main_
 
 #ifndef _di_iki_read_delete_data_
-  f_return_status iki_read_delete_data(iki_read_data *data) {
-    f_status status = F_none;
-    f_string_length i = 0;
+  f_return_status iki_read_delete_data(iki_read_data_t *data) {
+    f_status_t status = F_none;
+    f_string_length_t i = 0;
 
     while (i < iki_read_total_parameters) {
-      f_macro_string_lengths_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
       i++;
     } // while
 
-    f_macro_string_lengths_delete_simple(data->remaining);
-    f_macro_string_dynamic_delete_simple(data->buffer);
-    fl_macro_color_context_delete_simple(data->context);
+    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_string_dynamic_t_delete_simple(data->buffer);
+    fl_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
   }

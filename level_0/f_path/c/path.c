@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_path_change_
-  f_return_status f_path_change(const f_string path) {
+  f_return_status f_path_change(const f_string_t path) {
 
     if (chdir(path) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -50,7 +50,7 @@ extern "C" {
 #endif // _di_f_path_change_at_
 
 #ifndef _di_f_path_current_
-  f_return_status f_path_current(const bool real, f_string_dynamic *path) {
+  f_return_status f_path_current(const bool real, f_string_dynamic_t *path) {
     #ifndef _di_level_0_parameter_checking_
       if (path == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -73,12 +73,12 @@ extern "C" {
       return private_f_path_real(buffer, path);
     }
 
-    const f_string_length length = strnlen(buffer, f_path_max);
+    const f_string_length_t length = strnlen(buffer, f_path_max);
 
     if (length + 1 > path->size) {
-      f_status status = F_none;
+      f_status_t status = F_none;
 
-      f_macro_string_dynamic_new(status, (*path), length + 1);
+      f_macro_string_dynamic_t_new(status, (*path), length + 1);
       if (F_status_is_error(status)) return status;
     }
 
@@ -92,7 +92,7 @@ extern "C" {
 #endif // _di_f_path_current_
 
 #ifndef _di_f_path_real_
-  f_return_status f_path_real(const f_string path, f_string_dynamic *real) {
+  f_return_status f_path_real(const f_string_t path, f_string_dynamic_t *real) {
     #ifndef _di_level_0_parameter_checking_
       if (real == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

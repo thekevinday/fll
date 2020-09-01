@@ -19,7 +19,7 @@ extern "C" {
 /**
  * FSS-specific types.
  */
-#ifndef _di_f_fss_types_
+#ifndef _di_f_fss_types_t_
   #define f_fss_comment             '#'
   #define f_fss_space               ' '
   #define f_fss_space_holder        '_'
@@ -40,8 +40,8 @@ extern "C" {
   #define f_fss_type_header_part5   '-'
   #define f_fss_type_header_close   '\n'
 
-  typedef unsigned long f_fss_id;
-#endif // _di_f_fss_types_
+  typedef unsigned long f_fss_id_t;
+#endif // _di_f_fss_types_t_
 
 /**
  * FSS-specific delimiters.
@@ -101,23 +101,23 @@ extern "C" {
 /**
  * An array of string locations representing where a delimit was applied or is to be applied with respect to some string.
  */
-#ifndef _di_f_fss_delimits_
-  typedef f_string_ranges f_fss_delimits;
+#ifndef _di_f_fss_delimits_t_
+  typedef f_string_ranges_t f_fss_delimits_t;
 
-  #define f_fss_delimits_initialize f_string_ranges_initialize
+  #define f_fss_delimits_initialize f_string_ranges_t_initialize
 
-  #define f_macro_fss_delimits_clear(delimits) f_macro_memory_structure_clear(delimits)
+  #define f_macro_fss_delimits_clear(delimits) f_macro_memory_structure_t_clear(delimits)
 
-  #define f_macro_fss_delimits_new(status, delimits)     f_macro_string_ranges_new(status, delimits)
-  #define f_macro_fss_delimits_delete(status, delimits)  f_macro_string_ranges_delete(status, delimits)
-  #define f_macro_fss_delimits_destroy(status, delimits) f_macro_string_ranges_destroy(status, delimits)
+  #define f_macro_fss_delimits_new(status, delimits)     f_macro_string_ranges_t_new(status, delimits)
+  #define f_macro_fss_delimits_delete(status, delimits)  f_macro_string_ranges_t_delete(status, delimits)
+  #define f_macro_fss_delimits_destroy(status, delimits) f_macro_string_ranges_t_destroy(status, delimits)
 
-  #define f_macro_fss_delimits_delete_simple(delimits)  f_macro_string_ranges_delete_simple(delimits)
-  #define f_macro_fss_delimits_destroy_simple(delimits) f_macro_string_ranges_destroy_simple(delimits)
+  #define f_macro_fss_delimits_delete_simple(delimits)  f_macro_string_ranges_t_delete_simple(delimits)
+  #define f_macro_fss_delimits_destroy_simple(delimits) f_macro_string_ranges_t_destroy_simple(delimits)
 
-  #define f_macro_fss_delimits_resize(status, delimits, new_length) f_macro_string_ranges_resize(status, delimits, new_length)
-  #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_string_ranges_adjust(status, delimits, new_length)
-#endif // _di_f_fss_delimits_
+  #define f_macro_fss_delimits_resize(status, delimits, new_length) f_macro_string_ranges_t_resize(status, delimits, new_length)
+  #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_string_ranges_t_adjust(status, delimits, new_length)
+#endif // _di_f_fss_delimits_t_
 
 /**
  * Stores information about a particular fss file, otherwise known as its header.
@@ -127,15 +127,15 @@ extern "C" {
  * type:   the kind of fss file is this.
  * length: Total length of the header.
  */
-#ifndef _di_f_fss_header_
+#ifndef _di_f_fss_header_t_
   typedef struct {
-    f_fss_id type;
+    f_fss_id_t type;
 
-    f_string_length length;
-  } f_fss_header;
+    f_string_length_t length;
+  } f_fss_header_t;
 
   #define f_fss_header_initialize { 0, 0 }
-#endif // _di_f_fss_header_
+#endif // _di_f_fss_header_t_
 
 /**
  * This holds an array of fss_headers.
@@ -144,40 +144,40 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_fss_headers_
+#ifndef _di_f_fss_headers_t_
   typedef struct {
-    f_fss_header *array;
+    f_fss_header_t *array;
 
-    f_string_length size;
-    f_string_length used;
-  } f_fss_headers;
+    f_string_length_t size;
+    f_string_length_t used;
+  } f_fss_headers_t;
 
   #define f_fss_headers_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_headers_clear(headers) f_macro_memory_structure_clear(headers)
+  #define f_macro_fss_headers_clear(headers) f_macro_memory_structure_t_clear(headers)
 
-  #define f_macro_fss_headers_new(status, headers, length) f_macro_memory_structure_new(status, headers, f_fss_header, length)
+  #define f_macro_fss_headers_new(status, headers, length) f_macro_memory_structure_t_new(status, headers, f_fss_header_t, length)
 
-  #define f_macro_fss_headers_delete(status, headers)  f_macro_memory_structure_delete(status, headers, f_fss_header)
-  #define f_macro_fss_headers_destroy(status, headers) f_macro_memory_structure_destroy(status, headers, f_fss_header)
+  #define f_macro_fss_headers_delete(status, headers)  f_macro_memory_structure_t_delete(status, headers, f_fss_header_t)
+  #define f_macro_fss_headers_destroy(status, headers) f_macro_memory_structure_t_destroy(status, headers, f_fss_header_t)
 
-  #define f_macro_fss_headers_delete_simple(headers)  f_macro_memory_structure_delete_simple(headers, f_fss_header)
-  #define f_macro_fss_headers_destroy_simple(headers) f_macro_memory_structure_destroy_simple(headers, f_fss_header)
+  #define f_macro_fss_headers_delete_simple(headers)  f_macro_memory_structure_t_delete_simple(headers, f_fss_header_t)
+  #define f_macro_fss_headers_destroy_simple(headers) f_macro_memory_structure_t_destroy_simple(headers, f_fss_header_t)
 
-  #define f_macro_fss_headers_resize(status, headers, new_length) f_macro_memory_structure_resize(status, headers, f_fss_header, new_length)
-  #define f_macro_fss_headers_adjust(status, headers, new_length) f_macro_memory_structure_adjust(status, headers, f_fss_header, new_length)
-#endif // _di_f_fss_headers_
+  #define f_macro_fss_headers_resize(status, headers, new_length) f_macro_memory_structure_t_resize(status, headers, f_fss_header_t, new_length)
+  #define f_macro_fss_headers_adjust(status, headers, new_length) f_macro_memory_structure_t_adjust(status, headers, f_fss_header_t, new_length)
+#endif // _di_f_fss_headers_t_
 
 /**
  * This is a range that represents an object.
  */
-#ifndef _di_fss_object_
-  typedef f_string_range f_fss_object;
+#ifndef _di_fss_object_t_
+  typedef f_string_range_t f_fss_object_t;
 
-  #define f_fss_object_initialize f_string_range_initialize
+  #define f_fss_object_t_initialize f_string_range_initialize
 
-  #define f_macro_fss_object_clear(object) f_macro_string_range_clear(object)
-#endif // _di_fss_object_
+  #define f_macro_fss_object_t_clear(object) f_macro_string_range_clear(object)
+#endif // _di_fss_object_t_
 
 /**
  * This holds an array of fss_object.
@@ -186,24 +186,24 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_fss_objects_
-  typedef f_string_ranges f_fss_objects;
+#ifndef _di_fss_objects_t_
+  typedef f_string_ranges_t f_fss_objects_t;
 
-  #define f_fss_objects_initialize f_string_ranges_initialize
+  #define f_fss_objects_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_fss_objects_clear(objects) f_macro_string_ranges_clear(objects)
+  #define f_macro_fss_objects_t_clear(objects) f_macro_string_ranges_t_clear(objects)
 
-  #define f_macro_fss_objects_new(status, objects, length) f_macro_string_ranges_new(status, objects, length)
+  #define f_macro_fss_objects_t_new(status, objects, length) f_macro_string_ranges_t_new(status, objects, length)
 
-  #define f_macro_fss_objects_delete(status, objects)  f_macro_string_ranges_delete(status, objects)
-  #define f_macro_fss_objects_destroy(status, objects) f_macro_string_ranges_destroy(status, objects)
+  #define f_macro_fss_objects_t_delete(status, objects)  f_macro_string_ranges_t_delete(status, objects)
+  #define f_macro_fss_objects_t_destroy(status, objects) f_macro_string_ranges_t_destroy(status, objects)
 
-  #define f_macro_fss_objects_delete_simple(objects)  f_macro_string_ranges_delete_simple(objects)
-  #define f_macro_fss_objects_destroy_simple(objects) f_macro_string_ranges_destroy_simple(objects)
+  #define f_macro_fss_objects_t_delete_simple(objects)  f_macro_string_ranges_t_delete_simple(objects)
+  #define f_macro_fss_objects_t_destroy_simple(objects) f_macro_string_ranges_t_destroy_simple(objects)
 
-  #define f_macro_fss_objects_resize(status, objects, new_length) f_macro_string_ranges_resize(status, objects, new_length)
-  #define f_macro_fss_objects_adjust(status, objects, new_length) f_macro_string_ranges_destroy(status, objects, new_length)
-#endif // _di_fss_objects_
+  #define f_macro_fss_objects_t_resize(status, objects, new_length) f_macro_string_ranges_t_resize(status, objects, new_length)
+  #define f_macro_fss_objects_t_adjust(status, objects, new_length) f_macro_string_ranges_t_destroy(status, objects, new_length)
+#endif // _di_fss_objects_t_
 
 /**
  * This holds an array of string ranges that represent the content.
@@ -215,22 +215,22 @@ extern "C" {
  * used:  Total number of allocated spaces used.
  */
 #ifndef _di_fss_content_
-  typedef f_string_ranges f_fss_content;
+  typedef f_string_ranges_t f_fss_content_t;
 
-  #define f_fss_content_initialize f_string_ranges_initialize
+  #define f_fss_content_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_fss_content_clear(content) f_macro_string_ranges_clear(content)
+  #define f_macro_fss_content_t_clear(content) f_macro_string_ranges_t_clear(content)
 
-  #define f_macro_fss_content_new(status, content, length) f_macro_string_ranges_new(status, content, length)
+  #define f_macro_fss_content_t_new(status, content, length) f_macro_string_ranges_t_new(status, content, length)
 
-  #define f_macro_fss_content_delete(status, content)  f_macro_string_ranges_delete(status, content)
-  #define f_macro_fss_content_destroy(status, content) f_macro_string_ranges_destroy(status, content)
+  #define f_macro_fss_content_t_delete(status, content)  f_macro_string_ranges_t_delete(status, content)
+  #define f_macro_fss_content_t_destroy(status, content) f_macro_string_ranges_t_destroy(status, content)
 
-  #define f_macro_fss_content_delete_simple(content)  f_macro_string_ranges_delete_simple(content)
-  #define f_macro_fss_content_destroy_simple(content) f_macro_string_ranges_destroy_simple(content)
+  #define f_macro_fss_content_t_delete_simple(content)  f_macro_string_ranges_t_delete_simple(content)
+  #define f_macro_fss_content_t_destroy_simple(content) f_macro_string_ranges_t_destroy_simple(content)
 
-  #define f_macro_fss_content_resize(status, content, new_length) f_macro_string_ranges_resize(status, content, new_length)
-  #define f_macro_fss_content_adjust(status, content, new_length) f_macro_string_ranges_adjust(status, content, new_length)
+  #define f_macro_fss_content_t_resize(status, content, new_length) f_macro_string_ranges_t_resize(status, content, new_length)
+  #define f_macro_fss_content_t_adjust(status, content, new_length) f_macro_string_ranges_t_adjust(status, content, new_length)
 #endif // _di_fss_content_
 
 /**
@@ -240,24 +240,24 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_fss_contents_
-  typedef f_string_rangess f_fss_contents;
+#ifndef _di_f_fss_contents_t_
+  typedef f_string_rangess_t f_fss_contents_t;
 
-  #define f_fss_contents_initialize f_string_rangess_initialize
+  #define f_fss_contents_t_initialize f_string_rangess_t_initialize
 
-  #define f_macro_fss_contents_clear(contents) f_macro_string_rangess_clear(contents)
+  #define f_macro_fss_contents_t_clear(contents) f_macro_string_rangess_t_clear(contents)
 
-  #define f_macro_fss_contents_new(status, contents, length) f_macro_string_rangess_new(status, contents, length)
+  #define f_macro_fss_contents_t_new(status, contents, length) f_macro_string_rangess_t_new(status, contents, length)
 
-  #define f_macro_fss_contents_delete(status, contents)  f_macro_string_rangess_delete(status, contents)
-  #define f_macro_fss_contents_destroy(status, contents) f_macro_string_rangess_destroy(status, contents)
+  #define f_macro_fss_contents_t_delete(status, contents)  f_macro_string_rangess_t_delete(status, contents)
+  #define f_macro_fss_contents_t_destroy(status, contents) f_macro_string_rangess_t_destroy(status, contents)
 
-  #define f_macro_fss_contents_delete_simple(contents)  f_macro_string_rangess_delete_simple(contents)
-  #define f_macro_fss_contents_destroy_simple(contents) f_macro_string_rangess_destroy_simple(contents)
+  #define f_macro_fss_contents_t_delete_simple(contents)  f_macro_string_rangess_t_delete_simple(contents)
+  #define f_macro_fss_contents_t_destroy_simple(contents) f_macro_string_rangess_t_destroy_simple(contents)
 
-  #define f_macro_fss_contents_resize(status, contents, new_length) f_macro_string_rangess_resize(status, contents, new_length)
-  #define f_macro_fss_contents_adjust(status, contents, new_length) f_macro_string_rangess_adjust(status, contents, new_length)
-#endif // _di_f_fss_contents_
+  #define f_macro_fss_contents_t_resize(status, contents, new_length) f_macro_string_rangess_t_resize(status, contents, new_length)
+  #define f_macro_fss_contents_t_adjust(status, contents, new_length) f_macro_string_rangess_t_adjust(status, contents, new_length)
+#endif // _di_f_fss_contents_t_
 
 #ifdef __cplusplus
 } // extern "C"

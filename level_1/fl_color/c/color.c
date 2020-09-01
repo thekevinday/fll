@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_color_set_
-  f_return_status fl_color_set(FILE *file, const f_color_format format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
+  f_return_status fl_color_set(FILE *file, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return F_status_set_error(F_parameter);
       if (color1 == 0) return F_status_set_error(F_parameter);
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_fl_color_set_
 
 #ifndef _di_fl_color_save_
-  f_return_status fl_color_save(f_string_dynamic *buffer, const f_color_format format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
+  f_return_status fl_color_save(f_string_dynamic_t *buffer, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (color1 == 0) return F_status_set_error(F_parameter);
@@ -38,7 +38,7 @@ extern "C" {
       if (color4 == 0 && color5 != 0)                                 return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_string_length string_size = strnlen(format.begin, f_color_max_size) + strnlen(format.end, f_color_max_size) + 1;
+    f_string_length_t string_size = strnlen(format.begin, f_color_max_size) + strnlen(format.end, f_color_max_size) + 1;
 
     if      (color2 == 0) string_size += strnlen(color1, f_color_max_size);
     else if (color3 == 0) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size);
@@ -48,9 +48,9 @@ extern "C" {
 
     // make sure there is enough allocated space, if not, then allocate some more
     if (buffer->size - buffer->used - 1 < string_size) {
-      f_status status = F_none;
+      f_status_t status = F_none;
 
-      f_macro_string_dynamic_resize(status, (*buffer), buffer->used + string_size + 1); // the additional 1 is the EOS
+      f_macro_string_dynamic_t_resize(status, (*buffer), buffer->used + string_size + 1); // the additional 1 is the EOS
 
       if (F_status_is_error(status)) {
         return status;
@@ -114,14 +114,14 @@ extern "C" {
 #endif // _di_fl_color_save_
 
 #ifndef _di_fl_color_print_
-  f_return_status fl_color_print(FILE *file, const f_string_static start_color, const f_string_static end_color, const f_string string, ...) {
+  f_return_status fl_color_print(FILE *file, const f_string_static_t start_color, const f_string_static_t end_color, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return F_status_set_error(F_parameter);
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (start_color.used) {
-      f_status status = f_print_string_dynamic(file, start_color);
+      f_status_t status = f_print_string_dynamic(file, start_color);
       if (F_status_is_error(status)) return status;
     }
 
@@ -134,7 +134,7 @@ extern "C" {
     va_end(ap);
 
     if (end_color.used) {
-      f_status status = f_print_string_dynamic(file, end_color);
+      f_status_t status = f_print_string_dynamic(file, end_color);
 
       if (F_status_is_error(status)) return status;
     }
@@ -144,14 +144,14 @@ extern "C" {
 #endif // _di_fl_color_print_
 
 #ifndef _di_fl_color_print2_
-  f_return_status fl_color_print2(FILE *file, const f_string_static start_color, const f_string_static extra_color, const f_string_static end_color, const f_string string, ...) {
+  f_return_status fl_color_print2(FILE *file, const f_string_static_t start_color, const f_string_static_t extra_color, const f_string_static_t end_color, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return F_status_set_error(F_parameter);
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (start_color.used) {
-      f_status status = f_print_string_dynamic(file, start_color);
+      f_status_t status = f_print_string_dynamic(file, start_color);
       if (F_status_is_error(status)) return status;
 
       status = f_print_string_dynamic(file, extra_color);
@@ -167,7 +167,7 @@ extern "C" {
     va_end(ap);
 
     if (end_color.used) {
-      f_status status = f_print_string_dynamic(file, end_color);
+      f_status_t status = f_print_string_dynamic(file, end_color);
       if (F_status_is_error(status)) return status;
     }
 
@@ -176,14 +176,14 @@ extern "C" {
 #endif // _di_fl_color_print2_
 
 #ifndef _di_fl_color_print_line_
-  f_return_status fl_color_print_line(FILE *file, const f_string_static start_color, const f_string_static end_color, const f_string string, ...) {
+  f_return_status fl_color_print_line(FILE *file, const f_string_static_t start_color, const f_string_static_t end_color, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return F_status_set_error(F_parameter);
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (start_color.used) {
-      f_status status = f_print_string_dynamic(file, start_color);
+      f_status_t status = f_print_string_dynamic(file, start_color);
       if (F_status_is_error(status)) return status;
     }
 
@@ -196,7 +196,7 @@ extern "C" {
     va_end(ap);
 
     if (end_color.used) {
-      f_status status = f_print_string_dynamic(file, end_color);
+      f_status_t status = f_print_string_dynamic(file, end_color);
       if (F_status_is_error(status)) return status;
     }
 
@@ -208,14 +208,14 @@ extern "C" {
 #endif // _di_fl_color_print_line_
 
 #ifndef _di_fl_color_print2_line_
-  f_return_status fl_color_print2_line(FILE *file, const f_string_static start_color, const f_string_static extra_color, const f_string_static end_color, const f_string string, ...) {
+  f_return_status fl_color_print2_line(FILE *file, const f_string_static_t start_color, const f_string_static_t extra_color, const f_string_static_t end_color, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return F_status_set_error(F_parameter);
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (start_color.used) {
-      f_status status = f_print_string_dynamic(file, start_color);
+      f_status_t status = f_print_string_dynamic(file, start_color);
       if (F_status_is_error(status)) return status;
 
       status = f_print_string_dynamic(file, extra_color);
@@ -231,7 +231,7 @@ extern "C" {
     va_end(ap);
 
     if (end_color.used) {
-      f_status status = f_print_string_dynamic(file, end_color);
+      f_status_t status = f_print_string_dynamic(file, end_color);
       if (F_status_is_error(status)) return status;
     }
 
@@ -243,9 +243,9 @@ extern "C" {
 #endif // _di_fl_color_print2_line_
 
 #ifndef _di_fl_color_print_code_
-  f_return_status fl_color_print_code(FILE *file, const f_string_static color) {
+  f_return_status fl_color_print_code(FILE *file, const f_string_static_t color) {
     if (color.used) {
-      f_status status = f_print_string_dynamic(file, color);
+      f_status_t status = f_print_string_dynamic(file, color);
       if (F_status_is_error(status)) return status;
     }
 
@@ -254,12 +254,12 @@ extern "C" {
 #endif // _di_fl_color_print_code_
 
 #ifndef _di_fl_color_load_context_
-  f_return_status fl_color_load_context(fl_color_context *context, const bool use_light_colors) {
+  f_return_status fl_color_load_context(fl_color_context_t *context, const bool use_light_colors) {
     #ifndef _di_level_1_parameter_checking_
       if (context == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     // switch to the appropriate terminal color mode
     {

@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_fake_build_setting_
+#ifndef _di_fake_build_setting_t_
   typedef struct {
     uint8_t build_language;
 
@@ -26,43 +26,43 @@ extern "C" {
     bool search_shared;
     bool search_static;
 
-    f_string_dynamic build_compiler;
-    f_string_dynamic build_linker;
-    f_string_dynamic path_headers;
-    f_string_dynamic path_language;
-    f_string_dynamic path_library_script;
-    f_string_dynamic path_library_shared;
-    f_string_dynamic path_library_static;
-    f_string_dynamic path_program_script;
-    f_string_dynamic path_program_shared;
-    f_string_dynamic path_program_static;
-    f_string_dynamic process_post;
-    f_string_dynamic process_pre;
-    f_string_dynamic project_name;
-    f_string_dynamic version_major;
-    f_string_dynamic version_micro;
-    f_string_dynamic version_minor;
+    f_string_dynamic_t build_compiler;
+    f_string_dynamic_t build_linker;
+    f_string_dynamic_t path_headers;
+    f_string_dynamic_t path_language;
+    f_string_dynamic_t path_library_script;
+    f_string_dynamic_t path_library_shared;
+    f_string_dynamic_t path_library_static;
+    f_string_dynamic_t path_program_script;
+    f_string_dynamic_t path_program_shared;
+    f_string_dynamic_t path_program_static;
+    f_string_dynamic_t process_post;
+    f_string_dynamic_t process_pre;
+    f_string_dynamic_t project_name;
+    f_string_dynamic_t version_major;
+    f_string_dynamic_t version_micro;
+    f_string_dynamic_t version_minor;
 
-    f_string_dynamics build_libraries;
-    f_string_dynamics build_sources_headers;
-    f_string_dynamics build_sources_library;
-    f_string_dynamics build_sources_program;
-    f_string_dynamics build_sources_setting;
-    f_string_dynamics build_sources_script;
-    f_string_dynamics defines_all;
-    f_string_dynamics defines_shared;
-    f_string_dynamics defines_static;
-    f_string_dynamics environment;
-    f_string_dynamics flags_all;
-    f_string_dynamics flags_library;
-    f_string_dynamics flags_program;
-    f_string_dynamics flags_shared;
-    f_string_dynamics flags_static;
-    f_string_dynamics modes;
-    f_string_dynamics modes_default;
-  } fake_build_setting;
+    f_string_dynamics_t build_libraries;
+    f_string_dynamics_t build_sources_headers;
+    f_string_dynamics_t build_sources_library;
+    f_string_dynamics_t build_sources_program;
+    f_string_dynamics_t build_sources_setting;
+    f_string_dynamics_t build_sources_script;
+    f_string_dynamics_t defines_all;
+    f_string_dynamics_t defines_shared;
+    f_string_dynamics_t defines_static;
+    f_string_dynamics_t environment;
+    f_string_dynamics_t flags_all;
+    f_string_dynamics_t flags_library;
+    f_string_dynamics_t flags_program;
+    f_string_dynamics_t flags_shared;
+    f_string_dynamics_t flags_static;
+    f_string_dynamics_t modes;
+    f_string_dynamics_t modes_default;
+  } fake_build_setting_t;
 
-  #define fake_build_setting_initialize { \
+  #define fake_build_setting_t_initialize { \
     0, \
     0, \
     F_true, \
@@ -71,75 +71,75 @@ extern "C" {
     F_true, \
     F_true, \
     F_true, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
   }
 
-  #define fake_macro_build_setting_delete_simple(setting) \
-    f_macro_string_dynamic_delete_simple(setting.build_compiler) \
-    f_macro_string_dynamic_delete_simple(setting.build_linker) \
-    f_macro_string_dynamic_delete_simple(setting.path_headers) \
-    f_macro_string_dynamic_delete_simple(setting.path_language) \
-    f_macro_string_dynamic_delete_simple(setting.path_library_script) \
-    f_macro_string_dynamic_delete_simple(setting.path_library_shared) \
-    f_macro_string_dynamic_delete_simple(setting.path_library_static) \
-    f_macro_string_dynamic_delete_simple(setting.path_program_script) \
-    f_macro_string_dynamic_delete_simple(setting.path_program_shared) \
-    f_macro_string_dynamic_delete_simple(setting.path_program_static) \
-    f_macro_string_dynamic_delete_simple(setting.process_post) \
-    f_macro_string_dynamic_delete_simple(setting.process_pre) \
-    f_macro_string_dynamic_delete_simple(setting.project_name) \
-    f_macro_string_dynamic_delete_simple(setting.version_major) \
-    f_macro_string_dynamic_delete_simple(setting.version_micro) \
-    f_macro_string_dynamic_delete_simple(setting.version_minor) \
-    f_macro_string_dynamics_delete_simple(setting.build_libraries) \
-    f_macro_string_dynamics_delete_simple(setting.build_sources_headers) \
-    f_macro_string_dynamics_delete_simple(setting.build_sources_library) \
-    f_macro_string_dynamics_delete_simple(setting.build_sources_program) \
-    f_macro_string_dynamics_delete_simple(setting.build_sources_setting) \
-    f_macro_string_dynamics_delete_simple(setting.build_sources_script) \
-    f_macro_string_dynamics_delete_simple(setting.defines_all) \
-    f_macro_string_dynamics_delete_simple(setting.defines_shared) \
-    f_macro_string_dynamics_delete_simple(setting.defines_static) \
-    f_macro_string_dynamics_delete_simple(setting.environment) \
-    f_macro_string_dynamics_delete_simple(setting.flags_all) \
-    f_macro_string_dynamics_delete_simple(setting.flags_library) \
-    f_macro_string_dynamics_delete_simple(setting.flags_program) \
-    f_macro_string_dynamics_delete_simple(setting.flags_shared) \
-    f_macro_string_dynamics_delete_simple(setting.flags_static) \
-    f_macro_string_dynamics_delete_simple(setting.modes) \
-    f_macro_string_dynamics_delete_simple(setting.modes_default)
+  #define fake_macro_build_setting_t_delete_simple(setting) \
+    f_macro_string_dynamic_t_delete_simple(setting.build_compiler) \
+    f_macro_string_dynamic_t_delete_simple(setting.build_linker) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_headers) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_language) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_library_script) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_library_shared) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_library_static) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_program_script) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_program_shared) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_program_static) \
+    f_macro_string_dynamic_t_delete_simple(setting.process_post) \
+    f_macro_string_dynamic_t_delete_simple(setting.process_pre) \
+    f_macro_string_dynamic_t_delete_simple(setting.project_name) \
+    f_macro_string_dynamic_t_delete_simple(setting.version_major) \
+    f_macro_string_dynamic_t_delete_simple(setting.version_micro) \
+    f_macro_string_dynamic_t_delete_simple(setting.version_minor) \
+    f_macro_string_dynamics_t_delete_simple(setting.build_libraries) \
+    f_macro_string_dynamics_t_delete_simple(setting.build_sources_headers) \
+    f_macro_string_dynamics_t_delete_simple(setting.build_sources_library) \
+    f_macro_string_dynamics_t_delete_simple(setting.build_sources_program) \
+    f_macro_string_dynamics_t_delete_simple(setting.build_sources_setting) \
+    f_macro_string_dynamics_t_delete_simple(setting.build_sources_script) \
+    f_macro_string_dynamics_t_delete_simple(setting.defines_all) \
+    f_macro_string_dynamics_t_delete_simple(setting.defines_shared) \
+    f_macro_string_dynamics_t_delete_simple(setting.defines_static) \
+    f_macro_string_dynamics_t_delete_simple(setting.environment) \
+    f_macro_string_dynamics_t_delete_simple(setting.flags_all) \
+    f_macro_string_dynamics_t_delete_simple(setting.flags_library) \
+    f_macro_string_dynamics_t_delete_simple(setting.flags_program) \
+    f_macro_string_dynamics_t_delete_simple(setting.flags_shared) \
+    f_macro_string_dynamics_t_delete_simple(setting.flags_static) \
+    f_macro_string_dynamics_t_delete_simple(setting.modes) \
+    f_macro_string_dynamics_t_delete_simple(setting.modes_default)
 
   #define fake_build_setting_name_build_compiler         "build_compiler"
   #define fake_build_setting_name_build_language         "build_language"
@@ -230,57 +230,57 @@ extern "C" {
   #define fake_build_setting_default_version "0"
 
   #define fake_build_setting_default_version_length 1
-#endif // _di_fake_build_setting_
+#endif // _di_fake_build_setting_t_
 
-#ifndef _di_fake_build_stage_
+#ifndef _di_fake_build_stage_t_
   typedef struct {
-    f_string_dynamic file_libraries_script;
-    f_string_dynamic file_libraries_shared;
-    f_string_dynamic file_libraries_static;
-    f_string_dynamic file_objects_static;
-    f_string_dynamic file_process_post;
-    f_string_dynamic file_process_pre;
-    f_string_dynamic file_programs_script;
-    f_string_dynamic file_programs_shared;
-    f_string_dynamic file_programs_static;
-    f_string_dynamic file_skeleton;
-    f_string_dynamic file_sources_headers;
-    f_string_dynamic file_sources_script;
-    f_string_dynamic file_sources_settings;
-  } fake_build_stage;
+    f_string_dynamic_t file_libraries_script;
+    f_string_dynamic_t file_libraries_shared;
+    f_string_dynamic_t file_libraries_static;
+    f_string_dynamic_t file_objects_static;
+    f_string_dynamic_t file_process_post;
+    f_string_dynamic_t file_process_pre;
+    f_string_dynamic_t file_programs_script;
+    f_string_dynamic_t file_programs_shared;
+    f_string_dynamic_t file_programs_static;
+    f_string_dynamic_t file_skeleton;
+    f_string_dynamic_t file_sources_headers;
+    f_string_dynamic_t file_sources_script;
+    f_string_dynamic_t file_sources_settings;
+  } fake_build_stage_t;
 
-  #define fake_build_stage_initialize { \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
+  #define fake_build_stage_t_initialize { \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
   }
 
   #define fake_build_stage_total 13
 
-  #define fake_macro_build_stage_delete_simple(stage) \
-    f_macro_string_dynamic_delete_simple(stage.file_libraries_script) \
-    f_macro_string_dynamic_delete_simple(stage.file_libraries_shared) \
-    f_macro_string_dynamic_delete_simple(stage.file_libraries_static) \
-    f_macro_string_dynamic_delete_simple(stage.file_objects_static) \
-    f_macro_string_dynamic_delete_simple(stage.file_process_post) \
-    f_macro_string_dynamic_delete_simple(stage.file_process_pre) \
-    f_macro_string_dynamic_delete_simple(stage.file_programs_script) \
-    f_macro_string_dynamic_delete_simple(stage.file_programs_shared) \
-    f_macro_string_dynamic_delete_simple(stage.file_programs_static) \
-    f_macro_string_dynamic_delete_simple(stage.file_skeleton) \
-    f_macro_string_dynamic_delete_simple(stage.file_sources_headers) \
-    f_macro_string_dynamic_delete_simple(stage.file_sources_script) \
-    f_macro_string_dynamic_delete_simple(stage.file_sources_settings)
+  #define fake_macro_build_stage_t_delete_simple(stage) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_libraries_script) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_libraries_shared) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_libraries_static) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_objects_static) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_process_post) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_process_pre) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_programs_script) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_programs_shared) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_programs_static) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_skeleton) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_sources_headers) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_sources_script) \
+    f_macro_string_dynamic_t_delete_simple(stage.file_sources_settings)
 
   #define fake_build_stage_libraries_script "libraries_script.built"
   #define fake_build_stage_libraries_shared "libraries_shared.built"
@@ -309,23 +309,23 @@ extern "C" {
   #define fake_build_stage_sources_headers_length  21
   #define fake_build_stage_sources_script_length   20
   #define fake_build_stage_sources_settings_length 22
-#endif // _di_fake_build_stage_
+#endif // _di_fake_build_stage_t_
 
-#ifndef _di_fake_build_data_
+#ifndef _di_fake_build_data_t_
   typedef struct {
-    fake_build_setting setting;
-    fake_environment environment;
-  } fake_build_data;
+    fake_build_setting_t setting;
+    fake_environment_t environment;
+  } fake_build_data_t;
 
-  #define fake_build_data_initialize { \
-    fake_build_setting_initialize, \
-    fake_environment_initialize, \
+  #define fake_build_data_t_initialize { \
+    fake_build_setting_t_initialize, \
+    fake_environment_t_initialize, \
   }
 
   #define fake_macro_build_data_delete_simple(build) \
-    fake_macro_build_setting_delete_simple(build.setting) \
-    fake_macro_environment_delete_simple(build.environment)
-#endif // _di_fake_build_data_
+    fake_macro_build_setting_t_delete_simple(build.setting) \
+    fake_macro_environment_t_delete_simple(build.environment)
+#endif // _di_fake_build_data_t_
 
 #ifndef _di_fake_build_parameter_
 
@@ -397,7 +397,7 @@ extern "C" {
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_arguments_standard_add_
-  extern void fake_build_arguments_standard_add(const fake_data data, const fake_build_data data_build, const bool is_shared, const bool is_library, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_arguments_standard_add(const fake_data_t data, const fake_build_data_t data_build, const bool is_shared, const bool is_library, f_string_dynamics_t *arguments, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_arguments_standard_add_
 
 /**
@@ -426,7 +426,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_copy_
-  extern void fake_build_copy(const fake_data data, const f_mode mode, const f_string label, const f_string_static source, const f_string_static destination, const f_string_statics files, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_copy(const fake_data_t data, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_copy_
 
 /**
@@ -449,7 +449,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_skeleton_
-  extern void fake_build_skeleton(const fake_data data, const fake_build_data data_build, const mode_t mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_skeleton(const fake_data_t data, const fake_build_data_t data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_skeleton_
 
 /**
@@ -473,7 +473,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_execute_process_script_
-  extern void fake_build_execute_process_script(const fake_data data, const fake_build_data data_build, const f_string_static process_script, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_execute_process_script(const fake_data_t data, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_execute_process_script_
 
 /**
@@ -492,7 +492,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_get_file_name_without_extension_
-  extern f_return_status fake_build_get_file_name_without_extension(const fake_data data, const f_string_static path, f_string_dynamic *name);
+  extern f_return_status fake_build_get_file_name_without_extension(const fake_data_t data, const f_string_static_t path, f_string_dynamic_t *name);
 #endif // _di_fake_build_get_file_name_without_extension_
 
 /**
@@ -515,7 +515,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_libraries_script_
-  extern void fake_build_libraries_script(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_libraries_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_libraries_script_
 
 /**
@@ -538,7 +538,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_library_shared_
-  extern void fake_build_library_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_library_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_library_shared_
 
 /**
@@ -561,7 +561,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_library_static_
-  extern void fake_build_library_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_library_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_library_static_
 
 /**
@@ -581,7 +581,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_
-  extern void fake_build_load_setting(const fake_data data, fake_build_setting *setting, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_load_setting(const fake_data_t data, fake_build_setting_t *setting, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_load_setting_
 
 /**
@@ -605,7 +605,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_defaults_
-  extern void fake_build_load_setting_defaults(const fake_data data, fake_build_setting *setting, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_load_setting_defaults(const fake_data_t data, fake_build_setting_t *setting, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_load_setting_defaults_
 
 /**
@@ -633,7 +633,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_process_
-  extern void fake_build_load_setting_process(const fake_data data, const f_string path_file, const f_string_static buffer, const f_fss_objects objects, const f_fss_contents contents, fake_build_setting *setting, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_load_setting_process(const fake_data_t data, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_load_setting_process_
 
 /**
@@ -654,7 +654,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_environment_
-  extern void fake_build_load_environment(const fake_data data, const fake_build_data data_build, fake_environment *environment, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_load_environment(const fake_data_t data, const fake_build_data_t data_build, fake_environment_t *environment, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_load_environment_
 
 /**
@@ -673,7 +673,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_stage_
-  extern void fake_build_load_stage(const fake_data data, fake_build_stage *stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_load_stage(const fake_data_t data, fake_build_stage_t *stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_load_stage_
 
 /**
@@ -696,7 +696,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_objects_static_
-  extern void fake_build_objects_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_objects_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_objects_static_
 
 /**
@@ -711,7 +711,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
-  extern f_return_status fake_build_operate(const fake_data data) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_build_operate(const fake_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_operate_
 
 /**
@@ -734,7 +734,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_programs_script_
-  extern void fake_build_programs_script(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_programs_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_programs_script_
 
 /**
@@ -757,7 +757,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_program_shared_
-  extern void fake_build_program_shared(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_program_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_program_shared_
 
 /**
@@ -780,7 +780,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_program_static_
-  extern void fake_build_program_static(const fake_data data, const fake_build_data data_build, const f_mode mode, const f_string_static file_stage, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_program_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_program_static_
 
 /**
@@ -796,7 +796,7 @@ extern "C" {
  * @see f_file_touch()
  */
 #ifndef _di_fake_build_touch_
-  extern void fake_build_touch(const fake_data data, const f_string_dynamic file, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_touch(const fake_data_t data, const f_string_dynamic_t file, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_touch_
 
 #ifdef __cplusplus

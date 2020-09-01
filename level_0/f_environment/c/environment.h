@@ -28,7 +28,7 @@ extern "C" {
  * Environment related defines.
  */
 #ifndef _di_f_environment_defines_
-  #define f_environment_max_length f_string_length_size
+  #define f_environment_max_length f_string_length_t_size
 #endif // _di_f_environment_defines_
 
 /**
@@ -67,7 +67,7 @@ extern "C" {
  * @see getenv()
  */
 #ifndef _di_f_environment_get_
-  extern f_return_status f_environment_get(const f_string name, f_string_dynamic *value);
+  extern f_return_status f_environment_get(const f_string_t name, f_string_dynamic_t *value);
 #endif // _di_f_environment_get_
 
 /**
@@ -95,7 +95,7 @@ extern "C" {
  * @see getenv()
  */
 #ifndef _di_f_environment_get_dynamic_
-  extern f_return_status f_environment_get_dynamic(const f_string_static name, f_string_dynamic *value);
+  extern f_return_status f_environment_get_dynamic(const f_string_static_t name, f_string_dynamic_t *value);
 #endif // _di_f_environment_get_dynamic_
 
 /**
@@ -123,7 +123,7 @@ extern "C" {
  * @see setenv()
  */
 #ifndef _di_f_environment_set_
-  extern f_return_status f_environment_set(const f_string name, const f_string value, const bool replace);
+  extern f_return_status f_environment_set(const f_string_t name, const f_string_t value, const bool replace);
 #endif // _di_f_environment_set_
 
 /**
@@ -153,7 +153,7 @@ extern "C" {
  * @see setenv()
  */
 #ifndef _di_f_environment_set_dynamic_
-  extern f_return_status f_environment_set_dynamic(const f_string_static name, const f_string_static value, const bool replace);
+  extern f_return_status f_environment_set_dynamic(const f_string_static_t name, const f_string_static_t value, const bool replace);
 #endif // _di_f_environment_set_dynamic_
 
 /**
@@ -173,7 +173,7 @@ extern "C" {
  * @see unsetenv()
  */
 #ifndef _di_f_environment_unset_
-  extern f_return_status f_environment_unset(const f_string name);
+  extern f_return_status f_environment_unset(const f_string_t name);
 #endif // _di_f_environment_unset_
 
 /**
@@ -194,7 +194,7 @@ extern "C" {
  * @see unsetenv()
  */
 #ifndef _di_f_environment_unset_dynamic_
-  extern f_return_status f_environment_unset_dynamic(const f_string_static name);
+  extern f_return_status f_environment_unset_dynamic(const f_string_static_t name);
 #endif // _di_f_environment_unset_dynamic_
 
 #ifdef __cplusplus

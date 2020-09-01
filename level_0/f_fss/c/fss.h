@@ -53,7 +53,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_count_lines_
-  extern f_return_status f_fss_count_lines(const f_string_static buffer, const f_string_length before, f_string_length *line);
+  extern f_return_status f_fss_count_lines(const f_string_static_t buffer, const f_string_length_t before, f_string_length_t *line);
 #endif // _di_f_fss_count_lines_
 
 /**
@@ -77,7 +77,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_count_lines_range_
-  extern f_return_status f_fss_count_lines_range(const f_string_static buffer, const f_string_range range, const f_string_length before, f_string_length *line);
+  extern f_return_status f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, const f_string_length_t before, f_string_length_t *line);
 #endif // _di_f_fss_count_lines_range_
 
 /**
@@ -100,7 +100,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_f_fss_is_graph_
-  extern f_return_status f_fss_is_graph(const f_string_static buffer, const f_string_range range);
+  extern f_return_status f_fss_is_graph(const f_string_static_t buffer, const f_string_range_t range);
 #endif // _di_f_fss_is_graph_
 
 /**
@@ -125,7 +125,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_f_fss_is_space_
-  extern f_return_status f_fss_is_space(const f_string_static buffer, const f_string_range range);
+  extern f_return_status f_fss_is_space(const f_string_static_t buffer, const f_string_range_t range);
 #endif // _di_f_fss_is_space_
 
 /**
@@ -149,7 +149,7 @@ extern "C" {
  * @see f_utf_is_zero_width()
  */
 #ifndef _di_f_fss_is_zero_width_
-  extern f_return_status f_fss_is_zero_width(const f_string_static buffer, const f_string_range range);
+  extern f_return_status f_fss_is_zero_width(const f_string_static_t buffer, const f_string_range_t range);
 #endif // _di_f_fss_is_zero_width_
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_shift_delimiters_
-  extern f_return_status f_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_range range);
+  extern f_return_status f_fss_shift_delimiters(f_string_dynamic_t *buffer, const f_string_range_t range);
 #endif // _di_f_fss_shift_delimiters_
 
 /**
@@ -204,7 +204,7 @@ extern "C" {
  * @see f_utf_is_zero_width()
  */
 #ifndef _di_f_fss_skip_past_space_
-  extern f_return_status f_fss_skip_past_space(const f_string_static buffer, f_string_range *range);
+  extern f_return_status f_fss_skip_past_space(const f_string_static_t buffer, f_string_range_t *range);
 #endif // _di_f_fss_skip_past_space_
 
 /**
@@ -236,7 +236,7 @@ extern "C" {
  * @see f_utf_is_zero_width()
  */
 #ifndef _di_f_fss_skip_past_non_graph_
-  extern f_return_status f_fss_skip_past_non_graph(const f_string_static buffer, f_string_range *range);
+  extern f_return_status f_fss_skip_past_non_graph(const f_string_static_t buffer, f_string_range_t *range);
 #endif // _di_f_fss_skip_past_non_graph_
 
 #ifdef __cplusplus

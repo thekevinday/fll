@@ -9,13 +9,13 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_execute_
-  void fake_execute(const fake_data data, const fake_environment environment, const f_string_static program, const f_string_statics arguments, f_status *status) {
+  void fake_execute(const fake_data_t data, const fake_environment_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
     if (F_status_is_error(*status)) return;
 
     if (data.verbosity == fake_verbosity_verbose) {
       printf("%s", program.string);
 
-      for (f_array_length i = 0; i < arguments.used; i++) {
+      for (f_array_length_t i = 0; i < arguments.used; i++) {
         if (arguments.array[i].used == 0) continue;
 
         printf(" %s", arguments.array[i].string);
@@ -53,16 +53,16 @@ extern "C" {
 #endif // _di_fake_execute_
 
 #ifndef _di_fake_file_buffer_
-  f_return_status fake_file_buffer(const fake_data data, const f_string path_file, f_string_dynamic *buffer) {
-    f_file file = f_file_initialize;
-    f_string name_function = "f_file_exists";
-    f_status status = F_none;
+  f_return_status fake_file_buffer(const fake_data_t data, const f_string_t path_file, f_string_dynamic_t *buffer) {
+    f_file_t file = f_file_t_initialize;
+    f_string_t name_function = "f_file_exists";
+    f_status_t status = F_none;
 
     status = f_file_exists(data.file_data_build_settings.string);
 
     if (status == F_true) {
       {
-        f_string_length size_file = 0;
+        f_string_length_t size_file = 0;
 
         name_function = "f_file_size";
         status = f_file_size(path_file, F_true, &size_file);
@@ -72,11 +72,11 @@ extern "C" {
             size_file = fake_common_initial_buffer_max;
           }
 
-          f_macro_string_dynamic_new((status), (*buffer), size_file);
+          f_macro_string_dynamic_t_new((status), (*buffer), size_file);
           if (F_status_is_error(status)) {
             fake_print_error_file(data, F_status_set_fine(status), name_function, path_file, "allocate buffer size for", F_true, F_true);
 
-            f_macro_string_dynamic_delete_simple((*buffer));
+            f_macro_string_dynamic_t_delete_simple((*buffer));
             return status;
           }
         }
@@ -101,7 +101,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       fake_print_error_file(data, F_status_set_fine(status), name_function, path_file, "read", F_true, F_true);
 
-      f_macro_string_dynamic_delete_simple((*buffer));
+      f_macro_string_dynamic_t_delete_simple((*buffer));
     }
 
     return status;
@@ -109,12 +109,12 @@ extern "C" {
 #endif // _di_fake_file_buffer_
 
 #ifndef _di_fake_path_generate_
-  f_return_status fake_path_generate(fake_data *data) {
-    f_status status = F_none;
+  f_return_status fake_path_generate(fake_data_t *data) {
+    f_status_t status = F_none;
     uint8_t i = 0;
 
     {
-      const f_string_dynamic *parameters_source[] = {
+      const f_string_dynamic_t *parameters_source[] = {
         &data->path_build,
         &data->path_data,
         &data->path_sources,
@@ -126,7 +126,7 @@ extern "C" {
         4,
       };
 
-      f_string_dynamic *parameters_value_0[] = {
+      f_string_dynamic_t *parameters_value_0[] = {
         &data->path_build_documents,
         &data->path_build_includes,
         &data->path_build_libraries,
@@ -136,19 +136,19 @@ extern "C" {
         &data->path_build_stage,
       };
 
-      f_string_dynamic *parameters_value_1[] = {
+      f_string_dynamic_t *parameters_value_1[] = {
         &data->path_data_build,
         &data->path_data_settings,
       };
 
-      f_string_dynamic *parameters_value_2[] = {
+      f_string_dynamic_t *parameters_value_2[] = {
         &data->path_sources_bash,
         &data->path_sources_c,
         &data->path_sources_cpp,
         &data->path_sources_script,
       };
 
-      f_string_dynamic **parameters_value[] = {
+      f_string_dynamic_t **parameters_value[] = {
         parameters_value_0,
         parameters_value_1,
         parameters_value_2,
@@ -165,7 +165,7 @@ extern "C" {
     }
 
     {
-      const f_string parameters_source[] = {
+      const f_string_t parameters_source[] = {
         fake_path_part_documents,
         fake_path_part_includes,
         fake_path_part_libraries,
@@ -183,7 +183,7 @@ extern "C" {
         fake_path_part_script,
       };
 
-      const f_string_length parameters_length[] = {
+      const f_string_length_t parameters_length[] = {
         fake_path_part_documents_length,
         fake_path_part_includes_length,
         fake_path_part_libraries_length,
@@ -201,7 +201,7 @@ extern "C" {
         fake_path_part_script_length,
       };
 
-      f_string_dynamic *parameters_value[] = {
+      f_string_dynamic_t *parameters_value[] = {
         &data->path_build_documents,
         &data->path_build_includes,
         &data->path_build_libraries,
@@ -230,7 +230,7 @@ extern "C" {
     }
 
     {
-      const f_string_dynamic *parameters_source[] = {
+      const f_string_dynamic_t *parameters_source[] = {
         &data->path_build_libraries,
         &data->path_build_programs,
         &data->path_data_build,
@@ -244,30 +244,30 @@ extern "C" {
         1,
       };
 
-      f_string_dynamic *parameters_value_0[] = {
+      f_string_dynamic_t *parameters_value_0[] = {
         &data->path_build_libraries_script,
         &data->path_build_libraries_shared,
         &data->path_build_libraries_static,
       };
 
-      f_string_dynamic *parameters_value_1[] = {
+      f_string_dynamic_t *parameters_value_1[] = {
         &data->path_build_programs_script,
         &data->path_build_programs_shared,
         &data->path_build_programs_static,
       };
 
-      f_string_dynamic *parameters_value_2[] = {
+      f_string_dynamic_t *parameters_value_2[] = {
         &data->file_data_build_defines,
         &data->file_data_build_dependencies,
         &data->file_data_build_fakefile,
         &data->file_data_build_settings,
       };
 
-      f_string_dynamic *parameters_value_3[] = {
+      f_string_dynamic_t *parameters_value_3[] = {
         &data->file_documents_readme,
       };
 
-      f_string_dynamic **parameters_value[] = {
+      f_string_dynamic_t **parameters_value[] = {
         parameters_value_0,
         parameters_value_1,
         parameters_value_2,
@@ -285,7 +285,7 @@ extern "C" {
     }
 
     {
-      const f_string parameters_source[] = {
+      const f_string_t parameters_source[] = {
         fake_path_part_script,
         fake_path_part_shared,
         fake_path_part_static,
@@ -299,7 +299,7 @@ extern "C" {
         fake_file_readme,
       };
 
-      const f_string_length parameters_length[] = {
+      const f_string_length_t parameters_length[] = {
         fake_path_part_script_length,
         fake_path_part_shared_length,
         fake_path_part_static_length,
@@ -313,7 +313,7 @@ extern "C" {
         fake_file_readme_length,
       };
 
-      f_string_dynamic *parameters_value[] = {
+      f_string_dynamic_t *parameters_value[] = {
         &data->path_build_libraries_script,
         &data->path_build_libraries_shared,
         &data->path_build_libraries_static,
@@ -339,7 +339,7 @@ extern "C" {
 
     if (data->path_work.used > 0) {
       {
-        f_string_dynamic *parameters_value[] = {
+        f_string_dynamic_t *parameters_value[] = {
           &data->path_work_includes,
           &data->path_work_libraries,
           &data->path_work_programs,
@@ -356,19 +356,19 @@ extern "C" {
       }
 
       {
-        const f_string parameters_source[] = {
+        const f_string_t parameters_source[] = {
           fake_path_part_includes,
           fake_path_part_libraries,
           fake_path_part_programs,
         };
 
-        const f_string_length parameters_length[] = {
+        const f_string_length_t parameters_length[] = {
           fake_path_part_includes_length,
           fake_path_part_libraries_length,
           fake_path_part_programs_length,
         };
 
-        f_string_dynamic *parameters_value[] = {
+        f_string_dynamic_t *parameters_value[] = {
           &data->path_work_includes,
           &data->path_work_libraries,
           &data->path_work_programs,
@@ -385,7 +385,7 @@ extern "C" {
       }
 
       {
-        const f_string_dynamic *parameters_source[] = {
+        const f_string_dynamic_t *parameters_source[] = {
           &data->path_work_libraries,
           &data->path_work_programs,
         };
@@ -395,19 +395,19 @@ extern "C" {
           3,
         };
 
-        f_string_dynamic *parameters_value_0[] = {
+        f_string_dynamic_t *parameters_value_0[] = {
           &data->path_work_libraries_script,
           &data->path_work_libraries_shared,
           &data->path_work_libraries_static,
         };
 
-        f_string_dynamic *parameters_value_1[] = {
+        f_string_dynamic_t *parameters_value_1[] = {
           &data->path_work_programs_script,
           &data->path_work_programs_shared,
           &data->path_work_programs_static,
         };
 
-        f_string_dynamic **parameters_value[] = {
+        f_string_dynamic_t **parameters_value[] = {
           parameters_value_0,
           parameters_value_1,
         };
@@ -423,7 +423,7 @@ extern "C" {
       }
 
       {
-        const f_string parameters_source[] = {
+        const f_string_t parameters_source[] = {
           fake_path_part_script,
           fake_path_part_shared,
           fake_path_part_static,
@@ -432,7 +432,7 @@ extern "C" {
           fake_path_part_static,
         };
 
-        const f_string_length parameters_length[] = {
+        const f_string_length_t parameters_length[] = {
           fake_path_part_script_length,
           fake_path_part_shared_length,
           fake_path_part_static_length,
@@ -441,7 +441,7 @@ extern "C" {
           fake_path_part_static_length,
         };
 
-        f_string_dynamic *parameters_value[] = {
+        f_string_dynamic_t *parameters_value[] = {
           &data->path_work_libraries_script,
           &data->path_work_libraries_shared,
           &data->path_work_libraries_static,
@@ -462,7 +462,7 @@ extern "C" {
     }
 
     {
-      f_string_dynamic *parameters_value[] = {
+      f_string_dynamic_t *parameters_value[] = {
         &data->path_build_documents,
         &data->path_build_includes,
         &data->path_build_libraries,
@@ -515,8 +515,8 @@ extern "C" {
 #endif // _di_fake_path_generate_
 
 #ifndef _di_fake_path_generate_string_dynamic_
-  f_return_status fake_path_generate_string_dynamic(fake_data *data, const f_string_dynamic source, f_string_dynamic *destination[], const uint8_t length) {
-    f_status status = F_none;
+  f_return_status fake_path_generate_string_dynamic(fake_data_t *data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
+    f_status_t status = F_none;
 
     for (uint8_t i = 0; i < length; i++) {
       status = fl_string_dynamic_append_nulless(source, destination[i]);
@@ -528,8 +528,8 @@ extern "C" {
 #endif // _di_fake_path_generate_string_dynamic_
 
 #ifndef _di_fake_process_console_parameters_
-  f_return_status fake_process_console_parameters(const f_console_arguments arguments, fake_data *data) {
-    f_status status = F_none;
+  f_return_status fake_process_console_parameters(const f_console_arguments_t arguments, fake_data_t *data) {
+    f_status_t status = F_none;
 
     // @todo move as many of the inline error printing code into more general functions where possible to provide more accurate error reporting.
 
@@ -541,7 +541,7 @@ extern "C" {
         fake_parameter_operation_skeleton,
       };
 
-      const f_string parameters_name[] = {
+      const f_string_t parameters_name[] = {
         fake_other_operation_build,
         fake_other_operation_clean,
         fake_other_operation_make,
@@ -568,22 +568,22 @@ extern "C" {
         fake_parameter_settings,
       };
 
-      const f_string parameters_name[] = {
+      const f_string_t parameters_name[] = {
         fake_long_process,
         fake_long_settings,
       };
 
-      const f_string parameter_defaults[] = {
+      const f_string_t parameter_defaults[] = {
         fake_default_process,
         fake_default_settings,
       };
 
-      const f_string_length parameter_default_lengths[] = {
+      const f_string_length_t parameter_default_lengths[] = {
         fake_default_process_length,
         fake_default_settings_length,
       };
 
-      f_string_dynamic *parameters_value[] = {
+      f_string_dynamic_t *parameters_value[] = {
         &data->process,
         &data->settings,
       };
@@ -604,13 +604,13 @@ extern "C" {
             return F_status_set_error(F_parameter);
           }
 
-          f_string_length location = data->parameters[parameters_id[i]].additional.array[0];
-          f_string_length length = strnlen(arguments.argv[location], f_console_length_size);
+          f_string_length_t location = data->parameters[parameters_id[i]].additional.array[0];
+          f_string_length_t length = strnlen(arguments.argv[location], f_console_length_size);
 
           if (length > 0) {
             if (parameters_validate_word[i]) {
-              f_string_length j = 0;
-              f_string_length width_max = 0;
+              f_string_length_t j = 0;
+              f_string_length_t width_max = 0;
 
               for (j = 0; j < length; j++) {
                 width_max = length - j;
@@ -675,10 +675,10 @@ extern "C" {
           }
         }
         else if (parameter_default_lengths[i] > 0) {
-          f_macro_string_dynamic_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
+          f_macro_string_dynamic_t_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            fake_print_error(*data, F_status_set_fine(status), "f_macro_string_dynamic_resize", F_true);
+            fake_print_error(*data, F_status_set_fine(status), "f_macro_string_dynamic_t_resize", F_true);
             return status;
           }
 
@@ -701,28 +701,28 @@ extern "C" {
         fake_parameter_path_work,
       };
 
-      const f_string parameters_name[] = {
+      const f_string_t parameters_name[] = {
         fake_long_path_build,
         fake_long_path_data,
         fake_long_path_sources,
         fake_long_path_work,
       };
 
-      const f_string parameter_defaults[] = {
+      const f_string_t parameter_defaults[] = {
         fake_default_path_build,
         fake_default_path_data,
         fake_default_path_sources,
         fake_default_path_work,
       };
 
-      const f_string_length parameter_default_lengths[] = {
+      const f_string_length_t parameter_default_lengths[] = {
         fake_default_path_build_length,
         fake_default_path_data_length,
         fake_default_path_sources_length,
         fake_default_path_work_length,
       };
 
-      f_string_dynamic *parameters_value[] = {
+      f_string_dynamic_t *parameters_value[] = {
         &data->path_build,
         &data->path_data,
         &data->path_sources,
@@ -754,10 +754,10 @@ extern "C" {
           }
         }
         else if (parameter_default_lengths[i] > 0) {
-          f_macro_string_dynamic_new(status, (*parameters_value[i]), parameter_default_lengths[i]);
+          f_macro_string_dynamic_t_new(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            if (fake_print_error(*data, F_status_set_fine(status), "f_macro_string_dynamic_new", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+            if (fake_print_error(*data, F_status_set_fine(status), "f_macro_string_dynamic_t_new", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Failed to load default for the parameter '");
               fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
@@ -787,9 +787,9 @@ extern "C" {
         return status;
       }
 
-      f_array_length i = 0;
-      f_string_length j = 0;
-      f_string_length width_max = 0;
+      f_array_length_t i = 0;
+      f_string_length_t j = 0;
+      f_string_length_t width_max = 0;
 
       for (; i < data->define.used; i++) {
         for (j = 0; j < data->define.array[i].used; j++) {
@@ -842,9 +842,9 @@ extern "C" {
         return status;
       }
 
-      f_array_length i = 0;
-      f_string_length j = 0;
-      f_string_length width_max = 0;
+      f_array_length_t i = 0;
+      f_string_length_t j = 0;
+      f_string_length_t width_max = 0;
 
       for (; i < data->mode.used; i++) {
         for (j = 0; j < data->mode.array[i].used; j++) {
@@ -884,29 +884,29 @@ extern "C" {
 #endif // _di_fake_process_console_parameters_
 
 #ifndef _di_fake_validate_directories_
-  f_return_status fake_validate_parameter_directories(const f_console_arguments arguments, const fake_data data) {
-    const f_string parameters_name[] = {
+  f_return_status fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_data_t data) {
+    const f_string_t parameters_name[] = {
       fake_long_path_build,
       fake_long_path_data,
       fake_long_path_sources,
       fake_long_path_work,
     };
 
-    const f_string parameter_defaults[] = {
+    const f_string_t parameter_defaults[] = {
       fake_default_path_build,
       fake_default_path_data,
       fake_default_path_sources,
       fake_default_path_work,
     };
 
-    const f_string_length parameter_default_lengths[] = {
+    const f_string_length_t parameter_default_lengths[] = {
       fake_default_path_build_length,
       fake_default_path_data_length,
       fake_default_path_sources_length,
       fake_default_path_work_length,
     };
 
-    const f_string_dynamic *parameters_value[] = {
+    const f_string_dynamic_t *parameters_value[] = {
       &data.path_build,
       &data.path_data,
       &data.path_sources,
@@ -921,7 +921,7 @@ extern "C" {
     };
 
     struct stat directory_stat;
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     for (uint8_t i = 0; i < 4; i++) {
       if (parameters_value[i]->used > 0) {

@@ -5,14 +5,14 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_print_trim_string_
-  f_return_status fl_print_trim_string(FILE *output, const f_string string, const f_string_length length) {
+  f_return_status fl_print_trim_string(FILE *output, const f_string_t string, const f_string_length_t length) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (length < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    register f_string_length i = 0;
-    f_status status = F_none;
+    register f_string_length_t i = 0;
+    f_status_t status = F_none;
     uint8_t width_max = 0;
 
     for (; i < length; i += f_macro_utf_byte_width(string[i])) {
@@ -41,7 +41,7 @@ extern "C" {
       }
 
       if (status == F_true) {
-        f_string_length j = i + f_macro_utf_byte_width(string[i]);
+        f_string_length_t j = i + f_macro_utf_byte_width(string[i]);
 
         if (j == length) return F_none;
 
@@ -78,13 +78,13 @@ extern "C" {
 #endif // _di_fl_print_trim_string_
 
 #ifndef _di_fl_print_trim_string_dynamic_
-  f_return_status fl_print_trim_string_dynamic(FILE *output, const f_string_static buffer) {
+  f_return_status fl_print_trim_string_dynamic(FILE *output, const f_string_static_t buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    register f_string_length i = 0;
-    f_status status = F_none;
+    register f_string_length_t i = 0;
+    f_status_t status = F_none;
     uint8_t width_max = 0;
 
     for (; i < buffer.used; i += f_macro_utf_byte_width(buffer.string[i])) {
@@ -113,7 +113,7 @@ extern "C" {
       }
 
       if (status == F_true) {
-        f_string_length j = i + f_macro_utf_byte_width(buffer.string[i]);
+        f_string_length_t j = i + f_macro_utf_byte_width(buffer.string[i]);
 
         if (j == buffer.used) return F_none;
 
@@ -152,7 +152,7 @@ extern "C" {
 #endif // _di_fl_print_trim_string_dynamic_
 
 #ifndef _di_fl_print_trim_string_dynamic_partial_
-  f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_static buffer, const f_string_range range) {
+  f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
@@ -161,8 +161,8 @@ extern "C" {
       if (range.stop >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    register f_string_length i = range.start;
-    f_status status = F_none;
+    register f_string_length_t i = range.start;
+    f_status_t status = F_none;
 
     uint8_t width_max = 0;
 
@@ -198,7 +198,7 @@ extern "C" {
       }
 
       if (status == F_true) {
-        f_string_length j = i + width_i;
+        f_string_length_t j = i + width_i;
 
         if (j == range.stop) return F_none;
 
@@ -247,14 +247,14 @@ extern "C" {
 #endif // _di_fl_print_trim_string_dynamic_partial_
 
 #ifndef _di_fl_print_trim_utf_string_
-  f_return_status fl_print_trim_utf_string(FILE *output, const f_utf_string string, const f_utf_string_length length) {
+  f_return_status fl_print_trim_utf_string(FILE *output, const f_utf_string_t string, const f_utf_string_length_t length) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (length < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    register f_string_length i = 0;
-    f_status status = F_none;
+    register f_string_length_t i = 0;
+    f_status_t status = F_none;
 
     for (; i < length; i++) {
       status = f_utf_character_is_whitespace(string[i]);
@@ -280,7 +280,7 @@ extern "C" {
       }
 
       if (status == F_true) {
-        f_string_length j = i + 1;
+        f_string_length_t j = i + 1;
 
         if (j == length) return F_none;
 
@@ -316,13 +316,13 @@ extern "C" {
 #endif // _di_fl_print_trim_utf_string_
 
 #ifndef _di_fl_print_trim_utf_string_dynamic_
-  f_return_status fl_print_trim_utf_string_dynamic(FILE *output, const f_utf_string_static buffer) {
+  f_return_status fl_print_trim_utf_string_dynamic(FILE *output, const f_utf_string_static_t buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer.used == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    register f_utf_string_length i = 0;
-    f_status status = F_none;
+    register f_utf_string_length_t i = 0;
+    f_status_t status = F_none;
 
     for (; i < buffer.used; i++) {
       status = f_utf_character_is_whitespace(buffer.string[i]);
@@ -348,7 +348,7 @@ extern "C" {
       }
 
       if (status == F_true) {
-        f_string_length j = i + 1;
+        f_string_length_t j = i + 1;
 
         if (j == buffer.used) return F_none;
 
@@ -386,7 +386,7 @@ extern "C" {
 #endif // _di_fl_print_trim_utf_string_dynamic_
 
 #ifndef _di_fl_print_trim_utf_string_dynamic_partial_
-  f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_static buffer, const f_utf_string_range range) {
+  f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_utf_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
@@ -395,8 +395,8 @@ extern "C" {
       if (range.stop >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    register f_string_length i = range.start;
-    f_status status = F_none;
+    register f_string_length_t i = range.start;
+    f_status_t status = F_none;
 
     for (; i <= range.stop; i++) {
       status = f_utf_character_is_whitespace(buffer.string[i]);
@@ -422,7 +422,7 @@ extern "C" {
       }
 
       if (status == F_true) {
-        f_string_length j = i + 1;
+        f_string_length_t j = i + 1;
 
         if (j == range.stop) return F_none;
 

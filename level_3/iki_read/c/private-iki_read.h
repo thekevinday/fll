@@ -31,7 +31,7 @@ extern "C" {
  *   F_unknown is returned if the status code has no print message.
  */
 #ifndef _di_iki_read_print_error_
-  extern f_return_status iki_read_print_error(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern f_return_status iki_read_print_error(const fl_color_context_t context, const uint8_t verbosity, const f_status_t status, const f_string_t function, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_print_error_
 
 /**
@@ -61,7 +61,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_iki_read_print_error_file_
-  extern bool iki_read_print_error_file(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string name, const f_string operation, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern bool iki_read_print_error_file(const fl_color_context_t context, const uint8_t verbosity, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_print_error_file_
 
 /**
@@ -85,7 +85,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_iki_read_print_error_number_argument_
-  extern void iki_read_print_error_number_argument(const fl_color_context context, const uint8_t verbosity, const f_status status, const f_string function, const f_string parameter, const f_string argument) f_gcc_attribute_visibility_internal;
+  extern void iki_read_print_error_number_argument(const fl_color_context_t context, const uint8_t verbosity, const f_status_t status, const f_string_t function, const f_string_t parameter, const f_string_t argument) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_print_error_number_argument_
 
 /**
@@ -111,7 +111,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_at_
-  extern f_return_status iki_read_process_at(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_string_range *range) f_gcc_attribute_visibility_internal;
+  extern f_return_status iki_read_process_at(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_data_t *data, f_string_range_t *range) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_process_at_
 
 /**
@@ -131,7 +131,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_
-  extern f_return_status iki_read_process_buffer(const f_console_arguments arguments, const f_string file_name, iki_read_data *data) f_gcc_attribute_visibility_internal;
+  extern f_return_status iki_read_process_buffer(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_process_buffer_
 
 /**
@@ -162,7 +162,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_
-  extern f_return_status iki_read_process_buffer_ranges(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_string_range *buffer_range, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) f_gcc_attribute_visibility_internal;
+  extern f_return_status iki_read_process_buffer_ranges(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_data_t *data, f_string_range_t *buffer_range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_string_ranges_t *ranges) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_process_buffer_ranges_
 
 /**
@@ -195,7 +195,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_whole_
-  extern f_return_status iki_read_process_buffer_ranges_whole(const f_console_arguments arguments, const f_string file_name, const f_string_range buffer_range, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content, f_string_ranges *ranges) f_gcc_attribute_visibility_internal;
+  extern f_return_status iki_read_process_buffer_ranges_whole(const f_console_arguments_t arguments, const f_string_t file_name, const f_string_range_t buffer_range, iki_read_data_t *data, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_string_ranges_t *ranges) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
 /**
@@ -220,7 +220,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_total_
-  extern f_return_status iki_read_process_buffer_total(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_iki_variable *variable, f_iki_vocabulary *vocabulary, f_iki_content *content) f_gcc_attribute_visibility_internal;
+  extern f_return_status iki_read_process_buffer_total(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_data_t *data, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_process_buffer_total_
 
 /**
@@ -243,7 +243,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_substitutions_identify_
-  extern f_return_status iki_read_substitutions_identify(const f_console_arguments arguments, const f_string file_name, iki_read_data *data, f_iki_vocabulary *vocabulary, iki_read_substitutions *substitutionss) f_gcc_attribute_visibility_internal;
+  extern f_return_status iki_read_substitutions_identify(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_data_t *data, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_substitutions_identify_
 
 /**
@@ -266,7 +266,7 @@ extern "C" {
  *   Set to FALSE to print the entire variable when printing substituted text.
  */
 #ifndef _di_iki_read_substitutions_print_
-  extern void iki_read_substitutions_print(const iki_read_data data, const f_iki_variable variable, const f_iki_content content, const f_string_ranges ranges, const iki_read_substitutions substitutions, const f_string_length index, const bool content_only) f_gcc_attribute_visibility_internal;
+  extern void iki_read_substitutions_print(const iki_read_data_t data, const f_iki_variable_t variable, const f_iki_content_t content, const f_string_ranges_t ranges, const iki_read_substitutions_t substitutions, const f_string_length_t index, const bool content_only) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_read_substitutions_print_
 
 #ifdef __cplusplus

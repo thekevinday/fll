@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_list_object_read_
-  f_return_status fl_fss_basic_list_object_read(f_string_dynamic *buffer, f_string_range *range, f_fss_object *found) {
+  f_return_status fl_fss_basic_list_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (buffer->used == 0) return F_status_set_error(F_parameter);
@@ -16,10 +16,10 @@ extern "C" {
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     // delimits must only be applied once a valid object is found.
-    f_string_lengths delimits = f_string_lengths_initialize;
+    f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
     status = f_fss_skip_past_space(*buffer, range);
     if (F_status_is_error(status)) return status;
@@ -52,8 +52,8 @@ extern "C" {
     // identify where the object ends.
     while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
       if (buffer->string[range->start] == f_fss_delimit_slash) {
-        f_string_length first_slash = range->start;
-        f_string_length slash_count = 1;
+        f_string_length_t first_slash = range->start;
+        f_string_length_t slash_count = 1;
 
         status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
@@ -70,7 +70,7 @@ extern "C" {
         fl_macro_fss_object_return_on_overflow((*buffer), (*range), (*found), delimits, F_data_not_eos, F_data_not_stop);
 
         if (buffer->string[range->start] == f_fss_basic_list_open) {
-          f_string_length stop_point = range->start - 1;
+          f_string_length_t stop_point = range->start - 1;
 
           status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
@@ -90,15 +90,15 @@ extern "C" {
           fl_macro_fss_object_return_on_overflow((*buffer), (*range), (*found), delimits, F_data_not_eos, F_data_not_stop);
 
           if (buffer->string[range->start] == f_string_eol[0]) {
-            f_string_length start = range->start;
+            f_string_length_t start = range->start;
 
             range->start = first_slash;
 
             if (delimits.used + (slash_count / 2) >= delimits.size) {
-              f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
+              f_macro_string_lengths_t_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_delete_simple(delimits);
+                f_macro_string_lengths_t_delete_simple(delimits);
                 return status;
               }
             }
@@ -134,7 +134,7 @@ extern "C" {
         continue;
       }
       else if (buffer->string[range->start] == f_fss_basic_list_open) {
-        f_string_length stop_point = range->start - 1;
+        f_string_length_t stop_point = range->start - 1;
 
         status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
@@ -187,7 +187,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_list_object_read_
 
 #ifndef _di_fl_fss_basic_list_content_read_
-  f_return_status fl_fss_basic_list_content_read(f_string_dynamic *buffer, f_string_range *range, f_fss_content *found) {
+  f_return_status fl_fss_basic_list_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (buffer->used == 0) return F_status_set_error(F_parameter);
@@ -197,10 +197,10 @@ extern "C" {
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     // delimits must only be applied once a valid object is found.
-    f_string_lengths delimits = f_string_lengths_initialize;
+    f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
     fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*range));
     fl_macro_fss_content_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop)
@@ -208,7 +208,7 @@ extern "C" {
     fl_macro_fss_allocate_content_if_necessary((*found), delimits);
     found->array[found->used].start = range->start;
 
-    f_string_length last_newline = range->start;
+    f_string_length_t last_newline = range->start;
     bool found_newline = F_false;
 
     // identify where the content ends.
@@ -226,8 +226,8 @@ extern "C" {
       }
 
       if (buffer->string[range->start] == f_fss_delimit_slash) {
-        f_string_length first_slash = range->start;
-        f_string_length slash_count = 1;
+        f_string_length_t first_slash = range->start;
+        f_string_length_t slash_count = 1;
 
         status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
@@ -249,7 +249,7 @@ extern "C" {
         }
 
         if (buffer->string[range->start] == f_fss_basic_list_open) {
-          f_string_length stop_point = range->start - 1;
+          f_string_length_t stop_point = range->start - 1;
 
           status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
@@ -274,7 +274,7 @@ extern "C" {
           }
 
           if (buffer->string[range->start] == f_string_eol[0]) {
-            f_string_length start = range->start;
+            f_string_length_t start = range->start;
 
             range->start = first_slash;
 
@@ -293,10 +293,10 @@ extern "C" {
             }
 
             if (delimits.used + (slash_count / 2) >= delimits.size) {
-              f_macro_string_lengths_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
+              f_macro_string_lengths_t_resize(status, delimits, delimits.size + (slash_count / 2) + f_fss_default_allocation_step);
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_delete_simple(delimits);
+                f_macro_string_lengths_t_delete_simple(delimits);
                 return status;
               }
             }
@@ -389,17 +389,17 @@ extern "C" {
 #endif // _di_fl_fss_basic_list_content_read_
 
 #ifndef _di_fl_fss_basic_list_object_write_
-  f_return_status fl_fss_basic_list_object_write(const f_string_static object, f_string_range *range, f_string_dynamic *destination) {
+  f_return_status fl_fss_basic_list_object_write(const f_string_static_t object, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    f_string_range buffer_position = f_string_range_initialize;
-    f_string_length start_position = f_string_initialize;
-    f_string_length size_allocate = 0;
-    f_string_length start_buffer = 0;
+    f_string_range_t buffer_position = f_string_range_initialize;
+    f_string_length_t start_position = f_string_t_initialize;
+    f_string_length_t size_allocate = 0;
+    f_string_length_t start_buffer = 0;
 
     fl_macro_fss_skip_past_delimit_placeholders(object, (*range))
 
@@ -412,7 +412,7 @@ extern "C" {
     size_allocate = destination->used + (range->stop - range->start) + 2 + f_fss_default_allocation_step_string;
 
     if (size_allocate > destination->size) {
-      f_macro_string_dynamic_resize(status, (*destination), size_allocate);
+      f_macro_string_dynamic_t_resize(status, (*destination), size_allocate);
       if (F_status_is_error(status)) return status;
     }
 
@@ -442,7 +442,7 @@ extern "C" {
 
     while (range->start <= range->stop && range->start < object.used) {
       if (object.string[range->start] == f_fss_delimit_slash) {
-        f_string_length slash_count = 1;
+        f_string_length_t slash_count = 1;
 
         destination->string[buffer_position.stop] = object.string[range->start];
         buffer_position.stop++;
@@ -473,7 +473,7 @@ extern "C" {
           size_allocate += slash_count;
 
           if (size_allocate > destination->size) {
-            f_macro_string_dynamic_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+            f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
             if (F_status_is_error(status)) return status;
           }
 
@@ -515,18 +515,18 @@ extern "C" {
 #endif // _di_fl_fss_basic_list_object_write_
 
 #ifndef _di_fl_fss_basic_list_content_write_
-  f_return_status fl_fss_basic_list_content_write(const f_string_static content, f_string_range *range, f_string_dynamic *destination) {
+  f_return_status fl_fss_basic_list_content_write(const f_string_static_t content, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
     bool is_comment = F_false;
     bool has_graph = F_false;
 
-    f_string_range buffer_position = f_string_range_initialize;
-    f_string_length start_position = f_string_initialize;
-    f_string_length size_allocate = 0;
+    f_string_range_t buffer_position = f_string_range_initialize;
+    f_string_length_t start_position = f_string_t_initialize;
+    f_string_length_t size_allocate = 0;
 
     fl_macro_fss_skip_past_delimit_placeholders(content, (*range))
 
@@ -539,7 +539,7 @@ extern "C" {
     size_allocate = destination->used + (range->stop - range->start) + 2 + f_fss_default_allocation_step_string;
 
     if (size_allocate > destination->size) {
-      f_macro_string_dynamic_resize(status, (*destination), size_allocate);
+      f_macro_string_dynamic_t_resize(status, (*destination), size_allocate);
 
       if (F_status_is_error(status)) return status;
     }
@@ -549,7 +549,7 @@ extern "C" {
 
     while (range->start <= range->stop && range->start < content.used) {
       if (content.string[range->start] == f_fss_delimit_slash && !is_comment) {
-        f_string_length slash_count = 1;
+        f_string_length_t slash_count = 1;
 
         destination->string[buffer_position.stop] = content.string[range->start];
         buffer_position.stop++;
@@ -579,7 +579,7 @@ extern "C" {
         } // while
 
         if (content.string[range->start] == f_fss_basic_list_open) {
-          f_string_length start = range->start;
+          f_string_length_t start = range->start;
 
           status = f_utf_buffer_increment(content, range, 1);
           if (F_status_is_error(status)) return status;
@@ -600,7 +600,7 @@ extern "C" {
             size_allocate += slash_count + 1;
 
             if (size_allocate > destination->size) {
-              f_macro_string_dynamic_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+              f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
               if (F_status_is_error(status)) return status;
             }
 
@@ -623,7 +623,7 @@ extern "C" {
         }
       }
       else if (content.string[range->start] == f_fss_basic_list_open && !is_comment) {
-        f_string_length start = range->start;
+        f_string_length_t start = range->start;
 
         has_graph = F_true;
 
@@ -646,7 +646,7 @@ extern "C" {
           size_allocate++;
 
           if (size_allocate > destination->size) {
-            f_macro_string_dynamic_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+            f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
             if (F_status_is_error(status)) return status;
           }
 

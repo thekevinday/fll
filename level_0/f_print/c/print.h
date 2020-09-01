@@ -50,7 +50,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_print_string_
-  extern f_return_status f_print_string(FILE *output, const f_string string, const f_string_length length);
+  extern f_return_status f_print_string(FILE *output, const f_string_t string, const f_string_length_t length);
 #endif // _di_f_print_string_
 
 /**
@@ -74,7 +74,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_print_string_dynamic_
-  extern f_return_status f_print_string_dynamic(FILE *output, const f_string_static buffer);
+  extern f_return_status f_print_string_dynamic(FILE *output, const f_string_static_t buffer);
 #endif // _di_f_print_string_dynamic_
 
 /**
@@ -100,7 +100,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_print_string_dynamic_partial_
-  extern f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_static buffer, const f_string_range range);
+  extern f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range);
 #endif // _di_f_print_string_dynamic_partial_
 
 #ifdef __cplusplus

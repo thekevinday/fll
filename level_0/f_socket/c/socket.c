@@ -5,7 +5,7 @@ extern "C"{
 #endif
 
 #ifndef _di_f_socket_file_bind_
-  f_return_status f_socket_file_bind(const f_string path, const int id, struct sockaddr_un *address) {
+  f_return_status f_socket_file_bind(const f_string_t path, const int id, struct sockaddr_un *address) {
     memset(&address, 0, sizeof(struct sockaddr_un));
     address->sun_family = AF_UNIX;
     strncpy(address->sun_path, path, sizeof(address->sun_path) - 1);

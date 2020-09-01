@@ -10,8 +10,8 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_skeleton_operate_
-  f_return_status fake_skeleton_operate(const fake_data data) {
-    f_status status = F_none;
+  f_return_status fake_skeleton_operate(const fake_data_t data) {
+    f_status_t status = F_none;
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
@@ -19,7 +19,7 @@ extern "C" {
     }
 
     {
-      const f_string_dynamic *parameters_value[] = {
+      const f_string_dynamic_t *parameters_value[] = {
         &data.path_build,
         &data.path_data,
         &data.path_data_build,
@@ -52,9 +52,9 @@ extern "C" {
       } // for
     }
 
-    f_string_dynamic file_data_build_process_post = f_string_dynamic_initialize;
-    f_string_dynamic file_data_build_process_pre = f_string_dynamic_initialize;
-    f_string_dynamic content = f_string_dynamic_initialize;
+    f_string_dynamic_t file_data_build_process_post = f_string_dynamic_t_initialize;
+    f_string_dynamic_t file_data_build_process_pre = f_string_dynamic_t_initialize;
+    f_string_dynamic_t content = f_string_dynamic_t_initialize;
 
     if (F_status_is_not_error(status)) {
       content.string = fake_make_skeleton_content_defines;
@@ -109,8 +109,8 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_delete_simple(file_data_build_process_post);
-      f_macro_string_dynamic_delete_simple(file_data_build_process_pre);
+      f_macro_string_dynamic_t_delete_simple(file_data_build_process_post);
+      f_macro_string_dynamic_t_delete_simple(file_data_build_process_pre);
       return status;
     }
 
@@ -119,8 +119,8 @@ extern "C" {
 #endif // _di_fake_skeleton_operate_
 
 #ifndef _di_fake_skeleton_operate_directory_create_
-  f_return_status fake_skeleton_operate_directory_create(const fake_data data, const f_string_dynamic path) {
-    f_status status = F_none;
+  f_return_status fake_skeleton_operate_directory_create(const fake_data_t data, const f_string_dynamic_t path) {
+    f_status_t status = F_none;
 
     if (path.used == 0) return F_none;
 
@@ -174,8 +174,8 @@ extern "C" {
 #endif // _di_fake_skeleton_operate_directory_create_
 
 #ifndef _di_fake_skeleton_operate_file_create_
-  f_return_status fake_skeleton_operate_file_create(const fake_data data, const f_string_dynamic path, const bool executable, const f_string_static content) {
-    f_status status = F_none;
+  f_return_status fake_skeleton_operate_file_create(const fake_data_t data, const f_string_dynamic_t path, const bool executable, const f_string_static_t content) {
+    f_status_t status = F_none;
 
     if (path.used == 0) return F_none;
 
@@ -236,7 +236,7 @@ extern "C" {
       }
 
       if (content.used) {
-        f_file file = f_file_initialize;
+        f_file_t file = f_file_t_initialize;
 
         file.flag = f_file_flag_append_wo;
         file.size_write = content.used;

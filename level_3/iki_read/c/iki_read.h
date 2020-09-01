@@ -7,7 +7,7 @@
  *
  * This is the FSS Basic Read program
  * This program utilizes the Featureless Linux Library.
- * This program processes files or other input in fss format and stores the results in the iki_read_data.
+ * This program processes files or other input in fss format and stores the results in the iki_read_data_t.
  *
  * This processes in accordance to the FSS-0000 Basic specification.
  */
@@ -112,154 +112,154 @@ extern "C" {
     iki_read_parameter_total,
   };
 
-  #define f_console_parameter_initialize_iki_read \
+  #define iki_read_console_parameter_t_initialize \
     { \
-      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(iki_read_short_at, iki_read_long_at, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(iki_read_short_line, iki_read_long_line, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(iki_read_short_literal, iki_read_long_literal, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(iki_read_short_name, iki_read_long_name, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(iki_read_short_object, iki_read_long_object, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(iki_read_short_whole, iki_read_long_whole, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(iki_read_short_substitute, iki_read_long_substitute, 0, 3, f_console_type_normal), \
-      f_console_parameter_initialize(iki_read_short_total, iki_read_long_total, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(iki_read_short_at, iki_read_long_at, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_read_short_line, iki_read_long_line, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_read_short_literal, iki_read_long_literal, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_read_short_name, iki_read_long_name, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_read_short_object, iki_read_long_object, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_read_short_whole, iki_read_long_whole, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_read_short_substitute, iki_read_long_substitute, 0, 3, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_read_short_total, iki_read_long_total, 0, 0, f_console_type_normal), \
     }
 
   #define iki_read_total_parameters 15
 #endif // _di_iki_read_defines_
 
-#ifndef _di_iki_read_substitution_
+#ifndef _di_iki_read_substitution_t_
   #define iki_read_substitution_vocabulary "vocabulary"
   #define iki_read_substitution_replace    "replace"
   #define iki_read_substitution_with       "with"
 
   typedef struct {
-    f_string_static replace;
-    f_string_static with;
-  } iki_read_substitution;
+    f_string_static_t replace;
+    f_string_static_t with;
+  } iki_read_substitution_t;
 
-  #define iki_read_substitution_initialize \
+  #define iki_read_substitution_t_initialize \
     { \
-      f_string_static_initialize, \
-      f_string_static_initialize, \
+      f_string_static_t_initialize, \
+      f_string_static_t_initialize, \
     }
 
-  #define macro_iki_read_substitution_initialize(replace, with) \
+  #define macro_iki_read_substitution_t_initialize(replace, with) \
     { \
-      f_macro_string_static_initialize(replace), \
-      f_macro_string_static_initialize(with), \
+      f_macro_string_static_t_initialize(replace), \
+      f_macro_string_static_t_initialize(with), \
     }
-#endif // _di_iki_read_substitution_
+#endif // _di_iki_read_substitution_t_
 
-#ifndef _di_iki_read_substitutions_
+#ifndef _di_iki_read_substitutions_t_
   typedef struct {
-    iki_read_substitution *array;
+    iki_read_substitution_t *array;
 
-    f_array_length size;
-    f_array_length used;
-  } iki_read_substitutions;
+    f_array_length_t size;
+    f_array_length_t used;
+  } iki_read_substitutions_t;
 
-  #define iki_read_substitutions_initialize {0, 0, 0}
+  #define iki_read_substitutions_t_initialize {0, 0, 0}
 
-  #define macro_iki_read_substitutions_clear(replacements) f_macro_memory_structure_clear(replacements)
+  #define macro_iki_read_substitutions_t_clear(replacements) f_macro_memory_structure_t_clear(replacements)
 
-  #define macro_iki_read_substitutions_new(status, replacements, length) f_macro_memory_structure_new(status, replacements, iki_read_substitution, length)
+  #define macro_iki_read_substitutions_t_new(status, replacements, length) f_macro_memory_structure_t_new(status, replacements, iki_read_substitution_t, length)
 
-  #define macro_iki_read_substitutions_delete_simple(replacements) \
+  #define macro_iki_read_substitutions_t_delete_simple(replacements) \
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
     } \
-    if (replacements.used == 0) f_macro_memory_structure_delete_simple(replacements, iki_read_substitution)
+    if (replacements.used == 0) f_macro_memory_structure_t_delete_simple(replacements, iki_read_substitution_t)
 
-  #define macro_iki_read_substitutions_destroy_simple(replacements) \
+  #define macro_iki_read_substitutions_t_destroy_simple(replacements) \
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
     } \
-    if (replacements.used == 0) f_macro_memory_structure_destroy_simple(replacements, iki_read_substitution)
+    if (replacements.used == 0) f_macro_memory_structure_t_destroy_simple(replacements, iki_read_substitution_t)
 
-  #define macro_iki_read_substitutions_resize(status, replacements, new_length) \
+  #define macro_iki_read_substitutions_t_resize(status, replacements, new_length) \
     status = F_none; \
     if (new_length < replacements.size) { \
-      f_array_length i = replacements.size - new_length; \
+      f_array_length_t i = replacements.size - new_length; \
       for (; i < replacements.size; i++) { \
         if (status != F_none) break; \
       } \
     } \
-    if (status == F_none) status = f_memory_resize((void **) & replacements.array, sizeof(iki_read_substitution), replacements.size, new_length); \
+    if (status == F_none) status = f_memory_resize((void **) & replacements.array, sizeof(iki_read_substitution_t), replacements.size, new_length); \
     if (status == F_none) { \
       if (new_length > replacements.size) { \
-        f_array_length i = replacements.size; \
+        f_array_length_t i = replacements.size; \
         for (; i < new_length; i++) { \
-          memset(&replacements.array[i], 0, sizeof(iki_read_substitution)); \
+          memset(&replacements.array[i], 0, sizeof(iki_read_substitution_t)); \
         } \
       } \
       replacements.size = new_length; \
       if (replacements.used > replacements.size) replacements.used = new_length; \
     }
 
-  #define macro_iki_read_substitutions_adjust(status, replacements, new_length) \
+  #define macro_iki_read_substitutions_t_adjust(status, replacements, new_length) \
     status = F_none; \
     if (new_length < replacements.size) { \
-      f_array_length i = replacements.size - new_length; \
+      f_array_length_t i = replacements.size - new_length; \
       for (; i < replacements.size; i++) { \
         if (status != F_none) break; \
       } \
     } \
-    if (status == F_none) status = f_memory_adjust((void **) & replacements.array, sizeof(iki_read_substitution), replacements.size, new_length); \
+    if (status == F_none) status = f_memory_adjust((void **) & replacements.array, sizeof(iki_read_substitution_t), replacements.size, new_length); \
     if (status == F_none) { \
       if (new_length > replacements.size) { \
-        f_array_length i = replacements.size; \
+        f_array_length_t i = replacements.size; \
         for (; i < new_length; i++) { \
-          memset(&replacements.array[i], 0, sizeof(iki_read_substitution)); \
+          memset(&replacements.array[i], 0, sizeof(iki_read_substitution_t)); \
         } \
       } \
       replacements.size = new_length; \
       if (replacements.used > replacements.size) replacements.used = new_length; \
     }
-#endif // _di_iki_read_substitutions_
+#endif // _di_iki_read_substitutions_t_
 
-#ifndef _di_iki_read_data_
+#ifndef _di_iki_read_data_t_
   typedef struct {
-    f_console_parameter parameters[iki_read_total_parameters];
+    f_console_parameter_t parameters[iki_read_total_parameters];
 
-    f_string_lengths remaining;
+    f_string_lengths_t remaining;
     bool process_pipe;
 
-    f_number_unsigned at;
-    f_number_unsigned line;
+    f_number_unsigned_t at;
+    f_number_unsigned_t line;
 
     uint8_t mode;
     uint8_t verbosity;
 
-    f_string_dynamic buffer;
+    f_string_dynamic_t buffer;
 
-    iki_read_substitutions replacements;
+    iki_read_substitutions_t replacements;
 
-    fl_color_context context;
-  } iki_read_data;
+    fl_color_context_t context;
+  } iki_read_data_t;
 
-  #define iki_read_data_initialize \
+  #define iki_read_data_t_initialize \
     { \
-      f_console_parameter_initialize_iki_read, \
-      f_string_lengths_initialize, \
+      iki_read_console_parameter_t_initialize, \
+      f_string_lengths_t_initialize, \
       F_false, \
       0, \
       0, \
       0, \
       0, \
-      f_string_dynamic_initialize, \
-      iki_read_substitutions_initialize, \
-      fl_color_context_initialize, \
+      f_string_dynamic_t_initialize, \
+      iki_read_substitutions_t_initialize, \
+      fl_color_context_t_initialize, \
     }
-#endif // _di_iki_read_data_
+#endif // _di_iki_read_data_t_
 
 /**
  * Print help to standard output.
@@ -271,7 +271,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_iki_read_print_help_
-  extern f_return_status iki_read_print_help(const fl_color_context context);
+  extern f_return_status iki_read_print_help(const fl_color_context_t context);
 #endif // _di_iki_read_print_help_
 
 /**
@@ -292,7 +292,7 @@ extern "C" {
  * @see iki_read_delete_data()
  */
 #ifndef _di_iki_read_main_
-  extern f_return_status iki_read_main(const f_console_arguments arguments, iki_read_data *data);
+  extern f_return_status iki_read_main(const f_console_arguments_t arguments, iki_read_data_t *data);
 #endif // _di_iki_read_main_
 
 /**
@@ -311,7 +311,7 @@ extern "C" {
  * @see iki_read_main()
  */
 #ifndef _di_iki_read_delete_data_
-  extern f_return_status iki_read_delete_data(iki_read_data *data);
+  extern f_return_status iki_read_delete_data(iki_read_data_t *data);
 #endif // _di_iki_read_delete_data_
 
 #ifdef __cplusplus

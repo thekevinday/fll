@@ -46,7 +46,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_environment_path_explode_
-  extern f_return_status fl_environment_path_explode(const f_string path, f_string_dynamics *paths);
+  extern f_return_status fl_environment_path_explode(const f_string_t path, f_string_dynamics_t *paths);
 #endif // _di_fl_environment_path_explode_
 
 /**
@@ -70,7 +70,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_environment_path_explode_dynamic_
-  extern f_return_status fl_environment_path_explode_dynamic(const f_string_static path, f_string_dynamics *paths);
+  extern f_return_status fl_environment_path_explode_dynamic(const f_string_static_t path, f_string_dynamics_t *paths);
 #endif // _di_fl_environment_path_explode_dynamic_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_environment_path_explode_reverse_
-  extern f_return_status fl_environment_path_explode_reverse(const f_string path, f_string_dynamics *paths);
+  extern f_return_status fl_environment_path_explode_reverse(const f_string_t path, f_string_dynamics_t *paths);
 #endif // _di_fl_environment_path_explode_reverse_
 
 /**
@@ -122,7 +122,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_environment_path_explode_reverse_dynamic_
-  extern f_return_status fl_environment_path_explode_reverse_dynamic(const f_string_static path, f_string_dynamics *paths);
+  extern f_return_status fl_environment_path_explode_reverse_dynamic(const f_string_static_t path, f_string_dynamics_t *paths);
 #endif // _di_fl_environment_path_explode_reverse_dynamic_
 
 #ifdef __cplusplus

@@ -189,92 +189,92 @@ extern "C" {
   };
 
   #ifdef _en_init_debug_
-    #define f_console_parameter_initialize_init \
+    #define init_console_parameter_t_initialize \
       { \
-        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
-        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, F_false, f_console_type_inverse), \
-        f_console_parameter_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, F_true, f_console_type_normal), \
-        f_console_parameter_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, F_true, f_console_type_normal), \
+        f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
+        f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, F_true, f_console_type_normal), \
+        f_console_parameter_t_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, F_true, f_console_type_normal), \
       }
 
     #define init_total_parameters 8
   #else
-    #define f_console_parameter_initialize_init \
+    #define init_console_parameter_t_initialize \
       { \
-        f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
-        f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
-        f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
-        f_console_parameter_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, F_true, f_console_type_normal), \
-        f_console_parameter_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, F_true, f_console_type_normal), \
+        f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
+        f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, F_true, f_console_type_normal), \
+        f_console_parameter_t_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, F_true, f_console_type_normal), \
       }
 
     #define init_total_parameters 7
   #endif // _en_init_debug_
 #endif // _di_init_defines_
 
-#ifndef _di_init_data_
+#ifndef _di_init_data_t_
   typedef struct {
-    f_console_parameter parameters[init_total_parameters];
+    f_console_parameter_t parameters[init_total_parameters];
 
-    f_string_lengths remaining;
+    f_string_lengths_t remaining;
     bool process_pipe;
 
-    fl_color_context context;
-  } init_data;
+    fl_color_context_t context;
+  } init_data_t;
 
   #define init_data_initialize \
     { \
-      f_console_parameter_initialize_init, \
-      f_string_lengths_initialize, \
+      init_console_parameter_t_initialize, \
+      f_string_lengths_t_initialize, \
       F_false, \
-      fl_color_context_initialize, \
+      fl_color_context_t_initialize, \
     }
 
   typedef struct {
     uint8_t todo_placeholder;
-  } init_data_thread_control;
+  } init_data_thread_control_t;
 
-  #define init_data_thread_control_initialize \
+  #define init_data_thread_control_t_initialize \
     { \
       0 \
     }
 
   typedef struct {
     uint8_t todo_placeholder;
-  } init_data_thread_service;
+  } init_data_thread_service_t;
 
-  #define init_data_thread_service_initialize \
+  #define init_data_thread_service_t_initialize \
     { \
       0 \
     }
 
   typedef struct {
     uint8_t todo_placeholder;
-  } init_data_thread_socket_file;
+  } init_data_thread_socket_file_t;
 
-  #define init_data_thread_socket_file_initialize \
+  #define init_data_thread_socket_file_t_initialize \
     { \
       0 \
     }
 
   typedef struct {
     uint8_t todo_placeholder;
-  } init_data_thread_socket_port;
+  } init_data_thread_socket_port_t;
 
-  #define init_data_thread_socket_port_initialize \
+  #define init_data_thread_socket_port_t_initialize \
     { \
       0 \
     }
-#endif // _di_init_data_
+#endif // _di_init_data_t_
 
 #ifndef _di_init_print_version_
-  extern f_return_status init_print_version(const init_data data);
+  extern f_return_status init_print_version(const init_data_t data);
 #endif // _di_init_print_version_
 
 /**
@@ -287,7 +287,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_init_print_help_
-  extern f_return_status init_print_help(const fl_color_context context);
+  extern f_return_status init_print_help(const fl_color_context_t context);
 #endif // _di_init_print_help_
 
 /**
@@ -304,7 +304,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_init_main_
-  extern f_return_status init_main(const f_console_arguments arguments, init_data *data);
+  extern f_return_status init_main(const f_console_arguments_t arguments, init_data_t *data);
 #endif // _di_init_main_
 
 /**
@@ -321,7 +321,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_init_main_
-  extern f_return_status init_thread_control(const init_data *data);
+  extern f_return_status init_thread_control(const init_data_t *data);
 #endif // _di_init_main_
 
 #ifdef __cplusplus

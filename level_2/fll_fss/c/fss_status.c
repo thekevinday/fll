@@ -5,13 +5,13 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_status_from_string_
-  f_return_status fll_fss_status_from_string(const f_string string, f_status *code) {
+  f_return_status fll_fss_status_from_string(const f_string_t string, f_status_t *code) {
     #ifndef _di_level_1_parameter_checking_
       if (code == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
-    const f_string_length length = strlen(string);
+    f_status_t status = F_none;
+    const f_string_length_t length = strlen(string);
 
     if (length == 0) {
       return F_data_not;
@@ -109,12 +109,12 @@ extern "C" {
 #endif // _di_fll_fss_status_from_string_
 
 #ifndef _di_fll_fss_status_to_string_
-  f_return_status fll_fss_status_to_string(const f_status code, f_string *string) {
+  f_return_status fll_fss_status_to_string(const f_status_t code, f_string_t *string) {
     #ifndef _di_level_2_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    const f_status unmasked_code = F_status_set_fine(code);
+    const f_status_t unmasked_code = F_status_set_fine(code);
 
     switch (unmasked_code) {
       #ifndef _di_fll_fss_status_error_
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_fll_status_to_string_
 
 #ifndef _di_fll_fss_status_is_error_
-  f_return_status fll_fss_status_is_error(const f_status code) {
+  f_return_status fll_fss_status_is_error(const f_status_t code) {
     if (fll_fss_status_is_fine(code) == F_true) {
       return F_false;
     }
@@ -195,7 +195,7 @@ extern "C" {
 #endif // _di_fll_fss_status_is_error_
 
 #ifndef _di_fll_fss_status_is_warning_
-  f_return_status fll_fss_status_is_warning(const f_status code) {
+  f_return_status fll_fss_status_is_warning(const f_status_t code) {
     switch (code) {
       #ifndef _di_fll_fss_status_basic_
         case F_data_not:
@@ -223,7 +223,7 @@ extern "C" {
 #endif // _di_fll_fss_status_is_warning_
 
 #ifndef _di_fll_fss_status_is_fine_
-  f_return_status fll_fss_status_is_fine(const f_status code) {
+  f_return_status fll_fss_status_is_fine(const f_status_t code) {
     switch (code) {
       #ifndef _di_fll_fss_status_booleans_
         case F_false:

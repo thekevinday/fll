@@ -33,7 +33,7 @@ extern "C" {
  * This does not check if the path exists or not.
  * This processes the relative parts: './', '../', and extra '/'.
  * This does not process symbolic links.
- * This has a max size of f_string_length_size.
+ * This has a max size of f_string_length_t_size.
  *
  * @param path
  *   The source path to determine what the canonical path is.
@@ -47,7 +47,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fll_path_canonical_
-  extern f_return_status fll_path_canonical(const f_string path, f_string_dynamic *canonical);
+  extern f_return_status fll_path_canonical(const f_string_t path, f_string_dynamic_t *canonical);
 #endif // _di_fll_path_canonical_
 
 #ifdef __cplusplus

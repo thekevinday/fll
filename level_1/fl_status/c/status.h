@@ -652,7 +652,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_status_to_string_
-  extern f_return_status fl_status_to_string(const f_status code, f_string *string);
+  extern f_return_status fl_status_to_string(const f_status_t code, f_string_t *string);
 #endif // _di_fl_status_to_string_
 
 #ifdef __cplusplus

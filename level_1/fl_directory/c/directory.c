@@ -6,13 +6,13 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_directory_clone_
-  f_return_status fl_directory_clone(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
+  f_return_status fl_directory_clone(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
     #ifndef _di_level_1_parameter_checking_
       if (source) return F_status_set_error(F_parameter);
       if (destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = f_directory_exists(source);
+    f_status_t status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory);
@@ -49,12 +49,12 @@ extern "C" {
       fprintf(verbose, "Cloned '%s' to '%s'.%c", source, destination, f_string_eol[0]);
     }
 
-    f_string_static static_source = { source, source_length, source_length };
-    f_string_static static_destination = { destination, destination_length, destination_length };
+    f_string_static_t static_source = { source, source_length, source_length };
+    f_string_static_t static_destination = { destination, destination_length, destination_length };
 
     // do not allow null termination or trailing path separators in the string's length calculation.
     {
-      f_string_length i = source_length;
+      f_string_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
         if (source[i - 1] == 0) continue;
@@ -76,13 +76,13 @@ extern "C" {
 #endif // _di_fl_directory_clone_
 
 #ifndef _di_fl_directory_clone_content_
-  f_return_status fl_directory_clone_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
+  f_return_status fl_directory_clone_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
     #ifndef _di_level_1_parameter_checking_
       if (source) return F_status_set_error(F_parameter);
       if (destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = f_directory_exists(source);
+    f_status_t status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory);
@@ -91,12 +91,12 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory);
 
-    f_string_static static_source = { source, source_length, source_length };
-    f_string_static static_destination = { destination, destination_length, destination_length };
+    f_string_static_t static_source = { source, source_length, source_length };
+    f_string_static_t static_destination = { destination, destination_length, destination_length };
 
     // do not allow null termination or trailing path separators in the string's length calculation.
     {
-      f_string_length i = source_length;
+      f_string_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
         if (source[i - 1] == 0) continue;
@@ -118,13 +118,13 @@ extern "C" {
 #endif // _di_fl_directory_clone_content_
 
 #ifndef _di_fl_directory_copy_
-  f_return_status fl_directory_copy(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
+  f_return_status fl_directory_copy(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
     #ifndef _di_level_1_parameter_checking_
       if (source) return F_status_set_error(F_parameter);
       if (destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = f_directory_exists(source);
+    f_status_t status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory);
@@ -149,12 +149,12 @@ extern "C" {
       fprintf(verbose, "Copied '%s' to '%s'.%c", source, destination, f_string_eol[0]);
     }
 
-    f_string_static static_source = { source, source_length, source_length };
-    f_string_static static_destination = { destination, destination_length, destination_length };
+    f_string_static_t static_source = { source, source_length, source_length };
+    f_string_static_t static_destination = { destination, destination_length, destination_length };
 
     // do not allow null termination or trailing path separators in the string's length calculation.
     {
-      f_string_length i = source_length;
+      f_string_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
         if (source[i - 1] == 0) continue;
@@ -176,13 +176,13 @@ extern "C" {
 #endif // _di_fl_directory_copy_
 
 #ifndef _di_fl_directory_copy_content_
-  f_return_status fl_directory_copy_content(const f_string source, const f_string destination, const f_string_length source_length, const f_string_length destination_length, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
+  f_return_status fl_directory_copy_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
     #ifndef _di_level_1_parameter_checking_
       if (source) return F_status_set_error(F_parameter);
       if (destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = f_directory_exists(source);
+    f_status_t status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory);
@@ -191,12 +191,12 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory);
 
-    f_string_static static_source = { source, source_length, source_length };
-    f_string_static static_destination = { destination, destination_length, destination_length };
+    f_string_static_t static_source = { source, source_length, source_length };
+    f_string_static_t static_destination = { destination, destination_length, destination_length };
 
     // do not allow null termination or trailing path separators in the string's length calculation.
     {
-      f_string_length i = source_length;
+      f_string_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
         if (source[i - 1] == 0) continue;
@@ -218,7 +218,7 @@ extern "C" {
 #endif // _di_fl_directory_copy_content_
 
 #ifndef _di_fl_directory_list_
-  f_return_status fl_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing *listing) {
+  f_return_status fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) {
     #ifndef _di_level_1_parameter_checking_
       if (path) return F_status_set_error(F_parameter);
       if (listing == 0) return F_status_set_error(F_parameter);
@@ -229,7 +229,7 @@ extern "C" {
 #endif // _di_fl_directory_list_
 
 #ifndef _di_fl_directory_path_pop_
-  f_return_status fl_directory_path_pop(f_string_static *path) {
+  f_return_status fl_directory_path_pop(f_string_static_t *path) {
     #ifndef _di_level_0_parameter_checking_
       if (path->used > path->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -241,10 +241,10 @@ extern "C" {
     const bool null_terminated = path->string[path->used] == 0;
     bool first_nulless = F_false;
 
-    f_string_length i = path->used - 1;
-    f_string_length j = 0;
+    f_string_length_t i = path->used - 1;
+    f_string_length_t j = 0;
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     for (; i > 0; i--) {
       if (path->string[i] == 0) continue;
@@ -300,7 +300,7 @@ extern "C" {
 #endif // _di_fl_directory_path_pop_
 
 #ifndef _di_fl_directory_path_push_
-  f_return_status fl_directory_path_push(const f_string source, f_string_length length, f_string_dynamic *destination) {
+  f_return_status fl_directory_path_push(const f_string_t source, f_string_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_0_parameter_checking_
       if (source) return F_status_set_error(F_parameter);
       if (destination->used > destination->size) return F_status_set_error(F_parameter);
@@ -315,7 +315,7 @@ extern "C" {
 #endif // _di_fl_directory_path_push_
 
 #ifndef _di_fl_directory_path_push_dynamic_
-  f_return_status fl_directory_path_push_dynamic(const f_string_static source, f_string_dynamic *destination) {
+  f_return_status fl_directory_path_push_dynamic(const f_string_static_t source, f_string_dynamic_t *destination) {
     #ifndef _di_level_0_parameter_checking_
       if (source.used > source.size) return F_status_set_error(F_parameter);
       if (destination->used > destination->size) return F_status_set_error(F_parameter);

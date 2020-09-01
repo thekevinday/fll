@@ -6,15 +6,15 @@ extern "C" {
 #endif
 
 #ifndef _di_f_serialize_simple_
-  f_return_status f_serialize_simple(const f_string_static value, f_string_dynamic *serialize) {
+  f_return_status f_serialize_simple(const f_string_static_t value, f_string_dynamic_t *serialize) {
     #ifndef _di_level_0_parameter_checking_
       if (serialize == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     if (serialize->used + value.used + 1 >= serialize->size) {
-      f_macro_string_dynamic_resize(status, (*serialize), serialize->size + value.used + 1);
+      f_macro_string_dynamic_t_resize(status, (*serialize), serialize->size + value.used + 1);
       if (F_status_is_error(status)) return status;
     }
 
@@ -33,16 +33,16 @@ extern "C" {
 #endif // _di_f_serialize_simple_
 
 #ifndef _di_f_serialize_un_simple_
-  f_return_status f_serialize_un_simple(const f_string_static serialize, f_string_dynamics *strings) {
+  f_return_status f_serialize_un_simple(const f_string_static_t serialize, f_string_dynamics_t *strings) {
     #ifndef _di_level_0_parameter_checking_
       if (serialize.used == 0) return F_status_set_error(F_parameter);
       if (strings == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    f_array_length i = 0;
-    f_array_length start = 0;
+    f_array_length_t i = 0;
+    f_array_length_t start = 0;
 
     uint8_t width = 0;
 
@@ -58,7 +58,7 @@ extern "C" {
           strings->used++;
         }
         else {
-          f_string_length total;
+          f_string_length_t total;
 
           if (i + 1 >= serialize.used) {
             total = (i - start) + 1;
@@ -69,7 +69,7 @@ extern "C" {
           }
 
           if (total > strings->array[strings->used].size) {
-            f_macro_string_dynamic_new(status, strings->array[strings->used], total);
+            f_macro_string_dynamic_t_new(status, strings->array[strings->used], total);
             if (F_status_is_error(status)) return status;
 
             strings->array[strings->used].size = total;
@@ -99,16 +99,16 @@ extern "C" {
 #endif // _di_f_serialize_un_simple_
 
 #ifndef _di_f_serialize_un_simple_map_
-  f_return_status f_serialize_un_simple_map(const f_string_static serialize, f_string_ranges *locations) {
+  f_return_status f_serialize_un_simple_map(const f_string_static_t serialize, f_string_ranges_t *locations) {
     #ifndef _di_level_0_parameter_checking_
       if (serialize.used == 0) return F_status_set_error(F_parameter);
       if (locations == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    f_array_length i = 0;
-    f_array_length start = 0;
+    f_array_length_t i = 0;
+    f_array_length_t start = 0;
 
     uint8_t width = 0;
 
@@ -116,7 +116,7 @@ extern "C" {
       width = f_macro_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter || i + 1 >= serialize.used) {
-        f_macro_memory_structure_macro_increment(status, (*locations), 1, f_serialize_default_allocation_step, f_macro_string_ranges_resize, F_buffer_too_large);
+        f_macro_memory_structure_macro_increment(status, (*locations), 1, f_serialize_default_allocation_step, f_macro_string_ranges_t_resize, F_buffer_too_large);
         if (F_status_is_error(status)) return status;
 
         if (start == i) {
@@ -152,7 +152,7 @@ extern "C" {
 #endif // _di_f_serialize_un_simple_map_
 
 #ifndef _di_f_serialize_un_simple_find_
-  f_return_status f_serialize_un_simple_find(const f_string_static serialize, const f_array_length index, f_string_range *range) {
+  f_return_status f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t *range) {
     #ifndef _di_level_0_parameter_checking_
       if (serialize.used == 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
@@ -163,15 +163,15 @@ extern "C" {
 #endif // _di_f_serialize_un_simple_find_
 
 #ifndef _di_f_serialize_un_simple_get_
-  f_return_status f_serialize_un_simple_get(const f_string_static serialize, const f_array_length index, f_string_dynamic *dynamic) {
+  f_return_status f_serialize_un_simple_get(const f_string_static_t serialize, const f_array_length_t index, f_string_dynamic_t *dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (serialize.used == 0) return F_status_set_error(F_parameter);
       if (dynamic == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_string_range range = f_string_range_initialize;
+    f_string_range_t range = f_string_range_initialize;
 
-    f_status status = private_f_serialize_un_simple_find(serialize, index, &range);
+    f_status_t status = private_f_serialize_un_simple_find(serialize, index, &range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_data_not_eos) {
@@ -179,12 +179,12 @@ extern "C" {
       return status;
     }
 
-    f_string_length total = (range.stop - range.start) + 1;
+    f_string_length_t total = (range.stop - range.start) + 1;
 
     if (total >= dynamic->size) {
-      f_status status_allocation = F_none;
+      f_status_t status_allocation = F_none;
 
-      f_macro_string_dynamic_resize(status_allocation, (*dynamic), total);
+      f_macro_string_dynamic_t_resize(status_allocation, (*dynamic), total);
       if (F_status_is_error(status_allocation)) return status_allocation;
     }
 

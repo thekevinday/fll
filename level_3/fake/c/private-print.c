@@ -10,15 +10,15 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_error_
-  f_return_status fake_print_error(const fake_data data, const f_status status, const f_string function, const bool fallback) {
-    const fake_make_print print = fake_macro_make_print_initialize(fake_make_print_error, data.context.error, f_type_error);
+  f_return_status fake_print_error(const fake_data_t data, const f_status_t status, const f_string_t function, const bool fallback) {
+    const fake_make_print_t print = fake_macro_make_print_t_initialize(fake_make_print_error, data.context.error, f_type_error);
 
     return fake_print_message(data, status, function, fallback, print);
   }
 #endif // _di_fake_print_error_
 
 #ifndef _di_fake_print_error_build_operation_file_
-  bool fake_print_error_build_operation_file(const fake_data data, const f_status status, const f_string function, const f_string operation, const f_string how, const f_string source, const f_string destination, const bool fallback) {
+  bool fake_print_error_build_operation_file(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t operation, const f_string_t how, const f_string_t source, const f_string_t destination, const bool fallback) {
 
     if (status == F_file_found_not) {
       if (data.verbosity != fake_verbosity_quiet) {
@@ -239,15 +239,15 @@ extern "C" {
 #endif // _di_fake_print_error_build_operation_file_
 
 #ifndef _di_fake_print_error_file_
-  bool fake_print_error_file(const fake_data data, const f_status status, const f_string function, const f_string name, const f_string operation, const bool is_file, const bool fallback) {
-    const fake_make_print print = fake_macro_make_print_initialize(fake_make_print_error, data.context.error, f_type_error);
+  bool fake_print_error_file(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const bool is_file, const bool fallback) {
+    const fake_make_print_t print = fake_macro_make_print_t_initialize(fake_make_print_error, data.context.error, f_type_error);
 
     return fake_print_message_file(data, status, function, name, operation, is_file, fallback, print);
   }
 #endif // _di_fake_print_error_file_
 
 #ifndef _di_fake_print_error_fss
-  bool fake_print_error_fss(const fake_data data, const f_status status, const f_string function, const f_string path_file, const f_string_range range, const bool fallback) {
+  bool fake_print_error_fss(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t path_file, const f_string_range_t range, const bool fallback) {
 
     if (status == F_file_found_not) {
       if (data.verbosity != fake_verbosity_quiet) {
@@ -289,7 +289,7 @@ extern "C" {
 #endif // _di_fake_print_error_fss
 
 #ifndef _di_fake_print_error_parameter_missing_value_
-  void fake_print_error_parameter_missing_value(const fake_data data, const f_string parameter) {
+  void fake_print_error_parameter_missing_value(const fake_data_t data, const f_string_t parameter) {
     if (data.verbosity == fake_verbosity_quiet) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -302,7 +302,7 @@ extern "C" {
 #endif // _di_fake_print_error_parameter_missing_value_
 
 #ifndef _di_fake_print_error_parameter_too_many_
-  void fake_print_error_parameter_too_many(const fake_data data, const f_string parameter) {
+  void fake_print_error_parameter_too_many(const fake_data_t data, const f_string_t parameter) {
     if (data.verbosity == fake_verbosity_quiet) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -315,7 +315,7 @@ extern "C" {
 #endif // _di_fake_print_error_parameter_too_many_
 
 #ifndef _di_fake_print_message_
-  f_return_status fake_print_message(const fake_data data, const f_status status, const f_string function, const bool fallback, const fake_make_print print) {
+  f_return_status fake_print_message(const fake_data_t data, const f_status_t status, const f_string_t function, const bool fallback, const fake_make_print_t print) {
 
     if (status == F_parameter) {
       if (data.verbosity != fake_verbosity_quiet) {
@@ -374,8 +374,8 @@ extern "C" {
 #endif // _di_fake_print_message_
 
 #ifndef _di_fake_print_message_file_
-  bool fake_print_message_file(const fake_data data, const f_status status, const f_string function, const f_string name, const f_string operation, const bool is_file, const bool fallback, const fake_make_print print) {
-    const f_string file_or_directory = is_file ? "file" : "directory";
+  bool fake_print_message_file(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const bool is_file, const bool fallback, const fake_make_print_t print) {
+    const f_string_t file_or_directory = is_file ? "file" : "directory";
 
     if (status == F_file_found_not) {
       if (data.verbosity != fake_verbosity_quiet) {
@@ -550,10 +550,10 @@ extern "C" {
 #endif // _di_fake_print_message_file_
 
 #ifndef _di_fake_print_message_section_operation_failed_
-  void fake_print_message_section_operation_failed(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const fake_make_print print) {
+  void fake_print_message_section_operation_failed(const fake_data_t data, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const fake_make_print_t print) {
     if (data.verbosity == fake_verbosity_quiet || !print.to) return;
 
-    f_string_length line = 1;
+    f_string_length_t line = 1;
 
     f_fss_count_lines(buffer, operation_name.start, &line);
 
@@ -577,7 +577,7 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_failed_
 
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  void fake_print_message_section_operation_path_outside(const fake_data data, const f_status status, const f_string function, const f_string path, const fake_make_print print) {
+  void fake_print_message_section_operation_path_outside(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t path, const fake_make_print_t print) {
     if (data.verbosity == fake_verbosity_quiet || !print.to) return;
 
     if (F_status_set_fine(status) == F_false) {
@@ -593,7 +593,7 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_path_outside_
 
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  void fake_print_message_section_operation_path_stack_max(const fake_data data, const f_status status, const f_string function, const f_string path, const fake_make_print print) {
+  void fake_print_message_section_operation_path_stack_max(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t path, const fake_make_print_t print) {
     if (data.verbosity == fake_verbosity_quiet || !print.to) return;
 
     if (status == F_buffer_too_large) {
@@ -617,10 +617,10 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_path_stack_max_
 
 #ifndef _di_fake_print_message_section_operation_stack_max_
-  void fake_print_message_section_operation_stack_max(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const f_array_length stack_max, const fake_make_print print) {
+  void fake_print_message_section_operation_stack_max(const fake_data_t data, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max, const fake_make_print_t print) {
     if (data.verbosity == fake_verbosity_quiet || !print.to) return;
 
-    f_string_length line = 1;
+    f_string_length_t line = 1;
 
     f_fss_count_lines(buffer, operation_name.start, &line);
 
@@ -646,10 +646,10 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_stack_max_
 
 #ifndef _di_fake_print_message_section_operation_unknown_
-  void fake_print_message_section_operation_unknown(const fake_data data, const f_string_static buffer, const f_string_range section_name, const f_string_range operation_name, const fake_make_print print) {
+  void fake_print_message_section_operation_unknown(const fake_data_t data, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const fake_make_print_t print) {
     if (data.verbosity == fake_verbosity_quiet || !print.to) return;
 
-    f_string_length line = 1;
+    f_string_length_t line = 1;
 
     f_fss_count_lines(buffer, operation_name.start, &line);
 
@@ -673,7 +673,7 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_unknown_
 
 #ifndef _di_fake_print_warning_settings_content_empty_
-  void fake_print_warning_settings_content_empty(const fake_data data, const f_string path_file, const f_string_dynamic buffer, const f_string_range range_object, const f_string settings_name) {
+  void fake_print_warning_settings_content_empty(const fake_data_t data, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_t settings_name) {
     if (data.verbosity == fake_verbosity_quiet) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -693,7 +693,7 @@ extern "C" {
 #endif // _di_fake_print_warning_settings_content_empty_
 
 #ifndef _di_fake_print_warning_settings_content_invalid_
-  void fake_print_warning_settings_content_invalid(const fake_data data, const f_string path_file, const f_string_dynamic buffer, const f_string_range range_object, const f_string_range range_content, const f_string settings_name) {
+  void fake_print_warning_settings_content_invalid(const fake_data_t data, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_range_t range_content, const f_string_t settings_name) {
     if (data.verbosity == fake_verbosity_quiet) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -719,7 +719,7 @@ extern "C" {
 #endif // _di_fake_print_warning_settings_content_invalid_
 
 #ifndef _di_fake_print_warning_settings_content_multiple_
-  void fake_print_warning_settings_content_multiple(const fake_data data, const f_string path_file, const f_string name_object) {
+  void fake_print_warning_settings_content_multiple(const fake_data_t data, const f_string_t path_file, const f_string_t name_object) {
     if (data.verbosity != fake_verbosity_verbose) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -734,7 +734,7 @@ extern "C" {
 #endif // _di_fake_print_warning_settings_content_multiple_
 
 #ifndef _di_fake_print_warning_settings_object_multiple_
-  void fake_print_warning_settings_object_multiple(const fake_data data, const f_string path_file, const f_string label, const f_string name_object) {
+  void fake_print_warning_settings_object_multiple(const fake_data_t data, const f_string_t path_file, const f_string_t label, const f_string_t name_object) {
     if (data.verbosity != fake_verbosity_verbose) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);

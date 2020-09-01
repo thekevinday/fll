@@ -6,9 +6,9 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_status_code_process_check_
-  f_return_status fss_status_code_process_check(const fss_status_code_data data, const f_string value) {
-    f_number_unsigned number = 0;
-    f_status status = fss_status_code_convert_number(data, value, &number);
+  f_return_status fss_status_code_process_check(const fss_status_code_data_t data, const f_string_t value) {
+    f_number_unsigned_t number = 0;
+    f_status_t status = fss_status_code_convert_number(data, value, &number);
 
     if (F_status_is_error(status)) {
       return status;
@@ -44,13 +44,13 @@ extern "C" {
 #endif // _di_fss_status_code_process_check_
 
 #ifndef _di_fss_status_code_process_number_
-  f_return_status fss_status_code_process_number(const fss_status_code_data data, const f_string value) {
-    f_status status = F_none;
+  f_return_status fss_status_code_process_number(const fss_status_code_data_t data, const f_string_t value) {
+    f_status_t status = F_none;
 
     {
-      const f_string_range range = f_macro_string_range_initialize(strlen(value));
+      const f_string_range_t range = f_macro_string_range_initialize(strlen(value));
 
-      f_number_unsigned number = 0;
+      f_number_unsigned_t number = 0;
 
       status = fl_conversion_string_to_number_unsigned(value, &number, range);
 
@@ -67,7 +67,7 @@ extern "C" {
       }
     }
 
-    f_status code = F_none;
+    f_status_t code = F_none;
 
     status = fll_fss_status_from_string(value, &code);
 
@@ -101,16 +101,16 @@ extern "C" {
 #endif // _di_fss_status_code_process_number_
 
 #ifndef _di_fss_status_code_process_normal_
-  f_return_status fss_status_code_process_normal(const fss_status_code_data data, const f_string value) {
-    f_number_unsigned number = 0;
-    f_status status = fss_status_code_convert_number(data, value, &number);
+  f_return_status fss_status_code_process_normal(const fss_status_code_data_t data, const f_string_t value) {
+    f_number_unsigned_t number = 0;
+    f_status_t status = fss_status_code_convert_number(data, value, &number);
 
     if (F_status_is_error(status)) {
       return status;
     }
 
-    const f_status code = (f_status) number;
-    f_string string = 0;
+    const f_status_t code = (f_status_t) number;
+    f_string_t string = 0;
 
     status = fll_fss_status_to_string(code, &string);
 
@@ -132,10 +132,10 @@ extern "C" {
 #endif // _di_fss_status_code_process_normal_
 
 #ifndef _di_fss_status_code_convert_number_
-  f_return_status fss_status_code_convert_number(const fss_status_code_data data, const f_string value, f_number_unsigned *number) {
-    const f_string_range range = f_macro_string_range_initialize(strlen(value));
+  f_return_status fss_status_code_convert_number(const fss_status_code_data_t data, const f_string_t value, f_number_unsigned_t *number) {
+    const f_string_range_t range = f_macro_string_range_initialize(strlen(value));
 
-    f_status status = fl_conversion_string_to_number_unsigned(value, number, range);
+    f_status_t status = fl_conversion_string_to_number_unsigned(value, number, range);
 
     if (*number > F_status_size_max_with_signal) {
       fl_color_print_line(f_type_output, data.context.error, data.context.reset, "out of range");

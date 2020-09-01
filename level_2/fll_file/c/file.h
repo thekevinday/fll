@@ -46,7 +46,7 @@ extern "C" {
  *   F_false if no error message was printed.
  */
 #ifndef _di_fll_file_error_print_
-  extern f_return_status fll_file_error_print(FILE *file, const fl_color_context context, const f_string function_name, const f_string file_name, const f_status status);
+  extern f_return_status fll_file_error_print(FILE *file, const fl_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status);
 #endif // _di_fll_file_error_print_
 
 #ifdef __cplusplus

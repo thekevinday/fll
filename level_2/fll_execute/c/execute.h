@@ -57,7 +57,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_execute_arguments_add_
-  extern f_return_status fll_execute_arguments_add(const f_string source, const f_string_length length, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_
 /**
  * Add parameters as arguments to the execution arguments array.
@@ -95,7 +95,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
-  extern f_return_status fll_execute_arguments_add_parameter(const f_string prefix, const f_string_length prefix_length, const f_string name, const f_string_length name_length, const f_string value, const f_string_length value_length, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_parameter_
 
 /**
@@ -136,7 +136,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
-  extern f_return_status fll_execute_arguments_add_parameter_set(const f_string prefix[], const f_string_length prefix_length[], const f_string name[], const f_string_length name_length[], const f_string value[], const f_string_length value_length[], const f_array_length size, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_string_length_t prefix_length[], const f_string_t name[], const f_string_length_t name_length[], const f_string_t value[], const f_string_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
 /**
@@ -163,7 +163,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_execute_arguments_add_set_
-  extern f_return_status fll_execute_arguments_add_set(const f_string source[], const f_string_length length[], const f_array_length size, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_add_set(const f_string_t source[], const f_string_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_set_
 
 /**
@@ -186,7 +186,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_
-  extern f_return_status fll_execute_arguments_dynamic_add(const f_string_static source, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_dynamic_add(const f_string_static_t source, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_
 
 /**
@@ -219,7 +219,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_
-  extern f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_static prefix, const f_string_static name, const f_string_static value, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_parameter_
 
 /**
@@ -254,7 +254,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
-  extern f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_static prefix[], const f_string_static name[], const f_string_static value[], const f_array_length size, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_parameter_set_
 
 /**
@@ -279,7 +279,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
-  extern f_return_status fll_execute_arguments_dynamic_add_set(const f_string_static source[], const f_array_length size, f_string_dynamics *arguments);
+  extern f_return_status fll_execute_arguments_dynamic_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_set_
 
 /**
@@ -312,7 +312,7 @@ extern "C" {
  * @see execv()
  */
 #ifndef _di_fll_execute_path_
-  extern f_return_status fll_execute_path(const f_string program_path, const f_string_statics arguments, int *result);
+  extern f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, int *result);
 #endif // _di_fll_execute_path_
 
 /**
@@ -355,7 +355,7 @@ extern "C" {
  * @see execv()
  */
 #ifndef _di_fll_execute_path_environment_
-  f_return_status fll_execute_path_environment(const f_string program_path, const f_string_statics arguments, const f_string_statics names, const f_string_statics values, int *result);
+  f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, int *result);
 #endif // _di_fll_execute_path_environment_
 
 /**
@@ -383,7 +383,7 @@ extern "C" {
  * @see execvp()
  */
 #ifndef _di_fll_execute_program_
-  extern f_return_status fll_execute_program(const f_string program_name, const f_string_statics arguments, int *result);
+  extern f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, int *result);
 #endif // _di_fll_execute_program_
 
 /**
@@ -430,7 +430,7 @@ extern "C" {
  * @see execvpe()
  */
 #ifndef _di_fll_execute_program_environment_
-  extern f_return_status fll_execute_program_environment(const f_string program_name, const f_string_statics arguments, const f_string_statics names, const f_string_statics values, int *result);
+  extern f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, int *result);
 #endif // _di_fll_execute_program_environment_
 
 #ifdef __cplusplus

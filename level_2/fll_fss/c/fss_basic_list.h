@@ -54,7 +54,7 @@ extern "C" {
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  */
 #ifndef _di_fll_fss_basic_list_read_
-  extern f_return_status fll_fss_basic_list_read(f_string_dynamic *buffer, f_string_range *range, f_fss_objects *objects, f_fss_contents *contents);
+  extern f_return_status fll_fss_basic_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents);
 #endif // _di_fll_fss_basic_list_read_
 
 /**
@@ -79,7 +79,7 @@ extern "C" {
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  */
 #ifndef _di_fll_fss_basic_list_write_
-  extern f_return_status fll_fss_basic_list_write(const f_string_static object, const f_string_statics contents, f_string_dynamic *buffer);
+  extern f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer);
 #endif // _di_fll_fss_basic_list_write_
 
 #ifdef __cplusplus

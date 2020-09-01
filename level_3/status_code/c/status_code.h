@@ -76,40 +76,40 @@ extern "C" {
     status_code_parameter_number,
   };
 
-  #define f_console_parameter_initialize_status_code \
+  #define status_code_console_parameter_t_initialize \
     { \
-      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
-      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_initialize(status_code_short_is_fine, status_code_long_is_fine, 0, F_false, f_console_type_normal), \
-      f_console_parameter_initialize(status_code_short_is_warning, status_code_long_is_warning, 0, F_false, f_console_type_normal), \
-      f_console_parameter_initialize(status_code_short_is_error, status_code_long_is_error, 0, F_false, f_console_type_normal), \
-      f_console_parameter_initialize(status_code_short_number, status_code_long_number, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(status_code_short_is_fine, status_code_long_is_fine, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(status_code_short_is_warning, status_code_long_is_warning, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(status_code_short_is_error, status_code_long_is_error, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(status_code_short_number, status_code_long_number, 0, F_false, f_console_type_normal), \
     }
 
   #define status_code_total_parameters 9
 #endif // _di_status_code_defines_
 
-#ifndef _di_status_code_data_
+#ifndef _di_status_code_data_t_
   typedef struct {
-    f_console_parameter parameters[status_code_total_parameters];
+    f_console_parameter_t parameters[status_code_total_parameters];
 
-    f_string_lengths remaining;
+    f_string_lengths_t remaining;
     bool process_pipe;
 
-    fl_color_context context;
-  } status_code_data;
+    fl_color_context_t context;
+  } status_code_data_t;
 
-  #define status_code_data_initialize \
+  #define status_code_data_t_initialize \
     { \
-      f_console_parameter_initialize_status_code, \
-      f_string_lengths_initialize, \
+      status_code_console_parameter_t_initialize, \
+      f_string_lengths_t_initialize, \
       F_false, \
-      fl_color_context_initialize, \
+      fl_color_context_t_initialize, \
     }
-#endif // _di_status_code_data_
+#endif // _di_status_code_data_t_
 
 /**
  * Print help to standard output.
@@ -121,7 +121,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_status_code_print_help_
-  extern f_return_status status_code_print_help(const fl_color_context context);
+  extern f_return_status status_code_print_help(const fl_color_context_t context);
 #endif // _di_status_code_print_help_
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  * @see status_code_delete_data()
  */
 #ifndef _di_status_code_main_
-  extern f_return_status status_code_main(const f_console_arguments arguments, status_code_data *data);
+  extern f_return_status status_code_main(const f_console_arguments_t arguments, status_code_data_t *data);
 #endif // _di_status_code_main_
 
 /**
@@ -161,7 +161,7 @@ extern "C" {
  * @see status_code_main()
  */
 #ifndef _di_status_code_delete_data_
-  extern f_return_status status_code_delete_data(status_code_data *data);
+  extern f_return_status status_code_delete_data(status_code_data_t *data);
 #endif // _di_status_code_delete_data_
 
 #ifdef __cplusplus

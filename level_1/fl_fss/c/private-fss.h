@@ -63,7 +63,7 @@ extern "C" {
  * @see fl_fss_extended_object_read()
  */
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  extern f_return_status private_fl_fss_basic_object_read(f_string_dynamic *buffer, f_string_range *range, f_fss_object *found, f_fss_quoted *quoted, f_string_lengths *delimits) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_fss_basic_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quoted_t *quoted, f_string_lengths_t *delimits) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
 
 /**
@@ -98,7 +98,7 @@ extern "C" {
  * @see fl_fss_extended_object_write()
  */
 #if !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write)
-  extern f_return_status private_fl_fss_basic_object_write(const f_string_static object, const f_fss_quoted quoted, f_string_range *range, f_string_dynamic *destination) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write)
 
 #ifdef __cplusplus

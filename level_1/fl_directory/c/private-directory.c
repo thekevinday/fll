@@ -6,62 +6,62 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_directory_clone_)
-  f_return_status private_fl_directory_clone(const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
-    f_status status = F_none;
-    f_directory_listing listing = f_directory_listing_initialize;
+  f_return_status private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
+    f_status_t status = F_none;
+    f_directory_listing_t listing = f_directory_listing_t_initialize;
 
     status = private_fl_directory_list(source.string, 0, 0, F_false, &listing);
     if (F_status_is_error(status)) {
-      f_macro_directory_listing_delete_simple(listing);
+      f_macro_directory_listing_t_delete_simple(listing);
       return status;
     }
 
     status = F_none;
 
-    f_array_length i = 0;
+    f_array_length_t i = 0;
 
     int directory_fd = 0;
-    f_string_length failures_used = failures ? failures->used : 0;
+    f_string_length_t failures_used = failures ? failures->used : 0;
 
     for (; F_status_is_fine(status) && i < listing.block.used; i++) {
       status = private_fl_directory_clone_file(listing.block.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.block);
+    f_macro_string_dynamics_t_delete_simple(listing.block);
 
     for (i = 0; F_status_is_fine(status) && i < listing.character.used; i++) {
       status = private_fl_directory_clone_file(listing.character.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.character);
+    f_macro_string_dynamics_t_delete_simple(listing.character);
 
     for (i = 0; F_status_is_fine(status) && i < listing.regular.used; i++) {
       status = private_fl_directory_clone_file(listing.regular.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.regular);
+    f_macro_string_dynamics_t_delete_simple(listing.regular);
 
     for (i = 0; F_status_is_fine(status) && i < listing.link.used; i++) {
       status = private_fl_directory_clone_file(listing.link.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.link);
+    f_macro_string_dynamics_t_delete_simple(listing.link);
 
     for (i = 0; F_status_is_fine(status) && i < listing.socket.used; i++) {
       status = private_fl_directory_clone_file(listing.socket.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.socket);
+    f_macro_string_dynamics_t_delete_simple(listing.socket);
 
     for (i = 0; F_status_is_fine(status) && i < listing.unknown.used; i++) {
       status = private_fl_directory_clone_file(listing.unknown.array[i], source, destination, role, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.unknown);
+    f_macro_string_dynamics_t_delete_simple(listing.unknown);
 
     for (i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
-      f_string_static source_sub = f_string_static_initialize;
-      f_string_static destination_sub = f_string_static_initialize;
+      f_string_static_t source_sub = f_string_static_t_initialize;
+      f_string_static_t destination_sub = f_string_static_t_initialize;
 
       source_sub.used = source.used + listing.directory.array[i].used + 1;
       source_sub.size = source_sub.used;
@@ -129,7 +129,7 @@ extern "C" {
       status = private_fl_directory_clone(source_sub, destination_sub, role, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.directory);
+    f_macro_string_dynamics_t_delete_simple(listing.directory);
 
     if (F_status_is_error(status)) return status;
 
@@ -140,7 +140,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_clone_)
 
 #if !defined(_di_fl_directory_clone_file_)
-  f_return_status private_fl_directory_clone_file(const f_string_static file, const f_string_static source, const f_string_static destination, const bool role, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
+  f_return_status private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
     char path_source[source.used + file.used + 2];
     char path_destination[destination.used + file.used + 2];
 
@@ -154,7 +154,7 @@ extern "C" {
     path_destination[destination.used] = f_path_separator[0];
     path_destination[destination.used + file.used + 1] = 0;
 
-    f_status status = f_file_clone(path_source, path_destination, role, size_block, exclusive);
+    f_status_t status = f_file_clone(path_source, path_destination, role, size_block, exclusive);
 
     if (F_status_is_error(status) || status == F_unsupported) {
       if (status == F_status_set_error(F_memory_allocation) || status == F_status_set_error(F_memory_reallocation)) {
@@ -163,13 +163,13 @@ extern "C" {
 
       if (!failures) return F_failure;
 
-      const f_status status_failure = status;
+      const f_status_t status_failure = status;
 
-      f_macro_memory_structure_macro_increment(status, (*failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_resize, F_buffer_too_large);
+      f_macro_memory_structure_macro_increment(status, (*failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_t_resize, F_buffer_too_large);
       if (F_status_is_error(status)) return status;
 
-      f_directory_status failure = f_directory_status_initialize;
-      f_string_length size = 0;
+      f_directory_status_t failure = f_directory_status_t_initialize;
+      f_string_length_t size = 0;
 
       // identify if failure was because of source or destination.
       struct stat source_stat;
@@ -179,13 +179,13 @@ extern "C" {
       status = f_file_stat(source.string, F_false, &source_stat);
       if (F_status_is_error(status)) {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_length_size - 1;
+          size = f_string_length_t_size - 1;
         }
         else {
           size = source.used + file.used + 1;
         }
 
-        f_macro_directory_status_resize(status, failure, size + 1);
+        f_macro_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
         memcpy(failure.path.string, path_source, size);
@@ -193,13 +193,13 @@ extern "C" {
       }
       else {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_length_size - 1;
+          size = f_string_length_t_size - 1;
         }
         else {
           size = destination.used + file.used + 1;
         }
 
-        f_macro_directory_status_resize(status, failure, size + 1);
+        f_macro_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
         memcpy(failure.path.string, path_destination, size);
@@ -224,68 +224,68 @@ extern "C" {
 #endif // !defined(_di_fl_directory_clone_file_)
 
 #if !defined(_di_fl_directory_copy_)
-  f_return_status private_fl_directory_copy(const f_string_static source, const f_string_static destination, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
-    f_status status = F_none;
-    f_directory_listing listing = f_directory_listing_initialize;
+  f_return_status private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
+    f_status_t status = F_none;
+    f_directory_listing_t listing = f_directory_listing_t_initialize;
 
     status = private_fl_directory_list(source.string, 0, 0, F_false, &listing);
     if (F_status_is_error(status)) {
-      f_macro_directory_listing_delete_simple(listing);
+      f_macro_directory_listing_t_delete_simple(listing);
       return status;
     }
 
     status = F_none;
 
-    f_array_length i = 0;
+    f_array_length_t i = 0;
 
     int directory_fd = 0;
-    f_string_length failures_used = failures ? failures->used : 0;
+    f_string_length_t failures_used = failures ? failures->used : 0;
 
     for (; F_status_is_fine(status) && i < listing.block.used; i++) {
       status = private_fl_directory_copy_file(listing.block.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.block);
+    f_macro_string_dynamics_t_delete_simple(listing.block);
 
     for (i = 0; F_status_is_fine(status) && i < listing.character.used; i++) {
       status = private_fl_directory_copy_file(listing.character.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.character);
+    f_macro_string_dynamics_t_delete_simple(listing.character);
 
     for (i = 0; F_status_is_fine(status) && i < listing.fifo.used; i++) {
       status = private_fl_directory_copy_file(listing.fifo.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.fifo);
+    f_macro_string_dynamics_t_delete_simple(listing.fifo);
 
     for (i = 0; F_status_is_fine(status) && i < listing.regular.used; i++) {
       status = private_fl_directory_copy_file(listing.regular.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.regular);
+    f_macro_string_dynamics_t_delete_simple(listing.regular);
 
     for (i = 0; F_status_is_fine(status) && i < listing.link.used; i++) {
       status = private_fl_directory_copy_file(listing.link.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.link);
+    f_macro_string_dynamics_t_delete_simple(listing.link);
 
     for (i = 0; F_status_is_fine(status) && i < listing.socket.used; i++) {
       status = private_fl_directory_copy_file(listing.socket.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.socket);
+    f_macro_string_dynamics_t_delete_simple(listing.socket);
 
     for (i = 0; F_status_is_fine(status) && i < listing.unknown.used; i++) {
       status = private_fl_directory_copy_file(listing.unknown.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.unknown);
+    f_macro_string_dynamics_t_delete_simple(listing.unknown);
 
     for (i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
-      f_string_static source_sub = f_string_static_initialize;
-      f_string_static destination_sub = f_string_static_initialize;
+      f_string_static_t source_sub = f_string_static_t_initialize;
+      f_string_static_t destination_sub = f_string_static_t_initialize;
 
       source_sub.used = source.used + listing.directory.array[i].used + 1;
       source_sub.size = source_sub.used;
@@ -339,7 +339,7 @@ extern "C" {
       status = private_fl_directory_copy(source_sub, destination_sub, mode, size_block, exclusive, verbose, failures);
     } // for
 
-    f_macro_string_dynamics_delete_simple(listing.directory);
+    f_macro_string_dynamics_t_delete_simple(listing.directory);
 
     if (F_status_is_error(status)) return status;
 
@@ -350,7 +350,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_copy_)
 
 #if !defined(_di_fl_directory_copy_file_)
-  f_return_status private_fl_directory_copy_file(const f_string_static file, const f_string_static source, const f_string_static destination, const f_mode mode, const f_number_unsigned size_block, const bool exclusive, FILE *verbose, f_directory_statuss *failures) {
+  f_return_status private_fl_directory_copy_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
     char path_source[source.used + file.used + 2];
     char path_destination[destination.used + file.used + 2];
 
@@ -364,7 +364,7 @@ extern "C" {
     path_destination[destination.used] = f_path_separator[0];
     path_destination[destination.used + file.used + 1] = 0;
 
-    f_status status = f_file_copy(path_source, path_destination, mode, size_block, exclusive);
+    f_status_t status = f_file_copy(path_source, path_destination, mode, size_block, exclusive);
 
     if (F_status_is_error(status) || status == F_unsupported) {
       if (status == F_status_set_error(F_memory_allocation) || status == F_status_set_error(F_memory_reallocation)) {
@@ -373,13 +373,13 @@ extern "C" {
 
       if (!failures) return F_failure;
 
-      const f_status status_failure = status;
+      const f_status_t status_failure = status;
 
-      f_macro_memory_structure_macro_increment(status, (*failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_resize, F_buffer_too_large);
+      f_macro_memory_structure_macro_increment(status, (*failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_t_resize, F_buffer_too_large);
       if (F_status_is_error(status)) return status;
 
-      f_directory_status failure = f_directory_status_initialize;
-      f_string_length size = 0;
+      f_directory_status_t failure = f_directory_status_t_initialize;
+      f_string_length_t size = 0;
 
       // identify if failure was because of source or destination.
       struct stat source_stat;
@@ -389,13 +389,13 @@ extern "C" {
       status = f_file_stat(source.string, F_false, &source_stat);
       if (F_status_is_error(status)) {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_length_size - 1;
+          size = f_string_length_t_size - 1;
         }
         else {
           size = source.used + file.used + 1;
         }
 
-        f_macro_directory_status_resize(status, failure, size + 1);
+        f_macro_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
         memcpy(failure.path.string, path_source, size);
@@ -403,13 +403,13 @@ extern "C" {
       }
       else {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_length_size - 1;
+          size = f_string_length_t_size - 1;
         }
         else {
           size = destination.used + file.used + 1;
         }
 
-        f_macro_directory_status_resize(status, failure, size + 1);
+        f_macro_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
         memcpy(failure.path.string, path_destination, size);
@@ -434,11 +434,11 @@ extern "C" {
 #endif // !defined(_di_fl_directory_copy_file_)
 
 #if !defined(_di_fl_directory_list_)
-  f_return_status private_fl_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing *listing) {
+  f_return_status private_fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) {
     struct dirent **entity = 0;
 
-    f_string_length size = 0;
-    f_status status = F_none;
+    f_string_length_t size = 0;
+    f_status_t status = F_none;
 
     DIR *parent = opendir(path);
 
@@ -492,8 +492,8 @@ extern "C" {
       else return F_status_set_error(F_failure);
     }
 
-    f_string_dynamics *names = 0;
-    f_string_length total = 0;
+    f_string_dynamics_t *names = 0;
+    f_string_length_t total = 0;
     struct stat file_stat;
     int mode = 0;
     size_t i = 0;
@@ -544,18 +544,18 @@ extern "C" {
         if (F_status_is_error(status)) break;
       }
 
-      f_macro_string_dynamic_new(status, names->array[names->used], size);
+      f_macro_string_dynamic_t_new(status, names->array[names->used], size);
       if (F_status_is_error(status)) break;
 
       if (names->array[names->used].used > 0 && names->array[names->used].string[names->array[names->used].used - 1] != 0) {
-        if (names->array[names->used].used == f_string_length_size) {
+        if (names->array[names->used].used == f_string_length_t_size) {
           status = F_status_set_error(F_string_too_large);
           break;
         }
 
         total = names->array[names->used].used + 1;
         if (total > names->array[names->used].size) {
-          f_status status = F_none;
+          f_status_t status = F_none;
 
           f_macro_string_dynamics_resize(status, (*names), total);
           if (F_status_is_error(status)) break;
@@ -588,19 +588,19 @@ extern "C" {
 #endif // !defined(_di_fl_directory_list_)
 
 #if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
-  f_return_status private_fl_directory_path_push(const f_string source, const f_string_length length, f_string_dynamic *destination) {
+  f_return_status private_fl_directory_path_push(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
     bool terminated_null = F_false;
     bool separator_prepend = F_false;
     bool separator_append = F_false;
 
-    f_string_length total = 0;
-    f_string_length start = 0;
-    f_string_length length_truncated = length;
-    f_status status = F_none;
+    f_string_length_t total = 0;
+    f_string_length_t start = 0;
+    f_string_length_t length_truncated = length;
+    f_status_t status = F_none;
 
     {
-      f_string_length i = 0;
-      f_string_length j = 0;
+      f_string_length_t i = 0;
+      f_string_length_t j = 0;
 
       if (destination->used > 0) {
         if (destination->string[destination->used - 1] == 0) {
@@ -757,11 +757,11 @@ extern "C" {
       total += length_truncated - start;
 
       if (destination->used + total > destination->size) {
-        if (destination->used + total > f_string_length_size) {
+        if (destination->used + total > f_string_length_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
-        f_macro_string_dynamic_resize(status, (*destination), destination->used + total);
+        f_macro_string_dynamic_t_resize(status, (*destination), destination->used + total);
         if (F_status_is_error(status)) return status;
       }
     }

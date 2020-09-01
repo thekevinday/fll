@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 #ifndef _di_firewall_print_help_
-  f_return_status firewall_print_help(const fl_color_context context) {
+  f_return_status firewall_print_help(const fl_color_context_t context) {
     fll_program_print_help_header(context, firewall_name_long, firewall_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -55,13 +55,13 @@ extern "C" {
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
-  f_return_status firewall_main(const f_console_arguments arguments, firewall_data *data) {
-    f_status status = F_none;
+  f_return_status firewall_main(const f_console_arguments_t arguments, firewall_data_t *data) {
+    f_status_t status = F_none;
 
     {
-      f_console_parameters parameters = { data->parameters, firewall_total_parameters };
-      f_console_parameter_id ids[3] = { firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark };
-      f_console_parameter_ids choices = { ids, 3 };
+      f_console_parameters_t parameters = { data->parameters, firewall_total_parameters };
+      f_console_parameter_id_t ids[3] = { firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark };
+      f_console_parameter_ids_t choices = { ids, 3 };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
@@ -138,9 +138,9 @@ extern "C" {
       }
 
       if (found_command) {
-        firewall_local_data local = firewall_local_data_initialize;
-        firewall_reserved_chains reserved = firewall_reserved_chains_initialize;
-        f_string_range input = f_string_range_initialize;
+        firewall_local_data_t local = firewall_local_data_t_initialize;
+        firewall_reserved_chains_t reserved = firewall_reserved_chains_t_initialize;
+        f_string_range_t input = f_string_range_initialize;
 
         if (command == firewall_parameter_command_show) {
           // Warning: these are hardcoded print commands (I am not certain how I am going to implement external 'show' rules as the default-firewall setting file is the wrong place to put this)
@@ -148,7 +148,7 @@ extern "C" {
           bool show_mangle = F_true;
           bool show_ports = F_true;
 
-          f_string_dynamics parameters = f_string_dynamics_initialize;
+          f_string_dynamics_t parameters = f_string_dynamics_t_initialize;
           int results = 0;
 
           if (data->remaining.used > 0) {
@@ -156,7 +156,7 @@ extern "C" {
             show_mangle = F_false;
             show_ports = F_false;
 
-            f_string_length counter = 0;
+            f_string_length_t counter = 0;
 
             for (; counter < data->remaining.used; counter++) {
               if (strncmp("nat", arguments.argv[data->remaining.array[counter]], 4) != 0) {
@@ -195,12 +195,12 @@ extern "C" {
 
             parameters.used = 6;
 
-            parameters.array[0].string = (f_string) "-x";
-            parameters.array[1].string = (f_string) "-v";
-            parameters.array[2].string = (f_string) "-t";
-            parameters.array[3].string = (f_string) "nat";
-            parameters.array[4].string = (f_string) "--numeric";
-            parameters.array[5].string = (f_string) "--list";
+            parameters.array[0].string = (f_string_t) "-x";
+            parameters.array[1].string = (f_string_t) "-v";
+            parameters.array[2].string = (f_string_t) "-t";
+            parameters.array[3].string = (f_string_t) "nat";
+            parameters.array[4].string = (f_string_t) "--numeric";
+            parameters.array[5].string = (f_string_t) "--list";
 
             parameters.array[0].used = 2;
             parameters.array[1].used = 2;
@@ -209,7 +209,7 @@ extern "C" {
             parameters.array[4].used = 9;
             parameters.array[5].used = 6;
 
-            status = fll_execute_program((f_string) firewall_tool_iptables, parameters, &results);
+            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, &results);
 
             fprintf(f_type_output, "\n");
             fflush(f_type_output);
@@ -223,12 +223,12 @@ extern "C" {
 
             parameters.used = 6;
 
-            parameters.array[0].string = (f_string) "-x";
-            parameters.array[1].string = (f_string) "-v";
-            parameters.array[2].string = (f_string) "-t";
-            parameters.array[3].string = (f_string) "mangle";
-            parameters.array[4].string = (f_string) "--numeric";
-            parameters.array[5].string = (f_string) "--list";
+            parameters.array[0].string = (f_string_t) "-x";
+            parameters.array[1].string = (f_string_t) "-v";
+            parameters.array[2].string = (f_string_t) "-t";
+            parameters.array[3].string = (f_string_t) "mangle";
+            parameters.array[4].string = (f_string_t) "--numeric";
+            parameters.array[5].string = (f_string_t) "--list";
 
             parameters.array[0].used = 2;
             parameters.array[1].used = 2;
@@ -237,7 +237,7 @@ extern "C" {
             parameters.array[4].used = 9;
             parameters.array[5].used = 6;
 
-            status = fll_execute_program((f_string) firewall_tool_iptables, parameters, &results);
+            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, &results);
 
             fprintf(f_type_output, "\n");
             fflush(f_type_output);
@@ -251,17 +251,17 @@ extern "C" {
 
             parameters.used = 4;
 
-            parameters.array[0].string = (f_string) "-x";
-            parameters.array[1].string = (f_string) "-v";
-            parameters.array[2].string = (f_string) "--numeric";
-            parameters.array[3].string = (f_string) "--list";
+            parameters.array[0].string = (f_string_t) "-x";
+            parameters.array[1].string = (f_string_t) "-v";
+            parameters.array[2].string = (f_string_t) "--numeric";
+            parameters.array[3].string = (f_string_t) "--list";
 
             parameters.array[0].used = 2;
             parameters.array[1].used = 2;
             parameters.array[2].used = 9;
             parameters.array[3].used = 6;
 
-            status = fll_execute_program((f_string) firewall_tool_iptables, parameters, &results);
+            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, &results);
 
             fprintf(f_type_output, "\n");
             fflush(f_type_output);
@@ -277,7 +277,7 @@ extern "C" {
               fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Failed to perform requested %s operation:", firewall_tool_iptables);
               fprintf(f_type_error, "  ");
 
-              f_string_length i = 0;
+              f_string_length_t i = 0;
 
               fl_color_print_code(f_type_error, data->context.error);
 
@@ -308,14 +308,14 @@ extern "C" {
           parameters.array[5].used = 0;
           parameters.array[6].used = 0;
 
-          f_macro_string_dynamics_delete_simple( parameters);
+          f_macro_string_dynamics_t_delete_simple( parameters);
           firewall_delete_local_data(&local);
           firewall_delete_data(data);
           return status;
         }
 
         // load all network devices
-        status = f_directory_list((f_string) network_devices, 0, alphasort, &data->devices);
+        status = f_directory_list((f_string_t) network_devices, 0, alphasort, &data->devices);
 
         if (F_status_is_error(status)) {
           status = F_status_set_fine(status);
@@ -337,11 +337,11 @@ extern "C" {
 
         // remove "lo" (loopback) from the device listing
         {
-          f_string_length i = 0;
+          f_string_length_t i = 0;
 
           for (; i < data->devices.used; i++) {
-            if (fl_string_compare((f_string) firewall_device_loop, data->devices.array[i].string, firewall_device_loop_length + 1, data->devices.array[i].used) == F_equal_to) {
-              f_string_dynamic swap_string = data->devices.array[i];
+            if (fl_string_compare((f_string_t) firewall_device_loop, data->devices.array[i].string, firewall_device_loop_length + 1, data->devices.array[i].used) == F_equal_to) {
+              f_string_dynamic_t swap_string = data->devices.array[i];
 
               data->devices.used--;
 
@@ -364,17 +364,17 @@ extern "C" {
           }
 
           {
-            f_array_length i = 0;
-            f_string_length length = 0;
+            f_array_length_t i = 0;
+            f_string_length_t length = 0;
 
             for (; i < local.chain_objects.used; i++) {
               length = local.chain_objects.array[i].stop - local.chain_objects.array[i].start + 1;
 
-              if (!reserved.has_stop && fl_string_compare((f_string) firewall_group_stop, local.buffer.string + local.chain_objects.array[i].start, firewall_group_stop_length, length) == F_equal_to) {
+              if (!reserved.has_stop && fl_string_compare((f_string_t) firewall_group_stop, local.buffer.string + local.chain_objects.array[i].start, firewall_group_stop_length, length) == F_equal_to) {
                 reserved.stop_at = i;
                 reserved.has_stop = F_true;
               }
-              else if (!reserved.has_lock && fl_string_compare((f_string) firewall_group_lock, local.buffer.string + local.chain_objects.array[i].start, firewall_group_lock_length, length) == F_equal_to) {
+              else if (!reserved.has_lock && fl_string_compare((f_string_t) firewall_group_lock, local.buffer.string + local.chain_objects.array[i].start, firewall_group_lock_length, length) == F_equal_to) {
                 reserved.lock_at = i;
                 reserved.has_lock = F_true;
               }
@@ -492,7 +492,7 @@ extern "C" {
             return status;
           }
 
-          f_array_length i = 0;
+          f_array_length_t i = 0;
 
           local.is_global = F_true;
           local.is_stop = F_false;
@@ -522,9 +522,9 @@ extern "C" {
             local.device = i;
 
             {
-              f_string_dynamic file_path = f_string_dynamic_initialize;
+              f_string_dynamic_t file_path = f_string_dynamic_t_initialize;
 
-              f_macro_string_dynamic_resize(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
+              f_macro_string_dynamic_t_resize(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
 
               if (F_status_is_error(status)) {
                 fl_color_print_line(f_type_error, data->context.error, data->context.reset, "CRITICAL ERROR: Unable to allocate memory.");
@@ -542,7 +542,7 @@ extern "C" {
 
               status = firewall_buffer_rules(file_path.string, F_true, &local, data);
 
-              f_macro_string_dynamic_delete_simple(file_path);
+              f_macro_string_dynamic_t_delete_simple(file_path);
             }
 
             if (F_status_is_error(status)) {
@@ -567,7 +567,7 @@ extern "C" {
               return status;
             }
 
-            f_array_length j = 0;
+            f_array_length_t j = 0;
 
             local.is_global = F_false;
             local.is_stop = F_false;
@@ -603,7 +603,7 @@ extern "C" {
           status = firewall_create_custom_chains(&reserved, &local, data);
 
           if (F_status_is_error(status)) {
-            f_status status2 = F_none;
+            f_status_t status2 = F_none;
 
             firewall_macro_delete_fss_buffers(status2, local.buffer, local.chain_objects, local.chain_contents)
             firewall_delete_data(data);
@@ -650,20 +650,20 @@ extern "C" {
 #endif // _di_firewall_main_
 
 #ifndef _di_firewall_delete_data_
-  f_return_status firewall_delete_data(firewall_data *data) {
-    f_string_length i = 0;
+  f_return_status firewall_delete_data(firewall_data_t *data) {
+    f_string_length_t i = 0;
 
     while (i < firewall_total_parameters) {
-      f_macro_string_lengths_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
       i++;
     } // while
 
-    f_macro_string_dynamics_delete_simple(data->chains);
-    f_macro_string_lengths_delete_simple(data->remaining);
-    f_macro_string_dynamics_delete_simple(data->devices);
+    f_macro_string_dynamics_t_delete_simple(data->chains);
+    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_string_dynamics_t_delete_simple(data->devices);
 
-    fl_macro_color_context_delete_simple(data->context);
+    fl_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
   }

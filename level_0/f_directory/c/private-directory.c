@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_directory_create_) || !defined(_di_f_directory_touch_)
-  f_return_status private_f_directory_create(const f_string path, const mode_t mode) {
+  f_return_status private_f_directory_create(const f_string_t path, const mode_t mode) {
 
     if (mkdir(path, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -32,7 +32,7 @@ extern "C" {
 #endif // !defined(_di_f_directory_create_) || !defined(_di_f_directory_touch_)
 
 #if !defined(_di_f_directory_create_at_) || !defined(_di_f_directory_touch_at_)
-  f_return_status private_f_directory_create_at(const int at_id, const f_string path, const mode_t mode) {
+  f_return_status private_f_directory_create_at(const int at_id, const f_string_t path, const mode_t mode) {
 
     if (mkdirat(at_id, path, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);

@@ -335,159 +335,159 @@ extern "C" {
     fake_parameter_operation_skeleton,
   };
 
-  #define fake_console_parameter_initialize \
+  #define fake_console_parameter_t_initialize \
     { \
-      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
-      f_console_parameter_initialize(fake_short_define, fake_long_define, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_mode, fake_long_mode, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_process, fake_long_process, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_settings, fake_long_settings, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_build, fake_long_path_build, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_data, fake_long_path_data, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_sources, fake_long_path_sources, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(fake_short_path_work, fake_long_path_work, 0, 1, f_console_type_normal), \
-      f_console_parameter_initialize(0, fake_long_documents_disabled, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(0, fake_long_documents_enabled, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(0, fake_long_shared_disabled, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(0, fake_long_shared_enabled, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(0, fake_long_static_disabled, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(0, fake_long_static_enabled, 0, 0, f_console_type_normal), \
-      f_console_parameter_initialize(0, 0, fake_other_operation_build, 0, f_console_type_other), \
-      f_console_parameter_initialize(0, 0, fake_other_operation_clean, 0, f_console_type_other), \
-      f_console_parameter_initialize(0, 0, fake_other_operation_make, 0, f_console_type_other), \
-      f_console_parameter_initialize(0, 0, fake_other_operation_skeleton, 0, f_console_type_other), \
+      f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(fake_short_define, fake_long_define, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fake_short_mode, fake_long_mode, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fake_short_process, fake_long_process, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fake_short_settings, fake_long_settings, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fake_short_path_build, fake_long_path_build, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fake_short_path_data, fake_long_path_data, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fake_short_path_sources, fake_long_path_sources, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fake_short_path_work, fake_long_path_work, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(0, fake_long_documents_disabled, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(0, fake_long_documents_enabled, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(0, fake_long_shared_disabled, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(0, fake_long_shared_enabled, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(0, fake_long_static_disabled, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(0, fake_long_static_enabled, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(0, 0, fake_other_operation_build, 0, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, fake_other_operation_clean, 0, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, fake_other_operation_make, 0, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, fake_other_operation_skeleton, 0, f_console_type_other), \
     }
 
   #define fake_total_parameters 26
 #endif // _di_fake_defines_
 
-#ifndef _di_fake_data_
+#ifndef _di_fake_data_t_
   typedef struct {
-    f_console_parameter parameters[fake_total_parameters];
+    f_console_parameter_t parameters[fake_total_parameters];
 
-    f_string_lengths remaining;
+    f_string_lengths_t remaining;
     bool process_pipe;
     mode_t umask;
 
     uint8_t operation;
     uint8_t verbosity;
 
-    f_string_dynamics define;
-    f_string_dynamics mode;
-    f_string_dynamic process;
-    f_string_dynamic settings;
+    f_string_dynamics_t define;
+    f_string_dynamics_t mode;
+    f_string_dynamic_t process;
+    f_string_dynamic_t settings;
 
-    f_string_dynamic path_build;
-    f_string_dynamic path_build_documents;
-    f_string_dynamic path_build_includes;
-    f_string_dynamic path_build_libraries;
-    f_string_dynamic path_build_libraries_script;
-    f_string_dynamic path_build_libraries_shared;
-    f_string_dynamic path_build_libraries_static;
-    f_string_dynamic path_build_objects;
-    f_string_dynamic path_build_programs;
-    f_string_dynamic path_build_programs_script;
-    f_string_dynamic path_build_programs_shared;
-    f_string_dynamic path_build_programs_static;
-    f_string_dynamic path_build_settings;
-    f_string_dynamic path_build_stage;
+    f_string_dynamic_t path_build;
+    f_string_dynamic_t path_build_documents;
+    f_string_dynamic_t path_build_includes;
+    f_string_dynamic_t path_build_libraries;
+    f_string_dynamic_t path_build_libraries_script;
+    f_string_dynamic_t path_build_libraries_shared;
+    f_string_dynamic_t path_build_libraries_static;
+    f_string_dynamic_t path_build_objects;
+    f_string_dynamic_t path_build_programs;
+    f_string_dynamic_t path_build_programs_script;
+    f_string_dynamic_t path_build_programs_shared;
+    f_string_dynamic_t path_build_programs_static;
+    f_string_dynamic_t path_build_settings;
+    f_string_dynamic_t path_build_stage;
 
-    f_string_dynamic path_data;
-    f_string_dynamic path_data_build;
-    f_string_dynamic path_data_settings;
+    f_string_dynamic_t path_data;
+    f_string_dynamic_t path_data_build;
+    f_string_dynamic_t path_data_settings;
 
-    f_string_dynamic path_documents;
+    f_string_dynamic_t path_documents;
 
-    f_string_dynamic path_licenses;
+    f_string_dynamic_t path_licenses;
 
-    f_string_dynamic path_sources;
-    f_string_dynamic path_sources_bash;
-    f_string_dynamic path_sources_c;
-    f_string_dynamic path_sources_cpp;
-    f_string_dynamic path_sources_script;
+    f_string_dynamic_t path_sources;
+    f_string_dynamic_t path_sources_bash;
+    f_string_dynamic_t path_sources_c;
+    f_string_dynamic_t path_sources_cpp;
+    f_string_dynamic_t path_sources_script;
 
-    f_string_dynamic path_work;
-    f_string_dynamic path_work_includes;
-    f_string_dynamic path_work_libraries;
-    f_string_dynamic path_work_libraries_script;
-    f_string_dynamic path_work_libraries_shared;
-    f_string_dynamic path_work_libraries_static;
-    f_string_dynamic path_work_programs;
-    f_string_dynamic path_work_programs_script;
-    f_string_dynamic path_work_programs_shared;
-    f_string_dynamic path_work_programs_static;
+    f_string_dynamic_t path_work;
+    f_string_dynamic_t path_work_includes;
+    f_string_dynamic_t path_work_libraries;
+    f_string_dynamic_t path_work_libraries_script;
+    f_string_dynamic_t path_work_libraries_shared;
+    f_string_dynamic_t path_work_libraries_static;
+    f_string_dynamic_t path_work_programs;
+    f_string_dynamic_t path_work_programs_script;
+    f_string_dynamic_t path_work_programs_shared;
+    f_string_dynamic_t path_work_programs_static;
 
-    f_string_dynamic file_data_build_defines;
-    f_string_dynamic file_data_build_dependencies;
-    f_string_dynamic file_data_build_fakefile;
-    f_string_dynamic file_data_build_settings;
+    f_string_dynamic_t file_data_build_defines;
+    f_string_dynamic_t file_data_build_dependencies;
+    f_string_dynamic_t file_data_build_fakefile;
+    f_string_dynamic_t file_data_build_settings;
 
-    f_string_dynamic file_documents_readme;
+    f_string_dynamic_t file_documents_readme;
 
-    fl_color_context context;
-  } fake_data;
+    fl_color_context_t context;
+  } fake_data_t;
 
-  #define fake_data_initialize \
+  #define fake_data_t_initialize \
     { \
-      fake_console_parameter_initialize, \
-      f_string_lengths_initialize, \
+      fake_console_parameter_t_initialize, \
+      f_string_lengths_t_initialize, \
       F_false, \
       0, \
       0, \
       fake_verbosity_normal, \
-      f_string_dynamics_initialize, \
-      f_string_dynamics_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      fl_color_context_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      fl_color_context_t_initialize, \
     }
-#endif // _di_fake_data_
+#endif // _di_fake_data_t_
 
 /**
  * Print help to standard output.
@@ -499,7 +499,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fake_print_help_
-  extern f_return_status fake_print_help(const fl_color_context context);
+  extern f_return_status fake_print_help(const fl_color_context_t context);
 #endif // _di_fake_print_help_
 
 /**
@@ -520,7 +520,7 @@ extern "C" {
  * @see fake_delete_data()
  */
 #ifndef _di_fake_main_
-  extern f_return_status fake_main(const f_console_arguments arguments, fake_data *data);
+  extern f_return_status fake_main(const f_console_arguments_t arguments, fake_data_t *data);
 #endif // _di_fake_main_
 
 /**
@@ -539,7 +539,7 @@ extern "C" {
  * @see fake_main()
  */
 #ifndef _di_fake_delete_data_
-  extern f_return_status fake_delete_data(fake_data *data);
+  extern f_return_status fake_delete_data(fake_data_t *data);
 #endif // _di_fake_delete_data_
 
 #ifdef __cplusplus

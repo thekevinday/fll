@@ -13,7 +13,7 @@ extern "C" {
 
 // version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
 #ifndef _di_init_print_version_
-  f_return_status init_print_version(const init_data data) {
+  f_return_status init_print_version(const init_data_t data) {
     printf("%s\n", init_version);
 
     return F_none;
@@ -21,7 +21,7 @@ extern "C" {
 #endif // _di_init_print_version_
 
 #ifndef _di_init_print_help_
-  f_return_status init_print_help(const fl_color_context context) {
+  f_return_status init_print_help(const fl_color_context_t context) {
     fll_program_print_help_header(context, init_name_long, init_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -43,8 +43,8 @@ extern "C" {
 #endif // _di_init_print_help_
 
 #ifndef _di_init_main_
-  f_return_status init_main(const f_console_arguments arguments, init_data *data) {
-    f_status status  = F_none;
+  f_return_status init_main(const f_console_arguments_t arguments, init_data_t *data) {
+    f_status_t status  = F_none;
     int8_t run_level[init_kernel_runlevel_buffer];
 
     memset(run_level, 0, init_kernel_runlevel_buffer);
@@ -53,9 +53,9 @@ extern "C" {
     unsigned short do_socket_port = F_false;
 
     {
-      f_console_parameters parameters = { data->parameters, init_total_parameters };
-      f_console_parameter_id ids[3] = { init_parameter_no_color, init_parameter_light, init_parameter_dark };
-      f_console_parameter_ids choices = { ids, 3 };
+      f_console_parameters_t parameters = { data->parameters, init_total_parameters };
+      f_console_parameter_id_t ids[3] = { init_parameter_no_color, init_parameter_light, init_parameter_dark };
+      f_console_parameter_ids_t choices = { ids, 3 };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 

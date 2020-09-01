@@ -84,7 +84,7 @@ extern "C" {
  * @see chdir()
  */
 #ifndef _di_f_path_change_
-  extern f_return_status f_path_change(const f_string path);
+  extern f_return_status f_path_change(const f_string_t path);
 #endif // _di_f_path_change_
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  * @see getcwd()
  */
 #ifndef _di_f_path_current_
-  extern f_return_status f_path_current(const bool real, f_string_dynamic *path);
+  extern f_return_status f_path_current(const bool real, f_string_dynamic_t *path);
 #endif // _di_f_path_current_
 
 /**
@@ -179,7 +179,7 @@ extern "C" {
  * @see realpath()
  */
 #ifndef _di_f_path_real_
-  extern f_return_status f_path_real(const f_string path, f_string_dynamic *real);
+  extern f_return_status f_path_real(const f_string_t path, f_string_dynamic_t *real);
 #endif // _di_f_path_real_
 
 #ifdef __cplusplus

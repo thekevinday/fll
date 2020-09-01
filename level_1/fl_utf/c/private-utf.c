@@ -6,16 +6,16 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_utf_string_append_) || !defined(_di_fl_utf_string_dynamic_append_) || !defined(_di_fl_utf_string_append_mash_) || !defined(_di_fl_utf_string_dynamic_mash_)
-  f_return_status private_fl_utf_string_append(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
+  f_return_status private_fl_utf_string_append(const f_utf_string_t source, const f_utf_string_length_t length, f_utf_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
+    if (destination->used + length > f_utf_string_t_size_max) return F_status_set_error(F_string_too_large);
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    const f_utf_string_length total = destination->used + length;
+    const f_utf_string_length_t total = destination->used + length;
 
     if (total > destination->size) {
-      f_macro_string_dynamic_resize(status, (*destination), total);
+      f_macro_string_dynamic_t_resize(status, (*destination), total);
       if (F_status_is_error(status)) return status;
     }
 
@@ -27,25 +27,25 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_append_) || !defined(_di_fl_utf_string_dynamic_append_) || !defined(_di_fl_utf_string_append_mash_) || !defined(_di_fl_utf_string_dynamic_mash_)
 
 #if !defined(_di_fl_utf_string_append_nulless_) || !defined(_di_fl_utf_string_dynamic_append_nulless_) || !defined(_di_fl_utf_string_mash_nulless_) || !defined(_di_fl_utf_string_dynamic_mash_nulless_)
-  f_return_status private_fl_utf_string_append_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
+  f_return_status private_fl_utf_string_append_nulless(const f_utf_string_t source, const f_utf_string_length_t length, f_utf_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
+    if (destination->used + length > f_utf_string_t_size_max) return F_status_set_error(F_string_too_large);
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    f_utf_string_length first = 0;
+    f_utf_string_length_t first = 0;
 
-    for (f_utf_string_length i = 0; i <= length; i++) {
+    for (f_utf_string_length_t i = 0; i <= length; i++) {
       if (i == length) {
         if (i > first) {
-          f_utf_string_length size = i - first;
+          f_utf_string_length_t size = i - first;
 
-          if (destination->used + size > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
+          if (destination->used + size > f_utf_string_t_size_max) return F_status_set_error(F_string_too_large);
 
-          f_utf_string_length total = destination->used + size;
+          f_utf_string_length_t total = destination->used + size;
 
           if (total > destination->size) {
-            f_macro_string_dynamic_resize(status, (*destination), total);
+            f_macro_string_dynamic_t_resize(status, (*destination), total);
             if (F_status_is_error(status)) return status;
           }
 
@@ -56,17 +56,17 @@ extern "C" {
         break;
       }
 
-      if (source[i] == f_utf_character_eos) {
+      if (source[i] == f_utf_character_t_eos) {
         if (i > 0) {
           if (i > first) {
-            f_utf_string_length size = i - first;
+            f_utf_string_length_t size = i - first;
 
-            if (destination->used + size > f_utf_string_max_size) return F_status_set_error(F_string_too_large);
+            if (destination->used + size > f_utf_string_t_size_max) return F_status_set_error(F_string_too_large);
 
-            f_utf_string_length total = destination->used + size;
+            f_utf_string_length_t total = destination->used + size;
 
             if (total > destination->size) {
-              f_macro_string_dynamic_resize(status, (*destination), total);
+              f_macro_string_dynamic_t_resize(status, (*destination), total);
               if (F_status_is_error(status)) return status;
             }
 
@@ -75,7 +75,7 @@ extern "C" {
           }
         }
 
-        while (i + 1 < length && source[i + 1] == f_utf_character_eos) {
+        while (i + 1 < length && source[i + 1] == f_utf_character_t_eos) {
           i++;
         } // while
 
@@ -89,9 +89,9 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_append_nulless_) || !defined(_di_fl_utf_string_dynamic_append_nulless_) || !defined(_di_fl_utf_string_mash_nulless_) || !defined(_di_fl_utf_string_dynamic_mash_nulless_)
 
 #if !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
-  f_return_status private_fl_utf_string_compare(const f_utf_string string1, const f_utf_string string2, const f_utf_string_length offset1, const f_utf_string_length offset2, const f_utf_string_length stop1, const f_utf_string_length stop2) {
-    f_utf_string_length i1 = offset1;
-    f_utf_string_length i2 = offset2;
+  f_return_status private_fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t offset1, const f_utf_string_length_t offset2, const f_utf_string_length_t stop1, const f_utf_string_length_t stop2) {
+    f_utf_string_length_t i1 = offset1;
+    f_utf_string_length_t i2 = offset2;
 
     for (; i1 < stop1 && i2 < stop2; i1++, i2++) {
       // skip past NULL in string1.
@@ -119,11 +119,11 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
 
 #if !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
-  f_return_status private_fl_utf_string_compare_trim(const f_utf_string string1, const f_utf_string string2, const f_utf_string_length offset1, const f_utf_string_length offset2, const f_utf_string_length stop1, const f_utf_string_length stop2) {
-    f_utf_string_length i1 = offset1;
-    f_utf_string_length i2 = offset2;
+  f_return_status private_fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t offset1, const f_utf_string_length_t offset2, const f_utf_string_length_t stop1, const f_utf_string_length_t stop2) {
+    f_utf_string_length_t i1 = offset1;
+    f_utf_string_length_t i2 = offset2;
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     // skip past leading whitespace in string1.
     for (; i1 < stop1; i1++) {
@@ -159,16 +159,16 @@ extern "C" {
       if (status == F_false) break;
     } // for
 
-    f_utf_string_length last1 = i1;
-    f_utf_string_length last2 = i2;
+    f_utf_string_length_t last1 = i1;
+    f_utf_string_length_t last2 = i2;
 
     {
       // size1 and size2 are to represent to total number of characters after trim.
-      f_utf_string_length size1 = 0;
-      f_utf_string_length size2 = 0;
+      f_utf_string_length_t size1 = 0;
+      f_utf_string_length_t size2 = 0;
 
       // determine where the last non-whitespace is in string1.
-      for (f_utf_string_length j = i1; j < stop1; j++) {
+      for (f_utf_string_length_t j = i1; j < stop1; j++) {
         // skip past NULL in string1.
         while (j < stop1 && string1[j] == 0) j++;
         if (j == stop1) break;
@@ -188,7 +188,7 @@ extern "C" {
       } // for
 
       // determine where the last non-whitespace is in string2.
-      for (f_utf_string_length j = i2; j < stop2; j++) {
+      for (f_utf_string_length_t j = i2; j < stop2; j++) {
         // skip past NULL in string2.
         while (j < stop2 && string2[j] == 0) j++;
         if (j == stop2) break;
@@ -236,18 +236,18 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
 
 #if !defined(_di_fl_utf_string_prepend_) || !defined(_di_fl_utf_string_dynamic_prepend_)
-  f_return_status private_fl_utf_string_prepend(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
+  f_return_status private_fl_utf_string_prepend(const f_utf_string_t source, const f_utf_string_length_t length, f_utf_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_utf_string_max_size) {
+    if (destination->used + length > f_utf_string_t_size_max) {
       return F_status_set_error(F_string_too_large);
     }
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    const f_utf_string_length total = destination->used + length;
+    const f_utf_string_length_t total = destination->used + length;
 
     if (total > destination->size) {
-      f_macro_string_dynamic_resize(status, (*destination), total);
+      f_macro_string_dynamic_t_resize(status, (*destination), total);
       if (F_status_is_error(status)) return status;
     }
 
@@ -265,30 +265,30 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_prepend_) || !defined(_di_fl_utf_string_dynamic_prepend_)
 
 #if !defined(_di_fl_utf_string_prepend_nulless_) || !defined(_di_fl_utf_string_dynamic_prepend_nulless_)
-  f_return_status private_fl_utf_string_prepend_nulless(const f_utf_string source, const f_utf_string_length length, f_utf_string_dynamic *destination) {
+  f_return_status private_fl_utf_string_prepend_nulless(const f_utf_string_t source, const f_utf_string_length_t length, f_utf_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_utf_string_max_size) {
+    if (destination->used + length > f_utf_string_t_size_max) {
       return F_status_set_error(F_string_too_large);
     }
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    f_utf_string_length first = 0;
-    f_utf_string_length offset = 0;
+    f_utf_string_length_t first = 0;
+    f_utf_string_length_t offset = 0;
 
-    for (f_utf_string_length i = 0; i <= length; i++) {
+    for (f_utf_string_length_t i = 0; i <= length; i++) {
       if (i == length) {
         if (i > first) {
-          const f_utf_string_length size = i - first;
+          const f_utf_string_length_t size = i - first;
 
-          if (destination->used + size > f_utf_string_max_size) {
+          if (destination->used + size > f_utf_string_t_size_max) {
             return F_status_set_error(F_string_too_large);
           }
 
-          const f_utf_string_length total = destination->used + size;
+          const f_utf_string_length_t total = destination->used + size;
 
           if (total > destination->size) {
-            f_macro_string_dynamic_resize(status, (*destination), total);
+            f_macro_string_dynamic_t_resize(status, (*destination), total);
             if (F_status_is_error(status)) return status;
           }
 
@@ -302,19 +302,19 @@ extern "C" {
         break;
       }
 
-      if (source[i] == f_utf_character_eos) {
+      if (source[i] == f_utf_character_t_eos) {
         if (i > 0) {
           if (i > first) {
-            const f_utf_string_length size = i - first;
+            const f_utf_string_length_t size = i - first;
 
-            if (destination->used + size > f_utf_string_max_size) {
+            if (destination->used + size > f_utf_string_t_size_max) {
               return F_status_set_error(F_string_too_large);
             }
 
-            const f_utf_string_length total = destination->used + size;
+            const f_utf_string_length_t total = destination->used + size;
 
             if (total > destination->size) {
-              f_macro_string_dynamic_resize(status, (*destination), total);
+              f_macro_string_dynamic_t_resize(status, (*destination), total);
 
               if (F_status_is_error(status)) return status;
             }
@@ -327,7 +327,7 @@ extern "C" {
           }
         }
 
-        while (i + 1 < length && source[i + 1] == f_utf_character_eos) {
+        while (i + 1 < length && source[i + 1] == f_utf_character_t_eos) {
           i++;
         } // while
 
@@ -341,9 +341,9 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_prepend_nulless_) || !defined(_di_fl_utf_string_dynamic_prepend_nulless_)
 
 #if !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_) || !defined(_di_fl_utf_string_rip_nulless_) || !defined(_di_fl_utf_string_dynamic_rip_nulless_)
-  f_return_status private_fl_utf_string_rip_find_range(const f_utf_string source, f_utf_string_length *start, f_utf_string_length *stop) {
+  f_return_status private_fl_utf_string_rip_find_range(const f_utf_string_t source, f_utf_string_length_t *start, f_utf_string_length_t *stop) {
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     // skip past leading whitespace.
     for (; *start <= *stop; (*start)++) {

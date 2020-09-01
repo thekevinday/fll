@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_basic_list_read_
-  f_return_status fll_fss_basic_list_read(f_string_dynamic *buffer, f_string_range *range, f_fss_objects *objects, f_fss_contents *contents) {
+  f_return_status fll_fss_basic_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents) {
     #ifndef _di_level_2_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
@@ -13,20 +13,20 @@ extern "C" {
       if (contents == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = F_none;
-    f_status status2 = F_none;
-    f_string_length initial_used = objects->used;
+    f_status_t status = F_none;
+    f_status_t status2 = F_none;
+    f_string_length_t initial_used = objects->used;
     bool found_data = F_false;
 
     do {
       if (objects->used == objects->size) {
-        f_macro_fss_objects_resize(status2, (*objects), objects->used + f_fss_default_allocation_step);
+        f_macro_fss_objects_t_resize(status2, (*objects), objects->used + f_fss_default_allocation_step);
 
         if (F_status_is_error(status)) {
           return status;
         }
 
-        f_macro_fss_contents_resize(status2, (*contents), contents->used + f_fss_default_allocation_step);
+        f_macro_fss_contents_t_resize(status2, (*contents), contents->used + f_fss_default_allocation_step);
 
         if (F_status_is_error(status)) {
           return status;
@@ -45,7 +45,7 @@ extern "C" {
             objects->used++;
 
             if (contents->array[contents->used].used == contents->array[contents->used].size) {
-              f_macro_fss_content_resize(status2, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+              f_macro_fss_content_t_resize(status2, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
               if (F_status_is_error(status2)) return status2;
             }
 
@@ -84,7 +84,7 @@ extern "C" {
           found_data = F_true;
 
           if (contents->array[contents->used].used == contents->array[contents->used].size) {
-            f_macro_fss_content_resize(status2, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+            f_macro_fss_content_t_resize(status2, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
             if (F_status_is_error(status2)) return status2;
           }
 
@@ -127,22 +127,22 @@ extern "C" {
 
       objects->used++;
       contents->used++;
-    } while (range->start < f_string_length_size);
+    } while (range->start < f_string_length_t_size);
 
     return F_status_is_error(F_number_overflow);
   }
 #endif // _di_fll_fss_basic_list_read_
 
 #ifndef _di_fll_fss_basic_list_write_
-  f_return_status fll_fss_basic_list_write(const f_string_static object, const f_string_statics contents, f_string_dynamic *buffer) {
+  f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer) {
     #ifndef _di_level_2_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (contents.used > contents.size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = 0;
-    f_array_length current = 0;
-    f_string_range range = f_string_range_initialize;
+    f_status_t status = 0;
+    f_array_length_t current = 0;
+    f_string_range_t range = f_string_range_initialize;
 
     range.start = 0;
     range.stop = object.used - 1;

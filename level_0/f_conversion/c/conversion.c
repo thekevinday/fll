@@ -74,7 +74,7 @@ extern "C" {
 #endif // _di_f_conversion_character_is_octal_
 
 #ifndef _di_f_conversion_character_to_binary_
-  f_return_status f_conversion_character_to_binary(const int8_t character, f_number_unsigned *number) {
+  f_return_status f_conversion_character_to_binary(const int8_t character, f_number_unsigned_t *number) {
     #ifndef _di_level_0_parameter_checking_
       if (number == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -91,7 +91,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_binary_
 
 #ifndef _di_f_conversion_character_to_decimal_
-  f_return_status f_conversion_character_to_decimal(const int8_t character, f_number_unsigned *number) {
+  f_return_status f_conversion_character_to_decimal(const int8_t character, f_number_unsigned_t *number) {
     #ifndef _di_level_0_parameter_checking_
       if (number == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -116,7 +116,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_decimal_
 
 #ifndef _di_f_conversion_character_to_duodecimal_
-  f_return_status f_conversion_character_to_duodecimal(const int8_t character, f_number_unsigned *decimal) {
+  f_return_status f_conversion_character_to_duodecimal(const int8_t character, f_number_unsigned_t *decimal) {
     #ifndef _di_level_0_parameter_checking_
       if (decimal == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -145,7 +145,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_duodecimal_
 
 #ifndef _di_f_conversion_character_to_hexidecimal_
-  f_return_status f_conversion_character_to_hexidecimal(const int8_t character, f_number_unsigned *decimal) {
+  f_return_status f_conversion_character_to_hexidecimal(const int8_t character, f_number_unsigned_t *decimal) {
     #ifndef _di_level_0_parameter_checking_
       if (decimal == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_hexidecimal_
 
 #ifndef _di_f_conversion_character_to_octal_
-  f_return_status f_conversion_character_to_octal(const int8_t character, f_number_unsigned *number) {
+  f_return_status f_conversion_character_to_octal(const int8_t character, f_number_unsigned_t *number) {
     #ifndef _di_level_0_parameter_checking_
       if (number == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -205,16 +205,16 @@ extern "C" {
 #endif // _di_f_conversion_character_to_octal_
 
 #ifndef _di_f_conversion_number_signed_to_string_
-  f_return_status f_conversion_number_signed_to_string(const f_number_signed number, const uint8_t base, f_string_dynamic *destination) {
+  f_return_status f_conversion_number_signed_to_string(const f_number_signed_t number, const uint8_t base, f_string_dynamic_t *destination) {
     #ifndef _di_level_0_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
       if (base < 2 || base > 16) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     if (number == 0) {
-      f_macro_string_dynamic_resize(status, (*destination), destination->used + 2);
+      f_macro_string_dynamic_t_resize(status, (*destination), destination->used + 2);
       if (F_status_is_error(status)) return status;
 
       destination->string[destination->used] = '0';
@@ -225,30 +225,30 @@ extern "C" {
     }
 
     bool negative = F_false;
-    f_number_unsigned current = number;
+    f_number_unsigned_t current = number;
 
     if (number < 0) {
       current = 0 - number;
       negative = F_true;
     }
 
-    f_string_length total = 0;
+    f_string_length_t total = 0;
 
-    for (register f_number_signed work = current; work; total++) {
+    for (register f_number_signed_t work = current; work; total++) {
       work /= base;
     } // for
 
     if (negative) {
-      f_macro_string_dynamic_resize(status, (*destination), destination->used + total + 2);
+      f_macro_string_dynamic_t_resize(status, (*destination), destination->used + total + 2);
     }
     else {
-      f_macro_string_dynamic_resize(status, (*destination), destination->used + total + 1);
+      f_macro_string_dynamic_t_resize(status, (*destination), destination->used + total + 1);
     }
 
     if (F_status_is_error(status)) return status;
 
-    f_number_unsigned work = 0;
-    f_number_unsigned power = 1;
+    f_number_unsigned_t work = 0;
+    f_number_unsigned_t power = 1;
 
     if (negative) {
       destination->string[destination->used] = '-';
@@ -326,16 +326,16 @@ extern "C" {
 #endif // _di_f_conversion_decimal_signed_to_string_
 
 #ifndef _di_f_conversion_number_unsigned_to_string_
-  f_return_status f_conversion_number_unsigned_to_string(const f_number_unsigned number, const uint8_t base, f_string_dynamic *destination) {
+  f_return_status f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const uint8_t base, f_string_dynamic_t *destination) {
     #ifndef _di_level_0_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
       if (base < 2 || base > 16) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     if (number == 0) {
-      f_macro_string_dynamic_resize(status, (*destination), destination->used + 2);
+      f_macro_string_dynamic_t_resize(status, (*destination), destination->used + 2);
       if (F_status_is_error(status)) return status;
 
       destination->string[destination->used] = '0';
@@ -345,18 +345,18 @@ extern "C" {
       return F_none;
     }
 
-    f_string_length total = 0;
+    f_string_length_t total = 0;
 
-    for (register f_number_unsigned work = number; work; total++) {
+    for (register f_number_unsigned_t work = number; work; total++) {
       work /= base;
     } // for
 
-    f_macro_string_dynamic_resize(status, (*destination), destination->used + total + 1);
+    f_macro_string_dynamic_t_resize(status, (*destination), destination->used + total + 1);
     if (F_status_is_error(status)) return status;
 
-    f_number_unsigned current = number;
-    f_number_unsigned work = 0;
-    f_number_unsigned power = 1;
+    f_number_unsigned_t current = number;
+    f_number_unsigned_t work = 0;
+    f_number_unsigned_t power = 1;
 
     for (register uint8_t i = 1; i < total; i++) {
       power *= base;

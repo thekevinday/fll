@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_help_
-  f_return_status fake_print_help(const fl_color_context context) {
+  f_return_status fake_print_help(const fl_color_context_t context) {
     fll_program_print_help_header(context, fake_name_long, fake_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -76,22 +76,22 @@ extern "C" {
 #endif // _di_fake_print_help_
 
 #ifndef _di_fake_main_
-  f_return_status fake_main(const f_console_arguments arguments, fake_data *data) {
-    f_status status = F_none;
+  f_return_status fake_main(const f_console_arguments_t arguments, fake_data_t *data) {
+    f_status_t status = F_none;
 
     uint8_t operations[fake_operations_total];
-    f_string operations_name[fake_operations_total];
+    f_string_t operations_name[fake_operations_total];
 
     memset(&operations, 0, sizeof(uint8_t) * fake_operations_total);
-    memset(&operations_name, 0, sizeof(f_string) * fake_operations_total);
+    memset(&operations_name, 0, sizeof(f_string_t) * fake_operations_total);
 
     {
-      f_console_parameters parameters = { data->parameters, fake_total_parameters };
+      f_console_parameters_t parameters = { data->parameters, fake_total_parameters };
 
       // Load all parameters and identify priority of color parameters.
       {
-        f_console_parameter_id ids[3] = { fake_parameter_no_color, fake_parameter_light, fake_parameter_dark };
-        f_console_parameter_ids choices = f_console_parameter_ids_initialize;
+        f_console_parameter_id_t ids[3] = { fake_parameter_no_color, fake_parameter_light, fake_parameter_dark };
+        f_console_parameter_ids_t choices = f_console_parameter_ids_t_initialize;
 
         choices.id = ids;
         choices.used = 3;
@@ -107,9 +107,9 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id ids[3] = { fake_parameter_quiet, fake_parameter_verbose, fake_parameter_debug };
-        f_console_parameter_ids choices = f_console_parameter_ids_initialize;
-        f_console_parameter_id choice = 0;
+        f_console_parameter_id_t ids[3] = { fake_parameter_quiet, fake_parameter_verbose, fake_parameter_debug };
+        f_console_parameter_ids_t choices = f_console_parameter_ids_t_initialize;
+        f_console_parameter_id_t choice = 0;
 
         choices.id = ids;
         choices.used = 3;
@@ -348,70 +348,70 @@ extern "C" {
 #endif // _di_fake_main_
 
 #ifndef _di_fake_delete_data_
-  f_return_status fake_delete_data(fake_data *data) {
+  f_return_status fake_delete_data(fake_data_t *data) {
 
-    for (f_string_length i = 0; i < fake_total_parameters; i++) {
-      f_macro_string_lengths_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_delete_simple(data->parameters[i].additional);
+    for (f_string_length_t i = 0; i < fake_total_parameters; i++) {
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
     } // for
 
-    f_macro_string_lengths_delete_simple(data->remaining);
+    f_macro_string_lengths_t_delete_simple(data->remaining);
 
-    f_macro_string_dynamics_delete_simple(data->define);
-    f_macro_string_dynamics_delete_simple(data->mode);
-    f_macro_string_dynamic_delete_simple(data->process);
-    f_macro_string_dynamic_delete_simple(data->settings);
+    f_macro_string_dynamics_t_delete_simple(data->define);
+    f_macro_string_dynamics_t_delete_simple(data->mode);
+    f_macro_string_dynamic_t_delete_simple(data->process);
+    f_macro_string_dynamic_t_delete_simple(data->settings);
 
-    f_macro_string_dynamic_delete_simple(data->path_build);
-    f_macro_string_dynamic_delete_simple(data->path_build_documents);
-    f_macro_string_dynamic_delete_simple(data->path_build_includes);
-    f_macro_string_dynamic_delete_simple(data->path_build_libraries);
-    f_macro_string_dynamic_delete_simple(data->path_build_libraries_script);
-    f_macro_string_dynamic_delete_simple(data->path_build_libraries_shared);
-    f_macro_string_dynamic_delete_simple(data->path_build_libraries_static);
-    f_macro_string_dynamic_delete_simple(data->path_build_objects);
-    f_macro_string_dynamic_delete_simple(data->path_build_programs);
-    f_macro_string_dynamic_delete_simple(data->path_build_programs_script);
-    f_macro_string_dynamic_delete_simple(data->path_build_programs_shared);
-    f_macro_string_dynamic_delete_simple(data->path_build_programs_static);
-    f_macro_string_dynamic_delete_simple(data->path_build_settings);
-    f_macro_string_dynamic_delete_simple(data->path_build_stage);
-    f_macro_string_dynamic_delete_simple(data->path_work);
+    f_macro_string_dynamic_t_delete_simple(data->path_build);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_documents);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_includes);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries_script);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries_shared);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries_static);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_objects);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_programs);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_programs_script);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_programs_shared);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_programs_static);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_settings);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_stage);
+    f_macro_string_dynamic_t_delete_simple(data->path_work);
 
-    f_macro_string_dynamic_delete_simple(data->path_data);
-    f_macro_string_dynamic_delete_simple(data->path_data_build);
+    f_macro_string_dynamic_t_delete_simple(data->path_data);
+    f_macro_string_dynamic_t_delete_simple(data->path_data_build);
 
-    f_macro_string_dynamic_delete_simple(data->path_data_settings);
+    f_macro_string_dynamic_t_delete_simple(data->path_data_settings);
 
-    f_macro_string_dynamic_delete_simple(data->path_documents);
+    f_macro_string_dynamic_t_delete_simple(data->path_documents);
 
-    f_macro_string_dynamic_delete_simple(data->path_licenses);
+    f_macro_string_dynamic_t_delete_simple(data->path_licenses);
 
-    f_macro_string_dynamic_delete_simple(data->path_sources);
-    f_macro_string_dynamic_delete_simple(data->path_sources_bash);
-    f_macro_string_dynamic_delete_simple(data->path_sources_c);
-    f_macro_string_dynamic_delete_simple(data->path_sources_cpp);
-    f_macro_string_dynamic_delete_simple(data->path_sources_script);
+    f_macro_string_dynamic_t_delete_simple(data->path_sources);
+    f_macro_string_dynamic_t_delete_simple(data->path_sources_bash);
+    f_macro_string_dynamic_t_delete_simple(data->path_sources_c);
+    f_macro_string_dynamic_t_delete_simple(data->path_sources_cpp);
+    f_macro_string_dynamic_t_delete_simple(data->path_sources_script);
 
-    f_macro_string_dynamic_delete_simple(data->path_work);
-    f_macro_string_dynamic_delete_simple(data->path_work_includes);
-    f_macro_string_dynamic_delete_simple(data->path_work_libraries);
-    f_macro_string_dynamic_delete_simple(data->path_work_libraries_script);
-    f_macro_string_dynamic_delete_simple(data->path_work_libraries_shared);
-    f_macro_string_dynamic_delete_simple(data->path_work_libraries_static);
-    f_macro_string_dynamic_delete_simple(data->path_work_programs);
-    f_macro_string_dynamic_delete_simple(data->path_work_programs_script);
-    f_macro_string_dynamic_delete_simple(data->path_work_programs_shared);
-    f_macro_string_dynamic_delete_simple(data->path_work_programs_static);
+    f_macro_string_dynamic_t_delete_simple(data->path_work);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_includes);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries_script);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries_shared);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries_static);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_programs);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_programs_script);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_programs_shared);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_programs_static);
 
-    f_macro_string_dynamic_delete_simple(data->file_data_build_defines);
-    f_macro_string_dynamic_delete_simple(data->file_data_build_dependencies);
-    f_macro_string_dynamic_delete_simple(data->file_data_build_fakefile);
-    f_macro_string_dynamic_delete_simple(data->file_data_build_settings);
+    f_macro_string_dynamic_t_delete_simple(data->file_data_build_defines);
+    f_macro_string_dynamic_t_delete_simple(data->file_data_build_dependencies);
+    f_macro_string_dynamic_t_delete_simple(data->file_data_build_fakefile);
+    f_macro_string_dynamic_t_delete_simple(data->file_data_build_settings);
 
-    f_macro_string_dynamic_delete_simple(data->file_documents_readme);
+    f_macro_string_dynamic_t_delete_simple(data->file_documents_readme);
 
-    fl_macro_color_context_delete_simple(data->context);
+    fl_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
   }

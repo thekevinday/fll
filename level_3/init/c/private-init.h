@@ -33,29 +33,29 @@ extern "C" {
 #ifndef _di_init_rule_
   // rule [directory] [filename (no-extension)] [require] [last] [asynchronous] = execute a rule located in [directory][filename].rule.
   typedef struct {
-    f_string_dynamic name;
-    f_string_dynamic directory;
-    f_string_dynamic file;
+    f_string_dynamic_t name;
+    f_string_dynamic_t directory;
+    f_string_dynamic_t file;
     bool require;
     bool asynchronous;
   } init_rule;
 
   #define init_rule_initialize \
     { \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
-      f_string_dynamic_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
       F_false, \
       F_false, \
     }
 
   #define delete_init_rule(status, rule) \
-    f_macro_string_dynamic_delete(status, rule.name); \
+    f_macro_string_dynamic_t_delete(status, rule.name); \
     if (status == F_none) { \
-      f_macro_string_dynamic_delete(status, rule.directory); \
+      f_macro_string_dynamic_t_delete(status, rule.directory); \
     } \
     if (status == F_none) { \
-      f_macro_string_dynamic_delete(status, rule.address); \
+      f_macro_string_dynamic_t_delete(status, rule.address); \
     } \
     if (status == F_none) { \
       rule.require = 0; \
@@ -63,25 +63,25 @@ extern "C" {
     }
 
   #define destroy_init_rule(status, rule) \
-    f_macro_string_dynamic_destroy(status, rule.name); \
+    f_macro_string_dynamic_t_destroy(status, rule.name); \
     if (status == F_none) { \
-      f_macro_string_dynamic_destroy(status, rule.directory); \
+      f_macro_string_dynamic_t_destroy(status, rule.directory); \
     } \
     if (status == F_none) { \
-      f_macro_string_dynamic_destroy(status, rule.address); \
+      f_macro_string_dynamic_t_destroy(status, rule.address); \
     } \
     if (status == F_none) { \
       rule.require = 0; \
       rule.asynchronous = 0; \
     }
-#endif // _di_init_data_
+#endif // _di_init_data_t_
 
 // an array of dynamic strings
 #ifndef _di_init_rules_
   typedef struct {
     init_rule *array;       // the array of init_rule
-    f_string_length  size;  // total amount of allocated space
-    f_string_length  used;  // total number of allocated spaces used
+    f_string_length_t  size;  // total amount of allocated space
+    f_string_length_t  used;  // total number of allocated spaces used
   } init_rules;
 
   #define init_rules_initialize { 0, 0, 0 }
@@ -109,7 +109,7 @@ extern "C" {
   #define f_init_rules_resize(status, rules, new_length) \
     status = F_none; \
     if (new_length < rules.size) { \
-      f_string_length i = rules.size - new_length; \
+      f_string_length_t i = rules.size - new_length; \
       for (; i < rules.size; i++) { \
         delete_init_rule(status, rules.array[i]); \
         if (status != F_none) break; \
@@ -118,9 +118,9 @@ extern "C" {
     if (status == F_none) status = f_memory_resize((void **) & rules.array, sizeof(init_rule), rules.size, new_length); \
     if (status == F_none) { \
       if (new_length > rules.size) { \
-        f_string_length i = rules.size; \
+        f_string_length_t i = rules.size; \
         for (; i < new_length; i++) { \
-          memset(&rules.array[i], 0, sizeof(f_string)); \
+          memset(&rules.array[i], 0, sizeof(f_string_t)); \
         } \
       } \
       rules.size = new_length; \
@@ -130,7 +130,7 @@ extern "C" {
   #define f_init_rules_adjust(status, rules, new_length) \
     status = F_none; \
     if (new_length < rules.size) { \
-      f_string_length i = rules.size - new_length; \
+      f_string_length_t i = rules.size - new_length; \
       for (; i < rules.size; i++) { \
         destroy_init_rule(status, rules.array[i]); \
         if (status != F_none) break; \
@@ -139,7 +139,7 @@ extern "C" {
     if (status == F_none) status = f_memory_adjust((void **) & rules.array, sizeof(init_rule), rules.size, new_length); \
     if (status == F_none) { \
       if (new_length > rules.size) { \
-        f_string_length i = rules.size; \
+        f_string_length_t i = rules.size; \
         for (; i < new_length; i++) { \
           memset(&rules.array[i], 0, sizeof(init_rule)); \
         } \
@@ -152,24 +152,24 @@ extern "C" {
 #ifndef _di_init_category_
   // category [name] = execute rules in the specified list called [name].
   typedef struct {
-    f_string_dynamic name;
+    f_string_dynamic_t name;
     init_rule last;
   } init_category;
 
   #define init_category_initialize \
     { \
-      f_string_dynamic_initialize, \
+      f_string_dynamic_t_initialize, \
       init_rule_initialize, \
     }
 
   #define delete_init_category(status, category) \
-    f_macro_string_dynamic_delete(status, category.name); \
+    f_macro_string_dynamic_t_delete(status, category.name); \
     if (status == F_none) { \
       delete_init_rule(status, category.last); \
     }
 
   #define destroy_init_category(status, category) \
-    f_macro_string_dynamic_destroy(status, category.name); \
+    f_macro_string_dynamic_t_destroy(status, category.name); \
     if (status == F_none) { \
       destroy_init_rule(status, category.last); \
     }
@@ -180,8 +180,8 @@ extern "C" {
   typedef struct {
     init_category *array;  // the array of init_category
 
-    f_string_length size;  // total amount of allocated space
-    f_string_length used;  // total number of allocated spaces used
+    f_string_length_t size;  // total amount of allocated space
+    f_string_length_t used;  // total number of allocated spaces used
   } init_categorys;
 
   #define init_categorys_initialize { 0, 0, 0 }
@@ -209,7 +209,7 @@ extern "C" {
   #define f_init_categorys_resize(status, categorys, new_length) \
     status = F_none; \
     if (new_length < categorys.size) { \
-      f_string_length i = categorys.size - new_length; \
+      f_string_length_t i = categorys.size - new_length; \
       for (; i < categorys.size; i++) { \
         delete_init_category(status, categorys.array[i]); \
         if (status != F_none) break; \
@@ -218,9 +218,9 @@ extern "C" {
     if (status == F_none) status = f_memory_resize((void **) & categorys.array, sizeof(init_category), categorys.size, new_length); \
     if (status == F_none) { \
       if (new_length > categorys.size) { \
-        f_string_length i = categorys.size; \
+        f_string_length_t i = categorys.size; \
         for (; i < new_length; i++) { \
-          memset(&categorys.array[i], 0, sizeof(f_string)); \
+          memset(&categorys.array[i], 0, sizeof(f_string_t)); \
         } \
       } \
       categorys.size = new_length; \
@@ -230,7 +230,7 @@ extern "C" {
   #define f_init_categorys_adjust(status, categorys, new_length) \
     status = F_none; \
     if (new_length < categorys.size) { \
-      f_string_length i = categorys.size - new_length; \
+      f_string_length_t i = categorys.size - new_length; \
       for (; i < categorys.size; i++) { \
         destroy_init_category(status, categorys.array[i]); \
         if (status != F_none) break; \
@@ -239,7 +239,7 @@ extern "C" {
     if (status == F_none) status = f_memory_adjust((void **) & categorys.array, sizeof(init_category), categorys.size, new_length); \
     if (status == F_none) { \
       if (new_length > categorys.size) { \
-        f_string_length i = categorys.size; \
+        f_string_length_t i = categorys.size; \
         for (; i < new_length; i++) { \
           memset(&categorys.array[i], 0, sizeof(init_category)); \
         } \
@@ -251,7 +251,7 @@ extern "C" {
 
 #ifndef _di_init_setting_
   typedef struct {
-    f_string socket_file;
+    f_string_t socket_file;
     unsigned int  socket_port;
     unsigned int  socket_id_target;
     unsigned int  socket_id_client;
@@ -267,7 +267,7 @@ extern "C" {
 
   #define init_setting_initialize \
     { \
-      f_string_initialize, \
+      f_string_t_initialize, \
       0, \
       0, \
       0, \
@@ -289,7 +289,7 @@ typedef struct {
   void *login_file;
   void *login_port;
 
-  init_data    data;
+  init_data_t    data;
   init_setting setting;
 } init_stack_memory;
 
@@ -326,7 +326,7 @@ typedef struct {
 #define init_path_processes_mounts   init_paths_processes "mounts"
 /*
 #ifndef _di_init_rule_buffer_
-  f_return_status init_rule_buffer(const init_data data, const f_string filename, f_string_dynamic *buffer, f_fss_objects *objects, f_fss_contents *contents) f_gcc_attribute_visibility_internal;
+  f_return_status init_rule_buffer(const init_data_t data, const f_string_t filename, f_string_dynamic_t *buffer, f_fss_objects_t *objects, f_fss_contents_t *contents) f_gcc_attribute_visibility_internal;
 #endif // _di_init_rule_buffer_
 
 #ifndef _di_init_handler_chif_string_dynamic_initializeld_services_
@@ -356,7 +356,7 @@ typedef struct {
 #endif // _di_init_prepare_init_
 
 #ifndef _di_init_process_main_rule_
-  f_return_status init_process_main_rule(const init_data data, f_string_dynamic *buffer, init_setting *setting) f_gcc_attribute_visibility_internal;
+  f_return_status init_process_main_rule(const init_data_t data, f_string_dynamic_t *buffer, init_setting *setting) f_gcc_attribute_visibility_internal;
 #endif // _di_init_process_main_rule_
 */
 

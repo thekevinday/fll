@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_list_write_print_help_
-  f_return_status fss_basic_list_write_print_help(const fl_color_context context) {
+  f_return_status fss_basic_list_write_print_help(const fl_color_context_t context) {
     fll_program_print_help_header(context, fss_basic_list_write_name_long, fss_basic_list_write_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -28,13 +28,13 @@ extern "C" {
 #endif // _di_fss_basic_list_write_print_help_
 
 #ifndef _di_fss_basic_list_write_main_
-  f_return_status fss_basic_list_write_main(const f_console_arguments arguments, fss_basic_list_write_data *data) {
-    f_status status = F_none;
+  f_return_status fss_basic_list_write_main(const f_console_arguments_t arguments, fss_basic_list_write_data_t *data) {
+    f_status_t status = F_none;
 
     {
-      f_console_parameters parameters = { data->parameters, fss_basic_list_write_total_parameters };
-      f_console_parameter_id ids[3] = { fss_basic_list_write_parameter_no_color, fss_basic_list_write_parameter_light, fss_basic_list_write_parameter_dark };
-      f_console_parameter_ids choices = { ids, 3 };
+      f_console_parameters_t parameters = { data->parameters, fss_basic_list_write_total_parameters };
+      f_console_parameter_id_t ids[3] = { fss_basic_list_write_parameter_no_color, fss_basic_list_write_parameter_light, fss_basic_list_write_parameter_dark };
+      f_console_parameter_ids_t choices = { ids, 3 };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
       if (F_status_is_error(status)) {
@@ -52,15 +52,15 @@ extern "C" {
       fll_program_print_version(fss_basic_list_write_version);
     }
     else {
-      f_array_length counter = 0;
+      f_array_length_t counter = 0;
       bool object = (data->parameters[fss_basic_list_write_parameter_object].result == f_console_result_found);
 
-      f_string_dynamic buffer = f_string_dynamic_initialize;
-      f_string_range range = f_string_range_initialize;
+      f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
+      f_string_range_t range = f_string_range_initialize;
 
       if (data->process_pipe) {
-        f_file file = f_file_initialize;
-        f_string_dynamic input = f_string_dynamic_initialize;
+        f_file_t file = f_file_t_initialize;
+        f_string_dynamic_t input = f_string_dynamic_t_initialize;
 
         file.id = f_type_descriptor_input;
 
@@ -85,8 +85,8 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
           }
 
-          f_macro_string_dynamic_delete_simple(buffer);
-          f_macro_string_dynamic_delete_simple(input);
+          f_macro_string_dynamic_t_delete_simple(buffer);
+          f_macro_string_dynamic_t_delete_simple(input);
           fss_basic_list_write_delete_data(data);
           return F_status_set_error(status);
         }
@@ -99,8 +99,8 @@ extern "C" {
             status = fl_fss_basic_list_object_write(input, &range, &buffer);
 
             if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
-              f_macro_string_dynamic_delete_simple(buffer);
-              f_macro_string_dynamic_delete_simple(input);
+              f_macro_string_dynamic_t_delete_simple(buffer);
+              f_macro_string_dynamic_t_delete_simple(input);
               fss_basic_list_write_delete_data(data);
               return F_status_set_error(status);
             }
@@ -114,8 +114,8 @@ extern "C" {
             status = fl_fss_basic_list_content_write(input, &range, &buffer);
 
             if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
-              f_macro_string_dynamic_delete_simple(buffer);
-              f_macro_string_dynamic_delete_simple(input);
+              f_macro_string_dynamic_t_delete_simple(buffer);
+              f_macro_string_dynamic_t_delete_simple(input);
               fss_basic_list_write_delete_data(data);
               return F_status_set_error(status);
             }
@@ -126,10 +126,10 @@ extern "C" {
           }
         }
 
-        f_macro_string_dynamic_delete_simple(input);
+        f_macro_string_dynamic_t_delete_simple(input);
       }
       else if (data->parameters[fss_basic_list_write_parameter_string].result == f_console_result_additional) {
-        f_string_dynamic input = f_string_dynamic_initialize;
+        f_string_dynamic_t input = f_string_dynamic_t_initialize;
 
         input.string = arguments.argv[data->parameters[fss_basic_list_write_parameter_string].additional.array[0]];
         input.used = strlen(input.string);
@@ -142,7 +142,7 @@ extern "C" {
             status = fl_fss_basic_list_object_write(input, &range, &buffer);
 
             if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
-              f_macro_string_dynamic_delete_simple(buffer);
+              f_macro_string_dynamic_t_delete_simple(buffer);
               fss_basic_list_write_delete_data(data);
               return F_status_set_error(status);
             }
@@ -156,7 +156,7 @@ extern "C" {
             status = fl_fss_basic_list_content_write(input, &range, &buffer);
 
             if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos || status == F_data_not_eol) {
-              f_macro_string_dynamic_delete_simple(buffer);
+              f_macro_string_dynamic_t_delete_simple(buffer);
               fss_basic_list_write_delete_data(data);
               return F_status_set_error(status);
             }
@@ -171,7 +171,7 @@ extern "C" {
       }
 
       if (data->parameters[fss_basic_list_write_parameter_file].result == f_console_result_additional) {
-        f_file output = f_file_initialize;
+        f_file_t output = f_file_t_initialize;
 
         output.flag = f_file_flag_append_wo;
 
@@ -198,7 +198,7 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
           }
 
-          f_macro_string_dynamic_delete_simple(buffer);
+          f_macro_string_dynamic_t_delete_simple(buffer);
           fss_basic_list_write_delete_data(data);
           return F_status_set_error(status);
         }
@@ -219,7 +219,7 @@ extern "C" {
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_write()", status);
           }
 
-          f_macro_string_dynamic_delete_simple(buffer);
+          f_macro_string_dynamic_t_delete_simple(buffer);
           fss_basic_list_write_delete_data(data);
           return F_status_set_error(status);
         }
@@ -228,7 +228,7 @@ extern "C" {
         f_print_string_dynamic(f_type_output, buffer);
       }
 
-      f_macro_string_dynamic_delete_simple(buffer);
+      f_macro_string_dynamic_t_delete_simple(buffer);
     }
 
     fss_basic_list_write_delete_data(data);
@@ -237,17 +237,17 @@ extern "C" {
 #endif // _di_fss_basic_list_write_main_
 
 #ifndef _di_fss_basic_list_write_delete_data_
-  f_return_status fss_basic_list_write_delete_data(fss_basic_list_write_data *data) {
-    f_string_length i = 0;
+  f_return_status fss_basic_list_write_delete_data(fss_basic_list_write_data_t *data) {
+    f_string_length_t i = 0;
 
     while (i < fss_basic_list_write_total_parameters) {
-      f_macro_string_lengths_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
       i++;
     } // while
 
-    f_macro_string_lengths_delete_simple(data->remaining);
-    fl_macro_color_context_delete_simple(data->context);
+    f_macro_string_lengths_t_delete_simple(data->remaining);
+    fl_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
   }

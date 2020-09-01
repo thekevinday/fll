@@ -22,23 +22,23 @@ extern "C" {
   #define fake_make_section_stack_max 8192 // maximum stack call depth.
 #endif // _di_fake_make_section_
 
-#ifndef _di_fake_make_setting_
+#ifndef _di_fake_make_setting_t_
   typedef struct {
     bool load_build;
 
     uint8_t fail;
 
-    f_string_map_multis parameter;
-  } fake_make_setting;
+    f_string_map_multis_t parameter;
+  } fake_make_setting_t;
 
-  #define fake_make_setting_initialize { \
+  #define fake_make_setting_t_initialize { \
     0, \
     0, \
-    f_string_map_multis_initialize, \
+    f_string_map_multis_t_initialize, \
   }
 
-  #define fake_macro_make_setting_delete_simple(setting) \
-    f_macro_string_map_multis_delete_simple(setting.parameter)
+  #define fake_macro_make_setting_t_delete_simple(setting) \
+    f_macro_string_map_multis_t_delete_simple(setting.parameter)
 
   #define fake_make_setting_compiler    "compiler"
   #define fake_make_setting_define      "define"
@@ -57,7 +57,7 @@ extern "C" {
   #define fake_make_setting_load_build_length  10
   #define fake_make_setting_parameter_length   9
   #define fake_make_setting_return_length      6
-#endif // _di_fake_make_setting_
+#endif // _di_fake_make_setting_t_
 
 #ifndef _di_fake_make_operation_
   #define fake_make_operation_archive  "archive"
@@ -251,7 +251,7 @@ extern "C" {
 #endif // _di_fake_make_operation_
 
 // @todo each one of these should be made available to be passed to the program as "$parameter_define[X]" for multi-value (define) or "$parameter_no_color" for single-value (no_color).
-#ifndef _di_fake_make_parameter_
+#ifndef _di_fake_make_parameter_t_
   #define fake_make_parameter_variable_build    "build"
   #define fake_make_parameter_variable_dark     "dark"
   #define fake_make_parameter_variable_data     "data"
@@ -283,136 +283,136 @@ extern "C" {
   #define fake_make_file_parameter_variable_work_length     4
 
   typedef struct {
-    f_string_dynamics build;
-    f_string_dynamics dark;
-    f_string_dynamics data;
-    f_string_dynamics define;
-    f_string_dynamics light;
-    f_string_dynamics mode;
-    f_string_dynamics no_color;
-    f_string_dynamics process;
-    f_string_dynamics quiet;
-    f_string_dynamics settings;
-    f_string_dynamics sources;
-    f_string_dynamics verbose;
-    f_string_dynamics work;
-  } fake_make_parameter;
+    f_string_dynamics_t build;
+    f_string_dynamics_t dark;
+    f_string_dynamics_t data;
+    f_string_dynamics_t define;
+    f_string_dynamics_t light;
+    f_string_dynamics_t mode;
+    f_string_dynamics_t no_color;
+    f_string_dynamics_t process;
+    f_string_dynamics_t quiet;
+    f_string_dynamics_t settings;
+    f_string_dynamics_t sources;
+    f_string_dynamics_t verbose;
+    f_string_dynamics_t work;
+  } fake_make_parameter_t;
 
-  #define fake_make_parameter_initialize { \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
+  #define fake_make_parameter_t_initialize { \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
   }
 
   #define fake_macro_make_parameter_delete_simple(parameter) \
-    f_macro_string_dynamics_delete_simple(parameter.build) \
-    f_macro_string_dynamics_delete_simple(parameter.dark) \
-    f_macro_string_dynamics_delete_simple(parameter.data) \
-    f_macro_string_dynamics_delete_simple(parameter.define) \
-    f_macro_string_dynamics_delete_simple(parameter.light) \
-    f_macro_string_dynamics_delete_simple(parameter.mode) \
-    f_macro_string_dynamics_delete_simple(parameter.no_color) \
-    f_macro_string_dynamics_delete_simple(parameter.process) \
-    f_macro_string_dynamics_delete_simple(parameter.quiet) \
-    f_macro_string_dynamics_delete_simple(parameter.settings) \
-    f_macro_string_dynamics_delete_simple(parameter.sources) \
-    f_macro_string_dynamics_delete_simple(parameter.verbose) \
-    f_macro_string_dynamics_delete_simple(parameter.work)
-#endif // _di_fake_make_parameter_
+    f_macro_string_dynamics_t_delete_simple(parameter.build) \
+    f_macro_string_dynamics_t_delete_simple(parameter.dark) \
+    f_macro_string_dynamics_t_delete_simple(parameter.data) \
+    f_macro_string_dynamics_t_delete_simple(parameter.define) \
+    f_macro_string_dynamics_t_delete_simple(parameter.light) \
+    f_macro_string_dynamics_t_delete_simple(parameter.mode) \
+    f_macro_string_dynamics_t_delete_simple(parameter.no_color) \
+    f_macro_string_dynamics_t_delete_simple(parameter.process) \
+    f_macro_string_dynamics_t_delete_simple(parameter.quiet) \
+    f_macro_string_dynamics_t_delete_simple(parameter.settings) \
+    f_macro_string_dynamics_t_delete_simple(parameter.sources) \
+    f_macro_string_dynamics_t_delete_simple(parameter.verbose) \
+    f_macro_string_dynamics_t_delete_simple(parameter.work)
+#endif // _di_fake_make_parameter_t_
 
-#ifndef _di_fake_make_path_
+#ifndef _di_fake_make_path_t_
   typedef struct {
     int top;
     int current;
 
-    f_string_dynamics stack;
-  } fake_make_path;
+    f_string_dynamics_t stack;
+  } fake_make_path_t;
 
-  #define fake_make_path_initialize { \
+  #define fake_make_path_t_initialize { \
     0, \
     0, \
-    f_string_dynamics_initialize, \
+    f_string_dynamics_t_initialize, \
   }
 
   #define fake_macro_make_path_delete_simple(path) \
-    f_macro_string_dynamics_delete_simple(path.stack)
-#endif // _di_fake_make_path_
+    f_macro_string_dynamics_t_delete_simple(path.stack)
+#endif // _di_fake_make_path_t_
 
-#ifndef _di_fake_make_print_
+#ifndef _di_fake_make_print_t_
   typedef struct {
     const char *prefix;
-    f_string_static context;
+    f_string_static_t context;
 
     FILE *to;
-  } fake_make_print;
+  } fake_make_print_t;
 
-  #define fake_make_print_initialize { \
+  #define fake_make_print_t_initialize { \
     0, \
-    f_string_static_initialize, \
+    f_string_static_t_initialize, \
     0, \
   }
 
-  #define fake_macro_make_print_initialize(prefix, context, to) { prefix, context, to }
+  #define fake_macro_make_print_t_initialize(prefix, context, to) { prefix, context, to }
 
   #define fake_make_print_error   "ERROR"
   #define fake_make_print_warning "WARNING"
 
   #define fake_make_print_error_length   5
   #define fake_make_print_warning_length 7
-#endif // _di_fake_make_print_
+#endif // _di_fake_make_print_t_
 
-#ifndef _di_fake_make_data_
+#ifndef _di_fake_make_data_t_
   typedef struct {
-    fake_build_setting setting_build;
-    fake_make_setting setting_make;
+    fake_build_setting_t setting_build;
+    fake_make_setting_t setting_make;
 
-    fake_environment environment;
+    fake_environment_t environment;
 
-    fake_make_parameter parameter;
-    fake_make_path path;
-    fake_make_print print;
+    fake_make_parameter_t parameter;
+    fake_make_path_t path;
+    fake_make_print_t print;
 
-    f_fss_nameds fakefile;
+    f_fss_nameds_t fakefile;
 
-    f_string_dynamic buffer;
-    f_string_dynamic path_cache;
+    f_string_dynamic_t buffer;
+    f_string_dynamic_t path_cache;
 
-    f_array_length main;
-  } fake_make_data;
+    f_array_length_t main;
+  } fake_make_data_t;
 
-  #define fake_make_data_initialize { \
-    fake_build_setting_initialize, \
-    fake_make_setting_initialize, \
-    fake_environment_initialize, \
-    fake_make_parameter_initialize, \
-    fake_make_path_initialize, \
-    fake_make_print_initialize, \
-    f_fss_nameds_initialize, \
-    f_string_dynamic_initialize, \
-    f_string_dynamic_initialize, \
+  #define fake_make_data_t_initialize { \
+    fake_build_setting_t_initialize, \
+    fake_make_setting_t_initialize, \
+    fake_environment_t_initialize, \
+    fake_make_parameter_t_initialize, \
+    fake_make_path_t_initialize, \
+    fake_make_print_t_initialize, \
+    f_fss_nameds_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
     0, \
   }
 
-  #define fake_macro_make_data_delete_simple(data) \
-    fake_macro_build_setting_delete_simple(data.setting_build) \
-    fake_macro_make_setting_delete_simple(data.setting_make) \
-    fake_macro_environment_delete_simple(data.environment) \
+  #define fake_macro_make_data_t_delete_simple(data) \
+    fake_macro_build_setting_t_delete_simple(data.setting_build) \
+    fake_macro_make_setting_t_delete_simple(data.setting_make) \
+    fake_macro_environment_t_delete_simple(data.environment) \
     fake_macro_make_parameter_delete_simple(data.parameter) \
     fake_macro_make_path_delete_simple(data.path) \
-    f_macro_fss_nameds_delete_simple(data.fakefile) \
-    f_macro_string_dynamic_delete_simple(data.buffer) \
-    f_macro_string_dynamic_delete_simple(data.path_cache)
-#endif // _di_fake_make_data_
+    f_macro_fss_nameds_t_delete_simple(data.fakefile) \
+    f_macro_string_dynamic_t_delete_simple(data.buffer) \
+    f_macro_string_dynamic_t_delete_simple(data.path_cache)
+#endif // _di_fake_make_data_t_
 
 /**
  * Assure that a path is within the project root path.
@@ -432,7 +432,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_assure_inside_project_
-  extern f_return_status fake_make_assure_inside_project(const fake_data data, const f_string_static path, fake_make_data *data_make) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_assure_inside_project(const fake_data_t data, const f_string_static_t path, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_assure_inside_project_
 
 /**
@@ -454,7 +454,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_group_
-  f_return_status fake_make_get_id_group(const fake_data data, const fake_make_print print, const f_string_static buffer, gid_t *id) f_gcc_attribute_visibility_internal;
+  f_return_status fake_make_get_id_group(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, gid_t *id) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_group_
 
 /**
@@ -480,7 +480,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_mode_
-  f_return_status fake_make_get_id_mode(const fake_data data, const fake_make_print print, const f_string_static buffer, f_file_mode *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
+  f_return_status fake_make_get_id_mode(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, f_file_mode *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_mode_
 
 /**
@@ -502,7 +502,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_owner_
-  f_return_status fake_make_get_id_owner(const fake_data data, const fake_make_print print, const f_string_static buffer, uid_t *id) f_gcc_attribute_visibility_internal;
+  f_return_status fake_make_get_id_owner(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, uid_t *id) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_owner_
 
 /**
@@ -524,7 +524,7 @@ extern "C" {
  * @see fake_build_load_setting()
  */
 #ifndef _di_fake_make_load_fakefile_
-  extern void fake_make_load_fakefile(const fake_data data, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_load_fakefile(const fake_data_t data, fake_make_data_t *data_make, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_load_fakefile_
 
 /**
@@ -542,7 +542,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_
-  extern f_return_status fake_make_operate(const fake_data data) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_operate(const fake_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_
 
 /**
@@ -570,7 +570,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_
-  extern void fake_make_operate_expand(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_fss_content content, const f_fss_quoteds quoteds, fake_make_data *data_make, f_string_dynamics *arguments, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_expand(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_fss_content_t content, const f_fss_quoteds_t quoteds, fake_make_data_t *data_make, f_string_dynamics_t *arguments, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_expand_
 
 /**
@@ -594,7 +594,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_environment_
-  extern f_return_status fake_make_operate_expand_environment(const fake_data data, const f_fss_quoted quoted, const f_string_range range_name, fake_make_data *data_make, f_string_dynamics *arguments) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_operate_expand_environment(const fake_data_t data, const f_fss_quoted_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_expand_environment_
 
 /**
@@ -618,7 +618,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_build_
-  extern f_return_status fake_make_operate_expand_build(const fake_data data, const f_fss_quoted quoted, const f_string_range range_name, fake_make_data *data_make, f_string_dynamics *arguments) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_operate_expand_build(const fake_data_t data, const f_fss_quoted_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_expand_build_
 
 /**
@@ -639,7 +639,7 @@ extern "C" {
  *   F_recurse (with error bit set) is returned if unable to recurse to another operation section (usually max stack depth reached).
  */
 #ifndef _di_fake_make_operate_section_
-  void fake_make_operate_section(const fake_data data, const f_array_length id_section, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
+  void fake_make_operate_section(const fake_data_t data, const f_array_length_t id_section, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_section_
 
 /**
@@ -669,7 +669,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_
-  extern void fake_make_operate_process(const fake_data data, const f_string_range section_name, const uint8_t operation, const f_string_static operation_name, const f_string_dynamics arguments, const bool success, uint8_t *operation_if, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_process(const fake_data_t data, const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_process_
 
 /**
@@ -691,7 +691,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_execute_
-  extern f_return_status fake_make_operate_process_execute(const fake_data data, const f_string_static program, const f_string_statics arguments, const bool as_shell, fake_make_data *data_make) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_operate_process_execute(const fake_data_t data, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_process_execute_
 
 /**
@@ -707,7 +707,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_return_
-  extern void fake_make_operate_process_return(const fake_data data, const int return_code, fake_make_data *data_make, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_process_return(const fake_data_t data, const int return_code, fake_make_data_t *data_make, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_process_return_
 
 /**
@@ -727,7 +727,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_run_
-  extern f_return_status fake_make_operate_process_run(const fake_data data, const f_string_statics arguments, const bool as_shell, fake_make_data *data_make) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_operate_process_run(const fake_data_t data, const f_string_statics_t arguments, const bool as_shell, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_process_run_
 
 /**
@@ -758,7 +758,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(const fake_data data, const f_string_range section_name, const f_array_length operation, const f_string_static operation_name, const f_string_dynamics arguments, uint8_t *operation_if, fake_make_data *data_make, f_string_lengths *section_stack, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_validate(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, uint8_t *operation_if, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_
 
 /**
@@ -777,7 +777,7 @@ extern "C" {
  *   F_none if there is no string to validate (used = 0).
  */
 #ifndef _di_fake_make_operate_validate_define_name_
-  extern f_return_status fake_make_operate_validate_define_name(const f_string_static name) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_operate_validate_define_name(const f_string_static_t name) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_define_name_
 
 /**
@@ -795,7 +795,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_path_relative_
-  extern f_return_status fake_make_path_relative(const fake_data data, const f_string_static path, fake_make_data *data_make) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_path_relative(const fake_data_t data, const f_string_static_t path, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_path_relative_
 
 #ifdef __cplusplus

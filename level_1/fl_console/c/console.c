@@ -5,13 +5,13 @@ extern "C" {
 #endif
 
 #ifndef _fl_console_parameter_to_string_dynamic_directory_
-  f_return_status fl_console_parameter_to_string_dynamic_directory(const f_string argument, f_string_dynamic *directory) {
+  f_return_status fl_console_parameter_to_string_dynamic_directory(const f_string_t argument, f_string_dynamic_t *directory) {
     #ifndef _di_level_1_parameter_checking_
       if (argument == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
-    f_string_length length = strlen(argument);
+    f_status_t status = F_none;
+    f_string_length_t length = strlen(argument);
 
     if (length == 0) {
       directory->used = 0;
@@ -24,7 +24,7 @@ extern "C" {
       } // while
 
       if (argument[0] == '/') {
-        f_string_length begin = 1;
+        f_string_length_t begin = 1;
 
         while (begin < length && argument[begin] == '/') {
           begin++;
@@ -35,7 +35,7 @@ extern "C" {
         if (length > 0) {
           length += 2;
 
-          f_macro_string_dynamic_new(status, (*directory), length);
+          f_macro_string_dynamic_t_new(status, (*directory), length);
           if (F_status_is_error(status)) return status;
 
           memcpy(directory->string + 1, argument + begin, length - 2);
@@ -46,7 +46,7 @@ extern "C" {
           directory->string[length - 1] = '/';
         }
         else {
-          f_macro_string_dynamic_new(status, (*directory), 1);
+          f_macro_string_dynamic_t_new(status, (*directory), 1);
           if (F_status_is_error(status)) return status;
 
           directory->used = 1;
@@ -55,7 +55,7 @@ extern "C" {
         }
       }
       else if (length > 3 && argument[0] == '.' && argument[1] == '.' && argument[2] == '/') {
-        f_string_length begin = 3;
+        f_string_length_t begin = 3;
 
         while (begin < length && argument[begin] == '/') {
           begin++;
@@ -66,7 +66,7 @@ extern "C" {
         if (length > 0) {
           length += 4;
 
-          f_macro_string_dynamic_new(status, (*directory), length);
+          f_macro_string_dynamic_t_new(status, (*directory), length);
           if (F_status_is_error(status)) return status;
 
           memcpy(directory->string + 3, argument + begin, length - 4);
@@ -79,7 +79,7 @@ extern "C" {
           directory->string[length - 1] = '/';
         }
         else {
-          f_macro_string_dynamic_new(status, (*directory), 3);
+          f_macro_string_dynamic_t_new(status, (*directory), 3);
           if (F_status_is_error(status)) return status;
 
           directory->used = 3;
@@ -90,7 +90,7 @@ extern "C" {
         }
       }
       else if (length > 2 && argument[0] == '.' && argument[1] == '/') {
-        f_string_length begin = 2;
+        f_string_length_t begin = 2;
 
         while (begin < length && argument[begin] == '/') {
           begin++;
@@ -101,7 +101,7 @@ extern "C" {
         if (length > 0) {
           length += 3;
 
-          f_macro_string_dynamic_new(status, (*directory), length);
+          f_macro_string_dynamic_t_new(status, (*directory), length);
           if (F_status_is_error(status)) return status;
 
           memcpy(directory->string + 2, argument + begin, length - 3);
@@ -113,7 +113,7 @@ extern "C" {
           directory->string[length - 1] = '/';
         }
         else {
-          f_macro_string_dynamic_new(status, (*directory), 2);
+          f_macro_string_dynamic_t_new(status, (*directory), 2);
           if (F_status_is_error(status)) return status;
 
           directory->used = 2;
@@ -125,7 +125,7 @@ extern "C" {
       else {
         length++;
 
-        f_macro_string_dynamic_new(status, (*directory), length);
+        f_macro_string_dynamic_t_new(status, (*directory), length);
         if (F_status_is_error(status)) return status;
 
         memcpy(directory->string, argument, length - 1);
@@ -136,7 +136,7 @@ extern "C" {
       }
     }
     else if (argument[0] != '/') {
-      f_macro_string_dynamic_new(status, (*directory), 2);
+      f_macro_string_dynamic_t_new(status, (*directory), 2);
       if (F_status_is_error(status)) return status;
 
       memcpy(directory->string, argument, 2);
@@ -146,7 +146,7 @@ extern "C" {
       directory->string[1] = '/';
     }
     else {
-      f_macro_string_dynamic_new(status, (*directory), 1);
+      f_macro_string_dynamic_t_new(status, (*directory), 1);
       if (F_status_is_error(status)) return status;
 
       memcpy(directory->string, argument, 1);

@@ -54,43 +54,43 @@ extern "C" {
   #define string_format_long_long_unsigned "%llu"
 #endif // _di_string_format_pointers_
 
-#ifndef _di_f_array_length_printf_
+#ifndef _di_f_array_t_length_printf_
   #define f_array_length_printf       string_format_integer
   #define f_array_length_short_printf string_format_short_integer
   #define f_array_length_long_printf  string_format_long_integer
-#endif // _di_f_array_length_printf_
+#endif // _di_f_array_t_length_printf_
 
 /**
  * define the basic string type.
  */
-#ifndef _di_f_string_
-  typedef char *f_string;
+#ifndef _di_f_string_t_
+  typedef char *f_string_t;
 
-  #define f_string_initialize 0
+  #define f_string_t_initialize 0
 
-  #define f_macro_string_new(status, string, length)     status = f_memory_new((void **) & string, sizeof(f_string), length)
-  #define f_macro_string_delete(status, string, length)  status = f_memory_delete((void **) & string, sizeof(f_string), length)
-  #define f_macro_string_destroy(status, string, length) status = f_memory_destroy((void **) & string, sizeof(f_string), length)
+  #define f_macro_string_t_new(status, string, length)     status = f_memory_new((void **) & string, sizeof(f_string_t), length)
+  #define f_macro_string_t_delete(status, string, length)  status = f_memory_delete((void **) & string, sizeof(f_string_t), length)
+  #define f_macro_string_t_destroy(status, string, length) status = f_memory_destroy((void **) & string, sizeof(f_string_t), length)
 
-  #define f_macro_string_delete_simple(string, length)  f_memory_delete((void **) & string, sizeof(f_string), length)
-  #define f_macro_string_destroy_simple(string, length) f_memory_destroy((void **) & string, sizeof(f_string), length)
+  #define f_macro_string_t_delete_simple(string, length)  f_memory_delete((void **) & string, sizeof(f_string_t), length)
+  #define f_macro_string_t_destroy_simple(string, length) f_memory_destroy((void **) & string, sizeof(f_string_t), length)
 
-  #define f_macro_string_resize(status, string, old_length, new_length) \
-    status = f_memory_resize((void **) & string, sizeof(f_string), old_length, new_length)
+  #define f_macro_string_t_resize(status, string, old_length, new_length) \
+    status = f_memory_resize((void **) & string, sizeof(f_string_t), old_length, new_length)
 
-  #define f_macro_string_adjust(status, string, old_length, new_length) \
-    status = f_memory_adjust((void **) & string, sizeof(f_string), old_length, new_length)
-#endif // _di_f_string_
+  #define f_macro_string_t_adjust(status, string, old_length, new_length) \
+    status = f_memory_adjust((void **) & string, sizeof(f_string_t), old_length, new_length)
+#endif // _di_f_string_t_
 
-#ifndef _di_f_string_length_
-  typedef f_number_unsigned f_string_length;
+#ifndef _di_f_string_length_t_
+  typedef f_number_unsigned_t f_string_length_t;
 
   // string size is set to (size - 4) to compensate for UTF-8 4-byte character such that it can easily act as a (size - 1) regardless of UTF-8.
-  #define f_string_length_size     0xfffffffffffffffb
-  #define f_string_length_size_max f_type_number_size_max_unsigned
+  #define f_string_length_t_size     0xfffffffffffffffb
+  #define f_string_length_t_size_max f_number_t_size_max_unsigned
 
-  #define f_string_length_printf string_format_long_integer
-#endif // _di_f_string_length_
+  #define f_string_length_t_printf string_format_long_integer
+#endif // _di_f_string_length_t_
 
 /**
  * A structure containing an array of string lengths.
@@ -99,29 +99,29 @@ extern "C" {
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
  */
-#ifndef _di_f_string_lengths_
+#ifndef _di_f_string_lengths_t_
   typedef struct {
-    f_string_length *array;
+    f_string_length_t *array;
 
-    f_array_length size;
-    f_array_length used;
-  } f_string_lengths;
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_string_lengths_t;
 
-  #define f_string_lengths_initialize { 0, 0, 0 }
+  #define f_string_lengths_t_initialize { 0, 0, 0 }
 
-  #define f_macro_string_lengths_clear(lengths) f_macro_memory_structure_clear(lengths)
+  #define f_macro_string_lengths_t_clear(lengths) f_macro_memory_structure_t_clear(lengths)
 
-  #define f_macro_string_lengths_new(status, lengths, length) f_macro_memory_structure_new(status, lengths, f_string_length, length)
+  #define f_macro_string_lengths_t_new(status, lengths, length) f_macro_memory_structure_t_new(status, lengths, f_string_length_t, length)
 
-  #define f_macro_string_lengths_delete(status, lengths)  f_macro_memory_structure_delete(status, lengths, f_string_length)
-  #define f_macro_string_lengths_destroy(status, lengths) f_macro_memory_structure_destroy(status, lengths, f_string_length)
+  #define f_macro_string_lengths_t_delete(status, lengths)  f_macro_memory_structure_t_delete(status, lengths, f_string_length_t)
+  #define f_macro_string_lengths_t_destroy(status, lengths) f_macro_memory_structure_t_destroy(status, lengths, f_string_length_t)
 
-  #define f_macro_string_lengths_delete_simple(lengths)  f_macro_memory_structure_delete_simple(lengths, f_string_length)
-  #define f_macro_string_lengths_destroy_simple(lengths) f_macro_memory_structure_destroy_simple(lengths, f_string_length)
+  #define f_macro_string_lengths_t_delete_simple(lengths)  f_macro_memory_structure_t_delete_simple(lengths, f_string_length_t)
+  #define f_macro_string_lengths_t_destroy_simple(lengths) f_macro_memory_structure_t_destroy_simple(lengths, f_string_length_t)
 
-  #define f_macro_string_lengths_resize(status, lengths, new_length) f_macro_memory_structure_resize(status, lengths, f_string_length, new_length)
-  #define f_macro_string_lengths_adjust(status, lengths, new_length) f_macro_memory_structure_adjust(status, lengths, f_string_length, new_length)
-#endif // _di_f_string_lengths_
+  #define f_macro_string_lengths_t_resize(status, lengths, new_length) f_macro_memory_structure_t_resize(status, lengths, f_string_length_t, new_length)
+  #define f_macro_string_lengths_t_adjust(status, lengths, new_length) f_macro_memory_structure_t_adjust(status, lengths, f_string_length_t, new_length)
+#endif // _di_f_string_lengths_t_
 
 #ifdef __cplusplus
 } // extern "C"

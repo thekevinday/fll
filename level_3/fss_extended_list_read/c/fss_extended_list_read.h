@@ -7,7 +7,7 @@
  *
  * This is the FSS Basic List Read program
  * This program utilizes the Featureless Linux Library.
- * This program processes files or other input in fss format and stores the results in the fss_extended_list_read_data.
+ * This program processes files or other input in fss format and stores the results in the fss_extended_list_read_data_t.
  *
  * This processes in accordance to the FSS-0003 Extended List specification.
  */
@@ -99,51 +99,51 @@ extern "C" {
     fss_extended_list_read_parameter_trim,
   };
 
-  #define f_console_parameter_initialize_fss_extended_list_read \
+  #define fss_extended_list_read_console_parameter_t_initialize \
     { \
-      f_console_parameter_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
-      f_console_parameter_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_initialize(fss_extended_list_read_short_at, fss_extended_list_read_long_at, 0, F_true, f_console_type_normal), \
-      f_console_parameter_initialize(fss_extended_list_read_short_depth, fss_extended_list_read_long_depth, 0, F_true, f_console_type_normal), \
-      f_console_parameter_initialize(fss_extended_list_read_short_empty, fss_extended_list_read_long_empty, 0, F_false, f_console_type_normal), \
-      f_console_parameter_initialize(fss_extended_list_read_short_line, fss_extended_list_read_long_line, 0, F_true, f_console_type_normal), \
-      f_console_parameter_initialize(fss_extended_list_read_short_name, fss_extended_list_read_long_name, 0, F_true, f_console_type_normal), \
-      f_console_parameter_initialize(fss_extended_list_read_short_object, fss_extended_list_read_long_object, 0, F_false, f_console_type_normal), \
-      f_console_parameter_initialize(fss_extended_list_read_short_select, fss_extended_list_read_long_select, 0, F_true, f_console_type_normal), \
-      f_console_parameter_initialize(fss_extended_list_read_short_total, fss_extended_list_read_long_total, 0, F_false, f_console_type_normal), \
-      f_console_parameter_initialize(fss_extended_list_read_short_trim, fss_extended_list_read_long_trim, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_at, fss_extended_list_read_long_at, 0, F_true, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_depth, fss_extended_list_read_long_depth, 0, F_true, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_empty, fss_extended_list_read_long_empty, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_line, fss_extended_list_read_long_line, 0, F_true, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_name, fss_extended_list_read_long_name, 0, F_true, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_object, fss_extended_list_read_long_object, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_select, fss_extended_list_read_long_select, 0, F_true, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_total, fss_extended_list_read_long_total, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_trim, fss_extended_list_read_long_trim, 0, F_false, f_console_type_normal), \
     }
 
   #define fss_extended_list_read_total_parameters 14
 #endif // _di_fss_extended_list_read_defines_
 
-#ifndef _di_fss_extended_list_read_data_
+#ifndef _di_fss_extended_list_read_data_t_
   typedef struct {
-    f_console_parameter parameters[fss_extended_list_read_total_parameters];
+    f_console_parameter_t parameters[fss_extended_list_read_total_parameters];
 
-    f_string_dynamic buffer;
-    f_fss_nest nest;
-    f_string_quantity quantity;
-    f_string_lengths remaining;
+    f_string_dynamic_t buffer;
+    f_fss_nest_t nest;
+    f_string_quantity_t quantity;
+    f_string_lengths_t remaining;
     bool process_pipe;
 
-    fl_color_context context;
-  } fss_extended_list_read_data;
+    fl_color_context_t context;
+  } fss_extended_list_read_data_t;
 
-  #define fss_extended_list_read_data_initialize \
+  #define fss_extended_list_read_data_t_initialize \
     { \
-      f_console_parameter_initialize_fss_extended_list_read, \
-      f_string_dynamic_initialize, \
-      f_fss_nest_initialize, \
-      f_string_quantity_initialize, \
-      f_string_lengths_initialize, \
+      fss_extended_list_read_console_parameter_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_fss_nest_t_initialize, \
+      f_string_quantity_t_initialize, \
+      f_string_lengths_t_initialize, \
       F_false, \
-      fl_color_context_initialize, \
+      fl_color_context_t_initialize, \
     }
-#endif // _di_fss_extended_list_read_data_
+#endif // _di_fss_extended_list_read_data_t_
 
 /**
  * Print help to standard output.
@@ -155,7 +155,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_list_read_print_help_
-  extern f_return_status fss_extended_list_read_print_help(const fl_color_context context);
+  extern f_return_status fss_extended_list_read_print_help(const fl_color_context_t context);
 #endif // _di_fss_extended_list_read_print_help_
 
 /**
@@ -176,7 +176,7 @@ extern "C" {
  * @see fss_extended_list_read_delete_data()
  */
 #ifndef _di_fss_extended_list_read_main_
-  extern f_return_status fss_extended_list_read_main(const f_console_arguments arguments, fss_extended_list_read_data *data);
+  extern f_return_status fss_extended_list_read_main(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data);
 #endif // _di_fss_extended_list_read_main_
 
 /**
@@ -195,7 +195,7 @@ extern "C" {
  * @see fss_extended_list_read_main()
  */
 #ifndef _di_fss_extended_list_read_delete_data_
-  extern f_return_status fss_extended_list_read_delete_data(fss_extended_list_read_data *data);
+  extern f_return_status fss_extended_list_read_delete_data(fss_extended_list_read_data_t *data);
 #endif // _di_fss_extended_list_read_delete_data_
 
 #ifdef __cplusplus

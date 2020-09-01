@@ -63,7 +63,7 @@ extern "C" {
  * @see getgrnam_r()
  */
 #ifndef _di_f_account_id_group_by_name_
-  extern f_return_status f_account_id_group_by_name(const f_string name, gid_t *id);
+  extern f_return_status f_account_id_group_by_name(const f_string_t name, gid_t *id);
 #endif // _di_f_account_id_group_by_name_
 
 /**
@@ -89,7 +89,7 @@ extern "C" {
  * @see getpwnam_r()
  */
 #ifndef _di_f_account_id_user_by_name_
-  extern f_return_status f_account_id_user_by_name(const f_string name, uid_t *id);
+  extern f_return_status f_account_id_user_by_name(const f_string_t name, uid_t *id);
 #endif // _di_f_account_id_user_by_name_
 
 #ifdef __cplusplus

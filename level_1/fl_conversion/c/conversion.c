@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_conversion_string_to_binary_signed_
-  f_return_status fl_conversion_string_to_binary_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative) {
+  f_return_status fl_conversion_string_to_binary_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -17,10 +17,10 @@ extern "C" {
     }
 
     uint8_t scale = 0;
-    f_number_unsigned digit = 0;
-    f_number_unsigned converted = 0;
+    f_number_unsigned_t digit = 0;
+    f_number_unsigned_t converted = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
         if (scale) {
           scale++;
@@ -64,7 +64,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_binary_signed_
 
 #ifndef _di_fl_conversion_string_to_binary_unsigned_
-  f_return_status fl_conversion_string_to_binary_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
+  f_return_status fl_conversion_string_to_binary_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -76,10 +76,10 @@ extern "C" {
     }
 
     uint8_t scale = 0;
-    f_number_unsigned digit = 0;
-    f_number_unsigned converted = 0;
+    f_number_unsigned_t digit = 0;
+    f_number_unsigned_t converted = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
         if (scale) {
           scale++;
@@ -107,7 +107,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_binary_unsigned_
 
 #ifndef _di_fl_conversion_string_to_decimal_signed_
-  f_return_status fl_conversion_string_to_decimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative) {
+  f_return_status fl_conversion_string_to_decimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -119,10 +119,10 @@ extern "C" {
     }
 
     uint8_t scale = 0;
-    f_number_unsigned digit = 0;
-    f_number_unsigned converted = 0;
+    f_number_unsigned_t digit = 0;
+    f_number_unsigned_t converted = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_decimal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -130,7 +130,7 @@ extern "C" {
 
           if (negative) {
             if (scale > f_conversion_scale_decimal_signed) {
-              if ((converted * 10) - digit < f_type_number_size_negative || (converted * 10) - digit > converted) {
+              if ((converted * 10) - digit < f_number_t_size_negative || (converted * 10) - digit > converted) {
                 return F_status_set_error(F_number_underflow);
               }
             }
@@ -140,7 +140,7 @@ extern "C" {
           }
           else {
             if (scale > f_conversion_scale_decimal_signed) {
-              if ((converted * 10) + digit > f_type_number_size_positive || (converted * 10) + digit < converted) {
+              if ((converted * 10) + digit > f_number_t_size_positive || (converted * 10) + digit < converted) {
                 return F_status_set_error(F_number_overflow);
               }
             }
@@ -171,7 +171,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_decimal_signed_
 
 #ifndef _di_fl_conversion_string_to_decimal_unsigned_
-  f_return_status fl_conversion_string_to_decimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
+  f_return_status fl_conversion_string_to_decimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -183,17 +183,17 @@ extern "C" {
     }
 
     uint8_t scale = 0;
-    f_number_unsigned digit = 0;
-    f_number_unsigned converted = 0;
+    f_number_unsigned_t digit = 0;
+    f_number_unsigned_t converted = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_decimal(string[i], &digit) == F_none) {
 
         if (scale) {
           scale++;
 
           if (scale > f_conversion_scale_decimal_unsigned) {
-            if ((converted * 10) + digit > f_type_number_size_unsigned || (converted * 10) + digit < converted) {
+            if ((converted * 10) + digit > f_number_t_size_unsigned || (converted * 10) + digit < converted) {
               return F_status_set_error(F_number_overflow);
             }
           }
@@ -217,7 +217,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_decimal_unsigned_
 
 #ifndef _di_fl_conversion_string_to_duodecimal_signed_
-  f_return_status fl_conversion_string_to_duodecimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative) {
+  f_return_status fl_conversion_string_to_duodecimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -229,10 +229,10 @@ extern "C" {
     }
 
     uint8_t scale = 0;
-    f_number_unsigned digit = 0;
-    f_number_unsigned converted = 0;
+    f_number_unsigned_t digit = 0;
+    f_number_unsigned_t converted = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -240,7 +240,7 @@ extern "C" {
 
           if (negative) {
             if (scale > f_conversion_scale_duodecimal_signed) {
-              if ((converted * 12) - digit < f_type_number_size_negative || (converted * 12) - digit > converted) {
+              if ((converted * 12) - digit < f_number_t_size_negative || (converted * 12) - digit > converted) {
                 return F_status_set_error(F_number_underflow);
               }
             }
@@ -250,7 +250,7 @@ extern "C" {
           }
           else {
             if (scale > f_conversion_scale_duodecimal_signed) {
-              if ((converted * 12) + digit > f_type_number_size_positive || (converted * 12) + digit < converted) {
+              if ((converted * 12) + digit > f_number_t_size_positive || (converted * 12) + digit < converted) {
                 return F_status_set_error(F_number_overflow);
               }
             }
@@ -281,7 +281,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_duodecimal_signed_
 
 #ifndef _di_fl_conversion_string_to_duodecimal_unsigned_
-  f_return_status fl_conversion_string_to_duodecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
+  f_return_status fl_conversion_string_to_duodecimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -293,17 +293,17 @@ extern "C" {
     }
 
     uint8_t scale = 0;
-    f_number_unsigned digit = 0;
-    f_number_unsigned converted = 0;
+    f_number_unsigned_t digit = 0;
+    f_number_unsigned_t converted = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
 
         if (scale) {
           scale++;
 
           if (scale > f_conversion_scale_duodecimal_unsigned) {
-            if ((converted * 12) + digit > f_type_number_size_unsigned || (converted * 12) + digit < converted) {
+            if ((converted * 12) + digit > f_number_t_size_unsigned || (converted * 12) + digit < converted) {
               return F_status_set_error(F_number_overflow);
             }
           }
@@ -327,7 +327,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_duodecimal_unsigned_
 
 #ifndef _di_fl_conversion_string_to_hexidecimal_signed_
-  f_return_status fl_conversion_string_to_hexidecimal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative) {
+  f_return_status fl_conversion_string_to_hexidecimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -339,10 +339,10 @@ extern "C" {
     }
 
     uint8_t scale = 0;
-    f_number_unsigned digit = 0;
-    f_number_unsigned converted = 0;
+    f_number_unsigned_t digit = 0;
+    f_number_unsigned_t converted = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -350,7 +350,7 @@ extern "C" {
 
           if (negative) {
             if (scale > f_conversion_scale_hexidecimal_signed) {
-              if ((converted << 4) - digit < f_type_number_size_negative || (converted << 4) - digit > converted) {
+              if ((converted << 4) - digit < f_number_t_size_negative || (converted << 4) - digit > converted) {
                 return F_status_set_error(F_number_underflow);
               }
             }
@@ -360,7 +360,7 @@ extern "C" {
           }
           else {
             if (scale > f_conversion_scale_hexidecimal_signed) {
-              if ((converted << 4) + digit > f_type_number_size_positive || (converted << 4) + digit < converted) {
+              if ((converted << 4) + digit > f_number_t_size_positive || (converted << 4) + digit < converted) {
                 return F_status_set_error(F_number_overflow);
               }
             }
@@ -391,7 +391,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_hexidecimal_signed_
 
 #ifndef _di_fl_conversion_string_to_hexidecimal_unsigned_
-  f_return_status fl_conversion_string_to_hexidecimal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
+  f_return_status fl_conversion_string_to_hexidecimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -403,17 +403,17 @@ extern "C" {
     }
 
     uint8_t scale = 0;
-    f_number_unsigned digit = 0;
-    f_number_unsigned converted = 0;
+    f_number_unsigned_t digit = 0;
+    f_number_unsigned_t converted = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == F_none) {
 
         if (scale) {
           scale++;
 
           if (scale > f_conversion_scale_hexidecimal_unsigned) {
-            if ((converted << 4) + digit > f_type_number_size_unsigned || (converted << 4) + digit < converted) {
+            if ((converted << 4) + digit > f_number_t_size_unsigned || (converted << 4) + digit < converted) {
               return F_status_set_error(F_number_overflow);
             }
           }
@@ -437,7 +437,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_hexidecimal_unsigned_
 
 #ifndef _di_fl_conversion_string_to_octal_signed_
-  f_return_status fl_conversion_string_to_octal_signed(const f_string string, f_number_signed *number, const f_string_range range, const bool negative) {
+  f_return_status fl_conversion_string_to_octal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -449,10 +449,10 @@ extern "C" {
     }
 
     uint8_t scale = 0;
-    f_number_unsigned digit = 0;
-    f_number_unsigned converted = 0;
+    f_number_unsigned_t digit = 0;
+    f_number_unsigned_t converted = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_octal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -460,7 +460,7 @@ extern "C" {
 
           if (negative) {
             if (scale > f_conversion_scale_octal_signed) {
-              if ((converted << 3) - digit < f_type_number_size_negative || (converted << 3) - digit > converted) {
+              if ((converted << 3) - digit < f_number_t_size_negative || (converted << 3) - digit > converted) {
                 return F_status_set_error(F_number_underflow);
               }
             }
@@ -470,7 +470,7 @@ extern "C" {
           }
           else {
             if (scale > f_conversion_scale_octal_signed) {
-              if ((converted << 3) + digit > f_type_number_size_positive || (converted << 3) + digit < converted) {
+              if ((converted << 3) + digit > f_number_t_size_positive || (converted << 3) + digit < converted) {
                 return F_status_set_error(F_number_overflow);
               }
             }
@@ -501,7 +501,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_octal_signed_
 
 #ifndef _di_fl_conversion_string_to_octal_unsigned_
-  f_return_status fl_conversion_string_to_octal_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
+  f_return_status fl_conversion_string_to_octal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -513,17 +513,17 @@ extern "C" {
     }
 
     uint8_t scale = 0;
-    f_number_unsigned digit = 0;
-    f_number_unsigned converted = 0;
+    f_number_unsigned_t digit = 0;
+    f_number_unsigned_t converted = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       if (f_conversion_character_to_octal(string[i], &digit) == F_none) {
 
         if (scale) {
           scale++;
 
           if (scale > f_conversion_scale_octal_unsigned) {
-            if ((converted << 3) + digit > f_type_number_size_unsigned || (converted << 3) + digit < converted) {
+            if ((converted << 3) + digit > f_number_t_size_unsigned || (converted << 3) + digit < converted) {
               return F_status_set_error(F_number_overflow);
             }
           }
@@ -547,7 +547,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_octal_unsigned_
 
 #ifndef _di_fl_conversion_string_to_number_signed_
-  f_return_status fl_conversion_string_to_number_signed(const f_string string, f_number_signed *number, const f_string_range range) {
+  f_return_status fl_conversion_string_to_number_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -562,11 +562,11 @@ extern "C" {
     uint8_t width_max = 0;
     uint8_t mode = 0;
     int8_t vector = 0; // 0 for assumed positive, 1 for explicit positive, -1 for negative.
-    f_string_length j = 0;
-    f_string_length offset = 0;
-    f_status status = F_none;
+    f_string_length_t j = 0;
+    f_string_length_t offset = 0;
+    f_status_t status = F_none;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       width = f_macro_utf_byte_width_is(string[i]);
 
       if (width == 0) {
@@ -670,7 +670,7 @@ extern "C" {
       return F_status_set_error(F_number);
     }
 
-    f_string_range location_offset = f_string_range_initialize;
+    f_string_range_t location_offset = f_string_range_initialize;
     location_offset.start = range.start + offset;
     location_offset.stop = range.stop;
 
@@ -699,7 +699,7 @@ extern "C" {
 #endif // _di_fl_conversion_string_to_number_signed_
 
 #ifndef _di_fl_conversion_string_to_number_unsigned_
-  f_return_status fl_conversion_string_to_number_unsigned(const f_string string, f_number_unsigned *number, const f_string_range range) {
+  f_return_status fl_conversion_string_to_number_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
       if (string == 0) return F_status_set_error(F_parameter);
       if (number == 0) return F_status_set_error(F_parameter);
@@ -713,12 +713,12 @@ extern "C" {
     uint8_t width = 0;
     uint8_t width_max = 0;
     uint8_t mode = 0;
-    f_string_length j = 0;
-    f_string_length offset = 0;
-    f_status status = F_none;
+    f_string_length_t j = 0;
+    f_string_length_t offset = 0;
+    f_status_t status = F_none;
     int8_t sign_found = 0;
 
-    for (f_string_length i = range.start; i <= range.stop; i++) {
+    for (f_string_length_t i = range.start; i <= range.stop; i++) {
       width = f_macro_utf_byte_width_is(string[i]);
 
       if (width == 0) {
@@ -810,7 +810,7 @@ extern "C" {
       return F_status_set_error(F_number);
     }
 
-    f_string_range location_offset = f_string_range_initialize;
+    f_string_range_t location_offset = f_string_range_initialize;
     location_offset.start = range.start + offset;
     location_offset.stop = range.stop;
 

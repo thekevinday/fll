@@ -10,8 +10,8 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_clean_operate_
-  f_return_status fake_clean_operate(const fake_data data) {
-    f_status status = F_none;
+  f_return_status fake_clean_operate(const fake_data_t data) {
+    f_status_t status = F_none;
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);

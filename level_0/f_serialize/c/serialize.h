@@ -62,7 +62,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_simple_
-  extern f_return_status f_serialize_simple(const f_string_static value, f_string_dynamic *serialize);
+  extern f_return_status f_serialize_simple(const f_string_static_t value, f_string_dynamic_t *serialize);
 #endif // _di_f_serialize_simple_
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_un_simple_
-  extern f_return_status f_serialize_un_simple(const f_string_static serialize, f_string_dynamics *strings);
+  extern f_return_status f_serialize_un_simple(const f_string_static_t serialize, f_string_dynamics_t *strings);
 #endif // _di_f_serialize_un_simple_
 
 /**
@@ -114,7 +114,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_un_simple_map_
-  extern f_return_status f_serialize_un_simple_map(const f_string_static serialize, f_string_ranges *locations);
+  extern f_return_status f_serialize_un_simple_map(const f_string_static_t serialize, f_string_ranges_t *locations);
 #endif // _di_f_serialize_un_simple_map_
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_un_simple_find_
-  extern f_return_status f_serialize_un_simple_find(const f_string_static serialize, const f_array_length index, f_string_range *location);
+  extern f_return_status f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t *location);
 #endif // _di_f_serialize_un_simple_find_
 
 /**
@@ -171,7 +171,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_un_simple_get_
-  extern f_return_status f_serialize_un_simple_get(const f_string_static serialize, const f_array_length index, f_string_dynamic *dynamic);
+  extern f_return_status f_serialize_un_simple_get(const f_string_static_t serialize, const f_array_length_t index, f_string_dynamic_t *dynamic);
 #endif // _di_f_serialize_un_simple_get_
 
 #ifdef __cplusplus

@@ -5,14 +5,14 @@ extern "C" {
 #endif
 
 #ifndef _di_f_fss_count_lines_
-  f_return_status f_fss_count_lines(const f_string_static buffer, const f_string_length before, f_string_length *line) {
+  f_return_status f_fss_count_lines(const f_string_static_t buffer, const f_string_length_t before, f_string_length_t *line) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (before >= buffer.used) return F_status_set_error(F_parameter);
       if (line == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_string_length i = before;
+    f_string_length_t i = before;
 
     for (; i > 0; i--) {
       if (buffer.string[i] == f_string_eol[0]) {
@@ -29,7 +29,7 @@ extern "C" {
 #endif // _di_f_fss_count_lines_
 
 #ifndef _di_f_fss_count_lines_range_
-  f_return_status f_fss_count_lines_range(const f_string_static buffer, const f_string_range range, const f_string_length before, f_string_length *line) {
+  f_return_status f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, const f_string_length_t before, f_string_length_t *line) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
@@ -39,7 +39,7 @@ extern "C" {
       if (line == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_string_length i = before;
+    f_string_length_t i = before;
 
     for (; i > range.start; i--) {
       if (buffer.string[i] == f_string_eol[0]) {
@@ -56,7 +56,7 @@ extern "C" {
 #endif // _di_f_fss_count_lines_range_
 
 #ifndef _di_f_fss_is_graph_
-  f_return_status f_fss_is_graph(const f_string_static buffer, const f_string_range range) {
+  f_return_status f_fss_is_graph(const f_string_static_t buffer, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
@@ -64,7 +64,7 @@ extern "C" {
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_string_length width_max = (range.stop - range.start) + 1;
+    f_string_length_t width_max = (range.stop - range.start) + 1;
 
     if (width_max > buffer.used - range.start) {
       width_max = buffer.used - range.start;
@@ -75,7 +75,7 @@ extern "C" {
 #endif // _di_f_fss_is_graph_
 
 #ifndef _di_f_fss_is_space_
-  f_return_status f_fss_is_space(const f_string_static buffer, const f_string_range range) {
+  f_return_status f_fss_is_space(const f_string_static_t buffer, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
@@ -83,9 +83,9 @@ extern "C" {
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    f_string_length width_max = (range.stop - range.start) + 1;
+    f_string_length_t width_max = (range.stop - range.start) + 1;
 
     if (width_max > buffer.used - range.start) {
       width_max = buffer.used - range.start;
@@ -112,7 +112,7 @@ extern "C" {
 #endif // _di_f_fss_is_space_
 
 #ifndef _di_f_fss_is_zero_width_
-  f_return_status f_fss_is_zero_width(const f_string_static buffer, const f_string_range range) {
+  f_return_status f_fss_is_zero_width(const f_string_static_t buffer, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
@@ -120,7 +120,7 @@ extern "C" {
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_string_length width_max = (range.stop - range.start) + 1;
+    f_string_length_t width_max = (range.stop - range.start) + 1;
 
     if (width_max > buffer.used - range.start) {
       width_max = buffer.used - range.start;
@@ -131,7 +131,7 @@ extern "C" {
 #endif // _di_f_fss_is_zero_width_
 
 #ifndef _di_f_fss_shift_delimiters_
-  f_return_status f_fss_shift_delimiters(f_string_dynamic *buffer, const f_string_range range) {
+  f_return_status f_fss_shift_delimiters(f_string_dynamic_t *buffer, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer->used == 0) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
@@ -139,8 +139,8 @@ extern "C" {
       if (range.start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_string_length position = 0;
-    f_string_length distance = 0;
+    f_string_length_t position = 0;
+    f_string_length_t distance = 0;
     unsigned short utf_width = 0;
     unsigned short i = 0;
 
@@ -194,7 +194,7 @@ extern "C" {
 #endif // _di_f_fss_shift_delimiters_
 
 #ifndef _di_f_fss_skip_past_space_
-  f_return_status f_fss_skip_past_space(const f_string_static buffer, f_string_range *range) {
+  f_return_status f_fss_skip_past_space(const f_string_static_t buffer, f_string_range_t *range) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
@@ -202,10 +202,10 @@ extern "C" {
       if (range->start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
     uint8_t width = 0;
 
-    f_string_length width_max = (range->stop - range->start) + 1;
+    f_string_length_t width_max = (range->stop - range->start) + 1;
 
     if (width_max > buffer.used - range->start) {
       width_max = buffer.used - range->start;
@@ -268,7 +268,7 @@ extern "C" {
 #endif // _di_f_fss_skip_past_space_
 
 #ifndef _di_f_fss_skip_past_non_graph_
-  f_return_status f_fss_skip_past_non_graph(const f_string_static buffer, f_string_range *range) {
+  f_return_status f_fss_skip_past_non_graph(const f_string_static_t buffer, f_string_range_t *range) {
     #ifndef _di_level_0_parameter_checking_
       if (buffer.used == 0) return F_status_set_error(F_parameter);
       if (range == 0) return F_status_set_error(F_parameter);
@@ -276,10 +276,10 @@ extern "C" {
       if (range->start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
     unsigned short width = 0;
 
-    f_string_length width_max = (range->stop - range->start) + 1;
+    f_string_length_t width_max = (range->stop - range->start) + 1;
 
     if (width_max > buffer.used - range->start) {
       width_max = buffer.used - range->start;
@@ -297,9 +297,9 @@ extern "C" {
           status = f_utf_is_zero_width(buffer.string + range->start, width_max);
 
           if (status == F_true) {
-            f_string_length next_width_max = 0;
+            f_string_length_t next_width_max = 0;
 
-            for (f_string_length next = range->start + 1; next < buffer.used && next <= range->stop; next += f_macro_utf_byte_width_is(buffer.string[next])) {
+            for (f_string_length_t next = range->start + 1; next < buffer.used && next <= range->stop; next += f_macro_utf_byte_width_is(buffer.string[next])) {
               next_width_max = (range->stop - next) + 1;
 
               status = f_utf_is_graph(buffer.string + next, width_max);

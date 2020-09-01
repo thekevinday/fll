@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_list_read_print_file_error_
-  void fss_basic_list_read_print_file_error(const fl_color_context context, const f_string function_name, const f_string file_name, const f_status status) {
+  void fss_basic_list_read_print_file_error(const fl_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status) {
 
     if (fll_file_error_print(f_type_error, context, function_name, file_name, status) == F_false) {
       fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: An unhandled error (");
@@ -19,7 +19,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_print_file_error_
 
 #ifndef _di_fss_basic_list_read_print_number_argument_error_
-  void fss_basic_list_read_print_number_argument_error(const fl_color_context context, const f_string function_name, const f_string parameter_name, const f_string argument, const f_status status) {
+  void fss_basic_list_read_print_number_argument_error(const fl_color_context_t context, const f_string_t function_name, const f_string_t parameter_name, const f_string_t argument, const f_status_t status) {
 
     if (status == F_parameter) {
       fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ");
@@ -83,17 +83,17 @@ extern "C" {
 #endif // _di_fss_basic_list_read_print_number_argument_error_
 
 #ifndef _di_fss_basic_list_read_main_preprocess_depth_
-  f_return_status fss_basic_list_read_main_preprocess_depth(const f_console_arguments arguments, const fss_basic_list_read_data data, fss_basic_list_read_depths *depths) {
-    f_status status = F_none;
+  f_return_status fss_basic_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_basic_list_read_data_t data, fss_basic_list_read_depths_t *depths) {
+    f_status_t status = F_none;
 
     {
-      f_array_length depth_size = 1;
+      f_array_length_t depth_size = 1;
 
       if (data.parameters[fss_basic_list_read_parameter_depth].result == f_console_result_additional) {
         depth_size = data.parameters[fss_basic_list_read_parameter_depth].additional.used;
       }
 
-      macro_fss_basic_list_read_depths_new(status, (*depths), depth_size);
+      macro_fss_basic_list_read_depths_t_new(status, (*depths), depth_size);
       if (F_status_is_error(status)) {
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
         return status;
@@ -102,17 +102,17 @@ extern "C" {
       depths->used = depth_size;
     }
 
-    f_array_length position_depth = 0;
-    f_array_length position_at = 0;
-    f_array_length position_name = 0;
+    f_array_length_t position_depth = 0;
+    f_array_length_t position_at = 0;
+    f_array_length_t position_name = 0;
 
-    for (f_array_length i = 0; i < depths->used; i++) {
+    for (f_array_length_t i = 0; i < depths->used; i++) {
       depths->array[i].depth = 0;
       depths->array[i].index_at = 0;
       depths->array[i].index_name = 0;
       depths->array[i].value_at = 0;
 
-      f_macro_string_dynamic_clear(depths->array[i].value_name);
+      f_macro_string_dynamic_t_clear(depths->array[i].value_name);
 
       if (data.parameters[fss_basic_list_read_parameter_depth].additional.used == 0) {
         position_depth = 0;
@@ -120,7 +120,7 @@ extern "C" {
       else {
         position_depth = data.parameters[fss_basic_list_read_parameter_depth].additional.array[i];
 
-        const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[position_depth]));
+        const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[position_depth]));
 
         status = fl_conversion_string_to_number_unsigned(arguments.argv[position_depth], &depths->array[i].depth, range);
         if (F_status_is_error(status)) {
@@ -141,7 +141,7 @@ extern "C" {
 
           depths->array[i].index_at = data.parameters[fss_basic_list_read_parameter_at].additional.array[position_at];
 
-          const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[depths->array[i].index_at]));
+          const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[depths->array[i].index_at]));
 
           status = fl_conversion_string_to_number_unsigned(arguments.argv[depths->array[i].index_at], &depths->array[i].value_at, range);
           if (F_status_is_error(status)) {
@@ -171,19 +171,19 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            f_status status_code = F_status_set_fine(status);
+            f_status_t status_code = F_status_set_fine(status);
 
             // @todo: move error printing into common function.
             if (status_code == F_memory_allocation || status_code == F_memory_reallocation) {
               fl_color_print_line(f_type_error, data.context.error, data.context.reset, "CRITICAL ERROR: Unable to allocate memory.");
             }
-            else if (status_code == f_string_length_size) {
+            else if (status_code == f_string_length_t_size) {
               fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Unable to process '");
               fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_trim);
               fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' because the maximum buffer size was reached.");
             }
             else {
-              f_string function = "fl_string_append";
+              f_string_t function = "fl_string_append";
 
               if (data.parameters[fss_basic_list_read_parameter_trim].result == f_console_result_found) {
                 function = "fl_string_rip";
@@ -210,8 +210,8 @@ extern "C" {
       }
     } // for
 
-    for (f_array_length i = 0; i < depths->used; i++) {
-      for (f_array_length j = i + 1; j < depths->used; j++) {
+    for (f_array_length_t i = 0; i < depths->used; i++) {
+      for (f_array_length_t j = i + 1; j < depths->used; j++) {
         if (depths->array[i].depth == depths->array[j].depth) {
           fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The value '");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%llu", depths->array[i].depth);
@@ -240,11 +240,11 @@ extern "C" {
 #endif // _di_fss_basic_list_read_main_preprocess_depth_
 
 #ifndef _di_fss_basic_list_read_main_process_file_
-  f_return_status fss_basic_list_read_main_process_file(const f_console_arguments arguments, fss_basic_list_read_data *data, const f_string filename, const fss_basic_list_read_depths depths) {
-    f_status status = F_none;
+  f_return_status fss_basic_list_read_main_process_file(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data, const f_string_t filename, const fss_basic_list_read_depths_t depths) {
+    f_status_t status = F_none;
 
     {
-      f_string_range input = f_string_range_initialize;
+      f_string_range_t input = f_string_range_initialize;
 
       input.start = 0;
       input.stop = data->buffer.used - 1;
@@ -288,19 +288,19 @@ extern "C" {
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
         // Clear buffers, then attempt the next file.
-        f_macro_fss_contents_delete_simple(data->contents);
-        f_macro_fss_objects_delete_simple(data->objects);
-        f_macro_string_dynamic_delete_simple(data->buffer);
+        f_macro_fss_contents_t_delete_simple(data->contents);
+        f_macro_fss_objects_t_delete_simple(data->objects);
+        f_macro_string_dynamic_t_delete_simple(data->buffer);
 
         return F_status_set_warning(status);
       }
     }
 
-    f_string_length select = 0;
+    f_string_length_t select = 0;
 
     if (data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_additional) {
-      const f_string_length index = data->parameters[fss_basic_list_read_parameter_select].additional.array[data->parameters[fss_basic_list_read_parameter_select].additional.used - 1];
-      const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
+      const f_string_length_t index = data->parameters[fss_basic_list_read_parameter_select].additional.array[data->parameters[fss_basic_list_read_parameter_select].additional.used - 1];
+      const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &select, range);
       if (F_status_is_error(status)) {
@@ -314,11 +314,11 @@ extern "C" {
       }
     }
 
-    f_string_length line = 0;
+    f_string_length_t line = 0;
 
     if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
-      const f_string_length index = data->parameters[fss_basic_list_read_parameter_line].additional.array[data->parameters[fss_basic_list_read_parameter_line].additional.used - 1];
-      const f_string_range range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
+      const f_string_length_t index = data->parameters[fss_basic_list_read_parameter_line].additional.array[data->parameters[fss_basic_list_read_parameter_line].additional.used - 1];
+      const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &line, range);
       if (F_status_is_error(status)) {
@@ -332,10 +332,10 @@ extern "C" {
     if (depths.array[0].index_name > 0) {
       memset(names, 0, sizeof(bool) * data->objects.used);
 
-      f_string_length name_length = 0;
+      f_string_length_t name_length = 0;
 
       if (data->parameters[fss_basic_list_read_parameter_trim].result == f_console_result_found) {
-        for (f_string_length i = 0; i < data->objects.used; i++) {
+        for (f_string_length_t i = 0; i < data->objects.used; i++) {
           name_length = (data->objects.array[i].stop - data->objects.array[i].start) + 1;
 
           if (name_length == depths.array[0].value_name.used) {
@@ -346,7 +346,7 @@ extern "C" {
         } // for
       }
       else {
-        for (f_string_length i = 0; i < data->objects.used; i++) {
+        for (f_string_length_t i = 0; i < data->objects.used; i++) {
           name_length = (data->objects.array[i].stop - data->objects.array[i].start) + 1;
 
           if (name_length == depths.array[0].value_name.used) {
@@ -378,9 +378,9 @@ extern "C" {
           }
         }
         else if (depths.array[0].index_name > 0) {
-          f_string_length total = 0;
+          f_string_length_t total = 0;
 
-          for (f_string_length i = 0; i < data->objects.used; i++) {
+          for (f_string_length_t i = 0; i < data->objects.used; i++) {
             if (names[i] == 0) continue;
 
             total++;
@@ -395,15 +395,15 @@ extern "C" {
         return F_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_static, const f_string_range) = &f_print_string_dynamic_partial;
+      f_return_status (*print_object)(FILE *, const f_string_static_t, const f_string_range_t) = &f_print_string_dynamic_partial;
 
       if (data->parameters[fss_basic_list_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_string_dynamic_partial;
       }
 
       if (depths.array[0].index_at > 0) {
-        f_array_length at = 0;
-        f_array_length i = 0;
+        f_array_length_t at = 0;
+        f_array_length_t i = 0;
 
         for (; i < data->objects.used; i++) {
           if (names[i]) {
@@ -420,7 +420,7 @@ extern "C" {
         return F_none;
       }
 
-      for (f_string_length i = 0; i < data->objects.used; i++) {
+      for (f_string_length_t i = 0; i < data->objects.used; i++) {
         if (names[i] == 0) continue;
 
         print_object(f_type_output, data->buffer, data->objects.array[i]);
@@ -439,8 +439,8 @@ extern "C" {
         return F_none;
       }
 
-      f_array_length at = 0;
-      f_array_length i = 0;
+      f_array_length_t at = 0;
+      f_array_length_t i = 0;
 
       for (; i < data->objects.used; i++) {
         if (names[i]) {
@@ -450,9 +450,9 @@ extern "C" {
                 fprintf(f_type_output, "0%c", f_string_eol[0]);
               }
               else {
-                f_string_length total = 1;
+                f_string_length_t total = 1;
 
-                for (f_string_length j = data->contents.array[i].array[0].start; j <= data->contents.array[i].array[0].stop; j++) {
+                for (f_string_length_t j = data->contents.array[i].array[0].start; j <= data->contents.array[i].array[0].stop; j++) {
                   if (data->buffer.string[j] == 0) continue;
 
                   if (data->buffer.string[j] == f_string_eol[0]) {
@@ -473,7 +473,7 @@ extern "C" {
                 }
               }
               else {
-                f_string_length i = data->contents.array[i].array[0].start;
+                f_string_length_t i = data->contents.array[i].array[0].start;
 
                 if (line == 0) {
                   for (; i <= data->contents.array[i].array[0].stop; i++) {
@@ -487,7 +487,7 @@ extern "C" {
                   } // for
                 }
                 else {
-                  f_string_length line_current = 0;
+                  f_string_length_t line_current = 0;
 
                   for (; i <= data->contents.array[i].array[0].stop; i++) {
                     if (data->buffer.string[i] == 0) continue;
@@ -536,9 +536,9 @@ extern "C" {
     }
 
     if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
-      f_string_length total = 0;
+      f_string_length_t total = 0;
 
-      for (f_string_length i = 0; i < data->objects.used; i++) {
+      for (f_string_length_t i = 0; i < data->objects.used; i++) {
         if (!names[i]) continue;
 
         if (data->contents.array[i].used == 0) {
@@ -549,7 +549,7 @@ extern "C" {
           continue;
         }
 
-        for (f_string_length j = data->contents.array[i].array[0].start; j <= data->contents.array[i].array[0].stop; j++) {
+        for (f_string_length_t j = data->contents.array[i].array[0].start; j <= data->contents.array[i].array[0].stop; j++) {
           if (data->buffer.string[j] == 0) continue;
 
           if (data->buffer.string[j] == f_string_eol[0]) {
@@ -563,9 +563,9 @@ extern "C" {
     }
 
     if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
-      f_string_length line_current = 0;
-      f_string_length i = 0;
-      f_string_length j = 0;
+      f_string_length_t line_current = 0;
+      f_string_length_t i = 0;
+      f_string_length_t j = 0;
 
       for (; i < data->contents.used; i++) {
         if (!names[i]) {
@@ -621,7 +621,7 @@ extern "C" {
       return F_none;
     }
 
-    for (f_string_length i = 0; i < data->contents.used; i++) {
+    for (f_string_length_t i = 0; i < data->contents.used; i++) {
       if (!names[i]) {
         continue;
       }

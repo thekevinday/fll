@@ -5,10 +5,10 @@
 #include "private-init.h"
 /*
 #ifndef _di_init_rule_buffer_
-  f_return_status init_rule_buffer(const init_data data, const f_string filename, f_string_dynamic *buffer, f_fss_objects *objects, f_fss_contents *contents) {
-    f_file file = f_file_initialize;
-    f_status status = F_none;
-    f_string_quantity quantity = f_string_quantity_initialize;
+  f_return_status init_rule_buffer(const init_data_t data, const f_string_t filename, f_string_dynamic_t *buffer, f_fss_objects_t *objects, f_fss_contents_t *contents) {
+    f_file_t file = f_file_t_initialize;
+    f_status_t status = F_none;
+    f_string_quantity_t quantity = f_string_quantity_t_initialize;
 
     status = f_file_open(filename, 0, 0, &file);
 
@@ -38,7 +38,7 @@
       return F_status_set_error(status);
     }
 
-    f_macro_file_reset_position(quantity, file)
+    f_macro_file_t_reset_position(quantity, file)
 
     fflush(stdout);
     status = f_file_read_until(file, buffer, quantity);
@@ -66,7 +66,7 @@
 
       return F_status_set_error(status);
     } else {
-      f_string_range input = f_string_range_initialize;
+      f_string_range_t input = f_string_range_initialize;
 
       input.stop = buffer->used - 1;
 
@@ -94,8 +94,8 @@
 #endif // _di_init_rule_buffer_
 
 #ifndef _di_init_rules_process_main_
-  f_return_status init_rules_process_main(const init_data data, const f_string filename, f_string_dynamic *buffer, f_fss_objects *objects, f_fss_contents *contents) {
-    f_status status  = F_none;
+  f_return_status init_rules_process_main(const init_data_t data, const f_string_t filename, f_string_dynamic_t *buffer, f_fss_objects_t *objects, f_fss_contents_t *contents) {
+    f_status_t status  = F_none;
 
     // @todo: resume replacing code below.
     status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents, 0, 0);
@@ -114,14 +114,14 @@
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling firewall_perform_commands().", status);
         }
 
-        f_macro_fss_objects_delete_simple(local->rule_objects);
-        f_macro_fss_contents_delete_simple(local->rule_contents);
+        f_macro_fss_objects_t_delete_simple(local->rule_objects);
+        f_macro_fss_contents_t_delete_simple(local->rule_contents);
         return F_status_set_error(status);
       }
     }
 
-    f_macro_fss_objects_delete_simple(local->rule_objects);
-    f_macro_fss_contents_delete_simple(local->rule_contents);
+    f_macro_fss_objects_t_delete_simple(local->rule_objects);
+    f_macro_fss_contents_t_delete_simple(local->rule_contents);
     return status;
   }
 #endif // _init_rules_process_main_
@@ -163,7 +163,7 @@
 
 #ifndef _di_init_delete_stack_memory_
   f_return_status init_delete_stack_memory(init_stack_memory *stack_memory) {
-    f_status status = F_none;
+    f_status_t status = F_none;
 
     if (stack_memory->services > 0) {
       if (munmap(stack_memory->services, 0) >= 0) {
@@ -189,7 +189,7 @@
 
 #ifndef _di_init_prepare_system_
   f_return_status init_prepare_system(int8_t *run_level) {
-    f_status status = F_none;
+    f_status_t status = F_none;
     f_stat stat;
 
     memset(&stat, 0, sizeof(f_stat));
@@ -291,7 +291,7 @@
     // attempt to load kernel command line, but do not stop on failure.
     if (run_level > 0 && run_level[0] != 0) {
       f_file_p kernel_command_line_file = 0;
-      f_string kernel_command_line_string = f_string_initialize;
+      f_string_t kernel_command_line_string = f_string_t_initialize;
       size_t   kernel_command_line_length = 0;
 
       kernel_command_line_file = fopen(init_kernel_command_line, "ro");
@@ -323,8 +323,8 @@
       }
 
       if (kernel_command_line_string) {
-        f_status status_free = F_none;
-        f_macro_string_delete(status_free, kernel_command_line_string, string_length);
+        f_status_t status_free = F_none;
+        f_macro_string_t_delete(status_free, kernel_command_line_string, string_length);
       }
     }
 
@@ -334,7 +334,7 @@
 
 #ifndef _di_init_prepare_system_
   f_return_status init_prepare_system() {
-    f_status status = F_none;
+    f_status_t status = F_none;
     f_stat stat;
 
     memset(&stat, 0, sizeof(f_stat));
@@ -480,13 +480,13 @@
 #endif // _di_init_prepare_init_
 
 #ifndef _di_init_process_main_rule_
-  f_return_status init_process_main_rule(const init_data data, f_string_dynamic *buffer, init_data *settings) {
-    f_status status = F_none;
-    f_string_dynamic buffer = f_string_dynamic_initialize;
-    f_string_range range = f_string_range_initialize;
-    f_fss_objects objects = f_fss_objects_initialize;
-    f_fss_contents contents = f_fss_contents_initialize;
-    f_string_length position = 0;
+  f_return_status init_process_main_rule(const init_data_t data, f_string_dynamic_t *buffer, init_data_t *settings) {
+    f_status_t status = F_none;
+    f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
+    f_string_range_t range = f_string_range_initialize;
+    f_fss_objects_t objects = f_fss_objects_t_initialize;
+    f_fss_contents_t contents = f_fss_contents_t_initialize;
+    f_string_length_t position = 0;
 
     // load the main file into memory.
     status = init_rule_buffer(&data, init_rule_core_file, &buffer, &objects, &contents);
@@ -504,9 +504,9 @@
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fll_fss_basic_list_read() for the file '%s'.", status, init_rule_core_file);
       }
 
-      f_macro_string_dynamic_delete(buffer);
-      f_macro_fss_objects_delete(objects);
-      f_macro_fss_contents_delete(contents);
+      f_macro_string_dynamic_t_delete(buffer);
+      f_macro_fss_objects_t_delete(objects);
+      f_macro_fss_contents_t_delete(contents);
       return status;
     }
 
@@ -540,7 +540,7 @@
 
 
     /*
-    f_status status  = F_none;
+    f_status_t status  = F_none;
 
     status = fll_fss_extended_read(buffer, location, objects, contents, 0, 0);
 
@@ -559,8 +559,8 @@
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling firewall_perform_commands().", status);
         }
 
-        f_macro_fss_objects_delete_simple((*rule_objects));
-        f_macro_fss_contents_delete_simple((*rule_contents));
+        f_macro_fss_objects_t_delete_simple((*rule_objects));
+        f_macro_fss_contents_t_delete_simple((*rule_contents));
         return F_status_set_error(status);
       }
     }
@@ -573,13 +573,13 @@
       }
     }
 
-    f_macro_fss_objects_delete_simple((*rule_objects));
-    f_macro_fss_contents_delete_simple((*rule_contents));
+    f_macro_fss_objects_t_delete_simple((*rule_objects));
+    f_macro_fss_contents_t_delete_simple((*rule_contents));
     */
 /*
-    f_macro_string_dynamic_delete(buffer);
-    f_macro_fss_objects_delete(objects);
-    f_macro_fss_contents_delete(contents);
+    f_macro_string_dynamic_t_delete(buffer);
+    f_macro_fss_objects_t_delete(objects);
+    f_macro_fss_contents_t_delete(contents);
     return status;
   }
 #endif // _di_init_process_main_rule_

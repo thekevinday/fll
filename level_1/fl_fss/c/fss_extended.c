@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_extended_object_read_
-  f_return_status fl_fss_extended_object_read(f_string_dynamic *buffer, f_string_range *range, f_fss_object *found, f_fss_quoted *quoted) {
+  f_return_status fl_fss_extended_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quoted_t *quoted) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (buffer->used == 0) return F_status_set_error(F_parameter);
@@ -16,17 +16,17 @@ extern "C" {
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
-    f_string_lengths delimits = f_string_lengths_initialize;
+    f_status_t status = F_none;
+    f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
     status = private_fl_fss_basic_object_read(buffer, range, found, quoted, &delimits);
     if (F_status_is_error(status)) {
-      f_macro_string_lengths_delete_simple(delimits);
+      f_macro_string_lengths_t_delete_simple(delimits);
       return status;
     }
 
     if (status == FL_fss_found_object_not || status == F_data_not || status == F_data_not_eos || status == F_data_not_stop) {
-      f_macro_string_lengths_delete_simple(delimits);
+      f_macro_string_lengths_t_delete_simple(delimits);
       return status;
     }
 
@@ -37,7 +37,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_object_read_
 
 #ifndef _di_fl_fss_extended_content_read_
-  f_return_status fl_fss_extended_content_read(f_string_dynamic *buffer, f_string_range *range, f_fss_content *found, f_fss_quoteds *quoteds) {
+  f_return_status fl_fss_extended_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_quoteds_t *quoteds) {
     #ifndef _di_level_1_parameter_checking_
       if (buffer == 0) return F_status_set_error(F_parameter);
       if (buffer->used == 0) return F_status_set_error(F_parameter);
@@ -47,8 +47,8 @@ extern "C" {
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
-    f_status status_allocate = F_none;
+    f_status_t status = F_none;
+    f_status_t status_allocate = F_none;
 
     status = f_fss_skip_past_space(*buffer, range);
     if (F_status_is_error(status)) return status;
@@ -65,35 +65,35 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    f_string_lengths delimits = f_string_lengths_initialize;
+    f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
     uint8_t content_found = 0;
 
     while (range->start <= range->stop && range->start < buffer->used) {
-      f_string_range content_partial = f_string_range_initialize;
-      f_fss_quoted quoted = 0;
+      f_string_range_t content_partial = f_string_range_initialize;
+      f_fss_quoted_t quoted = 0;
 
       status = private_fl_fss_basic_object_read(buffer, range, &content_partial, &quoted, &delimits);
 
       if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
         if (found->used == found->size) {
           if (found->used + f_fss_default_allocation_step > found->size) {
-            if (found->used == f_array_length_size) {
-              f_macro_string_lengths_delete_simple(delimits);
+            if (found->used == f_array_length_t_size) {
+              f_macro_string_lengths_t_delete_simple(delimits);
               return F_status_set_error(F_buffer_too_large);
             }
             else {
-              f_macro_fss_content_resize(status_allocate, (*found), found->size + f_fss_default_allocation_step);
+              f_macro_fss_content_t_resize(status_allocate, (*found), found->size + f_fss_default_allocation_step);
             }
           }
           else {
-            f_macro_fss_content_resize(status_allocate, (*found), found->size + f_fss_default_allocation_step);
+            f_macro_fss_content_t_resize(status_allocate, (*found), found->size + f_fss_default_allocation_step);
           }
 
           if (F_status_is_error(status_allocate)) return status_allocate;
 
           if (quoteds) {
-            f_macro_fss_quoteds_resize(status_allocate, (*quoteds), found->size);
+            f_macro_fss_quoteds_t_resize(status_allocate, (*quoteds), found->size);
             if (F_status_is_error(status_allocate)) return status_allocate;
           }
         }
@@ -136,7 +136,7 @@ extern "C" {
         break;
       }
       else if (F_status_is_error(status)) {
-        f_macro_string_lengths_delete_simple(delimits);
+        f_macro_string_lengths_t_delete_simple(delimits);
         return status;
       }
     } // while
@@ -156,7 +156,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_content_read_
 
 #ifndef _di_fl_fss_extended_object_write_
-f_return_status fl_fss_extended_object_write(const f_string_static object, const f_fss_quoted quoted, f_string_range *range, f_string_dynamic *destination) {
+f_return_status fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -166,7 +166,7 @@ f_return_status fl_fss_extended_object_write(const f_string_static object, const
 #endif // _di_fl_fss_extended_object_write_
 
 #ifndef _di_fl_fss_extended_content_write_
-  f_return_status fl_fss_extended_content_write(const f_string_static content, const f_fss_quoted quoted, f_string_range *range, f_string_dynamic *destination) {
+  f_return_status fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_

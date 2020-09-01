@@ -69,7 +69,7 @@ extern "C"{
  * @see bind()
  */
 #ifndef _di_f_socket_file_bind_
-  extern f_return_status f_socket_file_bind(const f_string path, const int id, struct sockaddr_un *address);
+  extern f_return_status f_socket_file_bind(const f_string_t path, const int id, struct sockaddr_un *address);
 #endif // _di_f_socket_file_bind_
 
 /**

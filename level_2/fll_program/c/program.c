@@ -5,8 +5,8 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_program_print_help_header_
-  f_return_status fll_program_print_help_header(const fl_color_context context, const f_string name, const f_string version) {
-    f_status status = F_none;
+  f_return_status fll_program_print_help_header(const fl_color_context_t context, const f_string_t name, const f_string_t version) {
+    f_status_t status = F_none;
 
     printf("%c", f_string_eol[0]);
     status = fl_color_print(f_type_output, context.title, context.reset, " %s", name);
@@ -25,8 +25,8 @@ extern "C" {
 #endif // _di_fll_program_print_help_header_
 
 #ifndef _di_fll_program_print_help_option_
-  f_return_status fll_program_print_help_option(const fl_color_context context, const f_string option_short, const f_string option_long, const f_string symbol_short, const f_string symbol_long, const f_string description) {
-    f_status status = F_none;
+  f_return_status fll_program_print_help_option(const fl_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
+    f_status_t status = F_none;
 
     printf("%c", f_string_eol[0]);
     printf("  %s", symbol_short);
@@ -44,8 +44,8 @@ extern "C" {
 #endif // _di_fll_program_print_help_option_
 
 #ifndef _di_fll_program_print_help_option_long_
-  f_return_status fll_program_print_help_option_long(const fl_color_context context, const f_string option_long, const f_string symbol_long, const f_string description) {
-    f_status status = F_none;
+  f_return_status fll_program_print_help_option_long(const fl_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
+    f_status_t status = F_none;
 
     printf("%c", f_string_eol[0]);
     printf("      %s", symbol_long);
@@ -59,7 +59,7 @@ extern "C" {
 #endif // _di_fll_program_print_help_option_long_
 
 #ifndef _di_fll_program_print_help_option_other_
-  f_return_status fll_program_print_help_option_other(const fl_color_context context, const f_string option_other, const f_string description) {
+  f_return_status fll_program_print_help_option_other(const fl_color_context_t context, const f_string_t option_other, const f_string_t description) {
     printf("%c  ", f_string_eol[0]);
     fl_color_print(f_type_output, context.standout, context.reset, option_other);
 
@@ -70,8 +70,8 @@ extern "C" {
 #endif // _di_fll_program_print_help_option_other_
 
 #ifndef _di_fll_program_print_help_usage_
-  f_return_status fll_program_print_help_usage(const fl_color_context context, const f_string name, const f_string parameters) {
-    f_status status = F_none;
+  f_return_status fll_program_print_help_usage(const fl_color_context_t context, const f_string_t name, const f_string_t parameters) {
+    f_status_t status = F_none;
 
     printf("%c%c", f_string_eol[0], f_string_eol[0]);
     status = fl_color_print(f_type_output, context.important, context.reset, " Usage:");
@@ -104,7 +104,7 @@ extern "C" {
 #endif // _di_fll_program_print_help_usage_
 
 #ifndef _di_fll_program_print_version_
-  f_return_status fll_program_print_version(const f_string version) {
+  f_return_status fll_program_print_version(const f_string_t version) {
     printf("%s%c", version, f_string_eol[0]);
 
     return F_none;
@@ -112,8 +112,8 @@ extern "C" {
 #endif // _di_fll_program_print_version_
 
 #ifndef _di_fll_program_parameter_process_
-  f_return_status fll_program_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context) {
-    f_status status = F_none;
+  f_return_status fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, fl_color_context_t *context) {
+    f_status_t status = F_none;
 
     status = f_console_parameter_process(arguments, parameters, remaining);
 
@@ -152,9 +152,9 @@ extern "C" {
       return F_status_set_error(status);
     }
 
-    f_console_parameter_id decision = choices.id[2];
+    f_console_parameter_id_t decision = choices.id[2];
 
-    f_string function;
+    f_string_t function;
 
     if (right) {
       function = "f_console_parameter_prioritize_right";
@@ -191,13 +191,13 @@ extern "C" {
 
     // load colors unless told not to.
     if (decision != choices.id[0]) {
-      f_status allocation_status = F_none;
+      f_status_t allocation_status = F_none;
 
-      fl_macro_color_context_new(allocation_status, (*context));
+      fl_macro_color_context_t_new(allocation_status, (*context));
 
       if (F_status_is_error(allocation_status)) {
         fl_color_print(f_type_error, context->error, context->reset, "CRITICAL ERROR: Unable to allocate memory while calling ");
-        fl_color_print(f_type_error, context->notable, context->reset, "fl_macro_color_context_new");
+        fl_color_print(f_type_error, context->notable, context->reset, "fl_macro_color_context_t_new");
         fl_color_print_line(f_type_error, context->error, context->reset, "().");
 
         return allocation_status;
@@ -214,13 +214,13 @@ extern "C" {
 #endif // _di_fll_program_parameter_process_
 
 #ifndef _di_fll_program_parameter_process_quietly_
-  f_return_status fll_program_parameter_process_quietly(const f_console_arguments arguments, f_console_parameters parameters, const f_console_parameter_ids choices, const bool right, f_string_lengths *remaining, fl_color_context *context) {
-    f_status status = F_none;
+  f_return_status fll_program_parameter_process_quietly(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, fl_color_context_t *context) {
+    f_status_t status = F_none;
 
     status = f_console_parameter_process(arguments, parameters, remaining);
     if (F_status_is_error(status)) return status;
 
-    f_console_parameter_id decision = choices.id[2];
+    f_console_parameter_id_t decision = choices.id[2];
 
     if (right) {
       status = f_console_parameter_prioritize_right(parameters, choices, &decision);
@@ -233,9 +233,9 @@ extern "C" {
 
     // load colors unless told not to.
     if (decision != choices.id[0]) {
-      f_status allocation_status = F_none;
+      f_status_t allocation_status = F_none;
 
-      fl_macro_color_context_new(allocation_status, (*context));
+      fl_macro_color_context_t_new(allocation_status, (*context));
 
       if (F_status_is_error(allocation_status)) return allocation_status;
 
@@ -247,22 +247,22 @@ extern "C" {
 #endif // _di_fll_program_parameter_process_quietly_
 
 #ifndef _di_fll_program_parameter_additional_append_
-  f_return_status fll_program_parameter_additional_append(const f_string *argv, const f_string_lengths additional, f_string_dynamics *destination) {
+  f_return_status fll_program_parameter_additional_append(const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamics_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (argv == 0) return F_status_set_error(F_parameter);
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    f_string_length length = 0;
-    const f_string_length start = destination->used;
+    f_string_length_t length = 0;
+    const f_string_length_t start = destination->used;
 
-    for (f_string_length i = 0; i < additional.used; i++) {
+    for (f_string_length_t i = 0; i < additional.used; i++) {
       length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
-        f_string_dynamic ripped = f_string_dynamic_initialize;
+        f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
 
         status = fl_string_append(argv[additional.array[i]], length, &ripped);
         if (F_status_is_error(status)) return status;
@@ -289,19 +289,19 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_append_
 
 #ifndef _di_fll_program_parameter_additional_mash_
-  f_return_status fll_program_parameter_additional_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
+  f_return_status fll_program_parameter_additional_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (argv == 0) return F_status_set_error(F_parameter);
       if (glue_length < 1) return F_status_set_error(F_parameter);
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    f_string_length length = 0;
-    const f_string_length start = destination->used;
+    f_string_length_t length = 0;
+    const f_string_length_t start = destination->used;
 
-    for (f_string_length i = 0; i < additional.used; i++) {
+    for (f_string_length_t i = 0; i < additional.used; i++) {
       length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
@@ -319,21 +319,21 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_mash_
 
 #ifndef _di_fll_program_parameter_additional_rip_
-  f_return_status fll_program_parameter_additional_rip(const f_string *argv, const f_string_lengths additional, f_string_dynamics *destination) {
+  f_return_status fll_program_parameter_additional_rip(const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamics_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (argv == 0) return F_status_set_error(F_parameter);
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = F_none;
-    f_string_length length = 0;
-    const f_string_length start = destination->used;
+    f_status_t status = F_none;
+    f_string_length_t length = 0;
+    const f_string_length_t start = destination->used;
 
-    for (f_string_length i = 0; i < additional.used; i++) {
+    for (f_string_length_t i = 0; i < additional.used; i++) {
       length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
-        f_string_dynamic ripped = f_string_dynamic_initialize;
+        f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
 
         status = fl_string_rip(argv[additional.array[i]], length, &ripped);
         if (F_status_is_error(status)) return status;
@@ -362,27 +362,27 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_rip_
 
 #ifndef _di_fll_program_parameter_additional_rip_mash_
-  f_return_status fll_program_parameter_additional_rip_mash(const f_string glue, const f_string_length glue_length, const f_string *argv, const f_string_lengths additional, f_string_dynamic *destination) {
+  f_return_status fll_program_parameter_additional_rip_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (argv == 0) return F_status_set_error(F_parameter);
       if (glue_length < 1) return F_status_set_error(F_parameter);
       if (destination == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = F_none;
+    f_status_t status = F_none;
 
-    f_string_length length = 0;
-    const f_string_length start = destination->used;
-    f_string_dynamic ripped = f_string_dynamic_initialize;
+    f_string_length_t length = 0;
+    const f_string_length_t start = destination->used;
+    f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
 
-    for (f_string_length i = 0; i < additional.used; i++) {
+    for (f_string_length_t i = 0; i < additional.used; i++) {
       length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
         status = fl_string_rip(argv[additional.array[i]], length, &ripped);
 
         if (F_status_is_error(status)) {
-          f_macro_string_dynamic_delete_simple(ripped);
+          f_macro_string_dynamic_t_delete_simple(ripped);
           return status;
         }
 
@@ -390,7 +390,7 @@ extern "C" {
           status = fl_string_dynamic_mash(glue, glue_length, ripped, destination);
 
           if (F_status_is_error(status)) {
-            f_macro_string_dynamic_delete_simple(ripped);
+            f_macro_string_dynamic_t_delete_simple(ripped);
             return F_status_set_error(F_string_too_large);
           }
         }
@@ -398,7 +398,7 @@ extern "C" {
     } // for
 
     if (ripped.size) {
-      f_macro_string_dynamic_delete(status, ripped);
+      f_macro_string_dynamic_t_delete(status, ripped);
     }
 
     if (status == F_none && start == destination->used) {

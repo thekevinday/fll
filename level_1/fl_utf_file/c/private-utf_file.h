@@ -39,7 +39,7 @@ extern "C" {
  * @see fl_utf_file_read_until()
  */
 #if !defined(fl_utf_file_read) || !defined(fl_utf_file_read_until) || !defined(fl_utf_file_read_range)
-  void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic *buffer, char buffer_char[], uint8_t *width, int8_t *width_last) f_gcc_attribute_visibility_internal;
+  void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic_t *buffer, char buffer_char[], uint8_t *width, int8_t *width_last) f_gcc_attribute_visibility_internal;
 #endif // !defined(fl_utf_file_read) || !defined(fl_utf_file_read_until) || !defined(fl_utf_file_read_range)
 
 /**
@@ -77,7 +77,7 @@ extern "C" {
  * @see fl_utf_file_write_until()
  */
 #if !defined(fl_utf_file_write) || !defined(fl_utf_file_write_until) || !defined(fl_utf_file_write_range)
-  extern f_return_status private_fl_utf_file_write_until(const f_file file, const f_utf_string string, const f_utf_string_length total, f_utf_string_length *written) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_utf_string_length_t total, f_utf_string_length_t *written) f_gcc_attribute_visibility_internal;
 #endif // !defined(fl_utf_file_write) || !defined(fl_utf_file_write_until) || !defined(fl_utf_file_write_range)
 
 #ifdef __cplusplus

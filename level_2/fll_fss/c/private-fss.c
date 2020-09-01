@@ -6,8 +6,8 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_fss_identify_) || !defined(_di_fll_fss_identify_file_)
-  f_return_status private_fll_fss_identify(const f_string_static buffer, f_fss_header *header) {
-    register f_string_length i = 0;
+  f_return_status private_fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header) {
+    register f_string_length_t i = 0;
 
     if (buffer.used < 10) {
       // "# fss-0000" is always at least 10 characters.
@@ -46,13 +46,13 @@ extern "C" {
                       if (f_conversion_character_is_hexidecimal(buffer.string[i]) == F_true) {
                         i++;
 
-                        f_string_range range = f_string_range_initialize;
+                        f_string_range_t range = f_string_range_initialize;
 
                         range.start = i - 4;
                         range.stop = i;
 
                         // 1: A possibly valid header type was found, now convert it into its proper format and save the header type.
-                        const f_status status = fl_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
+                        const f_status_t status = fl_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
                         if (F_status_is_error(status)) return status;
 
                         if (status == F_none) {
@@ -105,12 +105,12 @@ extern "C" {
                       // @todo this needs to be changed to support sub-headers (maybe something like FL_fss_accepted_additional).
                       i++;
 
-                      f_string_range range = f_string_range_initialize;
+                      f_string_range_t range = f_string_range_initialize;
 
                       range.start = i - 4;
                       range.stop = i;
 
-                      const f_status status = fl_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
+                      const f_status_t status = fl_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
                       if (F_status_is_error(status)) return status;
 
                       header->length = i + 1;

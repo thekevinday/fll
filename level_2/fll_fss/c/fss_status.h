@@ -103,7 +103,7 @@ extern "C" {
  * @see fll_status_from_string
  */
 #ifndef _di_fll_fss_status_from_string_
-  extern f_return_status fll_fss_status_from_string(const f_string string, f_status *code);
+  extern f_return_status fll_fss_status_from_string(const f_string_t string, f_status_t *code);
 #endif // _di_fll_fss_status_to_string_
 
 /**
@@ -123,7 +123,7 @@ extern "C" {
  * @see fl_status_to_string()
  */
 #ifndef _di_fll_fss_status_to_string_
-  extern f_return_status fll_fss_status_to_string(const f_status code, f_string *string);
+  extern f_return_status fll_fss_status_to_string(const f_status_t code, f_string_t *string);
 #endif // _di_fll_status_to_string_
 
 /**
@@ -137,7 +137,7 @@ extern "C" {
  *   F_false otherwise.
  */
 #ifndef _di_fll_fss_status_is_error_
-  extern f_return_status fll_fss_status_is_error(const f_status code);
+  extern f_return_status fll_fss_status_is_error(const f_status_t code);
 #endif // _di_fll_fss_status_is_error_
 
 /**
@@ -151,7 +151,7 @@ extern "C" {
  *   F_false otherwise.
  */
 #ifndef _di_fll_fss_status_is_warning_
-  extern f_return_status fll_fss_status_is_warning(const f_status code);
+  extern f_return_status fll_fss_status_is_warning(const f_status_t code);
 #endif // _di_fll_fss_status_is_warning_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  *   F_false otherwise.
  */
 #ifndef _di_fll_fss_status_is_fine_
-  extern f_return_status fll_fss_status_is_fine(const f_status code);
+  extern f_return_status fll_fss_status_is_fine(const f_status_t code);
 #endif // _di_fll_fss_status_is_fine_
 
 #ifdef __cplusplus

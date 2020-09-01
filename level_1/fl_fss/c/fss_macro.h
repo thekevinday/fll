@@ -17,11 +17,11 @@ extern "C" {
 // TODO: check if character to be replaced is UTF and apply placeholder to entire width.
 #ifndef _di_fl_macro_fss_apply_delimit_placeholders_
   #define fl_macro_fss_apply_delimit_placeholders(buffer, delimits) \
-    for (f_array_length i = 0; i < delimits.used; i++) { \
+    for (f_array_length_t i = 0; i < delimits.used; i++) { \
       buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
     } \
     \
-    f_macro_string_lengths_delete_simple(delimits);
+    f_macro_string_lengths_t_delete_simple(delimits);
 #endif // _di_fl_macro_fss_apply_delimit_placeholders_
 
 #ifndef _di_fl_macro_fss_skip_past_delimit_placeholders_
@@ -37,13 +37,13 @@ extern "C" {
 #ifndef _di_fl_macro_fss_object_return_on_overflow_
   #define fl_macro_fss_object_return_on_overflow(buffer, range, found, delimits, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
-      f_macro_string_lengths_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
       \
       found.stop = buffer.used - 1; \
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
-      f_macro_string_lengths_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
       \
       found.stop = range.stop; \
       return stop_status; \
@@ -53,20 +53,20 @@ extern "C" {
 #ifndef _di_fl_macro_fss_object_delimited_return_on_overflow_
   #define fl_macro_fss_object_delimited_return_on_overflow(buffer, range, found, delimits, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
-      for (f_array_length i = 0; i < delimits.used; i++) { \
+      for (f_array_length_t i = 0; i < delimits.used; i++) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
       } \
-      f_macro_string_lengths_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
       \
       found.stop = buffer.used - 1; \
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
-      for (f_array_length i = 0; i < delimits.used; i++) { \
+      for (f_array_length_t i = 0; i < delimits.used; i++) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         i++; \
       } \
-      f_macro_string_lengths_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
       \
       found.stop = range.stop; \
       return stop_status; \
@@ -76,13 +76,13 @@ extern "C" {
 #ifndef _di_fl_macro_fss_content_return_on_overflow_
   #define fl_macro_fss_content_return_on_overflow(buffer, range, found, delimits, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
-      f_macro_string_lengths_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
       \
       found.array[found.used].stop = buffer.used - 1; \
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
-      f_macro_string_lengths_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
       \
       found.array[found.used].stop = range.stop; \
       return stop_status; \
@@ -92,19 +92,19 @@ extern "C" {
 #ifndef _di_fl_macro_fss_content_delimited_return_on_overflow_
   #define fl_macro_fss_content_delimited_return_on_overflow(buffer, range, found, delimits, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
-      for (f_array_length i = 0; i < delimits.used; i++) { \
+      for (f_array_length_t i = 0; i < delimits.used; i++) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
       } \
-      f_macro_string_lengths_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
       \
       found.array[found.used].stop = buffer.used - 1; \
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
-      for (f_array_length i = 0; i < delimits.used; i++) { \
+      for (f_array_length_t i = 0; i < delimits.used; i++) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
       } \
-      f_macro_string_lengths_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
       \
       found.array[found.used].stop = range.stop; \
       return stop_status; \
@@ -114,11 +114,11 @@ extern "C" {
 #ifndef _di_fl_macro_fss_allocate_content_if_necessary_
   #define fl_macro_fss_allocate_content_if_necessary(content, delimits) \
     if (content.used == content.size) { \
-      f_status status = F_none; \
+      f_status_t status = F_none; \
       \
-      f_macro_fss_content_resize(status, content, content.size + f_fss_default_allocation_step); \
+      f_macro_fss_content_t_resize(status, content, content.size + f_fss_default_allocation_step); \
       if (F_status_is_error(status)) { \
-        f_macro_string_lengths_delete_simple(delimits); \
+        f_macro_string_lengths_t_delete_simple(delimits); \
         \
         return status; \
       } \
@@ -128,16 +128,16 @@ extern "C" {
 #ifndef _di_fl_macro_fss_nest_return_on_overflow_
   #define fl_macro_fss_nest_return_on_overflow(buffer, range, found, delimits, positions, objects, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
-      f_macro_string_lengths_delete_simple(delimits); \
-      f_macro_string_lengths_delete_simple(positions); \
-      f_macro_fss_objects_delete_simple(objects); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(positions); \
+      f_macro_fss_objects_t_delete_simple(objects); \
       \
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
-      f_macro_string_lengths_delete_simple(delimits); \
-      f_macro_string_lengths_delete_simple(positions); \
-      f_macro_fss_objects_delete_simple(objects); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(positions); \
+      f_macro_fss_objects_t_delete_simple(objects); \
       \
       return stop_status; \
     }
@@ -146,22 +146,22 @@ extern "C" {
 #ifndef _di_fl_macro_fss_nest_delimited_return_on_overflow_
   #define fl_macro_fss_nest_delimited_return_on_overflow(buffer, range, found, delimits, positions, objects, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
-      for (f_array_length i = 0; i < delimits.used; i++) { \
+      for (f_array_length_t i = 0; i < delimits.used; i++) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
       } \
-      f_macro_string_lengths_delete_simple(delimits); \
-      f_macro_string_lengths_delete_simple(positions); \
-      f_macro_fss_objects_delete_simple(objects); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(positions); \
+      f_macro_fss_objects_t_delete_simple(objects); \
       \
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
-      for (f_array_length i = 0; i < delimits.used; i++) { \
+      for (f_array_length_t i = 0; i < delimits.used; i++) { \
         buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
       } \
-      f_macro_string_lengths_delete_simple(delimits); \
-      f_macro_string_lengths_delete_simple(positions); \
-      f_macro_fss_objects_delete_simple(objects); \
+      f_macro_string_lengths_t_delete_simple(delimits); \
+      f_macro_string_lengths_t_delete_simple(positions); \
+      f_macro_fss_objects_t_delete_simple(objects); \
       \
       return stop_status; \
     }
@@ -172,12 +172,12 @@ extern "C" {
     while (buffer.string[range.start] != f_string_eol[0]) { \
       range.start++; \
       if (range.start >= buffer.used) { \
-        f_macro_string_lengths_delete_simple(delimits); \
+        f_macro_string_lengths_t_delete_simple(delimits); \
         \
         return eos_status; \
       } \
       if (range.start > range.stop) { \
-        f_macro_string_lengths_delete_simple(delimits); \
+        f_macro_string_lengths_t_delete_simple(delimits); \
         \
         return stop_status; \
       } \
@@ -189,18 +189,18 @@ extern "C" {
     while (buffer.string[range.start] != f_string_eol[0]) { \
       range.start++; \
       if (range.start >= buffer.used) { \
-        for (f_array_length i = 0; i < delimits.used; i++) { \
+        for (f_array_length_t i = 0; i < delimits.used; i++) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         } \
-        f_macro_string_lengths_delete_simple(delimits); \
+        f_macro_string_lengths_t_delete_simple(delimits); \
         \
         return eos_status; \
       } \
       if (range.start > range.stop) { \
-        for (f_array_length i = 0; i < delimits.used; i++) { \
+        for (f_array_length_t i = 0; i < delimits.used; i++) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         } \
-        f_macro_string_lengths_delete_simple(delimits); \
+        f_macro_string_lengths_t_delete_simple(delimits); \
         \
         return stop_status; \
       } \
@@ -212,13 +212,13 @@ extern "C" {
     while (buffer.string[range.start] != f_string_eol[0]) { \
       range.start++; \
       if (range.start >= buffer.used) { \
-        f_macro_string_lengths_delete_simple(delimits); \
+        f_macro_string_lengths_t_delete_simple(delimits); \
         \
         found.array[found.used].stop = range.stop; \
         return eos_status; \
       } \
       if (range.start > range.stop) { \
-        f_macro_string_lengths_delete_simple(delimits); \
+        f_macro_string_lengths_t_delete_simple(delimits); \
         \
         found.array[found.used].stop = range.stop; \
         return stop_status; \
@@ -231,19 +231,19 @@ extern "C" {
     while (buffer.string[range.start] != f_string_eol[0]) { \
       range.start++; \
       if (range.start >= buffer.used) { \
-        for (f_array_length i = 0; i < delimits.used; i++) { \
+        for (f_array_length_t i = 0; i < delimits.used; i++) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         } \
-        f_macro_string_lengths_delete_simple(delimits); \
+        f_macro_string_lengths_t_delete_simple(delimits); \
         \
         found.array[found.used].stop = range.stop; \
         return eos_status; \
       } \
       if (range.start > range.stop) { \
-        for (f_array_length i = 0; i < delimits.used; i++) { \
+        for (f_array_length_t i = 0; i < delimits.used; i++) { \
           buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
         } \
-        f_macro_string_lengths_delete_simple(delimits); \
+        f_macro_string_lengths_t_delete_simple(delimits); \
         \
         found.array[found.used].stop = range.stop; \
         return stop_status; \

@@ -22,21 +22,21 @@ extern "C" {
   #define fake_common_setting_bool_no_length  2
 #endif // _di_fake_common_
 
-#ifndef _di_fake_environment_
+#ifndef _di_fake_environment_t_
   typedef struct {
-    f_string_dynamics names;
-    f_string_dynamics values;
-  } fake_environment;
+    f_string_dynamics_t names;
+    f_string_dynamics_t values;
+  } fake_environment_t;
 
-  #define fake_environment_initialize { \
-    f_string_dynamics_initialize, \
-    f_string_dynamics_initialize, \
+  #define fake_environment_t_initialize { \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
   }
 
-  #define fake_macro_environment_delete_simple(environment) \
-    f_macro_string_dynamics_delete_simple(environment.names) \
-    f_macro_string_dynamics_delete_simple(environment.values)
-#endif // _di_fake_environment_
+  #define fake_macro_environment_t_delete_simple(environment) \
+    f_macro_string_dynamics_t_delete_simple(environment.names) \
+    f_macro_string_dynamics_t_delete_simple(environment.values)
+#endif // _di_fake_environment_t_
 
 /**
  * Execute the given command and arguments.
@@ -55,7 +55,7 @@ extern "C" {
  *   The return status.
  */
 #ifndef _di_fake_execute_
-  extern void fake_execute(const fake_data data, const fake_environment environment, const f_string_static program, const f_string_statics arguments, f_status *status) f_gcc_attribute_visibility_internal;
+  extern void fake_execute(const fake_data_t data, const fake_environment_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_execute_
 
 /**
@@ -74,7 +74,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_file_buffer_
-  extern f_return_status fake_file_buffer(const fake_data data, const f_string path_file, f_string_dynamic *buffer) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_file_buffer(const fake_data_t data, const f_string_t path_file, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_file_buffer_
 
 /**
@@ -89,7 +89,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_
-  extern f_return_status fake_path_generate(fake_data *data) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_path_generate(fake_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_path_generate_
 
 /**
@@ -110,7 +110,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_string_dynamic_
-  extern f_return_status fake_path_generate_string_dynamic(fake_data *data, const f_string_dynamic source, f_string_dynamic *destination[], const uint8_t size) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_path_generate_string_dynamic(fake_data_t *data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_path_generate_string_dynamic_
 
 /**
@@ -127,7 +127,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_process_console_parameters_
-  extern f_return_status fake_process_console_parameters(const f_console_arguments arguments, fake_data *data) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_process_console_parameters(const f_console_arguments_t arguments, fake_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_validate_console_parameters_
 
 /**
@@ -146,7 +146,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_validate_parameter_directories_
-  extern f_return_status fake_validate_parameter_directories(const f_console_arguments arguments, const fake_data data) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_validate_parameter_directories_
 
 #ifdef __cplusplus

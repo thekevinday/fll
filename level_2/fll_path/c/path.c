@@ -5,19 +5,19 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_path_canonical_
-  f_return_status fll_path_canonical(const f_string path, f_string_dynamic *canonical) {
+  f_return_status fll_path_canonical(const f_string_t path, f_string_dynamic_t *canonical) {
     #ifndef _di_level_2_parameter_checking_
       if (canonical == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status status = F_none;
-    f_string_length at = 0;
+    f_status_t status = F_none;
+    f_string_length_t at = 0;
 
     uint8_t previous_1 = '/';
     uint8_t previous_2 = 0;
 
-    f_string_length size_chunk = 0;
-    f_string_length position = 0;
+    f_string_length_t size_chunk = 0;
+    f_string_length_t position = 0;
 
     canonical->used = 0;
 

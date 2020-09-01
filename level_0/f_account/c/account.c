@@ -5,8 +5,8 @@ extern "C" {
 #endif
 
 #ifndef _di_f_account_id_group_by_name_
-  f_return_status f_account_id_group_by_name(const f_string name, gid_t *id) {
-    f_status status = F_none;
+  f_return_status f_account_id_group_by_name(const f_string_t name, gid_t *id) {
+    f_status_t status = F_none;
 
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 
@@ -80,8 +80,8 @@ extern "C" {
 #endif // _di_f_account_id_group_by_name_
 
 #ifndef _di_f_account_id_user_by_name_
-  f_return_status f_account_id_user_by_name(const f_string name, uid_t *id) {
-    f_status status = F_none;
+  f_return_status f_account_id_user_by_name(const f_string_t name, uid_t *id) {
+    f_status_t status = F_none;
 
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 

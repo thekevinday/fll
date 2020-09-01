@@ -5,13 +5,13 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_status_from_string_
-  f_return_status fll_status_from_string(const f_string string, f_status *code) {
+  f_return_status fll_status_from_string(const f_string_t string, f_status_t *code) {
     #ifndef _di_level_1_parameter_checking_
       if (code == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status status = F_none;
-    const f_string_length length = strlen(string);
+    f_status_t status = F_none;
+    const f_string_length_t length = strlen(string);
 
     if (length == 0) {
       return F_data_not;

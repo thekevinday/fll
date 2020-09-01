@@ -139,7 +139,7 @@ extern "C" {
  * The maximum size for a single parameter.
  */
 #ifndef _di_f_console_length_size_
-  #define f_console_length_size f_string_length_size
+  #define f_console_length_size f_string_length_t_size
 #endif // _di_f_console_length_size_
 
 /**
@@ -162,8 +162,8 @@ extern "C" {
  * - inverse: parameters using plus sign, such as '++version'.
  * - other: parameters using neither minus nor plus sign, such as 'build'.
  */
-#ifndef _di_f_console_types_
-  typedef uint16_t f_console_id;
+#ifndef _di_f_console_types_t_
+  typedef uint16_t f_console_id_t;
 
   enum {
     f_console_result_none = 1,
@@ -176,7 +176,7 @@ extern "C" {
     f_console_type_inverse,
     f_console_type_other,
   };
-#endif // _di_f_console_types_
+#endif // _di_f_console_types_t_
 
 /**
  * Provide a structure for describing console parameters for the console processing functions to use.
@@ -200,7 +200,7 @@ extern "C" {
  * - locations: All locations within argv where this parameter is found (order is preserved).
  * - additional: An array of locations representing where in the argv[] the additional arguments are found.
  */
-#ifndef _di_f_console_parameter_
+#ifndef _di_f_console_parameter_t_
   typedef struct {
     const int8_t *symbol_short;
     const int8_t *symbol_long;
@@ -212,54 +212,54 @@ extern "C" {
     uint8_t result;
     uint8_t total;
 
-    f_string_length  location;
-    f_string_length  location_sub;
-    f_string_lengths locations;
-    f_string_lengths additional;
-  } f_console_parameter;
+    f_string_length_t  location;
+    f_string_length_t  location_sub;
+    f_string_lengths_t locations;
+    f_string_lengths_t additional;
+  } f_console_parameter_t;
 
-  #define f_console_parameter_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_string_lengths_initialize, f_string_lengths_initialize }
-#endif // _di_f_console_parameter_
+  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_string_lengths_t_initialize, f_string_lengths_t_initialize }
+#endif // _di_f_console_parameter_t_
 
 /**
  * Provide a helper structure for references and processing parameters.
  *
  * Designed for passing this to a function as a single argument.
  *
- * parameter: Intended to be populated with an array of f_console_parameter_id whose size is defined by the "used" property.
+ * parameter: Intended to be populated with an array of f_console_parameter_id_t whose size is defined by the "used" property.
  *            This is not intended to be dynamically allocated, so there is no "size" property.
  * order:
  */
-#ifndef _di_f_console_parameters_
+#ifndef _di_f_console_parameters_t_
   typedef struct {
-    f_console_parameter *parameter;
+    f_console_parameter_t *parameter;
 
-    f_array_length used;
-  } f_console_parameters;
+    f_array_length_t used;
+  } f_console_parameters_t;
 
-  #define f_console_parameters_initialize { 0, 0 }
-#endif // _di_f_console_parameters_
+  #define f_console_parameters_t_initialize { 0, 0 }
+#endif // _di_f_console_parameters_t_
 
 /**
  * Provide a helper structure for references and processing standard C main() arguments.
  *
- * The f_console_parameter_id is designed to be used for the enums to represent a any given parameter by the ID.
+ * The f_console_parameter_id_t is designed to be used for the enums to represent a any given parameter by the ID.
  *
- * The f_console_parameter_ids is designed for passing this to a function as a single argument.
- * The "id" property is intended to be populated with an aray of f_console_parameter_id whose size is defined by the "used" property.
- * This follows the idea of f_string_dynamic and has a "used" instead of length, but because this is not intended to be dynamically allocated there is no "size" property.
+ * The f_console_parameter_ids_t is designed for passing this to a function as a single argument.
+ * The "id" property is intended to be populated with an aray of f_console_parameter_id_t whose size is defined by the "used" property.
+ * This follows the idea of f_string_dynamic_t and has a "used" instead of length, but because this is not intended to be dynamically allocated there is no "size" property.
  */
-#ifndef _di_f_console_parameter_id_
-  typedef uint16_t f_console_parameter_id;
+#ifndef _di_f_console_parameter_id_t_
+  typedef uint16_t f_console_parameter_id_t;
 
   typedef struct {
-    f_console_parameter_id *id;
+    f_console_parameter_id_t *id;
 
-    f_array_length used;
-  } f_console_parameter_ids;
+    f_array_length_t used;
+  } f_console_parameter_ids_t;
 
-  #define f_console_parameter_ids_initialize { 0, 0 }
-#endif // _di_f_console_parameter_id_
+  #define f_console_parameter_ids_t_initialize { 0, 0 }
+#endif // _di_f_console_parameter_id_t_
 
 /**
  * Provide a helper structure for referencing the argc and argv standard main arguments.
@@ -268,13 +268,13 @@ extern "C" {
  *
  * No structure initializer is provided due to the use of constant properties.
  */
-#ifndef _di_f_console_arguments_
+#ifndef _di_f_console_arguments_t_
   typedef struct {
-    const f_number_unsigned argc;
+    const f_number_unsigned_t argc;
 
-    const f_string *argv;
-  } f_console_arguments;
-#endif // _di_f_console_arguments_
+    const f_string_t *argv;
+  } f_console_arguments_t;
+#endif // _di_f_console_arguments_t_
 
 /**
  * Determine the type code the given input parameter represents.
@@ -290,7 +290,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_f_console_identify_
-  extern f_return_status f_console_identify(const f_string input, f_console_id *result);
+  extern f_return_status f_console_identify(const f_string_t input, f_console_id_t *result);
 #endif // _di_f_console_identify_
 
 /**
@@ -334,7 +334,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_f_console_parameter_process_
-  extern f_return_status f_console_parameter_process(const f_console_arguments arguments, f_console_parameters parameters, f_string_lengths *remaining);
+  extern f_return_status f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_string_lengths_t *remaining);
 #endif // _di_f_console_parameter_process_
 
 /**
@@ -364,7 +364,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_left_
-  extern f_return_status f_console_parameter_prioritize_left(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision);
+  extern f_return_status f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision);
 #endif // _di_f_console_parameter_prioritize_left_
 
 /**
@@ -394,7 +394,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_right_
-  extern f_return_status f_console_parameter_prioritize_right(const f_console_parameters parameters, const f_console_parameter_ids choices, f_console_parameter_id *decision);
+  extern f_return_status f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision);
 #endif // _di_f_console_parameter_prioritize_right_
 
 #ifdef __cplusplus

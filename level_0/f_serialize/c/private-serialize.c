@@ -6,12 +6,12 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_serialize_un_simple_find_) || !defined(_di_f_serialize_un_simple_get_)
-  f_return_status private_f_serialize_un_simple_find(const f_string_static serialize, const f_array_length index, f_string_range *location) {
-    f_status status = F_none;
+  f_return_status private_f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t *location) {
+    f_status_t status = F_none;
 
-    f_array_length i = 0;
-    f_array_length start = 0;
-    f_array_length current = 0;
+    f_array_length_t i = 0;
+    f_array_length_t start = 0;
+    f_array_length_t current = 0;
 
     unsigned short width = 0;
 

@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_extended_list_read_print_help_
-  f_return_status fss_extended_list_read_print_help(const fl_color_context context) {
+  f_return_status fss_extended_list_read_print_help(const fl_color_context_t context) {
     fll_program_print_help_header(context, fss_extended_list_read_name_long, fss_extended_list_read_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -122,13 +122,13 @@ extern "C" {
 #endif // _di_fss_extended_list_read_print_help_
 
 #ifndef _di_fss_extended_list_read_main_
-  f_return_status fss_extended_list_read_main(const f_console_arguments arguments, fss_extended_list_read_data *data) {
-    f_status status = F_none;
+  f_return_status fss_extended_list_read_main(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data) {
+    f_status_t status = F_none;
 
     {
-      f_console_parameters parameters = { data->parameters, fss_extended_list_read_total_parameters };
-      f_console_parameter_id ids[3] = { fss_extended_list_read_parameter_no_color, fss_extended_list_read_parameter_light, fss_extended_list_read_parameter_dark };
-      f_console_parameter_ids choices = { ids, 3 };
+      f_console_parameters_t parameters = { data->parameters, fss_extended_list_read_total_parameters };
+      f_console_parameter_id_t ids[3] = { fss_extended_list_read_parameter_no_color, fss_extended_list_read_parameter_light, fss_extended_list_read_parameter_dark };
+      f_console_parameter_ids_t choices = { ids, 3 };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
@@ -229,14 +229,14 @@ extern "C" {
         }
       }
 
-      fss_extended_list_read_depths depths = fss_extended_list_read_depths_initialize;
+      fss_extended_list_read_depths_t depths = fss_extended_list_read_depths_t_initialize;
 
-      f_string_length counter = 0;
-      f_string_length original_size = data->quantity.total;
+      f_string_length_t counter = 0;
+      f_string_length_t original_size = data->quantity.total;
 
       status = fss_extended_list_read_main_preprocess_depth(arguments, *data, &depths);
       if (F_status_is_error(status)) {
-        macro_fss_extended_list_read_depths_delete_simple(depths);
+        macro_fss_extended_list_read_depths_t_delete_simple(depths);
         fss_extended_list_read_delete_data(data);
         return status;
       }
@@ -246,13 +246,13 @@ extern "C" {
         fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_select);
         fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter requires a positive number.");
 
-        macro_fss_extended_list_read_depths_delete_simple(depths);
+        macro_fss_extended_list_read_depths_t_delete_simple(depths);
         fss_extended_list_read_delete_data(data);
         return F_status_set_error(F_parameter);
       }
 
       if (data->process_pipe) {
-        f_file file = f_file_initialize;
+        f_file_t file = f_file_t_initialize;
 
         file.id = f_type_descriptor_input;
 
@@ -260,26 +260,26 @@ extern "C" {
         if (F_status_is_error(status)) {
           fss_extended_list_read_print_file_error(data->context, "f_file_read", "-", F_status_set_fine(status));
 
-          macro_fss_extended_list_read_depths_delete_simple(depths);
+          macro_fss_extended_list_read_depths_t_delete_simple(depths);
           fss_extended_list_read_delete_data(data);
           return status;
         }
 
         status = fss_extended_list_read_main_process_file(arguments, data, "-", depths);
         if (F_status_is_error(status)) {
-          macro_fss_extended_list_read_depths_delete_simple(depths);
+          macro_fss_extended_list_read_depths_t_delete_simple(depths);
           fss_extended_list_read_delete_data(data);
           return status;
         }
 
         // Clear buffers before continuing.
-        f_macro_fss_nest_delete_simple(data->nest);
-        f_macro_string_dynamic_delete_simple(data->buffer);
+        f_macro_fss_nest_t_delete_simple(data->nest);
+        f_macro_string_dynamic_t_delete_simple(data->buffer);
       }
 
       if (data->remaining.used > 0) {
         for (; counter < data->remaining.used; counter++) {
-          f_file file = f_file_initialize;
+          f_file_t file = f_file_t_initialize;
 
           status = f_file_open(arguments.argv[data->remaining.array[counter]], 0, &file);
 
@@ -288,7 +288,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             fss_extended_list_read_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
 
-            macro_fss_extended_list_read_depths_delete_simple(depths);
+            macro_fss_extended_list_read_depths_t_delete_simple(depths);
             fss_extended_list_read_delete_data(data);
             return status;
           }
@@ -300,7 +300,7 @@ extern "C" {
 
               f_file_close(&file.id);
 
-              macro_fss_extended_list_read_depths_delete_simple(depths);
+              macro_fss_extended_list_read_depths_t_delete_simple(depths);
               fss_extended_list_read_delete_data(data);
               return status;
             }
@@ -319,7 +319,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             fss_extended_list_read_print_file_error(data->context, "f_file_read_until", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
 
-            macro_fss_extended_list_read_depths_delete_simple(depths);
+            macro_fss_extended_list_read_depths_t_delete_simple(depths);
             fss_extended_list_read_delete_data(data);
             return status;
           }
@@ -327,18 +327,18 @@ extern "C" {
           status = fss_extended_list_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[counter]], depths);
 
           if (F_status_is_error(status)) {
-            macro_fss_extended_list_read_depths_delete_simple(depths);
+            macro_fss_extended_list_read_depths_t_delete_simple(depths);
             fss_extended_list_read_delete_data(data);
             return status;
           }
 
           // Clear buffers before repeating the loop.
-          f_macro_fss_nest_delete_simple(data->nest);
-          f_macro_string_dynamic_delete_simple(data->buffer);
+          f_macro_fss_nest_t_delete_simple(data->nest);
+          f_macro_string_dynamic_t_delete_simple(data->buffer);
         } // for
       }
 
-      macro_fss_extended_list_read_depths_delete_simple(depths);
+      macro_fss_extended_list_read_depths_t_delete_simple(depths);
     }
     else {
       fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: You failed to specify one or more files.");
@@ -351,22 +351,22 @@ extern "C" {
 #endif // _di_fss_extended_list_read_main_
 
 #ifndef _di_fss_extended_list_read_delete_data_
-  f_return_status fss_extended_list_read_delete_data(fss_extended_list_read_data *data) {
-    f_status status = F_none;
-    f_string_length i = 0;
+  f_return_status fss_extended_list_read_delete_data(fss_extended_list_read_data_t *data) {
+    f_status_t status = F_none;
+    f_string_length_t i = 0;
 
     while (i < fss_extended_list_read_total_parameters) {
-      f_macro_string_lengths_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
       i++;
     } // while
 
-    f_macro_fss_nest_delete_simple(data->nest);
+    f_macro_fss_nest_t_delete_simple(data->nest);
 
-    f_macro_string_dynamic_delete_simple(data->buffer);
-    f_macro_string_lengths_delete_simple(data->remaining);
+    f_macro_string_dynamic_t_delete_simple(data->buffer);
+    f_macro_string_lengths_t_delete_simple(data->remaining);
 
-    fl_macro_color_context_delete_simple(data->context);
+    fl_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
   }

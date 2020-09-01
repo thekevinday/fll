@@ -23,39 +23,39 @@ extern "C" {
  * value_at: the value of the "--at" parameter, already processed and ready to use, only when index_at > 0.
  * value_name: the value of the "--name" parameter, already processed and ready to use, only when index_name > 0.
  */
-#ifndef _di_fss_basic_list_read_depth_
+#ifndef _di_fss_basic_list_read_depth_t_
   typedef struct {
-    f_string_length depth;
+    f_string_length_t depth;
 
-    f_array_length index_at;
-    f_array_length index_name;
+    f_array_length_t index_at;
+    f_array_length_t index_name;
 
-    f_number_unsigned value_at;
-    f_string_dynamic  value_name;
-  } fss_basic_list_read_depth;
+    f_number_unsigned_t value_at;
+    f_string_dynamic_t  value_name;
+  } fss_basic_list_read_depth_t;
 
-  #define fss_basic_list_read_depth_initialize \
+  #define fss_basic_list_read_depth_t_initialize \
     { \
       0, \
       0, \
       0, \
       0, \
-      f_string_dynamic_initialize, \
+      f_string_dynamic_t_initialize, \
     }
 
-  #define macro_fss_basic_list_read_depth_clear(structure) \
+  #define macro_fss_basic_list_read_depth_t_clear(structure) \
     structure.depth = 0; \
     structure.index_at = 0; \
     structure.index_name = 0; \
     structure.value_at = 0; \
-    f_macro_string_dynamic_clear(structure.value_name)
+    f_macro_string_dynamic_t_clear(structure.value_name)
 
-  #define macro_fss_basic_list_read_depth_delete(status, structure)  f_macro_string_dynamic_delete(status, structure.value_name)
-  #define macro_fss_basic_list_read_depth_destroy(status, structure) f_macro_string_dynamic_destroy(status, structure.value_name)
+  #define macro_fss_basic_list_read_depth_t_delete(status, structure)  f_macro_string_dynamic_t_delete(status, structure.value_name)
+  #define macro_fss_basic_list_read_depth_t_destroy(status, structure) f_macro_string_dynamic_t_destroy(status, structure.value_name)
 
-  #define macro_fss_basic_list_read_depth_delete_simple(structure)  f_macro_string_dynamic_delete_simple(structure.value_name)
-  #define macro_fss_basic_list_read_depth_destroy_simple(structure) f_macro_string_dynamic_destroy_simple(structure.value_name)
-#endif // _di_fss_basic_list_read_depth_
+  #define macro_fss_basic_list_read_depth_t_delete_simple(structure)  f_macro_string_dynamic_t_delete_simple(structure.value_name)
+  #define macro_fss_basic_list_read_depth_t_destroy_simple(structure) f_macro_string_dynamic_t_destroy_simple(structure.value_name)
+#endif // _di_fss_basic_list_read_depth_t_
 
 /**
  * An array of depth parameters.
@@ -64,98 +64,98 @@ extern "C" {
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
  */
-#ifndef _di_fss_basic_list_read_depths_
+#ifndef _di_fss_basic_list_read_depths_t_
   typedef struct {
-    fss_basic_list_read_depth *array;
+    fss_basic_list_read_depth_t *array;
 
-    f_array_length size;
-    f_array_length used;
-  } fss_basic_list_read_depths;
+    f_array_length_t size;
+    f_array_length_t used;
+  } fss_basic_list_read_depths_t;
 
-  #define fss_basic_list_read_depths_initialize { 0, 0, 0 }
+  #define fss_basic_list_read_depths_t_initialize { 0, 0, 0 }
 
-  #define macro_fss_basic_list_read_depths_clear(depths) f_macro_memory_structure_clear(depths)
+  #define macro_fss_basic_list_read_depths_t_clear(depths) f_macro_memory_structure_t_clear(depths)
 
-  #define macro_fss_basic_list_read_depths_new(status, depths, length) f_macro_memory_structure_new(status, depths, fss_basic_list_read_depth, length)
+  #define macro_fss_basic_list_read_depths_t_new(status, depths, length) f_macro_memory_structure_t_new(status, depths, fss_basic_list_read_depth_t, length)
 
-  #define macro_fss_basic_list_read_depths_delete(status, depths) \
+  #define macro_fss_basic_list_read_depths_t_delete(status, depths) \
     status = F_none; \
     depths.used = depths.size; \
     while (depths.used > 0) { \
       depths.used--; \
-      macro_fss_basic_list_read_depth_delete(status, depths.array[depths.used]); \
+      macro_fss_basic_list_read_depth_t_delete(status, depths.array[depths.used]); \
       if (status != F_none) break; \
     } \
-    if (status == F_none) f_macro_memory_structure_delete(depths, fss_basic_list_read_depth)
+    if (status == F_none) f_macro_memory_structure_t_delete(depths, fss_basic_list_read_depth_t)
 
-  #define macro_fss_basic_list_read_depths_destroy(status, depths) \
+  #define macro_fss_basic_list_read_depths_t_destroy(status, depths) \
     status = F_none; \
     depths.used = depths.size; \
     while (depths.used > 0) { \
       depths.used--; \
-      macro_fss_basic_list_read_depth_destroy(status, depths.array[depths.used]); \
+      macro_fss_basic_list_read_depth_t_destroy(status, depths.array[depths.used]); \
       if (status != F_none) break; \
     } \
-    if (status == F_none) f_macro_memory_structure_destroy(depths, fss_basic_list_read_depth)
+    if (status == F_none) f_macro_memory_structure_t_destroy(depths, fss_basic_list_read_depth_t)
 
-  #define macro_fss_basic_list_read_depths_delete_simple(depths) \
+  #define macro_fss_basic_list_read_depths_t_delete_simple(depths) \
     depths.used = depths.size; \
     while (depths.used > 0) { \
       depths.used--; \
-      macro_fss_basic_list_read_depth_delete_simple(depths.array[depths.used]); \
+      macro_fss_basic_list_read_depth_t_delete_simple(depths.array[depths.used]); \
     } \
-    if (depths.used == 0) f_macro_memory_structure_delete_simple(depths, fss_basic_list_read_depth)
+    if (depths.used == 0) f_macro_memory_structure_t_delete_simple(depths, fss_basic_list_read_depth_t)
 
-  #define macro_fss_basic_list_read_depths_destroy_simple(depths) \
+  #define macro_fss_basic_list_read_depths_t_destroy_simple(depths) \
     depths.used = depths.size; \
     while (depths.used > 0) { \
       depths.used--; \
-      macro_fss_basic_list_read_depth_destroy_simple(depths.array[depths.used]); \
+      macro_fss_basic_list_read_depth_t_destroy_simple(depths.array[depths.used]); \
     } \
-    if (depths.used == 0) f_macro_memory_structure_destroy_simple(depths, fss_basic_list_read_depth)
+    if (depths.used == 0) f_macro_memory_structure_t_destroy_simple(depths, fss_basic_list_read_depth_t)
 
-  #define macro_fss_basic_list_read_depths_resize(status, depths, new_length) \
+  #define macro_fss_basic_list_read_depths_t_resize(status, depths, new_length) \
     status = F_none; \
     if (new_length < depths.size) { \
-      f_array_length i = depths.size - new_length; \
+      f_array_length_t i = depths.size - new_length; \
       for (; i < depths.size; i++) { \
-        macro_fss_basic_list_read_depth_delete(status, depths.array[i]); \
+        macro_fss_basic_list_read_depth_t_delete(status, depths.array[i]); \
         if (status != F_none) break; \
       } \
     } \
-    if (status == F_none) status = f_memory_resize((void **) & depths.array, sizeof(fss_basic_list_read_depth), depths.size, new_length); \
+    if (status == F_none) status = f_memory_resize((void **) & depths.array, sizeof(fss_basic_list_read_depth_t), depths.size, new_length); \
     if (status == F_none) { \
       if (new_length > depths.size) { \
-        f_array_length i = depths.size; \
+        f_array_length_t i = depths.size; \
         for (; i < new_length; i++) { \
-          memset(&depths.array[i], 0, sizeof(fss_basic_list_read_depth)); \
+          memset(&depths.array[i], 0, sizeof(fss_basic_list_read_depth_t)); \
         } \
       } \
       depths.size = new_length; \
       if (depths.used > depths.size) depths.used = new_length; \
     }
 
-  #define macro_fss_basic_list_read_depths_adjust(status, depths, new_length) \
+  #define macro_fss_basic_list_read_depths_t_adjust(status, depths, new_length) \
     status = F_none; \
     if (new_length < depths.size) { \
-      f_array_length i = depths.size - new_length; \
+      f_array_length_t i = depths.size - new_length; \
       for (; i < depths.size; i++) { \
-        macro_fss_basic_list_read_depth_delete(status, depths.array[i]); \
+        macro_fss_basic_list_read_depth_t_delete(status, depths.array[i]); \
         if (status != F_none) break; \
       } \
     } \
-    if (status == F_none) status = f_memory_adjust((void **) & depths.array, sizeof(fss_basic_list_read_depth), depths.size, new_length); \
+    if (status == F_none) status = f_memory_adjust((void **) & depths.array, sizeof(fss_basic_list_read_depth_t), depths.size, new_length); \
     if (status == F_none) { \
       if (new_length > depths.size) { \
-        f_array_length i = depths.size; \
+        f_array_length_t i = depths.size; \
         for (; i < new_length; i++) { \
-          memset(&depths.array[i], 0, sizeof(fss_basic_list_read_depth)); \
+          memset(&depths.array[i], 0, sizeof(fss_basic_list_read_depth_t)); \
         } \
       } \
       depths.size = new_length; \
       if (depths.used > depths.size) depths.used = new_length; \
     }
-#endif // _di_fss_basic_list_read_depths_
+#endif // _di_fss_basic_list_read_depths_t_
 
 /**
  * Print file error messages.
@@ -170,7 +170,7 @@ extern "C" {
  *   The status code representing the error.
  */
 #ifndef _di_fss_basic_list_read_print_file_error_
-  extern void fss_basic_list_read_print_file_error(const fl_color_context context, const f_string function_name, const f_string file_name, const f_status status) f_gcc_attribute_visibility_internal;
+  extern void fss_basic_list_read_print_file_error(const fl_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_basic_list_read_print_file_error_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  *   The status code representing the error.
  */
 #ifndef _di_fss_basic_list_read_print_number_argument_error_
-  extern void fss_basic_list_read_print_number_argument_error(const fl_color_context context, const f_string function_name, const f_string parameter_name, const f_string argument, const f_status status) f_gcc_attribute_visibility_internal;
+  extern void fss_basic_list_read_print_number_argument_error(const fl_color_context_t context, const f_string_t function_name, const f_string_t parameter_name, const f_string_t argument, const f_status_t status) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_basic_list_read_print_number_argument_error_
 
 /**
@@ -207,7 +207,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_basic_list_read_main_preprocess_depth_
-  extern f_return_status fss_basic_list_read_main_preprocess_depth(const f_console_arguments arguments, const fss_basic_list_read_data data, fss_basic_list_read_depths *depths) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_basic_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_basic_list_read_data_t data, fss_basic_list_read_depths_t *depths) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_basic_list_read_main_preprocess_depth_
 
 /**
@@ -230,7 +230,7 @@ extern "C" {
  * @see fss_basic_list_read_main_preprocess_depth()
  */
 #ifndef _di_fss_basic_list_read_main_process_file_
-  extern f_return_status fss_basic_list_read_main_process_file(const f_console_arguments arguments, fss_basic_list_read_data *data, const f_string file_name, const fss_basic_list_read_depths depths) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_basic_list_read_main_process_file(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data, const f_string_t file_name, const fss_basic_list_read_depths_t depths) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_basic_list_read_main_process_file_
 
 #ifdef __cplusplus

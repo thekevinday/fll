@@ -125,7 +125,7 @@ extern "C" {
  * @see mkdir()
  */
 #ifndef _di_f_directory_create_
-  extern f_return_status f_directory_create(const f_string path, const mode_t mode);
+  extern f_return_status f_directory_create(const f_string_t path, const mode_t mode);
 #endif // _di_f_directory_create_
 
 /**
@@ -159,7 +159,7 @@ extern "C" {
  * @see mkdirat()
  */
 #ifndef _di_f_directory_create_at_
-  extern f_return_status f_directory_create_at(const int at_id, const f_string path, const mode_t mode);
+  extern f_return_status f_directory_create_at(const int at_id, const f_string_t path, const mode_t mode);
 #endif // _di_f_directory_create_at_
 
 /**
@@ -182,7 +182,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_directory_exists_
-  extern f_return_status f_directory_exists(const f_string path);
+  extern f_return_status f_directory_exists(const f_string_t path);
 #endif // _di_f_directory_exists_
 
 /**
@@ -210,7 +210,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_directory_exists_at_
-  extern f_return_status f_directory_exists_at(const int at_id, const f_string path, const int flag);
+  extern f_return_status f_directory_exists_at(const int at_id, const f_string_t path, const int flag);
 #endif // _di_f_directory_exists_at_
 
 /**
@@ -233,7 +233,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_directory_is_
-  extern f_return_status f_directory_is(const f_string path);
+  extern f_return_status f_directory_is(const f_string_t path);
 #endif // _di_f_directory_is_
 
 /**
@@ -261,7 +261,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_directory_is_at_
-  extern f_return_status f_directory_is_at(const int at_id, const f_string path, const int flag);
+  extern f_return_status f_directory_is_at(const int at_id, const f_string_t path, const int flag);
 #endif // _di_f_directory_is_at_
 
 /**
@@ -294,7 +294,7 @@ extern "C" {
  * @see versionsort()
  */
 #ifndef _di_f_directory_list_
-  extern f_return_status f_directory_list(const f_string path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics *names);
+  extern f_return_status f_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics_t *names);
 #endif // _di_f_directory_list_
 
 /**
@@ -332,7 +332,7 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_directory_open_
-  extern f_return_status f_directory_open(const f_string path, const bool dereference, int *id);
+  extern f_return_status f_directory_open(const f_string_t path, const bool dereference, int *id);
 #endif // _di_f_directory_open_
 
 /**
@@ -373,7 +373,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_directory_open_at_
-  extern f_return_status f_directory_open_at(const int at_id, const f_string path, const bool dereference, int *id);
+  extern f_return_status f_directory_open_at(const int at_id, const f_string_t path, const bool dereference, int *id);
 #endif // _di_f_directory_open_at_
 
 /**
@@ -412,7 +412,7 @@ extern "C" {
  * @see remove()
  */
 #ifndef _di_f_directory_remove_
-  extern f_return_status f_directory_remove(const f_string path, const int recursion_max, const bool preserve);
+  extern f_return_status f_directory_remove(const f_string_t path, const int recursion_max, const bool preserve);
 #endif // _di_f_directory_remove_
 
 /**
@@ -454,7 +454,7 @@ extern "C" {
  * @see remove()
  */
 #ifndef _di_f_directory_remove_custom_
-  extern f_return_status f_directory_remove_custom(const f_string path, const int recursion_max, const bool preserve, int (*custom) (const char *, const struct stat *, int, struct FTW *));
+  extern f_return_status f_directory_remove_custom(const f_string_t path, const int recursion_max, const bool preserve, int (*custom) (const char *, const struct stat *, int, struct FTW *));
 #endif // _di_f_directory_remove_custom_
 
 /**
@@ -492,7 +492,7 @@ extern "C" {
  * @see utimensat()
  */
 #ifndef _di_f_directory_touch_
-  extern f_return_status f_directory_touch(const f_string path, const mode_t mode);
+  extern f_return_status f_directory_touch(const f_string_t path, const mode_t mode);
 #endif // _di_f_directory_touch_
 
 /**
@@ -534,7 +534,7 @@ extern "C" {
  * @see utimensat()
  */
 #ifndef _di_f_directory_touch_at_
-  extern f_return_status f_directory_touch_at(const int at_id, const f_string path, const mode_t mode, const int flag);
+  extern f_return_status f_directory_touch_at(const int at_id, const f_string_t path, const mode_t mode, const int flag);
 #endif // _di_f_directory_touch_at_
 
 #ifdef __cplusplus

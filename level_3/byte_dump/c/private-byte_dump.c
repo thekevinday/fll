@@ -6,8 +6,8 @@ extern "C" {
 #endif
 
 #ifndef _di_byte_dump_file_
-  f_return_status byte_dump_file(const byte_dump_data data, const f_string file_name, f_file file) {
-    f_status status = F_none;
+  f_return_status byte_dump_file(const byte_dump_data_t data, const f_string_t file_name, f_file_t file) {
+    f_status_t status = F_none;
 
     uint64_t position = 0;
     uint8_t size = 0;
@@ -18,16 +18,16 @@ extern "C" {
     int8_t width_current = 0;
     int8_t width_count = 0;
 
-    byte_dump_cell cell = byte_dump_cell_initialize;
-    byte_dump_previous previous = byte_dump_previous_initialize;
+    byte_dump_cell_t cell = byte_dump_cell_t_initialize;
+    byte_dump_previous_t previous = byte_dump_previous_t_initialize;
 
     bool character_reset = 0;
     bool found_invalid_utf = F_false;
 
     // Store the current character data until it can be printed.
-    f_utf_string_dynamic characters = f_utf_string_dynamic_initialize;
-    f_utf_character character_array[data.width];
-    f_utf_string_length character_current = 0;
+    f_utf_string_dynamic_t characters = f_utf_string_dynamic_t_initialize;
+    f_utf_character_t character_array[data.width];
+    f_utf_string_length_t character_current = 0;
 
     // The row starts based on the first byte starting point and how many columns of bytes are displayed per row.
     if (data.first > 0) {
@@ -35,7 +35,7 @@ extern "C" {
       offset = data.first % data.width;
     }
 
-    memset(&character_array, 0, sizeof(f_utf_character) * data.width);
+    memset(&character_array, 0, sizeof(f_utf_character_t) * data.width);
     characters.string = character_array;
     characters.used = 0;
     characters.size = data.width;
@@ -65,7 +65,7 @@ extern "C" {
 
       // When width_count == 0, then this is that start of a new character sequence.
       if (width_count == 0) {
-        characters.string[character_current] = f_macro_utf_character_from_char_1(byte);
+        characters.string[character_current] = f_macro_utf_character_t_from_char_1(byte);
         width_count = 1;
 
         // The first character in a UTF-8 sequence cannot have a width of 1.
@@ -83,13 +83,13 @@ extern "C" {
         width_current = f_macro_utf_byte_width_is(byte);
 
         if (width_count == 1) {
-          characters.string[character_current] |= f_macro_utf_character_from_char_2(byte);
+          characters.string[character_current] |= f_macro_utf_character_t_from_char_2(byte);
         }
         else if (width_count == 2) {
-          characters.string[character_current] |= f_macro_utf_character_from_char_3(byte);
+          characters.string[character_current] |= f_macro_utf_character_t_from_char_3(byte);
         }
         else if (width_count == 3) {
-          characters.string[character_current] |= f_macro_utf_character_from_char_4(byte);
+          characters.string[character_current] |= f_macro_utf_character_t_from_char_4(byte);
         }
 
         width_count++;
@@ -228,24 +228,24 @@ extern "C" {
 #endif // _di_byte_dump_file_
 
 #ifndef _di_byte_dump_print_character_fragment_
-  bool byte_dump_print_character_fragment(const byte_dump_data data, const f_utf_string_static characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, byte_dump_previous *previous, byte_dump_cell *cell, uint8_t *offset) {
+  bool byte_dump_print_character_fragment(const byte_dump_data_t data, const f_utf_string_static_t characters, const uint8_t invalid[], const int8_t width_utf, const int8_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, uint8_t *offset) {
     uint8_t byte = 0;
 
     bool reset = F_false;
 
-    f_utf_string_length character_current = characters.used - 1;
+    f_utf_string_length_t character_current = characters.used - 1;
 
     if (byte_current == 1) {
-      byte = f_macro_utf_character_to_char_1(characters.string[character_current]);
+      byte = f_macro_utf_character_t_to_char_1(characters.string[character_current]);
     }
     else if (byte_current == 2) {
-      byte = f_macro_utf_character_to_char_2(characters.string[character_current]);
+      byte = f_macro_utf_character_t_to_char_2(characters.string[character_current]);
     }
     else if (byte_current == 3) {
-      byte = f_macro_utf_character_to_char_3(characters.string[character_current]);
+      byte = f_macro_utf_character_t_to_char_3(characters.string[character_current]);
     }
     else if (byte_current == 4) {
-      byte = f_macro_utf_character_to_char_4(characters.string[character_current]);
+      byte = f_macro_utf_character_t_to_char_4(characters.string[character_current]);
     }
 
     if (cell->column == 0) {
@@ -428,7 +428,7 @@ extern "C" {
 #endif // _di_byte_dump_print_character_fragment_
 
 #ifndef _di_byte_dump_print_text_
-  void byte_dump_print_text(const byte_dump_data data, const f_utf_string_static characters, const uint8_t invalid[], byte_dump_previous *previous, uint8_t *offset) {
+  void byte_dump_print_text(const byte_dump_data_t data, const f_utf_string_static_t characters, const uint8_t invalid[], byte_dump_previous_t *previous, uint8_t *offset) {
     uint8_t j = 0;
     uint8_t output = 0;
     uint8_t width_utf = 0;
@@ -446,7 +446,7 @@ extern "C" {
         } // while
       }
       else {
-        f_string placeholder = " ";
+        f_string_t placeholder = " ";
 
         if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
           placeholder = byte_dump_character_placeholder;
@@ -499,7 +499,7 @@ extern "C" {
     }
 
     for (uint8_t i = 0; i < characters.used && j < data.width; i++, j++) {
-      output = f_macro_utf_character_to_char_1(characters.string[i]);
+      output = f_macro_utf_character_t_to_char_1(characters.string[i]);
       width_utf = f_macro_utf_byte_width_is(output);
 
       if (invalid[i]) {
@@ -687,15 +687,15 @@ extern "C" {
         printf("%c", (uint8_t) output);
 
         if (width_utf > 1) {
-          output = f_macro_utf_character_to_char_2(characters.string[i]);
+          output = f_macro_utf_character_t_to_char_2(characters.string[i]);
           printf("%c", (uint8_t) output);
 
           if (width_utf > 2) {
-            output = f_macro_utf_character_to_char_3(characters.string[i]);
+            output = f_macro_utf_character_t_to_char_3(characters.string[i]);
             printf("%c", (uint8_t) output);
 
             if (width_utf > 3) {
-              output = f_macro_utf_character_to_char_4(characters.string[i]);
+              output = f_macro_utf_character_t_to_char_4(characters.string[i]);
               printf("%c", (uint8_t) output);
             }
           }
@@ -824,7 +824,7 @@ extern "C" {
 #endif // _di_byte_dump_file_
 
 #ifndef _di_byte_dump_print_file_error_
-  void byte_dump_print_file_error(const fl_color_context context, const f_string function, const f_string file_name, const f_status status) {
+  void byte_dump_print_file_error(const fl_color_context_t context, const f_string_t function, const f_string_t file_name, const f_status_t status) {
     if (status == F_false) {
       fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to find file '");
       fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);

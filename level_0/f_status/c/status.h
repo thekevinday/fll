@@ -23,7 +23,7 @@ extern "C" {
  * Status masks.
  */
 #ifndef _di_F_status_masks_
-  // f_status is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
+  // f_status_t is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
   #define F_status_bit_error   0x8000 // 1000 0000 0000 0000
   #define F_status_bit_signal  0xc000 // 1100 0000 0000 0000
   #define F_status_bit_warning 0x4000 // 0100 0000 0000 0000
