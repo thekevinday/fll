@@ -59,9 +59,35 @@ extern "C" {
  *   The value will be appended (set value->used to 0 to replace).
  *
  * @return
+ *   F_true on success and environment variable exists.
+ *   F_false on success and environment variable does not exist.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see getenv()
+ */
+#ifndef _di_f_environment_exists_
+  extern f_return_status f_environment_exists(const f_string_t name);
+#endif // _di_f_environment_exists_
+
+/**
+ * Get a single environment variable.
+ *
+ * The variable is copied into a new dynamically allocated string and is safe to alter.
+ *
+ * @param name
+ *   The name of the environment variable to get.
+ *   The name string must not contain the '=' character.
+ *   The name must be NULL terminated.
+ * @param value
+ *   The value associated with name.
+ *   The value will not be null terminated.
+ *   The value will be appended (set value->used to 0 to replace).
+ *
+ * @return
  *   F_none on success.
  *   F_exist_not if name does not exist.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
  * @see getenv()

@@ -264,7 +264,11 @@ extern "C" {
 /**
  * File mode related functionality.
  *
- * The f_file_mode type properties are 8-bit types with the following structure:
+ * There are two types of file modes the f_file_mode_t macros associate with.
+ *
+ * The first type is the traditional mode type, associated with mode_t.
+ *
+ * The second type is f_file_mode_t, which utilizes 8-bit types with the following structure:
  *
  *   There should only be a single bit for each 'r', 'w', 'x', and 'X' bit (as well as 'S', 's', and 't'):
  *     'r' = read bit.
@@ -274,40 +278,43 @@ extern "C" {
  *     'S' = set user bit (setuid).
  *     's' = set group bit (setgid).
  *     't' = sticky bit.
+ *
+ * The file mode macros with "f_file_mode_" prefix (has no "_t") refer to the first type (mode_t).
+ * The file mode macros with "f_file_mode_t" prefix refer to the second type (f_file_mode_t).
  */
 #ifndef _di_f_file_mode_
-  typedef uint32_t f_file_mode;
+  typedef uint32_t f_file_mode_t;
 
-  #define f_file_mode_block_special  0x77000000 // 0111 0111 0000 0000 0000 0000 0000 0000
-  #define f_file_mode_block_owner    0x00ff0000 // 0000 0000 1111 1111 0000 0000 0000 0000
-  #define f_file_mode_block_group    0x0000ff00 // 0000 0000 0000 0000 1111 1111 0000 0000
-  #define f_file_mode_block_world    0x000000ff // 0000 0000 0000 0000 0000 0000 1111 1111
+  #define f_file_mode_t_block_special 0x77000000 // 0111 0111 0000 0000 0000 0000 0000 0000
+  #define f_file_mode_t_block_owner   0x00ff0000 // 0000 0000 1111 1111 0000 0000 0000 0000
+  #define f_file_mode_t_block_group   0x0000ff00 // 0000 0000 0000 0000 1111 1111 0000 0000
+  #define f_file_mode_t_block_world   0x000000ff // 0000 0000 0000 0000 0000 0000 1111 1111
 
-  #define f_file_mode_block_all      0x77ffffff // 0111 0111 1111 1111 1111 1111 1111 1111
-  #define f_file_mode_block_standard 0x00ffffff // 0000 0000 1111 1111 1111 1111 1111 1111
+  #define f_file_mode_t_block_all      0x77ffffff // 0111 0111 1111 1111 1111 1111 1111 1111
+  #define f_file_mode_t_block_standard 0x00ffffff // 0000 0000 1111 1111 1111 1111 1111 1111
 
-  #define f_file_mode_mask_how_add      0x070f0f0f // 0000 0111 0000 1111 0000 1111 0000 1111
-  #define f_file_mode_mask_how_subtract 0x70f0f0f0 // 0111 0000 1111 0000 1111 0000 1111 0000
+  #define f_file_mode_t_mask_how_add      0x070f0f0f // 0000 0111 0000 1111 0000 1111 0000 1111
+  #define f_file_mode_t_mask_how_subtract 0x70f0f0f0 // 0111 0000 1111 0000 1111 0000 1111 0000
 
-  #define f_file_mode_mask_bit_execute      0x00111111 // 0000 0000 0001 0001 0001 0001 0001 0001
-  #define f_file_mode_mask_bit_execute_only 0x00888888 // 0000 0000 1000 1000 1000 1000 1000 1000
-  #define f_file_mode_mask_bit_read         0x00444444 // 0000 0000 0100 0100 0100 0100 0100 0100
-  #define f_file_mode_mask_bit_set_group    0x22000000 // 0010 0010 0000 0000 0000 0000 0000 0000
-  #define f_file_mode_mask_bit_set_owner    0x44000000 // 0100 0100 0000 0000 0000 0000 0000 0000
-  #define f_file_mode_mask_bit_sticky       0x11000000 // 0001 0001 0000 0000 0000 0000 0000 0000
-  #define f_file_mode_mask_bit_write        0x00222222 // 0000 0000 0010 0010 0010 0010 0010 0010
+  #define f_file_mode_t_mask_bit_execute      0x00111111 // 0000 0000 0001 0001 0001 0001 0001 0001
+  #define f_file_mode_t_mask_bit_execute_only 0x00888888 // 0000 0000 1000 1000 1000 1000 1000 1000
+  #define f_file_mode_t_mask_bit_read         0x00444444 // 0000 0000 0100 0100 0100 0100 0100 0100
+  #define f_file_mode_t_mask_bit_set_group    0x22000000 // 0010 0010 0000 0000 0000 0000 0000 0000
+  #define f_file_mode_t_mask_bit_set_owner    0x44000000 // 0100 0100 0000 0000 0000 0000 0000 0000
+  #define f_file_mode_t_mask_bit_sticky       0x11000000 // 0001 0001 0000 0000 0000 0000 0000 0000
+  #define f_file_mode_t_mask_bit_write        0x00222222 // 0000 0000 0010 0010 0010 0010 0010 0010
 
-  #define f_file_mode_replace_owner     0x1  // 0000 0001
-  #define f_file_mode_replace_group     0x2  // 0000 0010
-  #define f_file_mode_replace_world     0x4  // 0000 0100
-  #define f_file_mode_replace_special   0x8  // 0000 1000
-  #define f_file_mode_replace_directory 0x10 // 0001 0000
+  #define f_file_mode_t_replace_owner     0x1  // 0000 0001
+  #define f_file_mode_t_replace_group     0x2  // 0000 0010
+  #define f_file_mode_t_replace_world     0x4  // 0000 0100
+  #define f_file_mode_t_replace_special   0x8  // 0000 1000
+  #define f_file_mode_t_replace_directory 0x10 // 0001 0000
 
-  #define f_file_mode_replace_all      0x1f // 0001 1111
-  #define f_file_mode_replace_other    0x18 // 0001 1000
-  #define f_file_mode_replace_standard 0x7  // 0000 0111
+  #define f_file_mode_t_replace_all      0x1f // 0001 1111
+  #define f_file_mode_t_replace_other    0x18 // 0001 1000
+  #define f_file_mode_t_replace_standard 0x7  // 0000 0111
 
-  // file permission modes.
+  // file permission modes (mode_t).
   #define f_file_mode_owner_rwx S_IRWXU
   #define f_file_mode_owner_r   S_IRUSR
   #define f_file_mode_owner_w   S_IWUSR
@@ -338,16 +345,16 @@ extern "C" {
   #define f_file_mode_all_w   (f_file_mode_owner_w | f_file_mode_group_w | f_file_mode_world_w)
   #define f_file_mode_all_x   (f_file_mode_owner_x | f_file_mode_group_x | f_file_mode_world_x)
 
-  // file mode set-uid/set-gid/sticky-bits and all bits.
+  // file mode set-uid/set-gid/sticky-bits and all bits (mode_t).
   #define f_file_mode_special_set_user  S_ISUID
   #define f_file_mode_special_set_group S_ISGID
   #define f_file_mode_special_sticky    S_ISVTX
   #define f_file_mode_special_all       (S_ISUID | S_ISGID | S_ISVTX)
 
-  // all permissions modes and special modes.
+  // all permissions modes and special modes (mode_t).
   #define f_file_mode_all (f_file_mode_special_all | f_file_mode_all_rwx)
 
-  // special file mode combinations.
+  // special file mode combinations (mode_t).
   #define f_file_mode_user_access    (f_file_mode_owner_rwx | f_file_mode_group_rwx | f_file_mode_world_x)
   #define f_file_mode_user_directory (f_file_mode_owner_rwx | f_file_mode_group_rwx)
   #define f_file_mode_user_file      (f_file_mode_owner_rw | f_file_mode_group_rw)
@@ -875,6 +882,31 @@ extern "C" {
 #endif // _di_f_file_flush_
 
 /**
+ * Get the current group of a file.
+ *
+ * @param path
+ *   The path file name.
+ * @param group
+ *   The id of the file's group.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory (with error bit) on invalid directory.
+ *   F_file_found_not (with error bit) if the file was not found.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstat()
+ */
+#ifndef _di_f_file_group_read_
+  extern f_return_status f_file_group_read(const f_string_t path, uid_t *group);
+#endif // _di_f_file_group_read_
+
+/**
  * Identify whether or not a file exists at the given path and if that file is a specific type.
  *
  * This does not require access on the file itself.
@@ -1182,7 +1214,7 @@ extern "C" {
  * @see f_file_mode_from_string()
  */
 #ifndef _di_f_file_mode_determine_
-  extern f_return_status f_file_mode_determine(const mode_t mode_file, const f_file_mode mode_change, const uint8_t mode_replace, const bool directory_is, mode_t *mode);
+  extern f_return_status f_file_mode_determine(const mode_t mode_file, const f_file_mode_t mode_change, const uint8_t mode_replace, const bool directory_is, mode_t *mode);
 #endif // _di_f_file_mode_determine_
 
 /**
@@ -1232,7 +1264,7 @@ extern "C" {
  *
  * When using digits, the umask is always ignored.
  * When there is a leading '0' or '=' when using digits, then the special bits should be replaced.
- * Otherwise, the current special bits are intended to be respected (designated by f_file_mode_replace_directory).
+ * Otherwise, the current special bits are intended to be respected (designated by f_file_mode_t_replace_directory).
  *
  * When using non-digits and '+', '-', or '=' are specified without a leading 'a', 'u', 'g', or 'o', then the mode operations should be performed against the current umask.
  * These are designated with the umask hows, such as f_file_mode_how_umask_replace.
@@ -1258,7 +1290,7 @@ extern "C" {
  *   The determined mode.
  *   This uses bitwise data.
  * @param replace
- *   The determined modes that are to be replaced, such as: f_file_mode_replace_owner.
+ *   The determined modes that are to be replaced, such as: f_file_mode_t_replace_owner.
  *   This uses bitwise data.
  *
  * @return
@@ -1271,11 +1303,11 @@ extern "C" {
  * @see private_f_file_mode_determine()
  */
 #ifndef _di_f_file_mode_from_string_
-  extern f_return_status f_file_mode_from_string(const f_string_t string, const mode_t umask, f_file_mode *mode, uint8_t *replace);
+  extern f_return_status f_file_mode_from_string(const f_string_t string, const mode_t umask, f_file_mode_t *mode, uint8_t *replace);
 #endif // _di_f_file_mode_from_string_
 
 /**
- * Get the current file mode as an f_file_mode.
+ * Get the current file mode as an f_file_mode_t.
  *
  * @param path
  *   The path file name.
@@ -1300,7 +1332,7 @@ extern "C" {
 #endif // _di_f_file_mode_read_
 
 /**
- * Get the current file mode as an f_file_mode.
+ * Get the current file mode as an f_file_mode_t.
  *
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
@@ -1391,13 +1423,13 @@ extern "C" {
 #endif // _di_f_file_mode_set_at_
 
 /**
- * Convert an f_file_mode type to a mode_t type.
+ * Convert an f_file_mode_t type to a mode_t type.
  *
- * @param mode_from
+ * This essentially converts all "add" codes from an f_file_mode_t to a mode_t, ignoring the "subtract" codes.
+ *
+ * @param from
  *   The file mode to convert from.
- * @param mode_replace
- *   The modes designated to be replaced instead of simply changed.
- * @param mode_to
+ * @param to
  *   The determined mode.
  *
  * @return
@@ -1406,9 +1438,9 @@ extern "C" {
  *
  * @see f_file_mode_from_string()
  */
-#ifndef _di_f_file_mode_determine_
-  extern f_return_status f_file_mode_to_mode(const f_file_mode mode_from, const uint8_t mode_replace, mode_t *mode_to);
-#endif // _di_f_file_mode_determine_
+#ifndef _di_f_file_mode_to_mode_
+  extern f_return_status f_file_mode_to_mode(const f_file_mode_t from, mode_t *to);
+#endif // _di_f_file_mode_to_mode_
 
 /**
  * Get the base name of a file path.
@@ -1513,6 +1545,31 @@ extern "C" {
 #ifndef _di_f_file_open_at_
   extern f_return_status f_file_open_at(const int at_id, const f_string_t path, const mode_t mode, f_file_t *file);
 #endif // _di_f_file_open_at_
+
+/**
+ * Get the current owner of a file.
+ *
+ * @param path
+ *   The path file name.
+ * @param owner
+ *   The id of the file's owner.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory (with error bit) on invalid directory.
+ *   F_file_found_not (with error bit) if the file was not found.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstat()
+ */
+#ifndef _di_f_file_owner_read_
+  extern f_return_status f_file_owner_read(const f_string_t path, uid_t *owner);
+#endif // _di_f_file_owner_read_
 
 /**
  * Read until EOF is reached.

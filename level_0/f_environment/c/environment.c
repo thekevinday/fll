@@ -15,8 +15,26 @@ extern "C" {
   }
 #endif // _di_f_environment_clear_
 
+#ifndef _di_f_environment_exists_
+  f_return_status f_environment_exists(const f_string_t name) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!name) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (getenv(name)) {
+      return F_true;
+    }
+
+    return F_false;
+  }
+#endif // _di_f_environment_exists_
+
 #ifndef _di_f_environment_get_
   f_return_status f_environment_get(const f_string_t name, f_string_dynamic_t *value) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!name) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     return private_f_environment_get(name, value);
   }
 #endif // _di_f_environment_get_
