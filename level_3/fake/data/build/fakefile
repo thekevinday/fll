@@ -17,7 +17,14 @@ main:
   #build
 
   print beginning
-  if is block xxx character directory fifo link fifo regular socket invalid for a b c
-    print success detected.
+  print return = 'parameter:"return"' (This needs to be fixed, always set return value after each line is operated).
+
+  if defined parameter verbose verbose_fll
+    print success defined parameter.
   else
-    print no success detected.
+    print failure defined parameter.
+
+  if defined environment SHELL PS1
+    print success defined environment.
+  else
+    print failure defined environment.

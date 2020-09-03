@@ -470,7 +470,7 @@ extern "C" {
  *   The determined mode.
  *   This uses bitwise data.
  * @param replace
- *   The determined modes that are to be replaced, such as: f_file_mode_replace_owner.
+ *   The determined modes that are to be replaced, such as: f_file_mode_t_replace_owner.
  *   This uses bitwise data.
  *
  * @return
@@ -480,7 +480,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_mode_
-  f_return_status fake_make_get_id_mode(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, f_file_mode *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
+  f_return_status fake_make_get_id_mode(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_mode_
 
 /**

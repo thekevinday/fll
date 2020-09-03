@@ -189,9 +189,9 @@ Fakefile Documentation:
           test if file exists.
           for example, "if exists "a.txt" "b.txt" would test if both the file a.txt and b.txt exist.
 
-        is block,character,directory,fifo,link,regular,socket "file path"\:
-          test if file exist and is of the given type, comma separated options with one or more files.
-          for example, "if is regular,directory "a.txt" "b.txt" would test if both the file a.txt and b.txt exist and are either of type "regular" or type "directory".
+        is block character directory fifo link regular socket for "file path"\:
+          test if one or more files exist and if each file is any of the given types followed by "for" to designate where the the file paths begin.
+          for example, "if is regular directory for "a.txt" "b.txt" would test if both the file a.txt and b.txt exist and are either of type "regular" or type "directory".
 
         fail\:
           test if the previous section operation failed.

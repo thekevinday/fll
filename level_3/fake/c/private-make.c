@@ -93,7 +93,7 @@ extern "C" {
 #endif // _di_fake_make_get_id_group_
 
 #ifndef _di_fake_make_get_id_mode_
-  f_return_status fake_make_get_id_mode(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, f_file_mode *mode, uint8_t *replace) {
+  f_return_status fake_make_get_id_mode(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) {
     if (!buffer.used) {
       fake_print_message(data, F_parameter, "fake_make_get_id_mode", F_true, print);
       return F_status_set_error(F_parameter);
@@ -1998,47 +1998,84 @@ extern "C" {
         return;
       }
 
-      if (*operation_if == fake_make_operation_if_type_if_mode) {
-        *operation_if = fake_make_operation_if_type_false_next;
+      if (*operation_if == fake_make_operation_if_type_if_group) {
+        uid_t id = 0;
 
+        *status = fake_make_get_id_group(data, data_make->print, arguments.array[1], &id);
+        if (F_status_is_error(*status)) return;
+
+        uid_t id_file = 0;
+
+        *operation_if = fake_make_operation_if_type_true_next;
+
+        for (f_array_length_t i = 2; i < arguments.used; i++, id_file = 0) {
+
+          *status = f_file_group_read(arguments.array[i].string, &id_file);
+          if (F_status_is_error(*status)) {
+            *operation_if = fake_make_operation_if_type_false_always_next;
+            fake_print_message_file(data, F_status_set_fine(*status), "f_file_group_read", arguments.array[i].string, "get group of", F_true, F_true, data_make->print);
+            break;
+          }
+
+          if (id != id_file) {
+            *operation_if = fake_make_operation_if_type_false_next;
+            break;
+          }
+        } // for
+
+        return;
+      }
+
+      if (*operation_if == fake_make_operation_if_type_if_mode) {
         bool is = F_false;
 
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_is, arguments.array[1], fake_make_operation_argument_is_length) == F_equal_to) {
           is = F_true;
         }
 
-        f_file_mode mode_rule = 0;
+        f_file_mode_t mode_rule = 0;
         mode_t mode_match = 0;
-        uint8_t replace = 0;
 
-        // @fixme: mode_rule needs to be converted to a mode_t.
-        *status = fake_make_get_id_mode(data, data_make->print, arguments.array[1], &mode_rule, &replace);
-        if (F_status_is_error(*status)) return;
+        {
+          uint8_t mode_replace = 0;
+
+          *status = fake_make_get_id_mode(data, data_make->print, arguments.array[2], &mode_rule, &mode_replace);
+          if (F_status_is_error(*status)) {
+            *operation_if = fake_make_operation_if_type_false_always_next;
+            return;
+          }
+
+          *status = f_file_mode_to_mode(mode_rule, &mode_match);
+          if (F_status_is_error(*status)) {
+            *operation_if = fake_make_operation_if_type_false_always_next;
+            fake_print_message(data, F_status_set_fine(*status), "f_file_mode_to_mode", F_true, data_make->print);
+            return;
+          }
+        }
 
         mode_t mode_file = 0;
 
-        for (f_array_length_t i = 2; i < arguments.used; i++, mode_file = 0) {
+        *operation_if = fake_make_operation_if_type_true_next;
+
+        for (f_array_length_t i = 3; i < arguments.used; i++, mode_file = 0) {
 
           *status = f_file_mode_read(arguments.array[i].string, &mode_file);
           if (F_status_is_error(*status)) {
+            *operation_if = fake_make_operation_if_type_false_always_next;
             fake_print_message_file(data, F_status_set_fine(*status), "f_file_mode_read", arguments.array[i].string, "get mode of", F_true, F_true, data_make->print);
             break;
           }
 
           if (is) {
-            if (mode_match == mode_file) {
-              // @todo success
-            }
-            else {
-              // @todo failure
+            if (mode_match != (mode_file & f_file_mode_all)) {
+              *operation_if = fake_make_operation_if_type_false_next;
+              break;
             }
           }
           else {
-            if (mode_match & mode_file) {
-              // @todo success
-            }
-            else {
-              // @todo failure
+            if (!(mode_match & mode_file)) {
+              *operation_if = fake_make_operation_if_type_false_next;
+              break;
             }
           }
         } // for
@@ -2046,27 +2083,183 @@ extern "C" {
         return;
       }
 
-      if (*operation_if == fake_make_operation_if_type_if_owner || *operation_if == fake_make_operation_if_type_if_group) {
-        *operation_if = fake_make_operation_if_type_false_next;
-        // @todo: handle first owner/group parameter and then filepath parameters.
+      if (*operation_if == fake_make_operation_if_type_if_owner) {
+        uid_t id = 0;
+
+        *status = fake_make_get_id_owner(data, data_make->print, arguments.array[1], &id);
+        if (F_status_is_error(*status)) return;
+
+        uid_t id_file = 0;
+
+        *operation_if = fake_make_operation_if_type_true_next;
+
+        for (f_array_length_t i = 2; i < arguments.used; i++, id_file = 0) {
+
+          *status = f_file_owner_read(arguments.array[i].string, &id_file);
+          if (F_status_is_error(*status)) {
+            *operation_if = fake_make_operation_if_type_false_always_next;
+            fake_print_message_file(data, F_status_set_fine(*status), "f_file_owner_read", arguments.array[i].string, "get owner of", F_true, F_true, data_make->print);
+            break;
+          }
+
+          if (id != id_file) {
+            *operation_if = fake_make_operation_if_type_false_next;
+            break;
+          }
+        } // for
+
         return;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_is) {
-        *operation_if = fake_make_operation_if_type_false_next;
-        // @todo: handle first file type parameter and then filepath parameters.
+        // block     = 0x1 (0000 0001) link    = 0x10 (0001 0000)
+        // character = 0x2 (0000 0010) regular = 0x20 (0010 0000)
+        // directory = 0x4 (0000 0100) socket  = 0x40 (0100 0000)
+        // fifo      = 0x8 (0000 1000) invalid = 0x80 (1000 0000)
+        uint8_t type = 0;
+
+        f_array_length_t i = 1;
+
+        *status = F_none;
+
+        for (; i < arguments.used; i++) {
+          if (fl_string_dynamic_compare_string(fake_make_operation_argument_if_is_for, arguments.array[i], fake_make_operation_argument_if_is_for_length) == F_equal_to) {
+            i++;
+            break;
+          }
+
+          if (fl_string_dynamic_compare_string(f_file_type_name_block, arguments.array[i], f_file_type_name_block_length) == F_equal_to) {
+            type |= 0x1;
+          }
+          else if (fl_string_dynamic_compare_string(f_file_type_name_character, arguments.array[i], f_file_type_name_character_length) == F_equal_to) {
+            type |= 0x2;
+          }
+          else if (fl_string_dynamic_compare_string(f_file_type_name_directory, arguments.array[i], f_file_type_name_directory_length) == F_equal_to) {
+            type |= 0x4;
+          }
+          else if (fl_string_dynamic_compare_string(f_file_type_name_fifo, arguments.array[i], f_file_type_name_fifo_length) == F_equal_to) {
+            type |= 0x8;
+          }
+          else if (fl_string_dynamic_compare_string(f_file_type_name_link, arguments.array[i], f_file_type_name_link_length) == F_equal_to) {
+            type |= 0x10;
+          }
+          else if (fl_string_dynamic_compare_string(f_file_type_name_regular, arguments.array[i], f_file_type_name_regular_length) == F_equal_to) {
+            type |= 0x20;
+          }
+          else if (fl_string_dynamic_compare_string(f_file_type_name_socket, arguments.array[i], f_file_type_name_socket_length) == F_equal_to) {
+            type |= 0x40;
+          }
+        } // for
+
+        uint8_t type_file = 0;
+        mode_t mode_file = 0;
+
+        *operation_if = fake_make_operation_if_type_true_next;
+
+        for (; i < arguments.used; i++, mode_file = 0) {
+
+          *status = f_file_mode_read(arguments.array[i].string, &mode_file);
+          if (F_status_is_error(*status)) {
+            *operation_if = fake_make_operation_if_type_false_always_next;
+            fake_print_message_file(data, F_status_set_fine(*status), "f_file_mode_read", arguments.array[i].string, "get mode of", F_true, F_true, data_make->print);
+            break;
+          }
+
+          if (f_macro_file_type_is_block(mode_file)) {
+            type_file = 0x1;
+          }
+          else if (f_macro_file_type_is_character(mode_file)) {
+            type_file = 0x2;
+          }
+          else if (f_macro_file_type_is_directory(mode_file)) {
+            type_file = 0x4;
+          }
+          else if (f_macro_file_type_is_fifo(mode_file)) {
+            type_file = 0x8;
+          }
+          else if (f_macro_file_type_is_link(mode_file)) {
+            type_file = 0x10;
+          }
+          else if (f_macro_file_type_is_regular(mode_file)) {
+            type_file = 0x20;
+          }
+          else if (f_macro_file_type_is_socket(mode_file)) {
+            type_file = 0x40;
+          }
+
+          if (!(type & type_file)) {
+            *operation_if = fake_make_operation_if_type_false_next;
+            break;
+          }
+        } // for
+
         return;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_exists) {
-        *operation_if = fake_make_operation_if_type_false_next;
-        // @todo: handle file type filepath parameters.
+        *operation_if = fake_make_operation_if_type_true_next;
+
+        for (f_array_length_t i = 1; i < arguments.used; i++) {
+
+          *status = f_file_exists(arguments.array[i].string);
+          if (F_status_is_error(*status)) {
+            *operation_if = fake_make_operation_if_type_false_always_next;
+            fake_print_message_file(data, F_status_set_fine(*status), "f_file_exists", arguments.array[i].string, "find", F_true, F_true, data_make->print);
+            break;
+          }
+
+          if (*status == F_false) {
+            *operation_if = fake_make_operation_if_type_false_next;
+            break;
+          }
+        } // for
+
         return;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_defined) {
-        *operation_if = fake_make_operation_if_type_false_next;
-        // @todo: handle first parameter/environment parameter and then define name parameters.
+
+        if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment, arguments.array[1], fake_make_operation_argument_environment_length) == F_equal_to) {
+          *operation_if = fake_make_operation_if_type_true_next;
+
+          for (f_array_length_t i = 2; i < arguments.used; i++) {
+
+            if (f_environment_exists(arguments.array[i].string) != F_true) {
+              *operation_if = fake_make_operation_if_type_false_next;
+              break;
+            }
+          } // for
+        }
+        else if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter, arguments.array[1], fake_make_operation_argument_parameter_length) == F_equal_to) {
+
+          if (!data_make->setting_make.parameter.used) {
+            *operation_if = fake_make_operation_if_type_false_next;
+            return;
+          }
+
+          f_array_length_t i = 2;
+          f_string_length_t j = 0;
+          bool missed = F_true;
+
+          *operation_if = fake_make_operation_if_type_true_next;
+
+          for (; i < arguments.used; i++, missed = F_true) {
+
+            for (j = 0; j < data_make->setting_make.parameter.used; j++) {
+
+              if (fl_string_dynamic_compare(arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
+                missed = F_false;
+                break;
+              }
+            } // for
+
+            if (missed) {
+              *operation_if = fake_make_operation_if_type_false_next;
+              break;
+            }
+          } // for
+        }
+
         return;
       }
 
@@ -2105,7 +2298,7 @@ extern "C" {
         return;
       }
 
-      f_file_mode mode_rule = 0;
+      f_file_mode_t mode_rule = 0;
       uint8_t replace = 0;
 
       *status = fake_make_get_id_mode(data, data_make->print, arguments.array[0], &mode_rule, &replace);
@@ -2148,7 +2341,7 @@ extern "C" {
         return;
       }
 
-      f_file_mode mode_rule = 0;
+      f_file_mode_t mode_rule = 0;
       uint8_t replace = 0;
 
       *status = fake_make_get_id_mode(data, data_make->print, arguments.array[0], &mode_rule, &replace);
@@ -3161,8 +3354,8 @@ extern "C" {
           }
 
           if (*operation_if == fake_make_operation_if_type_if_mode || *operation_if == fake_make_operation_if_type_if_owner || *operation_if == fake_make_operation_if_type_if_group || *operation_if == fake_make_operation_if_type_if_is || *operation_if == fake_make_operation_if_type_if_exists) {
-            if (*operation_if == fake_make_operation_if_type_if_mode) {
 
+            if (*operation_if == fake_make_operation_if_type_if_mode) {
               if (fl_string_dynamic_compare_string(fake_make_operation_argument_is, arguments.array[1], fake_make_operation_argument_is_length) == F_equal_to_not) {
                 if (fl_string_dynamic_compare_string(fake_make_operation_argument_has, arguments.array[1], fake_make_operation_argument_has_length) == F_equal_to_not) {
                   if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
@@ -3177,7 +3370,7 @@ extern "C" {
                 }
               }
 
-              f_file_mode mode_rule = 0;
+              f_file_mode_t mode_rule = 0;
               uint8_t replace = 0;
 
               *status = fake_make_get_id_mode(data, data_make->print, arguments.array[2], &mode_rule, &replace);
@@ -3281,6 +3474,7 @@ extern "C" {
                   }
                 }
                 else if (*operation_if != fake_make_operation_if_type_if_exists && *operation_if != fake_make_operation_if_type_if_is) {
+
                   // The existence tests do not need to happen here for *_if_exists and *_if_is as those two types will handle performing them during the process stage.
                   status_file = f_file_exists(arguments.array[i].string);
 
