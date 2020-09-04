@@ -1,0 +1,58 @@
+# fss-0001
+# This is designed for bzip2-1.0.8 as an example.
+# @fixme: this reveals some shortcomings and problems:
+# 1) need to be able to build -m bzip2recover without libbzip2.a.
+# 2) need to provide a way to designate path prefixes (instead of just hardcoded sources/c/, etc...
+# 3) need to be able to build shared program without library (add a 'build_library' setting).
+# 4) need to remove the auto-appending of the -D in the defines.
+# 5) the -s/--settings does not appear to be working correctly, confirm this.
+
+project_name bzip2
+
+version_major 1
+version_minor 0
+version_micro 8
+version_target major
+
+environment
+
+process_pre
+process_post
+
+modes
+modes_default
+
+build_compiler gcc
+build_language c
+build_linker ar
+build_libraries -lc
+build_sources_library blocksort.c huffman.c crctable.c randtable.c compress.c decompress.c bzlib.c
+build_sources_program bzip2.c
+build_sources_headers bzlib.h
+build_sources_script
+build_sources_setting
+build_script no
+build_shared yes
+build_static yes
+
+path_headers
+path_library_script script
+path_library_shared shared
+path_library_static static
+path_program_script script
+path_program_shared shared
+path_program_static static
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+defines_all _FILE_OFFSET_BITS=64
+defines_static
+defines_shared
+
+flags_all -z now -g -Wall -Winline -O2
+flags_shared
+flags_static
+flags_library -fPIC
+flags_program -fPIE
