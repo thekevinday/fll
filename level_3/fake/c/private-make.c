@@ -2263,15 +2263,184 @@ extern "C" {
         return;
       }
 
-      // @todo: for each of these, handle converting all arguments to integers/numbers and then processing conditions in order.
-      //fake_make_operation_if_type_if_equal
-      //fake_make_operation_if_type_if_equal_not (needs to be applied to all, so use separate logic block.)
-      //fake_make_operation_if_type_if_greater
-      //fake_make_operation_if_type_if_greater_equal
-      //fake_make_operation_if_type_if_less
-      //fake_make_operation_if_type_if_less_equal
+      if (*operation_if == fake_make_operation_if_type_if_equal) {
+        *operation_if = fake_make_operation_if_type_true_next;
 
-      *operation_if = fake_make_operation_if_type_false_next;
+        for (f_array_length_t i = 2; i < arguments.used; i++) {
+
+          if (fl_string_dynamic_compare(arguments.array[1], arguments.array[i]) == F_equal_to_not) {
+            *operation_if = fake_make_operation_if_type_false_next;
+            break;
+          }
+        } // for
+
+        return;
+      }
+
+      if (*operation_if == fake_make_operation_if_type_if_equal_not) {
+        *operation_if = fake_make_operation_if_type_true_next;
+
+        f_array_length_t i = 1;
+        f_array_length_t j = 0;
+
+        for (; i < arguments.used; i++) {
+          for (j = i + 1; j < arguments.used; j++) {
+
+            if (fl_string_dynamic_compare(arguments.array[i], arguments.array[j]) == F_equal_to) {
+              *operation_if = fake_make_operation_if_type_false_next;
+              i = arguments.used;
+              break;
+            }
+          } // for
+        } // for
+
+        return;
+      }
+
+      if (*operation_if == fake_make_operation_if_type_if_greater || *operation_if == fake_make_operation_if_type_if_greater_equal || *operation_if == fake_make_operation_if_type_if_less || *operation_if == fake_make_operation_if_type_if_less_equal) {
+        f_status_t status_number = F_none;
+        f_string_range_t range = f_string_range_initialize;
+
+        f_number_unsigned_t number_left = 0;
+        f_number_unsigned_t number_right = 0;
+
+        bool is_negative_left = F_false;
+        bool is_negative_right = F_false;
+
+        f_string_length_t i = 1;
+
+        const uint8_t type_if = *operation_if;
+
+        *operation_if = fake_make_operation_if_type_true_next;
+
+        // @fixme there needs to handle converting numbers with decimals (like 1.01), perhaps operate on them as strings or provide a special processor.
+        range.start = 0;
+        range.stop = arguments.array[i].used - 1;
+
+        if (arguments.array[i].string[0] == '+') {
+          range.start = 1;
+        }
+        else if (arguments.array[i].string[0] == '-') {
+          range.start = 1;
+          is_negative_left = F_true;
+        }
+
+        if (range.start > range.stop) {
+          status_number = F_status_set_error(F_failure);
+        }
+        else {
+          status_number = fl_conversion_string_to_number_unsigned(arguments.array[i].string, &number_left, range);
+        }
+
+        if (F_status_is_fine(status_number)) {
+          for (i = 2; i < arguments.used; i++, status_number = F_none, number_left = number_right, is_negative_left = is_negative_right) {
+
+            if (arguments.array[i].used) {
+              range.start = 0;
+              range.stop = arguments.array[i].used - 1;
+
+              is_negative_right = F_false;
+
+              if (arguments.array[i].string[0] == '+') {
+                range.start = 1;
+              }
+              else if (arguments.array[i].string[0] == '-') {
+                range.start = 1;
+                is_negative_right = F_true;
+              }
+
+              if (range.start > range.stop) {
+                status_number = F_status_set_error(F_failure);
+              }
+              else {
+                status_number = fl_conversion_string_to_number_unsigned(arguments.array[i].string, &number_right, range);
+              }
+            }
+            else {
+              status_number = F_status_set_error(F_failure);
+            }
+
+            if (F_status_is_error(status_number)) {
+              break;
+            }
+
+            if (type_if == fake_make_operation_if_type_if_greater) {
+
+              if (is_negative_left == is_negative_right) {
+                if (!(number_left > number_right)) {
+                  *operation_if = fake_make_operation_if_type_false_next;
+                  break;
+                }
+              }
+              else if (!is_negative_left && is_negative_right) {
+                *operation_if = fake_make_operation_if_type_false_next;
+                break;
+              }
+            }
+            else if (type_if == fake_make_operation_if_type_if_greater_equal) {
+
+              if (is_negative_left == is_negative_right) {
+                if (!(number_left >= number_right)) {
+                  *operation_if = fake_make_operation_if_type_false_next;
+                  break;
+                }
+              }
+              else if (!is_negative_left && is_negative_right) {
+                *operation_if = fake_make_operation_if_type_false_next;
+                break;
+              }
+            }
+            else if (type_if == fake_make_operation_if_type_if_less) {
+
+              if (is_negative_left == is_negative_right) {
+                if (!(number_left < number_right)) {
+                  *operation_if = fake_make_operation_if_type_false_next;
+                  break;
+                }
+              }
+              else if (is_negative_left && !is_negative_right) {
+                *operation_if = fake_make_operation_if_type_false_next;
+                break;
+              }
+            }
+            else if (type_if == fake_make_operation_if_type_if_less_equal) {
+
+              if (is_negative_left == is_negative_right) {
+                if (!(number_left <= number_right)) {
+                  *operation_if = fake_make_operation_if_type_false_next;
+                  break;
+                }
+              }
+              else if (is_negative_left && !is_negative_right) {
+                *operation_if = fake_make_operation_if_type_false_next;
+                break;
+              }
+            }
+          } // for
+        }
+
+        if (F_status_is_error(status_number)) {
+          *status = F_status_set_error(F_failure);
+          *operation_if = fake_make_operation_if_type_false_always_next;
+
+          if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+            printf("%c", f_string_eol[0]);
+
+            if ((i == 1 && number_left > f_number_t_size_unsigned) || (i > 1 && number_right > f_number_t_size_unsigned)) {
+              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The number '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%c%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' may only be between the ranges -%llu to %llu.", f_number_t_size_unsigned, f_number_t_size_unsigned);
+            }
+            else {
+              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Invalid or unsupported number provided '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+            }
+          }
+        }
+
+        return;
+      }
 
       return;
     }
@@ -3499,6 +3668,7 @@ extern "C" {
           }
 
           if (*operation_if == fake_make_operation_if_type_if_defined) {
+
             if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment, arguments.array[1], fake_make_operation_argument_environment_length) == F_equal_to_not) {
               if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter, arguments.array[1], fake_make_operation_argument_parameter_length) == F_equal_to_not) {
                 if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
@@ -3516,11 +3686,29 @@ extern "C" {
           }
 
           if (*operation_if == fake_make_operation_if_type_if_equal || *operation_if == fake_make_operation_if_type_if_equal_not) {
-            // nothing to validate.
+            if (arguments.used < 3) {
+              if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+                printf("%c", f_string_eol[0]);
+                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+              }
+
+              *status = F_status_set_error(F_failure);
+            }
+
             return;
           }
 
           if (*operation_if == fake_make_operation_if_type_if_greater || *operation_if == fake_make_operation_if_type_if_greater_equal || *operation_if == fake_make_operation_if_type_if_less || *operation_if == fake_make_operation_if_type_if_less_equal) {
+            if (arguments.used < 3) {
+              if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+                printf("%c", f_string_eol[0]);
+                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+              }
+
+              *status = F_status_set_error(F_failure);
+              return;
+            }
+
             f_status_t status_number = F_none;
             f_string_range_t range = f_string_range_initialize;
             f_number_unsigned_t number = 0;
