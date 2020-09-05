@@ -295,7 +295,7 @@ extern "C" {
         fake_file_defines,
         fake_file_dependencies,
         fake_file_fakefile,
-        fake_file_settings,
+        data->settings.string,
         fake_file_readme,
       };
 
@@ -309,7 +309,7 @@ extern "C" {
         fake_file_defines_length,
         fake_file_dependencies_length,
         fake_file_fakefile_length,
-        fake_file_settings_length,
+        data->settings.used,
         fake_file_readme_length,
       };
 

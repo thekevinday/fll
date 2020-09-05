@@ -5,7 +5,6 @@
 # 2) need to provide a way to designate path prefixes (instead of just hardcoded sources/c/, etc...
 # 3) need to be able to build shared program without library (add a 'build_library' setting).
 # 4) need to remove the auto-appending of the -D in the defines.
-# 5) the -s/--settings does not appear to be working correctly, confirm this.
 
 project_name bzip2recover
 
