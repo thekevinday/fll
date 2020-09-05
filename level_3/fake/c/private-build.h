@@ -22,6 +22,8 @@ extern "C" {
     bool build_shared;
     bool build_static;
 
+    bool path_standard;
+
     bool search_exclusive;
     bool search_shared;
     bool search_static;
@@ -36,6 +38,7 @@ extern "C" {
     f_string_dynamic_t path_program_script;
     f_string_dynamic_t path_program_shared;
     f_string_dynamic_t path_program_static;
+    f_string_dynamic_t path_sources;
     f_string_dynamic_t process_post;
     f_string_dynamic_t process_pre;
     f_string_dynamic_t project_name;
@@ -71,6 +74,8 @@ extern "C" {
     F_true, \
     F_true, \
     F_true, \
+    F_true, \
+    f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
@@ -117,6 +122,7 @@ extern "C" {
     f_macro_string_dynamic_t_delete_simple(setting.path_program_script) \
     f_macro_string_dynamic_t_delete_simple(setting.path_program_shared) \
     f_macro_string_dynamic_t_delete_simple(setting.path_program_static) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_sources) \
     f_macro_string_dynamic_t_delete_simple(setting.process_post) \
     f_macro_string_dynamic_t_delete_simple(setting.process_pre) \
     f_macro_string_dynamic_t_delete_simple(setting.project_name) \
@@ -172,6 +178,8 @@ extern "C" {
   #define fake_build_setting_name_path_program_script    "path_program_script"
   #define fake_build_setting_name_path_program_shared    "path_program_shared"
   #define fake_build_setting_name_path_program_static    "path_program_static"
+  #define fake_build_setting_name_path_sources           "path_sources"
+  #define fake_build_setting_name_path_standard          "path_standard"
   #define fake_build_setting_name_process_post           "process_post"
   #define fake_build_setting_name_process_pre            "process_pre"
   #define fake_build_setting_name_project_name           "project_name"
@@ -214,6 +222,8 @@ extern "C" {
   #define fake_build_setting_name_path_program_script_length    19
   #define fake_build_setting_name_path_program_shared_length    19
   #define fake_build_setting_name_path_program_static_length    19
+  #define fake_build_setting_name_path_sources_length           12
+  #define fake_build_setting_name_path_standard_length          13
   #define fake_build_setting_name_process_post_length           12
   #define fake_build_setting_name_process_pre_length            11
   #define fake_build_setting_name_project_name_length           12
@@ -225,7 +235,7 @@ extern "C" {
   #define fake_build_setting_name_version_minor_length          13
   #define fake_build_setting_name_version_target_length         14
 
-  #define fake_build_setting_total 41
+  #define fake_build_setting_total 43
 
   #define fake_build_setting_default_version "0"
 

@@ -41,6 +41,8 @@ Settings Specification:
     "path_program_script": Must be a single valid path.
     "path_program_shared": Must be a single valid path.
     "path_program_static": Must be a single valid path.
+    "path_sources": Must only be a valid directory path or not specified.
+    "path_standard": Must only one of: "yes" or "no".
     "project_name": Must only contain characters allowed in a filename.
     "process_post": Must contain only a single valid filename.
     "process_pre": Must contain only a single valid filename.

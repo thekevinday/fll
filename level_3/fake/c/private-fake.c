@@ -30,7 +30,12 @@ extern "C" {
     {
       int result = 0;
 
-      *status = fll_execute_program_environment(program.string, arguments, environment.names, environment.values, &result);
+      if (program.used) {
+        *status = fll_execute_program_environment(program.string, arguments, environment.names, environment.values, &result);
+      }
+      else {
+        *status = F_status_set_error(F_file_found_not);
+      }
 
       if (result != 0) {
         *status = F_status_set_error(F_failure);
@@ -40,7 +45,7 @@ extern "C" {
           if (data.verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find program '");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", program.string);
+            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", program.used ? program.string : "");
             fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' for executing.");
           }
         }
@@ -888,34 +893,29 @@ extern "C" {
     const f_string_t parameters_name[] = {
       fake_long_path_build,
       fake_long_path_data,
-      fake_long_path_sources,
       fake_long_path_work,
     };
 
     const f_string_t parameter_defaults[] = {
       fake_default_path_build,
       fake_default_path_data,
-      fake_default_path_sources,
       fake_default_path_work,
     };
 
     const f_string_length_t parameter_default_lengths[] = {
       fake_default_path_build_length,
       fake_default_path_data_length,
-      fake_default_path_sources_length,
       fake_default_path_work_length,
     };
 
     const f_string_dynamic_t *parameters_value[] = {
       &data.path_build,
       &data.path_data,
-      &data.path_sources,
       &data.path_work,
     };
 
     const bool parameters_required[] = {
       F_false,
-      F_true,
       F_true,
       F_false,
     };
@@ -923,7 +923,7 @@ extern "C" {
     struct stat directory_stat;
     f_status_t status = F_none;
 
-    for (uint8_t i = 0; i < 4; i++) {
+    for (uint8_t i = 0; i < 3; i++) {
       if (parameters_value[i]->used > 0) {
         memset(&directory_stat, 0, sizeof(struct stat));
 

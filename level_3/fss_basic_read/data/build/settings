@@ -38,6 +38,8 @@ path_library_static static
 path_program_script script
 path_program_shared shared
 path_program_static static
+path_sources
+path_standard yes
 
 search_exclusive yes
 search_shared yes

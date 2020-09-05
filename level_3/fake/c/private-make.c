@@ -1063,6 +1063,7 @@ extern "C" {
         fake_build_setting_name_build_script,
         fake_build_setting_name_build_shared,
         fake_build_setting_name_build_static,
+        fake_build_setting_name_path_standard,
         fake_build_setting_name_search_exclusive,
         fake_build_setting_name_search_shared,
         fake_build_setting_name_search_static,
@@ -1072,6 +1073,7 @@ extern "C" {
         fake_build_setting_name_build_script_length,
         fake_build_setting_name_build_shared_length,
         fake_build_setting_name_build_static_length,
+        fake_build_setting_name_path_standard_length,
         fake_build_setting_name_search_exclusive_length,
         fake_build_setting_name_search_shared_length,
         fake_build_setting_name_search_static_length,
@@ -1081,12 +1083,13 @@ extern "C" {
         data_make->setting_build.build_script,
         data_make->setting_build.build_shared,
         data_make->setting_build.build_static,
+        data_make->setting_build.path_standard,
         data_make->setting_build.search_exclusive,
         data_make->setting_build.search_shared,
         data_make->setting_build.search_static,
       };
 
-      for (uint8_t i = 0; i < 6; i++) {
+      for (uint8_t i = 0; i < 7; i++) {
         status = fl_string_dynamic_partial_compare_string(bool_name[i], data_make->buffer, bool_length[i], range_name);
 
         if (status == F_equal_to) {
@@ -1116,6 +1119,7 @@ extern "C" {
         fake_build_setting_name_path_program_script,
         fake_build_setting_name_path_program_shared,
         fake_build_setting_name_path_program_static,
+        fake_build_setting_name_path_sources,
         fake_build_setting_name_process_post,
         fake_build_setting_name_process_pre,
         fake_build_setting_name_project_name,
@@ -1135,6 +1139,7 @@ extern "C" {
         fake_build_setting_name_path_program_script_length,
         fake_build_setting_name_path_program_shared_length,
         fake_build_setting_name_path_program_static_length,
+        fake_build_setting_name_path_sources_length,
         fake_build_setting_name_process_post_length,
         fake_build_setting_name_process_pre_length,
         fake_build_setting_name_project_name_length,
@@ -1154,6 +1159,7 @@ extern "C" {
         data_make->setting_build.path_program_script,
         data_make->setting_build.path_program_shared,
         data_make->setting_build.path_program_static,
+        data_make->setting_build.path_sources,
         data_make->setting_build.process_post,
         data_make->setting_build.process_pre,
         data_make->setting_build.project_name,
@@ -1162,7 +1168,7 @@ extern "C" {
         data_make->setting_build.version_minor,
       };
 
-      for (uint8_t i = 0; i < 16; i++) {
+      for (uint8_t i = 0; i < 17; i++) {
         status = fl_string_dynamic_partial_compare_string(dynamic_name[i], data_make->buffer, dynamic_length[i], range_name);
 
         if (status == F_equal_to) {

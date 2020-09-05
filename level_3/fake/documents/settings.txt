@@ -136,6 +136,14 @@ Settings Documentation:
   path_program_static\:
     A sub-path representing when the built shared program files are placed.
 
+  path_sources\:
+    A sub-path representing when the built shared program files are placed.
+
+  path_standard\:
+    When "yes", the sources path will be built using the sources path with the language, such as "sources/c/", ignoring "path_sources" completely.
+    When "no", the default sources path structure is not used and instead "path_sources" is used.
+    When the parameter -S/--sources is specified, such as "-S xxx", then when "yes" is used path would be "xxx/c/" and when "no" path would be "xxx/".
+
   project_name\:
     The name of the project.
     If program sources are specified, then this will be used as the program name.

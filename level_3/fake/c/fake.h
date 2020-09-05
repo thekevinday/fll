@@ -120,7 +120,6 @@ extern "C" {
   #define fake_path_part_script    "script"    f_path_separator
   #define fake_path_part_settings  "settings"  f_path_separator
   #define fake_path_part_shared    "shared"    f_path_separator
-  #define fake_path_part_sources   "sources"   f_path_separator
   #define fake_path_part_stage     "stage"     f_path_separator
   #define fake_path_part_static    "static"    f_path_separator
 
@@ -139,7 +138,6 @@ extern "C" {
   #define fake_path_part_script_length    7
   #define fake_path_part_settings_length  9
   #define fake_path_part_shared_length    7
-  #define fake_path_part_sources_length   8
   #define fake_path_part_stage_length     6
   #define fake_path_part_static_length    7
 #endif // _di_fake_path_

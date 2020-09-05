@@ -435,32 +435,34 @@ bootstrap_id() {
     "path_program_script") echo -n 28;;
     "path_program_shared") echo -n 29;;
     "path_program_static") echo -n 30;;
-    "process_post") echo -n 31;;
-    "process_pre") echo -n 32;;
-    "project_name") echo -n 33;;
-    "search_exclusive") echo -n 34;;
-    "search_shared") echo -n 35;;
-    "search_static") echo -n 36;;
-    "version_major") echo -n 37;;
-    "version_micro") echo -n 38;;
-    "version_minor") echo -n 39;;
-    "version_target") echo -n 40;;
+    "path_sources") echo -n 31;;
+    "path_standard") echo -n 32;;
+    "process_post") echo -n 33;;
+    "process_pre") echo -n 34;;
+    "project_name") echo -n 35;;
+    "search_exclusive") echo -n 36;;
+    "search_shared") echo -n 37;;
+    "search_static") echo -n 38;;
+    "version_major") echo -n 39;;
+    "version_micro") echo -n 40;;
+    "version_minor") echo -n 41;;
+    "version_target") echo -n 42;;
 
-    "build_libraries-$mode") echo -n 41;;
-    "build_sources_headers-$mode") echo -n 42;;
-    "build_sources_library-$mode") echo -n 43;;
-    "build_sources_program-$mode") echo -n 44;;
-    "build_sources_setting-$mode") echo -n 45;;
-    "build_sources_script-$mode") echo -n 46;;
-    "defines_all-$mode") echo -n 47;;
-    "defines_shared-$mode") echo -n 48;;
-    "defines_static-$mode") echo -n 49;;
-    "environment-$mode") echo -n 50;;
-    "flags_all-$mode") echo -n 51;;
-    "flags_library-$mode") echo -n 52;;
-    "flags_program-$mode") echo -n 53;;
-    "flags_shared-$mode") echo -n 54;;
-    "flags_static-$mode") echo -n 55;;
+    "build_libraries-$mode") echo -n 43;;
+    "build_sources_headers-$mode") echo -n 44;;
+    "build_sources_library-$mode") echo -n 45;;
+    "build_sources_program-$mode") echo -n 46;;
+    "build_sources_setting-$mode") echo -n 47;;
+    "build_sources_script-$mode") echo -n 48;;
+    "defines_all-$mode") echo -n 49;;
+    "defines_shared-$mode") echo -n 50;;
+    "defines_static-$mode") echo -n 51;;
+    "environment-$mode") echo -n 52;;
+    "flags_all-$mode") echo -n 53;;
+    "flags_library-$mode") echo -n 54;;
+    "flags_program-$mode") echo -n 55;;
+    "flags_shared-$mode") echo -n 56;;
+    "flags_static-$mode") echo -n 57;;
   esac
 }
 
@@ -488,7 +490,7 @@ bootstrap_load_settings() {
     exit $failure
   fi
 
-  for i in build_compiler build_language build_libraries build_linker build_script build_shared build_sources_headers build_sources_library build_sources_program build_sources_setting build_sources_script build_static defines_all defines_shared defines_static environment flags_all flags_library flags_program flags_shared flags_static modes modes_default path_language path_headers path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static process_post process_pre project_name search_exclusive search_shared search_static version_major version_micro version_minor ; do
+  for i in build_compiler build_language build_libraries build_linker build_script build_shared build_sources_headers build_sources_library build_sources_program build_sources_setting build_sources_script build_static defines_all defines_shared defines_static environment flags_all flags_library flags_program flags_shared flags_static modes modes_default path_language path_headers path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static path_sources path_standard process_post process_pre project_name search_exclusive search_shared search_static version_major version_micro version_minor ; do
     variables[$(bootstrap_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 }

@@ -597,10 +597,17 @@ extern "C" {
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
     {
-      const f_string_static_t *path_sources = &data.path_sources_c;
+      const f_string_static_t *path_sources = &data.path_sources;
 
-      if (data_build.setting.build_language == fake_build_language_type_cpp) {
-        path_sources = &data.path_sources_cpp;
+      if (data_build.setting.path_standard) {
+        path_sources = &data.path_sources_c;
+
+        if (data_build.setting.build_language == fake_build_language_type_cpp) {
+          path_sources = &data.path_sources_cpp;
+        }
+      }
+      else if (data.parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+        path_sources = &data_build.setting.path_sources;
       }
 
       f_string_length_t source_length = 0;
@@ -1260,6 +1267,8 @@ extern "C" {
       fake_build_setting_name_path_program_script,
       fake_build_setting_name_path_program_shared,
       fake_build_setting_name_path_program_static,
+      fake_build_setting_name_path_sources,
+      fake_build_setting_name_path_standard,
       fake_build_setting_name_process_post,
       fake_build_setting_name_process_pre,
       fake_build_setting_name_project_name,
@@ -1304,6 +1313,8 @@ extern "C" {
       fake_build_setting_name_path_program_script_length,
       fake_build_setting_name_path_program_shared_length,
       fake_build_setting_name_path_program_static_length,
+      fake_build_setting_name_path_sources_length,
+      fake_build_setting_name_path_standard_length,
       fake_build_setting_name_process_post_length,
       fake_build_setting_name_process_pre_length,
       fake_build_setting_name_project_name_length,
@@ -1330,6 +1341,8 @@ extern "C" {
     f_string_dynamics_t path_program_script = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_program_shared = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_program_static = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_sources = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_standard = f_string_dynamics_t_initialize;
     f_string_dynamics_t process_post = f_string_dynamics_t_initialize;
     f_string_dynamics_t process_pre = f_string_dynamics_t_initialize;
     f_string_dynamics_t project_name = f_string_dynamics_t_initialize;
@@ -1373,6 +1386,8 @@ extern "C" {
       &path_program_script,
       &path_program_shared,
       &path_program_static,
+      &path_sources,
+      &path_standard,
       &process_post,
       &process_pre,
       &project_name,
@@ -1496,6 +1511,8 @@ extern "C" {
         fake_build_setting_name_path_program_script,
         fake_build_setting_name_path_program_shared,
         fake_build_setting_name_path_program_static,
+        fake_build_setting_name_path_sources,
+        fake_build_setting_name_path_standard,
         fake_build_setting_name_process_post,
         fake_build_setting_name_process_pre,
         fake_build_setting_name_project_name,
@@ -1523,6 +1540,8 @@ extern "C" {
         &path_program_script,
         &path_program_shared,
         &path_program_static,
+        &path_sources,
+        &path_standard,
         &process_post,
         &process_pre,
         &project_name,
@@ -1551,6 +1570,8 @@ extern "C" {
         0,
         0,
         0,
+        &setting->path_standard,
+        0,
         0,
         0,
         &setting->search_exclusive,
@@ -1573,6 +1594,8 @@ extern "C" {
         &setting->path_program_script,
         &setting->path_program_shared,
         &setting->path_program_static,
+        &setting->path_sources,
+        0,
         &setting->process_post,
         &setting->process_pre,
         &setting->project_name,
@@ -1590,6 +1613,8 @@ extern "C" {
       };
 
       uint8_t *settings_single_version[] = {
+        0,
+        0,
         0,
         0,
         0,
@@ -1632,6 +1657,8 @@ extern "C" {
         2,
         2,
         2,
+        2,
+        1,
         3,
         3,
         3,
@@ -1644,7 +1671,7 @@ extern "C" {
         5,
       };
 
-      for (f_array_length_t i = 0; i < 24; i++) {
+      for (f_array_length_t i = 0; i < 26; i++) {
         if (settings_single_source[i]->used == 0) continue;
 
         if (settings_single_source[i]->used > 1) {
@@ -1789,6 +1816,8 @@ extern "C" {
     f_macro_string_dynamics_t_delete_simple(path_program_script);
     f_macro_string_dynamics_t_delete_simple(path_program_shared);
     f_macro_string_dynamics_t_delete_simple(path_program_static);
+    f_macro_string_dynamics_t_delete_simple(path_sources);
+    f_macro_string_dynamics_t_delete_simple(path_standard);
     f_macro_string_dynamics_t_delete_simple(process_post);
     f_macro_string_dynamics_t_delete_simple(process_pre);
     f_macro_string_dynamics_t_delete_simple(project_name);
@@ -2055,10 +2084,17 @@ extern "C" {
     f_string_length_t source_length = 0;
     f_string_length_t destination_length = 0;
 
-    const f_string_static_t *path_sources = &data.path_sources_c;
+    const f_string_static_t *path_sources = &data.path_sources;
 
-    if (data_build.setting.build_language == fake_build_language_type_cpp) {
-      path_sources = &data.path_sources_cpp;
+    if (data_build.setting.path_standard) {
+      path_sources = &data.path_sources_c;
+
+      if (data_build.setting.build_language == fake_build_language_type_cpp) {
+        path_sources = &data.path_sources_cpp;
+      }
+    }
+    else if (data.parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+      path_sources = &data_build.setting.path_sources;
     }
 
     for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; i++) {
@@ -2250,10 +2286,17 @@ extern "C" {
     }
     else {
       if (data_build.setting.build_sources_headers.used) {
-        const f_string_static_t *path_sources = &data.path_sources_c;
+        const f_string_static_t *path_sources = &data.path_sources;
 
-        if (data_build.setting.build_language == fake_build_language_type_cpp) {
-          path_sources = &data.path_sources_cpp;
+        if (data_build.setting.path_standard) {
+          path_sources = &data.path_sources_c;
+
+          if (data_build.setting.build_language == fake_build_language_type_cpp) {
+            path_sources = &data.path_sources_cpp;
+          }
+        }
+        else if (data.parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+          path_sources = &data_build.setting.path_sources;
         }
 
         f_string_static_t path_headers = f_string_static_t_initialize;
@@ -2335,10 +2378,17 @@ extern "C" {
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
     {
-      const f_string_static_t *path_sources = &data.path_sources_c;
+      const f_string_static_t *path_sources = &data.path_sources;
 
-      if (data_build.setting.build_language == fake_build_language_type_cpp) {
-        path_sources = &data.path_sources_cpp;
+      if (data_build.setting.path_standard) {
+        path_sources = &data.path_sources_c;
+
+        if (data_build.setting.build_language == fake_build_language_type_cpp) {
+          path_sources = &data.path_sources_cpp;
+        }
+      }
+      else if (data.parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+        path_sources = &data_build.setting.path_sources;
       }
 
       f_string_length_t source_length = 0;
@@ -2427,10 +2477,17 @@ extern "C" {
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
     {
-      const f_string_static_t *path_sources = &data.path_sources_c;
+      const f_string_static_t *path_sources = &data.path_sources;
 
-      if (data_build.setting.build_language == fake_build_language_type_cpp) {
-        path_sources = &data.path_sources_cpp;
+      if (data_build.setting.path_standard) {
+        path_sources = &data.path_sources_c;
+
+        if (data_build.setting.build_language == fake_build_language_type_cpp) {
+          path_sources = &data.path_sources_cpp;
+        }
+      }
+      else if (data.parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+        path_sources = &data_build.setting.path_sources;
       }
 
       f_string_length_t source_length = 0;
