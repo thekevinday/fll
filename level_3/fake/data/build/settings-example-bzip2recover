@@ -1,8 +1,13 @@
 # fss-0001
-# This is designed for bzip2-1.0.8 as an example.
-# @fixme: this reveals some shortcomings and problems:
-# 1) need to be able to build -m bzip2recover without libbzip2.a.
-# 2) need to provide a way to designate path prefixes (instead of just hardcoded sources/c/, etc...
+#
+# This is designed for bzip2-1.0.8 as an example for compiling bzip2recover.
+#
+# To use this example do the following:
+#   1) download and extract bzip2-1.0.8.
+#   2) change into the extracted bzip2-1.0.8 directory.
+#   3) create the directory path "data/build/" within this bzip2-1.0.8 directory.
+#   4) copy this file (settings-example-bzip2recover) into the created directory path "data/build/".
+#   5) use the featureless make build operation to build, such as: "fake build -s settings-example-bzip2recover".
 
 project_name bzip2recover
 
@@ -11,47 +16,18 @@ version_minor 0
 version_micro 8
 version_target major
 
-environment
-
-process_pre
-process_post
-
-modes
-modes_default
-
 build_compiler gcc
 build_language c
 build_linker ar
 build_libraries -lc
-build_sources_library
 build_sources_program bzip2recover.c
-build_sources_headers
-build_sources_script
-build_sources_setting
 build_script no
-build_shared yes
-build_static yes
 
-path_headers
-path_library_script script
-path_library_shared shared
-path_library_static static
-path_program_script script
-path_program_shared shared
-path_program_static static
 path_sources
 path_standard no
 
-search_exclusive yes
-search_shared yes
-search_static yes
-
 defines_all -D_FILE_OFFSET_BITS=64
-defines_static
-defines_shared
 
 flags_all -z now -g -Wall -Winline -O2
-flags_shared
-flags_static
 flags_library -fPIC
 flags_program -fPIE
