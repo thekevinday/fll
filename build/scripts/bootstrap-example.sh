@@ -6,7 +6,7 @@
 # Unlike the other scripts, this is not inteded to be run as if it were a program.
 # Instead this provides a functional example on what commands to perform to perform the bootstrap.
 #
-# This only accepts a two arguments (both are required):
+# This only accepts two arguments (both are required):
 # 1) One of "individual", "level", "monolithic", "fake-individual", "fake-level", or "fake-monolithic".
 # 2) The version number of the project, such as "0.5.0".
 #
