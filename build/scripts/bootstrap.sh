@@ -893,7 +893,7 @@ bootstrap_operation_build() {
         fi
       done
 
-      if [[ $failure == "" ]] ; then
+      if [[ $failure == "" && $sources_library != "" ]] ; then
         if [[ $verbosity == "verbose" ]] ; then
           echo $linker rcs ${path_build}libraries/static/lib$name.a $sources
         fi

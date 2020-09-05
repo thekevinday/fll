@@ -2458,17 +2458,20 @@ extern "C" {
 
       source_library_length = 0;
 
-      memcpy(source_library, data.path_build_libraries_static.string, data.path_build_libraries_static.used);
-      source_library_length += data.path_build_libraries_static.used;
+      // only include the library if there are sources that would result in it being built.
+      if (data_build.setting.build_sources_library.used) {
+        memcpy(source_library, data.path_build_libraries_static.string, data.path_build_libraries_static.used);
+        source_library_length += data.path_build_libraries_static.used;
 
-      memcpy(source_library + source_library_length, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
-      source_library_length += fake_build_parameter_library_name_prefix_length;
+        memcpy(source_library + source_library_length, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+        source_library_length += fake_build_parameter_library_name_prefix_length;
 
-      memcpy(source_library + source_library_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
-      source_library_length += data_build.setting.project_name.used;
+        memcpy(source_library + source_library_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
+        source_library_length += data_build.setting.project_name.used;
 
-      memcpy(source_library + source_library_length, fake_build_parameter_library_name_suffix_static, fake_build_parameter_library_name_suffix_static_length);
-      source_library_length += fake_build_parameter_library_name_suffix_static_length;
+        memcpy(source_library + source_library_length, fake_build_parameter_library_name_suffix_static, fake_build_parameter_library_name_suffix_static_length);
+        source_library_length += fake_build_parameter_library_name_suffix_static_length;
+      }
 
       source_library[source_library_length] = 0;
 

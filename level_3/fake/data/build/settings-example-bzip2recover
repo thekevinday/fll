@@ -3,7 +3,6 @@
 # @fixme: this reveals some shortcomings and problems:
 # 1) need to be able to build -m bzip2recover without libbzip2.a.
 # 2) need to provide a way to designate path prefixes (instead of just hardcoded sources/c/, etc...
-# 3) need to be able to build shared program without library (add a 'build_library' setting).
 
 project_name bzip2recover
 
@@ -17,8 +16,8 @@ environment
 process_pre
 process_post
 
-modes 
-modes_default 
+modes
+modes_default
 
 build_compiler gcc
 build_language c
