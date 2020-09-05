@@ -574,6 +574,9 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param setting_file
+ *   The name of the settings file to use.
+ *   If setting_file.used is 0, then the default or program parameter supplied file is used.
  * @param setting
  *   All build related setting data from the build setting file are loaded into this.
  *   These setting will have any specified mode property applied.
@@ -586,7 +589,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_
-  extern void fake_build_load_setting(const fake_data_t data, fake_build_setting_t *setting, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_load_setting(const fake_data_t data, const f_string_static_t setting_file, fake_build_setting_t *setting, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_load_setting_
 
 /**
@@ -709,6 +712,9 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param setting_file
+ *   The name of the settings file to use.
+ *   If setting_file.used is 0, then the default or program parameter supplied file is used.
  *
  * @return
  *   F_none on success.
@@ -716,7 +722,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
-  extern f_return_status fake_build_operate(const fake_data_t data) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_build_operate(const fake_data_t data, const f_string_static_t setting_file) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_operate_
 
 /**

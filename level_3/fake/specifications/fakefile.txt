@@ -46,7 +46,7 @@ Fakefile Specification:
   The Section Operation Objects are\:
   - archive: One or more Content.
   - break: Zero or One Content. If specified, First content must be one of "success" or "failure".
-  - build: Zero or One Content. First Content represents path to the settings file, relative to the project root.
+  - build: Zero or One Content. First Content represents file name of the settings file to use.
   - clean: Zero Content.
   - compile: One or more Content as parameters to compiler.
   - define: Two or more Content.

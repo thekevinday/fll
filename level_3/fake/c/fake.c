@@ -283,7 +283,9 @@ extern "C" {
           }
 
           if (F_status_is_not_error(status)) {
-            status = fake_build_operate(*data);
+            f_string_static_t stub = f_string_static_t_initialize;
+
+            status = fake_build_operate(*data, stub);
           }
         }
         else if (operations[i] == fake_operation_clean) {

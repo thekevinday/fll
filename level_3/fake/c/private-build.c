@@ -1168,8 +1168,10 @@ extern "C" {
 #endif // _di_fake_build_load_environment_
 
 #ifndef _di_fake_build_load_setting_
-  void fake_build_load_setting(const fake_data_t data, fake_build_setting_t *setting, f_status_t *status) {
+  void fake_build_load_setting(const fake_data_t data, const f_string_static_t setting_file, fake_build_setting_t *setting, f_status_t *status) {
     if (F_status_is_error(*status)) return;
+
+    char path_file[data.path_data_build.used + setting_file.used + 1];
 
     {
       f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
@@ -1177,7 +1179,18 @@ extern "C" {
       f_fss_objects_t objects = f_fss_objects_t_initialize;
       f_fss_contents_t contents = f_fss_contents_t_initialize;
 
-      *status = fake_file_buffer(data, data.file_data_build_settings.string, &buffer);
+      if (setting_file.used) {
+        memcpy(path_file, data.path_data_build.string, data.path_data_build.used);
+        memcpy(path_file + data.path_data_build.used, setting_file.string, setting_file.used);
+
+        path_file[data.path_data_build.used + setting_file.used] = 0;
+
+        *status = fake_file_buffer(data, path_file, &buffer);
+      }
+      else {
+        *status = fake_file_buffer(data, data.file_data_build_settings.string, &buffer);
+      }
+
       if (F_status_is_error(*status)) return;
 
       f_string_range_t range = f_macro_string_range_initialize(buffer.used);
@@ -1187,7 +1200,7 @@ extern "C" {
         fake_print_error_fss(data, *status, "fll_fss_extended_read", data.file_data_build_settings.string, range, F_true);
       }
 
-      fake_build_load_setting_process(data, data.file_data_build_settings.string, buffer, objects, contents, setting, status);
+      fake_build_load_setting_process(data, setting_file.used ? path_file : data.file_data_build_settings.string, buffer, objects, contents, setting, status);
 
       f_macro_string_dynamic_t_delete_simple(buffer);
       f_macro_fss_objects_t_delete_simple(objects);
@@ -1212,7 +1225,7 @@ extern "C" {
           fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The setting '");
           fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", names[i]);
           fl_color_print(f_type_error, data.context.error, data.context.reset, "' is required but is not specified in the settings file '");
-          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", data.file_data_build_settings.string);
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", setting_file.used ? path_file : data.file_data_build_settings.string);
           fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
 
           failed = F_true;
@@ -2249,7 +2262,7 @@ extern "C" {
 #endif // _di_fake_build_objects_static_
 
 #ifndef _di_fake_build_operate_
-  f_return_status fake_build_operate(const fake_data_t data) {
+  f_return_status fake_build_operate(const fake_data_t data, const f_string_static_t setting_file) {
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Building project.");
@@ -2263,7 +2276,7 @@ extern "C" {
 
     f_macro_mode_t_set_default_umask(mode, data.umask);
 
-    fake_build_load_setting(data, &data_build.setting, &status);
+    fake_build_load_setting(data, setting_file, &data_build.setting, &status);
 
     fake_build_load_stage(data, &stage, &status);
 

@@ -75,7 +75,8 @@ Fakefile Documentation:
       Run the fake build operation as if "fake build" was run instead of "fake make".
       Command line arguments are automatically passed to the fake build operation.
 
-      Accepts an optional Content that is a path to a build settings file to use instead of the default.
+      Accepts an optional Content that is a file name to a build settings file to use instead of the default.
+      This file name is relative to the data build directory (which can be changed by -D/--data parameter).
 
     - break\:
       Perform an exit from the current make operation.

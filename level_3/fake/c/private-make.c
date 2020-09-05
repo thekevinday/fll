@@ -560,7 +560,9 @@ extern "C" {
       }
 
       if (data_make->setting_make.load_build) {
-        fake_build_load_setting(data, &data_make->setting_build, status);
+        f_string_static_t stub = f_string_static_t_initialize;
+
+        fake_build_load_setting(data, stub, &data_make->setting_build, status);
 
         if (F_status_is_error(*status)) {
           fake_print_error(data, *status, "fake_build_load_setting", F_true);
@@ -1738,7 +1740,9 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_build) {
-      *status = fake_build_operate(data);
+      f_string_static_t stub = f_string_static_t_initialize;
+
+      *status = fake_build_operate(data, arguments.used ? arguments.array[0] : stub);
 
       fake_make_operate_process_return(data, 0, data_make, status);
       return;
@@ -3103,27 +3107,34 @@ extern "C" {
       }
       else if (arguments.used) {
         if (arguments.array[0].used) {
-          f_status_t status_file = f_file_is(arguments.array[0].string, f_file_type_regular);
+          char path_file[data.path_data_build.used + arguments.array[0].used + 1];
+
+          memcpy(path_file, data.path_data_build.string, data.path_data_build.used);
+          memcpy(path_file + data.path_data_build.used, arguments.array[0].string, arguments.array[0].used);
+
+          path_file[data.path_data_build.used + arguments.array[0].used] = 0;
+
+          f_status_t status_file = f_file_is(path_file, f_file_type_regular);
 
           if (status_file == F_file_found_not) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
               fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", path_file);
               fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
             }
 
             *status = F_status_set_error(status_file);
           }
           else if (F_status_is_error(status_file)) {
-            fake_print_message_file(data, *status, "f_file_is", data.file_data_build_fakefile.string, "find", F_true, F_true, data_make->print);
+            fake_print_message_file(data, *status, "f_file_is", path_file, "find", F_true, F_true, data_make->print);
             *status = status_file;
           }
           else if (!status_file) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
               fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
+              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", path_file);
               fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a regular file.");
             }
 
