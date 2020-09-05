@@ -9,7 +9,3 @@ Defines Specification:
   The Object name has further restrictions than FSS-0000 requires.
   These restrictions are that the Object must only evaluate to a valid C/C++ macro name.
   This is essentially means only Word characters.
-
-  It is recommended that each define begin and end with an underscore.
-  The Featureless Make program will convert the define as follows when compiling\:
-    - Object name = "_en_my_macro_" will become "-D_en_my_macro_".

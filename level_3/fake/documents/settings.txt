@@ -68,19 +68,16 @@ Settings Documentation:
   defines_all\:
     A collection of macro names.
     These will be appended to the compiler for compiled languages such as C and C++.
-    These will automatically have "-D" prepended to them.
     These are applied to both shared and static builds.
 
   defines_shared\:
     A collection of macro names.
     These will be appended to the compiler for compiled languages such as C and C++.
-    These will automatically have "-D" prepended to them.
     These are applied to only shared builds.
 
   defines_static\:
     A collection of macro names.
     These will be appended to the compiler for compiled languages such as C and C++.
-    These will automatically have "-D" prepended to them.
     These are applied to only static builds.
 
   environment\:

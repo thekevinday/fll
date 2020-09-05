@@ -4,7 +4,6 @@
 # 1) need to be able to build -m bzip2recover without libbzip2.a.
 # 2) need to provide a way to designate path prefixes (instead of just hardcoded sources/c/, etc...
 # 3) need to be able to build shared program without library (add a 'build_library' setting).
-# 4) need to remove the auto-appending of the -D in the defines.
 
 project_name bzip2recover
 
@@ -46,7 +45,7 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-defines_all _FILE_OFFSET_BITS=64
+defines_all -D_FILE_OFFSET_BITS=64
 defines_static
 defines_shared
 

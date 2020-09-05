@@ -667,21 +667,21 @@ bootstrap_operation_build() {
   if [[ $defines != "" ]] ; then
     flags_all="$flags_all "
     for i in $defines ; do
-      flags_all="${flags_all}-D$i "
+      flags_all="${flags_all}$i "
     done
   fi
 
   if [[ $defines_shared != "" ]] ; then
     flags_shared="$flags_shared "
     for i in $defines_shared ; do
-      flags_shared="${flags_shared}-D$i "
+      flags_shared="${flags_shared}$i "
     done
   fi
 
   if [[ $defines_static != "" ]] ; then
     flags_static="$flags_static "
     for i in $defines_static ; do
-      flags_static="${flags_static}-D$i "
+      flags_static="${flags_static}$i "
     done
   fi
 

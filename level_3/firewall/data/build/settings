@@ -43,7 +43,7 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-defines_all _en_firewall_debug_
+defines_all -D_en_firewall_debug_
 defines_static
 defines_shared
 
