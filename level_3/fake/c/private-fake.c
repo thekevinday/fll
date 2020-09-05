@@ -9,8 +9,8 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_execute_
-  void fake_execute(const fake_data_t data, const fake_environment_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
-    if (F_status_is_error(*status)) return;
+  int fake_execute(const fake_data_t data, const fake_environment_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
+    if (F_status_is_error(*status)) return 1;
 
     if (data.verbosity == fake_verbosity_verbose) {
       printf("%s", program.string);
@@ -27,33 +27,35 @@ extern "C" {
       fflush(f_type_output);
     }
 
-    {
-      int result = 0;
+    int return_code = 0;
 
-      if (program.used) {
-        *status = fll_execute_program_environment(program.string, arguments, environment.names, environment.values, &result);
+    if (program.used) {
+      *status = fll_execute_program_environment(program.string, arguments, environment.names, environment.values, &return_code);
+    }
+    else {
+      *status = F_status_set_error(F_file_found_not);
+    }
+
+    if (return_code != 0) {
+      *status = F_status_set_error(F_failure);
+    }
+    else if (F_status_is_error(*status)) {
+      return_code = 1;
+
+      if (F_status_set_fine(*status) == F_file_found_not) {
+        if (data.verbosity != fake_verbosity_quiet) {
+          fprintf(f_type_error, "%c", f_string_eol[0]);
+          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find program '");
+          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", program.used ? program.string : "");
+          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' for executing.");
+        }
       }
       else {
-        *status = F_status_set_error(F_file_found_not);
-      }
-
-      if (result != 0) {
-        *status = F_status_set_error(F_failure);
-      }
-      else if (F_status_is_error(*status)) {
-        if (F_status_set_fine(*status) == F_file_found_not) {
-          if (data.verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to find program '");
-            fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", program.used ? program.string : "");
-            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' for executing.");
-          }
-        }
-        else {
-          fake_print_error(data, F_status_set_fine(*status), "fll_execute_program_environment", F_true);
-        }
+        fake_print_error(data, F_status_set_fine(*status), "fll_execute_program_environment", F_true);
       }
     }
+
+    return return_code;
   }
 #endif // _di_fake_execute_
 

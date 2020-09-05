@@ -306,3 +306,20 @@ Fakefile Documentation:
 
       The first Content must be either "file" or "directory".
       The remaining Content must be a path to the file.
+
+  The IKI vocabulary context is supported and is further clarified as follows\:
+  - define\:
+    The define object represents environment variables passed to the program or created by the program.
+    The value represents the environment variable name and is case-sensitive.
+    This IKI variable gets substituted with the environment variable's value or NULL if not defined.
+    The "settings" list supports declaring custom environment variables (which overwrite any existing environment variable with the same name).
+
+  - parameter\:
+    The parameter object represents a variable that is to be substituted.
+    The value represents the variable name and is case-sensitive.
+    This IKI variable gets substituted with the value defined in the "settings" list or NULL if not defined.
+
+    The following are reserved parameter variable names\:
+    - return\:
+      This variable holds the return status from a previously run user-space applications, which happens with the "run" and "shell" section operations.
+      This does not represent the return code for each line, just only those lines that run user-space applications.

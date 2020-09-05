@@ -880,6 +880,31 @@ extern "C" {
 
             if (parameter->used) {
               for (k = 0; k < parameter->used; k++) {
+
+                // check against reserved parameter names and if matches use them instead.
+                if (fl_string_dynamic_compare_string(fake_make_parameter_variable_return, parameter->array[k].name, fake_make_parameter_variable_return_length) == F_equal_to) {
+
+                  if (data_make->setting_make.parameter.array[0].value.array[0].used) {
+                    *status = fl_string_dynamic_append(data_make->setting_make.parameter.array[0].value.array[0], &arguments->array[arguments->used]);
+                    if (F_status_is_error(*status)) {
+                      fake_print_message(data, F_status_set_fine(*status), "fl_string_append", F_true, data_make->print);
+                      break;
+                    }
+                  }
+                  else {
+                    *status = fl_string_append("0", 1, &arguments->array[arguments->used]);
+                    if (F_status_is_error(*status)) {
+                      fake_print_message(data, F_status_set_fine(*status), "fl_string_append", F_true, data_make->print);
+                      break;
+                    }
+                  }
+
+                  arguments->used++;
+                  continue;
+                }
+                // @todo: else, handle all other reserved parameter names.
+
+                // check against iki variable list.
                 *status = fl_string_dynamic_partial_compare_dynamic(parameter->array[k].name, data_make->buffer, iki_content.array[j]);
 
                 if (*status == F_equal_to) {
@@ -1708,20 +1733,20 @@ extern "C" {
   void fake_make_operate_process(const fake_data_t data, const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
 
     if (operation == fake_make_operation_type_archive) {
-      if (!arguments.used) {
-        return;
-      }
-
-      fake_execute(data, data_make->environment, data_make->setting_build.build_linker, arguments, status);
+      int return_code = fake_execute(data, data_make->environment, data_make->setting_build.build_linker, arguments, status);
 
       if (F_status_is_error(*status)) {
         fake_print_message(data, F_status_set_fine(*status), "fake_execute", F_true, data_make->print);
+      }
+      else {
+        fake_make_operate_process_return(data, return_code, data_make, status);
       }
 
       return;
     }
 
     if (operation == fake_make_operation_type_break) {
+
       if (!arguments.used || fl_string_dynamic_compare_string(fake_make_operation_argument_success, arguments.array[0], fake_make_operation_argument_success_length) == F_equal_to) {
         *status = F_signal_abort;
       }
@@ -1756,23 +1781,19 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_compile) {
-      if (!arguments.used) {
-        return;
-      }
-
-      fake_execute(data, data_make->environment, data_make->setting_build.build_compiler, arguments, status);
+      int return_code = fake_execute(data, data_make->environment, data_make->setting_build.build_compiler, arguments, status);
 
       if (F_status_is_error(*status)) {
         fake_print_message(data, F_status_set_fine(*status), "fake_execute", F_true, data_make->print);
+      }
+      else {
+        fake_make_operate_process_return(data, return_code, data_make, status);
       }
 
       return;
     }
 
     if (operation == fake_make_operation_type_define) {
-      if (!arguments.used) {
-        return;
-      }
 
       if (arguments.used > 1) {
         *status = f_environment_set(arguments.array[0].string, arguments.array[1].string, F_true);
@@ -1857,6 +1878,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_else) {
+
       if (*operation_if == fake_make_operation_if_type_else_false_next || *operation_if == fake_make_operation_if_type_else_false_next_always) {
         *operation_if = fake_make_operation_if_type_else_false;
       }
@@ -1868,6 +1890,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_exit) {
+
       if (!arguments.used || fl_string_dynamic_compare_string(fake_make_operation_argument_success, arguments.array[0], fake_make_operation_argument_success_length) == F_equal_to) {
         *status = F_signal_quit;
       }
@@ -1892,9 +1915,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_fail) {
-      if (!arguments.used) {
-        return;
-      }
 
       if (fl_string_dynamic_compare_string(fake_make_operation_argument_exit, arguments.array[0], fake_make_operation_argument_exit_length) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_type_exit;
@@ -1933,10 +1953,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_group) {
-      if (!arguments.used) {
-        return;
-      }
-
       gid_t id = 0;
 
       *status = fake_make_get_id_group(data, data_make->print, arguments.array[0], &id);
@@ -1957,10 +1973,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_groups) {
-      if (!arguments.used) {
-        return;
-      }
-
       gid_t id = 0;
 
       *status = fake_make_get_id_group(data, data_make->print, arguments.array[0], &id);
@@ -1982,9 +1994,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_if) {
-      if (!arguments.used) {
-        return;
-      }
 
       if (*operation_if == fake_make_operation_if_type_if_success) {
         if (success) {
@@ -2456,10 +2465,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_link) {
-      if (!arguments.used) {
-        return;
-      }
-
       *status = f_file_link(arguments.array[0].string, arguments.array[1].string);
 
       if (F_status_is_error(*status)) {
@@ -2473,10 +2478,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_mode) {
-      if (!arguments.used) {
-        return;
-      }
-
       f_file_mode_t mode_rule = 0;
       uint8_t replace = 0;
 
@@ -2516,10 +2517,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_modes) {
-      if (!arguments.used) {
-        return;
-      }
-
       f_file_mode_t mode_rule = 0;
       uint8_t replace = 0;
 
@@ -2560,10 +2557,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_operate) {
-      if (!arguments.used) {
-        return;
-      }
-
       f_array_length_t id_section = 0;
 
       for (; id_section < data_make->fakefile.used; id_section++) {
@@ -2590,10 +2583,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_owner) {
-      if (!arguments.used) {
-        return;
-      }
-
       uid_t id = 0;
 
       *status = fake_make_get_id_owner(data, data_make->print, arguments.array[0], &id);
@@ -2615,10 +2604,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_owners) {
-      if (!arguments.used) {
-        return;
-      }
-
       uid_t id = 0;
 
       *status = fake_make_get_id_owner(data, data_make->print, arguments.array[0], &id);
@@ -2696,11 +2681,9 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_to) {
-      if (!arguments.used) {
-        return;
-      }
 
       *status = fake_make_assure_inside_project(data, arguments.array[0], data_make);
+
       if (F_status_is_error(*status)) {
         fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[0].string, data_make->print);
 
@@ -2712,6 +2695,7 @@ extern "C" {
       }
 
       *status = f_path_change(arguments.array[0].string);
+
       if (F_status_is_error(*status)) {
         fake_print_message_section_operation_path_stack_max(data, F_status_set_fine(*status), "f_path_change", arguments.array[0].string, data_make->print);
       }
@@ -2741,6 +2725,7 @@ extern "C" {
 
         if (data.verbosity == fake_verbosity_verbose) {
           *status = fake_make_path_relative(data, data_make->path.stack.array[data_make->path.stack.used], data_make);
+
           if (F_status_is_error(*status)) {
             fake_print_message(data, F_status_set_fine(*status), "fake_make_path_relative", F_true, data_make->print);
             return;
@@ -2758,9 +2743,6 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_top) {
-      if (!arguments.used) {
-        return;
-      }
 
       *status = f_path_change_at(data_make->path.top);
       if (F_status_is_error(*status)) {
@@ -2782,15 +2764,12 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_touch) {
-      if (!arguments.used) {
-        return;
-      }
-
       f_mode_t mode = f_mode_t_initialize;
 
       f_macro_mode_t_set_default_umask(mode, data.umask);
 
       for (f_array_length_t i = 1; i < arguments.used; i++) {
+
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to) {
           *status = f_file_touch(arguments.array[i].string, mode.regular, F_false);
 

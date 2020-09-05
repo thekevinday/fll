@@ -53,9 +53,13 @@ extern "C" {
  *   The arguments to be passed to the program.
  * @param status
  *   The return status.
+ *
+ * @return
+ *   The return code result from execution.
+ *   A value of 1 is returned if status has the error bit set.
  */
 #ifndef _di_fake_execute_
-  extern void fake_execute(const fake_data_t data, const fake_environment_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_execute(const fake_data_t data, const fake_environment_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_execute_
 
 /**

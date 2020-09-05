@@ -267,20 +267,20 @@ extern "C" {
   #define fake_make_parameter_variable_verbose  "verbose"
   #define fake_make_parameter_variable_work     "work"
 
-  #define fake_make_file_parameter_variable_build_length    5
-  #define fake_make_file_parameter_variable_dark_length     5
-  #define fake_make_file_parameter_variable_data_length     5
-  #define fake_make_file_parameter_variable_define_length   6
-  #define fake_make_file_parameter_variable_light_length    5
-  #define fake_make_file_parameter_variable_mode_length     4
-  #define fake_make_file_parameter_variable_no_color_length 8
-  #define fake_make_file_parameter_variable_process_length  7
-  #define fake_make_file_parameter_variable_quiet_length    5
-  #define fake_make_file_parameter_variable_return_length   6
-  #define fake_make_file_parameter_variable_settings_length 8
-  #define fake_make_file_parameter_variable_sources_length  7
-  #define fake_make_file_parameter_variable_verbose_length  7
-  #define fake_make_file_parameter_variable_work_length     4
+  #define fake_make_parameter_variable_build_length    5
+  #define fake_make_parameter_variable_dark_length     5
+  #define fake_make_parameter_variable_data_length     5
+  #define fake_make_parameter_variable_define_length   6
+  #define fake_make_parameter_variable_light_length    5
+  #define fake_make_parameter_variable_mode_length     4
+  #define fake_make_parameter_variable_no_color_length 8
+  #define fake_make_parameter_variable_process_length  7
+  #define fake_make_parameter_variable_quiet_length    5
+  #define fake_make_parameter_variable_return_length   6
+  #define fake_make_parameter_variable_settings_length 8
+  #define fake_make_parameter_variable_sources_length  7
+  #define fake_make_parameter_variable_verbose_length  7
+  #define fake_make_parameter_variable_work_length     4
 
   typedef struct {
     f_string_dynamics_t build;
@@ -699,6 +699,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param return_code
+ *   The return code to process.
  * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param status

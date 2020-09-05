@@ -17,16 +17,8 @@ Fakefile Specification:
   The reserved Settings Section does not support IKI variable substitution.
 
   The IKI-0002 vocabulary context is further clarified as follows\:
-  - define\:
-    The define object represents environment variables passed to the program or created by the program.
-    The value represents the environment variable name and is case-sensitive.
-    This IKI variable gets substituted with the environment variable's value or NULL if not defined.
-    The "settings" list supports declaring custom environment variables (which overwrite any existing environment variable with the same name).
-
-  - parameter\:
-    The parameter object represents a variable that is to be substituted.
-    The value represents the variable name and is case-sensitive.
-    This IKI variable gets substituted with the value defined in the "settings" list or NULL if not defined.
+  - define: the value must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
+  - parameter: the value is a case-sensitive variable name.
 
   The reserved Section Objects are\:
   - settings: contains a list of Settings Objects and Content in FSS-0001 (Extended) format.
