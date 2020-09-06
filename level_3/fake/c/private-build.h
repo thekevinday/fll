@@ -29,7 +29,7 @@ extern "C" {
     bool search_static;
 
     f_string_dynamic_t build_compiler;
-    f_string_dynamic_t build_linker;
+    f_string_dynamic_t build_indexer;
     f_string_dynamic_t path_headers;
     f_string_dynamic_t path_language;
     f_string_dynamic_t path_library_script;
@@ -113,7 +113,7 @@ extern "C" {
 
   #define fake_macro_build_setting_t_delete_simple(setting) \
     f_macro_string_dynamic_t_delete_simple(setting.build_compiler) \
-    f_macro_string_dynamic_t_delete_simple(setting.build_linker) \
+    f_macro_string_dynamic_t_delete_simple(setting.build_indexer) \
     f_macro_string_dynamic_t_delete_simple(setting.path_headers) \
     f_macro_string_dynamic_t_delete_simple(setting.path_language) \
     f_macro_string_dynamic_t_delete_simple(setting.path_library_script) \
@@ -150,7 +150,7 @@ extern "C" {
   #define fake_build_setting_name_build_compiler         "build_compiler"
   #define fake_build_setting_name_build_language         "build_language"
   #define fake_build_setting_name_build_libraries        "build_libraries"
-  #define fake_build_setting_name_build_linker           "build_linker"
+  #define fake_build_setting_name_build_indexer          "build_indexer"
   #define fake_build_setting_name_build_script           "build_script"
   #define fake_build_setting_name_build_shared           "build_shared"
   #define fake_build_setting_name_build_sources_headers  "build_sources_headers"
@@ -194,7 +194,7 @@ extern "C" {
   #define fake_build_setting_name_build_compiler_length         14
   #define fake_build_setting_name_build_language_length         14
   #define fake_build_setting_name_build_libraries_length        15
-  #define fake_build_setting_name_build_linker_length           12
+  #define fake_build_setting_name_build_indexer_length          13
   #define fake_build_setting_name_build_script_length           12
   #define fake_build_setting_name_build_shared_length           12
   #define fake_build_setting_name_build_sources_headers_length  21

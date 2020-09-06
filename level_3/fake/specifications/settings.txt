@@ -11,8 +11,8 @@ Settings Specification:
 
   Object Names and their respective Content purpose/restrictions\:
     "build_compiler": Must only be a valid filename.
+    "build_indexer": Must only be a valid filename.
     "build_language": Must only be one of: "bash", "c", or "c++".
-    "build_linker": Must only be a valid filename.
     "build_libraries": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
     "build_script": Must only one of: "yes" or "no".
     "build_shared": Must only one of: "yes" or "no".

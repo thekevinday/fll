@@ -158,6 +158,11 @@ bootstrap_main() {
 
   bootstrap_load_settings
 
+  if [[ $? -ne 0 ]] ; then
+    bootstrap_cleanup
+    return 1
+  fi
+
   if [[ $mode == "" ]] ; then
     mode=${variables[$(bootstrap_id modes_default)]}
 
@@ -172,6 +177,11 @@ bootstrap_main() {
   fi
 
   bootstrap_load_settings_mode
+
+  if [[ $? -ne 0 ]] ; then
+    bootstrap_cleanup
+    return 1
+  fi
 
   project_built="${path_build_stage}${variables[$(bootstrap_id project_name)]}"
   if [[ $process != "" ]] ; then
@@ -312,9 +322,19 @@ bootstrap_main() {
     else
       if [[ ! -f ${project_built}.prepared ]] ; then
         bootstrap_prepare_build
+
+        if [[ $? -ne 0 ]] ; then
+          bootstrap_cleanup
+          return 1
+        fi
       fi
 
       bootstrap_operation_build
+
+      if [[ $? -ne 0 ]] ; then
+        bootstrap_cleanup
+        return 1
+      fi
     fi
   elif [[ $operation == "clean" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
@@ -405,9 +425,9 @@ bootstrap_id() {
 
   case $name in
     "build_compiler") echo -n 0;;
-    "build_language") echo -n 1;;
-    "build_libraries") echo -n 2;;
-    "build_linker") echo -n 3;;
+    "build_indexer") echo -n 1;;
+    "build_language") echo -n 2;;
+    "build_libraries") echo -n 3;;
     "build_script") echo -n 4;;
     "build_shared") echo -n 5;;
     "build_sources_headers") echo -n 6;;
@@ -486,11 +506,10 @@ bootstrap_load_settings() {
   fi
 
   if [[ $failure != "" ]] ; then
-    bootstrap_cleanup
-    exit $failure
+    return 1
   fi
 
-  for i in build_compiler build_language build_libraries build_linker build_script build_shared build_sources_headers build_sources_library build_sources_program build_sources_setting build_sources_script build_static defines_all defines_shared defines_static environment flags_all flags_library flags_program flags_shared flags_static modes modes_default path_language path_headers path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static path_sources path_standard process_post process_pre project_name search_exclusive search_shared search_static version_major version_micro version_minor ; do
+  for i in build_compiler build_indexer build_language build_libraries build_script build_shared build_sources_headers build_sources_library build_sources_program build_sources_setting build_sources_script build_static defines_all defines_shared defines_static environment flags_all flags_library flags_program flags_shared flags_static modes modes_default path_language path_headers path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static path_sources path_standard process_post process_pre project_name search_exclusive search_shared search_static version_major version_micro version_minor ; do
     variables[$(bootstrap_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 }
@@ -517,8 +536,7 @@ bootstrap_prepare_build() {
   fi
 
   if [[ $failure != "" ]] ; then
-    bootstrap_cleanup
-    exit $failure
+    return $failure
   fi
 
   touch ${project_built}.prepared
@@ -532,7 +550,7 @@ bootstrap_operation_build() {
   local micro=${variables[$(bootstrap_id version_micro)]}
   local target=${variables[$(bootstrap_id version_target)]}
   local compiler=${variables[$(bootstrap_id build_compiler)]}
-  local linker=${variables[$(bootstrap_id build_linker)]}
+  local indexer=${variables[$(bootstrap_id build_indexer)]}
   local arguments_include="-I${path_build}includes"
   local arguments_shared="-L${path_build}libraries/shared"
   local arguments_static="-L${path_build}libraries/static"
@@ -708,8 +726,7 @@ bootstrap_operation_build() {
       echo -e "${c_error}ERROR: Cannot Build, either build_shared or build_static must be set to 'yes'.$c_reset"
     fi
 
-    bootstrap_cleanup
-    exit -1
+    return 1
   fi
 
   if [[ $search_shared != "yes" && $search_static != "yes" ]] ; then
@@ -717,8 +734,7 @@ bootstrap_operation_build() {
       echo -e "${c_error}ERROR: Cannot Build, either search_shared or search_static must be set to 'yes'.$c_reset"
     fi
 
-    bootstrap_cleanup
-    exit -1
+    return 1
   fi
 
   for i in $sources_library ; do
@@ -727,8 +743,7 @@ bootstrap_operation_build() {
         echo -e "${c_error}ERROR: Cannot Build, invalid source_library path provided: '$i'.$c_reset"
       fi
 
-      bootstrap_cleanup
-      exit -1
+      return 1
     fi
   done
 
@@ -738,8 +753,7 @@ bootstrap_operation_build() {
         echo -e "${c_error}ERROR: Cannot Build, invalid sources_program path provided: '$i'.$c_reset"
       fi
 
-      bootstrap_cleanup
-      exit -1
+      return 1
     fi
   done
 
@@ -749,8 +763,7 @@ bootstrap_operation_build() {
         echo -e "${c_error}ERROR: Cannot Build, invalid sources_headers path provided: '$i'.$c_reset"
       fi
 
-      bootstrap_cleanup
-      exit -1
+      return 1
     fi
   done
 
@@ -760,8 +773,7 @@ bootstrap_operation_build() {
         echo -e "${c_error}ERROR: Cannot Build, invalid sources_bash path provided: '$i'.$c_reset"
       fi
 
-      bootstrap_cleanup
-      exit -1
+      return 1
     fi
   done
 
@@ -771,8 +783,7 @@ bootstrap_operation_build() {
         echo -e "${c_error}ERROR: Cannot Build, invalid sources_setting path provided: '$i'.$c_reset"
       fi
 
-      bootstrap_cleanup
-      exit -1
+      return 1
     fi
   done
 
@@ -787,6 +798,16 @@ bootstrap_operation_build() {
   # when not in search exclusive mode, allow static libraries to be linked into shared libraries if the shared library is not found first.
   if [[ $search_exclusive == "no" ]] ; then
     arguments_shared="$arguments_shared $arguments_static"
+  fi
+
+  if [[ $compiler == "" ]] ; then
+    echo -e "${c_error}ERROR: Cannot Build, no '${c_notice}build_compiler${c_error}' specified, such as '${c_notice}gcc${c_error}'.$c_reset"
+    return 1
+  fi
+
+  if [[ $indexer == "" ]] ; then
+    echo -e "${c_error}ERROR: Cannot Build, no '${c_notice}build_indexer${c_error}' specified, such as '${c_notice}ar${c_error}'.$c_reset"
+    failure=1
   fi
 
   if [[ $sources_setting != "" ]] ; then
@@ -896,11 +917,12 @@ bootstrap_operation_build() {
       done
 
       if [[ $failure == "" && $sources_library != "" ]] ; then
+
         if [[ $verbosity == "verbose" ]] ; then
-          echo $linker rcs ${path_build}libraries/static/lib$name.a $sources
+          echo $indexer rcs ${path_build}libraries/static/lib$name.a $sources
         fi
 
-        $linker rcs ${path_build}libraries/static/lib$name.a $sources || failure=1
+        $indexer rcs ${path_build}libraries/static/lib$name.a $sources || failure=1
       fi
     fi
 
@@ -929,8 +951,7 @@ bootstrap_operation_build() {
       echo -e "${c_error}ERROR: failed to build.$c_reset"
     fi
 
-    bootstrap_cleanup
-    exit $failure
+    return 1
   fi
 
   touch ${project_built}.built

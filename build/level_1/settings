@@ -16,8 +16,8 @@ modes level
 modes_default level
 
 build_compiler gcc
+build_indexer ar
 build_language c
-build_linker ar
 build_libraries -lc
 build_libraries-level -lfll_0
 build_sources_library color.c console.c conversion.c directory.c private-directory.c environment.c private-fss.c fss_basic.c fss_basic_list.c fss_extended.c fss_extended_list.c iki.c print.c status.c string.c private-string.c utf.c private-utf.c utf_file.c private-utf_file.c

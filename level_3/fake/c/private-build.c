@@ -995,7 +995,7 @@ extern "C" {
       }
     }
 
-    fake_execute(data, data_build.environment, data_build.setting.build_linker, arguments, status);
+    fake_execute(data, data_build.environment, data_build.setting.build_indexer, arguments, status);
 
     f_macro_string_dynamic_t_delete_simple(file_name);
     f_macro_string_dynamic_t_delete_simple(source_path);
@@ -1250,9 +1250,9 @@ extern "C" {
 
     const f_string_t settings_name[] = {
       fake_build_setting_name_build_compiler,
+      fake_build_setting_name_build_indexer,
       fake_build_setting_name_build_language,
       fake_build_setting_name_build_libraries,
-      fake_build_setting_name_build_linker,
       fake_build_setting_name_build_script,
       fake_build_setting_name_build_shared,
       fake_build_setting_name_build_sources_headers,
@@ -1296,9 +1296,9 @@ extern "C" {
 
     const f_string_length_t settings_length[] = {
       fake_build_setting_name_build_compiler_length,
+      fake_build_setting_name_build_indexer_length,
       fake_build_setting_name_build_language_length,
       fake_build_setting_name_build_libraries_length,
-      fake_build_setting_name_build_linker_length,
       fake_build_setting_name_build_script_length,
       fake_build_setting_name_build_shared_length,
       fake_build_setting_name_build_sources_headers_length,
@@ -1341,8 +1341,8 @@ extern "C" {
     };
 
     f_string_dynamics_t build_compiler = f_string_dynamics_t_initialize;
+    f_string_dynamics_t build_indexer = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_language = f_string_dynamics_t_initialize;
-    f_string_dynamics_t build_linker = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_script = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_shared = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_static = f_string_dynamics_t_initialize;
@@ -1369,9 +1369,9 @@ extern "C" {
 
     f_string_dynamics_t *settings_value[] = {
       &build_compiler,
+      &build_indexer,
       &build_language,
       &setting->build_libraries,
-      &build_linker,
       &build_script,
       &build_shared,
       &setting->build_sources_headers,
@@ -1511,8 +1511,8 @@ extern "C" {
     else {
       const f_string_t settings_single_name[] = {
         fake_build_setting_name_build_compiler,
+        fake_build_setting_name_build_indexer,
         fake_build_setting_name_build_language,
-        fake_build_setting_name_build_linker,
         fake_build_setting_name_build_script,
         fake_build_setting_name_build_shared,
         fake_build_setting_name_build_static,
@@ -1540,8 +1540,8 @@ extern "C" {
 
       const f_string_statics_t *settings_single_source[] = {
         &build_compiler,
+        &build_indexer,
         &build_language,
-        &build_linker,
         &build_script,
         &build_shared,
         &build_static,
@@ -1594,8 +1594,8 @@ extern "C" {
 
       f_string_dynamic_t *settings_single_destination[] = {
         &setting->build_compiler,
+        &setting->build_indexer,
         0,
-        &setting->build_linker,
         0,
         0,
         0,
@@ -1621,6 +1621,7 @@ extern "C" {
       };
 
       uint8_t *settings_single_language[] = {
+        0,
         0,
         &setting->build_language,
       };
@@ -1657,8 +1658,8 @@ extern "C" {
       // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", or "micro".
       uint8_t settings_single_type[] = {
         3,
-        4,
         3,
+        4,
         1,
         1,
         1,
@@ -1816,8 +1817,8 @@ extern "C" {
     }
 
     f_macro_string_dynamics_t_delete_simple(build_compiler);
+    f_macro_string_dynamics_t_delete_simple(build_indexer);
     f_macro_string_dynamics_t_delete_simple(build_language);
-    f_macro_string_dynamics_t_delete_simple(build_linker);
     f_macro_string_dynamics_t_delete_simple(build_script);
     f_macro_string_dynamics_t_delete_simple(build_shared);
     f_macro_string_dynamics_t_delete_simple(build_static);

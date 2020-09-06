@@ -60,7 +60,6 @@ extern "C" {
 #endif // _di_fake_make_setting_t_
 
 #ifndef _di_fake_make_operation_
-  #define fake_make_operation_archive  "archive"
   #define fake_make_operation_build    "build"
   #define fake_make_operation_break    "break"
   #define fake_make_operation_clean    "clean"
@@ -74,6 +73,7 @@ extern "C" {
   #define fake_make_operation_group    "group"
   #define fake_make_operation_groups   "groups"
   #define fake_make_operation_if       "if"
+  #define fake_make_operation_index    "index"
   #define fake_make_operation_link     "link"
   #define fake_make_operation_mode     "mode"
   #define fake_make_operation_modes    "modes"
@@ -89,7 +89,7 @@ extern "C" {
   #define fake_make_operation_top      "top"
   #define fake_make_operation_touch    "touch"
 
-  #define fake_make_operation_archive_length  7
+  #define fake_make_operation_index_length    5
   #define fake_make_operation_break_length    5
   #define fake_make_operation_build_length    5
   #define fake_make_operation_clean_length    5
@@ -119,8 +119,7 @@ extern "C" {
   #define fake_make_operation_touch_length    5
 
   enum {
-    fake_make_operation_type_archive = 1,
-    fake_make_operation_type_break,
+    fake_make_operation_type_break = 1,
     fake_make_operation_type_build,
     fake_make_operation_type_clean,
     fake_make_operation_type_compile,
@@ -133,6 +132,7 @@ extern "C" {
     fake_make_operation_type_group,
     fake_make_operation_type_groups,
     fake_make_operation_type_if,
+    fake_make_operation_type_index,
     fake_make_operation_type_link,
     fake_make_operation_type_mode,
     fake_make_operation_type_modes,

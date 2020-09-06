@@ -14,11 +14,6 @@ Fakefile Documentation:
     The build settings may also be specified in the Settings Section.
 
     The following settings are available (in addition to the build settings)\:
-    - archiver\:
-      This represents the name of the linker program to use, such as "ar".
-
-      When specified and "load_build" is "true", then this will override the "build_linker" specified in the loaded build settings.
-
     - compiler\:
       This represents the name of the compiler program to use, such as "gcc".
 
@@ -45,6 +40,11 @@ Fakefile Documentation:
       - ignore: Designates to do nothing.
 
       The return code for programs can still be retrieved through using the reserved iki vaiable "return".
+
+    - index\:
+      This represents the name of the indexer program to use, such as "ar".
+
+      When specified and "load_build" is "true", then this will override the "build_indexer" specified in the loaded build settings.
 
     - load_build\:
       This represents whether or not to load the load the build settings file.

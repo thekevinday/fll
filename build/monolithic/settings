@@ -16,8 +16,8 @@ modes monolithic
 modes_default monolithic
 
 build_compiler gcc
+build_indexer ar
 build_language c
-build_linker ar
 build_libraries -lc
 build_libraries-monolithic
 build_sources_library level_0/account.c level_0/console.c level_0/conversion.c level_0/directory.c level_0/private-directory.c level_0/environment.c level_0/private-environment.c level_0/file.c level_0/private-file.c level_0/fss.c level_0/iki.c level_0/memory.c level_0/path.c level_0/private-path.c level_0/pipe.c level_0/print.c level_0/serialize.c level_0/private-serialize.c level_0/socket.c level_0/utf.c level_0/private-utf.c level_1/color.c level_1/console.c level_1/conversion.c level_1/directory.c level_1/private-directory.c level_1/environment.c level_1/private-fss.c level_1/fss_basic.c level_1/fss_basic_list.c level_1/fss_extended.c level_1/fss_extended_list.c level_1/iki.c level_1/print.c level_1/status.c level_1/string.c level_1/private-string.c level_1/utf.c level_1/private-utf.c level_1/utf_file.c level_1/private-utf_file.c level_2/execute.c level_2/private-execute.c level_2/file.c level_2/fss.c level_2/private-fss.c level_2/fss_basic.c level_2/fss_basic_list.c level_2/fss_extended.c level_2/fss_extended_list.c level_2/fss_status.c level_2/path.c level_2/program.c level_2/status.c

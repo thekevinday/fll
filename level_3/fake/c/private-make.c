@@ -572,15 +572,15 @@ extern "C" {
         }
       }
 
-      // if either compiler or linker is specified, each will replace any existing build_compiler or build_linker, respectively.
+      // if either compiler or linker is specified, each will replace any existing build_compiler or build_indexer, respectively.
       if (range_compiler) {
         data_make->setting_build.build_compiler.used = 0;
         *status = fl_string_dynamic_partial_append(data_make->buffer, *range_compiler, &data_make->setting_build.build_compiler);
       }
 
       if (F_status_is_fine(*status) && range_linker) {
-        data_make->setting_build.build_linker.used = 0;
-        *status = fl_string_dynamic_partial_append(data_make->buffer, *range_linker, &data_make->setting_build.build_linker);
+        data_make->setting_build.build_indexer.used = 0;
+        *status = fl_string_dynamic_partial_append(data_make->buffer, *range_linker, &data_make->setting_build.build_indexer);
       }
 
       if (F_status_is_error(*status)) {
@@ -1137,7 +1137,7 @@ extern "C" {
     if (unmatched) {
       const f_string_t dynamic_name[] = {
         fake_build_setting_name_build_compiler,
-        fake_build_setting_name_build_linker,
+        fake_build_setting_name_build_indexer,
         fake_build_setting_name_path_headers,
         fake_build_setting_name_path_language,
         fake_build_setting_name_path_library_script,
@@ -1157,7 +1157,7 @@ extern "C" {
 
       const f_string_length_t dynamic_length[] = {
         fake_build_setting_name_build_compiler_length,
-        fake_build_setting_name_build_linker_length,
+        fake_build_setting_name_build_indexer_length,
         fake_build_setting_name_path_headers_length,
         fake_build_setting_name_path_language_length,
         fake_build_setting_name_path_library_script_length,
@@ -1177,7 +1177,7 @@ extern "C" {
 
       const f_string_dynamic_t dynamic_value[] = {
         data_make->setting_build.build_compiler,
-        data_make->setting_build.build_linker,
+        data_make->setting_build.build_indexer,
         data_make->setting_build.path_headers,
         data_make->setting_build.path_language,
         data_make->setting_build.path_library_script,
@@ -1426,7 +1426,6 @@ extern "C" {
     }
 
     const f_string_static_t operations_name[] = {
-      f_macro_string_static_t_initialize(fake_make_operation_archive, fake_make_operation_archive_length),
       f_macro_string_static_t_initialize(fake_make_operation_break, fake_make_operation_break_length),
       f_macro_string_static_t_initialize(fake_make_operation_build, fake_make_operation_build_length),
       f_macro_string_static_t_initialize(fake_make_operation_clean, fake_make_operation_clean_length),
@@ -1440,6 +1439,7 @@ extern "C" {
       f_macro_string_static_t_initialize(fake_make_operation_group, fake_make_operation_group_length),
       f_macro_string_static_t_initialize(fake_make_operation_groups, fake_make_operation_groups_length),
       f_macro_string_static_t_initialize(fake_make_operation_if, fake_make_operation_if_length),
+      f_macro_string_static_t_initialize(fake_make_operation_index, fake_make_operation_index_length),
       f_macro_string_static_t_initialize(fake_make_operation_link, fake_make_operation_link_length),
       f_macro_string_static_t_initialize(fake_make_operation_mode, fake_make_operation_mode_length),
       f_macro_string_static_t_initialize(fake_make_operation_modes, fake_make_operation_modes_length),
@@ -1457,7 +1457,6 @@ extern "C" {
     };
 
     const f_string_range_t operations_range[] = {
-      f_macro_string_range_initialize(fake_make_operation_archive_length),
       f_macro_string_range_initialize(fake_make_operation_break_length),
       f_macro_string_range_initialize(fake_make_operation_build_length),
       f_macro_string_range_initialize(fake_make_operation_clean_length),
@@ -1471,6 +1470,7 @@ extern "C" {
       f_macro_string_range_initialize(fake_make_operation_group_length),
       f_macro_string_range_initialize(fake_make_operation_groups_length),
       f_macro_string_range_initialize(fake_make_operation_if_length),
+      f_macro_string_range_initialize(fake_make_operation_index_length),
       f_macro_string_range_initialize(fake_make_operation_link_length),
       f_macro_string_range_initialize(fake_make_operation_mode_length),
       f_macro_string_range_initialize(fake_make_operation_modes_length),
@@ -1488,7 +1488,6 @@ extern "C" {
     };
 
     const uint8_t operations_type[] = {
-      fake_make_operation_type_archive,
       fake_make_operation_type_break,
       fake_make_operation_type_build,
       fake_make_operation_type_clean,
@@ -1502,6 +1501,7 @@ extern "C" {
       fake_make_operation_type_group,
       fake_make_operation_type_groups,
       fake_make_operation_type_if,
+      fake_make_operation_type_index,
       fake_make_operation_type_link,
       fake_make_operation_type_mode,
       fake_make_operation_type_modes,
@@ -1732,8 +1732,8 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_
   void fake_make_operate_process(const fake_data_t data, const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
 
-    if (operation == fake_make_operation_type_archive) {
-      int return_code = fake_execute(data, data_make->environment, data_make->setting_build.build_linker, arguments, status);
+    if (operation == fake_make_operation_type_index) {
+      int return_code = fake_execute(data, data_make->environment, data_make->setting_build.build_indexer, arguments, status);
 
       if (F_status_is_error(*status)) {
         fake_print_message(data, F_status_set_fine(*status), "fake_execute", F_true, data_make->print);
@@ -3021,7 +3021,7 @@ extern "C" {
   void fake_make_operate_validate(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, uint8_t *operation_if, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
     if (F_status_is_error(*status)) return;
 
-    if (operation == fake_make_operation_type_archive || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell) {
+    if (operation == fake_make_operation_type_index || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell) {
       if (arguments.used == 0) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
@@ -3030,13 +3030,13 @@ extern "C" {
 
         *status = F_status_set_error(F_failure);
       }
-      else if (operation == fake_make_operation_type_archive) {
-        if (!data_make->setting_build.build_linker.used) {
+      else if (operation == fake_make_operation_type_index) {
+        if (!data_make->setting_build.build_indexer.used) {
 
           if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
             fprintf(data_make->print.to, "%c", f_string_eol[0]);
-            fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: No linker has been specified, cannot perform '", data_make->print.prefix);
-            fl_color_print(data_make->print.to, data.context.notable, data.context.reset, fake_make_operation_archive);
+            fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: No indexer has been specified, cannot perform '", data_make->print.prefix);
+            fl_color_print(data_make->print.to, data.context.notable, data.context.reset, fake_make_operation_index);
             fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' section operation.");
           }
 

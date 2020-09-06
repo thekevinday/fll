@@ -16,8 +16,8 @@ modes individual level monolithic
 modes_default individual
 
 build_compiler gcc
+build_indexer ar
 build_language c
-build_linker ar
 build_libraries -lc
 build_libraries-individual -lfll_program -lfl_utf -lfl_string -lfl_conversion -lfl_console -lfl_color -lf_print -lf_pipe -lf_file -lf_conversion -lf_console -lf_utf -lf_memory
 build_libraries-level -lfll_2 -lfll_1 -lfll_0

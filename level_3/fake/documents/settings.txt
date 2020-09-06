@@ -10,16 +10,16 @@ Settings Documentation:
     All of the arguments assume the GCC, so if a non-GCC executable is provided supports the GCC argument structure, then that is by effect supported.
     Many of the parameters in the settings file can be changed if using a non-GCC, but there is certain hard-coded functionality that may still need changing.
 
+  build_indexer\:
+    Exactly like build_compiler, except for the linker, aka indexer.
+    The default behavior is to support the GNU ar program.
+    As with build_compiler, anything linker that supports the "ar" program parameters is effectively supported.
+
   build_language\:
     The language to build with.
     The only currently supported languages are: bash, c, and c++.
     The "bash" language is not currently implemented and needs some consideration because there is nothing to compile.
     The "bash" language will likely build a set of individual scripts, and perhaps script dependencies, into a single bash script.
-
-  build_linker\:
-    Exactly like build_compiler, except for the linker.
-    Currently only supports the GNU ar program.
-    As with build_compiler, anything linker that supports the "ar" program parameters is effectively supported.
 
   build_libraries\:
     A collection of libraries to be linked against.
@@ -168,7 +168,7 @@ Settings Documentation:
     When "no", the search path during compile time for shared libraries will include shared library paths followed by static library paths.
     Setting this to "yes" helps prevent static libraries from ended up in shared libraries (very useful when bootstrapping a system).
     Setting this to "no" allows for including static libraries if no shared libraries are found but static are.
-    This does not alter search paths introduced automatically by the "build_compiler" or "build_linker", so it is still possible for static libraries to end up even when this is set to "yes".
+    This does not alter search paths introduced automatically by the "build_compiler" or "build_indexer", so it is still possible for static libraries to end up even when this is set to "yes".
 
   search_shared\:
     When "yes", shared library paths are searched during compile.

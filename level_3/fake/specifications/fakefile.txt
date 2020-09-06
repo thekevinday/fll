@@ -36,7 +36,6 @@ Fakefile Specification:
   The build settings may also be specified in the Settings Section.
 
   The Section Operation Objects are\:
-  - archive: One or more Content.
   - break: Zero or One Content. If specified, First content must be one of "success" or "failure".
   - build: Zero or One Content. First Content represents file name of the settings file to use.
   - clean: Zero Content.
@@ -50,6 +49,7 @@ Fakefile Specification:
   - group: Two or more Content. First Content is group name or number, remaining Content are paths to files.
   - groups: Two or more Content. First Content is group name or number, remaining Content are paths to files.
   - if: One or more Content. First Content is the condition, remaining Content are specific to the condition.
+  - index: One or more Content.
   - link: Two Content. First Content is the link target file and second Content is the pointer file (the link).
   - mode: Two or more Content. First Content is the mode, remaining Content are paths to files.
   - modes: Two or more Content. First Content is the mode, remaining Content are paths to files.
