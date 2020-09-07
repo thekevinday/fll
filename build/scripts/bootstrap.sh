@@ -3,7 +3,7 @@
 # programmer: Kevin Day
 #
 # The purpose of this script is to provide a simple bootstrap tool to compile any part of the FLL project.
-# The dependencies of this script are: bash, basename, dirname, grep, and sed.
+# The dependencies of this script are: bash, basename, cp, dirname, grep, ln, mkdir, rm, sed, and touch.
 #
 # This script is only designed specifically for bootstrap compiling the FLL project and does not necessarily fully follow the fake (featureless make) build process.
 
