@@ -1,4 +1,5 @@
 #include "file.h"
+#include "private-file.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -62,6 +63,27 @@ extern "C" {
     return F_true;
   }
 #endif // _di_fll_file_error_print_
+
+#ifndef _di_fll_file_mode_set_all_
+  f_return_status fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_fll_file_mode_set_all(path, mode, depth_max, 0);
+  }
+#endif // _di_fll_file_mode_set_all__
+
+#ifndef _di_fll_file_role_change_all_
+  f_return_status fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (path == 0) return F_status_set_error(F_parameter);
+      if (uid == -1 && gid == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_fll_file_role_change_all(path, uid, gid, dereference, depth_max, 0);
+  }
+#endif // _di_fll_file_role_change_all_
 
 #ifdef __cplusplus
 } // extern "C"

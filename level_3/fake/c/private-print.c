@@ -500,6 +500,28 @@ extern "C" {
       return F_false;
     }
 
+    if (status == F_access_owner) {
+      if (data.verbosity != fake_verbosity_quiet) {
+        fprintf(print.to, "%c", f_string_eol[0]);
+        fl_color_print(print.to, print.context, data.context.reset, "%s: Currrent user is not allowed to use the given owner while trying to %s %s '", print.prefix, operation, file_or_directory);
+        fl_color_print(print.to, data.context.notable, data.context.reset, "%s", name);
+        fl_color_print_line(print.to, print.context, data.context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
+    if (status == F_access_group) {
+      if (data.verbosity != fake_verbosity_quiet) {
+        fprintf(print.to, "%c", f_string_eol[0]);
+        fl_color_print(print.to, print.context, data.context.reset, "%s: Currrent user is not allowed to use the given group while trying to %s %s '", print.prefix, operation, file_or_directory);
+        fl_color_print(print.to, data.context.notable, data.context.reset, "%s", name);
+        fl_color_print_line(print.to, print.context, data.context.reset, "'.");
+      }
+
+      return F_false;
+    }
+
     if (is_file) {
       if (status == F_directory_found_not) {
         if (data.verbosity != fake_verbosity_quiet) {

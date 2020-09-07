@@ -248,6 +248,8 @@ extern "C" {
     fake_make_operation_fail_type_warn,
     fake_make_operation_fail_type_ignore,
   };
+
+  #define fake_make_operation_recursion_depth_max 65535
 #endif // _di_fake_make_operation_
 
 // @todo each one of these should be made available to be passed to the program as "$parameter_define[X]" for multi-value (define) or "$parameter_no_color" for single-value (no_color).

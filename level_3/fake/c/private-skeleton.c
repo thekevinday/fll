@@ -179,7 +179,7 @@ extern "C" {
 
     if (path.used == 0) return F_none;
 
-    status = f_file_is(path.string, f_file_type_regular);
+    status = f_file_is(path.string, f_file_type_regular, F_false);
     if (status == F_true) {
       if (data.verbosity == fake_verbosity_verbose) {
         printf("File '%s' already exists.%c", path.string, f_string_eol[0]);
@@ -190,7 +190,7 @@ extern "C" {
 
     // symbolic links might also be fine.
     if (status == F_false) {
-      status = f_file_is(path.string, f_file_type_link);
+      status = f_file_is(path.string, f_file_type_link, F_false);
 
       if (status == F_true) {
         if (data.verbosity == fake_verbosity_verbose) {

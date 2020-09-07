@@ -41,7 +41,7 @@ Fakefile Documentation:
 
       The return code for programs can still be retrieved through using the reserved iki vaiable "return".
 
-    - index\:
+    - indexer\:
       This represents the name of the indexer program to use, such as "ar".
 
       When specified and "load_build" is "true", then this will override the "build_indexer" specified in the loaded build settings.
@@ -65,12 +65,6 @@ Fakefile Documentation:
     This is processed top-down until the end of the list is reached.
 
     The following operations are available\:
-    - archive\:
-      Execute the linker program, such as "ar".
-      This uses "archive" instead of "link" to avoid confusion between this and generating a symbolic link to some file.
-
-      All Content are passed as arguments to the respective "ar" program.
-
     - build\:
       Run the fake build operation as if "fake build" was run instead of "fake make".
       Command line arguments are automatically passed to the fake build operation.
@@ -216,6 +210,11 @@ Fakefile Documentation:
           test if one or more names are defined as a "parameter" or an "environment" variable.
           for example, "if defined parameter verbose silent" would test if both the "verbose" and the "silent" variables are defined via the "parameter" setting.
           for example, "if defined environment PWD SHELL" would test if both the "PWD" and the "SHELL" variables are defined via the "environment" variables.
+
+    - index\:
+      Execute the linker program, such as "ar".
+
+      All Content are passed as arguments to the respective "ar" program.
 
     - link\:
       Create a symbolic link from some point to some target.

@@ -25,11 +25,11 @@ Fakefile Specification:
   - main: contains a list of Operation Objects and Content in FSS-0001 (Extended) format.
 
   The Settings Objects are\:
-  - archiver: Only one Content, which must only be a valid filename.
   - compiler: Only one Content, which must only be a valid filename.
   - define: First Content represents variable name (case-sensitive), remaining Content represents varaiable value for IKI substitution.
   - environment: Zero or more Content representing valid environment variable names (alpha-numeric with underscore, but cannot begin with a number).
   - fail: Only one Content, which must be either "exit", "warn" or "ignore" (quotes not required) (case-sensitive).
+  - indexer: Only one Content, which must only be a valid filename.
   - load_build: Only one Content, which must be either "yes" or "no" (quotes not required) (case-sensitive).
   - parameter: First Content represents variable name (case-sensitive), remaining Content represents varaiable value for IKI substitution.
 

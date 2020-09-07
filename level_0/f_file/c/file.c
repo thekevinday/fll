@@ -378,7 +378,7 @@ extern "C" {
 #endif // _di_f_file_group_read_
 
 #ifndef _di_f_file_is_
-  f_return_status f_file_is(const f_string_t path, const int type) {
+  f_return_status f_file_is(const f_string_t path, const int type, const bool dereference) {
     #ifndef _di_level_0_parameter_checking_
       if (path == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -387,18 +387,8 @@ extern "C" {
 
     memset(&file_stat, 0, sizeof(struct stat));
 
-    if (stat(path, &file_stat) < 0) {
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
-      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == ENOENT) return F_file_found_not;
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-
-      return F_status_set_error(F_file_stat);
-    }
+    f_status_t status = private_f_file_stat(path, dereference, &file_stat);
+    if (F_status_is_error(status)) return status;
 
     if (f_macro_file_type_get(file_stat.st_mode) == type) return F_true;
 

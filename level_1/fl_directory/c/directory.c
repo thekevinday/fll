@@ -220,8 +220,8 @@ extern "C" {
 #ifndef _di_fl_directory_list_
   f_return_status fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) {
     #ifndef _di_level_1_parameter_checking_
-      if (path) return F_status_set_error(F_parameter);
-      if (listing == 0) return F_status_set_error(F_parameter);
+      if (!path) return F_status_set_error(F_parameter);
+      if (!listing) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     return private_fl_directory_list(path, filter, sort, dereference, listing);

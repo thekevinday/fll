@@ -1958,10 +1958,24 @@ extern "C" {
       *status = fake_make_get_id_group(data, data_make->print, arguments.array[0], &id);
       if (F_status_is_error(*status)) return;
 
-      for (f_array_length_t i = 1; i < arguments.used; i++) {
-        *status = f_file_role_change(arguments.array[i].string, -1, id, F_false);
+      f_status_t status_file = F_none;
 
-        if (F_status_is_error(*status)) {
+      for (f_array_length_t i = 1; i < arguments.used; i++) {
+        status_file = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+
+        if (F_status_is_error(status_file)) {
+          *status = status_file;
+
+          fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string, data_make->print);
+
+          continue;
+        }
+
+        status_file = f_file_role_change(arguments.array[i].string, -1, id, F_false);
+
+        if (F_status_is_error(status_file)) {
+          *status = status_file;
+
           fake_print_message_file(data, *status, "f_file_role_change", arguments.array[i].string, "change group of", F_true, F_true, data_make->print);
         }
         else if (data.verbosity == fake_verbosity_verbose) {
@@ -1978,12 +1992,25 @@ extern "C" {
       *status = fake_make_get_id_group(data, data_make->print, arguments.array[0], &id);
       if (F_status_is_error(*status)) return;
 
-      for (f_array_length_t i = 1; i < arguments.used; i++) {
-        // @todo: recursive.
-        *status = f_file_role_change(arguments.array[i].string, -1, id, F_false);
+      f_status_t status_file = F_none;
 
-        if (F_status_is_error(*status)) {
-          fake_print_message_file(data, *status, "f_file_role_change", arguments.array[i].string, "change group of", F_true, F_true, data_make->print);
+      for (f_array_length_t i = 1; i < arguments.used; i++) {
+        status_file = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+
+        if (F_status_is_error(status_file)) {
+          *status = status_file;
+
+          fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string, data_make->print);
+
+          continue;
+        }
+
+        status_file = fll_file_role_change_all(arguments.array[i].string, -1, id, F_false, fake_make_operation_recursion_depth_max);
+
+        if (F_status_is_error(status_file)) {
+          *status = status_file;
+
+          fake_print_message_file(data, F_status_set_fine(*status), "fll_file_role_change_all", arguments.array[i].string, "change group of", F_true, F_true, data_make->print);
         }
         else if (data.verbosity == fake_verbosity_verbose) {
           printf("Changed group of '%s' to %llu.%c", arguments.array[i].string, id, f_string_eol[0]);
@@ -2527,7 +2554,6 @@ extern "C" {
       mode_t mode_file = 0;
 
       for (f_array_length_t i = 1; i < arguments.used; i++) {
-        // @todo recursive.
         mode = 0;
 
         *status = f_file_mode_read(arguments.array[i].string, &mode_file);
@@ -2542,9 +2568,9 @@ extern "C" {
           break;
         }
 
-        *status = f_file_mode_set(arguments.array[i].string, mode);
+        *status = fll_file_mode_set_all(arguments.array[i].string, mode, fake_make_operation_recursion_depth_max);
         if (F_status_is_error(*status)) {
-          fake_print_message_file(data, F_status_set_fine(*status), "f_file_mode_set", arguments.array[i].string, "change mode of", F_true, F_true, data_make->print);
+          fake_print_message_file(data, F_status_set_fine(*status), "fll_file_mode_set_all", arguments.array[i].string, "change mode of", F_true, F_true, data_make->print);
           break;
         }
 
@@ -2588,14 +2614,28 @@ extern "C" {
       *status = fake_make_get_id_owner(data, data_make->print, arguments.array[0], &id);
       if (F_status_is_error(*status)) return;
 
+      f_status_t status_file = F_none;
+
       for (f_array_length_t i = 1; i < arguments.used; i++) {
-        *status = f_file_role_change(arguments.array[i].string, id, -1, F_false);
-        if (F_status_is_error(*status)) {
+        status_file = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+
+        if (F_status_is_error(status_file)) {
+          *status = status_file;
+
+          fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string, data_make->print);
+
+          continue;
+        }
+
+        status_file = f_file_role_change(arguments.array[i].string, id, -1, F_false);
+
+        if (F_status_is_error(status_file)) {
+          *status = status_file;
+
           fake_print_message_file(data, F_status_set_fine(*status), "f_file_role_change", arguments.array[i].string, "change owner of", F_true, F_true, data_make->print);
           break;
         }
-
-        if (data.verbosity == fake_verbosity_verbose) {
+        else if (data.verbosity == fake_verbosity_verbose) {
           printf("Changed owner of '%s' to %d.%c", arguments.array[i].string, id, f_string_eol[0]);
         }
       } // for
@@ -2609,14 +2649,27 @@ extern "C" {
       *status = fake_make_get_id_owner(data, data_make->print, arguments.array[0], &id);
       if (F_status_is_error(*status)) return;
 
+      f_status_t status_file = F_none;
+
       for (f_array_length_t i = 1; i < arguments.used; i++) {
-        // @todo recursive.
-        *status = f_file_role_change(arguments.array[i].string, id, -1, F_false);
-        if (F_status_is_error(*status)) {
-          fake_print_message_file(data, F_status_set_fine(*status), "f_file_role_change", arguments.array[i].string, "change owner of", F_true, F_true, data_make->print);
+        status_file = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+
+        if (F_status_is_error(status_file)) {
+          *status = status_file;
+
+          fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string, data_make->print);
+
+          continue;
         }
 
-        if (data.verbosity == fake_verbosity_verbose) {
+        status_file = fll_file_role_change_all(arguments.array[i].string, id, -1, F_false, fake_make_operation_recursion_depth_max);
+
+        if (F_status_is_error(status_file)) {
+          *status = status_file;
+
+          fake_print_message_file(data, F_status_set_fine(*status), "fll_file_role_change_all", arguments.array[i].string, "change owner of", F_true, F_true, data_make->print);
+        }
+        else if (data.verbosity == fake_verbosity_verbose) {
           printf("Changed owner of '%s' to %o.%c", arguments.array[i].string, id, f_string_eol[0]);
         }
       } // for
@@ -3093,7 +3146,7 @@ extern "C" {
 
           path_file[data.path_data_build.used + arguments.array[0].used] = 0;
 
-          f_status_t status_file = f_file_is(path_file, f_file_type_regular);
+          f_status_t status_file = f_file_is(path_file, f_file_type_regular, F_false);
 
           if (status_file == F_file_found_not) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
@@ -3362,7 +3415,7 @@ extern "C" {
         f_status_t status_file = F_none;
 
         for (f_array_length_t i = 1; i < arguments.used; i++) {
-          status_file = f_file_is(arguments.array[i].string, f_file_type_regular);
+          status_file = f_file_is(arguments.array[i].string, f_file_type_regular, F_false);
 
           if (status_file == F_file_found_not) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
@@ -3877,7 +3930,7 @@ extern "C" {
       }
       else if (arguments.used) {
         if (arguments.array[0].used) {
-          f_status_t status_file = f_file_is(arguments.array[0].string, f_file_type_directory);
+          f_status_t status_file = f_file_is(arguments.array[0].string, f_file_type_directory, F_false);
 
           if (status_file == F_file_found_not) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {

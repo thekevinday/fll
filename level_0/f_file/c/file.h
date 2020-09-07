@@ -916,6 +916,9 @@ extern "C" {
  *   The path file name.
  * @param type
  *   The type of the file.
+ * @param dereference
+ *   Set to TRUE to dereference symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
  *
  * @return
  *   F_true if path was found and path is type.
@@ -932,7 +935,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_is_
-  extern f_return_status f_file_is(const f_string_t path, const int type);
+  extern f_return_status f_file_is(const f_string_t path, const int type, const bool dereference);
 #endif // _di_f_file_is_
 
 /**

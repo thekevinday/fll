@@ -787,9 +787,9 @@ extern "C" {
  * @see f_file_exists()
  * @see f_file_touch()
  */
-#if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_touch_)
+#if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)
   extern f_return_status private_f_file_stat(const f_string_t file_name, const bool dereference, struct stat *file_stat) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_touch_)
+#endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)
 
 /**
  * Private implementation of f_file_stat_at().
