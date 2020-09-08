@@ -83,10 +83,24 @@ Fakefile Documentation:
       Run the fake clean operation as if "fake clean" was run instead of "fake make".
       Command line arguments are automatically passed to the fake build operation.
 
+    - clone\:
+      Copy all files (and directories), preserving all propeties, into the last content.
+      If there are more than one file (or directory) being copied, then the final path must be a directory.
+
+      All Content, except last, represents the files to clone.
+      The last Content represents the destination file (or directory) to clone to.
+
     - compile\:
       Execute the compiler program, such as "gcc".
 
       All Content are passed as arguments to the respective "gcc" program.
+
+    - copy\:
+      Copy all files (and directories) into the last content.
+      If there are more than one file (or directory) being copied, then the final path must be a directory.
+
+      All Content, except last, represents the files to copy.
+      The last Content represents the destination file (or directory) to copy to.
 
     - define\:
       This represents an environment variable to define on run.
@@ -230,6 +244,13 @@ Fakefile Documentation:
 
     - modes\:
       Identical to mode operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
+
+    - move\:
+      Move all files (and directories) into the last content.
+      If there are more than one file (or directory) being copied, then the final path must be a directory.
+
+      All Content, except last, represents the files to move.
+      The last Content represents the destination file (or directory) to move to.
 
     - operate\:
       Begin execution of another Section.

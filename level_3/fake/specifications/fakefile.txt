@@ -39,7 +39,9 @@ Fakefile Specification:
   - break: Zero or One Content. If specified, First content must be one of "success" or "failure".
   - build: Zero or One Content. First Content represents file name of the settings file to use.
   - clean: Zero Content.
+  - clone: Two or more Content representing paths to files.
   - compile: One or more Content as parameters to compiler.
+  - copy: Two or more Content representing paths to files.
   - define: Two or more Content.
   - delete: One or more Content representing paths to files.
   - deletes: One or more Content representing paths to files.
@@ -53,6 +55,7 @@ Fakefile Specification:
   - link: Two Content. First Content is the link target file and second Content is the pointer file (the link).
   - mode: Two or more Content. First Content is the mode, remaining Content are paths to files.
   - modes: Two or more Content. First Content is the mode, remaining Content are paths to files.
+  - move: Two or more Content representing paths to files.
   - operate: One Content. First Content is the name of a valid Section Object, except for the reserved Section Objects.
   - owner: Two or more Content. First Content is group name or number, remaining Content are paths to files.
   - owners: Two or more Content. First Content is group name or number, remaining Content are paths to files.

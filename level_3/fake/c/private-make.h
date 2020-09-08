@@ -63,7 +63,9 @@ extern "C" {
   #define fake_make_operation_build    "build"
   #define fake_make_operation_break    "break"
   #define fake_make_operation_clean    "clean"
+  #define fake_make_operation_clone    "clone"
   #define fake_make_operation_compile  "compile"
+  #define fake_make_operation_copy     "copy"
   #define fake_make_operation_define   "define"
   #define fake_make_operation_delete   "delete"
   #define fake_make_operation_deletes  "deletes"
@@ -77,6 +79,7 @@ extern "C" {
   #define fake_make_operation_link     "link"
   #define fake_make_operation_mode     "mode"
   #define fake_make_operation_modes    "modes"
+  #define fake_make_operation_move     "move"
   #define fake_make_operation_operate  "operate"
   #define fake_make_operation_owner    "owner"
   #define fake_make_operation_owners   "owners"
@@ -93,7 +96,9 @@ extern "C" {
   #define fake_make_operation_break_length    5
   #define fake_make_operation_build_length    5
   #define fake_make_operation_clean_length    5
+  #define fake_make_operation_clone_length    5
   #define fake_make_operation_compile_length  7
+  #define fake_make_operation_copy_length     4
   #define fake_make_operation_define_length   6
   #define fake_make_operation_delete_length   6
   #define fake_make_operation_deletes_length  7
@@ -106,6 +111,7 @@ extern "C" {
   #define fake_make_operation_link_length     4
   #define fake_make_operation_mode_length     4
   #define fake_make_operation_modes_length    5
+  #define fake_make_operation_move_length     4
   #define fake_make_operation_operate_length  7
   #define fake_make_operation_owner_length    5
   #define fake_make_operation_owners_length   6
@@ -122,7 +128,9 @@ extern "C" {
     fake_make_operation_type_break = 1,
     fake_make_operation_type_build,
     fake_make_operation_type_clean,
+    fake_make_operation_type_clone,
     fake_make_operation_type_compile,
+    fake_make_operation_type_copy,
     fake_make_operation_type_define,
     fake_make_operation_type_delete,
     fake_make_operation_type_deletes,
@@ -136,6 +144,7 @@ extern "C" {
     fake_make_operation_type_link,
     fake_make_operation_type_mode,
     fake_make_operation_type_modes,
+    fake_make_operation_type_move,
     fake_make_operation_type_operate,
     fake_make_operation_type_owner,
     fake_make_operation_type_owners,
@@ -149,7 +158,7 @@ extern "C" {
     fake_make_operation_type_touch,
   };
 
-  #define fake_make_operation_total 28
+  #define fake_make_operation_total 31
 
   #define fake_make_operation_argument_environment "environment"
   #define fake_make_operation_argument_failure     "failure"

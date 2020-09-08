@@ -1430,6 +1430,7 @@ extern "C" {
       f_macro_string_static_t_initialize(fake_make_operation_build, fake_make_operation_build_length),
       f_macro_string_static_t_initialize(fake_make_operation_clean, fake_make_operation_clean_length),
       f_macro_string_static_t_initialize(fake_make_operation_compile, fake_make_operation_compile_length),
+      f_macro_string_static_t_initialize(fake_make_operation_copy, fake_make_operation_copy_length),
       f_macro_string_static_t_initialize(fake_make_operation_define, fake_make_operation_define_length),
       f_macro_string_static_t_initialize(fake_make_operation_delete, fake_make_operation_delete_length),
       f_macro_string_static_t_initialize(fake_make_operation_deletes, fake_make_operation_deletes_length),
@@ -1443,6 +1444,7 @@ extern "C" {
       f_macro_string_static_t_initialize(fake_make_operation_link, fake_make_operation_link_length),
       f_macro_string_static_t_initialize(fake_make_operation_mode, fake_make_operation_mode_length),
       f_macro_string_static_t_initialize(fake_make_operation_modes, fake_make_operation_modes_length),
+      f_macro_string_static_t_initialize(fake_make_operation_move, fake_make_operation_move_length),
       f_macro_string_static_t_initialize(fake_make_operation_operate, fake_make_operation_operate_length),
       f_macro_string_static_t_initialize(fake_make_operation_owner, fake_make_operation_owner_length),
       f_macro_string_static_t_initialize(fake_make_operation_owners, fake_make_operation_owners_length),
@@ -1461,6 +1463,7 @@ extern "C" {
       f_macro_string_range_initialize(fake_make_operation_build_length),
       f_macro_string_range_initialize(fake_make_operation_clean_length),
       f_macro_string_range_initialize(fake_make_operation_compile_length),
+      f_macro_string_range_initialize(fake_make_operation_copy_length),
       f_macro_string_range_initialize(fake_make_operation_define_length),
       f_macro_string_range_initialize(fake_make_operation_delete_length),
       f_macro_string_range_initialize(fake_make_operation_deletes_length),
@@ -1474,6 +1477,7 @@ extern "C" {
       f_macro_string_range_initialize(fake_make_operation_link_length),
       f_macro_string_range_initialize(fake_make_operation_mode_length),
       f_macro_string_range_initialize(fake_make_operation_modes_length),
+      f_macro_string_range_initialize(fake_make_operation_move_length),
       f_macro_string_range_initialize(fake_make_operation_operate_length),
       f_macro_string_range_initialize(fake_make_operation_owner_length),
       f_macro_string_range_initialize(fake_make_operation_owners_length),
@@ -1492,6 +1496,7 @@ extern "C" {
       fake_make_operation_type_build,
       fake_make_operation_type_clean,
       fake_make_operation_type_compile,
+      fake_make_operation_type_copy,
       fake_make_operation_type_define,
       fake_make_operation_type_delete,
       fake_make_operation_type_deletes,
@@ -1505,6 +1510,7 @@ extern "C" {
       fake_make_operation_type_link,
       fake_make_operation_type_mode,
       fake_make_operation_type_modes,
+      fake_make_operation_type_move,
       fake_make_operation_type_operate,
       fake_make_operation_type_owner,
       fake_make_operation_type_owners,
@@ -1780,6 +1786,29 @@ extern "C" {
       return;
     }
 
+    if (operation == fake_make_operation_type_clone) {
+      const f_array_length_t total = arguments.used -1;
+      f_status_t status_file = F_none;
+
+      for (f_array_length_t i = 0; i < total; i++) {
+        status_file = f_directory_is(arguments.array[i].string);
+
+        if (status_file == F_true) {
+          // @todo: *status = fl_directory_clone();
+        }
+        else if (status_file == F_true) {
+          // @todo: *status = f_file_clone();
+        }
+        else if (F_status_is_error(status_file)) {
+          // @todo
+          *status = F_status_set_error(F_failure);
+          break;
+        }
+      } // for
+
+      return;
+    }
+
     if (operation == fake_make_operation_type_compile) {
       int return_code = fake_execute(data, data_make->environment, data_make->setting_build.build_compiler, arguments, status);
 
@@ -1789,6 +1818,29 @@ extern "C" {
       else {
         fake_make_operate_process_return(data, return_code, data_make, status);
       }
+
+      return;
+    }
+
+    if (operation == fake_make_operation_type_copy) {
+      const f_array_length_t total = arguments.used -1;
+      f_status_t status_file = F_none;
+
+      for (f_array_length_t i = 0; i < total; i++) {
+        status_file = f_directory_is(arguments.array[i].string);
+
+        if (status_file == F_true) {
+          // @todo: *status = fl_directory_copy();
+        }
+        else if (status_file == F_true) {
+          // @todo: *status = f_file_copy();
+        }
+        else if (F_status_is_error(status_file)) {
+          // @todo
+          *status = F_status_set_error(F_failure);
+          break;
+        }
+      } // for
 
       return;
     }
@@ -2582,6 +2634,29 @@ extern "C" {
       return;
     }
 
+    if (operation == fake_make_operation_type_move) {
+      const f_array_length_t total = arguments.used -1;
+      f_status_t status_file = F_none;
+
+      for (f_array_length_t i = 0; i < total; i++) {
+        status_file = f_directory_is(arguments.array[i].string);
+
+        if (status_file == F_true) {
+          // @todo: *status = fl_directory_copy();
+        }
+        else if (status_file == F_true) {
+          // @todo: *status = f_file_copy();
+        }
+        else if (F_status_is_error(status_file)) {
+          // @todo
+          *status = F_status_set_error(F_failure);
+          break;
+        }
+      } // for
+
+      return;
+    }
+
     if (operation == fake_make_operation_type_operate) {
       f_array_length_t id_section = 0;
 
@@ -3210,6 +3285,84 @@ extern "C" {
       return;
     }
 
+    if (operation == fake_make_operation_type_clone) {
+      if (arguments.used > 1) {
+        for (f_array_length_t i = 0; i < arguments.used; i++) {
+          *status = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+
+          if (F_status_is_error(*status)) {
+            fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string, data_make->print);
+
+            if (F_status_set_fine(*status) == F_false) {
+              *status = F_status_set_error(F_failure);
+            }
+          }
+        } // for
+
+        for (f_array_length_t i = 0; i < arguments.used - 1; i++) {
+          if (f_file_exists(arguments.array[i].string) != F_true) {
+            if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+              printf("%c", f_string_eol[0]);
+              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+            }
+
+            *status = F_status_set_error(F_failure);
+          }
+        } // for
+
+        if (arguments.used > 2) {
+          // the last file must be a directory.
+          f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
+
+          if (status_file == F_false || status_file == F_file_found_not) {
+            if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+              printf("%c", f_string_eol[0]);
+              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+            }
+
+            *status = F_status_set_error(F_failure);
+          }
+          else if (F_status_is_error(status_file)) {
+            fake_print_message_file(data, F_status_set_fine(status_file), "f_directory_is", arguments.array[arguments.used - 1].string, "find", F_false, F_true, data_make->print);
+            *status = F_status_set_error(F_failure);
+          }
+        }
+        else {
+          // when the first file is a directory, then the second, if it exists, must also be a directory.
+          f_status_t status_file = f_directory_is(arguments.array[0].string);
+
+          if (status_file == F_true) {
+            status_file = f_directory_is(arguments.array[1].string);
+
+            if (status_file == F_false) {
+              if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+                printf("%c", f_string_eol[0]);
+                fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
+                fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
+                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+              }
+
+              *status = F_status_set_error(F_failure);
+            }
+          }
+        }
+      }
+      else {
+        if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+        }
+
+        *status = F_status_set_error(F_failure);
+      }
+
+      return;
+    }
+
     if (operation == fake_make_operation_type_compile) {
       if (arguments.used == 0) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
@@ -3225,6 +3378,84 @@ extern "C" {
           fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: No compiler has been specified, cannot perform '", data_make->print.prefix);
           fl_color_print(data_make->print.to, data.context.notable, data.context.reset, fake_make_operation_compile);
           fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' section operation.");
+        }
+
+        *status = F_status_set_error(F_failure);
+      }
+
+      return;
+    }
+
+    if (operation == fake_make_operation_type_copy) {
+      if (arguments.used > 1) {
+        for (f_array_length_t i = 0; i < arguments.used; i++) {
+          *status = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+
+          if (F_status_is_error(*status)) {
+            fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string, data_make->print);
+
+            if (F_status_set_fine(*status) == F_false) {
+              *status = F_status_set_error(F_failure);
+            }
+          }
+        } // for
+
+        for (f_array_length_t i = 0; i < arguments.used - 1; i++) {
+          if (f_file_exists(arguments.array[i].string) != F_true) {
+            if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+              printf("%c", f_string_eol[0]);
+              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+            }
+
+            *status = F_status_set_error(F_failure);
+          }
+        } // for
+
+        if (arguments.used > 2) {
+          // the last file must be a directory.
+          f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
+
+          if (status_file == F_false || status_file == F_file_found_not) {
+            if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+              printf("%c", f_string_eol[0]);
+              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+            }
+
+            *status = F_status_set_error(F_failure);
+          }
+          else if (F_status_is_error(status_file)) {
+            fake_print_message_file(data, F_status_set_fine(status_file), "f_directory_is", arguments.array[arguments.used - 1].string, "find", F_false, F_true, data_make->print);
+            *status = F_status_set_error(F_failure);
+          }
+        }
+        else {
+          // when the first file is a directory, then the second, if it exists, must also be a directory.
+          f_status_t status_file = f_directory_is(arguments.array[0].string);
+
+          if (status_file == F_true) {
+            status_file = f_directory_is(arguments.array[1].string);
+
+            if (status_file == F_false) {
+              if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+                printf("%c", f_string_eol[0]);
+                fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
+                fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
+                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+              }
+
+              *status = F_status_set_error(F_failure);
+            }
+          }
+        }
+      }
+      else {
+        if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -3851,6 +4082,84 @@ extern "C" {
 
           if (F_status_set_fine(*status) == F_false) {
             *status = F_status_set_error(F_failure);
+          }
+        }
+      }
+      else {
+        if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+          printf("%c", f_string_eol[0]);
+          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+        }
+
+        *status = F_status_set_error(F_failure);
+      }
+
+      return;
+    }
+
+    if (operation == fake_make_operation_type_move) {
+      if (arguments.used > 1) {
+        for (f_array_length_t i = 0; i < arguments.used; i++) {
+          *status = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+
+          if (F_status_is_error(*status)) {
+            fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string, data_make->print);
+
+            if (F_status_set_fine(*status) == F_false) {
+              *status = F_status_set_error(F_failure);
+            }
+          }
+        } // for
+
+        for (f_array_length_t i = 0; i < arguments.used - 1; i++) {
+          if (f_file_exists(arguments.array[i].string) != F_true) {
+            if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+              printf("%c", f_string_eol[0]);
+              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+            }
+
+            *status = F_status_set_error(F_failure);
+          }
+        } // for
+
+        if (arguments.used > 2) {
+          // the last file must be a directory.
+          f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
+
+          if (status_file == F_false || status_file == F_file_found_not) {
+            if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+              printf("%c", f_string_eol[0]);
+              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+            }
+
+            *status = F_status_set_error(F_failure);
+          }
+          else if (F_status_is_error(status_file)) {
+            fake_print_message_file(data, F_status_set_fine(status_file), "f_directory_is", arguments.array[arguments.used - 1].string, "find", F_false, F_true, data_make->print);
+            *status = F_status_set_error(F_failure);
+          }
+        }
+        else {
+          // when the first file is a directory, then the second, if it exists, must also be a directory.
+          f_status_t status_file = f_directory_is(arguments.array[0].string);
+
+          if (status_file == F_true) {
+            status_file = f_directory_is(arguments.array[1].string);
+
+            if (status_file == F_false) {
+              if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
+                printf("%c", f_string_eol[0]);
+                fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
+                fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
+                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+              }
+
+              *status = F_status_set_error(F_failure);
+            }
           }
         }
       }
