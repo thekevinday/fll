@@ -177,6 +177,14 @@ extern "C" {
 
     memcpy(path_source.string, source.string, source.used);
 
+    fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
+
+    if (data.verbosity == fake_verbosity_verbose) {
+      recurse.verbose = f_type_output;
+    }
+
+    recurse.failures = &failures;
+
     for (f_array_length_t i = 0; i < files.used; i++) {
       if (files.array[i].used == 0) continue;
 
@@ -195,7 +203,7 @@ extern "C" {
       }
 
       if ((*status = f_directory_is(path_source.string)) == F_true) {
-        *status = fl_directory_copy_content(path_source.string, destination.string, path_source.used, destination.used, mode, f_file_default_read_size, F_false, (data.verbosity == fake_verbosity_verbose) ? f_type_output : 0, &failures);
+        *status = fl_directory_copy_content(path_source.string, destination.string, path_source.used, destination.used, mode, recurse);
 
         if (F_status_is_error(*status)) {
           if (data.verbosity == fake_verbosity_verbose) {

@@ -79,7 +79,6 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
- *   F_recurse (with error bit) if recursion failed, due to max depth reached.
  *   F_failure (with error bit) for any other error.
  */
 #ifndef _di_fll_file_mode_set_all_
@@ -121,7 +120,6 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
- *   F_recurse (with error bit) if recursion failed, due to max depth reached.
  *   F_failure (with error bit) for any other error.
  */
 #ifndef _di_fll_file_role_change_all_

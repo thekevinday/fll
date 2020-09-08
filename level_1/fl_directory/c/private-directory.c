@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_directory_clone_)
-  f_return_status private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
+  f_return_status private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
     f_status_t status = F_none;
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
@@ -18,48 +18,33 @@ extern "C" {
 
     status = F_none;
 
-    f_array_length_t i = 0;
-
     int directory_fd = 0;
-    f_string_length_t failures_used = failures ? failures->used : 0;
+    f_string_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
 
-    for (; F_status_is_fine(status) && i < listing.block.used; i++) {
-      status = private_fl_directory_clone_file(listing.block.array[i], source, destination, role, size_block, exclusive, verbose, failures);
-    } // for
+    {
+      f_string_dynamics_t *list[] = {
+        &listing.block,
+        &listing.character,
+        &listing.regular,
+        &listing.link,
+        &listing.fifo,
+        &listing.socket,
+        &listing.unknown,
+      };
 
-    f_macro_string_dynamics_t_delete_simple(listing.block);
+      uint8_t i = 0;
+      f_array_length_t j = 0;
 
-    for (i = 0; F_status_is_fine(status) && i < listing.character.used; i++) {
-      status = private_fl_directory_clone_file(listing.character.array[i], source, destination, role, size_block, exclusive, verbose, failures);
-    } // for
+      for (; i < 7; i++) {
+        for (j = 0; F_status_is_fine(status) && j < list[i]->used; j++) {
+          status = private_fl_directory_clone_file(list[i]->array[i], source, destination, role, recurse);
+        } // for
 
-    f_macro_string_dynamics_t_delete_simple(listing.character);
+        f_macro_string_dynamics_t_delete_simple((*list[i]));
+      } // for
+    }
 
-    for (i = 0; F_status_is_fine(status) && i < listing.regular.used; i++) {
-      status = private_fl_directory_clone_file(listing.regular.array[i], source, destination, role, size_block, exclusive, verbose, failures);
-    } // for
-
-    f_macro_string_dynamics_t_delete_simple(listing.regular);
-
-    for (i = 0; F_status_is_fine(status) && i < listing.link.used; i++) {
-      status = private_fl_directory_clone_file(listing.link.array[i], source, destination, role, size_block, exclusive, verbose, failures);
-    } // for
-
-    f_macro_string_dynamics_t_delete_simple(listing.link);
-
-    for (i = 0; F_status_is_fine(status) && i < listing.socket.used; i++) {
-      status = private_fl_directory_clone_file(listing.socket.array[i], source, destination, role, size_block, exclusive, verbose, failures);
-    } // for
-
-    f_macro_string_dynamics_t_delete_simple(listing.socket);
-
-    for (i = 0; F_status_is_fine(status) && i < listing.unknown.used; i++) {
-      status = private_fl_directory_clone_file(listing.unknown.array[i], source, destination, role, size_block, exclusive, verbose, failures);
-    } // for
-
-    f_macro_string_dynamics_t_delete_simple(listing.unknown);
-
-    for (i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
+    for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
       f_string_static_t source_sub = f_string_static_t_initialize;
       f_string_static_t destination_sub = f_string_static_t_initialize;
 
@@ -107,7 +92,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (status == F_true) {
-          if (exclusive) {
+          if (recurse.exclusive) {
             status = F_status_set_error(F_directory_found);
             break;
           }
@@ -126,21 +111,23 @@ extern "C" {
         }
       }
 
-      status = private_fl_directory_clone(source_sub, destination_sub, role, size_block, exclusive, verbose, failures);
+      if (depth < recurse.depth_max) {
+        status = private_fl_directory_clone(source_sub, destination_sub, role, recurse, depth + 1);
+      }
     } // for
 
     f_macro_string_dynamics_t_delete_simple(listing.directory);
 
     if (F_status_is_error(status)) return status;
 
-    if (failures && failures_used < failures->used) return F_failure;
+    if (recurse.failures && failures_used < recurse.failures->used) return F_failure;
 
     return F_none;
   }
 #endif // !defined(_di_fl_directory_clone_)
 
 #if !defined(_di_fl_directory_clone_file_)
-  f_return_status private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
+  f_return_status private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse) {
     char path_source[source.used + file.used + 2];
     char path_destination[destination.used + file.used + 2];
 
@@ -154,18 +141,18 @@ extern "C" {
     path_destination[destination.used] = f_path_separator[0];
     path_destination[destination.used + file.used + 1] = 0;
 
-    f_status_t status = f_file_clone(path_source, path_destination, role, size_block, exclusive);
+    f_status_t status = f_file_clone(path_source, path_destination, role, recurse.size_block, recurse.exclusive);
 
     if (F_status_is_error(status) || status == F_unsupported) {
       if (status == F_status_set_error(F_memory_allocation) || status == F_status_set_error(F_memory_reallocation)) {
         return F_status_set_error(status);
       }
 
-      if (!failures) return F_failure;
+      if (!recurse.failures) return F_failure;
 
       const f_status_t status_failure = status;
 
-      f_macro_memory_structure_macro_increment(status, (*failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_t_resize, F_buffer_too_large);
+      f_macro_memory_structure_macro_increment(status, (*recurse.failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_t_resize, F_buffer_too_large);
       if (F_status_is_error(status)) return status;
 
       f_directory_status_t failure = f_directory_status_t_initialize;
@@ -206,17 +193,17 @@ extern "C" {
         failure.path.string[size] = 0;
       }
 
-      failures->array[failures->used].path.string = failure.path.string;
-      failures->array[failures->used].path.used = size;
-      failures->array[failures->used].path.size = size + 1;
-      failures->array[failures->used].status = status_failure;
-      failures->used++;
+      recurse.failures->array[recurse.failures->used].path.string = failure.path.string;
+      recurse.failures->array[recurse.failures->used].path.used = size;
+      recurse.failures->array[recurse.failures->used].path.size = size + 1;
+      recurse.failures->array[recurse.failures->used].status = status_failure;
+      recurse.failures->used++;
 
       return F_failure;
     }
 
-    if (verbose) {
-      fprintf(verbose, "Cloned '%s' to '%s'.%c", source.string, destination.string, f_string_eol[0]);
+    if (recurse.verbose) {
+      fprintf(recurse.verbose, "Cloned '%s' to '%s'.%c", source.string, destination.string, f_string_eol[0]);
     }
 
     return F_none;
@@ -224,7 +211,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_clone_file_)
 
 #if !defined(_di_fl_directory_copy_)
-  f_return_status private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
+  f_return_status private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
     f_status_t status = F_none;
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
@@ -236,54 +223,33 @@ extern "C" {
 
     status = F_none;
 
-    f_array_length_t i = 0;
-
     int directory_fd = 0;
-    f_string_length_t failures_used = failures ? failures->used : 0;
+    f_string_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
 
-    for (; F_status_is_fine(status) && i < listing.block.used; i++) {
-      status = private_fl_directory_copy_file(listing.block.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
-    } // for
+    {
+      f_string_dynamics_t *list[] = {
+        &listing.block,
+        &listing.character,
+        &listing.regular,
+        &listing.link,
+        &listing.fifo,
+        &listing.socket,
+        &listing.unknown,
+      };
 
-    f_macro_string_dynamics_t_delete_simple(listing.block);
+      uint8_t i = 0;
+      f_array_length_t j = 0;
 
-    for (i = 0; F_status_is_fine(status) && i < listing.character.used; i++) {
-      status = private_fl_directory_copy_file(listing.character.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
-    } // for
+      for (; i < 7; i++) {
+        for (j = 0; F_status_is_fine(status) && j < list[i]->used; j++) {
+          status = private_fl_directory_copy_file(list[i]->array[i], source, destination, mode, recurse);
+        } // for
 
-    f_macro_string_dynamics_t_delete_simple(listing.character);
+        f_macro_string_dynamics_t_delete_simple((*list[i]));
+      } // for
+    }
 
-    for (i = 0; F_status_is_fine(status) && i < listing.fifo.used; i++) {
-      status = private_fl_directory_copy_file(listing.fifo.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
-    } // for
-
-    f_macro_string_dynamics_t_delete_simple(listing.fifo);
-
-    for (i = 0; F_status_is_fine(status) && i < listing.regular.used; i++) {
-      status = private_fl_directory_copy_file(listing.regular.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
-    } // for
-
-    f_macro_string_dynamics_t_delete_simple(listing.regular);
-
-    for (i = 0; F_status_is_fine(status) && i < listing.link.used; i++) {
-      status = private_fl_directory_copy_file(listing.link.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
-    } // for
-
-    f_macro_string_dynamics_t_delete_simple(listing.link);
-
-    for (i = 0; F_status_is_fine(status) && i < listing.socket.used; i++) {
-      status = private_fl_directory_copy_file(listing.socket.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
-    } // for
-
-    f_macro_string_dynamics_t_delete_simple(listing.socket);
-
-    for (i = 0; F_status_is_fine(status) && i < listing.unknown.used; i++) {
-      status = private_fl_directory_copy_file(listing.unknown.array[i], source, destination, mode, size_block, exclusive, verbose, failures);
-    } // for
-
-    f_macro_string_dynamics_t_delete_simple(listing.unknown);
-
-    for (i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
+    for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
       f_string_static_t source_sub = f_string_static_t_initialize;
       f_string_static_t destination_sub = f_string_static_t_initialize;
 
@@ -323,7 +289,7 @@ extern "C" {
       if (F_status_is_error(status)) break;
 
       if (status == F_true) {
-        if (exclusive) {
+        if (recurse.exclusive) {
           status = F_status_set_error(F_directory_found);
           break;
         }
@@ -336,21 +302,23 @@ extern "C" {
         if (F_status_is_error(status)) break;
       }
 
-      status = private_fl_directory_copy(source_sub, destination_sub, mode, size_block, exclusive, verbose, failures);
+      if (depth < recurse.depth_max) {
+        status = private_fl_directory_copy(source_sub, destination_sub, mode, recurse, depth + 1);
+      }
     } // for
 
     f_macro_string_dynamics_t_delete_simple(listing.directory);
 
     if (F_status_is_error(status)) return status;
 
-    if (failures && failures_used < failures->used) return F_failure;
+    if (recurse.failures && failures_used < recurse.failures->used) return F_failure;
 
     return F_none;
   }
 #endif // !defined(_di_fl_directory_copy_)
 
 #if !defined(_di_fl_directory_copy_file_)
-  f_return_status private_fl_directory_copy_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures) {
+  f_return_status private_fl_directory_copy_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse) {
     char path_source[source.used + file.used + 2];
     char path_destination[destination.used + file.used + 2];
 
@@ -364,18 +332,18 @@ extern "C" {
     path_destination[destination.used] = f_path_separator[0];
     path_destination[destination.used + file.used + 1] = 0;
 
-    f_status_t status = f_file_copy(path_source, path_destination, mode, size_block, exclusive);
+    f_status_t status = f_file_copy(path_source, path_destination, mode, recurse.size_block, recurse.exclusive);
 
     if (F_status_is_error(status) || status == F_unsupported) {
       if (status == F_status_set_error(F_memory_allocation) || status == F_status_set_error(F_memory_reallocation)) {
         return F_status_set_error(status);
       }
 
-      if (!failures) return F_failure;
+      if (!recurse.failures) return F_failure;
 
       const f_status_t status_failure = status;
 
-      f_macro_memory_structure_macro_increment(status, (*failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_t_resize, F_buffer_too_large);
+      f_macro_memory_structure_macro_increment(status, (*recurse.failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_t_resize, F_buffer_too_large);
       if (F_status_is_error(status)) return status;
 
       f_directory_status_t failure = f_directory_status_t_initialize;
@@ -416,17 +384,17 @@ extern "C" {
         failure.path.string[size] = 0;
       }
 
-      failures->array[failures->used].path.string = failure.path.string;
-      failures->array[failures->used].path.used = size;
-      failures->array[failures->used].path.size = size + 1;
-      failures->array[failures->used].status = status_failure;
-      failures->used++;
+      recurse.failures->array[recurse.failures->used].path.string = failure.path.string;
+      recurse.failures->array[recurse.failures->used].path.used = size;
+      recurse.failures->array[recurse.failures->used].path.size = size + 1;
+      recurse.failures->array[recurse.failures->used].status = status_failure;
+      recurse.failures->used++;
 
       return F_failure;
     }
 
-    if (verbose) {
-      fprintf(verbose, "Copied '%s' to '%s'.%c", source.string, destination.string, f_string_eol[0]);
+    if (recurse.verbose) {
+      fprintf(recurse.verbose, "Copied '%s' to '%s'.%c", source.string, destination.string, f_string_eol[0]);
     }
 
     return F_none;

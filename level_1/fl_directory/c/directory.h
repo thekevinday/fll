@@ -45,6 +45,40 @@ extern "C" {
 #endif
 
 /**
+ * An association of a path and a status code.
+ *
+ * The allocation macros apply to the path.
+ *
+ * depth_max:
+ *   The max recursion depth.
+ * size_block:
+ *   The default number of chunks to read at a time with each chunk being 1-byte.
+ *   Must be greater than 0.
+ * exclusive:
+ *   If TRUE, will fail when file already exists.
+ *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * verbose:
+ *   Set to 0 to not print copy operation values on successful copy.
+ *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
+ * failures:
+ *   A list of paths and their respective status codes for clone failures.
+ *   If 0, then this and statuses are ignored.
+ */
+#ifndef _di_fl_directory_recurse_t_
+  #define fl_directory_recurse_depth_max 65535
+
+  typedef struct {
+    f_number_unsigned_t depth_max;
+    f_number_unsigned_t size_block;
+    bool exclusive;
+    FILE *verbose;
+    f_directory_statuss_t *failures;
+  } fl_directory_recurse_t;
+
+  #define fl_directory_recurse_t_initialize { fl_directory_recurse_depth_max, f_file_default_read_size, F_false, 0, 0 }
+#endif // _di_fl_directory_recurse_t_
+
+/**
  * Copy a directory and its contents, as well as its file mode and possibly the owner and group..
  *
  * The paths must not contain NULL except for the terminating NULL.
@@ -68,18 +102,8 @@ extern "C" {
  *   If TRUE, will copy the owner and group ids.
  *   If FALSE, will not copy the owner and group ids.
  *   (In both cases the file mode is copied.)
- * @param size_block
- *   The default number of chunks to read at a time with each chunk being 1-byte.
- *   Must be greater than 0.
- * @param exclusive
- *   If TRUE, will fail when file already exists.
- *   If FALSE, will not fail if file already exists (existing file will be replaced).
- * @param verbose
- *   Set to 0 to not print copy operation values on successful copy.
- *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
- * @param failures
- *   A list of paths and their respective status codes for clone failures.
- *   If 0, then this and statuses is ignored.
+ * @param recurse
+ *   The directory recurse data.
  *
  * @return
  *   F_none on success.
@@ -104,7 +128,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #ifndef _di_fl_directory_clone_
-  extern f_return_status fl_directory_clone(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures);
+  extern f_return_status fl_directory_clone(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_clone_
 
 /**
@@ -133,18 +157,8 @@ extern "C" {
  *   If TRUE, will copy the owner and group ids.
  *   If FALSE, will not copy the owner and group ids.
  *   (In both cases the file mode is copied.)
- * @param size_block
- *   The default number of chunks to read at a time with each chunk being 1-byte.
- *   Must be greater than 0.
- * @param exclusive
- *   If TRUE, will fail when file already exists.
- *   If FALSE, will not fail if file already exists (existing file will be replaced).
- * @param verbose
- *   Set to 0 to not print copy operation values on successful copy.
- *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
- * @param failures
- *   A list of paths and their respective status codes for clone failures.
- *   If 0, then this and statuses is ignored.
+ * @param recurse
+ *   The directory recurse data.
  *
  * @return
  *   F_none on success.
@@ -165,7 +179,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #ifndef _di_fl_directory_clone_content_
-  extern f_return_status fl_directory_clone_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures);
+  extern f_return_status fl_directory_clone_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_clone_content_
 
 /**
@@ -190,18 +204,8 @@ extern "C" {
  *   The length of the destination path.
  * @param mode
  *   The directory modes.
- * @param size_block
- *   The default number of chunks to read at a time with each chunk being 1-byte.
- *   Set to 0 to use default block read size.
- * @param exclusive
- *   If TRUE, will fail when file already exists.
- *   If FALSE, will not fail if file already exists (existing file will be replaced).
- * @param verbose
- *   Set to 0 to not print copy operation values on successful copy.
- *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
- * @param failures
- *   A list of paths and their respective status codes for copy failures.
- *   If 0, then this and statuses is ignored.
+ * @param recurse
+ *   The directory recurse data.
  *
  * @return
  *   F_none on success.
@@ -226,7 +230,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #ifndef _di_fl_directory_copy_
-  extern f_return_status fl_directory_copy(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures);
+  extern f_return_status fl_directory_copy(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_copy_
 
 /**
@@ -253,18 +257,8 @@ extern "C" {
  *   The length of the destination path.
  * @param mode
  *   The directory modes.
- * @param size_block
- *   The default number of chunks to read at a time with each chunk being 1-byte.
- *   Set to 0 to use default block read size.
- * @param exclusive
- *   If TRUE, will fail when file already exists.
- *   If FALSE, will not fail if file already exists (existing file will be replaced).
- * @param verbose
- *   Set to 0 to not print copy operation values on successful copy.
- *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
- * @param failures
- *   A list of paths and their respective status codes for copy failures.
- *   If 0, then this and statuses is ignored.
+ * @param recurse
+ *   The directory recurse data.
  *
  * @return
  *   F_none on success.
@@ -285,7 +279,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #ifndef _di_fl_directory_copy_content_
-  extern f_return_status fl_directory_copy_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive, FILE *verbose, f_directory_statuss_t *failures);
+  extern f_return_status fl_directory_copy_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_copy_content_
 
 /**

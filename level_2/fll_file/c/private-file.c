@@ -7,9 +7,6 @@ extern "C" {
 
 #if !defined(_di_fll_file_mode_set_all_)
   f_return_status private_fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
-
-    if (depth >= depth_max) return F_status_set_error(F_recurse);
-
     f_status_t status = F_none;
 
     status = f_directory_is(path);
@@ -86,8 +83,10 @@ extern "C" {
         break;
       }
 
-      status = private_fll_file_mode_set_all(path_sub, mode, depth_max, depth + 1);
-      if (F_status_is_error(status)) break;
+      if (depth < depth_max) {
+        status = private_fll_file_mode_set_all(path_sub, mode, depth_max, depth + 1);
+        if (F_status_is_error(status)) break;
+      }
     } // for
 
     f_macro_string_dynamics_t_delete_simple(listing.directory);
@@ -100,9 +99,6 @@ extern "C" {
 
 #if !defined(_di_fll_file_role_change_all_)
   f_return_status private_fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
-
-    if (depth >= depth_max) return F_status_set_error(F_recurse);
-
     f_status_t status = F_none;
 
     status = f_directory_is(path);
@@ -177,8 +173,10 @@ extern "C" {
         break;
       }
 
-      status = private_fll_file_role_change_all(path_sub, uid, gid, dereference, depth_max, depth + 1);
-      if (F_status_is_error(status)) break;
+      if (depth < depth_max) {
+        status = private_fll_file_role_change_all(path_sub, uid, gid, dereference, depth_max, depth + 1);
+        if (F_status_is_error(status)) break;
+      }
     } // for
 
     f_macro_string_dynamics_t_delete_simple(listing.directory);

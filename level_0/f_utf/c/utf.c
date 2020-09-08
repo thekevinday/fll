@@ -1128,7 +1128,7 @@ extern "C" {
       if (width_max < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const const uint8_t width = f_macro_utf_byte_width_is(*character);
+    const uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
       // There are no ASCII private characters.
