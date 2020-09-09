@@ -79,7 +79,7 @@ extern "C" {
 #endif // _di_fl_directory_recurse_t_
 
 /**
- * Copy a directory and its contents, as well as its file mode and possibly the owner and group..
+ * Copy a directory and its contents, as well as its file mode and possibly the owner and group.
  *
  * The paths must not contain NULL except for the terminating NULL.
  * The paths must be NULL terminated.

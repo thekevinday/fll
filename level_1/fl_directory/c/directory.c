@@ -8,8 +8,8 @@ extern "C" {
 #ifndef _di_fl_directory_clone_
   f_return_status fl_directory_clone(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_1_parameter_checking_
-      if (source) return F_status_set_error(F_parameter);
-      if (destination) return F_status_set_error(F_parameter);
+      if (!source) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = f_directory_exists(source);
@@ -82,8 +82,8 @@ extern "C" {
 #ifndef _di_fl_directory_clone_content_
   f_return_status fl_directory_clone_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_1_parameter_checking_
-      if (source) return F_status_set_error(F_parameter);
-      if (destination) return F_status_set_error(F_parameter);
+      if (!source) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = f_directory_exists(source);
@@ -128,8 +128,8 @@ extern "C" {
 #ifndef _di_fl_directory_copy_
   f_return_status fl_directory_copy(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_1_parameter_checking_
-      if (source) return F_status_set_error(F_parameter);
-      if (destination) return F_status_set_error(F_parameter);
+      if (!source) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = f_directory_exists(source);
@@ -190,8 +190,8 @@ extern "C" {
 #ifndef _di_fl_directory_copy_content_
   f_return_status fl_directory_copy_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_1_parameter_checking_
-      if (source) return F_status_set_error(F_parameter);
-      if (destination) return F_status_set_error(F_parameter);
+      if (!source) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = f_directory_exists(source);
@@ -318,7 +318,7 @@ extern "C" {
 #ifndef _di_fl_directory_path_push_
   f_return_status fl_directory_path_push(const f_string_t source, f_string_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_0_parameter_checking_
-      if (source) return F_status_set_error(F_parameter);
+      if (!source) return F_status_set_error(F_parameter);
       if (destination->used > destination->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 

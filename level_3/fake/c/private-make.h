@@ -60,8 +60,8 @@ extern "C" {
 #endif // _di_fake_make_setting_t_
 
 #ifndef _di_fake_make_operation_
-  #define fake_make_operation_build    "build"
   #define fake_make_operation_break    "break"
+  #define fake_make_operation_build    "build"
   #define fake_make_operation_clean    "clean"
   #define fake_make_operation_clone    "clone"
   #define fake_make_operation_compile  "compile"
@@ -92,7 +92,6 @@ extern "C" {
   #define fake_make_operation_top      "top"
   #define fake_make_operation_touch    "touch"
 
-  #define fake_make_operation_index_length    5
   #define fake_make_operation_break_length    5
   #define fake_make_operation_build_length    5
   #define fake_make_operation_clean_length    5
@@ -108,6 +107,7 @@ extern "C" {
   #define fake_make_operation_group_length    5
   #define fake_make_operation_groups_length   6
   #define fake_make_operation_if_length       2
+  #define fake_make_operation_index_length    5
   #define fake_make_operation_link_length     4
   #define fake_make_operation_mode_length     4
   #define fake_make_operation_modes_length    5

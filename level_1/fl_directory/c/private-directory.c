@@ -37,7 +37,7 @@ extern "C" {
 
       for (; i < 7; i++) {
         for (j = 0; F_status_is_fine(status) && j < list[i]->used; j++) {
-          status = private_fl_directory_clone_file(list[i]->array[i], source, destination, role, recurse);
+          status = private_fl_directory_clone_file(list[i]->array[j], source, destination, role, recurse);
         } // for
 
         f_macro_string_dynamics_t_delete_simple((*list[i]));
@@ -203,7 +203,7 @@ extern "C" {
     }
 
     if (recurse.verbose) {
-      fprintf(recurse.verbose, "Cloned '%s' to '%s'.%c", source.string, destination.string, f_string_eol[0]);
+      fprintf(recurse.verbose, "Cloned '%s' to '%s'.%c", path_source, path_destination, f_string_eol[0]);
     }
 
     return F_none;
@@ -242,7 +242,7 @@ extern "C" {
 
       for (; i < 7; i++) {
         for (j = 0; F_status_is_fine(status) && j < list[i]->used; j++) {
-          status = private_fl_directory_copy_file(list[i]->array[i], source, destination, mode, recurse);
+          status = private_fl_directory_copy_file(list[i]->array[j], source, destination, mode, recurse);
         } // for
 
         f_macro_string_dynamics_t_delete_simple((*list[i]));
@@ -394,7 +394,7 @@ extern "C" {
     }
 
     if (recurse.verbose) {
-      fprintf(recurse.verbose, "Copied '%s' to '%s'.%c", source.string, destination.string, f_string_eol[0]);
+      fprintf(recurse.verbose, "Copied '%s' to '%s'.%c", path_source, path_destination, f_string_eol[0]);
     }
 
     return F_none;

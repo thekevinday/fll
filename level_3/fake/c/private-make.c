@@ -1429,6 +1429,7 @@ extern "C" {
       f_macro_string_static_t_initialize(fake_make_operation_break, fake_make_operation_break_length),
       f_macro_string_static_t_initialize(fake_make_operation_build, fake_make_operation_build_length),
       f_macro_string_static_t_initialize(fake_make_operation_clean, fake_make_operation_clean_length),
+      f_macro_string_static_t_initialize(fake_make_operation_clone, fake_make_operation_clone_length),
       f_macro_string_static_t_initialize(fake_make_operation_compile, fake_make_operation_compile_length),
       f_macro_string_static_t_initialize(fake_make_operation_copy, fake_make_operation_copy_length),
       f_macro_string_static_t_initialize(fake_make_operation_define, fake_make_operation_define_length),
@@ -1462,6 +1463,7 @@ extern "C" {
       f_macro_string_range_initialize(fake_make_operation_break_length),
       f_macro_string_range_initialize(fake_make_operation_build_length),
       f_macro_string_range_initialize(fake_make_operation_clean_length),
+      f_macro_string_range_initialize(fake_make_operation_clone_length),
       f_macro_string_range_initialize(fake_make_operation_compile_length),
       f_macro_string_range_initialize(fake_make_operation_copy_length),
       f_macro_string_range_initialize(fake_make_operation_define_length),
@@ -1495,6 +1497,7 @@ extern "C" {
       fake_make_operation_type_break,
       fake_make_operation_type_build,
       fake_make_operation_type_clean,
+      fake_make_operation_type_clone,
       fake_make_operation_type_compile,
       fake_make_operation_type_copy,
       fake_make_operation_type_define,
@@ -1790,17 +1793,72 @@ extern "C" {
       const f_array_length_t total = arguments.used -1;
       f_status_t status_file = F_none;
 
+      fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
+
+      f_string_length_t destination_length = 0;
+
+      if (data.verbosity == fake_verbosity_verbose) {
+        recurse.verbose = f_type_output;
+      }
+
+      bool existing = F_true;
+
+      // in this case, the destination could be a file, so confirm this.
+      if (arguments.used == 2) {
+        status_file = f_directory_is(arguments.array[total].string);
+
+        if (F_status_is_error(status_file)) {
+          fake_print_message_file(data, F_status_set_fine(status_file), "f_directory_is", arguments.array[1].string, "identify", F_false, F_true, data_make->print);
+          *status = F_status_set_error(F_failure);
+          return;
+        }
+
+        if (status_file == F_false || status_file == F_file_found_not) {
+          existing = F_false;
+        }
+      }
+
       for (f_array_length_t i = 0; i < total; i++) {
+        destination_length = arguments.array[total].used;
+
+        if (existing) {
+          destination_length += arguments.array[i].used + 1;
+        }
+
+        char destination[destination_length + 1];
+
+        memcpy(destination, arguments.array[total].string, arguments.array[total].used);
+
+        if (existing) {
+          memcpy(destination + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
+          destination[arguments.array[total].used] = f_path_separator[0];
+        }
+
+        destination[destination_length] = 0;
+
         status_file = f_directory_is(arguments.array[i].string);
 
         if (status_file == F_true) {
-          // @todo: *status = fl_directory_clone();
+          status_file = fl_directory_clone(arguments.array[i].string, destination, arguments.array[i].used, destination_length, F_true, recurse);
+
+          if (F_status_is_error(status_file)) {
+            fake_print_message_file(data, F_status_set_fine(status_file), "fl_directory_clone", arguments.array[i].string, "clone", F_false, F_true, data_make->print);
+            *status = F_status_set_error(F_failure);
+          }
         }
-        else if (status_file == F_true) {
-          // @todo: *status = f_file_clone();
+        else if (status_file == F_false) {
+          status_file = f_file_clone(arguments.array[i].string, destination, F_true, recurse.size_block, recurse.exclusive);
+
+          if (F_status_is_error(status_file)) {
+            fake_print_message_file(data, F_status_set_fine(status_file), "f_file_clone", arguments.array[i].string, "clone", F_false, F_true, data_make->print);
+            *status = F_status_set_error(F_failure);
+          }
+          else if (data.verbosity == fake_verbosity_verbose) {
+            printf("Cloned '%s' to '%s'.%c", arguments.array[i].string, destination, f_string_eol[0]);
+          }
         }
         else if (F_status_is_error(status_file)) {
-          // @todo
+          fake_print_message_file(data, F_status_set_fine(status_file), "f_directory_is", arguments.array[i].string, "identify", F_false, F_true, data_make->print);
           *status = F_status_set_error(F_failure);
           break;
         }
@@ -1826,17 +1884,74 @@ extern "C" {
       const f_array_length_t total = arguments.used -1;
       f_status_t status_file = F_none;
 
+      fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
+
+      f_string_length_t destination_length = 0;
+
+      f_mode_t mode = f_mode_t_initialize;f_macro_mode_t_set_default_umask(mode, data.umask);
+
+      if (data.verbosity == fake_verbosity_verbose) {
+        recurse.verbose = f_type_output;
+      }
+
+      bool existing = F_true;
+
+      // in this case, the destination could be a file, so confirm this.
+      if (arguments.used == 2) {
+        status_file = f_directory_is(arguments.array[total].string);
+
+        if (F_status_is_error(status_file)) {
+          fake_print_message_file(data, F_status_set_fine(status_file), "f_directory_is", arguments.array[1].string, "identify", F_false, F_true, data_make->print);
+          *status = F_status_set_error(F_failure);
+          return;
+        }
+
+        if (status_file == F_false || status_file == F_file_found_not) {
+          existing = F_false;
+        }
+      }
+
       for (f_array_length_t i = 0; i < total; i++) {
+        destination_length = arguments.array[total].used;
+
+        if (existing) {
+          destination_length += arguments.array[i].used + 1;
+        }
+
+        char destination[destination_length + 1];
+
+        memcpy(destination, arguments.array[total].string, arguments.array[total].used);
+
+        if (existing) {
+          memcpy(destination + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
+          destination[arguments.array[total].used] = f_path_separator[0];
+        }
+
+        destination[destination_length] = 0;
+
         status_file = f_directory_is(arguments.array[i].string);
 
         if (status_file == F_true) {
-          // @todo: *status = fl_directory_copy();
+          status_file = fl_directory_copy(arguments.array[i].string, destination, arguments.array[i].used, destination_length, mode, recurse);
+
+          if (F_status_is_error(status_file)) {
+            fake_print_message_file(data, F_status_set_fine(status_file), "fl_directory_copy", arguments.array[i].string, "copy", F_false, F_true, data_make->print);
+            *status = F_status_set_error(F_failure);
+          }
         }
-        else if (status_file == F_true) {
-          // @todo: *status = f_file_copy();
+        else if (status_file == F_false) {
+          status_file = f_file_copy(arguments.array[i].string, destination, mode, recurse.size_block, recurse.exclusive);
+
+          if (F_status_is_error(status_file)) {
+            fake_print_message_file(data, F_status_set_fine(status_file), "f_file_copy", arguments.array[i].string, "copy", F_false, F_true, data_make->print);
+            *status = F_status_set_error(F_failure);
+          }
+          else if (data.verbosity == fake_verbosity_verbose) {
+            printf("Copied '%s' to '%s'.%c", arguments.array[i].string, destination, f_string_eol[0]);
+          }
         }
         else if (F_status_is_error(status_file)) {
-          // @todo
+          fake_print_message_file(data, F_status_set_fine(status_file), "f_directory_is", arguments.array[i].string, "identify", F_false, F_true, data_make->print);
           *status = F_status_set_error(F_failure);
           break;
         }
