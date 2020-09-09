@@ -191,6 +191,7 @@ extern "C" {
     #define FL_status_string_loop             "F_loop"
     #define FL_status_string_maybe            "F_maybe"
     #define FL_status_string_memory_out       "F_memory_out"
+    #define FL_status_string_mount            "F_mount"
     #define FL_status_string_name             "F_name"
     #define FL_status_string_parameter        "F_parameter"
     #define FL_status_string_pipe             "F_pipe"
@@ -241,6 +242,7 @@ extern "C" {
     #define FL_status_string_loop_length             6
     #define FL_status_string_maybe_length            7
     #define FL_status_string_memory_out_length       12
+    #define FL_status_string_mount_length            7
     #define FL_status_string_name_length             6
     #define FL_status_string_parameter_length        11
     #define FL_status_string_pipe_length             6

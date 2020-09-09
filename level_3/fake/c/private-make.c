@@ -1888,7 +1888,9 @@ extern "C" {
 
       f_string_length_t destination_length = 0;
 
-      f_mode_t mode = f_mode_t_initialize;f_macro_mode_t_set_default_umask(mode, data.umask);
+      f_mode_t mode = f_mode_t_initialize;
+
+      f_macro_mode_t_set_default_umask(mode, data.umask);
 
       if (data.verbosity == fake_verbosity_verbose) {
         recurse.verbose = f_type_output;
@@ -2753,19 +2755,51 @@ extern "C" {
       const f_array_length_t total = arguments.used -1;
       f_status_t status_file = F_none;
 
-      for (f_array_length_t i = 0; i < total; i++) {
-        status_file = f_directory_is(arguments.array[i].string);
+      f_string_length_t destination_length = 0;
 
-        if (status_file == F_true) {
-          // @todo: *status = fl_directory_copy();
-        }
-        else if (status_file == F_true) {
-          // @todo: *status = f_file_copy();
-        }
-        else if (F_status_is_error(status_file)) {
-          // @todo
+      bool existing = F_true;
+
+      // in this case, the destination could be a file, so confirm this.
+      if (arguments.used == 2) {
+        status_file = f_directory_is(arguments.array[total].string);
+
+        if (F_status_is_error(status_file)) {
+          fake_print_message_file(data, F_status_set_fine(status_file), "f_directory_is", arguments.array[1].string, "identify", F_false, F_true, data_make->print);
           *status = F_status_set_error(F_failure);
-          break;
+          return;
+        }
+
+        if (status_file == F_false || status_file == F_file_found_not) {
+          existing = F_false;
+        }
+      }
+
+      for (f_array_length_t i = 0; i < total; i++) {
+        destination_length = arguments.array[total].used;
+
+        if (existing) {
+          destination_length += arguments.array[i].used + 1;
+        }
+
+        char destination[destination_length + 1];
+
+        memcpy(destination, arguments.array[total].string, arguments.array[total].used);
+
+        if (existing) {
+          memcpy(destination + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
+          destination[arguments.array[total].used] = f_path_separator[0];
+        }
+
+        destination[destination_length] = 0;
+
+        status_file = f_file_move(arguments.array[i].string, destination);
+
+        if (F_status_is_error(status_file)) {
+          fake_print_message_file(data, F_status_set_fine(status_file), "f_file_move", arguments.array[i].string, "move", F_false, F_true, data_make->print);
+          *status = F_status_set_error(F_failure);
+        }
+        else if (data.verbosity == fake_verbosity_verbose) {
+          printf("Moved '%s' to '%s'.%c", arguments.array[i].string, destination, f_string_eol[0]);
         }
       } // for
 

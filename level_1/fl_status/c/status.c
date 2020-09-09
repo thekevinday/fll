@@ -299,6 +299,9 @@ extern "C" {
         case F_memory_out:
           *string = FL_status_string_memory_out;
           break;
+        case F_mount:
+          *string = FL_status_string_mount;
+          break;
         case F_name:
           *string = FL_status_string_name;
           break;

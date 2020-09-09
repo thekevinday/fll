@@ -1318,6 +1318,75 @@ extern "C" {
   }
 #endif // _di_f_file_mode_to_mode_
 
+#ifndef _di_f_file_move_
+  f_return_status f_file_move(const f_string_t source, const f_string_t destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (source == 0) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (rename(source, destination) < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBUSY) return F_status_set_error(F_busy);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == EMLINK) return F_status_set_error(F_link);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOSPC) return F_status_set_error(F_space_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOTEMPTY) return F_status_set_error(F_directory_empty_not);
+      if (errno == EEXIST) return F_status_set_error(F_directory_empty_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == EXDEV) return F_status_set_error(F_mount);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_file_move_
+
+#ifndef _di_f_file_move_at_
+  f_return_status f_file_move_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (source == 0) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (renameat(at_id, source, to_id, destination) < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBUSY) return F_status_set_error(F_busy);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == EMLINK) return F_status_set_error(F_link);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOSPC) return F_status_set_error(F_space_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOTEMPTY) return F_status_set_error(F_directory_empty_not);
+      if (errno == EEXIST) return F_status_set_error(F_directory_empty_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == EXDEV) return F_status_set_error(F_mount);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_file_move_at_
+
 #ifndef _di_f_file_name_base_
   f_return_status f_file_name_base(const f_string_t path, const f_string_length_t length, f_string_dynamic_t *name_base) {
     #ifndef _di_level_0_parameter_checking_

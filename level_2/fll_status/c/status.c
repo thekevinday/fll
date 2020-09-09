@@ -501,6 +501,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_mount, length, FL_status_string_mount_length) == F_equal_to) {
+        *code = F_mount;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_name, length, FL_status_string_name_length) == F_equal_to) {
         *code = F_name;
         return F_none;

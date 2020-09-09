@@ -417,7 +417,7 @@ extern "C" {
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
  *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -494,7 +494,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -533,7 +533,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -573,7 +573,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -983,7 +983,7 @@ extern "C" {
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
@@ -1020,7 +1020,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
@@ -1057,7 +1057,7 @@ extern "C" {
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
@@ -1098,7 +1098,7 @@ extern "C" {
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path.
@@ -1444,6 +1444,105 @@ extern "C" {
 #ifndef _di_f_file_mode_to_mode_
   extern f_return_status f_file_mode_to_mode(const f_file_mode_t from, mode_t *to);
 #endif // _di_f_file_mode_to_mode_
+
+/**
+ * Move a file.
+ *
+ * The paths must not contain NULL except for the terminating NULL.
+ * The paths must be NULL terminated.
+ *
+ * This essentially renames a file but can also change the file's path, which is therefore a move.
+ *
+ * If destination already exists, then according to rename(), destination will be atomically replaced.
+ * Which, if destination is a directory must either not exist or be empty.
+ *
+ * It is recommended to perform an existence test on destination to not have to consider the details on how rename() operates with an existing destination.
+ *
+ * @todo consider handling F_mount error internally, copying across filesystem and then removing file on success.
+ *
+ * @param source
+ *   The path to the file to copy from.
+ * @param destination
+ *   The path to copy to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_empty_not (with error bit) if the destination is a non-empty directory.
+ *   F_file_found_not (with error bit) if file at path was not found.
+ *   F_file_type_directory (with error bit) if destination is a directory but source is not.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_link (with error bit) if source or destination has the maxiumum associated links.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_mount (with error bit) if source and destination are not within the same mounted filesystems.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for making changes.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see rename()
+ */
+#ifndef _di_f_file_move_
+  extern f_return_status f_file_move(const f_string_t source, const f_string_t destination);
+#endif // _di_f_file_move_
+
+/**
+ * Move a file.
+ *
+ * The paths must not contain NULL except for the terminating NULL.
+ * The paths must be NULL terminated.
+ *
+ * This essentially renames a file but can also change the file's path, which is therefore a move.
+ *
+ * If destination already exists, then according to rename(), destination will be atomically replaced.
+ * Which, if destination is a directory must either not exist or be empty.
+ *
+ * It is recommended to perform an existence test on destination to not have to consider the details on how rename() operates with an existing destination.
+ *
+ * @todo consider handling F_mount error internally, copying across filesystem and then removing file on success.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which the source is relative to.
+ * @param to_id
+ *   The parent directory, as an open directory file descriptor, in which the destination is relative to.
+ * @param source
+ *   The path to the file to copy from.
+ * @param destination
+ *   The path to copy to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id or to_id.
+ *   F_directory_empty_not (with error bit) if the destination is a non-empty directory.
+ *   F_file_found_not (with error bit) if file at path was not found.
+ *   F_file_type_directory (with error bit) if destination is a directory but source is not.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_link (with error bit) if source or destination has the maxiumum associated links.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_mount (with error bit) if source and destination are not within the same mounted filesystems.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for making changes.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see renameat()
+ */
+#ifndef _di_f_file_move_at_
+  extern f_return_status f_file_move_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination);
+#endif // _di_f_file_move_at_
 
 /**
  * Get the base name of a file path.
@@ -2019,7 +2118,7 @@ extern "C" {
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path.
@@ -2061,7 +2160,7 @@ extern "C" {
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path (when calling utimensat()).

@@ -471,7 +471,7 @@ extern "C" {
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path.
@@ -513,7 +513,7 @@ extern "C" {
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path (when calling utimensat()).

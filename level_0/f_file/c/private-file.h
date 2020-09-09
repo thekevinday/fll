@@ -63,7 +63,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -109,7 +109,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -154,7 +154,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -432,7 +432,7 @@ extern "C" {
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
@@ -469,7 +469,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
- *   F_busy (with error bit) if filesystem is too busy to perforrm write.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
