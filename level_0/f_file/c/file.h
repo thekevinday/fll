@@ -1446,19 +1446,16 @@ extern "C" {
 #endif // _di_f_file_mode_to_mode_
 
 /**
- * Move a file.
+ * Rename a file.
  *
  * The paths must not contain NULL except for the terminating NULL.
  * The paths must be NULL terminated.
  *
- * This essentially renames a file but can also change the file's path, which is therefore a move.
+ * This essentially renames a file but can also change the file's path, which is identical to a move.
+ * However, renames only work within a filesystem and cannot be moved to another filesystem.
  *
  * If destination already exists, then according to rename(), destination will be atomically replaced.
- * Which, if destination is a directory must either not exist or be empty.
- *
- * It is recommended to perform an existence test on destination to not have to consider the details on how rename() operates with an existing destination.
- *
- * @todo consider handling F_mount error internally, copying across filesystem and then removing file on success.
+ * Which, if destination is a directory, then that directory must either not exist or be empty.
  *
  * @param source
  *   The path to the file to copy from.
@@ -1488,24 +1485,21 @@ extern "C" {
  *
  * @see rename()
  */
-#ifndef _di_f_file_move_
-  extern f_return_status f_file_move(const f_string_t source, const f_string_t destination);
-#endif // _di_f_file_move_
+#ifndef _di_f_file_rename_
+  extern f_return_status f_file_rename(const f_string_t source, const f_string_t destination);
+#endif // _di_f_file_rename_
 
 /**
- * Move a file.
+ * Rename a file.
  *
  * The paths must not contain NULL except for the terminating NULL.
  * The paths must be NULL terminated.
  *
- * This essentially renames a file but can also change the file's path, which is therefore a move.
+ * This essentially renames a file but can also change the file's path, which is identical to a move.
+ * However, renames only work within a filesystem and cannot be moved to another filesystem.
  *
  * If destination already exists, then according to rename(), destination will be atomically replaced.
- * Which, if destination is a directory must either not exist or be empty.
- *
- * It is recommended to perform an existence test on destination to not have to consider the details on how rename() operates with an existing destination.
- *
- * @todo consider handling F_mount error internally, copying across filesystem and then removing file on success.
+ * Which, if destination is a directory, then that directory must either not exist or be empty.
  *
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which the source is relative to.
@@ -1540,9 +1534,9 @@ extern "C" {
  *
  * @see renameat()
  */
-#ifndef _di_f_file_move_at_
-  extern f_return_status f_file_move_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination);
-#endif // _di_f_file_move_at_
+#ifndef _di_f_file_rename_at_
+  extern f_return_status f_file_rename_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination);
+#endif // _di_f_file_rename_at_
 
 /**
  * Get the base name of a file path.

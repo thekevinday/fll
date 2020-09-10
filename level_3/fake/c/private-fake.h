@@ -153,6 +153,48 @@ extern "C" {
   extern f_return_status fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_validate_parameter_directories_
 
+/**
+ * Helper function for performing a verbose print for a file clone operation.
+ *
+ * @param output
+ *   A file pointer to print to, such as stdout.
+ * @param source
+ *   The source string.
+ * @param destination
+ *   The destination string.
+ */
+#ifndef _di_fake_verbose_print_clone_
+  extern void fake_verbose_print_clone(FILE *output, const f_string_t source, const f_string_t destination) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_verbose_print_clone_
+
+/**
+ * Helper function for performing a verbose print for a file copy operation.
+ *
+ * @param output
+ *   A file pointer to print to, such as stdout.
+ * @param source
+ *   The source string.
+ * @param destination
+ *   The destination string.
+ */
+#ifndef _di_fake_verbose_print_copy_
+  extern void fake_verbose_print_copy(FILE *output, const f_string_t source, const f_string_t destination) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_verbose_print_copy_
+
+/**
+ * Helper function for performing a verbose print for a file move operation.
+ *
+ * @param output
+ *   A file pointer to print to, such as stdout.
+ * @param source
+ *   The source string.
+ * @param destination
+ *   The destination string.
+ */
+#ifndef _di_fake_verbose_print_move_
+  extern void fake_verbose_print_move(FILE *output, const f_string_t source, const f_string_t destination) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_verbose_print_move_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

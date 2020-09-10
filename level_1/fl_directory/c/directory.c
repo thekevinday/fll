@@ -45,10 +45,6 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    if (recurse.verbose) {
-      fprintf(recurse.verbose, "Cloned '%s' to '%s'.%c", source, destination, f_string_eol[0]);
-    }
-
     f_string_static_t static_source = { source, source_length, source_length };
     f_string_static_t static_destination = { destination, destination_length, destination_length };
 
@@ -71,11 +67,15 @@ extern "C" {
       } // for
     }
 
-    if (recurse.depth_max == 0) {
-      return status;
+    if (recurse.depth_max) {
+      status = private_fl_directory_clone(static_source, static_destination, role, recurse, 1);
     }
 
-    return private_fl_directory_clone(static_source, static_destination, role, recurse, 1);
+    if (status == F_none && recurse.output && recurse.verbose) {
+      recurse.verbose(recurse.output, source, destination);
+    }
+
+    return status;
   }
 #endif // _di_fl_directory_clone_
 
@@ -121,7 +121,15 @@ extern "C" {
       return status;
     }
 
-    return private_fl_directory_clone(static_source, static_destination, role, recurse, 1);
+    if (recurse.depth_max) {
+      status = private_fl_directory_clone(static_source, static_destination, role, recurse, 1);
+    }
+
+    if (status == F_none && recurse.output && recurse.verbose) {
+      recurse.verbose(recurse.output, source, destination);
+    }
+
+    return status;
   }
 #endif // _di_fl_directory_clone_content_
 
@@ -153,10 +161,6 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    if (recurse.verbose) {
-      fprintf(recurse.verbose, "Copied '%s' to '%s'.%c", source, destination, f_string_eol[0]);
-    }
-
     f_string_static_t static_source = { source, source_length, source_length };
     f_string_static_t static_destination = { destination, destination_length, destination_length };
 
@@ -179,11 +183,15 @@ extern "C" {
       } // for
     }
 
-    if (recurse.depth_max == 0) {
-      return status;
+    if (recurse.depth_max) {
+      status = private_fl_directory_copy(static_source, static_destination, mode, recurse, 1);
     }
 
-    return private_fl_directory_copy(static_source, static_destination, mode, recurse, 1);
+    if (status == F_none && recurse.output && recurse.verbose) {
+      recurse.verbose(recurse.output, source, destination);
+    }
+
+    return status;
   }
 #endif // _di_fl_directory_copy_
 
@@ -225,11 +233,15 @@ extern "C" {
       } // for
     }
 
-    if (recurse.depth_max == 0) {
-      return status;
+    if (recurse.depth_max) {
+      status = private_fl_directory_copy(static_source, static_destination, mode, recurse, 1);
     }
 
-    return private_fl_directory_copy(static_source, static_destination, mode, recurse, 1);
+    if (status == F_none && recurse.output && recurse.verbose) {
+      recurse.verbose(recurse.output, source, destination);
+    }
+
+    return status;
   }
 #endif // _di_fl_directory_copy_content_
 

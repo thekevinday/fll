@@ -57,9 +57,16 @@ extern "C" {
  * exclusive:
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * output:
+ *   Set to 0 to not print on successful operation.
+ *   Set to a valid file pointer to print to on successful operation.
+ *   This is passed to the verbose function if that function pointer is not 0.
  * verbose:
- *   Set to 0 to not print copy operation values on successful copy.
- *   Set to a valid file pointer, such as f_type_output (stdout), to print on successful copy.
+ *   Set to 0 to not print on successful operation.
+ *   Set to address of a function to be called for printing such that:
+ *     - The first parameter represents the file pointer from the output variable.
+ *     - The second parameter represents the source string.
+ *     - The third parameter represents the destination string.
  * failures:
  *   A list of paths and their respective status codes for clone failures.
  *   If 0, then this and statuses are ignored.
@@ -71,11 +78,12 @@ extern "C" {
     f_number_unsigned_t depth_max;
     f_number_unsigned_t size_block;
     bool exclusive;
-    FILE *verbose;
+    FILE *output;
+    void (*verbose)(FILE *, const f_string_t, const f_string_t);
     f_directory_statuss_t *failures;
   } fl_directory_recurse_t;
 
-  #define fl_directory_recurse_t_initialize { fl_directory_recurse_depth_max, f_file_default_read_size, F_false, 0, 0 }
+  #define fl_directory_recurse_t_initialize { fl_directory_recurse_depth_max, f_file_default_read_size, F_false, 0, 0, 0 }
 #endif // _di_fl_directory_recurse_t_
 
 /**
@@ -107,16 +115,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if directory is empty.
- *   F_directory_descriptor (with error bit) on directory file descriptor error.
- *   F_directory_open (with error bit) on directory open error.
- *   F_directory_stream (with error bit) on directory stream error.
- *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
- *   F_file_open_max (with error bit) too many open files.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors from (with error bit): f_directory_create().
@@ -162,16 +160,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if directory is empty.
- *   F_directory_descriptor (with error bit) on directory file descriptor error.
- *   F_directory_open (with error bit) on directory open error.
- *   F_directory_stream (with error bit) on directory stream error.
- *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
- *   F_file_open_max (with error bit) too many open files.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors from (with error bit): f_directory_exists().
@@ -209,16 +197,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if directory is empty.
- *   F_directory_descriptor (with error bit) on directory file descriptor error.
- *   F_directory_open (with error bit) on directory open error.
- *   F_directory_stream (with error bit) on directory stream error.
- *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
- *   F_file_open_max (with error bit) too many open files.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors from (with error bit): f_directory_create().
@@ -262,16 +240,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if directory is empty.
- *   F_directory_descriptor (with error bit) on directory file descriptor error.
- *   F_directory_open (with error bit) on directory open error.
- *   F_directory_stream (with error bit) on directory stream error.
- *   F_directory_unsupported (with error bit) on directory file descriptor not supported.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
- *   F_file_open_max (with error bit) too many open files.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors from (with error bit): f_directory_exists().

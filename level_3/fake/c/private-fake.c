@@ -954,6 +954,24 @@ extern "C" {
   }
 #endif // _di_fake_validate_parameter_directories_
 
+#ifndef _di_fake_verbose_print_clone_
+  void fake_verbose_print_clone(FILE *output, const f_string_t source, const f_string_t destination) {
+    fprintf(output, "Cloned '%s' to '%s'.%c", source, destination, f_string_eol[0]);
+  }
+#endif // _di_fake_verbose_print_clone_
+
+#ifndef _di_fake_verbose_print_copy_
+  void fake_verbose_print_copy(FILE *output, const f_string_t source, const f_string_t destination) {
+    fprintf(output, "Copied '%s' to '%s'.%c", source, destination, f_string_eol[0]);
+  }
+#endif // _di_fake_verbose_print_copy_
+
+#ifndef _di_fake_verbose_print_move_
+  void fake_verbose_print_move(FILE *output, const f_string_t source, const f_string_t destination) {
+    fprintf(output, "Moved '%s' to '%s'.%c", source, destination, f_string_eol[0]);
+  }
+#endif // _di_fake_verbose_print_move_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

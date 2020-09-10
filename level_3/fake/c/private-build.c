@@ -180,7 +180,8 @@ extern "C" {
     fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
     if (data.verbosity == fake_verbosity_verbose) {
-      recurse.verbose = f_type_output;
+      recurse.output = f_type_output;
+      recurse.verbose = fake_verbose_print_copy;
     }
 
     recurse.failures = &failures;

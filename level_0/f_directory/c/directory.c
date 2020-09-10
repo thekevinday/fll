@@ -255,15 +255,15 @@ extern "C" {
 #endif // _di_f_directory_open_at_
 
 #ifndef _di_f_directory_remove_
-  f_return_status f_directory_remove(const f_string_t path, const int recursion_max, const bool preserve) {
+  f_return_status f_directory_remove(const f_string_t path, const int depth_max, const bool preserve) {
     #ifndef _di_level_0_parameter_checking_
-      if (recursion_max < 0) return F_status_set_error(F_parameter);
+      if (depth_max < 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     int result = 0;
 
-    if (recursion_max) {
-      result = nftw(path, private_f_directory_remove_recursively, recursion_max, FTW_DEPTH | FTW_PHYS);
+    if (depth_max) {
+      result = nftw(path, private_f_directory_remove_recursively, depth_max, FTW_DEPTH | FTW_PHYS);
 
       if (result == 0 && !preserve) {
         result = remove(path);
@@ -302,15 +302,15 @@ extern "C" {
 #endif // _di_f_directory_remove_
 
 #ifndef _di_f_directory_remove_custom_
-  f_return_status f_directory_remove_custom(const f_string_t path, const int recursion_max, const bool preserve, int (*custom) (const char *, const struct stat *, int, struct FTW *)) {
+  f_return_status f_directory_remove_custom(const f_string_t path, const int depth_max, const bool preserve, int (*custom) (const char *, const struct stat *, int, struct FTW *)) {
     #ifndef _di_level_0_parameter_checking_
-      if (recursion_max < 0) return F_status_set_error(F_parameter);
+      if (depth_max < 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     int result = 0;
 
-    if (recursion_max) {
-      result = nftw(path, custom, recursion_max, FTW_DEPTH | FTW_PHYS);
+    if (depth_max) {
+      result = nftw(path, custom, depth_max, FTW_DEPTH | FTW_PHYS);
 
       if (result == 0 && !preserve) {
         result = remove(path);

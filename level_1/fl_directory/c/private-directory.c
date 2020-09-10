@@ -113,6 +113,10 @@ extern "C" {
 
       if (depth < recurse.depth_max) {
         status = private_fl_directory_clone(source_sub, destination_sub, role, recurse, depth + 1);
+
+        if (status == F_none && recurse.output && recurse.verbose) {
+          recurse.verbose(recurse.output, source_sub.string, destination_sub.string);
+        }
       }
     } // for
 
@@ -202,8 +206,8 @@ extern "C" {
       return F_failure;
     }
 
-    if (recurse.verbose) {
-      fprintf(recurse.verbose, "Cloned '%s' to '%s'.%c", path_source, path_destination, f_string_eol[0]);
+    if (recurse.output && recurse.verbose) {
+      recurse.verbose(recurse.output, path_source, path_destination);
     }
 
     return F_none;
@@ -304,6 +308,10 @@ extern "C" {
 
       if (depth < recurse.depth_max) {
         status = private_fl_directory_copy(source_sub, destination_sub, mode, recurse, depth + 1);
+
+        if (status == F_none && recurse.output && recurse.verbose) {
+          recurse.verbose(recurse.output, source_sub.string, destination_sub.string);
+        }
       }
     } // for
 
@@ -393,8 +401,8 @@ extern "C" {
       return F_failure;
     }
 
-    if (recurse.verbose) {
-      fprintf(recurse.verbose, "Copied '%s' to '%s'.%c", path_source, path_destination, f_string_eol[0]);
+    if (recurse.output && recurse.verbose) {
+      recurse.verbose(recurse.output, path_source, path_destination);
     }
 
     return F_none;

@@ -381,13 +381,13 @@ extern "C" {
  *
  * @param path
  *   The file path to the directory.
- * @param recursion_max
+ * @param depth_max
  *   Represents the max recursion depth, set to 0 to disable recursive delete.
  * @param preserve
- *   When recursion_max > 0, this designates whether or not to preserve the directory at path.
+ *   When depth_max > 0, this designates whether or not to preserve the directory at path.
  *   If TRUE, then only the content within the directory is deleted.
  *   If FALSE, then the directory at path and its content are deleted.
- *   When recursion_max is 0, then this should only be FALSE (setting this to TRUE would be a no-op).
+ *   When depth_max is 0, then this should only be FALSE (setting this to TRUE would be a no-op).
  *
  * @return
  *   F_none on success.
@@ -412,7 +412,7 @@ extern "C" {
  * @see remove()
  */
 #ifndef _di_f_directory_remove_
-  extern f_return_status f_directory_remove(const f_string_t path, const int recursion_max, const bool preserve);
+  extern f_return_status f_directory_remove(const f_string_t path, const int depth_max, const bool preserve);
 #endif // _di_f_directory_remove_
 
 /**
@@ -420,13 +420,13 @@ extern "C" {
  *
  * @param path
  *   The file path to the directory.
- * @param recursion_max
+ * @param depth_max
  *   Represents the max recursion depth, set to 0 to disable recursive delete.
  * @param preserve
- *   When recursion_max > 0, this designates whether or not to preserve the directory at path.
+ *   When depth_max > 0, this designates whether or not to preserve the directory at path.
  *   If TRUE, then only the content within the directory is deleted.
  *   If FALSE, then the directory at path and its content are deleted.
- *   When recursion_max is 0, then this should only be FALSE (setting this to TRUE would be a no-op).
+ *   When depth_max is 0, then this should only be FALSE (setting this to TRUE would be a no-op).
  * @param custom
  *   A custom function to pass to nftw() instead of using the internal one.
  *   Such as a custom function for verbose printing of removed files.
@@ -454,7 +454,7 @@ extern "C" {
  * @see remove()
  */
 #ifndef _di_f_directory_remove_custom_
-  extern f_return_status f_directory_remove_custom(const f_string_t path, const int recursion_max, const bool preserve, int (*custom) (const char *, const struct stat *, int, struct FTW *));
+  extern f_return_status f_directory_remove_custom(const f_string_t path, const int depth_max, const bool preserve, int (*custom) (const char *, const struct stat *, int, struct FTW *));
 #endif // _di_f_directory_remove_custom_
 
 /**

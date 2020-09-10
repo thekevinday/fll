@@ -1318,8 +1318,8 @@ extern "C" {
   }
 #endif // _di_f_file_mode_to_mode_
 
-#ifndef _di_f_file_move_
-  f_return_status f_file_move(const f_string_t source, const f_string_t destination) {
+#ifndef _di_f_file_rename_
+  f_return_status f_file_rename(const f_string_t source, const f_string_t destination) {
     #ifndef _di_level_0_parameter_checking_
       if (source == 0) return F_status_set_error(F_parameter);
       if (destination == 0) return F_status_set_error(F_parameter);
@@ -1350,10 +1350,10 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_file_move_
+#endif // _di_f_file_rename_
 
-#ifndef _di_f_file_move_at_
-  f_return_status f_file_move_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination) {
+#ifndef _di_f_file_rename_at_
+  f_return_status f_file_rename_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination) {
     #ifndef _di_level_0_parameter_checking_
       if (source == 0) return F_status_set_error(F_parameter);
       if (destination == 0) return F_status_set_error(F_parameter);
@@ -1385,7 +1385,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_file_move_at_
+#endif // _di_f_file_rename_at_
 
 #ifndef _di_f_file_name_base_
   f_return_status f_file_name_base(const f_string_t path, const f_string_length_t length, f_string_dynamic_t *name_base) {
