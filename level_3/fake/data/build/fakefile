@@ -5,7 +5,7 @@ settings:
   fail exit
 
   compiler gcc
-  linker ar
+  indexer ar
 
   environment
 

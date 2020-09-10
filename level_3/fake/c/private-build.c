@@ -2002,7 +2002,7 @@ extern "C" {
 #endif // _di_fake_build_load_setting_defaults_
 
 #ifndef _di_fake_build_load_stage_
-  void fake_build_load_stage(const fake_data_t data, fake_build_stage_t *stage, f_status_t *status) {
+  void fake_build_load_stage(const fake_data_t data, const f_string_static_t settings_file, fake_build_stage_t *stage, f_status_t *status) {
     if (F_status_is_error(*status)) return;
 
     const f_string_t names[] = {
@@ -2055,7 +2055,22 @@ extern "C" {
 
     *status = F_none;
 
+    f_string_dynamic_t settings_file_base = f_string_dynamic_t_initialize;
+
+    if (settings_file.used) {
+      *status = f_file_name_base(settings_file.string, settings_file.used, &settings_file_base);
+    }
+    else {
+      *status = f_file_name_base(data.file_data_build_settings.string, data.file_data_build_settings.used, &settings_file_base);
+    }
+
+    if (F_status_is_error(*status)) {
+      fake_print_error(data, F_status_set_fine(*status), "f_file_name_base", F_true);
+      return;
+    }
+
     for (uint8_t i = 0; i < fake_build_stage_total; i++) {
+
       *status = fl_string_dynamic_append_nulless(data.path_build_stage, values[i]);
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
@@ -2069,7 +2084,7 @@ extern "C" {
           break;
         }
 
-        *status = fl_string_append(fake_build_parameter_stage_separator, fake_build_parameter_stage_separator_length, values[i]);
+        *status = fl_string_append(fake_build_stage_separate, fake_build_stage_separate_length, values[i]);
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
           break;
@@ -2082,12 +2097,32 @@ extern "C" {
         break;
       }
 
+      *status = fl_string_append(fake_build_stage_separate, fake_build_stage_separate_length, values[i]);
+      if (F_status_is_error(*status)) {
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
+        break;
+      }
+
+      *status = fl_string_dynamic_append(settings_file_base, values[i]);
+      if (F_status_is_error(*status)) {
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append", F_true);
+        break;
+      }
+
+      *status = fl_string_append(fake_build_stage_built, fake_build_stage_built_length, values[i]);
+      if (F_status_is_error(*status)) {
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
+        break;
+      }
+
       *status = fl_string_dynamic_terminate_after(values[i]);
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
         break;
       }
     } // for
+
+    f_macro_string_dynamic_t_delete_simple(settings_file_base);
   }
 #endif // _di_fake_build_load_stage_
 
@@ -2288,7 +2323,7 @@ extern "C" {
 
     fake_build_load_setting(data, setting_file, &data_build.setting, &status);
 
-    fake_build_load_stage(data, &stage, &status);
+    fake_build_load_stage(data, setting_file, &stage, &status);
 
     fake_build_load_environment(data, data_build, &data_build.environment, &status);
 

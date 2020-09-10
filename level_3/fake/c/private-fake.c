@@ -65,7 +65,7 @@ extern "C" {
     f_string_t name_function = "f_file_exists";
     f_status_t status = F_none;
 
-    status = f_file_exists(data.file_data_build_settings.string);
+    status = f_file_exists(path_file);
 
     if (status == F_true) {
       {
@@ -467,6 +467,8 @@ extern "C" {
         } // for
       }
     }
+
+    // @todo use fakefile and settings file if a custom path is provided by the command line instead of the default.
 
     {
       f_string_dynamic_t *parameters_value[] = {

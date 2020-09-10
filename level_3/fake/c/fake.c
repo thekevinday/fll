@@ -25,9 +25,10 @@ extern "C" {
     printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(context, fake_short_define, fake_long_define, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Override defines from settings file with this define.");
+    fll_program_print_help_option(context, fake_short_fakefile, fake_long_fakefile, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use this fakefile.");
     fll_program_print_help_option(context, fake_short_mode, fake_long_mode, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use this mode when processing the build settings.");
     fll_program_print_help_option(context, fake_short_process, fake_long_process, f_console_symbol_short_enable, f_console_symbol_long_enable, " Process name for storing build states.");
-    fll_program_print_help_option(context, fake_short_settings, fake_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use this settings file, from within the data build directory.");
+    fll_program_print_help_option(context, fake_short_settings, fake_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use this settings file.");
 
     printf("%c", f_string_eol[0]);
 
@@ -68,6 +69,25 @@ extern "C" {
     printf("  For example, when a ");
     fl_color_print(f_type_output, context.notable, context.reset, "%s", fake_long_mode);
     printf(" of 'fll_monolithic' is specified, build libaries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').");
+
+    printf("%c%c", f_string_eol[0], f_string_eol[0]);
+
+    printf("  When specifying the ");
+    fl_color_print(f_type_output, context.notable, context.reset, "%s", fake_long_fakefile);
+    printf(" or the ");
+    fl_color_print(f_type_output, context.notable, context.reset, "%s", fake_long_settings);
+    printf(" parameters, the filenames are relative to the data build directory, unless a path is used.");
+    printf("%c", f_string_eol[0]);
+
+    printf("  For example, with '");
+    fl_color_print(f_type_output, context.notable, context.reset, "%s%s my_fakefile", f_console_symbol_long_enable, fake_long_fakefile);
+    printf("' the fakefile at '");
+    fl_color_print(f_type_output, context.notable, context.reset, "./%s%smy_fakefile", fake_default_path_data, fake_default_path_build);
+    printf(" would be used, however with '");
+    fl_color_print(f_type_output, context.notable, context.reset, "%s%s ./my_fakefile", f_console_symbol_long_enable, fake_long_fakefile);
+    printf("' the fakefile at '");
+    fl_color_print(f_type_output, context.notable, context.reset, "./my_fakefile", fake_default_path_data, fake_default_path_build);
+    printf(" would be used.");
 
     printf("%c%c", f_string_eol[0], f_string_eol[0]);
 

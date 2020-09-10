@@ -292,33 +292,37 @@ extern "C" {
     f_macro_string_dynamic_t_delete_simple(stage.file_sources_script) \
     f_macro_string_dynamic_t_delete_simple(stage.file_sources_settings)
 
-  #define fake_build_stage_libraries_script "libraries_script.built"
-  #define fake_build_stage_libraries_shared "libraries_shared.built"
-  #define fake_build_stage_libraries_static "libraries_static.built"
-  #define fake_build_stage_objects_static   "objects_static.built"
-  #define fake_build_stage_process_post     "process_post.built"
-  #define fake_build_stage_process_pre      "process_pre.built"
-  #define fake_build_stage_programs_script  "programs_script.built"
-  #define fake_build_stage_programs_shared  "programs_shared.built"
-  #define fake_build_stage_programs_static  "programs_static.built"
-  #define fake_build_stage_skeleton         "skeleton.built"
-  #define fake_build_stage_sources_headers  "sources_headers.built"
-  #define fake_build_stage_sources_script   "sources_script.built"
-  #define fake_build_stage_sources_settings "sources_settings.built"
+  #define fake_build_stage_built            ".built"
+  #define fake_build_stage_libraries_script "libraries_script"
+  #define fake_build_stage_libraries_shared "libraries_shared"
+  #define fake_build_stage_libraries_static "libraries_static"
+  #define fake_build_stage_objects_static   "objects_static"
+  #define fake_build_stage_process_post     "process_post"
+  #define fake_build_stage_process_pre      "process_pre"
+  #define fake_build_stage_programs_script  "programs_script"
+  #define fake_build_stage_programs_shared  "programs_shared"
+  #define fake_build_stage_programs_static  "programs_static"
+  #define fake_build_stage_separate         "-"
+  #define fake_build_stage_skeleton         "skeleton"
+  #define fake_build_stage_sources_headers  "sources_headers"
+  #define fake_build_stage_sources_script   "sources_script"
+  #define fake_build_stage_sources_settings "sources_settings"
 
-  #define fake_build_stage_libraries_script_length 22
-  #define fake_build_stage_libraries_shared_length 22
-  #define fake_build_stage_libraries_static_length 22
-  #define fake_build_stage_objects_static_length   20
-  #define fake_build_stage_process_post_length     18
-  #define fake_build_stage_process_pre_length      17
-  #define fake_build_stage_programs_script_length  21
-  #define fake_build_stage_programs_shared_length  21
-  #define fake_build_stage_programs_static_length  21
-  #define fake_build_stage_skeleton_length         14
-  #define fake_build_stage_sources_headers_length  21
-  #define fake_build_stage_sources_script_length   20
-  #define fake_build_stage_sources_settings_length 22
+  #define fake_build_stage_built_length            6
+  #define fake_build_stage_libraries_script_length 16
+  #define fake_build_stage_libraries_shared_length 16
+  #define fake_build_stage_libraries_static_length 16
+  #define fake_build_stage_objects_static_length   14
+  #define fake_build_stage_process_post_length     12
+  #define fake_build_stage_process_pre_length      11
+  #define fake_build_stage_programs_script_length  15
+  #define fake_build_stage_programs_shared_length  15
+  #define fake_build_stage_programs_static_length  15
+  #define fake_build_stage_separate_length         1
+  #define fake_build_stage_skeleton_length         8
+  #define fake_build_stage_sources_headers_length  15
+  #define fake_build_stage_sources_script_length   14
+  #define fake_build_stage_sources_settings_length 16
 #endif // _di_fake_build_stage_t_
 
 #ifndef _di_fake_build_data_t_
@@ -375,10 +379,6 @@ extern "C" {
   #define fake_build_parameter_object_link_arguments "rcs"
 
   #define fake_build_parameter_object_link_arguments_length 3
-
-  #define fake_build_parameter_stage_separator "-"
-
-  #define fake_build_parameter_stage_separator_length 1
 #endif // _di_fake_build_parameter_
 
 /**
@@ -670,6 +670,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param settings_file
+ *   The path to the settings file.
  * @param stage
  *   All stage file paths.
  * @param status
@@ -681,7 +683,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_stage_
-  extern void fake_build_load_stage(const fake_data_t data, fake_build_stage_t *stage, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_load_stage(const fake_data_t data, const f_string_static_t settings_file, fake_build_stage_t *stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_load_stage_
 
 /**

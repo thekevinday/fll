@@ -1,0 +1,26 @@
+# fss-0005 iki-0002
+#
+# This is designed for bzip2-1.0.8 as an example for compiling bzip2.
+#
+# To use this example do the following:
+#   1) download and extract bzip2-1.0.8.
+#   2) change into the extracted bzip2-1.0.8 directory.
+#   3) create the directory path "data/build/" within this bzip2-1.0.8 directory.
+#   4) copy the files fakefile-example-bzip2, settings-example-bzip2, and settings-example-bzip2recover) into the created directory path "data/build/".
+#   5) use the featureless make build operation to make, such as: "fake make".
+
+settings:
+  load_build no
+  fail exit
+
+  compiler gcc
+  indexer ar
+
+main:
+  print
+  print Building settings-example-bzip2.
+  build settings-example-bzip2
+
+  print
+  print Building settings-example-bzip2recover.
+  build settings-example-bzip2recover

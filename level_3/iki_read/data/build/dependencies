@@ -1,14 +1,14 @@
 # fss-0000
 
 f_type
-f_status_t
+f_status
 f_memory
-f_string_t
+f_string
 f_utf
-f_color_t
+f_color
 f_console
 f_conversion
-f_file_t
+f_file
 f_iki
 f_pipe
 f_print
