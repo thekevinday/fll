@@ -1,0 +1,41 @@
+# fss-0005 iki-0002
+#
+# This is designed for the linux kernel source, probably some version of 5.x.
+# This is intended to show that the functionality provided can go beyond the intended use, such as calling other build systems.
+#
+# This assumes make and everything necessary to compile the linux kernel is available.
+#
+# To use this example do the following:
+#   1) download and extract the linux source, such as linux-5.8.8.
+#   2) change into the extracted source (linux-5.8.8) directory.
+#   3) run using this, such as: "fake make -f /path/to/fakefile-example-bzip2".
+
+settings:
+  load_build no
+  fail exit
+
+  # add any desired environment variables here to expose to the run/shell environment.
+  environment PATH
+
+  # config can be set to any valid config option, such as: menuconfig, nconfig, xconfig, gconfig, oldconfig, olddefconfig, defconfig, etc...
+  parameter config defconfig
+
+main:
+
+  print
+  print Cleaning Linux kernel source.
+  run make mrproper
+
+  print
+  print Generating Linux config 'parameter:"config"'.
+  run make parameter:"config"
+
+  print
+  print Making Linux.
+  run make
+
+  operate done
+
+done:
+  print
+  print The Linux kernel has successfully compiled.
