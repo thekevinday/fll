@@ -851,6 +851,7 @@ extern "C" {
             range.stop = iki_variable.array[j].start - 1;
 
             *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
+
             if (F_status_is_error(*status)) {
               fake_print_message(data, F_status_set_fine(*status), "fl_string_dynamic_partial_append_nulless", F_true, data_make->print);
               break;
@@ -878,31 +879,33 @@ extern "C" {
           if (parameter_is) {
             unmatched = F_true;
 
-            if (parameter->used) {
-              for (k = 0; k < parameter->used; k++) {
+            // check against reserved parameter names and if matches use them instead.
+            if (fl_string_dynamic_partial_compare_string(fake_make_parameter_variable_return, data_make->buffer, fake_make_parameter_variable_return_length, iki_content.array[j]) == F_equal_to) {
 
-                // check against reserved parameter names and if matches use them instead.
-                if (fl_string_dynamic_compare_string(fake_make_parameter_variable_return, parameter->array[k].name, fake_make_parameter_variable_return_length) == F_equal_to) {
+              if (data_make->setting_make.parameter.array[0].value.array[0].used) {
+                *status = fl_string_dynamic_append(data_make->setting_make.parameter.array[0].value.array[0], &arguments->array[arguments->used]);
 
-                  if (data_make->setting_make.parameter.array[0].value.array[0].used) {
-                    *status = fl_string_dynamic_append(data_make->setting_make.parameter.array[0].value.array[0], &arguments->array[arguments->used]);
-                    if (F_status_is_error(*status)) {
-                      fake_print_message(data, F_status_set_fine(*status), "fl_string_append", F_true, data_make->print);
-                      break;
-                    }
-                  }
-                  else {
-                    *status = fl_string_append("0", 1, &arguments->array[arguments->used]);
-                    if (F_status_is_error(*status)) {
-                      fake_print_message(data, F_status_set_fine(*status), "fl_string_append", F_true, data_make->print);
-                      break;
-                    }
-                  }
-
-                  arguments->used++;
-                  continue;
+                if (F_status_is_error(*status)) {
+                  fake_print_message(data, F_status_set_fine(*status), "fl_string_append", F_true, data_make->print);
+                  break;
                 }
-                // @todo: else, handle all other reserved parameter names.
+              }
+              else {
+                *status = fl_string_append("0", 1, &arguments->array[arguments->used]);
+
+                if (F_status_is_error(*status)) {
+                  fake_print_message(data, F_status_set_fine(*status), "fl_string_append", F_true, data_make->print);
+                  break;
+                }
+              }
+
+              arguments->used++;
+              unmatched = F_false;
+            }
+            // @todo: else, handle all other reserved parameter names.
+
+            if (unmatched && parameter->used) {
+              for (k = 0; k < parameter->used; k++) {
 
                 // check against iki variable list.
                 *status = fl_string_dynamic_partial_compare_dynamic(parameter->array[k].name, data_make->buffer, iki_content.array[j]);
@@ -913,8 +916,10 @@ extern "C" {
                   if (parameter->array[k].value.used) {
                     if (quoteds.array[i]) {
                       for (l = 0; l < parameter->array[k].value.used; l++) {
+
                         if (l > 0) {
                           *status = fl_string_append(" ", 1, &arguments->array[arguments->used]);
+
                           if (F_status_is_error(*status)) {
                             fake_print_message(data, F_status_set_fine(*status), "fl_string_append", F_true, data_make->print);
                             break;
@@ -922,6 +927,7 @@ extern "C" {
                         }
 
                         *status = fl_string_dynamic_append_nulless(parameter->array[k].value.array[l], &arguments->array[arguments->used]);
+
                         if (F_status_is_error(*status)) {
                           fake_print_message(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true, data_make->print);
                           break;
@@ -945,13 +951,16 @@ extern "C" {
                       }
 
                       for (l = 0; l < parameter->array[k].value.used; l++) {
+
                         *status = fl_string_dynamic_append_nulless(parameter->array[k].value.array[l], &arguments->array[arguments->used]);
+
                         if (F_status_is_error(*status)) {
                           fake_print_message(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true, data_make->print);
                           break;
                         }
 
                         *status = fl_string_dynamic_terminate_after(&arguments->array[arguments->used]);
+
                         if (F_status_is_error(*status)) {
                           fake_print_message(data, F_status_set_fine(*status), "fl_string_terminate_after", F_true, data_make->print);
                           break;
@@ -3266,6 +3275,7 @@ extern "C" {
 
     if (arguments.used > 1) {
       f_macro_string_dynamics_new(status, args, arguments.used - 1);
+
       if (F_status_is_error(status)) {
         fake_print_message(data, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true, data_make->print);
         return status;
@@ -3274,6 +3284,7 @@ extern "C" {
       for (f_array_length_t i = 0; i < args.size; i++) {
 
         status = fl_string_dynamic_append(arguments.array[i + 1], &args.array[i]);
+
         if (F_status_is_error(status)) {
           fake_print_message(data, F_status_set_fine(status), "fl_string_dynamic_append", F_true, data_make->print);
 
@@ -3282,6 +3293,7 @@ extern "C" {
         }
 
         status = fl_string_dynamic_terminate(&args.array[i]);
+
         if (F_status_is_error(status)) {
           fake_print_message(data, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true, data_make->print);
 
