@@ -32,6 +32,9 @@ extern "C" {
  * The path separator, intended to be represented as a single character.
  * The path separator length must be a 1-byte wide character.
  *
+ * The "current" path separator "." represents a part of the path that potentially may represent the current path.
+ * This is expected to be followed by a separator "/".
+ *
  * The path variable separator is intended to represent the path separator used in the PATH environment variable.
  * PATH="/bin:/usr/bin", the path variable separator is ':'.
  * The path variable separator must be a 1-byte wide character.
@@ -40,9 +43,11 @@ extern "C" {
  */
 #ifndef _di_f_path_defines_
   #define f_path_separator          "/"
+  #define f_path_separator_current  "."
   #define f_path_separator_variable ":"
 
   #define f_path_separator_length          1
+  #define f_path_separator_current_length  1
   #define f_path_separator_variable_length 1
 
   #define f_path_extension_separator "."
@@ -144,6 +149,25 @@ extern "C" {
 #ifndef _di_f_path_current_
   extern f_return_status f_path_current(const bool real, f_string_dynamic_t *path);
 #endif // _di_f_path_current_
+
+/**
+ * Identify whether or not a string represents a path string.
+ *
+ * A string without any path parts that could be a path is not considered a path by this function.
+ * That is to say "my_file.txt" is not a path string but "./my_file.txt" is a path string.
+ *
+ * @param path
+ *   The string that may or may not represent a path..
+ * @param length
+ *   Length of the path string.
+ *
+ * @return
+ *   F_true if this string is a path string.
+ *   F_false if this string is not a path string.
+ */
+#ifndef _di_f_path_is_
+  extern f_return_status f_path_is(const f_string_t path, const f_string_length_t length);
+#endif // _di_f_path_is_
 
 /**
  * Get the real path for the given path.

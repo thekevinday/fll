@@ -380,6 +380,7 @@ extern "C" {
     f_macro_string_lengths_t_delete_simple(data->remaining);
 
     f_macro_string_dynamics_t_delete_simple(data->define);
+    f_macro_string_dynamic_t_delete_simple(data->fakefile);
     f_macro_string_dynamics_t_delete_simple(data->mode);
     f_macro_string_dynamic_t_delete_simple(data->process);
     f_macro_string_dynamic_t_delete_simple(data->settings);

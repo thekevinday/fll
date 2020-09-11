@@ -7,7 +7,7 @@
 #   2) change into the extracted bzip2-1.0.8 directory.
 #   3) create the directory path "data/build/" within this bzip2-1.0.8 directory.
 #   4) copy the files fakefile-example-bzip2, settings-example-bzip2, and settings-example-bzip2recover) into the created directory path "data/build/".
-#   5) use the featureless make build operation to make, such as: "fake make".
+#   5) use the featureless make build operation to make, such as: "fake make -f fakefile-example-bzip2".
 
 settings:
   load_build no

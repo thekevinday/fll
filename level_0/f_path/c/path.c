@@ -91,10 +91,27 @@ extern "C" {
   }
 #endif // _di_f_path_current_
 
+#ifndef _di_f_path_is_
+  f_return_status f_path_is(const f_string_t path, const f_string_length_t length) {
+    if (!path || !length) {
+      return F_false;
+    }
+
+    for (f_string_length_t i = 0; i < length; i++) {
+
+      if (path[i] == f_path_separator[0]) {
+        return F_true;
+      }
+    } // for
+
+    return F_false;
+  }
+#endif // _di_f_path_is_
+
 #ifndef _di_f_path_real_
   f_return_status f_path_real(const f_string_t path, f_string_dynamic_t *real) {
     #ifndef _di_level_0_parameter_checking_
-      if (real == 0) return F_status_set_error(F_parameter);
+      if (!real) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     return private_f_path_real(path, real);

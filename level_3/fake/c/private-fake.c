@@ -291,6 +291,15 @@ extern "C" {
       } // for
     }
 
+    // When custom fakefile or settings are used and they are paths to a file, remove the default path.
+    if (f_path_is(data->fakefile.string, data->fakefile.used)) {
+      data->file_data_build_fakefile.used = 0;
+    }
+
+    if (f_path_is(data->settings.string, data->settings.used)) {
+      data->file_data_build_settings.used = 0;
+    }
+
     {
       const f_string_t parameters_source[] = {
         fake_path_part_script,
@@ -301,7 +310,7 @@ extern "C" {
         fake_path_part_static,
         fake_file_defines,
         fake_file_dependencies,
-        fake_file_fakefile,
+        data->fakefile.string,
         data->settings.string,
         fake_file_readme,
       };
@@ -315,7 +324,7 @@ extern "C" {
         fake_path_part_static_length,
         fake_file_defines_length,
         fake_file_dependencies_length,
-        fake_file_fakefile_length,
+        data->fakefile.used,
         data->settings.used,
         fake_file_readme_length,
       };
@@ -468,8 +477,6 @@ extern "C" {
       }
     }
 
-    // @todo use fakefile and settings file if a custom path is provided by the command line instead of the default.
-
     {
       f_string_dynamic_t *parameters_value[] = {
         &data->path_build_documents,
@@ -503,11 +510,12 @@ extern "C" {
         &data->path_work_programs_static,
         &data->file_data_build_defines,
         &data->file_data_build_dependencies,
+        &data->file_data_build_fakefile,
         &data->file_data_build_settings,
         &data->file_documents_readme,
       };
 
-      for (i = 0; i < 33; i++) {
+      for (i = 0; i < 34; i++) {
         if (parameters_value[i]->used == 0) continue;
 
         status = fl_string_dynamic_terminate_after(parameters_value[i]);
@@ -573,36 +581,42 @@ extern "C" {
 
     {
       const uint8_t parameters_id[] = {
+        fake_parameter_fakefile,
         fake_parameter_process,
         fake_parameter_settings,
       };
 
       const f_string_t parameters_name[] = {
+        fake_long_fakefile,
         fake_long_process,
         fake_long_settings,
       };
 
       const f_string_t parameter_defaults[] = {
+        fake_default_fakefile,
         fake_default_process,
         fake_default_settings,
       };
 
       const f_string_length_t parameter_default_lengths[] = {
+        fake_default_fakefile_length,
         fake_default_process_length,
         fake_default_settings_length,
       };
 
       f_string_dynamic_t *parameters_value[] = {
+        &data->fakefile,
         &data->process,
         &data->settings,
       };
 
       bool parameters_validate_word[] = {
+        F_false,
         F_true,
         F_false,
       };
 
-      for (uint8_t i = 0; i < 2; i++) {
+      for (uint8_t i = 0; i < 3; i++) {
         if (data->parameters[parameters_id[i]].result == f_console_result_found) {
           fake_print_error_parameter_missing_value(*data, parameters_name[i]);
           return F_status_set_error(F_parameter);

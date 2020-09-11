@@ -146,19 +146,11 @@ extern "C" {
 #ifndef _di_fake_file_
   #define fake_file_defines      "defines"
   #define fake_file_dependencies "dependencies"
-  #define fake_file_fakefile     "fakefile"
-  #define fake_file_process_post "process_post.sh"
-  #define fake_file_process_pre  "process_pre.sh"
   #define fake_file_readme       "readme"
-  #define fake_file_settings     "settings"
 
   #define fake_file_defines_length      7
   #define fake_file_dependencies_length 12
-  #define fake_file_fakefile_length     8
-  #define fake_file_process_post_length 15
-  #define fake_file_process_pre_length  14
   #define fake_file_readme_length       6
-  #define fake_file_settings_length     8
 #endif // _di_fake_file_
 
 /**
@@ -176,11 +168,13 @@ extern "C" {
   #define fake_default_path_work_length    0
 
   #define fake_default_define   ""
+  #define fake_default_fakefile "fakefile"
   #define fake_default_mode     ""
   #define fake_default_process  ""
   #define fake_default_settings "settings"
 
   #define fake_default_define_length   0
+  #define fake_default_fakefile_length 8
   #define fake_default_mode_length     0
   #define fake_default_process_length  0
   #define fake_default_settings_length 8
@@ -385,6 +379,7 @@ extern "C" {
     uint8_t verbosity;
 
     f_string_dynamics_t define;
+    f_string_dynamic_t fakefile;
     f_string_dynamics_t mode;
     f_string_dynamic_t process;
     f_string_dynamic_t settings;
@@ -448,6 +443,7 @@ extern "C" {
       0, \
       fake_verbosity_normal, \
       f_string_dynamics_t_initialize, \
+      f_string_dynamic_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
