@@ -552,35 +552,6 @@ extern "C" {
 
     {
       const uint8_t parameters_id[] = {
-        fake_parameter_operation_build,
-        fake_parameter_operation_clean,
-        fake_parameter_operation_make,
-        fake_parameter_operation_skeleton,
-      };
-
-      const f_string_t parameters_name[] = {
-        fake_other_operation_build,
-        fake_other_operation_clean,
-        fake_other_operation_make,
-        fake_other_operation_skeleton,
-      };
-
-      for (uint8_t i = 0; i < 4; i++) {
-        if (data->parameters[parameters_id[i]].total > 1) {
-          if (data->verbosity != fake_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The operation '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", parameters_name[i]);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' specified too many times.");
-          }
-
-          return F_status_set_error(F_parameter);
-        }
-      } // for
-    }
-
-    {
-      const uint8_t parameters_id[] = {
         fake_parameter_fakefile,
         fake_parameter_process,
         fake_parameter_settings,

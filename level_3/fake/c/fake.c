@@ -99,12 +99,6 @@ extern "C" {
   f_return_status fake_main(const f_console_arguments_t arguments, fake_data_t *data) {
     f_status_t status = F_none;
 
-    uint8_t operations[fake_operations_total];
-    f_string_t operations_name[fake_operations_total];
-
-    memset(&operations, 0, sizeof(uint8_t) * fake_operations_total);
-    memset(&operations_name, 0, sizeof(f_string_t) * fake_operations_total);
-
     {
       f_console_parameters_t parameters = { data->parameters, fake_total_parameters };
 
@@ -154,121 +148,79 @@ extern "C" {
       }
 
       status = F_none;
+    }
 
-      // Determine order of operations.
-      // @todo: this should probably implemented as a standard function, such as: f_console_parameter_prioritize_set_right().
-      {
-        uint8_t order_total = 0;
-        uint8_t operations_id[fake_operations_total] = fake_operations_initialize;
+    f_array_length_t operations_length = data->parameters[fake_parameter_operation_build].locations.used;
 
-        if (data->parameters[fake_parameter_operation_build].result == f_console_result_found) {
-          operations[0] = fake_operation_build;
-          operations_id[0] = fake_parameter_operation_build;
-          operations_name[0] = fake_other_operation_build;
-          order_total = 1;
-        }
+    operations_length += data->parameters[fake_parameter_operation_clean].locations.used;
+    operations_length += data->parameters[fake_parameter_operation_make].locations.used;
+    operations_length += data->parameters[fake_parameter_operation_skeleton].locations.used;
 
-        if (data->parameters[fake_parameter_operation_clean].result == f_console_result_found) {
-          if (order_total) {
-            if (data->parameters[fake_parameter_operation_build].locations.array[0] < data->parameters[fake_parameter_operation_clean].locations.array[0]) {
-              operations[0] = fake_operation_build;
-              operations[1] = fake_operation_clean;
+    uint8_t operations[operations_length];
+    f_string_t operations_name = 0;
 
-              operations_id[0] = fake_parameter_operation_build;
-              operations_id[1] = fake_parameter_operation_clean;
+    {
+      f_array_length_t locations[operations_length];
+      f_array_length_t locations_length = 0;
+      f_string_length_t i = 0;
+      f_string_length_t j = 0;
+      f_string_length_t k = 0;
 
-              operations_name[0] = fake_other_operation_build;
-              operations_name[1] = fake_other_operation_clean;
-            }
-            else {
-              operations[0] = fake_operation_clean;
-              operations[1] = fake_operation_build;
+      for (; i < data->parameters[fake_parameter_operation_build].locations.used; i++, locations_length++) {
+        operations[locations_length] = fake_operation_build;
+        locations[locations_length] = data->parameters[fake_parameter_operation_build].locations.array[i];
+      } // for
 
-              operations_id[0] = fake_parameter_operation_clean;
-              operations_id[1] = fake_parameter_operation_build;
-
-              operations_name[0] = fake_other_operation_clean;
-              operations_name[1] = fake_other_operation_build;
-            }
-
-            order_total = 2;
-          }
-          else {
-            operations[0] = fake_operation_clean;
-            operations_id[0] = fake_parameter_operation_clean;
-            operations_name[0] = fake_other_operation_clean;
-            order_total = 1;
-          }
-        }
-
-        if (data->parameters[fake_parameter_operation_make].result == f_console_result_found) {
-          if (order_total) {
-            uint8_t i = 0;
-
-            for (; i < order_total; i++) {
-              if (data->parameters[fake_parameter_operation_make].locations.array[0] < data->parameters[operations_id[i]].locations.array[0]) break;
+      for (i = 0; i < data->parameters[fake_parameter_operation_clean].locations.used; i++) {
+        for (j = 0; j < locations_length; j++) {
+          if (data->parameters[fake_parameter_operation_clean].locations.array[i] < locations[j]) {
+            for (k = locations_length; k > j; k--) {
+              locations[k] = locations[k - 1];
+              operations[k] = operations[k - 1];
             } // for
 
-            if (i == order_total) {
-              operations[order_total] = fake_operation_make;
-              operations_id[order_total] = fake_parameter_operation_make;
-              operations_name[order_total] = fake_other_operation_make;
-            }
-            else {
-              for (uint8_t j = order_total; j > i; j--  ) {
-                operations[j] = operations[j - 1];
-                operations_id[j] = operations_id[j - 1];
-                operations_name[j] = operations_name[j - 1];
-              } // for
-
-              operations[i] = fake_operation_make;
-              operations_id[i] = fake_parameter_operation_make;
-              operations_name[i] = fake_other_operation_make;
-            }
-
-            order_total++;
+            break;
           }
-          else {
-            operations[0] = fake_operation_make;
-            operations_id[0] = fake_parameter_operation_make;
-            operations_name[0] = fake_other_operation_make;
-            order_total = 1;
-          }
-        }
+        } // for
 
-        if (data->parameters[fake_parameter_operation_skeleton].result == f_console_result_found) {
-          if (order_total) {
-            uint8_t i = 0;
+        locations[j] = data->parameters[fake_parameter_operation_clean].locations.array[i];
+        operations[j] = fake_operation_clean;
+        locations_length++;
+      } // for
 
-            for (; i < order_total; i++) {
-              if (data->parameters[fake_parameter_operation_skeleton].locations.array[0] < data->parameters[operations_id[i]].locations.array[0]) break;
+      for (i = 0; i < data->parameters[fake_parameter_operation_make].locations.used; i++) {
+        for (j = 0; j < locations_length; j++) {
+          if (data->parameters[fake_parameter_operation_make].locations.array[i] < locations[j]) {
+            for (k = locations_length; k > j; k--) {
+              locations[k] = locations[k - 1];
+              operations[k] = operations[k - 1];
             } // for
 
-            if (i == order_total) {
-              operations[order_total] = fake_operation_skeleton;
-              operations_id[order_total] = fake_parameter_operation_skeleton;
-              operations_name[order_total] = fake_other_operation_skeleton;
-            }
-            else {
-              for (uint8_t j = order_total; j > i; j--) {
-                operations[j] = operations[j - 1];
-                operations_id[j] = operations_id[j - 1];
-                operations_name[j] = operations_name[j - 1];
-              } // for
-
-              operations[i] = fake_operation_skeleton;
-              operations_id[i] = fake_parameter_operation_skeleton;
-              operations_name[i] = fake_other_operation_skeleton;
-            }
-
-            order_total++;
+            break;
           }
-          else {
-            operations[0] = fake_operation_skeleton;
-            operations_name[0] = fake_other_operation_skeleton;
+        } // for
+
+        locations[j] = data->parameters[fake_parameter_operation_make].locations.array[i];
+        operations[j] = fake_operation_make;
+        locations_length++;
+      } // for
+
+      for (i = 0; i < data->parameters[fake_parameter_operation_skeleton].locations.used; i++) {
+        for (j = 0; j < locations_length; j++) {
+          if (data->parameters[fake_parameter_operation_skeleton].locations.array[i] < locations[j]) {
+            for (k = locations_length; k > j; k--) {
+              locations[k] = locations[k - 1];
+              operations[k] = operations[k - 1];
+            } // for
+
+            break;
           }
-        }
-      }
+        } // for
+
+        locations[j] = data->parameters[fake_parameter_operation_skeleton].locations.array[i];
+        operations[j] = fake_operation_skeleton;
+        locations_length++;
+      } // for
     }
 
     status = F_none;
@@ -279,7 +231,7 @@ extern "C" {
     else if (data->parameters[fake_parameter_version].result == f_console_result_found) {
       fll_program_print_version(fake_version);
     }
-    else if (operations[0]) {
+    else if (operations_length) {
       bool validate_parameter_directories = F_true;
 
       status = fake_process_console_parameters(arguments, data);
@@ -293,10 +245,23 @@ extern "C" {
         return F_status_set_error(status);
       }
 
-      for (uint8_t i = 0; i < fake_operations_total && operations[i]; i++) {
+      for (uint8_t i = 0; i < operations_length; i++) {
         data->operation = operations[i];
 
-        if (operations[i] == fake_operation_build) {
+        if (data->operation == fake_operation_build) {
+          operations_name = fake_other_operation_build;
+        }
+        else if (data->operation == fake_operation_clean) {
+          operations_name = fake_other_operation_clean;
+        }
+        else if (data->operation == fake_operation_make) {
+          operations_name = fake_other_operation_make;
+        }
+        else if (data->operation == fake_operation_skeleton) {
+          operations_name = fake_other_operation_skeleton;
+        }
+
+        if (data->operation == fake_operation_build) {
           if (validate_parameter_directories) {
             status = fake_validate_parameter_directories(arguments, *data);
             validate_parameter_directories = F_false;
@@ -308,7 +273,7 @@ extern "C" {
             status = fake_build_operate(*data, stub);
           }
         }
-        else if (operations[i] == fake_operation_clean) {
+        else if (data->operation == fake_operation_clean) {
           if (validate_parameter_directories) {
             status = fake_validate_parameter_directories(arguments, *data);
             validate_parameter_directories = F_false;
@@ -318,7 +283,7 @@ extern "C" {
             status = fake_clean_operate(*data);
           }
         }
-        else if (operations[i] == fake_operation_make) {
+        else if (data->operation == fake_operation_make) {
           if (validate_parameter_directories) {
             status = fake_validate_parameter_directories(arguments, *data);
             validate_parameter_directories = F_false;
@@ -328,7 +293,7 @@ extern "C" {
             status = fake_make_operate(*data);
           }
         }
-        else if (operations[i] == fake_operation_skeleton) {
+        else if (data->operation == fake_operation_skeleton) {
           status = fake_skeleton_operate(*data);
         }
 
@@ -336,7 +301,7 @@ extern "C" {
           if (data->verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The operation '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", operations_name[i]);
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", operations_name);
             fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' failed.");
           }
 
