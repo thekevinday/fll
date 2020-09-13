@@ -267,7 +267,7 @@ extern "C" {
             validate_parameter_directories = F_false;
           }
 
-          if (F_status_is_not_error(status)) {
+          if (F_status_is_not_error(status) && status != F_signal) {
             f_string_static_t stub = f_string_static_t_initialize;
 
             status = fake_build_operate(*data, stub);
@@ -279,7 +279,7 @@ extern "C" {
             validate_parameter_directories = F_false;
           }
 
-          if (F_status_is_not_error(status)) {
+          if (F_status_is_not_error(status) && status != F_signal) {
             status = fake_clean_operate(*data);
           }
         }
@@ -289,7 +289,7 @@ extern "C" {
             validate_parameter_directories = F_false;
           }
 
-          if (F_status_is_not_error(status)) {
+          if (F_status_is_not_error(status) && status != F_signal) {
             status = fake_make_operate(*data);
           }
         }
@@ -297,7 +297,10 @@ extern "C" {
           status = fake_skeleton_operate(*data);
         }
 
-        if (F_status_is_error(status)) {
+        if (status == F_signal || fake_signal_received(*data)) {
+          break;
+        }
+        else if (F_status_is_error(status)) {
           if (data->verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The operation '");
@@ -311,7 +314,7 @@ extern "C" {
 
       // ensure a newline is always put at the end of the program execution, unless in quite mode.
       if (data->verbosity != fake_verbosity_quiet) {
-        if (F_status_is_error(status)) {
+        if (F_status_is_error(status) || status == F_signal) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
         }
         else {

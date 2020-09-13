@@ -743,7 +743,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
                       }
                     #endif // _en_firewall_debug_
 
-                    status = fll_execute_program((f_string_t) current_tool, arguments, &results);
+                    status = fll_execute_program((f_string_t) current_tool, arguments, 0, &results);
 
                     if (status == F_failure) {
                       fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to perform requested %s operation:", current_tool);
@@ -813,7 +813,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
             }
           #endif // _en_firewall_debug_
 
-          status = fll_execute_program(current_tool, arguments, &results);
+          status = fll_execute_program(current_tool, arguments, 0, &results);
 
           if (status == F_failure) {
             fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to perform requested %s operation:", current_tool);
@@ -1054,7 +1054,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserv
         #endif // _en_firewall_debug_
 
         tool = firewall_program_iptables;
-        status = fll_execute_program((f_string_t) firewall_tool_iptables, arguments, &results);
+        status = fll_execute_program((f_string_t) firewall_tool_iptables, arguments, 0, &results);
 
         if (F_status_is_not_error(status)) {
           // print command when debugging.
@@ -1073,7 +1073,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserv
           #endif // _en_firewall_debug_
 
           tool = firewall_program_ip6tables;
-          status = fll_execute_program((f_string_t) firewall_tool_ip6tables, arguments, &results);
+          status = fll_execute_program((f_string_t) firewall_tool_ip6tables, arguments, 0, &results);
         }
 
         if (F_status_is_error(status)) {
@@ -1159,7 +1159,7 @@ f_return_status firewall_delete_chains(const firewall_data_t data) {
       }
     #endif // _en_firewall_debug_
 
-    status = fll_execute_program(tools[i], arguments, &results);
+    status = fll_execute_program(tools[i], arguments, 0, &results);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -1217,7 +1217,7 @@ f_return_status firewall_delete_chains(const firewall_data_t data) {
       }
     #endif // _en_firewall_debug_
 
-    status = fll_execute_program(tools[i], arguments, &results);
+    status = fll_execute_program(tools[i], arguments, 0, &results);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -1296,7 +1296,7 @@ f_return_status firewall_default_lock(const firewall_data_t data) {
         }
       #endif // _en_firewall_debug_
 
-      status = fll_execute_program(tools[j], arguments, &results);
+      status = fll_execute_program(tools[j], arguments, 0, &results);
 
       if (F_status_is_error(status)) {
         status = F_status_set_fine(status);

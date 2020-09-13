@@ -1,0 +1,3 @@
+# fss-0000
+
+_threadsafe_f_signal_handle Enable use of pthread_sigmask() instead of sigprocmask() in appropriate f_signal_*() functions.

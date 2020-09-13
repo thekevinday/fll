@@ -11,6 +11,11 @@ extern "C" {
 
 #ifndef _di_fake_skeleton_operate_
   f_return_status fake_skeleton_operate(const fake_data_t data) {
+
+    if (fake_signal_received(data)) {
+      return F_signal;
+    }
+
     f_status_t status = F_none;
 
     if (data.verbosity != fake_verbosity_quiet) {
@@ -43,6 +48,11 @@ extern "C" {
       };
 
       for (uint8_t i = 0; i < 20; i++) {
+
+        if (fake_signal_received(data)) {
+          return F_status_set_error(F_signal);
+        }
+
         status = fake_skeleton_operate_directory_create(data, *parameters_value[i]);
 
         if (F_status_is_error(status)) {
@@ -55,6 +65,10 @@ extern "C" {
     f_string_dynamic_t file_data_build_process_post = f_string_dynamic_t_initialize;
     f_string_dynamic_t file_data_build_process_pre = f_string_dynamic_t_initialize;
     f_string_dynamic_t content = f_string_dynamic_t_initialize;
+
+    if (fake_signal_received(data)) {
+      status = F_status_set_error(F_signal);
+    }
 
     if (F_status_is_not_error(status)) {
       content.string = fake_make_skeleton_content_defines;
@@ -74,14 +88,26 @@ extern "C" {
       status = fake_skeleton_operate_file_create(data, data.file_data_build_dependencies, F_false, content);
 
       content.used = 0;
+
+      if (fake_signal_received(data)) {
+        status = F_status_set_error(F_signal);
+      }
     }
 
     if (F_status_is_not_error(status)) {
       status = fake_skeleton_operate_file_create(data, file_data_build_process_post, F_true, content);
+
+      if (fake_signal_received(data)) {
+        status = F_status_set_error(F_signal);
+      }
     }
 
     if (F_status_is_not_error(status)) {
       status = fake_skeleton_operate_file_create(data, file_data_build_process_pre, F_true, content);
+
+      if (fake_signal_received(data)) {
+        status = F_status_set_error(F_signal);
+      }
     }
 
     if (F_status_is_not_error(status)) {
@@ -92,10 +118,18 @@ extern "C" {
       status = fake_skeleton_operate_file_create(data, data.file_data_build_settings, F_false, content);
 
       content.used = 0;
+
+      if (fake_signal_received(data)) {
+        status = F_status_set_error(F_signal);
+      }
     }
 
     if (F_status_is_not_error(status)) {
       status = fake_skeleton_operate_file_create(data, data.file_documents_readme, F_false, content);
+
+      if (fake_signal_received(data)) {
+        status = F_status_set_error(F_signal);
+      }
     }
 
     if (F_status_is_not_error(status)) {
@@ -106,6 +140,10 @@ extern "C" {
       status = fake_skeleton_operate_file_create(data, data.file_data_build_fakefile, F_false, content);
 
       content.used = 0;
+
+      if (fake_signal_received(data)) {
+        status = F_status_set_error(F_signal);
+      }
     }
 
     if (F_status_is_error(status)) {

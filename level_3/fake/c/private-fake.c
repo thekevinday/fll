@@ -27,10 +27,26 @@ extern "C" {
       fflush(f_type_output);
     }
 
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return 0;
+    }
+
     int return_code = 0;
 
     if (program.used) {
-      *status = fll_execute_program_environment(program.string, arguments, environment.names, environment.values, &return_code);
+
+      // child processes should receive all signals, without blocking.
+      f_signal_how_t signals = f_signal_how_t_initialize;
+      f_signal_set_empty(&signals.block);
+      f_signal_set_fill(&signals.block_not);
+
+      *status = fll_execute_program_environment(program.string, arguments, &signals, environment.names, environment.values, &return_code);
+
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+        return 0;
+      }
     }
     else {
       *status = F_status_set_error(F_file_found_not);
@@ -65,6 +81,10 @@ extern "C" {
     f_string_t name_function = "f_file_exists";
     f_status_t status = F_none;
 
+    if (fake_signal_received(data)) {
+      return F_status_set_error(F_signal);
+    }
+
     status = f_file_exists(path_file);
 
     if (status == F_true) {
@@ -93,6 +113,14 @@ extern "C" {
 
       name_function = "f_file_open";
       status = f_file_open(path_file, 0, &file);
+
+      if (fake_signal_received(data)) {
+        if (file.id) {
+          f_file_close(&file.id);
+        }
+
+        return F_status_set_error(F_signal);
+      }
 
       if (F_status_is_not_error(status)) {
         name_function = "f_file_read";
@@ -877,8 +905,49 @@ extern "C" {
   }
 #endif // _di_fake_process_console_parameters_
 
+#ifndef _di_fake_signal_read_
+  f_return_status fake_signal_received(const fake_data_t data) {
+
+    if (!data.signal.id) {
+      return F_false;
+    }
+
+    f_status_t status = F_none;
+
+    struct signalfd_siginfo information;
+
+    memset(&information, 0, sizeof(struct signalfd_siginfo));
+
+    status = f_signal_read(data.signal, &information);
+
+    if (status == F_signal) {
+      switch (information.ssi_signo) {
+        case F_signal_abort:
+        case F_signal_hangup:
+        case F_signal_interrupt:
+        case F_signal_quit:
+        case F_signal_termination:
+
+          if (data.verbosity != fake_verbosity_quiet) {
+            fprintf(f_type_error, "%c", f_string_eol[0]);
+            fl_color_print_line(f_type_error, data.context.error, data.context.reset, "ALERT: An appropriate exit signal has been received, now aborting.");
+          }
+
+          return F_true;
+      }
+    }
+
+    return F_false;
+  }
+#endif // _di_fake_signal_read_
+
 #ifndef _di_fake_validate_directories_
   f_return_status fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_data_t data) {
+
+    if (fake_signal_received(data)) {
+      return F_signal;
+    }
+
     const f_string_t parameters_name[] = {
       fake_long_path_build,
       fake_long_path_data,
@@ -913,6 +982,11 @@ extern "C" {
     f_status_t status = F_none;
 
     for (uint8_t i = 0; i < 3; i++) {
+
+      if (fake_signal_received(data)) {
+        return F_status_set_error(F_signal);
+      }
+
       if (parameters_value[i]->used > 0) {
         memset(&directory_stat, 0, sizeof(struct stat));
 

@@ -43,6 +43,7 @@
 #ifndef _fake_h
 
 // libc includes
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,6 +54,7 @@
 #include <level_0/status.h>
 #include <level_0/type_array.h>
 #include <level_0/memory.h>
+#include <level_0/signal.h>
 #include <level_0/string.h>
 #include <level_0/utf.h>
 #include <level_0/account.h>
@@ -374,6 +376,7 @@ extern "C" {
     f_string_lengths_t remaining;
     bool process_pipe;
     mode_t umask;
+    f_signal_t signal;
 
     uint8_t operation;
     uint8_t verbosity;
@@ -440,6 +443,7 @@ extern "C" {
       f_string_lengths_t_initialize, \
       F_false, \
       0, \
+      f_signal_t_initialize, \
       0, \
       fake_verbosity_normal, \
       f_string_dynamics_t_initialize, \
@@ -508,6 +512,13 @@ extern "C" {
  *
  * Be sure to call fake_delete_data() after executing this.
  *
+ * If data.signal is non-zero, then this blocks and handles the following signals:
+ * - F_signal_abort
+ * - F_signal_hangup
+ * - F_signal_interrupt
+ * - F_signal_quit
+ * - F_signal_termination
+ *
  * @param arguments
  *   The parameters passed to the process.
  * @param data
@@ -515,6 +526,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_status if one of the above signals is received.
  *
  *   Status codes (with error bit) are returned on any problem.
  *

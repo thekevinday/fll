@@ -186,7 +186,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_dynamic_add_set_
 
 #ifndef _di_fll_execute_path_
-  f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, int *result) {
+  f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (result == 0) return F_status_set_error(F_parameter);
       if (arguments.used > arguments.size) return F_status_set_error(F_parameter);
@@ -201,8 +201,6 @@ extern "C" {
     f_string_length_t name_size = 0;
 
     f_status_t status = F_none;
-
-    memset(&fixed_arguments, 0, sizeof(f_string_t) * (arguments.used + 2));
 
     last_slash = strrchr(program_path, '/');
 
@@ -248,8 +246,8 @@ extern "C" {
       fixed_arguments[i + 1] = arguments.array[i].string;
     } // for
 
-    // insert the required array terminated
-    fixed_arguments[arguments.used + 2] = 0;
+    // insert the required array terminated.
+    fixed_arguments[arguments.used + 1] = 0;
 
     status = f_file_exists(program_path);
     if (F_status_is_error(status)) {
@@ -273,16 +271,20 @@ extern "C" {
       return F_status_set_error(F_fork);
     }
 
-    // child
+    // child process.
     if (process_id == 0) {
-      execv(program_path, fixed_arguments);
+      if (signals) {
+        f_signal_set_handle(SIG_BLOCK, &signals->block);
+        f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
+      }
 
-      // according to manpages, calling _exit() is safer and should be called here instead of exit()
-      _exit(-1);
+      const int code = execv(program_path, fixed_arguments);
+
+      exit(code);
     }
 
     // have the parent wait for the child process to finish
-    waitpid(process_id, result, 0);
+    waitpid(process_id, result, WUNTRACED | WCONTINUED);
 
     if (name_size > 0) f_macro_string_t_delete_simple(program_name, name_size);
 
@@ -293,7 +295,7 @@ extern "C" {
 #endif // _di_fll_execute_path_
 
 #ifndef _di_fll_execute_path_environment_
-  f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, int *result) {
+  f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, const f_string_statics_t names, const f_string_statics_t values, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (result == 0) return F_status_set_error(F_parameter);
       if (arguments.used > arguments.size) return F_status_set_error(F_parameter);
@@ -311,8 +313,6 @@ extern "C" {
     f_string_length_t name_size = 0;
 
     f_status_t status = F_none;
-
-    memset(&fixed_arguments, 0, sizeof(f_string_t) * (arguments.used + 2));
 
     last_slash = strrchr(program_path, '/');
 
@@ -358,8 +358,8 @@ extern "C" {
       fixed_arguments[i + 1] = arguments.array[i].string;
     } // for
 
-    // insert the required array terminated
-    fixed_arguments[arguments.used + 2] = 0;
+    // insert the required array terminated.
+    fixed_arguments[arguments.used + 1] = 0;
 
     status = f_file_exists(program_path);
 
@@ -384,33 +384,43 @@ extern "C" {
       return F_status_set_error(F_fork);
     }
 
-    // child
+    // child process.
     if (process_id == 0) {
+      if (signals) {
+        f_signal_set_handle(SIG_BLOCK, &signals->block);
+        f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
+      }
+
       clearenv();
 
       for (f_array_length_t i = 0; i < names.used; i++) {
         f_environment_set_dynamic(names.array[i], values.array[i], F_true);
       } // for
 
-      execv(program_path, fixed_arguments);
+      const int code = execv(program_path, fixed_arguments);
 
-      // according to manpages, calling _exit() is safer and should be called here instead of exit()
-      _exit(-1);
+      exit(code);
     }
 
-    // have the parent wait for the child process to finish
-    waitpid(process_id, result, 0);
+    // have the parent wait for the child process to finish.
+    waitpid(process_id, result, WUNTRACED | WCONTINUED);
 
     if (name_size > 0) f_macro_string_t_delete_simple(program_name, name_size);
 
-    if (result != 0 && *result != 0) return F_status_set_error(F_failure);
+    if (result != 0) {
+      if (WIFEXITED(*result)) {
+        return F_none;
+      }
+
+      return F_status_set_error(F_failure);
+    }
 
     return F_none;
   }
 #endif // _di_fll_execute_path_environment_
 
 #ifndef _di_fll_execute_program_
-  f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, int *result) {
+  f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (result == 0) return F_status_set_error(F_parameter);
       if (arguments.used > arguments.size) return F_status_set_error(F_parameter);
@@ -419,7 +429,6 @@ extern "C" {
     // create a string array that is compatible with execv() calls.
     f_string_t fixed_arguments[arguments.used + 2];
 
-    memset(&fixed_arguments, 0, sizeof(f_string_t) * (arguments.used + 2));
     fixed_arguments[0] = program_name;
 
     f_status_t status = F_none;
@@ -429,8 +438,8 @@ extern "C" {
       fixed_arguments[i + 1] = arguments.array[i].string;
     } // for
 
-    // insert the required array terminated
-    fixed_arguments[arguments.used + 2] = 0;
+    // insert the required array terminated.
+    fixed_arguments[arguments.used + 1] = 0;
 
     pid_t process_id = 0;
 
@@ -440,16 +449,20 @@ extern "C" {
       return F_status_set_error(F_fork);
     }
 
-    // child
+    // child process.
     if (process_id == 0) {
-      execvp(program_name, fixed_arguments);
+      if (signals) {
+        f_signal_set_handle(SIG_BLOCK, &signals->block);
+        f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
+      }
 
-      // according to manpages, calling _exit() is safer and should be called here instead of exit()
-      _exit(-1);
+      const int code = execvp(program_name, fixed_arguments);
+
+      exit(code);
     }
 
     // have the parent wait for the child process to finish
-    waitpid(process_id, result, 0);
+    waitpid(process_id, result, WUNTRACED | WCONTINUED);
 
     if (result != 0 && *result != 0) return F_status_set_error(F_failure);
 
@@ -458,7 +471,7 @@ extern "C" {
 #endif // _di_fll_execute_program_
 
 #ifndef _di_fll_execute_program_environment_
-  f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, int *result) {
+  f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, const f_string_statics_t names, const f_string_statics_t values, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (result == 0) return F_status_set_error(F_parameter);
       if (arguments.used > arguments.size) return F_status_set_error(F_parameter);
@@ -470,7 +483,6 @@ extern "C" {
     // create a string array that is compatible with execv() calls.
     f_string_t fixed_arguments[arguments.used + 2];
 
-    memset(&fixed_arguments, 0, sizeof(f_string_t) * (arguments.used + 2));
     fixed_arguments[0] = program_name;
 
     f_status_t status = F_none;
@@ -480,8 +492,8 @@ extern "C" {
       fixed_arguments[i + 1] = arguments.array[i].string;
     } // for
 
-    // insert the required array terminated
-    fixed_arguments[arguments.used + 2] = 0;
+    // insert the required array terminated.
+    fixed_arguments[arguments.used + 1] = 0;
 
     f_string_dynamic_t path = f_string_dynamic_t_initialize;
     f_string_dynamics_t paths = f_string_dynamics_t_initialize;
@@ -572,22 +584,26 @@ extern "C" {
       return F_status_set_error(F_fork);
     }
 
-    // child
+    // child process.
     if (process_id == 0) {
+      if (signals) {
+        f_signal_set_handle(SIG_BLOCK, &signals->block);
+        f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
+      }
+
       clearenv();
 
       for (i = 0; i < names.used; i++) {
         f_environment_set_dynamic(names.array[i], values.array[i], F_true);
       }
 
-      execvp(program_path, fixed_arguments);
+      const int code = execvp(program_path, fixed_arguments);
 
-      // according to manpages, calling _exit() is safer and should be called here instead of exit()
-      _exit(-1);
+      exit(code);
     }
 
     // have the parent wait for the child process to finish
-    waitpid(process_id, result, 0);
+    waitpid(process_id, result, WUNTRACED | WCONTINUED);
 
     if (result != 0 && *result != 0) return F_status_set_error(F_failure);
 

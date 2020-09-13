@@ -135,6 +135,22 @@ extern "C" {
 #endif // _di_validate_console_parameters_
 
 /**
+ * Check to see if a termination signal has been received.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_true if a termination signal is received.
+ *   F_false if no termination signal is received.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_signal_read_
+  extern f_return_status fake_signal_received(const fake_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_signal_read_
+
+/**
  * Validate directories and print any relating error messages.
  *
  * This should not be called for skeleton as in that case the directories probably do not exist.

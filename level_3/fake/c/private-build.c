@@ -158,6 +158,11 @@ extern "C" {
   void fake_build_copy(const fake_data_t data, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, f_status_t *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
 
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
+
     f_directory_statuss_t failures = f_directory_statuss_t_initialize;
     f_string_dynamic_t path_source = f_string_dynamic_t_initialize;
     f_string_dynamic_t destination_file = f_string_dynamic_t_initialize;
@@ -203,7 +208,18 @@ extern "C" {
         break;
       }
 
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+        break;
+      }
+
       if ((*status = f_directory_is(path_source.string)) == F_true) {
+
+        if (fake_signal_received(data)) {
+          *status = F_status_set_error(F_signal);
+          break;
+        }
+
         *status = fl_directory_copy_content(path_source.string, destination.string, path_source.used, destination.used, mode, recurse);
 
         if (F_status_is_error(*status)) {
@@ -240,6 +256,11 @@ extern "C" {
           break;
         }
 
+        if (fake_signal_received(data)) {
+          *status = F_status_set_error(F_signal);
+          break;
+        }
+
         *status = f_file_copy(path_source.string, destination_file.string, mode, f_file_default_read_size, F_false);
 
         if (F_status_is_error(*status)) {
@@ -272,6 +293,11 @@ extern "C" {
 #ifndef _di_fake_build_skeleton_
   void fake_build_skeleton(const fake_data_t data, const fake_build_data_t data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
+
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
 
     f_string_static_t path_headers = f_string_static_t_initialize;
     f_string_length_t directory_headers_length = data.path_build_includes.used + data_build.setting.path_headers.used;
@@ -320,7 +346,13 @@ extern "C" {
     }
 
     for (uint8_t i = 0; i < 15; i++) {
+
       if (directorys[i]->used == 0) continue;
+
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+        return;
+      }
 
       *status = f_directory_create(directorys[i]->string, mode);
 
@@ -347,6 +379,11 @@ extern "C" {
   void fake_build_execute_process_script(const fake_data_t data, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
     if (process_script.used == 0) return;
+
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
@@ -523,29 +560,45 @@ extern "C" {
       }
     }
 
-    {
-      int result = 0;
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
 
-      *status = fll_execute_path_environment(path.string, arguments, data_build.environment.names, data_build.environment.values, &result);
-
+      f_macro_string_dynamic_t_delete_simple(path);
       f_macro_string_dynamics_t_delete_simple(arguments);
     }
+    else {
+      int result = 0;
 
-    if (F_status_is_error(*status)) {
-      if (F_status_set_fine(*status) == F_failure) {
-        if (data.verbosity != fake_verbosity_quiet) {
-          fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to execute script: ");
-          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path.string);
-          fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
-        }
+      // child processes should receive all signals, without blocking.
+      f_signal_how_t signals = f_signal_how_t_initialize;
+      f_signal_set_empty(&signals.block);
+      f_signal_set_fill(&signals.block_not);
+
+      *status = fll_execute_path_environment(path.string, arguments, &signals, data_build.environment.names, data_build.environment.values, &result);
+
+      f_macro_string_dynamics_t_delete_simple(arguments);
+
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
       }
       else {
-        fake_print_error(data, F_status_set_fine(*status), "fll_execute_path_environment", F_true);
+        if (F_status_is_error(*status)) {
+          if (F_status_set_fine(*status) == F_failure) {
+            if (data.verbosity != fake_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Failed to execute script: ");
+              fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", path.string);
+              fl_color_print_line(f_type_error, data.context.error, data.context.reset, ".");
+            }
+          }
+          else {
+            fake_print_error(data, F_status_set_fine(*status), "fll_execute_path_environment", F_true);
+          }
+        }
+        else {
+          fake_build_touch(data, file_stage, status);
+        }
       }
-    }
-    else {
-      fake_build_touch(data, file_stage, status);
     }
 
     f_macro_string_dynamic_t_delete_simple(path);
@@ -785,7 +838,9 @@ extern "C" {
 
     f_macro_string_dynamics_t_delete_simple(arguments);
 
-    if (F_status_is_error(*status)) return;
+    if (F_status_is_error(*status)) {
+      return;
+    }
 
     if (data_build.setting.version_target != fake_build_version_type_micro) {
       f_string_length_t parameter_file_path_length = data.path_build_libraries_shared.used;
@@ -809,6 +864,12 @@ extern "C" {
       }
 
       parameter_file_path[parameter_file_path_length] = 0;
+
+
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+        return;
+      }
 
       *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
@@ -836,6 +897,11 @@ extern "C" {
       memcpy(parameter_file_path + data.path_build_libraries_shared.used, parameter_file_name, parameter_file_name_length);
 
       parameter_file_path[parameter_file_path_length] = 0;
+
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+        return;
+      }
 
       if (data_build.setting.version_target == fake_build_version_type_major) {
         *status = f_file_link(parameter_file_name_major, parameter_file_path);
@@ -937,14 +1003,16 @@ extern "C" {
         *status = fake_build_get_file_name_without_extension(data, data_build.setting.build_sources_library.array[i], &file_name);
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
+          break;
+        }
 
-          f_macro_string_dynamic_t_delete_simple(file_name);
-          f_macro_string_dynamic_t_delete_simple(source_path);
-          f_macro_string_dynamics_t_delete_simple(arguments);
-          return;
+        if (fake_signal_received(data)) {
+          *status = F_status_set_error(F_signal);
+          break;
         }
 
         *status = f_file_name_directory(data_build.setting.build_sources_library.array[i].string, data_build.setting.build_sources_library.array[i].used, &source_path);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "f_file_name_directory", F_true);
           break;
@@ -991,20 +1059,17 @@ extern "C" {
         source[source_length] = 0;
 
         *status = fll_execute_arguments_add(source, source_length, &arguments);
-        if (F_status_is_error(*status)) break;
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+          break;
+        }
       } // for
-
-      if (F_status_is_error(*status)) {
-        fake_print_error(data, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
-
-        f_macro_string_dynamic_t_delete_simple(file_name);
-        f_macro_string_dynamic_t_delete_simple(source_path);
-        f_macro_string_dynamics_t_delete_simple(arguments);
-        return;
-      }
     }
 
-    fake_execute(data, data_build.environment, data_build.setting.build_indexer, arguments, status);
+    if (F_status_is_fine(*status)) {
+      fake_execute(data, data_build.environment, data_build.setting.build_indexer, arguments, status);
+    }
 
     f_macro_string_dynamic_t_delete_simple(file_name);
     f_macro_string_dynamic_t_delete_simple(source_path);
@@ -1035,6 +1100,7 @@ extern "C" {
       };
 
       f_macro_string_dynamics_new(*status, names, 2);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "f_macro_string_dynamics_new", F_true);
 
@@ -1045,6 +1111,7 @@ extern "C" {
       f_string_dynamic_t part = f_string_dynamic_t_initialize;
 
       for (uint8_t i = 0; i < 2; i++) {
+
         *status = fl_string_append(variables_name[i], variables_length[i], &part);
         if (F_status_is_error(*status)) break;
 
@@ -1075,6 +1142,7 @@ extern "C" {
           }
 
           f_macro_string_dynamics_resize(*status, names, names.used + data_build.setting.environment.used);
+
           if (F_status_is_error(*status)) {
             fake_print_error(data, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true);
 
@@ -1085,6 +1153,7 @@ extern "C" {
         }
 
         for (f_string_length_t i = 0; i < data_build.setting.environment.used; i++) {
+
           *status = fl_string_dynamic_append_nulless(data_build.setting.environment.array[i], &part);
           if (F_status_is_error(*status)) break;
 
@@ -1112,7 +1181,14 @@ extern "C" {
     f_string_dynamic_t variable_value = f_string_dynamic_t_initialize;
 
     for (f_string_length_t i = 0; i < names.used; i++) {
+
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+        break;
+      }
+
       *status = f_environment_get_dynamic(names.array[i], &variable_value);
+
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_memory_reallocation) {
           function = "f_macro_string_dynamics_resize";
@@ -1170,7 +1246,7 @@ extern "C" {
     f_macro_string_dynamic_t_delete_simple(variable_name);
     f_macro_string_dynamic_t_delete_simple(variable_value);
 
-    if (F_status_is_error(*status)) {
+    if (F_status_is_error(*status) && F_status_set_fine(*status) != F_signal) {
       fake_print_error(data, *status, function, F_true);
     }
   }
@@ -1179,6 +1255,11 @@ extern "C" {
 #ifndef _di_fake_build_load_setting_
   void fake_build_load_setting(const fake_data_t data, const f_string_static_t setting_file, fake_build_setting_t *setting, f_status_t *status) {
     if (F_status_is_error(*status)) return;
+
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
 
     char path_file[data.path_data_build.used + setting_file.used + 1];
 
@@ -1200,16 +1281,21 @@ extern "C" {
         *status = fake_file_buffer(data, data.file_data_build_settings.string, &buffer);
       }
 
-      if (F_status_is_error(*status)) return;
-
-      f_string_range_t range = f_macro_string_range_initialize(buffer.used);
-
-      *status = fll_fss_extended_read(&buffer, &range, &objects, &contents, 0, 0);
-      if (F_status_is_error(*status)) {
-        fake_print_error_fss(data, *status, "fll_fss_extended_read", data.file_data_build_settings.string, range, F_true);
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
       }
+      else if (F_status_is_fine(*status)) {
+        f_string_range_t range = f_macro_string_range_initialize(buffer.used);
 
-      fake_build_load_setting_process(data, setting_file.used ? path_file : data.file_data_build_settings.string, buffer, objects, contents, setting, status);
+        *status = fll_fss_extended_read(&buffer, &range, &objects, &contents, 0, 0);
+
+        if (F_status_is_error(*status)) {
+          fake_print_error_fss(data, F_status_set_fine(*status), "fll_fss_extended_read", data.file_data_build_settings.string, range, F_true);
+        }
+        else {
+          fake_build_load_setting_process(data, setting_file.used ? path_file : data.file_data_build_settings.string, buffer, objects, contents, setting, status);
+        }
+      }
 
       f_macro_string_dynamic_t_delete_simple(buffer);
       f_macro_fss_objects_t_delete_simple(objects);
@@ -1254,6 +1340,11 @@ extern "C" {
 #ifndef _di_fake_build_load_setting_process_
   void fake_build_load_setting_process(const fake_data_t data, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) {
     if (F_status_is_error(*status) && buffer.used) return;
+
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
 
     bool error_printed = F_false;
 
@@ -1517,7 +1608,7 @@ extern "C" {
         fake_print_error(data, F_status_set_fine(*status), function, F_true);
       }
     }
-    else {
+    else if (!fake_signal_received(data)) {
       const f_string_t settings_single_name[] = {
         fake_build_setting_name_build_compiler,
         fake_build_setting_name_build_indexer,
@@ -1858,6 +1949,11 @@ extern "C" {
   void fake_build_load_setting_defaults(const fake_data_t data, fake_build_setting_t *setting, f_status_t *status) {
     if (F_status_is_error(*status)) return;
 
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
+
     {
       f_string_t sources[] = {
         fake_build_setting_default_version,
@@ -1998,12 +2094,20 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
     }
+
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+    }
   }
 #endif // _di_fake_build_load_setting_defaults_
 
 #ifndef _di_fake_build_load_stage_
   void fake_build_load_stage(const fake_data_t data, const f_string_static_t settings_file, fake_build_stage_t *stage, f_status_t *status) {
     if (F_status_is_error(*status)) return;
+
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+    }
 
     const f_string_t names[] = {
       fake_build_stage_libraries_script,
@@ -2170,11 +2274,12 @@ extern "C" {
       *status = fake_build_get_file_name_without_extension(data, data_build.setting.build_sources_library.array[i], &file_name);
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
+        break;
+      }
 
-        f_macro_string_dynamic_t_delete_simple(file_name);
-        f_macro_string_dynamic_t_delete_simple(destination_path);
-        f_macro_string_dynamics_t_delete_simple(arguments);
-        return;
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+        break;
       }
 
       *status = f_file_name_directory(data_build.setting.build_sources_library.array[i].string, data_build.setting.build_sources_library.array[i].used, &destination_path);
@@ -2199,6 +2304,11 @@ extern "C" {
         *status = fl_string_dynamic_terminate_after(&destination_path);
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+          break;
+        }
+
+        if (fake_signal_received(data)) {
+          *status = F_status_set_error(F_signal);
           break;
         }
 
@@ -2291,9 +2401,10 @@ extern "C" {
       }
 
       fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
-      if (F_status_is_error(*status)) break;
 
       f_macro_string_dynamics_t_delete_simple(arguments);
+
+      if (F_status_is_error(*status)) break;
     } // for
 
     f_macro_string_dynamic_t_delete_simple(file_name);
@@ -2308,6 +2419,11 @@ extern "C" {
 
 #ifndef _di_fake_build_operate_
   f_return_status fake_build_operate(const fake_data_t data, const f_string_static_t setting_file) {
+
+    if (fake_signal_received(data)) {
+      return F_signal;
+    }
+
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Building project.");
@@ -2408,6 +2524,11 @@ extern "C" {
 
     fake_macro_build_data_delete_simple(data_build);
     fake_macro_build_stage_t_delete_simple(stage);
+
+    // signal is set with error code only to prevent further execution above, return without the error bit set.
+    if (status == F_status_set_error(F_signal)) {
+      return F_signal;
+    }
 
     return status;
   }
@@ -2644,6 +2765,11 @@ extern "C" {
     f_mode_t mode = f_mode_t_initialize;
 
     f_macro_mode_t_set_default_umask(mode, data.umask);
+
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
 
     *status = f_file_touch(file.string, mode.regular, F_false);
 

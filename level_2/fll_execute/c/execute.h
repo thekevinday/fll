@@ -13,6 +13,7 @@
 // libc includes
 #include <memory.h>
 #include <signal.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -26,6 +27,7 @@
 #include <level_0/environment.h>
 #include <level_0/file.h>
 #include <level_0/path.h>
+#include <level_0/signal.h>
 
 // fll-1 includes
 #include <level_1/environment.h>
@@ -291,6 +293,9 @@ extern "C" {
  *   The entire path to the program.
  * @param arguments
  *   An array of strings representing the arguments.
+ * @param set_signal
+ *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
  * @param result
  *   The code returned after finishing execution of program_path.
  *
@@ -312,7 +317,7 @@ extern "C" {
  * @see execv()
  */
 #ifndef _di_fll_execute_path_
-  extern f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, int *result);
+  extern f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result);
 #endif // _di_fll_execute_path_
 
 /**
@@ -330,6 +335,9 @@ extern "C" {
  *   An array of strings representing the environment variable names.
  *   At most names.used variables are created.
  *   Duplicate names are overwritten.
+ * @param set_signal
+ *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
  * @param values
  *   An array of strings representing the environment variable names.
  *   The values.used must be of at least names.used.
@@ -355,7 +363,7 @@ extern "C" {
  * @see execv()
  */
 #ifndef _di_fll_execute_path_environment_
-  f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, int *result);
+  f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, const f_string_statics_t names, const f_string_statics_t values, int *result);
 #endif // _di_fll_execute_path_environment_
 
 /**
@@ -367,6 +375,9 @@ extern "C" {
  *   The name of the program.
  * @param arguments
  *   An array of strings representing the arguments.
+ * @param set_signal
+ *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
  * @param result
  *   The code returned after finishing execution of program.
  *
@@ -383,7 +394,7 @@ extern "C" {
  * @see execvp()
  */
 #ifndef _di_fll_execute_program_
-  extern f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, int *result);
+  extern f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result);
 #endif // _di_fll_execute_program_
 
 /**
@@ -403,6 +414,9 @@ extern "C" {
  *   An array of strings representing the environment variable names.
  *   At most names.used variables are created.
  *   Duplicate names are overwritten.
+ * @param set_signal
+ *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
  * @param values
  *   An array of strings representing the environment variable names.
  *   The values.used must be of at least names.used.
@@ -430,7 +444,7 @@ extern "C" {
  * @see execvpe()
  */
 #ifndef _di_fll_execute_program_environment_
-  extern f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, int *result);
+  extern f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, const f_string_statics_t names, const f_string_statics_t values, int *result);
 #endif // _di_fll_execute_program_environment_
 
 #ifdef __cplusplus

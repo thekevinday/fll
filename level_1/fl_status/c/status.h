@@ -181,6 +181,7 @@ extern "C" {
     #define FL_status_string_exist_not        "F_exist_not"
     #define FL_status_string_failure          "F_failure"
     #define FL_status_string_fork             "F_fork"
+    #define FL_status_string_found            "F_found"
     #define FL_status_string_incomplete       "F_incomplete"
     #define FL_status_string_input            "F_input"
     #define FL_status_string_input_output     "F_input_output"
@@ -203,6 +204,8 @@ extern "C" {
     #define FL_status_string_recurse          "F_recurse"
     #define FL_status_string_relative         "F_relative"
     #define FL_status_string_search           "F_search"
+    #define FL_status_string_signal           "F_signal"
+    #define FL_status_string_space            "F_space"
     #define FL_status_string_space_not        "F_space_not"
     #define FL_status_string_stop             "F_stop"
     #define FL_status_string_syntax           "F_syntax"
@@ -232,6 +235,7 @@ extern "C" {
     #define FL_status_string_exist_not_length        11
     #define FL_status_string_failure_length          9
     #define FL_status_string_fork_length             6
+    #define FL_status_string_found_length            7
     #define FL_status_string_incomplete_length       12
     #define FL_status_string_input_length            7
     #define FL_status_string_input_output_length     14
@@ -254,6 +258,8 @@ extern "C" {
     #define FL_status_string_recurse_length          9
     #define FL_status_string_relative_length         10
     #define FL_status_string_search_length           8
+    #define FL_status_string_signal_length           8
+    #define FL_status_string_space_length            7
     #define FL_status_string_space_not_length        11
     #define FL_status_string_stop_length             6
     #define FL_status_string_syntax_length           8

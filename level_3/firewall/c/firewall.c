@@ -209,7 +209,7 @@ extern "C" {
             parameters.array[4].used = 9;
             parameters.array[5].used = 6;
 
-            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, &results);
+            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &results);
 
             fprintf(f_type_output, "\n");
             fflush(f_type_output);
@@ -237,7 +237,7 @@ extern "C" {
             parameters.array[4].used = 9;
             parameters.array[5].used = 6;
 
-            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, &results);
+            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &results);
 
             fprintf(f_type_output, "\n");
             fflush(f_type_output);
@@ -261,7 +261,7 @@ extern "C" {
             parameters.array[2].used = 9;
             parameters.array[3].used = 6;
 
-            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, &results);
+            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &results);
 
             fprintf(f_type_output, "\n");
             fflush(f_type_output);

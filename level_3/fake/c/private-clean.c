@@ -20,6 +20,10 @@ extern "C" {
       fl_color_print_line(f_type_output, data.context.important, data.context.reset, "'.");
     }
 
+    if (fake_signal_received(data)) {
+      return F_signal;
+    }
+
     if (data.verbosity == fake_verbosity_verbose) {
       status = f_directory_remove_custom(data.path_build.string, f_directory_descriptors_max, F_true, fake_clean_remove_recursively_verbosely);
     }

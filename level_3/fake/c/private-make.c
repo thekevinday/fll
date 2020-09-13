@@ -174,8 +174,18 @@ extern "C" {
   void fake_make_load_fakefile(const fake_data_t data, fake_make_data_t *data_make, f_status_t *status) {
     if (F_status_is_error(*status)) return;
 
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
+
     *status = fake_file_buffer(data, data.file_data_build_fakefile.string, &data_make->buffer);
     if (F_status_is_error(*status)) return;
+
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
 
     if (!data_make->buffer.used) {
       if (data.verbosity == fake_verbosity_verbose) {
@@ -195,6 +205,7 @@ extern "C" {
       f_string_range_t range = f_macro_string_range_initialize(data_make->buffer.used);
 
       *status = fll_fss_basic_list_read(&data_make->buffer, &range, &list_objects, &list_contents);
+
       if (F_status_is_error(*status)) {
         fake_print_error_fss(data, *status, "fll_fss_basic_list_read", data.file_data_build_fakefile.string, range, F_true);
 
@@ -217,6 +228,7 @@ extern "C" {
       const f_string_range_t name_main_range = f_macro_string_range_initialize(fake_make_section_main_length);
 
       f_macro_fss_nameds_t_new((*status), data_make->fakefile, list_objects.used);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "f_macro_fss_nameds_t_new", F_true);
 
@@ -230,6 +242,12 @@ extern "C" {
         f_string_range_t content_range = f_string_range_initialize;
 
         for (f_array_length_t i = 0; i < list_objects.used; i++) {
+
+          if (fake_signal_received(data)) {
+            *status = F_status_set_error(F_signal);
+            break;
+          }
+
           if (fl_string_dynamic_partial_compare(name_settings, data_make->buffer, name_settings_range, list_objects.array[i]) == F_equal_to) {
             if (!missing_settings) {
               fake_print_warning_settings_object_multiple(data, data.file_data_build_fakefile.string, "list", name_settings.string);
@@ -239,13 +257,11 @@ extern "C" {
             content_range = list_contents.array[i].array[0];
 
             *status = fll_fss_extended_read(&data_make->buffer, &content_range, &settings.objects, &settings.contents, 0, 0);
+
             if (F_status_is_error(*status)) {
               fake_print_error_fss(data, *status, "fll_fss_extended_read", data.file_data_build_fakefile.string, content_range, F_true);
 
-              f_macro_fss_set_t_delete_simple(settings);
-              f_macro_fss_objects_t_delete_simple(list_objects);
-              f_macro_fss_contents_t_delete_simple(list_contents);
-              return;
+              break;
             }
 
             missing_settings = F_false;
@@ -266,13 +282,11 @@ extern "C" {
           content_range = list_contents.array[i].array[0];
 
           *status = fll_fss_extended_read(&data_make->buffer, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotedss);
+
           if (F_status_is_error(*status)) {
             fake_print_error_fss(data, *status, "fll_fss_extended_read", data.file_data_build_fakefile.string, content_range, F_true);
 
-            f_macro_fss_set_t_delete_simple(settings);
-            f_macro_fss_objects_t_delete_simple(list_objects);
-            f_macro_fss_contents_t_delete_simple(list_contents);
-            return;
+            break;
           }
 
           data_make->fakefile.used++;
@@ -281,6 +295,12 @@ extern "C" {
 
       f_macro_fss_objects_t_delete_simple(list_objects);
       f_macro_fss_contents_t_delete_simple(list_contents);
+
+      if (F_status_is_error(*status)) {
+        f_macro_fss_set_t_delete_simple(settings);
+
+        return;
+      }
 
       if (missing_main) {
         if (data.verbosity != fake_verbosity_quiet) {
@@ -327,7 +347,7 @@ extern "C" {
         }
 
         if (F_status_is_error(*status)) {
-          fake_print_error(data, *status, function_name, F_true);
+          fake_print_error(data, F_status_set_fine(*status), function_name, F_true);
 
           f_macro_fss_set_t_delete_simple(settings);
           return;
@@ -346,6 +366,7 @@ extern "C" {
         bool unmatched_load = F_true;
 
         for (f_array_length_t i = 0; i < settings.objects.used; i++) {
+
           if (fl_string_dynamic_partial_compare_string(fake_make_setting_compiler, data_make->buffer, fake_make_setting_compiler_length, settings.objects.array[i]) == F_equal_to) {
             if (range_compiler) {
               fake_print_warning_settings_content_multiple(data, data.file_data_build_fakefile.string, fake_make_setting_compiler);
@@ -373,20 +394,14 @@ extern "C" {
 
               *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, settings.contents.array[i].array[j], &name_define);
               if (F_status_is_error(*status)) {
-                fake_print_error(data, *status, "fl_string_dynamic_partial_append_nulless", F_true);
-
-                f_macro_string_dynamic_t_delete_simple(name_define);
-                f_macro_fss_set_t_delete_simple(settings);
-                return;
+                fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_partial_append_nulless", F_true);
+                break;
               }
 
               *status = fl_string_dynamic_terminate_after(&name_define);
               if (F_status_is_error(*status)) {
-                fake_print_error(data, *status, "fl_string_dynamic_terminate_after", F_true);
-
-                f_macro_string_dynamic_t_delete_simple(name_define);
-                f_macro_fss_set_t_delete_simple(settings);
-                return;
+                fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+                break;
               }
 
               if (fake_make_operate_validate_define_name(name_define) == F_true) {
@@ -401,11 +416,8 @@ extern "C" {
                     *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, &data_make->setting_build.environment);
 
                     if (F_status_is_error(*status)) {
-                      fake_print_error(data, *status, "fl_string_lengths_size_increase", F_true);
-
-                      f_macro_string_dynamic_t_delete_simple(name_define);
-                      f_macro_fss_set_t_delete_simple(settings);
-                      return;
+                      fake_print_error(data, F_status_set_fine(*status), "fl_string_lengths_size_increase", F_true);
+                      break;
                     }
                   }
 
@@ -414,11 +426,8 @@ extern "C" {
 
                   *status = fl_string_dynamic_append(name_define, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
                   if (F_status_is_error(*status)) {
-                    fake_print_error(data, *status, "fl_string_dynamic_append", F_true);
-
-                    f_macro_string_dynamic_t_delete_simple(name_define);
-                    f_macro_fss_set_t_delete_simple(settings);
-                    return;
+                    fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append", F_true);
+                    break;
                   }
 
                   // Ensure that the terminating NULL is after the end of the string used size.
@@ -441,6 +450,11 @@ extern "C" {
 
               name_define.used = 0;
             } // for
+
+            if (F_status_is_error(*status)) {
+              f_macro_string_dynamic_t_delete_simple(name_define);
+              break;
+            }
 
             *status = F_none;
             f_macro_string_dynamic_t_delete_simple(name_define);
@@ -543,12 +557,14 @@ extern "C" {
                     }
 
                     if (F_status_is_error(*status)) {
-                      fake_print_error(data, *status, function_name, F_true);
-
-                      f_macro_fss_set_t_delete_simple(settings);
-                      return;
+                      fake_print_error(data, F_status_set_fine(*status), function_name, F_true);
+                      break;
                     }
                   } // for
+
+                  if (F_status_is_error(*status)) {
+                    break;
+                  }
                 }
               }
             }
@@ -557,19 +573,31 @@ extern "C" {
             }
           }
         } // for
+
+        if (F_status_is_error(*status)) {
+          f_macro_fss_set_t_delete_simple(settings);
+
+          return;
+        }
       }
 
-      if (data_make->setting_make.load_build) {
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+      }
+
+      if (F_status_is_fine(*status) && data_make->setting_make.load_build) {
         f_string_static_t stub = f_string_static_t_initialize;
 
         fake_build_load_setting(data, stub, &data_make->setting_build, status);
 
-        if (F_status_is_error(*status)) {
-          fake_print_error(data, *status, "fake_build_load_setting", F_true);
-
-          f_macro_fss_set_t_delete_simple(settings);
-          return;
+        if (F_status_is_error(*status) && *status != F_status_set_error(F_signal)) {
+          fake_print_error(data, F_status_set_fine(*status), "fake_build_load_setting", F_true);
         }
+      }
+
+      if (F_status_is_error(*status)) {
+        f_macro_fss_set_t_delete_simple(settings);
+        return;
       }
 
       // if either compiler or linker is specified, each will replace any existing build_compiler or build_indexer, respectively.
@@ -584,7 +612,7 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data, *status, "fl_string_dynamic_partial_append", F_true);
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_partial_append", F_true);
 
         f_macro_fss_set_t_delete_simple(settings);
         return;
@@ -592,7 +620,12 @@ extern "C" {
 
       f_string_map_multis_t define = f_string_map_multis_t_initialize;
 
-      fake_build_load_setting_process(data, data.file_data_build_fakefile.string, data_make->buffer, settings.objects, settings.contents, &data_make->setting_build, status);
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+      }
+      else {
+        fake_build_load_setting_process(data, data.file_data_build_fakefile.string, data_make->buffer, settings.objects, settings.contents, &data_make->setting_build, status);
+      }
 
       if (F_status_is_not_error(*status) && settings.objects.used) {
         const f_string_t settings_name[] = {
@@ -611,6 +644,7 @@ extern "C" {
         };
 
         *status = fll_fss_snatch_map_apart(data_make->buffer, settings.objects, settings.contents, settings_name, settings_length, 2, settings_value, 0);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fll_fss_snatch_map_apart", F_true);
 
@@ -631,9 +665,11 @@ extern "C" {
             combined.used = 0;
 
             for (f_array_length_t j = 0; j < define.array[i].value.used; j++) {
+
               *status = fl_string_dynamic_mash(" ", 1, define.array[i].value.array[j], &combined);
+
               if (F_status_is_error(*status)) {
-                fake_print_error(data, *status, "fl_string_dynamic_mash_nulless", F_true);
+                fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_mash_nulless", F_true);
                 break;
               }
             } // for
@@ -642,7 +678,12 @@ extern "C" {
 
             *status = fl_string_dynamic_terminate_after(&combined);
             if (F_status_is_error(*status)) {
-              fake_print_error(data, *status, "fl_string_dynamic_terminate_after", F_true);
+              fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+              break;
+            }
+
+            if (fake_signal_received(data)) {
+              *status = F_status_set_error(F_signal);
               break;
             }
 
@@ -679,6 +720,11 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_
   f_return_status fake_make_operate(const fake_data_t data) {
+
+    if (fake_signal_received(data)) {
+      return F_signal;
+    }
+
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Making project.");
@@ -691,12 +737,19 @@ extern "C" {
     fake_make_data_t data_make = fake_make_data_t_initialize;
 
     f_macro_string_dynamics_new(status, data_make.path.stack, f_memory_default_allocation_step);
+
     if (F_status_is_error(status)) {
       fake_print_error(data, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true);
       return status;
     }
 
+    if (fake_signal_received(data)) {
+      fake_macro_make_data_t_delete_simple(data_make);
+      return F_signal;
+    }
+
     status = f_path_current(F_true, &data_make.path.stack.array[0]);
+
     if (F_status_is_error(status)) {
       fake_print_error(data, F_status_set_fine(status), "f_path_current", F_true);
 
@@ -705,6 +758,7 @@ extern "C" {
     }
 
     status = f_directory_open(data_make.path.stack.array[0].string, F_false, &data_make.path.top);
+
     if (F_status_is_error(status)) {
       fake_print_error(data, F_status_set_fine(status), "f_directory_open", F_true);
 
@@ -717,6 +771,17 @@ extern "C" {
     f_macro_mode_t_set_default_umask(mode, data.umask);
 
     fake_make_load_fakefile(data, &data_make, &status);
+
+    if (F_status_is_error(status)) {
+      fake_macro_make_data_t_delete_simple(data_make);
+
+      // signal is set with error code only to prevent further execution above, return without the error bit set.
+      if (F_status_set_fine(status) == F_signal) {
+        return F_signal;
+      }
+
+      return status;
+    }
 
     if (data_make.setting_make.fail == fake_make_operation_fail_type_exit) {
       data_make.print.prefix = fake_make_print_error;
@@ -755,6 +820,11 @@ extern "C" {
 
     f_macro_string_lengths_t_delete_simple(section_stack);
     fake_macro_make_data_t_delete_simple(data_make);
+
+    // signal is set with error code only to prevent further execution above, return without the error bit set.
+    if (status == F_status_set_error(F_signal)) {
+      return F_signal;
+    }
 
     return status;
   }
@@ -1394,6 +1464,11 @@ extern "C" {
   void fake_make_operate_section(const fake_data_t data, const f_array_length_t id_section, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
     if (F_status_is_error(*status)) return;
 
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
+
     if (id_section > data_make->fakefile.used) {
       *status = F_status_set_error(F_parameter);
 
@@ -1556,6 +1631,11 @@ extern "C" {
       operation = 0;
       operation_name = 0;
 
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+        break;
+      }
+
       for (j = 0; j < fake_make_operation_total; j++) {
         if (fl_string_dynamic_partial_compare(operations_name[j], data_make->buffer, operations_range[j], section->objects.array[i]) == F_equal_to) {
           operation = operations_type[j];
@@ -1646,6 +1726,10 @@ extern "C" {
         }
       }
 
+      if (*status == F_status_set_error(F_signal)) {
+        break;
+      }
+
       if (operation_if == fake_make_operation_if_type_else_true || operation_if == fake_make_operation_if_type_else_false) {
         // No else condition provided, so clear the operation_if state.
         if (operation != fake_make_operation_type_else) {
@@ -1712,7 +1796,16 @@ extern "C" {
       }
     } // for
 
+    if (*status == F_status_set_error(F_signal)) {
+      for (i = 0; i < section->objects.used; i++) {
+        f_macro_string_dynamics_t_delete_simple(arguments[i]);
+      } // for
+
+      return;
+    }
+
     if (i == section->objects.used && (operation_if == fake_make_operation_if_type_true_next || operation_if == fake_make_operation_if_type_false_next || operation_if == fake_make_operation_if_type_else_true || operation_if == fake_make_operation_if_type_else_false)) {
+
       if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
         const char *type_name = 0;
 
@@ -1787,12 +1880,22 @@ extern "C" {
 
       *status = fake_build_operate(data, arguments.used ? arguments.array[0] : stub);
 
+      if (F_status_set_fine(*status) == F_signal) {
+        *status = F_status_set_error(F_signal);
+        return;
+      }
+
       fake_make_operate_process_return(data, 0, data_make, status);
       return;
     }
 
     if (operation == fake_make_operation_type_clean) {
       *status = fake_clean_operate(data);
+
+      if (F_status_set_fine(*status) == F_signal) {
+        *status = F_status_set_error(F_signal);
+        return;
+      }
 
       fake_make_operate_process_return(data, 0, data_make, status);
       return;
@@ -2968,6 +3071,11 @@ extern "C" {
     if (operation == fake_make_operation_type_skeleton) {
       *status = fake_skeleton_operate(data);
 
+      if (F_status_set_fine(*status) == F_signal) {
+        *status = F_status_set_error(F_signal);
+        return;
+      }
+
       fake_make_operate_process_return(data, 0, data_make, status);
       return;
     }
@@ -3106,6 +3214,11 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_process_execute_
   f_return_status fake_make_operate_process_execute(const fake_data_t data, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell, fake_make_data_t *data_make) {
+
+    if (fake_signal_received(data)) {
+      return F_status_set_error(F_signal);
+    }
+
     f_status_t status = F_none;
 
     // reset the environment.
@@ -3169,11 +3282,20 @@ extern "C" {
 
     int result = 0;
 
+    // child processes should receive all signals, without blocking.
+    f_signal_how_t signals = f_signal_how_t_initialize;
+    f_signal_set_empty(&signals.block);
+    f_signal_set_fill(&signals.block_not);
+
     if (as_shell) {
-      status = fll_execute_path_environment(program.string, arguments, data_make->environment.names, data_make->environment.values, &result);
+      status = fll_execute_path_environment(program.string, arguments, &signals, data_make->environment.names, data_make->environment.values, &result);
     }
     else {
-      status = fll_execute_program_environment(program.string, arguments, data_make->environment.names, data_make->environment.values, &result);
+      status = fll_execute_program_environment(program.string, arguments, &signals, data_make->environment.names, data_make->environment.values, &result);
+    }
+
+    if (status == F_status_set_error(F_signal)) {
+      return status;
     }
 
     if (F_status_is_error(status)) {

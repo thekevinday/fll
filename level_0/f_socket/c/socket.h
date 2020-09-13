@@ -65,6 +65,7 @@ extern "C"{
  *   F_name (with error bit) on path name error.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *   F_unavailable_address (with error bit) if address is unavailable (is non-existent or not local).
+ *   F_failure (with error bit) for any other error.
  *
  * @see bind()
  */
@@ -87,6 +88,7 @@ extern "C"{
  *   F_descriptor (with error bit) if the id is not a socket descriptor.
  *   F_file_descriptor (with error bit) if id is an invalid descriptor.
  *   F_unsupported (with error bit) if this socket does not support the listen() operation.
+ *   F_failure (with error bit) for any other error.
  *
  * @see listen()
  */
@@ -115,6 +117,7 @@ extern "C"{
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_unsupported (with error bit) if this socket does not support the listen() operation.
+ *   F_failure (with error bit) for any other error.
  *
  * @see close()
  * @see shutdown()
