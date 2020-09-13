@@ -48,36 +48,36 @@ extern "C" {
 
   #define fl_macro_color_context_t_new(status, color_context) \
     f_macro_string_dynamic_t_new(status, color_context.reset, f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.warning,      f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.error,        f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.title,        f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.notable,      f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.important,    f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.standout,     f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.normal,       f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.normal_reset, f_color_max_size + 1);
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.warning,      f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.error,        f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.title,        f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.notable,      f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.important,    f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.standout,     f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal,       f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal_reset, f_color_max_size + 1);
 
   #define fl_macro_color_context_t_delete(status, color_context) \
     f_macro_string_dynamic_t_delete(status, color_context.reset); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_delete(status, color_context.warning); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_delete(status, color_context.error); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_delete(status, color_context.title); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_delete(status, color_context.notable); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_delete(status, color_context.important); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_delete(status, color_context.standout); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_delete(status, color_context.normal); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_delete(status, color_context.normal_reset);
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.warning); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.error); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.title); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.notable); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.important); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.standout); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.normal); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.normal_reset);
 
   #define fl_macro_color_context_t_destroy(status, color_context, size) \
     f_macro_string_dynamic_t_destroy(status, color_context.reset); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_destroy(status, color_context.warning, size); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_destroy(status, color_context.error, size); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_destroy(status, color_context.title, size); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_destroy(status, color_context.notable, size); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_destroy(status, color_context.important, size); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_destroy(status, color_context.standout, size); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_destroy(status, color_context.normal); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_destroy(status, color_context.normal_reset);
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.warning, size); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.error, size); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.title, size); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.notable, size); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.important, size); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.standout, size); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.normal); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.normal_reset);
 
   #define fl_macro_color_context_t_delete_simple(color_context) \
     f_macro_string_dynamic_t_delete_simple(color_context.reset); \
@@ -103,25 +103,25 @@ extern "C" {
 
   #define fl_macro_color_context_t_resize(status, color_context) \
     f_macro_string_dynamic_t_resize(status, color_context.reset, f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.warning,      f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.error,        f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.title,        f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.notable,      f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.important,    f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.standout,     f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.normal,       f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.normal_reset, f_color_max_size + 1);
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.warning,      f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.error,        f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.title,        f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.notable,      f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.important,    f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.standout,     f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal,       f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal_reset, f_color_max_size + 1);
 
   #define fl_macro_color_context_t_adjust(status, color_context) \
     f_macro_string_dynamic_t_adjust(status, color_context.reset, f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.warning,      f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.error,        f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.title,        f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.notable,      f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.important,    f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.standout,     f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.normal,       f_color_max_size + 1); \
-    if (F_status_is_not_error(status)) f_macro_string_dynamic_t_resize(status, color_context.normal_reset, f_color_max_size + 1);
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.warning,      f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.error,        f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.title,        f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.notable,      f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.important,    f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.standout,     f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal,       f_color_max_size + 1); \
+    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal_reset, f_color_max_size + 1);
 #endif // _di_fl_color_context_t_
 
 /**

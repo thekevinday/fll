@@ -70,7 +70,7 @@ extern "C" {
       status = F_status_set_error(F_signal);
     }
 
-    if (F_status_is_not_error(status)) {
+    if (F_status_is_error_not(status)) {
       content.string = fake_make_skeleton_content_defines;
       content.used = fake_make_skeleton_content_defines_length;
       content.size = content.used;
@@ -80,7 +80,7 @@ extern "C" {
       content.used = 0;
     }
 
-    if (F_status_is_not_error(status)) {
+    if (F_status_is_error_not(status)) {
       content.string = fake_make_skeleton_content_dependencies;
       content.used = fake_make_skeleton_content_dependencies_length;
       content.size = content.used;
@@ -94,7 +94,7 @@ extern "C" {
       }
     }
 
-    if (F_status_is_not_error(status)) {
+    if (F_status_is_error_not(status)) {
       status = fake_skeleton_operate_file_create(data, file_data_build_process_post, F_true, content);
 
       if (fake_signal_received(data)) {
@@ -102,7 +102,7 @@ extern "C" {
       }
     }
 
-    if (F_status_is_not_error(status)) {
+    if (F_status_is_error_not(status)) {
       status = fake_skeleton_operate_file_create(data, file_data_build_process_pre, F_true, content);
 
       if (fake_signal_received(data)) {
@@ -110,7 +110,7 @@ extern "C" {
       }
     }
 
-    if (F_status_is_not_error(status)) {
+    if (F_status_is_error_not(status)) {
       content.string = fake_make_skeleton_content_settings;
       content.used = fake_make_skeleton_content_settings_length;
       content.size = content.used;
@@ -124,7 +124,7 @@ extern "C" {
       }
     }
 
-    if (F_status_is_not_error(status)) {
+    if (F_status_is_error_not(status)) {
       status = fake_skeleton_operate_file_create(data, data.file_documents_readme, F_false, content);
 
       if (fake_signal_received(data)) {
@@ -132,7 +132,7 @@ extern "C" {
       }
     }
 
-    if (F_status_is_not_error(status)) {
+    if (F_status_is_error_not(status)) {
       content.string = fake_make_skeleton_content_fakefile;
       content.used = fake_make_skeleton_content_fakefile_length;
       content.size = content.used;

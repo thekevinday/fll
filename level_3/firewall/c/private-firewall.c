@@ -1056,7 +1056,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserv
         tool = firewall_program_iptables;
         status = fll_execute_program((f_string_t) firewall_tool_iptables, arguments, 0, &results);
 
-        if (F_status_is_not_error(status)) {
+        if (F_status_is_error_not(status)) {
           // print command when debugging.
           #ifdef _en_firewall_debug_
             if (data->parameters[firewall_parameter_debug].result == f_console_result_found) {
@@ -1433,7 +1433,7 @@ f_return_status firewall_process_rules(f_string_range_t *range, firewall_local_d
 
   status = fll_fss_extended_read(&local->buffer, range, &local->rule_objects, &local->rule_contents, 0, 0);
 
-  if (F_status_is_not_error(status)) {
+  if (F_status_is_error_not(status)) {
     status = firewall_perform_commands(*local, *data);
 
     if (F_status_is_error(status)) {

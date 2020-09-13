@@ -94,7 +94,7 @@ extern "C" {
         name_function = "f_file_size";
         status = f_file_size(path_file, F_true, &size_file);
 
-        if (F_status_is_not_error(status)) {
+        if (F_status_is_error_not(status)) {
           if (size_file > fake_common_initial_buffer_max) {
             size_file = fake_common_initial_buffer_max;
           }
@@ -122,7 +122,7 @@ extern "C" {
         return F_status_set_error(F_signal);
       }
 
-      if (F_status_is_not_error(status)) {
+      if (F_status_is_error_not(status)) {
         name_function = "f_file_read";
         status = f_file_read(file, buffer);
 

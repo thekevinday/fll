@@ -236,7 +236,7 @@ extern "C" {
 
       status = fake_process_console_parameters(arguments, data);
 
-      if (F_status_is_not_error(status)) {
+      if (F_status_is_error_not(status)) {
         status = fake_path_generate(data);
       }
 
@@ -267,7 +267,7 @@ extern "C" {
             validate_parameter_directories = F_false;
           }
 
-          if (F_status_is_not_error(status) && status != F_signal) {
+          if (F_status_is_error_not(status) && status != F_signal) {
             f_string_static_t stub = f_string_static_t_initialize;
 
             status = fake_build_operate(*data, stub);
@@ -279,7 +279,7 @@ extern "C" {
             validate_parameter_directories = F_false;
           }
 
-          if (F_status_is_not_error(status) && status != F_signal) {
+          if (F_status_is_error_not(status) && status != F_signal) {
             status = fake_clean_operate(*data);
           }
         }
@@ -289,7 +289,7 @@ extern "C" {
             validate_parameter_directories = F_false;
           }
 
-          if (F_status_is_not_error(status) && status != F_signal) {
+          if (F_status_is_error_not(status) && status != F_signal) {
             status = fake_make_operate(*data);
           }
         }

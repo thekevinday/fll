@@ -277,24 +277,24 @@ extern "C" {
     if (use_light_colors) {
       status = fl_macro_color_save_1(&context->reset, context->color_format, context->color_list.reset);
 
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_1(&context->warning,   context->color_format, context->color_list.yellow);
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_2(&context->error,     context->color_format, context->color_list.bold, context->color_list.red);
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_2(&context->title,     context->color_format, context->color_list.bold, context->color_list.blue);
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_1(&context->notable,   context->color_format, context->color_list.bold);
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_1(&context->important, context->color_format, context->color_list.blue);
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_1(&context->standout,  context->color_format, context->color_list.purple);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->warning,   context->color_format, context->color_list.yellow);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_2(&context->error,     context->color_format, context->color_list.bold, context->color_list.red);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_2(&context->title,     context->color_format, context->color_list.bold, context->color_list.blue);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->notable,   context->color_format, context->color_list.bold);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->important, context->color_format, context->color_list.blue);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->standout,  context->color_format, context->color_list.purple);
 
       context->mode = f_color_mode_light;
     }
     else {
       status = fl_macro_color_save_1(&context->reset, context->color_format, context->color_list.reset);
 
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_1(&context->warning,   context->color_format, context->color_list.yellow);
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_2(&context->error,     context->color_format, context->color_list.bold, context->color_list.red);
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_2(&context->title,     context->color_format, context->color_list.bold, context->color_list.yellow);
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_1(&context->notable,   context->color_format, context->color_list.bold);
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_2(&context->important, context->color_format, context->color_list.bold, context->color_list.green);
-      if (F_status_is_not_error(status)) status = fl_macro_color_save_1(&context->standout,  context->color_format, context->color_list.green);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->warning,   context->color_format, context->color_list.yellow);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_2(&context->error,     context->color_format, context->color_list.bold, context->color_list.red);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_2(&context->title,     context->color_format, context->color_list.bold, context->color_list.yellow);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->notable,   context->color_format, context->color_list.bold);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_2(&context->important, context->color_format, context->color_list.bold, context->color_list.green);
+      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->standout,  context->color_format, context->color_list.green);
 
       context->mode = f_color_mode_dark;
     }

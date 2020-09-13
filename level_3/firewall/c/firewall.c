@@ -215,7 +215,7 @@ extern "C" {
             fflush(f_type_output);
           }
 
-          if (F_status_is_not_error(status) && show_mangle) {
+          if (F_status_is_error_not(status) && show_mangle) {
             fl_color_print(f_type_output, data->context.standout, data->context.reset, "========================== ");
             fl_color_print(f_type_output, data->context.title, data->context.reset, "MANGLE");
             fl_color_print_line(f_type_output, data->context.standout, data->context.reset, " ==========================");
@@ -243,7 +243,7 @@ extern "C" {
             fflush(f_type_output);
           }
 
-          if (F_status_is_not_error(status) && show_ports) {
+          if (F_status_is_error_not(status) && show_ports) {
             fl_color_print(f_type_output, data->context.standout, data->context.reset, "========================== ");
             fl_color_print(f_type_output, data->context.title, data->context.reset, "FILTER");
             fl_color_print_line(f_type_output, data->context.standout, data->context.reset, " ==========================");
@@ -385,7 +385,7 @@ extern "C" {
             if (reserved.has_lock) {
               status = firewall_delete_chains(*data);
 
-              if (F_status_is_not_error(status)) {
+              if (F_status_is_error_not(status)) {
                 status = firewall_default_lock(*data);
               }
 
@@ -422,7 +422,7 @@ extern "C" {
             if (reserved.has_stop) {
               status = firewall_delete_chains(*data);
 
-              if (F_status_is_not_error(status)) {
+              if (F_status_is_error_not(status)) {
                 status = firewall_default_lock(*data);
               }
 
@@ -473,7 +473,7 @@ extern "C" {
           if (command == firewall_parameter_command_start) {
             status = firewall_delete_chains(*data);
 
-            if (F_status_is_not_error(status)) {
+            if (F_status_is_error_not(status)) {
               status = firewall_default_lock(*data);
             }
 

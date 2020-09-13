@@ -37,9 +37,10 @@ extern "C" {
   #define F_status_is_signal(status)  (status & F_status_bit_signal)
   #define F_status_is_warning(status) (status & F_status_bit_warning)
 
-  #define F_status_is_not_error(status)   ((status & F_status_bit_error) == 0)
-  #define F_status_is_not_signal(status)  ((status & F_status_bit_signal) == 0)
-  #define F_status_is_not_warning(status) ((status & F_status_bit_warning) == 0)
+  #define F_status_is_error_not(status)   ((status & F_status_bit_error) == 0)
+  #define F_status_is_fine_not(status)    (status & F_status_mask_code)
+  #define F_status_is_signal_not(status)  ((status & F_status_bit_signal) == 0)
+  #define F_status_is_warning_not(status) ((status & F_status_bit_warning) == 0)
 
   #define F_status_set_error(status)   (status | F_status_bit_error)
   #define F_status_set_signal(status)  (status | F_status_bit_signal)

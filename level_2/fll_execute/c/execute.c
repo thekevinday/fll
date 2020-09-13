@@ -528,11 +528,11 @@ extern "C" {
     for (i = 0; i < paths.used; i++) {
       status = fl_string_append(program_name, program_name_length, &paths.array[i]);
 
-      if (F_status_is_not_error(status)) {
+      if (F_status_is_error_not(status)) {
         status = fl_string_dynamic_terminate(&paths.array[i]);
       }
 
-      if (F_status_is_not_error(status)) {
+      if (F_status_is_error_not(status)) {
         status = f_file_exists(paths.array[i].string);
 
         if (status == F_true) {

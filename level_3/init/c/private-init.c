@@ -100,7 +100,7 @@
     // @todo: resume replacing code below.
     status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents, 0, 0);
 
-    if (F_status_is_not_error(status)) {
+    if (F_status_is_error_not(status)) {
       //status = init_perform_commands(*local, *data); // @fixme
 
       if (F_status_is_error(status)) {
@@ -544,7 +544,7 @@
 
     status = fll_fss_extended_read(buffer, location, objects, contents, 0, 0);
 
-    if (F_status_is_not_error(status)) {
+    if (F_status_is_error_not(status)) {
       // @todo: process objects and contents.
       // execute individual processes.
 

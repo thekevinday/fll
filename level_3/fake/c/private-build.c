@@ -50,7 +50,7 @@ extern "C" {
     if (data.path_work.used > 0) {
       f_string_length_t length = 0;
 
-      if (F_status_is_fine(*status)) {
+      if (F_status_is_error_not(*status)) {
         length = fake_build_parameter_library_include_length + data.path_work_includes.used;
 
         char string[length + 1];
@@ -63,7 +63,7 @@ extern "C" {
         *status = fll_execute_arguments_add(string, length, arguments);
       }
 
-      if (data_build.setting.search_shared && (is_shared || !data_build.setting.search_exclusive) && F_status_is_fine(*status)) {
+      if (data_build.setting.search_shared && (is_shared || !data_build.setting.search_exclusive) && F_status_is_error_not(*status)) {
         length = fake_build_parameter_library_link_path_length + data.path_work_libraries_shared.used;
 
         char string[length + 1];
@@ -76,7 +76,7 @@ extern "C" {
         *status = fll_execute_arguments_add(string, length, arguments);
       }
 
-      if (data_build.setting.search_static && (!is_shared || !data_build.setting.search_exclusive) && F_status_is_fine(*status)) {
+      if (data_build.setting.search_static && (!is_shared || !data_build.setting.search_exclusive) && F_status_is_error_not(*status)) {
         length = fake_build_parameter_library_link_path_length + data.path_work_libraries_static.used;
 
         char string[length + 1];
@@ -90,31 +90,31 @@ extern "C" {
       }
     }
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       for (f_array_length_t i = 0; i < data_build.setting.build_libraries.used; i++) {
         *status = fll_execute_arguments_add(data_build.setting.build_libraries.array[i].string, data_build.setting.build_libraries.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
 
-    for (f_array_length_t i = 0; i < data_build.setting.flags_all.used && F_status_is_fine(*status); i++) {
+    for (f_array_length_t i = 0; i < data_build.setting.flags_all.used && F_status_is_error_not(*status); i++) {
       *status = fll_execute_arguments_add(data_build.setting.flags_all.array[i].string, data_build.setting.flags_all.array[i].used, arguments);
       if (F_status_is_error(*status)) break;
     } // for
 
-    for (f_array_length_t i = 0; i < data_build.setting.flags_shared.used && F_status_is_fine(*status); i++) {
+    for (f_array_length_t i = 0; i < data_build.setting.flags_shared.used && F_status_is_error_not(*status); i++) {
       *status = fll_execute_arguments_add(data_build.setting.flags_shared.array[i].string, data_build.setting.flags_shared.array[i].used, arguments);
       if (F_status_is_error(*status)) break;
     } // for
 
     if (is_library) {
-      for (f_array_length_t j = 0; j < data_build.setting.flags_library.used && F_status_is_fine(*status); j++) {
+      for (f_array_length_t j = 0; j < data_build.setting.flags_library.used && F_status_is_error_not(*status); j++) {
         *status = fll_execute_arguments_add(data_build.setting.flags_library.array[j].string, data_build.setting.flags_library.array[j].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
     else {
-      for (f_array_length_t i = 0; i < data_build.setting.flags_program.used && F_status_is_fine(*status); i++) {
+      for (f_array_length_t i = 0; i < data_build.setting.flags_program.used && F_status_is_error_not(*status); i++) {
         *status = fll_execute_arguments_add(data_build.setting.flags_program.array[i].string, data_build.setting.flags_program.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
@@ -124,7 +124,7 @@ extern "C" {
       f_string_length_t length = 0;
       f_array_length_t i = 0;
 
-      for (; i < data.define.used && F_status_is_fine(*status); i++) {
+      for (; i < data.define.used && F_status_is_error_not(*status); i++) {
         *status = fll_execute_arguments_add(data.define.array[i].string, data.define.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
@@ -133,19 +133,19 @@ extern "C" {
       f_string_length_t length = 0;
       f_array_length_t i = 0;
 
-      for (; i < data_build.setting.defines_all.used && F_status_is_fine(*status); i++) {
+      for (; i < data_build.setting.defines_all.used && F_status_is_error_not(*status); i++) {
         *status = fll_execute_arguments_add(data_build.setting.defines_all.array[i].string, data_build.setting.defines_all.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
 
       if (is_shared) {
-        for (i = 0; i < data_build.setting.defines_shared.used && F_status_is_fine(*status); i++) {
+        for (i = 0; i < data_build.setting.defines_shared.used && F_status_is_error_not(*status); i++) {
           *status = fll_execute_arguments_add(data_build.setting.defines_shared.array[i].string, data_build.setting.defines_shared.array[i].used, arguments);
           if (F_status_is_error(*status)) break;
         } // for
       }
       else {
-        for (i = 0; i < data_build.setting.defines_static.used && F_status_is_fine(*status); i++) {
+        for (i = 0; i < data_build.setting.defines_static.used && F_status_is_error_not(*status); i++) {
           *status = fll_execute_arguments_add(data_build.setting.defines_static.array[i].string, data_build.setting.defines_static.array[i].used, arguments);
           if (F_status_is_error(*status)) break;
         } // for
@@ -284,7 +284,7 @@ extern "C" {
     f_macro_string_dynamic_t_delete_simple(path_source);
     f_macro_string_dynamic_t_delete_simple(destination_file);
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       fake_build_touch(data, file_stage, status);
     }
   }
@@ -390,7 +390,7 @@ extern "C" {
     *status = fll_execute_arguments_add(fake_other_operation_build, fake_other_operation_build_length, &arguments);
 
     // ensure console color mode is passed to the scripts so that they can also react to color mode.
-    if (F_status_is_not_error(*status) && data.context.mode != f_color_mode_none) {
+    if (F_status_is_error_not(*status) && data.context.mode != f_color_mode_none) {
       char argument[3] = { f_console_symbol_disable, 0, 0 };
 
       if (data.context.mode == f_color_mode_dark) {
@@ -407,7 +407,7 @@ extern "C" {
     }
 
     // ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
-    if (F_status_is_not_error(*status) && data.verbosity != fake_verbosity_normal) {
+    if (F_status_is_error_not(*status) && data.verbosity != fake_verbosity_normal) {
       char argument[3] = { f_console_symbol_disable, 0, 0 };
 
       if (data.verbosity == fake_verbosity_quiet) {
@@ -542,11 +542,11 @@ extern "C" {
         *status = fl_string_dynamic_append_nulless(data.path_data_build, &path);
       }
 
-      if (F_status_is_not_error(*status)) {
+      if (F_status_is_error_not(*status)) {
         *status = fl_string_dynamic_append_nulless(process_script, &path);
       }
 
-      if (F_status_is_not_error(*status)) {
+      if (F_status_is_error_not(*status)) {
         function = "fl_string_dynamic_terminate_after";
         *status = fl_string_dynamic_terminate_after(&path);
       }
@@ -873,7 +873,7 @@ extern "C" {
 
       *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
-      if (F_status_is_fine(*status) && data.verbosity == fake_verbosity_verbose) {
+      if (F_status_is_error_not(*status) && data.verbosity == fake_verbosity_verbose) {
         printf("Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_micro, f_string_eol[0]);
       }
       else if (F_status_is_error(*status)) {
@@ -887,7 +887,7 @@ extern "C" {
       }
     }
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       f_string_length_t parameter_file_path_length = data.path_build_libraries_shared.used + parameter_file_name_length;
 
       char parameter_file_path[parameter_file_path_length + 1];
@@ -913,7 +913,7 @@ extern "C" {
         *status = f_file_link(parameter_file_name_micro, parameter_file_path);
       }
 
-      if (F_status_is_fine(*status) && data.verbosity == fake_verbosity_verbose) {
+      if (F_status_is_error_not(*status) && data.verbosity == fake_verbosity_verbose) {
         printf("Linked file '%s' to '", parameter_file_path);
 
         if (data_build.setting.version_target == fake_build_version_type_major) {
@@ -969,7 +969,7 @@ extern "C" {
 
     *status = fll_execute_arguments_add(fake_build_parameter_object_link_arguments, fake_build_parameter_object_link_arguments_length, &arguments);
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       f_string_length_t destination_length = data.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_length;
       destination_length += data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_length;
 
@@ -994,7 +994,7 @@ extern "C" {
       *status = fll_execute_arguments_add(destination, destination_length, &arguments);
     }
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       f_string_length_t source_length = 0;
 
       for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; i++) {
@@ -1067,7 +1067,7 @@ extern "C" {
       } // for
     }
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       fake_execute(data, data_build.environment, data_build.setting.build_indexer, arguments, status);
     }
 
@@ -1075,7 +1075,7 @@ extern "C" {
     f_macro_string_dynamic_t_delete_simple(source_path);
     f_macro_string_dynamics_t_delete_simple(arguments);
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       fake_build_touch(data, file_stage, status);
     }
   }
@@ -1123,7 +1123,7 @@ extern "C" {
         f_macro_string_dynamic_t_clear(part);
       } // for
 
-      if (F_status_is_not_error(*status)) {
+      if (F_status_is_error_not(*status)) {
         if (names.used + data_build.setting.environment.used > names.size) {
           if (names.used + data_build.setting.environment.used > f_array_length_t_size) {
             if (data.verbosity != fake_verbosity_quiet) {
@@ -1196,7 +1196,7 @@ extern "C" {
         }
       }
 
-      if (F_status_is_not_error(*status) && environment->names.used + 1 > environment->names.size) {
+      if (F_status_is_error_not(*status) && environment->names.used + 1 > environment->names.size) {
         if (environment->names.size + f_memory_default_allocation_step > f_array_length_t_size) {
           if (environment->names.size + 1 > f_array_length_t_size) {
             *status = F_status_set_error(F_buffer_too_large);
@@ -1284,7 +1284,7 @@ extern "C" {
       if (fake_signal_received(data)) {
         *status = F_status_set_error(F_signal);
       }
-      else if (F_status_is_fine(*status)) {
+      else if (F_status_is_error_not(*status)) {
         f_string_range_t range = f_macro_string_range_initialize(buffer.used);
 
         *status = fll_fss_extended_read(&buffer, &range, &objects, &contents, 0, 0);
@@ -1303,7 +1303,7 @@ extern "C" {
     }
 
     // error when required settings are not specified.
-    if (F_status_is_not_error(*status)) {
+    if (F_status_is_error_not(*status)) {
       bool failed = F_false;
 
       f_string_static_t *settings[] = {
@@ -2411,7 +2411,7 @@ extern "C" {
     f_macro_string_dynamic_t_delete_simple(destination_path);
     f_macro_string_dynamics_t_delete_simple(arguments);
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       fake_build_touch(data, file_stage, status);
     }
   }
@@ -2586,7 +2586,7 @@ extern "C" {
       } // for
     }
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       f_string_length_t parameter_file_name_path_length = data.path_build_programs_shared.used + data_build.setting.project_name.used;
 
       char parameter_file_name_path[parameter_file_name_path_length + 1];
@@ -2612,7 +2612,7 @@ extern "C" {
     }
 
     // if project-specific library sources exist, then the -lproject_name needs to be added to the arguments.
-    if (F_status_is_fine(*status) && data_build.setting.build_sources_library.used > 0) {
+    if (F_status_is_error_not(*status) && data_build.setting.build_sources_library.used > 0) {
       f_string_length_t link_project_library_length = fake_build_parameter_library_link_file_length + data_build.setting.project_name.used;
 
       char link_project_library[link_project_library_length + 1];
@@ -2637,7 +2637,7 @@ extern "C" {
 
     f_macro_string_dynamics_t_delete_simple(arguments);
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       fake_build_touch(data, file_stage, status);
     }
   }
@@ -2687,7 +2687,7 @@ extern "C" {
       } // for
     }
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       f_string_length_t source_library_length = data.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_length + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_length;
 
       char source_library[source_library_length + 1];
@@ -2752,7 +2752,7 @@ extern "C" {
 
     f_macro_string_dynamics_t_delete_simple(arguments);
 
-    if (F_status_is_fine(*status)) {
+    if (F_status_is_error_not(*status)) {
       fake_build_touch(data, file_stage, status);
     }
   }

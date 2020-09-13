@@ -50,23 +50,23 @@ extern "C" {
 
   #define f_macro_directory_listing_t_delete(status, listing) \
     f_macro_string_dynamics_t_delete(status, listing.block) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_delete(status, listing.character) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_delete(status, listing.directory) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_delete(status, listing.regular) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_delete(status, listing.link) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_delete(status, listing.fifo) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_delete(status, listing.socket) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_delete(status, listing.unknown)
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_delete(status, listing.character) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_delete(status, listing.directory) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_delete(status, listing.regular) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_delete(status, listing.link) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_delete(status, listing.fifo) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_delete(status, listing.socket) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_delete(status, listing.unknown)
 
   #define f_macro_directory_listing_t_destroy(status, listing) \
     f_macro_string_dynamics_t_destroy(status, listing.block) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_destroy(status, listing.character) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_destroy(status, listing.directory) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_destroy(status, listing.regular) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_destroy(status, listing.link) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_destroy(status, listing.fifo) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_destroy(status, listing.socket) \
-    if (F_status_is_not_error(status)) f_macro_string_dynamics_t_delete(status, listing.unknown)
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_destroy(status, listing.character) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_destroy(status, listing.directory) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_destroy(status, listing.regular) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_destroy(status, listing.link) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_destroy(status, listing.fifo) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_destroy(status, listing.socket) \
+    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_delete(status, listing.unknown)
 
   #define f_macro_directory_listing_t_delete_simple(listing) \
     f_macro_string_dynamics_t_delete_simple(listing.block) \

@@ -324,24 +324,24 @@ extern "C" {
 
         f_macro_string_map_multis_t_new(*status, data_make->setting_make.parameter, f_memory_default_allocation_step);
 
-        if (F_status_is_fine(*status)) {
+        if (F_status_is_error_not(*status)) {
           data_make->setting_make.parameter.used = 1;
 
           function_name = "fl_string_append";
           *status = fl_string_append(fake_make_setting_return, fake_make_setting_return_length, &data_make->setting_make.parameter.array[0].name);
         }
 
-        if (F_status_is_fine(*status)) {
+        if (F_status_is_error_not(*status)) {
           function_name = "fl_string_dynamic_terminate_after";
           *status = fl_string_dynamic_terminate_after(&data_make->setting_make.parameter.array[0].name);
         }
 
-        if (F_status_is_fine(*status)) {
+        if (F_status_is_error_not(*status)) {
           function_name = "f_macro_string_dynamics_new";
           f_macro_string_dynamics_new(*status, data_make->setting_make.parameter.array[0].value, 1);
         }
 
-        if (F_status_is_fine(*status)) {
+        if (F_status_is_error_not(*status)) {
           function_name = "fl_string_dynamic_terminate_after";
           *status = fl_string_dynamic_terminate_after(&data_make->setting_make.parameter.array[0].value.array[0]);
         }
@@ -546,12 +546,12 @@ extern "C" {
                     function_name = "fl_string_dynamic_partial_append_nulless";
                     *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, settings.contents.array[i].array[j], &data_make->setting_make.parameter.array[0].value.array[0]);
 
-                    if (F_status_is_fine(*status)) {
+                    if (F_status_is_error_not(*status)) {
                       function_name = "fl_string_dynamic_terminate_after";
                       *status = fl_string_dynamic_terminate_after(&data_make->setting_make.parameter.array[0].value.array[0]);
                     }
 
-                    if (F_status_is_fine(*status) && j + 1 < settings.contents.array[i].used) {
+                    if (F_status_is_error_not(*status) && j + 1 < settings.contents.array[i].used) {
                       function_name = "fl_string_append_assure";
                       *status = fl_string_append_assure(" ", 1, &data_make->setting_make.parameter.array[0].value.array[0]);
                     }
@@ -585,7 +585,7 @@ extern "C" {
         *status = F_status_set_error(F_signal);
       }
 
-      if (F_status_is_fine(*status) && data_make->setting_make.load_build) {
+      if (F_status_is_error_not(*status) && data_make->setting_make.load_build) {
         f_string_static_t stub = f_string_static_t_initialize;
 
         fake_build_load_setting(data, stub, &data_make->setting_build, status);
@@ -606,7 +606,7 @@ extern "C" {
         *status = fl_string_dynamic_partial_append(data_make->buffer, *range_compiler, &data_make->setting_build.build_compiler);
       }
 
-      if (F_status_is_fine(*status) && range_linker) {
+      if (F_status_is_error_not(*status) && range_linker) {
         data_make->setting_build.build_indexer.used = 0;
         *status = fl_string_dynamic_partial_append(data_make->buffer, *range_linker, &data_make->setting_build.build_indexer);
       }
@@ -627,7 +627,7 @@ extern "C" {
         fake_build_load_setting_process(data, data.file_data_build_fakefile.string, data_make->buffer, settings.objects, settings.contents, &data_make->setting_build, status);
       }
 
-      if (F_status_is_not_error(*status) && settings.objects.used) {
+      if (F_status_is_error_not(*status) && settings.objects.used) {
         const f_string_t settings_name[] = {
           fake_make_setting_define,
           fake_make_setting_parameter,
@@ -1084,7 +1084,7 @@ extern "C" {
           else {
             *status = fl_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used - 1]);
 
-            if (F_status_is_fine(*status)) {
+            if (F_status_is_error_not(*status)) {
               *status = fl_string_dynamic_terminate_after(&arguments->array[arguments->used - 1]);
               if (F_status_is_error(*status)) {
                 fake_print_message(data, F_status_set_fine(*status), "fl_string_terminate_after", F_true, data_make->print);
@@ -1381,13 +1381,13 @@ extern "C" {
     else {
       status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
 
-      if (F_status_is_fine(status)) {
+      if (F_status_is_error_not(status)) {
         status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
 
-        if (F_status_is_fine(status)) {
+        if (F_status_is_error_not(status)) {
           status = fl_string_dynamic_terminate_after(&arguments->array[arguments->used]);
 
-          if (F_status_is_fine(status)) {
+          if (F_status_is_error_not(status)) {
             arguments->used++;
           }
         }
@@ -1396,7 +1396,7 @@ extern "C" {
 
     f_macro_string_dynamic_t_delete_simple(value);
 
-    if (F_status_is_fine(status)) {
+    if (F_status_is_error_not(status)) {
       return F_true;
     }
 
@@ -1437,13 +1437,13 @@ extern "C" {
     else {
       status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
 
-      if (F_status_is_fine(status)) {
+      if (F_status_is_error_not(status)) {
         status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
 
-        if (F_status_is_fine(status)) {
+        if (F_status_is_error_not(status)) {
           status = fl_string_dynamic_terminate_after(&arguments->array[arguments->used]);
 
-          if (F_status_is_fine(status)) {
+          if (F_status_is_error_not(status)) {
             arguments->used++;
           }
         }
@@ -1452,7 +1452,7 @@ extern "C" {
 
     f_macro_string_dynamic_t_delete_simple(value);
 
-    if (F_status_is_fine(status)) {
+    if (F_status_is_error_not(status)) {
       return F_true;
     }
 
@@ -1657,7 +1657,7 @@ extern "C" {
         }
       }
 
-      if (F_status_is_fine(*status)) {
+      if (F_status_is_error_not(*status)) {
         operations[i] = operation;
 
         fake_make_operate_expand(data, section->name, operation, *operation_name, section->contents.array[i], section->quotedss.array[i], data_make, &arguments[i], status);
@@ -1675,7 +1675,7 @@ extern "C" {
 
       fake_make_operate_validate(data, section->name, operation, *operation_name, arguments[i], &operation_if, data_make, section_stack, status);
 
-      if (F_status_is_fine(*status)) {
+      if (F_status_is_error_not(*status)) {
 
         if (operation_if == fake_make_operation_if_type_false) {
           operation_if = fake_make_operation_if_type_else_true_next;
@@ -1828,7 +1828,7 @@ extern "C" {
     }
 
     // ensure an error is returned during recursion if the last known section operation failed, except for the main operation.
-    if (success == F_false && F_status_is_fine(*status) && section_stack->used > 1) {
+    if (success == F_false && F_status_is_error_not(*status) && section_stack->used > 1) {
       *status = F_status_set_error(F_failure);
     }
 
@@ -2661,7 +2661,7 @@ extern "C" {
           status_number = fl_conversion_string_to_number_unsigned(arguments.array[i].string, &number_left, range);
         }
 
-        if (F_status_is_fine(status_number)) {
+        if (F_status_is_error_not(status_number)) {
           for (i = 2; i < arguments.used; i++, status_number = F_none, number_left = number_right, is_negative_left = is_negative_right) {
 
             if (arguments.array[i].used) {
@@ -3174,7 +3174,7 @@ extern "C" {
           *status = f_file_touch(arguments.array[i].string, mode.regular, F_false);
 
           if (F_status_is_error(*status)) {
-            if (F_status_is_fine(fll_path_canonical(arguments.array[i].string, &data_make->path_cache))) {
+            if (F_status_is_error_not(fll_path_canonical(arguments.array[i].string, &data_make->path_cache))) {
               fake_print_message_file(data, F_status_set_fine(*status), "f_file_touch", data_make->path_cache.string, "touch", F_true, F_true, data_make->print);
             }
             else {
@@ -3188,7 +3188,7 @@ extern "C" {
           *status = f_directory_touch(arguments.array[i].string, mode.directory);
 
           if (F_status_is_error(*status)) {
-            if (F_status_is_fine(fll_path_canonical(arguments.array[i].string, &data_make->path_cache))) {
+            if (F_status_is_error_not(fll_path_canonical(arguments.array[i].string, &data_make->path_cache))) {
               fake_print_message_file(data, F_status_set_fine(*status), "f_directory_touch", data_make->path_cache.string, "touch", F_false, F_true, data_make->print);
             }
             else {
@@ -3237,7 +3237,7 @@ extern "C" {
       if (data_make->environment.names.used + 1 > data_make->environment.names.size) {
         f_macro_string_dynamics_resize(status, data_make->environment.names, data_make->environment.names.size + f_memory_default_allocation_step);
 
-        if (F_status_is_not_error(status)) {
+        if (F_status_is_error_not(status)) {
           f_macro_string_dynamics_resize(status, data_make->environment.values, data_make->environment.values.size + f_memory_default_allocation_step);
         }
 
@@ -3365,6 +3365,7 @@ extern "C" {
     }
 
     status2 = fl_string_dynamic_terminate_after(&data_make->setting_make.parameter.array[0].value.array[0]);
+
     if (F_status_is_error(status2)) {
       *status = status2;
 
@@ -4202,7 +4203,7 @@ extern "C" {
 
                   *operation_if = fake_make_operation_if_type_false_always_next;
 
-                  if (F_status_is_fine(*status)) {
+                  if (F_status_is_error_not(*status)) {
                     if (F_status_set_fine(status_file) == F_false) {
                       *status = F_status_set_error(F_failure);
                     }
@@ -4225,7 +4226,7 @@ extern "C" {
 
                     *operation_if = fake_make_operation_if_type_false_always_next;
 
-                    if (F_status_is_fine(*status)) {
+                    if (F_status_is_error_not(*status)) {
                       *status = F_status_set_error(status_file);
                     }
                   }
