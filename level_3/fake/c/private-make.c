@@ -2220,9 +2220,8 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fake_print_message(data, F_status_set_fine(*status), "fake_execute", F_true, data_make->print);
       }
-      else {
-        fake_make_operate_process_return(data, return_code, data_make, status);
-      }
+
+      fake_make_operate_process_return(data, return_code, data_make, status);
 
       return;
     }
@@ -2256,7 +2255,13 @@ extern "C" {
         return;
       }
 
-      fake_make_operate_process_return(data, 0, data_make, status);
+      if (F_status_is_error(*status)) {
+        fake_make_operate_process_return(data, 1, data_make, status);
+      }
+      else {
+        fake_make_operate_process_return(data, 0, data_make, status);
+      }
+
       return;
     }
 
@@ -2268,7 +2273,13 @@ extern "C" {
         return;
       }
 
-      fake_make_operate_process_return(data, 0, data_make, status);
+      if (F_status_is_error(*status)) {
+        fake_make_operate_process_return(data, 1, data_make, status);
+      }
+      else {
+        fake_make_operate_process_return(data, 0, data_make, status);
+      }
+
       return;
     }
 
@@ -2357,9 +2368,8 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fake_print_message(data, F_status_set_fine(*status), "fake_execute", F_true, data_make->print);
       }
-      else {
-        fake_make_operate_process_return(data, return_code, data_make, status);
-      }
+
+      fake_make_operate_process_return(data, return_code, data_make, status);
 
       return;
     }
@@ -3447,7 +3457,13 @@ extern "C" {
         return;
       }
 
-      fake_make_operate_process_return(data, 0, data_make, status);
+      if (F_status_is_error(*status)) {
+        fake_make_operate_process_return(data, 1, data_make, status);
+      }
+      else {
+        fake_make_operate_process_return(data, 0, data_make, status);
+      }
+
       return;
     }
 
@@ -3651,7 +3667,7 @@ extern "C" {
       fflush(f_type_output);
     }
 
-    int result = 0;
+    int return_code = 0;
 
     // child processes should receive all signals, without blocking.
     f_signal_how_t signals = f_signal_how_t_initialize;
@@ -3659,10 +3675,10 @@ extern "C" {
     f_signal_set_fill(&signals.block_not);
 
     if (as_shell) {
-      status = fll_execute_path_environment(program.string, arguments, &signals, data_make->environment.names, data_make->environment.values, &result);
+      status = fll_execute_path_environment(program.string, arguments, &signals, data_make->environment.names, data_make->environment.values, &return_code);
     }
     else {
-      status = fll_execute_program_environment(program.string, arguments, &signals, data_make->environment.names, data_make->environment.values, &result);
+      status = fll_execute_program_environment(program.string, arguments, &signals, data_make->environment.names, data_make->environment.values, &return_code);
     }
 
     if (status == F_status_set_error(F_signal)) {
@@ -3683,7 +3699,7 @@ extern "C" {
       }
     }
 
-    fake_make_operate_process_return(data, result, data_make, &status);
+    fake_make_operate_process_return(data, return_code, data_make, &status);
 
     return status;
   }
@@ -3709,7 +3725,7 @@ extern "C" {
       if (return_code) {
         f_string_dynamic_t number = f_string_dynamic_t_initialize;
 
-        status2 = f_conversion_number_signed_to_string(return_code, 10, &number);
+        status2 = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), 10, &number);
         if (F_status_is_error(status2)) {
           *status = status2;
 

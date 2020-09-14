@@ -567,14 +567,14 @@ extern "C" {
       f_macro_string_dynamics_t_delete_simple(arguments);
     }
     else {
-      int result = 0;
+      int return_code = 0;
 
       // child processes should receive all signals, without blocking.
       f_signal_how_t signals = f_signal_how_t_initialize;
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      *status = fll_execute_path_environment(path.string, arguments, &signals, data_build.environment.names, data_build.environment.values, &result);
+      *status = fll_execute_path_environment(path.string, arguments, &signals, data_build.environment.names, data_build.environment.values, &return_code);
 
       f_macro_string_dynamics_t_delete_simple(arguments);
 

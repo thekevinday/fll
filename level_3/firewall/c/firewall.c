@@ -149,7 +149,7 @@ extern "C" {
           bool show_ports = F_true;
 
           f_string_dynamics_t parameters = f_string_dynamics_t_initialize;
-          int results = 0;
+          int return_code = 0;
 
           if (data->remaining.used > 0) {
             show_nat = F_false;
@@ -209,7 +209,7 @@ extern "C" {
             parameters.array[4].used = 9;
             parameters.array[5].used = 6;
 
-            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &results);
+            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &return_code);
 
             fprintf(f_type_output, "\n");
             fflush(f_type_output);
@@ -237,7 +237,7 @@ extern "C" {
             parameters.array[4].used = 9;
             parameters.array[5].used = 6;
 
-            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &results);
+            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &return_code);
 
             fprintf(f_type_output, "\n");
             fflush(f_type_output);
@@ -261,7 +261,7 @@ extern "C" {
             parameters.array[2].used = 9;
             parameters.array[3].used = 6;
 
-            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &results);
+            status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &return_code);
 
             fprintf(f_type_output, "\n");
             fflush(f_type_output);
