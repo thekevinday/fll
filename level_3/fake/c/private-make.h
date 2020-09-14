@@ -261,51 +261,44 @@ extern "C" {
   #define fake_make_operation_recursion_depth_max 65535
 #endif // _di_fake_make_operation_
 
-// @todo each one of these should be made available to be passed to the program as "$parameter_define[X]" for multi-value (define) or "$parameter_no_color" for single-value (no_color).
 #ifndef _di_fake_make_parameter_t_
-  #define fake_make_parameter_variable_build    "build"
-  #define fake_make_parameter_variable_dark     "dark"
-  #define fake_make_parameter_variable_data     "data"
-  #define fake_make_parameter_variable_define   "define"
-  #define fake_make_parameter_variable_light    "light"
-  #define fake_make_parameter_variable_mode     "mode"
-  #define fake_make_parameter_variable_no_color "no_color"
-  #define fake_make_parameter_variable_process  "process"
-  #define fake_make_parameter_variable_quiet    "quiet"
-  #define fake_make_parameter_variable_return   "return"
-  #define fake_make_parameter_variable_settings "settings"
-  #define fake_make_parameter_variable_sources  "sources"
-  #define fake_make_parameter_variable_verbose  "verbose"
-  #define fake_make_parameter_variable_work     "work"
+  #define fake_make_parameter_variable_build     "build"
+  #define fake_make_parameter_variable_color     "color"
+  #define fake_make_parameter_variable_data      "data"
+  #define fake_make_parameter_variable_define    "define"
+  #define fake_make_parameter_variable_fakefile  "fakefile"
+  #define fake_make_parameter_variable_mode      "mode"
+  #define fake_make_parameter_variable_process   "process"
+  #define fake_make_parameter_variable_return    "return"
+  #define fake_make_parameter_variable_settings  "settings"
+  #define fake_make_parameter_variable_sources   "sources"
+  #define fake_make_parameter_variable_verbosity "verbosity"
+  #define fake_make_parameter_variable_work      "work"
 
-  #define fake_make_parameter_variable_build_length    5
-  #define fake_make_parameter_variable_dark_length     5
-  #define fake_make_parameter_variable_data_length     5
-  #define fake_make_parameter_variable_define_length   6
-  #define fake_make_parameter_variable_light_length    5
-  #define fake_make_parameter_variable_mode_length     4
-  #define fake_make_parameter_variable_no_color_length 8
-  #define fake_make_parameter_variable_process_length  7
-  #define fake_make_parameter_variable_quiet_length    5
-  #define fake_make_parameter_variable_return_length   6
-  #define fake_make_parameter_variable_settings_length 8
-  #define fake_make_parameter_variable_sources_length  7
-  #define fake_make_parameter_variable_verbose_length  7
-  #define fake_make_parameter_variable_work_length     4
+  #define fake_make_parameter_variable_build_length     5
+  #define fake_make_parameter_variable_color_length     5
+  #define fake_make_parameter_variable_data_length      4
+  #define fake_make_parameter_variable_define_length    6
+  #define fake_make_parameter_variable_fakefile_length  8
+  #define fake_make_parameter_variable_mode_length      4
+  #define fake_make_parameter_variable_process_length   7
+  #define fake_make_parameter_variable_return_length    6
+  #define fake_make_parameter_variable_settings_length  8
+  #define fake_make_parameter_variable_sources_length   7
+  #define fake_make_parameter_variable_verbosity_length 9
+  #define fake_make_parameter_variable_work_length      4
 
   typedef struct {
     f_string_dynamics_t build;
-    f_string_dynamics_t dark;
+    f_string_dynamics_t color;
     f_string_dynamics_t data;
     f_string_dynamics_t define;
-    f_string_dynamics_t light;
+    f_string_dynamics_t fakefile;
     f_string_dynamics_t mode;
-    f_string_dynamics_t no_color;
     f_string_dynamics_t process;
-    f_string_dynamics_t quiet;
     f_string_dynamics_t settings;
     f_string_dynamics_t sources;
-    f_string_dynamics_t verbose;
+    f_string_dynamics_t verbosity;
     f_string_dynamics_t work;
   } fake_make_parameter_t;
 
@@ -321,23 +314,19 @@ extern "C" {
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
-    f_string_dynamics_t_initialize, \
-    f_string_dynamics_t_initialize, \
   }
 
   #define fake_macro_make_parameter_delete_simple(parameter) \
     f_macro_string_dynamics_t_delete_simple(parameter.build) \
-    f_macro_string_dynamics_t_delete_simple(parameter.dark) \
+    f_macro_string_dynamics_t_delete_simple(parameter.color) \
     f_macro_string_dynamics_t_delete_simple(parameter.data) \
     f_macro_string_dynamics_t_delete_simple(parameter.define) \
-    f_macro_string_dynamics_t_delete_simple(parameter.light) \
+    f_macro_string_dynamics_t_delete_simple(parameter.fakefile) \
     f_macro_string_dynamics_t_delete_simple(parameter.mode) \
-    f_macro_string_dynamics_t_delete_simple(parameter.no_color) \
     f_macro_string_dynamics_t_delete_simple(parameter.process) \
-    f_macro_string_dynamics_t_delete_simple(parameter.quiet) \
     f_macro_string_dynamics_t_delete_simple(parameter.settings) \
     f_macro_string_dynamics_t_delete_simple(parameter.sources) \
-    f_macro_string_dynamics_t_delete_simple(parameter.verbose) \
+    f_macro_string_dynamics_t_delete_simple(parameter.verbosity) \
     f_macro_string_dynamics_t_delete_simple(parameter.work)
 #endif // _di_fake_make_parameter_t_
 
@@ -537,6 +526,24 @@ extern "C" {
 #ifndef _di_fake_make_load_fakefile_
   extern void fake_make_load_fakefile(const fake_data_t data, fake_make_data_t *data_make, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_load_fakefile_
+
+/**
+ * Load the environment variables into a structure more readily available for using in parameter expansion.
+ *
+ * @param data
+ *   The program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param status
+ *   The return status.
+ *
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_load_parameters_
+  extern void fake_make_load_parameters(const fake_data_t data, fake_make_data_t *data_make, f_status_t *status) f_gcc_attribute_visibility_internal;
+#endif // _di_fake_make_load_parameters_
 
 /**
  * Execute the make sections and their respective operations.

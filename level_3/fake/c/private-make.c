@@ -718,6 +718,298 @@ extern "C" {
   }
 #endif // _di_fake_make_load_fakefile_
 
+#ifndef _di_fake_make_load_parameters_
+  void fake_make_load_parameters(const fake_data_t data, fake_make_data_t *data_make, f_status_t *status) {
+    if (F_status_is_error(*status)) return;
+
+    if (fake_signal_received(data)) {
+      *status = F_status_set_error(F_signal);
+      return;
+    }
+
+    if (data.context.mode != f_color_mode_none) {
+      if (data_make->parameter.color.used >= data_make->parameter.color.size) {
+        *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, &data_make->parameter.color);
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+          return;
+        }
+      }
+
+      if (data.context.mode == f_color_mode_no_color) {
+        if (data.parameters[fake_parameter_no_color].type == f_console_type_normal) {
+          *status = fl_string_append(f_console_symbol_short_enable, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        }
+        else if (data.parameters[fake_parameter_no_color].type == f_console_type_inverse) {
+          *status = fl_string_append(f_console_symbol_short_disable, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        }
+
+        if (F_status_is_error_not(*status)) {
+          *status = fl_string_append(f_console_standard_short_no_color, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        }
+      }
+      else if (data.context.mode == f_color_mode_dark) {
+        if (data.parameters[fake_parameter_dark].type == f_console_type_normal) {
+          *status = fl_string_append(f_console_symbol_short_enable, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        }
+        else if (data.parameters[fake_parameter_dark].type == f_console_type_inverse) {
+          *status = fl_string_append(f_console_symbol_short_disable, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        }
+
+        if (F_status_is_error_not(*status)) {
+          *status = fl_string_append(f_console_standard_short_dark, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        }
+      }
+      else if (data.context.mode == f_color_mode_light) {
+        if (data.parameters[fake_parameter_light].type == f_console_type_normal) {
+          *status = fl_string_append(f_console_symbol_short_enable, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        }
+        else if (data.parameters[fake_parameter_light].type == f_console_type_inverse) {
+          *status = fl_string_append(f_console_symbol_short_disable, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        }
+
+        if (F_status_is_error_not(*status)) {
+          *status = fl_string_append(f_console_standard_short_light, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        }
+      }
+
+      if (F_status_is_error(*status)) {
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
+        return;
+      }
+      else {
+        data_make->parameter.color.used++;
+      }
+    }
+
+    if (data.verbosity != fake_verbosity_normal) {
+      if (data_make->parameter.verbosity.used >= data_make->parameter.verbosity.size) {
+        *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, &data_make->parameter.verbosity);
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+          return;
+        }
+      }
+
+      if (data.verbosity == fake_verbosity_quiet) {
+        if (data.parameters[fake_parameter_quiet].type == f_console_type_normal) {
+          *status = fl_string_append(f_console_symbol_short_enable, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+        else if (data.parameters[fake_parameter_quiet].type == f_console_type_inverse) {
+          *status = fl_string_append(f_console_symbol_short_disable, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+
+        if (F_status_is_error_not(*status)) {
+          *status = fl_string_append(f_console_standard_short_quiet, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+      }
+      else if (data.verbosity == fake_verbosity_verbose) {
+        if (data.parameters[fake_parameter_verbose].type == f_console_type_normal) {
+          *status = fl_string_append(f_console_symbol_short_enable, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+        else if (data.parameters[fake_parameter_verbose].type == f_console_type_inverse) {
+          *status = fl_string_append(f_console_symbol_short_disable, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+
+        if (F_status_is_error_not(*status)) {
+          *status = fl_string_append(f_console_standard_short_verbose, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+      }
+      else if (data.verbosity == fake_verbosity_debug) {
+        if (data.parameters[fake_parameter_debug].type == f_console_type_normal) {
+          *status = fl_string_append(f_console_symbol_short_enable, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+        else if (data.parameters[fake_parameter_debug].type == f_console_type_inverse) {
+          *status = fl_string_append(f_console_symbol_short_disable, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+
+        if (F_status_is_error_not(*status)) {
+          *status = fl_string_append(f_console_standard_short_debug, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+      }
+
+      if (F_status_is_error(*status)) {
+        fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
+        return;
+      }
+      else {
+        data_make->parameter.verbosity.used++;
+      }
+    }
+
+    {
+      const f_string_t parameter[] = {
+        fake_short_define,
+        fake_short_mode,
+      };
+
+      const f_console_parameter_t *console[] = {
+        &data.parameters[fake_parameter_define],
+        &data.parameters[fake_parameter_mode],
+      };
+
+      const f_string_dynamics_t *source[] = {
+        &data.define,
+        &data.mode,
+      };
+
+      f_string_dynamics_t *destination[] = {
+        &data_make->parameter.define,
+        &data_make->parameter.mode,
+      };
+
+      uint8_t i = 0;
+      f_array_length_t j = 0;
+
+      for (; i < 2; i ++) {
+        for (j = 0; j < source[i]->used; j++) {
+
+          if (destination[i]->used >= destination[i]->size) {
+            *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, destination[i]);
+
+            if (F_status_is_error(*status)) {
+              fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+              return;
+            }
+          }
+
+          if (console[i]->type == f_console_type_normal) {
+            *status = fl_string_append(f_console_symbol_short_enable, 1, &destination[i]->array[destination[i]->used]);
+          }
+          else if (console[i]->type == f_console_type_inverse) {
+            *status = fl_string_append(f_console_symbol_short_disable, 1, &destination[i]->array[destination[i]->used]);
+          }
+
+          if (F_status_is_error_not(*status)) {
+            *status = fl_string_append(parameter[i], 1, &destination[i]->array[destination[i]->used]);
+          }
+
+          if (F_status_is_error(*status)) {
+            fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
+            return;
+          }
+          else {
+            destination[i]->used++;
+          }
+
+          if (destination[i]->used >= destination[i]->size) {
+            *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, destination[i]);
+
+            if (F_status_is_error(*status)) {
+              fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+              return;
+            }
+          }
+
+          *status = fl_string_dynamic_append(source[i]->array[j], &destination[i]->array[destination[i]->used]);
+
+          if (F_status_is_error(*status)) {
+            fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append", F_true);
+            return;
+          }
+          else {
+            destination[i]->used++;
+          }
+        } // for
+      } // for
+    }
+
+    {
+      const f_string_t parameter[] = {
+        fake_short_fakefile,
+        fake_short_path_build,
+        fake_short_path_data,
+        fake_short_path_sources,
+        fake_short_path_work,
+        fake_short_process,
+        fake_short_settings,
+      };
+
+      const f_console_parameter_t *console[] = {
+        &data.parameters[fake_parameter_fakefile],
+        &data.parameters[fake_parameter_path_build],
+        &data.parameters[fake_parameter_path_data],
+        &data.parameters[fake_parameter_path_sources],
+        &data.parameters[fake_parameter_path_work],
+        &data.parameters[fake_parameter_process],
+        &data.parameters[fake_parameter_settings],
+      };
+
+      const f_string_dynamic_t *source[] = {
+        &data.fakefile,
+        &data.path_build,
+        &data.path_data,
+        &data.path_sources,
+        &data.path_work,
+        &data.process,
+        &data.settings,
+      };
+
+      f_string_dynamics_t *destination[] = {
+        &data_make->parameter.fakefile,
+        &data_make->parameter.build,
+        &data_make->parameter.data,
+        &data_make->parameter.sources,
+        &data_make->parameter.work,
+        &data_make->parameter.process,
+        &data_make->parameter.settings,
+      };
+
+      for (uint8_t i = 0; i < 7; i ++) {
+
+        if (destination[i]->used >= destination[i]->size) {
+          *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, destination[i]);
+
+          if (F_status_is_error(*status)) {
+            fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+            return;
+          }
+        }
+
+        if (console[i]->type == f_console_type_normal) {
+          *status = fl_string_append(f_console_symbol_short_enable, 1, &destination[i]->array[destination[i]->used]);
+        }
+        else if (console[i]->type == f_console_type_inverse) {
+          *status = fl_string_append(f_console_symbol_short_disable, 1, &destination[i]->array[destination[i]->used]);
+        }
+
+        if (F_status_is_error_not(*status)) {
+          *status = fl_string_append(parameter[i], 1, &destination[i]->array[destination[i]->used]);
+        }
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
+          return;
+        }
+        else {
+          destination[i]->used++;
+        }
+
+        if (destination[i]->used >= destination[i]->size) {
+          *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, destination[i]);
+
+          if (F_status_is_error(*status)) {
+            fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+            return;
+          }
+        }
+
+        *status = fl_string_dynamic_append(*source[i], &destination[i]->array[destination[i]->used]);
+
+        if (F_status_is_error(*status)) {
+          fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append", F_true);
+          return;
+        }
+        else {
+          destination[i]->used++;
+        }
+      } // for
+    }
+  }
+#endif // _di_fake_make_load_parameters_
+
 #ifndef _di_fake_make_operate_
   f_return_status fake_make_operate(const fake_data_t data) {
 
@@ -769,6 +1061,8 @@ extern "C" {
     data_make.path.stack.used = 1;
 
     f_macro_mode_t_set_default_umask(mode, data.umask);
+
+    fake_make_load_parameters(data, &data_make, &status);
 
     fake_make_load_fakefile(data, &data_make, &status);
 
@@ -876,6 +1170,48 @@ extern "C" {
 
     f_string_length_t previous = 0;
 
+    const f_string_t reserved_name[] = {
+      fake_make_parameter_variable_build,
+      fake_make_parameter_variable_color,
+      fake_make_parameter_variable_data,
+      fake_make_parameter_variable_define,
+      fake_make_parameter_variable_fakefile,
+      fake_make_parameter_variable_mode,
+      fake_make_parameter_variable_process,
+      fake_make_parameter_variable_settings,
+      fake_make_parameter_variable_sources,
+      fake_make_parameter_variable_verbosity,
+      fake_make_parameter_variable_work,
+    };
+
+    const f_string_length_t reserved_length[] = {
+      fake_make_parameter_variable_build_length,
+      fake_make_parameter_variable_color_length,
+      fake_make_parameter_variable_data_length,
+      fake_make_parameter_variable_define_length,
+      fake_make_parameter_variable_fakefile_length,
+      fake_make_parameter_variable_mode_length,
+      fake_make_parameter_variable_process_length,
+      fake_make_parameter_variable_settings_length,
+      fake_make_parameter_variable_sources_length,
+      fake_make_parameter_variable_verbosity_length,
+      fake_make_parameter_variable_work_length,
+    };
+
+    f_string_dynamics_t *reserved_value[] = {
+      &data_make->parameter.build,
+      &data_make->parameter.color,
+      &data_make->parameter.data,
+      &data_make->parameter.define,
+      &data_make->parameter.fakefile,
+      &data_make->parameter.mode,
+      &data_make->parameter.process,
+      &data_make->parameter.settings,
+      &data_make->parameter.sources,
+      &data_make->parameter.verbosity,
+      &data_make->parameter.work,
+    };
+
     for (; i < content.used; i++) {
 
       if (content.array[i].start > content.array[i].stop) {
@@ -892,7 +1228,7 @@ extern "C" {
         break;
       }
 
-      if (arguments->used == arguments->size) {
+      if (arguments->used >= arguments->size) {
         *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
         if (F_status_is_error(*status)) {
           fake_print_message(data, F_status_set_fine(*status), "fl_string_lengths_size_increase", F_true, data_make->print);
@@ -956,7 +1292,7 @@ extern "C" {
                 *status = fl_string_dynamic_append(data_make->setting_make.parameter.array[0].value.array[0], &arguments->array[arguments->used]);
 
                 if (F_status_is_error(*status)) {
-                  fake_print_message(data, F_status_set_fine(*status), "fl_string_append", F_true, data_make->print);
+                  fake_print_message(data, F_status_set_fine(*status), "fl_string_dynamic_append", F_true, data_make->print);
                   break;
                 }
               }
@@ -972,7 +1308,48 @@ extern "C" {
               arguments->used++;
               unmatched = F_false;
             }
-            // @todo: else, handle all other reserved parameter names.
+            else {
+              for (k = 0; k < 11; k++) {
+
+                if (fl_string_dynamic_partial_compare_string(reserved_name[k], data_make->buffer, reserved_length[k], iki_content.array[j]) == F_equal_to) {
+                  if (arguments->used >= arguments->size) {
+                    *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
+
+                    if (F_status_is_error(*status)) {
+                      fake_print_message(data, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true, data_make->print);
+                      return;
+                    }
+                  }
+
+                  for (l = 0; l < reserved_value[k]->used; l++) {
+
+                    if (l > 0) {
+                      *status = fl_string_append(" ", 1, &arguments->array[arguments->used]);
+
+                      if (F_status_is_error(*status)) {
+                        fake_print_message(data, F_status_set_fine(*status), "fl_string_append", F_true, data_make->print);
+                        break;
+                      }
+                    }
+
+                    *status = fl_string_dynamic_append(reserved_value[k]->array[l], &arguments->array[arguments->used]);
+
+                    if (F_status_is_error(*status)) {
+                      fake_print_message(data, F_status_set_fine(*status), "fl_string_dynamic_append", F_true, data_make->print);
+                      break;
+                    }
+                  } // for
+
+                  if (F_status_is_error_not(*status)) {
+                    unmatched = F_false;
+                    arguments->used++;
+                  }
+                  else {
+                    break;
+                  }
+                }
+              } // for
+            }
 
             if (unmatched && parameter->used) {
               for (k = 0; k < parameter->used; k++) {
@@ -1005,17 +1382,11 @@ extern "C" {
                       } // for
                     }
                     else {
-                      if (arguments->used + parameter->array[k].value.used > arguments->size) {
-                        if (arguments->used + parameter->array[k].value.used > F_buffer_too_large) {
-                          *status = F_status_set_error(F_buffer_too_large);
+                      if (arguments->used >= arguments->size) {
+                        *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
 
-                          fake_print_message(data, F_buffer_too_large, "f_macro_string_dynamics_resize", F_true, data_make->print);
-                          break;
-                        }
-
-                        f_macro_string_dynamics_resize((*status), (*arguments), arguments->used + parameter->array[k].value.used);
                         if (F_status_is_error(*status)) {
-                          fake_print_message(data, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true, data_make->print);
+                          fake_print_message(data, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true, data_make->print);
                           break;
                         }
                       }
@@ -4356,8 +4727,8 @@ extern "C" {
       }
       else if (arguments.used == 2) {
         *status = fake_make_assure_inside_project(data, arguments.array[0], data_make);
+
         if (F_status_is_error(*status)) {
-          // @todo warning
           fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[0].string, data_make->print);
 
           if (F_status_set_fine(*status) == F_false) {
@@ -4366,8 +4737,8 @@ extern "C" {
         }
 
         *status = fake_make_assure_inside_project(data, arguments.array[1], data_make);
+
         if (F_status_is_error(*status)) {
-          // @todo warning
           fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[1].string, data_make->print);
 
           if (F_status_set_fine(*status) == F_false) {
@@ -4595,9 +4966,10 @@ extern "C" {
         }
 
         for (f_array_length_t i = 1; i < arguments.used; i++) {
+
           *status = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+
           if (F_status_is_error(*status)) {
-            // @todo warning
             fake_print_message_section_operation_path_outside(data, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string, data_make->print);
 
             if (F_status_set_fine(*status) == F_false) {
