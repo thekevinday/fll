@@ -773,10 +773,10 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (string->used - length > 0) {
+    if (string->size - length > 0) {
       f_macro_string_dynamic_t_resize(status, (*string), string->size - length);
     }
-    else if (string->used - length <= 0) {
+    else if (string->size - length <= 0) {
       f_macro_string_dynamic_t_delete(status, (*string));
     }
 
@@ -791,23 +791,7 @@ extern "C" {
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
-
-    if (string->used + length > string->size) {
-      if (string->used + length > f_string_length_t_size) {
-        if (string->used == f_string_length_t_size) {
-          status = F_status_set_error(F_string_too_large);
-        }
-        else {
-          f_macro_string_dynamic_t_resize(status, (*string), f_string_length_t_size);
-        }
-      }
-      else {
-        f_macro_string_dynamic_t_resize(status, (*string), string->size + length);
-      }
-    }
-
-    return status;
+    return private_fl_string_dynamic_size_increase(length, string);
   }
 #endif // _di_fl_string_dynamic_size_increase_
 
@@ -820,10 +804,10 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (strings->used - length > 0) {
+    if (strings->size - length > 0) {
       f_macro_string_dynamics_resize(status, (*strings), strings->size - length);
     }
-    else if (strings->used - length <= 0) {
+    else if (strings->size - length <= 0) {
       f_macro_string_dynamics_t_delete(status, (*strings));
     }
 
@@ -840,20 +824,16 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (strings->used + length > strings->size) {
-      if (strings->used + length > f_array_length_t_size) {
-        if (strings->used == f_array_length_t_size) {
-          status = F_status_set_error(F_string_too_large);
-        }
-        else {
-          f_macro_string_dynamics_resize(status, (*strings), f_array_length_t_size);
-        }
+    if (strings->size + length > f_array_length_t_size) {
+      if (strings->size == f_array_length_t_size) {
+        return F_status_set_error(F_string_too_large);
       }
-      else {
-        f_macro_string_dynamics_resize(status, (*strings), strings->size + length);
-      }
+
+      f_macro_string_dynamics_resize(status, (*strings), f_array_length_t_size);
+      return F_string_too_large;
     }
 
+    f_macro_string_dynamics_resize(status, (*strings), strings->size + length);
     return status;
   }
 #endif // _di_fl_string_dynamics_size_increase_

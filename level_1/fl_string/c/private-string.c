@@ -8,19 +8,15 @@ extern "C" {
 #if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_)
   f_return_status private_fl_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_string_length_t_size) return F_status_set_error(F_string_too_large);
-
     f_status_t status = F_none;
 
-    const f_string_length_t total = destination->used + length;
-
-    if (total > destination->size) {
-      f_macro_string_dynamic_t_resize(status, (*destination), total);
+    if (destination->used + length > destination->size) {
+      status = private_fl_string_dynamic_size_increase(length, destination);
       if (F_status_is_error(status)) return status;
     }
 
     memcpy(destination->string + destination->used, source, length);
-    destination->used = total;
+    destination->used = destination->used + length;
 
     return F_none;
   }
@@ -34,23 +30,21 @@ extern "C" {
     f_status_t status = F_none;
 
     f_string_length_t first = 0;
+    f_string_length_t size = 0;
 
     for (f_string_length_t i = 0; i <= length; i++) {
+
       if (i == length) {
         if (i > first) {
-          f_string_length_t size = i - first;
+          size = i - first;
 
-          if (destination->used + size > f_string_length_t_size) return F_status_set_error(F_string_too_large);
-
-          f_string_length_t total = destination->used + size;
-
-          if (total > destination->size) {
-            f_macro_string_dynamic_t_resize(status, (*destination), total);
+          if (destination->used + size > destination->size) {
+            status = private_fl_string_dynamic_size_increase(size, destination);
             if (F_status_is_error(status)) return status;
           }
 
           memcpy(destination->string + destination->used, source + first, size);
-          destination->used = total;
+          destination->used = destination->used + size;
         }
 
         break;
@@ -59,19 +53,15 @@ extern "C" {
       if (source[i] == 0) {
         if (i > 0) {
           if (i > first) {
-            f_string_length_t size = i - first;
+            size = i - first;
 
-            if (destination->used + size > f_string_length_t_size) return F_status_set_error(F_string_too_large);
-
-            f_string_length_t total = destination->used + size;
-
-            if (total > destination->size) {
-              f_macro_string_dynamic_t_resize(status, (*destination), total);
+            if (destination->used + size > destination->size) {
+              status = private_fl_string_dynamic_size_increase(size, destination);
               if (F_status_is_error(status)) return status;
             }
 
             memcpy(destination->string + destination->used, source + first, size);
-            destination->used = total;
+            destination->used = destination->used + size;
           }
         }
 
@@ -135,6 +125,7 @@ extern "C" {
 
       width_max = (stop1 - i1) + 1;
       status = f_utf_is_whitespace(string1 + i1, width_max);
+
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
@@ -154,6 +145,7 @@ extern "C" {
 
       width_max = (stop2 - i2) + 1;
       status = f_utf_is_whitespace(string2 + i2, width_max);
+
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
@@ -203,6 +195,7 @@ extern "C" {
 
         width_max = (stop2 - j) + 1;
         status = f_utf_is_whitespace(string2 + j, width_max);
+
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
@@ -247,6 +240,24 @@ extern "C" {
   }
 #endif // !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
 
+#if !defined(_di_fl_string_dynamic_size_increase_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
+  f_return_status private_fl_string_dynamic_size_increase(const f_string_length_t length, f_string_dynamic_t *string) {
+    f_status_t status = F_none;
+
+    if (string->size + length > f_string_length_t_size) {
+      if (string->size == f_string_length_t_size) {
+        return F_status_set_error(F_string_too_large);
+      }
+
+      f_macro_string_dynamic_t_resize(status, (*string), f_string_length_t_size);
+      return F_string_too_large;
+    }
+
+    f_macro_string_dynamic_t_resize(status, (*string), string->size + length);
+    return status;
+  }
+#endif // !defined(_di_fl_string_dynamic_size_increase_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
+
 #if !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_append_mish_) || !defined(_di_fl_string_dynamic_mish_)
   f_return_status private_fl_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
 
@@ -256,14 +267,12 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    const f_string_length_t total = destination->used + length;
-
-    if (total > destination->size) {
-      f_macro_string_dynamic_t_resize(status, (*destination), total);
+    if (destination->used + length > destination->size) {
+      status = private_fl_string_dynamic_size_increase(length, destination);
       if (F_status_is_error(status)) return status;
     }
 
-    if (destination->used > 0) {
+    if (destination->used) {
       memmove(destination->string + length, destination->string, destination->used);
       memcpy(destination->string, source, length);
     }
@@ -271,7 +280,7 @@ extern "C" {
       memcpy(destination->string, source, length);
     }
 
-    destination->used = total;
+    destination->used = destination->used + length;
     return F_none;
   }
 #endif // !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_)
@@ -288,26 +297,22 @@ extern "C" {
     f_string_length_t first = 0;
     f_string_length_t offset = 0;
 
+    f_string_length_t size = 0;
+
     for (f_string_length_t i = 0; i <= length; i++) {
       if (i == length) {
         if (i > first) {
-          const f_string_length_t size = i - first;
+          size = i - first;
 
-          if (destination->used + size > f_string_length_t_size) {
-            return F_status_set_error(F_string_too_large);
-          }
-
-          const f_string_length_t total = destination->used + size;
-
-          if (total > destination->size) {
-            f_macro_string_dynamic_t_resize(status, (*destination), total);
+          if (destination->used + size > destination->size) {
+            status = private_fl_string_dynamic_size_increase(size, destination);
             if (F_status_is_error(status)) return status;
           }
 
           memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
           memcpy(destination->string + offset, source + first, size);
 
-          destination->used = total;
+          destination->used = destination->used + size;
           offset += size;
         }
 
@@ -317,24 +322,17 @@ extern "C" {
       if (source[i] == 0) {
         if (i > 0) {
           if (i > first) {
-            const f_string_length_t size = i - first;
+            size = i - first;
 
-            if (destination->used + size > f_string_length_t_size) {
-              return F_status_set_error(F_string_too_large);
-            }
-
-            const f_string_length_t total = destination->used + size;
-
-            if (total > destination->size) {
-              f_macro_string_dynamic_t_resize(status, (*destination), total);
-
+            if (destination->used + size > destination->size) {
+              status = private_fl_string_dynamic_size_increase(size, destination);
               if (F_status_is_error(status)) return status;
             }
 
             memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
             memcpy(destination->string + offset, source + first, size);
 
-            destination->used = total;
+            destination->used = destination->used + size;
             offset += size;
           }
         }

@@ -1131,15 +1131,10 @@ extern "C" {
 
     // pre-allocate the known arguments size.
     if (arguments->used + content.used > arguments->size) {
-      if (arguments->used + content.used > F_buffer_too_large) {
-        *status = F_status_set_error(F_buffer_too_large);
-      }
-      else {
-        f_macro_string_dynamics_resize((*status), (*arguments), arguments->used + content.used);
-      }
+      *status = fl_string_dynamics_size_increase(content.used, arguments);
 
-      if (F_status_is_error(*status)) {
-        fake_print_message(data, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true, data_make->print);
+      if (F_status_is_error(*status) || *status == F_string_too_large) {
+        fake_print_message(data, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true, data_make->print);
         return;
       }
     }
