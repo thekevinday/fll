@@ -44,7 +44,7 @@ extern "C" {
 #ifndef _di_fss_status_code_version_
   #define fss_status_code_major_version "0"
   #define fss_status_code_minor_version "5"
-  #define fss_status_code_micro_version "0"
+  #define fss_status_code_micro_version "1"
   #define fss_status_code_version fss_status_code_major_version "." fss_status_code_minor_version "." fss_status_code_micro_version
 #endif // _di_fss_status_code_version_
 

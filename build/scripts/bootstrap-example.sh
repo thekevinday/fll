@@ -8,7 +8,7 @@
 #
 # This only accepts two arguments (both are required):
 # 1) One of "individual", "level", "monolithic", "fake-individual", "fake-level", or "fake-monolithic".
-# 2) The version number of the project, such as "0.5.0".
+# 2) The version number of the project, such as "0.5.1".
 #
 # This will create a directory at he present working directory of the script caller called "fll" where everything will be installed.
 # This assumes the shell script is GNU bash.

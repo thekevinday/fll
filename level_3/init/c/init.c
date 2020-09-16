@@ -1,8 +1,11 @@
-/* FLL - Level 3
- * Project:       Firewall
- * Version:       0.5.0
- * Licenses:      lgplv2.1
- * Programmers:   Kevin Day
+/**
+ * FLL - Level 3
+ *
+ * Project: Init
+ * API Version: 0.5
+ * Licenses: lgplv2.1
+ *
+ * This is the FLL Init program.
  */
 #include "init.h"
 #include "private-init.h"

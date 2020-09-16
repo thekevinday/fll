@@ -4,7 +4,7 @@ project_name f_fss
 
 version_major 0
 version_minor 5
-version_micro 0
+version_micro 1
 version_target major
 
 environment
