@@ -1,8 +1,59 @@
 #include "iki.h"
+#include "private-iki.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#ifndef _di_f_iki_content_is_
+  f_return_status f_iki_content_is(const f_string_static_t content, const uint8_t quote) {
+    #ifndef _di_level_0_parameter_checking_
+      if (content.used > content.size) return F_status_set_error(F_parameter);
+      if (quote != f_iki_syntax_quote_single && quote != f_iki_syntax_quote_double) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const f_string_range_t range = f_macro_string_range_t_initialize(content.used);
+
+    return private_f_iki_content_partial_is(content, range, quote);
+  }
+#endif // _di_f_iki_content_is_
+
+#ifndef _di_f_iki_content_partial_is_
+  f_return_status f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const uint8_t quote) {
+    #ifndef _di_level_0_parameter_checking_
+      if (content.used > content.size) return F_status_set_error(F_parameter);
+      if (range.start > range.stop) return F_status_set_error(F_parameter);
+      if (range.start >= content.used) return F_status_set_error(F_parameter);
+      if (quote != f_iki_syntax_quote_single && quote != f_iki_syntax_quote_double) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_iki_content_partial_is(content, range, quote);
+  }
+#endif // _di_f_iki_content_partial_is_
+
+#ifndef _di_f_iki_object_is_
+  f_return_status f_iki_object_is(const f_string_static_t object) {
+    #ifndef _di_level_0_parameter_checking_
+      if (object.used > object.size) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const f_string_range_t range = f_macro_string_range_t_initialize(object.used);
+
+    return private_f_iki_object_partial_is(object, range);
+  }
+#endif // _di_f_iki_object_is_
+
+#ifndef _di_f_iki_object_partial_is_
+  f_return_status f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range) {
+    #ifndef _di_level_0_parameter_checking_
+      if (object.used > object.size) return F_status_set_error(F_parameter);
+      if (range.start > range.stop) return F_status_set_error(F_parameter);
+      if (range.start >= object.used) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_iki_object_partial_is(object, range);
+  }
+#endif // _di_f_iki_object_partial_is_
 
 #ifndef _di_f_iki_read_
   f_return_status f_iki_read(f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) {
@@ -38,7 +89,7 @@ extern "C" {
       return F_data_not_eos;
     }
 
-    f_string_range_t found_vocabulary = f_string_range_initialize;
+    f_string_range_t found_vocabulary = f_string_range_t_initialize;
     f_string_length_t found_content = 0;
 
     found_vocabulary.start = range->start;
@@ -270,7 +321,7 @@ extern "C" {
 
               if (buffer->string[range->start] == quote) {
                 f_array_length_t content_slash_delimits = content_slash_total / 2;
-                f_string_range_t content_range = f_string_range_initialize;
+                f_string_range_t content_range = f_string_range_t_initialize;
                 f_array_length_t i = 0;
 
                 if (content_slash_total % 2) {

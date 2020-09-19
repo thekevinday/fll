@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name f_iki
+project_name iki_write
 
 version_major 0
 version_minor 5
@@ -12,24 +12,26 @@ environment
 process_pre
 process_post
 
-modes individual
+modes individual level monolithic
 modes_default individual
 
 build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lf_utf -lf_memory
-build_sources_library iki.c private-iki.c
-build_sources_program
-build_sources_headers iki.h iki-common.h
+build_libraries-individual -lfll_program -lfll_iki -lfll_file -lfl_directory -lf_path -lf_directory -lfl_utf -lfl_string -lfl_iki -lfl_conversion -lfl_console -lfl_color -lf_print -lf_pipe -lf_iki -lf_file -lf_conversion -lf_console -lf_utf -lf_memory
+build_libraries-level -lfll_2 -lfll_1 -lfll_0
+build_libraries-monolithic -lfll
+build_sources_library iki_write.c private-iki_write.c
+build_sources_program main.c
+build_sources_headers iki_write.h
 build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
 build_static yes
 
-path_headers level_0
+path_headers level_3
 path_library_script script
 path_library_shared shared
 path_library_static static
@@ -47,7 +49,7 @@ defines_all
 defines_static
 defines_shared
 
-flags_all -z now -g
+flags_all -z now -g -fdiagnostics-color=always
 flags_shared
 flags_static
 flags_library -fPIC

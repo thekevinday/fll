@@ -32,6 +32,80 @@ extern "C" {
 #endif
 
 /**
+ * Determine if an content is a valid IKI content name.
+ *
+ * @param content
+ *   The string to validate as an content name.
+ * @param quote
+ *   The quote character in use.
+ *   This must be either a single (') or double (") quote.
+ *
+ * @return
+ *   F_true on success and string is a valid content name.
+ *   F_false on success and string is not a valid content name.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_iki_content_is_
+  extern f_return_status f_iki_content_is(const f_string_static_t content, const uint8_t quote);
+#endif // _di_f_iki_content_is_
+
+/**
+ * Determine if an content, found within the given range, is a valid IKI content name.
+ *
+ * @param content
+ *   The string to validate as an content name.
+ * @param range
+ *   The range within the buffer that represents the content name.
+ * @param quote
+ *   The quote character in use.
+ *   This must be either a single (') or double (") quote.
+ *
+ * @return
+ *   F_true on success and string is a valid content name.
+ *   F_false on success and string is not a valid content name.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_iki_content_partial_is_
+  extern f_return_status f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const uint8_t quote);
+#endif // _di_f_iki_content_partial_is_
+
+/**
+ * Determine if an object is a valid IKI object name.
+ *
+ * @param object
+ *   The string to validate as an object name.
+ *
+ * @return
+ *   F_true on success and string is a valid object name.
+ *   F_false on success and string is not a valid object name.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_word().
+ */
+#ifndef _di_f_iki_object_is_
+  extern f_return_status f_iki_object_is(const f_string_static_t object);
+#endif // _di_f_iki_object_is_
+
+/**
+ * Determine if an object, found within the buffer, is a valid IKI object name.
+ *
+ * @param object
+ *   The string to validate as an object name.
+ * @param range
+ *   The range within the buffer that represents the object name.
+ *
+ * @return
+ *   F_true on success and string is a valid object name.
+ *   F_false on success and string is not a valid object name.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors from (with error bit): f_utf_is_word().
+ */
+#ifndef _di_f_iki_object_partial_is_
+  extern f_return_status f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range);
+#endif // _di_f_iki_object_partial_is_
+
+/**
  * Read a single iki Vocabulary and Content.
  *
  * This does not verify if the vocabulary name is known.
