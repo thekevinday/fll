@@ -144,6 +144,26 @@ extern "C" {
       }
     }
 
+    if (F_status_is_fine(status) && data->parameters[iki_write_parameter_object].result == f_console_result_found) {
+      if (data->verbosity != iki_write_verbosity_quiet) {
+        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
+      }
+
+      status = F_status_set_error(F_parameter);
+    }
+
+    if (F_status_is_fine(status) && data->parameters[iki_write_parameter_content].result == f_console_result_found) {
+      if (data->verbosity != iki_write_verbosity_quiet) {
+        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
+        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
+      }
+
+      status = F_status_set_error(F_parameter);
+    }
+
     if (F_status_is_fine(status) && !data->process_pipe) {
       if (data->parameters[iki_write_parameter_object].result != f_console_result_additional && data->parameters[iki_write_parameter_content].result != f_console_result_additional) {
         if (data->verbosity != iki_write_verbosity_quiet) {
