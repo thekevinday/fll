@@ -47,7 +47,7 @@ defines_all
 defines_static
 defines_shared
 
-flags_all -z now -g
+flags_all -z now -g -fdiagnostics-color=always
 flags_shared
 flags_static
 flags_library -fPIC
