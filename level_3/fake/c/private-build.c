@@ -1285,7 +1285,7 @@ extern "C" {
         *status = F_status_set_error(F_signal);
       }
       else if (F_status_is_error_not(*status)) {
-        f_string_range_t range = f_macro_string_range_initialize(buffer.used);
+        f_string_range_t range = f_macro_string_range_t_initialize(buffer.used);
 
         *status = fll_fss_extended_read(&buffer, &range, &objects, &contents, 0, 0);
 

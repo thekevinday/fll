@@ -126,9 +126,9 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_console_parameters_t parameters = { data->parameters, fss_basic_read_total_parameters };
       f_console_parameter_id_t ids[3] = { fss_basic_read_parameter_no_color, fss_basic_read_parameter_light, fss_basic_read_parameter_dark };
-      f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameters_t parameters = { data->parameters, fss_basic_read_total_parameters };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
@@ -330,7 +330,7 @@ extern "C" {
             }
           }
 
-          status = f_file_read_until(file, &data->buffer, data->quantity.total);
+          status = f_file_read_until(file, data->quantity.total, &data->buffer);
 
           f_file_close(&file.id);
 

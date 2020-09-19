@@ -772,7 +772,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_string_range_t buffer_position = f_string_range_initialize;
+    f_string_range_t buffer_position = f_string_range_t_initialize;
     f_string_length_t start_position = f_string_t_initialize;
     f_string_length_t size_allocate = 0;
     f_string_length_t start_buffer = 0;
@@ -901,7 +901,7 @@ extern "C" {
     bool is_comment = F_false;
     bool has_graph = F_false;
 
-    f_string_range_t buffer_position = f_string_range_initialize;
+    f_string_range_t buffer_position = f_string_range_t_initialize;
     f_string_length_t start_position = f_string_t_initialize;
     f_string_length_t size_allocate = 0;
 

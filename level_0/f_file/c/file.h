@@ -114,7 +114,7 @@ extern "C" {
 /**
  * Commonly used file related properties.
  *
- * id: File descriptor.
+ * id: File descriptor, with a value of -1 represents a closed file.
  * flag: Flags used for opening the file.
  * size_read: The default number of 1-byte characters to read at a time and is often used for the read buffer size.
  * size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
@@ -127,16 +127,16 @@ extern "C" {
     size_t size_write;
   } f_file_t;
 
-  #define f_file_t_initialize { 0, f_file_flag_read_only, f_file_default_read_size, f_file_default_write_size }
+  #define f_file_t_initialize { -1, f_file_flag_read_only, f_file_default_read_size, f_file_default_write_size }
 
   #define f_macro_file_t_clear(file) \
-    file.id = 0; \
+    file.id = -1; \
     file.flag = 0; \
     file.size_read = 0; \
     file.size_write = 0;
 
   #define f_macro_file_t_reset(file) \
-    file.id = 0; \
+    file.id = -1; \
     file.flag = f_file_flag_read_only; \
     file.size_read = f_file_default_read_size; \
     file.size_write = f_file_default_write_size;
@@ -456,7 +456,6 @@ extern "C" {
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_input_output (with error bit) on I/O error.
  *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *
  * @see fclose()
@@ -1446,99 +1445,6 @@ extern "C" {
 #endif // _di_f_file_mode_to_mode_
 
 /**
- * Rename a file.
- *
- * The paths must not contain NULL except for the terminating NULL.
- * The paths must be NULL terminated.
- *
- * This essentially renames a file but can also change the file's path, which is identical to a move.
- * However, renames only work within a filesystem and cannot be moved to another filesystem.
- *
- * If destination already exists, then according to rename(), destination will be atomically replaced.
- * Which, if destination is a directory, then that directory must either not exist or be empty.
- *
- * @param source
- *   The path to the file to copy from.
- * @param destination
- *   The path to copy to.
- *
- * @return
- *   F_none on success.
- *   F_access_denied (with error bit) on access denied.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_empty_not (with error bit) if the destination is a non-empty directory.
- *   F_file_found_not (with error bit) if file at path was not found.
- *   F_file_type_directory (with error bit) if destination is a directory but source is not.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   F_link (with error bit) if source or destination has the maxiumum associated links.
- *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
- *   F_mount (with error bit) if source and destination are not within the same mounted filesystems.
- *   F_name (with error bit) on path name error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for making changes.
- *   F_read_only (with error bit) if file is read-only.
- *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
- *   F_failure (with error bit) for any other error.
- *
- * @see rename()
- */
-#ifndef _di_f_file_rename_
-  extern f_return_status f_file_rename(const f_string_t source, const f_string_t destination);
-#endif // _di_f_file_rename_
-
-/**
- * Rename a file.
- *
- * The paths must not contain NULL except for the terminating NULL.
- * The paths must be NULL terminated.
- *
- * This essentially renames a file but can also change the file's path, which is identical to a move.
- * However, renames only work within a filesystem and cannot be moved to another filesystem.
- *
- * If destination already exists, then according to rename(), destination will be atomically replaced.
- * Which, if destination is a directory, then that directory must either not exist or be empty.
- *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which the source is relative to.
- * @param to_id
- *   The parent directory, as an open directory file descriptor, in which the destination is relative to.
- * @param source
- *   The path to the file to copy from.
- * @param destination
- *   The path to copy to.
- *
- * @return
- *   F_none on success.
- *   F_access_denied (with error bit) on access denied.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id or to_id.
- *   F_directory_empty_not (with error bit) if the destination is a non-empty directory.
- *   F_file_found_not (with error bit) if file at path was not found.
- *   F_file_type_directory (with error bit) if destination is a directory but source is not.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   F_link (with error bit) if source or destination has the maxiumum associated links.
- *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
- *   F_mount (with error bit) if source and destination are not within the same mounted filesystems.
- *   F_name (with error bit) on path name error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for making changes.
- *   F_read_only (with error bit) if file is read-only.
- *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
- *   F_failure (with error bit) for any other error.
- *
- * @see renameat()
- */
-#ifndef _di_f_file_rename_at_
-  extern f_return_status f_file_rename_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination);
-#endif // _di_f_file_rename_at_
-
-/**
  * Get the base name of a file path.
  *
  * @param path
@@ -1684,7 +1590,6 @@ extern "C" {
  *   F_none_eof on success and EOF was reached.
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file (with error bit) if file descriptor is in an error state.
  *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
@@ -1715,7 +1620,6 @@ extern "C" {
  *   F_none_eof on success and EOF was reached.
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file (with error bit) if file descriptor is in an error state.
  *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
@@ -1725,9 +1629,9 @@ extern "C" {
  *
  * @see read()
  */
-#ifndef _di_f_file_read_
+#ifndef _di_f_file_read_block_
   extern f_return_status f_file_read_block(const f_file_t file, f_string_dynamic_t *buffer);
-#endif // _di_f_file_read_
+#endif // _di_f_file_read_block_
 
 /**
  * Read until a given number or EOF is reached, storing it in the buffer.
@@ -1737,17 +1641,16 @@ extern "C" {
  * @param file
  *   The file to read.
  *   The file must already be open.
- * @param buffer
- *   The buffer the file is being read into.
  * @param total
  *   The total bytes to read, unless EOF is reached first.
+ * @param buffer
+ *   The buffer the file is being read into.
  *
  * @return
  *   F_none on success.
  *   F_none_eof on success and EOF was reached.
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file (with error bit) if file descriptor is in an error state.
  *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
@@ -1758,7 +1661,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_file_read_until_
-  extern f_return_status f_file_read_until(const f_file_t file, f_string_dynamic_t *buffer, const f_string_length_t total);
+  extern f_return_status f_file_read_until(const f_file_t file, const f_string_length_t total, f_string_dynamic_t *buffer);
 #endif // _di_f_file_read_until_
 
 /**
@@ -1820,6 +1723,99 @@ extern "C" {
 #ifndef _di_f_file_remove_at_
   extern f_return_status f_file_remove_at(const int at_id, const f_string_t path, const int flag);
 #endif // _di_f_file_remove_at_
+
+/**
+ * Rename a file.
+ *
+ * The paths must not contain NULL except for the terminating NULL.
+ * The paths must be NULL terminated.
+ *
+ * This essentially renames a file but can also change the file's path, which is identical to a move.
+ * However, renames only work within a filesystem and cannot be moved to another filesystem.
+ *
+ * If destination already exists, then according to rename(), destination will be atomically replaced.
+ * Which, if destination is a directory, then that directory must either not exist or be empty.
+ *
+ * @param source
+ *   The path to the file to copy from.
+ * @param destination
+ *   The path to copy to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_empty_not (with error bit) if the destination is a non-empty directory.
+ *   F_file_found_not (with error bit) if file at path was not found.
+ *   F_file_type_directory (with error bit) if destination is a directory but source is not.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_link (with error bit) if source or destination has the maxiumum associated links.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_mount (with error bit) if source and destination are not within the same mounted filesystems.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for making changes.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see rename()
+ */
+#ifndef _di_f_file_rename_
+  extern f_return_status f_file_rename(const f_string_t source, const f_string_t destination);
+#endif // _di_f_file_rename_
+
+/**
+ * Rename a file.
+ *
+ * The paths must not contain NULL except for the terminating NULL.
+ * The paths must be NULL terminated.
+ *
+ * This essentially renames a file but can also change the file's path, which is identical to a move.
+ * However, renames only work within a filesystem and cannot be moved to another filesystem.
+ *
+ * If destination already exists, then according to rename(), destination will be atomically replaced.
+ * Which, if destination is a directory, then that directory must either not exist or be empty.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which the source is relative to.
+ * @param to_id
+ *   The parent directory, as an open directory file descriptor, in which the destination is relative to.
+ * @param source
+ *   The path to the file to copy from.
+ * @param destination
+ *   The path to copy to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id or to_id.
+ *   F_directory_empty_not (with error bit) if the destination is a non-empty directory.
+ *   F_file_found_not (with error bit) if file at path was not found.
+ *   F_file_type_directory (with error bit) if destination is a directory but source is not.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_link (with error bit) if source or destination has the maxiumum associated links.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_mount (with error bit) if source and destination are not within the same mounted filesystems.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for making changes.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see renameat()
+ */
+#ifndef _di_f_file_rename_at_
+  extern f_return_status f_file_rename_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination);
+#endif // _di_f_file_rename_at_
 
 /**
  * Change owner and/or group of a given file at the specified path.
@@ -2252,7 +2248,6 @@ extern "C" {
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file (with error bit) if file descriptor is in an error state.
  *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
@@ -2285,7 +2280,6 @@ extern "C" {
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file (with error bit) if file descriptor is in an error state.
  *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
@@ -2319,7 +2313,6 @@ extern "C" {
  *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file (with error bit) if file descriptor is in an error state.
  *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
@@ -2353,8 +2346,6 @@ extern "C" {
  *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file (with error bit) if file descriptor is in an error state.
- *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.

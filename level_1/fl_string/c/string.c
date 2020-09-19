@@ -764,6 +764,36 @@ extern "C" {
   }
 #endif // _di_fl_string_dynamic_prepend_nulless_
 
+#ifndef _di_fl_string_dynamic_rip_
+  f_return_status fl_string_dynamic_rip(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (source.used <= range.start) return F_status_set_error(F_parameter);
+      if (source.used <= range.stop) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
+
+    return private_fl_string_append(source.string + range.start, (range.stop - range.start) + 1, destination);
+  }
+#endif // _di_fl_string_dynamic_rip_
+
+#ifndef _di_fl_string_dynamic_rip_nulless_
+  f_return_status fl_string_dynamic_rip_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
+    #ifndef _di_level_1_parameter_checking_
+      if (source.used <= range.start) return F_status_set_error(F_parameter);
+      if (source.used <= range.stop) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (source.used == 0) return F_data_not_eos;
+    if (range.start > range.stop) return F_data_not_stop;
+
+    return private_fl_string_append_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
+  }
+#endif // _di_fl_string_dynamic_rip_nulless_
+
 #ifndef _di_fl_string_dynamic_size_decrease_
   f_return_status fl_string_dynamic_size_decrease(const f_string_length_t length, f_string_dynamic_t *string) {
     #ifndef _di_level_1_parameter_checking_
@@ -795,96 +825,40 @@ extern "C" {
   }
 #endif // _di_fl_string_dynamic_size_increase_
 
-#ifndef _di_fl_string_dynamics_size_decrease_
-  f_return_status fl_string_dynamics_size_decrease(const f_array_length_t length, f_string_dynamics_t *strings) {
-    #ifndef _di_level_1_parameter_checking_
-      if (length == 0) return F_status_set_error(F_parameter);
-      if (strings == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    f_status_t status = F_none;
-
-    if (strings->size - length > 0) {
-      f_macro_string_dynamics_resize(status, (*strings), strings->size - length);
-    }
-    else if (strings->size - length <= 0) {
-      f_macro_string_dynamics_t_delete(status, (*strings));
-    }
-
-    return status;
-  }
-#endif // _di_fl_string_dynamics_size_decrease_
-
-#ifndef _di_fl_string_dynamics_size_increase_
-  f_return_status fl_string_dynamics_size_increase(const f_array_length_t length, f_string_dynamics_t *strings) {
-    #ifndef _di_level_1_parameter_checking_
-      if (length == 0) return F_status_set_error(F_parameter);
-      if (strings == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    f_status_t status = F_none;
-
-    if (strings->size + length > f_array_length_t_size) {
-      if (strings->size == f_array_length_t_size) {
-        return F_status_set_error(F_string_too_large);
-      }
-
-      f_macro_string_dynamics_resize(status, (*strings), f_array_length_t_size);
-      return F_string_too_large;
-    }
-
-    f_macro_string_dynamics_resize(status, (*strings), strings->size + length);
-    return status;
-  }
-#endif // _di_fl_string_dynamics_size_increase_
-
-#ifndef _di_fl_string_dynamic_rip_
-  f_return_status fl_string_dynamic_rip(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (source.used <= range.start) return F_status_set_error(F_parameter);
-      if (source.used <= range.stop) return F_status_set_error(F_parameter);
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    if (source.used == 0) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
-
-    return private_fl_string_append(source.string + range.start, (range.stop - range.start) + 1, destination);
-  }
-#endif // _di_fl_string_dynamic_rip_
-
-#ifndef _di_fl_string_dynamic_rip_nulless_
-  f_return_status fl_string_dynamic_rip_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
-    #ifndef _di_level_1_parameter_checking_
-      if (source.used <= range.start) return F_status_set_error(F_parameter);
-      if (source.used <= range.stop) return F_status_set_error(F_parameter);
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
-
-    if (source.used == 0) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
-
-    return private_fl_string_append_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
-  }
-#endif // _di_fl_string_dynamic_rip_nulless_
-
-#ifndef _di_fl_string_dynamic_seek_line_to_
-  f_return_status fl_string_dynamic_seek_line_to(const f_string_static_t buffer, f_string_range_t *range, const int8_t seek_to_this) {
+#ifndef _di_fl_string_dynamic_seek_line_
+  f_return_status fl_string_dynamic_seek_line(const f_string_t string, f_string_range_t *range) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->start) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not_eos;
+    if (!string) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (buffer.string[range->start] != seek_to_this) {
-      if (buffer.string[range->start] == f_string_eol[0]) return F_none_eol;
+    while (string[range->start] != f_string_eol[0]) {
+      range->start++;
+
+      if (range->start > range->stop) return F_none_stop;
+    } // while
+
+    return F_none;
+  }
+#endif // _di_fl_string_dynamic_seek_line_
+
+#ifndef _di_fl_string_dynamic_seek_line_to_
+  f_return_status fl_string_dynamic_seek_line_to(const f_string_t string, f_string_range_t *range, const int8_t seek_to_this) {
+    #ifndef _di_level_1_parameter_checking_
+      if (range == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!string) return F_data_not;
+    if (range->start > range->stop) return F_data_not_stop;
+
+    while (string[range->start] != seek_to_this) {
+
+      if (string[range->start] == f_string_eol[0]) return F_none_eol;
 
       range->start++;
 
-      if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
     } // while
 
@@ -893,14 +867,12 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_line_to_
 
 #ifndef _di_fl_string_dynamic_seek_line_to_utf_character_
-  f_return_status fl_string_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, f_string_range_t *range, const f_utf_character_t seek_to_this) {
+  f_return_status fl_string_dynamic_seek_line_to_utf_character(const f_string_t string, f_string_range_t *range, const f_utf_character_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->start) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not_eos;
+    if (!string) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
     const unsigned short seek_width = f_macro_utf_character_t_width(seek_to_this);
@@ -911,22 +883,17 @@ extern "C" {
 
     f_string_length_t width_max = 0;
 
-    while (range->start < buffer.used) {
+    while (range->start <= range->stop) {
       width_max = (range->stop - range->start) + 1;
-
-      if (width_max > buffer.used - range->start) {
-        width_max = buffer.used - range->start;
-      }
-
-      width = f_macro_utf_byte_width_is(buffer.string[range->start]);
+      width = f_macro_utf_byte_width_is(string[range->start]);
 
       if (width == 0) {
         width = 1;
 
-        if (buffer.string[range->start] == f_string_eol[0]) return F_none_eol;
+        if (string[range->start] == f_string_eol[0]) return F_none_eol;
 
         if (seek_width == width) {
-          if (buffer.string[range->start] == seek_to_this) return F_none;
+          if (string[range->start] == seek_to_this) return F_none;
         }
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
@@ -934,12 +901,12 @@ extern "C" {
         return F_status_set_error(F_incomplete_utf);
       }
       else {
-        if (range->start + width >= buffer.used) return F_status_set_error(F_incomplete_utf_eos);
         if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
 
         if (width == seek_width) {
           f_utf_character_t character = 0;
-          status = f_utf_char_to_character(buffer.string + range->start, width_max, &character);
+
+          status = f_utf_char_to_character(string + range->start, width_max, &character);
 
           if (F_status_is_error(status)) return status;
           if (character == seek_to_this) return F_none;
@@ -956,14 +923,12 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_line_to_utf_character_
 
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_
-  f_return_status fl_string_dynamic_seek_line_until_graph(const f_string_static_t buffer, f_string_range_t *range, const int8_t placeholder) {
+  f_return_status fl_string_dynamic_seek_line_until_graph(const f_string_t string, f_string_range_t *range, const int8_t placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->start) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not_eos;
+    if (!string) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
     f_status_t status = F_none;
@@ -971,15 +936,12 @@ extern "C" {
 
     f_string_length_t width_max = (range->stop - range->start) + 1;
 
-    if (width_max > buffer.used - range->start) {
-      width_max = buffer.used - range->start;
-    }
+    while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
 
-    while (buffer.string[range->start] == placeholder || (status = f_utf_is_graph(buffer.string + range->start, width_max)) == F_false) {
       if (F_status_is_error(status)) return status;
-      if (buffer.string[range->start] == f_string_eol[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol[0]) return F_none_eol;
 
-      width = f_macro_utf_byte_width_is(buffer.string[range->start]);
+      width = f_macro_utf_byte_width_is(string[range->start]);
 
       if (width == 0) {
         width = 1;
@@ -989,20 +951,14 @@ extern "C" {
         return F_status_set_error(F_incomplete_utf);
       }
       else {
-        if (range->start + width >= buffer.used) return F_status_set_error(F_incomplete_utf_eos);
         if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
       }
 
       range->start += width;
 
-      if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
 
       width_max = (range->stop - range->start) + 1;
-
-      if (width_max > buffer.used - range->start) {
-        width_max = buffer.used - range->start;
-      }
     } // while
 
     if (F_status_is_error(status)) return status;
@@ -1012,14 +968,12 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_line_until_graph_
 
 #ifndef _di_fl_string_dynamic_seek_line_until_non_graph_
-  f_return_status fl_string_dynamic_seek_line_until_non_graph(const f_string_static_t buffer, f_string_range_t *range, const int8_t placeholder) {
+  f_return_status fl_string_dynamic_seek_line_until_non_graph(const f_string_t string, f_string_range_t *range, const int8_t placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->start) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not_eos;
+    if (!string) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
     f_status_t status = F_none;
@@ -1027,15 +981,11 @@ extern "C" {
 
     f_string_length_t width_max = (range->stop - range->start) + 1;
 
-    if (width_max > buffer.used - range->start) {
-      width_max = buffer.used - range->start;
-    }
-
-    while (buffer.string[range->start] == placeholder || (status = f_utf_is_whitespace(buffer.string + range->start, width_max)) == F_false) {
+    while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max)) == F_false) {
       if (F_status_is_error(status)) return status;
-      if (buffer.string[range->start] == f_string_eol[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol[0]) return F_none_eol;
 
-      width = f_macro_utf_byte_width_is(buffer.string[range->start]);
+      width = f_macro_utf_byte_width_is(string[range->start]);
 
       if (width == 0) {
         width = 1;
@@ -1045,20 +995,14 @@ extern "C" {
         return F_status_set_error(F_incomplete_utf);
       }
       else {
-        if (range->start + width >= buffer.used) return F_status_set_error(F_incomplete_utf_eos);
         if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
       }
 
       range->start += width;
 
-      if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
 
       width_max = (range->stop - range->start) + 1;
-
-      if (width_max > buffer.used - range->start) {
-        width_max = buffer.used - range->start;
-      }
     } // while
 
     if (F_status_is_error(status)) return status;
@@ -1068,20 +1012,17 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_line_until_non_graph_
 
 #ifndef _di_fl_string_dynamic_seek_to_
-  f_return_status fl_string_dynamic_seek_to(const f_string_static_t buffer, f_string_range_t *range, const int8_t seek_to_this) {
+  f_return_status fl_string_dynamic_seek_to(const f_string_t string, f_string_range_t *range, const int8_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->start) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not_eos;
+    if (!string) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (buffer.string[range->start] != seek_to_this) {
+    while (string[range->start] != seek_to_this) {
       range->start++;
 
-      if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
     } // while
 
@@ -1090,14 +1031,12 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_to_
 
 #ifndef _di_fl_string_dynamic_seek_to_utf_character_
-  f_return_status fl_string_dynamic_seek_to_utf_character(const f_string_static_t buffer, f_string_range_t *range, const f_utf_character_t seek_to_this) {
+  f_return_status fl_string_dynamic_seek_to_utf_character(const f_string_t string, f_string_range_t *range, const f_utf_character_t seek_to_this) {
     #ifndef _di_level_1_parameter_checking_
       if (range == 0) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->start) return F_status_set_error(F_parameter);
-      if (buffer.used <= range->stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not_eos;
+    if (!string) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
     const unsigned short seek_width = f_macro_utf_character_t_width(seek_to_this);
@@ -1108,20 +1047,15 @@ extern "C" {
 
     f_string_length_t width_max = 0;
 
-    while (range->start < buffer.used) {
+    while (range->start <= range->stop) {
       width_max = (range->stop - range->start) + 1;
-
-      if (width_max > buffer.used - range->start) {
-        width_max = buffer.used - range->start;
-      }
-
-      width = f_macro_utf_byte_width_is(buffer.string[range->start]);
+      width = f_macro_utf_byte_width_is(string[range->start]);
 
       if (width == 0) {
         width = 1;
 
         if (seek_width == width) {
-          if (buffer.string[range->start] == seek_to_this) return F_none;
+          if (string[range->start] == seek_to_this) return F_none;
         }
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
@@ -1129,12 +1063,11 @@ extern "C" {
         return F_status_set_error(F_incomplete_utf);
       }
       else {
-        if (range->start + width >= buffer.used) return F_status_set_error(F_incomplete_utf_eos);
         if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
 
         if (width == seek_width) {
           f_utf_character_t character = 0;
-          status = f_utf_char_to_character(buffer.string + range->start, width_max, &character);
+          status = f_utf_char_to_character(string + range->start, width_max, &character);
 
           if (F_status_is_error(status)) return status;
           if (character == seek_to_this) return F_none;
@@ -1208,6 +1141,49 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fl_string_dynamic_terminate_after_
+
+#ifndef _di_fl_string_dynamics_size_decrease_
+  f_return_status fl_string_dynamics_size_decrease(const f_array_length_t length, f_string_dynamics_t *strings) {
+    #ifndef _di_level_1_parameter_checking_
+      if (length == 0) return F_status_set_error(F_parameter);
+      if (strings == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status_t status = F_none;
+
+    if (strings->size - length > 0) {
+      f_macro_string_dynamics_resize(status, (*strings), strings->size - length);
+    }
+    else if (strings->size - length <= 0) {
+      f_macro_string_dynamics_t_delete(status, (*strings));
+    }
+
+    return status;
+  }
+#endif // _di_fl_string_dynamics_size_decrease_
+
+#ifndef _di_fl_string_dynamics_size_increase_
+  f_return_status fl_string_dynamics_size_increase(const f_array_length_t length, f_string_dynamics_t *strings) {
+    #ifndef _di_level_1_parameter_checking_
+      if (length == 0) return F_status_set_error(F_parameter);
+      if (strings == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status_t status = F_none;
+
+    if (strings->size + length > f_array_length_t_size) {
+      if (strings->size == f_array_length_t_size) {
+        return F_status_set_error(F_string_too_large);
+      }
+
+      f_macro_string_dynamics_resize(status, (*strings), f_array_length_t_size);
+      return F_string_too_large;
+    }
+
+    f_macro_string_dynamics_resize(status, (*strings), strings->size + length);
+    return status;
+  }
+#endif // _di_fl_string_dynamics_size_increase_
 
 #ifndef _di_fl_string_lengths_size_decrease_
   f_return_status fl_string_lengths_size_decrease(const f_array_length_t length, f_string_lengths_t *lengths) {

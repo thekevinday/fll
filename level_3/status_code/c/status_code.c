@@ -33,9 +33,9 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_console_parameters_t parameters = { data->parameters, status_code_total_parameters };
       f_console_parameter_id_t ids[3] = { status_code_parameter_no_color, status_code_parameter_light, status_code_parameter_dark };
-      f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameters_t parameters = { data->parameters, status_code_total_parameters };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 

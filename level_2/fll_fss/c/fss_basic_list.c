@@ -142,7 +142,7 @@ extern "C" {
 
     f_status_t status = 0;
     f_array_length_t current = 0;
-    f_string_range_t range = f_string_range_initialize;
+    f_string_range_t range = f_string_range_t_initialize;
 
     range.start = 0;
     range.stop = object.used - 1;

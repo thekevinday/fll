@@ -36,6 +36,7 @@ extern "C" {
     f_utf_string_length_t first = 0;
 
     for (f_utf_string_length_t i = 0; i <= length; i++) {
+
       if (i == length) {
         if (i > first) {
           f_utf_string_length_t size = i - first;
@@ -127,6 +128,7 @@ extern "C" {
 
     // skip past leading whitespace in string1.
     for (; i1 < stop1; i1++) {
+
       // skip past NULL in string1.
       while (i1 < stop1 && string1[i1] == 0) i1++;
       if (i1 == stop1) break;
@@ -189,6 +191,7 @@ extern "C" {
 
       // determine where the last non-whitespace is in string2.
       for (f_utf_string_length_t j = i2; j < stop2; j++) {
+
         // skip past NULL in string2.
         while (j < stop2 && string2[j] == 0) j++;
         if (j == stop2) break;
@@ -211,6 +214,7 @@ extern "C" {
     }
 
     for (; i1 < last1 && i2 < last2; i1++, i2++) {
+
       // skip past NULL in string1.
       while (i1 < last1 && string1[i1] == 0) i1++;
       if (i1 == last1) break;
@@ -277,6 +281,7 @@ extern "C" {
     f_utf_string_length_t offset = 0;
 
     for (f_utf_string_length_t i = 0; i <= length; i++) {
+
       if (i == length) {
         if (i > first) {
           const f_utf_string_length_t size = i - first;
@@ -347,6 +352,7 @@ extern "C" {
 
     // skip past leading whitespace.
     for (; *start <= *stop; (*start)++) {
+
       // skip past NULL.
       while (*start < *stop && source[*start] == 0) (*start)++;
       if (*start > *stop) break;

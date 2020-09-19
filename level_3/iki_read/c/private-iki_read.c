@@ -331,7 +331,7 @@ extern "C" {
     f_iki_content_t content = f_iki_content_t_initialize;
 
     if (data->parameters[iki_read_parameter_whole].result == f_console_result_found) {
-      f_string_range_t buffer_range = f_macro_string_range_initialize(data->buffer.used);
+      f_string_range_t buffer_range = f_macro_string_range_t_initialize(data->buffer.used);
 
       status = iki_read_process_at(arguments, file_name, data, &buffer_range);
 
@@ -358,7 +358,7 @@ extern "C" {
       status = iki_read_process_buffer_total(arguments, file_name, data, &variable, &vocabulary, &content);
     }
     else {
-      f_string_range_t buffer_range = f_macro_string_range_initialize(data->buffer.used);
+      f_string_range_t buffer_range = f_macro_string_range_t_initialize(data->buffer.used);
 
       status = iki_read_process_at(arguments, file_name, data, &buffer_range);
 
@@ -536,8 +536,8 @@ extern "C" {
     }
 
     f_string_dynamics_t names = f_string_dynamics_t_initialize;
-    f_string_range_t name_range = f_string_range_initialize;
-    f_string_range_t substitution_range = f_string_range_initialize;
+    f_string_range_t name_range = f_string_range_t_initialize;
+    f_string_range_t substitution_range = f_string_range_t_initialize;
 
     bool name_missed = F_true;
 
@@ -670,7 +670,7 @@ extern "C" {
 #ifndef _di_iki_read_process_buffer_total_
   f_return_status iki_read_process_buffer_total(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_data_t *data, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) {
     f_status_t status = F_none;
-    f_string_range_t range = f_macro_string_range_initialize(data->buffer.used);
+    f_string_range_t range = f_macro_string_range_t_initialize(data->buffer.used);
 
     status = iki_read_process_at(arguments, file_name, data, &range);
 
@@ -787,7 +787,7 @@ extern "C" {
     f_status_t status = F_none;
 
     f_string_length_t i = 0;
-    f_string_range_t range = f_string_range_initialize;
+    f_string_range_t range = f_string_range_t_initialize;
 
     range.start = 0;
 

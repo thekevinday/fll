@@ -169,7 +169,7 @@ extern "C" {
       if (dynamic == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_string_range_t range = f_string_range_initialize;
+    f_string_range_t range = f_string_range_t_initialize;
 
     f_status_t status = private_f_serialize_un_simple_find(serialize, index, &range);
     if (F_status_is_error(status)) return status;

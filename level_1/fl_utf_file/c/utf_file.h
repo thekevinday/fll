@@ -99,10 +99,10 @@ extern "C" {
  * @param file
  *   The file to read.
  *   The file must already be open.
- * @param buffer
- *   The buffer the file is being read into.
  * @param total
  *   The total bytes to read, unless EOF is reached first.
+ * @param buffer
+ *   The buffer the file is being read into.
  *
  * @return
  *   F_none on success.
@@ -119,10 +119,10 @@ extern "C" {
  *   F_interrupted (with error bit) if interrupt was received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see read
+ * @see read()
  */
 #ifndef _di_fl_utf_file_read_until_
-  extern f_return_status fl_utf_file_read_until(const f_file_t file, f_utf_string_dynamic_t *buffer, const f_utf_string_length_t total);
+  extern f_return_status fl_utf_file_read_until(const f_file_t file, const f_utf_string_length_t total, f_utf_string_dynamic_t *buffer);
 #endif // _di_fl_utf_file_read_until_
 
 /**

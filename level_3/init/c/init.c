@@ -56,9 +56,9 @@ extern "C" {
     unsigned short do_socket_port = F_false;
 
     {
-      f_console_parameters_t parameters = { data->parameters, init_total_parameters };
       f_console_parameter_id_t ids[3] = { init_parameter_no_color, init_parameter_light, init_parameter_dark };
-      f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameters_t parameters = { data->parameters, init_total_parameters };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 

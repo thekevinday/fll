@@ -174,9 +174,9 @@ extern "C" {
 #ifndef _di_fss_object_t_
   typedef f_string_range_t f_fss_object_t;
 
-  #define f_fss_object_t_initialize f_string_range_initialize
+  #define f_fss_object_t_initialize f_string_range_t_initialize
 
-  #define f_macro_fss_object_t_clear(object) f_macro_string_range_clear(object)
+  #define f_macro_fss_object_t_clear(object) f_macro_string_range_t_clear(object)
 #endif // _di_fss_object_t_
 
 /**

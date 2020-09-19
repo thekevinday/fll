@@ -70,7 +70,7 @@ extern "C" {
     uint8_t content_found = 0;
 
     while (range->start <= range->stop && range->start < buffer->used) {
-      f_string_range_t content_partial = f_string_range_initialize;
+      f_string_range_t content_partial = f_string_range_t_initialize;
       f_fss_quoted_t quoted = 0;
 
       status = private_fl_fss_basic_object_read(buffer, range, &content_partial, &quoted, &delimits);

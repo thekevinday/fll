@@ -1057,100 +1057,6 @@ extern "C" {
 #endif // _di_fl_string_dynamic_prepend_nulless_
 
 /**
- * Resize the dynamic string to a smaller size.
- *
- * This will resize making the string smaller based on the given length.
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param length
- *   A positive number greater than 0 representing how much to decrease the size by.
- * @param string
- *   The string to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
- */
-#ifndef _di_fl_string_dynamic_size_decrease_
-  extern f_return_status fl_string_dynamic_size_decrease(const f_string_length_t length, f_string_dynamic_t *string);
-#endif // _di_fl_string_dynamic_size_decrease_
-
-/**
- * Resize the dynamic string to a larger size.
- *
- * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_string_length_t_size).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param length
- *   A positive number greater than 0 representing how much to increase the size by.
- * @param string
- *   The string to resize.
- *
- * @return
- *   F_none on success.
- *   F_string_too_large on success, but the requested length is too large for the buffer.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
- */
-#ifndef _di_fl_string_dynamic_size_increase_
-  extern f_return_status fl_string_dynamic_size_increase(const f_string_length_t length, f_string_dynamic_t *string);
-#endif // _di_fl_string_dynamic_size_increase_
-
-/**
- * Resize the array of dynamic strings to a smaller size.
- *
- * This will resize making the string smaller based on the given length.
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param length
- *   A positive number greater than 0 representing how much to decrease the size by.
- * @param strings
- *   The string array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
- */
-#ifndef _di_fl_string_dynamics_size_decrease_
-  extern f_return_status fl_string_dynamics_size_decrease(const f_array_length_t length, f_string_dynamics_t *strings);
-#endif // _di_fl_string_dynamics_size_decrease_
-
-/**
- * Resize the array of dynamic strings to a larger size.
- *
- * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param length
- *   A positive number greater than 0 representing how much to increase the size by.
- * @param strings
- *   The string array to resize.
- *
- * @return
- *   F_none on success.
- *   F_string_too_large on success, but the requested length is too large for the buffer.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
- */
-#ifndef _di_fl_string_dynamics_size_increase_
-  extern f_return_status fl_string_dynamics_size_increase(const f_array_length_t length, f_string_dynamics_t *strings);
-#endif // _di_fl_string_dynamics_size_increase_
-
-/**
  * Allocate a new string from the provided range in the buffer.
  *
  * Ignores leading and trailing whitespace.
@@ -1204,10 +1110,77 @@ extern "C" {
 #endif // _di_fl_string_dynamic_rip_nulless_
 
 /**
+ * Resize the dynamic string to a smaller size.
+ *
+ * This will resize making the string smaller based on the given length.
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param length
+ *   A positive number greater than 0 representing how much to decrease the size by.
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ */
+#ifndef _di_fl_string_dynamic_size_decrease_
+  extern f_return_status fl_string_dynamic_size_decrease(const f_string_length_t length, f_string_dynamic_t *string);
+#endif // _di_fl_string_dynamic_size_decrease_
+
+/**
+ * Resize the dynamic string to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_string_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param length
+ *   A positive number greater than 0 representing how much to increase the size by.
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_string_too_large on success, but the requested length is too large for the buffer.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ */
+#ifndef _di_fl_string_dynamic_size_increase_
+  extern f_return_status fl_string_dynamic_size_increase(const f_string_length_t length, f_string_dynamic_t *string);
+#endif // _di_fl_string_dynamic_size_increase_
+
+/**
+ * Seek the buffer location forward until EOL is reached.
+ *
+ * @param string
+ *   The string to traverse.
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_stop on success, but the range.start > range.stop.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_string_dynamic_seek_line_
+  extern f_return_status fl_string_dynamic_seek_line(const f_string_t string, f_string_range_t *range);
+#endif // _di_fl_string_dynamic_seek_line_
+
+/**
  * Seek the buffer location forward until the character (1-byte wide) or EOL is reached.
  *
- * @param buffer
- *   The buffer to traverse.
+ * @param string
+ *   The string to traverse.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
@@ -1217,21 +1190,20 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped stop location.
- *   F_data_not_eos if buffer length is 0.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_stop on success, but the range.start > range.stop.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_
-  extern f_return_status fl_string_dynamic_seek_line_to(const f_string_static_t buffer, f_string_range_t *range, const int8_t seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_line_to(const f_string_t string, f_string_range_t *range, const int8_t seek_to_this);
 #endif // _di_fl_string_dynamic_seek_line_to_
 
 /**
  * Seek the buffer location forward until the character (up to 4-byte wide) or EOL is reached.
  *
- * @param buffer
- *   The buffer to traverse.
+ * @param string
+ *   The string to traverse.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
@@ -1241,11 +1213,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_data_not_eos if buffer length is 0.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_stop on success, but the range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
@@ -1255,14 +1226,14 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_utf_character_
-  extern f_return_status fl_string_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, f_string_range_t *range, const f_utf_character_t seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_line_to_utf_character(const f_string_t string, f_string_range_t *range, const f_utf_character_t seek_to_this);
 #endif // _di_fl_string_dynamic_seek_line_to_utf_character_
 
 /**
  * Increment buffer location until a graph character (including UTF-8) or an EOL is matched.
  *
- * @param buffer
- *   The buffer to traverse.
+ * @param string
+ *   The string to traverse.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  * @param placeholder
@@ -1271,11 +1242,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_data_not_eos if buffer length is 0.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_stop on success, but the range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
@@ -1286,14 +1256,14 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_
-  extern f_return_status fl_string_dynamic_seek_line_until_graph(const f_string_static_t buffer, f_string_range_t *range, const int8_t placeholder);
+  extern f_return_status fl_string_dynamic_seek_line_until_graph(const f_string_t string, f_string_range_t *range, const int8_t placeholder);
 #endif // _di_fl_string_dynamic_seek_line_until_graph_
 
 /**
  * Increment buffer location until a non-graph character (including UTF-8) or an EOL is matched.
  *
- * @param buffer
- *   The buffer to traverse.
+ * @param string
+ *   The string to traverse.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  * @param placeholder
@@ -1302,12 +1272,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped stop location.
- *   F_data_not_eos if buffer length is 0.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_stop on success, but the range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
@@ -1318,14 +1286,14 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_non_graph_
-  extern f_return_status fl_string_dynamic_seek_line_until_non_graph(const f_string_static_t buffer, f_string_range_t *range, const int8_t placeholder);
+  extern f_return_status fl_string_dynamic_seek_line_until_non_graph(const f_string_t string, f_string_range_t *range, const int8_t placeholder);
 #endif // _di_fl_string_dynamic_seek_line_until_non_graph_
 
 /**
  * Seek the buffer location forward until the character (1-byte wide) is reached.
  *
- * @param buffer
- *   The buffer to traverse.
+ * @param string
+ *   The string to traverse.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
@@ -1334,24 +1302,22 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped stop location.
- *   F_data_not_eos if buffer length is 0.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_stop on success, but the range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_seek_to_
-  extern f_return_status fl_string_dynamic_seek_to(const f_string_static_t buffer, f_string_range_t *range, const int8_t seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_to(const f_string_t string, f_string_range_t *range, const int8_t seek_to_this);
 #endif // _di_fl_string_dynamic_seek_to_
 
 /**
  * Seek the buffer location forward until the UTF-8 character (up to 4-byte wide) is reached.
  *
- * @param buffer
- *   The buffer to traverse.
+ * @param string
+ *   The string to traverse.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
@@ -1360,12 +1326,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped stop location.
- *   F_data_not_eos if buffer length is 0.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_stop on success, but the range.start > range.stop.
  *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
@@ -1375,7 +1339,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_to_utf_character_
-  extern f_return_status fl_string_dynamic_seek_to_utf_character(const f_string_static_t buffer, f_string_range_t *range, const f_utf_character_t seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_to_utf_character(const f_string_t string, f_string_range_t *range, const f_utf_character_t seek_to_this);
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
 /**
@@ -1421,6 +1385,53 @@ extern "C" {
 #ifndef _di_fl_string_dynamic_terminate_after_
   extern f_return_status fl_string_dynamic_terminate_after(f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_terminate_after_
+
+/**
+ * Resize the array of dynamic strings to a smaller size.
+ *
+ * This will resize making the string smaller based on the given length.
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param length
+ *   A positive number greater than 0 representing how much to decrease the size by.
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ */
+#ifndef _di_fl_string_dynamics_size_decrease_
+  extern f_return_status fl_string_dynamics_size_decrease(const f_array_length_t length, f_string_dynamics_t *strings);
+#endif // _di_fl_string_dynamics_size_decrease_
+
+/**
+ * Resize the array of dynamic strings to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param length
+ *   A positive number greater than 0 representing how much to increase the size by.
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_string_too_large on success, but the requested length is too large for the buffer.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ */
+#ifndef _di_fl_string_dynamics_size_increase_
+  extern f_return_status fl_string_dynamics_size_increase(const f_array_length_t length, f_string_dynamics_t *strings);
+#endif // _di_fl_string_dynamics_size_increase_
 
 /**
  * Resize the array of string lengths to a smaller size.

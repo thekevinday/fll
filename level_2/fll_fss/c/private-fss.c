@@ -46,7 +46,7 @@ extern "C" {
                       if (f_conversion_character_is_hexidecimal(buffer.string[i]) == F_true) {
                         i++;
 
-                        f_string_range_t range = f_string_range_initialize;
+                        f_string_range_t range = f_string_range_t_initialize;
 
                         range.start = i - 4;
                         range.stop = i;
@@ -105,7 +105,7 @@ extern "C" {
                       // @todo this needs to be changed to support sub-headers (maybe something like FL_fss_accepted_additional).
                       i++;
 
-                      f_string_range_t range = f_string_range_initialize;
+                      f_string_range_t range = f_string_range_t_initialize;
 
                       range.start = i - 4;
                       range.stop = i;

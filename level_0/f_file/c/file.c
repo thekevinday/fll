@@ -85,10 +85,6 @@ extern "C" {
 
 #ifndef _di_f_file_close_
   f_return_status f_file_close(int *id) {
-    #ifndef _di_level_0_parameter_checking_
-      if (id == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
     return private_f_file_close(id);
   }
 #endif // _di_f_file_close_
@@ -1318,75 +1314,6 @@ extern "C" {
   }
 #endif // _di_f_file_mode_to_mode_
 
-#ifndef _di_f_file_rename_
-  f_return_status f_file_rename(const f_string_t source, const f_string_t destination) {
-    #ifndef _di_level_0_parameter_checking_
-      if (source == 0) return F_status_set_error(F_parameter);
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (rename(source, destination) < 0) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EBUSY) return F_status_set_error(F_busy);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == EMLINK) return F_status_set_error(F_link);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
-      if (errno == ENOSPC) return F_status_set_error(F_space_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == ENOTEMPTY) return F_status_set_error(F_directory_empty_not);
-      if (errno == EEXIST) return F_status_set_error(F_directory_empty_not);
-      if (errno == EPERM) return F_status_set_error(F_prohibited);
-      if (errno == EROFS) return F_status_set_error(F_read_only);
-      if (errno == EXDEV) return F_status_set_error(F_mount);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_file_rename_
-
-#ifndef _di_f_file_rename_at_
-  f_return_status f_file_rename_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination) {
-    #ifndef _di_level_0_parameter_checking_
-      if (source == 0) return F_status_set_error(F_parameter);
-      if (destination == 0) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (renameat(at_id, source, to_id, destination) < 0) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EBUSY) return F_status_set_error(F_busy);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == EMLINK) return F_status_set_error(F_link);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
-      if (errno == ENOSPC) return F_status_set_error(F_space_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == ENOTEMPTY) return F_status_set_error(F_directory_empty_not);
-      if (errno == EEXIST) return F_status_set_error(F_directory_empty_not);
-      if (errno == EPERM) return F_status_set_error(F_prohibited);
-      if (errno == EROFS) return F_status_set_error(F_read_only);
-      if (errno == EXDEV) return F_status_set_error(F_mount);
-      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_file_rename_at_
-
 #ifndef _di_f_file_name_base_
   f_return_status f_file_name_base(const f_string_t path, const f_string_length_t length, f_string_dynamic_t *name_base) {
     #ifndef _di_level_0_parameter_checking_
@@ -1509,8 +1436,7 @@ extern "C" {
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     f_status_t status = F_none;
     ssize_t size_read = 0;
@@ -1560,8 +1486,7 @@ extern "C" {
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     f_status_t status = F_none;
     ssize_t size_read = 0;
@@ -1605,14 +1530,13 @@ extern "C" {
 #endif // _di_f_file_read_block_
 
 #ifndef _di_f_file_read_until_
-  f_return_status f_file_read_until(const f_file_t file, f_string_dynamic_t *buffer, const f_string_length_t total) {
+  f_return_status f_file_read_until(const f_file_t file, const f_string_length_t total, f_string_dynamic_t *buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (file.size_read == 0) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     f_status_t status = F_none;
     ssize_t size_read = 0;
@@ -1629,6 +1553,7 @@ extern "C" {
     memset(&buffer_read, 0, sizeof(buffer_size));
 
     while (buffer_count < total && (size_read = read(file.id, buffer_read, buffer_size)) > 0) {
+
       if (buffer->used + size_read > buffer->size) {
         if (buffer->size + size_read > f_string_length_t_size) {
           return F_status_set_error(F_string_too_large);
@@ -1717,6 +1642,75 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_file_remove_at_
+
+#ifndef _di_f_file_rename_
+  f_return_status f_file_rename(const f_string_t source, const f_string_t destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (source == 0) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (rename(source, destination) < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBUSY) return F_status_set_error(F_busy);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == EMLINK) return F_status_set_error(F_link);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOSPC) return F_status_set_error(F_space_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOTEMPTY) return F_status_set_error(F_directory_empty_not);
+      if (errno == EEXIST) return F_status_set_error(F_directory_empty_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == EXDEV) return F_status_set_error(F_mount);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_file_rename_
+
+#ifndef _di_f_file_rename_at_
+  f_return_status f_file_rename_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (source == 0) return F_status_set_error(F_parameter);
+      if (destination == 0) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (renameat(at_id, source, to_id, destination) < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBUSY) return F_status_set_error(F_busy);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == EMLINK) return F_status_set_error(F_link);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOSPC) return F_status_set_error(F_space_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOTEMPTY) return F_status_set_error(F_directory_empty_not);
+      if (errno == EEXIST) return F_status_set_error(F_directory_empty_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == EXDEV) return F_status_set_error(F_mount);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_file_rename_at_
 
 #ifndef _di_f_file_role_change_
   f_return_status f_file_role_change(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference) {
@@ -2009,8 +2003,7 @@ extern "C" {
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     if (buffer.used == 0) {
       if (written) *written = 0;
@@ -2045,8 +2038,7 @@ extern "C" {
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     if (buffer.used == 0) {
       if (written) *written = 0;
@@ -2091,8 +2083,7 @@ extern "C" {
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     if (buffer.used == 0 || total == 0) {
       if (written) *written = 0;
@@ -2139,8 +2130,7 @@ extern "C" {
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     if (buffer.used == 0) {
       if (written) *written = 0;

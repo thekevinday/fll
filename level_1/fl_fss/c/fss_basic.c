@@ -114,8 +114,8 @@ extern "C" {
     if (range->start > range->stop) return F_data_not_stop;
     else if (range->start >= content.used) return F_data_not_eos;
 
-    f_string_range_t input_position = f_string_range_initialize;
-    f_string_range_t buffer_position = f_string_range_initialize;
+    f_string_range_t input_position = f_string_range_t_initialize;
+    f_string_range_t buffer_position = f_string_range_t_initialize;
 
     // ensure that there is room for the terminating newline.
     f_string_length_t size_allocate = destination->used + content.used + 1 + f_fss_default_allocation_step_string;

@@ -100,7 +100,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_console_parameters_t parameters = { data->parameters, fake_total_parameters };
+      const f_console_parameters_t parameters = { data->parameters, fake_total_parameters };
 
       // Load all parameters and identify priority of color parameters.
       {
@@ -312,7 +312,7 @@ extern "C" {
         }
       } // for
 
-      // ensure a newline is always put at the end of the program execution, unless in quite mode.
+      // ensure a newline is always put at the end of the program execution, unless in quiet mode.
       if (data->verbosity != fake_verbosity_quiet) {
         if (F_status_is_error(status) || status == F_signal) {
           fprintf(f_type_error, "%c", f_string_eol[0]);

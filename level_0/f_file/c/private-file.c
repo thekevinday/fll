@@ -7,6 +7,8 @@ extern "C" {
 
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
   f_return_status private_f_file_close(int *id) {
+    if (*id == -1) return F_none;
+
     if (F_status_is_error(private_f_file_flush(*id))) return F_status_set_error(F_file_synchronize);
 
     if (close(*id) < 0) {
@@ -19,7 +21,7 @@ extern "C" {
       return F_status_set_error(F_file_close);
     }
 
-    *id = 0;
+    *id = -1;
     return F_none;
   }
 #endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
@@ -500,7 +502,7 @@ extern "C" {
       file->id = open(path, file->flag, mode);
     }
 
-    if (file->id < 0) {
+    if (file->id == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -537,7 +539,7 @@ extern "C" {
       file->id = openat(at_id, path, file->flag, mode);
     }
 
-    if (file->id < 0) {
+    if (file->id == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);

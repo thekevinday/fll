@@ -33,6 +33,7 @@ extern "C" {
     f_utf_string_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
+
       if (source[length - i] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -71,6 +72,7 @@ extern "C" {
     f_utf_string_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
+
       if (source[length - i] == f_utf_character_t_eos) {
         i++;
         continue;

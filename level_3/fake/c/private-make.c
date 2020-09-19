@@ -22,7 +22,7 @@ extern "C" {
       return F_status_set_error(F_false);
     }
 
-    const f_string_range_t range = f_macro_string_range_initialize(data_make->path.stack.array[0].used);
+    const f_string_range_t range = f_macro_string_range_t_initialize(data_make->path.stack.array[0].used);
 
     if (range.start <= range.stop) {
       status = fl_string_dynamic_partial_compare(data_make->path.stack.array[0], data_make->path_cache, range, range);
@@ -45,7 +45,7 @@ extern "C" {
 
 #ifndef _di_fake_make_get_id_group_
   f_return_status fake_make_get_id_group(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, gid_t *id) {
-    const f_string_range_t range = f_macro_string_range_initialize(buffer.used);
+    const f_string_range_t range = f_macro_string_range_t_initialize(buffer.used);
 
     f_number_unsigned_t number = 0;
 
@@ -123,7 +123,7 @@ extern "C" {
 
 #ifndef _di_fake_make_get_id_owner_
   f_return_status fake_make_get_id_owner(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, uid_t *id) {
-    const f_string_range_t range = f_macro_string_range_initialize(buffer.used);
+    const f_string_range_t range = f_macro_string_range_t_initialize(buffer.used);
 
     f_number_unsigned_t number = 0;
 
@@ -202,7 +202,7 @@ extern "C" {
     f_fss_contents_t list_contents = f_fss_contents_t_initialize;
 
     {
-      f_string_range_t range = f_macro_string_range_initialize(data_make->buffer.used);
+      f_string_range_t range = f_macro_string_range_t_initialize(data_make->buffer.used);
 
       *status = fll_fss_basic_list_read(&data_make->buffer, &range, &list_objects, &list_contents);
 
@@ -224,8 +224,8 @@ extern "C" {
       const f_string_static_t name_settings = f_macro_string_static_t_initialize(fake_make_section_settings, fake_make_section_settings_length);
       const f_string_static_t name_main = f_macro_string_static_t_initialize(fake_make_section_main, fake_make_section_main_length);
 
-      const f_string_range_t name_settings_range = f_macro_string_range_initialize(fake_make_section_settings_length);
-      const f_string_range_t name_main_range = f_macro_string_range_initialize(fake_make_section_main_length);
+      const f_string_range_t name_settings_range = f_macro_string_range_t_initialize(fake_make_section_settings_length);
+      const f_string_range_t name_main_range = f_macro_string_range_t_initialize(fake_make_section_main_length);
 
       f_macro_fss_nameds_t_new((*status), data_make->fakefile, list_objects.used);
 
@@ -239,7 +239,7 @@ extern "C" {
       }
 
       {
-        f_string_range_t content_range = f_string_range_initialize;
+        f_string_range_t content_range = f_string_range_t_initialize;
 
         for (f_array_length_t i = 0; i < list_objects.used; i++) {
 
@@ -1142,14 +1142,14 @@ extern "C" {
     const f_string_static_t vocabulary_define = f_macro_string_static_t_initialize(iki_vocabulary_0002_define, iki_vocabulary_0002_define_length);
     const f_string_static_t vocabulary_parameter = f_macro_string_static_t_initialize(iki_vocabulary_0002_parameter, iki_vocabulary_0002_parameter_length);
 
-    const f_string_range_t range_define = f_macro_string_range_initialize(iki_vocabulary_0002_define_length);
-    const f_string_range_t range_parameter = f_macro_string_range_initialize(iki_vocabulary_0002_parameter_length);
+    const f_string_range_t range_define = f_macro_string_range_t_initialize(iki_vocabulary_0002_define_length);
+    const f_string_range_t range_parameter = f_macro_string_range_t_initialize(iki_vocabulary_0002_parameter_length);
 
     f_iki_variable_t iki_variable = f_iki_variable_t_initialize;
     f_iki_vocabulary_t iki_vocabulary = f_iki_vocabulary_t_initialize;
     f_iki_content_t iki_content = f_iki_content_t_initialize;
 
-    f_string_range_t range = f_string_range_initialize;
+    f_string_range_t range = f_string_range_t_initialize;
     f_string_map_multis_t *parameter = &data_make->setting_make.parameter;
 
     bool unmatched = F_true;
@@ -1910,37 +1910,37 @@ extern "C" {
     };
 
     const f_string_range_t operations_range[] = {
-      f_macro_string_range_initialize(fake_make_operation_break_length),
-      f_macro_string_range_initialize(fake_make_operation_build_length),
-      f_macro_string_range_initialize(fake_make_operation_clean_length),
-      f_macro_string_range_initialize(fake_make_operation_clone_length),
-      f_macro_string_range_initialize(fake_make_operation_compile_length),
-      f_macro_string_range_initialize(fake_make_operation_copy_length),
-      f_macro_string_range_initialize(fake_make_operation_define_length),
-      f_macro_string_range_initialize(fake_make_operation_delete_length),
-      f_macro_string_range_initialize(fake_make_operation_deletes_length),
-      f_macro_string_range_initialize(fake_make_operation_else_length),
-      f_macro_string_range_initialize(fake_make_operation_exit_length),
-      f_macro_string_range_initialize(fake_make_operation_fail_length),
-      f_macro_string_range_initialize(fake_make_operation_group_length),
-      f_macro_string_range_initialize(fake_make_operation_groups_length),
-      f_macro_string_range_initialize(fake_make_operation_if_length),
-      f_macro_string_range_initialize(fake_make_operation_index_length),
-      f_macro_string_range_initialize(fake_make_operation_link_length),
-      f_macro_string_range_initialize(fake_make_operation_mode_length),
-      f_macro_string_range_initialize(fake_make_operation_modes_length),
-      f_macro_string_range_initialize(fake_make_operation_move_length),
-      f_macro_string_range_initialize(fake_make_operation_operate_length),
-      f_macro_string_range_initialize(fake_make_operation_owner_length),
-      f_macro_string_range_initialize(fake_make_operation_owners_length),
-      f_macro_string_range_initialize(fake_make_operation_pop_length),
-      f_macro_string_range_initialize(fake_make_operation_print_length),
-      f_macro_string_range_initialize(fake_make_operation_run_length),
-      f_macro_string_range_initialize(fake_make_operation_shell_length),
-      f_macro_string_range_initialize(fake_make_operation_skeleton_length),
-      f_macro_string_range_initialize(fake_make_operation_to_length),
-      f_macro_string_range_initialize(fake_make_operation_top_length),
-      f_macro_string_range_initialize(fake_make_operation_touch_length),
+      f_macro_string_range_t_initialize(fake_make_operation_break_length),
+      f_macro_string_range_t_initialize(fake_make_operation_build_length),
+      f_macro_string_range_t_initialize(fake_make_operation_clean_length),
+      f_macro_string_range_t_initialize(fake_make_operation_clone_length),
+      f_macro_string_range_t_initialize(fake_make_operation_compile_length),
+      f_macro_string_range_t_initialize(fake_make_operation_copy_length),
+      f_macro_string_range_t_initialize(fake_make_operation_define_length),
+      f_macro_string_range_t_initialize(fake_make_operation_delete_length),
+      f_macro_string_range_t_initialize(fake_make_operation_deletes_length),
+      f_macro_string_range_t_initialize(fake_make_operation_else_length),
+      f_macro_string_range_t_initialize(fake_make_operation_exit_length),
+      f_macro_string_range_t_initialize(fake_make_operation_fail_length),
+      f_macro_string_range_t_initialize(fake_make_operation_group_length),
+      f_macro_string_range_t_initialize(fake_make_operation_groups_length),
+      f_macro_string_range_t_initialize(fake_make_operation_if_length),
+      f_macro_string_range_t_initialize(fake_make_operation_index_length),
+      f_macro_string_range_t_initialize(fake_make_operation_link_length),
+      f_macro_string_range_t_initialize(fake_make_operation_mode_length),
+      f_macro_string_range_t_initialize(fake_make_operation_modes_length),
+      f_macro_string_range_t_initialize(fake_make_operation_move_length),
+      f_macro_string_range_t_initialize(fake_make_operation_operate_length),
+      f_macro_string_range_t_initialize(fake_make_operation_owner_length),
+      f_macro_string_range_t_initialize(fake_make_operation_owners_length),
+      f_macro_string_range_t_initialize(fake_make_operation_pop_length),
+      f_macro_string_range_t_initialize(fake_make_operation_print_length),
+      f_macro_string_range_t_initialize(fake_make_operation_run_length),
+      f_macro_string_range_t_initialize(fake_make_operation_shell_length),
+      f_macro_string_range_t_initialize(fake_make_operation_skeleton_length),
+      f_macro_string_range_t_initialize(fake_make_operation_to_length),
+      f_macro_string_range_t_initialize(fake_make_operation_top_length),
+      f_macro_string_range_t_initialize(fake_make_operation_touch_length),
     };
 
     const uint8_t operations_type[] = {
@@ -3004,7 +3004,7 @@ extern "C" {
 
       if (*operation_if == fake_make_operation_if_type_if_greater || *operation_if == fake_make_operation_if_type_if_greater_equal || *operation_if == fake_make_operation_if_type_if_less || *operation_if == fake_make_operation_if_type_if_less_equal) {
         f_status_t status_number = F_none;
-        f_string_range_t range = f_string_range_initialize;
+        f_string_range_t range = f_string_range_t_initialize;
 
         f_number_unsigned_t number_left = 0;
         f_number_unsigned_t number_right = 0;
@@ -4662,7 +4662,7 @@ extern "C" {
             }
 
             f_status_t status_number = F_none;
-            f_string_range_t range = f_string_range_initialize;
+            f_string_range_t range = f_string_range_t_initialize;
             f_number_unsigned_t number = 0;
             bool is_negative = F_false;
 
@@ -5035,7 +5035,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    f_string_range_t range = f_string_range_initialize;
+    f_string_range_t range = f_string_range_t_initialize;
 
     range.start = data_make->path.stack.array[0].used + 1;
     range.stop = range.start + (path.used - range.start) - 1;

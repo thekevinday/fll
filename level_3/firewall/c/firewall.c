@@ -59,9 +59,9 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_console_parameters_t parameters = { data->parameters, firewall_total_parameters };
       f_console_parameter_id_t ids[3] = { firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark };
-      f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameters_t parameters = { data->parameters, firewall_total_parameters };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
@@ -140,7 +140,7 @@ extern "C" {
       if (found_command) {
         firewall_local_data_t local = firewall_local_data_t_initialize;
         firewall_reserved_chains_t reserved = firewall_reserved_chains_t_initialize;
-        f_string_range_t input = f_string_range_initialize;
+        f_string_range_t input = f_string_range_t_initialize;
 
         if (command == firewall_parameter_command_show) {
           // Warning: these are hardcoded print commands (I am not certain how I am going to implement external 'show' rules as the default-firewall setting file is the wrong place to put this)

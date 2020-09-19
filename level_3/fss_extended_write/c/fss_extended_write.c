@@ -32,9 +32,9 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_console_parameters_t parameters = { data->parameters, fss_extended_write_total_parameters };
       f_console_parameter_id_t ids[3] = { fss_extended_write_parameter_no_color, fss_extended_write_parameter_light, fss_extended_write_parameter_dark };
-      f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameters_t parameters = { data->parameters, fss_extended_write_total_parameters };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
       if (F_status_is_error(status)) {
@@ -56,7 +56,7 @@ extern "C" {
       bool object = (data->parameters[fss_extended_write_parameter_object].result == f_console_result_found);
 
       f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
-      f_string_range_t range = f_string_range_initialize;
+      f_string_range_t range = f_string_range_t_initialize;
 
       if (data->process_pipe) {
         f_file_t file = f_file_t_initialize;

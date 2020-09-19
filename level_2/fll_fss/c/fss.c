@@ -38,7 +38,7 @@ extern "C" {
     f_macro_string_dynamic_t_resize(status, buffer, f_fss_max_header_length + 1);
     if (F_status_is_error(status)) return status;
 
-    status = f_file_read_until(*file, &buffer, f_fss_max_header_length + 1);
+    status = f_file_read_until(*file, f_fss_max_header_length + 1, &buffer);
     if (F_status_is_error(status)) return status;
 
     return private_fll_fss_identify(buffer, header);

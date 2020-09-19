@@ -41,7 +41,7 @@
     f_macro_file_t_reset_position(quantity, file)
 
     fflush(stdout);
-    status = f_file_read_until(file, buffer, quantity);
+    status = f_file_read_until(file, quantity, buffer);
 
     f_file_close(&file.id);
 
@@ -66,7 +66,7 @@
 
       return F_status_set_error(status);
     } else {
-      f_string_range_t input = f_string_range_initialize;
+      f_string_range_t input = f_string_range_t_initialize;
 
       input.stop = buffer->used - 1;
 
@@ -483,7 +483,7 @@
   f_return_status init_process_main_rule(const init_data_t data, f_string_dynamic_t *buffer, init_data_t *settings) {
     f_status_t status = F_none;
     f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
-    f_string_range_t range = f_string_range_initialize;
+    f_string_range_t range = f_string_range_t_initialize;
     f_fss_objects_t objects = f_fss_objects_t_initialize;
     f_fss_contents_t contents = f_fss_contents_t_initialize;
     f_string_length_t position = 0;

@@ -5,11 +5,12 @@
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * This is the FSS Basic Read program
+ * This is the IKI Read program.
+ *
  * This program utilizes the Featureless Linux Library.
  * This program processes files or other input in fss format and stores the results in the iki_read_data_t.
  *
- * This processes in accordance to the FSS-0000 Basic specification.
+ * This processes in accordance to the IKI specification.
  */
 #ifndef _iki_read_h
 

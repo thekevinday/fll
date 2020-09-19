@@ -32,7 +32,7 @@ extern "C" {
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, iki_read_short_substitute, iki_read_long_substitute, f_console_symbol_short_enable, f_console_symbol_long_enable,"Substitute the entire variable for the given name and content value with the given string.");
+    fll_program_print_help_option(context, iki_read_short_substitute, iki_read_long_substitute, f_console_symbol_short_enable, f_console_symbol_long_enable, "Substitute the entire variable for the given name and content value with the given string.");
 
     fll_program_print_help_usage(context, iki_read_name, "filename(s)");
 
@@ -89,9 +89,9 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_console_parameters_t parameters = { data->parameters, iki_read_total_parameters };
       f_console_parameter_id_t ids[3] = { iki_read_parameter_no_color, iki_read_parameter_light, iki_read_parameter_dark };
-      f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameter_ids_t choices = { ids, 3 };
+      const f_console_parameters_t parameters = { data->parameters, iki_read_total_parameters };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
       if (F_status_is_error(status)) {
@@ -156,7 +156,7 @@ extern "C" {
         }
         else if (data->parameters[iki_read_parameter_at].result == f_console_result_additional) {
           const f_string_length_t index = data->parameters[iki_read_parameter_at].additional.array[data->parameters[iki_read_parameter_at].additional.used - 1];
-          const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
+          const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
           f_number_unsigned_t number = 0;
 
@@ -195,7 +195,7 @@ extern "C" {
         }
         else if (data->parameters[iki_read_parameter_line].result == f_console_result_additional) {
           const f_string_length_t index = data->parameters[iki_read_parameter_line].additional.array[data->parameters[iki_read_parameter_line].additional.used - 1];
-          const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
+          const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
           f_number_unsigned_t number = 0;
 
@@ -369,7 +369,7 @@ extern "C" {
               continue;
             }
 
-            status = f_file_read_until(file, &data->buffer, total);
+            status = f_file_read_until(file, total, &data->buffer);
 
             f_file_close(&file.id);
 
@@ -396,7 +396,7 @@ extern "C" {
       }
     }
 
-    // ensure a newline is always put at the end of the program execution, unless in quite mode.
+    // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (data->verbosity != iki_read_verbosity_quiet) {
       if (F_status_is_error(status) || data->mode == 0) {
         fprintf(f_type_error, "%c", f_string_eol[0]);

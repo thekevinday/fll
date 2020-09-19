@@ -73,7 +73,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_console_parameters_t parameters = { data->parameters, byte_dump_total_parameters };
+      const f_console_parameters_t parameters = { data->parameters, byte_dump_total_parameters };
       f_console_parameter_ids_t choices = f_console_parameter_ids_t_initialize;
 
       // Identify priority of color parameters.
@@ -171,7 +171,7 @@ extern "C" {
       }
       else if (data->parameters[byte_dump_parameter_width].result == f_console_result_additional) {
         const f_string_length_t index = data->parameters[byte_dump_parameter_width].additional.array[data->parameters[byte_dump_parameter_width].additional.used - 1];
-        const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
 
@@ -202,7 +202,7 @@ extern "C" {
       }
       else if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional) {
         const f_string_length_t index = data->parameters[byte_dump_parameter_first].additional.array[data->parameters[byte_dump_parameter_first].additional.used - 1];
-        const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
 
@@ -233,7 +233,7 @@ extern "C" {
       }
       else if (data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
         const f_string_length_t index = data->parameters[byte_dump_parameter_last].additional.array[data->parameters[byte_dump_parameter_last].additional.used - 1];
-        const f_string_range_t range = f_macro_string_range_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
 

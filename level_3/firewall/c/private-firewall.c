@@ -645,7 +645,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
             }
             else {
               {
-                f_string_range_t input = f_string_range_initialize;
+                f_string_range_t input = f_string_range_t_initialize;
 
                 input.stop = local_buffer.used - 1;
 
@@ -860,7 +860,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserv
   f_array_length_t j = 0;
 
   f_string_length_t length = 0;
-  f_string_range_t range = f_string_range_initialize;
+  f_string_range_t range = f_string_range_t_initialize;
   f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
   f_string_dynamic_t fixed_string = f_string_dynamic_t_initialize;
@@ -1399,7 +1399,7 @@ f_return_status firewall_buffer_rules(const f_string_t filename, const bool opti
     return status;
   }
   else {
-    f_string_range_t input = f_string_range_initialize;
+    f_string_range_t input = f_string_range_t_initialize;
 
     input.stop = local->buffer.used - 1;
 

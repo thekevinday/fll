@@ -670,7 +670,7 @@ extern "C" {
       return F_status_set_error(F_number);
     }
 
-    f_string_range_t location_offset = f_string_range_initialize;
+    f_string_range_t location_offset = f_string_range_t_initialize;
     location_offset.start = range.start + offset;
     location_offset.stop = range.stop;
 
@@ -810,7 +810,7 @@ extern "C" {
       return F_status_set_error(F_number);
     }
 
-    f_string_range_t location_offset = f_string_range_initialize;
+    f_string_range_t location_offset = f_string_range_t_initialize;
     location_offset.start = range.start + offset;
     location_offset.stop = range.stop;
 

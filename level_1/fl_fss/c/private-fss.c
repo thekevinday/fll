@@ -506,7 +506,7 @@ extern "C" {
 
     const f_string_length_t position_start = range->start;
 
-    f_string_range_t destination_position = f_string_range_initialize;
+    f_string_range_t destination_position = f_string_range_t_initialize;
 
     destination_position.start = destination->used;
     destination_position.stop  = destination->used;

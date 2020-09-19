@@ -199,7 +199,7 @@ extern "C" {
 
     f_status_t status = 0;
     f_array_length_t current = 0;
-    f_string_range_t range = f_macro_string_range_initialize(object.used);
+    f_string_range_t range = f_macro_string_range_t_initialize(object.used);
 
     status = fl_fss_extended_object_write(object, 0, &range, buffer);
 

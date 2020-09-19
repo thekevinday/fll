@@ -27,6 +27,7 @@ extern "C" {
     memset(&buffer_read, 0, sizeof(file.size_read));
 
     while ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
+
       if (buffer->used + size_read > buffer->size) {
         if (buffer->size + size_read > f_utf_string_length_t_size) {
           return F_status_set_error(F_string_too_large);
@@ -126,7 +127,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_block_
 
 #ifndef _di_fl_utf_file_read_until_
-  f_return_status fl_utf_file_read_until(const f_file_t file, f_utf_string_dynamic_t *buffer, const f_utf_string_length_t total) {
+  f_return_status fl_utf_file_read_until(const f_file_t file, const f_utf_string_length_t total, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (file.size_read == 0) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
@@ -154,6 +155,7 @@ extern "C" {
     memset(&buffer_read, 0, sizeof(buffer_size));
 
     while (buffer_count < total && (size_read = read(file.id, buffer_read, buffer_size)) > 0) {
+
       if (buffer->used + size_read > buffer->size) {
         if (buffer->size + size_read > f_string_length_t_size) {
           return F_status_set_error(F_string_too_large);
