@@ -17,8 +17,8 @@ extern "C" {
 // TODO: check if character to be replaced is UTF and apply placeholder to entire width.
 #ifndef _di_fl_macro_fss_apply_delimit_placeholders_
   #define fl_macro_fss_apply_delimit_placeholders(buffer, delimits) \
-    for (f_array_length_t i = 0; i < delimits.used; i++) { \
-      buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
+    for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+      buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
     } \
     \
     f_macro_string_lengths_t_delete_simple(delimits);
@@ -53,8 +53,8 @@ extern "C" {
 #ifndef _di_fl_macro_fss_object_delimited_return_on_overflow_
   #define fl_macro_fss_object_delimited_return_on_overflow(buffer, range, found, delimits, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
-      for (f_array_length_t i = 0; i < delimits.used; i++) { \
-        buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
+      for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+        buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
       } \
       f_macro_string_lengths_t_delete_simple(delimits); \
       \
@@ -62,9 +62,9 @@ extern "C" {
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
-      for (f_array_length_t i = 0; i < delimits.used; i++) { \
-        buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
-        i++; \
+      for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+        buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
+        _macro__i++; \
       } \
       f_macro_string_lengths_t_delete_simple(delimits); \
       \
@@ -92,8 +92,8 @@ extern "C" {
 #ifndef _di_fl_macro_fss_content_delimited_return_on_overflow_
   #define fl_macro_fss_content_delimited_return_on_overflow(buffer, range, found, delimits, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
-      for (f_array_length_t i = 0; i < delimits.used; i++) { \
-        buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
+      for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+        buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
       } \
       f_macro_string_lengths_t_delete_simple(delimits); \
       \
@@ -101,8 +101,8 @@ extern "C" {
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
-      for (f_array_length_t i = 0; i < delimits.used; i++) { \
-        buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
+      for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+        buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
       } \
       f_macro_string_lengths_t_delete_simple(delimits); \
       \
@@ -146,8 +146,8 @@ extern "C" {
 #ifndef _di_fl_macro_fss_nest_delimited_return_on_overflow_
   #define fl_macro_fss_nest_delimited_return_on_overflow(buffer, range, found, delimits, positions, objects, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
-      for (f_array_length_t i = 0; i < delimits.used; i++) { \
-        buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
+      for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+        buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
       } \
       f_macro_string_lengths_t_delete_simple(delimits); \
       f_macro_string_lengths_t_delete_simple(positions); \
@@ -156,8 +156,8 @@ extern "C" {
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
-      for (f_array_length_t i = 0; i < delimits.used; i++) { \
-        buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
+      for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+        buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
       } \
       f_macro_string_lengths_t_delete_simple(delimits); \
       f_macro_string_lengths_t_delete_simple(positions); \
@@ -189,16 +189,16 @@ extern "C" {
     while (buffer.string[range.start] != f_string_eol[0]) { \
       range.start++; \
       if (range.start >= buffer.used) { \
-        for (f_array_length_t i = 0; i < delimits.used; i++) { \
-          buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
+        for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+          buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
         } \
         f_macro_string_lengths_t_delete_simple(delimits); \
         \
         return eos_status; \
       } \
       if (range.start > range.stop) { \
-        for (f_array_length_t i = 0; i < delimits.used; i++) { \
-          buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
+        for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+          buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
         } \
         f_macro_string_lengths_t_delete_simple(delimits); \
         \
@@ -231,8 +231,8 @@ extern "C" {
     while (buffer.string[range.start] != f_string_eol[0]) { \
       range.start++; \
       if (range.start >= buffer.used) { \
-        for (f_array_length_t i = 0; i < delimits.used; i++) { \
-          buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
+        for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+          buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
         } \
         f_macro_string_lengths_t_delete_simple(delimits); \
         \
@@ -240,8 +240,8 @@ extern "C" {
         return eos_status; \
       } \
       if (range.start > range.stop) { \
-        for (f_array_length_t i = 0; i < delimits.used; i++) { \
-          buffer.string[delimits.array[i]] = f_fss_delimit_placeholder; \
+        for (f_array_length_t _macro__i = 0; _macro__i < delimits.used; _macro__i++) { \
+          buffer.string[delimits.array[_macro__i]] = f_fss_delimit_placeholder; \
         } \
         f_macro_string_lengths_t_delete_simple(delimits); \
         \
