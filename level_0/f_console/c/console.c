@@ -136,9 +136,12 @@ extern "C" {
       }
 
       if (console_short != f_console_none) {
+
         // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
         while (sub_location < string_length) {
+
           for (i = 0; i < parameters.used; i++) {
+
             if (parameters.parameter[i].type != console_type) {
               continue;
             }
@@ -240,6 +243,7 @@ extern "C" {
         found = F_false;
 
         for (i = 0; i < parameters.used; i++) {
+
           if (parameters.parameter[i].type != f_console_type_other) continue;
 
           if (parameters.parameter[i].symbol_other == 0) continue;
@@ -284,6 +288,7 @@ extern "C" {
         } // for
 
         if (!found) {
+
           // populate list of remaining parameters.parameter not associated with anything.
           if (remaining->used == remaining->size) {
             f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_console_default_allocation_step, f_macro_string_lengths_t_resize, F_buffer_too_large);
@@ -329,6 +334,7 @@ extern "C" {
     f_console_parameter_id_t priority = 0;
 
     for (f_array_length_t i = 0; i < choices.used; i++) {
+
       if (choices.id[i] > parameters.used) return F_status_set_error(F_parameter);
 
       if (parameters.parameter[choices.id[i]].result == f_console_result_found) {
@@ -370,6 +376,7 @@ extern "C" {
     f_console_parameter_id_t priority = 0;
 
     for (f_array_length_t i = 0; i < choices.used; i++) {
+
       if (choices.id[i] > parameters.used) return F_status_set_error(F_parameter);
 
       if (parameters.parameter[choices.id[i]].result == f_console_result_found) {

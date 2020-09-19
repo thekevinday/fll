@@ -7,7 +7,7 @@
  *
  * Provide means to use memory routines, with error checking.
  *
- * @todo consider adding f_memory__scramble() and f_memory__juggle().
+ * @todo consider adding f_memory_scramble() and f_memory_juggle().
  *       f_memory_scramble() is like f_destroy() but it writes random data instead of 0.
  *       f_memory_juggle() is like f_adjust() but it writes random data instead of 0.
  */

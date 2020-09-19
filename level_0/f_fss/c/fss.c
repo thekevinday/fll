@@ -147,6 +147,7 @@ extern "C" {
     position = range.start;
 
     while (position < buffer->used && position <= range.stop) {
+
       if (buffer->string[position] == f_fss_delimit_placeholder) {
         distance++;
       }
@@ -159,6 +160,7 @@ extern "C" {
       utf_width = f_macro_utf_byte_width_is(buffer->string[position]);
 
       if (utf_width > 1) {
+
         // not enough space in buffer or in range range to process UTF-8 character.
         if (position + utf_width >= buffer->used || position + utf_width > range.stop) {
           return F_status_set_error(F_utf);
@@ -173,6 +175,7 @@ extern "C" {
         }
       }
       else {
+
         // shift everything down one for each placeholder found
         if (distance > 0) {
           buffer->string[position] = buffer->string[position + distance];
@@ -286,6 +289,7 @@ extern "C" {
     }
 
     for (;;) {
+
       if (buffer.string[range->start] != f_fss_delimit_placeholder) {
         status = f_utf_is_graph(buffer.string + range->start, width_max);
 

@@ -11,11 +11,11 @@ extern "C" {
       if (pointer == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // prevent double-allocations
+    // prevent double-allocations.
     if (*pointer != 0) return F_none;
 
     // Some people use malloc(type * length) to produce the same results.
-    // I have noticed this sometimes causes an increase in L1/L2 cache misses (0.02% L1 increase, 0.01% L2 increase).
+    // This has been observed to sometimes causes an increase in L1/L2 cache misses (0.02% L1 increase, 0.01% L2 increase).
     *pointer = calloc(type, length);
 
     if (*pointer) {

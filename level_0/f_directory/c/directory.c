@@ -409,7 +409,6 @@ extern "C" {
     memset(&file_stat, 0, sizeof(struct stat));
 
     if (fstatat(at_id, path, &file_stat, flag) < 0) {
-
       if (errno == ENOENT) {
         return private_f_directory_create_at(at_id, path, mode);
       }
@@ -428,7 +427,6 @@ extern "C" {
     }
 
     if (utimensat(at_id, path, 0, flag) < 0) {
-
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);

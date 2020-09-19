@@ -40,6 +40,7 @@ extern "C" {
 
 #if !defined(_di_f_environment_set_) || !defined(_di_f_environment_set_dynamic_)
   f_return_status private_f_environment_set(const f_string_t name, const f_string_t value, const bool replace) {
+
     if (setenv(name, value, replace) < 0) {
       if (errno == EINVAL) {
         return F_status_set_error(F_invalid);
@@ -57,6 +58,7 @@ extern "C" {
 
 #if !defined(_di_f_environment_unset_) || !defined(_di_f_environment_unset_dynamic_)
   f_return_status private_f_environment_unset(const f_string_t name) {
+
     if (unsetenv(name) < 0) {
       if (errno == EINVAL) {
         return F_status_set_error(F_invalid);

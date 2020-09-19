@@ -10,7 +10,7 @@
  * The purpose of compression is not to compression the entire file's contents but only and individual objects content, so the file is still partially readable.
  * NOTE: all start/stop locations must be defined as a (start < stop) and not (start <= stop), therefore if (start == stop) then stop.
  *
- * @todo identify all special UTF-8 characters that would violate the concepts, such as "Ogham space mark ( )" is not valid as whitespace in FSS because it is a visible non-whitespace character.
+ * @todo identify all special UTF-8 characters that would violate the FSS design concepts, such as "Ogham space mark ( )" is not valid as whitespace in FSS because it is a visible non-whitespace character.
  */
 #ifndef _F_fss_h
 #define _F_fss_h

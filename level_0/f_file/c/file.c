@@ -1169,6 +1169,7 @@ extern "C" {
           syntax = 0;
         }
         else if (how == 2) {
+
           // if there are only '0's then the standard and setuid/setgid/sticky bits are to be replaced.
           if (*mode == 0) {
             *replace = f_file_mode_t_replace_standard | f_file_mode_t_replace_special;
@@ -1199,7 +1200,7 @@ extern "C" {
 
     memset(&stat_file, 0, sizeof(struct stat));
 
-    f_status_t status = private_f_file_stat(path, F_true, &stat_file);
+    const f_status_t status = private_f_file_stat(path, F_true, &stat_file);
     if (F_status_is_error(status)) {
       return status;
     }
@@ -1221,7 +1222,7 @@ extern "C" {
 
     memset(&stat_file, 0, sizeof(struct stat));
 
-    f_status_t status = private_f_file_stat(path, F_true, &stat_file);
+    const f_status_t status = private_f_file_stat(path, F_true, &stat_file);
     if (F_status_is_error(status)) {
       return status;
     }
@@ -1418,7 +1419,7 @@ extern "C" {
 
     memset(&stat_file, 0, sizeof(struct stat));
 
-    f_status_t status = private_f_file_stat(path, F_true, &stat_file);
+    const f_status_t status = private_f_file_stat(path, F_true, &stat_file);
     if (F_status_is_error(status)) {
       return status;
     }
@@ -1446,6 +1447,7 @@ extern "C" {
     memset(&buffer_read, 0, sizeof(file.size_read));
 
     while ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
+
       if (buffer->used + size_read > buffer->size) {
         if (buffer->size + size_read > f_string_length_t_size) {
           return F_status_set_error(F_string_too_large);

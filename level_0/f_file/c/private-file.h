@@ -205,7 +205,6 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  *
  * @see f_file_copy()
- * @see mkdir()
  */
 #if !defined(_di_f_file_copy_)
   extern f_return_status private_f_file_create_directory(const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
@@ -242,7 +241,7 @@ extern "C" {
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_failure (with error bit) for any other error.
  *
- * @see mkdirat()
+ * @see f_file_copy_at()
  */
 #if !defined(_di_f_file_copy_at_)
   extern f_return_status private_f_file_create_directory_at(const int at_id, const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
@@ -273,7 +272,8 @@ extern "C" {
  *   F_unsupported (with error bit) for unsupported file types.
  *   F_failure (with error bit) for any other error.
  *
- * @see mkfifo()
+ * @see f_file_create_fifo()
+ * @see f_file_copy()
  */
 #if !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
   extern f_return_status private_f_file_create_fifo(const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
@@ -307,7 +307,8 @@ extern "C" {
  *   F_unsupported (with error bit) for unsupported file types.
  *   F_failure (with error bit) for any other error.
  *
- * @see mkfifoat()
+ * @see f_file_create_fifo_at()
+ * @see f_file_copy_at()
  */
 #if !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
   extern f_return_status private_f_file_create_fifo_at(const int at_id, const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
@@ -344,6 +345,7 @@ extern "C" {
  *   F_unsupported (with error bit) for unsupported file types.
  *   F_failure (with error bit) for any other error.
  *
+ * @see f_file_copy()
  * @see f_file_create_device()
  * @see f_file_create_node()
  */
@@ -385,6 +387,7 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  *   F_unsupported (with error bit) for unsupported file types.
  *
+ * @see f_file_copy_at()
  * @see f_file_create_device_at()
  * @see f_file_create_node_at()
  */
@@ -519,6 +522,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
  *   F_failure (with error bit) for any other error.
  *
+ * @see f_file_copy()
  * @see f_file_link_read()
  */
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
@@ -555,6 +559,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
  *   F_failure (with error bit) for any other error.
  *
+ * @see f_file_copy_at()
  * @see f_file_link_read_at()
  */
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
@@ -585,8 +590,8 @@ extern "C" {
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
  *
- * @see f_file_mode_set()
  * @see f_file_copy()
+ * @see f_file_mode_set()
  */
 #if !defined(_di_f_file_mode_set_) || !defined(_di_f_file_copy_)
   extern f_return_status private_f_file_mode_set(const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
@@ -712,8 +717,8 @@ extern "C" {
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
  *
- * @see f_file_role_change()
  * @see f_file_copy()
+ * @see f_file_role_change()
  */
 #if !defined(_di_f_file_role_change_) || !defined(_di_f_file_copy_)
   extern f_return_status private_f_file_role_change(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference) f_gcc_attribute_visibility_internal;
@@ -783,8 +788,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see f_file_copy()
- * @see f_file_stat()
  * @see f_file_exists()
+ * @see f_file_is()
+ * @see f_file_stat()
  * @see f_file_touch()
  */
 #if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)

@@ -105,8 +105,10 @@ extern "C" {
     f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
     do {
+
       // find the start and end of the vocabulary name.
       while (range->start <= range->stop && range->start < buffer->used) {
+
         if (buffer->string[range->start] == f_iki_syntax_placeholder) {
           range->start++;
           continue;
@@ -115,6 +117,7 @@ extern "C" {
         if (buffer->string[range->start] == f_iki_syntax_separator) {
           if (range->start == found_vocabulary.start) {
             status = f_utf_buffer_increment(*buffer, range, 1);
+
             if (F_status_is_error(status)) {
               f_macro_string_lengths_t_delete(status, delimits);
               return status;
@@ -186,6 +189,7 @@ extern "C" {
             }
 
             status = f_utf_buffer_increment(*buffer, range, 1);
+
             if (F_status_is_error(status)) {
               f_macro_string_lengths_t_delete(status, delimits);
               return status;
@@ -198,6 +202,7 @@ extern "C" {
           f_macro_iki_determine_width_max(buffer, range, width_max);
 
           status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
+
           if (F_status_is_error(status)) {
             f_macro_string_lengths_t_delete(status, delimits);
             return status;
@@ -225,6 +230,7 @@ extern "C" {
         }
 
         status = f_utf_buffer_increment(*buffer, range, 1);
+
         if (F_status_is_error(status)) {
           f_macro_string_lengths_t_delete(status, delimits);
           return status;
@@ -236,6 +242,7 @@ extern "C" {
         found_content = range->start;
 
         while (range->start <= range->stop && range->start < buffer->used) {
+
           if (buffer->string[range->start] == f_iki_syntax_placeholder) {
             range->start++;
             continue;
@@ -246,6 +253,7 @@ extern "C" {
             // this is a valid vocabulary name and content, but if it is delimited, save the delimit and ignore.
             if (vocabulary_delimited) {
               f_macro_iki_allocate_delimits_if_necessary(status, delimits);
+
               if (F_status_is_error(status)) {
                 f_macro_string_lengths_t_delete(status, delimits);
                 return status;
@@ -314,6 +322,7 @@ extern "C" {
             f_array_length_t content_slash_total = 0;
 
             while (range->start <= range->stop && range->start < buffer->used) {
+
               if (buffer->string[range->start] == f_iki_syntax_placeholder) {
                 range->start++;
                 continue;
@@ -346,6 +355,7 @@ extern "C" {
                 content_range.stop = range->stop;
 
                 while (i < content_slash_delimits) {
+
                   if (buffer->string[content_range.start] == f_iki_syntax_slash) {
                     delimits.array[delimits.used] = content_range.start;
                     delimits.used++;
@@ -354,6 +364,7 @@ extern "C" {
                   }
 
                   status = f_utf_buffer_increment(*buffer, (&content_range), 1);
+
                   if (F_status_is_error(status)) {
                     f_macro_string_lengths_t_delete(status, delimits);
                     return status;
@@ -366,6 +377,7 @@ extern "C" {
                   // this is a valid vocabulary name and content, but if it is delimited, save the delimit and ignore.
                   if (vocabulary_delimited) {
                     f_macro_iki_allocate_delimits_if_necessary(status, delimits);
+
                     if (F_status_is_error(status)) {
                       f_macro_string_lengths_t_delete(status, delimits);
                       return status;
@@ -442,6 +454,7 @@ extern "C" {
               content_slash_total++;
 
               status = f_utf_buffer_increment(*buffer, range, 1);
+
               if (F_status_is_error(status)) {
                 f_macro_string_lengths_t_delete(status, delimits);
                 return status;
@@ -450,6 +463,7 @@ extern "C" {
           }
 
           status = f_utf_buffer_increment(*buffer, range, 1);
+
           if (F_status_is_error(status)) {
             f_macro_string_lengths_t_delete(status, delimits);
             return status;

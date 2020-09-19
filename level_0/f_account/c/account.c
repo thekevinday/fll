@@ -56,7 +56,7 @@ extern "C" {
 
     char buffer[f_account_pwd_length_fallback_second];
 
-    int result = getgrnam_r(name, &grp, buffer, length, &pointer);
+    const int result = getgrnam_r(name, &grp, buffer, length, &pointer);
 
     if (result) {
       if (errno == EINTR) return F_status_set_error(F_interrupted);
@@ -100,7 +100,7 @@ extern "C" {
       errno = 0;
 
       char buffer[length];
-      int result = getpwnam_r(name, &password, buffer, length, &pointer);
+      const int result = getpwnam_r(name, &password, buffer, length, &pointer);
 
       if (result) {
         if (errno == EINTR) return F_status_set_error(F_interrupted);
@@ -131,7 +131,7 @@ extern "C" {
 
     char buffer[f_account_pwd_length_fallback_second];
 
-    int result = getpwnam_r(name, &password, buffer, length, &pointer);
+    const int result = getpwnam_r(name, &password, buffer, length, &pointer);
 
     if (result) {
       if (errno == EINTR) return F_status_set_error(F_interrupted);
