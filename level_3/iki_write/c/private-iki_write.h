@@ -75,7 +75,7 @@ extern "C" {
  *   The quote character to use.
  *   This is either f_iki_syntax_quote_single or f_iki_syntax_quote_double.
  * @param output
- *   The output file (or stdout) to print to.
+ *   The output file descriptor to print processed iki text to.
  * @param escaped
  *   A string buffer used as a string cache to save the string into while escaping.
  *
@@ -84,7 +84,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_iki_write_process_
-  extern f_return_status iki_write_process(const iki_write_data_t data, const f_string_static_t object, const f_string_static_t content, const uint8_t quote, FILE *output, f_string_dynamic_t *escaped) f_gcc_attribute_visibility_internal;
+  extern f_return_status iki_write_process(const iki_write_data_t data, const f_string_static_t object, const f_string_static_t content, const uint8_t quote, const int output, f_string_dynamic_t *escaped) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_write_process_
 
 #ifdef __cplusplus

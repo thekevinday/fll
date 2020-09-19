@@ -106,7 +106,45 @@ extern "C" {
       data->verbosity = iki_write_verbosity_normal;
     }
 
-    if (!data->process_pipe) {
+    f_file_t output = f_file_t_initialize;
+
+    output.id = f_type_descriptor_output;
+    output.flag = f_file_flag_create | f_file_flag_write_only | f_file_flag_append;
+
+    if (F_status_is_fine(status)) {
+      if (data->parameters[iki_write_parameter_file].result == f_console_result_additional) {
+        if (data->parameters[iki_write_parameter_file].additional.used > 1) {
+          if (data->verbosity != iki_write_verbosity_quiet) {
+            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
+            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' may only be specified once.");
+          }
+
+          status = F_status_set_error(F_parameter);
+        }
+        else {
+          const f_string_length_t location = data->parameters[iki_write_parameter_file].additional.array[0];
+
+          output.id = -1;
+          status = f_file_open(arguments.argv[location], f_file_mode_all_rw, &output);
+
+          if (F_status_is_error(status)) {
+            iki_write_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_open", arguments.argv[location], "open", 0, F_true);
+          }
+        }
+      }
+      else if (data->parameters[iki_write_parameter_file].result == f_console_result_found) {
+        if (data->verbosity != iki_write_verbosity_quiet) {
+          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
+          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
+          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
+        }
+
+        status = F_status_set_error(F_parameter);
+      }
+    }
+
+    if (F_status_is_fine(status) && !data->process_pipe) {
       if (data->parameters[iki_write_parameter_object].result != f_console_result_additional && data->parameters[iki_write_parameter_content].result != f_console_result_additional) {
         if (data->verbosity != iki_write_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -232,10 +270,10 @@ extern "C" {
               }
             }
 
-            status = iki_write_process(*data, object, content, quote, f_type_output, &escaped);
+            status = iki_write_process(*data, object, content, quote, output.id, &escaped);
             if (F_status_is_error(status)) break;
 
-            fprintf(f_type_output, "%c", f_string_eol[0]);
+            dprintf(output.id, "%c", f_string_eol[0]);
 
             object_ended = F_false;
           }
@@ -292,19 +330,25 @@ extern "C" {
           content.used = strnlen(content.string, f_console_length_size);
           content.size = content.used;
 
-          status = iki_write_process(*data, object, content, quote, f_type_output, &escaped);
+          status = iki_write_process(*data, object, content, quote, output.id, &escaped);
           if (F_status_is_error(status)) break;
 
-          fprintf(f_type_output, "%c", f_string_eol[0]);
+          dprintf(output.id, "%c", f_string_eol[0]);
         } // for
 
         // ensure there is always a newline at the end, unless in quiet mode.
-        if (F_status_is_fine(status) && data->verbosity != iki_write_verbosity_quiet) {
+        if (F_status_is_fine(status) && data->verbosity != iki_write_verbosity_quiet && data->parameters[iki_write_parameter_file].result == f_console_result_none) {
           fprintf(f_type_output, "%c", f_string_eol[0]);
         }
       }
 
       f_macro_string_dynamic_t_delete_simple(escaped);
+    }
+
+    if (data->parameters[iki_write_parameter_file].result == f_console_result_additional) {
+      if (output.id != -1) {
+        f_file_close(&output.id);
+      }
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
