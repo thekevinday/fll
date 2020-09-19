@@ -6,9 +6,11 @@
 # Unlike the other scripts, this is not inteded to be run as if it were a program.
 # Instead this provides a functional example on what commands to perform to perform the bootstrap.
 #
-# This only accepts two arguments (both are required):
+# This only accepts two arguments, followed by two optional arguments (first two are required and in the specified order):
 # 1) One of "individual", "level", "monolithic", "fake-individual", "fake-level", or "fake-monolithic".
 # 2) The version number of the project, such as "0.5.1".
+# 3) Optional, may be one of: +V, +q, +n, +l, +d.
+# 4) Optional, may be one of: +V, +q, +n, +l, +d.
 #
 # This will create a directory at he present working directory of the script caller called "fll" where everything will be installed.
 # This assumes the shell script is GNU bash.
@@ -17,10 +19,26 @@
 original_path="$PWD/"
 install_path="${original_path}fll/"
 
+verbose=
+if [[ $3 == "+V" || $4 == "+V" ]] ; then
+  verbose="+V"
+elif [[ $3 == "+q" || $4 == "+q" ]] ; then
+  verbose="+q"
+fi
+
+color=
+if [[ $3 == "+d" || $4 == "+d" ]] ; then
+  color="+d"
+elif [[ $3 == "+l" || $4 == "+l" ]] ; then
+  color="+l"
+elif [[ $3 == "+n" || $4 == "+n" ]] ; then
+  color="+n"
+fi
+
 mkdir -vp $install_path
 
 if [[ $1 == "individual" ]] ; then
-  bash build/scripts/package.sh build -i
+  bash build/scripts/package.sh $verbose $color build -i
 
   if [[ $? -eq 0 ]] ; then
     for i in f_type f_status f_memory f_string f_utf f_account f_color f_console f_conversion f_directory f_environment f_file f_fss f_iki f_path f_pipe f_print f_serialize f_signal f_socket fl_color fl_console fl_conversion fl_directory fl_environment fl_fss fl_iki fl_print fl_status fl_string fl_utf fl_utf_file fll_execute fll_file fll_fss fll_iki fll_path fll_program fll_status ; do
@@ -28,11 +46,11 @@ if [[ $1 == "individual" ]] ; then
 
       cd package/individual/$i-$2/ &&
 
-      ./bootstrap.sh clean &&
+      ./bootstrap.sh clean $verbose $color &&
 
-      ./bootstrap.sh build -w $install_path -m individual &&
+      ./bootstrap.sh build $verbose $color -w $install_path -m individual &&
 
-      ./install.sh -w $install_path &&
+      ./install.sh $verbose $color -w $install_path &&
 
       cd $original_path || break
     done
@@ -40,47 +58,47 @@ if [[ $1 == "individual" ]] ; then
 fi
 
 if [[ $1 == "level" ]] ; then
-  bash build/scripts/package.sh build -l &&
+  bash build/scripts/package.sh $verbose $color build -l &&
 
   cd package/level/fll-level_0-$2/ &&
 
-  ./bootstrap.sh clean &&
+  ./bootstrap.sh $verbose $color clean &&
 
-  ./bootstrap.sh build -w $install_path -m level &&
+  ./bootstrap.sh $verbose $color build -w $install_path -m level &&
 
-  ./install.sh -w $install_path &&
+  ./install.sh $verbose $color -w $install_path &&
 
   cd $original_path &&
 
   cd package/level/fll-level_1-$2/ &&
 
-  ./bootstrap.sh clean &&
+  ./bootstrap.sh $verbose $color clean &&
 
-  ./bootstrap.sh build -w $install_path -m level &&
+  ./bootstrap.sh $verbose $color build -w $install_path -m level &&
 
-  ./install.sh -w $install_path &&
+  ./install.sh $verbose $color -w $install_path &&
 
   cd $original_path &&
 
   cd package/level/fll-level_2-$2/ &&
 
-  ./bootstrap.sh clean &&
+  ./bootstrap.sh $verbose $color clean &&
 
-  ./bootstrap.sh build -w $install_path -m level &&
+  ./bootstrap.sh $verbose $color build -w $install_path -m level &&
 
-  ./install.sh -w $install_path
+  ./install.sh $verbose $color -w $install_path
 fi
 
 if [[ $1 == "monolithic" ]] ; then
-  bash build/scripts/package.sh build -m &&
+  bash build/scripts/package.sh $verbose $color build -m &&
 
   cd package/monolithic/fll-$2/ &&
 
-  ./bootstrap.sh clean &&
+  ./bootstrap.sh $verbose $color clean &&
 
-  ./bootstrap.sh build -w $install_path -m monolithic &&
+  ./bootstrap.sh $verbose $color build -w $install_path -m monolithic &&
 
-  ./install.sh -w $install_path
+  ./install.sh $verbose $color -w $install_path
 fi
 
 # the following in an example on building the Featureless Make project (fake) from the project bootstrapped from above.
@@ -93,15 +111,15 @@ if [[ $1 == "fake-individual" || $1 == "fake-level" || $1 == "fake-monolithic" ]
     build_mode="monolithic"
   fi
 
-  bash build/scripts/package.sh build -p &&
+  bash build/scripts/package.sh $verbose $color build -p &&
 
   cd package/program/fake-$2/ &&
 
-  ./bootstrap.sh clean &&
+  ./bootstrap.sh $verbose $color clean &&
 
-  ./bootstrap.sh build -w $install_path -m $build_mode &&
+  ./bootstrap.sh $verbose $color build -w $install_path -m $build_mode &&
 
-  ./install.sh -w $install_path
+  ./install.sh $verbose $color -w $install_path
 fi
 
 # regardless of what happens always return to the starting directory.
