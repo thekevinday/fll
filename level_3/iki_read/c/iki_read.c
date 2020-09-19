@@ -26,8 +26,9 @@ extern "C" {
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, iki_read_short_literal, iki_read_long_literal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print the entire variable instead of the content.");
-    fll_program_print_help_option(context, iki_read_short_object, iki_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print the variable name instead of the variable content.");
+    fll_program_print_help_option(context, iki_read_short_content, iki_read_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print the variable content (default).");
+    fll_program_print_help_option(context, iki_read_short_literal, iki_read_long_literal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print the entire variable (aka: object, content, and syntax).");
+    fll_program_print_help_option(context, iki_read_short_object, iki_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print the variable name (aka: object).");
     fll_program_print_help_option(context, iki_read_short_total, iki_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the total number of variables.");
 
     printf("%c", f_string_eol[0]);
@@ -260,6 +261,19 @@ extern "C" {
             status = F_status_set_error(F_parameter);
           }
 
+          if (data->parameters[iki_read_parameter_content].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_content);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+
           if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
             if (data->verbosity != iki_read_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -276,6 +290,19 @@ extern "C" {
           data->mode = iki_read_mode_literal;
         }
         else if (data->parameters[iki_read_parameter_object].result == f_console_result_found) {
+          if (data->parameters[iki_read_parameter_content].result == f_console_result_found) {
+            if (data->verbosity != iki_read_verbosity_quiet) {
+              fprintf(f_type_error, "%c", f_string_eol[0]);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
+              fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
+              fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_read_long_content);
+              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+            }
+
+            status = F_status_set_error(F_parameter);
+          }
+
           if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
             if (data->verbosity != iki_read_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
@@ -295,6 +322,7 @@ extern "C" {
           data->mode = iki_read_mode_total;
         }
         else {
+          // this is the default behavior, so there is no reason to check for the -c/--content parameter.
           data->mode = iki_read_mode_content;
         }
 
