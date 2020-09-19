@@ -109,18 +109,18 @@ extern "C" {
   #define f_init_rules_resize(status, rules, new_length) \
     status = F_none; \
     if (new_length < rules.size) { \
-      f_string_length_t i = rules.size - new_length; \
-      for (; i < rules.size; i++) { \
-        delete_init_rule(status, rules.array[i]); \
+      f_string_length_t _macro__i = rules.size - new_length; \
+      for (; _macro__i < rules.size; _macro__i++) { \
+        delete_init_rule(status, rules.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_resize((void **) & rules.array, sizeof(init_rule), rules.size, new_length); \
     if (status == F_none) { \
       if (new_length > rules.size) { \
-        f_string_length_t i = rules.size; \
-        for (; i < new_length; i++) { \
-          memset(&rules.array[i], 0, sizeof(f_string_t)); \
+        f_string_length_t _macro__i = rules.size; \
+        for (; _macro__i < new_length; _macro__i++) { \
+          memset(&rules.array[_macro__i], 0, sizeof(f_string_t)); \
         } \
       } \
       rules.size = new_length; \
@@ -130,18 +130,18 @@ extern "C" {
   #define f_init_rules_adjust(status, rules, new_length) \
     status = F_none; \
     if (new_length < rules.size) { \
-      f_string_length_t i = rules.size - new_length; \
-      for (; i < rules.size; i++) { \
-        destroy_init_rule(status, rules.array[i]); \
+      f_string_length_t _macro__i = rules.size - new_length; \
+      for (; _macro__i < rules.size; _macro__i++) { \
+        destroy_init_rule(status, rules.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_adjust((void **) & rules.array, sizeof(init_rule), rules.size, new_length); \
     if (status == F_none) { \
       if (new_length > rules.size) { \
-        f_string_length_t i = rules.size; \
-        for (; i < new_length; i++) { \
-          memset(&rules.array[i], 0, sizeof(init_rule)); \
+        f_string_length_t _macro__i = rules.size; \
+        for (; _macro__i < new_length; _macro__i++) { \
+          memset(&rules.array[_macro__i], 0, sizeof(init_rule)); \
         } \
       } \
       rules.size = new_length; \
@@ -209,18 +209,18 @@ extern "C" {
   #define f_init_categorys_resize(status, categorys, new_length) \
     status = F_none; \
     if (new_length < categorys.size) { \
-      f_string_length_t i = categorys.size - new_length; \
-      for (; i < categorys.size; i++) { \
-        delete_init_category(status, categorys.array[i]); \
+      f_string_length_t _macro__i = categorys.size - new_length; \
+      for (; _macro__i < categorys.size; _macro__i++) { \
+        delete_init_category(status, categorys.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_resize((void **) & categorys.array, sizeof(init_category), categorys.size, new_length); \
     if (status == F_none) { \
       if (new_length > categorys.size) { \
-        f_string_length_t i = categorys.size; \
-        for (; i < new_length; i++) { \
-          memset(&categorys.array[i], 0, sizeof(f_string_t)); \
+        f_string_length_t _macro__i = categorys.size; \
+        for (; _macro__i < new_length; _macro__i++) { \
+          memset(&categorys.array[_macro__i], 0, sizeof(f_string_t)); \
         } \
       } \
       categorys.size = new_length; \
@@ -230,18 +230,18 @@ extern "C" {
   #define f_init_categorys_adjust(status, categorys, new_length) \
     status = F_none; \
     if (new_length < categorys.size) { \
-      f_string_length_t i = categorys.size - new_length; \
-      for (; i < categorys.size; i++) { \
-        destroy_init_category(status, categorys.array[i]); \
+      f_string_length_t _macro__i = categorys.size - new_length; \
+      for (; _macro__i < categorys.size; _macro__i++) { \
+        destroy_init_category(status, categorys.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
     if (status == F_none) status = f_memory_adjust((void **) & categorys.array, sizeof(init_category), categorys.size, new_length); \
     if (status == F_none) { \
       if (new_length > categorys.size) { \
-        f_string_length_t i = categorys.size; \
-        for (; i < new_length; i++) { \
-          memset(&categorys.array[i], 0, sizeof(init_category)); \
+        f_string_length_t _macro__i = categorys.size; \
+        for (; _macro__i < new_length; _macro__i++) { \
+          memset(&categorys.array[_macro__i], 0, sizeof(init_category)); \
         } \
       } \
       categorys.size = new_length; \

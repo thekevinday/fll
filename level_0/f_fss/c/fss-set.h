@@ -334,15 +334,15 @@ extern "C" {
     }
 
   #define f_macro_fss_set_quoted_t_adjust(status, set, new_length) \
-    f_macro_fss_objects_t_resize(status, set.objects, new_length) \
+    f_macro_fss_objects_t_adjust(status, set.objects, new_length) \
     if (F_status_is_fine(status)) { \
-      f_macro_fss_contents_t_resize(status, set.contents, new_length) \
+      f_macro_fss_contents_t_adjust(status, set.contents, new_length) \
     } \
     if (F_status_is_fine(status)) { \
-      f_macro_fss_quoteds_t_resize(status, set.objects_quoted, new_length) \
+      f_macro_fss_quoteds_t_adjust(status, set.objects_quoted, new_length) \
     } \
     if (F_status_is_fine(status)) { \
-      f_macro_fss_quotedss_t_resize(status, set.contents_quoted, new_length) \
+      f_macro_fss_quotedss_t_adjust(status, set.contents_quoted, new_length) \
     }
 #endif // _di_f_fss_set_quoted_t_
 
