@@ -506,6 +506,7 @@ extern "C" {
     f_string_range_t range = buffer_range;
 
     status = fl_iki_read(&data->buffer, &range, variable, vocabulary, content);
+
     if (F_status_is_error(status)) {
       iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_iki_read", F_true);
       return status;
@@ -524,6 +525,7 @@ extern "C" {
 
     if (data->mode == iki_read_mode_literal || data->mode == iki_read_mode_content) {
       status = iki_read_substitutions_identify(arguments, file_name, data, vocabulary, substitutionss);
+
       if (F_status_is_error(status)) {
         iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
 
@@ -597,7 +599,9 @@ extern "C" {
       name_range.start = 0;
 
       while (i <= range.stop && j < variable->used) {
+
         if (i < variable->array[j].start) {
+          range.start = i;
           range.stop = variable->array[j].start - 1;
 
           f_print_string_dynamic_partial(f_type_output, data->buffer, range);
