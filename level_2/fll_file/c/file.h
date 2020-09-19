@@ -50,7 +50,7 @@ extern "C" {
  *   F_false if no error message was printed.
  */
 #ifndef _di_fll_file_error_print_
-  extern f_return_status fll_file_error_print(FILE *file, const fl_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status);
+  extern f_return_status fll_file_error_print(FILE *file, const f_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status);
 #endif // _di_fll_file_error_print_
 
 /**
@@ -129,11 +129,11 @@ extern "C" {
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
  *   F_failure (with error bit) for any other error, failures might be populated with individual status codes.
  *
- *   Errors from (with error bit): f_directory_remove_custom().
- *   Errors from (with error bit): f_file_is().
- *   Errors from (with error bit): f_file_remove().
- *   Errors from (with error bit): f_file_rename().
- *   Errors from (with error bit): fl_directory_clone().
+ *   Errors (with error bit) from: f_directory_remove_custom().
+ *   Errors (with error bit) from: f_file_is().
+ *   Errors (with error bit) from: f_file_remove().
+ *   Errors (with error bit) from: f_file_rename().
+ *   Errors (with error bit) from: fl_directory_clone().
  *
  * @see f_directory_remove()
  * @see f_directory_remove_custom()

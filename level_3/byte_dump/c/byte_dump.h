@@ -211,7 +211,7 @@ extern "C" {
     uint8_t  mode;
     uint8_t  presentation;
 
-    fl_color_context_t context;
+    f_color_context_t context;
   } byte_dump_data_t;
 
   #define byte_dump_data_t_initialize \
@@ -224,7 +224,7 @@ extern "C" {
       8, \
       byte_dump_mode_hexidecimal, \
       byte_dump_presentation_normal, \
-      fl_color_context_t_initialize, \
+      f_color_context_t_initialize, \
     }
 #endif // _di_byte_dump_data_t_
 
@@ -238,7 +238,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_byte_dump_print_help_
-  extern f_return_status byte_dump_print_help(const fl_color_context_t context);
+  extern f_return_status byte_dump_print_help(const f_color_context_t context);
 #endif // _di_byte_dump_print_help_
 
 /**

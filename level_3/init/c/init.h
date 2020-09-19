@@ -225,7 +225,7 @@ extern "C" {
     f_string_lengths_t remaining;
     bool process_pipe;
 
-    fl_color_context_t context;
+    f_color_context_t context;
   } init_data_t;
 
   #define init_data_initialize \
@@ -233,7 +233,7 @@ extern "C" {
       init_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      fl_color_context_t_initialize, \
+      f_color_context_t_initialize, \
     }
 
   typedef struct {
@@ -287,7 +287,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_init_print_help_
-  extern f_return_status init_print_help(const fl_color_context_t context);
+  extern f_return_status init_print_help(const f_color_context_t context);
 #endif // _di_init_print_help_
 
 /**

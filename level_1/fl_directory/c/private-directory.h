@@ -192,7 +192,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
- *   Errors from (with error bit): f_utf_is_control().
+ *   Errors (with error bit) from: f_utf_is_control().
  *
  * @see fl_directory_path_push()
  * @see fl_directory_path_push_dynamic()

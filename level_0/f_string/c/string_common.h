@@ -61,7 +61,9 @@ extern "C" {
 #endif // _di_f_array_t_length_printf_
 
 /**
- * define the basic string type.
+ * Define the basic string type.
+ *
+ * Dynamic allocation macros are provided, but it is recommended to utilize the f_string_dynamic_t for dynamic allocation.
  */
 #ifndef _di_f_string_t_
   typedef char *f_string_t;

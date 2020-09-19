@@ -28,102 +28,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fl_color_context_t_
-  typedef struct {
-    f_color_t color_list;
-    f_color_format_t color_format;
-    f_color_mode_t mode;
-    f_string_dynamic_t reset;
-    f_string_dynamic_t warning;
-    f_string_dynamic_t error;
-    f_string_dynamic_t title;
-    f_string_dynamic_t notable;
-    f_string_dynamic_t important;
-    f_string_dynamic_t standout;
-    f_string_dynamic_t normal;
-    f_string_dynamic_t normal_reset;
-  } fl_color_context_t;
-
-  #define fl_color_context_t_initialize { f_color_t_initialize_linux, f_color_format_t_initialize_linux, f_color_mode_none, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
-
-  #define fl_macro_color_context_t_new(status, color_context) \
-    f_macro_string_dynamic_t_new(status, color_context.reset, f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.warning,      f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.error,        f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.title,        f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.notable,      f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.important,    f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.standout,     f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal,       f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal_reset, f_color_max_size + 1);
-
-  #define fl_macro_color_context_t_delete(status, color_context) \
-    f_macro_string_dynamic_t_delete(status, color_context.reset); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.warning); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.error); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.title); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.notable); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.important); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.standout); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.normal); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_delete(status, color_context.normal_reset);
-
-  #define fl_macro_color_context_t_destroy(status, color_context, size) \
-    f_macro_string_dynamic_t_destroy(status, color_context.reset); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.warning, size); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.error, size); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.title, size); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.notable, size); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.important, size); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.standout, size); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.normal); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_destroy(status, color_context.normal_reset);
-
-  #define fl_macro_color_context_t_delete_simple(color_context) \
-    f_macro_string_dynamic_t_delete_simple(color_context.reset); \
-    f_macro_string_dynamic_t_delete_simple(color_context.warning); \
-    f_macro_string_dynamic_t_delete_simple(color_context.error); \
-    f_macro_string_dynamic_t_delete_simple(color_context.title); \
-    f_macro_string_dynamic_t_delete_simple(color_context.notable); \
-    f_macro_string_dynamic_t_delete_simple(color_context.important); \
-    f_macro_string_dynamic_t_delete_simple(color_context.standout); \
-    f_macro_string_dynamic_t_delete_simple(color_context.normal); \
-    f_macro_string_dynamic_t_delete_simple(color_context.normal_reset);
-
-  #define fl_macro_color_context_t_destroy_simple(color_context, size) \
-    f_macro_string_dynamic_t_destroy_simple(color_context.reset); \
-    f_macro_string_dynamic_t_destroy_simple(color_context.warning, size); \
-    f_macro_string_dynamic_t_destroy_simple(color_context.error, size); \
-    f_macro_string_dynamic_t_destroy_simple(color_context.title, size); \
-    f_macro_string_dynamic_t_destroy_simple(color_context.notable, size); \
-    f_macro_string_dynamic_t_destroy_simple(color_context.important, size); \
-    f_macro_string_dynamic_t_destroy_simple(color_context.standout, size); \
-    f_macro_string_dynamic_t_destroy_simple(color_context.normal); \
-    f_macro_string_dynamic_t_destroy_simple(color_context.normal_reset);
-
-  #define fl_macro_color_context_t_resize(status, color_context) \
-    f_macro_string_dynamic_t_resize(status, color_context.reset, f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.warning,      f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.error,        f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.title,        f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.notable,      f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.important,    f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.standout,     f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal,       f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal_reset, f_color_max_size + 1);
-
-  #define fl_macro_color_context_t_adjust(status, color_context) \
-    f_macro_string_dynamic_t_adjust(status, color_context.reset, f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.warning,      f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.error,        f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.title,        f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.notable,      f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.important,    f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.standout,     f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal,       f_color_max_size + 1); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, color_context.normal_reset, f_color_max_size + 1);
-#endif // _di_fl_color_context_t_
-
 /**
  * Given some file or standard io, and push color information to that file or standard io.
  *
@@ -200,12 +104,8 @@ extern "C" {
  *
  * @param file
  *   The file or standard io.
- * @param format
- *   The color format parts.
- * @param start_color
- *   The color code to place at the beginning of the string, set to 0 to disable.
- * @param stop_color
- *   The color code to place at the end of the string, set to 0 to disable.
+ * @param set
+ *   The color set used for printing.
  * @param string
  *   The string to print to the file or standard io.
  * @param ...
@@ -215,10 +115,10 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_print_dynamic().
+ *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print_
-  extern f_return_status fl_color_print(FILE *file, const f_string_static_t start_color, const f_string_static_t end_color, const f_string_t string, ...);
+  extern f_return_status fl_color_print(FILE *file, const f_color_set_t set, const f_string_t string, ...);
 #endif // _di_fl_color_print_
 
 /**
@@ -231,14 +131,10 @@ extern "C" {
  *
  * @param file
  *   The file or standard io.
- * @param format
- *   The color format parts.
- * @param start_color
- *   The color code to place at the beginning of the string, set to 0 to disable.
- * @param extra_color
- *   The color code to place immediately following the start_color, set to 0 to disable.
- * @param stop_color
- *   The color code to place at the end of the string, set to 0 to disable.
+ * @param set
+ *   The color set used for printing.
+ * @param extra
+ *   The a second color set used for printing, which gets appended after set.before and set.after, respectively.
  * @param string
  *   The string to print to the file or standard io.
  * @param ...
@@ -248,10 +144,10 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_print_dynamic().
+ *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print2_
-  extern f_return_status fl_color_print2(FILE *file, const f_string_static_t start_color, const f_string_static_t extra_color, const f_string_static_t end_color, const f_string_t string, ...);
+  extern f_return_status fl_color_print2(FILE *file, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...);
 #endif // _di_fl_color_print2_
 
 /**
@@ -261,12 +157,8 @@ extern "C" {
  *
  * @param file
  *   The file or standard io.
- * @param format
- *   The color format parts.
- * @param start_color
- *   The color code to place at the beginning of the string, set to 0 to disable.
- * @param stop_color
- *   The color code to place at the end of the string, set to 0 to disable.
+ * @param set
+ *   The color set used for printing.
  * @param string
  *   The string to print to the file or standard io.
  * @param ...
@@ -276,10 +168,10 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_print_dynamic().
+ *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print_line_
-  extern f_return_status fl_color_print_line(FILE *file, const f_string_static_t start_color, const f_string_static_t end_color, const f_string_t string, ...);
+  extern f_return_status fl_color_print_line(FILE *file, const f_color_set_t set, const f_string_t string, ...);
 #endif // _di_fl_color_print_line_
 
 /**
@@ -292,14 +184,10 @@ extern "C" {
  *
  * @param file
  *   The file or standard io.
- * @param format
- *   The color format parts.
- * @param start_color
- *   The color code to place at the beginning of the string, set to 0 to disable.
- * @param extra_color
- *   The color code to place immediately following the start_color, set to 0 to disable.
- * @param stop_color
- *   The color code to place at the end of the string, set to 0 to disable.
+ * @param set
+ *   The color set used for printing.
+ * @param extra
+ *   The a second color set used for printing, which gets appended after set.before and set.after, respectively.
  * @param string
  *   The string to print to the file or standard io.
  * @param ...
@@ -309,10 +197,10 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_print_dynamic().
+ *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print2_line_
-  extern f_return_status fl_color_print2_line(FILE *file, const f_string_static_t start_color, const f_string_static_t extra_color, const f_string_static_t end_color, const f_string_t string, ...);
+  extern f_return_status fl_color_print2_line(FILE *file, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...);
 #endif // _di_fl_color_print2_line_
 
 /**
@@ -329,7 +217,7 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_print_dynamic().
+ *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print_code_
   extern f_return_status fl_color_print_code(FILE *file, const f_string_static_t color);
@@ -341,11 +229,13 @@ extern "C" {
  * This will handle the difference betweem xorg terminals and linux consoles.
  * If you wish to use non-standard colors either redefine this function or don't use it.
  *
+ * The default/fallback behavior is f_color_xterminal.
+ *
  * @param context
  *   The color context the load the color codes into.
  * @param use_light_colors
  *   Set to F_true to use colors for light backgrounds.
- *   Set to F_false to use colors forr dark backgrounds.
+ *   Set to F_false to use colors for dark backgrounds.
  *
  * @return
  *   F_none on success.
@@ -353,7 +243,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_load_context_
-  extern f_return_status fl_color_load_context(fl_color_context_t *context, const bool use_light_colors);
+  extern f_return_status fl_color_load_context(f_color_context_t *context, const bool use_light_colors);
 #endif // _di_fl_color_load_context_
 
 #ifdef __cplusplus

@@ -80,7 +80,7 @@ extern "C" {
  *   F_false on success and string is not a valid object name.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_word().
+ *   Errors (with error bit) from: f_utf_is_word().
  */
 #ifndef _di_f_iki_object_is_
   extern f_return_status f_iki_object_is(const f_string_static_t object);
@@ -99,7 +99,7 @@ extern "C" {
  *   F_false on success and string is not a valid object name.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_word().
+ *   Errors (with error bit) from: f_utf_is_word().
  */
 #ifndef _di_f_iki_object_partial_is_
   extern f_return_status f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range);

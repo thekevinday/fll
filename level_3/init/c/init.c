@@ -24,7 +24,7 @@ extern "C" {
 #endif // _di_init_print_version_
 
 #ifndef _di_init_print_help_
-  f_return_status init_print_help(const fl_color_context_t context) {
+  f_return_status init_print_help(const f_color_context_t context) {
     fll_program_print_help_header(context, init_name_long, init_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -120,13 +120,13 @@ extern "C" {
       pid_t pid_services = clone(init_handler_child_services, stack_memory.services + init_stack_size_small_services, init_flags_clone, stack_memory.services);
 
       if (pid_services < 0) {
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Failed to clone services process (errno = %i).", errno);
+        fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Failed to clone services process (errno = %i).", errno);
       }
 
       pid_t pid_control_file = clone(init_handler_child_control_file, stack_memory.control_file + init_stack_size_control_file, init_flags_clone, stack_memory.control_file);
 
       if (pid_control_file < 0) {
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Failed to clone control via file process (errno = %i).", errno);
+        fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Failed to clone control via file process (errno = %i).", errno);
       }
     */
 
@@ -154,11 +154,11 @@ extern "C" {
             continue;
           }
           else if (errno != EINTR) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: sigwaitinfo() failed (errno = %i).", errno);
+            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: sigwaitinfo() failed (errno = %i).", errno);
 
             signal_problem_count++;
             if (signal_problem_count > problem_count_max_signal_size) {
-              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Max signal problem count has been reached, sleeping for a period of time.", errno);
+              fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Max signal problem count has been reached, sleeping for a period of time.", errno);
               sleep(init_panic_signal_sleep_seconds);
               signal_problem_count = 0;
             }

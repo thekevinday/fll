@@ -55,13 +55,13 @@ extern "C" {
       status = fl_conversion_string_to_number_unsigned(value, &number, range);
 
       if (status == F_none) {
-        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "invalid name");
+        fl_color_print_line(f_type_output, data.context.set.error, "invalid name");
 
         return F_status_set_error(F_parameter);
       }
 
       if (status == F_data_not || F_status_set_fine(status) == F_parameter) {
-        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "invalid data");
+        fl_color_print_line(f_type_output, data.context.set.error, "invalid data");
 
         return status;
       }
@@ -73,17 +73,17 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {
-        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "unknown name");
+        fl_color_print_line(f_type_output, data.context.set.error, "unknown name");
       }
       else {
-        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "failed to convert");
+        fl_color_print_line(f_type_output, data.context.set.error, "failed to convert");
       }
 
       return status;
     }
 
     if (status == F_data) {
-      fl_color_print_line(f_type_output, data.context.warning, data.context.reset, "unknown code");
+      fl_color_print_line(f_type_output, data.context.set.warning, "unknown code");
 
       return F_none;
     }
@@ -110,10 +110,10 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {
-        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "unknown code");
+        fl_color_print_line(f_type_output, data.context.set.error, "unknown code");
       }
       else {
-        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "failed to convert");
+        fl_color_print_line(f_type_output, data.context.set.error, "failed to convert");
       }
 
       return status;
@@ -132,17 +132,17 @@ extern "C" {
     f_status_t status = fl_conversion_string_to_number_unsigned(value, number, range);
 
     if (*number > F_status_size_max_with_signal) {
-      fl_color_print_line(f_type_output, data.context.error, data.context.reset, "out of range");
+      fl_color_print_line(f_type_output, data.context.set.error, "out of range");
 
       return status;
     }
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_number_negative) {
-        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "out of range");
+        fl_color_print_line(f_type_output, data.context.set.error, "out of range");
       }
       else {
-        fl_color_print_line(f_type_output, data.context.error, data.context.reset, "invalid number");
+        fl_color_print_line(f_type_output, data.context.set.error, "invalid number");
       }
 
       return status;

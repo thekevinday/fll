@@ -351,14 +351,14 @@ extern "C" {
 #ifndef _di_fake_make_print_t_
   typedef struct {
     const char *prefix;
-    f_string_static_t context;
+    f_color_set_t context;
 
     FILE *to;
   } fake_make_print_t;
 
   #define fake_make_print_t_initialize { \
     0, \
-    f_string_static_t_initialize, \
+    f_color_set_t_initialize, \
     0, \
   }
 

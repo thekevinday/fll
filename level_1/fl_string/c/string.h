@@ -174,7 +174,7 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_whitespace()
  */
@@ -307,7 +307,7 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_whitespace()
  */
@@ -332,7 +332,7 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_whitespace()
  */
@@ -361,7 +361,7 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_whitespace()
  */
@@ -668,7 +668,7 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_whitespace()
  */
@@ -699,7 +699,7 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_whitespace()
  */
@@ -728,7 +728,7 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_whitespace()
  */
@@ -1221,7 +1221,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_char_to_character().
+ *   Errors (with error bit) from: f_utf_char_to_character().
  *
  * @see f_utf_char_to_character()
  */
@@ -1251,7 +1251,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_graph().
+ *   Errors (with error bit) from: f_utf_is_graph().
  *
  * @see f_utf_is_graph()
  */
@@ -1281,7 +1281,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_graph().
+ *   Errors (with error bit) from: f_utf_is_graph().
  *
  * @see f_utf_is_graph()
  */
@@ -1334,7 +1334,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_char_to_character().
+ *   Errors (with error bit) from: f_utf_char_to_character().
  *
  * @see f_utf_char_to_character()
  */
@@ -1719,7 +1719,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_whitespace()
  */
@@ -1749,7 +1749,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_whitespace()
  */
@@ -1799,7 +1799,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_char_to_character().
+ *   Errors (with error bit) from: f_utf_char_to_character().
  *
  * @see f_utf_char_to_character()
  */
@@ -1828,7 +1828,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_graph().
+ *   Errors (with error bit) from: f_utf_is_graph().
  *
  * @see f_utf_is_graph()
  */
@@ -1858,7 +1858,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_whitespace()
  */
@@ -1909,7 +1909,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_char_to_character().
+ *   Errors (with error bit) from: f_utf_char_to_character().
  *
  * @see f_utf_char_to_character()
  */

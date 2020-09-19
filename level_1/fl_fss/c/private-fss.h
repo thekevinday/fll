@@ -54,10 +54,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_buffer_increment().
- *   Errors from (with error bit): f_fss_is_graph().
- *   Errors from (with error bit): f_fss_is_space().
- *   Errors from (with error bit): f_fss_skip_past_space().
+ *   Errors (with error bit) from: f_utf_buffer_increment().
+ *   Errors (with error bit) from: f_fss_is_graph().
+ *   Errors (with error bit) from: f_fss_is_space().
+ *   Errors (with error bit) from: f_fss_skip_past_space().
  *
  * @see fl_fss_basic_object_read()
  * @see fl_fss_extended_object_read()
@@ -92,7 +92,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_buffer_increment().
+ *   Errors (with error bit) from: f_utf_buffer_increment().
  *
  * @see fl_fss_basic_object_write()
  * @see fl_fss_extended_object_write()

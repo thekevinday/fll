@@ -155,7 +155,7 @@ extern "C" {
  *   F_false if error has not been printed.
  */
 #ifndef _di_byte_dump_print_file_error_
-  extern void byte_dump_print_file_error(const fl_color_context_t context, const f_string_t function, const f_string_t file_name, const f_status_t status) f_gcc_attribute_visibility_internal;
+  extern void byte_dump_print_file_error(const f_color_context_t context, const f_string_t function, const f_string_t file_name, const f_status_t status) f_gcc_attribute_visibility_internal;
 #endif // _di_byte_dump_print_file_error_
 
 #ifdef __cplusplus

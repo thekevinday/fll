@@ -284,7 +284,7 @@ extern "C" {
     bool process_pipe;
     f_string_dynamics_t devices;
 
-    fl_color_context_t context;
+    f_color_context_t context;
   } firewall_data_t;
 
   #define firewall_data_t_initialize \
@@ -294,7 +294,7 @@ extern "C" {
       f_string_lengths_t_initialize, \
       F_false, \
       f_string_dynamics_t_initialize, \
-      fl_color_context_t_initialize, \
+      f_color_context_t_initialize, \
     }
 #endif // _di_firewall_data_t_
 
@@ -308,7 +308,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_firewall_print_help_
-  extern f_return_status firewall_print_help(const fl_color_context_t context);
+  extern f_return_status firewall_print_help(const f_color_context_t context);
 #endif // _di_firewall_print_help_
 
 /**

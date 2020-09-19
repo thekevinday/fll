@@ -46,7 +46,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  */
 #ifndef _di_fl_print_trim_string_
   extern f_return_status fl_print_trim_string(FILE *output, const f_string_t string, const f_string_length_t length);
@@ -73,7 +73,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  */
 #ifndef _di_fl_print_trim_string_dynamic_
   extern f_return_status fl_print_trim_string_dynamic(FILE *output, const f_string_static_t buffer);
@@ -102,7 +102,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  */
 #ifndef _di_fl_print_trim_string_dynamic_partial_
   extern f_return_status fl_print_trim_string_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range);
@@ -130,7 +130,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_character_is_whitespace().
+ *   Errors (with error bit) from: f_utf_character_is_whitespace().
  */
 #ifndef _di_fl_print_trim_utf_string_
   extern f_return_status fl_print_trim_utf_string(FILE *output, const f_utf_string_t string, const f_utf_string_length_t length);
@@ -157,7 +157,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_character_is_whitespace().
+ *   Errors (with error bit) from: f_utf_character_is_whitespace().
  */
 #ifndef _di_fl_print_trim_utf_string_dynamic_
   extern f_return_status fl_print_trim_utf_string_dynamic(FILE *output, const f_utf_string_static_t buffer);
@@ -186,7 +186,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors from (with error bit): f_utf_character_is_whitespace().
+ *   Errors (with error bit) from: f_utf_character_is_whitespace().
  */
 #ifndef _di_fl_print_trim_utf_string_dynamic_partial_
   extern f_return_status fl_print_trim_utf_string_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_utf_string_range_t range);

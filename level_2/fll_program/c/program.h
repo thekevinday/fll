@@ -42,12 +42,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors from (with error bit): fl_color_print().
+ *   Errors (with error bit) from: fl_color_print().
  *
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_header_
-  extern f_return_status fll_program_print_help_header(const fl_color_context_t context, const f_string_t name, const f_string_t version);
+  extern f_return_status fll_program_print_help_header(const f_color_context_t context, const f_string_t name, const f_string_t version);
 #endif // _di_fll_program_print_help_header_
 
 /**
@@ -69,12 +69,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors from (with error bit): fl_color_print().
+ *   Errors (with error bit) from: fl_color_print().
  *
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_
-  extern f_return_status fll_program_print_help_option(const fl_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
+  extern f_return_status fll_program_print_help_option(const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
 #endif // _di_fll_program_print_help_option_
 
 /**
@@ -92,12 +92,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors from (with error bit): fl_color_print().
+ *   Errors (with error bit) from: fl_color_print().
  *
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_long_
-  extern f_return_status fll_program_print_help_option_long(const fl_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
+  extern f_return_status fll_program_print_help_option_long(const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
 #endif // _di_fll_program_print_help_option_long_
 
 /**
@@ -113,12 +113,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors from (with error bit): fl_color_print().
+ *   Errors (with error bit) from: fl_color_print().
  *
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_other_
-  extern f_return_status fll_program_print_help_option_other(const fl_color_context_t context, const f_string_t option_other, const f_string_t description);
+  extern f_return_status fll_program_print_help_option_other(const f_color_context_t context, const f_string_t option_other, const f_string_t description);
 #endif // _di_fll_program_print_help_option_other_
 
 /**
@@ -135,12 +135,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors from (with error bit): fl_color_print().
+ *   Errors (with error bit) from: fl_color_print().
  *
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_usage_
-  extern f_return_status fll_program_print_help_usage(const fl_color_context_t context, const f_string_t name, const f_string_t parameters);
+  extern f_return_status fll_program_print_help_usage(const f_color_context_t context, const f_string_t name, const f_string_t parameters);
 #endif // _di_fll_program_print_help_usage_
 
 /**
@@ -179,10 +179,10 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_console_parameter_prioritize_left().
- *   Errors from (with error bit): f_console_parameter_prioritize_right().
- *   Errors from (with error bit): f_console_parameter_process().
- *   Errors from (with error bit): fl_color_load_context().
+ *   Errors (with error bit) from: f_console_parameter_prioritize_left().
+ *   Errors (with error bit) from: f_console_parameter_prioritize_right().
+ *   Errors (with error bit) from: f_console_parameter_process().
+ *   Errors (with error bit) from: fl_color_load_context().
  *
  * @see f_console_parameter_prioritize_left()
  * @see f_console_parameter_prioritize_right()
@@ -190,7 +190,7 @@ extern "C" {
  * @see fl_color_load_context()
  */
 #ifndef _di_fll_program_parameter_process_
-  extern f_return_status fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, fl_color_context_t *context);
+  extern f_return_status fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, f_color_context_t *context);
 #endif // _di_fll_program_parameter_process_
 /**
  * Perform basic parameter loading, including initialization of color context but does not print errors.
@@ -215,10 +215,10 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_console_parameter_prioritize_left().
- *   Errors from (with error bit): f_console_parameter_prioritize_right().
- *   Errors from (with error bit): f_console_parameter_process().
- *   Errors from (with error bit): fl_color_load_context().
+ *   Errors (with error bit) from: f_console_parameter_prioritize_left().
+ *   Errors (with error bit) from: f_console_parameter_prioritize_right().
+ *   Errors (with error bit) from: f_console_parameter_process().
+ *   Errors (with error bit) from: fl_color_load_context().
  *
  * @see f_console_parameter_prioritize_left()
  * @see f_console_parameter_prioritize_right()
@@ -226,7 +226,7 @@ extern "C" {
  * @see fl_color_load_context()
  */
 #ifndef _di_fll_program_parameter_process_quietly_
-  extern f_return_status fll_program_parameter_process_quietly(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, fl_color_context_t *context);
+  extern f_return_status fll_program_parameter_process_quietly(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, f_color_context_t *context);
 #endif // _di_fll_program_parameter_process_quietly_
 
 /**
@@ -251,7 +251,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): fl_string_append().
+ *   Errors (with error bit) from: fl_string_append().
  *
  * @see fl_string_append()
  */
@@ -281,7 +281,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- *   Errors from (with error bit): fl_string_mash().
+ *   Errors (with error bit) from: fl_string_mash().
  *
  * @see fl_string_mash()
  */
@@ -308,7 +308,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): fl_string_rip().
+ *   Errors (with error bit) from: fl_string_rip().
  *
  * @see fl_string_rip()
  */
@@ -340,8 +340,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- *   Errors from (with error bit): fl_string_dynamic_mash().
- *   Errors from (with error bit): fl_string_rip().
+ *   Errors (with error bit) from: fl_string_dynamic_mash().
+ *   Errors (with error bit) from: fl_string_rip().
  *
  * @see fl_string_dynamic_mash()
  * @see fl_string_rip()

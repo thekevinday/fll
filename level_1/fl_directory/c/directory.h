@@ -117,11 +117,11 @@ extern "C" {
  *   F_none on success.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
- *   Errors from (with error bit): f_directory_create().
- *   Errors from (with error bit): f_directory_exists().
- *   Errors from (with error bit): f_file_mode_set().
- *   Errors from (with error bit): f_file_role_change().
- *   Errors from (with error bit): f_file_stat().
+ *   Errors (with error bit) from: f_directory_create().
+ *   Errors (with error bit) from: f_directory_exists().
+ *   Errors (with error bit) from: f_file_mode_set().
+ *   Errors (with error bit) from: f_file_role_change().
+ *   Errors (with error bit) from: f_file_stat().
  *
  * @see f_file_clone()
  */
@@ -162,7 +162,7 @@ extern "C" {
  *   F_none on success.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
- *   Errors from (with error bit): f_directory_exists().
+ *   Errors (with error bit) from: f_directory_exists().
  *
  * @see f_file_clone()
  */
@@ -199,11 +199,11 @@ extern "C" {
  *   F_none on success.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
- *   Errors from (with error bit): f_directory_create().
- *   Errors from (with error bit): f_directory_exists().
- *   Errors from (with error bit): f_file_mode_set().
- *   Errors from (with error bit): f_file_role_change().
- *   Errors from (with error bit): f_file_stat().
+ *   Errors (with error bit) from: f_directory_create().
+ *   Errors (with error bit) from: f_directory_exists().
+ *   Errors (with error bit) from: f_file_mode_set().
+ *   Errors (with error bit) from: f_file_role_change().
+ *   Errors (with error bit) from: f_file_stat().
  *
  * @see f_file_copy()
  */
@@ -242,7 +242,7 @@ extern "C" {
  *   F_none on success.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
- *   Errors from (with error bit): f_directory_exists().
+ *   Errors (with error bit) from: f_directory_exists().
  *
  * @see f_file_copy()
  */
@@ -337,7 +337,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
- *   Errors from (with error bit): f_utf_is_control().
+ *   Errors (with error bit) from: f_utf_is_control().
  */
 #ifndef _di_fl_directory_path_push_
   extern f_return_status fl_directory_path_push(const f_string_t source, f_string_length_t length, f_string_dynamic_t *destination);
@@ -363,7 +363,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
- *   Errors from (with error bit): f_utf_is_control().
+ *   Errors (with error bit) from: f_utf_is_control().
  */
 #ifndef _di_fl_directory_path_push_dynamic_
   extern f_return_status fl_directory_path_push_dynamic(const f_string_static_t source, f_string_dynamic_t *destination);

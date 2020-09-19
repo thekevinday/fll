@@ -52,8 +52,8 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_macro_string_dynamic_t_resize().
- *   Errors from (with error bit): fl_string_dynamic_size_increase().
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
 #ifndef _di_fll_iki_content_escape_
   extern f_return_status fll_iki_content_escape(const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *escaped);
@@ -79,8 +79,8 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_macro_string_dynamic_t_resize().
- *   Errors from (with error bit): fl_string_dynamic_size_increase().
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
 #ifndef _di_fll_iki_content_partial_escape_
   extern f_return_status fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *escaped);
@@ -105,8 +105,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_syntax (with error bit) if the given string is invalid, such as having an undelimited quote.
  *
- *   Errors from (with error bit): f_macro_string_dynamic_t_resize().
- *   Errors from (with error bit): fl_string_dynamic_size_increase().
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
 #ifndef _di_fll_iki_content_escape_un_
   extern f_return_status fll_iki_content_escape_un(const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *unescaped);
@@ -133,8 +133,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_syntax (with error bit) if the given string is invalid, such as having an undelimited quote.
  *
- *   Errors from (with error bit): f_macro_string_dynamic_t_resize().
- *   Errors from (with error bit): fl_string_dynamic_size_increase().
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
 #ifndef _di_fll_iki_content_partial_escape_un_
   extern f_return_status fll_iki_content_partial_escape_un(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *unescaped);

@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_list_read_print_help_
-  f_return_status fss_basic_list_read_print_help(const fl_color_context_t context) {
+  f_return_status fss_basic_list_read_print_help(const f_color_context_t context) {
     fll_program_print_help_header(context, fss_basic_list_read_name_long, fss_basic_list_read_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -29,7 +29,7 @@ extern "C" {
 
     fll_program_print_help_usage(context, fss_basic_list_read_name, "filename(s)");
 
-    fl_color_print(f_type_output, context.important, context.reset, " Notes:");
+    fl_color_print(f_type_output, context.set.important, " Notes:");
 
     printf("%c", f_string_eol[0], f_string_eol[0]);
 
@@ -38,27 +38,27 @@ extern "C" {
     printf("%c", f_string_eol[0]);
 
     printf("  When using the ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
     printf(" option, an order of operations is enforced on the parameters.%c", f_string_eol[0]);
 
     printf("  When this order of operations is in effect, parameters to the right of a depth parameter are influenced by that depth parameter:%c", f_string_eol[0]);
 
     printf("    ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_at);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_at);
     printf(": An object index at the specified depth.%c", f_string_eol[0]);
 
     printf("    ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
     printf(": A new depth within the specified depth, indexed from the root.%c", f_string_eol[0]);
 
     printf("    ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
     printf(": An object name at the specified depth.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
     printf("  The parameter ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
     printf(" must be in numeric order, but values in between may be skipped.%c", f_string_eol[0]);
     printf("    ('-d 0 -a 1 -d 2 -a 2' would specify index 1 at depth 0, any index at depth 1, and index 2 at depth 2.)%c", f_string_eol[0]);
     printf("    ('-d 2 -a 1 -d 0 -a 2' would be invalid because depth 2 is before depth 1.)%c", f_string_eol[0]);
@@ -66,53 +66,53 @@ extern "C" {
     printf("%c", f_string_eol[0]);
 
     printf("  The parameter ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
     printf(" selects a content index at a given depth.%c", f_string_eol[0]);
     printf("    (This parameter is not synonymous with the depth parameter and does not relate to nested content).%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
     printf("  Specify both ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_object);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_object);
     printf(" and the ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_total);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_total);
     printf(" parameters to get the total objects.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
     printf("  When both ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_at);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_at);
     printf(" and ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
     printf(" parameters are specified (at the same depth), the ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_at);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_at);
     printf(" parameter value will be treated as a position relative to the specified ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
     printf(" parameter value.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
     printf("  This program may support parameters, such as ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
     printf(" or ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
     printf(", even if not supported by the standard.%c", f_string_eol[0]);
     printf("  This is done to help ensure consistency for scripting.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
     printf("  For parameters like ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
     printf(", if the standard doesn't support nested content, then only a depth of 0 would be valid.%c", f_string_eol[0]);
 
     printf("  For parameters like ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
     printf(", if the standard doesn't support multiple content groups, then only a select of 0 would be valid.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
     printf("  The parameter ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_trim);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_trim);
     printf(" will remove leading and trailing whitespaces when selecting objects or when printing objects.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
@@ -148,45 +148,45 @@ extern "C" {
     }
     else if (data->remaining.used > 0 || data->process_pipe) {
       if (data->parameters[fss_basic_list_read_parameter_at].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_at);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
+        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_at);
+        fl_color_print_line(f_type_error, data->context.set.error, "' requires a positive number.");
 
         fss_basic_list_read_delete_data(data);
         return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_list_read_parameter_depth].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
+        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
+        fl_color_print_line(f_type_error, data->context.set.error, "' requires a positive number.");
 
         fss_basic_list_read_delete_data(data);
         return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_line);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
+        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_line);
+        fl_color_print_line(f_type_error, data->context.set.error, "' requires a positive number.");
 
         fss_basic_list_read_delete_data(data);
         return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_list_read_parameter_name].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a string.");
+        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
+        fl_color_print_line(f_type_error, data->context.set.error, "' requires a string.");
 
         fss_basic_list_read_delete_data(data);
         return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' requires a positive number.");
+        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
+        fl_color_print_line(f_type_error, data->context.set.error, "' requires a positive number.");
 
         fss_basic_list_read_delete_data(data);
         return F_status_set_error(F_parameter);
@@ -194,22 +194,22 @@ extern "C" {
 
       if (data->parameters[fss_basic_list_read_parameter_object].result == f_console_result_found) {
         if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_object);
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_line);
-          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+          fl_color_print(f_type_error, data->context.set.error, "ERROR: Cannot specify the '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_object);
+          fl_color_print(f_type_error, data->context.set.error, "' parameter with the '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_line);
+          fl_color_print_line(f_type_error, data->context.set.error, "' parameter.");
 
           fss_basic_list_read_delete_data(data);
           return F_status_set_error(F_parameter);
         }
 
         if (data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_additional) {
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_object);
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
-          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+          fl_color_print(f_type_error, data->context.set.error, "ERROR: Cannot specify the '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_object);
+          fl_color_print(f_type_error, data->context.set.error, "' parameter with the '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
+          fl_color_print_line(f_type_error, data->context.set.error, "' parameter.");
 
           fss_basic_list_read_delete_data(data);
           return F_status_set_error(F_parameter);
@@ -218,11 +218,11 @@ extern "C" {
 
       if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
         if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_line);
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_total);
-          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+          fl_color_print(f_type_error, data->context.set.error, "ERROR: Cannot specify the '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_line);
+          fl_color_print(f_type_error, data->context.set.error, "' parameter with the '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_total);
+          fl_color_print_line(f_type_error, data->context.set.error, "' parameter.");
 
           fss_basic_list_read_delete_data(data);
           return F_status_set_error(F_parameter);
@@ -257,9 +257,9 @@ extern "C" {
       }
 
       if (data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The '");
-        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter requires a positive number.");
+        fl_color_print(f_type_error, data->context.set.error, "ERROR: The '");
+        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
+        fl_color_print_line(f_type_error, data->context.set.error, "' parameter requires a positive number.");
 
         macro_fss_basic_list_read_depths_t_delete_simple(depths);
         fss_basic_list_read_delete_data(data);
@@ -356,7 +356,7 @@ extern "C" {
       macro_fss_basic_list_read_depths_t_delete_simple(depths);
     }
     else {
-      fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: You failed to specify one or more files.");
+      fl_color_print_line(f_type_error, data->context.set.error, "ERROR: You failed to specify one or more files.");
       status = F_status_set_error(F_parameter);
     }
 
@@ -381,7 +381,7 @@ extern "C" {
     f_macro_string_dynamic_t_delete_simple(data->buffer);
     f_macro_string_lengths_t_delete_simple(data->remaining);
 
-    fl_macro_color_context_t_delete_simple(data->context);
+    f_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
   }

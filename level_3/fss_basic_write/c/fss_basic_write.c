@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_write_print_help_
-  f_return_status fss_basic_write_print_help(const fl_color_context_t context) {
+  f_return_status fss_basic_write_print_help(const f_color_context_t context) {
     fll_program_print_help_header(context, fss_basic_write_name_long, fss_basic_write_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -70,19 +70,19 @@ extern "C" {
           status = F_status_set_fine(status);
 
           if (status == F_parameter) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
+            fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           }
           else if (status == F_file_found_not) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", "-");
+            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Unable to find the file '%s'", "-");
           }
           else if (status == F_file_open) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", "-");
+            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Unable to open the file '%s'", "-");
           }
           else if (status == F_file_descriptor) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", "-");
+            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: File descriptor error while trying to open the file '%s'", "-");
           }
           else {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
+            fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
           }
 
           f_macro_string_dynamic_t_delete_simple(input);
@@ -172,19 +172,19 @@ extern "C" {
           f_file_close(&output.id);
 
           if (status == F_parameter) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
+            fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
           }
           else if (status == F_file_found_not) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to find the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Unable to find the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
           }
           else if (status == F_file_open) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to open the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Unable to open the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
           }
           else if (status == F_file_descriptor) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: File descriptor error while trying to open the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: File descriptor error while trying to open the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
           }
           else {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
+            fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
           }
 
           f_macro_string_dynamic_t_delete_simple(buffer);
@@ -199,13 +199,13 @@ extern "C" {
           status = F_status_set_fine(status);
 
           if (status == F_parameter) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: Invalid parameter when calling f_file_write()");
+            fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_write()");
           }
           else if (status == F_file_write) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: Unable to write to the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
+            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Unable to write to the file '%s'", arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]]);
           }
           else {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_write()", status);
+            fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_write()", status);
           }
 
           f_macro_string_dynamic_t_delete_simple(buffer);
@@ -235,7 +235,7 @@ extern "C" {
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
-    fl_macro_color_context_t_delete_simple(data->context);
+    f_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
   }

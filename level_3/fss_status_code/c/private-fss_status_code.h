@@ -29,7 +29,7 @@ extern "C" {
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *
- *   Errors from (with error bit): fss_status_code_convert_number().
+ *   Errors (with error bit) from: fss_status_code_convert_number().
  *
  * @see fss_status_code_convert_number()
  */
@@ -49,8 +49,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if string is empty.
  *
- *   Errors from (with error bit): fl_console_parameter_to_number_unsigned().
- *   Errors from (with error bit): fll_fss_status_from_string().
+ *   Errors (with error bit) from: fl_console_parameter_to_number_unsigned().
+ *   Errors (with error bit) from: fll_fss_status_from_string().
  *
  * @see fl_console_parameter_to_number_unsigned()
  * @see fll_fss_status_from_string()
@@ -76,8 +76,8 @@ extern "C" {
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): fll_fss_status_from_string().
- *   Errors from (with error bit): fss_status_code_convert_number().
+ *   Errors (with error bit) from: fll_fss_status_from_string().
+ *   Errors (with error bit) from: fss_status_code_convert_number().
  *
  * @see fll_fss_status_from_string()
  * @see fss_status_code_convert_number()
@@ -106,7 +106,7 @@ extern "C" {
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): fl_console_parameter_to_number_unsigned().
+ *   Errors (with error bit) from: fl_console_parameter_to_number_unsigned().
  *
  * @see fl_console_parameter_to_number_unsigned()
  */

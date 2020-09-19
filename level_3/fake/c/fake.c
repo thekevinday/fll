@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_help_
-  f_return_status fake_print_help(const fl_color_context_t context) {
+  f_return_status fake_print_help(const f_color_context_t context) {
     fll_program_print_help_header(context, fake_name_long, fake_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -39,7 +39,7 @@ extern "C" {
 
     printf("%c%c", f_string_eol[0], f_string_eol[0]);
 
-    fl_color_print(f_type_output, context.important, context.reset, " Special Options: ");
+    fl_color_print(f_type_output, context.set.important, " Special Options: ");
 
     fll_program_print_help_option_long(context, fake_long_documents_disabled, f_console_symbol_long_enable, "   Forcibly do not build documents files.");
     fll_program_print_help_option_long(context, fake_long_documents_enabled, f_console_symbol_long_enable, "    Forcibly do build documents files.");
@@ -50,7 +50,7 @@ extern "C" {
 
     printf("%c%c", f_string_eol[0], f_string_eol[0]);
 
-    fl_color_print(f_type_output, context.important, context.reset, " Operations: ");
+    fl_color_print(f_type_output, context.set.important, " Operations: ");
 
     fll_program_print_help_option_other(context, fake_other_operation_build, "   Build or compile the code based on build settings file.");
     fll_program_print_help_option_other(context, fake_other_operation_clean, "   Delete all build files.");
@@ -60,33 +60,33 @@ extern "C" {
     fll_program_print_help_usage(context, fake_name, "operation");
 
     printf("  When performing the ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s", fake_other_operation_build);
+    fl_color_print(f_type_output, context.set.notable, "%s", fake_other_operation_build);
     printf(" operation, the ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s", f_console_symbol_long_enable, fake_long_mode);
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_mode);
     printf(" parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.");
     printf("%c", f_string_eol[0]);
 
     printf("  For example, when a ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s", fake_long_mode);
+    fl_color_print(f_type_output, context.set.notable, "%s", fake_long_mode);
     printf(" of 'fll_monolithic' is specified, build libaries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').");
 
     printf("%c%c", f_string_eol[0], f_string_eol[0]);
 
     printf("  When specifying the ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s", fake_long_fakefile);
+    fl_color_print(f_type_output, context.set.notable, "%s", fake_long_fakefile);
     printf(" or the ");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s", fake_long_settings);
+    fl_color_print(f_type_output, context.set.notable, "%s", fake_long_settings);
     printf(" parameters, the filenames are relative to the data build directory, unless a path is used.");
     printf("%c", f_string_eol[0]);
 
     printf("  For example, with '");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s my_fakefile", f_console_symbol_long_enable, fake_long_fakefile);
+    fl_color_print(f_type_output, context.set.notable, "%s%s my_fakefile", f_console_symbol_long_enable, fake_long_fakefile);
     printf("' the fakefile at '");
-    fl_color_print(f_type_output, context.notable, context.reset, "./%s%smy_fakefile", fake_default_path_data, fake_default_path_build);
+    fl_color_print(f_type_output, context.set.notable, "./%s%smy_fakefile", fake_default_path_data, fake_default_path_build);
     printf(" would be used, however with '");
-    fl_color_print(f_type_output, context.notable, context.reset, "%s%s ./my_fakefile", f_console_symbol_long_enable, fake_long_fakefile);
+    fl_color_print(f_type_output, context.set.notable, "%s%s ./my_fakefile", f_console_symbol_long_enable, fake_long_fakefile);
     printf("' the fakefile at '");
-    fl_color_print(f_type_output, context.notable, context.reset, "./my_fakefile", fake_default_path_data, fake_default_path_build);
+    fl_color_print(f_type_output, context.set.notable, "./my_fakefile", fake_default_path_data, fake_default_path_build);
     printf(" would be used.");
 
     printf("%c%c", f_string_eol[0], f_string_eol[0]);
@@ -303,9 +303,9 @@ extern "C" {
         else if (F_status_is_error(status)) {
           if (data->verbosity != fake_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The operation '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s", operations_name);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' failed.");
+            fl_color_print(f_type_error, data->context.set.error, "ERROR: The operation '");
+            fl_color_print(f_type_error, data->context.set.notable, "%s", operations_name);
+            fl_color_print_line(f_type_error, data->context.set.error, "' failed.");
           }
 
           break;
@@ -325,7 +325,7 @@ extern "C" {
     else {
       if (data->verbosity != fake_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: You failed to specify an operation.");
+        fl_color_print_line(f_type_error, data->context.set.error, "ERROR: You failed to specify an operation.");
         fprintf(f_type_error, "%c", f_string_eol[0]);
       }
 
@@ -402,7 +402,7 @@ extern "C" {
 
     f_macro_string_dynamic_t_delete_simple(data->file_documents_readme);
 
-    fl_macro_color_context_t_delete_simple(data->context);
+    f_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
   }

@@ -31,7 +31,7 @@ extern "C" {
  *   FL_fss_accepted_invalid (with warning bit) if header is technically invalid but can be identified.
  *   FL_fss_header_not (with error bit) if the an error occurred prior to identifying a valid header.
  *
- *   Errors from (with error bit): fl_conversion_string_to_hexidecimal_unsigned().
+ *   Errors (with error bit) from: fl_conversion_string_to_hexidecimal_unsigned().
  *
  * @see fll_fss_identify()
  * @see fll_fss_identify_file()

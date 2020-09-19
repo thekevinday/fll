@@ -206,17 +206,17 @@ extern "C" {
     fflush(f_type_output);
 
     if (found_invalid_utf) {
-      fl_color_print(f_type_error, data.context.error, data.context.reset, "Invalid UTF-8 codes were detected for file '");
-      fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", file_name);
-      fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+      fl_color_print(f_type_error, data.context.set.error, "Invalid UTF-8 codes were detected for file '");
+      fl_color_print(f_type_error, data.context.set.notable, "%s", file_name);
+      fl_color_print_line(f_type_error, data.context.set.error, "'.");
       printf("%c", f_string_eol[0]);
     }
 
     if (size < 0) {
       // @todo: determine what the error from read() is and display it.
-      fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: read() failed for '");
-      fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", file_name);
-      fl_color_print_line(f_type_error, data.context.error, data.context.reset, "'.");
+      fl_color_print(f_type_error, data.context.set.error, "ERROR: read() failed for '");
+      fl_color_print(f_type_error, data.context.set.notable, "%s", file_name);
+      fl_color_print_line(f_type_error, data.context.set.error, "'.");
       printf("%c", f_string_eol[0]);
       status = F_status_set_error(F_failure);
     }
@@ -249,7 +249,7 @@ extern "C" {
     }
 
     if (cell->column == 0) {
-      fl_color_print(f_type_output, data.context.notable, data.context.reset, "%016X ", (uint64_t) cell->row);
+      fl_color_print(f_type_output, data.context.set.notable, "%016X ", (uint64_t) cell->row);
 
       if (*offset > 0) {
         uint8_t offset_to_print = *offset;
@@ -299,7 +299,7 @@ extern "C" {
     if (cell->column < data.width) {
       if (data.mode == byte_dump_mode_hexidecimal) {
         if (invalid[character_current]) {
-          fl_color_print(f_type_output, data.context.error, data.context.reset, " %02x", (uint8_t) byte);
+          fl_color_print(f_type_output, data.context.set.error, " %02x", (uint8_t) byte);
         }
         else {
           printf(" %02x", (uint8_t) byte);
@@ -342,7 +342,7 @@ extern "C" {
       }
       else if (data.mode == byte_dump_mode_octal) {
         if (invalid[character_current]) {
-          fl_color_print(f_type_output, data.context.error, data.context.reset, " %03o", (uint8_t) byte);
+          fl_color_print(f_type_output, data.context.set.error, " %03o", (uint8_t) byte);
         }
         else {
           printf(" %03o", (uint8_t) byte);
@@ -361,7 +361,7 @@ extern "C" {
         binary_string[7] = (byte & 0x01) ? '1' : '0';
 
         if (invalid[character_current]) {
-          fl_color_print(f_type_output, data.context.error, data.context.reset, " %s", binary_string);
+          fl_color_print(f_type_output, data.context.set.error, " %s", binary_string);
         }
         else {
           printf(" %s", binary_string);
@@ -369,7 +369,7 @@ extern "C" {
       }
       else if (data.mode == byte_dump_mode_decimal) {
         if (invalid[character_current]) {
-          fl_color_print(f_type_output, data.context.error, data.context.reset, " %3d", (uint8_t) byte);
+          fl_color_print(f_type_output, data.context.set.error, " %3d", (uint8_t) byte);
         }
         else {
           printf(" %3d", (uint8_t) byte);
@@ -434,7 +434,7 @@ extern "C" {
     uint8_t width_utf = 0;
     bool printed = F_false;
 
-    fl_color_print(f_type_output, data.context.notable, data.context.reset, "  %s ", byte_dump_character_wall);
+    fl_color_print(f_type_output, data.context.set.notable, "  %s ", byte_dump_character_wall);
 
 
     if (*offset > 0) {
@@ -453,7 +453,7 @@ extern "C" {
         }
 
         while (*offset > 0 && j < data.width) {
-          fl_color_print(f_type_output, data.context.warning, data.context.reset, "%s", placeholder);
+          fl_color_print(f_type_output, data.context.set.warning, "%s", placeholder);
           (*offset)--;
           j++;
         } // while
@@ -472,13 +472,13 @@ extern "C" {
         if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
           for (; j < previous->bytes && j < data.width; j++) {
             if (previous->invalid) {
-              fl_color_print(f_type_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
+              fl_color_print(f_type_output, data.context.set.error, "%s", byte_dump_character_placeholder);
             }
             else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
               printf(".");
             }
             else {
-              fl_color_print(f_type_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
+              fl_color_print(f_type_output, data.context.set.warning, "%s", byte_dump_character_placeholder);
             }
           } // for
         }
@@ -503,111 +503,111 @@ extern "C" {
       width_utf = f_macro_utf_byte_width_is(output);
 
       if (invalid[i]) {
-        fl_color_print(f_type_output, data.context.error, data.context.reset, "%s", byte_dump_character_incomplete);
+        fl_color_print(f_type_output, data.context.set.error, "%s", byte_dump_character_incomplete);
       }
       else if (output >= 0 && output <= 32 || output == 127) {
         if (data.presentation == byte_dump_presentation_normal) {
           if (output == 0) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_null);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_null);
           }
           else if (output == 1) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_start_of_header);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_start_of_header);
           }
           else if (output == 2) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_start_of_text);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_start_of_text);
           }
           else if (output == 3) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_end_of_text);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_text);
           }
           else if (output == 4) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_end_of_transmission);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_transmission);
           }
           else if (output == 5) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_end_of_enquiry);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_enquiry);
           }
           else if (output == 6) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_acknowledge);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_acknowledge);
           }
           else if (output == 7) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_bell);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_bell);
           }
           else if (output == 8) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_backspace);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_backspace);
           }
           else if (output == 9) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_tab);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_tab);
           }
           else if (output == 10) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_new_line);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_new_line);
           }
           else if (output == 11) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_tab_vertical);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_tab_vertical);
           }
           else if (output == 12) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_form_feed);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_form_feed);
           }
           else if (output == 13) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_carriage_return);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_carriage_return);
           }
           else if (output == 14) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_shift_out);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_shift_out);
           }
           else if (output == 15) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_shift_in);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_shift_in);
           }
           else if (output == 16) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_data_link_escape);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_data_link_escape);
           }
           else if (output == 17) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_device_control_1);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_1);
           }
           else if (output == 18) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_device_control_2);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_2);
           }
           else if (output == 19) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_device_control_3);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_3);
           }
           else if (output == 20) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_device_control_4);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_4);
           }
           else if (output == 21) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_negative_acknowledge);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_negative_acknowledge);
           }
           else if (output == 22) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_synchronous_idle);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_synchronous_idle);
           }
           else if (output == 23) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_end_of_transmission_block);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_transmission_block);
           }
           else if (output == 24) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_cancel);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_cancel);
           }
           else if (output == 25) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_end_of_medium);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_medium);
           }
           else if (output == 26) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_substitute);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_substitute);
           }
           else if (output == 27) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_escape);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_escape);
           }
           else if (output == 28) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_file_separator);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_file_separator);
           }
           else if (output == 29) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_group_separator);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_group_separator);
           }
           else if (output == 30) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_record_separator);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_record_separator);
           }
           else if (output == 31) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_unit_separator);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_unit_separator);
           }
           else if (output == 32) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_space);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_space);
           }
           else if (output == 127) {
-            fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_delete);
+            fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_delete);
           }
         }
         else if (data.presentation == byte_dump_presentation_simple) {
@@ -622,7 +622,7 @@ extern "C" {
           printf(".");
         }
         else {
-          fl_color_print2(f_type_output, data.context.notable, data.context.warning, data.context.reset, "%s", byte_dump_sequence_space);
+          fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_space);
         }
       }
       else if (f_utf_character_is_zero_width(characters.string[i]) == F_true) {
@@ -630,7 +630,7 @@ extern "C" {
           printf(".");
         }
         else if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
-          fl_color_print(f_type_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
+          fl_color_print(f_type_output, data.context.set.warning, "%s", byte_dump_character_placeholder);
         }
         else {
           printf(" ");
@@ -639,7 +639,7 @@ extern "C" {
       else if (f_utf_character_is_control(characters.string[i]) == F_true) {
         // print a space (or '.') for control characters.
         if (data.presentation == byte_dump_presentation_classic) {
-          fl_color_print(f_type_output, data.context.warning, data.context.reset, ".");
+          fl_color_print(f_type_output, data.context.set.warning, ".");
         }
         else {
           printf(" ");
@@ -677,10 +677,10 @@ extern "C" {
       else if (width_utf == 1) {
         // print invalid placeholder for invalid UTF-8 widths.
         if (invalid[i]) {
-          fl_color_print(f_type_output, data.context.error, data.context.reset, "%s", byte_dump_character_incomplete);
+          fl_color_print(f_type_output, data.context.set.error, "%s", byte_dump_character_incomplete);
         }
         else {
-          fl_color_print(f_type_output, data.context.warning, data.context.reset, "%s", byte_dump_character_incomplete);
+          fl_color_print(f_type_output, data.context.set.warning, "%s", byte_dump_character_incomplete);
         }
       }
       else if (width_utf > 0) {
@@ -743,13 +743,13 @@ extern "C" {
       if (width_utf > 1 && j + 1 < data.width) {
         if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
           if (invalid[i]) {
-            fl_color_print(f_type_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
+            fl_color_print(f_type_output, data.context.set.error, "%s", byte_dump_character_placeholder);
           }
           else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
             printf(".");
           }
           else {
-            fl_color_print(f_type_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
+            fl_color_print(f_type_output, data.context.set.warning, "%s", byte_dump_character_placeholder);
           }
         }
         else {
@@ -761,13 +761,13 @@ extern "C" {
         if (width_utf > 2 && j + 1 < data.width) {
           if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
             if (invalid[i]) {
-              fl_color_print(f_type_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
+              fl_color_print(f_type_output, data.context.set.error, "%s", byte_dump_character_placeholder);
             }
             else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
               printf(".");
             }
             else {
-              fl_color_print(f_type_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
+              fl_color_print(f_type_output, data.context.set.warning, "%s", byte_dump_character_placeholder);
             }
           }
           else {
@@ -779,13 +779,13 @@ extern "C" {
           if (width_utf > 3 && j + 1 < data.width) {
             if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
               if (invalid[i]) {
-                fl_color_print(f_type_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
+                fl_color_print(f_type_output, data.context.set.error, "%s", byte_dump_character_placeholder);
               }
               else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
                 printf(".");
               }
               else {
-                fl_color_print(f_type_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
+                fl_color_print(f_type_output, data.context.set.warning, "%s", byte_dump_character_placeholder);
               }
             }
             else {
@@ -802,13 +802,13 @@ extern "C" {
     if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
       for (; j < data.width; j++) {
         if (invalid[j]) {
-          fl_color_print(f_type_output, data.context.error, data.context.reset, "%s", byte_dump_character_placeholder);
+          fl_color_print(f_type_output, data.context.set.error, "%s", byte_dump_character_placeholder);
         }
         else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
           printf(".");
         }
         else {
-          fl_color_print(f_type_output, data.context.warning, data.context.reset, "%s", byte_dump_character_placeholder);
+          fl_color_print(f_type_output, data.context.set.warning, "%s", byte_dump_character_placeholder);
         }
       } // for
     }
@@ -818,76 +818,76 @@ extern "C" {
       } // for
     }
 
-    fl_color_print(f_type_output, data.context.notable, data.context.reset, " |");
+    fl_color_print(f_type_output, data.context.set.notable, " |");
     printf("%c", f_string_eol[0]);
   }
 #endif // _di_byte_dump_file_
 
 #ifndef _di_byte_dump_print_file_error_
-  void byte_dump_print_file_error(const fl_color_context_t context, const f_string_t function, const f_string_t file_name, const f_status_t status) {
+  void byte_dump_print_file_error(const f_color_context_t context, const f_string_t function, const f_string_t file_name, const f_status_t status) {
     if (status == F_false) {
-      fl_color_print(f_type_error, context.error, context.reset, "ERROR: Failed to find file '");
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
-      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.set.error, "ERROR: Failed to find file '");
+      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
+      fl_color_print_line(f_type_error, context.set.error, "'.");
       return;
     }
 
     if (status == F_parameter) {
-      fl_color_print(f_type_error, context.error, context.reset, "INTERNAL ERROR: Invalid parameter when calling ", function, file_name);
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", function);
-      fl_color_print(f_type_error, context.error, context.reset, "() for the file '");
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
-      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.set.error, "INTERNAL ERROR: Invalid parameter when calling ", function, file_name);
+      fl_color_print(f_type_error, context.set.notable, "%s", function);
+      fl_color_print(f_type_error, context.set.error, "() for the file '");
+      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
+      fl_color_print_line(f_type_error, context.set.error, "'.");
       return;
     }
 
     if (status == F_name) {
-      fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid filename '");
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
-      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.set.error, "ERROR: Invalid filename '");
+      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
+      fl_color_print_line(f_type_error, context.set.error, "'.");
       return;
     }
 
     if (status == F_memory_out) {
-      fl_color_print(f_type_error, context.error, context.reset, "CRITICAL ERROR: Unable to allocate memory, while trying to access file '");
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
-      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.set.error, "CRITICAL ERROR: Unable to allocate memory, while trying to access file '");
+      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
+      fl_color_print_line(f_type_error, context.set.error, "'.");
       return;
     }
 
     if (status == F_number_overflow) {
-      fl_color_print(f_type_error, context.error, context.reset, "ERROR: Overflow while trying to access file '");
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
-      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.set.error, "ERROR: Overflow while trying to access file '");
+      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
+      fl_color_print_line(f_type_error, context.set.error, "'.");
       return;
     }
 
     if (status == F_directory) {
-      fl_color_print(f_type_error, context.error, context.reset, "ERROR: Invalid directory while trying to access file '");
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
-      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.set.error, "ERROR: Invalid directory while trying to access file '");
+      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
+      fl_color_print_line(f_type_error, context.set.error, "'.");
       return;
     }
 
     if (status == F_access_denied) {
-      fl_color_print(f_type_error, context.error, context.reset, "ERROR: Access denied while trying to access file '");
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
-      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.set.error, "ERROR: Access denied while trying to access file '");
+      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
+      fl_color_print_line(f_type_error, context.set.error, "'.");
       return;
     }
 
     if (status == F_loop) {
-      fl_color_print(f_type_error, context.error, context.reset, "ERROR: Loop while trying to access file '");
-      fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
-      fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+      fl_color_print(f_type_error, context.set.error, "ERROR: Loop while trying to access file '");
+      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
+      fl_color_print_line(f_type_error, context.set.error, "'.");
       return;
     }
 
-    fl_color_print(f_type_error, context.error, context.reset, "UNKNOWN ERROR: (");
-    fl_color_print(f_type_error, context.notable, context.reset, "%llu", status);
-    fl_color_print(f_type_error, context.error, context.reset, ") occurred for file '");
-    fl_color_print(f_type_error, context.notable, context.reset, "%s", file_name);
-    fl_color_print_line(f_type_error, context.error, context.reset, "'.");
+    fl_color_print(f_type_error, context.set.error, "UNKNOWN ERROR: (");
+    fl_color_print(f_type_error, context.set.notable, "%llu", status);
+    fl_color_print(f_type_error, context.set.error, ") occurred for file '");
+    fl_color_print(f_type_error, context.set.notable, "%s", file_name);
+    fl_color_print_line(f_type_error, context.set.error, "'.");
   }
 #endif // _di_byte_dump_print_file_error_
 

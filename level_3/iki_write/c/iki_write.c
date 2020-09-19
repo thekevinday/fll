@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_write_print_help_
-  f_return_status iki_write_print_help(const fl_color_context_t context) {
+  f_return_status iki_write_print_help(const f_color_context_t context) {
     fll_program_print_help_header(context, iki_write_name_long, iki_write_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -27,12 +27,12 @@ extern "C" {
 
     fll_program_print_help_usage(context, iki_write_name, "filename(s)");
 
-    fl_color_print(f_type_output, context.important, context.reset, " Notes:");
+    fl_color_print(f_type_output, context.set.important, " Notes:");
 
     printf("%c", f_string_eol[0], f_string_eol[0]);
 
     printf("  This program will accept object and content strings to generate an IKI string, such as: ");
-    fl_color_print(f_type_output, context.notable, context.reset, "object:\"content\"");
+    fl_color_print(f_type_output, context.set.notable, "object:\"content\"");
     printf(".%c", f_string_eol[0]);
 
     printf("  Each object must have a content (and each content must have an object).%c", f_string_eol[0]);
@@ -88,11 +88,11 @@ extern "C" {
     if (data->parameters[iki_write_parameter_verbose].result == f_console_result_found) {
       if (data->parameters[iki_write_parameter_quiet].result == f_console_result_found) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: Cannot specify the '");
-        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, f_console_standard_long_verbose);
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "' parameter with the '");
-        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, f_console_standard_long_quiet);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameter.");
+        fl_color_print(f_type_error, data->context.set.error, "ERROR: Cannot specify the '");
+        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, f_console_standard_long_verbose);
+        fl_color_print(f_type_error, data->context.set.error, "' parameter with the '");
+        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, f_console_standard_long_quiet);
+        fl_color_print_line(f_type_error, data->context.set.error, "' parameter.");
 
         status = F_status_set_error(F_parameter);
       }
@@ -115,9 +115,9 @@ extern "C" {
       if (data->parameters[iki_write_parameter_file].result == f_console_result_additional) {
         if (data->parameters[iki_write_parameter_file].additional.used > 1) {
           if (data->verbosity != iki_write_verbosity_quiet) {
-            fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-            fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' may only be specified once.");
+            fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
+            fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
+            fl_color_print_line(f_type_error, data->context.set.error, "' may only be specified once.");
           }
 
           status = F_status_set_error(F_parameter);
@@ -135,9 +135,9 @@ extern "C" {
       }
       else if (data->parameters[iki_write_parameter_file].result == f_console_result_found) {
         if (data->verbosity != iki_write_verbosity_quiet) {
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
-          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
+          fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
+          fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
         }
 
         status = F_status_set_error(F_parameter);
@@ -146,9 +146,9 @@ extern "C" {
 
     if (F_status_is_fine(status) && data->parameters[iki_write_parameter_object].result == f_console_result_found) {
       if (data->verbosity != iki_write_verbosity_quiet) {
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
+        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
+        fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
       }
 
       status = F_status_set_error(F_parameter);
@@ -156,9 +156,9 @@ extern "C" {
 
     if (F_status_is_fine(status) && data->parameters[iki_write_parameter_content].result == f_console_result_found) {
       if (data->verbosity != iki_write_verbosity_quiet) {
-        fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
-        fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' was specified, but no value was given.");
+        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
+        fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
       }
 
       status = F_status_set_error(F_parameter);
@@ -168,11 +168,11 @@ extern "C" {
       if (data->parameters[iki_write_parameter_object].result != f_console_result_additional && data->parameters[iki_write_parameter_content].result != f_console_result_additional) {
         if (data->verbosity != iki_write_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: No data provided, either pipe the data or use the '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "' and the '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
-          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' parameters.");
+          fl_color_print(f_type_error, data->context.set.error, "ERROR: No data provided, either pipe the data or use the '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
+          fl_color_print(f_type_error, data->context.set.error, "' and the '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
+          fl_color_print_line(f_type_error, data->context.set.error, "' parameters.");
         }
 
         status = F_status_set_error(F_parameter);
@@ -182,11 +182,11 @@ extern "C" {
     if (F_status_is_fine(status)) {
       if (data->parameters[iki_write_parameter_object].additional.used != data->parameters[iki_write_parameter_content].additional.used) {
         if (data->verbosity != iki_write_verbosity_quiet) {
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "ERROR: The parameters '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
-          fl_color_print(f_type_error, data->context.error, data->context.reset, "' and '");
-          fl_color_print(f_type_error, data->context.notable, data->context.reset, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
-          fl_color_print_line(f_type_error, data->context.error, data->context.reset, "' must be specified the same number of times.");
+          fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameters '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
+          fl_color_print(f_type_error, data->context.set.error, "' and '");
+          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
+          fl_color_print_line(f_type_error, data->context.set.error, "' must be specified the same number of times.");
         }
 
         status = F_status_set_error(F_parameter);
@@ -242,7 +242,7 @@ extern "C" {
 
             if (!buffer.used) {
               if (data->verbosity != iki_write_verbosity_quiet) {
-                fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: The pipe has no content.");
+                fl_color_print_line(f_type_error, data->context.set.error, "ERROR: The pipe has no content.");
               }
 
               status = F_status_set_error(F_parameter);
@@ -268,7 +268,7 @@ extern "C" {
 
           if (object_ended && previous == range.start) {
             if (data->verbosity != iki_write_verbosity_quiet) {
-              fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: The pipe has incorrectly placed newlines.");
+              fl_color_print_line(f_type_error, data->context.set.error, "ERROR: The pipe has incorrectly placed newlines.");
             }
 
             status = F_status_set_error(F_parameter);
@@ -325,7 +325,7 @@ extern "C" {
 
         if (F_status_is_fine(status) && object_ended) {
           if (data->verbosity != iki_write_verbosity_quiet) {
-            fl_color_print_line(f_type_error, data->context.error, data->context.reset, "ERROR: The pipe has an object without content.");
+            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: The pipe has an object without content.");
           }
 
           status = F_status_set_error(F_parameter);
@@ -396,7 +396,7 @@ extern "C" {
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
     f_macro_string_dynamic_t_delete_simple(data->buffer);
-    fl_macro_color_context_t_delete_simple(data->context);
+    f_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
   }

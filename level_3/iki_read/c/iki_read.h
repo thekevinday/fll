@@ -248,7 +248,7 @@ extern "C" {
 
     iki_read_substitutions_t replacements;
 
-    fl_color_context_t context;
+    f_color_context_t context;
   } iki_read_data_t;
 
   #define iki_read_data_t_initialize \
@@ -262,7 +262,7 @@ extern "C" {
       0, \
       f_string_dynamic_t_initialize, \
       iki_read_substitutions_t_initialize, \
-      fl_color_context_t_initialize, \
+      f_color_context_t_initialize, \
     }
 #endif // _di_iki_read_data_t_
 
@@ -276,7 +276,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_iki_read_print_help_
-  extern f_return_status iki_read_print_help(const fl_color_context_t context);
+  extern f_return_status iki_read_print_help(const f_color_context_t context);
 #endif // _di_iki_read_print_help_
 
 /**

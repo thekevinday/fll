@@ -114,14 +114,14 @@ extern "C" {
 #endif // _di_fl_color_save_
 
 #ifndef _di_fl_color_print_
-  f_return_status fl_color_print(FILE *file, const f_string_static_t start_color, const f_string_static_t end_color, const f_string_t string, ...) {
+  f_return_status fl_color_print(FILE *file, const f_color_set_t set, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return F_status_set_error(F_parameter);
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (start_color.used) {
-      f_status_t status = f_print_dynamic(file, start_color);
+    if (set.before) {
+      f_status_t status = f_print_dynamic(file, *set.before);
       if (F_status_is_error(status)) return status;
     }
 
@@ -133,8 +133,8 @@ extern "C" {
 
     va_end(ap);
 
-    if (end_color.used) {
-      f_status_t status = f_print_dynamic(file, end_color);
+    if (set.after) {
+      f_status_t status = f_print_dynamic(file, *set.after);
 
       if (F_status_is_error(status)) return status;
     }
@@ -144,17 +144,21 @@ extern "C" {
 #endif // _di_fl_color_print_
 
 #ifndef _di_fl_color_print2_
-  f_return_status fl_color_print2(FILE *file, const f_string_static_t start_color, const f_string_static_t extra_color, const f_string_static_t end_color, const f_string_t string, ...) {
+  f_return_status fl_color_print2(FILE *file, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return F_status_set_error(F_parameter);
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (start_color.used) {
-      f_status_t status = f_print_dynamic(file, start_color);
-      if (F_status_is_error(status)) return status;
+    f_status_t status = F_none;
 
-      status = f_print_dynamic(file, extra_color);
+    if (set.before) {
+      status = f_print_dynamic(file, *set.before);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (extra.before) {
+      status = f_print_dynamic(file, *extra.before);
       if (F_status_is_error(status)) return status;
     }
 
@@ -166,8 +170,13 @@ extern "C" {
 
     va_end(ap);
 
-    if (end_color.used) {
-      f_status_t status = f_print_dynamic(file, end_color);
+    if (set.after) {
+      status = f_print_dynamic(file, *set.after);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (extra.after) {
+      status = f_print_dynamic(file, *extra.after);
       if (F_status_is_error(status)) return status;
     }
 
@@ -176,14 +185,14 @@ extern "C" {
 #endif // _di_fl_color_print2_
 
 #ifndef _di_fl_color_print_line_
-  f_return_status fl_color_print_line(FILE *file, const f_string_static_t start_color, const f_string_static_t end_color, const f_string_t string, ...) {
+  f_return_status fl_color_print_line(FILE *file, const f_color_set_t set, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return F_status_set_error(F_parameter);
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (start_color.used) {
-      f_status_t status = f_print_dynamic(file, start_color);
+    if (set.before) {
+      f_status_t status = f_print_dynamic(file, *set.before);
       if (F_status_is_error(status)) return status;
     }
 
@@ -195,8 +204,8 @@ extern "C" {
 
     va_end(ap);
 
-    if (end_color.used) {
-      f_status_t status = f_print_dynamic(file, end_color);
+    if (set.after) {
+      f_status_t status = f_print_dynamic(file, *set.after);
       if (F_status_is_error(status)) return status;
     }
 
@@ -208,17 +217,21 @@ extern "C" {
 #endif // _di_fl_color_print_line_
 
 #ifndef _di_fl_color_print2_line_
-  f_return_status fl_color_print2_line(FILE *file, const f_string_static_t start_color, const f_string_static_t extra_color, const f_string_static_t end_color, const f_string_t string, ...) {
+  f_return_status fl_color_print2_line(FILE *file, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (file == 0) return F_status_set_error(F_parameter);
       if (string == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (start_color.used) {
-      f_status_t status = f_print_dynamic(file, start_color);
-      if (F_status_is_error(status)) return status;
+    f_status_t status = F_none;
 
-      status = f_print_dynamic(file, extra_color);
+    if (set.before) {
+      status = f_print_dynamic(file, *set.before);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (extra.before) {
+      status = f_print_dynamic(file, *extra.before);
       if (F_status_is_error(status)) return status;
     }
 
@@ -230,8 +243,13 @@ extern "C" {
 
     va_end(ap);
 
-    if (end_color.used) {
-      f_status_t status = f_print_dynamic(file, end_color);
+    if (set.after) {
+      status = f_print_dynamic(file, *set.after);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (extra.after) {
+      status = f_print_dynamic(file, *extra.after);
       if (F_status_is_error(status)) return status;
     }
 
@@ -254,7 +272,7 @@ extern "C" {
 #endif // _di_fl_color_print_code_
 
 #ifndef _di_fl_color_load_context_
-  f_return_status fl_color_load_context(fl_color_context_t *context, const bool use_light_colors) {
+  f_return_status fl_color_load_context(f_color_context_t *context, const bool use_light_colors) {
     #ifndef _di_level_1_parameter_checking_
       if (context == 0) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -266,37 +284,93 @@ extern "C" {
       int8_t *environment = getenv("TERM");
 
       if (!environment || strncmp(environment, "linux", 6) == 0) {
-        context->color_list = f_color_linux;
+        f_macro_color_t_set_linux(context->list);
       }
       else {
-        context->color_list = f_color_xterminal;
+        f_macro_color_t_set_xterminal(context->list);
       }
     }
 
-    // load the colors
+    status = fl_macro_color_save_1(&context->reset, context->format, context->list.reset);
+
+    if (F_status_is_error_not(status)) {
+      status = fl_macro_color_save_1(&context->warning, context->format, context->list.yellow);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = fl_macro_color_save_2(&context->error, context->format, context->list.bold, context->list.red);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = fl_macro_color_save_1(&context->notable, context->format, context->list.bold);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = fl_macro_color_save_1(&context->standout,  context->format, context->list.purple);
+    }
+
     if (use_light_colors) {
-      status = fl_macro_color_save_1(&context->reset, context->color_format, context->color_list.reset);
+      if (F_status_is_error_not(status)) {
+        status = fl_macro_color_save_2(&context->title, context->format, context->list.bold, context->list.blue);
+      }
 
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->warning,   context->color_format, context->color_list.yellow);
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_2(&context->error,     context->color_format, context->color_list.bold, context->color_list.red);
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_2(&context->title,     context->color_format, context->color_list.bold, context->color_list.blue);
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->notable,   context->color_format, context->color_list.bold);
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->important, context->color_format, context->color_list.blue);
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->standout,  context->color_format, context->color_list.purple);
+      if (F_status_is_error_not(status)) {
+        status = fl_macro_color_save_1(&context->important, context->format, context->list.blue);
+      }
 
-      context->mode = f_color_mode_light;
+      if (F_status_is_error_not(status)) {
+        context->mode = f_color_mode_light;
+      }
+
+      if (F_status_is_error_not(status)) {
+        status = fl_macro_color_save_1(&context->standout,  context->format, context->list.purple);
+      }
     }
     else {
-      status = fl_macro_color_save_1(&context->reset, context->color_format, context->color_list.reset);
+      if (F_status_is_error_not(status)) {
+        status = fl_macro_color_save_2(&context->title, context->format, context->list.bold, context->list.yellow);
+      }
 
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->warning,   context->color_format, context->color_list.yellow);
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_2(&context->error,     context->color_format, context->color_list.bold, context->color_list.red);
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_2(&context->title,     context->color_format, context->color_list.bold, context->color_list.yellow);
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->notable,   context->color_format, context->color_list.bold);
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_2(&context->important, context->color_format, context->color_list.bold, context->color_list.green);
-      if (F_status_is_error_not(status)) status = fl_macro_color_save_1(&context->standout,  context->color_format, context->color_list.green);
+      if (F_status_is_error_not(status)) {
+        status = fl_macro_color_save_2(&context->important, context->format, context->list.bold, context->list.green);
+      }
 
-      context->mode = f_color_mode_dark;
+      if (F_status_is_error_not(status)) {
+        context->mode = f_color_mode_dark;
+      }
+
+      if (F_status_is_error_not(status)) {
+        status = fl_macro_color_save_1(&context->standout,  context->format, context->list.green);
+      }
+    }
+
+    if (F_status_is_error_not(status)) {
+      context->set.warning.before = &context->warning;
+      context->set.warning.after = &context->reset;
+
+      context->set.error.before = &context->error;
+      context->set.error.after = &context->reset;
+
+      context->set.title.before = &context->title;
+      context->set.title.after = &context->reset;
+
+      context->set.notable.before = &context->notable;
+      context->set.notable.after = &context->reset;
+
+      context->set.important.before = &context->important;
+      context->set.important.after = &context->reset;
+
+      context->set.standout.before = &context->standout;
+      context->set.standout.after = &context->reset;
+
+      context->set.normal.before = &context->normal;
+      context->set.normal.after = &context->reset;
+
+      context->set.warning.before = &context->warning;
+      context->set.warning.after = &context->reset;
+
+      context->set.normal_reset.before = &context->normal_reset;
+      context->set.normal_reset.after = &context->reset;
     }
 
     return status;

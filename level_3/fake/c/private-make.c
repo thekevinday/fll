@@ -64,9 +64,9 @@ extern "C" {
         else if (status == F_exist_not) {
           if (data.verbosity != fake_verbosity_quiet) {
             fprintf(print.to, "%c", f_string_eol[0]);
-            fl_color_print(print.to, print.context, data.context.reset, "%s: The group name '", print.prefix);
-            fl_color_print(print.to, data.context.notable, data.context.reset, "%s", buffer.string);
-            fl_color_print_line(print.to, print.context, data.context.reset, "' was not found.");
+            fl_color_print(print.to, print.context, "%s: The group name '", print.prefix);
+            fl_color_print(print.to, data.context.set.notable, "%s", buffer.string);
+            fl_color_print_line(print.to, print.context, "' was not found.");
           }
 
           return F_status_set_error(F_failure);
@@ -81,9 +81,9 @@ extern "C" {
     else if (number > f_type_size_32_unsigned) {
       if (data.verbosity != fake_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
-        fl_color_print(print.to, print.context, data.context.reset, "%s: The number '", print.prefix);
-        fl_color_print(print.to, data.context.notable, data.context.reset, "%llu", number);
-        fl_color_print_line(print.to, print.context, data.context.reset, "' is too large.");
+        fl_color_print(print.to, print.context, "%s: The number '", print.prefix);
+        fl_color_print(print.to, data.context.set.notable, "%llu", number);
+        fl_color_print_line(print.to, print.context, "' is too large.");
       }
     }
 
@@ -105,9 +105,9 @@ extern "C" {
       if (data.verbosity != fake_verbosity_quiet) {
         if (F_status_set_fine(status) == F_syntax) {
           fprintf(print.to, "%c", f_string_eol[0]);
-          fl_color_print(print.to, print.context, data.context.reset, "%s: The mode '", print.prefix);
-          fl_color_print(print.to, data.context.notable, data.context.reset, "%s", buffer.string);
-          fl_color_print_line(print.to, print.context, data.context.reset, "' is invalid.");
+          fl_color_print(print.to, print.context, "%s: The mode '", print.prefix);
+          fl_color_print(print.to, data.context.set.notable, "%s", buffer.string);
+          fl_color_print_line(print.to, print.context, "' is invalid.");
         }
         else {
           fake_print_message(data, status, "f_file_mode_from_string", F_true, print);
@@ -142,9 +142,9 @@ extern "C" {
         else if (status == F_exist_not) {
           if (data.verbosity != fake_verbosity_quiet) {
             fprintf(print.to, "%c", f_string_eol[0]);
-            fl_color_print(print.to, print.context, data.context.reset, "%s: The user name '", print.prefix);
-            fl_color_print(print.to, data.context.notable, data.context.reset, "%s", buffer.string);
-            fl_color_print_line(print.to, print.context, data.context.reset, "' was not found.");
+            fl_color_print(print.to, print.context, "%s: The user name '", print.prefix);
+            fl_color_print(print.to, data.context.set.notable, "%s", buffer.string);
+            fl_color_print_line(print.to, print.context, "' was not found.");
           }
 
           return F_status_set_error(F_failure);
@@ -159,9 +159,9 @@ extern "C" {
     else if (number > f_type_size_32_unsigned) {
       if (data.verbosity != fake_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
-        fl_color_print(print.to, print.context, data.context.reset, "%s: The number '", print.prefix);
-        fl_color_print(print.to, data.context.notable, data.context.reset, "%llu", number);
-        fl_color_print_line(print.to, print.context, data.context.reset, "' is too large.");
+        fl_color_print(print.to, print.context, "%s: The number '", print.prefix);
+        fl_color_print(print.to, data.context.set.notable, "%llu", number);
+        fl_color_print_line(print.to, print.context, "' is too large.");
       }
     }
 
@@ -190,9 +190,9 @@ extern "C" {
     if (!data_make->buffer.used) {
       if (data.verbosity == fake_verbosity_verbose) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the fakefile '");
-        fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", data.file_data_build_fakefile.string);
-        fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' is empty.");
+        fl_color_print(f_type_warning, data.context.set.warning, "WARNING: the fakefile '");
+        fl_color_print(f_type_warning, data.context.set.notable, "%s", data.file_data_build_fakefile.string);
+        fl_color_print(f_type_warning, data.context.set.warning, "' is empty.");
       }
 
       return;
@@ -305,11 +305,11 @@ extern "C" {
       if (missing_main) {
         if (data.verbosity != fake_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The fakefile '");
-          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", data.file_data_build_fakefile.string);
-          fl_color_print(f_type_error, data.context.error, data.context.reset, "' is missing the required '");
-          fl_color_print(f_type_error, data.context.notable, data.context.reset, "%s", fake_make_section_main);
-          fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' object.");
+          fl_color_print(f_type_error, data.context.set.error, "ERROR: The fakefile '");
+          fl_color_print(f_type_error, data.context.set.notable, "%s", data.file_data_build_fakefile.string);
+          fl_color_print(f_type_error, data.context.set.error, "' is missing the required '");
+          fl_color_print(f_type_error, data.context.set.notable, "%s", fake_make_section_main);
+          fl_color_print_line(f_type_error, data.context.set.error, "' object.");
         }
 
         *status = F_status_set_error(F_failure);
@@ -436,16 +436,16 @@ extern "C" {
                 }
                 else if (data.verbosity == fake_verbosity_verbose) {
                   fprintf(f_type_warning, "%c", f_string_eol[0]);
-                  fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: The environment name '");
-                  fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", name_define.string);
-                  fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "' is already added.");
+                  fl_color_print(f_type_warning, data.context.set.warning, "WARNING: The environment name '");
+                  fl_color_print(f_type_warning, data.context.set.notable, "%s", name_define.string);
+                  fl_color_print_line(f_type_warning, data.context.set.warning, "' is already added.");
                 }
               }
               else if (data.verbosity == fake_verbosity_verbose) {
                 fprintf(f_type_warning, "%c", f_string_eol[0]);
-                fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: The environment name '");
-                fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", name_define.string);
-                fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "' is invalid, ignoring.");
+                fl_color_print(f_type_warning, data.context.set.warning, "WARNING: The environment name '");
+                fl_color_print(f_type_warning, data.context.set.notable, "%s", name_define.string);
+                fl_color_print_line(f_type_warning, data.context.set.warning, "' is invalid, ignoring.");
               }
 
               name_define.used = 0;
@@ -696,13 +696,13 @@ extern "C" {
           else {
             if (data.verbosity != fake_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
-              fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Invalid characters in the define setting name '");
+              fl_color_print(f_type_error, data.context.set.error, "ERROR: Invalid characters in the define setting name '");
 
               fl_color_print_code(f_type_error, data.context.notable);
               f_print_dynamic(f_type_error, define.array[i].name);
               fl_color_print_code(f_type_error, data.context.reset);
 
-              fl_color_print_line(f_type_error, data.context.error, data.context.reset, "', only alpha-numeric ASCII characters and underscore (without a leading digit) is allowed.");
+              fl_color_print_line(f_type_error, data.context.set.error, "', only alpha-numeric ASCII characters and underscore (without a leading digit) is allowed.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -1019,7 +1019,7 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Making project.");
+      fl_color_print_line(f_type_output, data.context.set.important, "Making project.");
     }
 
     f_status_t status = F_none;
@@ -1079,12 +1079,12 @@ extern "C" {
 
     if (data_make.setting_make.fail == fake_make_operation_fail_type_exit) {
       data_make.print.prefix = fake_make_print_error;
-      data_make.print.context = data.context.error;
+      data_make.print.context = data.context.set.error;
       data_make.print.to = f_type_error;
     }
     else if (data_make.setting_make.fail == fake_make_operation_fail_type_warn) {
       data_make.print.prefix = fake_make_print_warning;
-      data_make.print.context = data.context.warning;
+      data_make.print.context = data.context.set.warning;
       data_make.print.to = f_type_warning;
     }
     else {
@@ -1102,11 +1102,11 @@ extern "C" {
 
       if (F_status_is_error(status_path) && data.verbosity == fake_verbosity_verbose) {
         fprintf(f_type_warning, "%c", f_string_eol[0]);
-        fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: Failed change back to orignal path '");
-        fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", data_make.path.stack.array[0].string);
-        fl_color_print(f_type_warning, data.context.warning, data.context.reset, "', status code = ");
-        fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%llu", F_status_set_fine(status_path));
-        fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, ".");
+        fl_color_print(f_type_warning, data.context.set.warning, "WARNING: Failed change back to orignal path '");
+        fl_color_print(f_type_warning, data.context.set.notable, "%s", data_make.path.stack.array[0].string);
+        fl_color_print(f_type_warning, data.context.set.warning, "', status code = ");
+        fl_color_print(f_type_warning, data.context.set.notable, "%llu", F_status_set_fine(status_path));
+        fl_color_print_line(f_type_warning, data.context.set.warning, ".");
       }
     }
 
@@ -1861,13 +1861,13 @@ extern "C" {
     if (data.verbosity != fake_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
 
-      fl_color_print(f_type_output, data.context.important, data.context.reset, "Processing Section '");
+      fl_color_print(f_type_output, data.context.set.important, "Processing Section '");
 
       fl_color_print_code(f_type_output, data.context.notable);
       f_print_dynamic_partial(f_type_output, data_make->buffer, section->name);
       fl_color_print_code(f_type_output, data.context.reset);
 
-      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "'.");
+      fl_color_print_line(f_type_output, data.context.set.important, "'.");
     }
 
     if (!section->objects.used) {
@@ -2116,7 +2116,7 @@ extern "C" {
         if (F_status_set_fine(*status) == F_signal_abort && section_stack->used == 0) {
           data_make->setting_make.fail = fake_make_operation_fail_type_exit;
           data_make->print.prefix = fake_make_print_error;
-          data_make->print.context = data.context.error;
+          data_make->print.context = data.context.set.error;
           data_make->print.to = f_type_error;
         }
 
@@ -2183,9 +2183,9 @@ extern "C" {
         }
 
         fprintf(data_make->print.to, "%c", f_string_eol[0]);
-        fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Incomplete '", data_make->print.prefix);
-        fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", type_name);
-        fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' at end of section.");
+        fl_color_print(data_make->print.to, data_make->print.context, "%s: Incomplete '", data_make->print.prefix);
+        fl_color_print(data_make->print.to, data.context.set.notable, "%s", type_name);
+        fl_color_print_line(data_make->print.to, data_make->print.context, "' at end of section.");
       }
 
       fake_print_message_section_operation_failed(data, data_make->buffer, section->name, section->objects.array[section->objects.used - 1], data_make->print);
@@ -2484,9 +2484,9 @@ extern "C" {
           if (F_status_set_fine(*status) == F_file_found_not) {
             if (data.verbosity == fake_verbosity_verbose) {
               fprintf(f_type_warning, "%c", f_string_eol[0]);
-              fl_color_print(f_type_warning, data.context.warning, data.context.reset, "WARNING: the file '");
-              fl_color_print(f_type_warning, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
-              fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "' was not found.");
+              fl_color_print(f_type_warning, data.context.set.warning, "WARNING: the file '");
+              fl_color_print(f_type_warning, data.context.set.notable, "%s", arguments.array[i].string);
+              fl_color_print_line(f_type_warning, data.context.set.warning, "' was not found.");
             }
 
             *status = F_none;
@@ -2559,7 +2559,7 @@ extern "C" {
         // forcing exit forces fail mode.
         data_make->setting_make.fail = fake_make_operation_fail_type_exit;
         data_make->print.prefix = fake_make_print_error;
-        data_make->print.context = data.context.error;
+        data_make->print.context = data.context.set.error;
         data_make->print.to = f_type_error;
       }
       else {
@@ -2578,13 +2578,13 @@ extern "C" {
       if (fl_string_dynamic_compare_string(fake_make_operation_argument_exit, arguments.array[0], fake_make_operation_argument_exit_length) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_type_exit;
         data_make->print.prefix = fake_make_print_error;
-        data_make->print.context = data.context.error;
+        data_make->print.context = data.context.set.error;
         data_make->print.to = f_type_error;
       }
       else if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn, arguments.array[0], fake_make_operation_argument_warn_length) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_type_warn;
         data_make->print.prefix = fake_make_print_warning;
-        data_make->print.context = data.context.warning;
+        data_make->print.context = data.context.set.warning;
         data_make->print.to = f_type_warning;
       }
       else if (fl_string_dynamic_compare_string(fake_make_operation_argument_ignore, arguments.array[0], fake_make_operation_argument_ignore_length) == F_equal_to) {
@@ -3132,14 +3132,14 @@ extern "C" {
             printf("%c", f_string_eol[0]);
 
             if ((i == 1 && number_left > f_number_t_size_unsigned) || (i > 1 && number_right > f_number_t_size_unsigned)) {
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The number '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%c%s", arguments.array[i].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' may only be between the ranges -%llu to %llu.", f_number_t_size_unsigned, f_number_t_size_unsigned);
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: The number '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%c%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "' may only be between the ranges -%llu to %llu.", f_number_t_size_unsigned, f_number_t_size_unsigned);
             }
             else {
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Invalid or unsupported number provided '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: Invalid or unsupported number provided '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
             }
           }
         }
@@ -3684,9 +3684,9 @@ extern "C" {
       if (F_status_set_fine(status) == F_file_found_not) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           fprintf(data_make->print.to, "%c", f_string_eol[0]);
-          fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find program '", data_make->print.prefix);
-          fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", program.string);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' for executing.");
+          fl_color_print(data_make->print.to, data_make->print.context, "%s: Failed to find program '", data_make->print.prefix);
+          fl_color_print(data_make->print.to, data.context.set.notable, "%s", program.string);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "' for executing.");
         }
       }
       else if (F_status_set_fine(status) != F_failure) {
@@ -3757,9 +3757,9 @@ extern "C" {
 
     if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
       fprintf(data_make->print.to, "%c", f_string_eol[0]);
-      fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed with return code '", data_make->print.prefix);
-      fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", data_make->setting_make.parameter.array[0].value.array[0].string);
-      fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+      fl_color_print(data_make->print.to, data_make->print.context, "%s: Failed with return code '", data_make->print.prefix);
+      fl_color_print(data_make->print.to, data.context.set.notable, "%s", data_make->setting_make.parameter.array[0].value.array[0].string);
+      fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
     }
 
     if (data_make->setting_make.fail == fake_make_operation_fail_type_exit) {
@@ -3825,7 +3825,7 @@ extern "C" {
       if (arguments.used == 0) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -3835,9 +3835,9 @@ extern "C" {
 
           if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
             fprintf(data_make->print.to, "%c", f_string_eol[0]);
-            fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: No indexer has been specified, cannot perform '", data_make->print.prefix);
-            fl_color_print(data_make->print.to, data.context.notable, data.context.reset, fake_make_operation_index);
-            fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' section operation.");
+            fl_color_print(data_make->print.to, data_make->print.context, "%s: No indexer has been specified, cannot perform '", data_make->print.prefix);
+            fl_color_print(data_make->print.to, data.context.set.notable, fake_make_operation_index);
+            fl_color_print_line(data_make->print.to, data_make->print.context, "' section operation.");
           }
 
           *status = F_status_set_error(F_failure);
@@ -3851,7 +3851,7 @@ extern "C" {
       if (arguments.used > 1) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has too many arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Has too many arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -3862,9 +3862,9 @@ extern "C" {
 
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Unsupported break type '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: Unsupported break type '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[0].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -3879,7 +3879,7 @@ extern "C" {
       if (arguments.used > 1) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has too many arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Has too many arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -3898,9 +3898,9 @@ extern "C" {
           if (status_file == F_file_found_not) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", path_file);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: Failed to find file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", path_file);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
             }
 
             *status = F_status_set_error(status_file);
@@ -3912,9 +3912,9 @@ extern "C" {
           else if (!status_file) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", path_file);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a regular file.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: The file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", path_file);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "' must be a regular file.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -3923,7 +3923,7 @@ extern "C" {
         else {
           if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
             printf("%c", f_string_eol[0]);
-            fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Filename argument must not be an empty string.", data_make->print.prefix);
+            fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Filename argument must not be an empty string.", data_make->print.prefix);
           }
 
           *status = F_status_set_error(F_failure);
@@ -3937,7 +3937,7 @@ extern "C" {
       if (arguments.used) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has too many arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Has too many arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -3947,7 +3947,7 @@ extern "C" {
 
           if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
             printf("%c", f_string_eol[0]);
-            fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Must not attempt to pop project root off of path stack.", data_make->print.prefix);
+            fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Must not attempt to pop project root off of path stack.", data_make->print.prefix);
           }
 
           *status = F_status_set_error(F_failure);
@@ -3975,9 +3975,9 @@ extern "C" {
           if (f_file_exists(arguments.array[i].string) != F_true) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: Failed to find file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -3991,9 +3991,9 @@ extern "C" {
           if (status_file == F_false || status_file == F_file_found_not) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: The last file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[arguments.used - 1].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "' must be a valid directory.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -4013,9 +4013,9 @@ extern "C" {
             if (status_file == F_false) {
               if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
                 printf("%c", f_string_eol[0]);
-                fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
-                fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
-                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+                fl_color_print(data_make->print.to, data_make->print.context, "%s: The last file '", data_make->print.prefix);
+                fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[arguments.used - 1].string);
+                fl_color_print_line(data_make->print.to, data_make->print.context, "' must be a valid directory.");
               }
 
               *status = F_status_set_error(F_failure);
@@ -4026,7 +4026,7 @@ extern "C" {
       else {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4039,7 +4039,7 @@ extern "C" {
       if (arguments.used == 0) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4047,9 +4047,9 @@ extern "C" {
       else if (data_make->setting_build.build_compiler.used) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           fprintf(data_make->print.to, "%c", f_string_eol[0]);
-          fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: No compiler has been specified, cannot perform '", data_make->print.prefix);
-          fl_color_print(data_make->print.to, data.context.notable, data.context.reset, fake_make_operation_compile);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' section operation.");
+          fl_color_print(data_make->print.to, data_make->print.context, "%s: No compiler has been specified, cannot perform '", data_make->print.prefix);
+          fl_color_print(data_make->print.to, data.context.set.notable, fake_make_operation_compile);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "' section operation.");
         }
 
         *status = F_status_set_error(F_failure);
@@ -4076,9 +4076,9 @@ extern "C" {
           if (f_file_exists(arguments.array[i].string) != F_true) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: Failed to find file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -4092,9 +4092,9 @@ extern "C" {
           if (status_file == F_false || status_file == F_file_found_not) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: The last file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[arguments.used - 1].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "' must be a valid directory.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -4114,9 +4114,9 @@ extern "C" {
             if (status_file == F_false) {
               if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
                 printf("%c", f_string_eol[0]);
-                fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
-                fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
-                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+                fl_color_print(data_make->print.to, data_make->print.context, "%s: The last file '", data_make->print.prefix);
+                fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[arguments.used - 1].string);
+                fl_color_print_line(data_make->print.to, data_make->print.context, "' must be a valid directory.");
               }
 
               *status = F_status_set_error(F_failure);
@@ -4127,7 +4127,7 @@ extern "C" {
       else {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4153,7 +4153,7 @@ extern "C" {
       else {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4169,7 +4169,7 @@ extern "C" {
         if (*status == F_none) {
           if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
             printf("%c", f_string_eol[0]);
-            fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Define name must not be an empty string.", data_make->print.prefix);
+            fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Define name must not be an empty string.", data_make->print.prefix);
           }
 
           *status = F_status_set_error(F_failure);
@@ -4177,13 +4177,13 @@ extern "C" {
         else if (*status == F_false) {
           if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
             fprintf(data_make->print.to, "%c", f_string_eol[0]);
-            fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Invalid characters in the define setting name '", data_make->print.prefix);
+            fl_color_print(data_make->print.to, data_make->print.context, "%s: Invalid characters in the define setting name '", data_make->print.prefix);
 
             fl_color_print_code(data_make->print.to, data.context.notable);
             f_print_dynamic(data_make->print.to, arguments.array[0]);
             fl_color_print_code(data_make->print.to, data.context.reset);
 
-            fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "', only alpha-numeric ASCII characters and underscore (without a leading digit) is allowed.");
+            fl_color_print_line(data_make->print.to, data_make->print.context, "', only alpha-numeric ASCII characters and underscore (without a leading digit) is allowed.");
           }
 
           *status = F_status_set_error(F_failure);
@@ -4192,7 +4192,7 @@ extern "C" {
       else {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4205,9 +4205,9 @@ extern "C" {
       if (*operation_if == fake_make_operation_if_type_else_true || *operation_if == fake_make_operation_if_type_else_false) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Must not be used after another '", data_make->print.prefix);
-          fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "else");
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' section operation.");
+          fl_color_print(data_make->print.to, data_make->print.context, "%s: Must not be used after another '", data_make->print.prefix);
+          fl_color_print(data_make->print.to, data.context.set.notable, "else");
+          fl_color_print_line(data_make->print.to, data_make->print.context, "' section operation.");
         }
 
         *status = F_status_set_error(F_failure);
@@ -4219,9 +4219,9 @@ extern "C" {
       if (*operation_if == fake_make_operation_if_type_true || *operation_if == fake_make_operation_if_type_false || *operation_if == fake_make_operation_if_type_false_always) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Must not be used inside an ", data_make->print.prefix);
-          fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "if");
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' section operation.");
+          fl_color_print(data_make->print.to, data_make->print.context, "%s: Must not be used inside an ", data_make->print.prefix);
+          fl_color_print(data_make->print.to, data.context.set.notable, "if");
+          fl_color_print_line(data_make->print.to, data_make->print.context, "' section operation.");
         }
 
         *status = F_status_set_error(F_failure);
@@ -4233,7 +4233,7 @@ extern "C" {
       if (*operation_if != fake_make_operation_if_type_else_true_next && *operation_if != fake_make_operation_if_type_else_false_next && *operation_if != fake_make_operation_if_type_else_false_next_always) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has no preceding if condition.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Has no preceding if condition.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4245,7 +4245,7 @@ extern "C" {
       if (arguments.used) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has too many arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Has too many arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4259,7 +4259,7 @@ extern "C" {
       if (arguments.used > 1) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has too many arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Has too many arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4270,9 +4270,9 @@ extern "C" {
 
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Unsupported exit type '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: Unsupported exit type '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[0].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -4291,9 +4291,9 @@ extern "C" {
 
               if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
                 printf("%c", f_string_eol[0]);
-                fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Unsupported fail type '", data_make->print.prefix);
-                fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
-                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+                fl_color_print(data_make->print.to, data_make->print.context, "%s: Unsupported fail type '", data_make->print.prefix);
+                fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[0].string);
+                fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
               }
 
               *status = F_status_set_error(F_failure);
@@ -4304,7 +4304,7 @@ extern "C" {
       else {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4323,9 +4323,9 @@ extern "C" {
           if (status_file == F_file_found_not) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: Failed to find file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
             }
 
             *status = F_status_set_error(status_file);
@@ -4344,7 +4344,7 @@ extern "C" {
 
       if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
         printf("%c", f_string_eol[0]);
-        fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+        fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
       }
 
       *status = F_status_set_error(F_failure);
@@ -4356,9 +4356,9 @@ extern "C" {
       if (*operation_if == fake_make_operation_if_type_true || *operation_if == fake_make_operation_if_type_false || *operation_if == fake_make_operation_if_type_false_always) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Must not be used after another '", data_make->print.prefix);
-          fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "if");
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' section operation.");
+          fl_color_print(data_make->print.to, data_make->print.context, "%s: Must not be used after another '", data_make->print.prefix);
+          fl_color_print(data_make->print.to, data.context.set.notable, "if");
+          fl_color_print_line(data_make->print.to, data_make->print.context, "' section operation.");
         }
 
         *status = F_status_set_error(F_failure);
@@ -4448,9 +4448,9 @@ extern "C" {
         if (i == 14) {
           if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
             printf("%c", f_string_eol[0]);
-            fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Unsupported if type '", data_make->print.prefix);
-            fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
-            fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+            fl_color_print(data_make->print.to, data_make->print.context, "%s: Unsupported if type '", data_make->print.prefix);
+            fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[0].string);
+            fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
           }
 
           *status = F_status_set_error(F_failure);
@@ -4464,7 +4464,7 @@ extern "C" {
             if (arguments.used > if_type_minimum[i]) {
               if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
                 printf("%c", f_string_eol[0]);
-                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has too many arguments.", data_make->print.prefix);
+                fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Has too many arguments.", data_make->print.prefix);
               }
 
               *status = F_status_set_error(F_failure);
@@ -4481,9 +4481,9 @@ extern "C" {
                 if (fl_string_dynamic_compare_string(fake_make_operation_argument_has, arguments.array[1], fake_make_operation_argument_has_length) == F_equal_to_not) {
                   if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
                     printf("%c", f_string_eol[0]);
-                    fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Unsupported mode type '", data_make->print.prefix);
-                    fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
-                    fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+                    fl_color_print(data_make->print.to, data_make->print.context, "%s: Unsupported mode type '", data_make->print.prefix);
+                    fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[1].string);
+                    fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
                   }
 
                   *status = F_status_set_error(F_failure);
@@ -4555,9 +4555,9 @@ extern "C" {
                 else {
                   if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
                     printf("%c", f_string_eol[0]);
-                    fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Unsupported file type '", data_make->print.prefix);
-                    fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
-                    fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+                    fl_color_print(data_make->print.to, data_make->print.context, "%s: Unsupported file type '", data_make->print.prefix);
+                    fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[i].string);
+                    fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
                   }
 
                   type_file |= 0x80;
@@ -4625,9 +4625,9 @@ extern "C" {
               if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter, arguments.array[1], fake_make_operation_argument_parameter_length) == F_equal_to_not) {
                 if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
                   printf("%c", f_string_eol[0]);
-                  fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Unsupported define type '", data_make->print.prefix);
-                  fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[1].string);
-                  fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+                  fl_color_print(data_make->print.to, data_make->print.context, "%s: Unsupported define type '", data_make->print.prefix);
+                  fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[1].string);
+                  fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
                 }
 
                 *status = F_status_set_error(F_failure);
@@ -4641,7 +4641,7 @@ extern "C" {
             if (arguments.used < 3) {
               if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
                 printf("%c", f_string_eol[0]);
-                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+                fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
               }
 
               *status = F_status_set_error(F_failure);
@@ -4654,7 +4654,7 @@ extern "C" {
             if (arguments.used < 3) {
               if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
                 printf("%c", f_string_eol[0]);
-                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+                fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
               }
 
               *status = F_status_set_error(F_failure);
@@ -4698,14 +4698,14 @@ extern "C" {
                   printf("%c", f_string_eol[0]);
 
                   if (number > f_number_t_size_unsigned) {
-                    fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The number '", data_make->print.prefix);
-                    fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%c%s", arguments.array[i].string);
-                    fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' may only be between the ranges -%llu to %llu.", f_number_t_size_unsigned, f_number_t_size_unsigned);
+                    fl_color_print(data_make->print.to, data_make->print.context, "%s: The number '", data_make->print.prefix);
+                    fl_color_print(data_make->print.to, data.context.set.notable, "%c%s", arguments.array[i].string);
+                    fl_color_print_line(data_make->print.to, data_make->print.context, "' may only be between the ranges -%llu to %llu.", f_number_t_size_unsigned, f_number_t_size_unsigned);
                   }
                   else {
-                    fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Invalid or unsupported number provided '", data_make->print.prefix);
-                    fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
-                    fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+                    fl_color_print(data_make->print.to, data_make->print.context, "%s: Invalid or unsupported number provided '", data_make->print.prefix);
+                    fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[i].string);
+                    fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
                   }
                 }
               }
@@ -4718,7 +4718,7 @@ extern "C" {
 
       if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
         printf("%c", f_string_eol[0]);
-        fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+        fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
       }
 
       *status = F_status_set_error(F_failure);
@@ -4731,7 +4731,7 @@ extern "C" {
       if (arguments.used > 2) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has too many arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Has too many arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4760,7 +4760,7 @@ extern "C" {
       else {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4787,9 +4787,9 @@ extern "C" {
           if (f_file_exists(arguments.array[i].string) != F_true) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[i].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: Failed to find file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[i].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -4803,9 +4803,9 @@ extern "C" {
           if (status_file == F_false || status_file == F_file_found_not) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: The last file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[arguments.used - 1].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "' must be a valid directory.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -4825,9 +4825,9 @@ extern "C" {
             if (status_file == F_false) {
               if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
                 printf("%c", f_string_eol[0]);
-                fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The last file '", data_make->print.prefix);
-                fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[arguments.used - 1].string);
-                fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a valid directory.");
+                fl_color_print(data_make->print.to, data_make->print.context, "%s: The last file '", data_make->print.prefix);
+                fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[arguments.used - 1].string);
+                fl_color_print_line(data_make->print.to, data_make->print.context, "' must be a valid directory.");
               }
 
               *status = F_status_set_error(F_failure);
@@ -4838,7 +4838,7 @@ extern "C" {
       else {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4851,7 +4851,7 @@ extern "C" {
       if (arguments.used > 1) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has too many arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Has too many arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4867,21 +4867,21 @@ extern "C" {
 
         if (id_section == data_make->fakefile.used) {
           printf("%c", f_string_eol[0]);
-          fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: No operation section named '", data_make->print.prefix);
-          fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' was found.");
+          fl_color_print(data_make->print.to, data_make->print.context, "%s: No operation section named '", data_make->print.prefix);
+          fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[0].string);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "' was found.");
         }
         else {
           for (f_array_length_t i = 0; i < section_stack->used; i++) {
             if (section_stack->array[i] == id_section) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The section operation '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: The section operation '", data_make->print.prefix);
 
               fl_color_print_code(data_make->print.to, data.context.notable);
               f_print_dynamic_partial(data_make->print.to, data_make->buffer, data_make->fakefile.array[id_section].name);
               fl_color_print_code(data_make->print.to, data.context.reset);
 
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' is already in the operation stack, recursion is not allowed.");
+              fl_color_print_line(data_make->print.to, data_make->print.context, "' is already in the operation stack, recursion is not allowed.");
 
               *status = F_status_set_error(F_failure);
               break;
@@ -4892,7 +4892,7 @@ extern "C" {
       else {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4904,7 +4904,7 @@ extern "C" {
       if (arguments.used > 1) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Has too many arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Has too many arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4916,9 +4916,9 @@ extern "C" {
           if (status_file == F_file_found_not) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Failed to find file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: Failed to find file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[0].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
             }
 
             *status = F_status_set_error(status_file);
@@ -4933,9 +4933,9 @@ extern "C" {
           else if (!status_file) {
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The file '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' must be a directory file.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: The file '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[0].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "' must be a directory file.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -4944,14 +4944,14 @@ extern "C" {
         else {
           if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
             printf("%c", f_string_eol[0]);
-            fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Filename argument must not be an empty string.", data_make->print.prefix);
+            fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Filename argument must not be an empty string.", data_make->print.prefix);
           }
         }
       }
       else {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);
@@ -4967,9 +4967,9 @@ extern "C" {
 
             if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
               printf("%c", f_string_eol[0]);
-              fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Unsupported file type '", data_make->print.prefix);
-              fl_color_print(data_make->print.to, data.context.notable, data.context.reset, "%s", arguments.array[0].string);
-              fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "'.");
+              fl_color_print(data_make->print.to, data_make->print.context, "%s: Unsupported file type '", data_make->print.prefix);
+              fl_color_print(data_make->print.to, data.context.set.notable, "%s", arguments.array[0].string);
+              fl_color_print_line(data_make->print.to, data_make->print.context, "'.");
             }
 
             *status = F_status_set_error(F_failure);
@@ -4992,7 +4992,7 @@ extern "C" {
       else {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
-          fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "%s: Requires more arguments.", data_make->print.prefix);
+          fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
         }
 
         *status = F_status_set_error(F_failure);

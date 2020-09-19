@@ -131,7 +131,7 @@ extern "C" {
     f_string_lengths_t remaining;
     bool process_pipe;
 
-    fl_color_context_t context;
+    f_color_context_t context;
   } fss_extended_read_data_t;
 
   #define fss_extended_read_data_initialize \
@@ -143,7 +143,7 @@ extern "C" {
       f_string_quantity_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      fl_color_context_t_initialize, \
+      f_color_context_t_initialize, \
     }
 #endif // _di_fss_extended_read_data_t_
 
@@ -157,7 +157,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_print_help_
-  extern f_return_status fss_extended_read_print_help(const fl_color_context_t context);
+  extern f_return_status fss_extended_read_print_help(const f_color_context_t context);
 #endif // _di_fss_extended_read_print_help_
 
 /**

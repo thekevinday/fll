@@ -118,7 +118,7 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): fl_status_to_string().
+ *   Errors (with error bit) from: fl_status_to_string().
  *
  * @see fl_status_to_string()
  */

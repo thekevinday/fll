@@ -170,7 +170,7 @@ extern "C" {
  *   The status code representing the error.
  */
 #ifndef _di_fss_extended_read_print_file_error_
-  extern void fss_extended_read_print_file_error(const fl_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status) f_gcc_attribute_visibility_internal;
+  extern void fss_extended_read_print_file_error(const f_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_read_print_file_error_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  *   The status code representing the error.
  */
 #ifndef _di_fss_extended_read_print_number_argument_error_
-  extern void fss_extended_read_print_number_argument_error(const fl_color_context_t context, const f_string_t function_name, const f_string_t parameter_name, const f_string_t argument, const f_status_t status) f_gcc_attribute_visibility_internal;
+  extern void fss_extended_read_print_number_argument_error(const f_color_context_t context, const f_string_t function_name, const f_string_t parameter_name, const f_string_t argument, const f_status_t status) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_read_print_number_argument_error_
 
 /**

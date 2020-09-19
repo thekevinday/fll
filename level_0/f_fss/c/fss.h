@@ -95,7 +95,7 @@ extern "C" {
  *   F_false if the character in the buffer is not a graph character.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_graph().
+ *   Errors (with error bit) from: f_utf_is_graph().
  *
  * @see f_utf_is_graph()
  */
@@ -118,8 +118,8 @@ extern "C" {
  *   F_false if the character in the buffer is not a space character.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_control().
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_control().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_control()
  * @see f_utf_is_whitespace()
@@ -143,8 +143,8 @@ extern "C" {
  *   F_false if the character in the buffer is not a space character.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_control().
- *   Errors from (with error bit): f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_control().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_zero_width()
  */
@@ -195,9 +195,9 @@ extern "C" {
  *   F_incomplete_utf_stop (with error bit) if unable to get entire UTF-8 sequence due to stop point reached.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_control().
- *   Errors from (with error bit): f_utf_is_whitespace().
- *   Errors from (with error bit): f_utf_is_zero_width().
+ *   Errors (with error bit) from: f_utf_is_control().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_zero_width().
  *
  * @see f_utf_is_control()
  * @see f_utf_is_whitespace()
@@ -229,8 +229,8 @@ extern "C" {
  *   F_incomplete_utf_stop (with error bit) if unable to get entire UTF-8 sequence due to stop point reached.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_utf_is_graph().
- *   Errors from (with error bit): f_utf_is_zero_width().
+ *   Errors (with error bit) from: f_utf_is_graph().
+ *   Errors (with error bit) from: f_utf_is_zero_width().
  *
  * @see f_utf_is_graph()
  * @see f_utf_is_zero_width()

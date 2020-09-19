@@ -31,7 +31,7 @@ extern "C" {
  *   F_unknown is returned if the status code has no print message.
  */
 #ifndef _di_iki_write_print_error_
-  extern f_return_status iki_write_print_error(const fl_color_context_t context, const uint8_t verbosity, const f_status_t status, const f_string_t function, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern f_return_status iki_write_print_error(const f_color_context_t context, const uint8_t verbosity, const f_status_t status, const f_string_t function, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_write_print_error_
 
 /**
@@ -59,7 +59,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_iki_write_print_error_file_
-  extern bool iki_write_print_error_file(const fl_color_context_t context, const uint8_t verbosity, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const uint8_t type, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern bool iki_write_print_error_file(const f_color_context_t context, const uint8_t verbosity, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const uint8_t type, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_iki_write_print_error_file_
 
 /**
