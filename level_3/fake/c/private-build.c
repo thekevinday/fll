@@ -2424,11 +2424,6 @@ extern "C" {
       return F_signal;
     }
 
-    if (data.verbosity != fake_verbosity_quiet) {
-      printf("%c", f_string_eol[0]);
-      fl_color_print_line(f_type_output, data.context.important, data.context.reset, "Building project.");
-    }
-
     f_status_t status = F_none;
     f_mode_t mode = f_mode_t_initialize;
 
@@ -2438,6 +2433,21 @@ extern "C" {
     f_macro_mode_t_set_default_umask(mode, data.umask);
 
     fake_build_load_setting(data, setting_file, &data_build.setting, &status);
+
+    if (F_status_is_fine(status)) {
+      if (data.verbosity != fake_verbosity_quiet) {
+        printf("%c", f_string_eol[0]);
+        fl_color_print(f_type_output, data.context.important, data.context.reset, "Building project%c", data_build.setting.project_name.used ? ' ' : 0);
+
+        if (data_build.setting.project_name.used) {
+          fl_color_print_code(f_type_output, data.context.notable);
+          f_print_string_dynamic(f_type_output, data_build.setting.project_name);
+          fl_color_print_code(f_type_output, data.context.reset);
+        }
+
+        fl_color_print_line(f_type_output, data.context.important, data.context.reset, ".");
+      }
+    }
 
     fake_build_load_stage(data, setting_file, &stage, &status);
 
