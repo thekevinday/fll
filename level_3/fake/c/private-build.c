@@ -2441,7 +2441,7 @@ extern "C" {
 
         if (data_build.setting.project_name.used) {
           fl_color_print_code(f_type_output, data.context.notable);
-          f_print_string_dynamic(f_type_output, data_build.setting.project_name);
+          f_print_dynamic(f_type_output, data_build.setting.project_name);
           fl_color_print_code(f_type_output, data.context.reset);
         }
 

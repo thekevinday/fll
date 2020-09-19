@@ -420,7 +420,7 @@ extern "C" {
         return F_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_static_t, const f_string_range_t) = &f_print_string_dynamic_partial;
+      f_return_status (*print_object)(FILE *, const f_string_static_t, const f_string_range_t) = &f_print_dynamic_partial;
 
       if (data->parameters[fss_extended_list_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_string_dynamic_partial;
@@ -534,7 +534,7 @@ extern "C" {
             }
 
             if (items->array[i].content.used > 0) {
-              f_print_string_dynamic_partial(f_type_output, data->buffer, items->array[i].content.array[0]);
+              f_print_dynamic_partial(f_type_output, data->buffer, items->array[i].content.array[0]);
             }
             else if (include_empty) {
               fprintf(f_type_output, "%c", f_string_eol[0]);
@@ -649,7 +649,7 @@ extern "C" {
         continue;
       }
 
-      f_print_string_dynamic_partial(f_type_output, data->buffer, items->array[i].content.array[0]);
+      f_print_dynamic_partial(f_type_output, data->buffer, items->array[i].content.array[0]);
     } // for
 
     return F_none;

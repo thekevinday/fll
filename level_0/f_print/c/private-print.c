@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_print_string_) || !defined(_di_f_print_string_dynamic_) || !defined(_di_f_print_string_dynamic_partial_)
-  f_return_status private_f_print_string(FILE *output, const f_string_t string, const f_string_length_t length) {
+#if !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
+  f_return_status private_f_print(FILE *output, const f_string_t string, const f_string_length_t length) {
 
     if (length == 0) return F_data_not;
 
@@ -20,7 +20,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_print_string_) || !defined(_di_f_print_string_dynamic_) || !defined(_di_f_print_string_dynamic_partial_)
+#endif // !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
 
 #if !defined(_di_f_print_to_) || !defined(_di_f_print_dynamic_to_) || !defined(_di_f_print_dynamic_partial_to_)
   f_return_status private_f_print_to(const int id, const f_string_t string, const f_string_length_t length) {

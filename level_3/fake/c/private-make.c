@@ -699,7 +699,7 @@ extern "C" {
               fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: Invalid characters in the define setting name '");
 
               fl_color_print_code(f_type_error, data.context.notable);
-              f_print_string_dynamic(f_type_error, define.array[i].name);
+              f_print_dynamic(f_type_error, define.array[i].name);
               fl_color_print_code(f_type_error, data.context.reset);
 
               fl_color_print_line(f_type_error, data.context.error, data.context.reset, "', only alpha-numeric ASCII characters and underscore (without a leading digit) is allowed.");
@@ -1864,7 +1864,7 @@ extern "C" {
       fl_color_print(f_type_output, data.context.important, data.context.reset, "Processing Section '");
 
       fl_color_print_code(f_type_output, data.context.notable);
-      f_print_string_dynamic_partial(f_type_output, data_make->buffer, section->name);
+      f_print_dynamic_partial(f_type_output, data_make->buffer, section->name);
       fl_color_print_code(f_type_output, data.context.reset);
 
       fl_color_print_line(f_type_output, data.context.important, data.context.reset, "'.");
@@ -3414,7 +3414,7 @@ extern "C" {
         }
 
         printf("Changed to project path '");
-        f_print_string_dynamic(f_type_output, data_make->path_cache);
+        f_print_dynamic(f_type_output, data_make->path_cache);
         printf("'.%c", f_string_eol[0]);
       }
 
@@ -3423,7 +3423,7 @@ extern "C" {
 
     if (operation == fake_make_operation_type_print) {
       for (f_array_length_t i = 0; i < arguments.used; i++) {
-        f_print_string_dynamic(f_type_output, arguments.array[i]);
+        f_print_dynamic(f_type_output, arguments.array[i]);
 
         if (i + 1 < arguments.used) {
           printf(" ");
@@ -3514,7 +3514,7 @@ extern "C" {
           }
 
           printf("Changed to project path '");
-          f_print_string_dynamic(f_type_output, data_make->path_cache);
+          f_print_dynamic(f_type_output, data_make->path_cache);
           printf("'.%c", f_string_eol[0]);
         }
 
@@ -3583,7 +3583,7 @@ extern "C" {
 
         if (data.verbosity == fake_verbosity_verbose) {
           printf("Touched %s '", arguments.array[0].string);
-          f_print_string_dynamic(f_type_output, arguments.array[i]);
+          f_print_dynamic(f_type_output, arguments.array[i]);
           printf("'.%c", f_string_eol[0]);
         }
 
@@ -4180,7 +4180,7 @@ extern "C" {
             fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: Invalid characters in the define setting name '", data_make->print.prefix);
 
             fl_color_print_code(data_make->print.to, data.context.notable);
-            f_print_string_dynamic(data_make->print.to, arguments.array[0]);
+            f_print_dynamic(data_make->print.to, arguments.array[0]);
             fl_color_print_code(data_make->print.to, data.context.reset);
 
             fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "', only alpha-numeric ASCII characters and underscore (without a leading digit) is allowed.");
@@ -4878,7 +4878,7 @@ extern "C" {
               fl_color_print(data_make->print.to, data_make->print.context, data.context.reset, "%s: The section operation '", data_make->print.prefix);
 
               fl_color_print_code(data_make->print.to, data.context.notable);
-              f_print_string_dynamic_partial(data_make->print.to, data_make->buffer, data_make->fakefile.array[id_section].name);
+              f_print_dynamic_partial(data_make->print.to, data_make->buffer, data_make->fakefile.array[id_section].name);
               fl_color_print_code(data_make->print.to, data.context.reset);
 
               fl_color_print_line(data_make->print.to, data_make->print.context, data.context.reset, "' is already in the operation stack, recursion is not allowed.");

@@ -52,9 +52,9 @@ extern "C" {
  *
  * @see fputc()
  */
-#ifndef _di_f_print_string_
-  extern f_return_status f_print_string(FILE *output, const f_string_t string, const f_string_length_t length);
-#endif // _di_f_print_string_
+#ifndef _di_f_print_
+  extern f_return_status f_print(FILE *output, const f_string_t string, const f_string_length_t length);
+#endif // _di_f_print_
 
 /**
  * Similar to a c-library printf, except that this prints a given dynamic string.
@@ -78,9 +78,9 @@ extern "C" {
  *
  * @see fputc()
  */
-#ifndef _di_f_print_string_dynamic_
-  extern f_return_status f_print_string_dynamic(FILE *output, const f_string_static_t buffer);
-#endif // _di_f_print_string_dynamic_
+#ifndef _di_f_print_dynamic_
+  extern f_return_status f_print_dynamic(FILE *output, const f_string_static_t buffer);
+#endif // _di_f_print_dynamic_
 
 /**
  * Similar to a c-library printf, except that this will only print a specific range in a given dynamic string.
@@ -106,9 +106,9 @@ extern "C" {
  *
  * @see fputc()
  */
-#ifndef _di_f_print_string_dynamic_partial_
-  extern f_return_status f_print_string_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range);
-#endif // _di_f_print_string_dynamic_partial_
+#ifndef _di_f_print_dynamic_partial_
+  extern f_return_status f_print_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range);
+#endif // _di_f_print_dynamic_partial_
 
 /**
  * Similar to a c-library dprintf, except that this will only print a specific range.

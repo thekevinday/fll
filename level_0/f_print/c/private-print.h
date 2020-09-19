@@ -16,7 +16,7 @@ extern "C" {
 #endif
 
 /**
- * Private implementation of f_print_string().
+ * Private implementation of f_print().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -33,13 +33,13 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see f_print_string()
- * @see f_print_string_dynamic()
- * @see f_print_string_dynamic_partial()
+ * @see f_print()
+ * @see f_print_dynamic()
+ * @see f_print_dynamic_partial()
  */
-#if !defined(_di_f_print_string_) || !defined(_di_f_print_string_dynamic_) || !defined(_di_f_print_string_dynamic_partial_)
-  extern f_return_status private_f_print_string(FILE *output, const f_string_t string, const f_string_length_t length) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_print_string_) || !defined(_di_f_print_string_dynamic_) || !defined(_di_f_print_string_dynamic_partial_)
+#if !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
+  extern f_return_status private_f_print(FILE *output, const f_string_t string, const f_string_length_t length) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
 
 /**
  * Private implementation of f_print_to().

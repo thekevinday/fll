@@ -390,7 +390,7 @@ extern "C" {
         return F_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_static_t, const f_string_range_t) = &f_print_string_dynamic_partial;
+      f_return_status (*print_object)(FILE *, const f_string_static_t, const f_string_range_t) = &f_print_dynamic_partial;
 
       if (data->parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_string_dynamic_partial;
@@ -458,13 +458,13 @@ extern "C" {
 
                   if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                     if (select < data->contents.array[i].used) {
-                      f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
+                      f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
                       fprintf(f_type_output, "%c", f_string_eol[0]);
                     }
                   }
                   else {
                     for (j = 0; j < data->contents.array[i].used; j++) {
-                      f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
+                      f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
                       if (j + 1 < data->contents.array[i].used) {
                         printf(" ");
@@ -494,13 +494,13 @@ extern "C" {
 
               if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                 if (select < data->contents.array[i].used) {
-                  f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
+                  f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
                   fprintf(f_type_output, "%c", f_string_eol[0]);
                 }
               }
               else {
                 for (j = 0; j < data->contents.array[i].used; j++) {
-                  f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
+                  f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
                   if (j + 1 < data->contents.array[i].used) {
                     printf(" ");
@@ -576,13 +576,13 @@ extern "C" {
         if (line_current == line) {
           if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
             if (select < data->contents.array[i].used) {
-              f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
+              f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
               fprintf(f_type_output, "%c", f_string_eol[0]);
             }
           }
           else {
             for (j = 0; j < data->contents.array[i].used; j++) {
-              f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
+              f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
               if (j + 1 < data->contents.array[i].used) {
                 printf(" ");
@@ -619,13 +619,13 @@ extern "C" {
 
       if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
         if (select < data->contents.array[i].used) {
-          f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
+          f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
           fprintf(f_type_output, "%c", f_string_eol[0]);
         }
       }
       else {
         for (j = 0; j < data->contents.array[i].used; j++) {
-          f_print_string_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
+          f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
           if (j + 1 < data->contents.array[i].used) {
             printf(" ");

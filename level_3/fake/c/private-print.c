@@ -583,13 +583,13 @@ extern "C" {
     fl_color_print(print.to, print.context, data.context.reset, "%s: The section operation '", print.prefix);
 
     fl_color_print_code(print.to, data.context.notable);
-    f_print_string_dynamic_partial(print.to, buffer, operation_name);
+    f_print_dynamic_partial(print.to, buffer, operation_name);
     fl_color_print_code(print.to, data.context.reset);
 
     fl_color_print(print.to, print.context, data.context.reset, "' from section '");
 
     fl_color_print_code(print.to, data.context.notable);
-    f_print_string_dynamic_partial(print.to, buffer, section_name);
+    f_print_dynamic_partial(print.to, buffer, section_name);
     fl_color_print_code(print.to, data.context.reset);
 
     fl_color_print(print.to, print.context, data.context.reset, "' on line ");
@@ -650,13 +650,13 @@ extern "C" {
     fl_color_print(print.to, print.context, data.context.reset, "%s: The section operation '", print.prefix);
 
     fl_color_print_code(print.to, data.context.notable);
-    f_print_string_dynamic_partial(print.to, buffer, operation_name);
+    f_print_dynamic_partial(print.to, buffer, operation_name);
     fl_color_print_code(print.to, data.context.reset);
 
     fl_color_print(print.to, print.context, data.context.reset, "' from section '");
 
     fl_color_print_code(print.to, data.context.notable);
-    f_print_string_dynamic_partial(print.to, buffer, section_name);
+    f_print_dynamic_partial(print.to, buffer, section_name);
     fl_color_print_code(print.to, data.context.reset);
 
     fl_color_print(print.to, print.context, data.context.reset, "' on line ");
@@ -679,13 +679,13 @@ extern "C" {
     fl_color_print(print.to, print.context, data.context.reset, "%s: The section operation '", print.prefix);
 
     fl_color_print_code(print.to, data.context.notable);
-    f_print_string_dynamic_partial(print.to, buffer, operation_name);
+    f_print_dynamic_partial(print.to, buffer, operation_name);
     fl_color_print_code(print.to, data.context.reset);
 
     fl_color_print(print.to, print.context, data.context.reset, "' from section '");
 
     fl_color_print_code(print.to, data.context.notable);
-    f_print_string_dynamic_partial(print.to, buffer, section_name);
+    f_print_dynamic_partial(print.to, buffer, section_name);
     fl_color_print_code(print.to, data.context.reset);
 
     fl_color_print(print.to, print.context, data.context.reset, "' on line ");
@@ -707,7 +707,7 @@ extern "C" {
     fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' object '");
 
     fl_color_print_code(f_type_warning, data.context.notable);
-    f_print_string_dynamic_partial(f_type_warning, buffer, range_object);
+    f_print_dynamic_partial(f_type_warning, buffer, range_object);
     fl_color_print_code(f_type_warning, data.context.reset);
 
     fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");
@@ -725,7 +725,7 @@ extern "C" {
     fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' has an invalid content '");
 
     fl_color_print_code(f_type_warning, data.context.notable);
-    f_print_string_dynamic_partial(f_type_warning, buffer, range_content);
+    f_print_dynamic_partial(f_type_warning, buffer, range_content);
     fl_color_print_code(f_type_warning, data.context.reset);
 
     fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' for the '");
@@ -733,7 +733,7 @@ extern "C" {
     fl_color_print(f_type_warning, data.context.warning, data.context.reset, "' object '");
 
     fl_color_print_code(f_type_warning, data.context.notable);
-    f_print_string_dynamic_partial(f_type_warning, buffer, range_object);
+    f_print_dynamic_partial(f_type_warning, buffer, range_object);
     fl_color_print_code(f_type_warning, data.context.reset);
 
     fl_color_print_line(f_type_warning, data.context.warning, data.context.reset, "'.");

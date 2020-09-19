@@ -284,7 +284,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
       if (length > 0) {
         fl_color_print_code(f_type_warning, data.context.warning);
         fprintf(f_type_warning, "WARNING: At line %i, the object '", i);
-        f_print_string(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
+        f_print(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
         fprintf(f_type_warning, "' is invalid");
         fl_color_print_code(f_type_warning, data.context.reset);
       }
@@ -302,9 +302,9 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
       if (length > 0) {
         fl_color_print_code(f_type_warning, data.context.warning);
         fprintf(f_type_warning, "WARNING: At line %i, the object '", i);
-        f_print_string(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
+        f_print(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
         fprintf(f_type_warning, "' has invalid content '");
-        f_print_string(f_type_warning, local.buffer.string + local.rule_contents.array[i].array[0].start, firewall_macro_structure_size(local.rule_contents.array[i], 0));
+        f_print(f_type_warning, local.buffer.string + local.rule_contents.array[i].array[0].start, firewall_macro_structure_size(local.rule_contents.array[i], 0));
         fprintf(f_type_warning, "'");
         fl_color_print_code(f_type_warning, data.context.reset);
         fprintf(f_type_warning, "\n");
@@ -552,7 +552,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
 
         fl_color_print_code(f_type_warning, data.context.warning);
         fprintf(f_type_warning, "WARNING: At line %i, the object '", i);
-        f_print_string(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
+        f_print(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
         fprintf(f_type_warning, "' has no content");
         fl_color_print_code(f_type_warning, data.context.reset);
         fprintf(f_type_warning, "\n");

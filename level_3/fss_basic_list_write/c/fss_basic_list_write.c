@@ -225,7 +225,7 @@ extern "C" {
         }
       }
       else {
-        f_print_string_dynamic(f_type_output, buffer);
+        f_print_dynamic(f_type_output, buffer);
       }
 
       f_macro_string_dynamic_t_delete_simple(buffer);

@@ -215,7 +215,7 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_print_string_dynamic().
+ *   Errors from (with error bit): f_print_dynamic().
  */
 #ifndef _di_fl_color_print_
   extern f_return_status fl_color_print(FILE *file, const f_string_static_t start_color, const f_string_static_t end_color, const f_string_t string, ...);
@@ -248,7 +248,7 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_print_string_dynamic().
+ *   Errors from (with error bit): f_print_dynamic().
  */
 #ifndef _di_fl_color_print2_
   extern f_return_status fl_color_print2(FILE *file, const f_string_static_t start_color, const f_string_static_t extra_color, const f_string_static_t end_color, const f_string_t string, ...);
@@ -276,7 +276,7 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_print_string_dynamic().
+ *   Errors from (with error bit): f_print_dynamic().
  */
 #ifndef _di_fl_color_print_line_
   extern f_return_status fl_color_print_line(FILE *file, const f_string_static_t start_color, const f_string_static_t end_color, const f_string_t string, ...);
@@ -309,7 +309,7 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_print_string_dynamic().
+ *   Errors from (with error bit): f_print_dynamic().
  */
 #ifndef _di_fl_color_print2_line_
   extern f_return_status fl_color_print2_line(FILE *file, const f_string_static_t start_color, const f_string_static_t extra_color, const f_string_static_t end_color, const f_string_t string, ...);
@@ -329,7 +329,7 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors from (with error bit): f_print_string_dynamic().
+ *   Errors from (with error bit): f_print_dynamic().
  */
 #ifndef _di_fl_color_print_code_
   extern f_return_status fl_color_print_code(FILE *file, const f_string_static_t color);

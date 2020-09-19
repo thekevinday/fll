@@ -289,7 +289,7 @@ extern "C" {
         fl_color_print(f_type_error, data.context.error, data.context.reset, "ERROR: The object '");
 
         fl_color_print_code(f_type_error, data.context.notable);
-        f_print_string_dynamic(f_type_error, object);
+        f_print_dynamic(f_type_error, object);
         fl_color_print_code(f_type_error, data.context.reset);
 
         fl_color_print_line(f_type_error, data.context.error, data.context.reset, "' is not a valid IKI object.");
