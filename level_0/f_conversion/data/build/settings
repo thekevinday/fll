@@ -22,7 +22,7 @@ build_libraries -lc
 build_libraries-individual -lf_utf -lf_memory
 build_sources_library conversion.c
 build_sources_program
-build_sources_headers conversion.h
+build_sources_headers conversion.h conversion-common.h
 build_sources_script
 build_sources_setting
 build_script yes

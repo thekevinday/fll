@@ -19,28 +19,18 @@
 #include <sys/un.h>
 #include <unistd.h>
 
-
 // fll-0 includes
 #include <level_0/type.h>
 #include <level_0/status.h>
 #include <level_0/memory.h>
 #include <level_0/string.h>
 
+// fll-0 socket includes
+#include <level_0/socket-common.h>
+
 #ifdef __cplusplus
 extern "C"{
 #endif
-
-/**
- * Socket Types.
- */
-#ifndef _di_f_socket_types_
-  enum {
-    f_socket_close_fast = 1,   // As in close();
-    f_socket_close_read,       // As in shutdown(, SHUT_RD);
-    f_socket_close_write,      // As in shutdown(, SHUT_WR);
-    f_socket_close_read_write, // As in shutdown(, SHUT_RDWR);
-  };
-#endif // _di_f_socket_types_
 
 /**
  * Bind a UNIX socket.

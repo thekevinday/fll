@@ -22,7 +22,7 @@
 #include <level_0/type.h>
 
 // fll-0 string includes
-#include <level_0/string_common.h>
+#include <level_0/string-common.h>
 #include <level_0/string_dynamic.h>
 #include <level_0/string_map.h>
 #include <level_0/string_quantity.h>

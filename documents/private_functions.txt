@@ -15,3 +15,7 @@ Such implementations should be kept to a bare minimum.
 
 Functions defined as private will not be normally exposed through the public headers files.
 Such functions will be prefixed with 'private_'.
+
+The header files and source files for these private functions will be prefixed with "private-".
+Normally, this product uses underscores for names, but, as a special name, the dash "-" is used.
+Normally, the names begin with the project name (such as directory_type.h instead of type_directory.h), but as a special case to further separate private files, this is prefixed onto source files (such as private-directory.h).

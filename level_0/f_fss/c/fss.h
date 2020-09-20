@@ -25,10 +25,10 @@
 
 // fll-0 fss includes
 #include <level_0/fss-common.h>
-#include <level_0/fss-quoted.h>
-#include <level_0/fss-named.h>
-#include <level_0/fss-nest.h>
-#include <level_0/fss-set.h>
+#include <level_0/fss_quoted.h>
+#include <level_0/fss_named.h>
+#include <level_0/fss_nest.h>
+#include <level_0/fss_set.h>
 
 #ifdef __cplusplus
 extern "C" {

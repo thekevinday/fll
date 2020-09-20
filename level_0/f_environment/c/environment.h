@@ -20,16 +20,12 @@
 #include <level_0/memory.h>
 #include <level_0/string.h>
 
+// fll-0 environment includes
+#include <level_0/environment-common.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * Environment related defines.
- */
-#ifndef _di_f_environment_defines_
-  #define f_environment_max_length f_string_length_t_size
-#endif // _di_f_environment_defines_
 
 /**
  * Delete all environment variables.
