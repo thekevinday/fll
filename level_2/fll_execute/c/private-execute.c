@@ -24,12 +24,14 @@ extern "C" {
     f_string_dynamic_t argument = f_string_dynamic_t_initialize;
 
     status = fl_string_append(source, length, &argument);
+
     if (F_status_is_error(status)) {
       f_macro_string_dynamic_t_delete_simple(argument);
       return status;
     }
 
     status = fl_string_dynamic_terminate(&argument);
+
     if (F_status_is_error(status)) {
       f_macro_string_dynamic_t_delete_simple(argument);
       return status;
@@ -64,6 +66,7 @@ extern "C" {
 
     if (prefix_length > 0) {
       status = fl_string_append(prefix, prefix_length, &argument);
+
       if (F_status_is_error(status)) {
         f_macro_string_dynamic_t_delete_simple(argument);
         return status;
@@ -71,12 +74,14 @@ extern "C" {
     }
 
     status = fl_string_append(name, name_length, &argument);
+
     if (F_status_is_error(status)) {
       f_macro_string_dynamic_t_delete_simple(argument);
       return status;
     }
 
     status = fl_string_dynamic_terminate(&argument);
+
     if (F_status_is_error(status)) {
       f_macro_string_dynamic_t_delete_simple(argument);
       return status;
@@ -90,12 +95,14 @@ extern "C" {
     f_macro_string_dynamic_t_clear(argument);
 
     status = fl_string_append(value, value_length, &argument);
+
     if (F_status_is_error(status)) {
       f_macro_string_dynamic_t_delete_simple(argument);
       return status;
     }
 
     status = fl_string_dynamic_terminate(&argument);
+
     if (F_status_is_error(status)) {
       f_macro_string_dynamic_t_delete_simple(argument);
       return status;

@@ -109,6 +109,7 @@ extern "C" {
 
       if (data->remaining.used > 0) {
         for (f_array_length_t i = 0; i < data->remaining.used; i++) {
+
           status2 = status_code_process_check(*data, arguments.argv[data->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
@@ -139,6 +140,7 @@ extern "C" {
 
       if (data->remaining.used > 0) {
         for (f_array_length_t i = 0; i < data->remaining.used; i++) {
+
           status2 = status_code_process_normal(*data, arguments.argv[data->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {

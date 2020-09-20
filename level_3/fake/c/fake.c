@@ -12,6 +12,7 @@ extern "C" {
 
 #ifndef _di_fake_print_help_
   f_return_status fake_print_help(const f_color_context_t context) {
+
     fll_program_print_help_header(context, fake_name_long, fake_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -167,12 +168,15 @@ extern "C" {
       f_string_length_t k = 0;
 
       for (; i < data->parameters[fake_parameter_operation_build].locations.used; i++, locations_length++) {
+
         operations[locations_length] = fake_operation_build;
         locations[locations_length] = data->parameters[fake_parameter_operation_build].locations.array[i];
       } // for
 
       for (i = 0; i < data->parameters[fake_parameter_operation_clean].locations.used; i++) {
+
         for (j = 0; j < locations_length; j++) {
+
           if (data->parameters[fake_parameter_operation_clean].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; k--) {
               locations[k] = locations[k - 1];
@@ -189,7 +193,9 @@ extern "C" {
       } // for
 
       for (i = 0; i < data->parameters[fake_parameter_operation_make].locations.used; i++) {
+
         for (j = 0; j < locations_length; j++) {
+
           if (data->parameters[fake_parameter_operation_make].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; k--) {
               locations[k] = locations[k - 1];
@@ -206,7 +212,9 @@ extern "C" {
       } // for
 
       for (i = 0; i < data->parameters[fake_parameter_operation_skeleton].locations.used; i++) {
+
         for (j = 0; j < locations_length; j++) {
+
           if (data->parameters[fake_parameter_operation_skeleton].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; k--) {
               locations[k] = locations[k - 1];

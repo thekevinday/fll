@@ -214,6 +214,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_character_t_width_is(character);
 
     if (width == 0) {
+
       // There are no control picture characters in ASCII.
       return F_false;
     }
@@ -337,6 +338,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_character_t_width_is(character);
 
     if (width == 0) {
+
       // There are no ASCII phonetic characters.
       return F_false;
     }
@@ -354,6 +356,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_character_t_width_is(character);
 
     if (width == 0) {
+
       // There are no ASCII private characters.
       return F_false;
     }
@@ -371,6 +374,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_character_t_width_is(character);
 
     if (width == 0) {
+
       // ASCII: '!' to '#'.
       if (character > 0x20000000 && character < 0x24000000) {
         return F_true;
@@ -417,6 +421,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_character_t_width_is(character);
 
     if (width == 0) {
+
       // ASCII: '$' or '+'.
       if (character == 0x24000000 || character == 0x2b000000) {
         return F_true;
@@ -509,6 +514,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_character_t_width_is(character);
 
     if (width == 0) {
+
       // There are no ASCII whitespace other.
       return F_false;
     }
@@ -1162,6 +1168,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
+
       // ASCII: '!' to '#'.
       if (character[0] > 0x20 && character[0] < 0x24) {
         return F_true;
@@ -1222,6 +1229,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
+
       // ASCII: '$' or '+'.
       if (character[0] == 0x24 || character[0] == 0x2b) {
         return F_true;
@@ -1353,6 +1361,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
+
       // There are no ASCII whitespace modifiers.
       return F_false;
     }
@@ -1384,6 +1393,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
+
       // There are no ASCII whitespace other.
       return F_false;
     }
@@ -1517,6 +1527,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 0) {
+
       // These control characters are considered zero-width spaces.
       if (*character >= 0x00 && *character <= 0x08) {
         return F_true;

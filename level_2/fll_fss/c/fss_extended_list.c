@@ -37,6 +37,7 @@ extern "C" {
 
         if (range->start >= range->stop || range->start >= buffer->used) {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
+
             // extended list requires content closure, so this could be an error.
             return FL_fss_found_object_content_not;
           }
@@ -59,6 +60,7 @@ extern "C" {
 
         if (status == FL_fss_found_object) {
           found_data = F_true;
+
           status = fl_fss_extended_list_content_read(buffer, range, nest);
 
           break;
@@ -73,6 +75,7 @@ extern "C" {
         return status;
       }
       else if (status == F_data_not_eos || status == F_data_not_stop) {
+
         // If at least some valid object was found, then return F_none equivalents.
         if (nest->depth[0].used > initial_used) {
           if (status == F_data_not_eos) return F_none_eos;
@@ -82,6 +85,7 @@ extern "C" {
         return status;
       }
       else if (status == F_unterminated_eos || status == F_unterminated_stop || status == F_unterminated_nest_eos || status == F_unterminated_nest_stop) {
+
         // If at least some valid object was found, then return F_none equivalents.
         if (nest->depth[0].used > initial_used) {
           if (status == F_data_not_eos) return F_none_eos;
@@ -132,6 +136,7 @@ extern "C" {
       if (contents.used > 0) {
         range.start = 0;
         range.stop = contents.array[0].used - 1;
+
         status = fl_fss_extended_list_content_write(contents.array[0], &range, buffer);
 
         if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {

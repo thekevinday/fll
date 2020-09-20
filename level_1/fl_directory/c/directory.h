@@ -284,6 +284,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
+ *   Errors (with error bit) from: f_file_stat_at().
+ *
  * @see alphasort()
  * @see opendir()
  * @see scandir()
@@ -309,6 +311,8 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
+ *
+ *   Errors (with error bit) from: f_utf_is_control().
  */
 #ifndef _di_fl_directory_path_pop_
   extern f_return_status fl_directory_path_pop(f_string_static_t *path);

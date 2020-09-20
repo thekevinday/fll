@@ -100,7 +100,7 @@ extern "C" {
  *   F_data (with error bit) if not found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fll_status_from_string
+ *   Errors (with error bit) from: f_conversion_character_is_decimal().
  */
 #ifndef _di_fll_fss_status_from_string_
   extern f_return_status fll_fss_status_from_string(const f_string_t string, f_status_t *code);

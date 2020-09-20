@@ -60,6 +60,7 @@ extern "C" {
 
 #ifndef _di_fll_program_print_help_option_other_
   f_return_status fll_program_print_help_option_other(const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
+
     printf("%c  ", f_string_eol[0]);
     fl_color_print(f_type_output, context.set.standout, option_other);
 
@@ -259,6 +260,7 @@ extern "C" {
     const f_string_length_t start = destination->used;
 
     for (f_string_length_t i = 0; i < additional.used; i++) {
+
       length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
@@ -302,6 +304,7 @@ extern "C" {
     const f_string_length_t start = destination->used;
 
     for (f_string_length_t i = 0; i < additional.used; i++) {
+
       length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
@@ -330,6 +333,7 @@ extern "C" {
     const f_string_length_t start = destination->used;
 
     for (f_string_length_t i = 0; i < additional.used; i++) {
+
       length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {
@@ -376,6 +380,7 @@ extern "C" {
     f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
 
     for (f_string_length_t i = 0; i < additional.used; i++) {
+
       length = strnlen(argv[additional.array[i]], f_console_length_size);
 
       if (length > 0) {

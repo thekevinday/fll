@@ -45,6 +45,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_path_current().
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_append_assure().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
  */
 #ifndef _di_fll_path_canonical_
   extern f_return_status fll_path_canonical(const f_string_t path, f_string_dynamic_t *canonical);

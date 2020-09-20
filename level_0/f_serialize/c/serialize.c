@@ -112,7 +112,7 @@ extern "C" {
 
     uint8_t width = 0;
 
-    while (i < serialize.used) {
+    for (; i < serialize.used; i += width) {
       width = f_macro_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter || i + 1 >= serialize.used) {
@@ -136,16 +136,16 @@ extern "C" {
 
         locations->used++;
 
-        if (i + width > serialize.used) return F_status_set_error(F_incomplete_utf_eos);
+        if (i + width > serialize.used) {
+          return F_status_set_error(F_incomplete_utf_eos);
+        }
 
         start = i + width;
       }
       else if (i + width > serialize.used) {
         return F_status_set_error(F_incomplete_utf_eos);
       }
-
-      i += width;
-    } // while
+    } // for
 
     return F_none;
   }

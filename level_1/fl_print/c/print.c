@@ -16,6 +16,7 @@ extern "C" {
     uint8_t width_max = 0;
 
     for (; i < length; i += f_macro_utf_byte_width(string[i])) {
+
       width_max = (length - i) + 1;
       status = f_utf_is_whitespace(string + i, width_max);
 

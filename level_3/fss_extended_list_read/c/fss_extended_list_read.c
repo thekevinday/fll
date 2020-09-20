@@ -7,6 +7,7 @@ extern "C" {
 
 #ifndef _di_fss_extended_list_read_print_help_
   f_return_status fss_extended_list_read_print_help(const f_color_context_t context) {
+
     fll_program_print_help_header(context, fss_extended_list_read_name_long, fss_extended_list_read_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -235,6 +236,7 @@ extern "C" {
       f_string_length_t original_size = data->quantity.total;
 
       status = fss_extended_list_read_main_preprocess_depth(arguments, *data, &depths);
+
       if (F_status_is_error(status)) {
         macro_fss_extended_list_read_depths_t_delete_simple(depths);
         fss_extended_list_read_delete_data(data);
@@ -257,6 +259,7 @@ extern "C" {
         file.id = f_type_descriptor_input;
 
         status = f_file_read(file, &data->buffer);
+
         if (F_status_is_error(status)) {
           fss_extended_list_read_print_file_error(data->context, "f_file_read", "-", F_status_set_fine(status));
 
@@ -266,6 +269,7 @@ extern "C" {
         }
 
         status = fss_extended_list_read_main_process_file(arguments, data, "-", depths);
+
         if (F_status_is_error(status)) {
           macro_fss_extended_list_read_depths_t_delete_simple(depths);
           fss_extended_list_read_delete_data(data);

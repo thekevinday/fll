@@ -51,6 +51,7 @@ extern "C" {
 
     // identify where the object ends.
     while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
+
       if (buffer->string[range->start] == f_fss_delimit_slash) {
         f_string_length_t first_slash = range->start;
         f_string_length_t slash_count = 1;
@@ -59,6 +60,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         while (range->start < buffer->used && range->start <= range->stop && (buffer->string[range->start] == f_fss_delimit_placeholder || buffer->string[range->start] == f_fss_delimit_slash)) {
+
           if (buffer->string[range->start] == f_fss_delimit_slash) {
             slash_count++;
           }
@@ -105,6 +107,7 @@ extern "C" {
 
             if (slash_count % 2 == 0) {
               while (slash_count > 0) {
+
                 if (buffer->string[range->start] == f_fss_delimit_slash) {
                   if (slash_count % 2 == 1) {
                     delimits.array[delimits.used] = range->start;
@@ -213,6 +216,7 @@ extern "C" {
 
     // identify where the content ends.
     while (range->start < buffer->used && range->start <= range->stop) {
+
       if (buffer->string[range->start] == f_string_eol[0]) {
         found_newline = F_true;
         last_newline = range->start;
@@ -233,6 +237,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         while (range->start < buffer->used && range->start <= range->stop && (buffer->string[range->start] == f_fss_delimit_placeholder || buffer->string[range->start] == f_fss_delimit_slash)) {
+
           if (buffer->string[range->start] == f_fss_delimit_slash) {
             slash_count++;
           }
@@ -302,6 +307,7 @@ extern "C" {
             }
 
             while (slash_count > 0) {
+
               if (buffer->string[range->start] == f_fss_delimit_slash) {
                 if (slash_count % 2 == 1) {
                   delimits.array[delimits.used] = range->start;
@@ -420,6 +426,7 @@ extern "C" {
     buffer_position.stop = destination->used;
 
     while (range->start <= range->stop && range->start < object.used) {
+
       if (object.string[range->start] == f_fss_comment) {
         // comments are not allowed and this format has no way of "wrapping" a comment.
         return F_status_set_error(FL_fss_found_comment);
@@ -441,6 +448,7 @@ extern "C" {
     } // while
 
     while (range->start <= range->stop && range->start < object.used) {
+
       if (object.string[range->start] == f_fss_delimit_slash) {
         f_string_length_t slash_count = 1;
 
@@ -451,6 +459,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         while (range->start <= range->stop && range->start < object.used) {
+
           if (object.string[range->start] == f_fss_delimit_placeholder) {
             status = f_utf_buffer_increment(object, range, 1);
             if (F_status_is_error(status)) return status;
@@ -548,6 +557,7 @@ extern "C" {
     buffer_position.stop = destination->used;
 
     while (range->start <= range->stop && range->start < content.used) {
+
       if (content.string[range->start] == f_fss_delimit_slash && !is_comment) {
         f_string_length_t slash_count = 1;
 
@@ -559,6 +569,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         while (range->start <= range->stop && range->start < content.used) {
+
           if (content.string[range->start] == f_fss_delimit_placeholder) {
             status = f_utf_buffer_increment(content, range, 1);
             if (F_status_is_error(status)) return status;

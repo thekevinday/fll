@@ -7,6 +7,7 @@ extern "C" {
 
 #ifndef _di_fss_status_code_print_help_
   f_return_status fss_status_code_print_help(const f_color_context_t context) {
+
     fll_program_print_help_header(context, fss_status_code_name_long, fss_status_code_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -107,6 +108,7 @@ extern "C" {
 
       if (data->remaining.used > 0) {
         for (f_array_length_t i = 0; i < data->remaining.used; i++) {
+
           status2 = fss_status_code_process_check(*data, arguments.argv[data->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
@@ -122,6 +124,7 @@ extern "C" {
 
       if (data->remaining.used > 0) {
         for (f_array_length_t i = 0; i < data->remaining.used; i++) {
+
           status2 = fss_status_code_process_number(*data, arguments.argv[data->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {

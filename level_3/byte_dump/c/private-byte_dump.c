@@ -45,6 +45,7 @@ extern "C" {
     memset(&invalid, 0, sizeof(uint8_t) * data.width);
 
     while ((size = read(file.id, &byte, 1)) > 0) {
+
       // Storing the next character is designated by width_utf == -1.
       if (width_utf == -1) {
         width_utf = f_macro_utf_byte_width_is(byte);
@@ -96,6 +97,7 @@ extern "C" {
 
         // UTF-8 character fragments must have a width of 1 (and ASCII characters can only be the first character in a sequence).
         if (width_current == 1) {
+
           // Grab the next UTF-8 character fragment if the entire sequence is not collected yet.
           if (width_count < width_utf) continue;
         }
@@ -436,7 +438,6 @@ extern "C" {
 
     fl_color_print(f_type_output, data.context.set.notable, "  %s ", byte_dump_character_wall);
 
-
     if (*offset > 0) {
       if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
         while (*offset > 0 && j < data.width) {
@@ -471,6 +472,7 @@ extern "C" {
       if (previous->bytes > 0) {
         if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
           for (; j < previous->bytes && j < data.width; j++) {
+
             if (previous->invalid) {
               fl_color_print(f_type_output, data.context.set.error, "%s", byte_dump_character_placeholder);
             }
@@ -499,6 +501,7 @@ extern "C" {
     }
 
     for (uint8_t i = 0; i < characters.used && j < data.width; i++, j++) {
+
       output = f_macro_utf_character_t_to_char_1(characters.string[i]);
       width_utf = f_macro_utf_byte_width_is(output);
 
@@ -825,6 +828,7 @@ extern "C" {
 
 #ifndef _di_byte_dump_print_file_error_
   void byte_dump_print_file_error(const f_color_context_t context, const f_string_t function, const f_string_t file_name, const f_status_t status) {
+
     if (status == F_false) {
       fl_color_print(f_type_error, context.set.error, "ERROR: Failed to find file '");
       fl_color_print(f_type_error, context.set.notable, "%s", file_name);

@@ -20,6 +20,7 @@ extern "C" {
     f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
     status = private_fl_fss_basic_object_read(buffer, range, found, quoted, &delimits);
+
     if (F_status_is_error(status)) {
       f_macro_string_lengths_t_delete_simple(delimits);
       return status;

@@ -15,12 +15,13 @@ extern "C" {
 
     unsigned short width = 0;
 
-    while (i < serialize.used) {
+    for (; i < serialize.used; i += width) {
       width = f_macro_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter) {
         if (current == index) {
           if (start == i) {
+
             // provide an invalid start to stop range to communicate that there is no data.
             location->start = 1;
             location->stop = 0;
@@ -46,9 +47,7 @@ extern "C" {
       }
 
       if (i + width > serialize.used) return F_status_set_error(F_incomplete_utf_eos);
-
-      i += width;
-    } // while
+    } // for
 
     return F_data_not_eos;
   }

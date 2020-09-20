@@ -17,7 +17,6 @@ extern "C" {
     f_status_t status = F_none;
 
     status = private_fll_execute_arguments_add(source, length, arguments);
-
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -37,7 +36,6 @@ extern "C" {
     f_status_t status = F_none;
 
     status = private_fll_execute_arguments_add_parameter(prefix, prefix_length, name, name_length, value, value_length, arguments);
-
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -60,7 +58,6 @@ extern "C" {
       if (value_length[i] == 0) continue;
 
       status = private_fll_execute_arguments_add_parameter(prefix[i], prefix_length[i], name[i], name_length[i], value[i], value_length[i], arguments);
-
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -83,7 +80,6 @@ extern "C" {
       if (length[i] == 0) continue;
 
       status = private_fll_execute_arguments_add(source[i], length[i], arguments);
-
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -104,7 +100,6 @@ extern "C" {
     f_status_t status = F_none;
 
     status = private_fll_execute_arguments_add(source.string, source.used, arguments);
-
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -127,7 +122,6 @@ extern "C" {
     f_status_t status = F_none;
 
     status = private_fll_execute_arguments_add_parameter(prefix.string, prefix.used, name.string, name.used, value.string, value.used, arguments);
-
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -153,7 +147,6 @@ extern "C" {
       if (value[i].used > value[i].size) continue;
 
       status = private_fll_execute_arguments_add_parameter(prefix[i].string, prefix[i].used, name[i].string, name[i].used, value[i].string, value[i].used, arguments);
-
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -177,7 +170,6 @@ extern "C" {
       if (source[i].used > source[i].size) continue;
 
       status = private_fll_execute_arguments_add(source[i].string, source[i].used, arguments);
-
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -209,7 +201,6 @@ extern "C" {
 
       if (name_size > 1) {
         f_macro_string_t_new(status, program_name, name_size + 1);
-
         if (F_status_is_error(status)) return status;
 
         memcpy(program_name, program_path, name_size);
@@ -224,7 +215,6 @@ extern "C" {
 
       if (name_size > 1) {
         f_macro_string_t_new(status, program_name, name_size + 1);
-
         if (F_status_is_error(status)) return status;
 
         memcpy(program_name, last_slash + 1, name_size);
@@ -250,6 +240,7 @@ extern "C" {
     fixed_arguments[arguments.used + 1] = 0;
 
     status = f_file_exists(program_path);
+
     if (F_status_is_error(status)) {
       if (name_size > 0) f_macro_string_t_delete_simple(program_name, name_size);
 
@@ -266,7 +257,9 @@ extern "C" {
     process_id = fork();
 
     if (process_id < 0) {
-      if (name_size > 0) f_macro_string_t_delete_simple(program_name, name_size);
+      if (name_size > 0) {
+        f_macro_string_t_delete_simple(program_name, name_size);
+      }
 
       return F_status_set_error(F_fork);
     }
@@ -286,9 +279,13 @@ extern "C" {
     // have the parent wait for the child process to finish
     waitpid(process_id, result, WUNTRACED | WCONTINUED);
 
-    if (name_size > 0) f_macro_string_t_delete_simple(program_name, name_size);
+    if (name_size > 0) {
+      f_macro_string_t_delete_simple(program_name, name_size);
+    }
 
-    if (result != 0 && *result != 0) return F_status_set_error(F_failure);
+    if (result != 0 && *result != 0) {
+      return F_status_set_error(F_failure);
+    }
 
     return F_none;
   }
@@ -405,7 +402,9 @@ extern "C" {
     // have the parent wait for the child process to finish.
     waitpid(process_id, result, WUNTRACED | WCONTINUED);
 
-    if (name_size > 0) f_macro_string_t_delete_simple(program_name, name_size);
+    if (name_size > 0) {
+      f_macro_string_t_delete_simple(program_name, name_size);
+    }
 
     if (result != 0) {
       if (WIFEXITED(*result)) {
@@ -464,7 +463,9 @@ extern "C" {
     // have the parent wait for the child process to finish
     waitpid(process_id, result, WUNTRACED | WCONTINUED);
 
-    if (result != 0 && *result != 0) return F_status_set_error(F_failure);
+    if (result != 0 && *result != 0) {
+      return F_status_set_error(F_failure);
+    }
 
     return F_none;
   }
@@ -501,6 +502,7 @@ extern "C" {
     status = f_environment_get("PATH", &path);
 
     if (F_status_is_error(status)) {
+
       // Do not consider PATH is not available (or valid?) to be an error.
       if (F_status_set_fine(status) == F_invalid || F_status_set_fine(status) == F_failure) {
         status = F_none;
@@ -517,6 +519,7 @@ extern "C" {
     }
 
     f_macro_string_dynamic_t_delete(status, path);
+
     if (F_status_is_error(status)) {
       f_macro_string_dynamics_t_delete_simple(paths);
       return status;
@@ -526,6 +529,7 @@ extern "C" {
     f_string_dynamic_t *found = 0;
 
     for (i = 0; i < paths.used; i++) {
+
       status = fl_string_append(program_name, program_name_length, &paths.array[i]);
 
       if (F_status_is_error_not(status)) {
@@ -572,9 +576,7 @@ extern "C" {
     memcpy(&program_path, found->string, found->used);
 
     f_macro_string_dynamics_t_delete(status, paths);
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     pid_t process_id = 0;
 
@@ -595,7 +597,7 @@ extern "C" {
 
       for (i = 0; i < names.used; i++) {
         f_environment_set_dynamic(names.array[i], values.array[i], F_true);
-      }
+      } // for
 
       const int code = execvp(program_path, fixed_arguments);
 

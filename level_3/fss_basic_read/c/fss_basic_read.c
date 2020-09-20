@@ -7,6 +7,7 @@ extern "C" {
 
 #ifndef _di_fss_basic_read_print_help_
   f_return_status fss_basic_read_print_help(const f_color_context_t context) {
+
     fll_program_print_help_header(context, fss_basic_read_name_long, fss_basic_read_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -282,6 +283,7 @@ extern "C" {
         }
 
         status = fss_basic_read_main_process_file(arguments, data, "-", depths);
+
         if (F_status_is_error(status)) {
           macro_fss_basic_read_depths_t_delete_simple(depths);
           fss_basic_read_delete_data(data);
@@ -343,6 +345,7 @@ extern "C" {
           }
 
           status = fss_basic_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[counter]], depths);
+
           if (F_status_is_error(status)) {
             macro_fss_basic_read_depths_t_delete_simple(depths);
             fss_basic_read_delete_data(data);

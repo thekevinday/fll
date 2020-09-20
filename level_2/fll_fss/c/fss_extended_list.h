@@ -56,6 +56,9 @@ extern "C" {
  *   F_unterminated_stop (with error bit) if stop location is reached before a closing bracket is found (object was found).
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *   FL_fss_found_object_content_not on success and object was found but no content was found (start location is at end of object).
+ *
+ *   Errors (with error bit) from: fl_fss_extended_list_content_read().
+ *   Errors (with error bit) from: fl_fss_extended_list_object_read().
  */
 #ifndef _di_fll_fss_extended_list_read_
   extern f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest);
@@ -81,6 +84,10 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
+ *
+ *   Errors (with error bit) from: fl_fss_extended_list_content_write().
+ *   Errors (with error bit) from: fl_fss_extended_list_object_write().
+ *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
 #ifndef _di_fll_fss_extended_list_write_
   //extern f_return_status fll_fss_extended_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer);

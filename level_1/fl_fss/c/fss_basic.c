@@ -20,6 +20,7 @@ extern "C" {
     f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
     status = private_fl_fss_basic_object_read(buffer, range, found, quoted, &delimits);
+
     if (F_status_is_error(status)) {
       f_macro_string_lengths_t_delete_simple(delimits);
       return status;
@@ -71,13 +72,12 @@ extern "C" {
     found->array[found->used].start = range->start;
 
     // search for valid content.
-    for (;;) {
+    for (;; range->start++) {
+
       fl_macro_fss_skip_past_delimit_placeholders((*buffer), (*range));
       fl_macro_fss_content_delimited_return_on_overflow((*buffer), (*range), (*found), delimits, F_none_eos, F_none_stop);
 
       if (buffer->string[range->start] == f_fss_basic_close) break;
-
-      range->start++;
     } // for
 
     // Save the stop length/
@@ -129,6 +129,7 @@ extern "C" {
     }
 
     while (range->start <= range->stop && range->start < content.used) {
+
       if (content.string[range->start] == f_string_eol[0]) {
         destination->string[buffer_position.stop] = f_string_eol[0];
         destination->used = buffer_position.stop + 1;

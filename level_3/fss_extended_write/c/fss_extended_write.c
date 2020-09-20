@@ -6,6 +6,7 @@ extern "C" {
 
 #ifndef _di_fss_extended_write_print_help_
   f_return_status fss_extended_write_print_help(const f_color_context_t context) {
+
     fll_program_print_help_header(context, fss_extended_write_name_long, fss_extended_write_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -37,6 +38,7 @@ extern "C" {
       const f_console_parameters_t parameters = { data->parameters, fss_extended_write_total_parameters };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+
       if (F_status_is_error(status)) {
         fss_extended_write_delete_data(data);
         return status;
@@ -156,6 +158,7 @@ extern "C" {
             range.stop = input.used - 1;
 
             status = fl_fss_extended_object_write(input, 0, &range, &buffer);
+
             if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
               f_macro_string_dynamic_t_delete_simple(buffer);
               fss_extended_write_delete_data(data);

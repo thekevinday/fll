@@ -7,6 +7,7 @@ extern "C" {
 
 #ifndef _di_iki_write_print_help_
   f_return_status iki_write_print_help(const f_color_context_t context) {
+
     fll_program_print_help_header(context, iki_write_name_long, iki_write_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -58,6 +59,7 @@ extern "C" {
       const f_console_parameter_ids_t choices = { ids, 3 };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+
       if (F_status_is_error(status)) {
         iki_write_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 

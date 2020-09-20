@@ -81,6 +81,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
+ *
+ *   Errors (with error bit) from: f_file_mode_set().
+ *   Errors (with error bit) from: f_directory_exists().
+ *   Errors (with error bit) from: fl_directory_list().
  */
 #ifndef _di_fll_file_mode_set_all_
   extern f_return_status fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max);
@@ -182,6 +186,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
+ *
+ *   Errors (with error bit) from: f_directory_is().
+ *   Errors (with error bit) from: f_file_role_change().
+ *   Errors (with error bit) from: fl_directory_list().
  */
 #ifndef _di_fll_file_role_change_all_
   extern f_return_status fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max);

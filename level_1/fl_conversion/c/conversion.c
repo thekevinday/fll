@@ -21,6 +21,7 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
+
       if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
         if (scale) {
           scale++;
@@ -80,6 +81,7 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
+
       if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
         if (scale) {
           scale++;
@@ -123,6 +125,7 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
+
       if (f_conversion_character_to_decimal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -187,6 +190,7 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
+
       if (f_conversion_character_to_decimal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -233,6 +237,7 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
+
       if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -297,6 +302,7 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
+
       if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -343,6 +349,7 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
+
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -407,6 +414,7 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
+
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -453,6 +461,7 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
+
       if (f_conversion_character_to_octal(string[i], &digit) == F_none) {
 
         if (scale) {
@@ -517,6 +526,7 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
+
       if (f_conversion_character_to_octal(string[i], &digit) == F_none) {
 
         if (scale) {

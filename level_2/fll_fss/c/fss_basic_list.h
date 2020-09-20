@@ -52,6 +52,9 @@ extern "C" {
  *   F_number_overflow (with error bit) if the maximimum buffer size is reached.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
+ *
+ *   Errors (with error bit) from: fl_fss_basic_list_content_read().
+ *   Errors (with error bit) from: fl_fss_basic_list_object_read().
  */
 #ifndef _di_fll_fss_basic_list_read_
   extern f_return_status fll_fss_basic_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents);
@@ -77,6 +80,10 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
+ *
+ *   Errors (with error bit) from: fl_fss_basic_list_content_write().
+ *   Errors (with error bit) from: fl_fss_basic_list_object_write().
+ *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
 #ifndef _di_fll_fss_basic_list_write_
   extern f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer);

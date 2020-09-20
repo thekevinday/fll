@@ -15,6 +15,7 @@ extern "C" {
     const f_string_length_t length = strnlen(path, PATH_MAX);
 
     if (length == 0) {
+
       // When PATH is "", this is actually a valid search path for PWD.
       // Append an equivalent representation of PWD (string used length is 0).
       f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
@@ -31,6 +32,7 @@ extern "C" {
     f_string_length_t total = 0;
 
     for (i = 0; i <= length; i++) {
+
       if (i == length || path[i] == f_path_separator_variable[0]) {
         f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
         if (F_status_is_error(status)) return status;
@@ -89,6 +91,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (path.used == 0) {
+
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
       f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
@@ -108,6 +111,7 @@ extern "C" {
     f_string_dynamic_t part = f_string_dynamic_t_initialize;
 
     for (i = 0; i <= path.used; i++) {
+
       if (i == path.used || path.string[i] == f_path_separator_variable[0]) {
         f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
         if (F_status_is_error(status)) return status;
@@ -166,6 +170,7 @@ extern "C" {
     const f_string_length_t length = strnlen(path, PATH_MAX);
 
     if (length == 0) {
+
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
       f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
@@ -217,6 +222,7 @@ extern "C" {
           last = j;
         }
         else if (j == 0) {
+
           // when j = 0, the total is actually the entire length to max.
           total = last - j;
 

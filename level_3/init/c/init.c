@@ -25,6 +25,7 @@ extern "C" {
 
 #ifndef _di_init_print_help_
   f_return_status init_print_help(const f_color_context_t context) {
+
     fll_program_print_help_header(context, init_name_long, init_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");

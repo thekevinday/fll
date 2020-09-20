@@ -164,6 +164,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
+ *   Errors (with error bit) from: f_file_stat_at().
+ *
  * @see fl_directory_list()
  */
 #if !defined(_di_fl_directory_list_)

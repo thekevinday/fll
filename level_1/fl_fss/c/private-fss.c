@@ -62,6 +62,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       while (range->start <= range->stop && range->start < buffer->used) {
+
         status = f_fss_is_zero_width(*buffer, *range);
         if (F_status_is_error(status)) return status;
 
@@ -96,6 +97,7 @@ extern "C" {
         }
 
         status = f_utf_buffer_increment(*buffer, range, 1);
+
         if (F_status_is_error(status)) {
           return status;
         }
@@ -150,6 +152,7 @@ extern "C" {
       status = F_none;
 
       while (range->start <= range->stop && range->start < buffer->used) {
+
         status = f_fss_is_space(*buffer, *range);
         if (F_status_is_error(status)) return status;
 
@@ -258,6 +261,7 @@ extern "C" {
                 }
 
                 while (slash_count > 0) {
+
                   if (buffer->string[range->start] == f_fss_delimit_slash) {
                     if (slash_count % 2 == 1) {
                       delimits->array[delimits->used] = range->start;
@@ -283,6 +287,7 @@ extern "C" {
                 if ((status = f_fss_is_graph(*buffer, *range)) == F_true) {
 
                   while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
+
                     status = f_utf_buffer_increment(*buffer, range, 1);
                     if (F_status_is_error(status)) return status;
                   } // while
@@ -328,6 +333,7 @@ extern "C" {
                 }
 
                 while (slash_count > 0) {
+
                   if (buffer->string[range->start] == f_fss_delimit_slash) {
                     if (slash_count % 2 == 1) {
                       delimits->array[delimits->used] = range->start;
@@ -394,6 +400,7 @@ extern "C" {
             if (F_status_is_error(status)) return status;
 
             while (range->start <= range->stop && range->start < buffer->used) {
+
               if (buffer->string[range->start] == f_string_eol[0]) {
                 range->start++;
                 return FL_fss_found_object_content_not;
@@ -410,9 +417,9 @@ extern "C" {
               else if (buffer->string[range->start] != f_fss_delimit_placeholder) {
 
                 while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
+
                   status = f_utf_buffer_increment(*buffer, range, 1);
                   if (F_status_is_error(status)) return status;
-
                 } // while
 
                 if (range->start >= buffer->used) {
@@ -467,6 +474,7 @@ extern "C" {
 
     // seek to the end of the line when no valid object is found->
     while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
+
       status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
     } // while
@@ -528,6 +536,7 @@ extern "C" {
 
     if (object.string[range->start] == f_fss_delimit_slash) {
       while (range->start <= range->stop && range->start < object.used) {
+
         if (object.string[range->start] == f_fss_delimit_placeholder) {
           status = f_utf_buffer_increment(object, range, 1);
           if (F_status_is_error(status)) return status;
@@ -581,6 +590,7 @@ extern "C" {
     }
 
     while (range->start <= range->stop && range->start < object.used) {
+
       if (object.string[range->start] == f_fss_delimit_placeholder) {
         status = f_utf_buffer_increment(object, range, 1);
         if (F_status_is_error(status)) return status;
@@ -608,6 +618,7 @@ extern "C" {
           bool must_delimit = F_false;
 
           while (next.start <= next.stop && next.start < object.used) {
+
             if (object.string[next.start] == f_fss_delimit_placeholder) {
               status = f_utf_buffer_increment(object, &next, 1);
               if (F_status_is_error(status)) return status;
@@ -625,6 +636,7 @@ extern "C" {
           } // while
 
           if (next.start <= next.stop && next.start < object.used) {
+
             // identify if quoted exists and could be considered a valid closing quoted.
             if (object.string[next.start] == destination->string[destination_position.start]) {
               fl_macro_fss_skip_past_delimit_placeholders(object, next);
@@ -651,6 +663,7 @@ extern "C" {
 
           if (must_delimit) {
             for (f_string_length_t i = 0; i < slashes; i++) {
+
               destination->string[destination_position.stop] = f_fss_delimit_slash;
               destination_position.stop++;
             } // for
@@ -726,6 +739,7 @@ extern "C" {
 
           if (object.string[range->start] == f_fss_delimit_slash) {
             while (range->start <= range->stop && range->start < object.used) {
+
               if (object.string[range->start] == f_fss_delimit_placeholder) {
                 status = f_utf_buffer_increment(object, range, 1);
                 if (F_status_is_error(status)) return status;

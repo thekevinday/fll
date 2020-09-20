@@ -157,6 +157,7 @@ extern "C" {
       if (contents.used > 0) {
         range.start = 0;
         range.stop = contents.array[0].used - 1;
+
         status = fl_fss_basic_list_content_write(contents.array[0], &range, buffer);
 
         if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {

@@ -59,6 +59,7 @@ extern "C" {
 
     // identify where the object ends.
     while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
+
       if (buffer->string[range->start] == f_fss_delimit_slash) {
         f_string_length_t first_slash = range->start;
         f_string_length_t slash_count = 1;
@@ -84,6 +85,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           while (range->start < buffer->used && range->start <= range->stop) {
+
             if (buffer->string[range->start] == f_string_eol[0] || (status = f_fss_is_graph(*buffer, *range)) == F_true) {
               break;
             }
@@ -112,6 +114,7 @@ extern "C" {
 
             if (slash_count % 2 == 0) {
               while (slash_count > 0) {
+
                 if (buffer->string[range->start] == f_fss_delimit_slash) {
                   if (slash_count % 2 == 1) {
                     delimits.array[delimits.used] = range->start;
@@ -180,6 +183,7 @@ extern "C" {
 
     // seek to the end of the line when no valid object is found.
     while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
+
       status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
     } // while
@@ -229,6 +233,7 @@ extern "C" {
     f_string_length_t last_newline = range->start;
 
     f_macro_string_lengths_t_new(status, positions_start, f_fss_default_allocation_step);
+
     if (F_status_is_error(status)) {
       f_macro_string_lengths_t_delete_simple(delimits);
 
@@ -236,6 +241,7 @@ extern "C" {
     }
 
     f_macro_fss_objects_t_new(status, objects, f_fss_default_allocation_step);
+
     if (F_status_is_error(status)) {
       f_macro_string_lengths_t_delete_simple(positions_start);
       f_macro_string_lengths_t_delete_simple(delimits);
@@ -249,6 +255,7 @@ extern "C" {
     positions_start.used = 1;
 
     while (range->start < buffer->used && range->start <= range->stop) {
+
       if (buffer->string[range->start] == f_string_eol[0]) {
         last_newline = range->start;
         position_previous = range->start;
@@ -272,6 +279,7 @@ extern "C" {
 
         position_previous = range->start;
         status = f_utf_buffer_increment(*buffer, range, 1);
+
         if (F_status_is_error(status)) {
           f_macro_string_lengths_t_delete_simple(delimits);
           f_macro_string_lengths_t_delete_simple(positions_start);
@@ -289,6 +297,7 @@ extern "C" {
           }
 
           status = f_utf_buffer_increment(*buffer, range, 1);
+
           if (F_status_is_error(status)) {
             f_macro_string_lengths_t_delete_simple(delimits);
             f_macro_string_lengths_t_delete_simple(positions_start);
@@ -328,6 +337,7 @@ extern "C" {
           range->start++;
 
           while (range->start < buffer->used && range->start <= range->stop) {
+
             if (buffer->string[range->start] == f_string_eol[0]) {
               last_newline = range->start;
               line_start = range->start + 1;
@@ -348,6 +358,7 @@ extern "C" {
 
             position_previous = range->start;
             status = f_utf_buffer_increment(*buffer, range, 1);
+
             if (F_status_is_error(status)) {
               f_macro_string_lengths_t_delete_simple(delimits);
               f_macro_string_lengths_t_delete_simple(positions_start);
@@ -394,6 +405,7 @@ extern "C" {
 
               // apply slash delimits, only slashes and placeholders should be present.
               while (slash_count > 0) {
+
                 if (buffer->string[range->start] == f_fss_delimit_slash) {
                   if (slash_count % 2 == 1) {
                     delimits.array[delimits.used] = range->start;
@@ -464,6 +476,7 @@ extern "C" {
 
         position_previous = range->start;
         status = f_utf_buffer_increment(*buffer, range, 1);
+
         if (F_status_is_error(status)) {
           f_macro_string_lengths_t_delete_simple(delimits);
           f_macro_string_lengths_t_delete_simple(positions_start);
@@ -492,6 +505,7 @@ extern "C" {
 
           position_previous = range->start;
           status = f_utf_buffer_increment(*buffer, range, 1);
+
           if (F_status_is_error(status)) {
             f_macro_string_lengths_t_delete_simple(delimits);
             f_macro_string_lengths_t_delete_simple(positions_start);
@@ -548,6 +562,7 @@ extern "C" {
         // No valid object open found, seek until EOL.
         else {
           while (range->start < buffer->used && range->start <= range->stop) {
+
             if (buffer->string[range->start] == f_string_eol[0]) {
               last_newline = range->start;
               line_start = range->start + 1;
@@ -556,6 +571,7 @@ extern "C" {
 
             position_previous = range->start;
             status = f_utf_buffer_increment(*buffer, range, 1);
+
             if (F_status_is_error(status)) {
               f_macro_string_lengths_t_delete_simple(delimits);
               f_macro_string_lengths_t_delete_simple(positions_start);
@@ -575,8 +591,10 @@ extern "C" {
       }
       else if (buffer->string[range->start] == f_fss_extended_list_close) {
         while (range->start < buffer->used && range->start <= range->stop) {
+
           position_previous = range->start;
           status = f_utf_buffer_increment(*buffer, range, 1);
+
           if (F_status_is_error(status)) {
             f_macro_string_lengths_t_delete_simple(delimits);
             f_macro_string_lengths_t_delete_simple(positions_start);
@@ -671,6 +689,7 @@ extern "C" {
 
           if (depth == 0) {
             status = f_utf_buffer_increment(*buffer, range, 1);
+
             if (F_status_is_error(status)) {
               f_macro_string_lengths_t_delete_simple(delimits);
               f_macro_string_lengths_t_delete_simple(positions_start);
@@ -694,6 +713,7 @@ extern "C" {
         // No valid object close found, seek until EOL.
         else {
           while (range->start < buffer->used && range->start <= range->stop) {
+
             if (buffer->string[range->start] == f_string_eol[0]) {
               last_newline = range->start;
               line_start = range->start + 1;
@@ -702,6 +722,7 @@ extern "C" {
 
             position_previous = range->start;
             status = f_utf_buffer_increment(*buffer, range, 1);
+
             if (F_status_is_error(status)) {
               f_macro_string_lengths_t_delete_simple(delimits);
               f_macro_string_lengths_t_delete_simple(positions_start);
@@ -722,6 +743,7 @@ extern "C" {
       else if (buffer->string[range->start] != f_string_eol[0]) {
         position_previous = range->start;
         status = f_utf_buffer_increment(*buffer, range, 1);
+
         if (F_status_is_error(status)) {
           f_macro_string_lengths_t_delete_simple(delimits);
           f_macro_string_lengths_t_delete_simple(positions_start);
@@ -739,6 +761,7 @@ extern "C" {
 
       position_previous = range->start;
       status = f_utf_buffer_increment(*buffer, range, 1);
+
       if (F_status_is_error(status)) {
         f_macro_string_lengths_t_delete_simple(delimits);
         f_macro_string_lengths_t_delete_simple(positions_start);
@@ -753,12 +776,16 @@ extern "C" {
     f_macro_fss_objects_t_delete_simple(objects);
 
     if (range->start > range->stop) {
-      if (depth == 0) return F_status_set_error(F_unterminated_stop);
+      if (depth == 0) {
+        return F_status_set_error(F_unterminated_stop);
+      }
 
       return F_status_set_error(F_unterminated_nest_stop);
     }
 
-    if (depth == 0) return F_status_set_error(F_unterminated_eos);
+    if (depth == 0) {
+      return F_status_set_error(F_unterminated_eos);
+    }
 
     return F_status_set_error(F_unterminated_nest_eos);
   }
@@ -797,6 +824,7 @@ extern "C" {
     buffer_position.stop = destination->used;
 
     while (range->start <= range->stop && range->start < object.used) {
+
       if (object.string[range->start] == f_fss_comment) {
         // comments are not allowed and this format has no way of "wrapping" a comment.
         return F_status_set_error(FL_fss_found_comment);
@@ -818,6 +846,7 @@ extern "C" {
     } // while
 
     while (range->start <= range->stop && range->start < object.used) {
+
       if (object.string[range->start] == f_fss_delimit_slash) {
         f_string_length_t slash_count = 1;
 
@@ -828,6 +857,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         while (range->start <= range->stop && range->start < object.used) {
+
           if (object.string[range->start] == f_fss_delimit_placeholder) {
             status = f_utf_buffer_increment(object, range, 1);
             if (F_status_is_error(status)) return status;
@@ -924,6 +954,7 @@ extern "C" {
     buffer_position.stop = destination->used;
 
     while (range->start <= range->stop && range->start < content.used) {
+
       if (content.string[range->start] == f_fss_delimit_slash && !is_comment) {
         f_string_length_t slash_count = 1;
 
@@ -935,6 +966,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         while (range->start <= range->stop && range->start < content.used) {
+
           if (content.string[range->start] == f_fss_delimit_placeholder) {
             status = f_utf_buffer_increment(content, range, 1);
             if (F_status_is_error(status)) return status;
@@ -961,6 +993,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           while (range->start < content.used && range->start <= range->stop) {
+
             if (content.string[range->start] == f_string_eol[0] || (status = f_fss_is_graph(content, *range)) == F_true) {
               break;
             }
@@ -1006,6 +1039,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         while (range->start < content.used && range->start <= range->stop) {
+
           if (content.string[range->start] == f_string_eol[0] || (status = f_fss_is_graph(content, *range)) == F_true) {
             break;
           }

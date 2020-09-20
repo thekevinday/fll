@@ -44,7 +44,9 @@ extern "C" {
       f_array_length_t j = 0;
 
       for (; i < 7; i++) {
+
         for (j = 0; F_status_is_fine(status) && j < list[i]->used; j++) {
+
           const f_string_length_t length = path_length + list[i]->array[j].used + 1;
 
           char path_sub[length + 1];
@@ -65,6 +67,7 @@ extern "C" {
     f_macro_string_dynamics_t_delete_simple(listing.unknown);
 
     for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
+
       const f_string_length_t length = path_length + listing.directory.array[i].used + 1;
 
       char path_sub[length + 1];
@@ -91,7 +94,9 @@ extern "C" {
 
     f_macro_string_dynamics_t_delete_simple(listing.directory);
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
     return f_file_mode_set(path, mode);
   }
@@ -136,7 +141,9 @@ extern "C" {
       f_array_length_t j = 0;
 
       for (; i < 7; i++) {
+
         for (j = 0; F_status_is_fine(status) && j < list[i]->used; j++) {
+
           const f_string_length_t length = path_length + list[i]->array[j].used + 1;
 
           char path_sub[length + 1];
@@ -155,6 +162,7 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
+
       const f_string_length_t length = path_length + listing.directory.array[i].used + 1;
 
       char path_sub[length + 1];
@@ -181,7 +189,9 @@ extern "C" {
 
     f_macro_string_dynamics_t_delete_simple(listing.directory);
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
     return f_file_role_change(path, uid, gid, dereference);
   }

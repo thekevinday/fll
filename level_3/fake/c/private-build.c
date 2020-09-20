@@ -173,6 +173,7 @@ extern "C" {
     }
 
     f_macro_string_dynamic_t_new(*status, path_source, source.used);
+
     if (F_status_is_error(*status)) {
       fake_print_error(data, F_status_set_fine(*status), "f_macro_string_dynamic_t_new", F_true);
 
@@ -197,12 +198,14 @@ extern "C" {
       path_source.used = source.used;
 
       *status = fl_string_dynamic_append_nulless(files.array[i], &path_source);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
         break;
       }
 
       *status = fl_string_dynamic_terminate_after(&path_source);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
         break;
@@ -245,12 +248,14 @@ extern "C" {
         destination_file.used = 0;
 
         *status = fl_string_dynamic_append_nulless(destination, &destination_file);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
           break;
         }
 
         *status = f_file_name_base(path_source.string, path_source.used, &destination_file);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "f_file_name_base", F_true);
           break;
@@ -435,6 +440,7 @@ extern "C" {
 
       if (data.define.used) {
         for (f_array_length_t i = 0; i < data.define.used; i++) {
+
           *status = fl_string_dynamic_mash(" ", 1, data.define.array[i], &defines);
 
           if (F_status_is_error(*status)) {
@@ -451,6 +457,7 @@ extern "C" {
         }
 
         *status = fl_string_dynamic_terminate_after(&defines);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
 
@@ -612,6 +619,7 @@ extern "C" {
     if (path.used == 0) return F_none;
 
     f_status_t status = f_file_name_base(path.string, path.used, name);
+
     if (F_status_is_error(status)) {
       fake_print_error(data, F_status_set_fine(status), "f_file_name_base", F_true);
       return status;
@@ -627,6 +635,7 @@ extern "C" {
     } // for
 
     status = fl_string_dynamic_terminate_after(name);
+
     if (F_status_is_error(status)) {
       fake_print_error(data, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
       return status;
@@ -675,6 +684,7 @@ extern "C" {
       f_string_length_t source_length = 0;
 
       for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; i++) {
+
         source_length = path_sources->used + data_build.setting.build_sources_library.array[i].used;
 
         char source[source_length + 1];
@@ -1001,6 +1011,7 @@ extern "C" {
         source_path.used = 0;
 
         *status = fake_build_get_file_name_without_extension(data, data_build.setting.build_sources_library.array[i], &file_name);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
           break;
@@ -1020,18 +1031,21 @@ extern "C" {
 
         if (source_path.used) {
           *status = fl_string_dynamic_prepend(data.path_build_objects, &source_path);
+
           if (F_status_is_error(*status)) {
             fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
             break;
           }
 
           *status = fl_string_append_assure(f_path_separator, f_path_separator_length, &source_path);
+
           if (F_status_is_error(*status)) {
             fake_print_error(data, F_status_set_fine(*status), "fl_string_append_assure", F_true);
             break;
           }
 
           *status = fl_string_dynamic_terminate_after(&source_path);
+
           if (F_status_is_error(*status)) {
             fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
             break;
@@ -1315,6 +1329,7 @@ extern "C" {
       };
 
       for (uint8_t i = 0; i < 1; i++) {
+
         if (settings[i]->used == 0) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
           fl_color_print(f_type_error, data.context.set.error, "ERROR: The setting '");
@@ -1537,6 +1552,7 @@ extern "C" {
         found = F_false;
 
         for (j = 0; j < setting->modes.used; j++) {
+
           if (fl_string_dynamic_compare_trim(modes->array[i], setting->modes.array[j]) == F_equal_to) {
             found = F_true;
             break;
@@ -1563,9 +1579,11 @@ extern "C" {
         memset(&setting_mode_lengths, 0, sizeof(f_string_length_t) * fake_build_setting_total);
 
         for (j = 0; j < fake_build_setting_total; j++) {
+
           setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
 
           f_macro_string_dynamic_t_new(*status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
+
           if (F_status_is_error(*status)) {
             function = "f_macro_string_dynamic_t_new";
             break;
@@ -2176,6 +2194,7 @@ extern "C" {
     for (uint8_t i = 0; i < fake_build_stage_total; i++) {
 
       *status = fl_string_dynamic_append_nulless(data.path_build_stage, values[i]);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
         break;
@@ -2183,12 +2202,14 @@ extern "C" {
 
       if (data.process.used) {
         *status = fl_string_append(data.process.string, data.process.used, values[i]);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
           break;
         }
 
         *status = fl_string_append(fake_build_stage_separate, fake_build_stage_separate_length, values[i]);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
           break;
@@ -2196,30 +2217,35 @@ extern "C" {
       }
 
       *status = fl_string_append_nulless(names[i], lengths[i], values[i]);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
         break;
       }
 
       *status = fl_string_append(fake_build_stage_separate, fake_build_stage_separate_length, values[i]);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
         break;
       }
 
       *status = fl_string_dynamic_append(settings_file_base, values[i]);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_append", F_true);
         break;
       }
 
       *status = fl_string_append(fake_build_stage_built, fake_build_stage_built_length, values[i]);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fl_string_append", F_true);
         break;
       }
 
       *status = fl_string_dynamic_terminate_after(values[i]);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
         break;
@@ -2272,6 +2298,7 @@ extern "C" {
       source[source_length] = 0;
 
       *status = fake_build_get_file_name_without_extension(data, data_build.setting.build_sources_library.array[i], &file_name);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
         break;
@@ -2283,6 +2310,7 @@ extern "C" {
       }
 
       *status = f_file_name_directory(data_build.setting.build_sources_library.array[i].string, data_build.setting.build_sources_library.array[i].used, &destination_path);
+
       if (F_status_is_error(*status)) {
         fake_print_error(data, F_status_set_fine(*status), "f_file_name_directory", F_true);
         break;
@@ -2290,18 +2318,21 @@ extern "C" {
 
       if (destination_path.used) {
         *status = fl_string_dynamic_prepend(data.path_build_objects, &destination_path);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
           break;
         }
 
         *status = fl_string_append_assure(f_path_separator, f_path_separator_length, &destination_path);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fl_string_append_assure", F_true);
           break;
         }
 
         *status = fl_string_dynamic_terminate_after(&destination_path);
+
         if (F_status_is_error(*status)) {
           fake_print_error(data, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
           break;
@@ -2389,6 +2420,7 @@ extern "C" {
       };
 
       for (uint8_t j = 0; j < 5; j++) {
+
         *status = fll_execute_arguments_add(values[j], lengths[j], &arguments);
         if (F_status_is_error(*status)) break;
       } // for

@@ -183,6 +183,7 @@ extern "C" {
 
 #ifndef _di_fll_fss_status_is_error_
   f_return_status fll_fss_status_is_error(const f_status_t code) {
+
     if (fll_fss_status_is_fine(code) == F_true) {
       return F_false;
     }
@@ -196,6 +197,7 @@ extern "C" {
 
 #ifndef _di_fll_fss_status_is_warning_
   f_return_status fll_fss_status_is_warning(const f_status_t code) {
+
     switch (code) {
       #ifndef _di_fll_fss_status_basic_
         case F_data_not:
@@ -224,6 +226,7 @@ extern "C" {
 
 #ifndef _di_fll_fss_status_is_fine_
   f_return_status fll_fss_status_is_fine(const f_status_t code) {
+
     switch (code) {
       #ifndef _di_fll_fss_status_booleans_
         case F_false:

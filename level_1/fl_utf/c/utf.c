@@ -147,6 +147,7 @@ extern "C" {
     f_utf_string_length_t j = 1;
 
     while (i <= source.used && j <= destination->used) {
+
       if (source.string[source.used - i] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -185,6 +186,7 @@ extern "C" {
     f_utf_string_length_t j = 1;
 
     while (i <= source.used && j <= destination->used) {
+
       if (source.string[source.used - i] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -333,6 +335,7 @@ extern "C" {
     f_utf_string_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
+
       if (source.string[range.stop - i] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -373,6 +376,7 @@ extern "C" {
     f_utf_string_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
+
       if (source.string[range.stop - i] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -539,6 +543,7 @@ extern "C" {
     f_utf_string_length_t j = 0;
 
     while (i < length && j < destination->used) {
+
       if (source.string[i + range.start] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -581,6 +586,7 @@ extern "C" {
     f_utf_string_length_t j = 0;
 
     while (i < length && j < destination->used) {
+
       if (source.string[i + range.start] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -645,6 +651,7 @@ extern "C" {
     f_utf_string_length_t j = 0;
 
     while (i < source.used && j < destination->used) {
+
       if (source.string[i] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -683,6 +690,7 @@ extern "C" {
     f_utf_string_length_t j = 0;
 
     while (i < source.used && j < destination->used) {
+
       if (source.string[i] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -763,7 +771,10 @@ extern "C" {
     }
 
     while (buffer.string[range->start] != seek_to_this) {
-      if (buffer.string[range->start] == f_utf_character_t_eol) return F_none_eol;
+
+      if (buffer.string[range->start] == f_utf_character_t_eol) {
+        return F_none_eol;
+      }
 
       range->start++;
 
@@ -795,7 +806,10 @@ extern "C" {
     }
 
     while (buffer.string[range->start] != seek_to_character) {
-      if (buffer.string[range->start] == f_utf_character_t_eol) return F_none_eol;
+
+      if (buffer.string[range->start] == f_utf_character_t_eol) {
+        return F_none_eol;
+      }
 
       range->start++;
 
@@ -829,6 +843,7 @@ extern "C" {
     }
 
     while (buffer.string[range->start] == placeholder || (status = f_utf_character_is_graph(buffer.string[range->start])) == F_false) {
+
       if (F_status_is_error(status)) return status;
       if (buffer.string[range->start] == f_utf_character_t_eol) return F_none_eol;
 
@@ -866,6 +881,7 @@ extern "C" {
     }
 
     while (buffer.string[range->start] == placeholder || (status = f_utf_character_is_whitespace(buffer.string[range->start])) == F_false) {
+
       if (F_status_is_error(status)) return status;
       if (buffer.string[range->start] == f_utf_character_t_eol) return F_none_eol;
 
@@ -987,6 +1003,7 @@ extern "C" {
 
     if (destination->used > 0) {
       for (; destination->used > 0; destination->used--) {
+
         if (destination->string[destination->used - 1] == 0) continue;
         break;
       } // for
@@ -1108,6 +1125,7 @@ extern "C" {
     f_utf_string_length_t j = 0;
 
     while (i < length && j < destination->used) {
+
       if (source[i] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -1146,6 +1164,7 @@ extern "C" {
     f_utf_string_length_t j = 0;
 
     while (i < length && j < destination->used) {
+
       if (source[i] == f_utf_character_t_eos) {
         i++;
         continue;
@@ -1233,7 +1252,10 @@ extern "C" {
     }
 
     while (string[range->start] != seek_to_this) {
-      if (string[range->start] == f_utf_character_t_eol) return F_none_eol;
+
+      if (string[range->start] == f_utf_character_t_eol) {
+        return F_none_eol;
+      }
 
       range->start++;
 
@@ -1259,6 +1281,7 @@ extern "C" {
     f_utf_character_t seek_to_character = seek_to_this << 24;
 
     for (; range->start <= range->stop; range->start++) {
+
       if (f_macro_utf_character_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
@@ -1286,6 +1309,7 @@ extern "C" {
     }
 
     while (string[range->start] == placeholder || (status = f_utf_character_is_graph(string[range->start])) == F_false) {
+
       if (F_status_is_error(status)) return status;
       if (string[range->start] == f_utf_character_t_eol) return F_none_eol;
 
@@ -1317,6 +1341,7 @@ extern "C" {
     if (f_macro_utf_character_t_width_is(string[range->start]) == 1) return F_status_set_error(F_utf);
 
     while (string[range->start] == placeholder || (status = f_utf_character_is_graph(string[range->start])) == F_true) {
+
       if (F_status_is_error(status)) return status;
       if (string[range->start] == f_utf_character_t_eol) return F_none_eol;
 
@@ -1376,7 +1401,10 @@ extern "C" {
     }
 
     while (range->start <= range->stop) {
-      if (string[range->start] == seek_to_character) return F_none;
+
+      if (string[range->start] == seek_to_character) {
+        return F_none;
+      }
 
       range->start++;
 

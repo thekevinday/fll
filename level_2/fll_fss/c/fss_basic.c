@@ -175,6 +175,7 @@ extern "C" {
       if (contents.used > 0) {
         range.start = 0;
         range.stop = contents.array[0].used - 1;
+
         status = fl_fss_basic_content_write(contents.array[0], &range, destination);
 
         if (F_status_is_error(status)) {

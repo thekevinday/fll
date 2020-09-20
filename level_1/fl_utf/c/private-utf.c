@@ -41,7 +41,9 @@ extern "C" {
         if (i > first) {
           f_utf_string_length_t size = i - first;
 
-          if (destination->used + size > f_utf_string_t_size_max) return F_status_set_error(F_string_too_large);
+          if (destination->used + size > f_utf_string_t_size_max) {
+            return F_status_set_error(F_string_too_large);
+          }
 
           f_utf_string_length_t total = destination->used + size;
 
@@ -62,7 +64,9 @@ extern "C" {
           if (i > first) {
             f_utf_string_length_t size = i - first;
 
-            if (destination->used + size > f_utf_string_t_size_max) return F_status_set_error(F_string_too_large);
+            if (destination->used + size > f_utf_string_t_size_max) {
+              return F_status_set_error(F_string_too_large);
+            }
 
             f_utf_string_length_t total = destination->used + size;
 
@@ -95,6 +99,7 @@ extern "C" {
     f_utf_string_length_t i2 = offset2;
 
     for (; i1 < stop1 && i2 < stop2; i1++, i2++) {
+
       // skip past NULL in string1.
       while (i1 < stop1 && string1[i1] == 0) i1++;
       if (i1 == stop1) break;
@@ -134,6 +139,7 @@ extern "C" {
       if (i1 == stop1) break;
 
       status = f_utf_character_is_whitespace(string1[i1]);
+
       if (F_status_is_error(status)) {
         // ignore possibly invalid UTF-8 codes.
         if (F_status_set_fine(status) != F_maybe) {
@@ -146,11 +152,13 @@ extern "C" {
 
     // skip past leading whitespace in string2.
     for (; i2 < stop2; i2++) {
+
       // skip past NULL in string2.
       while (i2 < stop2 && string2[i2] == 0) i2++;
       if (i2 == stop2) break;
 
       status = f_utf_character_is_whitespace(string2[i2]);
+
       if (F_status_is_error(status)) {
         // ignore possibly invalid UTF-8 codes.
         if (F_status_set_fine(status) != F_maybe) {
@@ -171,11 +179,13 @@ extern "C" {
 
       // determine where the last non-whitespace is in string1.
       for (f_utf_string_length_t j = i1; j < stop1; j++) {
+
         // skip past NULL in string1.
         while (j < stop1 && string1[j] == 0) j++;
         if (j == stop1) break;
 
         status = f_utf_character_is_whitespace(string1[j]);
+
         if (F_status_is_error(status)) {
           // ignore possibly invalid UTF-8 codes.
           if (F_status_set_fine(status) != F_maybe) {
@@ -197,6 +207,7 @@ extern "C" {
         if (j == stop2) break;
 
         status = f_utf_character_is_whitespace(string2[j]);
+
         if (F_status_is_error(status)) {
           // ignore possibly invalid UTF-8 codes.
           if (F_status_set_fine(status) != F_maybe) {
@@ -358,6 +369,7 @@ extern "C" {
       if (*start > *stop) break;
 
       status = f_utf_character_is_whitespace(source[*start]);
+
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
           return F_status_set_error(F_utf);
@@ -378,6 +390,7 @@ extern "C" {
       if (*stop == *start) break;
 
       status = f_utf_character_is_whitespace(source[*stop]);
+
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
           return F_status_set_error(F_utf);
@@ -391,6 +404,7 @@ extern "C" {
 
     if (*stop == *start) {
       status = f_utf_character_is_whitespace(source[*stop]);
+
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
           return F_status_set_error(F_utf);

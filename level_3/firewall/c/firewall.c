@@ -13,6 +13,7 @@ extern "C" {
 
 #ifndef _di_firewall_print_help_
   f_return_status firewall_print_help(const f_color_context_t context) {
+
     fll_program_print_help_header(context, firewall_name_long, firewall_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -159,6 +160,7 @@ extern "C" {
             f_string_length_t counter = 0;
 
             for (; counter < data->remaining.used; counter++) {
+
               if (strncmp("nat", arguments.argv[data->remaining.array[counter]], 4) != 0) {
                 if (strncmp("mangle",  arguments.argv[data->remaining.array[counter]], 7) != 0) {
                   if (strncmp("ports",  arguments.argv[data->remaining.array[counter]], 6) != 0) {
@@ -499,6 +501,7 @@ extern "C" {
           local.is_lock = F_false;
 
           while (i < local.chain_contents.used) {
+
             input.start = local.chain_contents.array[i].array[0].start;
             input.stop = local.chain_contents.array[i].array[0].stop;
 
@@ -574,6 +577,7 @@ extern "C" {
             local.is_lock = F_false;
 
             for (; j < local.chain_contents.used; j++) {
+
               input.start = local.chain_contents.array[j].array[0].start;
               input.stop = local.chain_contents.array[j].array[0].stop;
 
@@ -617,6 +621,7 @@ extern "C" {
           local.is_lock = F_false;
 
           while (i < local.chain_contents.used) {
+
             input.start = local.chain_contents.array[i].array[0].start;
             input.stop = local.chain_contents.array[i].array[0].stop;
 

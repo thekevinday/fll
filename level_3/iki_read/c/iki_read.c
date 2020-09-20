@@ -7,6 +7,7 @@ extern "C" {
 
 #ifndef _di_iki_read_print_help_
   f_return_status iki_read_print_help(const f_color_context_t context) {
+
     fll_program_print_help_header(context, iki_read_name_long, iki_read_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -95,6 +96,7 @@ extern "C" {
       const f_console_parameters_t parameters = { data->parameters, iki_read_total_parameters };
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+
       if (F_status_is_error(status)) {
         iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
@@ -162,6 +164,7 @@ extern "C" {
           f_number_unsigned_t number = 0;
 
           status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+
           if (F_status_is_error(status)) {
             iki_read_print_error_number_argument(data->context, data->verbosity, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", iki_read_long_line, arguments.argv[index]);
 
@@ -201,6 +204,7 @@ extern "C" {
           f_number_unsigned_t number = 0;
 
           status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+
           if (F_status_is_error(status)) {
             iki_read_print_error_number_argument(data->context, data->verbosity, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", iki_read_long_line, arguments.argv[index]);
 
@@ -378,12 +382,14 @@ extern "C" {
             total = 0;
 
             status = f_file_open(arguments.argv[data->remaining.array[i]], 0, &file);
+
             if (F_status_is_error(status)) {
               iki_read_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_open", arguments.argv[data->remaining.array[i]], "process", F_true, F_true);
               break;
             }
 
             status = f_file_size_by_id(file.id, &total);
+
             if (F_status_is_error(status)) {
               iki_read_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_size_by_id", arguments.argv[data->remaining.array[i]], "process", F_true, F_true);
 

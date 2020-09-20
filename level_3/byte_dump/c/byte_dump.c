@@ -7,6 +7,7 @@ extern "C" {
 
 #ifndef _di_byte_dump_print_help_
   f_return_status byte_dump_print_help(const f_color_context_t context) {
+
     fll_program_print_help_header(context, byte_dump_name_long, byte_dump_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Print this help message.");
@@ -176,6 +177,7 @@ extern "C" {
         f_number_unsigned_t number = 0;
 
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
           fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
@@ -207,6 +209,7 @@ extern "C" {
         f_number_unsigned_t number = 0;
 
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+
         if (F_status_is_error(status) || number > f_number_t_size_unsigned) {
           fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
           fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
@@ -238,6 +241,7 @@ extern "C" {
         f_number_unsigned_t number = 0;
 
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+
         if (F_status_is_error(status) || number < 0 || number > f_number_t_size_unsigned) {
           fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
           fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
@@ -310,7 +314,9 @@ extern "C" {
           f_status_t missing_files = F_none;
 
           for (f_array_length_t counter = 0; counter < data->remaining.used; counter++) {
+
             status = f_file_exists(arguments.argv[data->remaining.array[counter]]);
+
             if (status == F_false || F_status_is_error(status)) {
               if (missing_files == F_none) {
                 missing_files = status;
@@ -332,6 +338,7 @@ extern "C" {
           f_file_t file = f_file_t_initialize;
 
           status = f_file_open(arguments.argv[data->remaining.array[counter]], 0, &file);
+
           if (F_status_is_error(status)) {
             byte_dump_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
             byte_dump_delete_data(data);

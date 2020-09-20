@@ -8,11 +8,9 @@ extern "C" {
 #ifndef _di_fss_status_code_process_check_
   f_return_status fss_status_code_process_check(const fss_status_code_data_t data, const f_string_t value) {
     f_number_unsigned_t number = 0;
-    f_status_t status = fss_status_code_convert_number(data, value, &number);
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    f_status_t status = fss_status_code_convert_number(data, value, &number);
+    if (F_status_is_error(status)) return status;
 
     if (data.parameters[fss_status_code_parameter_is_error].result == f_console_result_found) {
       if (F_status_is_error(number)) {
@@ -103,11 +101,9 @@ extern "C" {
 #ifndef _di_fss_status_code_process_normal_
   f_return_status fss_status_code_process_normal(const fss_status_code_data_t data, const f_string_t value) {
     f_number_unsigned_t number = 0;
-    f_status_t status = fss_status_code_convert_number(data, value, &number);
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    f_status_t status = fss_status_code_convert_number(data, value, &number);
+    if (F_status_is_error(status)) return status;
 
     const f_status_t code = (f_status_t) number;
     f_string_t string = 0;

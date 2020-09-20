@@ -123,6 +123,7 @@ extern "C" {
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[position_depth]));
 
         status = fl_conversion_string_to_number_unsigned(arguments.argv[position_depth], &depths->array[i].depth, range);
+
         if (F_status_is_error(status)) {
           fss_extended_read_print_number_argument_error(data.context, "fl_conversion_string_to_number_unsigned", fss_extended_read_long_depth, arguments.argv[position_depth], F_status_set_fine(status));
           return status;
@@ -131,6 +132,7 @@ extern "C" {
 
       if (data.parameters[fss_extended_read_parameter_at].result == f_console_result_additional) {
         for (; position_at < data.parameters[fss_extended_read_parameter_at].additional.used; position_at++) {
+
           if (data.parameters[fss_extended_read_parameter_at].additional.array[position_at] < position_depth) {
             continue;
           }
@@ -144,6 +146,7 @@ extern "C" {
           const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[depths->array[i].index_at]));
 
           status = fl_conversion_string_to_number_unsigned(arguments.argv[depths->array[i].index_at], &depths->array[i].value_at, range);
+
           if (F_status_is_error(status)) {
             fss_extended_read_print_number_argument_error(data.context, "fl_conversion_string_to_number_unsigned", fss_extended_read_long_at, arguments.argv[depths->array[i].index_at], F_status_set_fine(status));
             return status;
@@ -153,6 +156,7 @@ extern "C" {
 
       if (data.parameters[fss_extended_read_parameter_name].result == f_console_result_additional) {
         for (; position_name < data.parameters[fss_extended_read_parameter_name].additional.used; position_name++) {
+
           if (data.parameters[fss_extended_read_parameter_name].additional.array[position_name] < position_depth) {
             continue;
           }
@@ -211,7 +215,9 @@ extern "C" {
     } // for
 
     for (f_array_length_t i = 0; i < depths->used; i++) {
+
       for (f_array_length_t j = i + 1; j < depths->used; j++) {
+
         if (depths->array[i].depth == depths->array[j].depth) {
           fl_color_print(f_type_error, data.context.set.error, "ERROR: The value '");
           fl_color_print(f_type_error, data.context.set.notable, "%llu", depths->array[i].depth);
@@ -287,6 +293,7 @@ extern "C" {
         return F_status_set_error(status);
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
+
         // Clear buffers, then attempt the next file.
         f_macro_fss_contents_t_delete_simple(data->contents);
         f_macro_fss_objects_t_delete_simple(data->objects);
@@ -303,6 +310,7 @@ extern "C" {
       const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &select, range);
+
       if (F_status_is_error(status)) {
         fss_extended_read_print_number_argument_error(data->context, "fl_conversion_string_to_number_unsigned", fss_extended_read_long_select, arguments.argv[index], F_status_set_fine(status));
         return status;
@@ -316,6 +324,7 @@ extern "C" {
       const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &line, range);
+
       if (F_status_is_error(status)) {
         fss_extended_read_print_number_argument_error(data->context, "fl_conversion_string_to_number_unsigned", fss_extended_read_long_line, arguments.argv[index], F_status_set_fine(status));
         return status;
@@ -331,6 +340,7 @@ extern "C" {
 
       if (data->parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
         for (f_string_length_t i = 0; i < data->objects.used; i++) {
+
           name_length = (data->objects.array[i].stop - data->objects.array[i].start) + 1;
 
           if (name_length == depths.array[0].value_name.used) {
@@ -342,6 +352,7 @@ extern "C" {
       }
       else {
         for (f_string_length_t i = 0; i < data->objects.used; i++) {
+
           name_length = (data->objects.array[i].stop - data->objects.array[i].start) + 1;
 
           if (name_length == depths.array[0].value_name.used) {
@@ -401,6 +412,7 @@ extern "C" {
         f_array_length_t i = 0;
 
         for (; i < data->objects.used; i++) {
+
           if (names[i]) {
             if (at == depths.array[0].value_at) {
               print_object(f_type_output, data->buffer, data->objects.array[i]);
@@ -438,6 +450,7 @@ extern "C" {
       f_array_length_t i = 0;
 
       for (; i < data->objects.used; i++) {
+
         if (names[i]) {
           if (at == depths.array[0].value_at) {
             if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
@@ -556,9 +569,7 @@ extern "C" {
       f_string_length_t j = 0;
 
       for (; i < data->contents.used; i++) {
-        if (!names[i]) {
-          continue;
-        }
+        if (!names[i]) continue;
 
         if (data->contents.array[i].used == 0) {
           if (include_empty) {
@@ -605,9 +616,7 @@ extern "C" {
     f_string_length_t j = 0;
 
     for (; i < data->contents.used; i++) {
-      if (!names[i]) {
-        continue;
-      }
+      if (!names[i]) continue;
 
       if (data->contents.array[i].used == 0) {
         if (include_empty && select == 0) {

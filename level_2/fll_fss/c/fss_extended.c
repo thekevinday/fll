@@ -209,6 +209,7 @@ extern "C" {
 
     if (status == F_none || status == F_none_stop || status == F_none_eos || status == F_none_eol) {
       while (current < contents.used) {
+
         range.start = 0;
         range.stop = contents.array[current].used - 1;
         status = fl_fss_extended_content_write(contents.array[current], 0, &range, buffer);

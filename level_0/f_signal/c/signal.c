@@ -106,7 +106,9 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (sigaddset(set, signal) < 0) {
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EINVAL) {
+        return F_status_set_error(F_parameter);
+      }
 
       return F_status_set_error(F_failure);
     }
@@ -122,7 +124,9 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (sigdelset(set, signal) < 0) {
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EINVAL) {
+        return F_status_set_error(F_parameter);
+      }
 
       return F_status_set_error(F_failure);
     }
@@ -138,7 +142,9 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (sigemptyset(set) < 0) {
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EINVAL) {
+        return F_status_set_error(F_parameter);
+      }
 
       return F_status_set_error(F_failure);
     }

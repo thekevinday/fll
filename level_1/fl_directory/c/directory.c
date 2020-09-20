@@ -53,16 +53,20 @@ extern "C" {
       f_string_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
+
         if (source[i - 1] == 0) continue;
         if (source[i - 1] == f_path_separator[0]) continue;
+
         break;
       } // for
 
       i = destination_length;
 
       for (; i > 0; i--, static_destination.used--) {
+
         if (destination[i - 1] == 0) continue;
         if (destination[i - 1] == f_path_separator[0]) continue;
+
         break;
       } // for
     }
@@ -103,16 +107,20 @@ extern "C" {
       f_string_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
+
         if (source[i - 1] == 0) continue;
         if (source[i - 1] == f_path_separator[0]) continue;
+
         break;
       } // for
 
       i = destination_length;
 
       for (; i > 0; i--, static_destination.used--) {
+
         if (destination[i - 1] == 0) continue;
         if (destination[i - 1] == f_path_separator[0]) continue;
+
         break;
       } // for
     }
@@ -169,16 +177,20 @@ extern "C" {
       f_string_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
+
         if (source[i - 1] == 0) continue;
         if (source[i - 1] == f_path_separator[0]) continue;
+
         break;
       } // for
 
       i = destination_length;
 
       for (; i > 0; i--, static_destination.used--) {
+
         if (destination[i - 1] == 0) continue;
         if (destination[i - 1] == f_path_separator[0]) continue;
+
         break;
       } // for
     }
@@ -219,16 +231,20 @@ extern "C" {
       f_string_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
+
         if (source[i - 1] == 0) continue;
         if (source[i - 1] == f_path_separator[0]) continue;
+
         break;
       } // for
 
       i = destination_length;
 
       for (; i > 0; i--, static_destination.used--) {
+
         if (destination[i - 1] == 0) continue;
         if (destination[i - 1] == f_path_separator[0]) continue;
+
         break;
       } // for
     }
@@ -275,6 +291,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (; i > 0; i--) {
+
       if (path->string[i] == 0) continue;
 
       status = f_utf_is_control(path->string + i, path->used - i);

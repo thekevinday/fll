@@ -29,6 +29,7 @@ extern "C" {
 #ifndef _di_f_statuss_t_
   typedef struct {
     f_status_t *array;
+
     f_array_length_t size;
     f_array_length_t used;
   } f_statuss_t;

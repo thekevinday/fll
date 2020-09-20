@@ -7,7 +7,6 @@ extern "C" {
 
 #if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_)
   f_return_status private_fl_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
-
     f_status_t status = F_none;
 
     if (destination->used + length > destination->size) {
@@ -84,6 +83,7 @@ extern "C" {
     f_string_length_t i2 = offset2;
 
     for (; i1 < stop1 && i2 < stop2; i1++, i2++) {
+
       // skip past NULL in string1.
       while (i1 < stop1 && string1[i1] == 0) i1++;
       if (i1 == stop1) break;
@@ -119,6 +119,7 @@ extern "C" {
 
     // skip past leading whitespace in string1.
     for (; i1 < stop1; i1 += width) {
+
       // skip past NULL in string1.
       while (i1 < stop1 && string1[i1] == 0) i1++;
       if (i1 == stop1) break;
@@ -139,6 +140,7 @@ extern "C" {
 
     // skip past leading whitespace in string2.
     for (; i2 < stop2; i2 += width) {
+
       // skip past NULL in string2.
       while (i2 < stop2 && string2[i2] == 0) i2++;
       if (i2 == stop2) break;
@@ -167,12 +169,14 @@ extern "C" {
 
       // determine where the last non-whitespace is in string1.
       for (f_string_length_t j = i1; j < stop1; j += width) {
+
         // skip past NULL in string1.
         while (j < stop1 && string1[j] == 0) j++;
         if (j == stop1) break;
 
         width_max = (stop1 - j) + 1;
         status = f_utf_is_whitespace(string1 + j, width_max);
+
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
 
@@ -189,6 +193,7 @@ extern "C" {
 
       // determine where the last non-whitespace is in string2.
       for (f_string_length_t j = i2; j < stop2; j += width) {
+
         // skip past NULL in string2.
         while (j < stop2 && string2[j] == 0) j++;
         if (j == stop2) break;
@@ -214,6 +219,7 @@ extern "C" {
     }
 
     for (; i1 < last1 && i2 < last2; i1++, i2++) {
+
       // skip past NULL in string1.
       while (i1 < last1 && string1[i1] == 0) i1++;
       if (i1 == last1) break;
@@ -300,6 +306,7 @@ extern "C" {
     f_string_length_t size = 0;
 
     for (f_string_length_t i = 0; i <= length; i++) {
+
       if (i == length) {
         if (i > first) {
           size = i - first;
@@ -360,11 +367,13 @@ extern "C" {
 
     // skip past leading whitespace.
     for (; *start <= *stop; *start += width) {
+
       // skip past NULL.
       while (*start < *stop && source[*start] == 0) (*start)++;
       if (*start > *stop) break;
 
       status = f_utf_is_whitespace(source + *start, (*stop - *start) + 1);
+
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
           return F_status_set_error(F_utf);
@@ -389,6 +398,7 @@ extern "C" {
       // each UTF-8 character of width 1 is an incomplete part.
       // go left until either width is 0 (ascii, or > 1) to determine the character.
       for (;;) {
+
         width = f_macro_utf_byte_width_is(source[*stop]);
 
         if (width == 1) {
@@ -396,12 +406,15 @@ extern "C" {
 
           if (*stop == *start) break;
         }
-        else break;
+        else {
+          break;
+        }
       } // for
 
       if (*stop == *start) break;
 
       status = f_utf_is_whitespace(source + *stop, (stop_original - *stop) + 1);
+
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
           return F_status_set_error(F_utf);
@@ -415,6 +428,7 @@ extern "C" {
 
     if (*stop == *start) {
       status = f_utf_is_whitespace(source + *stop, (stop_original - *stop) + 1);
+
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
           return F_status_set_error(F_utf);

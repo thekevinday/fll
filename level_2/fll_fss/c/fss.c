@@ -69,6 +69,7 @@ extern "C" {
     memset(&matched, 0, sizeof(bool) * size);
 
     for (; i < objects.used; i++) {
+
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
       for (j = 0; j < size; j++) {
@@ -118,9 +119,11 @@ extern "C" {
     f_array_length_t k = 0;
 
     for (; i < objects.used; i++) {
+
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
       for (j = 0; j < size; j++) {
+
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
 
         if (F_status_is_error(status)) return status;
@@ -144,6 +147,7 @@ extern "C" {
         }
 
         for (k = 0; k < contents.array[i].used; k++) {
+
           status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[k], &values[j]->array[values[j]->used]);
           if (F_status_is_error(status)) return status;
 
@@ -191,12 +195,14 @@ extern "C" {
       length_name = (objects.array[i].stop - objects.array[i].start) + 1;
 
       for (j = 0; j < size; j++) {
+
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_name, lengths[j]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
         status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
+
         if (F_status_is_error(status)) {
           f_macro_string_dynamic_t_delete_simple(name);
           return status;
@@ -206,6 +212,7 @@ extern "C" {
         length_name = (contents.array[i].array[0].stop - contents.array[i].array[0].start) + 1;
 
         for (k = 0; k < values[j]->used; k++) {
+
           status = fl_string_compare_trim(buffer.string + contents.array[i].array[0].start, values[j]->array[k].name.string, length_name, values[j]->array[k].name.used);
 
           if (F_status_is_error(status)) {
@@ -234,6 +241,7 @@ extern "C" {
             }
 
             f_macro_string_maps_t_resize(status, (*values[j]), values[j]->used + 1);
+
             if (F_status_is_error(status)) {
               f_macro_string_dynamic_t_delete_simple(name);
               return status;
@@ -246,6 +254,7 @@ extern "C" {
           }
           else {
             f_macro_string_maps_t_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
+
             if (F_status_is_error(status)) {
               f_macro_string_dynamic_t_delete_simple(name);
               return status;
@@ -262,6 +271,7 @@ extern "C" {
 
         if (contents.array[i].used > 1) {
           status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[1], &map->value);
+
           if (F_status_is_error(status)) {
             f_macro_string_dynamic_t_delete_simple(name);
             return status;
@@ -315,6 +325,7 @@ extern "C" {
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
       for (j = 0; j < size; j++) {
+
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
 
         if (F_status_is_error(status)) return status;
@@ -366,6 +377,7 @@ extern "C" {
           }
 
           for (k = 1; k < contents.array[i].used; k++) {
+
             status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[k], &map_multi->value.array[map_multi->value.used]);
             if (F_status_is_error(status)) return status;
 
@@ -406,6 +418,7 @@ extern "C" {
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
       for (j = 0; j < size; j++) {
+
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
 
         if (F_status_is_error(status)) return status;
@@ -450,6 +463,7 @@ extern "C" {
 
         if (contents.array[i].used > 1) {
           for (k = 1; k < contents.array[i].used; k++) {
+
             status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], &map->value);
             if (F_status_is_error(status)) return status;
           } // for
@@ -497,6 +511,7 @@ extern "C" {
         if (status == F_equal_to_not) continue;
 
         status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
+
         if (F_status_is_error(status)) {
           f_macro_string_dynamic_t_delete_simple(name);
           return status;
@@ -506,6 +521,7 @@ extern "C" {
         length_name = (contents.array[i].array[0].stop - contents.array[i].array[0].start) + 1;
 
         for (k = 0; k < values[j]->used; k++) {
+
           status = fl_string_compare_trim(buffer.string + contents.array[i].array[0].start, values[j]->array[k].name.string, length_name, values[j]->array[k].name.used);
 
           if (F_status_is_error(status)) {
@@ -579,6 +595,7 @@ extern "C" {
         }
 
         for (k = 1; k < contents.array[i].used; k++) {
+
           status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], &map_multi->value.array[map_multi->value.used]);
           if (F_status_is_error(status)) return status;
         } // for
@@ -622,12 +639,14 @@ extern "C" {
       length_name = (objects.array[i].stop - objects.array[i].start) + 1;
 
       for (j = 0; j < size; j++) {
+
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_name, lengths[j]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
         status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
+
         if (F_status_is_error(status)) {
           f_macro_string_dynamic_t_delete_simple(name);
           return status;
@@ -637,6 +656,7 @@ extern "C" {
         length_name = (contents.array[i].array[0].stop - contents.array[i].array[0].start) + 1;
 
         for (k = 0; k < values[j]->used; k++) {
+
           status = fl_string_compare_trim(buffer.string + contents.array[i].array[0].start, values[j]->array[k].name.string, length_name, values[j]->array[k].name.used);
 
           if (F_status_is_error(status)) {
@@ -666,6 +686,7 @@ extern "C" {
               }
 
               f_macro_string_maps_t_resize(status, (*values[j]), values[j]->used + 1);
+
               if (F_status_is_error(status)) {
                 f_macro_string_dynamic_t_delete_simple(name);
                 return status;
@@ -678,6 +699,7 @@ extern "C" {
             }
             else {
               f_macro_string_maps_t_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
+
               if (F_status_is_error(status)) {
                 f_macro_string_dynamic_t_delete_simple(name);
                 return status;
@@ -708,6 +730,7 @@ extern "C" {
 
         if (contents.array[i].used > 1) {
           status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[1], &map->value);
+
           if (F_status_is_error(status)) {
             f_macro_string_dynamic_t_delete_simple(name);
             return status;
@@ -745,6 +768,7 @@ extern "C" {
     memset(&matched, 0, sizeof(bool) * size);
 
     for (; i < objects.used; i++) {
+
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
       for (j = 0; j < size; j++) {
@@ -758,6 +782,7 @@ extern "C" {
         matched[j] = F_true;
 
         for (k = 0; k < contents.array[i].used; k++) {
+
           status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], values[j]);
           if (F_status_is_error(status)) return status;
         } // for
@@ -792,9 +817,11 @@ extern "C" {
     f_array_length_t k = 0;
 
     for (; i < objects.used; i++) {
+
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
       for (j = 0; j < size; j++) {
+
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
 
         if (F_status_is_error(status)) return status;
@@ -826,6 +853,7 @@ extern "C" {
         }
 
         for (k = 0; k < contents.array[i].used; k++) {
+
           status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], &values[j]->array[values[j]->used]);
           if (F_status_is_error(status)) return status;
         } // for
@@ -863,15 +891,18 @@ extern "C" {
     f_array_length_t k = 0;
 
     for (; i < objects.used; i++) {
+
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
       for (j = 0; j < size; j++) {
+
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
         for (k = 0; k < contents.array[i].used; k++) {
+
           status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], values[j]);
           if (F_status_is_error(status)) return status;
         } // for

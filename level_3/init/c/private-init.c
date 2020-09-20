@@ -287,7 +287,6 @@
     system(init_program_chgrp " " init_group_process_random " " init_path_device_random);
     system(init_program_chgrp " " init_group_process_urandom " " init_path_device_urandom);
 
-
     // attempt to load kernel command line, but do not stop on failure.
     if (run_level > 0 && run_level[0] != 0) {
       f_file_p kernel_command_line_file = 0;
@@ -345,6 +344,7 @@
 
     // create the required directories if they do not already exist and then perform appropriate mount.
     status = f_file_stat(init_paths_devices, &stat);
+
     if (status == F_file_found_not || status == F_status_set_error(F_directory)) {
       system(init_program_mkdir " -p " init_paths_devices);
       memset(&stat, 0, sizeof(f_stat));
@@ -405,7 +405,6 @@
     }
 
     system(init_program_mount " " tmp_path);
-
 
     // create the required devices
     system(init_program_mknod " -m 0660 " init_path_device_null " c 1 3");

@@ -58,6 +58,8 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if a string length is too large to store in the buffer.
+ *
+ *   Errors (with error bit) from: f_iki_read().
  */
 #ifndef _di_fl_iki_read_
   extern f_return_status fl_iki_read(f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content);

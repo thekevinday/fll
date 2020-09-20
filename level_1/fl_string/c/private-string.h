@@ -129,6 +129,8 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
  * @see fl_string_compare_trim()
  * @see fl_string_dynamic_compare_trim()
  * @see fl_string_dynamic_partial_compare_trim()

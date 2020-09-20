@@ -57,6 +57,9 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
  */
 #ifndef _di_fll_execute_arguments_add_
   extern f_return_status fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments);
@@ -95,6 +98,9 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
   extern f_return_status fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments);
@@ -136,6 +142,9 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
   extern f_return_status fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_string_length_t prefix_length[], const f_string_t name[], const f_string_length_t name_length[], const f_string_t value[], const f_string_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -163,6 +172,9 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
  */
 #ifndef _di_fll_execute_arguments_add_set_
   extern f_return_status fll_execute_arguments_add_set(const f_string_t source[], const f_string_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -186,6 +198,9 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_
   extern f_return_status fll_execute_arguments_dynamic_add(const f_string_static_t source, f_string_dynamics_t *arguments);
@@ -219,6 +234,9 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_
   extern f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments);
@@ -254,6 +272,9 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
   extern f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -279,6 +300,9 @@ extern "C" {
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
   extern f_return_status fll_execute_arguments_dynamic_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -313,6 +337,8 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_file_exists().
  *
  * @see execv()
  */
@@ -360,6 +386,8 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_file_exists().
+ *
  * @see execv()
  */
 #ifndef _di_fll_execute_path_environment_
@@ -390,6 +418,8 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string (generated from PATH) is too large.
+ *
+ *   Errors (with error bit) from: f_file_exists().
  *
  * @see execvp()
  */
@@ -440,6 +470,11 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string (generated from PATH) is too large.
+ *
+ *   Errors (with error bit) from: f_file_exists().
+ *   Errors (with error bit) from: fl_environment_path_explode_dynamic().
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *
  * @see execvpe()
  */

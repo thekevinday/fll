@@ -163,6 +163,7 @@ extern "C" {
     if (path.used == 0) return F_none;
 
     status = f_directory_exists(path.string);
+
     if (status == F_true) {
       if (data.verbosity == fake_verbosity_verbose) {
         printf("Directory '%s' already exists.%c", path.string, f_string_eol[0]);
@@ -218,6 +219,7 @@ extern "C" {
     if (path.used == 0) return F_none;
 
     status = f_file_is(path.string, f_file_type_regular, F_false);
+
     if (status == F_true) {
       if (data.verbosity == fake_verbosity_verbose) {
         printf("File '%s' already exists.%c", path.string, f_string_eol[0]);
@@ -280,6 +282,7 @@ extern "C" {
         file.size_write = content.used;
 
         status = f_file_open(path.string, 0, &file);
+
         if (F_status_is_error(status)) {
           fake_print_error_file(data, F_status_set_fine(status), "f_file_open", path.string, "pre-populate", F_true, F_true);
 
@@ -287,6 +290,7 @@ extern "C" {
         }
 
         status = f_file_write(file, content, 0);
+
         if (F_status_is_error(status)) {
           fake_print_error_file(data, F_status_set_fine(status), "f_file_write", path.string, "pre-populate", F_true, F_true);
 

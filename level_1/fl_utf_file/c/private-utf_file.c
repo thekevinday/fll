@@ -96,6 +96,7 @@ extern "C" {
       memset(buffer_write, 0, write_size);
 
       for (i = 0, used = 0; used < write_size && *written + i < write_max; i++, used += width) {
+
         if (width_written < width) {
           if (width_written < 2) {
             buffer_write[used] = f_macro_utf_character_t_to_char_2(string[*written + i]);

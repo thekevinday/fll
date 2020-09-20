@@ -397,6 +397,7 @@ extern "C" {
     bool unmatched = F_true;
 
     status = fl_iki_read(&data->buffer, buffer_range, variable, vocabulary, content);
+
     if (F_status_is_error(status)) {
       iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_iki_read", F_true);
       return status;
@@ -410,6 +411,7 @@ extern "C" {
 
     if (data->mode == iki_read_mode_literal || data->mode == iki_read_mode_content) {
       status = iki_read_substitutions_identify(arguments, file_name, data, vocabulary, substitutionss);
+
       if (F_status_is_error(status)) {
         iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
 
@@ -430,10 +432,12 @@ extern "C" {
       buffer_range->start = 0;
 
       for (; i < data->parameters[iki_read_parameter_name].additional.used; i++) {
+
         index = data->parameters[iki_read_parameter_name].additional.array[i];
         name.used = 0;
 
         status = fl_string_append_nulless(arguments.argv[index], strlen(arguments.argv[index]), &name);
+
         if (F_status_is_error(status)) {
           iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_append_nulless", F_true);
 
@@ -448,6 +452,7 @@ extern "C" {
         buffer_range->stop = name.used - 1;
 
         for (j = 0; j < vocabulary->used; j++) {
+
           status = fl_string_dynamic_partial_compare(name, data->buffer, *buffer_range, vocabulary->array[j]);
 
           if (status == F_equal_to) {
@@ -551,10 +556,12 @@ extern "C" {
       f_string_length_t length_argument = 0;
 
       for (f_array_length_t index = 0; i < data->parameters[iki_read_parameter_name].additional.used; i++) {
+
         index = data->parameters[iki_read_parameter_name].additional.array[i];
         length_argument = strnlen(arguments.argv[index], f_console_length_size);
 
         for (j = 0, name_missed = F_true; j < names.used; j++) {
+
           status = fl_string_compare(arguments.argv[index], names.array[j].string, length_argument, names.array[j].used);
 
           if (status == F_equal_to) {
@@ -690,6 +697,7 @@ extern "C" {
     }
 
     status = fl_iki_read(&data->buffer, &range, variable, vocabulary, content);
+
     if (F_status_is_error(status)) {
       iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_iki_read", F_true);
       return status;
@@ -707,10 +715,12 @@ extern "C" {
       range.start = 0;
 
       for (; i < data->parameters[iki_read_parameter_name].additional.used; i++) {
+
         index = data->parameters[iki_read_parameter_name].additional.array[i];
         name.used = 0;
 
         status = fl_string_append_nulless(arguments.argv[index], strlen(arguments.argv[index]), &name);
+
         if (F_status_is_error(status)) {
           iki_read_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_append_nulless", F_true);
 
@@ -741,7 +751,10 @@ extern "C" {
 
 #ifndef _di_iki_read_substitutions_identify_
   f_return_status iki_read_substitutions_identify(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_data_t *data, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) {
-    if (data->parameters[iki_read_parameter_substitute].result != f_console_result_additional) return F_none;
+
+    if (data->parameters[iki_read_parameter_substitute].result != f_console_result_additional) {
+      return F_none;
+    }
 
     f_status_t status = F_none;
 
@@ -756,10 +769,12 @@ extern "C" {
     f_console_parameter_t *parameter = &data->parameters[iki_read_parameter_substitute];
 
     for (; i < parameter->additional.used; i += 3) {
+
       index = parameter->additional.array[i];
       length = strnlen(arguments.argv[index], f_console_length_size);
 
       for (j = 0; j < vocabulary->used; j++) {
+
         status = fl_string_compare(arguments.argv[index], data->buffer.string + vocabulary->array[j].start, length, (vocabulary->array[j].stop - vocabulary->array[j].start) + 1);
 
         if (status == F_equal_to) {

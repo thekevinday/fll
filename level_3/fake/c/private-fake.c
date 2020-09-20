@@ -100,6 +100,7 @@ extern "C" {
           }
 
           f_macro_string_dynamic_t_new((status), (*buffer), size_file);
+
           if (F_status_is_error(status)) {
             fake_print_error_file(data, F_status_set_fine(status), name_function, path_file, "allocate buffer size for", F_true, F_true);
 
@@ -616,6 +617,7 @@ extern "C" {
       };
 
       for (uint8_t i = 0; i < 3; i++) {
+
         if (data->parameters[parameters_id[i]].result == f_console_result_found) {
           fake_print_error_parameter_missing_value(*data, parameters_name[i]);
           return F_status_set_error(F_parameter);
@@ -752,6 +754,7 @@ extern "C" {
       };
 
       for (uint8_t i = 0; i < 4; i++) {
+
         if (data->parameters[parameters_id[i]].result == f_console_result_found) {
           fake_print_error_parameter_missing_value(*data, parameters_name[i]);
           return F_status_set_error(F_parameter);
@@ -814,7 +817,9 @@ extern "C" {
       f_string_length_t width_max = 0;
 
       for (; i < data->define.used; i++) {
+
         for (j = 0; j < data->define.array[i].used; j++) {
+
           width_max = data->define.array[i].used - j;
 
           status = f_utf_is_word(data->define.array[i].string + j, width_max, F_false);
@@ -869,7 +874,9 @@ extern "C" {
       f_string_length_t width_max = 0;
 
       for (; i < data->mode.used; i++) {
+
         for (j = 0; j < data->mode.array[i].used; j++) {
+
           width_max = data->mode.array[i].used - j;
 
           status = f_utf_is_word_dash_plus(data->mode.array[i].string + j, width_max, F_false);

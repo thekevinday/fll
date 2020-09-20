@@ -317,6 +317,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
     }
 
     for (r = repeat; r > 0; r--) {
+
       // first add the program name
       f_macro_string_dynamics_t_delete_simple(arguments);
       f_macro_string_dynamics_new(status, arguments, firewall_default_allocation_step);
@@ -530,6 +531,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
         }
 
         for (; subcounter < local.rule_contents.array[i].used; subcounter++) {
+
           length = firewall_macro_structure_size(local.rule_contents.array[i], subcounter);
 
           if (length > 0) {
@@ -713,6 +715,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
 
                   // the ip_list file contains objects and no content, all objects are what matter an nothing else
                   for (; buffer_counter < basic_objects.used; buffer_counter++) {
+
                     ip_length = firewall_macro_structure_size(basic_objects, buffer_counter);
 
                     f_macro_string_dynamic_t_new(status, ip_argument, ip_length);
@@ -1009,6 +1012,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserv
 
       // copy the string character by character, ignoring placeholders.
       while (j <= local->chain_objects.array[i].stop) {
+
         if (local->buffer.string[j] == f_fss_delimit_placeholder) {
           j++;
           continue;

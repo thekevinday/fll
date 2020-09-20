@@ -89,6 +89,8 @@ extern "C" {
  *   F_none on success.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see calloc()
  */
 #ifndef _di_f_memory_new_
   extern f_return_status f_memory_new(void **pointer, const f_memory_size_t type, const f_memory_length length);
@@ -111,6 +113,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see free()
  */
 #if ! ( defined (_di_f_memory_delete_) || defined (_f_memory_FORCE_secure_memory_) )
   extern f_return_status f_memory_delete(void **pointer, const f_memory_size_t type, const f_memory_length length);
@@ -131,6 +135,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see free()
+ * @see memset()
  */
 #if ! ( defined (_di_f_memory_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
   extern f_return_status f_memory_destroy(void **pointer, const f_memory_size_t type, const f_memory_length length);
@@ -154,6 +161,10 @@ extern "C" {
  *   F_none on success.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see calloc()
+ * @see memset()
+ * @see realloc()
  */
 #if ! ( defined (_di_f_memory_resize_) || defined (_f_memory_FORCE_secure_memory_) )
   extern f_return_status f_memory_resize(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
@@ -177,6 +188,10 @@ extern "C" {
  *   F_none on success.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see calloc()
+ * @see memset()
+ * @see realloc()
  */
 #if ! ( defined (_di_f_memory_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
   extern f_return_status f_memory_adjust(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);

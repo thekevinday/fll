@@ -11,6 +11,7 @@ extern "C" {
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
     status = private_fl_directory_list(source.string, 0, 0, F_false, &listing);
+
     if (F_status_is_error(status)) {
       f_macro_directory_listing_t_delete_simple(listing);
       return status;
@@ -36,6 +37,7 @@ extern "C" {
       f_array_length_t j = 0;
 
       for (; i < 7; i++) {
+
         for (j = 0; F_status_is_fine(status) && j < list[i]->used; j++) {
           status = private_fl_directory_clone_file(list[i]->array[j], source, destination, role, recurse);
         } // for
@@ -220,6 +222,7 @@ extern "C" {
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
     status = private_fl_directory_list(source.string, 0, 0, F_false, &listing);
+
     if (F_status_is_error(status)) {
       f_macro_directory_listing_t_delete_simple(listing);
       return status;
@@ -363,6 +366,7 @@ extern "C" {
       memset(&source_stat, 0, sizeof(struct stat));
 
       status = f_file_stat(source.string, F_false, &source_stat);
+
       if (F_status_is_error(status)) {
         if (status == F_status_set_error(F_string_too_large)) {
           size = f_string_length_t_size - 1;
@@ -475,6 +479,7 @@ extern "C" {
     size_t i = 0;
 
     for (; i < length; i++) {
+
       size = strnlen(entity[i]->d_name, f_directory_name_max);
 
       // There is no reason to include "." and ".." in the directory listing.
