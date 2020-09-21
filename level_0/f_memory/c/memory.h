@@ -24,7 +24,7 @@
 #include <level_0/status.h>
 
 // fll-0 memory includes
-#include <level_0/memory-structure.h>
+#include <level_0/memory_structure.h>
 
 #ifdef __cplusplus
 extern "C" {
