@@ -14,7 +14,7 @@ extern "C" {
     for (; i < size_read; i += increment_by) {
       increment_by = 0;
 
-      if (*width == 0) {
+      if (!*width) {
         *width = f_macro_utf_byte_width(buffer_read[i]);
         *width_last = -1;
       }
@@ -162,7 +162,7 @@ extern "C" {
 
       size_write = write(file.id, buffer_write, used);
 
-      if (size_write == 0) {
+      if (!size_write) {
         return F_none_stop;
       }
 

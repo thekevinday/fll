@@ -7,12 +7,12 @@ extern "C" {
 #ifndef _di_f_console_identify_
   f_return_status f_console_identify(const f_string_t input, f_console_id_t *result) {
     #ifndef _di_level_0_parameter_checking_
-      if (result == 0) return F_status_set_error(F_parameter);
+      if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_f
 
     const f_string_length_t length = strnlen(input, 3);
 
-    if (length == 0) {
+    if (!length) {
       *result = f_console_none;
       return F_data_not;
     }
@@ -50,7 +50,7 @@ extern "C" {
 #ifndef _di_f_console_parameter_process_
   f_return_status f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_string_lengths_t *remaining) {
     #ifndef _di_level_0_parameter_checking_
-      if (remaining == 0) return F_status_set_error(F_parameter);
+      if (!remaining) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
@@ -147,7 +147,7 @@ extern "C" {
             }
 
             if (result == console_short) {
-              if (parameters.parameter[i].symbol_short == 0) continue;
+              if (!parameters.parameter[i].symbol_short) continue;
 
               width = f_macro_utf_byte_width_is(arguments.argv[location][sub_location]);
               if (width > 0) {
@@ -184,7 +184,7 @@ extern "C" {
               }
             }
             else if (result == console_long) {
-              if (parameters.parameter[i].symbol_long == 0) {
+              if (!parameters.parameter[i].symbol_long) {
                 continue;
               }
 
@@ -246,7 +246,7 @@ extern "C" {
 
           if (parameters.parameter[i].type != f_console_type_other) continue;
 
-          if (parameters.parameter[i].symbol_other == 0) continue;
+          if (!parameters.parameter[i].symbol_other) continue;
 
           if (strncmp(arguments.argv[location], parameters.parameter[i].symbol_other, string_length + 1) != 0) continue;
 
@@ -322,12 +322,12 @@ extern "C" {
 #ifndef _di_f_console_parameter_prioritize_left_
   f_return_status f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision) {
     #ifndef _di_level_0_parameter_checking_
-      if (decision == 0) return F_status_set_error(F_parameter);
-      if (choices.id == 0) return F_status_set_error(F_parameter);
+      if (!decision) return F_status_set_error(F_parameter);
+      if (!choices.id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (choices.used == 0) return F_data_not;
-    if (parameters.used == 0) return F_data_not;
+    if (!choices.used) return F_data_not;
+    if (!parameters.used) return F_data_not;
 
     f_array_length_t location = 0;
     f_array_length_t location_sub = 0;
@@ -351,7 +351,7 @@ extern "C" {
     } // for
 
     // The first parameter location (argc = 0) is the program name, therefore if the location is 0, then no matches were found.
-    if (location == 0) {
+    if (!location) {
       return F_data_not;
     }
 
@@ -364,12 +364,12 @@ extern "C" {
 #ifndef _di_f_console_parameter_prioritize_right_
   f_return_status f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision) {
     #ifndef _di_level_0_parameter_checking_
-      if (decision == 0) return F_status_set_error(F_parameter);
-      if (choices.id == 0) return F_status_set_error(F_parameter);
+      if (!decision) return F_status_set_error(F_parameter);
+      if (!choices.id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (choices.used == 0) return F_data_not;
-    if (parameters.used == 0) return F_data_not;
+    if (!choices.used) return F_data_not;
+    if (!parameters.used) return F_data_not;
 
     f_array_length_t location = 0;
     f_array_length_t location_sub = 0;
@@ -393,7 +393,7 @@ extern "C" {
     } // for
 
     // The first parameter location (argc = 0) is the program name, therefore if the location is 0, then no matches were found.
-    if (location == 0) {
+    if (!location) {
       return F_data_not;
     }
 

@@ -183,7 +183,7 @@ extern "C" {
     while (dynamics.used > 0) { \
       dynamics.used--; \
       f_macro_string_dynamic_t_delete_simple(dynamics.array[dynamics.used]); \
-      if (dynamics.used == 0) { \
+      if (!dynamics.used) { \
         if (f_memory_delete((void **) & dynamics.array, sizeof(f_string_dynamic_t), dynamics.size)) { \
           dynamics.size = 0; \
         } \
@@ -195,7 +195,7 @@ extern "C" {
     while (dynamics.used > 0) { \
       dynamics.used--; \
       f_macro_string_dynamic_t_destroy_simple(dynamics.array[dynamics.used]); \
-      if (dynamics.used == 0) { \
+      if (!dynamics.used) { \
         if (f_memory_destroy((void **) & dynamics.array, sizeof(f_string_dynamic_t), dynamics.size)) { \
           dynamics.size = 0; \
         } \

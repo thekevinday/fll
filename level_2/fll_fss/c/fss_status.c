@@ -7,13 +7,13 @@ extern "C" {
 #ifndef _di_fll_fss_status_from_string_
   f_return_status fll_fss_status_from_string(const f_string_t string, f_status_t *code) {
     #ifndef _di_level_1_parameter_checking_
-      if (code == 0) return F_status_set_error(F_parameter);
+      if (!code) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
     const f_string_length_t length = strlen(string);
 
-    if (length == 0) {
+    if (!length) {
       return F_data_not;
     }
 
@@ -111,7 +111,7 @@ extern "C" {
 #ifndef _di_fll_fss_status_to_string_
   f_return_status fll_fss_status_to_string(const f_status_t code, f_string_t *string) {
     #ifndef _di_level_2_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     const f_status_t unmasked_code = F_status_set_fine(code);

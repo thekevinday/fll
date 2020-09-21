@@ -398,7 +398,7 @@ extern "C" {
             }
 
             // Skip past empty files.
-            if (total == 0) {
+            if (!total) {
               f_file_close(&file.id);
               continue;
             }
@@ -432,7 +432,7 @@ extern "C" {
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (data->verbosity != iki_read_verbosity_quiet) {
-      if (F_status_is_error(status) || data->mode == 0) {
+      if (F_status_is_error(status) || !data->mode) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
       }
     }

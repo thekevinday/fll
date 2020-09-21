@@ -8,12 +8,12 @@ extern "C" {
 #ifndef _di_fl_utf_file_read_
   f_return_status fl_utf_file_read(const f_file_t file, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (file.size_read == 0) return F_status_set_error(F_parameter);
+      if (!file.size_read) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
     f_status_t status = F_none;
 
@@ -40,7 +40,7 @@ extern "C" {
       private_fl_utf_file_process_read_buffer(buffer_read, size_read, buffer, buffer_char, &width, &width_last);
     } // while
 
-    if (size_read == 0) {
+    if (!size_read) {
       if (width != 0) {
         return F_status_set_error(F_incomplete_utf_eof);
       }
@@ -69,12 +69,12 @@ extern "C" {
 #ifndef _di_fl_utf_file_read_block_
   f_return_status fl_utf_file_read_block(const f_file_t file, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (file.size_read == 0) return F_status_set_error(F_parameter);
+      if (!file.size_read) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
     f_status_t status = F_none;
 
@@ -100,8 +100,8 @@ extern "C" {
       private_fl_utf_file_process_read_buffer(buffer_read, size_read, buffer, buffer_char, &width, &width_last);
     }
 
-    if (size_read == 0) {
-      if (width != 0) {
+    if (!size_read) {
+      if (width) {
         return F_status_set_error(F_incomplete_utf_eof);
       }
 
@@ -129,12 +129,12 @@ extern "C" {
 #ifndef _di_fl_utf_file_read_until_
   f_return_status fl_utf_file_read_until(const f_file_t file, const f_utf_string_length_t total, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (file.size_read == 0) return F_status_set_error(F_parameter);
+      if (!file.size_read) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
     f_status_t status = F_none;
 
@@ -168,7 +168,7 @@ extern "C" {
       private_fl_utf_file_process_read_buffer(buffer_read, size_read, buffer, buffer_char, &width, &width_last);
     } // while
 
-    if (size_read == 0) {
+    if (!size_read) {
       if (width != 0) {
         return F_status_set_error(F_incomplete_utf_eof);
       }
@@ -197,14 +197,14 @@ extern "C" {
 #ifndef _di_fl_utf_file_write_
   f_return_status fl_utf_file_write(const f_file_t file, const f_utf_string_static_t buffer, f_utf_string_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
-      if (file.size_write == 0) return F_status_set_error(F_parameter);
+      if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
-    if (buffer.used == 0) {
+    if (!buffer.used) {
       *written = 0;
       return F_data_not;
     }
@@ -221,14 +221,14 @@ extern "C" {
 #ifndef _di_fl_utf_file_write_block_
   f_return_status fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t buffer, f_utf_string_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
-      if (file.size_write == 0) return F_status_set_error(F_parameter);
+      if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
-    if (buffer.used == 0) {
+    if (!buffer.used) {
       *written = 0;
       return F_data_not;
     }
@@ -251,14 +251,14 @@ extern "C" {
 #ifndef _di_fl_utf_file_write_until_
   f_return_status fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_length_t total, f_utf_string_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
-      if (file.size_write == 0) return F_status_set_error(F_parameter);
+      if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
-    if (buffer.used == 0 || total == 0) {
+    if (!buffer.used || !total) {
       *written = 0;
       return F_data_not;
     }
@@ -281,16 +281,16 @@ extern "C" {
 #ifndef _di_fl_utf_file_write_range_
   f_return_status fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_range_t range, f_utf_string_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
-      if (file.size_write == 0) return F_status_set_error(F_parameter);
+      if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
-    if (file.id == 0) return F_status_set_error(F_file_closed);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
-    if (buffer.used == 0) {
+    if (!buffer.used) {
       *written = 0;
       return F_data_not;
     }

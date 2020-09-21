@@ -145,7 +145,7 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_ascii_) || !defined(_di_f_utf_is_ascii_)
   f_return_status private_f_utf_character_is_ascii(const f_utf_character_t character, const uint8_t width) {
 
-    if (width == 0) {
+    if (!width) {
       const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
 
       if (byte_first >= 0x00 && byte_first <= 0x7f) {
@@ -1936,7 +1936,7 @@ extern "C" {
     // reduce the number of checks by grouping checks by byte.
     const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
 
-    if (width == 0) {
+    if (!width) {
       if (byte_first >= 0x00 && byte_first <= 0x7f) {
         return F_true;
       }

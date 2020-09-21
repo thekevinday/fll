@@ -126,7 +126,7 @@ extern "C" {
 #ifndef _di_f_directory_list_
   f_return_status f_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics_t *names) {
     #ifndef _di_level_0_parameter_checking_
-      if (names == 0) return F_status_set_error(F_parameter);
+      if (!names) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     struct dirent **listing = 0;
@@ -145,7 +145,7 @@ extern "C" {
       size = strnlen(listing[i]->d_name, f_directory_name_max);
 
       // There is no reason to include "." and ".." in the directory listing.
-      if (strncmp(listing[i]->d_name, "..", 3) == 0 || strncmp(listing[i]->d_name, ".", 2) == 0)  {
+      if (!strncmp(listing[i]->d_name, "..", 3) == 0 || strncmp(listing[i]->d_name, ".", 2))  {
         f_memory_delete((void **) & listing[i], sizeof(char *), 1);
         continue;
       }
@@ -172,7 +172,7 @@ extern "C" {
     f_memory_delete((void **) & listing, sizeof(struct dirent *), 1);
 
     if (F_status_is_error(status)) return status;
-    if (length == 0) return F_data_not;
+    if (!length) return F_data_not;
 
     return F_none;
   }
@@ -181,7 +181,7 @@ extern "C" {
 #ifndef _di_f_directory_open_
   f_return_status f_directory_open(const f_string_t path, const bool dereference, int *id) {
     #ifndef _di_level_0_parameter_checking_
-      if (id == 0) return F_status_set_error(F_parameter);
+      if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     int flag = f_directory_flag_directory | f_directory_flag_close_execute | f_directory_flag_path;
@@ -219,7 +219,7 @@ extern "C" {
   f_return_status f_directory_open_at(const int at_id, const f_string_t path, const bool dereference, int *id) {
     #ifndef _di_level_0_parameter_checking_
       if (at_id <= 0) return F_status_set_error(F_parameter);
-      if (id == 0) return F_status_set_error(F_parameter);
+      if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     int flag = f_directory_flag_directory | f_directory_flag_close_execute | f_directory_flag_path;
@@ -351,7 +351,7 @@ extern "C" {
 #ifndef _di_f_directory_touch_
   f_return_status f_directory_touch(const f_string_t path, const mode_t mode) {
     #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return F_status_set_error(F_parameter);
+      if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
@@ -400,7 +400,7 @@ extern "C" {
 #ifndef _di_f_directory_touch_at_
   f_return_status f_directory_touch_at(const int at_id, const f_string_t path, const mode_t mode, const int flag) {
     #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return F_status_set_error(F_parameter);
+      if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;

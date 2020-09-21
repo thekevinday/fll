@@ -54,7 +54,7 @@ extern "C" {
 
       for (; i > 0; i--, static_source.used--) {
 
-        if (source[i - 1] == 0) continue;
+        if (!source[i - 1]) continue;
         if (source[i - 1] == f_path_separator[0]) continue;
 
         break;
@@ -64,7 +64,7 @@ extern "C" {
 
       for (; i > 0; i--, static_destination.used--) {
 
-        if (destination[i - 1] == 0) continue;
+        if (!destination[i - 1]) continue;
         if (destination[i - 1] == f_path_separator[0]) continue;
 
         break;
@@ -108,7 +108,7 @@ extern "C" {
 
       for (; i > 0; i--, static_source.used--) {
 
-        if (source[i - 1] == 0) continue;
+        if (!source[i - 1]) continue;
         if (source[i - 1] == f_path_separator[0]) continue;
 
         break;
@@ -118,20 +118,18 @@ extern "C" {
 
       for (; i > 0; i--, static_destination.used--) {
 
-        if (destination[i - 1] == 0) continue;
+        if (!destination[i - 1]) continue;
         if (destination[i - 1] == f_path_separator[0]) continue;
 
         break;
       } // for
     }
 
-    if (recurse.depth_max == 0) {
+    if (!recurse.depth_max) {
       return status;
     }
 
-    if (recurse.depth_max) {
-      status = private_fl_directory_clone(static_source, static_destination, role, recurse, 1);
-    }
+    status = private_fl_directory_clone(static_source, static_destination, role, recurse, 1);
 
     if (status == F_none && recurse.output && recurse.verbose) {
       recurse.verbose(recurse.output, source, destination);
@@ -178,7 +176,7 @@ extern "C" {
 
       for (; i > 0; i--, static_source.used--) {
 
-        if (source[i - 1] == 0) continue;
+        if (!source[i - 1]) continue;
         if (source[i - 1] == f_path_separator[0]) continue;
 
         break;
@@ -188,7 +186,7 @@ extern "C" {
 
       for (; i > 0; i--, static_destination.used--) {
 
-        if (destination[i - 1] == 0) continue;
+        if (!destination[i - 1]) continue;
         if (destination[i - 1] == f_path_separator[0]) continue;
 
         break;
@@ -232,7 +230,7 @@ extern "C" {
 
       for (; i > 0; i--, static_source.used--) {
 
-        if (source[i - 1] == 0) continue;
+        if (!source[i - 1]) continue;
         if (source[i - 1] == f_path_separator[0]) continue;
 
         break;
@@ -242,7 +240,7 @@ extern "C" {
 
       for (; i > 0; i--, static_destination.used--) {
 
-        if (destination[i - 1] == 0) continue;
+        if (!destination[i - 1]) continue;
         if (destination[i - 1] == f_path_separator[0]) continue;
 
         break;
@@ -278,7 +276,7 @@ extern "C" {
       if (path->used > path->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (path->used == 0) {
+    if (!path->used) {
       return F_data_not;
     }
 
@@ -292,7 +290,7 @@ extern "C" {
 
     for (; i > 0; i--) {
 
-      if (path->string[i] == 0) continue;
+      if (!path->string[i]) continue;
 
       status = f_utf_is_control(path->string + i, path->used - i);
       if (status == F_true) continue;
@@ -320,7 +318,7 @@ extern "C" {
         first_nulless = F_true;
 
         for (j = i; j > 0; j--) {
-          if (path->string[j] == 0) continue;
+          if (!path->string[j]) continue;
 
           status = f_utf_is_control(path->string + j, path->used - j);
           if (status == F_true) continue;
@@ -351,7 +349,7 @@ extern "C" {
       if (destination->used > destination->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (length == 0) {
+    if (!length) {
       return F_data_not;
     }
 
@@ -366,7 +364,7 @@ extern "C" {
       if (destination->used > destination->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (source.used == 0) {
+    if (!source.used) {
       return F_data_not;
     }
 

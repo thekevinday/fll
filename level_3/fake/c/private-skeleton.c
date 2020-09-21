@@ -160,7 +160,7 @@ extern "C" {
   f_return_status fake_skeleton_operate_directory_create(const fake_data_t data, const f_string_dynamic_t path) {
     f_status_t status = F_none;
 
-    if (path.used == 0) return F_none;
+    if (!path.used) return F_none;
 
     status = f_directory_exists(path.string);
 
@@ -216,7 +216,7 @@ extern "C" {
   f_return_status fake_skeleton_operate_file_create(const fake_data_t data, const f_string_dynamic_t path, const bool executable, const f_string_static_t content) {
     f_status_t status = F_none;
 
-    if (path.used == 0) return F_none;
+    if (!path.used) return F_none;
 
     status = f_file_is(path.string, f_file_type_regular, F_false);
 

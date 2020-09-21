@@ -297,7 +297,7 @@ extern "C" {
             return status;
           }
 
-          if (data->quantity.total == 0) {
+          if (!data->quantity.total) {
             status = f_file_size_by_id(file.id, &data->quantity.total);
             if (F_status_is_error(status)) {
               fss_extended_list_read_print_file_error(data->context, "f_file_size_by_id", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
@@ -310,7 +310,7 @@ extern "C" {
             }
 
             // Skip past empty files.
-            if (data->quantity.total == 0) {
+            if (!data->quantity.total) {
               f_file_close(&file.id);
               continue;
             }

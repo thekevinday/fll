@@ -8,10 +8,10 @@ extern "C" {
 #ifndef _di_fl_fss_extended_object_read_
   f_return_status fl_fss_extended_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quoted_t *quoted) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == 0) return F_status_set_error(F_parameter);
-      if (buffer->used == 0) return F_status_set_error(F_parameter);
-      if (range == 0) return F_status_set_error(F_parameter);
-      if (found == 0) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
+      if (!buffer->used) return F_status_set_error(F_parameter);
+      if (!range) return F_status_set_error(F_parameter);
+      if (!found) return F_status_set_error(F_parameter);
       if (range->start > range->stop) return F_status_set_error(F_parameter);
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -40,10 +40,10 @@ extern "C" {
 #ifndef _di_fl_fss_extended_content_read_
   f_return_status fl_fss_extended_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_quoteds_t *quoteds) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer == 0) return F_status_set_error(F_parameter);
-      if (buffer->used == 0) return F_status_set_error(F_parameter);
-      if (range == 0) return F_status_set_error(F_parameter);
-      if (found == 0) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
+      if (!buffer->used) return F_status_set_error(F_parameter);
+      if (!range) return F_status_set_error(F_parameter);
+      if (!found) return F_status_set_error(F_parameter);
       if (range->start > range->stop) return F_status_set_error(F_parameter);
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -159,7 +159,7 @@ extern "C" {
 #ifndef _di_fl_fss_extended_object_write_
 f_return_status fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (destination == 0) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     return private_fl_fss_basic_object_write(object, quoted, range, destination);
@@ -169,7 +169,7 @@ f_return_status fl_fss_extended_object_write(const f_string_static_t object, con
 #ifndef _di_fl_fss_extended_content_write_
   f_return_status fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (destination == 0) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     // this operates exactly like an object, syntax-wise, so just use the object write.

@@ -16,7 +16,7 @@ extern "C" {
       printf("%s", program.string);
 
       for (f_array_length_t i = 0; i < arguments.used; i++) {
-        if (arguments.array[i].used == 0) continue;
+        if (!arguments.array[i].used) continue;
 
         printf(" %s", arguments.array[i].string);
       } // for
@@ -545,7 +545,7 @@ extern "C" {
       };
 
       for (i = 0; i < 34; i++) {
-        if (parameters_value[i]->used == 0) continue;
+        if (!parameters_value[i]->used) continue;
 
         status = fl_string_dynamic_terminate_after(parameters_value[i]);
 

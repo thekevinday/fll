@@ -501,7 +501,7 @@ extern "C" {
 #if !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
   f_return_status private_f_file_open(const f_string_t path, const mode_t mode, f_file_t *file) {
 
-    if (mode == 0) {
+    if (!mode) {
       file->id = open(path, file->flag);
     }
     else {
@@ -539,7 +539,7 @@ extern "C" {
 #if !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
   f_return_status private_f_file_open_at(const int at_id, const f_string_t path, const mode_t mode, f_file_t *file) {
 
-    if (mode == 0) {
+    if (!mode) {
       file->id = openat(at_id, path, file->flag);
     }
     else {
@@ -744,7 +744,7 @@ extern "C" {
       }
     } // while
 
-    if (size_write == 0) {
+    if (!size_write) {
       return F_none_stop;
     }
 

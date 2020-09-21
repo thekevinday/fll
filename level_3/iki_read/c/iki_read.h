@@ -181,14 +181,14 @@ extern "C" {
     while (replacements.used > 0) { \
       replacements.used--; \
     } \
-    if (replacements.used == 0) f_macro_memory_structure_t_delete_simple(replacements, iki_read_substitution_t)
+    if (!replacements.used) f_macro_memory_structure_t_delete_simple(replacements, iki_read_substitution_t)
 
   #define macro_iki_read_substitutions_t_destroy_simple(replacements) \
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
     } \
-    if (replacements.used == 0) f_macro_memory_structure_t_destroy_simple(replacements, iki_read_substitution_t)
+    if (!replacements.used) f_macro_memory_structure_t_destroy_simple(replacements, iki_read_substitution_t)
 
   #define macro_iki_read_substitutions_t_resize(status, replacements, new_length) \
     status = F_none; \

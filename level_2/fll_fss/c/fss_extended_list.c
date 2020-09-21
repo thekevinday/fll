@@ -7,9 +7,9 @@ extern "C" {
 #ifndef _di_fll_fss_extended_list_read_
   f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest) {
     #ifndef _di_level_3_parameter_checking_
-      if (buffer == 0) return F_status_set_error(F_parameter);
-      if (range == 0) return F_status_set_error(F_parameter);
-      if (nest == 0) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
+      if (!range) return F_status_set_error(F_parameter);
+      if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_3_parameter_checking_
 
     f_status_t status = F_none;
@@ -17,7 +17,7 @@ extern "C" {
     f_string_length_t initial_used = 0;
     bool found_data = F_false;
 
-    if (nest->used == 0) {
+    if (!nest->used) {
       f_macro_fss_nest_t_resize(status2, (*nest), f_fss_default_allocation_step);
       if (F_status_is_error(status2)) return status2;
     }
@@ -115,7 +115,7 @@ extern "C" {
 #ifndef _di_fll_fss_extended_list_write_
   f_return_status fll_fss_extended_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer) {
     #ifndef _di_level_3_parameter_checking_
-      if (buffer == 0) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
       if (contents.used > contents.size) return F_status_set_error(F_parameter);
     #endif // _di_level_3_parameter_checking_
 

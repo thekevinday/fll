@@ -8,8 +8,8 @@ extern "C" {
 #ifndef _di_fll_fss_identify_
   f_return_status fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header) {
     #ifndef _di_level_2_parameter_checking_
-      if (header == 0) return F_status_set_error(F_parameter);
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (!header) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     return private_fll_fss_identify(buffer, header);
@@ -19,9 +19,9 @@ extern "C" {
 #ifndef _di_fll_fss_identify_file_
   f_return_status fll_fss_identify_file(f_file_t *file, f_fss_header_t *header) {
     #ifndef _di_level_2_parameter_checking_
-      if (file == 0) return F_status_set_error(F_parameter);
-      if (header == 0) return F_status_set_error(F_parameter);
-      if (file->id == 0) return F_status_set_error(F_file_closed);
+      if (!file) return F_status_set_error(F_parameter);
+      if (!header) return F_status_set_error(F_parameter);
+      if (!file->id) return F_status_set_error(F_file_closed);
       if (file->id < 0) return F_status_set_error(F_file);
     #endif // _di_level_2_parameter_checking_
 
@@ -48,14 +48,14 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_
   f_return_status fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_dynamic_t *values[], f_array_length_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
-      if (size == 0) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
-      if (values == 0) return F_status_set_error(F_parameter);
+      if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not;
-    if (objects.used == 0) return F_data_not;
-    if (contents.used == 0) return F_data_not;
+    if (!buffer.used) return F_data_not;
+    if (!objects.used) return F_data_not;
+    if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
     f_string_length_t length_object = 0;
@@ -100,14 +100,14 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_apart_
   f_return_status fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_dynamics_t *values[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
-      if (size == 0) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
-      if (values == 0) return F_status_set_error(F_parameter);
+      if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not;
-    if (objects.used == 0) return F_data_not;
-    if (contents.used == 0) return F_data_not;
+    if (!buffer.used) return F_data_not;
+    if (!objects.used) return F_data_not;
+    if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
     f_string_length_t length_object = 0;
@@ -168,14 +168,14 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_map_
   f_return_status fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_maps_t *values[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
-      if (size == 0) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
-      if (values == 0) return F_status_set_error(F_parameter);
+      if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not;
-    if (objects.used == 0) return F_data_not;
-    if (contents.used == 0) return F_data_not;
+    if (!buffer.used) return F_data_not;
+    if (!objects.used) return F_data_not;
+    if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
     f_string_length_t length_name = 0;
@@ -301,14 +301,14 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_map_apart_
   f_return_status fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_map_multis_t *values[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
-      if (size == 0) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
-      if (values == 0) return F_status_set_error(F_parameter);
+      if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not;
-    if (objects.used == 0) return F_data_not;
-    if (contents.used == 0) return F_data_not;
+    if (!buffer.used) return F_data_not;
+    if (!objects.used) return F_data_not;
+    if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
     f_string_length_t length_object = 0;
@@ -394,14 +394,14 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_map_mash_
   f_return_status fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_maps_t *values[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
-      if (size == 0) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
-      if (values == 0) return F_status_set_error(F_parameter);
+      if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not;
-    if (objects.used == 0) return F_data_not;
-    if (contents.used == 0) return F_data_not;
+    if (!buffer.used) return F_data_not;
+    if (!objects.used) return F_data_not;
+    if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
     f_string_length_t length_object = 0;
@@ -478,14 +478,14 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_map_mash_apart_
   f_return_status fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_map_multis_t *values[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
-      if (size == 0) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
-      if (values == 0) return F_status_set_error(F_parameter);
+      if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not;
-    if (objects.used == 0) return F_data_not;
-    if (contents.used == 0) return F_data_not;
+    if (!buffer.used) return F_data_not;
+    if (!objects.used) return F_data_not;
+    if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
     f_string_length_t length_name = 0;
@@ -612,14 +612,14 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_map_together_
   f_return_status fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_maps_t *values[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
-      if (size == 0) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
-      if (values == 0) return F_status_set_error(F_parameter);
+      if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not;
-    if (objects.used == 0) return F_data_not;
-    if (contents.used == 0) return F_data_not;
+    if (!buffer.used) return F_data_not;
+    if (!objects.used) return F_data_not;
+    if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
     f_string_length_t length_name = 0;
@@ -747,14 +747,14 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_mash_
   f_return_status fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamic_t *values[], f_array_length_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
-      if (size == 0) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
-      if (values == 0) return F_status_set_error(F_parameter);
+      if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not;
-    if (objects.used == 0) return F_data_not;
-    if (contents.used == 0) return F_data_not;
+    if (!buffer.used) return F_data_not;
+    if (!objects.used) return F_data_not;
+    if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
     f_string_length_t length_object = 0;
@@ -800,14 +800,14 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_mash_apart_
   f_return_status fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamics_t *values[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
-      if (size == 0) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
-      if (values == 0) return F_status_set_error(F_parameter);
+      if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not;
-    if (objects.used == 0) return F_data_not;
-    if (contents.used == 0) return F_data_not;
+    if (!buffer.used) return F_data_not;
+    if (!objects.used) return F_data_not;
+    if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
     f_string_length_t length_object = 0;
@@ -874,14 +874,14 @@ extern "C" {
 #ifndef _di_fll_fss_snatch_together_
   f_return_status fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamic_t *values[], f_array_length_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
-      if (size == 0) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
-      if (values == 0) return F_status_set_error(F_parameter);
+      if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (buffer.used == 0) return F_data_not;
-    if (objects.used == 0) return F_data_not;
-    if (contents.used == 0) return F_data_not;
+    if (!buffer.used) return F_data_not;
+    if (!objects.used) return F_data_not;
+    if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
     f_string_length_t length_object = 0;

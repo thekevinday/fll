@@ -76,7 +76,7 @@ extern "C" {
 #ifndef _di_f_conversion_character_to_binary_
   f_return_status f_conversion_character_to_binary(const int8_t character, f_number_unsigned_t *number) {
     #ifndef _di_level_0_parameter_checking_
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -93,7 +93,7 @@ extern "C" {
 #ifndef _di_f_conversion_character_to_decimal_
   f_return_status f_conversion_character_to_decimal(const int8_t character, f_number_unsigned_t *number) {
     #ifndef _di_level_0_parameter_checking_
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -118,7 +118,7 @@ extern "C" {
 #ifndef _di_f_conversion_character_to_duodecimal_
   f_return_status f_conversion_character_to_duodecimal(const int8_t character, f_number_unsigned_t *decimal) {
     #ifndef _di_level_0_parameter_checking_
-      if (decimal == 0) return F_status_set_error(F_parameter);
+      if (!decimal) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -147,7 +147,7 @@ extern "C" {
 #ifndef _di_f_conversion_character_to_hexidecimal_
   f_return_status f_conversion_character_to_hexidecimal(const int8_t character, f_number_unsigned_t *decimal) {
     #ifndef _di_level_0_parameter_checking_
-      if (decimal == 0) return F_status_set_error(F_parameter);
+      if (!decimal) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -184,7 +184,7 @@ extern "C" {
 #ifndef _di_f_conversion_character_to_octal_
   f_return_status f_conversion_character_to_octal(const int8_t character, f_number_unsigned_t *number) {
     #ifndef _di_level_0_parameter_checking_
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     switch (character) {
@@ -207,13 +207,13 @@ extern "C" {
 #ifndef _di_f_conversion_number_signed_to_string_
   f_return_status f_conversion_number_signed_to_string(const f_number_signed_t number, const uint8_t base, f_string_dynamic_t *destination) {
     #ifndef _di_level_0_parameter_checking_
-      if (destination == 0) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
       if (base < 2 || base > 16) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
 
-    if (number == 0) {
+    if (!number) {
       f_macro_string_dynamic_t_resize(status, (*destination), destination->used + 2);
       if (F_status_is_error(status)) return status;
 
@@ -328,13 +328,13 @@ extern "C" {
 #ifndef _di_f_conversion_number_unsigned_to_string_
   f_return_status f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const uint8_t base, f_string_dynamic_t *destination) {
     #ifndef _di_level_0_parameter_checking_
-      if (destination == 0) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
       if (base < 2 || base > 16) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
 
-    if (number == 0) {
+    if (!number) {
       f_macro_string_dynamic_t_resize(status, (*destination), destination->used + 2);
       if (F_status_is_error(status)) return status;
 

@@ -8,7 +8,7 @@ extern "C" {
 #ifndef _di_f_serialize_simple_
   f_return_status f_serialize_simple(const f_string_static_t value, f_string_dynamic_t *serialize) {
     #ifndef _di_level_0_parameter_checking_
-      if (serialize == 0) return F_status_set_error(F_parameter);
+      if (!serialize) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
@@ -18,7 +18,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    if (serialize->used == 0) {
+    if (!serialize->used) {
       memcpy(serialize->string + serialize->used, value.string, value.used);
       serialize->used += value.used;
     }
@@ -35,8 +35,8 @@ extern "C" {
 #ifndef _di_f_serialize_un_simple_
   f_return_status f_serialize_un_simple(const f_string_static_t serialize, f_string_dynamics_t *strings) {
     #ifndef _di_level_0_parameter_checking_
-      if (serialize.used == 0) return F_status_set_error(F_parameter);
-      if (strings == 0) return F_status_set_error(F_parameter);
+      if (!serialize.used) return F_status_set_error(F_parameter);
+      if (!strings) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
@@ -101,8 +101,8 @@ extern "C" {
 #ifndef _di_f_serialize_un_simple_map_
   f_return_status f_serialize_un_simple_map(const f_string_static_t serialize, f_string_ranges_t *locations) {
     #ifndef _di_level_0_parameter_checking_
-      if (serialize.used == 0) return F_status_set_error(F_parameter);
-      if (locations == 0) return F_status_set_error(F_parameter);
+      if (!serialize.used) return F_status_set_error(F_parameter);
+      if (!locations) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
@@ -154,8 +154,8 @@ extern "C" {
 #ifndef _di_f_serialize_un_simple_find_
   f_return_status f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t *range) {
     #ifndef _di_level_0_parameter_checking_
-      if (serialize.used == 0) return F_status_set_error(F_parameter);
-      if (range == 0) return F_status_set_error(F_parameter);
+      if (!serialize.used) return F_status_set_error(F_parameter);
+      if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     return private_f_serialize_un_simple_find(serialize, index, range);
@@ -165,8 +165,8 @@ extern "C" {
 #ifndef _di_f_serialize_un_simple_get_
   f_return_status f_serialize_un_simple_get(const f_string_static_t serialize, const f_array_length_t index, f_string_dynamic_t *dynamic) {
     #ifndef _di_level_0_parameter_checking_
-      if (serialize.used == 0) return F_status_set_error(F_parameter);
-      if (dynamic == 0) return F_status_set_error(F_parameter);
+      if (!serialize.used) return F_status_set_error(F_parameter);
+      if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_string_range_t range = f_string_range_t_initialize;

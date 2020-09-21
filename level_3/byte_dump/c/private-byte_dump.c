@@ -65,7 +65,7 @@ extern "C" {
       }
 
       // When width_count == 0, then this is that start of a new character sequence.
-      if (width_count == 0) {
+      if (!width_count) {
         characters.string[character_current] = f_macro_utf_character_t_from_char_1(byte);
         width_count = 1;
 
@@ -250,7 +250,7 @@ extern "C" {
       byte = f_macro_utf_character_t_to_char_4(characters.string[character_current]);
     }
 
-    if (cell->column == 0) {
+    if (!cell->column) {
       fl_color_print(f_type_output, data.context.set.notable, "%016X ", (uint64_t) cell->row);
 
       if (*offset > 0) {
@@ -400,7 +400,7 @@ extern "C" {
       cell->column = 0;
       cell->row++;
 
-      if (bytes == 0) {
+      if (!bytes) {
         previous->bytes = 0;
         previous->invalid = 0;
       }
@@ -510,7 +510,7 @@ extern "C" {
       }
       else if (output >= 0 && output <= 32 || output == 127) {
         if (data.presentation == byte_dump_presentation_normal) {
-          if (output == 0) {
+          if (!output) {
             fl_color_print2(f_type_output, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_null);
           }
           else if (output == 1) {

@@ -7,10 +7,10 @@ extern "C" {
 #ifndef _di_fll_fss_basic_list_read_
   f_return_status fll_fss_basic_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents) {
     #ifndef _di_level_2_parameter_checking_
-      if (buffer == 0) return F_status_set_error(F_parameter);
-      if (range == 0) return F_status_set_error(F_parameter);
-      if (objects == 0) return F_status_set_error(F_parameter);
-      if (contents == 0) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
+      if (!range) return F_status_set_error(F_parameter);
+      if (!objects) return F_status_set_error(F_parameter);
+      if (!contents) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
@@ -136,7 +136,7 @@ extern "C" {
 #ifndef _di_fll_fss_basic_list_write_
   f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer) {
     #ifndef _di_level_2_parameter_checking_
-      if (buffer == 0) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
       if (contents.used > contents.size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 

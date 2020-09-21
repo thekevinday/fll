@@ -192,7 +192,7 @@ extern "C" {
     while (sets.used > 0) { \
       sets.used--; \
       f_macro_fss_named_t_delete_simple(sets.array[sets.used]); \
-      if (sets.used == 0) { \
+      if (!sets.used) { \
         if (f_memory_delete((void **) & sets.array, sizeof(f_fss_named_t), sets.size)) { \
           sets.size = 0; \
         } \
@@ -209,7 +209,7 @@ extern "C" {
     while (sets.used > 0) { \
       sets.used--; \
       f_macro_fss_named_t_destroy_simple(sets.array[sets.used]); \
-      if (sets.used == 0) { \
+      if (!sets.used) { \
         if (f_memory_destroy((void **) & sets.array, sizeof(f_fss_named_t), sets.size)) { \
           sets.size = 0; \
         } \

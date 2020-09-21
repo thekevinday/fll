@@ -7,13 +7,13 @@ extern "C" {
 #ifndef _fl_console_parameter_to_string_dynamic_directory_
   f_return_status fl_console_parameter_to_string_dynamic_directory(const f_string_t argument, f_string_dynamic_t *directory) {
     #ifndef _di_level_1_parameter_checking_
-      if (argument == 0) return F_status_set_error(F_parameter);
+      if (!argument) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
     f_string_length_t length = strlen(argument);
 
-    if (length == 0) {
+    if (!length) {
       directory->used = 0;
       return F_none;
     }

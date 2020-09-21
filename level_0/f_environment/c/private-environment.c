@@ -9,13 +9,13 @@ extern "C" {
   f_return_status private_f_environment_get(const f_string_t name, f_string_dynamic_t *value) {
     const f_string_t result = getenv(name);
 
-    if (result == 0) {
+    if (!result) {
       return F_exist_not;
     }
 
     const f_string_length_t size = strnlen(result, f_environment_max_length);
 
-    if (size == 0) {
+    if (!size) {
       value->used = 0;
     }
     else {

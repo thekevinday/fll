@@ -169,7 +169,7 @@ extern "C" {
       structures.used--; \
       f_macro_directory_status_t_delete_simple(structures.array[structures.used]); \
     } \
-    if (structures.used == 0) { \
+    if (!structures.used) { \
       if (f_memory_delete((void **) & structures.array, sizeof(f_directory_status_t), structures.size)) { \
         structures.size = 0; \
       } \
@@ -181,7 +181,7 @@ extern "C" {
       structures.used--; \
       f_macro_directory_status_t_destroy_simple(structures.array[structures.used]); \
     } \
-    if (structures.used == 0) { \
+    if (!structures.used) { \
       if (f_memory_destroy((void **) & structures.array, sizeof(f_directory_status_t), structures.size)) { \
         structures.size = 0; \
       } \

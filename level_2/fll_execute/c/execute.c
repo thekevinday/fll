@@ -8,11 +8,11 @@ extern "C" {
 #ifndef _di_fll_execute_arguments_add_
   f_return_status fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
-      if (arguments == 0) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (arguments->used > arguments->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (length == 0) return F_data_not;
+    if (!length) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -26,12 +26,12 @@ extern "C" {
 #ifndef _di_fll_execute_arguments_add_parameter_
   f_return_status fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
-      if (arguments == 0) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (arguments->used > arguments->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (name_length == 0) return F_data_not;
-    if (value_length == 0) return F_data_not;
+    if (!name_length) return F_data_not;
+    if (!value_length) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -45,17 +45,17 @@ extern "C" {
 #ifndef _di_fll_execute_arguments_add_parameter_set_
   f_return_status fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_string_length_t prefix_length[], const f_string_t name[], const f_string_length_t name_length[], const f_string_t value[], const f_string_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
-      if (arguments == 0) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (arguments->used > arguments->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (size == 0) return F_data_not;
+    if (!size) return F_data_not;
 
     f_status_t status = F_none;
 
     for (f_array_length_t i = 0; i < size; i++) {
-      if (name_length[i] == 0) continue;
-      if (value_length[i] == 0) continue;
+      if (!name_length[i]) continue;
+      if (!value_length[i]) continue;
 
       status = private_fll_execute_arguments_add_parameter(prefix[i], prefix_length[i], name[i], name_length[i], value[i], value_length[i], arguments);
       if (F_status_is_error(status)) return status;
@@ -68,16 +68,16 @@ extern "C" {
 #ifndef _di_fll_execute_arguments_add_set_
   f_return_status fll_execute_arguments_add_set(const f_string_t source[], const f_string_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
-      if (arguments == 0) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (arguments->used > arguments->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (size == 0) return F_data_not;
+    if (!size) return F_data_not;
 
     f_status_t status = F_none;
 
     for (f_array_length_t i = 0; i < size; i++) {
-      if (length[i] == 0) continue;
+      if (!length[i]) continue;
 
       status = private_fll_execute_arguments_add(source[i], length[i], arguments);
       if (F_status_is_error(status)) return status;
@@ -91,11 +91,11 @@ extern "C" {
   f_return_status fll_execute_arguments_dynamic_add(const f_string_static_t source, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (source.used > source.size) return F_status_set_error(F_parameter);
-      if (arguments == 0) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (arguments->used > arguments->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (source.used == 0) return F_data_not;
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -112,12 +112,12 @@ extern "C" {
       if (prefix.used > prefix.size) return F_status_set_error(F_parameter);
       if (name.used > name.size) return F_status_set_error(F_parameter);
       if (value.used > value.size) return F_status_set_error(F_parameter);
-      if (arguments == 0) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (arguments->used > arguments->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (name.used == 0) return F_data_not;
-    if (value.used == 0) return F_data_not;
+    if (!name.used) return F_data_not;
+    if (!value.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -131,19 +131,19 @@ extern "C" {
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
   f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
-      if (arguments == 0) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (arguments->used > arguments->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (size == 0) return F_data_not;
+    if (!size) return F_data_not;
 
     f_status_t status = F_none;
 
     for (f_array_length_t i = 0; i < size; i++) {
       if (prefix[i].used > prefix[i].size) continue;
-      if (name[i].used == 0) continue;
+      if (!name[i].used) continue;
       if (name[i].used > name[i].size) continue;
-      if (value[i].used == 0) continue;
+      if (!value[i].used) continue;
       if (value[i].used > value[i].size) continue;
 
       status = private_fll_execute_arguments_add_parameter(prefix[i].string, prefix[i].used, name[i].string, name[i].used, value[i].string, value[i].used, arguments);
@@ -157,16 +157,16 @@ extern "C" {
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
   f_return_status fll_execute_arguments_dynamic_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
-      if (arguments == 0) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (arguments->used > arguments->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    if (size == 0) return F_data_not;
+    if (!size) return F_data_not;
 
     f_status_t status = F_none;
 
     for (f_array_length_t i = 0; i < size; i++) {
-      if (source[i].used == 0) continue;
+      if (!source[i].used) continue;
       if (source[i].used > source[i].size) continue;
 
       status = private_fll_execute_arguments_add(source[i].string, source[i].used, arguments);
@@ -180,7 +180,7 @@ extern "C" {
 #ifndef _di_fll_execute_path_
   f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result) {
     #ifndef _di_level_2_parameter_checking_
-      if (result == 0) return F_status_set_error(F_parameter);
+      if (!result) return F_status_set_error(F_parameter);
       if (arguments.used > arguments.size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
@@ -196,7 +196,7 @@ extern "C" {
 
     last_slash = strrchr(program_path, '/');
 
-    if (last_slash == 0) {
+    if (!last_slash) {
       name_size = strnlen(program_path, f_path_max);
 
       if (name_size > 1) {
@@ -225,7 +225,7 @@ extern "C" {
       }
     }
 
-    if (name_size == 0) {
+    if (!name_size) {
       fixed_arguments[0] = 0;
     }
     else {
@@ -265,7 +265,7 @@ extern "C" {
     }
 
     // child process.
-    if (process_id == 0) {
+    if (!process_id) {
       if (signals) {
         f_signal_set_handle(SIG_BLOCK, &signals->block);
         f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
@@ -294,7 +294,7 @@ extern "C" {
 #ifndef _di_fll_execute_path_environment_
   f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, const f_string_statics_t names, const f_string_statics_t values, int *result) {
     #ifndef _di_level_2_parameter_checking_
-      if (result == 0) return F_status_set_error(F_parameter);
+      if (!result) return F_status_set_error(F_parameter);
       if (arguments.used > arguments.size) return F_status_set_error(F_parameter);
       if (names.used > names.size) return F_status_set_error(F_parameter);
       if (values.used > values.size) return F_status_set_error(F_parameter);
@@ -313,7 +313,7 @@ extern "C" {
 
     last_slash = strrchr(program_path, '/');
 
-    if (last_slash == 0) {
+    if (!last_slash) {
       name_size = strnlen(program_path, f_path_max);
 
       if (name_size > 1) {
@@ -344,7 +344,7 @@ extern "C" {
       }
     }
 
-    if (name_size == 0) {
+    if (!name_size) {
       fixed_arguments[0] = 0;
     }
     else {
@@ -382,7 +382,7 @@ extern "C" {
     }
 
     // child process.
-    if (process_id == 0) {
+    if (!process_id) {
       if (signals) {
         f_signal_set_handle(SIG_BLOCK, &signals->block);
         f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
@@ -421,7 +421,7 @@ extern "C" {
 #ifndef _di_fll_execute_program_
   f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result) {
     #ifndef _di_level_2_parameter_checking_
-      if (result == 0) return F_status_set_error(F_parameter);
+      if (!result) return F_status_set_error(F_parameter);
       if (arguments.used > arguments.size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
@@ -449,7 +449,7 @@ extern "C" {
     }
 
     // child process.
-    if (process_id == 0) {
+    if (!process_id) {
       if (signals) {
         f_signal_set_handle(SIG_BLOCK, &signals->block);
         f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
@@ -474,7 +474,7 @@ extern "C" {
 #ifndef _di_fll_execute_program_environment_
   f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, const f_string_statics_t names, const f_string_statics_t values, int *result) {
     #ifndef _di_level_2_parameter_checking_
-      if (result == 0) return F_status_set_error(F_parameter);
+      if (!result) return F_status_set_error(F_parameter);
       if (arguments.used > arguments.size) return F_status_set_error(F_parameter);
       if (names.used > names.size) return F_status_set_error(F_parameter);
       if (values.used > values.size) return F_status_set_error(F_parameter);
@@ -566,7 +566,7 @@ extern "C" {
       }
     } // for
 
-    if (found == 0) {
+    if (!found) {
       f_macro_string_dynamics_t_delete_simple(paths);
       return F_status_set_error(F_file_found_not);
     }
@@ -587,7 +587,7 @@ extern "C" {
     }
 
     // child process.
-    if (process_id == 0) {
+    if (!process_id) {
       if (signals) {
         f_signal_set_handle(SIG_BLOCK, &signals->block);
         f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);

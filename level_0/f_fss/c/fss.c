@@ -7,9 +7,9 @@ extern "C" {
 #ifndef _di_f_fss_count_lines_
   f_return_status f_fss_count_lines(const f_string_static_t buffer, const f_string_length_t before, f_string_length_t *line) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
       if (before >= buffer.used) return F_status_set_error(F_parameter);
-      if (line == 0) return F_status_set_error(F_parameter);
+      if (!line) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_string_length_t i = before;
@@ -31,12 +31,12 @@ extern "C" {
 #ifndef _di_f_fss_count_lines_range_
   f_return_status f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, const f_string_length_t before, f_string_length_t *line) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
       if (before >= buffer.used) return F_status_set_error(F_parameter);
       if (before > range.stop) return F_status_set_error(F_parameter);
-      if (line == 0) return F_status_set_error(F_parameter);
+      if (!line) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_string_length_t i = before;
@@ -58,7 +58,7 @@ extern "C" {
 #ifndef _di_f_fss_is_graph_
   f_return_status f_fss_is_graph(const f_string_static_t buffer, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
@@ -77,7 +77,7 @@ extern "C" {
 #ifndef _di_f_fss_is_space_
   f_return_status f_fss_is_space(const f_string_static_t buffer, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
@@ -114,7 +114,7 @@ extern "C" {
 #ifndef _di_f_fss_is_zero_width_
   f_return_status f_fss_is_zero_width(const f_string_static_t buffer, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
@@ -133,7 +133,7 @@ extern "C" {
 #ifndef _di_f_fss_shift_delimiters_
   f_return_status f_fss_shift_delimiters(f_string_dynamic_t *buffer, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer->used == 0) return F_status_set_error(F_parameter);
+      if (!buffer->used) return F_status_set_error(F_parameter);
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer->used) return F_status_set_error(F_parameter);
@@ -199,8 +199,8 @@ extern "C" {
 #ifndef _di_f_fss_skip_past_space_
   f_return_status f_fss_skip_past_space(const f_string_static_t buffer, f_string_range_t *range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
-      if (range == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
+      if (!range) return F_status_set_error(F_parameter);
       if (range->start > range->stop) return F_status_set_error(F_parameter);
       if (range->start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -242,7 +242,7 @@ extern "C" {
 
       width = f_macro_utf_byte_width_is(buffer.string[range->start]);
 
-      if (width == 0) {
+      if (!width) {
         width = 1;
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
@@ -273,8 +273,8 @@ extern "C" {
 #ifndef _di_f_fss_skip_past_non_graph_
   f_return_status f_fss_skip_past_non_graph(const f_string_static_t buffer, f_string_range_t *range) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
-      if (range == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
+      if (!range) return F_status_set_error(F_parameter);
       if (range->start > range->stop) return F_status_set_error(F_parameter);
       if (range->start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -340,7 +340,7 @@ extern "C" {
 
       width = f_macro_utf_byte_width_is(buffer.string[range->start]);
 
-      if (width == 0) {
+      if (!width) {
         width = 1;
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.

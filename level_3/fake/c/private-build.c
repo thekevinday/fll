@@ -193,7 +193,7 @@ extern "C" {
     recurse.failures = &failures;
 
     for (f_array_length_t i = 0; i < files.used; i++) {
-      if (files.array[i].used == 0) continue;
+      if (!files.array[i].used) continue;
 
       path_source.used = source.used;
 
@@ -352,7 +352,7 @@ extern "C" {
 
     for (uint8_t i = 0; i < 15; i++) {
 
-      if (directorys[i]->used == 0) continue;
+      if (!directorys[i]->used) continue;
 
       if (fake_signal_received(data)) {
         *status = F_status_set_error(F_signal);
@@ -383,7 +383,7 @@ extern "C" {
 #ifndef _di_fake_build_execute_process_script_
   void fake_build_execute_process_script(const fake_data_t data, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
-    if (process_script.used == 0) return;
+    if (!process_script.used) return;
 
     if (fake_signal_received(data)) {
       *status = F_status_set_error(F_signal);
@@ -616,7 +616,7 @@ extern "C" {
   f_return_status fake_build_get_file_name_without_extension(const fake_data_t data, const f_string_static_t path, f_string_dynamic_t *name) {
     name->used = 0;
 
-    if (path.used == 0) return F_none;
+    if (!path.used) return F_none;
 
     f_status_t status = f_file_name_base(path.string, path.used, name);
 
@@ -1330,7 +1330,7 @@ extern "C" {
 
       for (uint8_t i = 0; i < 1; i++) {
 
-        if (settings[i]->used == 0) {
+        if (!settings[i]->used) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
           fl_color_print(f_type_error, data.context.set.error, "ERROR: The setting '");
           fl_color_print(f_type_error, data.context.set.notable, "%s", names[i]);
@@ -1804,7 +1804,7 @@ extern "C" {
       };
 
       for (f_array_length_t i = 0; i < 26; i++) {
-        if (settings_single_source[i]->used == 0) continue;
+        if (!settings_single_source[i]->used) continue;
 
         if (settings_single_source[i]->used > 1) {
           if (data.verbosity == fake_verbosity_verbose) {

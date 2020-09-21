@@ -58,12 +58,12 @@ extern "C" {
 #ifndef _di_f_iki_read_
   f_return_status f_iki_read(f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) {
     #ifndef _di_level_0_parameter_checking_
-      if (buffer == 0) return F_status_set_error(F_parameter);
-      if (buffer->used == 0) return F_status_set_error(F_parameter);
-      if (range == 0) return F_status_set_error(F_parameter);
-      if (variable == 0) return F_status_set_error(F_parameter);
-      if (vocabulary == 0) return F_status_set_error(F_parameter);
-      if (content == 0) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
+      if (!buffer->used) return F_status_set_error(F_parameter);
+      if (!range) return F_status_set_error(F_parameter);
+      if (!variable) return F_status_set_error(F_parameter);
+      if (!vocabulary) return F_status_set_error(F_parameter);
+      if (!content) return F_status_set_error(F_parameter);
       if (range->start > range->stop) return F_status_set_error(F_parameter);
       if (range->start >= buffer->used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

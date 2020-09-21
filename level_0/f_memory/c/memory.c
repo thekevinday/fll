@@ -8,7 +8,7 @@ extern "C" {
   f_return_status f_memory_new(void **pointer, const f_memory_size_t type, const f_memory_length length) {
     #ifndef _di_level_0_parameter_checking_
       if (type <= 0) return F_status_set_error(F_parameter);
-      if (pointer == 0) return F_status_set_error(F_parameter);
+      if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-allocations.
@@ -29,11 +29,11 @@ extern "C" {
 #if ! ( defined (_di_f_memory_delete_) || defined (_f_memory_FORCE_secure_memory_) )
   f_return_status f_memory_delete(void **pointer, const f_memory_size_t type, const f_memory_length length) {
     #ifndef _di_level_0_parameter_checking_
-      if (pointer == 0) return F_status_set_error(F_parameter);
+      if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-frees.
-    if (*pointer == 0) return F_none;
+    if (!*pointer) return F_none;
 
     free(*pointer);
 
@@ -49,11 +49,11 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (length <  0) return F_status_set_error(F_parameter);
       if (type <= 0) return F_status_set_error(F_parameter);
-      if (pointer == 0) return F_status_set_error(F_parameter);
+      if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-frees.
-    if (*pointer == 0) return F_none;
+    if (!*pointer) return F_none;
 
     if (length > 0) {
       memset(*pointer, 0, type * length);
@@ -74,7 +74,7 @@ extern "C" {
       if (type <= 0) return F_status_set_error(F_parameter);
       if (old_length < 0) return F_status_set_error(F_parameter);
       if (new_length < 0) return F_status_set_error(F_parameter);
-      if (pointer == 0) return F_status_set_error(F_parameter);
+      if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // don't be wasteful.
@@ -131,7 +131,7 @@ extern "C" {
       if (type <= 0) return F_status_set_error(F_parameter);
       if (old_length < 0) return F_status_set_error(F_parameter);
       if (new_length < 0) return F_status_set_error(F_parameter);
-      if (pointer == 0) return F_status_set_error(F_parameter);
+      if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // don't be wasteful

@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fl_status_to_string_
   f_return_status fl_status_to_string(const f_status_t code, f_string_t *string) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t unmasked_code = F_status_set_fine(code);

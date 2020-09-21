@@ -250,8 +250,8 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_append_
   f_return_status fll_program_parameter_additional_append(const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamics_t *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (argv == 0) return F_status_set_error(F_parameter);
-      if (destination == 0) return F_status_set_error(F_parameter);
+      if (!argv) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
@@ -293,9 +293,9 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_mash_
   f_return_status fll_program_parameter_additional_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (argv == 0) return F_status_set_error(F_parameter);
+      if (!argv) return F_status_set_error(F_parameter);
       if (glue_length < 1) return F_status_set_error(F_parameter);
-      if (destination == 0) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
@@ -324,8 +324,8 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_rip_
   f_return_status fll_program_parameter_additional_rip(const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamics_t *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (argv == 0) return F_status_set_error(F_parameter);
-      if (destination == 0) return F_status_set_error(F_parameter);
+      if (!argv) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
@@ -368,9 +368,9 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_rip_mash_
   f_return_status fll_program_parameter_additional_rip_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (argv == 0) return F_status_set_error(F_parameter);
+      if (!argv) return F_status_set_error(F_parameter);
       if (glue_length < 1) return F_status_set_error(F_parameter);
-      if (destination == 0) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;

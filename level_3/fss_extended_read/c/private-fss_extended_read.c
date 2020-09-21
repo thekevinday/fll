@@ -114,7 +114,7 @@ extern "C" {
 
       f_macro_string_dynamic_t_clear(depths->array[i].value_name);
 
-      if (data.parameters[fss_extended_read_parameter_depth].additional.used == 0) {
+      if (!data.parameters[fss_extended_read_parameter_depth].additional.used) {
         position_depth = 0;
       }
       else {
@@ -203,7 +203,7 @@ extern "C" {
             return status;
           }
 
-          if (depths->array[i].value_name.used == 0) {
+          if (!depths->array[i].value_name.used) {
             fl_color_print(f_type_error, data.context.set.error, "ERROR: The '");
             fl_color_print(f_type_error, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_name);
             fl_color_print_line(f_type_error, data.context.set.error, "' must not be an empty string.");
@@ -387,7 +387,7 @@ extern "C" {
           f_string_length_t total = 0;
 
           for (f_string_length_t i = 0; i < data->objects.used; i++) {
-            if (names[i] == 0) continue;
+            if (!names[i]) continue;
 
             total++;
           } // for
@@ -428,7 +428,7 @@ extern "C" {
       }
 
       for (f_string_length_t i = 0; i < data->objects.used; i++) {
-        if (names[i] == 0) continue;
+        if (!names[i]) continue;
 
         print_object(f_type_output, data->buffer, data->objects.array[i]);
         fprintf(f_type_output, "%c", f_string_eol[0]);
@@ -454,7 +454,7 @@ extern "C" {
         if (names[i]) {
           if (at == depths.array[0].value_at) {
             if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
-              if (data->contents.array[i].used == 0) {
+              if (!data->contents.array[i].used) {
                 fprintf(f_type_output, "0%c", f_string_eol[0]);
               }
               else {
@@ -465,7 +465,7 @@ extern "C" {
             }
 
             if (data->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
-              if (line == 0) {
+              if (!line) {
                 if (data->contents.array[i].used > 0) {
                   f_string_length_t j = 0;
 
@@ -489,7 +489,7 @@ extern "C" {
                 }
                 else if (include_empty) {
                   if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-                    if (select == 0) {
+                    if (!select) {
                       fprintf(f_type_output, "%c", f_string_eol[0]);
                     }
                   }
@@ -525,7 +525,7 @@ extern "C" {
             }
             else if (include_empty) {
               if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-                if (select == 0) {
+                if (!select) {
                   fprintf(f_type_output, "%c", f_string_eol[0]);
                 }
               }
@@ -552,7 +552,7 @@ extern "C" {
           continue;
         }
 
-        if (data->contents.array[i].used == 0 && !include_empty) {
+        if (!data->contents.array[i].used && !include_empty) {
           continue;
         }
 
@@ -571,7 +571,7 @@ extern "C" {
       for (; i < data->contents.used; i++) {
         if (!names[i]) continue;
 
-        if (data->contents.array[i].used == 0) {
+        if (!data->contents.array[i].used) {
           if (include_empty) {
             if (line_current == line) {
               fprintf(f_type_output, "%c", f_string_eol[0]);
@@ -618,8 +618,8 @@ extern "C" {
     for (; i < data->contents.used; i++) {
       if (!names[i]) continue;
 
-      if (data->contents.array[i].used == 0) {
-        if (include_empty && select == 0) {
+      if (!data->contents.array[i].used) {
+        if (include_empty && !select) {
           fprintf(f_type_output, "%c", f_string_eol[0]);
         }
 

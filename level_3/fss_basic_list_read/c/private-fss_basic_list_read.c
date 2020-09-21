@@ -114,7 +114,7 @@ extern "C" {
 
       f_macro_string_dynamic_t_clear(depths->array[i].value_name);
 
-      if (data.parameters[fss_basic_list_read_parameter_depth].additional.used == 0) {
+      if (!data.parameters[fss_basic_list_read_parameter_depth].additional.used) {
         position_depth = 0;
       }
       else {
@@ -201,7 +201,7 @@ extern "C" {
             return status;
           }
 
-          if (depths->array[i].value_name.used == 0) {
+          if (!depths->array[i].value_name.used) {
             fl_color_print(f_type_error, data.context.set.error, "ERROR: The '");
             fl_color_print(f_type_error, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
             fl_color_print_line(f_type_error, data.context.set.error, "' must not be an empty string.");
@@ -388,7 +388,7 @@ extern "C" {
           f_string_length_t total = 0;
 
           for (f_string_length_t i = 0; i < data->objects.used; i++) {
-            if (names[i] == 0) continue;
+            if (!names[i]) continue;
 
             total++;
           } // for
@@ -429,7 +429,7 @@ extern "C" {
       }
 
       for (f_string_length_t i = 0; i < data->objects.used; i++) {
-        if (names[i] == 0) continue;
+        if (!names[i]) continue;
 
         print_object(f_type_output, data->buffer, data->objects.array[i]);
         fprintf(f_type_output, "%c", f_string_eol[0]);
@@ -451,17 +451,18 @@ extern "C" {
       f_array_length_t i = 0;
 
       for (; i < data->objects.used; i++) {
+
         if (names[i]) {
           if (at == depths.array[0].value_at) {
             if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
-              if (data->contents.array[i].used == 0) {
+              if (!data->contents.array[i].used) {
                 fprintf(f_type_output, "0%c", f_string_eol[0]);
               }
               else {
                 f_string_length_t total = 1;
 
                 for (f_string_length_t j = data->contents.array[i].array[0].start; j <= data->contents.array[i].array[0].stop; j++) {
-                  if (data->buffer.string[j] == 0) continue;
+                  if (!data->buffer.string[j]) continue;
 
                   if (data->buffer.string[j] == f_string_eol[0]) {
                     total++;
@@ -475,17 +476,17 @@ extern "C" {
             }
 
             if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
-              if (data->contents.array[i].used == 0) {
-                if (include_empty && line == 0) {
+              if (!data->contents.array[i].used) {
+                if (include_empty && !line) {
                   fprintf(f_type_output, "%c", f_string_eol[0]);
                 }
               }
               else {
                 f_string_length_t i = data->contents.array[i].array[0].start;
 
-                if (line == 0) {
+                if (!line) {
                   for (; i <= data->contents.array[i].array[0].stop; i++) {
-                    if (data->buffer.string[i] == 0) continue;
+                    if (!data->buffer.string[i]) continue;
                     if (data->buffer.string[i] == f_string_eol[0]) {
                       fprintf(f_type_output, "%c", f_string_eol[0]);
                       break;
@@ -498,7 +499,7 @@ extern "C" {
                   f_string_length_t line_current = 0;
 
                   for (; i <= data->contents.array[i].array[0].stop; i++) {
-                    if (data->buffer.string[i] == 0) continue;
+                    if (!data->buffer.string[i]) continue;
 
                     if (data->buffer.string[i] == f_string_eol[0]) {
                       line_current++;
@@ -507,7 +508,7 @@ extern "C" {
                         i++;
 
                         for (; i <= data->contents.array[i].array[0].stop; i++) {
-                          if (data->buffer.string[i] == 0) continue;
+                          if (!data->buffer.string[i]) continue;
 
                           if (data->buffer.string[i] == f_string_eol[0]) {
                             fprintf(f_type_output, "%c", f_string_eol[0]);
@@ -550,7 +551,7 @@ extern "C" {
       for (f_string_length_t i = 0; i < data->objects.used; i++) {
         if (!names[i]) continue;
 
-        if (data->contents.array[i].used == 0) {
+        if (!data->contents.array[i].used) {
           if (include_empty) {
             total++;
           }
@@ -559,7 +560,7 @@ extern "C" {
         }
 
         for (f_string_length_t j = data->contents.array[i].array[0].start; j <= data->contents.array[i].array[0].stop; j++) {
-          if (data->buffer.string[j] == 0) continue;
+          if (!data->buffer.string[j]) continue;
 
           if (data->buffer.string[j] == f_string_eol[0]) {
             total++;
@@ -579,7 +580,7 @@ extern "C" {
       for (; i < data->contents.used; i++) {
         if (!names[i]) continue;
 
-        if (data->contents.array[i].used == 0) {
+        if (!data->contents.array[i].used) {
           if (include_empty) {
             if (line_current == line) {
               fprintf(f_type_output, "%c", f_string_eol[0]);
@@ -612,7 +613,7 @@ extern "C" {
           if (j > data->contents.array[i].array[0].stop) continue;
 
           for (; j <= data->contents.array[i].array[0].stop; j++) {
-            if (data->buffer.string[j] == 0) continue;
+            if (!data->buffer.string[j]) continue;
 
             if (data->buffer.string[j] == f_string_eol[0]) {
               fprintf(f_type_output, "%c", f_string_eol[0]);
@@ -632,7 +633,7 @@ extern "C" {
     for (f_string_length_t i = 0; i < data->contents.used; i++) {
       if (!names[i]) continue;
 
-      if (data->contents.array[i].used == 0) {
+      if (!data->contents.array[i].used) {
         if (include_empty) {
           fprintf(f_type_output, "%c", f_string_eol[0]);
         }

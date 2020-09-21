@@ -422,7 +422,7 @@ extern "C" {
 
     DIR *parent = opendir(path);
 
-    if (parent == 0) {
+    if (!parent) {
       if (errno == ENOMEM) {
         return F_status_set_error(F_memory_out);
       }
@@ -483,7 +483,7 @@ extern "C" {
       size = strnlen(entity[i]->d_name, f_directory_name_max);
 
       // There is no reason to include "." and ".." in the directory listing.
-      if (strncmp(entity[i]->d_name, "..", 3) == 0 || strncmp(entity[i]->d_name, ".", 2) == 0) {
+      if (!strncmp(entity[i]->d_name, "..", 3) || !strncmp(entity[i]->d_name, ".", 2)) {
         f_memory_delete((void **) & entity[i], sizeof(char *), 1);
         continue;
       }
@@ -562,7 +562,7 @@ extern "C" {
     f_memory_delete((void **) & entity, sizeof(struct dirent *), 1);
 
     if (F_status_is_error(status)) return status;
-    if (length == 0) return F_data_not;
+    if (!length) return F_data_not;
 
     return F_none;
   }
@@ -584,7 +584,7 @@ extern "C" {
       f_string_length_t j = 0;
 
       if (destination->used > 0) {
-        if (destination->string[destination->used - 1] == 0) {
+        if (!destination->string[destination->used - 1]) {
           terminated_null = F_true;
           total = 1;
 
@@ -592,7 +592,7 @@ extern "C" {
         }
 
         for (i = destination->used - 1; i > 0; i--) {
-          if (destination->string[i] == 0) continue;
+          if (!destination->string[i]) continue;
 
           status = f_utf_is_control(destination->string + i, destination->used - i);
           if (status == F_true) continue;
@@ -606,7 +606,7 @@ extern "C" {
           if (destination->string[i] == f_path_separator[0]) {
             if (i - 1 > 0) {
               for (j = i - 1; j > 0; j--) {
-                if (destination->string[j] == 0) continue;
+                if (!destination->string[j]) continue;
 
                 status = f_utf_is_control(destination->string + j, destination->used - j);
                 if (status == F_true) continue;
@@ -634,7 +634,7 @@ extern "C" {
           break;
         } // for
 
-        if (destination->used > 0 && i == 0) {
+        if (destination->used > 0 && !i) {
           if (destination->string[0] != 0 && destination->string[0] != f_path_separator[0]) {
             separator_prepend = F_true;
             total++;
@@ -643,7 +643,7 @@ extern "C" {
       }
 
       for (i = length - 1; i > 0; i--) {
-        if (source[i] == 0) continue;
+        if (!source[i]) continue;
 
         status = f_utf_is_control(source + i, length - i);
         if (status == F_true) continue;
@@ -661,7 +661,7 @@ extern "C" {
 
           if (i - 1 > 0) {
             for (j = i - 1; j > 0; j--) {
-              if (source[j] == 0) continue;
+              if (!source[j]) continue;
 
               status = f_utf_is_control(source + j, length - j);
               if (status == F_true) continue;
@@ -689,13 +689,13 @@ extern "C" {
         break;
       } // for
 
-      if (i == 0 && source[0] != f_path_separator[0]) {
+      if (!i && source[0] != f_path_separator[0]) {
         separator_append = F_true;
         total++;
       }
 
       for (i = 0; i < length_truncated; i++) {
-        if (source[i] == 0) continue;
+        if (!source[i]) continue;
 
         status = f_utf_is_control(source + i, length - i);
         if (status == F_true) continue;
@@ -711,7 +711,7 @@ extern "C" {
         if (source[0] == f_path_separator[0]) {
           if (i + 1 < length_truncated) {
             for (j = i + 1; j < length_truncated; j++) {
-              if (source[j] == 0) continue;
+              if (!source[j]) continue;
 
               status = f_utf_is_control(source + j, length - j);
               if (status == F_true) continue;

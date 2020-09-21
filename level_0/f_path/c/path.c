@@ -52,7 +52,7 @@ extern "C" {
 #ifndef _di_f_path_current_
   f_return_status f_path_current(const bool real, f_string_dynamic_t *path) {
     #ifndef _di_level_0_parameter_checking_
-      if (path == 0) return F_status_set_error(F_parameter);
+      if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     char buffer[f_path_max];

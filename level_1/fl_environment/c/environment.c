@@ -7,14 +7,14 @@ extern "C" {
 #ifndef _di_fl_environment_path_explode_
   f_return_status fl_environment_path_explode(const f_string_t path, f_string_dynamics_t *paths) {
     #ifndef _di_level_0_parameter_checking_
-      if (paths == 0) return F_status_set_error(F_parameter);
+      if (!paths) return F_status_set_error(F_parameter);
       if (paths->used > paths->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
     const f_string_length_t length = strnlen(path, PATH_MAX);
 
-    if (length == 0) {
+    if (!length) {
 
       // When PATH is "", this is actually a valid search path for PWD.
       // Append an equivalent representation of PWD (string used length is 0).
@@ -37,7 +37,7 @@ extern "C" {
         f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
         if (F_status_is_error(status)) return status;
 
-        if (i == 0) {
+        if (!i) {
           f_macro_string_dynamic_t_clear(paths->array[paths->used]);
           paths->used++;
 
@@ -84,13 +84,13 @@ extern "C" {
   f_return_status fl_environment_path_explode_dynamic(const f_string_static_t path, f_string_dynamics_t *paths) {
     #ifndef _di_level_0_parameter_checking_
       if (path.used > path.size) return F_status_set_error(F_parameter);
-      if (paths == 0) return F_status_set_error(F_parameter);
+      if (!paths) return F_status_set_error(F_parameter);
       if (paths->used > paths->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
 
-    if (path.used == 0) {
+    if (!path.used) {
 
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
@@ -116,7 +116,7 @@ extern "C" {
         f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
         if (F_status_is_error(status)) return status;
 
-        if (i == 0) {
+        if (!i) {
           f_macro_string_dynamic_t_clear(paths->array[paths->used]);
           paths->used++;
 
@@ -131,7 +131,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           for (j = 0; j < total; j++) {
-            if (path.string[first + j] == 0) continue;
+            if (!path.string[first + j]) continue;
 
             part.string[part.used] = path.string[first + j];
             part.used++;
@@ -162,14 +162,14 @@ extern "C" {
 #ifndef _di_fl_environment_path_explode_reverse_
   f_return_status fl_environment_path_explode_reverse(const f_string_t path, f_string_dynamics_t *paths) {
     #ifndef _di_level_0_parameter_checking_
-      if (paths == 0) return F_status_set_error(F_parameter);
+      if (!paths) return F_status_set_error(F_parameter);
       if (paths->used > paths->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
     const f_string_length_t length = strnlen(path, PATH_MAX);
 
-    if (length == 0) {
+    if (!length) {
 
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
@@ -194,7 +194,7 @@ extern "C" {
     for (; i > 0; i--) {
       j--;
 
-      if (j == 0 || path[j] == f_path_separator_variable[0]) {
+      if (!j || path[j] == f_path_separator_variable[0]) {
         f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
         if (F_status_is_error(status)) return status;
 
@@ -221,7 +221,7 @@ extern "C" {
 
           last = j;
         }
-        else if (j == 0) {
+        else if (!j) {
 
           // when j = 0, the total is actually the entire length to max.
           total = last - j;
@@ -260,13 +260,13 @@ extern "C" {
   f_return_status fl_environment_path_explode_reverse_dynamic(const f_string_static_t path, f_string_dynamics_t *paths) {
     #ifndef _di_level_0_parameter_checking_
       if (path.used > path.size) return F_status_set_error(F_parameter);
-      if (paths == 0) return F_status_set_error(F_parameter);
+      if (!paths) return F_status_set_error(F_parameter);
       if (paths->used > paths->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
 
-    if (path.used == 0) {
+    if (!path.used) {
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
       f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
@@ -289,7 +289,7 @@ extern "C" {
     for (; i > 0; i--) {
       j--;
 
-      if (j == 0 || path.string[j] == f_path_separator_variable[0]) {
+      if (!j || path.string[j] == f_path_separator_variable[0]) {
         f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
         if (F_status_is_error(status)) return status;
 
@@ -301,7 +301,7 @@ extern "C" {
             if (F_status_is_error(status)) return status;
 
             for (k = 0; k < total; k++) {
-              if (path.string[i + k] == 0) continue;
+              if (!path.string[i + k]) continue;
 
               part.string[part.used] = path.string[i + k];
               part.used++;
@@ -318,7 +318,7 @@ extern "C" {
 
           last = j;
         }
-        else if (j == 0) {
+        else if (!j) {
           // when j = 0, the total is actually the entire length to max.
           total = last - j;
 
@@ -326,7 +326,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           for (k = 0; k < total; k++) {
-            if (path.string[i + k] == 0) continue;
+            if (!path.string[i + k]) continue;
 
             part.string[part.used] = path.string[i + k];
             part.used++;

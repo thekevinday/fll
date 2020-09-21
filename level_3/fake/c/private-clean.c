@@ -50,11 +50,11 @@ extern "C" {
 
 #if !defined(_di_fake_clean_operate_)
   int fake_clean_remove_recursively_verbosely(const char *path, const struct stat *file_stat, int type, struct FTW *entity) {
-    if (entity->level == 0) return 0;
+    if (!entity->level) return 0;
 
-    int result = remove(path);
+    const int result = remove(path);
 
-    if (result == 0) {
+    if (!result) {
       printf("Removed '%s'.%c", path, f_string_eol[0]);
     }
 

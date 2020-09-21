@@ -7,7 +7,7 @@ extern "C" {
 
 #ifndef _di_f_environment_clear_
   f_return_status f_environment_clear() {
-    if (clearenv() == 0) {
+    if (!clearenv()) {
       return F_none;
     }
 
@@ -46,9 +46,9 @@ extern "C" {
       if (value->used > value->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (name.used == 0) return F_data_not;
+    if (!name.used) return F_data_not;
 
-    if (name.string[name.used - 1] == 0) {
+    if (!name.string[name.used - 1]) {
       return private_f_environment_get(name.string, value);
     }
 
@@ -74,10 +74,10 @@ extern "C" {
       if (value.used > value.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (name.used == 0) return F_data_not;
+    if (!name.used) return F_data_not;
 
-    if (name.string[name.used - 1] == 0) {
-      if (value.used > 0 && value.string[value.used - 1] == 0) {
+    if (!name.string[name.used - 1]) {
+      if (value.used > 0 && !value.string[value.used - 1]) {
         return private_f_environment_set(name.string, value.string, replace);
       }
 
@@ -97,7 +97,7 @@ extern "C" {
     memcpy(&variable_name, name.string, name.used);
     variable_name[name.used] = 0;
 
-    if (value.used > 0 && value.string[value.used - 1] == 0) {
+    if (value.used > 0 && !value.string[value.used - 1]) {
       return private_f_environment_set(variable_name, value.string, replace);
     }
 
@@ -125,9 +125,9 @@ extern "C" {
       if (name.used > name.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (name.used == 0) return F_data_not;
+    if (!name.used) return F_data_not;
 
-    if (name.string[name.used - 1] == 0) {
+    if (!name.string[name.used - 1]) {
       return private_f_environment_unset(name.string);
     }
 

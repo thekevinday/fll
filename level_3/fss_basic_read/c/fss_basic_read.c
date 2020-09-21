@@ -312,7 +312,7 @@ extern "C" {
             return status;
           }
 
-          if (data->quantity.total == 0) {
+          if (!data->quantity.total) {
             status = f_file_size_by_id(file.id, &data->quantity.total);
 
             if (F_status_is_error(status)) {
@@ -326,7 +326,7 @@ extern "C" {
             }
 
             // Skip past empty files.
-            if (data->quantity.total == 0) {
+            if (!data->quantity.total) {
               f_file_close(&file.id);
               continue;
             }

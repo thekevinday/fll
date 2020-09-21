@@ -234,7 +234,7 @@ extern "C" {
       structures.used--; \
       f_macro_memory_structure_t_delete_simple(structures.array[structures.used], type_structure); \
     } \
-    if (structures.used == 0) { \
+    if (!structures.used) { \
       if (f_memory_delete((void **) & structures.array, sizeof(type_structures), structures.size)) { \
         structures.size = 0; \
       } \
@@ -255,7 +255,7 @@ extern "C" {
       structures.used--; \
       f_macro_memory_structure_t_destroy_simple(structures.array[structures.used], type_structure); \
     } \
-    if (structures.used == 0) { \
+    if (!structures.used) { \
       if (f_memory_destroy((void **) & structures.array, sizeof(type_structures), structures.size)) { \
         structures.size = 0; \
       } \

@@ -8,7 +8,7 @@ extern "C" {
 #if !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
   f_return_status private_f_print(FILE *output, const f_string_t string, const f_string_length_t length) {
 
-    if (length == 0) return F_data_not;
+    if (!length) return F_data_not;
 
     for (register f_string_length_t i = 0; i < length; ++i) {
       if (!string[i]) continue;
@@ -25,7 +25,7 @@ extern "C" {
 #if !defined(_di_f_print_to_) || !defined(_di_f_print_dynamic_to_) || !defined(_di_f_print_dynamic_partial_to_)
   f_return_status private_f_print_to(const int id, const f_string_t string, const f_string_length_t length) {
 
-    if (length == 0) return F_data_not;
+    if (!length) return F_data_not;
 
     for (register f_string_length_t i = 0; i < length; ++i) {
       if (!string[i]) continue;

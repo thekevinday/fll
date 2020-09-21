@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fl_print_trim_string_
   f_return_status fl_print_trim_string(FILE *output, const f_string_t string, const f_string_length_t length) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
       if (length < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
@@ -30,7 +30,7 @@ extern "C" {
     } // for
 
     for (; i < length; i += f_macro_utf_byte_width(string[i])) {
-      if (string[i] == 0) continue;
+      if (!string[i]) continue;
 
       width_max = (length - i) + 1;
       status = f_utf_is_whitespace(string + i, width_max);
@@ -59,9 +59,9 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
             for (; i < j; i++) {
-              if (string[i] == 0) continue;
+              if (!string[i]) continue;
 
-              if (fputc(string[i], output) == 0) return F_status_set_error(F_output);
+              if (!fputc(string[i], output)) return F_status_set_error(F_output);
             } // for
 
             break;
@@ -71,7 +71,7 @@ extern "C" {
         if (status == F_true) break;
       }
 
-      if (fputc(string[i], output) == 0) return F_status_set_error(F_output);
+      if (!fputc(string[i], output)) return F_status_set_error(F_output);
     } // for
 
     return F_none;
@@ -81,7 +81,7 @@ extern "C" {
 #ifndef _di_fl_print_trim_string_dynamic_
   f_return_status fl_print_trim_string_dynamic(FILE *output, const f_string_static_t buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     register f_string_length_t i = 0;
@@ -102,7 +102,7 @@ extern "C" {
     } // for
 
     for (; i < buffer.used; i += f_macro_utf_byte_width(buffer.string[i])) {
-      if (buffer.string[i] == 0) continue;
+      if (!buffer.string[i]) continue;
 
       width_max = (buffer.used - i) + 1;
       status = f_utf_is_whitespace(buffer.string + i, width_max);
@@ -131,9 +131,9 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
             for (; i < j; i++) {
-              if (buffer.string[i] == 0) continue;
+              if (!buffer.string[i]) continue;
 
-              if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
+              if (!fputc(buffer.string[i], output)) return F_status_set_error(F_output);
             } // for
 
             break;
@@ -145,7 +145,7 @@ extern "C" {
         }
       }
 
-      if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
+      if (!fputc(buffer.string[i], output)) return F_status_set_error(F_output);
     } // for
 
     return F_none;
@@ -157,7 +157,7 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
       if (range.stop >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -181,7 +181,7 @@ extern "C" {
     } // for
 
     for (uint8_t width_i = f_macro_utf_byte_width(buffer.string[i]); i <= range.stop; i += width_i) {
-      if (buffer.string[i] == 0) {
+      if (!buffer.string[i]) {
         width_i = 1;
         continue;
       }
@@ -217,7 +217,7 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
             for (; i <= j; i += width_i) {
-              if (buffer.string[i] == 0) {
+              if (!buffer.string[i]) {
                 width_i = 1;
                 continue;
               }
@@ -225,7 +225,7 @@ extern "C" {
               width_i = f_macro_utf_byte_width(buffer.string[i]);
 
               for (uint8_t k = 0; k < width_i; k++) {
-                if (fputc(buffer.string[i + k], output) == 0) return F_status_set_error(F_output);
+                if (!fputc(buffer.string[i + k], output)) return F_status_set_error(F_output);
               } // for
             } // for
 
@@ -239,7 +239,7 @@ extern "C" {
       }
 
       for (uint8_t k = 0; k < width_i; k++) {
-        if (fputc(buffer.string[i + k], output) == 0) return F_status_set_error(F_output);
+        if (!fputc(buffer.string[i + k], output)) return F_status_set_error(F_output);
       } // for
     } // for
 
@@ -250,7 +250,7 @@ extern "C" {
 #ifndef _di_fl_print_trim_utf_string_
   f_return_status fl_print_trim_utf_string(FILE *output, const f_utf_string_t string, const f_utf_string_length_t length) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
       if (length < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
@@ -270,7 +270,7 @@ extern "C" {
     } // for
 
     for (; i < length; i++) {
-      if (string[i] == 0) continue;
+      if (!string[i]) continue;
 
       status = f_utf_character_is_whitespace(string[i]);
 
@@ -297,9 +297,9 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
             for (; i < j; i++) {
-              if (string[i] == 0) continue;
+              if (!string[i]) continue;
 
-              if (fputc(string[i], output) == 0) return F_status_set_error(F_output);
+              if (!fputc(string[i], output)) return F_status_set_error(F_output);
             } // for
 
             break;
@@ -309,7 +309,7 @@ extern "C" {
         if (status == F_true) break;
       }
 
-      if (fputc(string[i], output) == 0) return F_status_set_error(F_output);
+      if (!fputc(string[i], output)) return F_status_set_error(F_output);
     } // for
 
     return F_none;
@@ -319,7 +319,7 @@ extern "C" {
 #ifndef _di_fl_print_trim_utf_string_dynamic_
   f_return_status fl_print_trim_utf_string_dynamic(FILE *output, const f_utf_string_static_t buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     register f_utf_string_length_t i = 0;
@@ -338,7 +338,7 @@ extern "C" {
     } // for
 
     for (; i < buffer.used; i++) {
-      if (buffer.string[i] == 0) continue;
+      if (!buffer.string[i]) continue;
 
       status = f_utf_character_is_whitespace(buffer.string[i]);
 
@@ -365,9 +365,9 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
             for (; i < j; i++) {
-              if (buffer.string[i] == 0) continue;
+              if (!buffer.string[i]) continue;
 
-              if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
+              if (!fputc(buffer.string[i], output)) return F_status_set_error(F_output);
             } // for
 
             break;
@@ -379,7 +379,7 @@ extern "C" {
         }
       }
 
-      if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
+      if (!fputc(buffer.string[i], output)) return F_status_set_error(F_output);
     } // for
 
     return F_none;
@@ -391,7 +391,7 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (range.start < 0) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
-      if (buffer.used == 0) return F_status_set_error(F_parameter);
+      if (!buffer.used) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
       if (range.stop >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -412,7 +412,7 @@ extern "C" {
     } // for
 
     for (; i <= range.stop; i++) {
-      if (buffer.string[i] == 0) continue;
+      if (!buffer.string[i]) continue;
 
       status = f_utf_character_is_whitespace(buffer.string[i]);
 
@@ -439,9 +439,9 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
             for (; i <= j; i++) {
-              if (buffer.string[i] == 0) continue;
+              if (!buffer.string[i]) continue;
 
-              if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
+              if (!fputc(buffer.string[i], output)) return F_status_set_error(F_output);
             } // for
 
             break;
@@ -451,7 +451,7 @@ extern "C" {
         if (status == F_true) break;
       }
 
-      if (fputc(buffer.string[i], output) == 0) return F_status_set_error(F_output);
+      if (!fputc(buffer.string[i], output)) return F_status_set_error(F_output);
     } // for
 
     return F_none;

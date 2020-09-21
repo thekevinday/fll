@@ -249,7 +249,7 @@ extern "C" {
     while (items.used > 0) { \
       items.used--; \
       f_macro_fss_item_t_delete_simple(items.array[items.used]); \
-      if (items.used == 0) { \
+      if (!items.used) { \
         if (f_memory_delete((void **) & items.array, sizeof(f_fss_item_t), items.size)) { \
           items.size = 0; \
         } \
@@ -266,7 +266,7 @@ extern "C" {
     while (items.used > 0) { \
       items.used--; \
       f_macro_fss_item_t_destroy_simple(status, items.array[items.used]); \
-      if (items.used == 0) { \
+      if (!items.used) { \
         if (f_memory_destroy((void **) & items.array, sizeof(f_fss_item_t), items.size)) { \
           items.size = 0; \
         } \
@@ -423,7 +423,7 @@ extern "C" {
     while (nest.used > 0) { \
       nest.used--; \
       f_macro_fss_items_t_delete_simple(nest.depth[nest.used]); \
-      if (nest.used == 0) { \
+      if (!nest.used) { \
         if (f_memory_delete((void **) & nest.depth, sizeof(f_fss_items_t), nest.size)) { \
           nest.size = 0; \
         } \
@@ -440,7 +440,7 @@ extern "C" {
     while (nest.used > 0) { \
       nest.used--; \
       f_macro_fss_items_t_destroy_simple(nest.depth[nest.used]); \
-      if (nest.used == 0) { \
+      if (!nest.used) { \
         if (f_memory_destroy((void **) & nest.depth, sizeof(f_fss_items_t), nest.size)) { \
           nest.size = 0; \
         } \
@@ -592,7 +592,7 @@ extern "C" {
     while (nests.used > 0) { \
       nests.used--; \
       f_macro_fss_nest_t_delete_simple(nests.array[nests.used]); \
-      if (nests.used == 0) { \
+      if (!nests.used) { \
         if (f_memory_delete((void **) & nests.array, sizeof(f_fss_nest_t), nests.size)) { \
           nests.size = 0; \
         } \
@@ -609,7 +609,7 @@ extern "C" {
     while (nests.used > 0) { \
       nests.used--; \
       f_macro_fss_nest_t_destroy_simple(nests.array[nests.used]); \
-      if (nests.used == 0) { \
+      if (!nests.used) { \
         if (f_memory_destroy((void **) & nests.array, sizeof(f_fss_nest_t), nests.size)) { \
           nests.size = 0; \
         } \

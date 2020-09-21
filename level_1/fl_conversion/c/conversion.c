@@ -7,12 +7,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_binary_signed_
   f_return_status fl_conversion_string_to_binary_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -67,12 +67,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_binary_unsigned_
   f_return_status fl_conversion_string_to_binary_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -111,12 +111,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_decimal_signed_
   f_return_status fl_conversion_string_to_decimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -176,12 +176,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_decimal_unsigned_
   f_return_status fl_conversion_string_to_decimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -223,12 +223,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_duodecimal_signed_
   f_return_status fl_conversion_string_to_duodecimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -288,12 +288,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_duodecimal_unsigned_
   f_return_status fl_conversion_string_to_duodecimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -335,12 +335,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_hexidecimal_signed_
   f_return_status fl_conversion_string_to_hexidecimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -400,12 +400,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_hexidecimal_unsigned_
   f_return_status fl_conversion_string_to_hexidecimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -447,12 +447,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_octal_signed_
   f_return_status fl_conversion_string_to_octal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -512,12 +512,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_octal_unsigned_
   f_return_status fl_conversion_string_to_octal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -559,12 +559,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_number_signed_
   f_return_status fl_conversion_string_to_number_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -579,9 +579,9 @@ extern "C" {
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
       width = f_macro_utf_byte_width_is(string[i]);
 
-      if (width == 0) {
+      if (!width) {
         if (isspace(string[i])) {
-          if (mode == 0 && vector == 0) {
+          if (!mode && !vector) {
             offset++;
             continue;
           }
@@ -590,7 +590,7 @@ extern "C" {
         }
       }
       else {
-        if (mode == 0 && vector == 0) {
+        if (!mode && !vector) {
           width_max = (range.stop - i) + 1;
 
           status = f_utf_is_whitespace(string + i, width_max);
@@ -648,7 +648,7 @@ extern "C" {
 
       // plus sign is only allowed as the first non-whitespace character.
       if (string[i] == 0x2b) {
-        if (mode == 0 && vector == 0) {
+        if (!mode && !vector) {
           vector = 1;
           offset++;
         }
@@ -659,7 +659,7 @@ extern "C" {
 
       // negative sign is not allowed.
       if (string[i] == 0x2d) {
-        if (mode == 0 && vector == 0) {
+        if (!mode && !vector) {
           vector = -1;
           offset++;
         }
@@ -676,7 +676,7 @@ extern "C" {
       return F_status_set_error(F_number);
     } // for
 
-    if (mode == 0) {
+    if (!mode) {
       return F_status_set_error(F_number);
     }
 
@@ -711,12 +711,12 @@ extern "C" {
 #ifndef _di_fl_conversion_string_to_number_unsigned_
   f_return_status fl_conversion_string_to_number_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
-      if (string == 0) return F_status_set_error(F_parameter);
-      if (number == 0) return F_status_set_error(F_parameter);
+      if (!string) return F_status_set_error(F_parameter);
+      if (!number) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (string[0] == 0) {
+    if (!string[0]) {
       return F_data_not;
     }
 
@@ -731,9 +731,9 @@ extern "C" {
     for (f_string_length_t i = range.start; i <= range.stop; i++) {
       width = f_macro_utf_byte_width_is(string[i]);
 
-      if (width == 0) {
+      if (!width) {
         if (isspace(string[i])) {
-          if (mode == 0) {
+          if (!mode) {
             offset++;
             continue;
           }
@@ -742,7 +742,7 @@ extern "C" {
         }
       }
       else {
-        if (mode == 0) {
+        if (!mode) {
           width_max = (range.stop - i) + 1;
 
           status = f_utf_is_whitespace(string + i, width_max);
@@ -816,7 +816,7 @@ extern "C" {
       return F_status_set_error(F_number);
     } // for
 
-    if (mode == 0) {
+    if (!mode) {
       return F_status_set_error(F_number);
     }
 

@@ -148,7 +148,7 @@ extern "C" {
     }
 
     // identify where the object ends.
-    if (quote == 0) {
+    if (!quote) {
       status = F_none;
 
       while (range->start <= range->stop && range->start < buffer->used) {

@@ -1129,7 +1129,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_expand_
   void fake_make_operate_expand(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_fss_content_t content, const f_fss_quoteds_t quoteds, fake_make_data_t *data_make, f_string_dynamics_t *arguments, f_status_t *status) {
     if (F_status_is_error(*status)) return;
-    if (content.used == 0) return;
+    if (!content.used) return;
 
     // pre-allocate the known arguments size.
     if (arguments->used + content.used > arguments->size) {
@@ -2020,7 +2020,7 @@ extern "C" {
         }
       } // for
 
-      if (operation == 0) {
+      if (!operation) {
         fake_print_message_section_operation_unknown(data, data_make->buffer, section->name, section->objects.array[i], data_make->print);
 
         *status = F_status_set_error(F_invalid);
@@ -2123,7 +2123,7 @@ extern "C" {
         success = F_false;
 
         // break acts identical to fail when at the top of the stack.
-        if (F_status_set_fine(*status) == F_signal_abort && section_stack->used == 0) {
+        if (F_status_set_fine(*status) == F_signal_abort && !section_stack->used) {
           data_make->setting_make.fail = fake_make_operation_fail_type_exit;
           data_make->print.prefix = fake_make_print_error;
           data_make->print.context = data.context.set.error;
@@ -2139,7 +2139,7 @@ extern "C" {
 
         // F_signal_abort is used by the exit section operation.
         if (F_status_set_fine(*status) == F_signal_quit) {
-          if (section_stack->used == 0) {
+          if (!section_stack->used) {
             *status = F_status_set_error(F_failure);
           }
 
@@ -2161,7 +2161,7 @@ extern "C" {
         success = F_true;
 
         // F_signal_abort is used by the exit section operation.
-        if (section_stack->used == 0) {
+        if (!section_stack->used) {
           *status = F_none;
         }
 
@@ -3678,7 +3678,7 @@ extern "C" {
       printf("%s", program.string);
 
       for (f_array_length_t i = 0; i < arguments.used; i++) {
-        if (arguments.array[i].used == 0) continue;
+        if (!arguments.array[i].used) continue;
 
         printf(" %s", arguments.array[i].string);
       } // for
@@ -3733,7 +3733,7 @@ extern "C" {
 
     data_make->setting_make.parameter.array[0].value.array[0].used = 0;
 
-    if (return_code == 0) {
+    if (!return_code) {
       if (F_status_is_error(*status)) {
         status2 = fl_string_append("1", 1, &data_make->setting_make.parameter.array[0].value.array[0]);
       }
@@ -3850,7 +3850,7 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (operation == fake_make_operation_type_index || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell) {
-      if (arguments.used == 0) {
+      if (!arguments.used) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
           fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
@@ -4066,7 +4066,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_compile) {
-      if (arguments.used == 0) {
+      if (!arguments.used) {
         if (data.verbosity != fake_verbosity_quiet && data_make->print.to) {
           printf("%c", f_string_eol[0]);
           fl_color_print_line(data_make->print.to, data_make->print.context, "%s: Requires more arguments.", data_make->print.prefix);
