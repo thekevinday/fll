@@ -279,9 +279,12 @@ extern "C" {
   typedef struct {
     f_console_parameter_t parameters[firewall_total_parameters];
 
-    f_string_dynamics_t chains;
     f_string_lengths_t remaining;
     bool process_pipe;
+
+    uint8_t verbosity;
+
+    f_string_dynamics_t chains;
     f_string_dynamics_t devices;
 
     f_color_context_t context;
@@ -290,9 +293,10 @@ extern "C" {
   #define firewall_data_t_initialize \
     { \
       firewall_console_parameter_t_initialize, \
-      f_string_dynamics_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
+      f_console_verbosity_normal, \
+      f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_color_context_t_initialize, \
     }

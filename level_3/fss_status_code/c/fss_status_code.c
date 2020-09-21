@@ -11,9 +11,13 @@ extern "C" {
     fll_program_print_help_header(context, fss_status_code_name_long, fss_status_code_version);
 
     fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
     fll_program_print_help_option(context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
     fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol[0]);
@@ -35,8 +39,8 @@ extern "C" {
 
     {
       f_console_parameter_id_t ids[3] = { fss_status_code_parameter_no_color, fss_status_code_parameter_light, fss_status_code_parameter_dark };
-      const f_console_parameter_ids_t choices = { ids, 3 };
-      const f_console_parameters_t parameters = { data->parameters, fss_status_code_total_parameters };
+      const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, fss_status_code_total_parameters);
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
@@ -50,11 +54,14 @@ extern "C" {
 
     if (data->parameters[fss_status_code_parameter_help].result == f_console_result_found) {
       fss_status_code_print_help(data->context);
+
       fss_status_code_delete_data(data);
       return F_none;
     }
-    else if (data->parameters[fss_status_code_parameter_version].result == f_console_result_found) {
+
+    if (data->parameters[fss_status_code_parameter_version].result == f_console_result_found) {
       fll_program_print_version(fss_status_code_version);
+
       fss_status_code_delete_data(data);
       return F_none;
     }

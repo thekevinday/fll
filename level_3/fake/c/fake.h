@@ -300,6 +300,7 @@ extern "C" {
     fake_parameter_dark,
     fake_parameter_debug,
     fake_parameter_no_color,
+    fake_parameter_normal,
     fake_parameter_quiet,
     fake_parameter_verbose,
     fake_parameter_version,
@@ -335,6 +336,7 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
@@ -359,7 +361,7 @@ extern "C" {
       f_console_parameter_t_initialize(0, 0, fake_other_operation_skeleton, 0, f_console_type_other), \
     }
 
-  #define fake_total_parameters 27
+  #define fake_total_parameters 28
 #endif // _di_fake_defines_
 
 #ifndef _di_fake_data_t_
@@ -368,11 +370,13 @@ extern "C" {
 
     f_string_lengths_t remaining;
     bool process_pipe;
+
+    uint8_t verbosity;
+    uint8_t operation;
+
     mode_t umask;
     f_signal_t signal;
 
-    uint8_t operation;
-    uint8_t verbosity;
 
     f_string_dynamics_t define;
     f_string_dynamic_t fakefile;
@@ -435,10 +439,10 @@ extern "C" {
       fake_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
+      f_console_verbosity_normal, \
+      0, \
       0, \
       f_signal_t_initialize, \
-      0, \
-      f_console_verbosity_normal, \
       f_string_dynamics_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamics_t_initialize, \

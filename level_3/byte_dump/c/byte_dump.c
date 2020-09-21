@@ -10,11 +10,15 @@ extern "C" {
 
     fll_program_print_help_header(context, byte_dump_name_long, byte_dump_version);
 
-    fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Print this help message.");
-    fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "      Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "       Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Do not output in color.");
-    fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Print only the version number.");
+    fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol[0]);
 
@@ -74,15 +78,12 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = { data->parameters, byte_dump_total_parameters };
-      f_console_parameter_ids_t choices = f_console_parameter_ids_t_initialize;
+      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, byte_dump_total_parameters);
 
       // Identify priority of color parameters.
       {
         f_console_parameter_id_t ids[3] = { byte_dump_parameter_no_color, byte_dump_parameter_light, byte_dump_parameter_dark };
-
-        choices.id = ids;
-        choices.used = 3;
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
@@ -94,13 +95,38 @@ extern "C" {
         status = F_none;
       }
 
+      // Identify priority of verbosity related parameters.
+      {
+        f_console_parameter_id_t ids[4] = { byte_dump_parameter_verbosity_quiet, byte_dump_parameter_verbosity_normal, byte_dump_parameter_verbosity_verbose, byte_dump_parameter_verbosity_debug };
+        f_console_parameter_id_t choice = 0;
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+
+        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
+
+        if (F_status_is_error(status)) {
+          byte_dump_delete_data(data);
+          return status;
+        }
+
+        if (choice == byte_dump_parameter_verbosity_quiet) {
+          data->verbosity = f_console_verbosity_quiet;
+        }
+        else if (choice == byte_dump_parameter_verbosity_normal) {
+          data->verbosity = f_console_verbosity_normal;
+        }
+        else if (choice == byte_dump_parameter_verbosity_verbose) {
+          data->verbosity = f_console_verbosity_verbose;
+        }
+        else if (choice == byte_dump_parameter_verbosity_debug) {
+          data->verbosity = f_console_verbosity_debug;
+        }
+      }
+
       // Identify priority of mode parameters.
       {
         f_console_parameter_id_t ids[5] = { byte_dump_parameter_hexidecimal, byte_dump_parameter_duodecimal, byte_dump_parameter_octal, byte_dump_parameter_binary, byte_dump_parameter_decimal };
         f_console_parameter_id_t choice = byte_dump_parameter_hexidecimal;
-
-        choices.id = ids;
-        choices.used = 5;
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 5);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
@@ -130,9 +156,7 @@ extern "C" {
       {
         f_console_parameter_id_t ids[3] = { byte_dump_parameter_normal, byte_dump_parameter_simple, byte_dump_parameter_classic };
         f_console_parameter_id_t choice = byte_dump_parameter_normal;
-
-        choices.id = ids;
-        choices.used = 3;
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
@@ -151,17 +175,25 @@ extern "C" {
           data->presentation = byte_dump_presentation_classic;
         }
       }
-    }
 
-    status = F_none;
+      status = F_none;
+    }
 
     if (data->parameters[byte_dump_parameter_help].result == f_console_result_found) {
       byte_dump_print_help(data->context);
+
+      byte_dump_delete_data(data);
+      return F_none;
     }
-    else if (data->parameters[byte_dump_parameter_version].result == f_console_result_found) {
+
+    if (data->parameters[byte_dump_parameter_version].result == f_console_result_found) {
       fll_program_print_version(byte_dump_version);
+
+      byte_dump_delete_data(data);
+      return F_none;
     }
-    else if (data->remaining.used > 0 || data->process_pipe) {
+
+    if (data->remaining.used > 0 || data->process_pipe) {
       if (data->parameters[byte_dump_parameter_width].result == f_console_result_found) {
         fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
         fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);

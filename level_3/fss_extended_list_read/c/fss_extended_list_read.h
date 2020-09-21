@@ -124,11 +124,14 @@ extern "C" {
   typedef struct {
     f_console_parameter_t parameters[fss_extended_list_read_total_parameters];
 
+    f_string_lengths_t remaining;
+    bool process_pipe;
+
+    uint8_t verbosity;
+
     f_string_dynamic_t buffer;
     f_fss_nest_t nest;
     f_string_quantity_t quantity;
-    f_string_lengths_t remaining;
-    bool process_pipe;
 
     f_color_context_t context;
   } fss_extended_list_read_data_t;
@@ -136,11 +139,12 @@ extern "C" {
   #define fss_extended_list_read_data_t_initialize \
     { \
       fss_extended_list_read_console_parameter_t_initialize, \
+      f_string_lengths_t_initialize, \
+      F_false, \
+      f_console_verbosity_normal, \
       f_string_dynamic_t_initialize, \
       f_fss_nest_t_initialize, \
       f_string_quantity_t_initialize, \
-      f_string_lengths_t_initialize, \
-      F_false, \
       f_color_context_t_initialize, \
     }
 #endif // _di_fss_extended_list_read_data_t_

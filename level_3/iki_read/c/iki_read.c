@@ -15,7 +15,9 @@ extern "C" {
     fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
     fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
     fll_program_print_help_option(context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
     fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol[0]);
@@ -92,8 +94,8 @@ extern "C" {
 
     {
       f_console_parameter_id_t ids[3] = { iki_read_parameter_no_color, iki_read_parameter_light, iki_read_parameter_dark };
-      const f_console_parameter_ids_t choices = { ids, 3 };
-      const f_console_parameters_t parameters = { data->parameters, iki_read_total_parameters };
+      const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, iki_read_total_parameters);
 
       status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
@@ -115,13 +117,14 @@ extern "C" {
       iki_read_print_help(data->context);
 
       iki_read_delete_data(data);
-      return status;
+      return F_none;
     }
-    else if (data->parameters[iki_read_parameter_version].result == f_console_result_found) {
+
+    if (data->parameters[iki_read_parameter_version].result == f_console_result_found) {
       fll_program_print_version(iki_read_version);
 
       iki_read_delete_data(data);
-      return status;
+      return F_none;
     }
 
     if (data->parameters[iki_read_parameter_verbose].result == f_console_result_found) {

@@ -100,6 +100,8 @@ extern "C" {
     f_string_lengths_t remaining;
     bool process_pipe;
 
+    uint8_t verbosity;
+
     f_color_context_t context;
   } fss_status_code_data_t;
 
@@ -108,6 +110,7 @@ extern "C" {
       fss_status_code_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
+      f_console_verbosity_normal, \
       f_color_context_t_initialize, \
     }
 #endif // _di_fss_status_code_data_t_

@@ -153,6 +153,10 @@ extern "C" {
     byte_dump_parameter_light,
     byte_dump_parameter_dark,
     byte_dump_parameter_no_color,
+    byte_dump_parameter_verbosity_quiet,
+    byte_dump_parameter_verbosity_normal,
+    byte_dump_parameter_verbosity_verbose,
+    byte_dump_parameter_verbosity_debug,
     byte_dump_parameter_version,
 
     byte_dump_parameter_binary,
@@ -179,6 +183,10 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(byte_dump_short_binary, byte_dump_long_binary, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(byte_dump_short_decimal, byte_dump_long_decimal, 0, 0, f_console_type_normal), \
@@ -195,7 +203,7 @@ extern "C" {
       f_console_parameter_t_initialize(0, byte_dump_long_classic, 0, 0, f_console_type_normal), \
     }
 
-  #define byte_dump_total_parameters 18
+  #define byte_dump_total_parameters 22
 #endif // _di_byte_dump_defines_
 
 #ifndef _di_byte_dump_data_t_
@@ -204,6 +212,8 @@ extern "C" {
 
     f_string_lengths_t remaining;
     bool process_pipe;
+
+    uint8_t verbosity;
 
     uint64_t first;
     uint64_t last;
@@ -219,6 +229,7 @@ extern "C" {
       byte_dump_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
+      f_console_verbosity_normal, \
       0, \
       0, \
       8, \

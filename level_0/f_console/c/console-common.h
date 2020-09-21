@@ -68,8 +68,12 @@ extern "C" {
  * It is acceptable for any of these options, when specified multiple times, for that number of times to represent the "level".
  * For example, a "+D +D" means more debug output than simply "+D".
  *
- * The following options are subjective in interpretation but are expected to follow the general interpretation:
+ * The verbosity interpretation used as the default for many of the level 3 programs in this process, is to treat verbosity modes as a scale from quiet to debug with quiet as the least verbose and debug as the most verbose.
+ * This is not stricly a requirement, but expect level 3 projects to work this way.
+ *
+ * The following options are subjective in interpretation of the verbosity but are expected to be follow the general interpretation:
  * - debug: Enable debugging, which will likely increase output verbosity.
+ * - normal: Use normal printing (don't use debug/quiet/verbose).
  * - quiet: Decrease verbosity, print less, in some use cases this could mean printing nothing.
  * - verbose: Increase verbosity, print more, in some use cases this could mean printing just about everything.
  *
@@ -81,50 +85,62 @@ extern "C" {
  * - version: Should always print only the version number, no colors, but what represents the version number is undefined by this project.
  *
  * The following options are for special purposes:
- * - status: Represents the return status code from another program.
- *           Because it is associated with the status from another program, its structure is very subjective.
- *           The only expectation is that it somehow communicates the fss status codes.
- *           Example of complex use: "failed_program_name:error:123".
- *           Example of simple use: "123".
+ * - status_in: Is intended to accept the name of an environment variable in which to read the status from.
+ * - status_out: Is intended to accept the name of an environment variable in which to ride the status to.
+ *
+ * In the case of "status_in" and "status_out", the environment variable will store a string representing the base-10 unsigned 16-bit status code.
+ * - In the case of "status_in" the environment variable is being read in, which means that it should be the status from some previous execution.
+ * - In the case of "status_out" the environment variable is being written to, which means that it should store the status this program exits with.
+ *   - To avoid problems with the status code after a program is forcibly killed, the status_out environment variable should be cleared at program start.
  */
 #ifndef _di_f_standard_console_parameters_
-  #define f_console_standard_short_dark     "d"
-  #define f_console_standard_short_debug    "D"
-  #define f_console_standard_short_help     "h"
-  #define f_console_standard_short_light    "l"
-  #define f_console_standard_short_no_color "n"
-  #define f_console_standard_short_quiet    "q"
-  #define f_console_standard_short_verbose  "V"
-  #define f_console_standard_short_version  "v"
+  #define f_console_standard_short_dark       "d"
+  #define f_console_standard_short_debug      "D"
+  #define f_console_standard_short_help       "h"
+  #define f_console_standard_short_light      "l"
+  #define f_console_standard_short_no_color   "n"
+  #define f_console_standard_short_normal     "N"
+  #define f_console_standard_short_quiet      "q"
+  #define f_console_standard_short_status_in  "s"
+  #define f_console_standard_short_status_out "S"
+  #define f_console_standard_short_verbose    "V"
+  #define f_console_standard_short_version    "v"
 
-  #define f_console_standard_short_dark_length     1
-  #define f_console_standard_short_debug_length    1
-  #define f_console_standard_short_help_length     1
-  #define f_console_standard_short_light_length    1
-  #define f_console_standard_short_no_color_length 1
-  #define f_console_standard_short_quiet_length    1
-  #define f_console_standard_short_verbose_length  1
-  #define f_console_standard_short_version_length  1
+  #define f_console_standard_short_dark_length       1
+  #define f_console_standard_short_debug_length      1
+  #define f_console_standard_short_help_length       1
+  #define f_console_standard_short_light_length      1
+  #define f_console_standard_short_no_color_length   1
+  #define f_console_standard_short_normal_length     1
+  #define f_console_standard_short_quiet_length      1
+  #define f_console_standard_short_status_in_length  1
+  #define f_console_standard_short_status_out_length 1
+  #define f_console_standard_short_verbose_length    1
+  #define f_console_standard_short_version_length    1
 
-  #define f_console_standard_long_dark     "dark"
-  #define f_console_standard_long_debug    "debug"
-  #define f_console_standard_long_help     "help"
-  #define f_console_standard_long_light    "light"
-  #define f_console_standard_long_no_color "no_color"
-  #define f_console_standard_long_status   "status"
-  #define f_console_standard_long_quiet    "quiet"
-  #define f_console_standard_long_verbose  "verbose"
-  #define f_console_standard_long_version  "version"
+  #define f_console_standard_long_dark       "dark"
+  #define f_console_standard_long_debug      "debug"
+  #define f_console_standard_long_help       "help"
+  #define f_console_standard_long_light      "light"
+  #define f_console_standard_long_no_color   "no_color"
+  #define f_console_standard_long_normal     "normal"
+  #define f_console_standard_long_quiet      "quiet"
+  #define f_console_standard_long_status_in  "status_in"
+  #define f_console_standard_long_status_out "status_out"
+  #define f_console_standard_long_verbose    "verbose"
+  #define f_console_standard_long_version    "version"
 
-  #define f_console_standard_long_dark_length     4
-  #define f_console_standard_long_debug_length    5
-  #define f_console_standard_long_help_length     4
-  #define f_console_standard_long_light_length    5
-  #define f_console_standard_long_no_color_length 8
-  #define f_console_standard_long_status_length   6
-  #define f_console_standard_long_quiet_length    5
-  #define f_console_standard_long_verbose_length  7
-  #define f_console_standard_long_version_length  7
+  #define f_console_standard_long_dark_length       4
+  #define f_console_standard_long_debug_length      5
+  #define f_console_standard_long_help_length       4
+  #define f_console_standard_long_light_length      5
+  #define f_console_standard_long_no_color_length   8
+  #define f_console_standard_long_normal_length     6
+  #define f_console_standard_long_quiet_length      5
+  #define f_console_standard_long_status_in_length  9
+  #define f_console_standard_long_status_out_length 10
+  #define f_console_standard_long_verbose_length    7
+  #define f_console_standard_long_version_length    7
 #endif // _di_f_standard_console_parameters_
 
 /**
@@ -225,6 +241,8 @@ extern "C" {
   } f_console_parameter_t;
 
   #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_string_lengths_t_initialize, f_string_lengths_t_initialize }
+
+  #define f_macro_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, additional) { symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, additional }
 #endif // _di_f_console_parameter_t_
 
 /**
@@ -244,6 +262,8 @@ extern "C" {
   } f_console_parameters_t;
 
   #define f_console_parameters_t_initialize { 0, 0 }
+
+  #define f_macro_console_parameters_t_initialize(parameter, used) { parameter, used }
 #endif // _di_f_console_parameters_t_
 
 /**
@@ -265,6 +285,8 @@ extern "C" {
   } f_console_parameter_ids_t;
 
   #define f_console_parameter_ids_t_initialize { 0, 0 }
+
+  #define f_macro_console_parameter_ids_t_initialize(id, used) { id, used }
 #endif // _di_f_console_parameter_id_t_
 
 /**
@@ -280,6 +302,10 @@ extern "C" {
 
     const f_string_t *argv;
   } f_console_arguments_t;
+
+  #define f_console_arguments_t_initialize { 0, 0 }
+
+  #define f_macro_console_arguments_t_initialize(argc, argv) { argc, argv }
 #endif // _di_f_console_arguments_t_
 
 #ifdef __cplusplus

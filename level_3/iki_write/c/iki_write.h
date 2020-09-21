@@ -129,7 +129,7 @@ extern "C" {
       iki_write_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      0, \
+      f_console_verbosity_normal, \
       f_string_dynamic_t_initialize, \
       f_color_context_t_initialize, \
     }
