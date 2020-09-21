@@ -25,6 +25,9 @@
 extern "C" {
 #endif
 
+// fll-0 signal includes
+#include <level_0/signal-common.h>
+
 /**
  * Close an open signal descriptor.
  *
