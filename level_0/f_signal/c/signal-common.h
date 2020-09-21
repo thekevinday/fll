@@ -35,6 +35,23 @@ extern "C" {
   #define f_macro_signal_t_initialize(flags, id, set) { flags, id, set }
 #endif // _di_f_signal_t_
 
+/**
+ * This holds a set of signals to block and a set of signals to unblock.
+ *
+ * block:     The signal flags to block.
+ * block_not: The signal flags to unblock.
+ */
+#ifndef _di_f_signal_how_t_
+  typedef struct {
+    sigset_t block;
+    sigset_t block_not;
+  } f_signal_how_t;
+
+  #define f_signal_how_t_initialize { { 0 } , { 0 } }
+
+  #define f_macro_signal_how_t_initialize(block, block_not) { block, block_not }
+#endif // _di_f_signal_how_t_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
