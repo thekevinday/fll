@@ -63,13 +63,6 @@ extern "C" {
 #endif // _di_iki_write_name_
 
 #ifndef _di_iki_write_defines_
-  enum {
-    iki_write_verbosity_quiet = 1,
-    iki_write_verbosity_normal,
-    iki_write_verbosity_verbose,
-    iki_write_verbosity_debug,
-  };
-
   #define iki_write_short_file    "f"
   #define iki_write_short_content "c"
   #define iki_write_short_double  "d"

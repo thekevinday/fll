@@ -225,13 +225,6 @@ extern "C" {
   #define fake_operations_total      4
   #define fake_operations_initialize { 0, 0, 0, 0 }
 
-  enum {
-    fake_verbosity_quiet = 1,
-    fake_verbosity_normal,
-    fake_verbosity_verbose,
-    fake_verbosity_debug,
-  };
-
   #define fake_short_define   "d"
   #define fake_short_fakefile "f"
   #define fake_short_mode     "m"
@@ -445,7 +438,7 @@ extern "C" {
       0, \
       f_signal_t_initialize, \
       0, \
-      fake_verbosity_normal, \
+      f_console_verbosity_normal, \
       f_string_dynamics_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamics_t_initialize, \

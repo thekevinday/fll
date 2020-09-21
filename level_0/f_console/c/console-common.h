@@ -171,6 +171,20 @@ extern "C" {
 #endif // _di_f_console_types_t_
 
 /**
+ * Provide the standard verbosity codes.
+ *
+ * Intended to be used for the basic/standard verbosity modes for all programs following this practice.
+ */
+#ifndef _di_f_console_verbosity_
+  enum {
+    f_console_verbosity_quiet = 1,
+    f_console_verbosity_normal,
+    f_console_verbosity_verbose,
+    f_console_verbosity_debug,
+  };
+#endif // _di_f_console_verbosity_
+
+/**
  * Provide a structure for describing console parameters for the console processing functions to use.
  *
  * The short parameters are will be prepended with either '-' or '+'.

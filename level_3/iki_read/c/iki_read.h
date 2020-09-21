@@ -69,13 +69,6 @@ extern "C" {
     iki_read_mode_total,
   };
 
-  enum {
-    iki_read_verbosity_quiet = 1,
-    iki_read_verbosity_normal,
-    iki_read_verbosity_verbose,
-    iki_read_verbosity_debug,
-  };
-
   #define iki_read_short_at         "a"
   #define iki_read_short_content    "c"
   #define iki_read_short_line       "l"

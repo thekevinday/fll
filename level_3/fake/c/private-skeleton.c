@@ -18,7 +18,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (data.verbosity != fake_verbosity_quiet) {
+    if (data.verbosity != f_console_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.set.important, "Generating skeleton structure.");
     }
@@ -165,7 +165,7 @@ extern "C" {
     status = f_directory_exists(path.string);
 
     if (status == F_true) {
-      if (data.verbosity == fake_verbosity_verbose) {
+      if (data.verbosity == f_console_verbosity_verbose) {
         printf("Directory '%s' already exists.%c", path.string, f_string_eol[0]);
       }
 
@@ -173,7 +173,7 @@ extern "C" {
     }
 
     if (status == F_false) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ERROR: The path '");
         fl_color_print(f_type_error, data.context.set.notable, "%s", path.string);
@@ -199,7 +199,7 @@ extern "C" {
         return status;
       }
 
-      if (data.verbosity == fake_verbosity_verbose) {
+      if (data.verbosity == f_console_verbosity_verbose) {
         printf("Directory '%s' created.%c", path.string, f_string_eol[0]);
       }
     }
@@ -221,7 +221,7 @@ extern "C" {
     status = f_file_is(path.string, f_file_type_regular, F_false);
 
     if (status == F_true) {
-      if (data.verbosity == fake_verbosity_verbose) {
+      if (data.verbosity == f_console_verbosity_verbose) {
         printf("File '%s' already exists.%c", path.string, f_string_eol[0]);
       }
 
@@ -233,7 +233,7 @@ extern "C" {
       status = f_file_is(path.string, f_file_type_link, F_false);
 
       if (status == F_true) {
-        if (data.verbosity == fake_verbosity_verbose) {
+        if (data.verbosity == f_console_verbosity_verbose) {
           printf("File '%s' already exists (as a symbolic link).%c", path.string, f_string_eol[0]);
         }
 
@@ -242,7 +242,7 @@ extern "C" {
     }
 
     if (status == F_false) {
-      if (data.verbosity == fake_verbosity_verbose) {
+      if (data.verbosity == f_console_verbosity_verbose) {
         printf("File '%s' already exists but is not a regular file (or symbolic link).%c", path.string, f_string_eol[0]);
       }
 
@@ -271,7 +271,7 @@ extern "C" {
         return status;
       }
 
-      if (data.verbosity == fake_verbosity_verbose) {
+      if (data.verbosity == f_console_verbosity_verbose) {
         printf("File '%s' created.%c", path.string, f_string_eol[0]);
       }
 
@@ -298,7 +298,7 @@ extern "C" {
           return status;
         }
 
-        if (data.verbosity == fake_verbosity_verbose) {
+        if (data.verbosity == f_console_verbosity_verbose) {
           printf("File '%s' pre-populated.%c", path.string, f_string_eol[0]);
         }
 

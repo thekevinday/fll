@@ -21,9 +21,9 @@ extern "C" {
     printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(context, iki_write_short_file, iki_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
-    fll_program_print_help_option(context, iki_write_short_content, iki_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "The content to write.");
+    fll_program_print_help_option(context, iki_write_short_content, iki_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "The content to output.");
     fll_program_print_help_option(context, iki_write_short_double, iki_write_long_double, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use double quotes (default).");
-    fll_program_print_help_option(context, iki_write_short_object, iki_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to write.");
+    fll_program_print_help_option(context, iki_write_short_object, iki_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to output.");
     fll_program_print_help_option(context, iki_write_short_single, iki_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
 
     fll_program_print_help_usage(context, iki_write_name, "filename(s)");
@@ -63,7 +63,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         iki_write_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
-        if (data->verbosity == iki_write_verbosity_verbose) {
+        if (data->verbosity == f_console_verbosity_verbose) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
         }
 
@@ -99,13 +99,13 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      data->verbosity = iki_write_verbosity_verbose;
+      data->verbosity = f_console_verbosity_verbose;
     }
     else if (data->parameters[iki_write_parameter_quiet].result == f_console_result_found) {
-      data->verbosity = iki_write_verbosity_quiet;
+      data->verbosity = f_console_verbosity_quiet;
     }
     else {
-      data->verbosity = iki_write_verbosity_normal;
+      data->verbosity = f_console_verbosity_normal;
     }
 
     f_file_t output = f_file_t_initialize;
@@ -116,7 +116,7 @@ extern "C" {
     if (F_status_is_fine(status)) {
       if (data->parameters[iki_write_parameter_file].result == f_console_result_additional) {
         if (data->parameters[iki_write_parameter_file].additional.used > 1) {
-          if (data->verbosity != iki_write_verbosity_quiet) {
+          if (data->verbosity != f_console_verbosity_quiet) {
             fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
             fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
             fl_color_print_line(f_type_error, data->context.set.error, "' may only be specified once.");
@@ -136,7 +136,7 @@ extern "C" {
         }
       }
       else if (data->parameters[iki_write_parameter_file].result == f_console_result_found) {
-        if (data->verbosity != iki_write_verbosity_quiet) {
+        if (data->verbosity != f_console_verbosity_quiet) {
           fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
           fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
           fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
@@ -147,7 +147,7 @@ extern "C" {
     }
 
     if (F_status_is_fine(status) && data->parameters[iki_write_parameter_object].result == f_console_result_found) {
-      if (data->verbosity != iki_write_verbosity_quiet) {
+      if (data->verbosity != f_console_verbosity_quiet) {
         fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
         fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
         fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
@@ -157,7 +157,7 @@ extern "C" {
     }
 
     if (F_status_is_fine(status) && data->parameters[iki_write_parameter_content].result == f_console_result_found) {
-      if (data->verbosity != iki_write_verbosity_quiet) {
+      if (data->verbosity != f_console_verbosity_quiet) {
         fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
         fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
         fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
@@ -168,7 +168,7 @@ extern "C" {
 
     if (F_status_is_fine(status) && !data->process_pipe) {
       if (data->parameters[iki_write_parameter_object].result != f_console_result_additional && data->parameters[iki_write_parameter_content].result != f_console_result_additional) {
-        if (data->verbosity != iki_write_verbosity_quiet) {
+        if (data->verbosity != f_console_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
           fl_color_print(f_type_error, data->context.set.error, "ERROR: No data provided, either pipe the data or use the '");
           fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
@@ -183,7 +183,7 @@ extern "C" {
 
     if (F_status_is_fine(status)) {
       if (data->parameters[iki_write_parameter_object].additional.used != data->parameters[iki_write_parameter_content].additional.used) {
-        if (data->verbosity != iki_write_verbosity_quiet) {
+        if (data->verbosity != f_console_verbosity_quiet) {
           fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameters '");
           fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
           fl_color_print(f_type_error, data->context.set.error, "' and '");
@@ -243,7 +243,7 @@ extern "C" {
             }
 
             if (!buffer.used) {
-              if (data->verbosity != iki_write_verbosity_quiet) {
+              if (data->verbosity != f_console_verbosity_quiet) {
                 fl_color_print_line(f_type_error, data->context.set.error, "ERROR: The pipe has no content.");
               }
 
@@ -269,7 +269,7 @@ extern "C" {
           }
 
           if (object_ended && previous == range.start) {
-            if (data->verbosity != iki_write_verbosity_quiet) {
+            if (data->verbosity != f_console_verbosity_quiet) {
               fl_color_print_line(f_type_error, data->context.set.error, "ERROR: The pipe has incorrectly placed newlines.");
             }
 
@@ -326,7 +326,7 @@ extern "C" {
         } // for
 
         if (F_status_is_fine(status) && object_ended) {
-          if (data->verbosity != iki_write_verbosity_quiet) {
+          if (data->verbosity != f_console_verbosity_quiet) {
             fl_color_print_line(f_type_error, data->context.set.error, "ERROR: The pipe has an object without content.");
           }
 
@@ -359,7 +359,7 @@ extern "C" {
         } // for
 
         // ensure there is always a newline at the end, unless in quiet mode.
-        if (F_status_is_fine(status) && data->verbosity != iki_write_verbosity_quiet && data->parameters[iki_write_parameter_file].result == f_console_result_none) {
+        if (F_status_is_fine(status) && data->verbosity != f_console_verbosity_quiet && data->parameters[iki_write_parameter_file].result == f_console_result_none) {
           fprintf(f_type_output, "%c", f_string_eol[0]);
         }
       }
@@ -374,7 +374,7 @@ extern "C" {
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (data->verbosity != iki_write_verbosity_quiet) {
+    if (data->verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
       }

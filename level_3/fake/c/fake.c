@@ -138,13 +138,13 @@ extern "C" {
         }
 
         if (choice == fake_parameter_quiet) {
-          data->verbosity = fake_verbosity_quiet;
+          data->verbosity = f_console_verbosity_quiet;
         }
         else if (choice == fake_parameter_verbose) {
-          data->verbosity = fake_verbosity_verbose;
+          data->verbosity = f_console_verbosity_verbose;
         }
         else if (choice == fake_parameter_debug) {
-          data->verbosity = fake_verbosity_debug;
+          data->verbosity = f_console_verbosity_debug;
         }
       }
 
@@ -309,7 +309,7 @@ extern "C" {
           break;
         }
         else if (F_status_is_error(status)) {
-          if (data->verbosity != fake_verbosity_quiet) {
+          if (data->verbosity != f_console_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data->context.set.error, "ERROR: The operation '");
             fl_color_print(f_type_error, data->context.set.notable, "%s", operations_name);
@@ -321,7 +321,7 @@ extern "C" {
       } // for
 
       // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-      if (data->verbosity != fake_verbosity_quiet) {
+      if (data->verbosity != f_console_verbosity_quiet) {
         if (F_status_is_error(status) || status == F_signal) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
         }
@@ -331,7 +331,7 @@ extern "C" {
       }
     }
     else {
-      if (data->verbosity != fake_verbosity_quiet) {
+      if (data->verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print_line(f_type_error, data->context.set.error, "ERROR: You failed to specify an operation.");
         fprintf(f_type_error, "%c", f_string_eol[0]);

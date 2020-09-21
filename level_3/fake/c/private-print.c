@@ -21,7 +21,7 @@ extern "C" {
   bool fake_print_error_build_operation_file(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t operation, const f_string_t how, const f_string_t source, const f_string_t destination, const bool fallback) {
 
     if (status == F_file_found_not) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ERROR: Failed to find '");
 
@@ -47,7 +47,7 @@ extern "C" {
     }
 
     if (status == F_parameter) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
         fl_color_print(f_type_error, data.context.set.notable, "%s", function);
@@ -66,7 +66,7 @@ extern "C" {
     }
 
     if (status == F_name) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ERROR: Invalid name for '");
         fl_color_print(f_type_error, data.context.set.notable, "%s", source);
@@ -83,7 +83,7 @@ extern "C" {
     }
 
     if (status == F_memory_out) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory, while trying to %s '", operation);
         fl_color_print(f_type_error, data.context.set.notable, "%s", source);
@@ -100,7 +100,7 @@ extern "C" {
     }
 
     if (status == F_number_overflow) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
 
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ERROR: Overflow while trying to %s '", operation);
@@ -118,7 +118,7 @@ extern "C" {
     }
 
     if (status == F_directory) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ERROR: Invalid directory while trying to %s '", operation);
         fl_color_print(f_type_error, data.context.set.notable, "%s", source);
@@ -135,7 +135,7 @@ extern "C" {
     }
 
     if (status == F_access_denied) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ERROR: Access denied while trying to %s '", operation);
         fl_color_print(f_type_error, data.context.set.notable, "%s", source);
@@ -152,7 +152,7 @@ extern "C" {
     }
 
     if (status == F_loop) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ERROR: Loop while trying to %s '", operation);
         fl_color_print(f_type_error, data.context.set.notable, "%s", source);
@@ -169,7 +169,7 @@ extern "C" {
     }
 
     if (status == F_prohibited) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ERROR: Prohibited by system while trying to %s '", operation);
         fl_color_print(f_type_error, data.context.set.notable, "%s", source);
@@ -186,7 +186,7 @@ extern "C" {
     }
 
     if (status == F_directory_found_not) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ERROR: Failed to %s '", operation);
         fl_color_print(f_type_error, data.context.set.notable, "%s", source);
@@ -203,7 +203,7 @@ extern "C" {
     }
 
     if (status == F_failure) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ERROR: Failed to %s '", operation);
         fl_color_print(f_type_error, data.context.set.notable, "%s", source);
@@ -219,7 +219,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fake_print_error(data, status, function, F_false) == F_unknown && fallback && data.verbosity != fake_verbosity_quiet) {
+    if (fake_print_error(data, status, function, F_false) == F_unknown && fallback && data.verbosity != f_console_verbosity_quiet) {
       fprintf(f_type_error, "%c", f_string_eol[0]);
       fl_color_print(f_type_error, data.context.set.error, "UNKNOWN ERROR: (");
       fl_color_print(f_type_error, data.context.set.notable, "%llu", status);
@@ -250,7 +250,7 @@ extern "C" {
   bool fake_print_error_fss(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t path_file, const f_string_range_t range, const bool fallback) {
 
     if (status == F_file_found_not) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
         fl_color_print(f_type_error, data.context.set.notable, "%d", range.start);
@@ -263,7 +263,7 @@ extern "C" {
     }
 
     if (status == F_status_set_error(F_incomplete_utf_stop)) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(f_type_error, "%c", f_string_eol[0]);
         fl_color_print(f_type_error, data.context.set.error, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
         fl_color_print(f_type_error, data.context.set.notable, "%d", range.start);
@@ -275,7 +275,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fake_print_error(data, status, function, F_false) == F_unknown && fallback && data.verbosity != fake_verbosity_quiet) {
+    if (fake_print_error(data, status, function, F_false) == F_unknown && fallback && data.verbosity != f_console_verbosity_quiet) {
       fprintf(f_type_error, "%c", f_string_eol[0]);
       fl_color_print(f_type_error, data.context.set.error, "UNKNOWN ERROR: (");
       fl_color_print(f_type_error, data.context.set.notable, "%llu", status);
@@ -290,7 +290,7 @@ extern "C" {
 
 #ifndef _di_fake_print_error_parameter_missing_value_
   void fake_print_error_parameter_missing_value(const fake_data_t data, const f_string_t parameter) {
-    if (data.verbosity == fake_verbosity_quiet) return;
+    if (data.verbosity == f_console_verbosity_quiet) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
 
@@ -303,7 +303,7 @@ extern "C" {
 
 #ifndef _di_fake_print_error_parameter_too_many_
   void fake_print_error_parameter_too_many(const fake_data_t data, const f_string_t parameter) {
-    if (data.verbosity == fake_verbosity_quiet) return;
+    if (data.verbosity == f_console_verbosity_quiet) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
 
@@ -318,7 +318,7 @@ extern "C" {
   f_return_status fake_print_message(const fake_data_t data, const f_status_t status, const f_string_t function, const bool fallback, const fake_make_print_t print) {
 
     if (status == F_parameter) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Invalid parameter", print.prefix);
 
@@ -336,7 +336,7 @@ extern "C" {
     }
 
     if (status == F_memory_allocation || status == F_memory_reallocation) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Unable to allocate memory", print.prefix);
 
@@ -353,7 +353,7 @@ extern "C" {
       return F_none;
     }
 
-    if (fallback && data.verbosity != fake_verbosity_quiet) {
+    if (fallback && data.verbosity != f_console_verbosity_quiet) {
       fprintf(print.to, "%c", f_string_eol[0]);
       fl_color_print(print.to, print.context, "UNKNOWN %s: (", print.prefix);
       fl_color_print(print.to, data.context.set.notable, "%llu", status);
@@ -378,7 +378,7 @@ extern "C" {
     const f_string_t file_or_directory = is_file ? "file" : "directory";
 
     if (status == F_file_found_not) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Failed to find %s '", print.prefix, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -389,7 +389,7 @@ extern "C" {
     }
 
     if (status == F_file_found) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: The %s '", print.prefix, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -400,7 +400,7 @@ extern "C" {
     }
 
     if (status == F_directory_empty_not) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: The %s '", print.prefix, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -411,7 +411,7 @@ extern "C" {
     }
 
     if (status == F_parameter) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "INTERNAL %s: Invalid parameter when calling ", print.prefix);
         fl_color_print(print.to, data.context.set.notable, "%s", function);
@@ -424,7 +424,7 @@ extern "C" {
     }
 
     if (status == F_name) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Invalid %s name '", print.prefix, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -435,7 +435,7 @@ extern "C" {
     }
 
     if (status == F_memory_out) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "CRITICAL %s: Unable to allocate memory, while trying to %s %s '", print.prefix, operation, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -446,7 +446,7 @@ extern "C" {
     }
 
     if (status == F_number_overflow) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Overflow while trying to %s %s '", print.prefix, operation, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -457,7 +457,7 @@ extern "C" {
     }
 
     if (status == F_directory) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Invalid directory while trying to %s %s '", print.prefix, operation, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -468,7 +468,7 @@ extern "C" {
     }
 
     if (status == F_access_denied) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Access denied while trying to %s %s '", print.prefix, operation, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -479,7 +479,7 @@ extern "C" {
     }
 
     if (status == F_loop) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Loop while trying to %s %s '", print.prefix, operation, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -490,7 +490,7 @@ extern "C" {
     }
 
     if (status == F_prohibited) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Prohibited by system while trying to %s %s '", print.prefix, operation, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -501,7 +501,7 @@ extern "C" {
     }
 
     if (status == F_access_owner) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Currrent user is not allowed to use the given owner while trying to %s %s '", print.prefix, operation, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -512,7 +512,7 @@ extern "C" {
     }
 
     if (status == F_access_group) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to, "%c", f_string_eol[0]);
         fl_color_print(print.to, print.context, "%s: Currrent user is not allowed to use the given group while trying to %s %s '", print.prefix, operation, file_or_directory);
         fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -524,7 +524,7 @@ extern "C" {
 
     if (is_file) {
       if (status == F_directory_found_not) {
-        if (data.verbosity != fake_verbosity_quiet) {
+        if (data.verbosity != f_console_verbosity_quiet) {
           fprintf(print.to, "%c", f_string_eol[0]);
           fl_color_print(print.to, print.context, "%s: Failed to %s %s '", print.prefix, operation, file_or_directory);
           fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -536,7 +536,7 @@ extern "C" {
     }
     else {
       if (status == F_directory_found_not) {
-        if (data.verbosity != fake_verbosity_quiet) {
+        if (data.verbosity != f_console_verbosity_quiet) {
           fprintf(print.to, "%c", f_string_eol[0]);
           fl_color_print(print.to, print.context, "%s: Failed to %s %s '", print.prefix, operation, file_or_directory);
           fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -547,7 +547,7 @@ extern "C" {
       }
 
       if (status == F_failure) {
-        if (data.verbosity != fake_verbosity_quiet) {
+        if (data.verbosity != f_console_verbosity_quiet) {
           fprintf(print.to, "%c", f_string_eol[0]);
           fl_color_print(print.to, print.context, "%s: Failed to %s %s '", print.prefix, operation, file_or_directory);
           fl_color_print(print.to, data.context.set.notable, "%s", name);
@@ -558,7 +558,7 @@ extern "C" {
       }
     }
 
-    if (fake_print_error(data, status, function, F_false) == F_unknown && fallback && data.verbosity != fake_verbosity_quiet) {
+    if (fake_print_error(data, status, function, F_false) == F_unknown && fallback && data.verbosity != f_console_verbosity_quiet) {
       fprintf(print.to, "%c", f_string_eol[0]);
       fl_color_print(print.to, print.context, "UNKNOWN %s: (", print.prefix);
       fl_color_print(print.to, data.context.set.notable, "%llu", status);
@@ -573,7 +573,7 @@ extern "C" {
 
 #ifndef _di_fake_print_message_section_operation_failed_
   void fake_print_message_section_operation_failed(const fake_data_t data, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const fake_make_print_t print) {
-    if (data.verbosity == fake_verbosity_quiet || !print.to) return;
+    if (data.verbosity == f_console_verbosity_quiet || !print.to) return;
 
     f_string_length_t line = 1;
 
@@ -600,7 +600,7 @@ extern "C" {
 
 #ifndef _di_fake_print_message_section_operation_path_outside_
   void fake_print_message_section_operation_path_outside(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t path, const fake_make_print_t print) {
-    if (data.verbosity == fake_verbosity_quiet || !print.to) return;
+    if (data.verbosity == f_console_verbosity_quiet || !print.to) return;
 
     if (F_status_set_fine(status) == F_false) {
       fprintf(print.to, "%c", f_string_eol[0]);
@@ -616,7 +616,7 @@ extern "C" {
 
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
   void fake_print_message_section_operation_path_stack_max(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t path, const fake_make_print_t print) {
-    if (data.verbosity == fake_verbosity_quiet || !print.to) return;
+    if (data.verbosity == f_console_verbosity_quiet || !print.to) return;
 
     if (status == F_buffer_too_large) {
       fprintf(print.to, "%c", f_string_eol[0]);
@@ -640,7 +640,7 @@ extern "C" {
 
 #ifndef _di_fake_print_message_section_operation_stack_max_
   void fake_print_message_section_operation_stack_max(const fake_data_t data, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max, const fake_make_print_t print) {
-    if (data.verbosity == fake_verbosity_quiet || !print.to) return;
+    if (data.verbosity == f_console_verbosity_quiet || !print.to) return;
 
     f_string_length_t line = 1;
 
@@ -669,7 +669,7 @@ extern "C" {
 
 #ifndef _di_fake_print_message_section_operation_unknown_
   void fake_print_message_section_operation_unknown(const fake_data_t data, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const fake_make_print_t print) {
-    if (data.verbosity == fake_verbosity_quiet || !print.to) return;
+    if (data.verbosity == f_console_verbosity_quiet || !print.to) return;
 
     f_string_length_t line = 1;
 
@@ -696,7 +696,7 @@ extern "C" {
 
 #ifndef _di_fake_print_warning_settings_content_empty_
   void fake_print_warning_settings_content_empty(const fake_data_t data, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_t settings_name) {
-    if (data.verbosity == fake_verbosity_quiet) return;
+    if (data.verbosity == f_console_verbosity_quiet) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
 
@@ -716,7 +716,7 @@ extern "C" {
 
 #ifndef _di_fake_print_warning_settings_content_invalid_
   void fake_print_warning_settings_content_invalid(const fake_data_t data, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_range_t range_content, const f_string_t settings_name) {
-    if (data.verbosity == fake_verbosity_quiet) return;
+    if (data.verbosity == f_console_verbosity_quiet) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
 
@@ -742,7 +742,7 @@ extern "C" {
 
 #ifndef _di_fake_print_warning_settings_content_multiple_
   void fake_print_warning_settings_content_multiple(const fake_data_t data, const f_string_t path_file, const f_string_t name_object) {
-    if (data.verbosity != fake_verbosity_verbose) return;
+    if (data.verbosity != f_console_verbosity_verbose) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
 
@@ -757,7 +757,7 @@ extern "C" {
 
 #ifndef _di_fake_print_warning_settings_object_multiple_
   void fake_print_warning_settings_object_multiple(const fake_data_t data, const f_string_t path_file, const f_string_t label, const f_string_t name_object) {
-    if (data.verbosity != fake_verbosity_verbose) return;
+    if (data.verbosity != f_console_verbosity_verbose) return;
 
     fprintf(f_type_error, "%c", f_string_eol[0]);
 

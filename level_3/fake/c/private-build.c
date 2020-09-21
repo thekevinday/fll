@@ -167,7 +167,7 @@ extern "C" {
     f_string_dynamic_t path_source = f_string_dynamic_t_initialize;
     f_string_dynamic_t destination_file = f_string_dynamic_t_initialize;
 
-    if (data.verbosity != fake_verbosity_quiet) {
+    if (data.verbosity != f_console_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.set.important, "Copying %s.", label);
     }
@@ -185,7 +185,7 @@ extern "C" {
 
     fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
-    if (data.verbosity == fake_verbosity_verbose) {
+    if (data.verbosity == f_console_verbosity_verbose) {
       recurse.output = f_type_output;
       recurse.verbose = fake_verbose_print_copy;
     }
@@ -226,7 +226,7 @@ extern "C" {
         *status = fl_directory_copy_content(path_source.string, destination.string, path_source.used, destination.used, mode, recurse);
 
         if (F_status_is_error(*status)) {
-          if (data.verbosity == fake_verbosity_verbose) {
+          if (data.verbosity == f_console_verbosity_verbose) {
             for (f_string_length_t j = 0; j < failures.used; j++) {
               fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
             } // for
@@ -237,7 +237,7 @@ extern "C" {
 
             break;
           }
-          else if (data.verbosity != fake_verbosity_quiet) {
+          else if (data.verbosity != f_console_verbosity_quiet) {
             fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
           }
 
@@ -273,7 +273,7 @@ extern "C" {
           break;
         }
 
-        if (data.verbosity == fake_verbosity_verbose) {
+        if (data.verbosity == f_console_verbosity_verbose) {
           printf("Copied file '%s' to '%s'.%c", path_source.string, destination_file.string, f_string_eol[0]);
         }
       }
@@ -345,7 +345,7 @@ extern "C" {
       &path_headers,
     };
 
-    if (data.verbosity != fake_verbosity_quiet) {
+    if (data.verbosity != f_console_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.set.important, "Creating base build directories.");
     }
@@ -371,7 +371,7 @@ extern "C" {
         return;
       }
 
-      if (data.verbosity == fake_verbosity_verbose) {
+      if (data.verbosity == f_console_verbosity_verbose) {
         printf("Created directory '%s'.%c", directorys[i]->string, f_string_eol[0]);
       }
     } // for
@@ -412,16 +412,16 @@ extern "C" {
     }
 
     // ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
-    if (F_status_is_error_not(*status) && data.verbosity != fake_verbosity_normal) {
+    if (F_status_is_error_not(*status) && data.verbosity != f_console_verbosity_normal) {
       char argument[3] = { f_console_symbol_disable, 0, 0 };
 
-      if (data.verbosity == fake_verbosity_quiet) {
+      if (data.verbosity == f_console_verbosity_quiet) {
         argument[1] = f_console_standard_short_quiet[0];
       }
-      else if (data.verbosity == fake_verbosity_verbose) {
+      else if (data.verbosity == f_console_verbosity_verbose) {
         argument[1] = f_console_standard_short_verbose[0];
       }
-      else if (data.verbosity == fake_verbosity_debug) {
+      else if (data.verbosity == f_console_verbosity_debug) {
         argument[1] = f_console_standard_short_debug[0];
       }
 
@@ -591,7 +591,7 @@ extern "C" {
       else {
         if (F_status_is_error(*status)) {
           if (F_status_set_fine(*status) == F_failure) {
-            if (data.verbosity != fake_verbosity_quiet) {
+            if (data.verbosity != f_console_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data.context.set.error, "ERROR: Failed to execute script: ");
               fl_color_print(f_type_error, data.context.set.notable, "%s", path.string);
@@ -660,7 +660,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
     if (!data_build.setting.build_sources_library.used) return;
 
-    if (data.verbosity != fake_verbosity_quiet) {
+    if (data.verbosity != f_console_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.set.important, "Compiling shared library.");
     }
@@ -883,7 +883,7 @@ extern "C" {
 
       *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
-      if (F_status_is_error_not(*status) && data.verbosity == fake_verbosity_verbose) {
+      if (F_status_is_error_not(*status) && data.verbosity == f_console_verbosity_verbose) {
         printf("Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_micro, f_string_eol[0]);
       }
       else if (F_status_is_error(*status)) {
@@ -923,7 +923,7 @@ extern "C" {
         *status = f_file_link(parameter_file_name_micro, parameter_file_path);
       }
 
-      if (F_status_is_error_not(*status) && data.verbosity == fake_verbosity_verbose) {
+      if (F_status_is_error_not(*status) && data.verbosity == f_console_verbosity_verbose) {
         printf("Linked file '%s' to '", parameter_file_path);
 
         if (data_build.setting.version_target == fake_build_version_type_major) {
@@ -968,7 +968,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
     if (!data_build.setting.build_sources_library.used) return;
 
-    if (data.verbosity != fake_verbosity_quiet) {
+    if (data.verbosity != f_console_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.set.important, "Compiling static library.");
     }
@@ -1140,7 +1140,7 @@ extern "C" {
       if (F_status_is_error_not(*status)) {
         if (names.used + data_build.setting.environment.used > names.size) {
           if (names.used + data_build.setting.environment.used > f_array_length_t_size) {
-            if (data.verbosity != fake_verbosity_quiet) {
+            if (data.verbosity != f_console_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data.context.set.error, "ERROR: The values for the setting '");
               fl_color_print(f_type_error, data.context.set.notable, "%s", fake_build_setting_name_environment);
@@ -1560,7 +1560,7 @@ extern "C" {
         } // for
 
         if (found == F_false) {
-          if (data.verbosity != fake_verbosity_quiet) {
+          if (data.verbosity != f_console_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data.context.set.error, "ERROR: The specified mode '");
             fl_color_print(f_type_error, data.context.set.notable, "%s", modes->array[i].string);
@@ -1614,7 +1614,7 @@ extern "C" {
 
     if (F_status_is_error(*status)) {
       if (*status == F_status_set_error(F_string_too_large)) {
-        if (data.verbosity != fake_verbosity_quiet) {
+        if (data.verbosity != f_console_verbosity_quiet) {
           // @todo update FSS functions to return which setting index the problem happened on.
           fprintf(f_type_error, "%c", f_string_eol[0]);
           fl_color_print(f_type_error, data.context.set.error, "ERROR: A setting in the build setting file '");
@@ -1807,7 +1807,7 @@ extern "C" {
         if (!settings_single_source[i]->used) continue;
 
         if (settings_single_source[i]->used > 1) {
-          if (data.verbosity == fake_verbosity_verbose) {
+          if (data.verbosity == f_console_verbosity_verbose) {
             fprintf(f_type_warning, "%c", f_string_eol[0]);
             fl_color_print(f_type_warning, data.context.set.warning, "WARNING: the setting '");
             fl_color_print(f_type_warning, data.context.set.notable, "%s", settings_single_name[i]);
@@ -1829,7 +1829,7 @@ extern "C" {
           else {
             *settings_single_bool[i] = F_true;
 
-            if (data.verbosity == fake_verbosity_verbose) {
+            if (data.verbosity == f_console_verbosity_verbose) {
               fprintf(f_type_warning, "%c", f_string_eol[0]);
               fl_color_print(f_type_warning, data.context.set.warning, "WARNING: the setting '");
               fl_color_print(f_type_warning, data.context.set.notable, "%s", settings_single_name[i]);
@@ -1858,7 +1858,7 @@ extern "C" {
           else {
             *settings_single_language[i] = fake_build_language_type_c;
 
-            if (data.verbosity == fake_verbosity_verbose) {
+            if (data.verbosity == f_console_verbosity_verbose) {
               fprintf(f_type_warning, "%c", f_string_eol[0]);
               fl_color_print(f_type_warning, data.context.set.warning, "WARNING: the setting '");
               fl_color_print(f_type_warning, data.context.set.notable, "%s", settings_single_name[i]);
@@ -1889,7 +1889,7 @@ extern "C" {
           else {
             *settings_single_version[i] = fake_build_version_type_major;
 
-            if (data.verbosity == fake_verbosity_verbose) {
+            if (data.verbosity == f_console_verbosity_verbose) {
               fprintf(f_type_warning, "%c", f_string_eol[0]);
               fl_color_print(f_type_warning, data.context.set.warning, "WARNING: the setting '");
               fl_color_print(f_type_warning, data.context.set.notable, "%s", settings_single_name[i]);
@@ -2022,7 +2022,7 @@ extern "C" {
           setting->search_shared = F_false;
         }
 
-        if (data.verbosity == fake_verbosity_verbose) {
+        if (data.verbosity == f_console_verbosity_verbose) {
           fprintf(f_type_warning, "%c", f_string_eol[0]);
           fl_color_print(f_type_warning, data.context.set.error, "WARNING: the parameters '");
           fl_color_print(f_type_warning, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_disabled);
@@ -2061,7 +2061,7 @@ extern "C" {
           setting->search_static = F_false;
         }
 
-        if (data.verbosity == fake_verbosity_verbose) {
+        if (data.verbosity == f_console_verbosity_verbose) {
           fprintf(f_type_warning, "%c", f_string_eol[0]);
           fl_color_print(f_type_warning, data.context.set.error, "WARNING: the parameters '");
           fl_color_print(f_type_warning, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_static_disabled);
@@ -2091,7 +2091,7 @@ extern "C" {
 
     if (setting->build_language == fake_build_language_type_c || setting->build_language == fake_build_language_type_cpp) {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
-        if (data.verbosity != fake_verbosity_quiet) {
+        if (data.verbosity != f_console_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
           fl_color_print(f_type_error, data.context.set.error, "ERROR: The build settings '");
           fl_color_print(f_type_error, data.context.set.notable, "%s", fake_build_setting_name_build_shared);
@@ -2261,7 +2261,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
     if (!data_build.setting.build_sources_library.used) return;
 
-    if (data.verbosity != fake_verbosity_quiet) {
+    if (data.verbosity != f_console_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.set.important, "Compiling static objects.");
     }
@@ -2346,7 +2346,7 @@ extern "C" {
         *status = f_directory_exists(destination_path.string);
 
         if (*status == F_false) {
-          if (data.verbosity != fake_verbosity_quiet) {
+          if (data.verbosity != f_console_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print(f_type_error, data.context.set.error, "ERROR: The path '");
             fl_color_print(f_type_error, data.context.set.notable, "%s", destination_path.string);
@@ -2373,7 +2373,7 @@ extern "C" {
             break;
           }
 
-          if (data.verbosity == fake_verbosity_verbose) {
+          if (data.verbosity == f_console_verbosity_verbose) {
             printf("Directory '%s' created.%c", destination_path.string, f_string_eol[0]);
           }
         }
@@ -2467,7 +2467,7 @@ extern "C" {
     fake_build_load_setting(data, setting_file, &data_build.setting, &status);
 
     if (F_status_is_fine(status)) {
-      if (data.verbosity != fake_verbosity_quiet) {
+      if (data.verbosity != f_console_verbosity_quiet) {
         printf("%c", f_string_eol[0]);
         fl_color_print(f_type_output, data.context.set.important, "Building project%c", data_build.setting.project_name.used ? ' ' : 0);
 
@@ -2591,7 +2591,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
     if (!data_build.setting.build_sources_program.used) return;
 
-    if (data.verbosity != fake_verbosity_quiet) {
+    if (data.verbosity != f_console_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.set.important, "Compiling shared program.");
     }
@@ -2690,7 +2690,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
     if (!data_build.setting.build_sources_program.used) return;
 
-    if (data.verbosity != fake_verbosity_quiet) {
+    if (data.verbosity != f_console_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print_line(f_type_output, data.context.set.important, "Compiling static program.");
     }

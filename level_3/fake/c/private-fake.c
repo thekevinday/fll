@@ -12,7 +12,7 @@ extern "C" {
   int fake_execute(const fake_data_t data, const fake_environment_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
     if (F_status_is_error(*status)) return 1;
 
-    if (data.verbosity == fake_verbosity_verbose) {
+    if (data.verbosity == f_console_verbosity_verbose) {
       printf("%s", program.string);
 
       for (f_array_length_t i = 0; i < arguments.used; i++) {
@@ -59,7 +59,7 @@ extern "C" {
       return_code = 1;
 
       if (F_status_set_fine(*status) == F_file_found_not) {
-        if (data.verbosity != fake_verbosity_quiet) {
+        if (data.verbosity != f_console_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
           fl_color_print(f_type_error, data.context.set.error, "ERROR: Failed to find program '");
           fl_color_print(f_type_error, data.context.set.notable, "%s", program.used ? program.string : "");
@@ -642,7 +642,7 @@ extern "C" {
                 status = f_utf_is_word_dash_plus(arguments.argv[location] + j, width_max, F_false);
 
                 if (F_status_is_error(status)) {
-                  if (fake_print_error(*data, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+                  if (fake_print_error(*data, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->verbosity != f_console_verbosity_quiet) {
                     fprintf(f_type_error, "%c", f_string_eol[0]);
                     fl_color_print(f_type_error, data->context.set.error, "ERROR: Failed to process the parameter '");
                     fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_process);
@@ -653,7 +653,7 @@ extern "C" {
                 }
 
                 if (status == F_false) {
-                  if (data->verbosity != fake_verbosity_quiet) {
+                  if (data->verbosity != f_console_verbosity_quiet) {
                     fprintf(f_type_error, "%c", f_string_eol[0]);
                     fl_color_print(f_type_error, data->context.set.error, "ERROR: The '");
                     fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_process);
@@ -671,7 +671,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               if (status == F_status_set_error(F_string_too_large)) {
-                if (data->verbosity != fake_verbosity_quiet) {
+                if (data->verbosity != f_console_verbosity_quiet) {
                   fprintf(f_type_error, "%c", f_string_eol[0]);
                   fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
                   fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
@@ -690,7 +690,7 @@ extern "C" {
           }
 
           if (length == 0 || status == F_data_not) {
-            if (data->verbosity != fake_verbosity_quiet) {
+            if (data->verbosity != f_console_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
               fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
@@ -768,7 +768,7 @@ extern "C" {
           status = fl_console_parameter_to_string_dynamic_directory(arguments.argv[data->parameters[parameters_id[i]].additional.array[0]], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            if (fake_print_error(*data, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+            if (fake_print_error(*data, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_unknown && data->verbosity != f_console_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data->context.set.error, "ERROR: Failed to process parameter '");
               fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
@@ -782,7 +782,7 @@ extern "C" {
           f_macro_string_dynamic_t_new(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            if (fake_print_error(*data, F_status_set_fine(status), "f_macro_string_dynamic_t_new", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+            if (fake_print_error(*data, F_status_set_fine(status), "f_macro_string_dynamic_t_new", F_false) == F_unknown && data->verbosity != f_console_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data->context.set.error, "ERROR: Failed to load default for the parameter '");
               fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
@@ -802,7 +802,7 @@ extern "C" {
       status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_define].additional, &data->define);
 
       if (F_status_is_error(status)) {
-        if (fake_print_error(*data, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+        if (fake_print_error(*data, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->verbosity != f_console_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
           fl_color_print(f_type_error, data->context.set.error, "ERROR: Failed to process the parameter '");
           fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_define);
@@ -825,7 +825,7 @@ extern "C" {
           status = f_utf_is_word(data->define.array[i].string + j, width_max, F_false);
 
           if (F_status_is_error(status)) {
-            if (fake_print_error(*data, F_status_set_fine(status), "f_utf_is_word", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+            if (fake_print_error(*data, F_status_set_fine(status), "f_utf_is_word", F_false) == F_unknown && data->verbosity != f_console_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data->context.set.error, "ERROR: Failed to process the parameter '");
               fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_define);
@@ -836,7 +836,7 @@ extern "C" {
           }
 
           if (status == F_false) {
-            if (data->verbosity != fake_verbosity_quiet) {
+            if (data->verbosity != f_console_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data->context.set.error, "ERROR: The '");
               fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_define);
@@ -859,7 +859,7 @@ extern "C" {
       status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_mode].additional, &data->mode);
 
       if (F_status_is_error(status)) {
-        if (fake_print_error(*data, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+        if (fake_print_error(*data, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->verbosity != f_console_verbosity_quiet) {
           fprintf(f_type_error, "%c", f_string_eol[0]);
           fl_color_print(f_type_error, data->context.set.error, "ERROR: Failed to process the parameter '");
           fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_mode);
@@ -882,7 +882,7 @@ extern "C" {
           status = f_utf_is_word_dash_plus(data->mode.array[i].string + j, width_max, F_false);
 
           if (F_status_is_error(status)) {
-            if (fake_print_error(*data, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->verbosity != fake_verbosity_quiet) {
+            if (fake_print_error(*data, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->verbosity != f_console_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data->context.set.error, "ERROR: Failed to process the parameter '");
               fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_mode);
@@ -893,7 +893,7 @@ extern "C" {
           }
 
           if (status == F_false) {
-            if (data->verbosity != fake_verbosity_quiet) {
+            if (data->verbosity != f_console_verbosity_quiet) {
               fprintf(f_type_error, "%c", f_string_eol[0]);
               fl_color_print(f_type_error, data->context.set.error, "ERROR: The '");
               fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_mode);
@@ -935,7 +935,7 @@ extern "C" {
         case F_signal_quit:
         case F_signal_termination:
 
-          if (data.verbosity != fake_verbosity_quiet) {
+          if (data.verbosity != f_console_verbosity_quiet) {
             fprintf(f_type_error, "%c", f_string_eol[0]);
             fl_color_print_line(f_type_error, data.context.set.error, "ALERT: An appropriate exit signal has been received, now aborting.");
           }
