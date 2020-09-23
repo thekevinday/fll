@@ -150,13 +150,12 @@ extern "C" {
  *
  * Will not stop at NULL.
  * Will not print NULL.
+ * Will print the entire dynamic string.
  *
- * @param id
- *   The file descriptor to output to.
- * @param string
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param buffer
  *   The string to output.
- * @param length
- *   The total number of characters to print.
  *
  * @return
  *   F_none on success.
@@ -172,9 +171,9 @@ extern "C" {
  *
  * @see write()
  */
-#ifndef _di_f_print_dynamic_to_
-  extern f_return_status f_print_dynamic_to(const int id, const f_string_t string, const f_string_length_t length);
-#endif // _di_f_print_dynamic_to_
+#ifndef _di_f_print_to_dynamic_
+  extern f_return_status f_print_to_dynamic(const int id, const f_string_static_t buffer);
+#endif // _di_f_print_to_dynamic_
 
 /**
  * Similar to a c-library dprintf, except that this will only print a specific range in a given dynamic string.
@@ -183,13 +182,14 @@ extern "C" {
  *
  * Will not stop at NULL.
  * Will not print NULL.
+ * Will print the only the buffer range specified by range.
  *
- * @param id
- *   The file descriptor to output to.
- * @param string
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param buffer
  *   The string to output.
- * @param length
- *   The total number of characters to print.
+ * @param range
+ *   The range within the provided string to print.
  *
  * @return
  *   F_none on success.
@@ -205,9 +205,9 @@ extern "C" {
  *
  * @see write()
  */
-#ifndef _di_f_print_dynamic_partial_to_
-  extern f_return_status f_print_dynamic_partial_to(const int id, const f_string_t string, const f_string_length_t length);
-#endif // _di_f_print_dynamic_partial_to_
+#ifndef _di_f_print_to_dynamic_partial_
+  extern f_return_status f_print_to_dynamic_partial(const int id, const f_string_static_t buffer, const f_string_range_t range);
+#endif // _di_f_print_to_dynamic_partial_
 
 #ifdef __cplusplus
 } // extern "C"

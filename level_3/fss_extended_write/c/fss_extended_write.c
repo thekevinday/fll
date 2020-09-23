@@ -5,30 +5,30 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_extended_write_print_help_
-  f_return_status fss_extended_write_print_help(const f_color_context_t context) {
+  f_return_status fss_extended_write_print_help(const int id, const f_color_context_t context) {
 
-    fll_program_print_help_header(context, fss_extended_write_name_long, fss_extended_write_version);
+    fll_program_print_help_header(id, context, fss_extended_write_name_long, fss_extended_write_version);
 
-    fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(id, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(id, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(id, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, fss_extended_write_short_content, fss_extended_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, " The content to output.");
-    fll_program_print_help_option(context, fss_extended_write_short_double, fss_extended_write_long_double, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use double quotes (default).");
-    fll_program_print_help_option(context, fss_extended_write_short_file, fss_extended_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
-    fll_program_print_help_option(context, fss_extended_write_short_object, fss_extended_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to output.");
-    fll_program_print_help_option(context, fss_extended_write_short_partial, fss_extended_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, "Do not output end of object/content character.");
-    fll_program_print_help_option(context, fss_extended_write_short_single, fss_extended_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
+    fll_program_print_help_option(id, context, fss_extended_write_short_content, fss_extended_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, " The content to output.");
+    fll_program_print_help_option(id, context, fss_extended_write_short_double, fss_extended_write_long_double, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use double quotes (default).");
+    fll_program_print_help_option(id, context, fss_extended_write_short_file, fss_extended_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
+    fll_program_print_help_option(id, context, fss_extended_write_short_object, fss_extended_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to output.");
+    fll_program_print_help_option(id, context, fss_extended_write_short_partial, fss_extended_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, "Do not output end of object/content character.");
+    fll_program_print_help_option(id, context, fss_extended_write_short_single, fss_extended_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
 
-    fll_program_print_help_usage(context, fss_extended_write_name, "");
+    fll_program_print_help_usage(id, context, fss_extended_write_name, "");
 
     return F_none;
   }
@@ -39,29 +39,59 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_console_parameter_id_t ids[3] = { fss_extended_write_parameter_no_color, fss_extended_write_parameter_light, fss_extended_write_parameter_dark };
-      const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
       const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, fss_extended_write_total_parameters);
 
-      status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+      {
+        f_console_parameter_id_t ids[3] = { fss_extended_write_parameter_no_color, fss_extended_write_parameter_light, fss_extended_write_parameter_dark };
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
 
-      if (F_status_is_error(status)) {
-        fss_extended_write_delete_data(data);
-        return status;
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+
+        if (F_status_is_error(status)) {
+          fss_extended_write_delete_data(data);
+          return status;
+        }
+      }
+
+      // Identify priority of verbosity related parameters.
+      {
+        f_console_parameter_id_t ids[4] = { fss_extended_write_parameter_verbosity_quiet, fss_extended_write_parameter_verbosity_normal, fss_extended_write_parameter_verbosity_verbose, fss_extended_write_parameter_verbosity_debug };
+        f_console_parameter_id_t choice = 0;
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+
+        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
+
+        if (F_status_is_error(status)) {
+          fss_extended_write_delete_data(data);
+          return status;
+        }
+
+        if (choice == fss_extended_write_parameter_verbosity_quiet) {
+          data->error.verbosity = f_console_verbosity_quiet;
+        }
+        else if (choice == fss_extended_write_parameter_verbosity_normal) {
+          data->error.verbosity = f_console_verbosity_normal;
+        }
+        else if (choice == fss_extended_write_parameter_verbosity_verbose) {
+          data->error.verbosity = f_console_verbosity_verbose;
+        }
+        else if (choice == fss_extended_write_parameter_verbosity_debug) {
+          data->error.verbosity = f_console_verbosity_debug;
+        }
       }
 
       status = F_none;
     }
 
     if (data->parameters[fss_extended_write_parameter_help].result == f_console_result_found) {
-      fss_extended_write_print_help(data->context);
+      fss_extended_write_print_help(data->output, data->context);
 
       fss_extended_write_delete_data(data);
       return F_none;
     }
 
     if (data->parameters[fss_extended_write_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(fss_extended_write_version);
+      fll_program_print_version(data->output, fss_extended_write_version);
 
       fss_extended_write_delete_data(data);
       return F_none;
@@ -85,19 +115,19 @@ extern "C" {
         status = F_status_set_fine(status);
 
         if (status == F_parameter) {
-          fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
+          fl_color_print_to(data->error.to, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_open()%c", f_string_eol[0]);
         }
         else if (status == F_file_found_not) {
-          fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Unable to find the file '%s'", "-");
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Unable to find the file '%s'%c", "-", f_string_eol[0]);
         }
         else if (status == F_file_open) {
-          fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Unable to open the file '%s'", "-");
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Unable to open the file '%s'%c", "-", f_string_eol[0]);
         }
         else if (status == F_file_descriptor) {
-          fl_color_print_line(f_type_error, data->context.set.error, "ERROR: File descriptor error while trying to open the file '%s'", "-");
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: File descriptor error while trying to open the file '%s'%c", "-", f_string_eol[0]);
         }
         else {
-          fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
+          fl_color_print_to(data->error.to, data->context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()%c", status, f_string_eol[0]);
         }
 
         f_macro_string_dynamic_t_delete_simple(input);
@@ -239,19 +269,19 @@ extern "C" {
         f_file_close(&output.id);
 
         if (status == F_parameter) {
-          fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_open()");
+          fl_color_print_to(data->error.to, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_open()%c", f_string_eol[0]);
         }
         else if (status == F_file_found_not) {
-          fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Unable to find the file '%s'", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Unable to find the file '%s'%c", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]], f_string_eol[0]);
         }
         else if (status == F_file_open) {
-          fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Unable to open the file '%s'", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Unable to open the file '%s'%c", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]], f_string_eol[0]);
         }
         else if (status == F_file_descriptor) {
-          fl_color_print_line(f_type_error, data->context.set.error, "ERROR: File descriptor error while trying to open the file '%s'", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: File descriptor error while trying to open the file '%s'%c", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]], f_string_eol[0]);
         }
         else {
-          fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()", status);
+          fl_color_print_to(data->error.to, data->context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open()%c", status, f_string_eol[0]);
         }
 
         f_macro_string_dynamic_t_delete_simple(buffer);
@@ -266,13 +296,13 @@ extern "C" {
         status = F_status_set_fine(status);
 
         if (status == F_parameter) {
-          fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_write()");
+          fl_color_print_to(data->error.to, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_write()%c", f_string_eol[0]);
         }
         else if (status == F_file_write) {
-          fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Unable to write to the file '%s'", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]]);
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Unable to write to the file '%s'%c", arguments.argv[data->parameters[fss_extended_write_parameter_file].additional.array[0]], f_string_eol[0]);
         }
         else {
-          fl_color_print_line(f_type_error, data->context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_write()", status);
+          fl_color_print_to(data->error.to, data->context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_write()%c", status, f_string_eol[0]);
         }
 
         f_macro_string_dynamic_t_delete_simple(buffer);

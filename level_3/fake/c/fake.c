@@ -11,88 +11,88 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_help_
-  f_return_status fake_print_help(const f_color_context_t context) {
+  f_return_status fake_print_help(const int id, const f_color_context_t context) {
 
-    fll_program_print_help_header(context, fake_name_long, fake_version);
+    fll_program_print_help_header(id, context, fake_name_long, fake_version);
 
-    fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(id, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(id, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(id, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    printf("%c", f_string_eol[0]);
+    dprintf(id, "%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, fake_short_define, fake_long_define, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Override defines from settings file with this define.");
-    fll_program_print_help_option(context, fake_short_fakefile, fake_long_fakefile, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use this fakefile.");
-    fll_program_print_help_option(context, fake_short_mode, fake_long_mode, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use this mode when processing the build settings.");
-    fll_program_print_help_option(context, fake_short_process, fake_long_process, f_console_symbol_short_enable, f_console_symbol_long_enable, " Process name for storing build states.");
-    fll_program_print_help_option(context, fake_short_settings, fake_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use this settings file.");
+    fll_program_print_help_option(id, context, fake_short_define, fake_long_define, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Override defines from settings file with this define.");
+    fll_program_print_help_option(id, context, fake_short_fakefile, fake_long_fakefile, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use this fakefile.");
+    fll_program_print_help_option(id, context, fake_short_mode, fake_long_mode, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use this mode when processing the build settings.");
+    fll_program_print_help_option(id, context, fake_short_process, fake_long_process, f_console_symbol_short_enable, f_console_symbol_long_enable, " Process name for storing build states.");
+    fll_program_print_help_option(id, context, fake_short_settings, fake_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use this settings file.");
 
-    printf("%c", f_string_eol[0]);
+    dprintf(id, "%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, fake_short_path_build, fake_long_path_build, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a custom build directory.");
-    fll_program_print_help_option(context, fake_short_path_data, fake_long_path_data, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Specify a custom path to the data files.");
-    fll_program_print_help_option(context, fake_short_path_sources, fake_long_path_sources, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a custom path to the source files.");
-    fll_program_print_help_option(context, fake_short_path_work, fake_long_path_work, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use includes/libraries/programs from this directory instead of system.");
+    fll_program_print_help_option(id, context, fake_short_path_build, fake_long_path_build, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a custom build directory.");
+    fll_program_print_help_option(id, context, fake_short_path_data, fake_long_path_data, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Specify a custom path to the data files.");
+    fll_program_print_help_option(id, context, fake_short_path_sources, fake_long_path_sources, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a custom path to the source files.");
+    fll_program_print_help_option(id, context, fake_short_path_work, fake_long_path_work, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Use includes/libraries/programs from this directory instead of system.");
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    fl_color_print(f_type_output, context.set.important, " Special Options: ");
+    fl_color_print_to(id, context.set.important, " Special Options: ");
 
-    fll_program_print_help_option_long(context, fake_long_documents_disabled, f_console_symbol_long_enable, "   Forcibly do not build documents files.");
-    fll_program_print_help_option_long(context, fake_long_documents_enabled, f_console_symbol_long_enable, "    Forcibly do build documents files.");
-    fll_program_print_help_option_long(context, fake_long_shared_disabled, f_console_symbol_long_enable, "Forcibly do not build shared files.");
-    fll_program_print_help_option_long(context, fake_long_shared_enabled, f_console_symbol_long_enable, " Forcibly do build shared files.");
-    fll_program_print_help_option_long(context, fake_long_static_disabled, f_console_symbol_long_enable, "Forcibly do not build static files.");
-    fll_program_print_help_option_long(context, fake_long_static_enabled, f_console_symbol_long_enable, " Forcibly do build static files.");
+    fll_program_print_help_option_long(id, context, fake_long_documents_disabled, f_console_symbol_long_enable, "   Forcibly do not build documents files.");
+    fll_program_print_help_option_long(id, context, fake_long_documents_enabled, f_console_symbol_long_enable, "    Forcibly do build documents files.");
+    fll_program_print_help_option_long(id, context, fake_long_shared_disabled, f_console_symbol_long_enable, "Forcibly do not build shared files.");
+    fll_program_print_help_option_long(id, context, fake_long_shared_enabled, f_console_symbol_long_enable, " Forcibly do build shared files.");
+    fll_program_print_help_option_long(id, context, fake_long_static_disabled, f_console_symbol_long_enable, "Forcibly do not build static files.");
+    fll_program_print_help_option_long(id, context, fake_long_static_enabled, f_console_symbol_long_enable, " Forcibly do build static files.");
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    fl_color_print(f_type_output, context.set.important, " Operations: ");
+    fl_color_print_to(id, context.set.important, " Operations: ");
 
-    fll_program_print_help_option_other(context, fake_other_operation_build, "   Build or compile the code based on build settings file.");
-    fll_program_print_help_option_other(context, fake_other_operation_clean, "   Delete all build files.");
-    fll_program_print_help_option_other(context, fake_other_operation_make, "    Build or compile the code based on fakefile.");
-    fll_program_print_help_option_other(context, fake_other_operation_skeleton, "Build a skeleton directory structure.");
+    fll_program_print_help_option_other(id, context, fake_other_operation_build, "   Build or compile the code based on build settings file.");
+    fll_program_print_help_option_other(id, context, fake_other_operation_clean, "   Delete all build files.");
+    fll_program_print_help_option_other(id, context, fake_other_operation_make, "    Build or compile the code based on fakefile.");
+    fll_program_print_help_option_other(id, context, fake_other_operation_skeleton, "Build a skeleton directory structure.");
 
-    fll_program_print_help_usage(context, fake_name, "operation");
+    fll_program_print_help_usage(id, context, fake_name, "operation");
 
-    printf("  When performing the ");
-    fl_color_print(f_type_output, context.set.notable, "%s", fake_other_operation_build);
-    printf(" operation, the ");
-    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_mode);
-    printf(" parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.");
-    printf("%c", f_string_eol[0]);
+    dprintf(id, "  When performing the ");
+    fl_color_print_to(id, context.set.notable, "%s", fake_other_operation_build);
+    dprintf(id, " operation, the ");
+    fl_color_print_to(id, context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_mode);
+    dprintf(id, " parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.");
+    dprintf(id, "%c", f_string_eol[0]);
 
-    printf("  For example, when a ");
-    fl_color_print(f_type_output, context.set.notable, "%s", fake_long_mode);
-    printf(" of 'fll_monolithic' is specified, build libaries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').");
+    dprintf(id, "  For example, when a ");
+    fl_color_print_to(id, context.set.notable, "%s", fake_long_mode);
+    dprintf(id, " of 'fll_monolithic' is specified, build libaries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').");
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    printf("  When specifying the ");
-    fl_color_print(f_type_output, context.set.notable, "%s", fake_long_fakefile);
-    printf(" or the ");
-    fl_color_print(f_type_output, context.set.notable, "%s", fake_long_settings);
-    printf(" parameters, the filenames are relative to the data build directory, unless a path is used.");
-    printf("%c", f_string_eol[0]);
+    dprintf(id, "  When specifying the ");
+    fl_color_print_to(id, context.set.notable, "%s", fake_long_fakefile);
+    dprintf(id, " or the ");
+    fl_color_print_to(id, context.set.notable, "%s", fake_long_settings);
+    dprintf(id, " parameters, the filenames are relative to the data build directory, unless a path is used.");
+    dprintf(id, "%c", f_string_eol[0]);
 
-    printf("  For example, with '");
-    fl_color_print(f_type_output, context.set.notable, "%s%s my_fakefile", f_console_symbol_long_enable, fake_long_fakefile);
-    printf("' the fakefile at '");
-    fl_color_print(f_type_output, context.set.notable, "./%s%smy_fakefile", fake_default_path_data, fake_default_path_build);
-    printf(" would be used, however with '");
-    fl_color_print(f_type_output, context.set.notable, "%s%s ./my_fakefile", f_console_symbol_long_enable, fake_long_fakefile);
-    printf("' the fakefile at '");
-    fl_color_print(f_type_output, context.set.notable, "./my_fakefile", fake_default_path_data, fake_default_path_build);
-    printf(" would be used.");
+    dprintf(id, "  For example, with '");
+    fl_color_print_to(id, context.set.notable, "%s%s my_fakefile", f_console_symbol_long_enable, fake_long_fakefile);
+    dprintf(id, "' the fakefile at '");
+    fl_color_print_to(id, context.set.notable, "./%s%smy_fakefile", fake_default_path_data, fake_default_path_build);
+    dprintf(id, " would be used, however with '");
+    fl_color_print_to(id, context.set.notable, "%s%s ./my_fakefile", f_console_symbol_long_enable, fake_long_fakefile);
+    dprintf(id, "' the fakefile at '");
+    fl_color_print_to(id, context.set.notable, "./my_fakefile", fake_default_path_data, fake_default_path_build);
+    dprintf(id, " would be used.");
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
 
     return F_none;
   }
@@ -121,7 +121,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { fake_parameter_quiet, fake_parameter_normal, fake_parameter_verbose, fake_parameter_debug };
+        f_console_parameter_id_t ids[4] = { fake_parameter_verbosity_quiet, fake_parameter_verbosity_normal, fake_parameter_verbosity_verbose, fake_parameter_verbosity_debug };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
 
@@ -133,17 +133,17 @@ extern "C" {
           return status;
         }
 
-        if (choice == fake_parameter_quiet) {
-          data->verbosity = f_console_verbosity_quiet;
+        if (choice == fake_parameter_verbosity_quiet) {
+          data->error.verbosity = f_console_verbosity_quiet;
         }
-        else if (choice == fake_parameter_normal) {
-          data->verbosity = f_console_verbosity_normal;
+        else if (choice == fake_parameter_verbosity_normal) {
+          data->error.verbosity = f_console_verbosity_normal;
         }
-        else if (choice == fake_parameter_verbose) {
-          data->verbosity = f_console_verbosity_verbose;
+        else if (choice == fake_parameter_verbosity_verbose) {
+          data->error.verbosity = f_console_verbosity_verbose;
         }
-        else if (choice == fake_parameter_debug) {
-          data->verbosity = f_console_verbosity_debug;
+        else if (choice == fake_parameter_verbosity_debug) {
+          data->error.verbosity = f_console_verbosity_debug;
         }
       }
 
@@ -233,14 +233,14 @@ extern "C" {
     status = F_none;
 
     if (data->parameters[fake_parameter_help].result == f_console_result_found) {
-      fake_print_help(data->context);
+      fake_print_help(data->output, data->context);
 
       fake_delete_data(data);
       return F_none;
     }
 
     if (data->parameters[fake_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(fake_version);
+      fll_program_print_version(data->output, fake_version);
 
       fake_delete_data(data);
       return F_none;
@@ -316,11 +316,11 @@ extern "C" {
           break;
         }
         else if (F_status_is_error(status)) {
-          if (data->verbosity != f_console_verbosity_quiet) {
-            fprintf(f_type_error, "%c", f_string_eol[0]);
-            fl_color_print(f_type_error, data->context.set.error, "ERROR: The operation '");
-            fl_color_print(f_type_error, data->context.set.notable, "%s", operations_name);
-            fl_color_print_line(f_type_error, data->context.set.error, "' failed.");
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            dprintf(data->error.to, "%c", f_string_eol[0]);
+            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The operation '");
+            fl_color_print_to(data->error.to, data->context.set.notable, "%s", operations_name);
+            fl_color_print_to(data->error.to, data->context.set.error, "' failed.%c", f_string_eol[0]);
           }
 
           break;
@@ -328,20 +328,20 @@ extern "C" {
       } // for
 
       // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-      if (data->verbosity != f_console_verbosity_quiet) {
+      if (data->error.verbosity != f_console_verbosity_quiet) {
         if (F_status_is_error(status) || status == F_signal) {
-          fprintf(f_type_error, "%c", f_string_eol[0]);
+          dprintf(data->error.to, "%c", f_string_eol[0]);
         }
         else {
-          fprintf(f_type_output, "%cAll operations complete.%c%c", f_string_eol[0], f_string_eol[0], f_string_eol[0]);
+          dprintf(data->output, "%cAll operations complete.%c%c", f_string_eol[0], f_string_eol[0], f_string_eol[0]);
         }
       }
     }
     else {
-      if (data->verbosity != f_console_verbosity_quiet) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print_line(f_type_error, data->context.set.error, "ERROR: You failed to specify an operation.");
-        fprintf(f_type_error, "%c", f_string_eol[0]);
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        dprintf(data->error.to, "%c", f_string_eol[0]);
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: You failed to specify an operation.%c", f_string_eol[0]);
+        dprintf(data->error.to, "%c", f_string_eol[0]);
       }
 
       status = F_status_set_error(F_parameter);

@@ -42,6 +42,7 @@
 #include <level_1/string.h>
 
 // fll-2 includes
+#include <level_2/error.h>
 #include <level_2/file.h>
 #include <level_2/program.h>
 
@@ -94,8 +95,10 @@ extern "C" {
     iki_read_parameter_light,
     iki_read_parameter_dark,
     iki_read_parameter_no_color,
-    iki_read_parameter_quiet,
-    iki_read_parameter_verbose,
+    iki_read_parameter_verbosity_quiet,
+    iki_read_parameter_verbosity_normal,
+    iki_read_parameter_verbosity_verbose,
+    iki_read_parameter_verbosity_debug,
     iki_read_parameter_version,
 
     iki_read_parameter_at,
@@ -114,9 +117,10 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(iki_read_short_at, iki_read_long_at, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(iki_read_short_content, iki_read_long_content, 0, 0, f_console_type_normal), \
@@ -129,7 +133,7 @@ extern "C" {
       f_console_parameter_t_initialize(iki_read_short_total, iki_read_long_total, 0, 0, f_console_type_normal), \
     }
 
-  #define iki_read_total_parameters 16
+  #define iki_read_total_parameters 17
 #endif // _di_iki_read_defines_
 
 #ifndef _di_iki_read_substitution_t_
@@ -231,7 +235,9 @@ extern "C" {
     f_string_lengths_t remaining;
     bool process_pipe;
 
-    uint8_t verbosity;
+    int output;
+    fll_error_print_t error;
+
     uint8_t mode;
 
     f_number_unsigned_t at;
@@ -249,7 +255,8 @@ extern "C" {
       iki_read_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      f_console_verbosity_normal, \
+      f_type_descriptor_output, \
+      fll_error_print_t_initialize, \
       0, \
       0, \
       0, \
@@ -269,7 +276,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_iki_read_print_help_
-  extern f_return_status iki_read_print_help(const f_color_context_t context);
+  extern f_return_status iki_read_print_help(const int id, const f_color_context_t context);
 #endif // _di_iki_read_print_help_
 
 /**

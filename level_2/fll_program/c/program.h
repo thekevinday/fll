@@ -7,8 +7,8 @@
  *
  * Provide functions commonly used by FLL based programs.
  */
-#ifndef _FL_program_h
-#define _FL_program_h
+#ifndef _FLL_program_h
+#define _FLL_program_h
 
 // libc include
 #include <stdio.h>
@@ -32,6 +32,8 @@ extern "C" {
 /**
  * Print standard help header.
  *
+ * @param id
+ *   The file descriptor to output to.
  * @param context
  *   The color context.
  * @param name
@@ -47,12 +49,14 @@ extern "C" {
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_header_
-  extern f_return_status fll_program_print_help_header(const f_color_context_t context, const f_string_t name, const f_string_t version);
+  extern f_return_status fll_program_print_help_header(const int id, const f_color_context_t context, const f_string_t name, const f_string_t version);
 #endif // _di_fll_program_print_help_header_
 
 /**
  * Print standard help option.
  *
+ * @param id
+ *   The file descriptor to output to.
  * @param context
  *   The color context.
  * @param option_short
@@ -74,12 +78,14 @@ extern "C" {
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_
-  extern f_return_status fll_program_print_help_option(const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
+  extern f_return_status fll_program_print_help_option(const int id, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
 #endif // _di_fll_program_print_help_option_
 
 /**
  * Print standard help option (long option only).
  *
+ * @param id
+ *   The file descriptor to output to.
  * @param context
  *   The color context.
  * @param option_long
@@ -97,12 +103,14 @@ extern "C" {
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_long_
-  extern f_return_status fll_program_print_help_option_long(const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
+  extern f_return_status fll_program_print_help_option_long(const int id, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
 #endif // _di_fll_program_print_help_option_long_
 
 /**
  * Print standard help option (other option only).
  *
+ * @param id
+ *   The file descriptor to output to.
  * @param context
  *   The color context.
  * @param option_other
@@ -118,12 +126,14 @@ extern "C" {
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_other_
-  extern f_return_status fll_program_print_help_option_other(const f_color_context_t context, const f_string_t option_other, const f_string_t description);
+  extern f_return_status fll_program_print_help_option_other(const int id, const f_color_context_t context, const f_string_t option_other, const f_string_t description);
 #endif // _di_fll_program_print_help_option_other_
 
 /**
  * Print standard help usage.
  *
+ * @param id
+ *   The file descriptor to output to.
  * @param context
  *   The color context.
  * @param name
@@ -140,12 +150,14 @@ extern "C" {
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_usage_
-  extern f_return_status fll_program_print_help_usage(const f_color_context_t context, const f_string_t name, const f_string_t parameters);
+  extern f_return_status fll_program_print_help_usage(const int id, const f_color_context_t context, const f_string_t name, const f_string_t parameters);
 #endif // _di_fll_program_print_help_usage_
 
 /**
  * Print the program version.
  *
+ * @param id
+ *   The file descriptor to output to.
  * @param version
  *   The version number of the program.
  *
@@ -153,11 +165,11 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fll_program_print_version_
-  extern f_return_status fll_program_print_version(const f_string_t version);
+  extern f_return_status fll_program_print_version(const int id, const f_string_t version);
 #endif // _di_fll_program_print_version_
 
 /**
- * Perform basic parameter loading, including initialization of color context and printing errors.
+ * Perform basic parameter loading, including initialization of color context.
  *
  * @param arguments
  *   The parameters passed to the process.
@@ -192,42 +204,6 @@ extern "C" {
 #ifndef _di_fll_program_parameter_process_
   extern f_return_status fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, f_color_context_t *context);
 #endif // _di_fll_program_parameter_process_
-/**
- * Perform basic parameter loading, including initialization of color context but does not print errors.
- *
- * @param arguments
- *   The parameters passed to the process.
- * @param parameters
- *   The console parameters to look for.
- * @param choices
- *   A set of the color options: no-color option, light-color option, dark-color option.
- *   This must have its used size set to 3 and the ids are expected to be in this order: no_color, light, and dark.
- * @param right
- *   Set to TRUE for right priortization and FALSE for left prioritization.
- * @param remaining
- *   A list of remaining parameters not associated with anything.
- * @param context
- *   The color context.
- *
- * @return
- *   F_none on success.
- *   F_data_not if "additional" parameters were expected but not found.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_console_parameter_prioritize_left().
- *   Errors (with error bit) from: f_console_parameter_prioritize_right().
- *   Errors (with error bit) from: f_console_parameter_process().
- *   Errors (with error bit) from: fl_color_load_context().
- *
- * @see f_console_parameter_prioritize_left()
- * @see f_console_parameter_prioritize_right()
- * @see f_console_parameter_process()
- * @see fl_color_load_context()
- */
-#ifndef _di_fll_program_parameter_process_quietly_
-  extern f_return_status fll_program_parameter_process_quietly(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, f_color_context_t *context);
-#endif // _di_fll_program_parameter_process_quietly_
 
 /**
  * Allocate new strings from all of the provided locations.
@@ -354,4 +330,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _FL_program_h
+#endif // _FLL_program_h

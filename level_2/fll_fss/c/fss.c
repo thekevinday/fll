@@ -27,6 +27,7 @@ extern "C" {
 
     {
       f_string_length_t seeked = 0;
+
       if (F_status_is_error(f_file_seek(file->id, SEEK_SET, 0, &seeked))) {
         return F_status_set_error(F_file_seek);
       }

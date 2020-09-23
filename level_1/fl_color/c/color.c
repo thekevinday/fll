@@ -20,11 +20,33 @@ extern "C" {
     else if (!color3) fprintf(file, "%s%s%s%s%s",             format.begin, color1, format.medium, color2, format.end);
     else if (!color4) fprintf(file, "%s%s%s%s%s%s%s",         format.begin, color1, format.medium, color2, format.medium, color3, format.end);
     else if (!color5) fprintf(file, "%s%s%s%s%s%s%s%s%s",     format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.end);
-    else                  fprintf(file, "%s%s%s%s%s%s%s%s%s%s%s", format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.medium, color5, format.end);
+    else              fprintf(file, "%s%s%s%s%s%s%s%s%s%s%s", format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.medium, color5, format.end);
 
     return F_none;
   }
 #endif // _di_fl_color_set_
+
+#ifndef _di_fl_color_set_to_
+  f_return_status fl_color_set_to(const int id, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
+    #ifndef _di_level_1_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+      if (!color1) return F_status_set_error(F_parameter);
+
+      // make sure all data is in the proper order
+      if (!color2 && (color3 != 0 || color4 != 0 || color5 != 0)) return F_status_set_error(F_parameter);
+      if (!color3 && (color4 != 0 || color5 != 0))                return F_status_set_error(F_parameter);
+      if (!color4 && color5 != 0)                                 return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if      (!color2) dprintf(id, "%s%s%s",                 format.begin, color1, format.end);
+    else if (!color3) dprintf(id, "%s%s%s%s%s",             format.begin, color1, format.medium, color2, format.end);
+    else if (!color4) dprintf(id, "%s%s%s%s%s%s%s",         format.begin, color1, format.medium, color2, format.medium, color3, format.end);
+    else if (!color5) dprintf(id, "%s%s%s%s%s%s%s%s%s",     format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.end);
+    else              dprintf(id, "%s%s%s%s%s%s%s%s%s%s%s", format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.medium, color5, format.end);
+
+    return F_none;
+  }
+#endif // _di_fl_color_set_to_
 
 #ifndef _di_fl_color_save_
   f_return_status fl_color_save(f_string_dynamic_t *buffer, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
@@ -44,7 +66,7 @@ extern "C" {
     else if (!color3) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size);
     else if (!color4) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size);
     else if (!color5) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size) + strnlen(color4, f_color_max_size);
-    else                  string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size) + strnlen(color4, f_color_max_size) + strnlen(color5, f_color_max_size);
+    else              string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size) + strnlen(color4, f_color_max_size) + strnlen(color5, f_color_max_size);
 
     // make sure there is enough allocated space, if not, then allocate some more
     if (buffer->size - buffer->used - 1 < string_size) {
@@ -121,8 +143,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     if (set.before) {
-      f_status_t status = f_print_dynamic(file, *set.before);
-      if (F_status_is_error(status)) return status;
+      fprintf(file, "%s", set.before->string);
     }
 
     va_list ap;
@@ -134,9 +155,7 @@ extern "C" {
     va_end(ap);
 
     if (set.after) {
-      f_status_t status = f_print_dynamic(file, *set.after);
-
-      if (F_status_is_error(status)) return status;
+      fprintf(file, "%s", set.after->string);
     }
 
     return F_none;
@@ -153,13 +172,11 @@ extern "C" {
     f_status_t status = F_none;
 
     if (set.before) {
-      status = f_print_dynamic(file, *set.before);
-      if (F_status_is_error(status)) return status;
+      fprintf(file, "%s", set.before->string);
     }
 
     if (extra.before) {
-      status = f_print_dynamic(file, *extra.before);
-      if (F_status_is_error(status)) return status;
+      fprintf(file, "%s", extra.before->string);
     }
 
     va_list ap;
@@ -171,105 +188,108 @@ extern "C" {
     va_end(ap);
 
     if (set.after) {
-      status = f_print_dynamic(file, *set.after);
-      if (F_status_is_error(status)) return status;
+      fprintf(file, "%s", set.after->string);
     }
 
     if (extra.after) {
-      status = f_print_dynamic(file, *extra.after);
-      if (F_status_is_error(status)) return status;
+      fprintf(file, "%s", extra.after->string);
     }
 
     return F_none;
   }
 #endif // _di_fl_color_print2_
 
-#ifndef _di_fl_color_print_line_
-  f_return_status fl_color_print_line(FILE *file, const f_color_set_t set, const f_string_t string, ...) {
+#ifndef _di_fl_color_print_code_
+  f_return_status fl_color_print_code(FILE *file, const f_string_static_t color) {
     #ifndef _di_level_1_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (color.used) {
+      fprintf(file, "%s", color.string);
+    }
+
+    return F_none;
+  }
+#endif // _di_fl_color_print_code_
+
+#ifndef _di_fl_color_print_code_to_
+  f_return_status fl_color_print_code_to(const int id, const f_string_static_t color) {
+    #ifndef _di_level_1_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (color.used) {
+      dprintf(id, "%s", color.string);
+    }
+
+    return F_none;
+  }
+#endif // _di_fl_color_print_code_to_
+
+#ifndef _di_fl_color_print_to_
+  f_return_status fl_color_print_to(const int id, const f_color_set_t set, const f_string_t string, ...) {
+    #ifndef _di_level_1_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
       if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (set.before) {
-      f_status_t status = f_print_dynamic(file, *set.before);
-      if (F_status_is_error(status)) return status;
+      dprintf(id, "%s", set.before->string);
     }
 
     va_list ap;
 
     va_start(ap, string);
 
-    vfprintf(file, string, ap);
+    vdprintf(id, string, ap);
 
     va_end(ap);
 
     if (set.after) {
-      f_status_t status = f_print_dynamic(file, *set.after);
-      if (F_status_is_error(status)) return status;
+      dprintf(id, "%s", set.after->string);
     }
-
-    // now print the trailing newline, this is done _after_ ending the colors to avoid color wrapping issues that can happen when a color code follows a newline
-    fprintf(file, "%c", f_string_eol[0]);
 
     return F_none;
   }
-#endif // _di_fl_color_print_line_
+#endif // _di_fl_color_print_to_
 
-#ifndef _di_fl_color_print2_line_
-  f_return_status fl_color_print2_line(FILE *file, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...) {
+#ifndef _di_fl_color_print2_to_
+  f_return_status fl_color_print2_to(const int id, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (!file) return F_status_set_error(F_parameter);
+      if (id == -1) return F_status_set_error(F_parameter);
       if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
 
     if (set.before) {
-      status = f_print_dynamic(file, *set.before);
-      if (F_status_is_error(status)) return status;
+      dprintf(id, "%s", set.before->string);
     }
 
     if (extra.before) {
-      status = f_print_dynamic(file, *extra.before);
-      if (F_status_is_error(status)) return status;
+      dprintf(id, "%s", extra.before->string);
     }
 
     va_list ap;
 
     va_start(ap, string);
 
-    vfprintf(file, string, ap);
+    vdprintf(id, string, ap);
 
     va_end(ap);
 
     if (set.after) {
-      status = f_print_dynamic(file, *set.after);
-      if (F_status_is_error(status)) return status;
+      dprintf(id, "%s", set.after->string);
     }
 
     if (extra.after) {
-      status = f_print_dynamic(file, *extra.after);
-      if (F_status_is_error(status)) return status;
-    }
-
-    // now print the trailing newline, this is done _after_ ending the colors to avoid color wrapping issues that can happen when a color code follows a newline
-    fprintf(file, "%c", f_string_eol[0]);
-
-    return F_none;
-  }
-#endif // _di_fl_color_print2_line_
-
-#ifndef _di_fl_color_print_code_
-  f_return_status fl_color_print_code(FILE *file, const f_string_static_t color) {
-    if (color.used) {
-      f_status_t status = f_print_dynamic(file, color);
-      if (F_status_is_error(status)) return status;
+      dprintf(id, "%s", extra.after->string);
     }
 
     return F_none;
   }
-#endif // _di_fl_color_print_code_
+#endif // _di_fl_color_print2_to_
 
 #ifndef _di_fl_color_load_context_
   f_return_status fl_color_load_context(f_color_context_t *context, const bool use_light_colors) {

@@ -6,68 +6,70 @@ extern "C" {
 #endif
 
 #ifndef _di_byte_dump_print_help_
-  f_return_status byte_dump_print_help(const f_color_context_t context) {
+  f_return_status byte_dump_print_help(const int id, const f_color_context_t context) {
 
-    fll_program_print_help_header(context, byte_dump_name_long, byte_dump_version);
+    fll_program_print_help_header(id, context, byte_dump_name_long, byte_dump_version);
 
-    fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(id, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(id, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(id, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    printf("%c", f_string_eol[0]);
+    dprintf(id, "%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, byte_dump_short_binary, byte_dump_long_binary, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Display binary representation.");
-    fll_program_print_help_option(context, byte_dump_short_decimal, byte_dump_long_decimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Display decimal representation.");
-    fll_program_print_help_option(context, byte_dump_short_duodecimal, byte_dump_long_duodecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, " Display duodecimal representation.");
-    fll_program_print_help_option(context, byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Display hexadecimal representation.");
-    fll_program_print_help_option(context, byte_dump_short_octal, byte_dump_long_octal, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Display octal representation.");
+    fll_program_print_help_option(id, context, byte_dump_short_binary, byte_dump_long_binary, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Display binary representation.");
+    fll_program_print_help_option(id, context, byte_dump_short_decimal, byte_dump_long_decimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Display decimal representation.");
+    fll_program_print_help_option(id, context, byte_dump_short_duodecimal, byte_dump_long_duodecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, " Display duodecimal representation.");
+    fll_program_print_help_option(id, context, byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Display hexadecimal representation.");
+    fll_program_print_help_option(id, context, byte_dump_short_octal, byte_dump_long_octal, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Display octal representation.");
 
-    printf("%c", f_string_eol[0]);
+    dprintf(id, "%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, byte_dump_short_first, byte_dump_long_first, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Start reading at this byte offset.");
-    fll_program_print_help_option(context, byte_dump_short_last, byte_dump_long_last, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Stop reading at this (inclusive) byte offset.");
-    fll_program_print_help_option(context, byte_dump_short_width, byte_dump_long_width, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Set number of columns of Bytes to display.");
+    fll_program_print_help_option(id, context, byte_dump_short_first, byte_dump_long_first, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Start reading at this byte offset.");
+    fll_program_print_help_option(id, context, byte_dump_short_last, byte_dump_long_last, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Stop reading at this (inclusive) byte offset.");
+    fll_program_print_help_option(id, context, byte_dump_short_width, byte_dump_long_width, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Set number of columns of Bytes to display.");
 
-    printf("%c", f_string_eol[0]);
+    dprintf(id, "%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, byte_dump_short_text, byte_dump_long_text, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Include a column of text when displaying the bytes.");
-    fll_program_print_help_option(context, byte_dump_short_placeholder, byte_dump_long_placeholder, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use a placeholder character instead of a space for placeholders.");
+    fll_program_print_help_option(id, context, byte_dump_short_text, byte_dump_long_text, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Include a column of text when displaying the bytes.");
+    fll_program_print_help_option(id, context, byte_dump_short_placeholder, byte_dump_long_placeholder, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use a placeholder character instead of a space for placeholders.");
 
-    printf("%c", f_string_eol[0]);
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    fll_program_print_help_option_long(context, byte_dump_long_normal, f_console_symbol_long_enable, "     Display UTF-8 symbols for ASCII control codes.");
-    fll_program_print_help_option_long(context, byte_dump_long_simple, f_console_symbol_long_enable, "     Display spaces for ASCII control codes.");
-    fll_program_print_help_option_long(context, byte_dump_long_classic, f_console_symbol_long_enable, "    Display periods for ASCII control codes.");
+    fl_color_print_to(id, context.set.important, " Special Options: ");
 
-    fll_program_print_help_usage(context, byte_dump_name, "filename(s)");
+    fll_program_print_help_option_long(id, context, byte_dump_long_normal, f_console_symbol_long_enable, " Display UTF-8 symbols for ASCII control codes.");
+    fll_program_print_help_option_long(id, context, byte_dump_long_simple, f_console_symbol_long_enable, " Display spaces for ASCII control codes.");
+    fll_program_print_help_option_long(id, context, byte_dump_long_classic, f_console_symbol_long_enable, "Display periods for ASCII control codes.");
 
-    printf("  When using the ");
-    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_text);
-    printf(" option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.");
+    fll_program_print_help_usage(id, context, byte_dump_name, "filename(s)");
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
+    dprintf(id, "  When using the ");
+    fl_color_print_to(id, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_text);
+    dprintf(id, " option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.");
 
-    printf("  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the ");
-    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_placeholder);
-    printf(" option is used).");
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
+    dprintf(id, "  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the ");
+    fl_color_print_to(id, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_placeholder);
+    dprintf(id, " option is used).");
 
-    printf("  UTF-8 \"Combining\" characters might have a space appended to allow a proper display but this may cause copy and paste issues.");
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
+    dprintf(id, "  UTF-8 \"Combining\" characters might have a space appended to allow a proper display but this may cause copy and paste issues.");
 
-    printf("  When ");
-    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
-    printf(" is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.");
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
+    dprintf(id, "  When ");
+    fl_color_print_to(id, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
+    dprintf(id, " is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.");
+
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
 
     return F_none;
   }
@@ -88,11 +90,11 @@ extern "C" {
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
         if (F_status_is_error(status)) {
+          fll_error_parameter_print(data->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+
           byte_dump_delete_data(data);
           return F_status_set_error(status);
         }
-
-        status = F_none;
       }
 
       // Identify priority of verbosity related parameters.
@@ -109,16 +111,16 @@ extern "C" {
         }
 
         if (choice == byte_dump_parameter_verbosity_quiet) {
-          data->verbosity = f_console_verbosity_quiet;
+          data->error.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == byte_dump_parameter_verbosity_normal) {
-          data->verbosity = f_console_verbosity_normal;
+          data->error.verbosity = f_console_verbosity_normal;
         }
         else if (choice == byte_dump_parameter_verbosity_verbose) {
-          data->verbosity = f_console_verbosity_verbose;
+          data->error.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == byte_dump_parameter_verbosity_debug) {
-          data->verbosity = f_console_verbosity_debug;
+          data->error.verbosity = f_console_verbosity_debug;
         }
       }
 
@@ -131,6 +133,8 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
+          fll_error_print(data->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+
           byte_dump_delete_data(data);
           return F_status_set_error(status);
         }
@@ -180,14 +184,14 @@ extern "C" {
     }
 
     if (data->parameters[byte_dump_parameter_help].result == f_console_result_found) {
-      byte_dump_print_help(data->context);
+      byte_dump_print_help(data->output, data->context);
 
       byte_dump_delete_data(data);
       return F_none;
     }
 
     if (data->parameters[byte_dump_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(byte_dump_version);
+      fll_program_print_version(data->output, byte_dump_version);
 
       byte_dump_delete_data(data);
       return F_none;
@@ -195,9 +199,9 @@ extern "C" {
 
     if (data->remaining.used > 0 || data->process_pipe) {
       if (data->parameters[byte_dump_parameter_width].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
-        fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
+        fl_color_print_to(data->error.to, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
 
         byte_dump_delete_data(data);
         return F_status_set_error(status);
@@ -211,13 +215,13 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
 
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
-          fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
-          fl_color_print(f_type_error, data->context.set.error, "' value can only be a number between ");
-          fl_color_print(f_type_error, data->context.set.notable, "0");
-          fl_color_print(f_type_error, data->context.set.error, " and ");
-          fl_color_print(f_type_error, data->context.set.notable, "251");
-          fl_color_print_line(f_type_error, data->context.set.error, ".");
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
+          fl_color_print_to(data->error.to, data->context.set.error, "' value can only be a number between ");
+          fl_color_print_to(data->error.to, data->context.set.notable, "0");
+          fl_color_print_to(data->error.to, data->context.set.error, " and ");
+          fl_color_print_to(data->error.to, data->context.set.notable, "251");
+          fl_color_print_to(data->error.to, data->context.set.error, ".%c", f_string_eol[0]);
 
           byte_dump_delete_data(data);
           return F_status_set_error(status);
@@ -227,9 +231,9 @@ extern "C" {
       }
 
       if (data->parameters[byte_dump_parameter_first].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
-        fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
+        fl_color_print_to(data->error.to, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
 
         byte_dump_delete_data(data);
         return F_status_set_error(status);
@@ -243,13 +247,13 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
 
         if (F_status_is_error(status) || number > f_number_t_size_unsigned) {
-          fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
-          fl_color_print(f_type_error, data->context.set.error, "' value can only be a number (inclusively) between ");
-          fl_color_print(f_type_error, data->context.set.notable, "0");
-          fl_color_print(f_type_error, data->context.set.error, " and ");
-          fl_color_print(f_type_error, data->context.set.notable, "%llu", f_number_t_size_unsigned);
-          fl_color_print_line(f_type_error, data->context.set.error, ".");
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
+          fl_color_print_to(data->error.to, data->context.set.error, "' value can only be a number (inclusively) between ");
+          fl_color_print_to(data->error.to, data->context.set.notable, "0");
+          fl_color_print_to(data->error.to, data->context.set.error, " and ");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%llu", f_number_t_size_unsigned);
+          fl_color_print_to(data->error.to, data->context.set.error, ".%c", f_string_eol[0]);
 
           byte_dump_delete_data(data);
           return F_status_set_error(status);
@@ -259,9 +263,9 @@ extern "C" {
       }
 
       if (data->parameters[byte_dump_parameter_last].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
-        fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
+        fl_color_print_to(data->error.to, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
 
         byte_dump_delete_data(data);
         return F_status_set_error(status);
@@ -275,13 +279,13 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
 
         if (F_status_is_error(status) || number < 0 || number > f_number_t_size_unsigned) {
-          fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
-          fl_color_print(f_type_error, data->context.set.error, "' value can only be a number (inclusively) between ");
-          fl_color_print(f_type_error, data->context.set.notable, "0");
-          fl_color_print(f_type_error, data->context.set.error, " and ");
-          fl_color_print(f_type_error, data->context.set.notable, "%llu", f_number_t_size_unsigned);
-          fl_color_print_line(f_type_error, data->context.set.error, ".");
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
+          fl_color_print_to(data->error.to, data->context.set.error, "' value can only be a number (inclusively) between ");
+          fl_color_print_to(data->error.to, data->context.set.notable, "0");
+          fl_color_print_to(data->error.to, data->context.set.error, " and ");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%llu", f_number_t_size_unsigned);
+          fl_color_print_to(data->error.to, data->context.set.error, ".%c", f_string_eol[0]);
 
           byte_dump_delete_data(data);
           return F_status_set_error(status);
@@ -292,11 +296,11 @@ extern "C" {
 
       if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional && data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
         if (data->first > data->last) {
-          fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
-          fl_color_print(f_type_error, data->context.set.error, "' value cannot be greater than the parameter '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
-          fl_color_print_line(f_type_error, data->context.set.error, "' value.");
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
+          fl_color_print_to(data->error.to, data->context.set.error, "' value cannot be greater than the parameter '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
+          fl_color_print_to(data->error.to, data->context.set.error, "' value.%c", f_string_eol[0]);
 
           byte_dump_delete_data(data);
           return F_status_set_error(status);
@@ -312,25 +316,25 @@ extern "C" {
         file.id = f_type_descriptor_input;
 
         printf("%c", f_string_eol[0]);
-        fl_color_print(f_type_output, data->context.set.title, "Piped Byte Dump: (in ");
+        fl_color_print_to(data->output, data->context.set.title, "Piped Byte Dump: (in ");
 
         if (data->mode == byte_dump_mode_hexidecimal) {
-          fl_color_print(f_type_output, data->context.set.title, "Hexidecimal");
+          fl_color_print_to(data->output, data->context.set.title, "Hexidecimal");
         }
         else if (data->mode == byte_dump_mode_duodecimal) {
-          fl_color_print(f_type_output, data->context.set.title, "Duodecimal");
+          fl_color_print_to(data->output, data->context.set.title, "Duodecimal");
         }
         else if (data->mode == byte_dump_mode_octal) {
-          fl_color_print(f_type_output, data->context.set.title, "Octal");
+          fl_color_print_to(data->output, data->context.set.title, "Octal");
         }
         else if (data->mode == byte_dump_mode_binary) {
-          fl_color_print(f_type_output, data->context.set.title, "Binary");
+          fl_color_print_to(data->output, data->context.set.title, "Binary");
         }
         else if (data->mode == byte_dump_mode_decimal) {
-          fl_color_print(f_type_output, data->context.set.title, "Decimal");
+          fl_color_print_to(data->output, data->context.set.title, "Decimal");
         }
 
-        fl_color_print_line(f_type_output, data->context.set.title, ")");
+        fl_color_print_to(data->output, data->context.set.title, ")%c", f_string_eol[0]);
 
         status = byte_dump_file(*data, "-", file);
 
@@ -354,7 +358,7 @@ extern "C" {
                 missing_files = status;
               }
 
-              byte_dump_print_file_error(data->context, "f_file_exists", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
+              fll_error_file_print(data->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.argv[data->remaining.array[counter]], "find", fll_error_file_type_file);
             }
           } // for
 
@@ -372,33 +376,34 @@ extern "C" {
           status = f_file_open(arguments.argv[data->remaining.array[counter]], 0, &file);
 
           if (F_status_is_error(status)) {
-            byte_dump_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
+            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_open", F_true, arguments.argv[data->remaining.array[counter]], "open", fll_error_file_type_file);
+
             byte_dump_delete_data(data);
             return status;
           }
 
           printf("%c", f_string_eol[0]);
-          fl_color_print(f_type_output, data->context.set.title, "Byte Dump of: ");
-          fl_color_print(f_type_output, data->context.set.notable, "%s", arguments.argv[data->remaining.array[counter]]);
-          fl_color_print(f_type_output, data->context.set.title, " (in ");
+          fl_color_print_to(data->output, data->context.set.title, "Byte Dump of: ");
+          fl_color_print_to(data->output, data->context.set.notable, "%s", arguments.argv[data->remaining.array[counter]]);
+          fl_color_print_to(data->output, data->context.set.title, " (in ");
 
           if (data->mode == byte_dump_mode_hexidecimal) {
-            fl_color_print(f_type_output, data->context.set.title, "Hexidecimal");
+            fl_color_print_to(data->output, data->context.set.title, "Hexidecimal");
           }
           else if (data->mode == byte_dump_mode_duodecimal) {
-            fl_color_print(f_type_output, data->context.set.title, "Duodecimal");
+            fl_color_print_to(data->output, data->context.set.title, "Duodecimal");
           }
           else if (data->mode == byte_dump_mode_octal) {
-            fl_color_print(f_type_output, data->context.set.title, "Octal");
+            fl_color_print_to(data->output, data->context.set.title, "Octal");
           }
           else if (data->mode == byte_dump_mode_binary) {
-            fl_color_print(f_type_output, data->context.set.title, "Binary");
+            fl_color_print_to(data->output, data->context.set.title, "Binary");
           }
           else if (data->mode == byte_dump_mode_decimal) {
-            fl_color_print(f_type_output, data->context.set.title, "Decimal");
+            fl_color_print_to(data->output, data->context.set.title, "Decimal");
           }
 
-          fl_color_print_line(f_type_output, data->context.set.title, ")");
+          fl_color_print_to(data->output, data->context.set.title, ")%c", f_string_eol[0]);
 
           status = byte_dump_file(*data, arguments.argv[data->remaining.array[counter]], file);
 
@@ -415,7 +420,7 @@ extern "C" {
       }
     }
     else {
-      fl_color_print_line(f_type_error, data->context.set.error, "ERROR: You failed to specify one or more filenames.");
+      fl_color_print_to(data->error.to, data->context.set.error, "ERROR: You failed to specify one or more filenames.%c", f_string_eol[0]);
       status = F_status_set_error(F_parameter);
     }
 

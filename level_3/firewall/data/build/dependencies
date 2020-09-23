@@ -20,6 +20,7 @@ fl_conversion
 fl_fss
 fl_status
 fl_string
+fll_error
 fll_execute
 fll_fss
 fll_program

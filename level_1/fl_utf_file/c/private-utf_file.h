@@ -38,9 +38,9 @@ extern "C" {
  * @see fl_utf_file_read_range()
  * @see fl_utf_file_read_until()
  */
-#if !defined(fl_utf_file_read) || !defined(fl_utf_file_read_until) || !defined(fl_utf_file_read_range)
+#if !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
   void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic_t *buffer, char buffer_char[], uint8_t *width, int8_t *width_last) f_gcc_attribute_visibility_internal;
-#endif // !defined(fl_utf_file_read) || !defined(fl_utf_file_read_until) || !defined(fl_utf_file_read_range)
+#endif // !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
 
 /**
  * Private implementation of fl_utf_file_write_until().
@@ -76,9 +76,9 @@ extern "C" {
  * @see fl_utf_file_write_range()
  * @see fl_utf_file_write_until()
  */
-#if !defined(fl_utf_file_write) || !defined(fl_utf_file_write_until) || !defined(fl_utf_file_write_range)
+#if !defined(_di_fl_utf_file_write_) || !defined(_di_fl_utf_file_write_until_) || !defined(_di_fl_utf_file_write_range_)
   extern f_return_status private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_utf_string_length_t total, f_utf_string_length_t *written) f_gcc_attribute_visibility_internal;
-#endif // !defined(fl_utf_file_write) || !defined(fl_utf_file_write_until) || !defined(fl_utf_file_write_range)
+#endif // !defined(_di_fl_utf_file_write_) || !defined(_di_fl_utf_file_write_until_) || !defined(_di_fl_utf_file_write_range_)
 
 #ifdef __cplusplus
 } // extern "C"

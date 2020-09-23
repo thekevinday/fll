@@ -6,29 +6,29 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_write_print_help_
-  f_return_status iki_write_print_help(const f_color_context_t context) {
+  f_return_status iki_write_print_help(const int id, const f_color_context_t context) {
 
-    fll_program_print_help_header(context, iki_write_name_long, iki_write_version);
+    fll_program_print_help_header(id, context, iki_write_name_long, iki_write_version);
 
-    fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(id, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(id, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(id, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, iki_write_short_file, iki_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
-    fll_program_print_help_option(context, iki_write_short_content, iki_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "The content to output.");
-    fll_program_print_help_option(context, iki_write_short_double, iki_write_long_double, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use double quotes (default).");
-    fll_program_print_help_option(context, iki_write_short_object, iki_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to output.");
-    fll_program_print_help_option(context, iki_write_short_single, iki_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
+    fll_program_print_help_option(id, context, iki_write_short_file, iki_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
+    fll_program_print_help_option(id, context, iki_write_short_content, iki_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "The content to output.");
+    fll_program_print_help_option(id, context, iki_write_short_double, iki_write_long_double, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use double quotes (default).");
+    fll_program_print_help_option(id, context, iki_write_short_object, iki_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to output.");
+    fll_program_print_help_option(id, context, iki_write_short_single, iki_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
 
-    fll_program_print_help_usage(context, iki_write_name, "filename(s)");
+    fll_program_print_help_usage(id, context, iki_write_name, "filename(s)");
 
     fl_color_print(f_type_output, context.set.important, " Notes:");
 
@@ -56,56 +56,68 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_console_parameter_id_t ids[3] = { iki_write_parameter_no_color, iki_write_parameter_light, iki_write_parameter_dark };
-      const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
       const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, iki_write_total_parameters);
 
-      status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+      {
+        f_console_parameter_id_t ids[3] = { iki_write_parameter_no_color, iki_write_parameter_light, iki_write_parameter_dark };
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
 
-      if (F_status_is_error(status)) {
-        iki_write_print_error(data->context, data->verbosity, F_status_set_fine(status), "fll_program_parameter_process", F_true);
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-        if (data->verbosity == f_console_verbosity_verbose) {
-          fprintf(f_type_error, "%c", f_string_eol[0]);
+        if (F_status_is_error(status)) {
+          iki_write_print_error(data->context, data->error.verbosity, F_status_set_fine(status), "fll_program_parameter_process", F_true);
+
+          if (data->error.verbosity == f_console_verbosity_verbose) {
+            dprintf(data->error.to, "%c", f_string_eol[0]);
+          }
+
+          iki_write_delete_data(data);
+          return F_status_set_error(status);
+        }
+      }
+
+      // Identify priority of verbosity related parameters.
+      {
+        f_console_parameter_id_t ids[4] = { iki_write_parameter_verbosity_quiet, iki_write_parameter_verbosity_normal, iki_write_parameter_verbosity_verbose, iki_write_parameter_verbosity_debug };
+        f_console_parameter_id_t choice = 0;
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+
+        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
+
+        if (F_status_is_error(status)) {
+          iki_write_delete_data(data);
+          return status;
         }
 
-        iki_write_delete_data(data);
-        return F_status_set_error(status);
+        if (choice == iki_write_parameter_verbosity_quiet) {
+          data->error.verbosity = f_console_verbosity_quiet;
+        }
+        else if (choice == iki_write_parameter_verbosity_normal) {
+          data->error.verbosity = f_console_verbosity_normal;
+        }
+        else if (choice == iki_write_parameter_verbosity_verbose) {
+          data->error.verbosity = f_console_verbosity_verbose;
+        }
+        else if (choice == iki_write_parameter_verbosity_debug) {
+          data->error.verbosity = f_console_verbosity_debug;
+        }
       }
 
       status = F_none;
     }
 
     if (data->parameters[iki_write_parameter_help].result == f_console_result_found) {
-      iki_write_print_help(data->context);
+      iki_write_print_help(data->output, data->context);
 
       iki_write_delete_data(data);
       return F_none;
     }
 
     if (data->parameters[iki_write_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(iki_write_version);
+      fll_program_print_version(data->output, iki_write_version);
 
       iki_write_delete_data(data);
       return F_none;
-    }
-
-    if (data->parameters[iki_write_parameter_verbose].result == f_console_result_found) {
-      if (data->parameters[iki_write_parameter_quiet].result == f_console_result_found) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: Cannot specify the '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, f_console_standard_long_verbose);
-        fl_color_print(f_type_error, data->context.set.error, "' parameter with the '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, f_console_standard_long_quiet);
-        fl_color_print_line(f_type_error, data->context.set.error, "' parameter.");
-
-        status = F_status_set_error(F_parameter);
-      }
-
-      data->verbosity = f_console_verbosity_verbose;
-    }
-    else if (data->parameters[iki_write_parameter_quiet].result == f_console_result_found) {
-      data->verbosity = f_console_verbosity_quiet;
     }
 
     f_file_t output = f_file_t_initialize;
@@ -116,10 +128,10 @@ extern "C" {
     if (F_status_is_fine(status)) {
       if (data->parameters[iki_write_parameter_file].result == f_console_result_additional) {
         if (data->parameters[iki_write_parameter_file].additional.used > 1) {
-          if (data->verbosity != f_console_verbosity_quiet) {
-            fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-            fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
-            fl_color_print_line(f_type_error, data->context.set.error, "' may only be specified once.");
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
+            fl_color_print_to(data->error.to, data->context.set.error, "' may only be specified once.%c", f_string_eol[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -131,15 +143,15 @@ extern "C" {
           status = f_file_open(arguments.argv[location], f_file_mode_all_rw, &output);
 
           if (F_status_is_error(status)) {
-            iki_write_print_error_file(data->context, data->verbosity, F_status_set_fine(status), "f_file_open", arguments.argv[location], "open", 0, F_true);
+            iki_write_print_error_file(data->context, data->error.verbosity, F_status_set_fine(status), "f_file_open", arguments.argv[location], "open", 0, F_true);
           }
         }
       }
       else if (data->parameters[iki_write_parameter_file].result == f_console_result_found) {
-        if (data->verbosity != f_console_verbosity_quiet) {
-          fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
-          fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
+        if (data->error.verbosity != f_console_verbosity_quiet) {
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
+          fl_color_print_to(data->error.to, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
         }
 
         status = F_status_set_error(F_parameter);
@@ -147,20 +159,20 @@ extern "C" {
     }
 
     if (F_status_is_fine(status) && data->parameters[iki_write_parameter_object].result == f_console_result_found) {
-      if (data->verbosity != f_console_verbosity_quiet) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
-        fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
+        fl_color_print_to(data->error.to, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
       }
 
       status = F_status_set_error(F_parameter);
     }
 
     if (F_status_is_fine(status) && data->parameters[iki_write_parameter_content].result == f_console_result_found) {
-      if (data->verbosity != f_console_verbosity_quiet) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
-        fl_color_print_line(f_type_error, data->context.set.error, "' was specified, but no value was given.");
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
+        fl_color_print_to(data->error.to, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
       }
 
       status = F_status_set_error(F_parameter);
@@ -168,13 +180,13 @@ extern "C" {
 
     if (F_status_is_fine(status) && !data->process_pipe) {
       if (data->parameters[iki_write_parameter_object].result != f_console_result_additional && data->parameters[iki_write_parameter_content].result != f_console_result_additional) {
-        if (data->verbosity != f_console_verbosity_quiet) {
-          fprintf(f_type_error, "%c", f_string_eol[0]);
-          fl_color_print(f_type_error, data->context.set.error, "ERROR: No data provided, either pipe the data or use the '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
-          fl_color_print(f_type_error, data->context.set.error, "' and the '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
-          fl_color_print_line(f_type_error, data->context.set.error, "' parameters.");
+        if (data->error.verbosity != f_console_verbosity_quiet) {
+          dprintf(data->error.to, "%c", f_string_eol[0]);
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: No data provided, either pipe the data or use the '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
+          fl_color_print_to(data->error.to, data->context.set.error, "' and the '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
+          fl_color_print_to(data->error.to, data->context.set.error, "' parameters.%c", f_string_eol[0]);
         }
 
         status = F_status_set_error(F_parameter);
@@ -183,12 +195,12 @@ extern "C" {
 
     if (F_status_is_fine(status)) {
       if (data->parameters[iki_write_parameter_object].additional.used != data->parameters[iki_write_parameter_content].additional.used) {
-        if (data->verbosity != f_console_verbosity_quiet) {
-          fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameters '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
-          fl_color_print(f_type_error, data->context.set.error, "' and '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
-          fl_color_print_line(f_type_error, data->context.set.error, "' must be specified the same number of times.");
+        if (data->error.verbosity != f_console_verbosity_quiet) {
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameters '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
+          fl_color_print_to(data->error.to, data->context.set.error, "' and '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_object);
+          fl_color_print_to(data->error.to, data->context.set.error, "' must be specified the same number of times.%c", f_string_eol[0]);
         }
 
         status = F_status_set_error(F_parameter);
@@ -236,15 +248,15 @@ extern "C" {
             status_pipe = f_file_read(file, &buffer);
 
             if (F_status_is_error(status_pipe)) {
-              iki_write_print_error_file(data->context, data->verbosity, F_status_set_fine(status_pipe), "f_file_read_to", "-", "read", 2, F_true);
+              iki_write_print_error_file(data->context, data->error.verbosity, F_status_set_fine(status_pipe), "f_file_read_to", "-", "read", 2, F_true);
 
               status = F_status_set_error(F_pipe);
               break;
             }
 
             if (!buffer.used) {
-              if (data->verbosity != f_console_verbosity_quiet) {
-                fl_color_print_line(f_type_error, data->context.set.error, "ERROR: The pipe has no content.");
+              if (data->error.verbosity != f_console_verbosity_quiet) {
+                fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The pipe has no content.%c", f_string_eol[0]);
               }
 
               status = F_status_set_error(F_parameter);
@@ -258,19 +270,19 @@ extern "C" {
           status = fl_string_dynamic_seek_line(buffer.string, &range);
 
           if (F_status_is_error(status)) {
-            iki_write_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_dynamic_seek_line", F_true);
+            iki_write_print_error(data->context, data->error.verbosity, F_status_set_fine(status), "fl_string_dynamic_seek_line", F_true);
             break;
           }
 
           if (status == F_data_not_stop) {
             status = F_status_set_error(F_parameter);
-            iki_write_print_error(data->context, data->verbosity, F_parameter, "fl_string_dynamic_seek_line", F_true);
+            iki_write_print_error(data->context, data->error.verbosity, F_parameter, "fl_string_dynamic_seek_line", F_true);
             break;
           }
 
           if (object_ended && previous == range.start) {
-            if (data->verbosity != f_console_verbosity_quiet) {
-              fl_color_print_line(f_type_error, data->context.set.error, "ERROR: The pipe has incorrectly placed newlines.");
+            if (data->error.verbosity != f_console_verbosity_quiet) {
+              fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The pipe has incorrectly placed newlines.%c", f_string_eol[0]);
             }
 
             status = F_status_set_error(F_parameter);
@@ -287,7 +299,7 @@ extern "C" {
               status = fl_string_dynamic_partial_append_nulless(buffer, range, &content);
 
               if (F_status_is_error(status)) {
-                iki_write_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+                iki_write_print_error(data->context, data->error.verbosity, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
                 break;
               }
             }
@@ -305,7 +317,7 @@ extern "C" {
             status = fl_string_dynamic_partial_append_nulless(buffer, range, &object);
 
             if (F_status_is_error(status)) {
-              iki_write_print_error(data->context, data->verbosity, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+              iki_write_print_error(data->context, data->error.verbosity, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
               break;
             }
 
@@ -326,8 +338,8 @@ extern "C" {
         } // for
 
         if (F_status_is_fine(status) && object_ended) {
-          if (data->verbosity != f_console_verbosity_quiet) {
-            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: The pipe has an object without content.");
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The pipe has an object without content.%c", f_string_eol[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -359,7 +371,7 @@ extern "C" {
         } // for
 
         // ensure there is always a newline at the end, unless in quiet mode.
-        if (F_status_is_fine(status) && data->verbosity != f_console_verbosity_quiet && data->parameters[iki_write_parameter_file].result == f_console_result_none) {
+        if (F_status_is_fine(status) && data->error.verbosity != f_console_verbosity_quiet && data->parameters[iki_write_parameter_file].result == f_console_result_none) {
           fprintf(f_type_output, "%c", f_string_eol[0]);
         }
       }
@@ -374,9 +386,9 @@ extern "C" {
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (data->verbosity != f_console_verbosity_quiet) {
+    if (data->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fprintf(f_type_error, "%c", f_string_eol[0]);
+        dprintf(data->error.to, "%c", f_string_eol[0]);
       }
     }
 

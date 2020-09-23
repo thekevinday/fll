@@ -250,9 +250,9 @@ extern "C" {
  *
  * Designed for passing this to a function as a single argument.
  *
- * parameter: Intended to be populated with an array of f_console_parameter_id_t whose size is defined by the "used" property.
- *            This is not intended to be dynamically allocated, so there is no "size" property.
- * order:
+ * parameters: Intended to be populated with an array of f_console_parameter_id_t whose size is defined by the "used" property.
+ *             This is not intended to be dynamically allocated, so there is no "size" property.
+ * length:     The total number of parameters in the parameters array.
  */
 #ifndef _di_f_console_parameters_t_
   typedef struct {
@@ -263,7 +263,7 @@ extern "C" {
 
   #define f_console_parameters_t_initialize { 0, 0 }
 
-  #define f_macro_console_parameters_t_initialize(parameter, used) { parameter, used }
+  #define f_macro_console_parameters_t_initialize(parameters, length) { parameters, length }
 #endif // _di_f_console_parameters_t_
 
 /**

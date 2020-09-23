@@ -252,14 +252,15 @@ extern "C" {
  * Provide a set of two colors, a before and an after.
  *
  * This is intended to be used for printing, such that the printed code is prefixed with the "before" and postfixed with the "after".
+ * These color strings should be NULL terminated.
  *
  * before: A pointer to the dynamic string representing the before color to assign, set to NULL to disable.
  * after:  A pointer to the dynamic string representing the after color to assign, set to NULL to disable.
  */
 #ifndef _di_f_color_set_t_
   typedef struct {
-    const f_string_dynamic_t *before;
-    const f_string_dynamic_t *after;
+    const f_string_static_t *before;
+    const f_string_static_t *after;
   } f_color_set_t;
 
   #define f_color_set_t_initialize { 0, 0 }

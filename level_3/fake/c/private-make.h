@@ -348,29 +348,6 @@ extern "C" {
     f_macro_string_dynamics_t_delete_simple(path.stack)
 #endif // _di_fake_make_path_t_
 
-#ifndef _di_fake_make_print_t_
-  typedef struct {
-    const char *prefix;
-    f_color_set_t context;
-
-    FILE *to;
-  } fake_make_print_t;
-
-  #define fake_make_print_t_initialize { \
-    0, \
-    f_color_set_t_initialize, \
-    0, \
-  }
-
-  #define fake_macro_make_print_t_initialize(prefix, context, to) { prefix, context, to }
-
-  #define fake_make_print_error   "ERROR"
-  #define fake_make_print_warning "WARNING"
-
-  #define fake_make_print_error_length   5
-  #define fake_make_print_warning_length 7
-#endif // _di_fake_make_print_t_
-
 #ifndef _di_fake_make_data_t_
   typedef struct {
     fake_build_setting_t setting_build;
@@ -380,7 +357,6 @@ extern "C" {
 
     fake_make_parameter_t parameter;
     fake_make_path_t path;
-    fake_make_print_t print;
 
     f_fss_nameds_t fakefile;
 
@@ -396,7 +372,6 @@ extern "C" {
     fake_environment_t_initialize, \
     fake_make_parameter_t_initialize, \
     fake_make_path_t_initialize, \
-    fake_make_print_t_initialize, \
     f_fss_nameds_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
@@ -440,8 +415,6 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param print
- *   The error/warning print data.
  * @param buffer
  *   The string containing the name or number.
  * @param id
@@ -454,7 +427,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_group_
-  f_return_status fake_make_get_id_group(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, gid_t *id) f_gcc_attribute_visibility_internal;
+  f_return_status fake_make_get_id_group(const fake_data_t data, const f_string_static_t buffer, gid_t *id) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_group_
 
 /**
@@ -462,8 +435,6 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param print
- *   The error/warning print data.
  * @param buffer
  *   The string containing the name or number.
  * @param mode
@@ -480,7 +451,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_mode_
-  f_return_status fake_make_get_id_mode(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
+  f_return_status fake_make_get_id_mode(const fake_data_t data, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_mode_
 
 /**
@@ -488,8 +459,6 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param print
- *   The error/warning print data.
  * @param buffer
  *   The string containing the name or number.
  * @param id
@@ -502,7 +471,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_owner_
-  f_return_status fake_make_get_id_owner(const fake_data_t data, const fake_make_print_t print, const f_string_static_t buffer, uid_t *id) f_gcc_attribute_visibility_internal;
+  f_return_status fake_make_get_id_owner(const fake_data_t data, const f_string_static_t buffer, uid_t *id) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_owner_
 
 /**

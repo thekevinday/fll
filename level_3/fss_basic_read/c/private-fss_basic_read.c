@@ -9,11 +9,11 @@ extern "C" {
   void fss_basic_read_print_file_error(const f_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status) {
 
     if (fll_file_error_print(f_type_error, context, function_name, file_name, status) == F_false) {
-      fl_color_print(f_type_error, context.set.error, "INTERNAL ERROR: An unhandled error (");
-      fl_color_print(f_type_error, context.set.notable, "%llu", status);
-      fl_color_print(f_type_error, context.set.error, ") has occurred while calling ");
-      fl_color_print(f_type_error, context.set.notable, "%s()", function_name);
-      fl_color_print_line(f_type_error, context.set.error, ".");
+      fl_color_print_to(data.error.to, context.set.error, "INTERNAL ERROR: An unhandled error (");
+      fl_color_print_to(data.error.to, context.set.notable, "%llu", status);
+      fl_color_print_to(data.error.to, context.set.error, ") has occurred while calling ");
+      fl_color_print_to(data.error.to, context.set.notable, "%s()", function_name);
+      fl_color_print_to(data.error.to, context.set.error, ".%c", f_string_eol[0]);
     }
   }
 #endif // _di_fss_basic_read_print_file_error_
@@ -22,62 +22,62 @@ extern "C" {
   void fss_basic_read_print_number_argument_error(const f_color_context_t context, const f_string_t function_name, const f_string_t parameter_name, const f_string_t argument, const f_status_t status) {
 
     if (status == F_parameter) {
-      fl_color_print(f_type_error, context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
-      fl_color_print(f_type_error, context.set.notable, "%s()", function_name);
-      fl_color_print_line(f_type_error, context.set.error, ".");
+      fl_color_print_to(data.error.to, context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
+      fl_color_print_to(data.error.to, context.set.notable, "%s()", function_name);
+      fl_color_print_to(data.error.to, context.set.error, ".%c", f_string_eol[0]);
     }
     else if (status == F_number) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: The argument '");
-      fl_color_print(f_type_error, context.set.notable, "%s", argument);
-      fl_color_print(f_type_error, context.set.error, "' is not a valid number for the parameter '");
-      fl_color_print(f_type_error, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
+      fl_color_print_to(data.error.to, context.set.error, "ERROR: The argument '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s", argument);
+      fl_color_print_to(data.error.to, context.set.error, "' is not a valid number for the parameter '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
     }
     else if (status == F_number_underflow) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: The argument '");
-      fl_color_print(f_type_error, context.set.notable, "%s", argument);
-      fl_color_print(f_type_error, context.set.error, "' is too small for the parameter '");
-      fl_color_print(f_type_error, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
+      fl_color_print_to(data.error.to, context.set.error, "ERROR: The argument '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s", argument);
+      fl_color_print_to(data.error.to, context.set.error, "' is too small for the parameter '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
     }
     else if (status == F_number_overflow) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: The argument '");
-      fl_color_print(f_type_error, context.set.notable, "%s", argument);
-      fl_color_print(f_type_error, context.set.error, "' is too large for the parameter '");
-      fl_color_print(f_type_error, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
+      fl_color_print_to(data.error.to, context.set.error, "ERROR: The argument '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s", argument);
+      fl_color_print_to(data.error.to, context.set.error, "' is too large for the parameter '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
     }
     else if (status == F_number_negative) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: The argument '");
-      fl_color_print(f_type_error, context.set.notable, "%s", argument);
-      fl_color_print(f_type_error, context.set.error, "' is negative, which is not allowed for the parameter '");
-      fl_color_print(f_type_error, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
+      fl_color_print_to(data.error.to, context.set.error, "ERROR: The argument '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s", argument);
+      fl_color_print_to(data.error.to, context.set.error, "' is negative, which is not allowed for the parameter '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
     }
     else if (status == F_number_positive) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: The argument '");
-      fl_color_print(f_type_error, context.set.notable, "%s", argument);
-      fl_color_print(f_type_error, context.set.error, "' contains a '");
-      fl_color_print(f_type_error, context.set.notable, "+");
-      fl_color_print(f_type_error, context.set.error, "', which is not allowed for the parameter '");
-      fl_color_print(f_type_error, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
+      fl_color_print_to(data.error.to, context.set.error, "ERROR: The argument '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s", argument);
+      fl_color_print_to(data.error.to, context.set.error, "' contains a '");
+      fl_color_print_to(data.error.to, context.set.notable, "+");
+      fl_color_print_to(data.error.to, context.set.error, "', which is not allowed for the parameter '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
     }
     else if (status == F_data_not) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: The parameter '");
-      fl_color_print(f_type_error, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print_line(f_type_error, context.set.error, "' must not be an empty string.");
+      fl_color_print_to(data.error.to, context.set.error, "ERROR: The parameter '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_to(data.error.to, context.set.error, "' must not be an empty string.%c", f_string_eol[0]);
     }
     else {
-      fl_color_print(f_type_error, context.set.error, "INTERNAL ERROR: An unhandled error (");
-      fl_color_print(f_type_error, context.set.notable, "%llu", status);
-      fl_color_print(f_type_error, context.set.error, ") has occurred while calling ");
-      fl_color_print(f_type_error, context.set.notable, "%s()", function_name);
-      fl_color_print(f_type_error, context.set.error, "' for the parameter '");
-      fl_color_print(f_type_error, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
-      fl_color_print(f_type_error, context.set.error, "' with the value '");
-      fl_color_print(f_type_error, context.set.notable, "%s", argument);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
+      fl_color_print_to(data.error.to, context.set.error, "INTERNAL ERROR: An unhandled error (");
+      fl_color_print_to(data.error.to, context.set.notable, "%llu", status);
+      fl_color_print_to(data.error.to, context.set.error, ") has occurred while calling ");
+      fl_color_print_to(data.error.to, context.set.notable, "%s()", function_name);
+      fl_color_print_to(data.error.to, context.set.error, "' for the parameter '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s%s", f_console_symbol_long_enable, parameter_name);
+      fl_color_print_to(data.error.to, context.set.error, "' with the value '");
+      fl_color_print_to(data.error.to, context.set.notable, "%s", argument);
+      fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
     }
   }
 #endif // _di_fss_basic_read_print_number_argument_error_
@@ -96,7 +96,7 @@ extern "C" {
       macro_fss_basic_read_depths_t_new(status, (*depths), depth_size);
 
       if (F_status_is_error(status)) {
-        fl_color_print_line(f_type_error, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.");
+        fl_color_print_to(data.error.to, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
         return status;
       }
 
@@ -180,12 +180,12 @@ extern "C" {
 
             // @todo: move error printing into common function.
             if (status_code == F_memory_allocation || status_code == F_memory_reallocation) {
-              fl_color_print_line(f_type_error, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.");
+              fl_color_print_to(data.error.to, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
             }
             else if (status_code == f_string_length_t_size) {
-              fl_color_print(f_type_error, data.context.set.error, "ERROR: Unable to process '");
-              fl_color_print(f_type_error, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_trim);
-              fl_color_print_line(f_type_error, data.context.set.error, "' because the maximum buffer size was reached.");
+              fl_color_print_to(data.error.to, data.context.set.error, "ERROR: Unable to process '");
+              fl_color_print_to(data.error.to, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_trim);
+              fl_color_print_to(data.error.to, data.context.set.error, "' because the maximum buffer size was reached.%c", f_string_eol[0]);
             }
             else {
               f_string_t function = "fl_string_append";
@@ -194,20 +194,20 @@ extern "C" {
                 function = "fl_string_rip";
               }
 
-              fl_color_print(f_type_error, data.context.set.error, "INTERNAL ERROR: An unhandled error (");
-              fl_color_print(f_type_error, data.context.set.notable, "%u", status_code);
-              fl_color_print(f_type_error, data.context.set.error, ") has occurred while calling ");
-              fl_color_print(f_type_error, data.context.set.notable, "%s()", function);
-              fl_color_print_line(f_type_error, data.context.set.error, ".");
+              fl_color_print_to(data.error.to, data.context.set.error, "INTERNAL ERROR: An unhandled error (");
+              fl_color_print_to(data.error.to, data.context.set.notable, "%u", status_code);
+              fl_color_print_to(data.error.to, data.context.set.error, ") has occurred while calling ");
+              fl_color_print_to(data.error.to, data.context.set.notable, "%s()", function);
+              fl_color_print_to(data.error.to, data.context.set.error, ".%c", f_string_eol[0]);
             }
 
             return status;
           }
 
           if (!depths->array[i].value_name.used) {
-            fl_color_print(f_type_error, data.context.set.error, "ERROR: The '");
-            fl_color_print(f_type_error, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_name);
-            fl_color_print_line(f_type_error, data.context.set.error, "' must not be an empty string.");
+            fl_color_print_to(data.error.to, data.context.set.error, "ERROR: The '");
+            fl_color_print_to(data.error.to, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_name);
+            fl_color_print_to(data.error.to, data.context.set.error, "' must not be an empty string.%c", f_string_eol[0]);
 
             return F_status_set_error(F_parameter);
           }
@@ -220,22 +220,22 @@ extern "C" {
       for (f_array_length_t j = i + 1; j < depths->used; j++) {
 
         if (depths->array[i].depth == depths->array[j].depth) {
-          fl_color_print(f_type_error, data.context.set.error, "ERROR: The value '");
-          fl_color_print(f_type_error, data.context.set.notable, "%llu", depths->array[i].depth);
-          fl_color_print(f_type_error, data.context.set.error, "' may only be specified once for the parameter '");
-          fl_color_print(f_type_error, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_depth);
-          fl_color_print_line(f_type_error, data.context.set.error, "'.");
+          fl_color_print_to(data.error.to, data.context.set.error, "ERROR: The value '");
+          fl_color_print_to(data.error.to, data.context.set.notable, "%llu", depths->array[i].depth);
+          fl_color_print_to(data.error.to, data.context.set.error, "' may only be specified once for the parameter '");
+          fl_color_print_to(data.error.to, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_depth);
+          fl_color_print_to(data.error.to, data.context.set.error, "'.%c", f_string_eol[0]);
 
           return F_status_set_error(F_parameter);
         }
         else if (depths->array[i].depth > depths->array[j].depth) {
-          fl_color_print(f_type_error, data.context.set.error, "ERROR: The parameter '");
-          fl_color_print(f_type_error, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_depth);
-          fl_color_print(f_type_error, data.context.set.error, "' may not have the value '");
-          fl_color_print(f_type_error, data.context.set.notable, "%llu", depths->array[i].depth);
-          fl_color_print(f_type_error, data.context.set.error, "' before the value '");
-          fl_color_print(f_type_error, data.context.set.notable, "%llu", depths->array[j].depth);
-          fl_color_print_line(f_type_error, data.context.set.error, "'.");
+          fl_color_print_to(data.error.to, data.context.set.error, "ERROR: The parameter '");
+          fl_color_print_to(data.error.to, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_depth);
+          fl_color_print_to(data.error.to, data.context.set.error, "' may not have the value '");
+          fl_color_print_to(data.error.to, data.context.set.notable, "%llu", depths->array[i].depth);
+          fl_color_print_to(data.error.to, data.context.set.error, "' before the value '");
+          fl_color_print_to(data.error.to, data.context.set.notable, "%llu", depths->array[j].depth);
+          fl_color_print_to(data.error.to, data.context.set.error, "'.%c", f_string_eol[0]);
 
           return F_status_set_error(F_parameter);
         }
@@ -262,33 +262,33 @@ extern "C" {
         status = F_status_set_fine(status);
 
         if (status == F_parameter) {
-          fl_color_print(f_type_error, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
-          fl_color_print(f_type_error, data->context.set.notable, "fll_fss_basic_list_read()");
-          fl_color_print(f_type_error, data->context.set.error, " for the file '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s", filename);
-          fl_color_print_line(f_type_error, data->context.set.error, "'.");
+          fl_color_print_to(data->error.to, data->context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
+          fl_color_print_to(data->error.to, data->context.set.notable, "fll_fss_basic_list_read()");
+          fl_color_print_to(data->error.to, data->context.set.error, " for the file '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s", filename);
+          fl_color_print_to(data->error.to, data->context.set.error, "'.%c", f_string_eol[0]);
         }
         else if (status == F_memory_allocation || status == F_memory_reallocation) {
-          fl_color_print_line(f_type_error, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.");
+          fl_color_print_to(data->error.to, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
         }
         else if (status == F_incomplete_utf_stop) {
-          fl_color_print(f_type_error, data->context.set.error, "ENCODING ERROR: Error occurred on invalid UTF-8 character at stop position (at ");
-          fl_color_print(f_type_error, data->context.set.notable, "%d", input.start);
-          fl_color_print_line(f_type_error, data->context.set.error, ").");
+          fl_color_print_to(data->error.to, data->context.set.error, "ENCODING ERROR: Error occurred on invalid UTF-8 character at stop position (at ");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%d", input.start);
+          fl_color_print_to(data->error.to, data->context.set.error, ").%c", f_string_eol[0]);
         }
         else if (status == F_incomplete_utf_eos) {
-          fl_color_print(f_type_error, data->context.set.error, "ENCODING ERROR: Error occurred on invalid UTF-8 character at end of string (at ");
-          fl_color_print(f_type_error, data->context.set.notable, "%d", input.start);
-          fl_color_print_line(f_type_error, data->context.set.error, ").");
+          fl_color_print_to(data->error.to, data->context.set.error, "ENCODING ERROR: Error occurred on invalid UTF-8 character at end of string (at ");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%d", input.start);
+          fl_color_print_to(data->error.to, data->context.set.error, ").%c", f_string_eol[0]);
         }
         else {
-          fl_color_print(f_type_error, data->context.set.error, "INTERNAL ERROR: An unhandled error (");
-          fl_color_print(f_type_error, data->context.set.notable, "%u", status);
-          fl_color_print(f_type_error, data->context.set.error, ") has occurred while calling ");
-          fl_color_print(f_type_error, data->context.set.notable, "fll_fss_basic_list_read()");
-          fl_color_print(f_type_error, data->context.set.error, " for the file '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s", filename);
-          fl_color_print_line(f_type_error, data->context.set.error, "'.");
+          fl_color_print_to(data->error.to, data->context.set.error, "INTERNAL ERROR: An unhandled error (");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%u", status);
+          fl_color_print_to(data->error.to, data->context.set.error, ") has occurred while calling ");
+          fl_color_print_to(data->error.to, data->context.set.notable, "fll_fss_basic_list_read()");
+          fl_color_print_to(data->error.to, data->context.set.error, " for the file '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s", filename);
+          fl_color_print_to(data->error.to, data->context.set.error, "'.%c", f_string_eol[0]);
         }
 
         return F_status_set_error(status);

@@ -5,108 +5,93 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_program_print_help_header_
-  f_return_status fll_program_print_help_header(const f_color_context_t context, const f_string_t name, const f_string_t version) {
-    f_status_t status = F_none;
+  f_return_status fll_program_print_help_header(const int id, const f_color_context_t context, const f_string_t name, const f_string_t version) {
 
-    printf("%c", f_string_eol[0]);
-    status = fl_color_print(f_type_output, context.set.title, " %s", name);
-    if (F_status_is_error(status)) return status;
+    dprintf(id, "%c", f_string_eol[0]);
+    fl_color_print_to(id, context.set.title, " %s", name);
 
-    printf("%c", f_string_eol[0]);
-    status = fl_color_print(f_type_output, context.set.notable, "  Version %s", version);
-    if (F_status_is_error(status)) return status;
+    dprintf(id, "%c", f_string_eol[0]);
+    fl_color_print_to(id, context.set.notable, "  Version %s", version);
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
-    status = fl_color_print(f_type_output, context.set.important, " Available Options: ");
-    if (F_status_is_error(status)) return status;
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fl_color_print_to(id, context.set.important, " Available Options: ");
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_header_
 
 #ifndef _di_fll_program_print_help_option_
-  f_return_status fll_program_print_help_option(const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
-    f_status_t status = F_none;
+  f_return_status fll_program_print_help_option(const int id, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
 
-    printf("%c", f_string_eol[0]);
-    printf("  %s", symbol_short);
-    status = fl_color_print(f_type_output, context.set.standout, option_short);
-    if (F_status_is_error(status)) return status;
+    dprintf(id, "%c  %s", f_string_eol[0], symbol_short);
+    fl_color_print_to(id, context.set.standout, option_short);
 
-    printf(", %s", symbol_long);
-    status = fl_color_print(f_type_output, context.set.standout, option_long);
-    if (F_status_is_error(status)) return status;
+    dprintf(id, ", %s", symbol_long);
+    fl_color_print_to(id, context.set.standout, option_long);
 
-    printf("  %s", description);
+    dprintf(id, "  %s", description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_
 
 #ifndef _di_fll_program_print_help_option_long_
-  f_return_status fll_program_print_help_option_long(const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
-    f_status_t status = F_none;
+  f_return_status fll_program_print_help_option_long(const int id, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
 
-    printf("%c", f_string_eol[0]);
-    printf("      %s", symbol_long);
-    status = fl_color_print(f_type_output, context.set.standout, option_long);
-    if (F_status_is_error(status)) return status;
+    dprintf(id, "%c      %s", f_string_eol[0], symbol_long);
+    fl_color_print_to(id, context.set.standout, option_long);
 
-    printf("  %s", description);
+    dprintf(id, "  %s", description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_long_
 
 #ifndef _di_fll_program_print_help_option_other_
-  f_return_status fll_program_print_help_option_other(const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
+  f_return_status fll_program_print_help_option_other(const int id, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
 
-    printf("%c  ", f_string_eol[0]);
-    fl_color_print(f_type_output, context.set.standout, option_other);
+    dprintf(id, "%c  ", f_string_eol[0]);
+    fl_color_print_to(id, context.set.standout, option_other);
 
-    printf("  %s", description);
+    dprintf(id, "  %s", description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_other_
 
 #ifndef _di_fll_program_print_help_usage_
-  f_return_status fll_program_print_help_usage(const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
-    f_status_t status = F_none;
+  f_return_status fll_program_print_help_usage(const int id, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
-    status = fl_color_print(f_type_output, context.set.important, " Usage:");
-    if (F_status_is_error(status)) return status;
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fl_color_print_to(id, context.set.important, " Usage:");
 
-    printf("%c  ", f_string_eol[0]);
-    status = fl_color_print(f_type_output, context.set.standout, name);
-    if (F_status_is_error(status)) return status;
+    dprintf(id, "%c  ", f_string_eol[0]);
+    fl_color_print_to(id, context.set.standout, name);
 
-    printf(" ");
-    status = fl_color_print(f_type_output, context.set.notable, "[");
-    if (F_status_is_error(status)) return status;
+    dprintf(id, " ");
+    fl_color_print_to(id, context.set.notable, "[");
 
-    printf(" options ");
-    status = fl_color_print(f_type_output, context.set.notable, "]");
-    if (F_status_is_error(status)) return status;
+    dprintf(id, " options ");
+    fl_color_print_to(id, context.set.notable, "]");
 
     if (parameters[0] != '\0') {
-      printf(" ");
-      status = fl_color_print(f_type_output, context.set.notable, "[");
-      if (F_status_is_error(status)) return status;
+      dprintf(id, " ");
+      fl_color_print_to(id, context.set.notable, "[");
 
-      printf(" %s ", parameters);
-      status = fl_color_print(f_type_output, context.set.notable, "]");
-      if (F_status_is_error(status)) return status;
+      dprintf(id, " %s ", parameters);
+      fl_color_print_to(id, context.set.notable, "]");
     }
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
+    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
+
+    return F_none;
   }
 #endif // _di_fll_program_print_help_usage_
 
 #ifndef _di_fll_program_print_version_
-  f_return_status fll_program_print_version(const f_string_t version) {
-    printf("%s%c", version, f_string_eol[0]);
+  f_return_status fll_program_print_version(const int id, const f_string_t version) {
+
+    dprintf(id, "%s%c", version, f_string_eol[0]);
 
     return F_none;
   }
@@ -117,92 +102,25 @@ extern "C" {
     f_status_t status = F_none;
 
     status = f_console_parameter_process(arguments, parameters, remaining);
-
-    if (F_status_is_error(status)) {
-      status = F_status_set_fine(status);
-
-      if (status == F_data_not) {
-        fl_color_print_line(f_type_error, context->set.error, "ERROR: One of the parameters you passed requires an additional parameter that you did not pass.");
-        // @todo there is a way to identify which parameter is incorrect
-        //       to do this, one must look for any "has_additional" and then see if the "additional" location is set to 0
-        //       nothing can be 0 as that represents the program name, unless argv[] is improperly created
-      }
-      else if (status == F_memory_allocation || status == F_memory_reallocation) {
-        fl_color_print(f_type_error, context->set.error, "CRITICAL ERROR: Unable to allocate memory while calling ");
-        fl_color_print(f_type_error, context->set.notable, "f_console_parameter_process");
-        fl_color_print_line(f_type_error, context->set.error, ").");
-      }
-      else if (status == F_utf) {
-        fl_color_print(f_type_error, context->set.error, "ENCODING ERROR: Invalid UTF-8 character in parameter when calling ");
-        fl_color_print(f_type_error, context->set.notable, "f_console_parameter_process()");
-        fl_color_print_line(f_type_error, context->set.error, ".");
-      }
-      else if (status == F_parameter) {
-        fl_color_print(f_type_error, context->set.error, "INTERNAL ERROR: Invalid parameter when calling ");
-        fl_color_print(f_type_error, context->set.notable, "f_console_parameter_process()");
-        fl_color_print_line(f_type_error, context->set.error, ".");
-      }
-      else {
-        fl_color_print(f_type_error, context->set.error, "INTERNAL ERROR: An unhandled error (");
-        fl_color_print(f_type_error, context->set.notable, "%u", status);
-        fl_color_print(f_type_error, context->set.error, ") has occurred while calling ");
-        fl_color_print(f_type_error, context->set.notable, "f_console_parameter_process()");
-        fl_color_print_line(f_type_error, context->set.error, ".");
-      }
-
-      return F_status_set_error(status);
-    }
+    if (F_status_is_error(status)) return status;
 
     f_console_parameter_id_t decision = choices.id[2];
 
-    f_string_t function;
-
     if (right) {
-      function = "f_console_parameter_prioritize_right";
       status = f_console_parameter_prioritize_right(parameters, choices, &decision);
     }
     else {
-      function = "f_console_parameter_prioritize_left";
       status = f_console_parameter_prioritize_left(parameters, choices, &decision);
     }
 
-    if (F_status_is_error(status)) {
-      status = F_status_set_fine(status);
-
-      if (status == F_memory_allocation || status == F_memory_reallocation) {
-        fl_color_print(f_type_error, context->set.error, "CRITICAL ERROR: Unable to allocate memory while calling ");
-        fl_color_print(f_type_error, context->set.notable, "%s", function);
-        fl_color_print_line(f_type_error, context->set.error, ").");
-      }
-      else if (status == F_parameter) {
-        fl_color_print(f_type_error, context->set.error, "INTERNAL ERROR: Invalid parameter when calling ");
-        fl_color_print(f_type_error, context->set.notable, "%s", function);
-        fl_color_print_line(f_type_error, context->set.error, "().");
-      }
-      else {
-        fl_color_print(f_type_error, context->set.error, "INTERNAL ERROR: An unhandled error (");
-        fl_color_print(f_type_error, context->set.notable, "%u", status);
-        fl_color_print(f_type_error, context->set.error, ") has occurred while calling ");
-        fl_color_print(f_type_error, context->set.notable, "%s", function);
-        fl_color_print_line(f_type_error, context->set.error, "().");
-      }
-
-      return F_status_set_error(status);
-    }
+    if (F_status_is_error(status)) return status;
 
     // load colors unless told not to.
     if (decision != choices.id[0]) {
       f_status_t allocation_status = F_none;
 
       f_macro_color_context_t_new(allocation_status, (*context));
-
-      if (F_status_is_error(allocation_status)) {
-        fl_color_print(f_type_error, context->set.error, "CRITICAL ERROR: Unable to allocate memory while calling ");
-        fl_color_print(f_type_error, context->set.notable, "f_macro_color_context_t_new");
-        fl_color_print_line(f_type_error, context->set.error, "().");
-
-        return allocation_status;
-      }
+      if (F_status_is_error(status)) return status;
 
       status = fl_color_load_context(context, decision == choices.id[1]);
     }
@@ -213,39 +131,6 @@ extern "C" {
     return status;
   }
 #endif // _di_fll_program_parameter_process_
-
-#ifndef _di_fll_program_parameter_process_quietly_
-  f_return_status fll_program_parameter_process_quietly(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, f_color_context_t *context) {
-    f_status_t status = F_none;
-
-    status = f_console_parameter_process(arguments, parameters, remaining);
-    if (F_status_is_error(status)) return status;
-
-    f_console_parameter_id_t decision = choices.id[2];
-
-    if (right) {
-      status = f_console_parameter_prioritize_right(parameters, choices, &decision);
-    }
-    else {
-      status = f_console_parameter_prioritize_left(parameters, choices, &decision);
-    }
-
-    if (F_status_is_error(status)) return status;
-
-    // load colors unless told not to.
-    if (decision != choices.id[0]) {
-      f_status_t allocation_status = F_none;
-
-      f_macro_color_context_t_new(allocation_status, (*context));
-
-      if (F_status_is_error(allocation_status)) return allocation_status;
-
-      status = fl_color_load_context(context, decision == choices.id[1]);
-    }
-
-    return status;
-  }
-#endif // _di_fll_program_parameter_process_quietly_
 
 #ifndef _di_fll_program_parameter_additional_append_
   f_return_status fll_program_parameter_additional_append(const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamics_t *destination) {

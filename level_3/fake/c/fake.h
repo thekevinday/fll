@@ -74,6 +74,7 @@
 #include <level_1/string.h>
 
 // fll-2 includes
+#include <level_2/error.h>
 #include <level_2/execute.h>
 #include <level_2/file.h>
 #include <level_2/fss.h>
@@ -298,11 +299,11 @@ extern "C" {
     fake_parameter_help,
     fake_parameter_light,
     fake_parameter_dark,
-    fake_parameter_debug,
     fake_parameter_no_color,
-    fake_parameter_normal,
-    fake_parameter_quiet,
-    fake_parameter_verbose,
+    fake_parameter_verbosity_quiet,
+    fake_parameter_verbosity_normal,
+    fake_parameter_verbosity_verbose,
+    fake_parameter_verbosity_debug,
     fake_parameter_version,
 
     fake_parameter_define,
@@ -334,11 +335,11 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(fake_short_define, fake_long_define, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fake_short_fakefile, fake_long_fakefile, 0, 1, f_console_type_normal), \
@@ -371,7 +372,9 @@ extern "C" {
     f_string_lengths_t remaining;
     bool process_pipe;
 
-    uint8_t verbosity;
+    int output;
+    fll_error_print_t error;
+
     uint8_t operation;
 
     mode_t umask;
@@ -439,7 +442,8 @@ extern "C" {
       fake_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      f_console_verbosity_normal, \
+      f_type_descriptor_output, \
+      fll_error_print_t_initialize, \
       0, \
       0, \
       f_signal_t_initialize, \
@@ -501,7 +505,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fake_print_help_
-  extern f_return_status fake_print_help(const f_color_context_t context);
+  extern f_return_status fake_print_help(const int id, const f_color_context_t context);
 #endif // _di_fake_print_help_
 
 /**

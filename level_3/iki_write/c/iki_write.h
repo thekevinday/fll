@@ -42,6 +42,7 @@
 #include <level_1/string.h>
 
 // fll-2 includes
+#include <level_2/error.h>
 #include <level_2/file.h>
 #include <level_2/iki.h>
 #include <level_2/program.h>
@@ -80,8 +81,10 @@ extern "C" {
     iki_write_parameter_light,
     iki_write_parameter_dark,
     iki_write_parameter_no_color,
-    iki_write_parameter_quiet,
-    iki_write_parameter_verbose,
+    iki_write_parameter_verbosity_quiet,
+    iki_write_parameter_verbosity_normal,
+    iki_write_parameter_verbosity_verbose,
+    iki_write_parameter_verbosity_debug,
     iki_write_parameter_version,
 
     iki_write_parameter_file,
@@ -98,7 +101,9 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(iki_write_short_file, iki_write_long_file, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(iki_write_short_content, iki_write_long_content, 0, 1, f_console_type_normal), \
@@ -107,7 +112,7 @@ extern "C" {
       f_console_parameter_t_initialize(iki_write_short_single, iki_write_long_single, 0, 0, f_console_type_normal), \
     }
 
-  #define iki_write_total_parameters 12
+  #define iki_write_total_parameters 14
 #endif // _di_iki_write_defines_
 
 #ifndef _di_iki_write_data_t_
@@ -117,7 +122,8 @@ extern "C" {
     f_string_lengths_t remaining;
     bool process_pipe;
 
-    uint8_t verbosity;
+    int output;
+    fll_error_print_t error;
 
     f_string_dynamic_t buffer;
 
@@ -129,7 +135,8 @@ extern "C" {
       iki_write_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      f_console_verbosity_normal, \
+      f_type_descriptor_output, \
+      fll_error_print_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_color_context_t_initialize, \
     }
@@ -145,7 +152,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_iki_write_print_help_
-  extern f_return_status iki_write_print_help(const f_color_context_t context);
+  extern f_return_status iki_write_print_help(const int id, const f_color_context_t context);
 #endif // _di_iki_write_print_help_
 
 /**

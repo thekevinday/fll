@@ -80,6 +80,7 @@
 #include <level_1/string.h>
 
 // fll-2 includes
+#include <level_2/error.h>
 #include <level_2/execute.h>
 #include <level_2/fss_basic_list.h>
 #include <level_2/fss_extended.h>
@@ -178,11 +179,15 @@ extern "C" {
     init_parameter_light,
     init_parameter_dark,
     init_parameter_no_color,
-    init_parameter_version,
+    init_parameter_verbosity_quiet,
+    init_parameter_verbosity_normal,
+    init_parameter_verbosity_verbose,
 
     #ifdef _en_init_debug_
-      init_parameter_debug,
+      init_parameter_verbosity_debug,
     #endif // _en_init_debug_
+
+    init_parameter_version,
 
     init_parameter_runlevel,
     init_parameter_no_prepare,
@@ -195,13 +200,16 @@ extern "C" {
         f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
         f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
         f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
         f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, F_false, f_console_type_inverse), \
         f_console_parameter_t_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, F_true, f_console_type_normal), \
         f_console_parameter_t_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, F_true, f_console_type_normal), \
       }
 
-    #define init_total_parameters 8
+    #define init_total_parameters 11
   #else
     #define init_console_parameter_t_initialize \
       { \
@@ -209,12 +217,15 @@ extern "C" {
         f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
         f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
         f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
+        f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
         f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
         f_console_parameter_t_initialize(init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, 0, F_true, f_console_type_normal), \
         f_console_parameter_t_initialize(init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, 0, F_true, f_console_type_normal), \
       }
 
-    #define init_total_parameters 7
+    #define init_total_parameters 10
   #endif // _en_init_debug_
 #endif // _di_init_defines_
 
@@ -225,7 +236,8 @@ extern "C" {
     f_string_lengths_t remaining;
     bool process_pipe;
 
-    uint8_t verbosity;
+    int output;
+    fll_error_print_t error;
 
     f_color_context_t context;
   } init_data_t;
@@ -235,7 +247,8 @@ extern "C" {
       init_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      f_console_verbosity_normal, \
+      f_type_descriptor_output, \
+      fll_error_print_t_initialize, \
       f_color_context_t_initialize, \
     }
 
@@ -290,7 +303,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_init_print_help_
-  extern f_return_status init_print_help(const f_color_context_t context);
+  extern f_return_status init_print_help(const int id, const f_color_context_t context);
 #endif // _di_init_print_help_
 
 /**

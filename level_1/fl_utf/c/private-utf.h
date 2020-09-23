@@ -5,8 +5,6 @@
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * Provides UTF-8 character manipulation and processing capabilities.
- *
  * These are provided for internal reduction in redundant code.
  * These should not be exposed/used outside of this project.
  */

@@ -6,33 +6,33 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_read_print_help_
-  f_return_status fss_basic_read_print_help(const f_color_context_t context) {
+  f_return_status fss_basic_read_print_help(const int id, const f_color_context_t context) {
 
-    fll_program_print_help_header(context, fss_basic_read_name_long, fss_basic_read_version);
+    fll_program_print_help_header(id, context, fss_basic_read_name_long, fss_basic_read_version);
 
-    fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(id, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(id, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(id, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, fss_basic_read_short_at, fss_basic_read_long_at, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Select object at this numeric index.");
-    fll_program_print_help_option(context, fss_basic_read_short_depth, fss_basic_read_long_depth, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Select object at this numeric depth.");
-    fll_program_print_help_option(context, fss_basic_read_short_empty, fss_basic_read_long_empty, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Include empty content when processing.");
-    fll_program_print_help_option(context, fss_basic_read_short_line, fss_basic_read_long_line, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print only the content at the given line.");
-    fll_program_print_help_option(context, fss_basic_read_short_name, fss_basic_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Select object with this name.");
-    fll_program_print_help_option(context, fss_basic_read_short_object, fss_basic_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the object instead of the content.");
-    fll_program_print_help_option(context, fss_basic_read_short_select, fss_basic_read_long_select, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Select sub-content at this index.");
-    fll_program_print_help_option(context, fss_basic_read_short_total, fss_basic_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print the total number of lines.");
-    fll_program_print_help_option(context, fss_basic_read_short_trim, fss_basic_read_long_trim, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Trim object names on select or print.");
+    fll_program_print_help_option(id, context, fss_basic_read_short_at, fss_basic_read_long_at, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Select object at this numeric index.");
+    fll_program_print_help_option(id, context, fss_basic_read_short_depth, fss_basic_read_long_depth, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Select object at this numeric depth.");
+    fll_program_print_help_option(id, context, fss_basic_read_short_empty, fss_basic_read_long_empty, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Include empty content when processing.");
+    fll_program_print_help_option(id, context, fss_basic_read_short_line, fss_basic_read_long_line, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print only the content at the given line.");
+    fll_program_print_help_option(id, context, fss_basic_read_short_name, fss_basic_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Select object with this name.");
+    fll_program_print_help_option(id, context, fss_basic_read_short_object, fss_basic_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the object instead of the content.");
+    fll_program_print_help_option(id, context, fss_basic_read_short_select, fss_basic_read_long_select, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Select sub-content at this index.");
+    fll_program_print_help_option(id, context, fss_basic_read_short_total, fss_basic_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print the total number of lines.");
+    fll_program_print_help_option(id, context, fss_basic_read_short_trim, fss_basic_read_long_trim, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Trim object names on select or print.");
 
-    fll_program_print_help_usage(context, fss_basic_read_name, "filename(s)");
+    fll_program_print_help_usage(id, context, fss_basic_read_name, "filename(s)");
 
     fl_color_print(f_type_output, context.set.important, " Notes:");
 
@@ -131,29 +131,59 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_console_parameter_id_t ids[3] = { fss_basic_read_parameter_no_color, fss_basic_read_parameter_light, fss_basic_read_parameter_dark };
-      const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
       const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, fss_basic_read_total_parameters);
 
-      status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+      {
+        f_console_parameter_id_t ids[3] = { fss_basic_read_parameter_no_color, fss_basic_read_parameter_light, fss_basic_read_parameter_dark };
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
 
-      if (F_status_is_error(status)) {
-        fss_basic_read_delete_data(data);
-        return F_status_set_error(status);
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+
+        if (F_status_is_error(status)) {
+          fss_basic_read_delete_data(data);
+          return F_status_set_error(status);
+        }
+      }
+
+      // Identify priority of verbosity related parameters.
+      {
+        f_console_parameter_id_t ids[4] = { fss_basic_read_parameter_verbosity_quiet, fss_basic_read_parameter_verbosity_normal, fss_basic_read_parameter_verbosity_verbose, fss_basic_read_parameter_verbosity_debug };
+        f_console_parameter_id_t choice = 0;
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+
+        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
+
+        if (F_status_is_error(status)) {
+          fss_basic_read_delete_data(data);
+          return status;
+        }
+
+        if (choice == fss_basic_read_parameter_verbosity_quiet) {
+          data->error.verbosity = f_console_verbosity_quiet;
+        }
+        else if (choice == fss_basic_read_parameter_verbosity_normal) {
+          data->error.verbosity = f_console_verbosity_normal;
+        }
+        else if (choice == fss_basic_read_parameter_verbosity_verbose) {
+          data->error.verbosity = f_console_verbosity_verbose;
+        }
+        else if (choice == fss_basic_read_parameter_verbosity_debug) {
+          data->error.verbosity = f_console_verbosity_debug;
+        }
       }
 
       status = F_none;
     }
 
     if (data->parameters[fss_basic_read_parameter_help].result == f_console_result_found) {
-      fss_basic_read_print_help(data->context);
+      fss_basic_read_print_help(data->output, data->context);
 
       fss_basic_read_delete_data(data);
       return status;
     }
 
     if (data->parameters[fss_basic_read_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(fss_basic_read_version);
+      fll_program_print_version(data->output, fss_basic_read_version);
 
       fss_basic_read_delete_data(data);
       return status;
@@ -161,45 +191,45 @@ extern "C" {
 
     if (data->remaining.used > 0 || data->process_pipe) {
       if (data->parameters[fss_basic_read_parameter_at].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_at);
-        fl_color_print_line(f_type_error, data->context.set.error, "' requires a positive number.");
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_at);
+        fl_color_print_to(data->error.to, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
         fss_basic_read_delete_data(data);
         return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_read_parameter_depth].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_depth);
-        fl_color_print_line(f_type_error, data->context.set.error, "' requires a positive number.");
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_depth);
+        fl_color_print_to(data->error.to, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
         fss_basic_read_delete_data(data);
         return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_line);
-        fl_color_print_line(f_type_error, data->context.set.error, "' requires a positive number.");
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_line);
+        fl_color_print_to(data->error.to, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
         fss_basic_read_delete_data(data);
         return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_read_parameter_name].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_name);
-        fl_color_print_line(f_type_error, data->context.set.error, "' requires a string.");
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_name);
+        fl_color_print_to(data->error.to, data->context.set.error, "' requires a string.%c", f_string_eol[0]);
 
         fss_basic_read_delete_data(data);
         return F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_read_parameter_select].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The parameter '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_select);
-        fl_color_print_line(f_type_error, data->context.set.error, "' requires a positive number.");
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_select);
+        fl_color_print_to(data->error.to, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
         fss_basic_read_delete_data(data);
         return F_status_set_error(F_parameter);
@@ -207,22 +237,22 @@ extern "C" {
 
       if (data->parameters[fss_basic_read_parameter_object].result == f_console_result_found) {
         if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
-          fl_color_print(f_type_error, data->context.set.error, "ERROR: Cannot specify the '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_object);
-          fl_color_print(f_type_error, data->context.set.error, "' parameter with the '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_line);
-          fl_color_print_line(f_type_error, data->context.set.error, "' parameter.");
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_object);
+          fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_line);
+          fl_color_print_to(data->error.to, data->context.set.error, "' parameter.");
 
           fss_basic_read_delete_data(data);
           return F_status_set_error(F_parameter);
         }
 
         if (data->parameters[fss_basic_read_parameter_select].result == f_console_result_additional) {
-          fl_color_print(f_type_error, data->context.set.error, "ERROR: Cannot specify the '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_object);
-          fl_color_print(f_type_error, data->context.set.error, "' parameter with the '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_select);
-          fl_color_print_line(f_type_error, data->context.set.error, "' parameter.");
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_object);
+          fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_select);
+          fl_color_print_to(data->error.to, data->context.set.error, "' parameter.%c", f_string_eol[0]);
 
           fss_basic_read_delete_data(data);
           return F_status_set_error(F_parameter);
@@ -231,11 +261,11 @@ extern "C" {
 
       if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
         if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
-          fl_color_print(f_type_error, data->context.set.error, "ERROR: Cannot specify the '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_line);
-          fl_color_print(f_type_error, data->context.set.error, "' parameter with the '");
-          fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_total);
-          fl_color_print_line(f_type_error, data->context.set.error, "' parameter.");
+          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_line);
+          fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
+          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_total);
+          fl_color_print_to(data->error.to, data->context.set.error, "' parameter.%c", f_string_eol[0]);
 
           fss_basic_read_delete_data(data);
           return F_status_set_error(F_parameter);
@@ -270,9 +300,9 @@ extern "C" {
       }
 
       if (data->parameters[fss_basic_read_parameter_select].result == f_console_result_found) {
-        fl_color_print(f_type_error, data->context.set.error, "ERROR: The '");
-        fl_color_print(f_type_error, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_select);
-        fl_color_print_line(f_type_error, data->context.set.error, "' parameter requires a positive number.");
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The '");
+        fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_select);
+        fl_color_print_to(data->error.to, data->context.set.error, "' parameter requires a positive number.%c", f_string_eol[0]);
 
         macro_fss_basic_read_depths_t_delete_simple(depths);
         fss_basic_read_delete_data(data);
@@ -374,7 +404,7 @@ extern "C" {
       macro_fss_basic_read_depths_t_delete_simple(depths);
     }
     else {
-      fl_color_print_line(f_type_error, data->context.set.error, "ERROR: You failed to specify one or more files.");
+      fl_color_print_to(data->error.to, data->context.set.error, "ERROR: You failed to specify one or more files.%c", f_string_eol[0]);
       status = F_status_set_error(F_parameter);
     }
 

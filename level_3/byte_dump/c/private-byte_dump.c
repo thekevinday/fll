@@ -208,17 +208,17 @@ extern "C" {
     fflush(f_type_output);
 
     if (found_invalid_utf) {
-      fl_color_print(f_type_error, data.context.set.error, "Invalid UTF-8 codes were detected for file '");
-      fl_color_print(f_type_error, data.context.set.notable, "%s", file_name);
-      fl_color_print_line(f_type_error, data.context.set.error, "'.");
+      fl_color_print_to(data.error.to, data.context.set.error, "Invalid UTF-8 codes were detected for file '");
+      fl_color_print_to(data.error.to, data.context.set.notable, "%s", file_name);
+      fl_color_print_to(data.error.to, data.context.set.error, "'.%c", f_string_eol[0]);
       printf("%c", f_string_eol[0]);
     }
 
     if (size < 0) {
       // @todo: determine what the error from read() is and display it.
-      fl_color_print(f_type_error, data.context.set.error, "ERROR: read() failed for '");
-      fl_color_print(f_type_error, data.context.set.notable, "%s", file_name);
-      fl_color_print_line(f_type_error, data.context.set.error, "'.");
+      fl_color_print_to(data.error.to, data.context.set.error, "ERROR: read() failed for '");
+      fl_color_print_to(data.error.to, data.context.set.notable, "%s", file_name);
+      fl_color_print_to(data.error.to, data.context.set.error, "'.%c", f_string_eol[0]);
       printf("%c", f_string_eol[0]);
       status = F_status_set_error(F_failure);
     }
@@ -825,75 +825,6 @@ extern "C" {
     printf("%c", f_string_eol[0]);
   }
 #endif // _di_byte_dump_file_
-
-#ifndef _di_byte_dump_print_file_error_
-  void byte_dump_print_file_error(const f_color_context_t context, const f_string_t function, const f_string_t file_name, const f_status_t status) {
-
-    if (status == F_false) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: Failed to find file '");
-      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
-      return;
-    }
-
-    if (status == F_parameter) {
-      fl_color_print(f_type_error, context.set.error, "INTERNAL ERROR: Invalid parameter when calling ", function, file_name);
-      fl_color_print(f_type_error, context.set.notable, "%s", function);
-      fl_color_print(f_type_error, context.set.error, "() for the file '");
-      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
-      return;
-    }
-
-    if (status == F_name) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: Invalid filename '");
-      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
-      return;
-    }
-
-    if (status == F_memory_out) {
-      fl_color_print(f_type_error, context.set.error, "CRITICAL ERROR: Unable to allocate memory, while trying to access file '");
-      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
-      return;
-    }
-
-    if (status == F_number_overflow) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: Overflow while trying to access file '");
-      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
-      return;
-    }
-
-    if (status == F_directory) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: Invalid directory while trying to access file '");
-      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
-      return;
-    }
-
-    if (status == F_access_denied) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: Access denied while trying to access file '");
-      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
-      return;
-    }
-
-    if (status == F_loop) {
-      fl_color_print(f_type_error, context.set.error, "ERROR: Loop while trying to access file '");
-      fl_color_print(f_type_error, context.set.notable, "%s", file_name);
-      fl_color_print_line(f_type_error, context.set.error, "'.");
-      return;
-    }
-
-    fl_color_print(f_type_error, context.set.error, "UNKNOWN ERROR: (");
-    fl_color_print(f_type_error, context.set.notable, "%llu", status);
-    fl_color_print(f_type_error, context.set.error, ") occurred for file '");
-    fl_color_print(f_type_error, context.set.notable, "%s", file_name);
-    fl_color_print_line(f_type_error, context.set.error, "'.");
-  }
-#endif // _di_byte_dump_print_file_error_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -24,26 +24,26 @@ extern "C" {
 #endif // _di_init_print_version_
 
 #ifndef _di_init_print_help_
-  f_return_status init_print_help(const f_color_context_t context) {
+  f_return_status init_print_help(const int id, const f_color_context_t context) {
 
-    fll_program_print_help_header(context, init_name_long, init_version);
+    fll_program_print_help_header(id, context, init_name_long, init_version);
 
-    fll_program_print_help_option(context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(id, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(id, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(id, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(id, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(id, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(context, init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Do not attempt to process kernel command line or perform any boot-time specific preparations.");
-    fll_program_print_help_option(context, init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a custom run level, ignoring the kernel command line runlevel argument.");
+    fll_program_print_help_option(id, context, init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Do not attempt to process kernel command line or perform any boot-time specific preparations.");
+    fll_program_print_help_option(id, context, init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a custom run level, ignoring the kernel command line runlevel argument.");
 
-    fll_program_print_help_usage(context, init_name, "");
+    fll_program_print_help_usage(id, context, init_name, "");
 
     return F_none;
   }
@@ -60,18 +60,62 @@ extern "C" {
     unsigned short do_socket_port = F_false;
 
     {
-      f_console_parameter_id_t ids[3] = { init_parameter_no_color, init_parameter_light, init_parameter_dark };
-      const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
       const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, init_total_parameters);
 
-      status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+      {
+        f_console_parameter_id_t ids[3] = { init_parameter_no_color, init_parameter_light, init_parameter_dark };
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
 
-      if (F_status_is_error(status)) {
-        // @todo: init_delete_data(data);
-        return F_status_set_error(status);
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+
+        if (F_status_is_error(status)) {
+          // @todo: init_delete_data(data);
+          return F_status_set_error(status);
+        }
+      }
+
+      // Identify priority of verbosity related parameters.
+      {
+        f_console_parameter_id_t ids[4] = { init_parameter_verbosity_quiet, init_parameter_verbosity_normal, init_parameter_verbosity_verbose, init_parameter_verbosity_debug };
+        f_console_parameter_id_t choice = 0;
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+
+        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
+
+        if (F_status_is_error(status)) {
+          init_delete_data(data);
+          return status;
+        }
+
+        if (choice == init_parameter_verbosity_quiet) {
+          data->error.verbosity = f_console_verbosity_quiet;
+        }
+        else if (choice == init_parameter_verbosity_normal) {
+          data->error.verbosity = f_console_verbosity_normal;
+        }
+        else if (choice == init_parameter_verbosity_verbose) {
+          data->error.verbosity = f_console_verbosity_verbose;
+        }
+        else if (choice == init_parameter_verbosity_debug) {
+          data->error.verbosity = f_console_verbosity_debug;
+        }
       }
 
       status = F_none;
+    }
+
+    if (data->parameters[init_parameter_help].result == f_console_result_found) {
+      init_print_help(data->output, data->context);
+
+      init_delete_data(data);
+      return F_none;
+    }
+
+    if (data->parameters[init_parameter_version].result == f_console_result_found) {
+      fll_program_print_version(data->output, init_version);
+
+      init_delete_data(data);
+      return F_none;
     }
 
     if (data->parameters[init_parameter_runlevel].result == f_console_result_found) {
@@ -124,13 +168,13 @@ extern "C" {
       pid_t pid_services = clone(init_handler_child_services, stack_memory.services + init_stack_size_small_services, init_flags_clone, stack_memory.services);
 
       if (pid_services < 0) {
-        fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Failed to clone services process (errno = %i).", errno);
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Failed to clone services process (errno = %i).%c", errno, f_string_eol[0]);
       }
 
       pid_t pid_control_file = clone(init_handler_child_control_file, stack_memory.control_file + init_stack_size_control_file, init_flags_clone, stack_memory.control_file);
 
       if (pid_control_file < 0) {
-        fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Failed to clone control via file process (errno = %i).", errno);
+        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Failed to clone control via file process (errno = %i).%c", errno, f_string_eol[0]);
       }
     */
 
@@ -158,11 +202,11 @@ extern "C" {
             continue;
           }
           else if (errno != EINTR) {
-            fl_color_print_line(f_type_error, data->context.set.error, "ERROR: sigwaitinfo() failed (errno = %i).", errno);
+            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: sigwaitinfo() failed (errno = %i).%c", errno, f_string_eol[0]);
 
             signal_problem_count++;
             if (signal_problem_count > problem_count_max_signal_size) {
-              fl_color_print_line(f_type_error, data->context.set.error, "ERROR: Max signal problem count has been reached, sleeping for a period of time.", errno);
+              fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Max signal problem count has been reached, sleeping for a period of time.%c", errno, f_string_eol[0]);
               sleep(init_panic_signal_sleep_seconds);
               signal_problem_count = 0;
             }

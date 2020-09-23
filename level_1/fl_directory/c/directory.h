@@ -58,9 +58,9 @@ extern "C" {
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists (existing file will be replaced).
  * output:
- *   Set to 0 to not print on successful operation.
- *   Set to a valid file pointer to print to on successful operation.
- *   This is passed to the verbose function if that function pointer is not 0.
+ *   Set to -1 to not print on successful operation.
+ *   Set to a valid file descriptor to print to on successful operation.
+ *   This is passed to the verbose function if that function pointer is not -1.
  * verbose:
  *   Set to 0 to not print on successful operation.
  *   Set to address of a function to be called for printing such that:
@@ -78,12 +78,12 @@ extern "C" {
     f_number_unsigned_t depth_max;
     f_number_unsigned_t size_block;
     bool exclusive;
-    FILE *output;
-    void (*verbose)(FILE *, const f_string_t, const f_string_t);
+    int output;
+    void (*verbose)(const int, const f_string_t, const f_string_t);
     f_directory_statuss_t *failures;
   } fl_directory_recurse_t;
 
-  #define fl_directory_recurse_t_initialize { fl_directory_recurse_depth_max, f_file_default_read_size, F_false, 0, 0, 0 }
+  #define fl_directory_recurse_t_initialize { fl_directory_recurse_depth_max, f_file_default_read_size, F_false, -1, 0, 0 }
 #endif // _di_fl_directory_recurse_t_
 
 /**

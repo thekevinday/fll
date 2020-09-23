@@ -136,28 +136,6 @@ extern "C" {
   extern void byte_dump_print_text(const byte_dump_data_t data, const f_utf_string_static_t characters, const uint8_t invalid[], byte_dump_previous_t *previous, uint8_t *offset) f_gcc_attribute_visibility_internal;
 #endif // _di_byte_dump_print_text_
 
-/**
- * Print error messages related to a file.
- *
- * @param context
- *   The color context codes.
- * @param status
- *   The status code.
- * @param function
- *   The name of the function that failed.
- * @param file_name
- *   The name of the file related to the error.
- * @param status
- *   The status code representing the error.
- *
- * @param
- *   F_true if error has been printed.
- *   F_false if error has not been printed.
- */
-#ifndef _di_byte_dump_print_file_error_
-  extern void byte_dump_print_file_error(const f_color_context_t context, const f_string_t function, const f_string_t file_name, const f_status_t status) f_gcc_attribute_visibility_internal;
-#endif // _di_byte_dump_print_file_error_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

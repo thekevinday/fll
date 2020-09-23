@@ -40,6 +40,7 @@
 #include <level_1/utf.h>
 
 // fll-2 includes
+#include <level_2/error.h>
 #include <level_2/program.h>
 
 #ifdef __cplusplus
@@ -213,13 +214,14 @@ extern "C" {
     f_string_lengths_t remaining;
     bool process_pipe;
 
-    uint8_t verbosity;
+    int output;
+    fll_error_print_t error;
 
     uint64_t first;
     uint64_t last;
-    uint8_t  width;
-    uint8_t  mode;
-    uint8_t  presentation;
+    uint8_t width;
+    uint8_t mode;
+    uint8_t presentation;
 
     f_color_context_t context;
   } byte_dump_data_t;
@@ -229,7 +231,8 @@ extern "C" {
       byte_dump_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      f_console_verbosity_normal, \
+      f_type_descriptor_output, \
+      fll_error_print_t_initialize, \
       0, \
       0, \
       8, \
@@ -242,6 +245,8 @@ extern "C" {
 /**
  * Print help to standard output.
  *
+ * @param id
+ *   The file descriptor to print to.
  * @param context
  *   The color context settings.
  *
@@ -249,7 +254,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_byte_dump_print_help_
-  extern f_return_status byte_dump_print_help(const f_color_context_t context);
+  extern f_return_status byte_dump_print_help(const int id, const f_color_context_t context);
 #endif // _di_byte_dump_print_help_
 
 /**

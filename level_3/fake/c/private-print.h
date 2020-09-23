@@ -153,15 +153,13 @@ extern "C" {
  *   Set to 0 to disable.
  * @param fallback
  *   Set to F_true to print the fallback error message for unknown errors.
- * @param print
- *   Designates how the section error/warning should be printed.
  *
  * @return
  *   F_none is returned on successful print of known errors.
  *   F_unknown is returned if the status code has no print message.
  */
 #ifndef _di_fake_print_message_
-  extern f_return_status fake_print_message(const fake_data_t data, const f_status_t status, const f_string_t function, const bool fallback, const fake_make_print_t print) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_print_message(const fake_data_t data, const f_status_t status, const f_string_t function, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_message_
 
 /**
@@ -191,7 +189,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fake_print_message_file_
-  extern bool fake_print_message_file(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const bool is_file, const bool fallback, const fake_make_print_t print) f_gcc_attribute_visibility_internal;
+  extern bool fake_print_message_file(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_message_file_
 
 /**

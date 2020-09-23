@@ -13,18 +13,18 @@ extern "C" {
   f_return_status fake_clean_operate(const fake_data_t data) {
     f_status_t status = F_none;
 
-    if (data.verbosity != f_console_verbosity_quiet) {
+    if (data.error.verbosity != f_console_verbosity_quiet) {
       printf("%c", f_string_eol[0]);
       fl_color_print(f_type_output, data.context.set.important, "Deleting all files within build directory '");
       fl_color_print(f_type_output, data.context.set.notable, "%s", data.path_build.string);
-      fl_color_print_line(f_type_output, data.context.set.important, "'.");
+      fl_color_print(f_type_output, data.context.set.important, "'.%c", f_string_eol[0]);
     }
 
     if (fake_signal_received(data)) {
       return F_signal;
     }
 
-    if (data.verbosity == f_console_verbosity_verbose) {
+    if (data.error.verbosity == f_console_verbosity_verbose) {
       status = f_directory_remove_custom(data.path_build.string, f_directory_descriptors_max, F_true, fake_clean_remove_recursively_verbosely);
     }
     else {
@@ -32,7 +32,7 @@ extern "C" {
     }
 
     if (F_status_set_fine(status) == F_file_found_not) {
-      if (data.verbosity == f_console_verbosity_verbose) {
+      if (data.error.verbosity == f_console_verbosity_verbose) {
         printf("The build directory '%s' does not exist.%c", data.path_build.string, f_string_eol[0]);
       }
 
