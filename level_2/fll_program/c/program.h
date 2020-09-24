@@ -32,8 +32,8 @@ extern "C" {
 /**
  * Print standard help header.
  *
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file to output to.
  * @param context
  *   The color context.
  * @param name
@@ -49,14 +49,14 @@ extern "C" {
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_header_
-  extern f_return_status fll_program_print_help_header(const int id, const f_color_context_t context, const f_string_t name, const f_string_t version);
+  extern f_return_status fll_program_print_help_header(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t version);
 #endif // _di_fll_program_print_help_header_
 
 /**
  * Print standard help option.
  *
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file to output to.
  * @param context
  *   The color context.
  * @param option_short
@@ -78,14 +78,14 @@ extern "C" {
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_
-  extern f_return_status fll_program_print_help_option(const int id, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
+  extern f_return_status fll_program_print_help_option(const f_file_t file, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
 #endif // _di_fll_program_print_help_option_
 
 /**
  * Print standard help option (long option only).
  *
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file to output to.
  * @param context
  *   The color context.
  * @param option_long
@@ -103,14 +103,14 @@ extern "C" {
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_long_
-  extern f_return_status fll_program_print_help_option_long(const int id, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
+  extern f_return_status fll_program_print_help_option_long(const f_file_t file, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
 #endif // _di_fll_program_print_help_option_long_
 
 /**
  * Print standard help option (other option only).
  *
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file to output to.
  * @param context
  *   The color context.
  * @param option_other
@@ -126,14 +126,14 @@ extern "C" {
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_option_other_
-  extern f_return_status fll_program_print_help_option_other(const int id, const f_color_context_t context, const f_string_t option_other, const f_string_t description);
+  extern f_return_status fll_program_print_help_option_other(const f_file_t file, const f_color_context_t context, const f_string_t option_other, const f_string_t description);
 #endif // _di_fll_program_print_help_option_other_
 
 /**
  * Print standard help usage.
  *
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file to output to.
  * @param context
  *   The color context.
  * @param name
@@ -150,14 +150,14 @@ extern "C" {
  * @param fl_color_print()
  */
 #ifndef _di_fll_program_print_help_usage_
-  extern f_return_status fll_program_print_help_usage(const int id, const f_color_context_t context, const f_string_t name, const f_string_t parameters);
+  extern f_return_status fll_program_print_help_usage(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t parameters);
 #endif // _di_fll_program_print_help_usage_
 
 /**
  * Print the program version.
  *
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file to output to.
  * @param version
  *   The version number of the program.
  *
@@ -165,7 +165,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fll_program_print_version_
-  extern f_return_status fll_program_print_version(const int id, const f_string_t version);
+  extern f_return_status fll_program_print_version(const f_file_t file, const f_string_t version);
 #endif // _di_fll_program_print_version_
 
 /**

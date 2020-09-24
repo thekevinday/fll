@@ -19,8 +19,8 @@ extern "C" {
     f_status_t status = F_none;
 
     if (data.error.verbosity != f_console_verbosity_quiet) {
-      printf("%c", f_string_eol[0]);
-      fl_color_print(f_type_output, data.context.set.important, "Generating skeleton structure.%c", f_string_eol[0]);
+      fprintf(data.output.stream, "%c", f_string_eol[0]);
+      fl_color_print(data.output.stream, data.context.set.important, "Generating skeleton structure.%c", f_string_eol[0]);
     }
 
     {
@@ -56,7 +56,7 @@ extern "C" {
         status = fake_skeleton_operate_directory_create(data, *parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fake_print_error(data, F_status_set_fine(status), "fake_skeleton_operate_directory_create", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "fake_skeleton_operate_directory_create", F_true);
           return status;
         }
       } // for
@@ -166,7 +166,7 @@ extern "C" {
 
     if (status == F_true) {
       if (data.error.verbosity == f_console_verbosity_verbose) {
-        printf("Directory '%s' already exists.%c", path.string, f_string_eol[0]);
+        fprintf(data.output.stream, "Directory '%s' already exists.%c", path.string, f_string_eol[0]);
       }
 
       return F_none;
@@ -174,10 +174,10 @@ extern "C" {
 
     if (status == F_false) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, data.context.set.error, "ERROR: The path '");
-        fl_color_print_to(data.error.to, data.context.set.notable, "%s", path.string);
-        fl_color_print_to(data.error.to, data.context.set.error, "' exists but is not a directory.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The path '");
+        fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path.string);
+        fl_color_print(data.error.to.stream, data.context.set.error, "' exists but is not a directory.%c", f_string_eol[0]);
       }
 
       return F_status_set_warning(F_failure);
@@ -187,24 +187,24 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
-          dprintf(data.error.to, "%c", f_string_eol[0]);
-          fl_color_print_to(data.error.to, data.context.set.error, "ERROR: The path '");
-          fl_color_print_to(data.error.to, data.context.set.notable, "%s", path.string);
-          fl_color_print_to(data.error.to, data.context.set.error, "' could not be created, a parent directory does not exist.%c", f_string_eol[0]);
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The path '");
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path.string);
+          fl_color_print(data.error.to.stream, data.context.set.error, "' could not be created, a parent directory does not exist.%c", f_string_eol[0]);
         }
         else {
-          fake_print_error_file(data, F_status_set_fine(status), "f_directory_create", path.string, "create", F_false, F_true);
+          fll_error_file_print(data.error, F_status_set_fine(status), "f_directory_create", F_true, path.string, "create", fll_error_file_type_directory);
         }
 
         return status;
       }
 
       if (data.error.verbosity == f_console_verbosity_verbose) {
-        printf("Directory '%s' created.%c", path.string, f_string_eol[0]);
+        fprintf(data.output.stream, "Directory '%s' created.%c", path.string, f_string_eol[0]);
       }
     }
     else if (F_status_is_error(status)) {
-      fake_print_error_file(data, F_status_set_fine(status), "f_directory_exists", path.string, "create", F_false, F_true);
+      fll_error_file_print(data.error, F_status_set_fine(status), "f_directory_exists", F_true, path.string, "create", fll_error_file_type_directory);
       return status;
     }
 
@@ -222,7 +222,7 @@ extern "C" {
 
     if (status == F_true) {
       if (data.error.verbosity == f_console_verbosity_verbose) {
-        printf("File '%s' already exists.%c", path.string, f_string_eol[0]);
+        fprintf(data.output.stream, "File '%s' already exists.%c", path.string, f_string_eol[0]);
       }
 
       return F_none;
@@ -234,7 +234,7 @@ extern "C" {
 
       if (status == F_true) {
         if (data.error.verbosity == f_console_verbosity_verbose) {
-          printf("File '%s' already exists (as a symbolic link).%c", path.string, f_string_eol[0]);
+          fprintf(data.output.stream, "File '%s' already exists (as a symbolic link).%c", path.string, f_string_eol[0]);
         }
 
         return F_none;
@@ -243,7 +243,7 @@ extern "C" {
 
     if (status == F_false) {
       if (data.error.verbosity == f_console_verbosity_verbose) {
-        printf("File '%s' already exists but is not a regular file (or symbolic link).%c", path.string, f_string_eol[0]);
+        fprintf(data.output.stream, "File '%s' already exists but is not a regular file (or symbolic link).%c", path.string, f_string_eol[0]);
       }
 
       return F_status_set_warning(F_none);
@@ -259,20 +259,20 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
-          dprintf(data.error.to, "%c", f_string_eol[0]);
-          fl_color_print_to(data.error.to, data.context.set.error, "ERROR: The file '");
-          fl_color_print_to(data.error.to, data.context.set.notable, "%s", path.string);
-          fl_color_print_to(data.error.to, data.context.set.error, "' could not be created, a parent directory does not exist.%c", f_string_eol[0]);
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The file '");
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path.string);
+          fl_color_print(data.error.to.stream, data.context.set.error, "' could not be created, a parent directory does not exist.%c", f_string_eol[0]);
         }
         else {
-          fake_print_error_file(data, F_status_set_fine(status), "f_file_create", path.string, "create", F_true, F_true);
+          fll_error_file_print(data.error, F_status_set_fine(status), "f_file_create", F_true, path.string, "create", fll_error_file_type_file);
         }
 
         return status;
       }
 
       if (data.error.verbosity == f_console_verbosity_verbose) {
-        printf("File '%s' created.%c", path.string, f_string_eol[0]);
+        fprintf(data.output.stream, "File '%s' created.%c", path.string, f_string_eol[0]);
       }
 
       if (content.used) {
@@ -284,7 +284,7 @@ extern "C" {
         status = f_file_open(path.string, 0, &file);
 
         if (F_status_is_error(status)) {
-          fake_print_error_file(data, F_status_set_fine(status), "f_file_open", path.string, "pre-populate", F_true, F_true);
+          fll_error_file_print(data.error, F_status_set_fine(status), "f_file_open", F_true, path.string, "pre-populate", fll_error_file_type_file);
 
           return status;
         }
@@ -292,21 +292,22 @@ extern "C" {
         status = f_file_write(file, content, 0);
 
         if (F_status_is_error(status)) {
-          fake_print_error_file(data, F_status_set_fine(status), "f_file_write", path.string, "pre-populate", F_true, F_true);
+          fll_error_file_print(data.error, F_status_set_fine(status), "f_file_write", F_true, path.string, "pre-populate", fll_error_file_type_file);
 
           f_file_close(&file.id);
           return status;
         }
 
         if (data.error.verbosity == f_console_verbosity_verbose) {
-          printf("File '%s' pre-populated.%c", path.string, f_string_eol[0]);
+          fprintf(data.output.stream, "File '%s' pre-populated.%c", path.string, f_string_eol[0]);
         }
 
         f_file_close(&file.id);
       }
     }
     else if (F_status_is_error(status)) {
-      fake_print_error_file(data, F_status_set_fine(status), "f_file_is", path.string, "create", F_true, F_true);
+      fll_error_file_print(data.error, F_status_set_fine(status), "f_file_is", F_true, path.string, "create", fll_error_file_type_file);
+
       return status;
     }
 

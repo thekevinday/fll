@@ -358,6 +358,8 @@ extern "C" {
     fake_make_parameter_t parameter;
     fake_make_path_t path;
 
+    fll_error_print_t error;
+
     f_fss_nameds_t fakefile;
 
     f_string_dynamic_t buffer;
@@ -372,6 +374,7 @@ extern "C" {
     fake_environment_t_initialize, \
     fake_make_parameter_t_initialize, \
     fake_make_path_t_initialize, \
+    fll_error_print_t_initialize, \
     f_fss_nameds_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
@@ -415,6 +418,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param error
+ *   The error/warning print data.
  * @param buffer
  *   The string containing the name or number.
  * @param id
@@ -427,7 +432,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_group_
-  f_return_status fake_make_get_id_group(const fake_data_t data, const f_string_static_t buffer, gid_t *id) f_gcc_attribute_visibility_internal;
+  f_return_status fake_make_get_id_group(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, gid_t *id) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_group_
 
 /**
@@ -435,6 +440,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param error
+ *   The error/warning print data.
  * @param buffer
  *   The string containing the name or number.
  * @param mode
@@ -451,7 +458,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_mode_
-  f_return_status fake_make_get_id_mode(const fake_data_t data, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
+  f_return_status fake_make_get_id_mode(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_mode_
 
 /**

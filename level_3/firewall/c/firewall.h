@@ -293,7 +293,7 @@ extern "C" {
     f_string_lengths_t remaining;
     bool process_pipe;
 
-    int output;
+    f_file_t output;
     fll_error_print_t error;
 
     f_string_dynamics_t chains;
@@ -307,7 +307,7 @@ extern "C" {
       firewall_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      f_type_descriptor_output, \
+      f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
@@ -316,8 +316,10 @@ extern "C" {
 #endif // _di_firewall_data_t_
 
 /**
- * Print help to standard output.
+ * Print help.
  *
+ * @param file
+ *   The file to print to.
  * @param context
  *   The color context settings.
  *
@@ -325,7 +327,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_firewall_print_help_
-  extern f_return_status firewall_print_help(const int id, const f_color_context_t context);
+  extern f_return_status firewall_print_help(const f_file_t file, const f_color_context_t context);
 #endif // _di_firewall_print_help_
 
 /**

@@ -6,65 +6,65 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_file_error_print_
-  f_return_status fll_file_error_print(FILE *file, const f_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status) {
+  f_return_status fll_file_error_print(FILE *stream, const f_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status) {
 
     if (status == F_memory_allocation || status == F_memory_reallocation) {
-      fl_color_print(file, context.set.error, "CRITICAL ERROR: Unable to allocate memory.");
-      fprintf(file, "%c", f_string_eol[0]);
+      fl_color_print(stream, context.set.error, "CRITICAL ERROR: Unable to allocate memory.");
+      fprintf(stream, "%c", f_string_eol[0]);
     }
     else if (status == F_file_closed) {
-      fl_color_print(file, context.set.error, "INTERNAL ERROR: The file '");
-      fl_color_print(file, context.set.notable, "%s", file_name);
-      fl_color_print(file, context.set.error, "' is no longer open.");
-      fprintf(file, "%c", f_string_eol[0]);
+      fl_color_print(stream, context.set.error, "INTERNAL ERROR: The file '");
+      fl_color_print(stream, context.set.notable, "%s", file_name);
+      fl_color_print(stream, context.set.error, "' is no longer open.");
+      fprintf(stream, "%c", f_string_eol[0]);
     }
     else if (status == F_file_seek) {
-      fl_color_print(file, context.set.error, "ERROR: A seek error occurred while accessing the file '");
-      fl_color_print(file, context.set.notable, "%s", file_name);
-      fl_color_print(file, context.set.error, "'.");
-      fprintf(file, "%c", f_string_eol[0]);
+      fl_color_print(stream, context.set.error, "ERROR: A seek error occurred while accessing the file '");
+      fl_color_print(stream, context.set.notable, "%s", file_name);
+      fl_color_print(stream, context.set.error, "'.");
+      fprintf(stream, "%c", f_string_eol[0]);
     }
     else if (status == F_file_read) {
-      fl_color_print(file, context.set.error, "ERROR: A read error occurred while accessing the file '");
-      fl_color_print(file, context.set.notable, "%s", file_name);
-      fl_color_print(file, context.set.error, "'.");
-      fprintf(file, "%c", f_string_eol[0]);
+      fl_color_print(stream, context.set.error, "ERROR: A read error occurred while accessing the file '");
+      fl_color_print(stream, context.set.notable, "%s", file_name);
+      fl_color_print(stream, context.set.error, "'.");
+      fprintf(stream, "%c", f_string_eol[0]);
     }
     else if (status == F_file_found_not) {
-      fl_color_print(file, context.set.error, "ERROR: Unable to find the file '");
-      fl_color_print(file, context.set.notable, "%s", file_name);
-      fl_color_print(file, context.set.error, "'.");
-      fprintf(file, "%c", f_string_eol[0]);
+      fl_color_print(stream, context.set.error, "ERROR: Unable to find the file '");
+      fl_color_print(stream, context.set.notable, "%s", file_name);
+      fl_color_print(stream, context.set.error, "'.");
+      fprintf(stream, "%c", f_string_eol[0]);
     }
     else if (status == F_file_open) {
-      fl_color_print(file, context.set.error, "ERROR: Unable to open the file '");
-      fl_color_print(file, context.set.notable, "%s", file_name);
-      fl_color_print(file, context.set.error, "'.");
-      fprintf(file, "%c", f_string_eol[0]);
+      fl_color_print(stream, context.set.error, "ERROR: Unable to open the file '");
+      fl_color_print(stream, context.set.notable, "%s", file_name);
+      fl_color_print(stream, context.set.error, "'.");
+      fprintf(stream, "%c", f_string_eol[0]);
     }
     else if (status == F_file_descriptor) {
-      fl_color_print(file, context.set.error, "ERROR: File descriptor error while trying to open the file '");
-      fl_color_print(file, context.set.notable, "%s", file_name);
-      fl_color_print(file, context.set.error, "'.");
-      fprintf(file, "%c", f_string_eol[0]);
+      fl_color_print(stream, context.set.error, "ERROR: File descriptor error while trying to open the file '");
+      fl_color_print(stream, context.set.notable, "%s", file_name);
+      fl_color_print(stream, context.set.error, "'.");
+      fprintf(stream, "%c", f_string_eol[0]);
     }
     else if (status == F_parameter) {
-      fl_color_print(file, context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
-      fl_color_print(file, context.set.notable, "%s()", function_name);
-      fl_color_print(file, context.set.error, ".");
-      fprintf(file, "%c", f_string_eol[0]);
+      fl_color_print(stream, context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
+      fl_color_print(stream, context.set.notable, "%s()", function_name);
+      fl_color_print(stream, context.set.error, ".");
+      fprintf(stream, "%c", f_string_eol[0]);
     }
     else if (status == F_number_overflow) {
-      fl_color_print(file, context.set.error, "ERROR: Integer overflow while trying to buffer the file '");
-      fl_color_print(file, context.set.notable, "%s", file_name);
-      fl_color_print(file, context.set.error, "'.");
-      fprintf(file, "%c", f_string_eol[0]);
+      fl_color_print(stream, context.set.error, "ERROR: Integer overflow while trying to buffer the file '");
+      fl_color_print(stream, context.set.notable, "%s", file_name);
+      fl_color_print(stream, context.set.error, "'.");
+      fprintf(stream, "%c", f_string_eol[0]);
     }
     else if (status == F_number_underflow) {
-      fl_color_print(file, context.set.error, "ERROR: Integer underflow while trying to buffer the file '");
-      fl_color_print(file, context.set.notable, "%s", file_name);
-      fl_color_print(file, context.set.error, "'.");
-      fprintf(file, "%c", f_string_eol[0]);
+      fl_color_print(stream, context.set.error, "ERROR: Integer underflow while trying to buffer the file '");
+      fl_color_print(stream, context.set.notable, "%s", file_name);
+      fl_color_print(stream, context.set.error, "'.");
+      fprintf(stream, "%c", f_string_eol[0]);
     }
     else {
       return F_false;
@@ -94,7 +94,7 @@ extern "C" {
     f_status_t status = f_file_rename(source, destination);
 
     if (F_status_set_fine(status) != F_mount) {
-      if (status == F_none && recurse.output && recurse.verbose) {
+      if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
         recurse.verbose(recurse.output, source, destination);
       }
 
@@ -120,7 +120,7 @@ extern "C" {
 
       status = f_directory_remove(source, recurse.depth_max, F_false);
 
-      if (status == F_none && recurse.output && recurse.verbose) {
+      if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
         recurse.verbose(recurse.output, source, destination);
       }
     }
@@ -133,7 +133,7 @@ extern "C" {
 
       status = f_file_remove(source);
 
-      if (status == F_none && recurse.output && recurse.verbose) {
+      if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
         recurse.verbose(recurse.output, source, destination);
       }
     }

@@ -116,7 +116,7 @@ extern "C" {
       if (depth < recurse.depth_max) {
         status = private_fl_directory_clone(source_sub, destination_sub, role, recurse, depth + 1);
 
-        if (status == F_none && recurse.output != -1 && recurse.verbose) {
+        if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
           recurse.verbose(recurse.output, source_sub.string, destination_sub.string);
         }
       }
@@ -208,7 +208,7 @@ extern "C" {
       return F_failure;
     }
 
-    if (recurse.output != -1 && recurse.verbose) {
+    if ((!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
       recurse.verbose(recurse.output, path_source, path_destination);
     }
 
@@ -312,7 +312,7 @@ extern "C" {
       if (depth < recurse.depth_max) {
         status = private_fl_directory_copy(source_sub, destination_sub, mode, recurse, depth + 1);
 
-        if (status == F_none && recurse.output != -1 && recurse.verbose) {
+        if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
           recurse.verbose(recurse.output, source_sub.string, destination_sub.string);
         }
       }
@@ -405,7 +405,7 @@ extern "C" {
       return F_failure;
     }
 
-    if (recurse.output != -1 && recurse.verbose) {
+    if ((!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
       recurse.verbose(recurse.output, path_source, path_destination);
     }
 

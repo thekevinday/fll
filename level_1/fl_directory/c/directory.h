@@ -64,7 +64,7 @@ extern "C" {
  * verbose:
  *   Set to 0 to not print on successful operation.
  *   Set to address of a function to be called for printing such that:
- *     - The first parameter represents the file pointer from the output variable.
+ *     - The first parameter represents the output file type.
  *     - The second parameter represents the source string.
  *     - The third parameter represents the destination string.
  * failures:
@@ -78,12 +78,12 @@ extern "C" {
     f_number_unsigned_t depth_max;
     f_number_unsigned_t size_block;
     bool exclusive;
-    int output;
-    void (*verbose)(const int, const f_string_t, const f_string_t);
+    f_file_t output;
+    void (*verbose)(const f_file_t, const f_string_t, const f_string_t);
     f_directory_statuss_t *failures;
   } fl_directory_recurse_t;
 
-  #define fl_directory_recurse_t_initialize { fl_directory_recurse_depth_max, f_file_default_read_size, F_false, -1, 0, 0 }
+  #define fl_directory_recurse_t_initialize { fl_directory_recurse_depth_max, f_file_default_read_size, F_false, f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), 0, 0 }
 #endif // _di_fl_directory_recurse_t_
 
 /**

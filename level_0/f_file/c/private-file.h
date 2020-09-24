@@ -36,10 +36,11 @@ extern "C" {
  *
  * @see f_file_close()
  * @see f_file_copy()
+ * @see f_file_stream_close()
  */
-#if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
+#if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
   extern f_return_status private_f_file_close(int *id) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
+#endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
 
 /**
  * Copy a file.

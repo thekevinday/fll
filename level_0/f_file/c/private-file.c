@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
+#if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
   f_return_status private_f_file_close(int *id) {
 
     if (*id == -1) return F_none;
@@ -25,7 +25,7 @@ extern "C" {
     *id = -1;
     return F_none;
   }
-#endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
+#endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
 
 #if !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
   f_return_status private_f_file_copy_content(const f_string_t source, const f_string_t destination, const f_number_unsigned_t size_block) {

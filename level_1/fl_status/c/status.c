@@ -239,6 +239,9 @@ extern "C" {
         case F_critical:
           *string = FL_status_string_critical;
           break;
+        case F_deadlock:
+          *string = FL_status_string_deadlock;
+          break;
         case F_descriptor:
           *string = FL_status_string_descriptor;
           break;
@@ -292,6 +295,12 @@ extern "C" {
           break;
         case F_link:
           *string = FL_status_string_link;
+          break;
+        case F_lock:
+          *string = FL_status_string_lock;
+          break;
+        case F_lock_not:
+          *string = FL_status_string_lock_not;
           break;
         case F_loop:
           *string = FL_status_string_loop;

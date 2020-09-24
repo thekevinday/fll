@@ -89,6 +89,7 @@ extern "C" {
 /**
  * Commonly used file related properties.
  *
+ * stream: File stream.
  * id: File descriptor, with a value of -1 represents a closed file.
  * flag: Flags used for opening the file.
  * size_read: The default number of 1-byte characters to read at a time and is often used for the read buffer size.
@@ -96,21 +97,26 @@ extern "C" {
  */
 #ifndef _di_f_file_t_
   typedef struct {
+    FILE   *stream;
     int    id;
     int    flag;
     size_t size_read;
     size_t size_write;
   } f_file_t;
 
-  #define f_file_t_initialize { -1, f_file_flag_read_only, f_file_default_read_size, f_file_default_write_size }
+  #define f_file_t_initialize { 0, -1, f_file_flag_read_only, f_file_default_read_size, f_file_default_write_size }
+
+  #define f_macro_file_t_initialize(stream, id, flag) { stream, id, flag, f_file_default_read_size, f_file_default_write_size }
 
   #define f_macro_file_t_clear(file) \
+    file.stream = 0; \
     file.id = -1; \
     file.flag = 0; \
     file.size_read = 0; \
     file.size_write = 0;
 
   #define f_macro_file_t_reset(file) \
+    file.stream = 0; \
     file.id = -1; \
     file.flag = f_file_flag_read_only; \
     file.size_read = f_file_default_read_size; \

@@ -38,7 +38,7 @@ extern "C" {
 /**
  * Structure for facilitating the error printing.
  *
- * to:        The file descriptor to print to.
+ * to:        The file to print to.
  * verbosity: The verbosity mode.
  * prefix:    A prefix string to display before the error.
  * context:   The color codes for the entire error message.
@@ -52,7 +52,7 @@ extern "C" {
   #define fll_error_print_warning_length 9
 
   typedef struct {
-    int to;
+    f_file_t to;
     uint8_t verbosity;
 
     const char *prefix;
@@ -62,7 +62,7 @@ extern "C" {
   } fll_error_print_t;
 
   #define fll_error_print_t_initialize { \
-    f_type_descriptor_error, \
+    f_macro_file_t_initialize(f_type_error, f_type_descriptor_error, f_file_flag_write_only), \
     f_console_verbosity_normal, \
     fll_error_print_error, \
     f_color_set_t_initialize, \

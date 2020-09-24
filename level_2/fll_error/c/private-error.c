@@ -6,81 +6,81 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
-  f_return_status private_fll_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback) {
+  f_return_status private_fll_error_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback) {
 
     if (status == F_buffer_too_large) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        dprintf(print.to, "%c", f_string_eol[0]);
-        dprintf(print.to, "%s%sMaximum buffer length reached while processing ", print.context.before->string, print.prefix ? print.prefix : "");
+      if (error.verbosity != f_console_verbosity_quiet) {
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
+        fprintf(error.to.stream, "%s%sMaximum buffer length reached while processing ", error.context.before->string, error.prefix ? error.prefix : "");
 
-        private_fll_error_print_function(print, function);
+        private_fll_error_print_function(error, function);
 
-        dprintf(print.to, ".%s%c", print.context.after->string, f_string_eol[0]);
+        fprintf(error.to.stream, ".%s%c", error.context.after->string, f_string_eol[0]);
       }
 
       return F_false;
     }
 
     if (status == F_memory_allocation || status == F_memory_reallocation || status == F_memory_out) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        dprintf(print.to, "%c", f_string_eol[0]);
-        dprintf(print.to, "%s%sUnable to allocate memory in function ", print.context.before->string, print.prefix ? print.prefix : "");
+      if (error.verbosity != f_console_verbosity_quiet) {
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
+        fprintf(error.to.stream, "%s%sUnable to allocate memory in function ", error.context.before->string, error.prefix ? error.prefix : "");
 
-        private_fll_error_print_function(print, function);
+        private_fll_error_print_function(error, function);
 
-        dprintf(print.to, ".%s%c", print.context.after->string, f_string_eol[0]);
+        fprintf(error.to.stream, ".%s%c", error.context.after->string, f_string_eol[0]);
       }
 
       return F_false;
     }
 
     if (status == F_parameter) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        dprintf(print.to, "%c", f_string_eol[0]);
-        dprintf(print.to, "%s%sInvalid parameter", print.context.before->string, print.prefix ? print.prefix : "");
+      if (error.verbosity != f_console_verbosity_quiet) {
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
+        fprintf(error.to.stream, "%s%sInvalid parameter", error.context.before->string, error.prefix ? error.prefix : "");
 
-        private_fll_error_print_function(print, function);
+        private_fll_error_print_function(error, function);
 
-        dprintf(print.to, ".%s%c", print.context.after->string, f_string_eol[0]);
+        fprintf(error.to.stream, ".%s%c", error.context.after->string, f_string_eol[0]);
       }
 
       return F_false;
     }
 
     if (status == F_string_too_large) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        dprintf(print.to, "%c", f_string_eol[0]);
-        dprintf(print.to, "%s%sMaximum string length reached while processing ", print.context.before->string, print.prefix ? print.prefix : "");
+      if (error.verbosity != f_console_verbosity_quiet) {
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
+        fprintf(error.to.stream, "%s%sMaximum string length reached while processing ", error.context.before->string, error.prefix ? error.prefix : "");
 
-        private_fll_error_print_function(print, function);
+        private_fll_error_print_function(error, function);
 
-        dprintf(print.to, ".%s%c", print.context.after->string, f_string_eol[0]);
+        fprintf(error.to.stream, ".%s%c", error.context.after->string, f_string_eol[0]);
       }
 
       return F_false;
     }
 
     if (status == F_utf) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        dprintf(print.to, "%c", f_string_eol[0]);
-        dprintf(print.to, "%s%sInvalid UTF-8 character while calling ", print.context.before->string, print.prefix ? print.prefix : "");
+      if (error.verbosity != f_console_verbosity_quiet) {
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
+        fprintf(error.to.stream, "%s%sInvalid UTF-8 character while calling ", error.context.before->string, error.prefix ? error.prefix : "");
 
-        private_fll_error_print_function(print, function);
+        private_fll_error_print_function(error, function);
 
-        dprintf(print.to, ".%s%c", print.context.after->string, f_string_eol[0]);
+        fprintf(error.to.stream, ".%s%c", error.context.after->string, f_string_eol[0]);
       }
 
       return F_false;
     }
 
-    if (fallback && print.verbosity != f_console_verbosity_quiet) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        dprintf(print.to, "%c", f_string_eol[0]);
-        dprintf(print.to, "%s%s(%llu)", print.context.before->string, print.prefix ? print.prefix : "", status);
+    if (fallback && error.verbosity != f_console_verbosity_quiet) {
+      if (error.verbosity != f_console_verbosity_quiet) {
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
+        fprintf(error.to.stream, "%s%s(%llu)", error.context.before->string, error.prefix ? error.prefix : "", status);
 
-        private_fll_error_print_function(print, function);
+        private_fll_error_print_function(error, function);
 
-        dprintf(print.to, ".%s%c", print.context.after->string, f_string_eol[0]);
+        fprintf(error.to.stream, ".%s%c", error.context.after->string, f_string_eol[0]);
       }
     }
 
@@ -89,12 +89,12 @@ extern "C" {
 #endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
 
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
-  void private_fll_error_print_function(const fll_error_print_t print, const f_string_t function) {
+  void private_fll_error_print_function(const fll_error_print_t error, const f_string_t function) {
 
     if (function) {
-      dprintf(print.to, " when calling function %s", print.context.after->string);
-      dprintf(print.to, "%s%s%s", print.notable.before->string, function, print.notable.after->string);
-      dprintf(print.to, "%s()", print.context.before->string);
+      fprintf(error.to.stream, " when calling function %s", error.context.after->string);
+      fprintf(error.to.stream, "%s%s%s", error.notable.before->string, function, error.notable.after->string);
+      fprintf(error.to.stream, "%s()", error.context.before->string);
     }
   }
 #endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)

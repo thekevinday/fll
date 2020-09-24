@@ -484,6 +484,23 @@ extern "C" {
 #endif // _di_f_file_create_node_at_
 
 /**
+ * Identify the file descriptor of a valid file stream.
+ *
+ * @param file
+ *   The file stream to get descriptor of.
+ *
+ * @return
+ *   F_none is returned on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_file (with error bit) if file is not a valid stream.
+ *
+ * @see fileno()
+ */
+#ifndef _di_f_file_descriptor_
+  extern f_return_status f_file_descriptor(f_file_t *file);
+#endif // _di_f_file_descriptor_
+
+/**
  * Identify whether or not a file exists at the given path.
  *
  * This does not require access on the file itself.
@@ -1177,7 +1194,8 @@ extern "C" {
 /**
  * Open a particular file and save its stream.
  *
- * This will open the file and obtain the file descriptor.
+ * This will open the file as a file descriptor.
+ * This does not open a file stream.
  *
  * @param path
  *   The path file name.
@@ -1189,11 +1207,24 @@ extern "C" {
  *   This will be updated with the file descriptor.
  *
  * @return
- *   F_none on success.
- *   F_file_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
+ *   F_none is returned on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_file_found_not (with error bit) if the file was not found.
- *   F_file_open (with error bit) if the file is already open.
+ *   F_file_open_max (with error bit) when system-wide max open files is reached.
+ *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name is too long.
+ *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for making changes.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_unsupported (with error bit) fo unsupported file types.
+ *   F_failure (with error bit) for any other error.
  *
  * @see open()
  */
@@ -1204,7 +1235,8 @@ extern "C" {
 /**
  * Open a particular file and save its stream.
  *
- * This will open the file and obtain the file descriptor.
+ * This will open the file as a file descriptor.
+ * This does not open a file stream.
  *
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
@@ -1772,6 +1804,158 @@ extern "C" {
 #ifndef _di_f_file_stat_by_id_
   extern f_return_status f_file_stat_by_id(const int id, struct stat *file_stat);
 #endif // _di_f_file_stat_by_id_
+
+/**
+ * Close an open file stream.
+ *
+ * @param complete
+ *   When TRUE, will close the file descriptor as well, setting file.id is reset to -1, on success.
+ *   When FALSE, will do nothing in regards to the file descriptor.
+ * @param file
+ *   The file information.
+ *   The file.stream is set to 0, on success.
+ *
+ * @return
+ *   F_none is returned on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_deadlock (with error bit) if operation would cause a deadlock.
+ *   F_file_close (with error bit) if fclose() failed for any other reason.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_synchronize (with error bit) on flush failure.
+ *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_lock (with error bit) if failed to lock, such as lock table is full or too many open segments.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for making changes.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *
+ * @see close()
+ * @see fclose()
+ */
+#ifndef _di_f_file_stream_close_
+  extern f_return_status f_file_stream_close(const bool complete, f_file_t *file);
+#endif // _di_f_file_stream_close_
+
+/**
+ * Open a file stream from a file descriptor.
+ *
+ * @param id
+ *   The file descriptor.
+ * @param mode
+ *   The file modes do use when opening.
+ *   This should match the modes used to open the file descriptor as it relates to the stream modes.
+ * @param stream
+ *   The file stream.
+ *   Updated on success, but may be set to NULL on error.
+ *
+ * @return
+ *   F_none is returned on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_deadlock (with error bit) if operation would cause a deadlock.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_lock (with error bit) if failed to lock, such as lock table is full or too many open segments.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for making changes.
+ *
+ * @see fdopen()
+ */
+#ifndef _di_f_file_stream_descriptor_
+  extern f_return_status f_file_stream_descriptor(const int id, const f_string_t mode, FILE *stream);
+#endif // _di_f_file_stream_descriptor_
+
+/**
+ * Open a file stream.
+ *
+ * The file descriptor is retrieved on success, if necessary and able.
+ *
+ * @param path
+ *   The file path
+ * @param mode
+ *   The file modes do use when opening.
+ * @param file
+ *   The file information.
+ *   The file.stream is updated if necessary.
+ *   The file.id is updated with the file descriptor, if necessary and able.
+ *
+ * @return
+ *   F_none is returned on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
+ *   F_file_descriptor (with error bit) if unable to load the file descriptor.
+ *   F_file_found_not (with error bit) if the file was not found.
+ *   F_file_open_max (with error bit) when system-wide max open files is reached.
+ *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name is too long.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for making changes.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_unsupported (with error bit) fo unsupported file types.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see fileno()
+ * @see fopen()
+ */
+#ifndef _di_f_file_stream_open_
+  extern f_return_status f_file_stream_open(const f_string_t path, const f_string_t mode, f_file_t *file);
+#endif // _di_f_file_stream_open_
+
+/**
+ * Re-open a file stream.
+ *
+ * This allows for re-using an existing file stream and possibly file-descriptor.
+ *
+ * The file descriptor is retrieved on success, if necessary and able.
+ *
+ * @param path
+ *   The file path
+ * @param mode
+ *   The file modes do use when opening.
+ * @param file
+ *   The file information.
+ *   The file.stream is updated, if necessary.
+ *   The file.id is updated with the file descriptor, if necessary and able.
+ *
+ * @return
+ *   F_none is returned on success.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy (with error bit) if filesystem is too busy to perform write.
+ *   F_file_descriptor (with error bit) if unable to load the file descriptor.
+ *   F_file_found_not (with error bit) if the file was not found.
+ *   F_file_open_max (with error bit) when system-wide max open files is reached.
+ *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name is too long.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for making changes.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_unsupported (with error bit) fo unsupported file types.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see fileno()
+ * @see freopen()
+ */
+#ifndef _di_f_file_stream_reopen_
+  extern f_return_status f_file_stream_reopen(const f_string_t path, const f_string_t mode, f_file_t *file);
+#endif // _di_f_file_stream_reopen_
 
 /**
  * Update the files access and modification timestamp, creating the file if it does not already exist.

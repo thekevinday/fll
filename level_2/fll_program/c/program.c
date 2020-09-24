@@ -5,93 +5,93 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_program_print_help_header_
-  f_return_status fll_program_print_help_header(const int id, const f_color_context_t context, const f_string_t name, const f_string_t version) {
+  f_return_status fll_program_print_help_header(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t version) {
 
-    dprintf(id, "%c", f_string_eol[0]);
-    fl_color_print_to(id, context.set.title, " %s", name);
+    fprintf(file.stream, "%c", f_string_eol[0]);
+    fl_color_print(file.stream, context.set.title, " %s", name);
 
-    dprintf(id, "%c", f_string_eol[0]);
-    fl_color_print_to(id, context.set.notable, "  Version %s", version);
+    fprintf(file.stream, "%c", f_string_eol[0]);
+    fl_color_print(file.stream, context.set.notable, "  Version %s", version);
 
-    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
-    fl_color_print_to(id, context.set.important, " Available Options: ");
+    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fl_color_print(file.stream, context.set.important, " Available Options: ");
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_header_
 
 #ifndef _di_fll_program_print_help_option_
-  f_return_status fll_program_print_help_option(const int id, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
+  f_return_status fll_program_print_help_option(const f_file_t file, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
 
-    dprintf(id, "%c  %s", f_string_eol[0], symbol_short);
-    fl_color_print_to(id, context.set.standout, option_short);
+    fprintf(file.stream, "%c  %s", f_string_eol[0], symbol_short);
+    fl_color_print(file.stream, context.set.standout, option_short);
 
-    dprintf(id, ", %s", symbol_long);
-    fl_color_print_to(id, context.set.standout, option_long);
+    fprintf(file.stream, ", %s", symbol_long);
+    fl_color_print(file.stream, context.set.standout, option_long);
 
-    dprintf(id, "  %s", description);
+    fprintf(file.stream, "  %s", description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_
 
 #ifndef _di_fll_program_print_help_option_long_
-  f_return_status fll_program_print_help_option_long(const int id, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
+  f_return_status fll_program_print_help_option_long(const f_file_t file, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
 
-    dprintf(id, "%c      %s", f_string_eol[0], symbol_long);
-    fl_color_print_to(id, context.set.standout, option_long);
+    fprintf(file.stream, "%c      %s", f_string_eol[0], symbol_long);
+    fl_color_print(file.stream, context.set.standout, option_long);
 
-    dprintf(id, "  %s", description);
+    fprintf(file.stream, "  %s", description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_long_
 
 #ifndef _di_fll_program_print_help_option_other_
-  f_return_status fll_program_print_help_option_other(const int id, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
+  f_return_status fll_program_print_help_option_other(const f_file_t file, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
 
-    dprintf(id, "%c  ", f_string_eol[0]);
-    fl_color_print_to(id, context.set.standout, option_other);
+    fprintf(file.stream, "%c  ", f_string_eol[0]);
+    fl_color_print(file.stream, context.set.standout, option_other);
 
-    dprintf(id, "  %s", description);
+    fprintf(file.stream, "  %s", description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_other_
 
 #ifndef _di_fll_program_print_help_usage_
-  f_return_status fll_program_print_help_usage(const int id, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
+  f_return_status fll_program_print_help_usage(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
 
-    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
-    fl_color_print_to(id, context.set.important, " Usage:");
+    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fl_color_print(file.stream, context.set.important, " Usage:");
 
-    dprintf(id, "%c  ", f_string_eol[0]);
-    fl_color_print_to(id, context.set.standout, name);
+    fprintf(file.stream, "%c  ", f_string_eol[0]);
+    fl_color_print(file.stream, context.set.standout, name);
 
-    dprintf(id, " ");
-    fl_color_print_to(id, context.set.notable, "[");
+    fprintf(file.stream, " ");
+    fl_color_print(file.stream, context.set.notable, "[");
 
-    dprintf(id, " options ");
-    fl_color_print_to(id, context.set.notable, "]");
+    fprintf(file.stream, " options ");
+    fl_color_print(file.stream, context.set.notable, "]");
 
     if (parameters[0] != '\0') {
-      dprintf(id, " ");
-      fl_color_print_to(id, context.set.notable, "[");
+      fprintf(file.stream, " ");
+      fl_color_print(file.stream, context.set.notable, "[");
 
-      dprintf(id, " %s ", parameters);
-      fl_color_print_to(id, context.set.notable, "]");
+      fprintf(file.stream, " %s ", parameters);
+      fl_color_print(file.stream, context.set.notable, "]");
     }
 
-    dprintf(id, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_usage_
 
 #ifndef _di_fll_program_print_version_
-  f_return_status fll_program_print_version(const int id, const f_string_t version) {
+  f_return_status fll_program_print_version(const f_file_t file, const f_string_t version) {
 
-    dprintf(id, "%s%c", version, f_string_eol[0]);
+    fprintf(file.stream, "%s%c", version, f_string_eol[0]);
 
     return F_none;
   }

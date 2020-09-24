@@ -171,6 +171,7 @@ extern "C" {
     #define FL_status_string_connected        "F_connected"
     #define FL_status_string_connected_not    "F_connected_not"
     #define FL_status_string_critical         "F_critical"
+    #define FL_status_string_deadlock         "F_deadlock"
     #define FL_status_string_descriptor       "F_descriptor"
     #define FL_status_string_device           "F_device"
     #define FL_status_string_dummy            "F_dummy"
@@ -189,6 +190,8 @@ extern "C" {
     #define FL_status_string_invalid          "F_invalid"
     #define FL_status_string_output           "F_output"
     #define FL_status_string_link             "F_link"
+    #define FL_status_string_lock             "F_lock"
+    #define FL_status_string_lock_not         "F_lock_not"
     #define FL_status_string_loop             "F_loop"
     #define FL_status_string_maybe            "F_maybe"
     #define FL_status_string_memory_out       "F_memory_out"
@@ -225,6 +228,7 @@ extern "C" {
     #define FL_status_string_connected_length        11
     #define FL_status_string_connected_not_length    15
     #define FL_status_string_critical_length         10
+    #define FL_status_string_deadlock_length         10
     #define FL_status_string_descriptor_length       12
     #define FL_status_string_device_length           8
     #define FL_status_string_dummy_length            7
@@ -243,6 +247,8 @@ extern "C" {
     #define FL_status_string_invalid_length          9
     #define FL_status_string_output_length           8
     #define FL_status_string_link_length             6
+    #define FL_status_string_lock_length             6
+    #define FL_status_string_lock_not_length         10
     #define FL_status_string_loop_length             6
     #define FL_status_string_maybe_length            7
     #define FL_status_string_memory_out_length       12

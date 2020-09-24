@@ -12,26 +12,26 @@ extern "C" {
 #endif
 
 #ifndef _di_firewall_print_help_
-  f_return_status firewall_print_help(const int id, const f_color_context_t context) {
+  f_return_status firewall_print_help(const f_file_t file, const f_color_context_t context) {
 
-    fll_program_print_help_header(id, context, firewall_name_long, firewall_version);
+    fll_program_print_help_header(file, context, firewall_name_long, firewall_version);
 
-    fll_program_print_help_option(id, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(id, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(id, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(id, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(id, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(id, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(id, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
 
     #ifdef _en_firewall_debug_
-      fll_program_print_help_option(id, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+      fll_program_print_help_option(file, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
     #endif // _en_firewall_debug_
 
-    fll_program_print_help_option(id, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     #ifdef _en_firewall_debug_
-      fll_program_print_help_option(id, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging.");
+      fll_program_print_help_option(file, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging.");
     #endif // _en_firewall_debug_
 
     printf("%c%c", f_string_eol[0], f_string_eol[0]);
@@ -57,7 +57,7 @@ extern "C" {
     fl_color_print(f_type_output, context.set.standout, firewall_command_show);
     printf("     Show active firewall settings");
 
-    fll_program_print_help_usage(id, context, firewall_name, "command");
+    fll_program_print_help_usage(file, context, firewall_name, "command");
 
     return F_none;
   }
@@ -228,7 +228,7 @@ extern "C" {
         f_macro_string_dynamics_resize(status, parameters, 7);
 
         if (F_status_is_error(status)) {
-          fl_color_print_to(data->error.to, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
           firewall_delete_local_data(&local);
           firewall_delete_data(data);
           return status;
@@ -318,10 +318,10 @@ extern "C" {
           status = F_status_set_fine(status);
 
           if (status == F_memory_allocation || status == F_memory_reallocation) {
-            fl_color_print_to(data->error.to, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
           }
           else {
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Failed to perform requested %s operation:%c", firewall_tool_iptables, f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to perform requested %s operation:%c", firewall_tool_iptables, f_string_eol[0]);
             fprintf(f_type_error, "  ");
 
             f_string_length_t i = 0;
@@ -368,13 +368,13 @@ extern "C" {
         status = F_status_set_fine(status);
 
         if (status == F_memory_allocation || status == F_memory_reallocation) {
-          fl_color_print_to(data->error.to, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
         }
         else if (status == F_data_not) {
-          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Could not find any network devices%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Could not find any network devices%c", f_string_eol[0]);
         }
         else if (status == F_failure) {
-          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Failed to read the device directory '%s'%c", network_devices, f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to read the device directory '%s'%c", network_devices, f_string_eol[0]);
         }
 
         firewall_delete_local_data(&local);
@@ -457,7 +457,7 @@ extern "C" {
             return status;
           }
           else {
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Failed to perform lock request because the lock instructions are missing from: %s.%c", network_path firewall_file_other, f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to perform lock request because the lock instructions are missing from: %s.%c", network_path firewall_file_other, f_string_eol[0]);
 
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
@@ -497,7 +497,7 @@ extern "C" {
             }
           }
           else {
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Failed to perform stop request because the lock instructions are missing from: %s.", network_path firewall_file_other, f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to perform stop request because the lock instructions are missing from: %s.", network_path firewall_file_other, f_string_eol[0]);
 
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
@@ -575,7 +575,7 @@ extern "C" {
             f_macro_string_dynamic_t_resize(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
 
             if (F_status_is_error(status)) {
-              fl_color_print_to(data->error.to, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
+              fl_color_print(data->error.to.stream, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
               return status;
@@ -689,7 +689,7 @@ extern "C" {
       firewall_delete_local_data(&local);
     }
     else {
-      fl_color_print_to(data->error.to, data->context.set.error, "ERROR: You did not pass a command%c", f_string_eol[0]);
+      fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: You did not pass a command%c", f_string_eol[0]);
       status = F_status_set_error(F_parameter);
     }
 

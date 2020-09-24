@@ -173,42 +173,42 @@ extern "C" {
  * Helper function for performing a verbose print for a file clone operation.
  *
  * @param output
- *   A file descriptor to print to, such as f_type_desciptor_output.
+ *   A file to print to.
  * @param source
  *   The source string.
  * @param destination
  *   The destination string.
  */
 #ifndef _di_fake_verbose_print_clone_
-  extern void fake_verbose_print_clone(const int output, const f_string_t source, const f_string_t destination) f_gcc_attribute_visibility_internal;
+  extern void fake_verbose_print_clone(const f_file_t output, const f_string_t source, const f_string_t destination) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_verbose_print_clone_
 
 /**
  * Helper function for performing a verbose print for a file copy operation.
  *
  * @param output
- *   A file descriptor to print to, such as f_type_desciptor_output.
+ *   A file to print to.
  * @param source
  *   The source string.
  * @param destination
  *   The destination string.
  */
 #ifndef _di_fake_verbose_print_copy_
-  extern void fake_verbose_print_copy(const int output, const f_string_t source, const f_string_t destination) f_gcc_attribute_visibility_internal;
+  extern void fake_verbose_print_copy(const f_file_t output, const f_string_t source, const f_string_t destination) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_verbose_print_copy_
 
 /**
  * Helper function for performing a verbose print for a file move operation.
  *
  * @param output
- *   A file descriptor to print to, such as f_type_desciptor_output.
+ *   A file to print to.
  * @param source
  *   The source string.
  * @param destination
  *   The destination string.
  */
 #ifndef _di_fake_verbose_print_move_
-  extern void fake_verbose_print_move(const int output, const f_string_t source, const f_string_t destination) f_gcc_attribute_visibility_internal;
+  extern void fake_verbose_print_move(const f_file_t output, const f_string_t source, const f_string_t destination) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_verbose_print_move_
 
 #ifdef __cplusplus

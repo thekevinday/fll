@@ -6,39 +6,39 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_read_print_help_
-  f_return_status iki_read_print_help(const int id, const f_color_context_t context) {
+  f_return_status iki_read_print_help(const f_file_t file, const f_color_context_t context) {
 
-    fll_program_print_help_header(id, context, iki_read_name_long, iki_read_version);
+    fll_program_print_help_header(file, context, iki_read_name_long, iki_read_version);
 
-    fll_program_print_help_option(id, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(id, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(id, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(id, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(id, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(id, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(id, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(id, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(id, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
-
-    printf("%c", f_string_eol[0]);
-
-    fll_program_print_help_option(id, context, iki_read_short_at, iki_read_long_at, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Select variable at this numeric index.");
-    fll_program_print_help_option(id, context, iki_read_short_line, iki_read_long_line, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print only the variables at the given line.");
-    fll_program_print_help_option(id, context, iki_read_short_name, iki_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Select variables with this name.");
-    fll_program_print_help_option(id, context, iki_read_short_whole, iki_read_long_whole, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print all of the data instead of just the variable data.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(id, context, iki_read_short_content, iki_read_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print the variable content (default).");
-    fll_program_print_help_option(id, context, iki_read_short_literal, iki_read_long_literal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print the entire variable (aka: object, content, and syntax).");
-    fll_program_print_help_option(id, context, iki_read_short_object, iki_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print the variable name (aka: object).");
-    fll_program_print_help_option(id, context, iki_read_short_total, iki_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the total number of variables.");
+    fll_program_print_help_option(file, context, iki_read_short_at, iki_read_long_at, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Select variable at this numeric index.");
+    fll_program_print_help_option(file, context, iki_read_short_line, iki_read_long_line, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print only the variables at the given line.");
+    fll_program_print_help_option(file, context, iki_read_short_name, iki_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Select variables with this name.");
+    fll_program_print_help_option(file, context, iki_read_short_whole, iki_read_long_whole, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print all of the data instead of just the variable data.");
 
     printf("%c", f_string_eol[0]);
 
-    fll_program_print_help_option(id, context, iki_read_short_substitute, iki_read_long_substitute, f_console_symbol_short_enable, f_console_symbol_long_enable, "Substitute the entire variable for the given name and content value with the given string.");
+    fll_program_print_help_option(file, context, iki_read_short_content, iki_read_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print the variable content (default).");
+    fll_program_print_help_option(file, context, iki_read_short_literal, iki_read_long_literal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print the entire variable (aka: object, content, and syntax).");
+    fll_program_print_help_option(file, context, iki_read_short_object, iki_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print the variable name (aka: object).");
+    fll_program_print_help_option(file, context, iki_read_short_total, iki_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the total number of variables.");
 
-    fll_program_print_help_usage(id, context, iki_read_name, "filename(s)");
+    printf("%c", f_string_eol[0]);
+
+    fll_program_print_help_option(file, context, iki_read_short_substitute, iki_read_long_substitute, f_console_symbol_short_enable, f_console_symbol_long_enable, "Substitute the entire variable for the given name and content value with the given string.");
+
+    fll_program_print_help_usage(file, context, iki_read_name, "filename(s)");
 
     fl_color_print(f_type_output, context.set.important, " Notes:");
 
@@ -105,7 +105,7 @@ extern "C" {
           iki_read_print_error(data->context, data->error.verbosity, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
           if (data->error.verbosity == f_console_verbosity_verbose) {
-            dprintf(data->error.to, "%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
           }
 
           iki_read_delete_data(data);
@@ -162,10 +162,10 @@ extern "C" {
     if (data->remaining.used > 0 || data->process_pipe) {
       if (data->parameters[iki_read_parameter_at].result == f_console_result_found) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          dprintf(data->error.to, "%c", f_string_eol[0]);
-          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
-          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_at);
-          fl_color_print_to(data->error.to, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
+          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_at);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
         }
 
         status = F_status_set_error(F_parameter);
@@ -188,12 +188,12 @@ extern "C" {
 
         if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            dprintf(data->error.to, "%c", f_string_eol[0]);
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_at);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter.");
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_at);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.");
           }
 
           status = F_status_set_error(F_parameter);
@@ -202,10 +202,10 @@ extern "C" {
 
       if (data->parameters[iki_read_parameter_line].result == f_console_result_found) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          dprintf(data->error.to, "%c", f_string_eol[0]);
-          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
-          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_line);
-          fl_color_print_to(data->error.to, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
+          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_line);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
         }
 
         status = F_status_set_error(F_parameter);
@@ -229,10 +229,10 @@ extern "C" {
 
       if (data->parameters[iki_read_parameter_name].result == f_console_result_found) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          dprintf(data->error.to, "%c", f_string_eol[0]);
-          fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
-          fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_name);
-          fl_color_print_to(data->error.to, data->context.set.error, "' requires a string.%c", f_string_eol[0]);
+          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_name);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' requires a string.%c", f_string_eol[0]);
         }
 
         status = F_status_set_error(F_parameter);
@@ -241,10 +241,10 @@ extern "C" {
       if (data->parameters[iki_read_parameter_substitute].result != f_console_result_none) {
         if (data->parameters[iki_read_parameter_substitute].result == f_console_result_found || data->parameters[iki_read_parameter_substitute].additional.used % 3 != 0) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            dprintf(data->error.to, "%c", f_string_eol[0]);
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: The parameter '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_substitute);
-            fl_color_print_to(data->error.to, data->context.set.error, "' requires 3 strings.%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_substitute);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' requires 3 strings.%c", f_string_eol[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -252,12 +252,12 @@ extern "C" {
 
         if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            dprintf(data->error.to, "%c", f_string_eol[0]);
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_substitute);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_substitute);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -267,12 +267,12 @@ extern "C" {
       if (data->parameters[iki_read_parameter_literal].result == f_console_result_found) {
         if (data->parameters[iki_read_parameter_object].result == f_console_result_found) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            dprintf(data->error.to, "%c", f_string_eol[0]);
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -280,12 +280,12 @@ extern "C" {
 
         if (data->parameters[iki_read_parameter_content].result == f_console_result_found) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            dprintf(data->error.to, "%c", f_string_eol[0]);
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_content);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_content);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -293,12 +293,12 @@ extern "C" {
 
         if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            dprintf(data->error.to, "%c", f_string_eol[0]);
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_literal);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -309,12 +309,12 @@ extern "C" {
       else if (data->parameters[iki_read_parameter_object].result == f_console_result_found) {
         if (data->parameters[iki_read_parameter_content].result == f_console_result_found) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            dprintf(data->error.to, "%c", f_string_eol[0]);
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_content);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_content);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -322,12 +322,12 @@ extern "C" {
 
         if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            dprintf(data->error.to, "%c", f_string_eol[0]);
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_object);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -346,12 +346,12 @@ extern "C" {
       if (data->parameters[iki_read_parameter_whole].result == f_console_result_found) {
         if (data->parameters[iki_read_parameter_total].result == f_console_result_found) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            dprintf(data->error.to, "%c", f_string_eol[0]);
-            fl_color_print_to(data->error.to, data->context.set.error, "ERROR: Cannot specify the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_whole);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter with the '");
-            fl_color_print_to(data->error.to, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
-            fl_color_print_to(data->error.to, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_whole);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_read_long_total);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -360,7 +360,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          dprintf(data->error.to, "%c", f_string_eol[0]);
+          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
         }
 
         iki_read_delete_data(data);
@@ -435,8 +435,8 @@ extern "C" {
     }
     else {
       if (data->error.verbosity != f_console_verbosity_quiet) {
-        dprintf(data->error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data->error.to, data->context.set.error, "ERROR: you failed to specify one or more files.%c", f_string_eol[0]);
+        fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: you failed to specify one or more files.%c", f_string_eol[0]);
       }
 
       status = F_status_set_error(F_parameter);
@@ -445,7 +445,7 @@ extern "C" {
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (data->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status) || !data->mode) {
-        dprintf(data->error.to, "%c", f_string_eol[0]);
+        fprintf(data->error.to.stream, "%c", f_string_eol[0]);
       }
     }
 

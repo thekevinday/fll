@@ -14,10 +14,10 @@ extern "C" {
     f_status_t status = F_none;
 
     if (data.error.verbosity != f_console_verbosity_quiet) {
-      printf("%c", f_string_eol[0]);
-      fl_color_print(f_type_output, data.context.set.important, "Deleting all files within build directory '");
-      fl_color_print(f_type_output, data.context.set.notable, "%s", data.path_build.string);
-      fl_color_print(f_type_output, data.context.set.important, "'.%c", f_string_eol[0]);
+      fprintf(data.output.stream, "%c", f_string_eol[0]);
+      fl_color_print(data.output.stream, data.context.set.important, "Deleting all files within build directory '");
+      fl_color_print(data.output.stream, data.context.set.notable, "%s", data.path_build.string);
+      fl_color_print(data.output.stream, data.context.set.important, "'.%c", f_string_eol[0]);
     }
 
     if (fake_signal_received(data)) {
@@ -33,14 +33,14 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_file_found_not) {
       if (data.error.verbosity == f_console_verbosity_verbose) {
-        printf("The build directory '%s' does not exist.%c", data.path_build.string, f_string_eol[0]);
+        fprintf(data.output.stream, "The build directory '%s' does not exist.%c", data.path_build.string, f_string_eol[0]);
       }
 
       status = F_none;
     }
 
     if (F_status_is_error(status)) {
-      fake_print_error(data, F_status_set_fine(status), "f_directory_remove", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_directory_remove", F_true);
       return status;
     }
 
@@ -55,6 +55,7 @@ extern "C" {
     const int result = remove(path);
 
     if (!result) {
+      // @todo in order to get this working, the recursive function that calls this needs to be rewritten with more flexibility or provide a higher-level equivalent function.
       printf("Removed '%s'.%c", path, f_string_eol[0]);
     }
 

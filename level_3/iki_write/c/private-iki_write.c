@@ -10,10 +10,10 @@ extern "C" {
 
     if (status == F_parameter) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Invalid parameter when calling function ");
-        fl_color_print_to(data.error.to, context.set.notable, "%s", function);
-        fl_color_print_to(data.error.to, context.set.error, "().%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Invalid parameter when calling function ");
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
+        fl_color_print(data.error.to.stream, context.set.error, "().%c", f_string_eol[0]);
       }
 
       return F_none;
@@ -21,10 +21,10 @@ extern "C" {
 
     if (status == F_memory_allocation || status == F_memory_reallocation) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Unable to allocate memory in function ");
-        fl_color_print_to(data.error.to, context.set.notable, "%s", function);
-        fl_color_print_to(data.error.to, context.set.error, "().%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Unable to allocate memory in function ");
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
+        fl_color_print(data.error.to.stream, context.set.error, "().%c", f_string_eol[0]);
       }
 
       return F_none;
@@ -32,10 +32,10 @@ extern "C" {
 
     if (status == F_buffer_too_large) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Maximum buffer limit reached while processing ");
-        fl_color_print_to(data.error.to, context.set.notable, "%s", function);
-        fl_color_print_to(data.error.to, context.set.error, "().%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Maximum buffer limit reached while processing ");
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
+        fl_color_print(data.error.to.stream, context.set.error, "().%c", f_string_eol[0]);
       }
 
       return F_none;
@@ -43,22 +43,22 @@ extern "C" {
 
     if (status == F_string_too_large) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Maximum string limit reached while processing ");
-        fl_color_print_to(data.error.to, context.set.notable, "%s", function);
-        fl_color_print_to(data.error.to, context.set.error, "().%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Maximum string limit reached while processing ");
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
+        fl_color_print(data.error.to.stream, context.set.error, "().%c", f_string_eol[0]);
       }
 
       return F_none;
     }
 
     if (fallback && verbosity != f_console_verbosity_quiet) {
-      dprintf(data.error.to, "%c", f_string_eol[0]);
-      fl_color_print_to(data.error.to, context.set.error, "UNKNOWN ERROR: (");
-      fl_color_print_to(data.error.to, context.set.notable, "%llu", status);
-      fl_color_print_to(data.error.to, context.set.error, ") in function ");
-      fl_color_print_to(data.error.to, context.set.notable, "%s", function);
-      fl_color_print_to(data.error.to, context.set.error, "().%c", f_string_eol[0]);
+      fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+      fl_color_print(data.error.to.stream, context.set.error, "UNKNOWN ERROR: (");
+      fl_color_print(data.error.to.stream, context.set.notable, "%llu", status);
+      fl_color_print(data.error.to.stream, context.set.error, ") in function ");
+      fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
+      fl_color_print(data.error.to.stream, context.set.error, "().%c", f_string_eol[0]);
     }
 
     return F_unknown;
@@ -78,10 +78,10 @@ extern "C" {
 
     if (status == F_file_found_not) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Failed to find %s '", type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Failed to find %s '", type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -89,9 +89,9 @@ extern "C" {
 
     if (status == F_file_closed) {
       if (verbosity != f_console_verbosity_quiet) {
-        fl_color_print_to(data.error.to, context.set.error, "INTERNAL ERROR: The %s '", type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "' is no longer open.%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "INTERNAL ERROR: The %s '", type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "' is no longer open.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -99,9 +99,9 @@ extern "C" {
 
     if (status == F_file_seek) {
       if (verbosity != f_console_verbosity_quiet) {
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: A seek error occurred while accessing the file '");
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: A seek error occurred while accessing the file '");
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -109,9 +109,9 @@ extern "C" {
 
     if (status == F_file_read) {
       if (verbosity != f_console_verbosity_quiet) {
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: A read error occurred while accessing the file '");
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: A read error occurred while accessing the file '");
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -119,10 +119,10 @@ extern "C" {
 
     if (status == F_file_found) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: The %s '", type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "' already exists.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: The %s '", type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "' already exists.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -130,12 +130,12 @@ extern "C" {
 
     if (status == F_parameter) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
-        fl_color_print_to(data.error.to, context.set.notable, "%s", function);
-        fl_color_print_to(data.error.to, context.set.error, "() for the %s '", type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
+        fl_color_print(data.error.to.stream, context.set.error, "() for the %s '", type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -143,10 +143,10 @@ extern "C" {
 
     if (status == F_name) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Invalid %s name '", type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Invalid %s name '", type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -154,10 +154,10 @@ extern "C" {
 
     if (status == F_memory_out) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "CRITICAL ERROR: Unable to allocate memory, while trying to %s %s '", operation, type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "CRITICAL ERROR: Unable to allocate memory, while trying to %s %s '", operation, type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -165,10 +165,10 @@ extern "C" {
 
     if (status == F_number_overflow) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Overflow while trying to %s %s '", operation, type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Overflow while trying to %s %s '", operation, type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -176,10 +176,10 @@ extern "C" {
 
     if (status == F_directory) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Invalid directory while trying to %s %s '", operation, type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Invalid directory while trying to %s %s '", operation, type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -187,10 +187,10 @@ extern "C" {
 
     if (status == F_access_denied) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Access denied while trying to %s %s '", operation, type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Access denied while trying to %s %s '", operation, type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -198,10 +198,10 @@ extern "C" {
 
     if (status == F_loop) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Loop while trying to %s %s '", operation, type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Loop while trying to %s %s '", operation, type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -209,10 +209,10 @@ extern "C" {
 
     if (status == F_prohibited) {
       if (verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, context.set.error, "ERROR: Prohibited by system while trying to %s %s '", operation, type_name);
-        fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-        fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Prohibited by system while trying to %s %s '", operation, type_name);
+        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
       }
 
       return F_false;
@@ -221,10 +221,10 @@ extern "C" {
     if (!type) {
       if (status == F_directory_found_not) {
         if (verbosity != f_console_verbosity_quiet) {
-          dprintf(data.error.to, "%c", f_string_eol[0]);
-          fl_color_print_to(data.error.to, context.set.error, "ERROR: Failed to %s %s '", operation, type_name);
-          fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-          fl_color_print_to(data.error.to, context.set.error, "' due to an invalid directory in the path.%c", f_string_eol[0]);
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, context.set.error, "ERROR: Failed to %s %s '", operation, type_name);
+          fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+          fl_color_print(data.error.to.stream, context.set.error, "' due to an invalid directory in the path.%c", f_string_eol[0]);
         }
 
         return F_false;
@@ -233,10 +233,10 @@ extern "C" {
     else if (type == 1) {
       if (status == F_directory_found_not) {
         if (verbosity != f_console_verbosity_quiet) {
-          dprintf(data.error.to, "%c", f_string_eol[0]);
-          fl_color_print_to(data.error.to, context.set.error, "ERROR: Failed to %s %s '", operation, type_name);
-          fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-          fl_color_print_to(data.error.to, context.set.error, "' due to an invalid directory in the path.%c", f_string_eol[0]);
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, context.set.error, "ERROR: Failed to %s %s '", operation, type_name);
+          fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+          fl_color_print(data.error.to.stream, context.set.error, "' due to an invalid directory in the path.%c", f_string_eol[0]);
         }
 
         return F_false;
@@ -244,10 +244,10 @@ extern "C" {
 
       if (status == F_failure) {
         if (verbosity != f_console_verbosity_quiet) {
-          dprintf(data.error.to, "%c", f_string_eol[0]);
-          fl_color_print_to(data.error.to, context.set.error, "ERROR: Failed to %s %s '", operation, type_name);
-          fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-          fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, context.set.error, "ERROR: Failed to %s %s '", operation, type_name);
+          fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+          fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
         }
 
         return F_false;
@@ -255,12 +255,12 @@ extern "C" {
     }
 
     if (iki_write_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != f_console_verbosity_quiet) {
-      dprintf(data.error.to, "%c", f_string_eol[0]);
-      fl_color_print_to(data.error.to, context.set.error, "UNKNOWN ERROR: (");
-      fl_color_print_to(data.error.to, context.set.notable, "%llu", status);
-      fl_color_print_to(data.error.to, context.set.error, ") occurred while trying to %s %s '", operation, type_name);
-      fl_color_print_to(data.error.to, context.set.notable, "%s", name);
-      fl_color_print_to(data.error.to, context.set.error, "'.%c", f_string_eol[0]);
+      fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+      fl_color_print(data.error.to.stream, context.set.error, "UNKNOWN ERROR: (");
+      fl_color_print(data.error.to.stream, context.set.notable, "%llu", status);
+      fl_color_print(data.error.to.stream, context.set.error, ") occurred while trying to %s %s '", operation, type_name);
+      fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
+      fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
     }
 
     return F_true;
@@ -272,10 +272,10 @@ extern "C" {
 
     if (!object.used) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, data.context.set.error, "ERROR: The object is missing, it must not have a length of ");
-        fl_color_print_to(data.error.to, data.context.set.notable, "0");
-        fl_color_print_to(data.error.to, data.context.set.error, ".%c", f_string_eol[0]);
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The object is missing, it must not have a length of ");
+        fl_color_print(data.error.to.stream, data.context.set.notable, "0");
+        fl_color_print(data.error.to.stream, data.context.set.error, ".%c", f_string_eol[0]);
       }
 
       return F_status_set_error(F_failure);
@@ -285,14 +285,14 @@ extern "C" {
 
     if (status == F_false) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
-        dprintf(data.error.to, "%c", f_string_eol[0]);
-        fl_color_print_to(data.error.to, data.context.set.error, "ERROR: The object '");
+        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The object '");
 
         fl_color_print_code(f_type_error, data.context.notable);
         f_print_dynamic(f_type_error, object);
         fl_color_print_code(f_type_error, data.context.reset);
 
-        fl_color_print_to(data.error.to, data.context.set.error, "' is not a valid IKI object.%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "' is not a valid IKI object.%c", f_string_eol[0]);
       }
 
       return F_status_set_error(F_failure);

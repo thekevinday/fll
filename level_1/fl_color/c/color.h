@@ -35,8 +35,8 @@ extern "C" {
  *
  * Up to 5 colors may be associted with a single color format block.
  *
- * @param file
- *   The file or standard io.
+ * @param stream
+ *   The file stream or standard output.
  * @param format
  *   The color format parts.
  * @param color1
@@ -55,13 +55,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_set_
-  extern f_return_status fl_color_set(FILE *file, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
+  extern f_return_status fl_color_set(FILE *stream, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
 
-  #define fl_macro_color_set_1(file, format, color1)                                 fl_color_set(file, format, color1, 0, 0, 0, 0)
-  #define fl_macro_color_set_2(file, format, color1, color2)                         fl_color_set(file, format, color1, color2, 0, 0, 0)
-  #define fl_macro_color_set_3(file, format, color1, color2, color3)                 fl_color_set(file, format, color1, color2, color3, 0, 0)
-  #define fl_macro_color_set_4(file, format, color1, color2, color3, color4)         fl_color_set(file, format, color1, color2, color3, color4, 0)
-  #define fl_macro_color_set_5(file, format, color1, color2, color3, color4, color5) fl_color_set(file, format, color1, color2, color3, color4, color5)
+  #define fl_macro_color_set_1(stream, format, color1)                                 fl_color_set(stream, format, color1, 0, 0, 0, 0)
+  #define fl_macro_color_set_2(stream, format, color1, color2)                         fl_color_set(stream, format, color1, color2, 0, 0, 0)
+  #define fl_macro_color_set_3(stream, format, color1, color2, color3)                 fl_color_set(stream, format, color1, color2, color3, 0, 0)
+  #define fl_macro_color_set_4(stream, format, color1, color2, color3, color4)         fl_color_set(stream, format, color1, color2, color3, color4, 0)
+  #define fl_macro_color_set_5(stream, format, color1, color2, color3, color4, color5) fl_color_set(stream, format, color1, color2, color3, color4, color5)
 #endif // _di_fl_color_set_
 
 /**
@@ -138,23 +138,21 @@ extern "C" {
  *
  * If the colors strings have nothing used in them, then this will only print the string.
  *
- * @param file
- *   The file or standard io.
+ * @param stream
+ *   The file stream or standard output.
  * @param set
  *   The color set used for printing.
  * @param string
- *   The string to print to the file or standard io.
+ *   The string to print.
  * @param ...
  *   Variable arguments, processed in the same way fprintf() processes them.
  *
  * @return
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print_
-  extern f_return_status fl_color_print(FILE *file, const f_color_set_t set, const f_string_t string, ...);
+  extern f_return_status fl_color_print(FILE *stream, const f_color_set_t set, const f_string_t string, ...);
 #endif // _di_fl_color_print_
 
 /**
@@ -165,25 +163,23 @@ extern "C" {
  * It is common for colors to be bolded.
  * This is intended to simplify printing bold colors.
  *
- * @param file
- *   The file or standard io.
+ * @param stream
+ *   The file stream or standard output.
  * @param set
  *   The color set used for printing.
  * @param extra
  *   The a second color set used for printing, which gets appended after set.before and set.after, respectively.
  * @param string
- *   The string to print to the file or standard io.
+ *   The string to print.
  * @param ...
  *   Variable arguments, processed in the same way fprintf() processes them.
  *
  * @return
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print2_
-  extern f_return_status fl_color_print2(FILE *file, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...);
+  extern f_return_status fl_color_print2(FILE *stream, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...);
 #endif // _di_fl_color_print2_
 
 /**
@@ -191,8 +187,8 @@ extern "C" {
  *
  * Be sure to forget to print the color reset when done.
  *
- * @param file
- *   The file or standard io.
+ * @param stream
+ *   The file stream or standard output.
  * @param start_color
  *   The color code to print.
  *
@@ -203,7 +199,7 @@ extern "C" {
  *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print_code_
-  extern f_return_status fl_color_print_code(FILE *file, const f_string_static_t color);
+  extern f_return_status fl_color_print_code(FILE *stream, const f_string_static_t color);
 #endif // _di_fl_color_print_code_
 
 /**
@@ -236,7 +232,7 @@ extern "C" {
  * @param set
  *   The color set used for printing.
  * @param string
- *   The string to print to the file or standard io.
+ *   The string to print.
  * @param ...
  *   Variable arguments, processed in the same way fprintf() processes them.
  *
@@ -265,7 +261,7 @@ extern "C" {
  * @param extra
  *   The a second color set used for printing, which gets appended after set.before and set.after, respectively.
  * @param string
- *   The string to print to the file or standard io.
+ *   The string to print.
  * @param ...
  *   Variable arguments, processed in the same way fprintf() processes them.
  *

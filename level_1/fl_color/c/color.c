@@ -5,9 +5,9 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_color_set_
-  f_return_status fl_color_set(FILE *file, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
+  f_return_status fl_color_set(FILE *stream, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
     #ifndef _di_level_1_parameter_checking_
-      if (!file) return F_status_set_error(F_parameter);
+      if (!stream) return F_status_set_error(F_parameter);
       if (!color1) return F_status_set_error(F_parameter);
 
       // make sure all data is in the proper order
@@ -16,11 +16,11 @@ extern "C" {
       if (!color4 && color5 != 0)                                 return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if      (!color2) fprintf(file, "%s%s%s",                 format.begin, color1, format.end);
-    else if (!color3) fprintf(file, "%s%s%s%s%s",             format.begin, color1, format.medium, color2, format.end);
-    else if (!color4) fprintf(file, "%s%s%s%s%s%s%s",         format.begin, color1, format.medium, color2, format.medium, color3, format.end);
-    else if (!color5) fprintf(file, "%s%s%s%s%s%s%s%s%s",     format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.end);
-    else              fprintf(file, "%s%s%s%s%s%s%s%s%s%s%s", format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.medium, color5, format.end);
+    if      (!color2) fprintf(stream, "%s%s%s",                 format.begin, color1, format.end);
+    else if (!color3) fprintf(stream, "%s%s%s%s%s",             format.begin, color1, format.medium, color2, format.end);
+    else if (!color4) fprintf(stream, "%s%s%s%s%s%s%s",         format.begin, color1, format.medium, color2, format.medium, color3, format.end);
+    else if (!color5) fprintf(stream, "%s%s%s%s%s%s%s%s%s",     format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.end);
+    else              fprintf(stream, "%s%s%s%s%s%s%s%s%s%s%s", format.begin, color1, format.medium, color2, format.medium, color3, format.medium, color4, format.medium, color5, format.end);
 
     return F_none;
   }
@@ -136,26 +136,26 @@ extern "C" {
 #endif // _di_fl_color_save_
 
 #ifndef _di_fl_color_print_
-  f_return_status fl_color_print(FILE *file, const f_color_set_t set, const f_string_t string, ...) {
+  f_return_status fl_color_print(FILE *stream, const f_color_set_t set, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (!file) return F_status_set_error(F_parameter);
+      if (!stream) return F_status_set_error(F_parameter);
       if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (set.before) {
-      fprintf(file, "%s", set.before->string);
+      fprintf(stream, "%s", set.before->string);
     }
 
     va_list ap;
 
     va_start(ap, string);
 
-    vfprintf(file, string, ap);
+    vfprintf(stream, string, ap);
 
     va_end(ap);
 
     if (set.after) {
-      fprintf(file, "%s", set.after->string);
+      fprintf(stream, "%s", set.after->string);
     }
 
     return F_none;
@@ -163,36 +163,36 @@ extern "C" {
 #endif // _di_fl_color_print_
 
 #ifndef _di_fl_color_print2_
-  f_return_status fl_color_print2(FILE *file, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...) {
+  f_return_status fl_color_print2(FILE *stream, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (!file) return F_status_set_error(F_parameter);
+      if (!stream) return F_status_set_error(F_parameter);
       if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
 
     if (set.before) {
-      fprintf(file, "%s", set.before->string);
+      fprintf(stream, "%s", set.before->string);
     }
 
     if (extra.before) {
-      fprintf(file, "%s", extra.before->string);
+      fprintf(stream, "%s", extra.before->string);
     }
 
     va_list ap;
 
     va_start(ap, string);
 
-    vfprintf(file, string, ap);
+    vfprintf(stream, string, ap);
 
     va_end(ap);
 
     if (set.after) {
-      fprintf(file, "%s", set.after->string);
+      fprintf(stream, "%s", set.after->string);
     }
 
     if (extra.after) {
-      fprintf(file, "%s", extra.after->string);
+      fprintf(stream, "%s", extra.after->string);
     }
 
     return F_none;
@@ -200,13 +200,13 @@ extern "C" {
 #endif // _di_fl_color_print2_
 
 #ifndef _di_fl_color_print_code_
-  f_return_status fl_color_print_code(FILE *file, const f_string_static_t color) {
+  f_return_status fl_color_print_code(FILE *stream, const f_string_static_t color) {
     #ifndef _di_level_1_parameter_checking_
-      if (!file) return F_status_set_error(F_parameter);
+      if (!stream) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (color.used) {
-      fprintf(file, "%s", color.string);
+      fprintf(stream, "%s", color.string);
     }
 
     return F_none;

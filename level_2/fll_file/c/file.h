@@ -33,8 +33,8 @@ extern "C" {
 /**
  * Print file error messages.
  *
- * @param file
- *   The file to write to, such as f_type_output or f_type_error.
+ * @param stream
+ *   The file stream to write to, such as f_type_output or f_type_error.
  * @param context
  *   The color context information to use when printing.
  * @param function_name
@@ -50,7 +50,7 @@ extern "C" {
  *   F_false if no error message was printed.
  */
 #ifndef _di_fll_file_error_print_
-  extern f_return_status fll_file_error_print(FILE *file, const f_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status);
+  extern f_return_status fll_file_error_print(FILE *stream, const f_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status);
 #endif // _di_fll_file_error_print_
 
 /**

@@ -401,6 +401,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_deadlock, length, FL_status_string_deadlock_length) == F_equal_to) {
+        *code = F_deadlock;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_descriptor, length, FL_status_string_descriptor_length) == F_equal_to) {
         *code = F_descriptor;
         return F_none;
@@ -488,6 +493,16 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_link, length, FL_status_string_link_length) == F_equal_to) {
         *code = F_link;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_lock, length, FL_status_string_lock_length) == F_equal_to) {
+        *code = F_lock;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_lock_not, length, FL_status_string_lock_not_length) == F_equal_to) {
+        *code = F_lock_not;
         return F_none;
       }
 
