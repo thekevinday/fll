@@ -112,6 +112,9 @@ extern "C" {
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
+        data->error.context = data->context.set.error;
+        data->error.notable = data->context.set.notable;
+
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
@@ -320,9 +323,9 @@ extern "C" {
         else if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
             fprintf(data->error.to.stream, "%c", f_string_eol[0]);
-            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The operation '");
-            fl_color_print(data->error.to.stream, data->context.set.notable, "%s", operations_name);
-            fl_color_print(data->error.to.stream, data->context.set.error, "' failed.%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->error.context, "ERROR: The operation '");
+            fl_color_print(data->error.to.stream, data->error.notable, "%s", operations_name);
+            fl_color_print(data->error.to.stream, data->error.context, "' failed.%c", f_string_eol[0]);
           }
 
           break;
@@ -342,7 +345,7 @@ extern "C" {
     else {
       if (data->error.verbosity != f_console_verbosity_quiet) {
         fprintf(data->error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: You failed to specify an operation.%c", f_string_eol[0]);
+        fl_color_print(data->error.to.stream, data->error.context, "ERROR: You failed to specify an operation.%c", f_string_eol[0]);
         fprintf(data->error.to.stream, "%c", f_string_eol[0]);
       }
 

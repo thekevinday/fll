@@ -89,6 +89,9 @@ extern "C" {
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
+        data->error.context = data->context.set.error;
+        data->error.notable = data->context.set.notable;
+
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 

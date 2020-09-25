@@ -466,6 +466,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param error
+ *   The error/warning print data.
  * @param buffer
  *   The string containing the name or number.
  * @param id
@@ -478,7 +480,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_owner_
-  f_return_status fake_make_get_id_owner(const fake_data_t data, const f_string_static_t buffer, uid_t *id) f_gcc_attribute_visibility_internal;
+  f_return_status fake_make_get_id_owner(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, uid_t *id) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_owner_
 
 /**
@@ -541,6 +543,8 @@ extern "C" {
 
 /**
  * For a given make section operation, expand the content into an arguments array for that operation.
+ *
+ * This prints errors via data_make.error.
  *
  * @param data
  *   The program data.

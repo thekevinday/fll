@@ -92,29 +92,34 @@ extern "C" {
 
     if (F_status_is_error_not(*status)) {
       for (f_array_length_t i = 0; i < data_build.setting.build_libraries.used; i++) {
+
         *status = fll_execute_arguments_add(data_build.setting.build_libraries.array[i].string, data_build.setting.build_libraries.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
 
     for (f_array_length_t i = 0; i < data_build.setting.flags_all.used && F_status_is_error_not(*status); i++) {
+
       *status = fll_execute_arguments_add(data_build.setting.flags_all.array[i].string, data_build.setting.flags_all.array[i].used, arguments);
       if (F_status_is_error(*status)) break;
     } // for
 
     for (f_array_length_t i = 0; i < data_build.setting.flags_shared.used && F_status_is_error_not(*status); i++) {
+
       *status = fll_execute_arguments_add(data_build.setting.flags_shared.array[i].string, data_build.setting.flags_shared.array[i].used, arguments);
       if (F_status_is_error(*status)) break;
     } // for
 
     if (is_library) {
       for (f_array_length_t j = 0; j < data_build.setting.flags_library.used && F_status_is_error_not(*status); j++) {
+
         *status = fll_execute_arguments_add(data_build.setting.flags_library.array[j].string, data_build.setting.flags_library.array[j].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
     else {
       for (f_array_length_t i = 0; i < data_build.setting.flags_program.used && F_status_is_error_not(*status); i++) {
+
         *status = fll_execute_arguments_add(data_build.setting.flags_program.array[i].string, data_build.setting.flags_program.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
@@ -125,6 +130,7 @@ extern "C" {
       f_array_length_t i = 0;
 
       for (; i < data.define.used && F_status_is_error_not(*status); i++) {
+
         *status = fll_execute_arguments_add(data.define.array[i].string, data.define.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
@@ -134,18 +140,21 @@ extern "C" {
       f_array_length_t i = 0;
 
       for (; i < data_build.setting.defines_all.used && F_status_is_error_not(*status); i++) {
+
         *status = fll_execute_arguments_add(data_build.setting.defines_all.array[i].string, data_build.setting.defines_all.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
 
       if (is_shared) {
         for (i = 0; i < data_build.setting.defines_shared.used && F_status_is_error_not(*status); i++) {
+
           *status = fll_execute_arguments_add(data_build.setting.defines_shared.array[i].string, data_build.setting.defines_shared.array[i].used, arguments);
           if (F_status_is_error(*status)) break;
         } // for
       }
       else {
         for (i = 0; i < data_build.setting.defines_static.used && F_status_is_error_not(*status); i++) {
+
           *status = fll_execute_arguments_add(data_build.setting.defines_static.array[i].string, data_build.setting.defines_static.array[i].used, arguments);
           if (F_status_is_error(*status)) break;
         } // for
@@ -175,7 +184,7 @@ extern "C" {
     f_macro_string_dynamic_t_new(*status, path_source, source.used);
 
     if (F_status_is_error(*status)) {
-      fll_error_print(data->error, F_status_set_fine(*status), "f_macro_string_dynamic_t_new", F_true);
+      fll_error_print(data.error, F_status_set_fine(*status), "f_macro_string_dynamic_t_new", F_true);
 
       f_macro_string_dynamic_t_delete_simple(path_source);
       return;
@@ -186,7 +195,7 @@ extern "C" {
     fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
     if (data.error.verbosity == f_console_verbosity_verbose) {
-      recurse.output = f_type_descriptor_output;
+      recurse.output = data.output;
       recurse.verbose = fake_verbose_print_copy;
     }
 
@@ -200,14 +209,14 @@ extern "C" {
       *status = fl_string_dynamic_append_nulless(files.array[i], &path_source);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
         break;
       }
 
       *status = fl_string_dynamic_terminate_after(&path_source);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
         break;
       }
 
@@ -232,7 +241,7 @@ extern "C" {
             } // for
 
             if (F_status_set_fine(*status) != F_failure) {
-              fll_error_print(data->error, F_status_set_fine(*status), "fl_directory_copy_content", F_true);
+              fll_error_print(data.error, F_status_set_fine(*status), "fl_directory_copy_content", F_true);
             }
 
             break;
@@ -250,14 +259,14 @@ extern "C" {
         *status = fl_string_dynamic_append_nulless(destination, &destination_file);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
           break;
         }
 
         *status = f_file_name_base(path_source.string, path_source.used, &destination_file);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "f_file_name_base", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "f_file_name_base", F_true);
           break;
         }
 
@@ -429,7 +438,7 @@ extern "C" {
     }
 
     if (F_status_is_error(*status)) {
-      fll_error_print(data->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+      fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       f_macro_string_dynamics_t_delete_simple(arguments);
       return;
@@ -449,7 +458,7 @@ extern "C" {
         } // for
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_mash", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_mash", F_true);
 
           f_macro_string_dynamic_t_delete_simple(defines);
           f_macro_string_dynamics_t_delete_simple(arguments);
@@ -459,7 +468,7 @@ extern "C" {
         *status = fl_string_dynamic_terminate_after(&defines);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
 
           f_macro_string_dynamic_t_delete_simple(defines);
           f_macro_string_dynamics_t_delete_simple(arguments);
@@ -532,7 +541,7 @@ extern "C" {
       f_macro_string_dynamic_t_delete_simple(defines);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fll_execute_arguments_add_parameter_set", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add_parameter_set", F_true);
 
         f_macro_string_dynamics_t_delete_simple(arguments);
         return;
@@ -559,7 +568,7 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), function, F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), function, F_true);
 
         f_macro_string_dynamic_t_delete_simple(path);
         f_macro_string_dynamics_t_delete_simple(arguments);
@@ -592,14 +601,14 @@ extern "C" {
         if (F_status_is_error(*status)) {
           if (F_status_set_fine(*status) == F_failure) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data.error.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.error, data.context.set.error, "ERROR: Failed to execute script: ");
-              fl_color_print(data.error, data.context.set.notable, "%s", path.string);
-              fl_color_print(data.error, data.context.set.error, ".%c", f_string_eol[0]);
+              fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+              fl_color_print(data.error.to.stream, data.error.context, "%sFailed to execute script: ", data.error.prefix);
+              fl_color_print(data.error.to.stream, data.error.notable, "%s", path.string);
+              fl_color_print(data.error.to.stream, data.error.context, ".%c", f_string_eol[0]);
             }
           }
           else {
-            fll_error_print(data->error, F_status_set_fine(*status), "fll_execute_path_environment", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_path_environment", F_true);
           }
         }
         else {
@@ -621,7 +630,7 @@ extern "C" {
     f_status_t status = f_file_name_base(path.string, path.used, name);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "f_file_name_base", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_file_name_base", F_true);
       return status;
     }
 
@@ -637,7 +646,7 @@ extern "C" {
     status = fl_string_dynamic_terminate_after(name);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
       return status;
     }
 
@@ -698,7 +707,7 @@ extern "C" {
       } // for
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
         f_macro_string_dynamics_t_delete_simple(arguments);
         return;
@@ -837,7 +846,7 @@ extern "C" {
       fake_build_arguments_standard_add(data, data_build, F_true, F_true, &arguments, status);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
         f_macro_string_dynamics_t_delete_simple(arguments);
         return;
@@ -1013,7 +1022,7 @@ extern "C" {
         *status = fake_build_get_file_name_without_extension(data, data_build.setting.build_sources_library.array[i], &file_name);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
           break;
         }
 
@@ -1025,7 +1034,7 @@ extern "C" {
         *status = f_file_name_directory(data_build.setting.build_sources_library.array[i].string, data_build.setting.build_sources_library.array[i].used, &source_path);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "f_file_name_directory", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "f_file_name_directory", F_true);
           break;
         }
 
@@ -1033,21 +1042,21 @@ extern "C" {
           *status = fl_string_dynamic_prepend(data.path_build_objects, &source_path);
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
             break;
           }
 
           *status = fl_string_append_assure(f_path_separator, f_path_separator_length, &source_path);
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data->error, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append_assure", F_true);
             break;
           }
 
           *status = fl_string_dynamic_terminate_after(&source_path);
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
             break;
           }
 
@@ -1075,7 +1084,7 @@ extern "C" {
         *status = fll_execute_arguments_add(source, source_length, &arguments);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
           break;
         }
       } // for
@@ -1116,7 +1125,7 @@ extern "C" {
       f_macro_string_dynamics_new(*status, names, 2);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "f_macro_string_dynamics_new", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "f_macro_string_dynamics_new", F_true);
 
         f_macro_string_dynamics_t_delete_simple(names);
         return;
@@ -1141,12 +1150,12 @@ extern "C" {
         if (names.used + data_build.setting.environment.used > names.size) {
           if (names.used + data_build.setting.environment.used > f_array_length_t_size) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data.error.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.error, data.context.set.error, "ERROR: The values for the setting '");
-              fl_color_print(data.error, data.context.set.notable, "%s", fake_build_setting_name_environment);
-              fl_color_print(data.error, data.context.set.error, "' of setting file '");
-              fl_color_print(data.error, data.context.set.notable, "%s", data.file_data_build_settings.string);
-              fl_color_print(data.error, data.context.set.error, "' is too large.%c", f_string_eol[0]);
+              fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+              fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The values for the setting '");
+              fl_color_print(data.error.to.stream, data.context.set.notable, "%s", fake_build_setting_name_environment);
+              fl_color_print(data.error.to.stream, data.context.set.error, "' of setting file '");
+              fl_color_print(data.error.to.stream, data.context.set.notable, "%s", data.file_data_build_settings.string);
+              fl_color_print(data.error.to.stream, data.context.set.error, "' is too large.%c", f_string_eol[0]);
             }
 
             f_macro_string_dynamic_t_delete_simple(part);
@@ -1158,7 +1167,7 @@ extern "C" {
           f_macro_string_dynamics_resize(*status, names, names.used + data_build.setting.environment.used);
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data->error, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true);
 
             f_macro_string_dynamic_t_delete_simple(part);
             f_macro_string_dynamics_t_delete_simple(names);
@@ -1183,7 +1192,7 @@ extern "C" {
       f_macro_string_dynamic_t_delete_simple(part);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fl_string_append", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append", F_true);
 
         f_macro_string_dynamics_t_delete_simple(names);
         return;
@@ -1261,7 +1270,7 @@ extern "C" {
     f_macro_string_dynamic_t_delete_simple(variable_value);
 
     if (F_status_is_error(*status) && F_status_set_fine(*status) != F_signal) {
-      fll_error_print(data->error, *status, function, F_true);
+      fll_error_print(data.error, *status, function, F_true);
     }
   }
 #endif // _di_fake_build_load_environment_
@@ -1331,12 +1340,12 @@ extern "C" {
       for (uint8_t i = 0; i < 1; i++) {
 
         if (!settings[i]->used) {
-          fprintf(data.error.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error, data.context.set.error, "ERROR: The setting '");
-          fl_color_print(data.error, data.context.set.notable, "%s", names[i]);
-          fl_color_print(data.error, data.context.set.error, "' is required but is not specified in the settings file '");
-          fl_color_print(data.error, data.context.set.notable, "%s", setting_file.used ? path_file : data.file_data_build_settings.string);
-          fl_color_print(data.error, data.context.set.error, "'.%c", f_string_eol[0]);
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The setting '");
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", names[i]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "' is required but is not specified in the settings file '");
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", setting_file.used ? path_file : data.file_data_build_settings.string);
+          fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol[0]);
 
           failed = F_true;
         }
@@ -1561,12 +1570,12 @@ extern "C" {
 
         if (found == F_false) {
           if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.stream, "%c", f_string_eol[0]);
-            fl_color_print(data.error, data.context.set.error, "ERROR: The specified mode '");
-            fl_color_print(data.error, data.context.set.notable, "%s", modes->array[i].string);
-            fl_color_print(data.error, data.context.set.error, "' is not a valid mode, according to '");
-            fl_color_print(data.error, data.context.set.notable, "%s", path_file);
-            fl_color_print(data.error, data.context.set.error, "'.%c", f_string_eol[0]);
+            fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The specified mode '");
+            fl_color_print(data.error.to.stream, data.context.set.notable, "%s", modes->array[i].string);
+            fl_color_print(data.error.to.stream, data.context.set.error, "' is not a valid mode, according to '");
+            fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path_file);
+            fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol[0]);
           }
 
           error_printed = F_true;
@@ -1616,14 +1625,14 @@ extern "C" {
       if (*status == F_status_set_error(F_string_too_large)) {
         if (data.error.verbosity != f_console_verbosity_quiet) {
           // @todo update FSS functions to return which setting index the problem happened on.
-          fprintf(data.error.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error, data.context.set.error, "ERROR: A setting in the build setting file '");
-          fl_color_print(data.error, data.context.set.notable, "%s", path_file);
-          fl_color_print(data.error, data.context.set.error, "' is too long.%c", f_string_eol[0]);
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: A setting in the build setting file '");
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path_file);
+          fl_color_print(data.error.to.stream, data.context.set.error, "' is too long.%c", f_string_eol[0]);
         }
       }
       else if (!error_printed) {
-        fll_error_print(data->error, F_status_set_fine(*status), function, F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), function, F_true);
       }
     }
     else if (!fake_signal_received(data)) {
@@ -1913,21 +1922,21 @@ extern "C" {
 
           *status = fl_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);
           if (F_status_is_error(*status)) {
-            fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
             break;
           }
 
           if (settings_single_type[i] == 2) {
             *status = fl_string_append_assure(f_path_separator, f_path_separator_length, settings_single_destination[i]);
             if (F_status_is_error(*status)) {
-              fll_error_print(data->error, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+              fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append_assure", F_true);
               break;
             }
           }
 
           *status = fl_string_dynamic_terminate_after(settings_single_destination[i]);
           if (F_status_is_error(*status)) {
-            fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
             break;
           }
         }
@@ -1995,14 +2004,16 @@ extern "C" {
         if (destinations[i]->used > 0) continue;
 
         *status = fl_string_append_assure(sources[i], lengths[i], destinations[i]);
+
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append_assure", F_true);
           break;
         }
 
         *status = fl_string_dynamic_terminate_after(destinations[i]);
+
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
           break;
         }
       } // for
@@ -2023,12 +2034,12 @@ extern "C" {
         }
 
         if (data.error.verbosity == f_console_verbosity_verbose) {
-          Dprintf(data.output, "%c", f_string_eol[0]);
-          fl_color_print_TO(data.output, data.context.set.error, "WARNING: the parameters '");
-          fl_color_print_TO(data.output, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_disabled);
-          fl_color_print_TO(data.output, data.context.set.error, "' and '");
-          fl_color_print_TO(data.output, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_enabled);
-          fl_color_print_TO(data.output, data.context.set.error, "' contradict, defaulting to '");
+          fprintf(data.output.stream, "%c", f_string_eol[0]);
+          fl_color_print(data.output.stream, data.context.set.error, "WARNING: the parameters '");
+          fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_disabled);
+          fl_color_print(data.output.stream, data.context.set.error, "' and '");
+          fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_enabled);
+          fl_color_print(data.output.stream, data.context.set.error, "' contradict, defaulting to '");
 
           if (setting->build_shared) {
             fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_enabled);
@@ -2092,21 +2103,21 @@ extern "C" {
     if (setting->build_language == fake_build_language_type_c || setting->build_language == fake_build_language_type_cpp) {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
         if (data.error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data.error.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error, data.context.set.error, "ERROR: The build settings '");
-          fl_color_print(data.error, data.context.set.notable, "%s", fake_build_setting_name_build_shared);
-          fl_color_print(data.error, data.context.set.error, "' and '");
-          fl_color_print(data.error, data.context.set.notable, "%s", fake_build_setting_name_build_static);
-          fl_color_print(data.error, data.context.set.error, "' cannot both be false when using the language '");
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The build settings '");
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", fake_build_setting_name_build_shared);
+          fl_color_print(data.error.to.stream, data.context.set.error, "' and '");
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", fake_build_setting_name_build_static);
+          fl_color_print(data.error.to.stream, data.context.set.error, "' cannot both be false when using the language '");
 
           if (setting->build_language == fake_build_language_type_c) {
-            fl_color_print(data.error, data.context.set.notable, "%s", fake_build_language_c);
+            fl_color_print(data.error.to.stream, data.context.set.notable, "%s", fake_build_language_c);
           }
           else {
-            fl_color_print(data.error, data.context.set.notable, "%s", fake_build_language_cpp);
+            fl_color_print(data.error.to.stream, data.context.set.notable, "%s", fake_build_language_cpp);
           }
 
-          fl_color_print(data.error, data.context.set.error, "'.%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol[0]);
         }
 
         *status = F_status_set_error(F_failure);
@@ -2187,7 +2198,7 @@ extern "C" {
     }
 
     if (F_status_is_error(*status)) {
-      fll_error_print(data->error, F_status_set_fine(*status), "f_file_name_base", F_true);
+      fll_error_print(data.error, F_status_set_fine(*status), "f_file_name_base", F_true);
       return;
     }
 
@@ -2196,7 +2207,7 @@ extern "C" {
       *status = fl_string_dynamic_append_nulless(data.path_build_stage, values[i]);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
         break;
       }
 
@@ -2204,14 +2215,14 @@ extern "C" {
         *status = fl_string_append(data.process.string, data.process.used, values[i]);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fl_string_append", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append", F_true);
           break;
         }
 
         *status = fl_string_append(fake_build_stage_separate, fake_build_stage_separate_length, values[i]);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fl_string_append", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append", F_true);
           break;
         }
       }
@@ -2219,35 +2230,35 @@ extern "C" {
       *status = fl_string_append_nulless(names[i], lengths[i], values[i]);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
         break;
       }
 
       *status = fl_string_append(fake_build_stage_separate, fake_build_stage_separate_length, values[i]);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fl_string_append", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append", F_true);
         break;
       }
 
       *status = fl_string_dynamic_append(settings_file_base, values[i]);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_append", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_append", F_true);
         break;
       }
 
       *status = fl_string_append(fake_build_stage_built, fake_build_stage_built_length, values[i]);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fl_string_append", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append", F_true);
         break;
       }
 
       *status = fl_string_dynamic_terminate_after(values[i]);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
         break;
       }
     } // for
@@ -2300,7 +2311,7 @@ extern "C" {
       *status = fake_build_get_file_name_without_extension(data, data_build.setting.build_sources_library.array[i], &file_name);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
         break;
       }
 
@@ -2312,7 +2323,7 @@ extern "C" {
       *status = f_file_name_directory(data_build.setting.build_sources_library.array[i].string, data_build.setting.build_sources_library.array[i].used, &destination_path);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "f_file_name_directory", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "f_file_name_directory", F_true);
         break;
       }
 
@@ -2320,21 +2331,21 @@ extern "C" {
         *status = fl_string_dynamic_prepend(data.path_build_objects, &destination_path);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_prepend", F_true);
           break;
         }
 
         *status = fl_string_append_assure(f_path_separator, f_path_separator_length, &destination_path);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fl_string_append_assure", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append_assure", F_true);
           break;
         }
 
         *status = fl_string_dynamic_terminate_after(&destination_path);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data->error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
           break;
         }
 
@@ -2347,10 +2358,10 @@ extern "C" {
 
         if (*status == F_false) {
           if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.stream, "%c", f_string_eol[0]);
-            fl_color_print(data.error, data.context.set.error, "ERROR: The path '");
-            fl_color_print(data.error, data.context.set.notable, "%s", destination_path.string);
-            fl_color_print(data.error, data.context.set.error, "' exists but is not a directory.%c", f_string_eol[0]);
+            fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The path '");
+            fl_color_print(data.error.to.stream, data.context.set.notable, "%s", destination_path.string);
+            fl_color_print(data.error.to.stream, data.context.set.error, "' exists but is not a directory.%c", f_string_eol[0]);
           }
 
           *status = F_status_set_error(F_failure);
@@ -2361,10 +2372,10 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             if (F_status_set_fine(*status) == F_file_found_not) {
-              fprintf(data.error.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.error, data.context.set.error, "ERROR: The path '");
-              fl_color_print(data.error, data.context.set.notable, "%s", destination_path.string);
-              fl_color_print(data.error, data.context.set.error, "' could not be created, a parent directory does not exist.%c", f_string_eol[0]);
+              fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+              fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The path '");
+              fl_color_print(data.error.to.stream, data.context.set.notable, "%s", destination_path.string);
+              fl_color_print(data.error.to.stream, data.context.set.error, "' could not be created, a parent directory does not exist.%c", f_string_eol[0]);
             }
             else {
               fll_error_file_print(data.error, F_status_set_fine(*status), "f_directory_create", F_true, destination_path.string, "create", fll_error_file_type_directory);
@@ -2428,7 +2439,7 @@ extern "C" {
       fake_build_arguments_standard_add(data, data_build, F_false, F_true, &arguments, status);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
         break;
       }
 
@@ -2669,7 +2680,7 @@ extern "C" {
     fake_build_arguments_standard_add(data, data_build, F_true, F_false, &arguments, status);
 
     if (F_status_is_error(*status)) {
-      fll_error_print(data->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+      fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       f_macro_string_dynamics_t_delete_simple(arguments);
       return;
@@ -2784,7 +2795,7 @@ extern "C" {
     fake_build_arguments_standard_add(data, data_build, F_false, F_false, &arguments, status);
 
     if (F_status_is_error(*status)) {
-      fll_error_print(data->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
+      fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       f_macro_string_dynamics_t_delete_simple(arguments);
       return;

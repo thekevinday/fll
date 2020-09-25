@@ -93,33 +93,14 @@ extern "C" {
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**
- * Print generic error/warning messages.
- *
- * @param data
- *   The program data.
- * @param status
- *   The status code representing an error.
- * @param function
- *   The name of the function where the error happened.
- *   Set to 0 to disable.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
- *
- * @return
- *   F_none is returned on successful print of known errors.
- *   F_unknown is returned if the status code has no print message.
- */
-#ifndef _di_fake_print_message_
-  extern f_return_status fake_print_message(const fake_data_t data, const f_status_t status, const f_string_t function, const bool fallback) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_print_message_
-
-/**
  * Print file/directory error/warning messages.
  *
  * @todo the fll_file_error_print() needs to be reviewed and possibly changed.
  *
  * @param data
  *   The program data.
+ * @param error
+ *   Designates how the section error/warning should be printed.
  * @param status
  *   The error status code to report on.
  * @param function
@@ -138,7 +119,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fake_print_message_file_
-  extern bool fake_print_message_file(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern bool fake_print_message_file(const fake_data_t data, const fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_message_file_
 
 /**
@@ -146,17 +127,17 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param error
+ *   Designates how the section error/warning should be printed.
  * @param buffer
  *   The buffer containing the fakefile data.
  * @param section_name
  *   The range within the buffer representing the section name.
  * @param operation_name
  *   The range within the buffer representing the operation name within the section.
- * @param error
- *   Designates how the section error/warning should be printed.
  */
 #ifndef _di_fake_print_message_section_operation_failed_
-  extern void fake_print_message_section_operation_failed(const fake_data_t data, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, fll_error_print_t error) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_failed(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_failed_
 
 /**
@@ -164,17 +145,17 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param error
+ *   Designates how the section error/warning should be printed.
  * @param status
  *   The status code representing an error.
  * @param function
  *   The name of the function where the error happened.
  * @param path
  *   The path that is outside of the project path.
- * @param error
- *   Designates how the section error/warning should be printed.
  */
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  extern void fake_print_message_section_operation_path_outside(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t path, fll_error_print_t error) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_path_outside(const fake_data_t data, const fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) f_gcc_attribute_visibility_internal;
 #endif // _fake_print_message_section_operation_path_outside_
 
 /**
@@ -182,6 +163,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param error
+ *   Designates how the section error/warning should be printed.
  * @param status
  *   The status code representing an error.
  * @param function
@@ -189,11 +172,9 @@ extern "C" {
  *   Set to 0 to disable.
  * @param path
  *   The path to the directory.
- * @param error
- *   Designates how the section error/warning should be printed.
  */
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  extern void fake_print_message_section_operation_path_stack_max(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t path, fll_error_print_t error) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_path_stack_max(const fake_data_t data, fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_path_stack_max_
 
 /**
@@ -201,6 +182,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param error
+ *   Designates how the section error/warning should be printed.
  * @param buffer
  *   The buffer containing the fakefile data.
  * @param section_name
@@ -209,11 +192,9 @@ extern "C" {
  *   The range within the buffer representing the operation name within the section.
  * @param stack_max
  *   The max stack depth.
- * @param error
- *   Designates how the section error/warning should be printed.
  */
 #ifndef _di_fake_print_message_section_operation_stack_max_
-  extern void fake_print_message_section_operation_stack_max(const fake_data_t data, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max, fll_error_print_t error) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_stack_max(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_stack_max_
 
 /**
@@ -221,17 +202,17 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param error
+ *   Designates how the section error/warning should be printed.
  * @param buffer
  *   The buffer containing the fakefile data.
  * @param section_name
  *   The range within the buffer representing the section name.
  * @param operation_name
  *   The range within the buffer representing the operation name within the section.
- * @param error
- *   Designates how the section error/warning should be printed.
  */
 #ifndef _di_fake_print_message_section_operation_unknown_
-  extern void fake_print_message_section_operation_unknown(const fake_data_t data, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, fll_error_print_t error) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_unknown(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_unknown_
 
 /**

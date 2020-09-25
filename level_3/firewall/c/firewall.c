@@ -77,6 +77,9 @@ extern "C" {
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
+        data->error.context = data->context.set.error;
+        data->error.notable = data->context.set.notable;
+
         if (F_status_is_error(status)) {
           firewall_delete_data(data);
           return F_status_set_error(status);

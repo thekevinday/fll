@@ -101,6 +101,9 @@ extern "C" {
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
+        data->error.context = data->context.set.error;
+        data->error.notable = data->context.set.notable;
+
         if (F_status_is_error(status)) {
           iki_read_print_error(data->context, data->error.verbosity, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 

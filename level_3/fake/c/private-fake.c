@@ -194,7 +194,7 @@ extern "C" {
         status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
         if (F_status_is_error(status)) {
-          fake_print_error(*data, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
           return status;
         }
       } // for
@@ -259,7 +259,7 @@ extern "C" {
         status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fake_print_error(*data, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
           return status;
         }
       } // for
@@ -314,7 +314,7 @@ extern "C" {
         status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
         if (F_status_is_error(status)) {
-          fake_print_error(*data, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
           return status;
         }
       } // for
@@ -376,7 +376,7 @@ extern "C" {
         status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fake_print_error(*data, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
           return status;
         }
       } // for
@@ -394,7 +394,7 @@ extern "C" {
           status = fl_string_dynamic_append_nulless(data->path_work, parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fake_print_error(*data, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
             return status;
           }
         } // for
@@ -423,7 +423,7 @@ extern "C" {
           status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fake_print_error(*data, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
             return status;
           }
         } // for
@@ -461,7 +461,7 @@ extern "C" {
           status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
           if (F_status_is_error(status)) {
-            fake_print_error(*data, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
             return status;
           }
         } // for
@@ -499,7 +499,7 @@ extern "C" {
           status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fake_print_error(*data, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
             return status;
           }
         } // for
@@ -550,7 +550,7 @@ extern "C" {
         status = fl_string_dynamic_terminate_after(parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fake_print_error(*data, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
           return status;
         }
       } // for
@@ -642,7 +642,7 @@ extern "C" {
                 status = f_utf_is_word_dash_plus(arguments.argv[location] + j, width_max, F_false);
 
                 if (F_status_is_error(status)) {
-                  if (fake_print_error(*data, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
+                  if (fll_error_print(data->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
                     fprintf(data->error.to.stream, "%c", f_string_eol[0]);
                     fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to process the parameter '");
                     fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_process);
@@ -679,7 +679,7 @@ extern "C" {
                 }
               }
               else {
-                fake_print_error(*data, F_status_set_fine(status), "fl_string_append", F_true);
+                fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
               }
 
               return status;
@@ -702,7 +702,7 @@ extern "C" {
           f_macro_string_dynamic_t_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            fake_print_error(*data, F_status_set_fine(status), "f_macro_string_dynamic_t_resize", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "f_macro_string_dynamic_t_resize", F_true);
             return status;
           }
 
@@ -768,7 +768,7 @@ extern "C" {
           status = fl_console_parameter_to_string_dynamic_directory(arguments.argv[data->parameters[parameters_id[i]].additional.array[0]], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            if (fake_print_error(*data, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
+            if (fll_error_print(data->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
               fprintf(data->error.to.stream, "%c", f_string_eol[0]);
               fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to process parameter '");
               fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
@@ -782,7 +782,7 @@ extern "C" {
           f_macro_string_dynamic_t_new(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            if (fake_print_error(*data, F_status_set_fine(status), "f_macro_string_dynamic_t_new", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
+            if (fll_error_print(data->error, F_status_set_fine(status), "f_macro_string_dynamic_t_new", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
               fprintf(data->error.to.stream, "%c", f_string_eol[0]);
               fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to load default for the parameter '");
               fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, parameters_name[i]);
@@ -802,7 +802,7 @@ extern "C" {
       status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_define].additional, &data->define);
 
       if (F_status_is_error(status)) {
-        if (fake_print_error(*data, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
+        if (fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
           fprintf(data->error.to.stream, "%c", f_string_eol[0]);
           fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to process the parameter '");
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_define);
@@ -825,7 +825,7 @@ extern "C" {
           status = f_utf_is_word(data->define.array[i].string + j, width_max, F_false);
 
           if (F_status_is_error(status)) {
-            if (fake_print_error(*data, F_status_set_fine(status), "f_utf_is_word", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
+            if (fll_error_print(data->error, F_status_set_fine(status), "f_utf_is_word", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
               fprintf(data->error.to.stream, "%c", f_string_eol[0]);
               fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to process the parameter '");
               fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_define);
@@ -859,7 +859,7 @@ extern "C" {
       status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_mode].additional, &data->mode);
 
       if (F_status_is_error(status)) {
-        if (fake_print_error(*data, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
+        if (fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
           fprintf(data->error.to.stream, "%c", f_string_eol[0]);
           fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to process the parameter '");
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_mode);
@@ -882,7 +882,7 @@ extern "C" {
           status = f_utf_is_word_dash_plus(data->mode.array[i].string + j, width_max, F_false);
 
           if (F_status_is_error(status)) {
-            if (fake_print_error(*data, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
+            if (fll_error_print(data->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
               fprintf(data->error.to.stream, "%c", f_string_eol[0]);
               fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to process the parameter '");
               fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_mode);
