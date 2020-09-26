@@ -23,7 +23,7 @@ extern "C" {
 
       if (content.string[i] == quote) {
         if (escaped->used + delimits + 2 > escaped->size) {
-          status = fl_string_dynamic_size_increase(delimits, escaped);
+          status = fl_string_dynamic_size_increase(delimits + 2, escaped);
           if (F_status_is_error(status)) return status;
         }
 
