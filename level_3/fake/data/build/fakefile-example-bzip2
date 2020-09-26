@@ -17,10 +17,22 @@ settings:
   indexer ar
 
 main:
+  operate bzip2
+  operate bzip2recover
+  operate scripts
+
+bzip2:
   print
   print Building settings-example-bzip2.
   build settings-example-bzip2
 
+bzip2recover:
   print
   print Building settings-example-bzip2recover.
   build settings-example-bzip2recover
+
+scripts:
+  print
+  print copying bzip2 scripts.
+  touch directory build/ build/program/ build/program/scripts/
+  copy bzdiff bzgrep build/program/scripts/
