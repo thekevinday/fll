@@ -15,7 +15,7 @@ extern "C" {
     if (status == F_file_found_not) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Failed to find '");
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sFailed to find '", fll_error_print_error);
 
         if (f_file_exists(source) == F_true) {
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s", destination);
@@ -41,7 +41,7 @@ extern "C" {
     if (status == F_parameter) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sInvalid parameter when calling ", fll_error_print_error);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", function);
         fl_color_print(data.error.to.stream, data.context.set.error, "() to %s '", operation);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
@@ -60,7 +60,7 @@ extern "C" {
     if (status == F_name) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Invalid name for '");
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sInvalid name for '", fll_error_print_error);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
 
         if (destination) {
@@ -77,7 +77,7 @@ extern "C" {
     if (status == F_memory_out) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory, while trying to %s '", operation);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory, while trying to %s '", fll_error_print_error, operation);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
 
         if (destination) {
@@ -95,7 +95,7 @@ extern "C" {
       if (data.error.verbosity != f_console_verbosity_quiet) {
 
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Overflow while trying to %s '", operation);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sOverflow while trying to %s '", fll_error_print_error, operation);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
 
         if (destination) {
@@ -112,7 +112,7 @@ extern "C" {
     if (status == F_directory) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Invalid directory while trying to %s '", operation);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sInvalid directory while trying to %s '", fll_error_print_error, operation);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
 
         if (destination) {
@@ -129,7 +129,7 @@ extern "C" {
     if (status == F_access_denied) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Access denied while trying to %s '", operation);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sAccess denied while trying to %s '", fll_error_print_error, operation);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
 
         if (destination) {
@@ -146,7 +146,7 @@ extern "C" {
     if (status == F_loop) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Loop while trying to %s '", operation);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sLoop while trying to %s '", fll_error_print_error, operation);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
 
         if (destination) {
@@ -163,7 +163,7 @@ extern "C" {
     if (status == F_prohibited) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Prohibited by system while trying to %s '", operation);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sProhibited by system while trying to %s '", fll_error_print_error, operation);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
 
         if (destination) {
@@ -180,7 +180,7 @@ extern "C" {
     if (status == F_directory_found_not) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Failed to %s '", operation);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sFailed to %s '", fll_error_print_error, operation);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
 
         if (destination) {
@@ -197,7 +197,7 @@ extern "C" {
     if (status == F_failure) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Failed to %s '", operation);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sFailed to %s '", fll_error_print_error, operation);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
 
         if (destination) {
@@ -213,7 +213,7 @@ extern "C" {
 
     if (fll_error_print(data.error, status, function, F_false) == F_unknown && fallback && data.error.verbosity != f_console_verbosity_quiet) {
       fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-      fl_color_print(data.error.to.stream, data.context.set.error, "UNKNOWN ERROR: (");
+      fl_color_print(data.error.to.stream, data.context.set.error, "UNKNOWN %s(", fll_error_print_error);
       fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", status);
       fl_color_print(data.error.to.stream, data.context.set.error, ") occurred while trying to %s '", operation);
       fl_color_print(data.error.to.stream, data.context.set.notable, "%s", source);
@@ -236,7 +236,7 @@ extern "C" {
     if (status == F_file_found_not) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ENCODING ERROR: error occurred on invalid UTF-8 character at stop position (at ");
+        fl_color_print(data.error.to.stream, data.context.set.error, "%serror occurred on invalid UTF-8 character at stop position (at ", fll_error_print_error);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%d", range.start);
         fl_color_print(data.error.to.stream, data.context.set.error, " of setting file '");
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path_file);
@@ -249,7 +249,7 @@ extern "C" {
     if (status == F_status_set_error(F_incomplete_utf_stop)) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ENCODING ERROR: error occurred on invalid UTF-8 character at end of string (at ");
+        fl_color_print(data.error.to.stream, data.context.set.error, "%serror occurred on invalid UTF-8 character at end of string (at ", fll_error_print_error);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%d", range.start);
         fl_color_print(data.error.to.stream, data.context.set.error, " of setting file '");
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path_file);
@@ -261,7 +261,7 @@ extern "C" {
 
     if (fll_error_print(data.error, status, function, F_false) == F_unknown && fallback && data.error.verbosity != f_console_verbosity_quiet) {
       fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-      fl_color_print(data.error.to.stream, data.context.set.error, "UNKNOWN ERROR: (");
+      fl_color_print(data.error.to.stream, data.context.set.error, "UNKNOWN %s(", fll_error_print_error);
       fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", status);
       fl_color_print(data.error.to.stream, data.context.set.error, ") in function ");
       fl_color_print(data.error.to.stream, data.context.set.notable, "%s", function);
@@ -278,7 +278,7 @@ extern "C" {
 
     fprintf(data.error.to.stream, "%c", f_string_eol[0]);
 
-    fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The parameter '");
+    fl_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
     fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, parameter);
 
     fl_color_print(data.error.to.stream, data.context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
@@ -291,7 +291,7 @@ extern "C" {
 
     fprintf(data.error.to.stream, "%c", f_string_eol[0]);
 
-    fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The parameter '");
+    fl_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
     fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, parameter);
 
     fl_color_print(data.error.to.stream, data.context.set.error, "' specified too many times.%c", f_string_eol[0]);
@@ -505,7 +505,7 @@ extern "C" {
     f_fss_count_lines(buffer, operation_name.start, &line);
 
     fprintf(error.to.stream, "%c", f_string_eol[0]);
-    fl_color_print(error.to.stream, data.error.context, "%s: The section operation '", data.error.prefix);
+    fl_color_print(error.to.stream, data.error.context, "%sThe section operation '", data.error.prefix);
 
     fl_color_print_code(error.to.stream, data.context.notable);
     f_print_dynamic_partial(error.to.stream, buffer, operation_name);
@@ -529,7 +529,7 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_false) {
       fprintf(error.to.stream, "%c", f_string_eol[0]);
-      fl_color_print(error.to.stream, data.error.context, "%s: The path '", data.error.prefix);
+      fl_color_print(error.to.stream, data.error.context, "%sThe path '", data.error.prefix);
       fl_color_print(error.to.stream, data.context.set.notable, "%s", path);
       fl_color_print(error.to.stream, data.error.context, "' is outside the project root.%c", f_string_eol[0]);
     }
@@ -572,7 +572,7 @@ extern "C" {
     f_fss_count_lines(buffer, operation_name.start, &line);
 
     fprintf(error.to.stream, "%c", f_string_eol[0]);
-    fl_color_print(error.to.stream, data.error.context, "%s: The section operation '", data.error.prefix);
+    fl_color_print(error.to.stream, data.error.context, "The section operation '", data.error.prefix);
 
     fl_color_print_code(error.to.stream, data.context.notable);
     f_print_dynamic_partial(error.to.stream, buffer, operation_name);
@@ -601,7 +601,7 @@ extern "C" {
     f_fss_count_lines(buffer, operation_name.start, &line);
 
     fprintf(error.to.stream, "%c", f_string_eol[0]);
-    fl_color_print(error.to.stream, data.error.context, "%s: The section operation '", data.error.prefix);
+    fl_color_print(error.to.stream, data.error.context, "%sThe section operation '", data.error.prefix);
 
     fl_color_print_code(error.to.stream, data.context.notable);
     f_print_dynamic_partial(error.to.stream, buffer, operation_name);
@@ -625,7 +625,7 @@ extern "C" {
 
     fprintf(data.error.to.stream, "%c", f_string_eol[0]);
 
-    fl_color_print(f_type_warning, data.context.set.warning, "WARNING: the fakefile '");
+    fl_color_print(f_type_warning, data.context.set.warning, "%sthe fakefile '", fll_error_print_warning);
     fl_color_print(f_type_warning, data.context.set.notable, "%s", path_file);
     fl_color_print(f_type_warning, data.context.set.warning, "' has empty content for the '");
     fl_color_print(f_type_warning, data.context.set.notable, "%s", settings_name);
@@ -645,7 +645,7 @@ extern "C" {
 
     fprintf(data.output.stream, "%c", f_string_eol[0]);
 
-    fl_color_print(data.output.stream, data.context.set.warning, "WARNING: the fakefile '");
+    fl_color_print(data.output.stream, data.context.set.warning, "%sthe fakefile '", fll_error_print_warning);
     fl_color_print(data.output.stream, data.context.set.notable, "%s", path_file);
     fl_color_print(data.output.stream, data.context.set.warning, "' has an invalid content '");
 
@@ -671,7 +671,7 @@ extern "C" {
 
     fprintf(data.error.to.stream, "%c", f_string_eol[0]);
 
-    fl_color_print(f_type_warning, data.context.set.warning, "WARNING: the setting '");
+    fl_color_print(f_type_warning, data.context.set.warning, "%sthe setting '", fll_error_print_warning);
     fl_color_print(f_type_warning, data.context.set.notable, "%s", name_object);
     fl_color_print(f_type_warning, data.context.set.warning, "' in the file '");
     fl_color_print(f_type_warning, data.context.set.notable, "%s", path_file);
@@ -686,7 +686,7 @@ extern "C" {
 
     fprintf(data.error.to.stream, "%c", f_string_eol[0]);
 
-    fl_color_print(f_type_warning, data.context.set.warning, "WARNING: the %s object '", label);
+    fl_color_print(f_type_warning, data.context.set.warning, "%sthe %s object '", fll_error_print_warning, label);
     fl_color_print(f_type_warning, data.context.set.notable, "%s", name_object);
     fl_color_print(f_type_warning, data.context.set.warning, "' in the file '");
     fl_color_print(f_type_warning, data.context.set.notable, "%s", path_file);

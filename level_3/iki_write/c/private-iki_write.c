@@ -5,275 +5,13 @@
 extern "C" {
 #endif
 
-#ifndef _di_iki_write_print_error_
-  f_return_status iki_write_print_error(const f_color_context_t context, const uint8_t verbosity, const f_status_t status, const f_string_t function, const bool fallback) {
-
-    if (status == F_parameter) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Invalid parameter when calling function ");
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
-        fl_color_print(data.error.to.stream, context.set.error, "().%c", f_string_eol[0]);
-      }
-
-      return F_none;
-    }
-
-    if (status == F_memory_allocation || status == F_memory_reallocation) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Unable to allocate memory in function ");
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
-        fl_color_print(data.error.to.stream, context.set.error, "().%c", f_string_eol[0]);
-      }
-
-      return F_none;
-    }
-
-    if (status == F_buffer_too_large) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Maximum buffer limit reached while processing ");
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
-        fl_color_print(data.error.to.stream, context.set.error, "().%c", f_string_eol[0]);
-      }
-
-      return F_none;
-    }
-
-    if (status == F_string_too_large) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Maximum string limit reached while processing ");
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
-        fl_color_print(data.error.to.stream, context.set.error, "().%c", f_string_eol[0]);
-      }
-
-      return F_none;
-    }
-
-    if (fallback && verbosity != f_console_verbosity_quiet) {
-      fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-      fl_color_print(data.error.to.stream, context.set.error, "UNKNOWN ERROR: (");
-      fl_color_print(data.error.to.stream, context.set.notable, "%llu", status);
-      fl_color_print(data.error.to.stream, context.set.error, ") in function ");
-      fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
-      fl_color_print(data.error.to.stream, context.set.error, "().%c", f_string_eol[0]);
-    }
-
-    return F_unknown;
-  }
-#endif // _di_iki_write_print_error_
-
-#ifndef _di_iki_write_print_error_file_
-  bool iki_write_print_error_file(const f_color_context_t context, const uint8_t verbosity, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const uint8_t type, const bool fallback) {
-    f_string_t type_name = "file";
-
-    if (type == 1) {
-      type_name = "directory";
-    }
-    else if (type == 2) {
-      type_name = "pipe";
-    }
-
-    if (status == F_file_found_not) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Failed to find %s '", type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_file_closed) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fl_color_print(data.error.to.stream, context.set.error, "INTERNAL ERROR: The %s '", type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "' is no longer open.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_file_seek) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: A seek error occurred while accessing the file '");
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_file_read) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: A read error occurred while accessing the file '");
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_file_found) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: The %s '", type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "' already exists.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_parameter) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "INTERNAL ERROR: Invalid parameter when calling ");
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", function);
-        fl_color_print(data.error.to.stream, context.set.error, "() for the %s '", type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_name) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Invalid %s name '", type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_memory_out) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "CRITICAL ERROR: Unable to allocate memory, while trying to %s %s '", operation, type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_number_overflow) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Overflow while trying to %s %s '", operation, type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_directory) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Invalid directory while trying to %s %s '", operation, type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_access_denied) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Access denied while trying to %s %s '", operation, type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_loop) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Loop while trying to %s %s '", operation, type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_prohibited) {
-      if (verbosity != f_console_verbosity_quiet) {
-        fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, context.set.error, "ERROR: Prohibited by system while trying to %s %s '", operation, type_name);
-        fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-        fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-      }
-
-      return F_false;
-    }
-
-    if (!type) {
-      if (status == F_directory_found_not) {
-        if (verbosity != f_console_verbosity_quiet) {
-          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error.to.stream, context.set.error, "ERROR: Failed to %s %s '", operation, type_name);
-          fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-          fl_color_print(data.error.to.stream, context.set.error, "' due to an invalid directory in the path.%c", f_string_eol[0]);
-        }
-
-        return F_false;
-      }
-    }
-    else if (type == 1) {
-      if (status == F_directory_found_not) {
-        if (verbosity != f_console_verbosity_quiet) {
-          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error.to.stream, context.set.error, "ERROR: Failed to %s %s '", operation, type_name);
-          fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-          fl_color_print(data.error.to.stream, context.set.error, "' due to an invalid directory in the path.%c", f_string_eol[0]);
-        }
-
-        return F_false;
-      }
-
-      if (status == F_failure) {
-        if (verbosity != f_console_verbosity_quiet) {
-          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error.to.stream, context.set.error, "ERROR: Failed to %s %s '", operation, type_name);
-          fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-          fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-        }
-
-        return F_false;
-      }
-    }
-
-    if (iki_write_print_error(context, verbosity, status, function, F_false) == F_unknown && fallback && verbosity != f_console_verbosity_quiet) {
-      fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-      fl_color_print(data.error.to.stream, context.set.error, "UNKNOWN ERROR: (");
-      fl_color_print(data.error.to.stream, context.set.notable, "%llu", status);
-      fl_color_print(data.error.to.stream, context.set.error, ") occurred while trying to %s %s '", operation, type_name);
-      fl_color_print(data.error.to.stream, context.set.notable, "%s", name);
-      fl_color_print(data.error.to.stream, context.set.error, "'.%c", f_string_eol[0]);
-    }
-
-    return F_true;
-  }
-#endif // _di_iki_write_print_error_file_
-
 #ifndef _di_iki_write_process_
   f_return_status iki_write_process(const iki_write_data_t data, const f_string_static_t object, const f_string_static_t content, const uint8_t quote, const int output, f_string_dynamic_t *escaped) {
 
     if (!object.used) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The object is missing, it must not have a length of ");
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sThe object is missing, it must not have a length of ", fll_error_print_error);
         fl_color_print(data.error.to.stream, data.context.set.notable, "0");
         fl_color_print(data.error.to.stream, data.context.set.error, ".%c", f_string_eol[0]);
       }
@@ -286,7 +24,7 @@ extern "C" {
     if (status == F_false) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The object '");
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sThe object '", fll_error_print_error);
 
         fl_color_print_code(f_type_error, data.context.notable);
         f_print_dynamic(f_type_error, object);
@@ -298,8 +36,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
     else if (F_status_is_error(status)) {
-      iki_write_print_error(data.context, data.error.verbosity, F_status_set_fine(status), "f_iki_object_is", F_true);
-
+      fll_error_print(data.error, F_status_set_fine(status), "f_iki_object_is", F_true);
       return F_status_set_error(F_failure);
     }
 
@@ -308,7 +45,7 @@ extern "C" {
     status = fll_iki_content_escape(content, quote, escaped);
 
     if (F_status_is_error(status)) {
-      iki_write_print_error(data.context, data.error.verbosity, F_status_set_fine(status), "fll_iki_content_escape", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "fll_iki_content_escape", F_true);
 
       f_macro_string_dynamic_t_delete_simple((*escaped));
       return F_status_set_error(F_failure);

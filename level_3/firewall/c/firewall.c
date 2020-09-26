@@ -23,16 +23,8 @@ extern "C" {
     fll_program_print_help_option(file, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
     fll_program_print_help_option(file, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
     fll_program_print_help_option(file, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-
-    #ifdef _en_firewall_debug_
-      fll_program_print_help_option(file, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    #endif // _en_firewall_debug_
-
+    fll_program_print_help_option(file, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(file, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
-
-    #ifdef _en_firewall_debug_
-      fll_program_print_help_option(file, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging.");
-    #endif // _en_firewall_debug_
 
     printf("%c%c", f_string_eol[0], f_string_eol[0]);
     fl_color_print(f_type_output, context.set.important, " Available Commands: ");
@@ -68,12 +60,11 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, firewall_total_parameters);
 
       {
         f_console_parameter_id_t ids[3] = { firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark };
         const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
-        const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, firewall_total_parameters);
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
@@ -89,6 +80,7 @@ extern "C" {
       // Identify priority of verbosity related parameters.
       {
         f_console_parameter_id_t ids[4] = { firewall_parameter_verbosity_quiet, firewall_parameter_verbosity_normal, firewall_parameter_verbosity_verbose, firewall_parameter_verbosity_debug };
+        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
         f_console_parameter_id_t choice = 0;
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
@@ -212,7 +204,7 @@ extern "C" {
             if (strncmp("nat", arguments.argv[data->remaining.array[counter]], 4) != 0) {
               if (strncmp("mangle",  arguments.argv[data->remaining.array[counter]], 7) != 0) {
                 if (strncmp("ports",  arguments.argv[data->remaining.array[counter]], 6) != 0) {
-                  fl_color_print(f_type_warning, data->context.set.warning, "WARNING: '%s' is not a valid show option%c", arguments.argv[data->remaining.array[counter]], f_string_eol[0]);
+                  fl_color_print(f_type_warning, data->context.set.warning, "%s'%s' is not a valid show option%c", fll_error_print_warning, arguments.argv[data->remaining.array[counter]], f_string_eol[0]);
                 }
                 else {
                   show_ports = F_true;
@@ -231,7 +223,7 @@ extern "C" {
         f_macro_string_dynamics_resize(status, parameters, 7);
 
         if (F_status_is_error(status)) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);
           firewall_delete_local_data(&local);
           firewall_delete_data(data);
           return status;
@@ -321,10 +313,10 @@ extern "C" {
           status = F_status_set_fine(status);
 
           if (status == F_memory_allocation || status == F_memory_reallocation) {
-            fl_color_print(data->error.to.stream, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);
           }
           else {
-            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to perform requested %s operation:%c", firewall_tool_iptables, f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, firewall_tool_iptables, f_string_eol[0]);
             fprintf(f_type_error, "  ");
 
             f_string_length_t i = 0;
@@ -371,13 +363,13 @@ extern "C" {
         status = F_status_set_fine(status);
 
         if (status == F_memory_allocation || status == F_memory_reallocation) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);
         }
         else if (status == F_data_not) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Could not find any network devices%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sCould not find any network devices%c", fll_error_print_error, f_string_eol[0]);
         }
         else if (status == F_failure) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to read the device directory '%s'%c", network_devices, f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sFailed to read the device directory '%s'%c", fll_error_print_error, network_devices, f_string_eol[0]);
         }
 
         firewall_delete_local_data(&local);
@@ -460,7 +452,7 @@ extern "C" {
             return status;
           }
           else {
-            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to perform lock request because the lock instructions are missing from: %s.%c", network_path firewall_file_other, f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "%sFailed to perform lock request because the lock instructions are missing from: %s.%c", fll_error_print_error, network_path firewall_file_other, f_string_eol[0]);
 
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
@@ -500,7 +492,7 @@ extern "C" {
             }
           }
           else {
-            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to perform stop request because the lock instructions are missing from: %s.", network_path firewall_file_other, f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "%sFailed to perform stop request because the lock instructions are missing from: %s.", fll_error_print_error, network_path firewall_file_other, f_string_eol[0]);
 
             firewall_delete_local_data(&local);
             firewall_delete_data(data);
@@ -578,7 +570,7 @@ extern "C" {
             f_macro_string_dynamic_t_resize(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
 
             if (F_status_is_error(status)) {
-              fl_color_print(data->error.to.stream, data->context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
+              fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);
               firewall_delete_local_data(&local);
               firewall_delete_data(data);
               return status;
@@ -692,7 +684,7 @@ extern "C" {
       firewall_delete_local_data(&local);
     }
     else {
-      fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: You did not pass a command%c", f_string_eol[0]);
+      fl_color_print(data->error.to.stream, data->context.set.error, "%sYou did not pass a command%c", fll_error_print_error, f_string_eol[0]);
       status = F_status_set_error(F_parameter);
     }
 

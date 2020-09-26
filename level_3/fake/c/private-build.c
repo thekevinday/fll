@@ -1151,7 +1151,7 @@ extern "C" {
           if (names.used + data_build.setting.environment.used > f_array_length_t_size) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
               fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The values for the setting '");
+              fl_color_print(data.error.to.stream, data.context.set.error, "%sThe values for the setting '", fll_error_print_error);
               fl_color_print(data.error.to.stream, data.context.set.notable, "%s", fake_build_setting_name_environment);
               fl_color_print(data.error.to.stream, data.context.set.error, "' of setting file '");
               fl_color_print(data.error.to.stream, data.context.set.notable, "%s", data.file_data_build_settings.string);
@@ -1341,7 +1341,7 @@ extern "C" {
 
         if (!settings[i]->used) {
           fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The setting '");
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sThe setting '", fll_error_print_error);
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s", names[i]);
           fl_color_print(data.error.to.stream, data.context.set.error, "' is required but is not specified in the settings file '");
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s", setting_file.used ? path_file : data.file_data_build_settings.string);
@@ -1571,7 +1571,7 @@ extern "C" {
         if (found == F_false) {
           if (data.error.verbosity != f_console_verbosity_quiet) {
             fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-            fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The specified mode '");
+            fl_color_print(data.error.to.stream, data.context.set.error, "%sThe specified mode '", fll_error_print_error);
             fl_color_print(data.error.to.stream, data.context.set.notable, "%s", modes->array[i].string);
             fl_color_print(data.error.to.stream, data.context.set.error, "' is not a valid mode, according to '");
             fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path_file);
@@ -1626,7 +1626,7 @@ extern "C" {
         if (data.error.verbosity != f_console_verbosity_quiet) {
           // @todo update FSS functions to return which setting index the problem happened on.
           fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: A setting in the build setting file '");
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sA setting in the build setting file '", fll_error_print_error);
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path_file);
           fl_color_print(data.error.to.stream, data.context.set.error, "' is too long.%c", f_string_eol[0]);
         }
@@ -1818,7 +1818,7 @@ extern "C" {
         if (settings_single_source[i]->used > 1) {
           if (data.error.verbosity == f_console_verbosity_verbose) {
             fprintf(data.output.stream, "%c", f_string_eol[0]);
-            fl_color_print(data.output.stream, data.context.set.warning, "WARNING: the setting '");
+            fl_color_print(data.output.stream, data.context.set.warning, "%sthe setting '", fll_error_print_warning);
             fl_color_print(data.output.stream, data.context.set.notable, "%s", settings_single_name[i]);
             fl_color_print(data.output.stream, data.context.set.warning, "' in the file '");
             fl_color_print(data.output.stream, data.context.set.notable, "%s", path_file);
@@ -1840,7 +1840,7 @@ extern "C" {
 
             if (data.error.verbosity == f_console_verbosity_verbose) {
               fprintf(data.output.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.output.stream, data.context.set.warning, "WARNING: the setting '");
+              fl_color_print(data.output.stream, data.context.set.warning, "%sthe setting '", fll_error_print_warning);
               fl_color_print(data.output.stream, data.context.set.notable, "%s", settings_single_name[i]);
               fl_color_print(data.output.stream, data.context.set.warning, "' in the file '");
               fl_color_print(data.output.stream, data.context.set.notable, "%s", path_file);
@@ -1869,7 +1869,7 @@ extern "C" {
 
             if (data.error.verbosity == f_console_verbosity_verbose) {
               fprintf(data.output.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.output.stream, data.context.set.warning, "WARNING: the setting '");
+              fl_color_print(data.output.stream, data.context.set.warning, "%sthe setting '", fll_error_print_warning);
               fl_color_print(data.output.stream, data.context.set.notable, "%s", settings_single_name[i]);
               fl_color_print(data.output.stream, data.context.set.warning, "' in the file '");
               fl_color_print(data.output.stream, data.context.set.notable, "%s", path_file);
@@ -1900,7 +1900,7 @@ extern "C" {
 
             if (data.error.verbosity == f_console_verbosity_verbose) {
               fprintf(data.output.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.output.stream, data.context.set.warning, "WARNING: the setting '");
+              fl_color_print(data.output.stream, data.context.set.warning, "%sthe setting '", fll_error_print_warning);
               fl_color_print(data.output.stream, data.context.set.notable, "%s", settings_single_name[i]);
               fl_color_print(data.output.stream, data.context.set.warning, "' in the file '");
               fl_color_print(data.output.stream, data.context.set.notable, "%s", path_file);
@@ -2035,7 +2035,7 @@ extern "C" {
 
         if (data.error.verbosity == f_console_verbosity_verbose) {
           fprintf(data.output.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.output.stream, data.context.set.error, "WARNING: the parameters '");
+          fl_color_print(data.output.stream, data.context.set.error, "%sthe parameters '", fll_error_print_warning);
           fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_disabled);
           fl_color_print(data.output.stream, data.context.set.error, "' and '");
           fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_enabled);
@@ -2074,7 +2074,7 @@ extern "C" {
 
         if (data.error.verbosity == f_console_verbosity_verbose) {
           fprintf(data.output.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.output.stream, data.context.set.error, "WARNING: the parameters '");
+          fl_color_print(data.output.stream, data.context.set.error, "%sthe parameters '", fll_error_print_warning);
           fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_static_disabled);
           fl_color_print(data.output.stream, data.context.set.error, "' and '");
           fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_static_enabled);
@@ -2104,7 +2104,7 @@ extern "C" {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
         if (data.error.verbosity != f_console_verbosity_quiet) {
           fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The build settings '");
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sThe build settings '", fll_error_print_error);
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s", fake_build_setting_name_build_shared);
           fl_color_print(data.error.to.stream, data.context.set.error, "' and '");
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s", fake_build_setting_name_build_static);
@@ -2359,7 +2359,7 @@ extern "C" {
         if (*status == F_false) {
           if (data.error.verbosity != f_console_verbosity_quiet) {
             fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-            fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The path '");
+            fl_color_print(data.error.to.stream, data.context.set.error, "%sThe path '", fll_error_print_error);
             fl_color_print(data.error.to.stream, data.context.set.notable, "%s", destination_path.string);
             fl_color_print(data.error.to.stream, data.context.set.error, "' exists but is not a directory.%c", f_string_eol[0]);
           }
@@ -2373,7 +2373,7 @@ extern "C" {
           if (F_status_is_error(*status)) {
             if (F_status_set_fine(*status) == F_file_found_not) {
               fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The path '");
+              fl_color_print(data.error.to.stream, data.context.set.error, "%sThe path '", fll_error_print_error);
               fl_color_print(data.error.to.stream, data.context.set.notable, "%s", destination_path.string);
               fl_color_print(data.error.to.stream, data.context.set.error, "' could not be created, a parent directory does not exist.%c", f_string_eol[0]);
             }

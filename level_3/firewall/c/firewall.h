@@ -213,10 +213,7 @@ extern "C" {
     firewall_parameter_verbosity_quiet,
     firewall_parameter_verbosity_normal,
     firewall_parameter_verbosity_verbose,
-
-    #ifdef _en_firewall_debug_
-      firewall_parameter_debug,
-    #endif // _en_firewall_debug_
+    firewall_parameter_verbosity_debug,
 
     firewall_parameter_version,
 
@@ -244,46 +241,25 @@ extern "C" {
     firewall_action_none_id,
   };
 
-  #ifdef _en_firewall_debug_
-    #define firewall_console_parameter_t_initialize \
-      { \
-        f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
-        f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(0, 0, firewall_command_start, F_false, f_console_type_other), \
-        f_console_parameter_t_initialize(0, 0, firewall_command_stop, F_false, f_console_type_other), \
-        f_console_parameter_t_initialize(0, 0, firewall_command_restart, F_false, f_console_type_other), \
-        f_console_parameter_t_initialize(0, 0, firewall_command_lock, F_false, f_console_type_other), \
-        f_console_parameter_t_initialize(0, 0, firewall_command_show, F_false, f_console_type_other), \
-      }
+  #define firewall_console_parameter_t_initialize \
+    { \
+      f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_start, F_false, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_stop, F_false, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_restart, F_false, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_lock, F_false, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_show, F_false, f_console_type_other), \
+    }
 
-    #define firewall_total_parameters 14
-  #else
-    #define firewall_console_parameter_t_initialize \
-      { \
-        f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
-        f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
-        f_console_parameter_t_initialize(0, 0, firewall_command_start, F_false, f_console_type_other), \
-        f_console_parameter_t_initialize(0, 0, firewall_command_stop, F_false, f_console_type_other), \
-        f_console_parameter_t_initialize(0, 0, firewall_command_restart, F_false, f_console_type_other), \
-        f_console_parameter_t_initialize(0, 0, firewall_command_lock, F_false, f_console_type_other), \
-        f_console_parameter_t_initialize(0, 0, firewall_command_show, F_false, f_console_type_other), \
-      }
-
-    #define firewall_total_parameters 13
-  #endif // _en_firewall_debug_
+  #define firewall_total_parameters 14
 #endif // _di_firewall_defines_
 
 #ifndef _di_firewall_data_t_

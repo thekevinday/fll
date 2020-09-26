@@ -158,40 +158,6 @@ extern "C" {
 #endif // _di_fss_basic_read_depths_t_
 
 /**
- * Print file error messages.
- *
- * @param context
- *   The color context information to use when printing.
- * @param function_name
- *   The name of the function responsible for the error.
- * @param file_name
- *   The name of the file with the error.
- * @param status
- *   The status code representing the error.
- */
-#ifndef _di_fss_basic_read_print_file_error_
-  extern void fss_basic_read_print_file_error(const f_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status) f_gcc_attribute_visibility_internal;
-#endif // _di_fss_basic_read_print_file_error_
-
-/**
- * Print number parameter argument error messages.
- *
- * @param context
- *   The color context information to use when printing.
- * @param function_name
- *   The name of the function responsible for the error.
- * @param parameter_name
- *   The name of the parameter responsible for the error.
- * @param argument
- *   The value of the argument that is invalid.
- * @param status
- *   The status code representing the error.
- */
-#ifndef _di_fss_basic_read_print_number_argument_error_
-  extern void fss_basic_read_print_number_argument_error(const f_color_context_t context, const f_string_t function_name, const f_string_t parameter_name, const f_string_t argument, const f_status_t status) f_gcc_attribute_visibility_internal;
-#endif // _di_fss_basic_read_print_number_argument_error_
-
-/**
  * Pre-process the parameters, parsing out and handling the depth and depth related parameters.
  *
  * Will handle depth-sensitive parameter conflicts, such as --name being used with --at (which is not allowed).

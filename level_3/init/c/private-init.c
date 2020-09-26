@@ -17,21 +17,21 @@
 
       if (optional) {
         if (status == F_parameter) {
-          fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_open().%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sInvalid parameter when calling f_file_open().%c", fll_error_print_error, f_string_eol[0]);
         } else if (status != F_file_found_not && status != F_file_open && status != F_file_descriptor) {
-          fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open().%c", status, f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_open().%c", fll_error_print_error, status, f_string_eol[0]);
         }
       } else {
         if (status == F_parameter) {
-          fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_open().%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sInvalid parameter when calling f_file_open().%c", fll_error_print_error, f_string_eol[0]);
         } else if (status == F_file_found_not) {
-          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Unable to find the file '%s'.%c", filename, f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to find the file '%s'.%c", fll_error_print_error, filename, f_string_eol[0]);
         } else if (status == F_file_open) {
-          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Unable to open the file '%s'.%c", filename, f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to open the file '%s'.%c", fll_error_print_error, filename, f_string_eol[0]);
         } else if (status == F_file_descriptor) {
-          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: File descriptor error while trying to open the file '%s'.%c", filename, f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sFile descriptor error while trying to open the file '%s'.%c", fll_error_print_error, filename, f_string_eol[0]);
         } else {
-          fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_open().%c", status, f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_open().%c", fll_error_print_error, status, f_string_eol[0]);
         }
       }
 
@@ -49,19 +49,19 @@
       status = F_status_set_fine(status);
 
       if (status == F_parameter) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: Invalid parameter when calling f_file_read_until().%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sInvalid parameter when calling f_file_read_until().%c", fll_error_print_error, f_string_eol[0]);
       } else if (status == F_number_overflow) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Integer overflow while trying to buffer the file '%s'.%c", filename, f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sInteger overflow while trying to buffer the file '%s'.%c", fll_error_print_error, filename, f_string_eol[0]);
       } else if (status == F_file_closed) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: The file '%s' is no longer open.%c", filename, f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sThe file '%s' is no longer open.%c", fll_error_print_error, filename, f_string_eol[0]);
       } else if (status == F_file_seek) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: A seek error occurred while accessing the file '%s'.%c", filename, f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sA seek error occurred while accessing the file '%s'.%c", fll_error_print_error, filename, f_string_eol[0]);
       } else if (status == F_file_read) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: A read error occurred while accessing the file '%s'.%c", filename, f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sA read error occurred while accessing the file '%s'.%c", fll_error_print_error, filename, f_string_eol[0]);
       } else if (status == F_memory_allocation || status == F_memory_reallocation) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);
       } else {
-        fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling f_file_read_until().%c", status, f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_read_until().%c", fll_error_print_error, status, f_string_eol[0]);
       }
 
       return F_status_set_error(status);
@@ -77,13 +77,13 @@
       status = F_status_set_fine(status);
 
       if (status == F_parameter) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.%c", filename, f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sInvalid parameter when calling fll_fss_basic_list_read() for the file '%s'.%c", fll_error_print_error, filename, f_string_eol[0]);
       } else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: No relevant data was found within the file '%s'.%c", filename, f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sNo relevant data was found within the file '%s'.%c", fll_error_print_error, filename, f_string_eol[0]);
       } else if (status == F_memory_allocation || status == F_memory_reallocation) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);
       } else {
-        fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fll_fss_basic_list_read() for the file '%s'.%c", status, filename, f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_fss_basic_list_read() for the file '%s'.%c", fll_error_print_error, status, filename, f_string_eol[0]);
       }
 
       return F_status_set_error(status);
@@ -107,11 +107,11 @@
         status = F_status_set_fine(status);
 
         if (status == F_memory_allocation || status == F_memory_reallocation) {
-          fl_color_print(data.error.to.stream, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.");
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.", fll_error_print_error);
         } else if (status == F_failure) {
           // the error message has already been displayed.
         } else {
-          fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling firewall_perform_commands().", status);
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sAn unhandled error (%u) has occurred while calling firewall_perform_commands().", fll_error_print_error, status);
         }
 
         f_macro_fss_objects_t_delete_simple(local->rule_objects);
@@ -494,13 +494,13 @@
       status = F_status_set_fine(status);
 
       if (status == F_parameter) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: Invalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", init_rule_core_file);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sInvalid parameter when calling fll_fss_basic_list_read() for the file '%s'.", fll_error_print_error, init_rule_core_file);
       } else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: No relevant data was found within the file '%s'.", init_rule_core_file);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sNo relevant data was found within the file '%s'.", fll_error_print_error, init_rule_core_file);
       } else if (status == F_memory_allocation || status == F_memory_reallocation) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.");
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.", fll_error_print_error);
       } else {
-        fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling fll_fss_basic_list_read() for the file '%s'.", status, init_rule_core_file);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_fss_basic_list_read() for the file '%s'.", fll_error_print_error, status, init_rule_core_file);
       }
 
       f_macro_string_dynamic_t_delete(buffer);
@@ -525,10 +525,10 @@
 
     if (F_status_is_error(status_process)) {
       if (status == F_memory_allocation || status == F_memory_reallocation) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.");
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.", fll_error_print_error);
       }
       else {
-        fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling init_load_main_rule().", status);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sAn unhandled error (%u) has occurred while calling init_load_main_rule().", fll_error_print_error, status);
       }
 
       // @todo: init_delete_data((*data));
@@ -551,11 +551,11 @@
         status = F_status_set_fine(status);
 
         if (status == F_memory_allocation || status == F_memory_reallocation) {
-          fl_color_print(data.error.to.stream, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.");
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.", fll_error_print_error);
         } else if (status == F_failure) {
           // the error message has already been displayed.
         } else {
-          fl_color_print(data.error.to.stream, data.context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling firewall_perform_commands().", status);
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sAn unhandled error (%u) has occurred while calling firewall_perform_commands().", fll_error_print_error, status);
         }
 
         f_macro_fss_objects_t_delete_simple((*rule_objects));
@@ -565,10 +565,10 @@
     }
     else {
       if (status == F_memory_allocation || status == F_memory_reallocation) {
-        fl_color_print(data.error.to.stream, context.set.error, "CRITICAL ERROR: Unable to allocate memory.");
+        fl_color_print(data.error.to.stream, context.set.error, "%sUnable to allocate memory.", fll_error_print_error);
       }
       else {
-        fl_color_print(data.error.to.stream, context.set.error, "INTERNAL ERROR: An unhandled error (%u) has occurred while calling init_load_main_rule().", status);
+        fl_color_print(data.error.to.stream, context.set.error, "%sAn unhandled error (%u) has occurred while calling init_load_main_rule().", fll_error_print_error, status);
       }
     }
 

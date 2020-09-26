@@ -206,7 +206,7 @@ extern "C" {
 
     if (data->remaining.used > 0 || data->process_pipe) {
       if (data->parameters[byte_dump_parameter_width].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
         fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
 
@@ -222,7 +222,7 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
 
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_width);
           fl_color_print(data->error.to.stream, data->context.set.error, "' value can only be a number between ");
           fl_color_print(data->error.to.stream, data->context.set.notable, "0");
@@ -238,7 +238,7 @@ extern "C" {
       }
 
       if (data->parameters[byte_dump_parameter_first].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
         fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
 
@@ -254,7 +254,7 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
 
         if (F_status_is_error(status) || number > f_number_t_size_unsigned) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
           fl_color_print(data->error.to.stream, data->context.set.error, "' value can only be a number (inclusively) between ");
           fl_color_print(data->error.to.stream, data->context.set.notable, "0");
@@ -270,7 +270,7 @@ extern "C" {
       }
 
       if (data->parameters[byte_dump_parameter_last].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
         fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
 
@@ -286,7 +286,7 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
 
         if (F_status_is_error(status) || number < 0 || number > f_number_t_size_unsigned) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
           fl_color_print(data->error.to.stream, data->context.set.error, "' value can only be a number (inclusively) between ");
           fl_color_print(data->error.to.stream, data->context.set.notable, "0");
@@ -303,7 +303,7 @@ extern "C" {
 
       if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional && data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
         if (data->first > data->last) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_first);
           fl_color_print(data->error.to.stream, data->context.set.error, "' value cannot be greater than the parameter '");
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
@@ -431,7 +431,7 @@ extern "C" {
       }
     }
     else {
-      fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: You failed to specify one or more filenames.%c", f_string_eol[0]);
+      fl_color_print(data->error.to.stream, data->context.set.error, "%sYou failed to specify one or more filenames.%c", fll_error_print_error, f_string_eol[0]);
       status = F_status_set_error(F_parameter);
     }
 

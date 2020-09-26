@@ -194,7 +194,7 @@ extern "C" {
 
     if (data->remaining.used > 0 || data->process_pipe) {
       if (data->parameters[fss_extended_read_parameter_at].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_at);
         fl_color_print(data->error.to.stream, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
@@ -203,7 +203,7 @@ extern "C" {
       }
 
       if (data->parameters[fss_extended_read_parameter_depth].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_depth);
         fl_color_print(data->error.to.stream, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
@@ -212,7 +212,7 @@ extern "C" {
       }
 
       if (data->parameters[fss_extended_read_parameter_line].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_line);
         fl_color_print(data->error.to.stream, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
@@ -221,7 +221,7 @@ extern "C" {
       }
 
       if (data->parameters[fss_extended_read_parameter_name].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_name);
         fl_color_print(data->error.to.stream, data->context.set.error, "' requires a string.%c", f_string_eol[0]);
 
@@ -230,7 +230,7 @@ extern "C" {
       }
 
       if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_select);
         fl_color_print(data->error.to.stream, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
@@ -240,7 +240,7 @@ extern "C" {
 
       if (data->parameters[fss_extended_read_parameter_object].result == f_console_result_found) {
         if (data->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_object);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_line);
@@ -251,7 +251,7 @@ extern "C" {
         }
 
         if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_object);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_select);
@@ -264,7 +264,7 @@ extern "C" {
 
       if (data->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
         if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Cannot specify the '");
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_line);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_total);
@@ -304,7 +304,7 @@ extern "C" {
       }
 
       if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_read_long_select);
         fl_color_print(data->error.to.stream, data->context.set.error, "' parameter requires a positive number.%c", f_string_eol[0]);
 
@@ -321,7 +321,7 @@ extern "C" {
         status = f_file_read(file, &data->buffer);
 
         if (F_status_is_error(status)) {
-          fss_extended_read_print_file_error(data->context, "f_file_read", "-", F_status_set_fine(status));
+          fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read", F_true, "-", "read", fll_error_file_type_file);
 
           macro_fss_extended_read_depths_t_delete_simple(depths);
           fss_extended_read_delete_data(data);
@@ -351,7 +351,7 @@ extern "C" {
           data->quantity.total = original_size;
 
           if (F_status_is_error(status)) {
-            fss_extended_read_print_file_error(data->context, "f_file_open", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
+            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_open", F_true, arguments.argv[data->remaining.array[counter]], "open", fll_error_file_type_file);
 
             macro_fss_extended_read_depths_t_delete_simple(depths);
             fss_extended_read_delete_data(data);
@@ -362,7 +362,7 @@ extern "C" {
             status = f_file_size_by_id(file.id, &data->quantity.total);
 
             if (F_status_is_error(status)) {
-              fss_extended_read_print_file_error(data->context, "f_file_size_by_id", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
+              fll_error_file_print(data->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments.argv[data->remaining.array[counter]], "read", fll_error_file_type_file);
 
               f_file_close(&file.id);
 
@@ -383,7 +383,7 @@ extern "C" {
           f_file_close(&file.id);
 
           if (F_status_is_error(status)) {
-            fss_extended_read_print_file_error(data->context, "f_file_read_until", arguments.argv[data->remaining.array[counter]], F_status_set_fine(status));
+            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments.argv[data->remaining.array[counter]], "read", fll_error_file_type_file);
 
             macro_fss_extended_read_depths_t_delete_simple(depths);
             fss_extended_read_delete_data(data);
@@ -408,7 +408,7 @@ extern "C" {
       macro_fss_extended_read_depths_t_delete_simple(depths);
     }
     else {
-      fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: You failed to specify one or more files.%c", f_string_eol[0]);
+      fl_color_print(data->error.to.stream, data->context.set.error, "%sYou failed to specify one or more files.%c", fll_error_print_error, f_string_eol[0]);
       status = F_status_set_error(F_parameter);
     }
 

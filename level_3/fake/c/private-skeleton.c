@@ -175,7 +175,7 @@ extern "C" {
     if (status == F_false) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The path '");
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sThe path '", fll_error_print_error);
         fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path.string);
         fl_color_print(data.error.to.stream, data.context.set.error, "' exists but is not a directory.%c", f_string_eol[0]);
       }
@@ -188,7 +188,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
           fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The path '");
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sThe path '", fll_error_print_error);
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path.string);
           fl_color_print(data.error.to.stream, data.context.set.error, "' could not be created, a parent directory does not exist.%c", f_string_eol[0]);
         }
@@ -260,7 +260,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
           fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-          fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: The file '");
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sThe file '", fll_error_print_error);
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s", path.string);
           fl_color_print(data.error.to.stream, data.context.set.error, "' could not be created, a parent directory does not exist.%c", f_string_eol[0]);
         }

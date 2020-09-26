@@ -171,13 +171,13 @@ extern "C" {
       pid_t pid_services = clone(init_handler_child_services, stack_memory.services + init_stack_size_small_services, init_flags_clone, stack_memory.services);
 
       if (pid_services < 0) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to clone services process (errno = %i).%c", errno, f_string_eol[0]);
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sFailed to clone services process (errno = %i).%c", fll_error_print_error, errno, f_string_eol[0]);
       }
 
       pid_t pid_control_file = clone(init_handler_child_control_file, stack_memory.control_file + init_stack_size_control_file, init_flags_clone, stack_memory.control_file);
 
       if (pid_control_file < 0) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Failed to clone control via file process (errno = %i).%c", errno, f_string_eol[0]);
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sFailed to clone control via file process (errno = %i).%c", fll_error_print_error, errno, f_string_eol[0]);
       }
     */
 
@@ -205,11 +205,11 @@ extern "C" {
             continue;
           }
           else if (errno != EINTR) {
-            fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: sigwaitinfo() failed (errno = %i).%c", errno, f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "%ssigwaitinfo() failed (errno = %i).%c", fll_error_print_error, errno, f_string_eol[0]);
 
             signal_problem_count++;
             if (signal_problem_count > problem_count_max_signal_size) {
-              fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: Max signal problem count has been reached, sleeping for a period of time.%c", errno, f_string_eol[0]);
+              fl_color_print(data->error.to.stream, data->context.set.error, "%sMax signal problem count has been reached, sleeping for a period of time.%c", fll_error_print_error, errno, f_string_eol[0]);
               sleep(init_panic_signal_sleep_seconds);
               signal_problem_count = 0;
             }

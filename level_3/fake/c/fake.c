@@ -323,7 +323,7 @@ extern "C" {
         else if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
             fprintf(data->error.to.stream, "%c", f_string_eol[0]);
-            fl_color_print(data->error.to.stream, data->error.context, "ERROR: The operation '");
+            fl_color_print(data->error.to.stream, data->error.context, "%sThe operation '", fll_error_print_error);
             fl_color_print(data->error.to.stream, data->error.notable, "%s", operations_name);
             fl_color_print(data->error.to.stream, data->error.context, "' failed.%c", f_string_eol[0]);
           }
@@ -345,7 +345,7 @@ extern "C" {
     else {
       if (data->error.verbosity != f_console_verbosity_quiet) {
         fprintf(data->error.to.stream, "%c", f_string_eol[0]);
-        fl_color_print(data->error.to.stream, data->error.context, "ERROR: You failed to specify an operation.%c", f_string_eol[0]);
+        fl_color_print(data->error.to.stream, data->error.context, "%sYou failed to specify an operation.%c", fll_error_print_error, f_string_eol[0]);
         fprintf(data->error.to.stream, "%c", f_string_eol[0]);
       }
 

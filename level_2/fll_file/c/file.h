@@ -31,29 +31,6 @@ extern "C" {
 #endif
 
 /**
- * Print file error messages.
- *
- * @param stream
- *   The file stream to write to, such as f_type_output or f_type_error.
- * @param context
- *   The color context information to use when printing.
- * @param function_name
- *   The name of the function responsible for the error.
- * @param file_name
- *   The name of the file with the error.
- * @param status
- *   The status code representing the error.
- *   The status code should be passed through F_status_set_fine() if it contains error or warning bits.
- *
- * @return
- *   F_true if error message was printed.
- *   F_false if no error message was printed.
- */
-#ifndef _di_fll_file_error_print_
-  extern f_return_status fll_file_error_print(FILE *stream, const f_color_context_t context, const f_string_t function_name, const f_string_t file_name, const f_status_t status);
-#endif // _di_fll_file_error_print_
-
-/**
  * Change mode of a given file or directory at the specified path.
  *
  * This does not set mode based on umask(), be sure to apply umask if so desired.

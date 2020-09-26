@@ -7,6 +7,7 @@ extern "C" {
 
 #ifndef _di_status_code_print_help_
   f_return_status status_code_print_help(const f_file_t file, const f_color_context_t context) {
+
     fll_program_print_help_header(file, context, status_code_name_long, status_code_version);
 
     fll_program_print_help_option(file, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
@@ -100,7 +101,7 @@ extern "C" {
 
     if (data->parameters[status_code_parameter_is_error].result == f_console_result_found) {
       if (data->parameters[status_code_parameter_is_warning].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, status_code_long_is_error);
         fl_color_print(data->error.to.stream, data->context.set.error, "' cannot be used with the parameter ");
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, status_code_long_is_warning);
@@ -110,7 +111,7 @@ extern "C" {
         return F_status_set_error(status);
       }
       else if (data->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, status_code_long_is_error);
         fl_color_print(data->error.to.stream, data->context.set.error, "' cannot be used with the parameter ");
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, status_code_long_is_fine);
@@ -121,7 +122,7 @@ extern "C" {
       }
     }
     else if (data->parameters[status_code_parameter_is_warning].result == f_console_result_found && data->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
-      fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: The parameter '");
+      fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
       fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, status_code_long_is_warning);
       fl_color_print(data->error.to.stream, data->context.set.error, "' cannot be used with the parameter ");
       fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, status_code_long_is_fine);
@@ -132,7 +133,7 @@ extern "C" {
     }
 
     if (data->remaining.used == 0 && !data->process_pipe) {
-      fl_color_print(data->error.to.stream, data->context.set.error, "ERROR: You failed to specify a status code.%c", f_string_eol[0]);
+      fl_color_print(data->error.to.stream, data->context.set.error, "%sYou failed to specify a status code.%c", fll_error_print_error, f_string_eol[0]);
 
       status_code_delete_data(data);
       return F_status_set_error(F_parameter);
@@ -163,6 +164,7 @@ extern "C" {
 
       if (data->remaining.used > 0) {
         for (f_array_length_t i = 0; i < data->remaining.used; i++) {
+
           status2 = status_code_process_number(*data, arguments.argv[data->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
@@ -198,6 +200,7 @@ extern "C" {
     f_string_length_t i = 0;
 
     while (i < status_code_total_parameters) {
+
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
       i++;

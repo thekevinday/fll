@@ -216,7 +216,7 @@ extern "C" {
 
     if (size < 0) {
       // @todo: determine what the error from read() is and display it.
-      fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: read() failed for '");
+      fl_color_print(data.error.to.stream, data.context.set.error, "%sread() failed for '", fll_error_print_error);
       fl_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name);
       fl_color_print(data.error.to.stream, data.context.set.error, "'.");
       fprintf(data.error.to.stream, "%c%x", f_string_eol[0], f_string_eol[0]);

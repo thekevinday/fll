@@ -190,7 +190,7 @@ extern "C" {
     if (!data_make->buffer.used) {
       if (data.error.verbosity == f_console_verbosity_verbose) {
         fprintf(data.output.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.output.stream, data.context.set.warning, "WARNING: the fakefile '");
+        fl_color_print(data.output.stream, data.context.set.warning, "%sthe fakefile '", fll_error_print_warning);
         fl_color_print(data.output.stream, data.context.set.notable, "%s", data.file_data_build_fakefile.string);
         fl_color_print(data.output.stream, data.context.set.warning, "' is empty.");
       }
@@ -439,14 +439,14 @@ extern "C" {
                 }
                 else if (data.error.verbosity == f_console_verbosity_verbose) {
                   fprintf(data.output.stream, "%c", f_string_eol[0]);
-                  fl_color_print(data.output.stream, data.context.set.warning, "WARNING: The environment name '");
+                  fl_color_print(data.output.stream, data.context.set.warning, "%sThe environment name '", fll_error_print_warning);
                   fl_color_print(data.output.stream, data.context.set.notable, "%s", name_define.string);
                   fl_color_print(data.output.stream, data.context.set.warning, "' is already added.%c", f_string_eol[0]);
                 }
               }
               else if (data.error.verbosity == f_console_verbosity_verbose) {
                 fprintf(data.output.stream, "%c", f_string_eol[0]);
-                fl_color_print(data.output.stream, data.context.set.warning, "WARNING: The environment name '");
+                fl_color_print(data.output.stream, data.context.set.warning, "%sThe environment name '", fll_error_print_warning);
                 fl_color_print(data.output.stream, data.context.set.notable, "%s", name_define.string);
                 fl_color_print(data.output.stream, data.context.set.warning, "' is invalid, ignoring.%c", f_string_eol[0]);
               }
@@ -701,7 +701,7 @@ extern "C" {
           else {
             if (data.error.verbosity != f_console_verbosity_quiet) {
               fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.error.to.stream, data.context.set.error, "ERROR: Invalid characters in the define setting name '");
+              fl_color_print(data.error.to.stream, data.context.set.error, "%sInvalid characters in the define setting name '", fll_error_print_error);
 
               fl_color_print_code(data.error.to.stream, *data.error.notable.before);
               f_print_dynamic(data.error.to.stream, define.array[i].name);
@@ -1113,7 +1113,7 @@ extern "C" {
 
       if (F_status_is_error(status_path) && data.error.verbosity == f_console_verbosity_verbose) {
         fprintf(data.output.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.output.stream, data.context.set.warning, "WARNING: Failed change back to orignal path '");
+        fl_color_print(data.output.stream, data.context.set.warning, "%sFailed change back to orignal path '", fll_error_print_warning);
         fl_color_print(data.output.stream, data.context.set.notable, "%s", data_make.path.stack.array[0].string);
         fl_color_print(data.output.stream, data.context.set.warning, "', status code = ");
         fl_color_print(data.output.stream, data.context.set.notable, "%llu", F_status_set_fine(status_path));
@@ -2524,7 +2524,7 @@ extern "C" {
           if (F_status_set_fine(*status) == F_file_found_not) {
             if (data.error.verbosity == f_console_verbosity_verbose) {
               fprintf(data.output.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.output.stream, data.context.set.warning, "WARNING: the file '");
+              fl_color_print(data.output.stream, data.context.set.warning, "%sthe file '", fll_error_print_warning);
               fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[i].string);
               fl_color_print(data.output.stream, data.context.set.warning, "' was not found.%c", f_string_eol[0]);
             }
