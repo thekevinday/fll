@@ -112,7 +112,7 @@ extern "C" {
 
     if (status == F_file_open) {
       fl_color_print(error.to.stream, error.context, "%s%sUnable to open the file '", error.context.before->string, error.prefix ? error.prefix : "");
-      fl_color_print(error.to.stream, error.notable, "%s", file_name);
+      fl_color_print(error.to.stream, error.notable, "%s", name);
       fl_color_print(error.to.stream, error.context, "'.");
       fprintf(error.to.stream, "%c", f_string_eol[0]);
 
@@ -121,8 +121,8 @@ extern "C" {
 
     if (status == F_file_descriptor) {
       fl_color_print(error.to.stream, error.context, "%s%sFile descriptor error while trying to open the file '", error.context.before->string, error.prefix ? error.prefix : "");
-      fl_color_print(error.to.stream.to.stream, error.notable, "%s", file_name);
-      fl_color_print(stream, error.context, "'.");
+      fl_color_print(error.to.stream, error.notable, "%s", name);
+      fl_color_print(error.to.stream, error.context, "'.");
       fprintf(error.to.stream, "%c", f_string_eol[0]);
 
       return F_false;
@@ -130,7 +130,7 @@ extern "C" {
 
     if (status == F_number_underflow) {
       fl_color_print(error.to.stream, error.context, "%s%sInteger underflow while trying to buffer the file '", error.context.before->string, error.prefix ? error.prefix : "");
-      fl_color_print(error.to.stream, error.notable, "%s", file_name);
+      fl_color_print(error.to.stream, error.notable, "%s", name);
       fl_color_print(error.to.stream, error.context, "'.");
       fprintf(error.to.stream, "%c", f_string_eol[0]);
 
