@@ -1875,7 +1875,7 @@ extern "C" {
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!fclose(file->stream)) {
+    if (file->stream && !fclose(file->stream)) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EAGAIN) return F_status_set_error(F_prohibited);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
