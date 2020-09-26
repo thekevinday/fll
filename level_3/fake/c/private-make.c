@@ -2309,7 +2309,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_clone) {
-      const f_array_length_t total = arguments.used -1;
+      const f_array_length_t total = arguments.used - 1;
       f_status_t status_file = F_none;
 
       fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
@@ -2325,10 +2325,10 @@ extern "C" {
 
       // in this case, the destination could be a file, so confirm this.
       if (arguments.used == 2) {
-        status_file = f_directory_is(arguments.array[total].string);
+        status_file = f_directory_is(arguments.array[1].string);
 
         if (F_status_is_error(status_file)) {
-          fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "f_directory_is", arguments.array[1].string, "identify", F_false, F_true);
+          fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory);
           *status = F_status_set_error(F_failure);
           return;
         }
@@ -2339,6 +2339,7 @@ extern "C" {
       }
 
       for (f_array_length_t i = 0; i < total; i++) {
+
         destination_length = arguments.array[total].used;
 
         if (existing) {
@@ -2362,7 +2363,7 @@ extern "C" {
           status_file = fl_directory_clone(arguments.array[i].string, destination, arguments.array[i].used, destination_length, F_true, recurse);
 
           if (F_status_is_error(status_file)) {
-            fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "fl_directory_clone", arguments.array[i].string, "clone", F_false, F_true);
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "fl_directory_clone", F_true, arguments.array[i].string, "clone", fll_error_file_type_directory);
             *status = F_status_set_error(F_failure);
           }
         }
@@ -2370,7 +2371,7 @@ extern "C" {
           status_file = f_file_clone(arguments.array[i].string, destination, F_true, recurse.size_block, recurse.exclusive);
 
           if (F_status_is_error(status_file)) {
-            fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "f_file_clone", arguments.array[i].string, "clone", F_false, F_true);
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_file_clone", F_true, arguments.array[i].string, "clone", fll_error_file_type_file);
             *status = F_status_set_error(F_failure);
           }
           else if (data.error.verbosity == f_console_verbosity_verbose) {
@@ -2382,7 +2383,7 @@ extern "C" {
           }
         }
         else if (F_status_is_error(status_file)) {
-          fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "f_directory_is", arguments.array[i].string, "identify", F_false, F_true);
+          fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[i].string, "identify", fll_error_file_type_directory);
           *status = F_status_set_error(F_failure);
           break;
         }
@@ -2424,10 +2425,11 @@ extern "C" {
 
       // in this case, the destination could be a file, so confirm this.
       if (arguments.used == 2) {
-        status_file = f_directory_is(arguments.array[total].string);
+        status_file = f_directory_is(arguments.array[1].string);
 
         if (F_status_is_error(status_file)) {
-          fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "f_directory_is", arguments.array[1].string, "identify", F_false, F_true);
+          fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory);
+
           *status = F_status_set_error(F_failure);
           return;
         }
@@ -2461,7 +2463,7 @@ extern "C" {
           status_file = fl_directory_copy(arguments.array[i].string, destination, arguments.array[i].used, destination_length, mode, recurse);
 
           if (F_status_is_error(status_file)) {
-            fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "fl_directory_copy", arguments.array[i].string, "copy", F_false, F_true);
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "fl_directory_copy", F_true, arguments.array[i].string, "copy", fll_error_file_type_directory);
             *status = F_status_set_error(F_failure);
           }
         }
@@ -2469,7 +2471,7 @@ extern "C" {
           status_file = f_file_copy(arguments.array[i].string, destination, mode, recurse.size_block, recurse.exclusive);
 
           if (F_status_is_error(status_file)) {
-            fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "f_file_copy", arguments.array[i].string, "copy", F_false, F_true);
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_file_copy", F_true, arguments.array[i].string, "copy", fll_error_file_type_file);
             *status = F_status_set_error(F_failure);
           }
           else if (data.error.verbosity == f_console_verbosity_verbose) {
@@ -2481,7 +2483,7 @@ extern "C" {
           }
         }
         else if (F_status_is_error(status_file)) {
-          fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "f_directory_is", arguments.array[i].string, "identify", F_false, F_true);
+          fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[i].string, "identify", fll_error_file_type_directory);
           *status = F_status_set_error(F_failure);
           break;
         }
@@ -3358,7 +3360,7 @@ extern "C" {
 
       // in this case, the destination could be a file, so confirm this.
       if (arguments.used == 2) {
-        status_file = f_directory_is(arguments.array[total].string);
+        status_file = f_directory_is(arguments.array[1].string);
 
         if (F_status_is_error(status_file)) {
           fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory);
@@ -3373,6 +3375,7 @@ extern "C" {
       }
 
       for (f_array_length_t i = 0; i < total; i++) {
+
         destination_length = arguments.array[total].used;
 
         if (existing) {
@@ -4110,6 +4113,7 @@ extern "C" {
         } // for
 
         if (arguments.used > 2) {
+
           // the last file must be a directory.
           f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
 
@@ -4124,11 +4128,12 @@ extern "C" {
             *status = F_status_set_error(F_failure);
           }
           else if (F_status_is_error(status_file)) {
-            fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "f_directory_is", arguments.array[arguments.used - 1].string, "find", F_false, F_true);
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[arguments.used - 1].string, "find", fll_error_file_type_directory);
             *status = F_status_set_error(F_failure);
           }
         }
         else {
+
           // when the first file is a directory, then the second, if it exists, must also be a directory.
           f_status_t status_file = f_directory_is(arguments.array[0].string);
 
@@ -4139,7 +4144,7 @@ extern "C" {
               if (data.error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
                 fprintf(data_make->error.to.stream, "%c", f_string_eol[0]);
                 fl_color_print(data_make->error.to.stream, data_make->error.context, "%sThe last file '", data_make->error.prefix);
-                fl_color_print(data_make->error.to.stream, data_make->error.notable, "%s", arguments.array[arguments.used - 1].string);
+                fl_color_print(data_make->error.to.stream, data_make->error.notable, "%s", arguments.array[1].string);
                 fl_color_print(data_make->error.to.stream, data_make->error.context, "' must be a valid directory.%c", f_string_eol[0]);
               }
 
@@ -4213,6 +4218,7 @@ extern "C" {
         } // for
 
         if (arguments.used > 2) {
+
           // the last file must be a directory.
           f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
 
@@ -4227,11 +4233,12 @@ extern "C" {
             *status = F_status_set_error(F_failure);
           }
           else if (F_status_is_error(status_file)) {
-            fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "f_directory_is", arguments.array[arguments.used - 1].string, "find", F_false, F_true);
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[arguments.used - 1].string, "identify", fll_error_file_type_directory);
             *status = F_status_set_error(F_failure);
           }
         }
         else {
+
           // when the first file is a directory, then the second, if it exists, must also be a directory.
           f_status_t status_file = f_directory_is(arguments.array[0].string);
 
@@ -4242,7 +4249,7 @@ extern "C" {
               if (data.error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
                 fprintf(data_make->error.to.stream, "%c", f_string_eol[0]);
                 fl_color_print(data_make->error.to.stream, data_make->error.context, "%sThe last file '", data_make->error.prefix);
-                fl_color_print(data_make->error.to.stream, data_make->error.notable, "%s", arguments.array[arguments.used - 1].string);
+                fl_color_print(data_make->error.to.stream, data_make->error.notable, "%s", arguments.array[1].string);
                 fl_color_print(data_make->error.to.stream, data_make->error.context, "' must be a valid directory.%c", f_string_eol[0]);
               }
 
@@ -4446,6 +4453,7 @@ extern "C" {
         f_status_t status_file = F_none;
 
         for (f_array_length_t i = 1; i < arguments.used; i++) {
+
           status_file = f_file_is(arguments.array[i].string, f_file_type_regular, F_false);
 
           if (status_file == F_file_found_not) {
@@ -4460,7 +4468,7 @@ extern "C" {
           }
           else if (F_status_is_error(status_file)) {
             if (data.error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-              fake_print_message_file(data, data_make->error, *status, "f_file_is", arguments.array[i].string, "find", F_true, F_true);
+              fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_is", F_true, arguments.array[i].string, "find", fll_error_file_type_directory);
             }
 
             *status = status_file;
@@ -4931,6 +4939,7 @@ extern "C" {
         } // for
 
         if (arguments.used > 2) {
+
           // the last file must be a directory.
           f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
 
@@ -4945,11 +4954,12 @@ extern "C" {
             *status = F_status_set_error(F_failure);
           }
           else if (F_status_is_error(status_file)) {
-            fake_print_message_file(data, data_make->error, F_status_set_fine(status_file), "f_directory_is", arguments.array[arguments.used - 1].string, "find", F_false, F_true);
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[arguments.used - 1].string, "identify", fll_error_file_type_directory);
             *status = F_status_set_error(F_failure);
           }
         }
         else {
+
           // when the first file is a directory, then the second, if it exists, must also be a directory.
           f_status_t status_file = f_directory_is(arguments.array[0].string);
 
@@ -4960,7 +4970,7 @@ extern "C" {
               if (data.error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
                 fprintf(data_make->error.to.stream, "%c", f_string_eol[0]);
                 fl_color_print(data_make->error.to.stream, data_make->error.context, "%sThe last file '", data_make->error.prefix);
-                fl_color_print(data_make->error.to.stream, data_make->error.notable, "%s", arguments.array[arguments.used - 1].string);
+                fl_color_print(data_make->error.to.stream, data_make->error.notable, "%s", arguments.array[1].string);
                 fl_color_print(data_make->error.to.stream, data_make->error.context, "' must be a valid directory.%c", f_string_eol[0]);
               }
 

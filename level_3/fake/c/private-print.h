@@ -93,36 +93,6 @@ extern "C" {
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**
- * Print file/directory error/warning messages.
- *
- * @todo the fll_file_error_print() needs to be reviewed and possibly changed.
- *
- * @param data
- *   The program data.
- * @param error
- *   Designates how the section error/warning should be printed.
- * @param status
- *   The error status code to report on.
- * @param function
- *   The function call that returned the error.
- * @param name
- *   The name of the file or directory.
- * @param operation
- *   The operation that fails, such as 'create' or 'access'.
- * @param is_file
- *   Set to TRUE if this is a file and FALSE if this is a directory.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
- *
- * @return
- *   F_true is returned if the status code has no print message.
- *   F_false is returned on successful print of known errors.
- */
-#ifndef _di_fake_print_message_file_
-  extern bool fake_print_message_file(const fake_data_t data, const fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t name, const f_string_t operation, const bool is_file, const bool fallback) f_gcc_attribute_visibility_internal;
-#endif // _di_fake_print_message_file_
-
-/**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that operation failed.
  *
  * @param data
