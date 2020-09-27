@@ -54,16 +54,16 @@ extern "C" {
 #endif // _di_fss_basic_list_write_name_
 
 #ifndef _di_fss_basic_list_write_defines_
+  #define fss_basic_list_write_short_file    "f"
   #define fss_basic_list_write_short_content "c"
   #define fss_basic_list_write_short_double  "d"
-  #define fss_basic_list_write_short_file    "f"
   #define fss_basic_list_write_short_object  "o"
   #define fss_basic_list_write_short_partial "p"
   #define fss_basic_list_write_short_single  "s"
 
+  #define fss_basic_list_write_long_file    "file"
   #define fss_basic_list_write_long_content "content"
   #define fss_basic_list_write_long_double  "double"
-  #define fss_basic_list_write_long_file    "file"
   #define fss_basic_list_write_long_object  "object"
   #define fss_basic_list_write_long_partial "partial"
   #define fss_basic_list_write_long_single  "single"
@@ -79,9 +79,9 @@ extern "C" {
     fss_basic_list_write_parameter_verbosity_debug,
     fss_basic_list_write_parameter_version,
 
+    fss_basic_list_write_parameter_file,
     fss_basic_list_write_parameter_content,
     fss_basic_list_write_parameter_double,
-    fss_basic_list_write_parameter_file,
     fss_basic_list_write_parameter_object,
     fss_basic_list_write_parameter_partial,
     fss_basic_list_write_parameter_single,
@@ -98,9 +98,9 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(fss_basic_list_write_short_file, fss_basic_list_write_long_file, 0, F_true, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_basic_list_write_short_content, fss_basic_list_write_long_content, 0, F_true, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_basic_list_write_short_double, fss_basic_list_write_long_double, 0, F_true, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_write_short_file, fss_basic_list_write_long_file, 0, F_true, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_basic_list_write_short_object, fss_basic_list_write_long_object, 0, F_false, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_basic_list_write_short_partial, fss_basic_list_write_long_partial, 0, F_true, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_basic_list_write_short_single, fss_basic_list_write_long_single, 0, F_true, f_console_type_normal), \

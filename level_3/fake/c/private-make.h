@@ -332,15 +332,15 @@ extern "C" {
 
 #ifndef _di_fake_make_path_t_
   typedef struct {
-    int top;
-    int current;
+    f_file_t top;
+    f_file_t current;
 
     f_string_dynamics_t stack;
   } fake_make_path_t;
 
   #define fake_make_path_t_initialize { \
-    0, \
-    0, \
+    f_file_t_initialize, \
+    f_file_t_initialize, \
     f_string_dynamics_t_initialize, \
   }
 
@@ -356,7 +356,7 @@ extern "C" {
     fake_environment_t environment;
 
     fake_make_parameter_t parameter;
-    fake_make_path_t path;
+    fake_make_path_t path; // @todo review this, check if path.current is used anymore.
 
     fll_error_print_t error;
 

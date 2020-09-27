@@ -364,7 +364,7 @@ extern "C" {
             if (F_status_is_error(status)) {
               fll_error_file_print(data->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments.argv[data->remaining.array[counter]], "read", fll_error_file_type_file);
 
-              f_file_close(&file.id);
+              f_file_stream_close(F_true, &file);
 
               macro_fss_extended_read_depths_t_delete_simple(depths);
               fss_extended_read_delete_data(data);
@@ -373,14 +373,14 @@ extern "C" {
 
             // Skip past empty files.
             if (!data->quantity.total) {
-              f_file_close(&file.id);
+              f_file_stream_close(F_true, &file);
               continue;
             }
           }
 
           status = f_file_read_until(file, data->quantity.total, &data->buffer);
 
-          f_file_close(&file.id);
+          f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments.argv[data->remaining.array[counter]], "read", fll_error_file_type_file);

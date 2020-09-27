@@ -40,10 +40,10 @@
 
     f_macro_file_t_reset_position(quantity, file)
 
-    fflush(stdout);
+    fflush(data.output.stream);
     status = f_file_read_until(file, quantity, buffer);
 
-    f_file_close(&file.id);
+    f_file_stream_close(F_true, &file);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);

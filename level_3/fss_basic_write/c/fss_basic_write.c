@@ -21,9 +21,9 @@ extern "C" {
 
     printf("%c", f_string_eol[0]);
 
+    fll_program_print_help_option(file, context, fss_basic_write_short_file, fss_basic_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
     fll_program_print_help_option(file, context, fss_basic_write_short_content, fss_basic_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, " The content to output.");
     fll_program_print_help_option(file, context, fss_basic_write_short_double, fss_basic_write_long_double, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use double quotes (default).");
-    fll_program_print_help_option(file, context, fss_basic_write_short_file, fss_basic_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
     fll_program_print_help_option(file, context, fss_basic_write_short_object, fss_basic_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to output.");
     fll_program_print_help_option(file, context, fss_basic_write_short_partial, fss_basic_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, "Do not output end of object/content character.");
     fll_program_print_help_option(file, context, fss_basic_write_short_single, fss_basic_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
@@ -101,7 +101,7 @@ extern "C" {
     }
 
     f_array_length_t counter = 0;
-    bool object = (data->parameters[fss_basic_write_parameter_object].result == f_console_result_found);
+    bool object = data->parameters[fss_basic_write_parameter_object].result == f_console_result_found;
 
     f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
     f_string_range_t range = f_string_range_t_initialize;
@@ -115,23 +115,7 @@ extern "C" {
       status = f_file_read(file, &input);
 
       if (F_status_is_error(status)) {
-        status = F_status_set_fine(status);
-
-        if (status == F_parameter) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sInvalid parameter when calling f_file_open()%c", fll_error_print_error, f_string_eol[0]);
-        }
-        else if (status == F_file_found_not) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to find the file '%s'%c", fll_error_print_error, "-", f_string_eol[0]);
-        }
-        else if (status == F_file_open) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to open the file '%s'%c", fll_error_print_error, "-", f_string_eol[0]);
-        }
-        else if (status == F_file_descriptor) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sFile descriptor error while trying to open the file '%s'%c", fll_error_print_error, "-", f_string_eol[0]);
-        }
-        else {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_open()%c", fll_error_print_error, status, f_string_eol[0]);
-        }
+        fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read", F_true, file.string, "read", fll_error_file_type_file);
 
         f_macro_string_dynamic_t_delete_simple(input);
         fss_basic_write_delete_data(data);
@@ -215,25 +199,7 @@ extern "C" {
       status = f_file_open(arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]], 0, &output);
 
       if (F_status_is_error(status)) {
-        status = F_status_set_fine(status);
-
-        f_file_close(&output.id);
-
-        if (status == F_parameter) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sInvalid parameter when calling f_file_open()%c", fll_error_print_error, f_string_eol[0]);
-        }
-        else if (status == F_file_found_not) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to find the file '%s'%c", fll_error_print_error, arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]], f_string_eol[0]);
-        }
-        else if (status == F_file_open) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to open the file '%s'%c", fll_error_print_error, arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]], f_string_eol[0]);
-        }
-        else if (status == F_file_descriptor) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sFile descriptor error while trying to open the file '%s'%c", fll_error_print_error, arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]], f_string_eol[0]);
-        }
-        else {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_open()%c", fll_error_print_error, status, f_string_eol[0]);
-        }
+        fll_error_file_print(data->error, F_status_set_fine(status), "f_file_open", F_true, file.string, "open", fll_error_file_type_file);
 
         f_macro_string_dynamic_t_delete_simple(buffer);
         fss_basic_write_delete_data(data);
@@ -241,24 +207,14 @@ extern "C" {
       }
 
       status = f_file_write(output, buffer, 0);
-      f_file_close(&output.id);
+      f_file_stream_close(F_true, &output);
 
       if (F_status_is_error(status)) {
-        status = F_status_set_fine(status);
-
-        if (status == F_parameter) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sInvalid parameter when calling f_file_write()%c", fll_error_print_error, f_string_eol[0]);
-        }
-        else if (status == F_file_write) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to write to the file '%s'%c", fll_error_print_error, arguments.argv[data->parameters[fss_basic_write_parameter_file].additional.array[0]], f_string_eol[0]);
-        }
-        else {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_write()%c", fll_error_print_error, status, f_string_eol[0]);
-        }
+        fll_error_file_print(data->error, F_status_set_fine(status), "f_file_stream_close", F_true, file.string, "close", fll_error_file_type_file);
 
         f_macro_string_dynamic_t_delete_simple(buffer);
         fss_basic_write_delete_data(data);
-        return F_status_set_error(status);
+        return status;
       }
     }
     else {

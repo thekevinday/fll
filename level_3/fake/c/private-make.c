@@ -1055,7 +1055,7 @@ extern "C" {
       return status;
     }
 
-    status = f_directory_open(data_make.path.stack.array[0].string, F_false, &data_make.path.top);
+    status = f_directory_open(data_make.path.stack.array[0].string, F_false, &data_make.path.top.id);
 
     if (F_status_is_error(status)) {
       fll_error_print(data.error, F_status_set_fine(status), "f_directory_open", F_true);
@@ -1104,12 +1104,12 @@ extern "C" {
 
     fake_make_operate_section(data, data_make.main, &data_make, &section_stack, &status);
 
-    if (data_make.path.current > 0) {
-      f_file_close(&data_make.path.current);
+    if (data_make.path.current.stream) {
+      f_file_stream_close(F_true, &data_make.path.current);
     }
 
     {
-      f_status_t status_path = f_path_change_at(data_make.path.top);
+      f_status_t status_path = f_path_change_at(data_make.path.top.id);
 
       if (F_status_is_error(status_path) && data.error.verbosity == f_console_verbosity_verbose) {
         fprintf(data.output.stream, "%c", f_string_eol[0]);
@@ -1121,7 +1121,7 @@ extern "C" {
       }
     }
 
-    f_file_close(&data_make.path.top);
+    f_file_stream_close(F_true, &data_make.path.top);
 
     f_macro_string_lengths_t_delete_simple(section_stack);
     fake_macro_make_data_t_delete_simple(data_make);
@@ -3646,7 +3646,7 @@ extern "C" {
 
     if (operation == fake_make_operation_type_top) {
 
-      *status = f_path_change_at(data_make->path.top);
+      *status = f_path_change_at(data_make->path.top.id);
 
       if (F_status_is_error(*status)) {
         fake_print_message_section_operation_path_stack_max(data, data_make->error, F_status_set_fine(*status), "f_path_change", arguments.array[0].string);
@@ -3784,7 +3784,7 @@ extern "C" {
       fprintf(data.output.stream, "%c", f_string_eol[0]);
 
       // flush to stdout before executing command.
-      fflush(f_type_output);
+      fflush(data.output.stream);
     }
 
     int return_code = 0;

@@ -611,12 +611,12 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
               status = F_status_set_error(status);
             }
 
-            f_file_close(&file.id);
+            f_file_stream_close(F_true, &file);
           }
           else {
             status = f_file_read(file, &local_buffer);
 
-            f_file_close(&file.id);
+            f_file_stream_close(F_true, &file);
 
             if (F_status_is_error(status)) {
               status = F_status_set_fine(status);
@@ -1353,7 +1353,7 @@ f_return_status firewall_buffer_rules(const f_string_t filename, const bool opti
 
   status = f_file_read(file, &local->buffer);
 
-  f_file_close(&file.id);
+  f_file_stream_close(F_true, &file);
 
   if (F_status_is_error(status)) {
     status = F_status_set_fine(status);

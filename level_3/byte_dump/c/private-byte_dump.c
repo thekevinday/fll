@@ -205,7 +205,7 @@ extern "C" {
     fprintf(data.output.stream, "%c", f_string_eol[0]);
 
     // make sure to flush standard out to help prevent standard error from causing poblems.
-    fflush(f_type_output);
+    fflush(data.output.stream);
 
     if (found_invalid_utf) {
       fl_color_print(data.error.to.stream, data.context.set.error, "Invalid UTF-8 codes were detected for file '");
@@ -224,7 +224,7 @@ extern "C" {
       status = F_status_set_error(F_failure);
     }
 
-    fflush(f_type_error);
+    fflush(data.error.to.stream);
 
     return status;
   }

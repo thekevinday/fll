@@ -722,7 +722,84 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
-#if !defined(f_file_write) || !defined(f_file_write_until) || !defined(f_file_write_range)
+#if !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
+  const char *private_f_file_stream_open_mode_determine(const int flag) {
+
+    if (flag & f_file_flag_read_write) {
+      if (flag & f_file_flag_truncate) {
+        return "w+";
+      }
+      else if (flag & f_file_flag_append) {
+        return "a+";
+      }
+
+      // failsafe to read write prepend.
+      return "r+";
+    }
+    else if (flag & f_file_flag_write_only) {
+      if (flag & f_file_flag_truncate) {
+        return "w";
+      }
+
+      // failsafe to append.
+      return "a";
+    }
+
+    // failsafe to read only.
+    return "r";
+  }
+#endif // !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
+
+#if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
+  f_return_status private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_string_length_t amount, const f_string_length_t total, f_string_length_t *written) {
+    *written = 0;
+
+    f_status_t status = F_none;
+    f_string_length_t write_amount = amount;
+    f_string_length_t write_size = file.size_write;
+    f_string_length_t write_max = total;
+
+    ssize_t size_write = 0;
+
+    if (write_max < file.size_write) {
+      write_amount = 1;
+      write_size = write_max;
+    }
+    else if (amount * file.size_write > total) {
+      write_amount = total / file.size_write;
+
+      if (total % file.size_write) {
+        write_amount++;
+      }
+    }
+
+    while (*written < write_max) {
+      size_write = fwrite(string + *written, write_amount, write_size, file.stream);
+
+      if (size_write < 0) {
+        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+        if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+        if (errno == EFAULT) return F_status_set_error(F_buffer);
+        if (errno == EINTR) return F_status_set_error(F_interrupted);
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == EIO) return F_status_set_error(F_input_output);
+        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
+        return F_status_set_error(F_failure);
+      }
+
+      *written += size_write * write_amount;
+
+      if (!size_write) {
+        return F_none_stop;
+      }
+    } // while
+
+    return F_none;
+  }
+#endif // !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
+
+#if !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
   f_return_status private_f_file_write_until(const f_file_t file, const f_string_t string, const f_string_length_t total, f_string_length_t *written) {
     *written = 0;
 
@@ -732,7 +809,7 @@ extern "C" {
 
     ssize_t size_write = 0;
 
-    if (write_max < write_size) {
+    if (write_max < file.size_write) {
       write_size = write_max;
     }
 
@@ -762,7 +839,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(f_file_write) || !defined(f_file_write_until) || !defined(f_file_write_range)
+#endif // !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
 
 #ifdef __cplusplus
 } // extern "C"

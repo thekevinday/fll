@@ -409,19 +409,19 @@ extern "C" {
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments.argv[data->remaining.array[i]], "process", fll_error_file_type_file);
 
-            f_file_close(&file.id);
+            f_file_stream_close(F_true, &file);
             break;
           }
 
           // Skip past empty files.
           if (!total) {
-            f_file_close(&file.id);
+            f_file_stream_close(F_true, &file);
             continue;
           }
 
           status = f_file_read_until(file, total, &data->buffer);
 
-          f_file_close(&file.id);
+          f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments.argv[data->remaining.array[i]], "process", fll_error_file_type_file);

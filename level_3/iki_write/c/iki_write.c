@@ -28,7 +28,7 @@ extern "C" {
     fll_program_print_help_option(file, context, iki_write_short_object, iki_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to output.");
     fll_program_print_help_option(file, context, iki_write_short_single, iki_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
 
-    fll_program_print_help_usage(file, context, iki_write_name, "filename(s)");
+    fll_program_print_help_usage(file, context, iki_write_name, "");
 
     fl_color_print(f_type_output, context.set.important, " Notes:");
 
@@ -228,10 +228,10 @@ extern "C" {
       f_string_dynamic_t escaped = f_string_dynamic_t_initialize;
 
       if (data->process_pipe) {
-        f_file_t file = f_file_t_initialize;
+        f_file_t input = f_file_t_initialize;
 
-        file.id = f_type_descriptor_input;
-        file.size_read = 1;
+        input.id = f_type_descriptor_input;
+        input.size_read = 1;
 
         f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
         f_string_dynamic_t object = f_string_dynamic_t_initialize;
@@ -247,7 +247,7 @@ extern "C" {
         for (f_status_t status_pipe = F_none; ; ) {
 
           if (status_pipe != F_none_eof) {
-            status_pipe = f_file_read(file, &buffer);
+            status_pipe = f_file_read(input, &buffer);
 
             if (F_status_is_error(status_pipe)) {
               fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read_to", F_true, "-", "read", fll_error_file_type_pipe);
@@ -307,10 +307,10 @@ extern "C" {
               }
             }
 
-            status = iki_write_process(*data, object, content, quote, output.id, &escaped);
+            status = iki_write_process(*data, data->output, object, content, quote, &escaped);
             if (F_status_is_error(status)) break;
 
-            dprintf(output.id, "%c", f_string_eol[0]);
+            fprintf(output.stream, "%c", f_string_eol[0]);
 
             object_ended = F_false;
           }
@@ -367,10 +367,10 @@ extern "C" {
           content.used = strnlen(content.string, f_console_length_size);
           content.size = content.used;
 
-          status = iki_write_process(*data, object, content, quote, output.id, &escaped);
+          status = iki_write_process(*data, data->output, object, content, quote, &escaped);
           if (F_status_is_error(status)) break;
 
-          dprintf(output.id, "%c", f_string_eol[0]);
+          fprintf(output.stream, "%c", f_string_eol[0]);
         } // for
 
         // ensure there is always a newline at the end, unless in quiet mode.
@@ -384,7 +384,7 @@ extern "C" {
 
     if (data->parameters[iki_write_parameter_file].result == f_console_result_additional) {
       if (output.id != -1) {
-        f_file_close(&output.id);
+        f_file_stream_close(F_true, &output);
       }
     }
 

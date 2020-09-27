@@ -860,6 +860,65 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
 /**
+ * Special function for use in the f_file_stream_open() and related functions.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param flag
+ *   The file flag.
+ *
+ * @return
+ *   A string representing the file mode for use in fopen(), fdopen(), or freopen().
+ *
+ * @see f_file_stream_descriptor()
+ * @see f_file_stream_open()
+ * @see f_file_stream_reopen()
+ */
+#if !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
+  extern const char *private_f_file_stream_open_mode_determine(const int flag) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
+
+/**
+ * Private implementation of f_file_stream_write_until().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param string
+ *   The string to write to the file.
+ * @param amount
+ *   The total amount of file.size_write to process.
+ *   This amount is multiplied against file.size_write and must be greater than 0.
+ * @param total
+ *   The total bytes to write.
+ * @param written
+ *   The total bytes to written.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file (with error bit) if file descriptor is in an error state.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_stream_write()
+ * @see f_file_stream_write_block()
+ * @see f_file_stream_write_range()
+ * @see f_file_stream_write_until()
+ */
+#if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
+  extern f_return_status private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_string_length_t amount, const f_string_length_t total, f_string_length_t *written) f_gcc_attribute_visibility_internal;
+#endif // !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
+
+/**
  * Private implementation of f_file_write_until().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -888,12 +947,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see f_file_write()
+ * @see f_file_write_block()
  * @see f_file_write_range()
  * @see f_file_write_until()
  */
-#if !defined(f_file_write) || !defined(f_file_write_until) || !defined(f_file_write_range)
+#if !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
   extern f_return_status private_f_file_write_until(const f_file_t file, const f_string_t string, const f_string_length_t total, f_string_length_t *written) f_gcc_attribute_visibility_internal;
-#endif // !defined(f_file_write) || !defined(f_file_write_until) || !defined(f_file_write_range)
+#endif // !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
 
 #ifdef __cplusplus
 } // extern "C"

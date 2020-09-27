@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_write_process_
-  f_return_status iki_write_process(const iki_write_data_t data, const f_string_static_t object, const f_string_static_t content, const uint8_t quote, const int output, f_string_dynamic_t *escaped) {
+  f_return_status iki_write_process(const iki_write_data_t data, const f_file_t output, const f_string_static_t object, const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *escaped) {
 
     if (!object.used) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
@@ -51,7 +51,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    dprintf(output, "%s%c%c%s%c", object.string, f_iki_syntax_separator, quote, escaped->string, quote);
+    fprintf(output.stream, "%s%c%c%s%c", object.string, f_iki_syntax_separator, quote, escaped->string, quote);
 
     return F_none;
   }

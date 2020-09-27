@@ -294,7 +294,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_file_print(data.error, F_status_set_fine(status), "f_file_write", F_true, path.string, "pre-populate", fll_error_file_type_file);
 
-          f_file_close(&file.id);
+          f_file_stream_close(F_true, &file);
           return status;
         }
 
@@ -302,7 +302,7 @@ extern "C" {
           fprintf(data.output.stream, "File '%s' pre-populated.%c", path.string, f_string_eol[0]);
         }
 
-        f_file_close(&file.id);
+        f_file_stream_close(F_true, &file);
       }
     }
     else if (F_status_is_error(status)) {

@@ -127,6 +127,8 @@ extern "C" {
  *
  * Will flush before closing.
  *
+ * @todo consider making this consistent and acceptinf f_file_t instead of just the id.
+ *
  * @param id
  *   The file descriptor.
  *
@@ -1290,7 +1292,7 @@ extern "C" {
 /**
  * Read until EOF is reached.
  *
- * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ * To determine how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
  *
  * @param file
  *   The file to read.
@@ -1300,7 +1302,6 @@ extern "C" {
  *   The contents of the file is appended into this buffer.
  *
  * @return
- *   F_none on success.
  *   F_none_eof on success and EOF was reached.
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1350,7 +1351,12 @@ extern "C" {
 /**
  * Read until a given number or EOF is reached, storing it in the buffer.
  *
- * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ * To determine how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ *
+ * This is different from simply using the file.size_read.
+ * The file.size_read represents the amount to process for a given buffer size.
+ * The total represents the maximum number of bytes to process.
+ * For example, if file.size_read is 16 and total is 128, then this function would need to be called 8 times until total is reached.
  *
  * @param file
  *   The file to read.
@@ -1361,8 +1367,8 @@ extern "C" {
  *   The buffer the file is being read into.
  *
  * @return
- *   F_none on success.
  *   F_none_eof on success and EOF was reached.
+ *   F_none_stop on success and total was reached.
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_file_closed (with error bit) if file is not open.
@@ -1843,14 +1849,15 @@ extern "C" {
 /**
  * Open a file stream from a file descriptor.
  *
- * @param id
- *   The file descriptor.
  * @param mode
  *   The file modes do use when opening.
+ *   The file modes do use when opening.
+ *   Set to 0 to determine mode from file.flags (falling back to read only as a failsafe).
+ *   If neither truncate nor append are not specified in write only mode, then the failsafe is to append.
  *   This should match the modes used to open the file descriptor as it relates to the stream modes.
- * @param stream
- *   The file stream.
- *   Updated on success, but may be set to NULL on error.
+ * @param file
+ *   The file with a valid file descriptor (file.id).
+ *   THe file stream (file.stream) is updated on success, but may be set to NULL on error.
  *
  * @return
  *   F_none is returned on success.
@@ -1868,7 +1875,7 @@ extern "C" {
  * @see fdopen()
  */
 #ifndef _di_f_file_stream_descriptor_
-  extern f_return_status f_file_stream_descriptor(const int id, const f_string_t mode, FILE *stream);
+  extern f_return_status f_file_stream_descriptor(const f_string_t mode, f_file_t *file);
 #endif // _di_f_file_stream_descriptor_
 
 /**
@@ -1880,6 +1887,8 @@ extern "C" {
  *   The file path
  * @param mode
  *   The file modes do use when opening.
+ *   Set to 0 to determine mode from file.flags (falling back to read only as a failsafe).
+ *   If neither truncate nor append are not specified in write only mode, then the failsafe is to append.
  * @param file
  *   The file information.
  *   The file.stream is updated if necessary.
@@ -1914,6 +1923,110 @@ extern "C" {
 #endif // _di_f_file_stream_open_
 
 /**
+ * Read until EOF is reached.
+ *
+ * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ *
+ * @param file
+ *   The file to read.
+ *   The file must already be open.
+ * @param amount
+ *   The total amount of file.size_read to process.
+ *   This amount is multiplied against file.size_read and must be greater than 0.
+ * @param buffer
+ *   The buffer the file is being read into.
+ *   The contents of the file is appended into this buffer.
+ *
+ * @return
+ *   F_none_eof on success and EOF was reached.
+ *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fread()
+ */
+#ifndef _di_f_file_stream_read_
+  extern f_return_status f_file_stream_read(const f_file_t file, const f_string_length_t amount, f_string_dynamic_t *buffer);
+#endif // _di_f_file_stream_read_
+
+/**
+ * Read until a single block is filled or EOF is reached.
+ *
+ * To determine how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ *
+ * @param file
+ *   The file to read.
+ *   The file must already be open.
+ * @param amount
+ *   The total amount of file.size_read to process.
+ *   This amount is multiplied against file.size_read and must be greater than 0.
+ * @param buffer
+ *   The buffer the file is being read into.
+ *   The contents of the file is appended into this buffer.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_eof on success and EOF was reached.
+ *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fread()
+ */
+#ifndef _di_f_file_stream_read_block_
+  extern f_return_status f_file_stream_read_block(const f_file_t file, const f_string_length_t amount, f_string_dynamic_t *buffer);
+#endif // _di_f_file_stream_read_block_
+
+/**
+ * Read until a given number or EOF is reached, storing it in the buffer.
+ *
+ * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ *
+ * This is different from simply using the file.size_read.
+ * The file.size_read represents the amount to process for a given buffer size.
+ * The total represents the maximum number of "size" to process.
+ * For example, if file.size_read is 16 and total is 128, then this function would need to be called 8 times until total is reached.
+ *
+ * @param file
+ *   The file to read.
+ *   The file must already be open.
+ * @param amount
+ *   The total amount of file.size_read to process.
+ *   This amount is multiplied against file.size_read and must be greater than 0.
+ * @param total
+ *   The total bytes to read, unless EOF is reached first.
+ * @param buffer
+ *   The buffer the file is being read into.
+ *
+ * @return
+ *   F_none_eof on success and EOF was reached.
+ *   F_none_stop on success and total was reached.
+ *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fread()
+ */
+#ifndef _di_f_file_stream_read_until_
+  extern f_return_status f_file_stream_read_until(const f_file_t file, const f_string_length_t amount, const f_string_length_t total, f_string_dynamic_t *buffer);
+#endif // _di_f_file_stream_read_until_
+
+/**
  * Re-open a file stream.
  *
  * This allows for re-using an existing file stream and possibly file-descriptor.
@@ -1924,6 +2037,8 @@ extern "C" {
  *   The file path
  * @param mode
  *   The file modes do use when opening.
+ *   Set to 0 to determine mode from file.flags (falling back to read only as a failsafe).
+ *   If neither truncate nor append are not specified in write only mode, then the failsafe is to append.
  * @param file
  *   The file information.
  *   The file.stream is updated, if necessary.
@@ -1956,6 +2071,146 @@ extern "C" {
 #ifndef _di_f_file_stream_reopen_
   extern f_return_status f_file_stream_reopen(const f_string_t path, const f_string_t mode, f_file_t *file);
 #endif // _di_f_file_stream_reopen_
+
+/**
+ * Write until entire buffer is written.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param amount
+ *   The total amount of file.size_write to process.
+ *   This amount is multiplied against file.size_write and must be greater than 0.
+ * @param written
+ *   The total bytes written.
+ *   Set pointer to 0 to not use.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fwrite()
+ */
+#ifndef _di_f_file_stream_write_
+  extern f_return_status f_file_stream_write(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, f_string_length_t *written);
+#endif // _di_f_file_stream_write_
+
+/**
+ * Write until a single block is filled or entire buffer is written.
+ *
+ * To check how much was write into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param amount
+ *   The total amount of file.size_write to process.
+ *   This amount is multiplied against file.size_write and must be greater than 0.
+ * @param written
+ *   The total bytes written.
+ *   Set pointer to 0 to not use.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fwrite()
+ */
+#ifndef _di_f_file_stream_write_block_
+  extern f_return_status f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, f_string_length_t *written);
+#endif // _di_f_file_stream_write_block_
+
+/**
+ * Write until a given number or entire buffer is written.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param amount
+ *   The total amount of file.size_write to process.
+ *   This amount is multiplied against file.size_write and must be greater than 0.
+ * @param total
+ *   The total bytes to write, unless end of buffer is reached first.
+ * @param written
+ *   The total bytes written.
+ *   Set pointer to 0 to not use.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fwrite()
+ */
+#ifndef _di_f_file_stream_write_until_
+  extern f_return_status f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, const f_string_length_t total, f_string_length_t *written);
+#endif // _di_f_file_stream_write_until_
+
+/**
+ * Write a given range within the buffer.
+ *
+ * @param file
+ *   The file to write to.
+ *   The file must already be open.
+ * @param buffer
+ *   The buffer to write to the file.
+ * @param amount
+ *   The total amount of file.size_write to process.
+ *   This amount is multiplied against file.size_write and must be greater than 0.
+ * @param range
+ *   An inclusive start an stop range within the buffer to read.
+ * @param written
+ *   The total bytes written.
+ *   Set pointer to 0 to not use.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fwrite()
+ */
+#ifndef _di_f_file_stream_write_range_
+  extern f_return_status f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, const f_string_range_t range, f_string_length_t *written);
+#endif // _di_f_file_stream_write_range_
+
 
 /**
  * Update the files access and modification timestamp, creating the file if it does not already exist.

@@ -24,7 +24,7 @@ extern "C" {
       fprintf(data.output.stream, "%c", f_string_eol[0]);
 
       // flush to stdout before executing command.
-      fflush(f_type_output);
+      fflush(data.output.stream);
     }
 
     if (fake_signal_received(data)) {
@@ -113,11 +113,11 @@ extern "C" {
       }
 
       name_function = "f_file_open";
-      status = f_file_open(path_file, 0, &file);
+      status = f_file_stream_open(path_file, 0, &file);
 
       if (fake_signal_received(data)) {
         if (file.id) {
-          f_file_close(&file.id);
+          f_file_stream_close(F_true, &file);
         }
 
         return F_status_set_error(F_signal);
@@ -127,7 +127,7 @@ extern "C" {
         name_function = "f_file_read";
         status = f_file_read(file, buffer);
 
-        f_file_close(&file.id);
+        f_file_stream_close(F_true, &file);
       }
     }
     else if (status == F_false) {

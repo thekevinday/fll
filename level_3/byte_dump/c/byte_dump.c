@@ -367,7 +367,7 @@ extern "C" {
                 missing_files = status;
               }
 
-              fll_error_file_print(data.error, F_status_set_fine(status), "f_file_exists", F_true, arguments.argv[data->remaining.array[counter]], "find", fll_error_file_type_file);
+              fll_error_file_print(data->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.argv[data->remaining.array[counter]], "find", fll_error_file_type_file);
             }
           } // for
 
@@ -382,10 +382,11 @@ extern "C" {
         f_file_t file = f_file_t_initialize;
 
         for (f_array_length_t counter = 0; counter < data->remaining.used; counter++) {
+
           status = f_file_open(arguments.argv[data->remaining.array[counter]], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(data.error, F_status_set_fine(status), "f_file_open", F_true, arguments.argv[data->remaining.array[counter]], "open", fll_error_file_type_file);
+            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_open", F_true, arguments.argv[data->remaining.array[counter]], "open", fll_error_file_type_file);
 
             byte_dump_delete_data(data);
             return status;
@@ -419,7 +420,7 @@ extern "C" {
           f_file_close(&file.id);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(data.error, F_status_set_fine(status), "byte_dump_file", F_true, arguments.argv[data->remaining.array[counter]], "open", fll_error_file_type_file);
+            fll_error_file_print(data->error, F_status_set_fine(status), "byte_dump_file", F_true, arguments.argv[data->remaining.array[counter]], "process", fll_error_file_type_file);
 
             byte_dump_delete_data(data);
             return status;

@@ -8,9 +8,7 @@ int main(const int argc, const f_string_t *argv) {
     data.process_pipe = F_true;
   }
 
-  f_status_t status = firewall_main(arguments, &data);
-
-  if (F_status_is_error(status)) {
+  if (F_status_is_error(firewall_main(arguments, &data))) {
     return 1;
   }
 
