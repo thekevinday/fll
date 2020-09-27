@@ -217,6 +217,11 @@ extern "C" {
         return F_status_set_error(status);
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
+        if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
+          fprintf(f_type_output, "0%c", f_string_eol[0]);
+          return F_none;
+        }
+
         // Clear buffers, then attempt the next file.
         f_macro_fss_contents_t_delete_simple(data->contents);
         f_macro_fss_objects_t_delete_simple(data->objects);

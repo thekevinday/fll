@@ -356,6 +356,10 @@ extern "C" {
 
             // Skip past empty files.
             if (!data->quantity.total) {
+              if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
+                fprintf(f_type_output, "0%c", f_string_eol[0]);
+              }
+
               f_file_stream_close(F_true, &file);
               continue;
             }
