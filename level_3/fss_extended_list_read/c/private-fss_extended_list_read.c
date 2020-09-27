@@ -380,7 +380,7 @@ extern "C" {
 
     if (depth_setting.index_at > 0) {
       if (depth_setting.value_at >= items->used) {
-        if (names[depth_setting.value_at] && data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
+        if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
           fprintf(f_type_output, "0%c", f_string_eol[0]);
         }
 
