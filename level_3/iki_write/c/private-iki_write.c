@@ -26,9 +26,9 @@ extern "C" {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
         fl_color_print(data.error.to.stream, data.context.set.error, "%sThe object '", fll_error_print_error);
 
-        fl_color_print_code(f_type_error, data.context.notable);
-        f_print_dynamic(f_type_error, object);
-        fl_color_print_code(f_type_error, data.context.reset);
+        fl_color_print_code(data.error.to.stream, data.context.notable);
+        f_print_dynamic(data.error.to.stream, object);
+        fl_color_print_code(data.error.to.stream, data.context.reset);
 
         fl_color_print(data.error.to.stream, data.context.set.error, "' is not a valid IKI object.%c", f_string_eol[0]);
       }
