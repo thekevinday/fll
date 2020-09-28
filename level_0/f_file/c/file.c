@@ -1454,7 +1454,7 @@ extern "C" {
     f_status_t status = F_none;
     ssize_t size_read = 0;
 
-    for (f_string_t buffer_read = 0; ;) {
+    for (f_string_t buffer_read = 0; ; ) {
 
       if (buffer->used + file.size_read > buffer->size) {
         if (buffer->size + file.size_read > f_string_length_t_size) {
@@ -1560,7 +1560,7 @@ extern "C" {
     f_status_t status = F_none;
     ssize_t size_read = 0;
 
-    for (f_string_t buffer_read = 0; ;) {
+    for (f_string_t buffer_read = 0; ; ) {
 
       if (buffer_count + buffer_size > total) {
         buffer_size = total - buffer_count;
