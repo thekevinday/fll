@@ -472,7 +472,7 @@ extern "C" {
       }
     }
 
-    // seek to the end of the line when no valid object is found->
+    // seek to the end of the line when no valid object is found.
     while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
 
       status = f_utf_buffer_increment(*buffer, range, 1);

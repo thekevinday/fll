@@ -28,6 +28,7 @@
 // fll-1 includes
 #include <level_1/color.h>
 #include <level_1/console.h>
+#include <level_1/fss_basic.h>
 #include <level_1/status.h>
 #include <level_1/string.h>
 
@@ -119,9 +120,9 @@ extern "C" {
     fll_error_print_t error;
 
     f_color_context_t context;
-  } fss_basic_write_data;
+  } fss_basic_write_data_t;
 
-  #define fss_basic_write_data_initialize \
+  #define fss_basic_write_data_t_initialize \
     { \
       fss_basic_write_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
@@ -164,7 +165,7 @@ extern "C" {
  * @see fss_basic_write_delete_data()
  */
 #ifndef _di_fss_basic_write_main_
-  extern f_return_status fss_basic_write_main(const f_console_arguments_t arguments, fss_basic_write_data *data);
+  extern f_return_status fss_basic_write_main(const f_console_arguments_t arguments, fss_basic_write_data_t *data);
 #endif // _di_fss_basic_write_main_
 
 /**
@@ -182,7 +183,7 @@ extern "C" {
  * @see fss_basic_write_main()
  */
 #ifndef _di_fss_basic_write_delete_data_
-  extern f_return_status fss_basic_write_delete_data(fss_basic_write_data *data);
+  extern f_return_status fss_basic_write_delete_data(fss_basic_write_data_t *data);
 #endif // _di_fss_basic_write_delete_data_
 
 #ifdef __cplusplus

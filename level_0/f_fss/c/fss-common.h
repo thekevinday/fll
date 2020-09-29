@@ -31,7 +31,7 @@ extern "C" {
   #define f_fss_basic_list_open     ':'
   #define f_fss_basic_list_close    '\0'
   #define f_fss_extended_list_open  '{'
-  #define f_fss_extended_list_close '}'
+  #define f_fss_extended_list_close '}' // also requires '\n'.
   #define f_fss_type_header_open    '#'
   #define f_fss_type_header_part1   ' '
   #define f_fss_type_header_part2   'f'

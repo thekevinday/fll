@@ -134,7 +134,7 @@ extern "C" {
 #endif // _di_fll_fss_basic_list_read_
 
 #ifndef _di_fll_fss_basic_list_write_
-  f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer) {
+  f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quoted_t quoted, f_string_dynamic_t *buffer) {
     #ifndef _di_level_2_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (contents.used > contents.size) return F_status_set_error(F_parameter);
@@ -147,7 +147,7 @@ extern "C" {
     range.start = 0;
     range.stop = object.used - 1;
 
-    status = fl_fss_basic_list_object_write(object, &range, buffer);
+    status = fl_fss_basic_list_object_write(object, quoted, &range, buffer);
 
     if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
       return status;

@@ -147,7 +147,7 @@ extern "C" {
     f_color_context_t context;
   } fss_extended_read_data_t;
 
-  #define fss_extended_read_data_initialize \
+  #define fss_extended_read_data_t_initialize \
     { \
       fss_extended_read_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \

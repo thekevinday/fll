@@ -67,6 +67,9 @@ extern "C" {
  *   A string representing the object.
  * @param contents
  *   An array of strings representing multiple content to write.
+ * @param quoted
+ *   If 0, then double quotes are auto-inserted, when required.
+ *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param buffer
  *   The buffer to write to.
  *
@@ -86,7 +89,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
 #ifndef _di_fll_fss_basic_list_write_
-  extern f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer);
+  extern f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quoted_t quoted, f_string_dynamic_t *buffer);
 #endif // _di_fll_fss_basic_list_write_
 
 #ifdef __cplusplus
