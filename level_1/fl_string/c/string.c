@@ -1090,9 +1090,13 @@ extern "C" {
       if (destination->used > destination->size) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!destination->used && destination->string[destination->used - 1]) return F_none;
+    if (!destination->used && destination->size && !destination->string[destination->used - 1]) {
+      return F_none;
+    }
 
-    if (destination->used == f_string_length_t_size) return F_status_set_error(F_string_too_large);
+    if (destination->used == f_string_length_t_size) {
+      return F_status_set_error(F_string_too_large);
+    }
 
     const f_string_length_t total = destination->used + 1;
 
@@ -1124,7 +1128,9 @@ extern "C" {
       } // for
     }
 
-    if (destination->used == f_string_length_t_size) return F_status_set_error(F_string_too_large);
+    if (destination->used == f_string_length_t_size) {
+      return F_status_set_error(F_string_too_large);
+    }
 
     const f_string_length_t total = destination->used + 1;
 
