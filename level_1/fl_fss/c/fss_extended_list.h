@@ -129,6 +129,8 @@ extern "C" {
  * Anything within this range will be escaped as necessary.
  * This will stop if EOL is reached.
  *
+ * The destination string may have NULLs.
+ *
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
  * @param range
@@ -158,6 +160,8 @@ extern "C" {
  *
  * This will write the given string range as a valid content.
  * Anything within this range will be escaped as necessary.
+ *
+ * The destination string may have NULLs.
  *
  * @param content
  *   The string to write as (does not stop at NULLS, they are ignored and not written).

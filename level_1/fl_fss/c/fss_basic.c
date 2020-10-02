@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_object_read_
-  f_return_status fl_fss_basic_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quoted_t *quoted) {
+  f_return_status fl_fss_basic_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote) {
     #ifndef _di_level_1_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!buffer->used ) return F_status_set_error(F_parameter);
@@ -19,7 +19,7 @@ extern "C" {
     f_status_t status = F_none;
     f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
-    status = private_fl_fss_basic_object_read(buffer, range, found, quoted, &delimits);
+    status = private_fl_fss_basic_object_read(buffer, range, found, quote, &delimits);
 
     if (F_status_is_error(status)) {
       f_macro_string_lengths_t_delete_simple(delimits);
@@ -92,18 +92,47 @@ extern "C" {
 #endif // _di_fl_fss_basic_content_read_
 
 #ifndef _di_fl_fss_basic_object_write_
-  f_return_status fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_return_status fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
+      if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_fss_basic_object_write(object, quoted, range, destination);
+    const f_status_t status = private_fl_fss_basic_object_write(object, quote ? quote : f_fss_delimit_quote_double, range, destination);
+
+    if (status == F_data_not_stop || status == F_data_not_eos) {
+
+      // Objects cannot be empty, so write a quoted empty string.
+      const f_status_t status_allocation = private_fl_fss_destination_increase_by(2, destination);
+      if (F_status_is_error(status_allocation)) return status_allocation;
+
+      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
+      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
+
+      if (status == F_data_not_stop) {
+        return F_none_stop;
+      }
+
+      return F_none_eos;
+    }
+
+    if (complete == f_fss_complete_partial || complete == f_fss_complete_full) {
+      if (status == F_none_stop || status == F_none_eos) {
+        const f_status_t status_allocation = private_fl_fss_destination_increase(destination);
+        if (F_status_is_error(status_allocation)) return status_allocation;
+
+        destination->string[destination->used++] = f_fss_basic_open;
+      }
+    }
+
+    return status;
   }
 #endif // _di_fl_fss_basic_object_write_
 
 #ifndef _di_fl_fss_basic_content_write_
-  f_return_status fl_fss_basic_content_write(const f_string_static_t content, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_return_status fl_fss_basic_content_write(const f_string_static_t content, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
+      if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
@@ -111,47 +140,52 @@ extern "C" {
 
     fl_macro_fss_skip_past_delimit_placeholders(content, (*range));
 
-    if (range->start > range->stop) return F_data_not_stop;
-    else if (range->start >= content.used) return F_data_not_eos;
+    if (range->start > range->stop || range->start >= content.used) {
 
-    f_string_range_t input_position = f_string_range_t_initialize;
-    f_string_range_t buffer_position = f_string_range_t_initialize;
+      // content should be terminated, even if empty.
+      if (complete == f_fss_complete_full || complete == f_fss_complete_end) {
+        status = private_fl_fss_destination_increase(destination);
+        if (F_status_is_error(status)) return status;
 
-    // ensure that there is room for the terminating newline.
-    f_string_length_t size_allocate = destination->used + content.used + 1 + f_fss_default_allocation_step_string;
+        destination->string[destination->used++] = f_fss_basic_close;
+      }
 
-    buffer_position.start = destination->used;
-    buffer_position.stop = destination->used;
+      if (range->start > range->stop) {
+        return F_data_not_stop;
+      }
 
-    if (size_allocate > destination->size) {
-      f_macro_string_dynamic_t_resize(status, (*destination), size_allocate);
-      if (F_status_is_error(status)) return status;
+      return F_data_not_eos;
     }
 
-    while (range->start <= range->stop && range->start < content.used) {
+    // ensure that there is room for the potential terminating newline.
+    status = private_fl_fss_destination_increase_by(destination->used + (range->stop - range->start) + 1, destination);
+    if (F_status_is_error(status)) return status;
+
+    const f_string_length_t used_start = destination->used;
+
+    for (; range->start <= range->stop && range->start < content.used; range->start++) {
 
       if (content.string[range->start] == f_string_eol[0]) {
-        destination->string[buffer_position.stop] = f_string_eol[0];
-        destination->used = buffer_position.stop + 1;
-        return F_none_eos;
+        destination->used = used_start;
+        return F_status_set_error(F_none_eol);
       }
 
-      if (content.string[range->start] != f_fss_delimit_placeholder) {
-        destination->string[buffer_position.stop] = content.string[range->start];
-        buffer_position.stop++;
+      if (content.string[range->start] == f_fss_delimit_placeholder) {
+        continue;
       }
 
-      status = f_utf_buffer_increment(content, range, 1);
-      if (F_status_is_error(status)) return status;
+      destination->string[destination->used++] = content.string[range->start];
     } // while
 
-    destination->string[buffer_position.stop] = f_string_eol[0];
-    destination->used = buffer_position.stop + 1;
+    if (complete == f_fss_complete_full || complete == f_fss_complete_end) {
+      destination->string[destination->used++] = f_fss_basic_close;
+    }
 
-    if (range->start > range->stop) return F_none_stop;
-    else if (range->start >= content.used) return F_none_eos;
+    if (range->start > range->stop) {
+      return F_none_stop;
+    }
 
-    return F_none;
+    return F_none_eos;
   }
 #endif // _di_fl_fss_basic_content_write_
 

@@ -88,7 +88,7 @@ typedef struct {
 // TODO: also report: fl_color_print(data.error.to.stream, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol[0]);
 #define firewall_macro_append_argument_to_arguments(status, arguments, argument) \
   if (arguments.used == arguments.size) { \
-    f_macro_string_dynamics_resize(status, arguments, arguments.used + firewall_default_allocation_step); \
+    f_macro_string_dynamics_t_resize(status, arguments, arguments.used + firewall_default_allocation_step); \
     \
     if (F_status_is_error(status)) break; \
   } \

@@ -138,7 +138,7 @@ extern "C" {
             return F_status_set_error(F_buffer_too_large);
           }
 
-          f_macro_string_dynamics_resize(status, (*value), (values[j]->used + content->used));
+          f_macro_string_dynamics_t_resize(status, (*value), (values[j]->used + content->used));
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
@@ -373,7 +373,7 @@ extern "C" {
           if (map_multi->value.used + contents.array[i].used - 1 > map_multi->value.size) {
             if (map_multi->value.used + contents.array[i].used - 1 > f_array_length_t_size) return F_status_set_error(F_buffer_too_large);
 
-            f_macro_string_dynamics_resize(status, map_multi->value, map_multi->value.used + contents.array[i].used - 1);
+            f_macro_string_dynamics_t_resize(status, map_multi->value, map_multi->value.used + contents.array[i].used - 1);
             if (F_status_is_error(status)) return status;
           }
 
@@ -591,7 +591,7 @@ extern "C" {
             return F_status_set_error(F_buffer_too_large);
           }
 
-          f_macro_string_dynamics_resize(status, map_multi->value, map_multi->value.used + 1);
+          f_macro_string_dynamics_t_resize(status, map_multi->value, map_multi->value.used + 1);
           if (F_status_is_error(status)) return status;
         }
 
@@ -834,7 +834,7 @@ extern "C" {
               return F_status_set_error(F_buffer_too_large);
             }
 
-            f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + 1);
+            f_macro_string_dynamics_t_resize(status, (*values[j]), values[j]->used + 1);
             if (F_status_is_error(status)) return status;
 
             if (indexs) {
@@ -843,7 +843,7 @@ extern "C" {
             }
           }
           else {
-            f_macro_string_dynamics_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
+            f_macro_string_dynamics_t_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
             if (F_status_is_error(status)) return status;
 
             if (indexs) {

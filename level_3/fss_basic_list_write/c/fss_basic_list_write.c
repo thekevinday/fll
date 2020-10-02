@@ -191,7 +191,7 @@ extern "C" {
       }
     }
 
-    f_fss_quoted_t quoted = f_fss_delimit_quote_double;
+    f_fss_quote_t quoted = f_fss_delimit_quote_double;
 
     if (F_status_is_error_not(status)) {
       if (data->parameters[fss_basic_list_write_parameter_double].result == f_console_result_found) {

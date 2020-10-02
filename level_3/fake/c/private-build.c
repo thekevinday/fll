@@ -1164,10 +1164,10 @@ extern "C" {
             return;
           }
 
-          f_macro_string_dynamics_resize(*status, names, names.used + data_build.setting.environment.used);
+          f_macro_string_dynamics_t_resize(*status, names, names.used + data_build.setting.environment.used);
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data.error, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "f_macro_string_dynamics_t_resize", F_true);
 
             f_macro_string_dynamic_t_delete_simple(part);
             f_macro_string_dynamics_t_delete_simple(names);
@@ -1214,7 +1214,7 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_memory_reallocation) {
-          function = "f_macro_string_dynamics_resize";
+          function = "f_macro_string_dynamics_t_resize";
           break;
         }
       }
@@ -1225,21 +1225,21 @@ extern "C" {
             *status = F_status_set_error(F_buffer_too_large);
           }
           else {
-            f_macro_string_dynamics_resize(*status, environment->names, environment->names.size + 1);
+            f_macro_string_dynamics_t_resize(*status, environment->names, environment->names.size + 1);
           }
         }
         else {
-          f_macro_string_dynamics_resize(*status, environment->names, environment->names.size + f_memory_default_allocation_step);
+          f_macro_string_dynamics_t_resize(*status, environment->names, environment->names.size + f_memory_default_allocation_step);
         }
 
         if (F_status_is_error(*status)) {
-          function = "f_macro_string_dynamics_resize";
+          function = "f_macro_string_dynamics_t_resize";
           break;
         }
 
-        f_macro_string_dynamics_resize(*status, environment->values, environment->names.size);
+        f_macro_string_dynamics_t_resize(*status, environment->values, environment->names.size);
         if (F_status_is_error(*status)) {
-          function = "f_macro_string_dynamics_resize";
+          function = "f_macro_string_dynamics_t_resize";
           break;
         }
       }

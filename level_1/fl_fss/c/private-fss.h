@@ -63,13 +63,15 @@ extern "C" {
  * @see fl_fss_extended_object_read()
  */
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  extern f_return_status private_fl_fss_basic_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quoted_t *quoted, f_string_lengths_t *delimits) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_fss_basic_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_string_lengths_t *delimits) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
 
 /**
  * Private implementation of fl_fss_basic_object_write().
  *
  * Intended to be shared to each of the different implementation variations.
+ *
+ * Note: this does not attempt to "complete" the object.
  *
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
@@ -84,22 +86,63 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eos on success after reaching the end of the buffer.
+ *   F_none_stop on success after reaching the range stop.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
- *   F_none_stop on success after reaching stopping point .
- *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *
- *   Errors (with error bit) from: f_utf_buffer_increment().
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
  *
  * @see fl_fss_basic_object_write()
  * @see fl_fss_extended_object_write()
+ * @see fl_fss_extended_content_write()
  */
-#if !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write)
-  extern f_return_status private_fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write)
+#if !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
+  extern f_return_status private_fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quote_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
+
+/**
+ * Increase the size of destination buffer, but only if necessary.
+ *
+ * @param destination
+ *   The destination buffer to increment.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
+ *
+ * @see fl_fss_basic_object_write()
+ * @see fl_fss_basic_content_write()
+ * @see fl_fss_extended_object_write()
+ * @see fl_fss_extended_content_write()
+ */
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+  extern f_return_status private_fl_fss_destination_increase(f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+
+/**
+ * Increase the size of destination buffer by the given amount, but only if necessary.
+ *
+ * @param amount
+ *   The amount to increase by.
+ * @param destination
+ *   The destination buffer to increment.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
+ *
+ * @see fl_fss_basic_object_write()
+ * @see fl_fss_basic_content_write()
+ * @see fl_fss_extended_object_write()
+ * @see fl_fss_extended_content_write()
+ */
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+  f_return_status private_fl_fss_destination_increase_by(const f_string_length_t amount, f_string_dynamic_t *destination);
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_extended_object_write_)  || !defined(_di_fl_fss_extended_content_write_)
 
 #ifdef __cplusplus
 } // extern "C"

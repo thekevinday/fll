@@ -812,7 +812,7 @@ extern "C" {
     start_position = range->start;
 
     // add an additional 2 to ensure that there is room for the slash delimit and the object open character.
-    size_allocate = destination->used + (range->stop - range->start) + 2 + f_fss_default_allocation_step_string;
+    size_allocate = destination->used + (range->stop - range->start) + 2 + f_fss_default_allocation_step;
 
     if (size_allocate > destination->size) {
       f_macro_string_dynamic_t_resize(status, (*destination), size_allocate);
@@ -880,7 +880,7 @@ extern "C" {
           size_allocate += slash_count;
 
           if (size_allocate > destination->size) {
-            f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+            f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step);
             if (F_status_is_error(status)) return status;
           }
 
@@ -943,7 +943,7 @@ extern "C" {
     start_position = range->start;
 
     // add an additional 2 to ensure that there is room for the slash delimit and the content open character.
-    size_allocate = destination->used + (range->stop - range->start) + 2 + f_fss_default_allocation_step_string;
+    size_allocate = destination->used + (range->stop - range->start) + 2 + f_fss_default_allocation_step;
 
     if (size_allocate > destination->size) {
       f_macro_string_dynamic_t_resize(status, (*destination), size_allocate);
@@ -1008,7 +1008,7 @@ extern "C" {
             size_allocate += slash_count + 1;
 
             if (size_allocate > destination->size) {
-              f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+              f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step);
               if (F_status_is_error(status)) return status;
             }
 
@@ -1054,7 +1054,7 @@ extern "C" {
           size_allocate++;
 
           if (size_allocate > destination->size) {
-            f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step_string);
+            f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step);
 
             if (F_status_is_error(status)) return status;
           }

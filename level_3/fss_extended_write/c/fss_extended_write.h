@@ -33,6 +33,7 @@
 
 // fll-2 includes
 #include <level_2/error.h>
+#include <level_2/fss_extended.h>
 #include <level_2/fss_status.h>
 #include <level_2/program.h>
 

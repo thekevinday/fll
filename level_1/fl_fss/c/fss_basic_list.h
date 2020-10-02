@@ -125,8 +125,13 @@ extern "C" {
  * Anything within this range will be escaped as necessary.
  * This will stop if EOL is reached.
  *
+ * The destination string may have NULLs.
+ *
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
+ * @param quoted
+ *   If 0, then double quotes are auto-inserted, when required.
+ *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param range
  *   The start/stop location within the object string to write as an object.
  * @param destination
@@ -146,7 +151,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_basic_list_object_write_
-  extern f_return_status fl_fss_basic_list_object_write(const f_string_static_t object, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_return_status fl_fss_basic_list_object_write(const f_string_static_t object, const f_fss_quote_t quoted, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_basic_list_object_write_
 
 /**
@@ -154,6 +159,8 @@ extern "C" {
  *
  * This will write the given string range as a valid content.
  * Anything within this range will be escaped as necessary.
+ *
+ * The destination string may have NULLs.
  *
  * @param content
  *   The string to write as (does not stop at NULLS, they are ignored and not written).

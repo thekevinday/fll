@@ -202,7 +202,7 @@ extern "C" {
       } \
     }
 
-  #define f_macro_string_dynamics_resize(status, dynamics, new_length) \
+  #define f_macro_string_dynamics_t_resize(status, dynamics, new_length) \
     status = F_none; \
     if (new_length < dynamics.size) { \
       for (f_array_length_t _macro__i = dynamics.size - new_length; _macro__i < dynamics.size; _macro__i++) { \
@@ -221,7 +221,7 @@ extern "C" {
       if (dynamics.used > dynamics.size) dynamics.used = new_length; \
     }
 
-  #define f_macro_string_dynamics_adjust(status, dynamics, new_length) \
+  #define f_macro_string_dynamics_t_adjust(status, dynamics, new_length) \
     status = F_none; \
     if (new_length < dynamics.size) { \
       for (f_array_length_t _macro__i = dynamics.size - new_length; _macro__i < dynamics.size; _macro__i++) { \

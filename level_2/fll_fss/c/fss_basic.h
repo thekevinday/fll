@@ -61,7 +61,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_basic_object_read().
  */
 #ifndef _di_fll_fss_basic_read_
-  extern f_return_status fll_fss_basic_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quoteds_t *quoted_objects);
+  extern f_return_status fll_fss_basic_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *quoted_objects);
 #endif // _di_fll_fss_basic_read_
 
 /**
@@ -69,10 +69,13 @@ extern "C" {
  *
  * @param object
  *   A string representing the object.
- * @param contents
- *   An array of strings representing multiple content to write.
- * @param buffer
- *   The buffer to write to.
+ * @param content
+ *   A string representing the content.
+ * @param quote
+ *   If 0, then double quotes are auto-inserted, when required.
+ *   Otherwise, this is the type of quote to wrap the object in when writing.
+ * @param destination
+ *   The buffer where the content is written to.
  *
  * @return
  *   F_none on success.
@@ -90,7 +93,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
 #ifndef _di_fll_fss_basic_write_
-  extern f_return_status fll_fss_basic_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer);
+  extern f_return_status fll_fss_basic_write(const f_string_static_t object, const f_string_static_t content, const f_fss_quote_t quote, f_string_dynamic_t *destination);
 #endif // _di_fll_fss_basic_write_
 
 #ifdef __cplusplus

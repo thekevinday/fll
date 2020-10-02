@@ -134,7 +134,7 @@ extern "C" {
 #endif // _di_fll_fss_basic_list_read_
 
 #ifndef _di_fll_fss_basic_list_write_
-  f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quoted_t quoted, f_string_dynamic_t *buffer) {
+  f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quote_t quoted, f_string_dynamic_t *buffer) {
     #ifndef _di_level_2_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (contents.used > contents.size) return F_status_set_error(F_parameter);
@@ -166,7 +166,7 @@ extern "C" {
       }
       else {
         if (buffer->used == buffer->size) {
-          status = fl_string_dynamic_size_increase(f_fss_default_allocation_step_string, buffer);
+          status = fl_string_dynamic_size_increase(f_fss_default_allocation_step, buffer);
           if (F_status_is_error(status)) return status;
         }
 

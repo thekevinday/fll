@@ -191,18 +191,18 @@ extern "C" {
       }
     }
 
-    f_fss_quoted_t quoted = f_fss_delimit_quote_double;
+    f_fss_quote_t quote = f_fss_delimit_quote_double;
 
     if (F_status_is_error_not(status)) {
       if (data->parameters[fss_extended_write_parameter_double].result == f_console_result_found) {
         if (data->parameters[fss_extended_write_parameter_single].result == f_console_result_found) {
           if (data->parameters[fss_extended_write_parameter_double].location < data->parameters[fss_extended_write_parameter_single].location) {
-            quoted = f_fss_delimit_quote_single;
+            quote = f_fss_delimit_quote_single;
           }
         }
       }
       else if (data->parameters[fss_extended_write_parameter_single].result == f_console_result_found) {
-        quoted = f_fss_delimit_quote_single;
+        quote = f_fss_delimit_quote_single;
       }
     }
 
@@ -294,7 +294,7 @@ extern "C" {
               }
             }
 
-            status = fss_extended_write_process(*data, output, object, content, quoted, &buffer);
+            status = fss_extended_write_process(*data, output, object, content, quote, &buffer);
             if (F_status_is_error(status)) break;
 
             fprintf(output.stream, "%c", f_string_eol[0]);
@@ -376,7 +376,7 @@ extern "C" {
                 }
               }
 
-              status = fss_extended_write_process(*data, output, object, content, quoted, &buffer);
+              status = fss_extended_write_process(*data, output, object, content, quote, &buffer);
               if (F_status_is_error(status)) break;
 
               fprintf(output.stream, "%c", f_string_eol[0]);
@@ -430,7 +430,7 @@ extern "C" {
               object.used = strnlen(object.string, f_console_length_size);
               object.size = object.used;
 
-              status = fss_extended_write_process(*data, output, object, content, quoted, &buffer);
+              status = fss_extended_write_process(*data, output, object, content, quote, &buffer);
               if (F_status_is_error(status)) break;
 
               fprintf(output.stream, "%c", f_string_eol[0]);
@@ -445,7 +445,7 @@ extern "C" {
               content.used = strnlen(content.string, f_console_length_size);
               content.size = content.used;
 
-              status = fss_extended_write_process(*data, output, object, content, quoted, &buffer);
+              status = fss_extended_write_process(*data, output, object, content, quote, &buffer);
               if (F_status_is_error(status)) break;
 
               fprintf(output.stream, "%c", f_string_eol[0]);
@@ -463,7 +463,7 @@ extern "C" {
             content.used = strnlen(content.string, f_console_length_size);
             content.size = content.used;
 
-            status = fss_extended_write_process(*data, output, object, content, quoted, &buffer);
+            status = fss_extended_write_process(*data, output, object, content, quote, &buffer);
             if (F_status_is_error(status)) break;
 
             fprintf(output.stream, "%c", f_string_eol[0]);

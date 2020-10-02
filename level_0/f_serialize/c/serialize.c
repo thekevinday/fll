@@ -50,7 +50,7 @@ extern "C" {
       width = f_macro_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter || i + 1 >= serialize.used) {
-        f_macro_memory_structure_macro_increment(status, (*strings), 1, f_serialize_default_allocation_step, f_macro_string_dynamics_resize, F_buffer_too_large);
+        f_macro_memory_structure_macro_increment(status, (*strings), 1, f_serialize_default_allocation_step, f_macro_string_dynamics_t_resize, F_buffer_too_large);
         if (F_status_is_error(status)) return status;
 
         if (start == i) {

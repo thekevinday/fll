@@ -696,7 +696,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
 
                 status = F_none;
                 if (arguments.used + 2 > arguments.size) {
-                  f_macro_string_dynamics_resize(status, arguments, arguments.size + 2);
+                  f_macro_string_dynamics_t_resize(status, arguments, arguments.size + 2);
                 }
 
                 if (F_status_is_error(status)) {
@@ -968,7 +968,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserv
 
     if (new_chain) {
       if (data->chains.used == data->chains.size) {
-        f_macro_string_dynamics_resize(status, data->chains, data->chains.used + firewall_default_allocation_step);
+        f_macro_string_dynamics_t_resize(status, data->chains, data->chains.used + firewall_default_allocation_step);
 
         if (F_status_is_error(status)) {
           f_macro_string_dynamics_t_delete_simple(arguments);

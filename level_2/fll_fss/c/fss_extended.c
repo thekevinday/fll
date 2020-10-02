@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_extended_read_
-  f_return_status fll_fss_extended_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quoteds_t *quoted_objects, f_fss_quotedss_t *quoted_contents) {
+  f_return_status fll_fss_extended_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *quoted_objects, f_fss_quotess_t *quoted_contents) {
     #ifndef _di_level_2_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
@@ -19,8 +19,8 @@ extern "C" {
 
     bool found_data = F_false;
 
-    f_fss_quoted_t *quoted_object = 0;
-    f_fss_quoteds_t *quoted_content = 0;
+    f_fss_quote_t *quoted_object = 0;
+    f_fss_quotes_t *quoted_content = 0;
 
     do {
       if (objects->used == objects->size) {
@@ -31,12 +31,12 @@ extern "C" {
         if (F_status_is_error(status2)) return status2;
 
         if (quoted_objects) {
-          f_macro_fss_quoteds_t_resize(status2, (*quoted_objects), quoted_objects->used + f_fss_default_allocation_step);
+          f_macro_fss_quotes_t_resize(status2, (*quoted_objects), quoted_objects->used + f_fss_default_allocation_step);
           if (F_status_is_error(status2)) return status2;
         }
 
         if (quoted_contents) {
-          f_macro_fss_quotedss_t_resize(status2, (*quoted_contents), quoted_contents->used + f_fss_default_allocation_step);
+          f_macro_fss_quotess_t_resize(status2, (*quoted_contents), quoted_contents->used + f_fss_default_allocation_step);
           if (F_status_is_error(status2)) return status2;
         }
       }
@@ -191,38 +191,38 @@ extern "C" {
 #endif // _di_fll_fss_extended_read_
 
 #ifndef _di_fll_fss_extended_write_
-  f_return_status fll_fss_extended_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer) {
+  f_return_status fll_fss_extended_write(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quote_t quote, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
-      if (contents.used > contents.size) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = 0;
-    f_array_length_t current = 0;
     f_string_range_t range = f_macro_string_range_t_initialize(object.used);
 
-    status = fl_fss_extended_object_write(object, 0, &range, buffer);
+    status = fl_fss_extended_object_write(object, quote, f_fss_complete_full, &range, destination);
 
     if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
       return status;
     }
 
     if (status == F_none || status == F_none_stop || status == F_none_eos || status == F_none_eol) {
-      while (current < contents.used) {
+      uint8_t complete = f_fss_complete_next;
 
-        range.start = 0;
-        range.stop = contents.array[current].used - 1;
-        status = fl_fss_extended_content_write(contents.array[current], 0, &range, buffer);
+      for (f_array_length_t i = 0; i < contents.used; i++) {
 
-        if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
-          return status;
+        if (i + 1 == contents.used) {
+          complete = f_fss_complete_end;
         }
 
-        current++;
-      } // while
+        range.start = 0;
+        range.stop = contents.array[i].used - 1;
 
-      // extended always ends each call with a space, and so the last position should be replaced with an eol.
-      buffer->string[buffer->used - 1] = f_string_eol[0];
+        status = fl_fss_extended_content_write(contents.array[i], quote, complete, &range, destination);
+
+        if (F_status_is_error(status)) {
+          return status;
+        }
+      } // for
     }
 
     return F_none;

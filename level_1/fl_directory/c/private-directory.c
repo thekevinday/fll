@@ -521,7 +521,7 @@ extern "C" {
       }
 
       if (names->used == names->size) {
-        f_macro_string_dynamics_resize(status, (*names), names->size + f_directory_default_allocation_step);
+        f_macro_string_dynamics_t_resize(status, (*names), names->size + f_directory_default_allocation_step);
         if (F_status_is_error(status)) break;
       }
 
@@ -538,7 +538,7 @@ extern "C" {
         if (total > names->array[names->used].size) {
           f_status_t status = F_none;
 
-          f_macro_string_dynamics_resize(status, (*names), total);
+          f_macro_string_dynamics_t_resize(status, (*names), total);
           if (F_status_is_error(status)) break;
         }
 

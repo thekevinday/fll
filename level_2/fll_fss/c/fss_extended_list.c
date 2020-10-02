@@ -145,7 +145,7 @@ extern "C" {
       }
       else {
         if (buffer->used == buffer->size) {
-          status = fl_string_dynamic_size_increase(f_fss_default_allocation_step_string, buffer);
+          status = fl_string_dynamic_size_increase(f_fss_default_allocation_step, buffer);
           if (F_status_is_error(status)) return status;
         }
 

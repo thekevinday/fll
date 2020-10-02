@@ -220,7 +220,7 @@ extern "C" {
           } // for
         }
 
-        f_macro_string_dynamics_resize(status, parameters, 7);
+        f_macro_string_dynamics_t_resize(status, parameters, 7);
 
         if (F_status_is_error(status)) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);

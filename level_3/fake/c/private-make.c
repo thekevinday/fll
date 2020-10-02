@@ -281,7 +281,7 @@ extern "C" {
 
           content_range = list_contents.array[i].array[0];
 
-          *status = fll_fss_extended_read(&data_make->buffer, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotedss);
+          *status = fll_fss_extended_read(&data_make->buffer, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotess);
 
           if (F_status_is_error(*status)) {
             fake_print_error_fss(data, F_status_set_fine(*status), "fll_fss_extended_read", data.file_data_build_fakefile.string, content_range, F_true);
@@ -1136,7 +1136,7 @@ extern "C" {
 #endif // _di_fake_make_operate_
 
 #ifndef _di_fake_make_operate_expand_
-  void fake_make_operate_expand(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_fss_content_t content, const f_fss_quoteds_t quoteds, fake_make_data_t *data_make, f_string_dynamics_t *arguments, f_status_t *status) {
+  void fake_make_operate_expand(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_fss_content_t content, const f_fss_quotes_t quotes, fake_make_data_t *data_make, f_string_dynamics_t *arguments, f_status_t *status) {
     if (F_status_is_error(*status)) return;
     if (!content.used) return;
 
@@ -1370,7 +1370,7 @@ extern "C" {
                   unmatched = F_false;
 
                   if (parameter->array[k].value.used) {
-                    if (quoteds.array[i]) {
+                    if (quotes.array[i]) {
                       for (l = 0; l < parameter->array[k].value.used; l++) {
 
                         if (l > 0) {
@@ -1433,7 +1433,7 @@ extern "C" {
             if (F_status_is_error(*status)) break;
 
             if (unmatched) {
-              *status = fake_make_operate_expand_build(data, quoteds.array[i], iki_content.array[j], data_make, arguments);
+              *status = fake_make_operate_expand_build(data, quotes.array[i], iki_content.array[j], data_make, arguments);
 
               if (F_status_is_error(*status)) {
                 fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_build", F_true);
@@ -1442,7 +1442,7 @@ extern "C" {
             }
           }
           else if (define_is && data_make->setting_make.load_build) {
-            *status = fake_make_operate_expand_environment(data, quoteds.array[i], iki_content.array[j], data_make, arguments);
+            *status = fake_make_operate_expand_environment(data, quotes.array[i], iki_content.array[j], data_make, arguments);
 
             if (F_status_is_error(*status)) {
               fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_environment", F_true);
@@ -1515,7 +1515,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_
 
 #ifndef _di_fake_make_operate_expand_build_
-  f_return_status fake_make_operate_expand_build(const fake_data_t data, const f_fss_quoted_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) {
+  f_return_status fake_make_operate_expand_build(const fake_data_t data, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) {
     f_status_t status = F_none;
     f_string_dynamic_t value = f_string_dynamic_t_initialize;
 
@@ -1796,7 +1796,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_build_
 
 #ifndef _di_fake_make_operate_expand_environment_
-  f_return_status fake_make_operate_expand_environment(const fake_data_t data, const f_fss_quoted_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) {
+  f_return_status fake_make_operate_expand_environment(const fake_data_t data, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) {
     f_status_t status = F_none;
     f_string_dynamic_t value = f_string_dynamic_t_initialize;
 
@@ -2052,7 +2052,7 @@ extern "C" {
       if (F_status_is_error_not(*status)) {
         operations[i] = operation;
 
-        fake_make_operate_expand(data, section->name, operation, *operation_name, section->contents.array[i], section->quotedss.array[i], data_make, &arguments[i], status);
+        fake_make_operate_expand(data, section->name, operation, *operation_name, section->contents.array[i], section->quotess.array[i], data_make, &arguments[i], status);
       }
 
       if (operation_if == fake_make_operation_if_type_true_next) {
@@ -3608,7 +3608,7 @@ extern "C" {
             return;
           }
           else if (F_status_is_error(*status)) {
-            fll_error_print(data_make->error, F_status_set_fine(*status), "f_macro_string_dynamics_resize", F_true);
+            fll_error_print(data_make->error, F_status_set_fine(*status), "f_macro_string_dynamics_t_resize", F_true);
             return;
           }
         }
@@ -3740,14 +3740,14 @@ extern "C" {
 
       // pre-allocate name and value if necessary.
       if (data_make->environment.names.used + 1 > data_make->environment.names.size) {
-        f_macro_string_dynamics_resize(status, data_make->environment.names, data_make->environment.names.size + f_memory_default_allocation_step);
+        f_macro_string_dynamics_t_resize(status, data_make->environment.names, data_make->environment.names.size + f_memory_default_allocation_step);
 
         if (F_status_is_error_not(status)) {
-          f_macro_string_dynamics_resize(status, data_make->environment.values, data_make->environment.values.size + f_memory_default_allocation_step);
+          f_macro_string_dynamics_t_resize(status, data_make->environment.values, data_make->environment.values.size + f_memory_default_allocation_step);
         }
 
         if (F_status_is_error(status)) {
-          fll_error_print(data_make->error, F_status_set_fine(status), "f_macro_string_dynamics_resize", F_true);
+          fll_error_print(data_make->error, F_status_set_fine(status), "f_macro_string_dynamics_t_resize", F_true);
           return status;
         }
       }

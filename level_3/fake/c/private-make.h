@@ -568,7 +568,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_
-  extern void fake_make_operate_expand(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_fss_content_t content, const f_fss_quoteds_t quoteds, fake_make_data_t *data_make, f_string_dynamics_t *arguments, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_expand(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_fss_content_t content, const f_fss_quotes_t quoteds, fake_make_data_t *data_make, f_string_dynamics_t *arguments, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_expand_
 
 /**
@@ -592,7 +592,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_environment_
-  extern f_return_status fake_make_operate_expand_environment(const fake_data_t data, const f_fss_quoted_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_operate_expand_environment(const fake_data_t data, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_expand_environment_
 
 /**
@@ -616,7 +616,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_build_
-  extern f_return_status fake_make_operate_expand_build(const fake_data_t data, const f_fss_quoted_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_operate_expand_build(const fake_data_t data, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_expand_build_
 
 /**

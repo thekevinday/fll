@@ -20,25 +20,28 @@ extern "C" {
  * FSS-specific types.
  */
 #ifndef _di_f_fss_types_t_
-  #define f_fss_comment             '#'
-  #define f_fss_space               ' '
-  #define f_fss_space_holder        '_'
-  #define f_fss_basic_open          ' '
-  #define f_fss_basic_close         '\n'
-  #define f_fss_extended_open       ' '
-  #define f_fss_extended_close      '\n'
-  #define f_fss_list_terminator     '\n'
-  #define f_fss_basic_list_open     ':'
-  #define f_fss_basic_list_close    '\0'
-  #define f_fss_extended_list_open  '{'
-  #define f_fss_extended_list_close '}' // also requires '\n'.
-  #define f_fss_type_header_open    '#'
-  #define f_fss_type_header_part1   ' '
-  #define f_fss_type_header_part2   'f'
-  #define f_fss_type_header_part3   's'
-  #define f_fss_type_header_part4   's'
-  #define f_fss_type_header_part5   '-'
-  #define f_fss_type_header_close   '\n'
+  #define f_fss_comment                 '#'
+  #define f_fss_eol                     f_string_eol[0]
+  #define f_fss_space                   ' '
+  #define f_fss_space_holder            '_'
+  #define f_fss_basic_open              ' '
+  #define f_fss_basic_close             f_string_eol[0]
+  #define f_fss_extended_open           ' '
+  #define f_fss_extended_next           ' '
+  #define f_fss_extended_close          f_string_eol[0]
+  #define f_fss_list_terminator         f_string_eol[0]
+  #define f_fss_basic_list_open         ':'
+  #define f_fss_basic_list_close        f_string_eol[0]
+  #define f_fss_extended_list_open      '{'
+  #define f_fss_extended_list_close     '}'
+  #define f_fss_extended_list_close_end f_string_eol[0]
+  #define f_fss_type_header_open        '#'
+  #define f_fss_type_header_part1       ' '
+  #define f_fss_type_header_part2       'f'
+  #define f_fss_type_header_part3       's'
+  #define f_fss_type_header_part4       's'
+  #define f_fss_type_header_part5       '-'
+  #define f_fss_type_header_close       f_string_eol[0]
 
   typedef unsigned long f_fss_id_t;
 #endif // _di_f_fss_types_t_
@@ -75,6 +78,27 @@ extern "C" {
 #endif // _di_f_fss_codes_
 
 /**
+ * Codes for FSS completeness.
+ *
+ * Only "next" and "end" are only meaningful for a Content and will be treated as "none" for an Object.
+ *
+ * none:    disable completeness.
+ * partial: complete, but do not add terminating EOL, where applicable.
+ * full:    complete and add terminating EOL, where applicable.
+ * next:    complete as if this is a piece of a set (such as FSS-0001 where there are multiple space separated content).
+ * end:     complete as if this is the final piece of a set, therefore adding an EOL.
+ */
+#ifndef _di_f_fss_complete_
+  enum {
+    f_fss_complete_none = 1,
+    f_fss_complete_partial,
+    f_fss_complete_full,
+    f_fss_complete_next,
+    f_fss_complete_end,
+  };
+#endif // _di_f_fss_complete_
+
+/**
  * Max size of a FSS header.
  *
  * The standard FSS character header is: "# fss-0000\n\0", which is 10 characters + newline + EOS = 12.
@@ -92,10 +116,8 @@ extern "C" {
  * Default allocation steps.
  */
 #ifndef _di_f_fss_default_allocation_step_
+  // recommended to be set to at least 4 to be UTF-8 friendlier.
   #define f_fss_default_allocation_step f_memory_default_allocation_step
-
-  // set to 4 to be UTF-8 friendlier.
-  #define f_fss_default_allocation_step_string 4
 #endif // _di_f_fss_default_allocation_step_
 
 /**

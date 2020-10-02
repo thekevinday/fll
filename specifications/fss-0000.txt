@@ -1,22 +1,24 @@
 # fss-0002
 
 Featureless Settings Specification: 0000 - Basic:
-  Each Object starts at the beginning of a line and whitespace to the left of the Object is not treated as an object.
+  Each Object starts at the beginning of a line and whitespace to the left of the Object is not treated as part of the object.
   Whitespace separates an Object from the Content.
   An Object may be followed by a newline, in which case means that the Object has no Content.
 
   Content exists on the same line as the Object.
   Content consists of everything following the first non-whitespace character until the newline.
   Content includes trailing whitespace before newline is reached.
-  Content does not include the leading whitespace.
+  Content does not include any of the leading whitespace.
   No delimits are supported in the content.
+
+  If only printing whitespace follows a valid Object, that Object is considered to have no Content.
 
   Key\:
     \s = whitespace, except newline.
     \b = either whitespace or printable, except newline.
-    \q = non-whitespace or quoteded whitespace, no whitespace outside of quotes.
+    \q = non-whitespace or quoted whitespace with no whitespace outside of the quotes.
     \n = newline.
-    * = 0 or more occurrences.
+    * = zero or more occurrences.
     + = one or more occurrences.
 
   Structure\:

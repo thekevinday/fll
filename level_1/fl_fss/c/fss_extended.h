@@ -74,7 +74,7 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_object_read_
-  extern f_return_status fl_fss_extended_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quoted_t *quoted);
+  extern f_return_status fl_fss_extended_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted);
 #endif // _di_fl_fss_extended_object_read_
 
 /**
@@ -93,7 +93,7 @@ extern "C" {
  *   A start location past the stop location or buffer used means that the entire range was processed.
  * @param found
  *   A set of all locations where a valid content was found.
- * @param quoteds
+ * @param quotes
  *   An array of quotes designating whether or not content is quoted and what quote is in use.
  *   Set pointer address to 0 to not use.
  *
@@ -120,7 +120,7 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_content_read_
-  extern f_return_status fl_fss_extended_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_quoteds_t *quoteds);
+  extern f_return_status fl_fss_extended_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_quotes_t *quotes);
 #endif // _di_fl_fss_extended_content_read_
 
 /**
@@ -130,11 +130,17 @@ extern "C" {
  * Anything within this range will be escaped as necessary.
  * This will stop if EOL is reached.
  *
+ * The destination string may have NULLs.
+ *
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
- * @param quoted
+ * @param quote
  *   If 0, then double quotes are auto-inserted, when required.
  *   Otherwise, this is the type of quote to wrap the object in when writing.
+ * @param complete
+ *   If f_fss_complete_none, then only the object name is written.
+ *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this object, except for the final newline.
+ *   If f_fss_complete_full, this will write any appropriate open and close aspects of this object, including the final newline.
  * @param range
  *   The start/stop location within the object string to write as an object.
  * @param destination
@@ -143,18 +149,16 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eos on success after reaching the end of the buffer.
+ *   F_none_stop on success after reaching the range stop.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
- *   F_none_stop on success after reaching stopping point .
- *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *
- *   Errors (with error bit) from: f_utf_buffer_increment().
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
  */
 #ifndef _di_fl_fss_extended_object_write_
-  extern f_return_status fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_return_status fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_extended_object_write_
 
 /**
@@ -163,11 +167,17 @@ extern "C" {
  * This will write the given string range as a valid content.
  * Anything within this range will be escaped as necessary.
  *
+ * The destination string may have NULLs.
+ *
  * @param content
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
- * @param quoted
+ * @param quote
  *   If 0, then double quotes are auto-inserted, when required.
  *   Otherwise, this is the type of quote to wrap the object in when writing.
+ * @param complete
+ *   If f_fss_complete_none, then only the object name is written.
+ *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this object, except for the final newline.
+ *   If f_fss_complete_full, this will write any appropriate open and close aspects of this object, including the final newline.
  * @param range
  *   The start/stop location within the content string to write as an content.
  * @param destination
@@ -176,18 +186,16 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eos on success after reaching the end of the buffer.
+ *   F_none_stop on success after reaching the range stop.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
- *   F_none_stop on success after reaching stopping point .
- *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *
- *   Errors (with error bit) from: f_utf_buffer_increment().
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
  */
 #ifndef _di_fl_fss_extended_content_write_
-  extern f_return_status fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quoted_t quoted, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_return_status fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quote_t quote, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_extended_content_write_
 
 #ifdef __cplusplus

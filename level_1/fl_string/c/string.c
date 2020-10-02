@@ -1158,7 +1158,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (strings->size - length > 0) {
-      f_macro_string_dynamics_resize(status, (*strings), strings->size - length);
+      f_macro_string_dynamics_t_resize(status, (*strings), strings->size - length);
     }
     else if (strings->size - length <= 0) {
       f_macro_string_dynamics_t_delete(status, (*strings));
@@ -1182,11 +1182,11 @@ extern "C" {
         return F_status_set_error(F_string_too_large);
       }
 
-      f_macro_string_dynamics_resize(status, (*strings), f_array_length_t_size);
+      f_macro_string_dynamics_t_resize(status, (*strings), f_array_length_t_size);
       return F_string_too_large;
     }
 
-    f_macro_string_dynamics_resize(status, (*strings), strings->size + length);
+    f_macro_string_dynamics_t_resize(status, (*strings), strings->size + length);
     return status;
   }
 #endif // _di_fl_string_dynamics_size_increase_
