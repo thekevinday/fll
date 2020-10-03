@@ -287,7 +287,7 @@ extern "C" {
               if (found_newline) {
                 fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
-                found->array[found->used].stop = last_newline;
+                found->array[found->used].stop = last_newline - 1;
                 range->start = last_newline + 1;
                 found->used++;
 
@@ -355,7 +355,7 @@ extern "C" {
           if (found_newline) {
             fl_macro_fss_apply_delimit_placeholders((*buffer), delimits);
 
-            found->array[found->used].stop = last_newline;
+            found->array[found->used].stop = last_newline - 1;
             range->start = last_newline + 1;
             found->used++;
 
