@@ -241,7 +241,7 @@ extern "C" {
     }
 
     {
-      f_string_length_t select = 0;
+      f_number_unsigned_t select = 0;
 
       if (data->parameters[fss_extended_list_read_parameter_select].result == f_console_result_additional) {
         const f_string_length_t index = data->parameters[fss_extended_list_read_parameter_select].additional.array[data->parameters[fss_extended_list_read_parameter_select].additional.used - 1];
@@ -261,15 +261,13 @@ extern "C" {
       }
     }
 
-    f_string_length_t line = 0;
+    f_array_length_t line = 0;
 
     if (data->parameters[fss_extended_list_read_parameter_line].result == f_console_result_additional) {
-      const f_string_length_t index = data->parameters[fss_extended_list_read_parameter_line].additional.array[data->parameters[fss_extended_list_read_parameter_line].additional.used - 1];
+      const f_array_length_t index = data->parameters[fss_extended_list_read_parameter_line].additional.array[data->parameters[fss_extended_list_read_parameter_line].additional.used - 1];
       const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
-      f_number_unsigned_t number = 0;
-
-      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &line, range);
 
       if (F_status_is_error(status)) {
         fll_error_parameter_integer_print(data->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_read_long_line, arguments.argv[index]);
@@ -288,11 +286,14 @@ extern "C" {
 #endif // _di_fss_extended_list_read_main_process_file_
 
 #ifndef _di_fss_extended_list_read_main_process_for_depth_
-  f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_string_length_t line) {
+  f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line) {
     f_status_t status = F_none;
 
     f_fss_items_t *items = &data->nest.depth[depth_setting.depth];
     bool names[items->used];
+
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
 
     if (depth_setting.index_name > 0) {
       memset(names, 0, sizeof(bool) * items->used);
@@ -301,14 +302,14 @@ extern "C" {
       value_range.stop = depth_setting.value_name.used - 1;
 
       if (data->parameters[fss_extended_list_read_parameter_trim].result == f_console_result_found) {
-        for (f_string_length_t i = 0; i < items->used; i++) {
+        for (i = 0; i < items->used; i++) {
           if (fl_string_dynamic_partial_compare_trim(data->buffer, depth_setting.value_name, items->array[i].object, value_range) == F_equal_to) {
             names[i] = 1;
           }
         } // for
       }
       else {
-        for (f_string_length_t i = 0; i < items->used; i++) {
+        for (i = 0; i < items->used; i++) {
           if (fl_string_dynamic_partial_compare(data->buffer, depth_setting.value_name, items->array[i].object, value_range) == F_equal_to) {
             names[i] = 1;
           }
@@ -339,9 +340,9 @@ extern "C" {
           return F_none;
         }
         else if (depth_setting.index_name > 0) {
-          f_string_length_t total = 0;
+          f_array_length_t total = 0;
 
-          for (f_string_length_t i = 0; i < items->used; i++) {
+          for (i = 0; i < items->used; i++) {
             if (!names[i]) continue;
 
             total++;
@@ -366,17 +367,39 @@ extern "C" {
       if (depth_setting.index_at > 0) {
         if (depth_setting.value_at < items->used && names[depth_setting.value_at]) {
           print_object(f_type_output, data->buffer, items->array[depth_setting.value_at].object);
-          fprintf(f_type_output, "%c", f_string_eol[0]);
+
+          if (data->parameters[fss_extended_list_read_parameter_content].result == f_console_result_found) {
+            if (items->array[depth_setting.value_at].content.used) {
+              fprintf(f_type_output, "%c", f_fss_eol);
+              f_print_dynamic_partial(f_type_output, data->buffer, items->array[depth_setting.value_at].content.array[0]);
+            }
+            else {
+              fprintf(f_type_output, "%c", f_fss_eol);
+            }
+          }
+
+          fprintf(f_type_output, "%c", f_fss_eol);
         }
 
         return F_none;
       }
 
-      for (f_array_length_t i = 0; i < items->used; i++) {
+      for (i = 0; i < items->used; i++) {
 
         if (names[i]) {
           print_object(f_type_output, data->buffer, items->array[i].object);
-          fprintf(f_type_output, "%c", f_string_eol[0]);
+
+          if (data->parameters[fss_extended_list_read_parameter_content].result == f_console_result_found) {
+            if (items->array[i].content.used) {
+              fprintf(f_type_output, "%c", f_fss_eol);
+              f_print_dynamic_partial(f_type_output, data->buffer, items->array[i].content.array[0]);
+            }
+            else {
+              fprintf(f_type_output, "%c", f_fss_eol);
+            }
+          }
+
+          fprintf(f_type_output, "%c", f_fss_eol);
         }
       } // for
 
@@ -393,7 +416,6 @@ extern "C" {
       }
 
       f_array_length_t at = 0;
-      f_array_length_t i = 0;
 
       for (; i < items->used; i++) {
 
@@ -404,9 +426,9 @@ extern "C" {
                 fprintf(f_type_output, "0%c", f_string_eol[0]);
               }
               else {
-                f_string_length_t total = 1;
+                f_array_length_t total = 1;
 
-                for (f_string_length_t j = items->array[i].content.array[0].start; j <= items->array[i].content.array[0].stop; j++) {
+                for (j = items->array[i].content.array[0].start; j <= items->array[i].content.array[0].stop; j++) {
                   if (!data->buffer.string[j]) continue;
 
                   if (data->buffer.string[j] == f_string_eol[0]) {
@@ -427,7 +449,7 @@ extern "C" {
                 }
               }
               else {
-                f_string_length_t i = items->array[i].content.array[0].start;
+                i = items->array[i].content.array[0].start;
 
                 if (!line) {
                   for (; i <= items->array[i].content.array[0].stop; i++) {
@@ -442,7 +464,7 @@ extern "C" {
                   } // for
                 }
                 else {
-                  f_string_length_t line_current = 0;
+                  f_array_length_t line_current = 0;
 
                   for (; i <= items->array[i].content.array[0].stop; i++) {
                     if (!data->buffer.string[i]) continue;
@@ -492,9 +514,9 @@ extern "C" {
     }
 
     if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
-      f_string_length_t total = 0;
+      f_array_length_t total = 0;
 
-      for (f_string_length_t i = 0; i < items->used; i++) {
+      for (i = 0; i < items->used; i++) {
         if (!names[i]) continue;
 
         if (!items->array[i].content.used) {
@@ -505,7 +527,7 @@ extern "C" {
           continue;
         }
 
-        for (f_string_length_t j = items->array[i].content.array[0].start; j <= items->array[i].content.array[0].stop; j++) {
+        for (j = items->array[i].content.array[0].start; j <= items->array[i].content.array[0].stop; j++) {
           if (!data->buffer.string[j]) continue;
 
           if (data->buffer.string[j] == f_string_eol[0]) {
@@ -519,9 +541,7 @@ extern "C" {
     }
 
     if (data->parameters[fss_extended_list_read_parameter_line].result == f_console_result_additional) {
-      f_string_length_t line_current = 0;
-      f_string_length_t i = 0;
-      f_string_length_t j = 0;
+      f_array_length_t line_current = 0;
 
       for (; i < items->used; i++) {
         if (!names[i]) continue;
@@ -575,7 +595,7 @@ extern "C" {
       return F_none;
     }
 
-    for (f_string_length_t i = 0; i < items->used; i++) {
+    for (i = 0; i < items->used; i++) {
       if (!names[i]) continue;
 
       if (!items->array[i].content.used) {

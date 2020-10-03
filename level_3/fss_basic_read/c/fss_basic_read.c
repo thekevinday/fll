@@ -23,11 +23,12 @@ extern "C" {
     printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(file, context, fss_basic_read_short_at, fss_basic_read_long_at, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Select object at this numeric index.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_content, fss_basic_read_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, " Print the content (default).");
     fll_program_print_help_option(file, context, fss_basic_read_short_depth, fss_basic_read_long_depth, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Select object at this numeric depth.");
     fll_program_print_help_option(file, context, fss_basic_read_short_empty, fss_basic_read_long_empty, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Include empty content when processing.");
     fll_program_print_help_option(file, context, fss_basic_read_short_line, fss_basic_read_long_line, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print only the content at the given line.");
     fll_program_print_help_option(file, context, fss_basic_read_short_name, fss_basic_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Select object with this name.");
-    fll_program_print_help_option(file, context, fss_basic_read_short_object, fss_basic_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the object instead of the content.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_object, fss_basic_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the object.");
     fll_program_print_help_option(file, context, fss_basic_read_short_select, fss_basic_read_long_select, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Select sub-content at this index.");
     fll_program_print_help_option(file, context, fss_basic_read_short_total, fss_basic_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print the total number of lines.");
     fll_program_print_help_option(file, context, fss_basic_read_short_trim, fss_basic_read_long_trim, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Trim object names on select or print.");
@@ -119,6 +120,16 @@ extern "C" {
     printf("  The parameter ");
     fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_trim);
     printf(" will remove leading and trailing whitespaces when selecting objects or when printing objects.%c", f_string_eol[0]);
+
+    printf("%c", f_string_eol[0]);
+
+    printf("  When specifying both the ");
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_object);
+    printf(" parameter and the ");
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_content);
+    printf(" parameter, the entire object and content are printed, including the formatting.%c", f_string_eol[0]);
+    printf("  Both the object and content printed are already escaped.%c", f_string_eol[0]);
+    printf("  Both the object and content are separated by a space.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
@@ -259,6 +270,21 @@ extern "C" {
 
           fss_basic_read_delete_data(data);
           return F_status_set_error(F_parameter);
+        }
+
+        if (data->parameters[fss_basic_read_parameter_content].result == f_console_result_found) {
+          if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
+            fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify both the '", fll_error_print_error);
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_object);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' and the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_content);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_total);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+
+            fss_basic_read_delete_data(data);
+            return F_status_set_error(F_parameter);
+          }
         }
       }
 

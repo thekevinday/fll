@@ -62,25 +62,27 @@ extern "C" {
 #endif // _di_fss_extended_read_name_
 
 #ifndef _di_fss_extended_read_defines_
-  #define fss_extended_read_short_at     "a"
-  #define fss_extended_read_short_depth  "d"
-  #define fss_extended_read_short_empty  "e"
-  #define fss_extended_read_short_line   "l"
-  #define fss_extended_read_short_name   "n"
-  #define fss_extended_read_short_object "o"
-  #define fss_extended_read_short_select "s"
-  #define fss_extended_read_short_total  "t"
-  #define fss_extended_read_short_trim   "T"
+  #define fss_extended_read_short_at      "a"
+  #define fss_extended_read_short_content "c"
+  #define fss_extended_read_short_depth   "d"
+  #define fss_extended_read_short_empty   "e"
+  #define fss_extended_read_short_line    "l"
+  #define fss_extended_read_short_name    "n"
+  #define fss_extended_read_short_object  "o"
+  #define fss_extended_read_short_select  "s"
+  #define fss_extended_read_short_total   "t"
+  #define fss_extended_read_short_trim    "T"
 
-  #define fss_extended_read_long_at     "at"
-  #define fss_extended_read_long_depth  "depth"
-  #define fss_extended_read_long_empty  "empty"
-  #define fss_extended_read_long_line   "line"
-  #define fss_extended_read_long_name   "name"
-  #define fss_extended_read_long_object "object"
-  #define fss_extended_read_long_select "select"
-  #define fss_extended_read_long_total  "total"
-  #define fss_extended_read_long_trim   "trim"
+  #define fss_extended_read_long_at      "at"
+  #define fss_extended_read_long_content "content"
+  #define fss_extended_read_long_depth   "depth"
+  #define fss_extended_read_long_empty   "empty"
+  #define fss_extended_read_long_line    "line"
+  #define fss_extended_read_long_name    "name"
+  #define fss_extended_read_long_object  "object"
+  #define fss_extended_read_long_select  "select"
+  #define fss_extended_read_long_total   "total"
+  #define fss_extended_read_long_trim    "trim"
 
   enum {
     fss_extended_read_parameter_help,
@@ -94,6 +96,7 @@ extern "C" {
     fss_extended_read_parameter_version,
 
     fss_extended_read_parameter_at,
+    fss_extended_read_parameter_content,
     fss_extended_read_parameter_depth,
     fss_extended_read_parameter_empty,
     fss_extended_read_parameter_line,
@@ -116,6 +119,7 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(fss_extended_read_short_at, fss_extended_read_long_at, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_read_short_content, fss_extended_read_long_content, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_read_short_depth, fss_extended_read_long_depth, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_read_short_empty, fss_extended_read_long_empty, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_read_short_line, fss_extended_read_long_line, 0, 1, f_console_type_normal), \
@@ -126,7 +130,7 @@ extern "C" {
       f_console_parameter_t_initialize(fss_extended_read_short_trim, fss_extended_read_long_trim, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_extended_read_total_parameters 18
+  #define fss_extended_read_total_parameters 19
 #endif // _di_fss_extended_read_defines_
 
 #ifndef _di_fss_extended_read_data_t_

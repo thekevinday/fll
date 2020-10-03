@@ -216,7 +216,7 @@ extern "C" {
  * @see fss_extended_list_read_main_process_file()
  */
 #ifndef _di_fss_extended_list_read_main_process_for_depth_
-  extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_string_length_t line) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_main_process_for_depth_
 
 #ifdef __cplusplus
