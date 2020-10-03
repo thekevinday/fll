@@ -106,24 +106,24 @@ extern "C" {
 
   #define fss_extended_list_read_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, F_false, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_at, fss_extended_list_read_long_at, 0, F_true, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_depth, fss_extended_list_read_long_depth, 0, F_true, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_empty, fss_extended_list_read_long_empty, 0, F_false, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_line, fss_extended_list_read_long_line, 0, F_true, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_name, fss_extended_list_read_long_name, 0, F_true, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_object, fss_extended_list_read_long_object, 0, F_false, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_select, fss_extended_list_read_long_select, 0, F_true, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_total, fss_extended_list_read_long_total, 0, F_false, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_trim, fss_extended_list_read_long_trim, 0, F_false, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_at, fss_extended_list_read_long_at, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_depth, fss_extended_list_read_long_depth, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_empty, fss_extended_list_read_long_empty, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_line, fss_extended_list_read_long_line, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_name, fss_extended_list_read_long_name, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_object, fss_extended_list_read_long_object, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_select, fss_extended_list_read_long_select, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_total, fss_extended_list_read_long_total, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_trim, fss_extended_list_read_long_trim, 0, 0, f_console_type_normal), \
     }
 
   #define fss_extended_list_read_total_parameters 18

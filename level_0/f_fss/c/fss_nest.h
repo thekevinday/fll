@@ -35,7 +35,7 @@ extern "C" {
     f_array_length_t parent;
   } f_fss_item_t;
 
-  #define f_fss_item_t_initialize { f_fss_object_t_initialize, f_fss_content_t_initialize, f_array_length_t_initialize }
+  #define f_fss_item_t_initialize { f_fss_object_t_initialize, f_fss_content_t_initialize, 0 }
 
   /**
    * Reset a fss item stucture to 0 (clear all values).

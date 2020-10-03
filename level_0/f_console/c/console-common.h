@@ -232,15 +232,15 @@ extern "C" {
     const uint8_t type;
 
     uint8_t result;
-    uint8_t total;
+    uint8_t total; // @todo locations.used could instead be used to represent the total.
 
-    f_string_length_t  location;
-    f_string_length_t  location_sub;
-    f_string_lengths_t locations;
-    f_string_lengths_t additional;
+    f_array_length_t  location;
+    f_string_length_t location_sub;
+    f_array_lengths_t locations;
+    f_array_lengths_t additional;
   } f_console_parameter_t;
 
-  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_string_lengths_t_initialize, f_string_lengths_t_initialize }
+  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
 
   #define f_macro_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, additional) { symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, additional }
 #endif // _di_f_console_parameter_t_

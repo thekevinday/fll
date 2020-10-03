@@ -297,8 +297,6 @@ extern "C" {
             status = fss_basic_list_write_process(*data, output, object, content, quoted, &buffer);
             if (F_status_is_error(status)) break;
 
-            fprintf(output.stream, "%c", f_string_eol[0]);
-
             // restore the range, positioned after the newline.
             range.start = range.stop + 2;
             range.stop = buffer.used - 1;
@@ -379,8 +377,6 @@ extern "C" {
               status = fss_basic_list_write_process(*data, output, object, content, quoted, &buffer);
               if (F_status_is_error(status)) break;
 
-              fprintf(output.stream, "%c", f_string_eol[0]);
-
               object_ended = F_false;
             }
             else {
@@ -432,8 +428,6 @@ extern "C" {
 
               status = fss_basic_list_write_process(*data, output, object, content, quoted, &buffer);
               if (F_status_is_error(status)) break;
-
-              fprintf(output.stream, "%c", f_string_eol[0]);
             } // for
           }
           else {
@@ -447,8 +441,6 @@ extern "C" {
 
               status = fss_basic_list_write_process(*data, output, object, content, quoted, &buffer);
               if (F_status_is_error(status)) break;
-
-              fprintf(output.stream, "%c", f_string_eol[0]);
             } // for
           }
         }
@@ -465,8 +457,6 @@ extern "C" {
 
             status = fss_basic_list_write_process(*data, output, object, content, quoted, &buffer);
             if (F_status_is_error(status)) break;
-
-            fprintf(output.stream, "%c", f_string_eol[0]);
           } // for
         }
 

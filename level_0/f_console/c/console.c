@@ -58,10 +58,13 @@ extern "C" {
     bool found = F_false;
 
     unsigned long location = 1; // Parameter 0 represents the program name so skip it.
+
     f_string_length_t sub_location = 0;
     f_string_length_t increment_by = 0;
-    f_string_length_t string_length = 0;
+    f_string_length_t argument_length = 0;
+
     f_array_length_t i = 0;
+    f_array_length_t additional = 0;
 
     uint8_t console_short = f_console_none;
     uint8_t console_long = f_console_none;
@@ -78,8 +81,8 @@ extern "C" {
       if (needs_additional.used > 0) {
         i = needs_additional.array[0];
 
-        if (parameters.parameter[i].additional.used == parameters.parameter[i].additional.size) {
-          f_macro_string_lengths_t_resize(status, parameters.parameter[i].additional, parameters.parameter[i].additional.size + f_console_default_allocation_step);
+        if (parameters.parameter[i].additional.used + 1 > parameters.parameter[i].additional.size) {
+          f_macro_array_lengths_t_resize(status, parameters.parameter[i].additional, parameters.parameter[i].additional.size + f_console_default_allocation_step);
 
           if (F_status_is_error(status)) {
             f_macro_string_lengths_t_delete_simple(needs_additional);
@@ -88,8 +91,7 @@ extern "C" {
         }
 
         parameters.parameter[i].result = f_console_result_additional;
-        parameters.parameter[i].additional.array[parameters.parameter[i].additional.used] = location;
-        parameters.parameter[i].additional.used++;
+        parameters.parameter[i].additional.array[parameters.parameter[i].additional.used++] = location;
 
         needs_additional.used--;
 
@@ -104,7 +106,7 @@ extern "C" {
 
       f_console_identify(arguments.argv[location], &result);
 
-      string_length = strnlen(arguments.argv[location], f_console_length_size);
+      argument_length = strnlen(arguments.argv[location], f_console_length_size);
 
       // process the current parameter.
       if (result == f_console_short_enable || result == f_console_short_disable) {
@@ -112,11 +114,11 @@ extern "C" {
         sub_location = 1;
       }
       else if (result == f_console_long_enable || result == f_console_long_disable) {
-        increment_by = string_length;
+        increment_by = argument_length;
         sub_location = 2;
       }
       else {
-        increment_by = string_length;
+        increment_by = argument_length;
         sub_location = 0;
       }
 
@@ -138,7 +140,7 @@ extern "C" {
       if (console_short != f_console_none) {
 
         // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
-        while (sub_location < string_length) {
+        while (sub_location < argument_length) {
 
           for (i = 0; i < parameters.used; i++) {
 
@@ -160,7 +162,7 @@ extern "C" {
                 f_utf_character_t character_argument_utf = 0;
                 f_utf_character_t character_console_utf = 0;
 
-                f_number_unsigned_t width_max = string_length - sub_location;
+                f_number_unsigned_t width_max = argument_length - sub_location;
 
                 status = f_utf_char_to_character(arguments.argv[location] + sub_location, width_max, &character_argument_utf);
 
@@ -196,7 +198,7 @@ extern "C" {
               continue;
             }
 
-            if (parameters.parameter[i].locations.used == parameters.parameter[i].locations.size) {
+            if (parameters.parameter[i].locations.used + 1 > parameters.parameter[i].locations.size) {
               f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
 
               if (F_status_is_error(status)) {
@@ -205,8 +207,7 @@ extern "C" {
               }
             }
 
-            parameters.parameter[i].locations.array[parameters.parameter[i].locations.used] = location;
-            parameters.parameter[i].locations.used++;
+            parameters.parameter[i].locations.array[parameters.parameter[i].locations.used++] = location;
 
             parameters.parameter[i].result = f_console_result_found;
             parameters.parameter[i].location = location;
@@ -227,9 +228,8 @@ extern "C" {
                 }
               }
 
-              for (f_array_length_t additional = 0; additional < parameters.parameter[i].has_additional; additional++) {
-                needs_additional.array[needs_additional.used] = i;
-                needs_additional.used++;
+              for (additional = 0; additional < parameters.parameter[i].has_additional; additional++) {
+                needs_additional.array[needs_additional.used++] = i;
               } // for
             }
 
@@ -248,7 +248,7 @@ extern "C" {
 
           if (!parameters.parameter[i].symbol_other) continue;
 
-          if (strncmp(arguments.argv[location], parameters.parameter[i].symbol_other, string_length + 1) != 0) continue;
+          if (strncmp(arguments.argv[location], parameters.parameter[i].symbol_other, argument_length + 1) != 0) continue;
 
           if (parameters.parameter[i].locations.used == parameters.parameter[i].locations.size) {
             f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
@@ -259,8 +259,7 @@ extern "C" {
             }
           }
 
-          parameters.parameter[i].locations.array[parameters.parameter[i].locations.used] = location;
-          parameters.parameter[i].locations.used++;
+          parameters.parameter[i].locations.array[parameters.parameter[i].locations.used++] = location;
 
           parameters.parameter[i].result = f_console_result_found;
           parameters.parameter[i].location = location;
@@ -277,9 +276,8 @@ extern "C" {
               }
             }
 
-            for (f_array_length_t additional = 0; additional < parameters.parameter[i].has_additional; additional++) {
-              needs_additional.array[needs_additional.used] = i;
-              needs_additional.used++;
+            for (additional = 0; additional < parameters.parameter[i].has_additional; additional++) {
+              needs_additional.array[needs_additional.used++] = i;
             } // for
           }
 
@@ -298,8 +296,7 @@ extern "C" {
             }
           }
 
-          remaining->array[remaining->used] = location;
-          remaining->used++;
+          remaining->array[remaining->used++] = location;
         }
       }
 
