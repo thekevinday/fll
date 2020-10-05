@@ -695,13 +695,12 @@ extern "C" {
 
 #ifndef _di_firewall_delete_data_
   f_return_status firewall_delete_data(firewall_data_t *data) {
-    f_string_length_t i = 0;
 
-    while (i < firewall_total_parameters) {
+    for (f_string_length_t i = 0; i < firewall_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
-      i++;
-    } // while
+    } // for
 
     f_macro_string_dynamics_t_delete_simple(data->chains);
     f_macro_string_lengths_t_delete_simple(data->remaining);

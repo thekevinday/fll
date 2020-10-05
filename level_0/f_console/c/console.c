@@ -207,6 +207,15 @@ extern "C" {
               }
             }
 
+            if (parameters.parameter[i].locations_sub.used == parameters.parameter[i].locations_sub.size) {
+              f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations_sub, parameters.parameter[i].locations_sub.size + f_console_default_allocation_step);
+
+              if (F_status_is_error(status)) {
+                f_macro_string_lengths_t_delete_simple(needs_additional);
+                return status;
+              }
+            }
+
             parameters.parameter[i].locations.array[parameters.parameter[i].locations.used++] = location;
 
             parameters.parameter[i].result = f_console_result_found;
@@ -216,6 +225,10 @@ extern "C" {
 
             if (result == console_short) {
               parameters.parameter[i].location_sub = sub_location;
+              parameters.parameter[i].locations_sub.array[parameters.parameter[i].locations_sub.used++] = sub_location;
+            }
+            else {
+              parameters.parameter[i].locations_sub.array[parameters.parameter[i].locations_sub.used++] = 0;
             }
 
             if (parameters.parameter[i].has_additional) {
@@ -259,7 +272,17 @@ extern "C" {
             }
           }
 
+          if (parameters.parameter[i].locations_sub.used == parameters.parameter[i].locations_sub.size) {
+            f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations_sub, parameters.parameter[i].locations_sub.size + f_console_default_allocation_step);
+
+            if (F_status_is_error(status)) {
+              f_macro_string_lengths_t_delete_simple(needs_additional);
+              return status;
+            }
+          }
+
           parameters.parameter[i].locations.array[parameters.parameter[i].locations.used++] = location;
+          parameters.parameter[i].locations_sub.array[parameters.parameter[i].locations_sub.used++] = 0;
 
           parameters.parameter[i].result = f_console_result_found;
           parameters.parameter[i].location = location;

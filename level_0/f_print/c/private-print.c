@@ -11,10 +11,10 @@ extern "C" {
     if (!length) return F_data_not;
 
     for (register f_string_length_t i = 0; i < length; ++i) {
-      if (!string[i]) continue;
-
-      if (!fputc(string[i], output)) {
-        return F_status_set_error(F_output);
+      if (string[i]) {
+        if (!fputc(string[i], output)) {
+          return F_status_set_error(F_output);
+        }
       }
     } // for
 

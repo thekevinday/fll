@@ -557,11 +557,11 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        f_macro_string_dynamic_t_resize(status, (*destination), 1);
+        f_macro_string_dynamic_t_resize(status, (*destination), destination->used + 1);
         if (F_status_is_error(status)) return status;
       }
       else {
-        f_macro_string_dynamic_t_resize(status, (*destination), f_fss_default_allocation_step);
+        f_macro_string_dynamic_t_resize(status, (*destination), destination->used + f_fss_default_allocation_step);
         if (F_status_is_error(status)) return status;
       }
 

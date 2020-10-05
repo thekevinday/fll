@@ -459,17 +459,16 @@ extern "C" {
 
 #ifndef _di_iki_read_delete_data_
   f_return_status iki_read_delete_data(iki_read_data_t *data) {
-    f_status_t status = F_none;
-    f_string_length_t i = 0;
 
-    while (i < iki_read_total_parameters) {
+    for (f_string_length_t i = 0; i < iki_read_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
-      i++;
-    } // while
+    } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
     f_macro_string_dynamic_t_delete_simple(data->buffer);
+
     f_macro_color_context_t_delete_simple(data->context);
 
     return F_none;

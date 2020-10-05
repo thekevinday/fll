@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * Print an message about the object and content parameters not being specified the same number of times.
+ * Print an message about the object and content parameters not being specified the correct number of times.
  *
  * @param data
  *   The program data.
@@ -22,9 +22,9 @@ extern "C" {
  *   F_none on success.
  *   F_failure (with error bit) for any othe failure.
  */
-#ifndef _di_fss_extended_write_error_parameter_same_times_print_
-  void fss_extended_write_error_parameter_same_times_print(const fss_extended_write_data_t data) f_gcc_attribute_visibility_internal;
-#endif // _di_fss_extended_write_error_parameter_same_times_print_
+#ifndef _di_fss_extended_write_error_parameter_at_least_once_print_
+  void fss_extended_write_error_parameter_at_least_once(const fss_extended_write_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_write_error_parameter_at_least_once_print_
 
 /**
  * Print an message about a parameter missing a value.
@@ -51,10 +51,33 @@ extern "C" {
  *   The program data.
  * @param output
  *   The file to output to.
+ * @param quote
+ *   The quote character to use.
+ *   This is either single our double quote.
  * @param object
- *   The object to validate and print.
- * @param contents
- *   An array of content to escape and print.
+ *   A pointer to the object to validate and print.
+ *   Set to 0 to disable.
+ * @param content
+ *   A pointer to the  content to escape and print.
+ *   Set to 0 to disable.
+ * @param buffer
+ *   The buffer array used as a cache to construct the output before printing.
+ *
+ * @return
+ *   F_none on success.
+ *   F_failure (with error bit) for any othe failure.
+ */
+#ifndef _di_fss_extended_write_process_
+  extern f_return_status fss_extended_write_process(const fss_extended_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_write_process_
+
+/**
+ * Process the pipe, reading from the pipe and writing to the output.
+ *
+ * @param data
+ *   The program data.
+ * @param output
+ *   The file to output to.
  * @param quote
  *   The quote character to use.
  *   This is either single our double quote.
@@ -65,9 +88,9 @@ extern "C" {
  *   F_none on success.
  *   F_failure (with error bit) for any othe failure.
  */
-#ifndef _di_fss_extended_write_process_
-  extern f_return_status fss_extended_write_process(const fss_extended_write_data_t data, const f_file_t output, const f_string_static_t object, const f_string_statics_t contents, const f_fss_quote_t quote, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
-#endif // _di_fss_extended_write_process_
+#ifndef _di_fss_extended_write_process_pipe_
+  extern f_return_status fss_extended_write_process_pipe(const fss_extended_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_write_process_pipe_
 
 #ifdef __cplusplus
 } // extern "C"

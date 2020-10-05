@@ -220,6 +220,7 @@ extern "C" {
  * - location: The last location in argv[] where this parameter is found.
  * - location_sub: The last sub-location at location in argv (only used by short parameters, such as -h or +l).
  * - locations: All locations within argv where this parameter is found (order is preserved).
+ * - locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
  * - additional: An array of locations representing where in the argv[] the additional arguments are found.
  */
 #ifndef _di_f_console_parameter_t_
@@ -237,12 +238,13 @@ extern "C" {
     f_array_length_t  location;
     f_string_length_t location_sub;
     f_array_lengths_t locations;
+    f_array_lengths_t locations_sub;
     f_array_lengths_t additional;
   } f_console_parameter_t;
 
-  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
+  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
 
-  #define f_macro_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, additional) { symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, additional }
+  #define f_macro_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, locations_sub, additional) { symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, locations_sub, additional }
 #endif // _di_f_console_parameter_t_
 
 /**

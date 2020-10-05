@@ -448,14 +448,12 @@ extern "C" {
 
 #ifndef _di_fss_basic_read_delete_data_
   f_return_status fss_basic_read_delete_data(fss_basic_read_data_t *data) {
-    f_status_t status = F_none;
-    f_string_length_t i = 0;
 
-    while (i < fss_basic_read_total_parameters) {
+    for (f_string_length_t i = 0; i < fss_basic_read_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
-      i++;
-    } // while
+    } // for
 
     f_macro_fss_contents_t_delete_simple(data->contents);
     f_macro_fss_objects_t_delete_simple(data->objects);

@@ -196,15 +196,15 @@ extern "C" {
 
 #ifndef _di_fss_status_code_delete_data_
   f_return_status fss_status_code_delete_data(fss_status_code_data_t *data) {
-    f_string_length_t i = 0;
 
-    while (i < fss_status_code_total_parameters) {
+    for (f_string_length_t i = 0; i < fss_status_code_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
-      i++;
-    } // while
+    } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
+
     f_macro_color_context_t_delete_simple(data->context);
 
     return F_none;

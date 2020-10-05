@@ -147,7 +147,7 @@ extern "C" {
             fss_basic_list_write_error_parameter_value_missing_print(*data, f_console_symbol_long_enable, fss_basic_list_write_long_content);
             status = F_status_set_error(F_parameter);
           }
-          else if (data->parameters[fss_basic_list_write_parameter_object].locations.used != data->parameters[fss_basic_list_write_parameter_content].locations.used) {
+          else if (data->parameters[fss_basic_list_write_parameter_object].locations.used != data->parameters[fss_basic_list_write_parameter_content].locations.used && data->parameters[fss_basic_list_write_parameter_partial].result == f_console_result_none) {
             fss_basic_list_write_error_parameter_same_times_print(*data);
             status = F_status_set_error(F_parameter);
           }
@@ -164,6 +164,33 @@ extern "C" {
               }
 
               status = F_status_set_error(F_parameter);
+            }
+          }
+
+          if (F_status_is_error_not(status)) {
+            if (data->parameters[fss_basic_list_write_parameter_content].result == f_console_result_additional) {
+              f_array_length_t location_object = 0;
+              f_array_length_t location_content = 0;
+              f_array_length_t location_sub_object = 0;
+              f_array_length_t location_sub_content = 0;
+
+              for (f_array_length_t i = 0; i < data->parameters[fss_basic_list_write_parameter_object].locations.used; i++) {
+                location_object = data->parameters[fss_basic_list_write_parameter_object].locations.array[i];
+                location_content = data->parameters[fss_basic_list_write_parameter_content].locations.array[i];
+                location_sub_object = data->parameters[fss_basic_list_write_parameter_object].locations_sub.array[i];
+                location_sub_content = data->parameters[fss_basic_list_write_parameter_content].locations_sub.array[i];
+
+                if (location_object > location_content || location_object == location_content && location_sub_object > location_sub_content) {
+                  fl_color_print(data->error.to.stream, data->context.set.error, "%sEach ", fll_error_print_error);
+                  fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_write_long_object);
+                  fl_color_print(data->error.to.stream, data->context.set.error, "' parameter must be specified before a '");
+                  fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_write_long_content);
+                  fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+
+                  status = F_status_set_error(F_parameter);
+                  break;
+                }
+              } // for
             }
           }
         }
@@ -189,20 +216,32 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
+
+      if (F_status_is_error_not(status) && data->process_pipe) {
+        if (data->parameters[fss_basic_list_write_parameter_partial].result == f_console_result_found) {
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            fl_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_write_long_partial);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter cannot be used when processing a pipe.%c", f_string_eol[0]);
+          }
+
+          status = F_status_set_error(F_parameter);
+        }
+      }
     }
 
-    f_fss_quote_t quoted = f_fss_delimit_quote_double;
+    f_fss_quote_t quote = f_fss_delimit_quote_double;
 
     if (F_status_is_error_not(status)) {
       if (data->parameters[fss_basic_list_write_parameter_double].result == f_console_result_found) {
         if (data->parameters[fss_basic_list_write_parameter_single].result == f_console_result_found) {
           if (data->parameters[fss_basic_list_write_parameter_double].location < data->parameters[fss_basic_list_write_parameter_single].location) {
-            quoted = f_fss_delimit_quote_single;
+            quote = f_fss_delimit_quote_single;
           }
         }
       }
       else if (data->parameters[fss_basic_list_write_parameter_single].result == f_console_result_found) {
-        quoted = f_fss_delimit_quote_single;
+        quote = f_fss_delimit_quote_single;
       }
     }
 
@@ -214,232 +253,37 @@ extern "C" {
       f_string_dynamic_t escaped = f_string_dynamic_t_initialize;
 
       if (data->process_pipe) {
-        f_file_t input = f_file_t_initialize;
+        status = fss_basic_list_write_process_pipe(*data, output, quote, &buffer);
 
-        input.id = f_type_descriptor_input;
-        input.size_read = 1;
-
-        bool object_ended = F_false;
-
-        f_string_length_t previous = 0;
-        f_string_range_t range = f_string_range_t_initialize;
-
-        range.start = 0;
-
-        if (data->parameters[fss_basic_list_write_parameter_partial].result == f_console_result_found) {
-          for (f_status_t status_pipe = F_none; ; ) {
-
-            if (status_pipe != F_none_eof) {
-              status_pipe = f_file_read(input, &buffer);
-
-              if (F_status_is_error(status_pipe)) {
-                fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read_to", F_true, "-", "read", fll_error_file_type_pipe);
-
-                status = F_status_set_error(F_pipe);
-                break;
-              }
-
-              if (!buffer.used) {
-                if (data->error.verbosity != f_console_verbosity_quiet) {
-                  fl_color_print(data->error.to.stream, data->context.set.error, "%sThe pipe has no data.%c", fll_error_print_error, f_string_eol[0]);
-                }
-
-                status = F_status_set_error(F_parameter);
-                break;
-              }
-
-              range.stop = buffer.used - 1;
-            }
-
-            previous = range.start;
-            status = fl_string_dynamic_seek_line(buffer.string, &range);
-
-            if (F_status_is_error(status)) {
-              fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_seek_line", F_true);
-              break;
-            }
-
-            if (status == F_data_not_stop) {
-              status = F_status_set_error(F_parameter);
-
-              fll_error_print(data->error, F_parameter, "fl_string_dynamic_seek_line", F_true);
-              break;
-            }
-
-            range.stop = range.start - 1;
-            range.start = previous;
-
-            if (data->parameters[fss_basic_list_write_parameter_object].result == f_console_result_found) {
-              object.used = 0;
-
-              if (buffer.used) {
-                status = fl_string_dynamic_partial_append_nulless(buffer, range, &object);
-
-                if (F_status_is_error(status)) {
-                  fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
-                  break;
-                }
-              }
-            }
-            else {
-              content.used = 0;
-
-              if (buffer.used) {
-                status = fl_string_dynamic_partial_append_nulless(buffer, range, &object);
-
-                if (F_status_is_error(status)) {
-                  fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
-                  break;
-                }
-              }
-            }
-
-            status = fss_basic_list_write_process(*data, output, object, content, quoted, &buffer);
-            if (F_status_is_error(status)) break;
-
-            // restore the range, positioned after the newline.
-            range.start = range.stop + 2;
-            range.stop = buffer.used - 1;
-
-            // only clear the buffer and reset the start when the entire buffer has been processed.
-            if (range.start > range.stop) {
-              range.start = 0;
-              buffer.used = 0;
-            }
-
-            if (status_pipe == F_none_eof && !buffer.used && !object_ended) break;
-          } // for
-        }
-        else {
-          for (f_status_t status_pipe = F_none; ; ) {
-
-            if (status_pipe != F_none_eof) {
-              status_pipe = f_file_read(input, &buffer);
-
-              if (F_status_is_error(status_pipe)) {
-                fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read_to", F_true, "-", "read", fll_error_file_type_pipe);
-
-                status = F_status_set_error(F_pipe);
-                break;
-              }
-
-              if (!buffer.used) {
-                if (data->error.verbosity != f_console_verbosity_quiet) {
-                  fl_color_print(data->error.to.stream, data->context.set.error, "%sThe pipe has no data.%c", fll_error_print_error, f_string_eol[0]);
-                }
-
-                status = F_status_set_error(F_parameter);
-                break;
-              }
-
-              range.stop = buffer.used - 1;
-            }
-
-            previous = range.start;
-            status = fl_string_dynamic_seek_line(buffer.string, &range);
-
-            if (F_status_is_error(status)) {
-              fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_seek_line", F_true);
-              break;
-            }
-
-            if (status == F_data_not_stop) {
-              status = F_status_set_error(F_parameter);
-
-              fll_error_print(data->error, F_parameter, "fl_string_dynamic_seek_line", F_true);
-              break;
-            }
-
-            if (object_ended && previous == range.start) {
-              if (data->error.verbosity != f_console_verbosity_quiet) {
-                fl_color_print(data->error.to.stream, data->context.set.error, "%sThe pipe has incorrectly placed newlines.%c", fll_error_print_error, f_string_eol[0]);
-              }
-
-              status = F_status_set_error(F_parameter);
-              break;
-            }
-
-            range.stop = range.start - 1;
-            range.start = previous;
-
-            if (object_ended) {
-              content.used = 0;
-
-              if (buffer.used) {
-                status = fl_string_dynamic_partial_append_nulless(buffer, range, &content);
-
-                if (F_status_is_error(status)) {
-                  fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
-                  break;
-                }
-              }
-
-              status = fss_basic_list_write_process(*data, output, object, content, quoted, &buffer);
-              if (F_status_is_error(status)) break;
-
-              object_ended = F_false;
-            }
-            else {
-              object.used = 0;
-
-              status = fl_string_dynamic_partial_append_nulless(buffer, range, &object);
-
-              if (F_status_is_error(status)) {
-                fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
-                break;
-              }
-
-              object_ended = F_true;
-            }
-
-            // restore the range, positioned after the newline.
-            range.start = range.stop + 2;
-            range.stop = buffer.used - 1;
-
-            // only clear the buffer and reset the start when the entire buffer has been processed.
-            if (range.start > range.stop) {
-              range.start = 0;
-              buffer.used = 0;
-            }
-
-            if (status_pipe == F_none_eof && !buffer.used && !object_ended) break;
-          } // for
-
-          if (F_status_is_error_not(status) && object_ended) {
-            if (data->error.verbosity != f_console_verbosity_quiet) {
-              fl_color_print(data->error.to.stream, data->context.set.error, "%sThe pipe has an object without content.%c", fll_error_print_error, f_string_eol[0]);
-            }
-
-            status = F_status_set_error(F_parameter);
-          }
+        if (F_status_is_error(status)) {
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sWhile processing the ", fll_error_print_error);
+          fl_color_print(data->error.to.stream, data->context.set.notable, "input pipe");
+          fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
         }
       }
 
       if (F_status_is_error_not(status)) {
         if (data->parameters[fss_basic_list_write_parameter_partial].result == f_console_result_found) {
-          if (data->parameters[fss_basic_list_write_parameter_object].result == f_console_result_found) {
-            content.used = 0;
 
+          if (data->parameters[fss_basic_list_write_parameter_object].result == f_console_result_additional) {
             for (f_array_length_t i = 0; i < data->parameters[fss_basic_list_write_parameter_object].additional.used; i++) {
 
               object.string = arguments.argv[data->parameters[fss_basic_list_write_parameter_object].additional.array[i]];
               object.used = strnlen(object.string, f_console_length_size);
               object.size = object.used;
 
-              status = fss_basic_list_write_process(*data, output, object, content, quoted, &buffer);
+              status = fss_basic_list_write_process(*data, output, quote, &object, 0, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
           else {
-            object.used = 0;
-
-            for (f_array_length_t i = 0; i < data->parameters[fss_basic_list_write_parameter_object].additional.used; i++) {
+            for (f_array_length_t i = 0; i < data->parameters[fss_basic_list_write_parameter_content].additional.used; i++) {
 
               content.string = arguments.argv[data->parameters[fss_basic_list_write_parameter_content].additional.array[i]];
               content.used = strnlen(content.string, f_console_length_size);
               content.size = content.used;
 
-              status = fss_basic_list_write_process(*data, output, object, content, quoted, &buffer);
+              status = fss_basic_list_write_process(*data, output, quote, 0, &content, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
@@ -455,13 +299,18 @@ extern "C" {
             content.used = strnlen(content.string, f_console_length_size);
             content.size = content.used;
 
-            status = fss_basic_list_write_process(*data, output, object, content, quoted, &buffer);
+            status = fss_basic_list_write_process(*data, output, quote, &object, &content, &buffer);
             if (F_status_is_error(status)) break;
           } // for
         }
 
-        // ensure there is always a newline at the end, unless in quiet mode.
-        if (F_status_is_error_not(status) && data->error.verbosity != f_console_verbosity_quiet && data->parameters[fss_basic_list_write_parameter_file].result == f_console_result_none) {
+        if (F_status_is_error(status)) {
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sWhile processing the ", fll_error_print_error);
+          fl_color_print(data->error.to.stream, data->context.set.notable, "input arguments");
+          fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
+        }
+        else if (data->error.verbosity != f_console_verbosity_quiet && data->parameters[fss_basic_list_write_parameter_file].result == f_console_result_none) {
+          // ensure there is always a newline at the end, unless in quiet mode.
           fprintf(f_type_output, "%c", f_string_eol[0]);
         }
       }
@@ -501,15 +350,15 @@ extern "C" {
 
 #ifndef _di_fss_basic_list_write_delete_data_
   f_return_status fss_basic_list_write_delete_data(fss_basic_list_write_data_t *data) {
-    f_string_length_t i = 0;
 
-    while (i < fss_basic_list_write_total_parameters) {
+    for (f_string_length_t i = 0; i < fss_basic_list_write_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
-      i++;
-    } // while
+    } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
+
     f_macro_color_context_t_delete_simple(data->context);
 
     return F_none;

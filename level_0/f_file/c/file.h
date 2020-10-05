@@ -1737,7 +1737,7 @@ extern "C" {
  * @param dereference
  *   Set to TRUE to dereferenc symlinks (often is what is desired).
  *   Set to FALSE to operate on the symlink itself.
- * @param file_stat
+ * @param stat_file
  *   The statistics read.
  *
  * @return
@@ -1754,7 +1754,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_stat_
-  extern f_return_status f_file_stat(const f_string_t path, const bool dereference, struct stat *file_stat);
+  extern f_return_status f_file_stat(const f_string_t path, const bool dereference, struct stat *stat_file);
 #endif // _di_f_file_stat_
 
 /**
@@ -1766,7 +1766,7 @@ extern "C" {
  *   The path to the file.
  * @param flag
  *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
- * @param file_stat
+ * @param stat_file
  *   The statistics read.
  *
  * @return
@@ -1783,7 +1783,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_stat_at_
-  extern f_return_status f_file_stat_at(const int at_id, const f_string_t path, const int flag, struct stat *file_stat);
+  extern f_return_status f_file_stat_at(const int at_id, const f_string_t path, const int flag, struct stat *stat_file);
 #endif // _di_f_file_stat_at_
 
 /**
@@ -1791,7 +1791,7 @@ extern "C" {
  *
  * @param id
  *   The file descriptor.
- * @param file_stat
+ * @param stat_file
  *   The statistics read.
  *
  * @return
@@ -1808,7 +1808,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_stat_by_id_
-  extern f_return_status f_file_stat_by_id(const int id, struct stat *file_stat);
+  extern f_return_status f_file_stat_by_id(const int id, struct stat *stat_file);
 #endif // _di_f_file_stat_by_id_
 
 /**

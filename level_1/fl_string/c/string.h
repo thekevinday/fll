@@ -1116,7 +1116,7 @@ extern "C" {
  * If the given length is too small, then the resize will fail.
  * This will not shrink the size to less than 0.
  *
- * @param length
+ * @param amount
  *   A positive number greater than 0 representing how much to decrease the size by.
  * @param string
  *   The string to resize.
@@ -1129,7 +1129,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_size_decrease_
-  extern f_return_status fl_string_dynamic_size_decrease(const f_string_length_t length, f_string_dynamic_t *string);
+  extern f_return_status fl_string_dynamic_size_decrease(const f_string_length_t amount, f_string_dynamic_t *string);
 #endif // _di_fl_string_dynamic_size_decrease_
 
 /**
@@ -1139,7 +1139,7 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_string_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
- * @param length
+ * @param amount
  *   A positive number greater than 0 representing how much to increase the size by.
  * @param string
  *   The string to resize.
@@ -1153,7 +1153,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_size_increase_
-  extern f_return_status fl_string_dynamic_size_increase(const f_string_length_t length, f_string_dynamic_t *string);
+  extern f_return_status fl_string_dynamic_size_increase(const f_string_length_t amount, f_string_dynamic_t *string);
 #endif // _di_fl_string_dynamic_size_increase_
 
 /**
@@ -1181,11 +1181,11 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
+ * @param seek_to_this
+ *   A single-width character representing a character to seek to.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
- * @param seek_to_this
- *   A single-width character representing a character to seek to.
  *
  * @return
  *   F_none on success.
@@ -1196,7 +1196,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_
-  extern f_return_status fl_string_dynamic_seek_line_to(const f_string_t string, f_string_range_t *range, const int8_t seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_line_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_to_
 
 /**
@@ -1204,11 +1204,11 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
+ * @param seek_to_this
+ *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
- * @param seek_to_this
- *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
  *
  * @return
  *   F_none on success.
@@ -1226,7 +1226,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_utf_character_
-  extern f_return_status fl_string_dynamic_seek_line_to_utf_character(const f_string_t string, f_string_range_t *range, const f_utf_character_t seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_line_to_utf_character(const f_string_t string, const f_utf_character_t seek_to_this, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_to_utf_character_
 
 /**
@@ -1234,10 +1234,10 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
- * @param range
- *   A range within the buffer representing the start and stop locations.
  * @param placeholder
  *   A single-width character representing a placeholder to ignore (may be NULL).
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
  *
  * @return
  *   F_none on success.
@@ -1256,7 +1256,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_
-  extern f_return_status fl_string_dynamic_seek_line_until_graph(const f_string_t string, f_string_range_t *range, const int8_t placeholder);
+  extern f_return_status fl_string_dynamic_seek_line_until_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_until_graph_
 
 /**
@@ -1264,10 +1264,10 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
- * @param range
- *   A range within the buffer representing the start and stop locations.
  * @param placeholder
  *   A single-width character representing a placeholder to ignore (may be NULL).
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
  *
  * @return
  *   F_none on success.
@@ -1286,7 +1286,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_non_graph_
-  extern f_return_status fl_string_dynamic_seek_line_until_non_graph(const f_string_t string, f_string_range_t *range, const int8_t placeholder);
+  extern f_return_status fl_string_dynamic_seek_line_until_non_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_until_non_graph_
 
 /**
@@ -1294,11 +1294,11 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
+ * @param seek_to_this
+ *   A single-width character representing a character to seek to.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
- * @param seek_to_this
- *   A single-width character representing a character to seek to.
  *
  * @return
  *   F_none on success.
@@ -1310,7 +1310,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_seek_to_
-  extern f_return_status fl_string_dynamic_seek_to(const f_string_t string, f_string_range_t *range, const int8_t seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_to_
 
 /**
@@ -1318,11 +1318,11 @@ extern "C" {
  *
  * @param string
  *   The string to traverse.
+ * @param seek_to_this
+ *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
- * @param seek_to_this
- *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
  *
  * @return
  *   F_none on success.
@@ -1339,7 +1339,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_to_utf_character_
-  extern f_return_status fl_string_dynamic_seek_to_utf_character(const f_string_t string, f_string_range_t *range, const f_utf_character_t seek_to_this);
+  extern f_return_status fl_string_dynamic_seek_to_utf_character(const f_string_t string, const f_utf_character_t seek_to_this, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
 /**

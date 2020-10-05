@@ -51,10 +51,33 @@ extern "C" {
  *   The program data.
  * @param output
  *   The file to output to.
+ * @param quote
+ *   The quote character to use.
+ *   This is either single our double quote.
  * @param object
- *   The object to validate and print.
+ *   A pointer to the object to validate and print.
+ *   Set to 0 to disable.
  * @param content
- *   The content to escape and print.
+ *   A pointer to the  content to escape and print.
+ *   Set to 0 to disable.
+ * @param buffer
+ *   The buffer array used as a cache to construct the output before printing.
+ *
+ * @return
+ *   F_none on success.
+ *   F_failure (with error bit) for any othe failure.
+ */
+#ifndef _di_fss_basic_write_process_
+  extern f_return_status fss_basic_write_process(const fss_basic_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_basic_write_process_
+
+/**
+ * Process the pipe, reading from the pipe and writing to the output.
+ *
+ * @param data
+ *   The program data.
+ * @param output
+ *   The file to output to.
  * @param quote
  *   The quote character to use.
  *   This is either single our double quote.
@@ -65,9 +88,9 @@ extern "C" {
  *   F_none on success.
  *   F_failure (with error bit) for any othe failure.
  */
-#ifndef _di_fss_basic_write_process_
-  extern f_return_status fss_basic_write_process(const fss_basic_write_data_t data, const f_file_t output, const f_string_static_t object, const f_string_static_t content, const f_fss_quote_t quote, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
-#endif // _di_fss_basic_write_process_
+#ifndef _di_fss_basic_write_process_pipe_
+  extern f_return_status fss_basic_write_process_pipe(const fss_basic_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_basic_write_process_pipe_
 
 #ifdef __cplusplus
 } // extern "C"

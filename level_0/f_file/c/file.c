@@ -318,11 +318,11 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    status = private_f_file_stat(path, F_false, &file_stat);
+    status = private_f_file_stat(path, F_false, &stat_file);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_file_found_not) return F_false;
@@ -341,11 +341,11 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    status = private_f_file_stat_at(at_id, path, flag, &file_stat);
+    status = private_f_file_stat_at(at_id, path, flag, &stat_file);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_file_found_not) return F_false;
@@ -391,14 +391,14 @@ extern "C" {
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    f_status_t status = private_f_file_stat(path, dereference, &file_stat);
+    f_status_t status = private_f_file_stat(path, dereference, &stat_file);
     if (F_status_is_error(status)) return status;
 
-    if (f_macro_file_type_get(file_stat.st_mode) == type) return F_true;
+    if (f_macro_file_type_get(stat_file.st_mode) == type) return F_true;
 
     return F_false;
   }
@@ -410,11 +410,11 @@ extern "C" {
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    if (fstatat(at_id, path, &file_stat, flag) < 0) {
+    if (fstatat(at_id, path, &stat_file, flag) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
@@ -428,7 +428,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if (file_stat.st_mode == (S_IFMT & S_IFDIR)) return F_true;
+    if (stat_file.st_mode == (S_IFMT & S_IFDIR)) return F_true;
 
     return F_false;
   }
@@ -1463,8 +1463,6 @@ extern "C" {
 
         f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
         if (F_status_is_error(status)) return status;
-
-        memset(buffer->string + buffer->used, 0, sizeof(file.size_read));
       }
 
       buffer_read = buffer->string + buffer->used;
@@ -1506,15 +1504,13 @@ extern "C" {
 
     f_string_t buffer_read = 0;
 
-    if (buffer->used + size_read > buffer->size) {
-      if (buffer->size + size_read > f_string_length_t_size) {
+    if (buffer->used + file.size_read > buffer->size) {
+      if (buffer->size + file.size_read > f_string_length_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
-      f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + size_read);
+      f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
       if (F_status_is_error(status)) return status;
-
-      memset(buffer->string + buffer->used, 0, sizeof(file.size_read));
     }
 
     buffer_read = buffer->string + buffer->used;
@@ -1573,8 +1569,6 @@ extern "C" {
 
         f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
         if (F_status_is_error(status)) return status;
-
-        memset(buffer->string + buffer->used, 0, sizeof(buffer_size));
       }
 
       buffer_read = buffer->string + buffer->used;
@@ -1786,15 +1780,15 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    f_status_t status = private_f_file_stat(path, dereference, &file_stat);
+    f_status_t status = private_f_file_stat(path, dereference, &stat_file);
 
     if (F_status_is_error(status)) return status;
 
-    *size = file_stat.st_size;
+    *size = stat_file.st_size;
 
     return F_none;
   }
@@ -1808,15 +1802,15 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    f_status_t status = private_f_file_stat_at(at_id, path, dereference, &file_stat);
+    f_status_t status = private_f_file_stat_at(at_id, path, dereference, &stat_file);
 
     if (F_status_is_error(status)) return status;
 
-    *size = file_stat.st_size;
+    *size = stat_file.st_size;
 
     return F_none;
   }
@@ -1829,51 +1823,51 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    f_status_t status = private_f_file_stat_by_id(id, &file_stat);
+    f_status_t status = private_f_file_stat_by_id(id, &stat_file);
 
     if (F_status_is_error(status)) return status;
 
-    *size = file_stat.st_size;
+    *size = stat_file.st_size;
 
     return F_none;
   }
 #endif // _di_f_file_size_by_id_
 
 #ifndef _di_f_file_stat_
-  f_return_status f_file_stat(const f_string_t path, const bool dereference, struct stat *file_stat) {
+  f_return_status f_file_stat(const f_string_t path, const bool dereference, struct stat *stat_file) {
     #ifndef _di_level_0_parameter_checking_
       if (!path) return F_status_set_error(F_parameter);
-      if (!file_stat) return F_status_set_error(F_parameter);
+      if (!stat_file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_file_stat(path, dereference, file_stat);
+    return private_f_file_stat(path, dereference, stat_file);
   }
 #endif // _di_f_file_stat_
 
 #ifndef _di_f_file_stat_at_
-  f_return_status f_file_stat_at(const int at_id, const f_string_t path, const int flag, struct stat *file_stat) {
+  f_return_status f_file_stat_at(const int at_id, const f_string_t path, const int flag, struct stat *stat_file) {
     #ifndef _di_level_0_parameter_checking_
       if (!path) return F_status_set_error(F_parameter);
       if (at_id <= 0) return F_status_set_error(F_parameter);
-      if (!file_stat) return F_status_set_error(F_parameter);
+      if (!stat_file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_file_stat_at(at_id, path, flag, file_stat);
+    return private_f_file_stat_at(at_id, path, flag, stat_file);
   }
 #endif // _di_f_file_stat_at_
 
 #ifndef _di_f_file_stat_by_id_
-  f_return_status f_file_stat_by_id(const int id, struct stat *file_stat) {
+  f_return_status f_file_stat_by_id(const int id, struct stat *stat_file) {
     #ifndef _di_level_0_parameter_checking_
       if (id <= 0) return F_status_set_error(F_parameter);
-      if (!file_stat) return F_status_set_error(F_parameter);
+      if (!stat_file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_file_stat_by_id(id, file_stat);
+    return private_f_file_stat_by_id(id, stat_file);
   }
 #endif // _di_f_file_stat_by_id_
 
@@ -2065,8 +2059,6 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    memset(buffer->string + buffer->used, 0, sizeof(buffer_size));
-
     size_read = fread(buffer->string + buffer->used, amount, file.size_read, file.stream);
 
     if (ferror(file.stream)) {
@@ -2120,8 +2112,6 @@ extern "C" {
 
         f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
         if (F_status_is_error(status)) return status;
-
-        memset(buffer->string + buffer->used, 0, sizeof(buffer_size));
       }
 
       size_read = fread(buffer->string + buffer->used, amount, file.size_read, file.stream);
@@ -2380,11 +2370,11 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    status = private_f_file_stat(path, F_false, &file_stat);
+    status = private_f_file_stat(path, F_false, &stat_file);
 
     if (F_status_set_fine(status) == F_file_found_not) {
       return private_f_file_create(path, mode, dereference);
@@ -2420,11 +2410,11 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    status = private_f_file_stat_at(at_id, path, flag, &file_stat);
+    status = private_f_file_stat_at(at_id, path, flag, &stat_file);
 
     if (F_status_set_fine(status) == F_file_found_not) {
       return private_f_file_create_at(at_id, path, mode, F_false);
@@ -2460,11 +2450,11 @@ extern "C" {
       if (!type) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    if (stat(path, &file_stat) < 0) {
+    if (stat(path, &stat_file) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
@@ -2477,7 +2467,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    *type = f_macro_file_type_get(file_stat.st_mode);
+    *type = f_macro_file_type_get(stat_file.st_mode);
 
     return F_none;
   }
@@ -2490,11 +2480,11 @@ extern "C" {
       if (!type) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    struct stat file_stat;
+    struct stat stat_file;
 
-    memset(&file_stat, 0, sizeof(struct stat));
+    memset(&stat_file, 0, sizeof(struct stat));
 
-    if (fstatat(at_id, path, &file_stat, flag) < 0) {
+    if (fstatat(at_id, path, &stat_file, flag) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENOMEM) return F_status_set_error(F_memory_out);
@@ -2508,7 +2498,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    *type = f_macro_file_type_get(file_stat.st_mode);
+    *type = f_macro_file_type_get(stat_file.st_mode);
 
     return F_none;
   }

@@ -54,6 +54,9 @@ extern "C" {
 #endif // _di_fss_extended_write_name_
 
 #ifndef _di_fss_extended_write_defines_
+  #define fss_extended_write_pipe_content_start '\0'
+  #define fss_extended_write_pipe_content_end   '\f'
+
   #define fss_extended_write_short_file     "f"
   #define fss_extended_write_short_content  "c"
   #define fss_extended_write_short_double   "d"
