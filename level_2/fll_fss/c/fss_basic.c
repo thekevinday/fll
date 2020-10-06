@@ -187,7 +187,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return status;
   }
 #endif // _di_fll_fss_basic_write_
 

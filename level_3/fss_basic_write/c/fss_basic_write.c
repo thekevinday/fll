@@ -31,6 +31,28 @@ extern "C" {
 
     fll_program_print_help_usage(file, context, fss_basic_write_name, "");
 
+    printf("  The pipe uses the NULL character '");
+    fl_color_print(f_type_output, context.set.notable, "\\0");
+    printf("' (");
+    fl_color_print(f_type_output, context.set.notable, "U+0000");
+    printf(") to designate the start of a Content and uses the Form Feed character '");
+    fl_color_print(f_type_output, context.set.notable, "\\f");
+    printf("' (");
+    fl_color_print(f_type_output, context.set.notable, "U+000C");
+    printf(") to designate the end of the last Content.%c", f_string_eol[0]);
+    printf("  For the pipe, an Object is terminated by either a NULL character '");
+    fl_color_print(f_type_output, context.set.notable, "\\0");
+    printf("' (");
+    fl_color_print(f_type_output, context.set.notable, "U+0000");
+    printf(") or a Form Feed character '");
+    fl_color_print(f_type_output, context.set.notable, "\\f");
+    printf("' (");
+    fl_color_print(f_type_output, context.set.notable, "U+000C");
+    printf(").%c", f_string_eol[0]);
+    printf("  The end of the pipe represents the end of any Object or Content.%c", f_string_eol[0]);
+
+    printf("%c", f_string_eol[0]);
+
     return F_none;
   }
 #endif // _di_fss_basic_write_print_help_
@@ -111,6 +133,7 @@ extern "C" {
       if (data->parameters[fss_basic_write_parameter_file].result == f_console_result_additional) {
         if (data->parameters[fss_basic_write_parameter_file].additional.used > 1) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
             fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
             fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_file);
             fl_color_print(data->error.to.stream, data->context.set.error, "' may only be specified once.%c", f_string_eol[0]);
@@ -154,6 +177,7 @@ extern "C" {
           else if (data->parameters[fss_basic_write_parameter_content].locations.used && data->parameters[fss_basic_write_parameter_partial].locations.used) {
             if (data->parameters[fss_basic_write_parameter_content].result == f_console_result_additional) {
               if (data->error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data->error.to.stream, "%c", f_string_eol[0]);
                 fl_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
                 fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_partial);
                 fl_color_print(data->error.to.stream, data->context.set.error, "' parameter only allows either the '");
@@ -181,11 +205,14 @@ extern "C" {
                 location_sub_content = data->parameters[fss_basic_write_parameter_content].locations_sub.array[i];
 
                 if (location_object > location_content || location_object == location_content && location_sub_object > location_sub_content) {
-                  fl_color_print(data->error.to.stream, data->context.set.error, "%sEach ", fll_error_print_error);
-                  fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_object);
-                  fl_color_print(data->error.to.stream, data->context.set.error, "' parameter must be specified before a '");
-                  fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_content);
-                  fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+                  if (data->error.verbosity != f_console_verbosity_quiet) {
+                    fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+                    fl_color_print(data->error.to.stream, data->context.set.error, "%sEach ", fll_error_print_error);
+                    fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_object);
+                    fl_color_print(data->error.to.stream, data->context.set.error, "' parameter must be specified before a '");
+                    fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_content);
+                    fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+                  }
 
                   status = F_status_set_error(F_parameter);
                   break;
@@ -207,6 +234,7 @@ extern "C" {
       }
       else if (!data->process_pipe) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
+          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
           fl_color_print(data->error.to.stream, data->context.set.error, "%sThis requires either piped data or the use of the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_object);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
@@ -220,6 +248,7 @@ extern "C" {
       if (F_status_is_error_not(status) && data->process_pipe) {
         if (data->parameters[fss_basic_write_parameter_partial].result == f_console_result_found) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
             fl_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
             fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_partial);
             fl_color_print(data->error.to.stream, data->context.set.error, "' parameter cannot be used when processing a pipe.%c", f_string_eol[0]);
@@ -256,9 +285,12 @@ extern "C" {
         status = fss_basic_write_process_pipe(*data, output, quote, &buffer);
 
         if (F_status_is_error(status)) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sWhile processing the ", fll_error_print_error);
-          fl_color_print(data->error.to.stream, data->context.set.notable, "input pipe");
-          fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "%sWhile processing the ", fll_error_print_error);
+            fl_color_print(data->error.to.stream, data->context.set.notable, "input pipe");
+            fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
+          }
         }
       }
 
@@ -308,9 +340,12 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sWhile processing the ", fll_error_print_error);
-          fl_color_print(data->error.to.stream, data->context.set.notable, "input arguments");
-          fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "%sWhile processing the ", fll_error_print_error);
+            fl_color_print(data->error.to.stream, data->context.set.notable, "input arguments");
+            fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
+          }
         }
         else if (data->error.verbosity != f_console_verbosity_quiet && data->parameters[fss_basic_write_parameter_file].result == f_console_result_none) {
           // ensure there is always a newline at the end, unless in quiet mode.

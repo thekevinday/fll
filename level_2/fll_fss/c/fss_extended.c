@@ -214,8 +214,14 @@ extern "C" {
           complete = f_fss_complete_end;
         }
 
-        range.start = 0;
-        range.stop = contents.array[i].used - 1;
+        if (contents.array[i].used) {
+          range.start = 0;
+          range.stop = contents.array[i].used - 1;
+        }
+        else {
+          range.start = 1;
+          range.stop = 0;
+        }
 
         status = fl_fss_extended_content_write(contents.array[i], quote, complete, &range, destination);
 
@@ -225,7 +231,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return status;
   }
 #endif // _di_fll_fss_extended_write_
 

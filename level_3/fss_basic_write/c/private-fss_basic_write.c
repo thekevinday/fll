@@ -12,6 +12,7 @@ extern "C" {
       return;
     }
 
+    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
     fl_color_print(data.error.to.stream, data.context.set.error, "%sMust specify both the '", fll_error_print_error);
     fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_object);
     fl_color_print(data.error.to.stream, data.context.set.error, "' parameter and the '");
@@ -29,11 +30,26 @@ extern "C" {
       return;
     }
 
+    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
     fl_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
     fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", symbol, parameter);
     fl_color_print(data.error.to.stream, data.context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
   }
 #endif // _di_fss_basic_write_error_parameter_value_missing_print_
+
+#ifndef _di_fss_basic_write_error_parameter_unsupported_eol_print_
+  void fss_basic_write_error_parameter_unsupported_eol_print(const fss_basic_write_data_t data) {
+
+    if (data.error.verbosity == f_console_verbosity_quiet) {
+      return;
+    }
+
+    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+    fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard does not support end of line character '", fll_error_print_error);
+    fl_color_print(data.error.to.stream, data.context.set.notable, "\\n");
+    fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol[0]);
+  }
+#endif // _di_fss_basic_write_error_parameter_unsupported_eol_print_
 
 #ifndef _di_fss_basic_write_process_
   f_return_status fss_basic_write_process(const fss_basic_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
@@ -54,19 +70,13 @@ extern "C" {
       status = fl_fss_basic_object_write(*object, quote, content ? f_fss_complete_full : f_fss_complete_partial, &range, buffer);
 
       if (F_status_set_fine(status) == F_none_eol) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard does not support end of line character '", fll_error_print_error);
-        fl_color_print(data.error.to.stream, data.context.set.notable, "\\n");
-        fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol[0]);
+        fss_basic_write_error_parameter_unsupported_eol_print(data);
 
         return F_status_set_error(F_unsupported);
       }
 
-      if (status == F_data_not_stop || status == F_data_not_eos) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard requires an object.%c", fll_error_print_error, f_string_eol[0]);
-        return F_status_set_error(status);
-      }
-      else if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_list_object_write", F_true);
+      if (F_status_is_error(status)) {
+        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_object_write", F_true);
         return status;
       }
     }
@@ -83,6 +93,12 @@ extern "C" {
 
       status = fl_fss_basic_content_write(*content, object ? f_fss_complete_full : f_fss_complete_partial, &range, buffer);
 
+      if (F_status_set_fine(status) == F_none_eol) {
+        fss_basic_write_error_parameter_unsupported_eol_print(data);
+
+        return F_status_set_error(F_unsupported);
+      }
+
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_content_write", F_true);
         return status;
@@ -93,7 +109,7 @@ extern "C" {
       status = fl_string_append(f_string_eol, 1, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_content_write", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
         return status;
       }
     }
@@ -142,6 +158,8 @@ extern "C" {
           break;
         }
 
+        if (!block.used) break;
+
         range.start = 0;
         range.stop = block.used - 1;
       }
@@ -171,20 +189,26 @@ extern "C" {
             break;
           }
 
+          if (block.string[range.start] == fss_basic_write_pipe_content_end) {
+            state = 0x3;
+            range.start++;
+            break;
+          }
+
           object.string[object.used++] = block.string[range.start];
         } // for
 
         if (F_status_is_error(status)) break;
 
         // if the start of content was not found, then fetch the next block.
-        if (state != 0x2) continue;
+        if (state == 0x1) continue;
 
         // if the end of the current block is reached, fetch the next block.
         if (range.start > range.stop) continue;
       }
 
       if (state == 0x2) {
-        if (block.used && range.start <= range.stop) {
+        if (range.start <= range.stop) {
           total = (range.stop - range.start) + 1;
         }
         else {
@@ -204,7 +228,10 @@ extern "C" {
           for (; range.start <= range.stop; range.start++) {
 
             if (block.string[range.start] == fss_basic_write_pipe_content_start) {
-              fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard only supports one content per object.%c", fll_error_print_error, f_string_eol[0]);
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard only supports one content per object.%c", fll_error_print_error, f_string_eol[0]);
+              }
 
               status = F_status_set_error(F_unsupported);
               break;
@@ -212,6 +239,12 @@ extern "C" {
             else if (block.string[range.start] == fss_basic_write_pipe_content_end) {
               state = 0x3;
               range.start++;
+              break;
+            }
+            else if (F_status_set_fine(status) == F_none_eol) {
+              fss_basic_write_error_parameter_unsupported_eol_print(data);
+
+              status = F_status_set_error(F_unsupported);
               break;
             }
 
@@ -234,7 +267,7 @@ extern "C" {
     } // for
 
     // if the pipe ended before finishing, then attempt to wrap up.
-    if (status_pipe == F_none_eof && state) {
+    if (F_status_is_error_not(status) && status_pipe == F_none_eof && state) {
       status = fss_basic_write_process(data, output, quote, &object, &content, buffer);
     }
 

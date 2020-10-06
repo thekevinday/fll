@@ -26,12 +26,14 @@ extern "C" {
 
 #ifndef _di_fl_macro_fss_skip_past_delimit_placeholders_
   #define fl_macro_fss_skip_past_delimit_placeholders(buffer, range) \
-    while (buffer.string[range.start] == f_fss_delimit_placeholder) { \
-      range.start++;\
-      \
-      if (range.start >= buffer.used) break; \
-      if (range.start  > range.stop) break; \
-    } // while
+    if (buffer.used) { \
+      while (buffer.string[range.start] == f_fss_delimit_placeholder) { \
+        range.start++;\
+        \
+        if (range.start >= buffer.used) break; \
+        if (range.start > range.stop) break; \
+      } \
+    }
 #endif // _di_fl_macro_fss_skip_past_delimit_placeholders_
 
 #ifndef _di_fl_macro_fss_object_return_on_overflow_

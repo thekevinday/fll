@@ -129,9 +129,10 @@ extern "C" {
  *
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
- * @param quoted
- *   If 0, then double quotes are auto-inserted, when required.
- *   Otherwise, this is the type of quote to wrap the object in when writing.
+ * @param complete
+ *   If f_fss_complete_none, then only the object name is written.
+ *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this object.
+ *   If f_fss_complete_full, this will write any appropriate open and close aspects of this object.
  * @param range
  *   The start/stop location within the object string to write as an object.
  * @param destination
@@ -151,7 +152,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_basic_list_object_write_
-  extern f_return_status fl_fss_basic_list_object_write(const f_string_static_t object, const f_fss_quote_t quoted, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_return_status fl_fss_basic_list_object_write(const f_string_static_t object, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_basic_list_object_write_
 
 /**
@@ -171,6 +172,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_none_eol on success after reaching the end of the line.
  *   F_none_eos on success after reaching the end of the buffer.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.

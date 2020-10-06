@@ -98,7 +98,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    const f_status_t status = private_fl_fss_basic_object_write(object, quote ? quote : f_fss_delimit_quote_double, range, destination);
+    f_status_t status = private_fl_fss_basic_object_write(object, quote ? quote : f_fss_delimit_quote_double, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
@@ -108,16 +108,10 @@ extern "C" {
 
       destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
       destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
-
-      if (status == F_data_not_stop) {
-        return F_none_stop;
-      }
-
-      return F_none_eos;
     }
 
     if (complete == f_fss_complete_partial || complete == f_fss_complete_full) {
-      if (status == F_none_stop || status == F_none_eos) {
+      if (status == F_none_stop || status == F_none_eos || status == F_data_not_stop || status == F_data_not_eos) {
         const f_status_t status_allocation = private_fl_fss_destination_increase(destination);
         if (F_status_is_error(status_allocation)) return status_allocation;
 
@@ -165,7 +159,7 @@ extern "C" {
 
     for (; range->start <= range->stop && range->start < content.used; range->start++) {
 
-      if (content.string[range->start] == f_string_eol[0]) {
+      if (content.string[range->start] == f_fss_eol) {
         destination->used = used_start;
         return F_status_set_error(F_none_eol);
       }

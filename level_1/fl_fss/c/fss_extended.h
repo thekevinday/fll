@@ -152,12 +152,15 @@ extern "C" {
  *   F_none_stop on success after reaching the range stop.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
+ *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
  *   Errors (with error bit) from: f_fss_is_space().
+ *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_extended_object_write_
   extern f_return_status fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);
@@ -191,12 +194,15 @@ extern "C" {
  *   F_none_stop on success after reaching the range stop.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
+ *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
  *   Errors (with error bit) from: f_fss_is_space().
+ *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_extended_content_write_
   extern f_return_status fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quote_t quote, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);

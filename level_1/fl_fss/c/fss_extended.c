@@ -163,26 +163,20 @@ f_return_status fl_fss_extended_object_write(const f_string_static_t object, con
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    const f_status_t status = private_fl_fss_basic_object_write(object, quote ? quote : f_fss_delimit_quote_double, range, destination);
+    f_status_t status = private_fl_fss_basic_object_write(object, quote ? quote : f_fss_delimit_quote_double, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
       // Objects cannot be empty, so write a quoted empty string.
-      const f_status_t status_allocation = private_fl_fss_destination_increase_by(2, destination);
+      const f_status_t status_allocation = private_fl_fss_destination_increase_by(3, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
       destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
       destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
-
-      if (status == F_data_not_stop) {
-        return F_none_stop;
-      }
-
-      return F_none_eos;
     }
 
     if (complete == f_fss_complete_partial || complete == f_fss_complete_full) {
-      if (status == F_none_stop || status == F_none_eos) {
+      if (status == F_none_stop || status == F_none_eos || status == F_data_not_stop || status == F_data_not_eos) {
         const f_status_t status_allocation = private_fl_fss_destination_increase(destination);
         if (F_status_is_error(status_allocation)) return status_allocation;
 
@@ -206,6 +200,13 @@ f_return_status fl_fss_extended_object_write(const f_string_static_t object, con
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
       f_status_t status_allocation = F_none;
+
+      // content that is empty must be represented by a quoted empty string.
+      status_allocation = private_fl_fss_destination_increase_by(3, destination);
+      if (F_status_is_error(status_allocation)) return status_allocation;
+
+      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
+      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
 
       // content should be terminated, even if empty.
       if (complete == f_fss_complete_partial || complete == f_fss_complete_full || complete == f_fss_complete_next) {

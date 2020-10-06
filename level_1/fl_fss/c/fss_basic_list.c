@@ -395,141 +395,160 @@ extern "C" {
 #endif // _di_fl_fss_basic_list_content_read_
 
 #ifndef _di_fl_fss_basic_list_object_write_
-  f_return_status fl_fss_basic_list_object_write(const f_string_static_t object, const f_fss_quote_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_return_status fl_fss_basic_list_object_write(const f_string_static_t object, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
 
-    f_string_range_t buffer_position = f_string_range_t_initialize;
-    f_string_length_t start_position = f_string_t_initialize;
-    f_string_length_t start_buffer = 0;
-
     fl_macro_fss_skip_past_delimit_placeholders(object, (*range))
 
-    if (range->start > range->stop) return F_data_not_stop;
-    else if (range->start >= object.used) return F_data_not_eos;
-
-    start_position = range->start;
-
-    // ensure that there is room for the start and stop quotes or a slash delimit and the object open character.
-    f_string_length_t size_allocate = destination->used + (range->stop - range->start) + 3 + f_fss_default_allocation_step;
-
-    if (size_allocate > destination->size) {
-      f_macro_string_dynamic_t_resize(status, (*destination), size_allocate);
-      if (F_status_is_error(status)) return status;
+    if (range->start > range->stop) {
+      status = F_data_not_stop;
+    }
+    else if (range->start >= object.used) {
+      status = F_data_not_eos;
     }
 
-    buffer_position.start = destination->used;
-    buffer_position.stop = destination->used;
+    if (status == F_data_not_stop || status == F_data_not_eos) {
+      if (complete == f_fss_complete_partial || complete == f_fss_complete_full) {
+        const f_status_t status_allocation = private_fl_fss_destination_increase_by(2, destination);
+        if (F_status_is_error(status_allocation)) return status_allocation;
 
-    bool quote = quoted ? F_true : F_false;
+        destination->string[destination->used++] = f_fss_basic_list_open;
 
-    if (quoted) {
-      if (quoted == f_fss_quote_type_single) {
-        destination->string[destination->used] = f_fss_delimit_quote_single;
+        if (complete == f_fss_complete_full) {
+          destination->string[destination->used++] = f_fss_eol;
+        }
       }
-      else {
-        destination->string[destination->used] = f_fss_delimit_quote_double;
-      }
 
-      destination->used++;
+      return status;
     }
 
+    // ensure that there is room for a slash delimit, the object open character, and the end of line character.
+    status = private_fl_fss_destination_increase_by(destination->used + (range->stop - range->start) + 3, destination);
+    if (F_status_is_error(status)) return status;
+
+    const f_string_length_t input_start = range->start;
+    const f_string_length_t used_start = destination->used;
+
+    f_string_length_t i = 0;
+
+    uint8_t width = 0;
+
+    // find the first graph character.
     while (range->start <= range->stop && range->start < object.used) {
 
       if (object.string[range->start] == f_fss_comment) {
+        // @todo the standard may be updated to allow escaping comments.
         // comments are not allowed and this format has no way of "wrapping" a comment.
-        return F_status_set_error(FL_fss_found_comment);
-      }
-      else if ((status = f_fss_is_graph(object, *range)) == F_true) {
+        status = F_status_set_error(FL_fss_found_comment);
         break;
       }
-      else if (F_status_is_error(status)) {
-        return status;
-      }
+
+      status = f_fss_is_graph(object, *range);
+      if (F_status_is_error(status)) break;
+
+      if (status == F_true) break;
 
       if (object.string[range->start] != f_fss_delimit_placeholder) {
-        destination->string[buffer_position.stop] = object.string[range->start];
-        buffer_position.stop++;
+        width = f_macro_utf_byte_width(object.string[range->start]);
+
+        status = private_fl_fss_destination_increase_by(width, destination);
+        if (F_status_is_error(status)) break;
+
+        for (i = 0; i < width; i++) {
+          destination->string[destination->used++] = object.string[range->start + i];
+        } // for
       }
 
       status = f_utf_buffer_increment(object, range, 1);
-      if (F_status_is_error(status)) return status;
+      if (F_status_is_error(status)) break;
     } // while
+
+    if (F_status_is_error(status)) {
+      destination->used = used_start;
+      return status;
+    }
 
     while (range->start <= range->stop && range->start < object.used) {
 
       if (object.string[range->start] == f_fss_delimit_slash) {
         f_string_length_t slash_count = 1;
 
-        destination->string[buffer_position.stop] = object.string[range->start];
-        buffer_position.stop++;
-
-        status = f_utf_buffer_increment(object, range, 1);
-        if (F_status_is_error(status)) return status;
+        destination->string[destination->used++] = object.string[range->start];
+        range->start++;
 
         while (range->start <= range->stop && range->start < object.used) {
 
           if (object.string[range->start] == f_fss_delimit_placeholder) {
-            status = f_utf_buffer_increment(object, range, 1);
-            if (F_status_is_error(status)) return status;
-
+            range->start++;
             continue;
           } else if (object.string[range->start] != f_fss_delimit_slash) {
             break;
           }
 
-          destination->string[buffer_position.stop] = object.string[range->start];
-          buffer_position.stop++;
+          destination->string[destination->used++] = object.string[range->start];
 
-          status = f_utf_buffer_increment(object, range, 1);
-          if (F_status_is_error(status)) return status;
-
+          range->start++;
           slash_count++;
         } // while
 
-        if (range->start > range->stop || range->start >= object.used) {
-          size_allocate += slash_count;
+        if (F_status_is_error(status)) break;
 
-          if (size_allocate > destination->size) {
-            f_macro_string_dynamic_t_resize(status, (*destination), size_allocate + f_fss_default_allocation_step);
-            if (F_status_is_error(status)) return status;
-          }
+        if (range->start > range->stop || range->start >= object.used) {
+          status = private_fl_fss_destination_increase_by(slash_count, destination);
+          if (F_status_is_error(status)) break;
 
           while (slash_count > 0) {
-            destination->string[buffer_position.stop] = f_fss_delimit_slash;
-            buffer_position.stop++;
+            destination->string[destination->used++] = f_fss_delimit_slash;
             slash_count--;
           } // while
 
           break;
         }
       }
-      else if (object.string[range->start] == f_string_eol[0]) {
-        if (buffer_position.stop == buffer_position.start) {
+      else if (object.string[range->start] == f_fss_eol) {
+        if (destination->used == used_start) {
           return F_data_not_eol;
         }
 
-        break;
+        return F_none_eol;
       }
 
       if (object.string[range->start] != f_fss_delimit_placeholder) {
-        destination->string[buffer_position.stop] = object.string[range->start];
-        buffer_position.stop++;
+        width = f_macro_utf_byte_width(object.string[range->start]);
+
+        status = private_fl_fss_destination_increase_by(width, destination);
+        if (F_status_is_error(status)) break;
+
+        for (i = 0; i < width; i++) {
+          destination->string[destination->used++] = object.string[range->start + i];
+        } // for
       }
 
       status = f_utf_buffer_increment(object, range, 1);
-      if (F_status_is_error(status)) return status;
+      if (F_status_is_error(status)) break;
     } // while
 
-    destination->string[buffer_position.stop] = f_fss_basic_list_open;
-    destination->string[buffer_position.stop + 1] = f_string_eol[0];
-    destination->used = buffer_position.stop + 2;
+    if (F_status_is_error(status)) {
+      destination->used = used_start;
+      return status;
+    }
 
-    if (range->start > range->stop) return F_none_stop;
-    else if (range->start >= object.used) return F_none_eos;
+    if (complete == f_fss_complete_partial || complete == f_fss_complete_full) {
+      destination->string[destination->used++] = f_fss_basic_list_open;
+      destination->string[destination->used++] = f_fss_eol;
+    }
+
+    if (range->start > range->stop) {
+      return F_none_stop;
+    }
+
+    if (range->start >= object.used) {
+      return F_none_eos;
+    }
 
     return F_none;
   }
@@ -538,6 +557,7 @@ extern "C" {
 #ifndef _di_fl_fss_basic_list_content_write_
   f_return_status fl_fss_basic_list_content_write(const f_string_static_t content, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
+      if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 

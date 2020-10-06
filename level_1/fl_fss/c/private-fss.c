@@ -532,7 +532,9 @@ extern "C" {
       quoted = F_true;
     }
 
-    for (; range->start <= range->stop && range->start < object.used; range->start++) {
+    uint8_t width = 0;
+
+    for (; range->start <= range->stop && range->start < object.used; ) {
 
       if (object.string[range->start] == f_fss_delimit_slash) {
         item_first = range->start++;
@@ -614,7 +616,15 @@ extern "C" {
           } // for
 
           destination->string[destination->used++] = quote;
-          destination->string[destination->used++] = object.string[range->start];
+
+          width = f_macro_utf_byte_width(object.string[range->start]);
+
+          status = private_fl_fss_destination_increase_by(width, destination);
+          if (F_status_is_error(status)) break;
+
+          for (i = 0; i < width; i++) {
+            destination->string[destination->used++] = object.string[range->start + i];
+          } // for
         }
         else {
 
@@ -631,7 +641,14 @@ extern "C" {
             destination->string[destination->used++] = f_fss_delimit_slash;
           } // for
 
-          destination->string[destination->used++] = object.string[range->start];
+          width = f_macro_utf_byte_width(object.string[range->start]);
+
+          status = private_fl_fss_destination_increase_by(width, destination);
+          if (F_status_is_error(status)) break;
+
+          for (i = 0; i < width; i++) {
+            destination->string[destination->used++] = object.string[range->start + i];
+          } // for
         }
       }
       else if (object.string[range->start] == quote) {
@@ -652,8 +669,7 @@ extern "C" {
         if (object.string[range->start] == quote) {
           destination->string[destination->used++] = quote;
 
-          // the next quote must also be checked.
-          range->start--;
+          // the next quote must also be checked, so do not increment.
           continue;
         }
 
@@ -673,7 +689,15 @@ extern "C" {
         }
 
         destination->string[destination->used++] = quote;
-        destination->string[destination->used++] = object.string[range->start];
+
+        width = f_macro_utf_byte_width(object.string[range->start]);
+
+        status = private_fl_fss_destination_increase_by(width, destination);
+        if (F_status_is_error(status)) break;
+
+        for (i = 0; i < width; i++) {
+          destination->string[destination->used++] = object.string[range->start + i];
+        } // for
       }
       else if (object.string[range->start] == f_fss_eol) {
         status = F_status_set_error(F_none_eol);
@@ -690,8 +714,18 @@ extern "C" {
           }
         }
 
-        destination->string[destination->used++] = object.string[range->start];
+        width = f_macro_utf_byte_width(object.string[range->start]);
+
+        status = private_fl_fss_destination_increase_by(width, destination);
+        if (F_status_is_error(status)) break;
+
+        for (i = 0; i < width; i++) {
+          destination->string[destination->used++] = object.string[range->start + i];
+        } // for
       }
+
+      status = f_utf_buffer_increment(object, range, 1);
+      if (F_status_is_error(status)) break;
     } // for
 
     if (F_status_is_error(status)) {
@@ -737,7 +771,7 @@ extern "C" {
   }
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
 
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
   f_return_status private_fl_fss_destination_increase(f_string_dynamic_t *destination) {
     f_status_t status = F_none;
 
@@ -756,9 +790,9 @@ extern "C" {
 
     return status;
   }
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
 
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
   f_return_status private_fl_fss_destination_increase_by(const f_string_length_t amount, f_string_dynamic_t *destination) {
     f_status_t status = F_none;
 
@@ -772,7 +806,7 @@ extern "C" {
 
     return status;
   }
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
 
 #ifdef __cplusplus
 } // extern "C"
