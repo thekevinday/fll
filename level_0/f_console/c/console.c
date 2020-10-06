@@ -221,7 +221,6 @@ extern "C" {
             parameters.parameter[i].result = f_console_result_found;
             parameters.parameter[i].location = location;
             parameters.parameter[i].location_sub = 0;
-            parameters.parameter[i].total++;
 
             if (result == console_short) {
               parameters.parameter[i].location_sub = sub_location;
@@ -287,7 +286,6 @@ extern "C" {
           parameters.parameter[i].result = f_console_result_found;
           parameters.parameter[i].location = location;
           parameters.parameter[i].location_sub = 0;
-          parameters.parameter[i].total++;
 
           if (parameters.parameter[i].has_additional) {
             if (needs_additional.used + parameters.parameter[i].has_additional > needs_additional.size) {

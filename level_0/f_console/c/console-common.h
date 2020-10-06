@@ -215,7 +215,6 @@ extern "C" {
  * - type: One of the f_console_type_* codes, defining how this parameter is to be processed.
  *
  * - result: A code representing that the parameter is found and how it is found ('-h' vs '--help').
- * - total: A number representing the total number of times this parameter is found ('-h -h' would result in a total of 2).
  *
  * - location: The last location in argv[] where this parameter is found.
  * - location_sub: The last sub-location at location in argv (only used by short parameters, such as -h or +l).
@@ -232,19 +231,17 @@ extern "C" {
     const uint8_t has_additional;
     const uint8_t type;
 
-    uint8_t result;
-    uint8_t total; // @todo locations.used could instead be used to represent the total.
-
-    f_array_length_t  location;
+    f_array_length_t result;
+    f_array_length_t location;
     f_string_length_t location_sub;
     f_array_lengths_t locations;
     f_array_lengths_t locations_sub;
     f_array_lengths_t additional;
   } f_console_parameter_t;
 
-  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
+  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
 
-  #define f_macro_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, locations_sub, additional) { symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, locations_sub, additional }
+  #define f_macro_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value, result, location, location_sub, locations, locations_sub, additional) { symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, locations_sub, additional }
 #endif // _di_f_console_parameter_t_
 
 /**

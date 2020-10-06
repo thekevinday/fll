@@ -623,7 +623,7 @@ extern "C" {
           return F_status_set_error(F_parameter);
         }
         else if (data->parameters[parameters_id[i]].result == f_console_result_additional) {
-          if (data->parameters[parameters_id[i]].total > 1) {
+          if (data->parameters[parameters_id[i]].locations.used > 1) {
             fake_print_error_parameter_too_many(*data, parameters_name[i]);
             return F_status_set_error(F_parameter);
           }

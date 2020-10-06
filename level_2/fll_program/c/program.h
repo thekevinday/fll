@@ -232,7 +232,7 @@ extern "C" {
  * @see fl_string_append()
  */
 #ifndef _di_fll_program_parameter_additional_append_
-  extern f_return_status fll_program_parameter_additional_append(const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamics_t *destination);
+  extern f_return_status fll_program_parameter_additional_append(const f_string_t *argv, const f_array_lengths_t additional, f_string_dynamics_t *destination);
 #endif // _di_fll_program_parameter_additional_append_
 
 /**
@@ -262,7 +262,7 @@ extern "C" {
  * @see fl_string_mash()
  */
 #ifndef _di_fll_program_parameter_additional_mash_
-  extern f_return_status fll_program_parameter_additional_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamic_t *destination);
+  extern f_return_status fll_program_parameter_additional_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t additional, f_string_dynamic_t *destination);
 #endif // _di_fll_program_parameter_additional_mash_
 
 /**
@@ -289,7 +289,7 @@ extern "C" {
  * @see fl_string_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_
-  extern f_return_status fll_program_parameter_additional_rip(const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamics_t *destination);
+  extern f_return_status fll_program_parameter_additional_rip(const f_string_t *argv, const f_array_lengths_t additional, f_string_dynamics_t *destination);
 #endif // _di_fll_program_parameter_additional_rip_
 
 /**
@@ -323,7 +323,7 @@ extern "C" {
  * @see fl_string_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_mash_
-  extern f_return_status fll_program_parameter_additional_rip_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_string_lengths_t additional, f_string_dynamic_t *destination);
+  extern f_return_status fll_program_parameter_additional_rip_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t additional, f_string_dynamic_t *destination);
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
 #ifdef __cplusplus
