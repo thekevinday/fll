@@ -182,39 +182,10 @@ extern "C" {
       status = fll_fss_extended_read(&data->buffer, &input, &data->objects, &data->contents, 0, 0);
 
       if (F_status_is_error(status)) {
-        status = F_status_set_fine(status);
+        // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
+        fll_error_file_print(data->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, filename, "process", fll_error_file_type_file);
 
-        if (status == F_parameter) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sInvalid parameter when calling ", fll_error_print_error);
-          fl_color_print(data->error.to.stream, data->context.set.notable, "fll_fss_extended_read()");
-          fl_color_print(data->error.to.stream, data->context.set.error, " for the file '");
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%s", filename);
-          fl_color_print(data->error.to.stream, data->context.set.error, "'.%c", f_string_eol[0]);
-        }
-        else if (status == F_memory_allocation || status == F_memory_reallocation) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);
-        }
-        else if (status == F_incomplete_utf_stop) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sError occurred on invalid UTF-8 character at stop position (at ", fll_error_print_error);
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%d", input.start);
-          fl_color_print(data->error.to.stream, data->context.set.error, ").%c", f_string_eol[0]);
-        }
-        else if (status == F_incomplete_utf_eos) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sError occurred on invalid UTF-8 character at end of string (at ", fll_error_print_error);
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%d", input.start);
-          fl_color_print(data->error.to.stream, data->context.set.error, ").%c", f_string_eol[0]);
-        }
-        else {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sAn unhandled error (", fll_error_print_error);
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%u", status);
-          fl_color_print(data->error.to.stream, data->context.set.error, ") has occurred while calling ");
-          fl_color_print(data->error.to.stream, data->context.set.notable, "fll_fss_extended_read()");
-          fl_color_print(data->error.to.stream, data->context.set.error, " for the file '");
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%s", filename);
-          fl_color_print(data->error.to.stream, data->context.set.error, "'.%c", f_string_eol[0]);
-        }
-
-        return F_status_set_error(status);
+        return status;
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
         if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
@@ -349,20 +320,20 @@ extern "C" {
 
               if (data->parameters[fss_extended_read_parameter_content].result == f_console_result_found) {
                 if (data->contents.array[i].used) {
-                  fprintf(f_type_output, "%c", f_fss_space);
+                  fss_extended_read_print_object_end(*data);
 
                   for (j = 0; j < data->contents.array[i].used; j++) {
 
                     f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
                     if (j + 1 < data->contents.array[i].used) {
-                      fprintf(f_type_output, "%c", f_fss_space);
+                      fss_extended_read_print_content_end(*data);
                     }
                   } // for
                 }
               }
 
-              fprintf(f_type_output, "%c", f_fss_eol);
+              fss_extended_read_print_set_end(*data);
               break;
             }
 
@@ -380,20 +351,20 @@ extern "C" {
 
         if (data->parameters[fss_extended_read_parameter_content].result == f_console_result_found) {
           if (data->contents.array[i].used) {
-            fprintf(f_type_output, "%c", f_fss_space);
+            fss_extended_read_print_object_end(*data);
 
             for (j = 0; j < data->contents.array[i].used; j++) {
 
               f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
               if (j + 1 < data->contents.array[i].used) {
-                fprintf(f_type_output, "%c", f_fss_space);
+                fss_extended_read_print_content_end(*data);
               }
             } // for
           }
         }
 
-        fprintf(f_type_output, "%c", f_fss_eol);
+        fss_extended_read_print_set_end(*data);
       } // for
 
       return F_none;
@@ -433,7 +404,7 @@ extern "C" {
                   if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                     if (select < data->contents.array[i].used) {
                       f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
-                      fprintf(f_type_output, "%c", f_string_eol[0]);
+                      fss_extended_read_print_set_end(*data);
                     }
                   }
                   else {
@@ -441,21 +412,21 @@ extern "C" {
                       f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
                       if (j + 1 < data->contents.array[i].used) {
-                        printf(" ");
+                        fss_extended_read_print_content_end(*data);
                       }
                     } // for
 
-                    fprintf(f_type_output, "%c", f_string_eol[0]);
+                    fss_extended_read_print_set_end(*data);
                   }
                 }
                 else if (include_empty) {
                   if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                     if (!select) {
-                      fprintf(f_type_output, "%c", f_string_eol[0]);
+                      fss_extended_read_print_set_end(*data);
                     }
                   }
                   else {
-                    fprintf(f_type_output, "%c", f_string_eol[0]);
+                    fss_extended_read_print_set_end(*data);
                   }
                 }
               }
@@ -469,7 +440,7 @@ extern "C" {
               if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                 if (select < data->contents.array[i].used) {
                   f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
-                  fprintf(f_type_output, "%c", f_string_eol[0]);
+                  fss_extended_read_print_set_end(*data);
                 }
               }
               else {
@@ -477,21 +448,21 @@ extern "C" {
                   f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
                   if (j + 1 < data->contents.array[i].used) {
-                    printf(" ");
+                    fss_extended_read_print_content_end(*data);
                   }
                 } // for
 
-                fprintf(f_type_output, "%c", f_string_eol[0]);
+                fss_extended_read_print_set_end(*data);
               }
             }
             else if (include_empty) {
               if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
                 if (!select) {
-                  fprintf(f_type_output, "%c", f_string_eol[0]);
+                  fss_extended_read_print_set_end(*data);
                 }
               }
               else {
-                fprintf(f_type_output, "%c", f_string_eol[0]);
+                fss_extended_read_print_set_end(*data);
               }
             }
 
@@ -533,7 +504,7 @@ extern "C" {
         if (!data->contents.array[i].used) {
           if (include_empty) {
             if (line_current == line) {
-              fprintf(f_type_output, "%c", f_string_eol[0]);
+              fss_extended_read_print_set_end(*data);
               break;
             }
 
@@ -547,7 +518,7 @@ extern "C" {
           if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
             if (select < data->contents.array[i].used) {
               f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
-              fprintf(f_type_output, "%c", f_string_eol[0]);
+              fss_extended_read_print_set_end(*data);
             }
           }
           else {
@@ -555,11 +526,11 @@ extern "C" {
               f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
               if (j + 1 < data->contents.array[i].used) {
-                printf(" ");
+                fss_extended_read_print_content_end(*data);
               }
             } // for
 
-            fprintf(f_type_output, "%c", f_string_eol[0]);
+            fss_extended_read_print_set_end(*data);
           }
 
           break;
@@ -576,7 +547,7 @@ extern "C" {
 
       if (!data->contents.array[i].used) {
         if (include_empty && !select) {
-          fprintf(f_type_output, "%c", f_string_eol[0]);
+          fss_extended_read_print_set_end(*data);
         }
 
         continue;
@@ -585,7 +556,7 @@ extern "C" {
       if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
         if (select < data->contents.array[i].used) {
           f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[select]);
-          fprintf(f_type_output, "%c", f_string_eol[0]);
+          fss_extended_read_print_set_end(*data);
         }
       }
       else {
@@ -593,17 +564,53 @@ extern "C" {
           f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[j]);
 
           if (j + 1 < data->contents.array[i].used) {
-            printf(" ");
+            fss_extended_read_print_content_end(*data);
           }
         } // for
 
-        fprintf(f_type_output, "%c", f_string_eol[0]);
+        fss_extended_read_print_set_end(*data);
       }
     } // for
 
     return F_none;
   }
 #endif // _di_fss_extended_read_main_process_file_
+
+#ifndef _di_fss_extended_read_print_object_end_
+  void fss_extended_read_print_object_end(const fss_extended_read_data_t data) {
+
+    if (data.parameters[fss_extended_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(data.output.stream, "%c", fss_extended_read_pipe_content_start);
+    }
+    else {
+      fprintf(data.output.stream, "%c", f_fss_space);
+    }
+  }
+#endif // _di_fss_extended_read_print_object_end_
+
+#ifndef _di_fss_extended_read_print_content_end_
+  void fss_extended_read_print_content_end(const fss_extended_read_data_t data) {
+
+    if (data.parameters[fss_extended_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(data.output.stream, "%c", fss_extended_read_pipe_content_start);
+    }
+    else {
+      fprintf(data.output.stream, "%c", f_fss_space);
+    }
+  }
+#endif // _di_fss_extended_read_print_content_end_
+
+#ifndef _di_fss_extended_read_print_set_end_
+  void fss_extended_read_print_set_end(const fss_extended_read_data_t data) {
+
+    if (data.parameters[fss_extended_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(data.output.stream, "%c", fss_extended_read_pipe_content_end);
+    }
+    else {
+      fprintf(data.output.stream, "%c", f_fss_eol);
+    }
+  }
+#endif // _di_fss_extended_read_print_set_end_
 
 #ifdef __cplusplus
 } // extern "C"

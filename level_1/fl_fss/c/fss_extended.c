@@ -19,7 +19,7 @@ extern "C" {
     f_status_t status = F_none;
     f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
-    status = private_fl_fss_basic_object_read(buffer, range, found, quoted, &delimits);
+    status = private_fl_fss_basic_read(F_true, buffer, range, found, quoted, &delimits);
 
     if (F_status_is_error(status)) {
       f_macro_string_lengths_t_delete_simple(delimits);
@@ -74,7 +74,7 @@ extern "C" {
       f_string_range_t content_partial = f_string_range_t_initialize;
       f_fss_quote_t quoted = 0;
 
-      status = private_fl_fss_basic_object_read(buffer, range, &content_partial, &quoted, &delimits);
+      status = private_fl_fss_basic_read(F_false, buffer, range, &content_partial, &quoted, &delimits);
 
       if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
         if (found->used == found->size) {
@@ -163,12 +163,12 @@ f_return_status fl_fss_extended_object_write(const f_string_static_t object, con
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = private_fl_fss_basic_object_write(object, quote ? quote : f_fss_delimit_quote_double, range, destination);
+    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
       // Objects cannot be empty, so write a quoted empty string.
-      const f_status_t status_allocation = private_fl_fss_destination_increase_by(3, destination);
+      const f_status_t status_allocation = private_fl_fss_destination_increase_by(2, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
       destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
@@ -196,13 +196,12 @@ f_return_status fl_fss_extended_object_write(const f_string_static_t object, con
     #endif // _di_level_1_parameter_checking_
 
     // this operates exactly like an object, syntax-wise.
-    const f_status_t status = private_fl_fss_basic_object_write(content, quote ? quote : f_fss_delimit_quote_double, range, destination);
+    const f_status_t status = private_fl_fss_basic_write(F_false, content, quote ? quote : f_fss_delimit_quote_double, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
-      f_status_t status_allocation = F_none;
 
       // content that is empty must be represented by a quoted empty string.
-      status_allocation = private_fl_fss_destination_increase_by(3, destination);
+      const f_status_t status_allocation = private_fl_fss_destination_increase_by(4, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
       destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
@@ -210,16 +209,10 @@ f_return_status fl_fss_extended_object_write(const f_string_static_t object, con
 
       // content should be terminated, even if empty.
       if (complete == f_fss_complete_partial || complete == f_fss_complete_full || complete == f_fss_complete_next) {
-        status_allocation = private_fl_fss_destination_increase(destination);
-        if (F_status_is_error(status_allocation)) return status_allocation;
-
         destination->string[destination->used++] = f_fss_extended_next;
       }
 
       if (complete == f_fss_complete_full || complete == f_fss_complete_end) {
-        status_allocation = private_fl_fss_destination_increase(destination);
-        if (F_status_is_error(status_allocation)) return status_allocation;
-
         destination->string[destination->used++] = f_fss_extended_close;
       }
 
@@ -231,19 +224,14 @@ f_return_status fl_fss_extended_object_write(const f_string_static_t object, con
     }
 
     if (F_status_is_error_not(status)) {
-      f_status_t status_allocation = F_none;
+      const f_status_t status_allocation = private_fl_fss_destination_increase_by(2, destination);
+      if (F_status_is_error(status_allocation)) return status_allocation;
 
       if (complete == f_fss_complete_partial || complete == f_fss_complete_full || complete == f_fss_complete_next) {
-        status_allocation = private_fl_fss_destination_increase(destination);
-        if (F_status_is_error(status_allocation)) return status_allocation;
-
         destination->string[destination->used++] = f_fss_extended_next;
       }
 
       if (complete == f_fss_complete_full || complete == f_fss_complete_end) {
-        status_allocation = private_fl_fss_destination_increase(destination);
-        if (F_status_is_error(status_allocation)) return status_allocation;
-
         destination->string[destination->used++] = f_fss_extended_close;
       }
     }

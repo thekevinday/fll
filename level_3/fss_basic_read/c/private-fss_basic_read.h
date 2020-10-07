@@ -195,6 +195,26 @@ extern "C" {
   extern f_return_status fss_basic_read_main_process_file(const f_console_arguments_t arguments, fss_basic_read_data_t *data, const f_string_t file_name, const fss_basic_read_depths_t depths) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_basic_read_main_process_file_
 
+/**
+ * Print the end of an object (which is essentially the start of a content).
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_basic_read_print_object_end_
+  extern void fss_basic_read_print_object_end(const fss_basic_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_basic_read_print_object_end_
+
+/**
+ * Print the end of an object/content set.
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_basic_read_print_set_end_
+  extern void fss_basic_read_print_set_end(const fss_basic_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_basic_read_print_set_end_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

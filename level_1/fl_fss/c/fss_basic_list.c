@@ -441,9 +441,12 @@ extern "C" {
     while (range->start <= range->stop && range->start < object.used) {
 
       if (object.string[range->start] == f_fss_comment) {
-        // @todo the standard may be updated to allow escaping comments.
-        // comments are not allowed and this format has no way of "wrapping" a comment.
-        status = F_status_set_error(FL_fss_found_comment);
+
+        // when a comment is found, escape it.
+        status = private_fl_fss_destination_increase(destination);
+        if (F_status_is_error(status)) break;
+
+        destination->string[destination->used++] = f_fss_delimit_slash;
         break;
       }
 

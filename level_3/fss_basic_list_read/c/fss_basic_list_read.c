@@ -29,6 +29,7 @@ extern "C" {
     fll_program_print_help_option(file, context, fss_basic_list_read_short_line, fss_basic_list_read_long_line, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print only the content at the given line.");
     fll_program_print_help_option(file, context, fss_basic_list_read_short_name, fss_basic_list_read_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Select object with this name.");
     fll_program_print_help_option(file, context, fss_basic_list_read_short_object, fss_basic_list_read_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Print the object.");
+    fll_program_print_help_option(file, context, fss_basic_list_read_short_pipe, fss_basic_list_read_long_pipe, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print using the special pipe format.");
     fll_program_print_help_option(file, context, fss_basic_list_read_short_select, fss_basic_list_read_long_select, f_console_symbol_short_enable, f_console_symbol_long_enable, "  Select sub-content at this index.");
     fll_program_print_help_option(file, context, fss_basic_list_read_short_total, fss_basic_list_read_long_total, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print the total number of lines.");
     fll_program_print_help_option(file, context, fss_basic_list_read_short_trim, fss_basic_list_read_long_trim, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Trim object names on select or print.");
@@ -209,71 +210,64 @@ extern "C" {
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_at);
         fl_color_print(data->error.to.stream, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
-        fss_basic_list_read_delete_data(data);
-        return F_status_set_error(F_parameter);
+        status = F_status_set_error(F_parameter);
       }
 
-      if (data->parameters[fss_basic_list_read_parameter_depth].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && data->parameters[fss_basic_list_read_parameter_depth].result == f_console_result_found) {
         fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
         fl_color_print(data->error.to.stream, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
-        fss_basic_list_read_delete_data(data);
-        return F_status_set_error(F_parameter);
+        status = F_status_set_error(F_parameter);
       }
 
-      if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_found) {
         fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_line);
         fl_color_print(data->error.to.stream, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
-        fss_basic_list_read_delete_data(data);
-        return F_status_set_error(F_parameter);
+        status = F_status_set_error(F_parameter);
       }
 
-      if (data->parameters[fss_basic_list_read_parameter_name].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && data->parameters[fss_basic_list_read_parameter_name].result == f_console_result_found) {
         fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
         fl_color_print(data->error.to.stream, data->context.set.error, "' requires a string.%c", f_string_eol[0]);
 
-        fss_basic_list_read_delete_data(data);
-        return F_status_set_error(F_parameter);
+        status = F_status_set_error(F_parameter);
       }
 
-      if (data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_found) {
         fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
         fl_color_print(data->error.to.stream, data->context.set.error, "' requires a positive number.%c", f_string_eol[0]);
 
-        fss_basic_list_read_delete_data(data);
-        return F_status_set_error(F_parameter);
+        status = F_status_set_error(F_parameter);
       }
 
       if (data->parameters[fss_basic_list_read_parameter_object].result == f_console_result_found) {
-        if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
+        if (F_status_is_error_not(status) && data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_object);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_line);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
 
-          fss_basic_list_read_delete_data(data);
-          return F_status_set_error(F_parameter);
+          status = F_status_set_error(F_parameter);
         }
 
-        if (data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_additional) {
+        if (F_status_is_error_not(status) && data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_additional) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_object);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
 
-          fss_basic_list_read_delete_data(data);
-          return F_status_set_error(F_parameter);
+          status = F_status_set_error(F_parameter);
         }
 
         if (data->parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {
-          if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
+          if (F_status_is_error_not(status) && data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
             fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify both the '", fll_error_print_error);
             fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_object);
             fl_color_print(data->error.to.stream, data->context.set.error, "' and the '");
@@ -282,64 +276,68 @@ extern "C" {
             fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_total);
             fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
 
-            fss_basic_list_read_delete_data(data);
-            return F_status_set_error(F_parameter);
+            status = F_status_set_error(F_parameter);
           }
         }
       }
 
       if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
-        if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
+        if (F_status_is_error_not(status) && data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_line);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_total);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
 
-          fss_basic_list_read_delete_data(data);
-          return F_status_set_error(F_parameter);
+          status = F_status_set_error(F_parameter);
+        }
+      }
+
+      if (data->parameters[fss_basic_list_read_parameter_pipe].result == f_console_result_found) {
+        if (F_status_is_error_not(status) && data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_pipe);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_total);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+
+          status = F_status_set_error(F_parameter);
         }
       }
 
       fss_basic_list_read_depths_t depths = fss_basic_list_read_depths_t_initialize;
 
-      f_string_length_t counter = 0;
       f_string_length_t original_size = data->quantity.total;
 
-      status = fss_basic_list_read_main_preprocess_depth(arguments, *data, &depths);
+      if (F_status_is_error_not(status)) {
+        status = fss_basic_list_read_main_preprocess_depth(arguments, *data, &depths);
 
-      if (F_status_is_error(status)) {
-        macro_fss_basic_list_read_depths_t_delete_simple(depths);
-        fss_basic_list_read_delete_data(data);
-        return status;
+        if (F_status_is_error(status)) {
+          fll_error_print(data->error, F_status_set_fine(status), "fss_basic_list_read_main_preprocess_depth", F_true);
+        }
       }
 
       // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
-      if (depths.array[0].depth > 0) {
+      if (F_status_is_error_not(status) && depths.array[0].depth > 0) {
         macro_fss_basic_list_read_depths_t_delete_simple(depths);
 
         if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
           fprintf(f_type_output, "0%c", f_string_eol[0]);
-
-          fss_basic_list_read_delete_data(data);
-          return F_none;
         }
 
         fss_basic_list_read_delete_data(data);
         return F_none;
       }
 
-      if (data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && data->parameters[fss_basic_list_read_parameter_select].result == f_console_result_found) {
         fl_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_select);
         fl_color_print(data->error.to.stream, data->context.set.error, "' parameter requires a positive number.%c", f_string_eol[0]);
 
-        macro_fss_basic_list_read_depths_t_delete_simple(depths);
-        fss_basic_list_read_delete_data(data);
-        return F_status_set_error(F_parameter);
+        status = F_status_set_error(F_parameter);
       }
 
-      if (data->process_pipe) {
+      if (F_status_is_error_not(status) && data->process_pipe) {
         f_file_t file = f_file_t_initialize;
 
         file.id = f_type_descriptor_input;
@@ -347,19 +345,14 @@ extern "C" {
         status = f_file_read(file, &data->buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read", F_true, "-", "read", fll_error_file_type_file);
-
-          macro_fss_basic_list_read_depths_t_delete_simple(depths);
-          fss_basic_list_read_delete_data(data);
-          return status;
+          fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read", F_true, "-", "read", fll_error_file_type_pipe);
         }
+        else {
+          status = fss_basic_list_read_main_process_file(arguments, data, "-", depths);
 
-        status = fss_basic_list_read_main_process_file(arguments, data, "-", depths);
-
-        if (F_status_is_error(status)) {
-          macro_fss_basic_list_read_depths_t_delete_simple(depths);
-          fss_basic_list_read_delete_data(data);
-          return status;
+          if (F_status_is_error(status)) {
+            fll_error_file_print(data->error, F_status_set_fine(status), "fss_basic_list_read_main_process_file", F_true, "-", "read", fll_error_file_type_pipe);
+          }
         }
 
         // Clear buffers before continuing.
@@ -368,32 +361,27 @@ extern "C" {
         f_macro_string_dynamic_t_delete_simple(data->buffer);
       }
 
-      if (data->remaining.used > 0) {
-        for (; counter < data->remaining.used; counter++) {
+      if (F_status_is_error_not(status) && data->remaining.used > 0) {
+        for (f_array_length_t i = 0; i < data->remaining.used; i++) {
           f_file_t file = f_file_t_initialize;
 
-          status = f_file_open(arguments.argv[data->remaining.array[counter]], 0, &file);
+          status = f_file_open(arguments.argv[data->remaining.array[i]], 0, &file);
 
           data->quantity.total = original_size;
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_open", F_true, arguments.argv[data->remaining.array[counter]], "open", fll_error_file_type_file);
-
-            macro_fss_basic_list_read_depths_t_delete_simple(depths);
-            fss_basic_list_read_delete_data(data);
-            return status;
+            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_open", F_true, arguments.argv[data->remaining.array[i]], "open", fll_error_file_type_file);
+            break;
           }
 
           if (!data->quantity.total) {
             status = f_file_size_by_id(file.id, &data->quantity.total);
+
             if (F_status_is_error(status)) {
-              fll_error_file_print(data->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments.argv[data->remaining.array[counter]], "read", fll_error_file_type_file);
+              fll_error_file_print(data->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments.argv[data->remaining.array[i]], "read", fll_error_file_type_file);
 
               f_file_stream_close(F_true, &file);
-
-              macro_fss_basic_list_read_depths_t_delete_simple(depths);
-              fss_basic_list_read_delete_data(data);
-              return status;
+              break;
             }
 
             // Skip past empty files.
@@ -412,19 +400,15 @@ extern "C" {
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments.argv[data->remaining.array[counter]], "read", fll_error_file_type_file);
-
-            macro_fss_basic_list_read_depths_t_delete_simple(depths);
-            fss_basic_list_read_delete_data(data);
-            return status;
+            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments.argv[data->remaining.array[i]], "read", fll_error_file_type_file);
+            break;
           }
 
-          status = fss_basic_list_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[counter]], depths);
+          status = fss_basic_list_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[i]], depths);
 
           if (F_status_is_error(status)) {
-            macro_fss_basic_list_read_depths_t_delete_simple(depths);
-            fss_basic_list_read_delete_data(data);
-            return status;
+            fll_error_file_print(data->error, F_status_set_fine(status), "fss_basic_list_read_main_process_file", F_true, arguments.argv[data->remaining.array[i]], "read", fll_error_file_type_file);
+            break;
           }
 
           // Clear buffers before repeating the loop.
@@ -432,6 +416,12 @@ extern "C" {
           f_macro_fss_objects_t_delete_simple(data->objects);
           f_macro_string_dynamic_t_delete_simple(data->buffer);
         } // for
+
+        if (F_status_is_error(status)) {
+          f_macro_fss_contents_t_delete_simple(data->contents);
+          f_macro_fss_objects_t_delete_simple(data->objects);
+          f_macro_string_dynamic_t_delete_simple(data->buffer);
+        }
       }
 
       macro_fss_basic_list_read_depths_t_delete_simple(depths);

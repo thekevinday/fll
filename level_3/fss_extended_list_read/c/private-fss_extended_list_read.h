@@ -219,6 +219,36 @@ extern "C" {
   extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_main_process_for_depth_
 
+/**
+ * Print the end of an object (which is essentially the start of a content).
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_extended_list_read_print_object_end_
+  extern void fss_extended_list_read_print_object_end(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_print_object_end_
+
+/**
+ * Print the end of an content.
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_extended_list_read_print_content_end_
+  extern void fss_extended_list_read_print_content_end(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_print_content_end_
+
+/**
+ * Print the end of an object/content set.
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_extended_list_read_print_set_end_
+  extern void fss_extended_list_read_print_set_end(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_print_set_end_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

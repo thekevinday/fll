@@ -62,6 +62,9 @@ extern "C" {
 #endif // _di_fss_extended_list_read_name_
 
 #ifndef _di_fss_extended_list_read_defines_
+  #define fss_extended_list_read_pipe_content_start '\0'
+  #define fss_extended_list_read_pipe_content_end   '\f'
+
   #define fss_extended_list_read_short_at      "a"
   #define fss_extended_list_read_short_content "c"
   #define fss_extended_list_read_short_depth   "d"
@@ -69,6 +72,7 @@ extern "C" {
   #define fss_extended_list_read_short_line    "l"
   #define fss_extended_list_read_short_name    "n"
   #define fss_extended_list_read_short_object  "o"
+  #define fss_extended_list_read_short_pipe    "p"
   #define fss_extended_list_read_short_select  "s"
   #define fss_extended_list_read_short_total   "t"
   #define fss_extended_list_read_short_trim    "T"
@@ -80,6 +84,7 @@ extern "C" {
   #define fss_extended_list_read_long_line    "line"
   #define fss_extended_list_read_long_name    "name"
   #define fss_extended_list_read_long_object  "object"
+  #define fss_extended_list_read_long_pipe    "pipe"
   #define fss_extended_list_read_long_select  "select"
   #define fss_extended_list_read_long_total   "total"
   #define fss_extended_list_read_long_trim    "trim"
@@ -102,6 +107,7 @@ extern "C" {
     fss_extended_list_read_parameter_line,
     fss_extended_list_read_parameter_name,
     fss_extended_list_read_parameter_object,
+    fss_extended_list_read_parameter_pipe,
     fss_extended_list_read_parameter_select,
     fss_extended_list_read_parameter_total,
     fss_extended_list_read_parameter_trim,
@@ -125,12 +131,13 @@ extern "C" {
       f_console_parameter_t_initialize(fss_extended_list_read_short_line, fss_extended_list_read_long_line, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_list_read_short_name, fss_extended_list_read_long_name, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_list_read_short_object, fss_extended_list_read_long_object, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_pipe, fss_extended_list_read_long_pipe, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_list_read_short_select, fss_extended_list_read_long_select, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_list_read_short_total, fss_extended_list_read_long_total, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_list_read_short_trim, fss_extended_list_read_long_trim, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_extended_list_read_total_parameters 19
+  #define fss_extended_list_read_total_parameters 20
 #endif // _di_fss_extended_list_read_defines_
 
 #ifndef _di_fss_extended_list_read_data_t_

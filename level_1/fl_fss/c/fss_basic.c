@@ -19,7 +19,7 @@ extern "C" {
     f_status_t status = F_none;
     f_string_lengths_t delimits = f_string_lengths_t_initialize;
 
-    status = private_fl_fss_basic_object_read(buffer, range, found, quote, &delimits);
+    status = private_fl_fss_basic_read(F_true, buffer, range, found, quote, &delimits);
 
     if (F_status_is_error(status)) {
       f_macro_string_lengths_t_delete_simple(delimits);
@@ -98,7 +98,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = private_fl_fss_basic_object_write(object, quote ? quote : f_fss_delimit_quote_double, range, destination);
+    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 

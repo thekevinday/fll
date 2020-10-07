@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  f_return_status private_fl_fss_basic_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_string_lengths_t *delimits) {
+  f_return_status private_fl_fss_basic_read(const bool object_as, f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_string_lengths_t *delimits) {
     f_status_t status = F_none;
 
     status = f_fss_skip_past_space(*buffer, range);
@@ -28,7 +28,7 @@ extern "C" {
     found->start = range->start;
 
     // ignore all comment lines.
-    if (buffer->string[range->start] == f_fss_comment) {
+    if (object_as && buffer->string[range->start] == f_fss_comment) {
       while (buffer->string[range->start] != f_string_eol[0]) {
         range->start++;
 
@@ -46,10 +46,10 @@ extern "C" {
     const f_string_length_t delimit_initial = delimits->used;
 
     // handle quoted support.
-    int8_t quote = 0;
+    int8_t quote_found = 0;
 
-    if (quoted) {
-      *quoted = 0;
+    if (quote) {
+      *quote = 0;
     }
 
     // identify where the object begins.
@@ -112,7 +112,7 @@ extern "C" {
         return F_none_stop;
       }
 
-      if (buffer->string[range->start] == f_fss_delimit_quote_single || buffer->string[range->start] == f_fss_delimit_quote_double) {
+      if (buffer->string[range->start] == f_fss_delimit_quote_single || buffer->string[range->start] == f_fss_delimit_quote_double || (object_as && buffer->string[range->start] == f_fss_comment)) {
 
         // only the first slash before a quoted needs to be escaped (or not) as once there is a slash before a quoted, this cannot ever be a quote object.
         // this simplifies the number of slashes needed.
@@ -139,7 +139,7 @@ extern "C" {
       }
     }
     else if (buffer->string[range->start] == f_fss_delimit_quote_single || buffer->string[range->start] == f_fss_delimit_quote_double) {
-      quote = buffer->string[range->start];
+      quote_found = buffer->string[range->start];
 
       status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
@@ -148,7 +148,7 @@ extern "C" {
     }
 
     // identify where the object ends.
-    if (!quote) {
+    if (!quote_found) {
       status = F_none;
 
       while (range->start <= range->stop && range->start < buffer->used) {
@@ -213,7 +213,7 @@ extern "C" {
             return F_unterminated_group_stop;
           }
 
-          if (buffer->string[range->start] == quote) {
+          if (buffer->string[range->start] == quote_found) {
             f_string_length_t location = range->start;
 
             // check to see if there is a whitespace, EOS, or EOL after the quoted, if not, then this is not a closing quoted and delimits do not apply.
@@ -239,12 +239,12 @@ extern "C" {
             }
 
             if (status == F_true) {
-              if (quoted) {
-                if (quote == f_fss_delimit_quote_single) {
-                  *quoted = f_fss_quote_type_single;
+              if (quote) {
+                if (quote_found == f_fss_delimit_quote_single) {
+                  *quote = f_fss_quote_type_single;
                 }
-                else if (quote == f_fss_delimit_quote_double) {
-                  *quoted = f_fss_quote_type_double;
+                else if (quote_found == f_fss_delimit_quote_double) {
+                  *quote = f_fss_quote_type_double;
                 }
               }
 
@@ -355,7 +355,7 @@ extern "C" {
             }
           }
         }
-        else if (buffer->string[range->start] == quote) {
+        else if (buffer->string[range->start] == quote_found) {
           // check to see if there is a whitespace, EOS, or EOL after the quoted, if not, then this is not a closing quoted.
           {
             f_string_length_t location = range->start;
@@ -385,12 +385,12 @@ extern "C" {
           }
 
           if (status == F_true) {
-            if (quoted) {
-              if (quote == f_fss_delimit_quote_single) {
-                *quoted = f_fss_quote_type_single;
+            if (quote) {
+              if (quote_found == f_fss_delimit_quote_single) {
+                *quote = f_fss_quote_type_single;
               }
-              else if (quote == f_fss_delimit_quote_double) {
-                *quoted = f_fss_quote_type_double;
+              else if (quote_found == f_fss_delimit_quote_double) {
+                *quote = f_fss_quote_type_double;
               }
             }
 
@@ -496,7 +496,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_)
 
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
-  f_return_status private_fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quote_t quote, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_return_status private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quote, f_string_range_t *range, f_string_dynamic_t *destination) {
     f_status_t status = F_none;
 
     fl_macro_fss_skip_past_delimit_placeholders(object, (*range));
@@ -517,6 +517,7 @@ extern "C" {
     const f_string_length_t used_start = destination->used;
 
     bool quoted = F_false;
+    bool commented = F_false;
 
     f_string_length_t item_first = 0;
     f_string_length_t item_total = 0;
@@ -530,6 +531,9 @@ extern "C" {
     // if there is an initial quote, then this must be quoted and the existing quote must be delimited.
     if (object.string[input_start] == quote) {
       quoted = F_true;
+    }
+    else if (object_as && object.string[input_start] == f_fss_comment) {
+      commented = F_true;
     }
 
     uint8_t width = 0;
@@ -551,18 +555,29 @@ extern "C" {
         } // for
 
         if (range->start > range->stop || range->start >= object.used) {
+
+          // slashes before the final quote must be escaped when quoted, add the delimit slashes.
           if (quoted) {
 
-            // slashes before the final quote must be escaped when quoted, add the delimit slashes.
+            // if this is the first quote, then only a single delimit slash is needed.
             if (item_first == input_start) {
+              status = private_fl_fss_destination_increase(destination);
+              if (F_status_is_error(status)) break;
+
               destination->string[destination->used++] = f_fss_delimit_slash;
             }
             else {
+              status = private_fl_fss_destination_increase_by(item_total, destination);
+              if (F_status_is_error(status)) break;
+
               for (i = 0; i < item_total; i++) {
                 destination->string[destination->used++] = f_fss_delimit_slash;
               } // for
             }
           }
+
+          status = private_fl_fss_destination_increase_by(item_total, destination);
+          if (F_status_is_error(status)) break;
 
           for (i = 0; i < item_total; i++) {
             destination->string[destination->used++] = f_fss_delimit_slash;
@@ -581,6 +596,9 @@ extern "C" {
           fl_macro_fss_skip_past_delimit_placeholders(object, (*range));
 
           if (range->start > range->stop || range->start >= object.used) {
+            status = private_fl_fss_destination_increase_by(item_total + 1, destination);
+            if (F_status_is_error(status)) break;
+
             for (i = 0; i < item_total; i++) {
               destination->string[destination->used++] = f_fss_delimit_slash;
             } // for
@@ -602,14 +620,25 @@ extern "C" {
 
             // add the slashes that delimit the slashes.
             if (item_first == input_start) {
+              status = private_fl_fss_destination_increase(destination);
+              if (F_status_is_error(status)) break;
+
               destination->string[destination->used++] = f_fss_delimit_slash;
             }
             else {
+              status = private_fl_fss_destination_increase_by(item_total, destination);
+              if (F_status_is_error(status)) break;
+
               for (i = 0; i < item_total; i++) {
                 destination->string[destination->used++] = f_fss_delimit_slash;
               } // for
             }
           }
+
+          width = f_macro_utf_byte_width(object.string[range->start]);
+
+          status = private_fl_fss_destination_increase_by(item_total + width + 1, destination);
+          if (F_status_is_error(status)) break;
 
           for (i = 0; i < item_total; i++) {
             destination->string[destination->used++] = f_fss_delimit_slash;
@@ -617,14 +646,27 @@ extern "C" {
 
           destination->string[destination->used++] = quote;
 
-          width = f_macro_utf_byte_width(object.string[range->start]);
-
-          status = private_fl_fss_destination_increase_by(width, destination);
-          if (F_status_is_error(status)) break;
-
           for (i = 0; i < width; i++) {
             destination->string[destination->used++] = object.string[range->start + i];
           } // for
+        }
+        else if (object_as && object.string[range->start] == f_fss_comment) {
+
+          // only the first slash needs to be escaped for a comment, and then only if not quoted.
+          if (item_first == input_start) {
+            commented = F_true;
+          }
+
+          status = private_fl_fss_destination_increase_by(item_total + 1, destination);
+          if (F_status_is_error(status)) break;
+
+          for (i = 0; i < item_total; i++) {
+            destination->string[destination->used++] = f_fss_delimit_slash;
+          } // for
+
+          destination->string[destination->used++] = object.string[range->start];
+          range->start++;
+          continue;
         }
         else {
 
@@ -636,12 +678,15 @@ extern "C" {
             quoted = F_true;
           }
 
+          width = f_macro_utf_byte_width(object.string[range->start]);
+
+          status = private_fl_fss_destination_increase_by(item_total + width, destination);
+          if (F_status_is_error(status)) break;
+
           // there is nothing to delimit, so all slashes should be printed as is.
           for (i = 0; i < item_total; i++) {
             destination->string[destination->used++] = f_fss_delimit_slash;
           } // for
-
-          width = f_macro_utf_byte_width(object.string[range->start]);
 
           status = private_fl_fss_destination_increase_by(width, destination);
           if (F_status_is_error(status)) break;
@@ -656,17 +701,26 @@ extern "C" {
 
         // the very first quote, must be escaped, when quoting is disabled.
         if (item_first == input_start) {
+          status = private_fl_fss_destination_increase(destination);
+          if (F_status_is_error(status)) break;
+
           destination->string[used_start + 1] = f_fss_delimit_slash;
         }
 
         fl_macro_fss_skip_past_delimit_placeholders(object, (*range));
 
         if (range->start > range->stop || range->start >= object.used) {
+          status = private_fl_fss_destination_increase(destination);
+          if (F_status_is_error(status)) break;
+
           destination->string[destination->used++] = quote;
           break;
         }
 
         if (object.string[range->start] == quote) {
+          status = private_fl_fss_destination_increase(destination);
+          if (F_status_is_error(status)) break;
+
           destination->string[destination->used++] = quote;
 
           // the next quote must also be checked, so do not increment.
@@ -678,22 +732,22 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (status == F_true) {
-          status = private_fl_fss_destination_increase(destination);
-          if (F_status_is_error(status)) break;
-
           if (item_first != input_start) {
+            status = private_fl_fss_destination_increase(destination);
+            if (F_status_is_error(status)) break;
+
             destination->string[destination->used++] = f_fss_delimit_slash;
           }
 
           quoted = F_true;
         }
 
-        destination->string[destination->used++] = quote;
-
         width = f_macro_utf_byte_width(object.string[range->start]);
 
-        status = private_fl_fss_destination_increase_by(width, destination);
+        status = private_fl_fss_destination_increase_by(1 + width, destination);
         if (F_status_is_error(status)) break;
+
+        destination->string[destination->used++] = quote;
 
         for (i = 0; i < width; i++) {
           destination->string[destination->used++] = object.string[range->start + i];
@@ -704,7 +758,6 @@ extern "C" {
         break;
       }
       else if (object.string[range->start] != f_fss_delimit_placeholder) {
-
         if (!quoted) {
           status = f_fss_is_space(object, *range);
           if (F_status_is_error(status)) break;
@@ -734,6 +787,13 @@ extern "C" {
     }
 
     if (quoted) {
+      status = private_fl_fss_destination_increase(destination);
+
+      if (F_status_is_error(status)) {
+        destination->used = used_start;
+        return status;
+      }
+
       destination->string[used_start] = quote;
       destination->string[destination->used++] = quote;
 
@@ -761,6 +821,9 @@ extern "C" {
           }
         }
       }
+    }
+    else if (commented) {
+      destination->string[used_start] = f_fss_delimit_slash;
     }
 
     if (range->start > range->stop) {

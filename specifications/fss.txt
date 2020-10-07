@@ -93,7 +93,7 @@ Featureless Settings Specifications:
 
   Unless otherwise specified, comments are designated by the pound symbol '#' but only if only whitespace is to the left of the pound or the pound '#' is at the start of the line.
   There is no support for inline comments.
-  Unless explicitly defined, the start comment may be delimited by '\' in the same manner as Objects and Contents are.
+  Unless otherwise specified, the start comment may be delimited by '\' in the same manner as Objects and Contents are.
   This delimit only applies to the start of a comment (the pound '#' character) as there is no terminating character for a comment (other than a newline '\n').
 
   Unless otherwise specified, all designation characters MUST represent ASCII codes.
