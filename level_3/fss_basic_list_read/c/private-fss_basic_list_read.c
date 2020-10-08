@@ -400,6 +400,7 @@ extern "C" {
             if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
               if (!data->contents.array[i].used) {
                 if (include_empty && !line) {
+                  fprintf(f_type_output, "%c", f_string_eol[0]);
                   fss_basic_list_read_print_set_end(*data);
                 }
               }
@@ -458,6 +459,7 @@ extern "C" {
               }
             }
             else if (include_empty) {
+              fprintf(f_type_output, "%c", f_string_eol[0]);
               fss_basic_list_read_print_set_end(*data);
             }
 
@@ -505,6 +507,7 @@ extern "C" {
         if (!data->contents.array[i].used) {
           if (include_empty) {
             if (line_current == line) {
+              fprintf(f_type_output, "%c", f_string_eol[0]);
               fss_basic_list_read_print_set_end(*data);
               break;
             }
@@ -557,6 +560,7 @@ extern "C" {
 
       if (!data->contents.array[i].used) {
         if (include_empty) {
+          fprintf(f_type_output, "%c", f_string_eol[0]);
           fss_basic_list_read_print_set_end(*data);
         }
 
@@ -592,9 +596,6 @@ extern "C" {
     if (data.parameters[fss_basic_list_read_parameter_pipe].result == f_console_result_found) {
       fprintf(data.output.stream, "%c", fss_basic_list_read_pipe_content_start);
     }
-    else {
-      fprintf(data.output.stream, "%c", f_fss_eol);
-    }
   }
 #endif // _di_fss_basic_list_read_print_content_end_
 
@@ -603,9 +604,6 @@ extern "C" {
 
     if (data.parameters[fss_basic_list_read_parameter_pipe].result == f_console_result_found) {
       fprintf(data.output.stream, "%c", fss_basic_list_read_pipe_content_end);
-    }
-    else {
-      fprintf(data.output.stream, "%c", f_fss_eol);
     }
   }
 #endif // _di_fss_basic_list_read_print_set_end_
