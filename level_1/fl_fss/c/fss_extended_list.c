@@ -58,7 +58,7 @@ extern "C" {
     }
 
     // identify where the object ends.
-    while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
+    while (range->start <= range->stop && range->start < buffer->used && buffer->string[range->start] != f_string_eol[0]) {
 
       if (buffer->string[range->start] == f_fss_delimit_slash) {
         f_string_length_t first_slash = range->start;
@@ -67,7 +67,7 @@ extern "C" {
         status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
 
-        while (range->start < buffer->used && range->start <= range->stop && (buffer->string[range->start] == f_fss_delimit_placeholder || buffer->string[range->start] == f_fss_delimit_slash)) {
+        while (range->start <= range->stop && range->start < buffer->used && (buffer->string[range->start] == f_fss_delimit_placeholder || buffer->string[range->start] == f_fss_delimit_slash)) {
           if (buffer->string[range->start] == f_fss_delimit_slash) {
             slash_count++;
           }
@@ -84,7 +84,7 @@ extern "C" {
           status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
-          while (range->start < buffer->used && range->start <= range->stop) {
+          while (range->start <= range->stop && range->start < buffer->used) {
 
             if (buffer->string[range->start] == f_string_eol[0] || (status = f_fss_is_graph(*buffer, *range)) == F_true) {
               break;
@@ -149,7 +149,7 @@ extern "C" {
         status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) return status;
 
-        while (range->start < buffer->used && range->start <= range->stop) {
+        while (range->start <= range->stop && range->start < buffer->used) {
           if (buffer->string[range->start] == f_string_eol[0]) break;
 
           status = f_fss_is_space(*buffer, *range);
@@ -182,7 +182,7 @@ extern "C" {
     } // while
 
     // seek to the end of the line when no valid object is found.
-    while (range->start < buffer->used && range->start <= range->stop && buffer->string[range->start] != f_string_eol[0]) {
+    while (range->start <= range->stop && range->start < buffer->used && buffer->string[range->start] != f_string_eol[0]) {
 
       status = f_utf_buffer_increment(*buffer, range, 1);
       if (F_status_is_error(status)) return status;
@@ -254,7 +254,7 @@ extern "C" {
     positions_start.array[0] = range->start;
     positions_start.used = 1;
 
-    while (range->start < buffer->used && range->start <= range->stop) {
+    while (range->start <= range->stop && range->start < buffer->used) {
 
       if (buffer->string[range->start] == f_string_eol[0]) {
         last_newline = range->start;
@@ -288,7 +288,7 @@ extern "C" {
           return status;
         }
 
-        while (range->start < buffer->used && range->start <= range->stop && (buffer->string[range->start] == f_fss_delimit_placeholder || buffer->string[range->start] == f_fss_delimit_slash)) {
+        while (range->start <= range->stop && range->start < buffer->used && (buffer->string[range->start] == f_fss_delimit_placeholder || buffer->string[range->start] == f_fss_delimit_slash)) {
           position_previous = range->start;
 
           if (buffer->string[range->start] == f_fss_delimit_slash) {
@@ -336,7 +336,7 @@ extern "C" {
           position_previous = range->start;
           range->start++;
 
-          while (range->start < buffer->used && range->start <= range->stop) {
+          while (range->start <= range->stop && range->start < buffer->used) {
 
             if (buffer->string[range->start] == f_string_eol[0]) {
               last_newline = range->start;
@@ -485,7 +485,7 @@ extern "C" {
           return status;
         }
 
-        while (range->start < buffer->used && range->start <= range->stop) {
+        while (range->start <= range->stop && range->start < buffer->used) {
 
           if (buffer->string[range->start] == f_string_eol[0]) {
             break;
@@ -561,7 +561,7 @@ extern "C" {
         }
         // No valid object open found, seek until EOL.
         else {
-          while (range->start < buffer->used && range->start <= range->stop) {
+          while (range->start <= range->stop && range->start < buffer->used) {
 
             if (buffer->string[range->start] == f_string_eol[0]) {
               last_newline = range->start;
@@ -590,7 +590,7 @@ extern "C" {
         }
       }
       else if (buffer->string[range->start] == f_fss_extended_list_close) {
-        while (range->start < buffer->used && range->start <= range->stop) {
+        while (range->start <= range->stop && range->start < buffer->used) {
 
           position_previous = range->start;
           status = f_utf_buffer_increment(*buffer, range, 1);
@@ -712,7 +712,7 @@ extern "C" {
         }
         // No valid object close found, seek until EOL.
         else {
-          while (range->start < buffer->used && range->start <= range->stop) {
+          while (range->start <= range->stop && range->start < buffer->used) {
 
             if (buffer->string[range->start] == f_string_eol[0]) {
               last_newline = range->start;

@@ -146,6 +146,7 @@ extern "C" {
  *   F_none_stop on success after reaching stopping point .
  *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *

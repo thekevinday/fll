@@ -21,24 +21,15 @@ extern "C" {
     do {
       if (objects->used == objects->size) {
         f_macro_fss_objects_t_resize(status2, (*objects), objects->used + f_fss_default_allocation_step);
-
-        if (F_status_is_error(status)) {
-          return status;
-        }
+        if (F_status_is_error(status)) return status;
 
         f_macro_fss_contents_t_resize(status2, (*contents), contents->used + f_fss_default_allocation_step);
-
-        if (F_status_is_error(status)) {
-          return status;
-        }
+        if (F_status_is_error(status)) return status;
       }
 
       do {
         status = fl_fss_basic_list_object_read(buffer, range, &objects->array[objects->used]);
-
-        if (F_status_is_error(status)) {
-          return status;
-        }
+        if (F_status_is_error(status)) return status;
 
         if (range->start >= range->stop || range->start >= buffer->used) {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
@@ -102,8 +93,13 @@ extern "C" {
 
         // If at least some valid object was found, then return F_none equivalents.
         if (objects->used > initial_used) {
-          if (status == F_data_not_eos) return F_none_eos;
-          if (status == F_data_not_stop) return F_none_stop;
+          if (status == F_data_not_eos) {
+            return F_none_eos;
+          }
+
+          if (status == F_data_not_stop) {
+            return F_none_stop;
+          }
         }
 
         return status;
@@ -111,8 +107,9 @@ extern "C" {
       else if (status != FL_fss_found_object && status != FL_fss_found_content && status != FL_fss_found_content_not && status != FL_fss_found_object_content_not) {
         return status;
       }
-      // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
       else if (range->start >= range->stop || range->start >= buffer->used) {
+
+        // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (status == FL_fss_found_object || status == FL_fss_found_content || status == FL_fss_found_content_not || status == FL_fss_found_object_content_not) {
           objects->used++;
           contents->used++;
