@@ -76,7 +76,9 @@ extern "C" {
     if (fallback && error.verbosity != f_console_verbosity_quiet) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%s(%llu)", error.context.before->string, error.prefix ? error.prefix : "", status);
+        fprintf(error.to.stream, "%s%s(", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%s%llu%s", error.context.after->string, error.notable.before->string, status, error.notable.after->string);
+        fprintf(error.to.stream, "%s)", error.context.before->string);
 
         private_fll_error_print_function(error, function);
 
