@@ -323,9 +323,9 @@ extern "C" {
             if (at == depths.array[0].value_at) {
               print_object(f_type_output, data->buffer, data->objects.array[i]);
 
-              if (data->parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {
-                fss_basic_list_read_print_object_end(*data);
+              fss_basic_list_read_print_object_end(*data);
 
+              if (data->parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {
                 if (data->contents.array[i].used) {
                   f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[0]);
                 }
@@ -347,9 +347,9 @@ extern "C" {
 
         print_object(f_type_output, data->buffer, data->objects.array[i]);
 
-        if (data->parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {
-          fss_basic_list_read_print_object_end(*data);
+        fss_basic_list_read_print_object_end(*data);
 
+        if (data->parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {
           if (data->contents.array[i].used) {
             f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[0]);
           }

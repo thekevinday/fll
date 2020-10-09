@@ -23,7 +23,7 @@ extern "C" {
     printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(file, context, fss_basic_list_write_short_file, fss_basic_list_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
-    fll_program_print_help_option(file, context, fss_basic_list_write_short_content, fss_basic_list_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, " The content to output.");
+    fll_program_print_help_option(file, context, fss_basic_list_write_short_content, fss_basic_list_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "The content to output.");
     fll_program_print_help_option(file, context, fss_basic_list_write_short_double, fss_basic_list_write_long_double, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use double quotes (default).");
     fll_program_print_help_option(file, context, fss_basic_list_write_short_object, fss_basic_list_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to output.");
     fll_program_print_help_option(file, context, fss_basic_list_write_short_partial, fss_basic_list_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, "Do not output end of object/content character.");
@@ -50,6 +50,14 @@ extern "C" {
     fl_color_print(f_type_output, context.set.notable, "U+000C");
     printf(").%c", f_string_eol[0]);
     printf("  The end of the pipe represents the end of any Object or Content.%c", f_string_eol[0]);
+
+    printf("%c", f_string_eol[0]);
+
+    printf("  The FSS-0002 (Basic List) specification does not support quoted names, therefore the parameters '");
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_write_long_single);
+    printf("' and '");
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_write_long_double);
+    printf("' do nothing.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
