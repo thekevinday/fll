@@ -169,7 +169,7 @@ extern "C" {
       }
 
       destination->string[destination->used++] = content.string[range->start];
-    } // while
+    } // for
 
     if (complete == f_fss_complete_full || complete == f_fss_complete_end) {
       destination->string[destination->used++] = f_fss_basic_close;

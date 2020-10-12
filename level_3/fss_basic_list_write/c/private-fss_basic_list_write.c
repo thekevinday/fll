@@ -23,6 +23,20 @@ extern "C" {
   }
 #endif // _di_fss_basic_list_write_error_parameter_same_times_print_
 
+#ifndef _di_fss_basic_list_write_error_parameter_unsupported_eol_print_
+  void fss_basic_list_write_error_parameter_unsupported_eol_print(const fss_basic_list_write_data_t data) {
+
+    if (data.error.verbosity == f_console_verbosity_quiet) {
+      return;
+    }
+
+    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+    fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard does not support end of line character '", fll_error_print_error);
+    fl_color_print(data.error.to.stream, data.context.set.notable, "\\n");
+    fl_color_print(data.error.to.stream, data.context.set.error, "' in objects.%c", f_string_eol[0]);
+  }
+#endif // _di_fss_basic_list_write_error_parameter_unsupported_eol_print_
+
 #ifndef _di_fss_basic_list_write_error_parameter_value_missing_print_
   void fss_basic_list_write_error_parameter_value_missing_print(const fss_basic_list_write_data_t data, const f_string_t symbol, const f_string_t parameter) {
 
@@ -54,6 +68,12 @@ extern "C" {
       }
 
       status = fl_fss_basic_list_object_write(*object, content ? f_fss_complete_full : f_fss_complete_partial, &range, buffer);
+
+      if (F_status_set_fine(status) == F_none_eol) {
+        fss_basic_list_write_error_parameter_unsupported_eol_print(data);
+
+        return F_status_set_error(F_unsupported);
+      }
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_list_object_write", F_true);

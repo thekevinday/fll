@@ -27,6 +27,20 @@ extern "C" {
 #endif // _di_fss_basic_list_write_error_parameter_same_times_print_
 
 /**
+ * Print an message about a parameter EOL being unsupported.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
+ *   F_failure (with error bit) for any othe failure.
+ */
+#ifndef _di_fss_basic_list_write_error_parameter_unsupported_eol_print_
+  void fss_basic_list_write_error_parameter_unsupported_eol_print(const fss_basic_list_write_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_basic_list_write_error_parameter_unsupported_eol_print_
+
+/**
  * Print an message about a parameter missing a value.
  *
  * @param data
