@@ -29,10 +29,11 @@ extern "C" {
   #define f_fss_extended_open           ' '
   #define f_fss_extended_next           ' '
   #define f_fss_extended_close          f_string_eol[0]
-  #define f_fss_list_terminator         f_string_eol[0]
   #define f_fss_basic_list_open         ':'
+  #define f_fss_basic_list_open_end     f_string_eol[0]
   #define f_fss_basic_list_close        f_string_eol[0]
   #define f_fss_extended_list_open      '{'
+  #define f_fss_extended_list_open_end  f_string_eol[0]
   #define f_fss_extended_list_close     '}'
   #define f_fss_extended_list_close_end f_string_eol[0]
   #define f_fss_type_header_open        '#'

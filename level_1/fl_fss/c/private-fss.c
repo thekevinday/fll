@@ -838,7 +838,7 @@ extern "C" {
   }
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
 
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
   f_return_status private_fl_fss_destination_increase(f_string_dynamic_t *destination) {
     f_status_t status = F_none;
 
@@ -857,9 +857,9 @@ extern "C" {
 
     return status;
   }
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
 
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
   f_return_status private_fl_fss_destination_increase_by(const f_string_length_t amount, f_string_dynamic_t *destination) {
     f_status_t status = F_none;
 
@@ -873,7 +873,27 @@ extern "C" {
 
     return status;
   }
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
+
+#if !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_)
+  f_return_status private_fl_fss_destination_prepend(const f_string_static_t prepend, f_string_dynamic_t *destination) {
+
+    if (!prepend.used) {
+      return F_none;
+    }
+
+    if (prepend.used) {
+      f_status_t status = private_fl_fss_destination_increase_by(prepend.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_string_length_t i = 0; i < prepend.used; i++) {
+      destination->string[destination->used++] = prepend.string[i];
+    } // for
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_)
 
 #ifdef __cplusplus
 } // extern "C"

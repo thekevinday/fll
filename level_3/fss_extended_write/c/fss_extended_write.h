@@ -62,6 +62,7 @@ extern "C" {
   #define fss_extended_write_short_double   "d"
   #define fss_extended_write_short_object   "o"
   #define fss_extended_write_short_partial  "p"
+  #define fss_extended_write_short_prepend  "P"
   #define fss_extended_write_short_single   "s"
 
   #define fss_extended_write_long_file    "file"
@@ -69,6 +70,7 @@ extern "C" {
   #define fss_extended_write_long_double  "double"
   #define fss_extended_write_long_object  "object"
   #define fss_extended_write_long_partial "partial"
+  #define fss_extended_write_long_prepend "prepend"
   #define fss_extended_write_long_single  "single"
 
   enum {
@@ -87,6 +89,7 @@ extern "C" {
     fss_extended_write_parameter_double,
     fss_extended_write_parameter_object,
     fss_extended_write_parameter_partial,
+    fss_extended_write_parameter_prepend,
     fss_extended_write_parameter_single,
   };
 
@@ -106,10 +109,11 @@ extern "C" {
       f_console_parameter_t_initialize(fss_extended_write_short_double, fss_extended_write_long_double, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_write_short_object, fss_extended_write_long_object, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_write_short_partial, fss_extended_write_long_partial, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_prepend, fss_extended_write_long_prepend, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_write_short_single, fss_extended_write_long_single, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_extended_write_total_parameters 15
+  #define fss_extended_write_total_parameters 16
 #endif // _di_fss_extended_write_defines_
 
 #ifndef _di_fss_extended_write_data_t_
@@ -121,6 +125,7 @@ extern "C" {
 
     f_file_t output;
     fll_error_print_t error;
+    f_string_static_t prepend;
 
     f_color_context_t context;
   } fss_extended_write_data_t;
@@ -132,6 +137,7 @@ extern "C" {
       F_false, \
       f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
+      f_string_static_t_initialize, \
       f_color_context_t_initialize, \
     }
 #endif // _di_fss_extended_write_data_t_

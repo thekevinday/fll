@@ -67,6 +67,9 @@ extern "C" {
  *   A string representing the object.
  * @param contents
  *   An array of strings representing multiple content to write.
+ * @param contents_prepend
+ *   A string to prepend at the start of each line in contents, such as spaces.
+ *   Set prepend.used to 0 to not use.
  * @param buffer
  *   The buffer to write to.
  *
@@ -86,7 +89,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
 #ifndef _di_fll_fss_basic_list_write_
-  extern f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer);
+  extern f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, const f_string_static_t contents_prepend, f_string_dynamic_t *buffer);
 #endif // _di_fll_fss_basic_list_write_
 
 #ifdef __cplusplus

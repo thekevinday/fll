@@ -67,7 +67,7 @@ extern "C" {
         range.stop = 0;
       }
 
-      status = fl_fss_extended_object_write(*object, quote, contents && contents->used ? f_fss_complete_full : f_fss_complete_partial, &range, buffer);
+      status = fl_fss_extended_object_write(*object, quote, contents && contents->used ? f_fss_complete_full : f_fss_complete_none, &range, buffer);
 
       if (F_status_set_fine(status) == F_none_eol) {
         fss_extended_write_error_parameter_unsupported_eol_print(data);
@@ -108,14 +108,13 @@ extern "C" {
           }
         } // for
       }
-      else {
-        // objects in this standard do not have EOL, so add an EOL for printing purposes when there is no desired content.
-        status = fl_string_append(f_string_eol, 1, buffer);
+    }
+    else if (!object) {
+      status = fl_string_append(f_string_eol, 1, buffer);
 
-        if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
-          return status;
-        }
+      if (F_status_is_error(status)) {
+        fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+        return status;
       }
     }
 

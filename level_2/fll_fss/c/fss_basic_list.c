@@ -131,7 +131,7 @@ extern "C" {
 #endif // _di_fll_fss_basic_list_read_
 
 #ifndef _di_fll_fss_basic_list_write_
-  f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *destination) {
+  f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, const f_string_static_t contents_prepend, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -150,7 +150,7 @@ extern "C" {
         range.start = 0;
         range.stop = contents.array[0].used - 1;
 
-        status = fl_fss_basic_list_content_write(contents.array[0], &range, destination);
+        status = fl_fss_basic_list_content_write(contents.array[0], f_fss_complete_full, contents_prepend, &range, destination);
       }
     }
 

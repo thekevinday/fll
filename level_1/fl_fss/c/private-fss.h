@@ -132,12 +132,15 @@ extern "C" {
  * @see fl_fss_basic_object_write()
  * @see fl_fss_basic_content_write()
  * @see fl_fss_basic_list_object_write()
+ * @see fl_fss_basic_list_content_write()
  * @see fl_fss_extended_object_write()
  * @see fl_fss_extended_content_write()
+ * @see fl_fss_extended_list_object_write()
+ * @see fl_fss_extended_list_content_write()
  */
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
   extern f_return_status private_fl_fss_destination_increase(f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
 
 /**
  * Increase the size of destination buffer by the given amount, but only if necessary.
@@ -155,12 +158,36 @@ extern "C" {
  * @see fl_fss_basic_object_write()
  * @see fl_fss_basic_content_write()
  * @see fl_fss_basic_list_object_write()
+ * @see fl_fss_basic_list_content_write()
  * @see fl_fss_extended_object_write()
  * @see fl_fss_extended_content_write()
+ * @see fl_fss_extended_list_object_write()
+ * @see fl_fss_extended_list_content_write()
  */
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
-  f_return_status private_fl_fss_destination_increase_by(const f_string_length_t amount, f_string_dynamic_t *destination);
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
+  f_return_status private_fl_fss_destination_increase_by(const f_string_length_t amount, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
+
+/**
+ * Prepend the given string onto the destination buffer, allocating space as necessary
+ *
+ * @param prepend
+ *   A string to prepend at the start of each line, such as spaces.
+ *   Set prepend.used to 0 to not use.
+ * @param destination
+ *   The destination buffer to prepend to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
+ *
+ * @see fl_fss_basic_list_content_write()
+ * @see fl_fss_extended_list_content_write()
+ */
+#if !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_)
+  f_return_status private_fl_fss_destination_prepend(const f_string_static_t prepend, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_)
 
 #ifdef __cplusplus
 } // extern "C"

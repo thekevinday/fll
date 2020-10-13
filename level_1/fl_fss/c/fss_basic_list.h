@@ -166,6 +166,16 @@ extern "C" {
  *
  * @param content
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
+ * @param complete
+ *   If f_fss_complete_none, then only the content is written.
+ *   If f_fss_complete_next, then the content followed by any appropriate "next" character separating one content from the next, if applicable.
+ *   If f_fss_complete_end, then the content followed by any appropriate "end" character designating the last content for some object, printing final newline, if applicable.
+ *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this content, except for the final newline.
+ *   If f_fss_complete_full, this will write any appropriate open and close aspects of this content, including the final newline.
+ * @param prepend
+ *   A string of whitespace to prepend at the start of each line.
+ *   This should only be whitespace, anything else could product invalid content.
+ *   Set prepend.used to 0 to not use.
  * @param range
  *   The start/stop location within the content string to write as an content.
  * @param destination
@@ -186,7 +196,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_basic_list_content_write_
-  extern f_return_status fl_fss_basic_list_content_write(const f_string_static_t content, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_return_status fl_fss_basic_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t prepend, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_basic_list_content_write_
 
 #ifdef __cplusplus

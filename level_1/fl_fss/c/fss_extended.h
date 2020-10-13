@@ -180,9 +180,11 @@ extern "C" {
  *   If 0, then double quotes are auto-inserted, when required.
  *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param complete
- *   If f_fss_complete_none, then only the object name is written.
- *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this object, except for the final newline.
- *   If f_fss_complete_full, this will write any appropriate open and close aspects of this object, including the final newline.
+ *   If f_fss_complete_none, then only the content is written.
+ *   If f_fss_complete_next, then the content followed by any appropriate "next" character separating one content from the next, if applicable.
+ *   If f_fss_complete_end, then the content followed by any appropriate "end" character designating the last content for some object, printing final newline, if applicable.
+ *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this content, except for the final newline.
+ *   If f_fss_complete_full, this will write any appropriate open and close aspects of this content, including the final newline.
  * @param range
  *   The start/stop location within the content string to write as an content.
  * @param destination

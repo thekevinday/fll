@@ -23,10 +23,11 @@ extern "C" {
     printf("%c", f_string_eol[0]);
 
     fll_program_print_help_option(file, context, fss_extended_write_short_file, fss_extended_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
-    fll_program_print_help_option(file, context, fss_extended_write_short_content, fss_extended_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "The content to output.");
+    fll_program_print_help_option(file, context, fss_extended_write_short_content, fss_extended_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "The Content to output.");
     fll_program_print_help_option(file, context, fss_extended_write_short_double, fss_extended_write_long_double, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use double quotes (default).");
-    fll_program_print_help_option(file, context, fss_extended_write_short_object, fss_extended_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to output.");
-    fll_program_print_help_option(file, context, fss_extended_write_short_partial, fss_extended_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, "Do not output end of object/content character.");
+    fll_program_print_help_option(file, context, fss_extended_write_short_object, fss_extended_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The Object to output.");
+    fll_program_print_help_option(file, context, fss_extended_write_short_partial, fss_extended_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, "Do not output end of Object/Content character.");
+    fll_program_print_help_option(file, context, fss_extended_write_short_prepend, fss_extended_write_long_prepend, f_console_symbol_short_enable, f_console_symbol_long_enable, "Prepend the given whitespace characters to the start of each multi-line Content.");
     fll_program_print_help_option(file, context, fss_extended_write_short_single, fss_extended_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
 
     fll_program_print_help_usage(file, context, fss_extended_write_name, "");
@@ -50,6 +51,12 @@ extern "C" {
     fl_color_print(f_type_output, context.set.notable, "U+000C");
     printf(").%c", f_string_eol[0]);
     printf("  The end of the pipe represents the end of any Object or Content.%c", f_string_eol[0]);
+
+    printf("%c", f_string_eol[0]);
+
+    printf("  The FSS-0001 (Extended) specification does not support multi-line Content, therefore the parameter '");
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_write_long_prepend);
+    printf("' does nothing.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
@@ -270,6 +277,57 @@ extern "C" {
       }
     }
 
+    if (F_status_is_error_not(status)) {
+      if (data->parameters[fss_extended_write_parameter_prepend].result == f_console_result_found) {
+        if (data->error.verbosity != f_console_verbosity_quiet) {
+          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_write_long_prepend);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
+        }
+
+        status = F_status_set_error(F_parameter);
+      }
+      else if (data->parameters[fss_extended_write_parameter_prepend].result == f_console_result_additional) {
+        const f_string_length_t index = data->parameters[fss_extended_write_parameter_prepend].additional.array[data->parameters[fss_extended_write_parameter_prepend].additional.used - 1];
+        const f_string_length_t length = strnlen(arguments.argv[index], f_console_length_size);
+
+        // Even though this standard does not utilize this parameter, provide the validation for consistency.
+        if (length) {
+          f_string_range_t range = f_macro_string_range_t_initialize(length);
+          const f_string_static_t prepend = f_macro_string_static_t_initialize(arguments.argv[index], length);
+
+          for (; range.start < length; range.start++) {
+
+            status = f_fss_is_space(prepend, range);
+            if (F_status_is_error(status)) break;
+
+            if (status == F_false) {
+              if (data->error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+                fl_color_print(data->error.to.stream, data->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
+                fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_write_long_prepend);
+                fl_color_print(data->error.to.stream, data->context.set.error, "' must only contain whitespace.%c", f_string_eol[0]);
+              }
+
+              status = F_status_set_error(F_parameter);
+              break;
+            }
+          } // for
+        }
+        else {
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
+            fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_write_long_prepend);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' must not be an empty string.%c", f_string_eol[0]);
+          }
+
+          status = F_status_set_error(F_parameter);
+        }
+      }
+    }
+
     f_fss_quote_t quote = f_fss_delimit_quote_double;
 
     if (F_status_is_error_not(status)) {
@@ -333,7 +391,9 @@ extern "C" {
               fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamics_size_increase", F_true);
             }
             else {
-              for (f_array_length_t i = 0; i < data->parameters[fss_extended_write_parameter_content].additional.used; i++) {
+              f_array_length_t i = 0;
+
+              for (; i < data->parameters[fss_extended_write_parameter_content].additional.used; i++) {
 
                 contents.array[contents.used].string = arguments.argv[data->parameters[fss_extended_write_parameter_content].additional.array[i]];
                 contents.array[contents.used].used = strnlen(contents.array[contents.used].string, f_console_length_size);
@@ -342,6 +402,16 @@ extern "C" {
               } // for
 
               status = fss_extended_write_process(*data, output, quote, 0, &contents, &buffer);
+
+              // clear the contents array of the static strings to avoid deallocation attempts on static variables.
+              for (; i < data->parameters[fss_extended_write_parameter_content].additional.used; i++) {
+                contents.array[contents.used].string = 0;
+                contents.array[contents.used].used = 0;
+                contents.array[contents.used].size = 0;
+              } // for
+
+              contents.used = 0;
+              contents.size = 0;
             }
           }
         }
