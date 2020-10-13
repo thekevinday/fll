@@ -131,8 +131,10 @@ extern "C" {
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
  * @param complete
  *   If f_fss_complete_none, then only the object name is written.
- *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this object.
  *   If f_fss_complete_full, this will write any appropriate open and close aspects of this object.
+ *   If f_fss_complete_full_trim, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object.
+ *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this object.
+ *   If f_fss_complete_partial_tim, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object.
  * @param range
  *   The start/stop location within the object string to write as an object.
  * @param destination

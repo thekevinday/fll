@@ -81,21 +81,28 @@ extern "C" {
 /**
  * Codes for FSS completeness.
  *
+ * The details on how these work are specific to individual specifications.
+ * The notes below provide the intended purpose but be sure to still read the individual function documentation.
+ *
  * Only "next" and "end" are only meaningful for a Content and will be treated as "none" for an Object.
  *
- * none:    disable completeness.
- * partial: complete, but do not add terminating EOL, where applicable.
- * full:    complete and add terminating EOL, where applicable.
- * next:    complete as if this is a piece of a set (such as FSS-0001 where there are multiple space separated content).
- * end:     complete as if this is the final piece of a set, therefore adding an EOL.
+ * none:         disable completeness.
+ * end:          complete as if this is the final piece of a set (such as FSS-0001, adding terminating EOL).
+ * full:         complete and add terminating EOL, where applicable.
+ * full_trim:    complete and add terminating EOL but remove any leading or trailing whitespace, where applicable.
+ * next:         complete as if this is a piece of a set (such as FSS-0001, adding a separating space).
+ * partial:      complete, but do not add terminating EOL, where applicable.
+ * partial_trim: complete, but do not add terminating EOL and remove any leading or trailing whitespace, where applicable.
  */
 #ifndef _di_f_fss_complete_
   enum {
     f_fss_complete_none = 1,
-    f_fss_complete_partial,
-    f_fss_complete_full,
-    f_fss_complete_next,
     f_fss_complete_end,
+    f_fss_complete_full,
+    f_fss_complete_full_trim,
+    f_fss_complete_next,
+    f_fss_complete_partial,
+    f_fss_complete_partial_trim,
   };
 #endif // _di_f_fss_complete_
 

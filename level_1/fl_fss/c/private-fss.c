@@ -5,6 +5,171 @@
 extern "C" {
 #endif
 
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
+  f_return_status private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_string_length_t used_start, f_string_dynamic_t *destination) {
+    f_status_t status = F_none;
+    f_string_range_t destination_range = f_macro_string_range_t_initialize(destination->used);
+    f_string_length_t i = 0;
+
+    uint8_t width = 0;
+
+    // if there are any spaces, then this will be quoted so find the first non-placeholder character.
+    for (; destination_range.start < destination->used; destination_range.start++) {
+      if (destination->string[destination_range.start] != f_fss_delimit_placeholder) break;
+    } // for
+
+    if (destination->string[destination_range.start] == quote) {
+      const f_string_length_t front = destination_range.start;
+
+      for (destination_range.start++; destination_range.start < destination->used; destination_range.start++) {
+
+        if (destination->string[destination_range.start] == f_fss_delimit_placeholder) {
+          continue;
+        }
+
+        status = f_fss_is_space(*destination, destination_range);
+
+        if (F_status_is_error(status)) {
+          destination->used = used_start;
+          return status;
+        }
+
+        if (status == F_false) break;
+
+        width = f_macro_utf_byte_width(destination->string[destination_range.start]);
+
+        for (i = 0; i < width; i++) {
+          destination->string[destination_range.start + i] = f_fss_delimit_placeholder;
+        } // for
+      } // for
+
+      // find the last quote.
+      for (destination_range.start = destination->used - 1; destination_range.start > front; destination_range.start--) {
+        if (destination->string[destination_range.start] == quote) {
+          destination_range.start--;
+          break;
+        }
+      } // for
+
+      const f_string_length_t rear = destination_range.start + 1;
+
+      for (; destination_range.start > front; destination_range.start--) {
+
+        if (destination->string[destination_range.start] == f_fss_delimit_placeholder) {
+          continue;
+        }
+
+        status = f_fss_is_space(*destination, destination_range);
+
+        // when going backwards, getting incomplete UTF-8 sequences is not an error.
+        if (F_status_set_fine(status) == F_incomplete_utf) continue;
+
+        if (F_status_is_error(status)) {
+          destination->used = used_start;
+          return status;
+        }
+
+        if (status == F_false) break;
+
+        width = f_macro_utf_byte_width(destination->string[destination_range.start]);
+
+        for (i = 0; i < width; i++) {
+          destination->string[destination_range.start + i] = f_fss_delimit_placeholder;
+        } // for
+      } // for
+
+      // if there is no whitespace between the quotes, post-trimming, then remove the quotes.
+      for (destination_range.start = front; destination_range.start < rear; destination_range.start++) {
+
+        status = f_fss_is_space(*destination, destination_range);
+
+        if (F_status_is_error(status)) {
+          destination->used = used_start;
+          return status;
+        }
+
+        if (status == F_true) break;
+      } // for
+
+      if (destination_range.start == rear) {
+        destination->string[front] = f_fss_delimit_placeholder;
+        destination->string[rear] = f_fss_delimit_placeholder;
+      }
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
+
+#if !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
+  f_return_status private_fl_fss_basic_list_write_object_trim(const f_string_length_t used_start, f_string_dynamic_t *destination) {
+    f_status_t status = F_none;
+    f_string_range_t destination_range = f_macro_string_range_t_initialize(destination->used);
+    f_string_length_t i = 0;
+
+    uint8_t width = 0;
+
+    for (; destination_range.start < destination->used; destination_range.start++) {
+
+      if (destination->string[destination_range.start] == f_fss_delimit_placeholder) {
+        continue;
+      }
+
+      status = f_fss_is_space(*destination, destination_range);
+
+      if (F_status_is_error(status)) {
+        destination->used = used_start;
+        return status;
+      }
+
+      if (status == F_false) break;
+
+      width = f_macro_utf_byte_width(destination->string[destination_range.start]);
+
+      for (i = 0; i < width; i++) {
+        destination->string[destination_range.start + i] = f_fss_delimit_placeholder;
+      } // for
+    } // for
+
+    for (destination_range.start = destination->used - 1; destination_range.start > 0; destination_range.start--) {
+
+      if (destination->string[destination_range.start] == f_fss_delimit_placeholder) {
+        destination->used--;
+        continue;
+      }
+
+      status = f_fss_is_space(*destination, destination_range);
+
+      // when going backwards, getting incomplete UTF-8 sequences is not an error.
+      if (F_status_set_fine(status) == F_incomplete_utf) continue;
+
+      if (F_status_is_error(status)) {
+        destination->used = used_start;
+        return status;
+      }
+
+      if (status == F_false) break;
+
+      destination->used -= f_macro_utf_byte_width(destination->string[destination_range.start]);
+    } // for
+
+    if (destination_range.start == 0) {
+      status = f_fss_is_space(*destination, destination_range);
+
+      if (F_status_is_error(status)) {
+        destination->used = used_start;
+        return status;
+      }
+
+      if (status == F_true) {
+        destination->used = 0;
+      }
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
+
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
   f_return_status private_fl_fss_basic_read(const bool object_as, f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_string_lengths_t *delimits) {
     f_status_t status = F_none;

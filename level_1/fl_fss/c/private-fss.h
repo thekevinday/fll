@@ -16,6 +16,49 @@ extern "C" {
 #endif
 
 /**
+ * Trim a given object used by the basic and extended object write functions.
+ *
+ * @param quote
+ *   If 0, then double quotes are auto-inserted, when required.
+ *   Otherwise, this is the type of quote to wrap the object in when writing.
+ * @param used_start
+ *   The destination.used value before any operations were perfomed.
+ * @param destination
+ *   The buffer where the object is written to.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_fss_is_space().
+ *
+ * @see fl_fss_basic_object_write()
+ * @see fl_fss_extended_object_write()
+ */
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
+  extern f_return_status private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_string_length_t used_start, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
+
+/**
+ * Trim a given object used by the basic list and extended list object write functions.
+ *
+ * @param used_start
+ *   The destination.used value before any operations were perfomed.
+ * @param destination
+ *   The buffer where the object is written to.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_fss_is_space().
+ *
+ * @see fl_fss_basic_list_object_write()
+ * @see fl_fss_extended_list_object_write()
+ */
+#if !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
+  extern f_return_status private_fl_fss_basic_list_write_object_trim(const f_string_length_t used_start, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
+
+/**
  * Private implementation of fl_fss_basic_object_read().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -67,6 +110,7 @@ extern "C" {
  *
  * @see fl_fss_basic_object_read()
  * @see fl_fss_extended_object_read()
+ * @see fl_fss_extended_content_read()
  */
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
   extern f_return_status private_fl_fss_basic_read(const bool object_as, f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_string_lengths_t *delimits) f_gcc_attribute_visibility_internal;
@@ -169,7 +213,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
 
 /**
- * Prepend the given string onto the destination buffer, allocating space as necessary
+ * Prepend the given string onto the destination buffer, allocating space as necessary.
  *
  * @param prepend
  *   A string to prepend at the start of each line, such as spaces.

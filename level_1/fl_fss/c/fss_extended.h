@@ -139,8 +139,8 @@ extern "C" {
  *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param complete
  *   If f_fss_complete_none, then only the object name is written.
- *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this object, except for the final newline.
- *   If f_fss_complete_full, this will write any appropriate open and close aspects of this object, including the final newline.
+ *   If f_fss_complete_full, this will write any appropriate open and close aspects of this object.
+ *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this object.
  * @param range
  *   The start/stop location within the object string to write as an object.
  * @param destination

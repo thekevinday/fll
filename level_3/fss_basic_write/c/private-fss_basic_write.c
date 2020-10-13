@@ -58,6 +58,8 @@ extern "C" {
     f_string_range_t range = f_string_range_t_initialize;
 
     if (object) {
+      uint8_t complete = f_fss_complete_none;
+
       if (object->used) {
         range.start = 0;
         range.stop = object->used - 1;
@@ -67,7 +69,16 @@ extern "C" {
         range.stop = 0;
       }
 
-      status = fl_fss_basic_object_write(*object, quote, content ? f_fss_complete_full : f_fss_complete_none, &range, buffer);
+      if (content) {
+        if (data.parameters[fss_basic_write_parameter_trim].result == f_console_result_found) {
+          complete = f_fss_complete_full_trim;
+        }
+        else {
+          complete = f_fss_complete_full;
+        }
+      }
+
+      status = fl_fss_basic_object_write(*object, quote, complete, &range, buffer);
 
       if (F_status_set_fine(status) == F_none_eol) {
         fss_basic_write_error_parameter_unsupported_eol_print(data);

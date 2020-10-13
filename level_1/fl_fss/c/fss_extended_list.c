@@ -809,13 +809,13 @@ extern "C" {
     }
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
-      if (complete == f_fss_complete_partial || complete == f_fss_complete_full) {
+      if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
         const f_status_t status_allocation = private_fl_fss_destination_increase_by(2, destination);
         if (F_status_is_error(status_allocation)) return status_allocation;
 
         destination->string[destination->used++] = f_fss_extended_list_open;
 
-        if (complete == f_fss_complete_full) {
+        if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
           destination->string[destination->used++] = f_fss_extended_list_open_end;
         }
       }
@@ -955,7 +955,16 @@ extern "C" {
       return status;
     }
 
-    if (complete == f_fss_complete_partial || complete == f_fss_complete_full) {
+    if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
+      if (complete == f_fss_complete_full_trim) {
+        status = private_fl_fss_basic_list_write_object_trim(used_start, destination);
+
+        if (F_status_is_error(status)) {
+          destination->used = used_start;
+          return status;
+        }
+      }
+
       status = private_fl_fss_destination_increase_by(3, destination);
 
       if (F_status_is_error(status)) {
@@ -969,7 +978,7 @@ extern "C" {
 
       destination->string[destination->used++] = f_fss_extended_list_open;
 
-      if (complete == f_fss_complete_full) {
+      if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
         destination->string[destination->used++] = f_fss_extended_list_open_end;
       }
     }
@@ -998,7 +1007,7 @@ extern "C" {
     fl_macro_fss_skip_past_delimit_placeholders(content, (*range));
 
     if (range->start > range->stop || range->start >= content.used) {
-      if (complete == f_fss_complete_full || complete == f_fss_complete_end) {
+      if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
         status = private_fl_fss_destination_increase_by(2, destination);
         if (F_status_is_error(status)) return status;
 
@@ -1225,7 +1234,7 @@ extern "C" {
       return status;
     }
 
-    if (complete == f_fss_complete_full || complete == f_fss_complete_end) {
+    if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
       status = private_fl_fss_destination_increase_by(3, destination);
       if (F_status_is_error(status)) return status;
 

@@ -29,6 +29,7 @@ extern "C" {
     fll_program_print_help_option(file, context, fss_extended_list_write_short_partial, fss_extended_list_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, "Do not output end of Object/Content character.");
     fll_program_print_help_option(file, context, fss_extended_list_write_short_prepend, fss_extended_list_write_long_prepend, f_console_symbol_short_enable, f_console_symbol_long_enable, "Prepend the given whitespace characters to the start of each multi-line Content.");
     fll_program_print_help_option(file, context, fss_extended_list_write_short_single, fss_extended_list_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
+    fll_program_print_help_option(file, context, fss_extended_list_write_short_trim, fss_extended_list_write_long_trim, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Trim object names.");
 
     fll_program_print_help_usage(file, context, fss_extended_list_write_name, "");
 

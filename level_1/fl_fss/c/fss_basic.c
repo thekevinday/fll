@@ -98,6 +98,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    const f_string_length_t used_start = destination->used;
+
     f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
@@ -110,10 +112,17 @@ extern "C" {
       destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
     }
 
-    if (complete == f_fss_complete_partial || complete == f_fss_complete_full) {
+    if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
       if (status == F_none_stop || status == F_none_eos || status == F_data_not_stop || status == F_data_not_eos) {
-        const f_status_t status_allocation = private_fl_fss_destination_increase(destination);
-        if (F_status_is_error(status_allocation)) return status_allocation;
+        f_status_t status2 = F_none;
+
+        if (complete == f_fss_complete_full_trim) {
+          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_delimit_quote_double, used_start, destination);
+          if (F_status_is_error(status2)) return status2;
+        }
+
+        status2 = private_fl_fss_destination_increase(destination);
+        if (F_status_is_error(status2)) return status2;
 
         destination->string[destination->used++] = f_fss_basic_open;
       }
@@ -137,7 +146,7 @@ extern "C" {
     if (range->start > range->stop || range->start >= content.used) {
 
       // content should be terminated, even if empty.
-      if (complete == f_fss_complete_full || complete == f_fss_complete_end) {
+      if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
         status = private_fl_fss_destination_increase(destination);
         if (F_status_is_error(status)) return status;
 
@@ -171,7 +180,7 @@ extern "C" {
       destination->string[destination->used++] = content.string[range->start];
     } // for
 
-    if (complete == f_fss_complete_full || complete == f_fss_complete_end) {
+    if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
       destination->string[destination->used++] = f_fss_basic_close;
     }
 

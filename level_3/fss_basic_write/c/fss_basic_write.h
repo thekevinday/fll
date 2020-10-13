@@ -65,6 +65,7 @@ extern "C" {
   #define fss_basic_write_short_partial "p"
   #define fss_basic_write_short_prepend "P"
   #define fss_basic_write_short_single  "s"
+  #define fss_basic_write_short_trim    "T"
 
   #define fss_basic_write_long_file    "file"
   #define fss_basic_write_long_content "content"
@@ -73,6 +74,7 @@ extern "C" {
   #define fss_basic_write_long_partial "partial"
   #define fss_basic_write_long_prepend "prepend"
   #define fss_basic_write_long_single  "single"
+  #define fss_basic_write_long_trim    "trim"
 
   enum {
     fss_basic_write_parameter_help,
@@ -92,6 +94,7 @@ extern "C" {
     fss_basic_write_parameter_partial,
     fss_basic_write_parameter_prepend,
     fss_basic_write_parameter_single,
+    fss_basic_write_parameter_trim,
   };
 
   #define fss_basic_write_console_parameter_t_initialize \
@@ -112,9 +115,10 @@ extern "C" {
       f_console_parameter_t_initialize(fss_basic_write_short_partial, fss_basic_write_long_partial, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_basic_write_short_prepend, fss_basic_write_long_prepend, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_basic_write_short_single, fss_basic_write_long_single, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_basic_write_short_trim, fss_basic_write_long_trim, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_basic_write_total_parameters 16
+  #define fss_basic_write_total_parameters 17
 #endif // _di_fss_basic_write_defines_
 
 #ifndef _di_fss_basic_write_data_
