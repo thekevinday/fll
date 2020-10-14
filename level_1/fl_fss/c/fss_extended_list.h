@@ -123,7 +123,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_list_content_read_
 
 /**
- * Write an fss-0003 object.
+ * Write an fss-0003 object from a given string.
  *
  * This will write the given string range as a valid object.
  * Anything within this range will be escaped as necessary.
@@ -158,12 +158,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
-#ifndef _di_fl_fss_extended_list_object_write_
-  extern f_return_status fl_fss_extended_list_object_write(const f_string_static_t object, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);
-#endif // _di_fl_fss_extended_list_object_write_
+#ifndef _di_fl_fss_extended_list_object_write_string_
+  extern f_return_status fl_fss_extended_list_object_write_string(const f_string_static_t object, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);
+#endif // _di_fl_fss_extended_list_object_write_string_
 
 /**
- * Write an fss-0003 content.
+ * Write an fss-0003 content from a given string.
  *
  * This will write the given string range as a valid content.
  * Anything within this range will be escaped as necessary.
@@ -181,7 +181,12 @@ extern "C" {
  * @param prepend
  *   A string of whitespace to prepend at the start of each line.
  *   This should only be whitespace, anything else could product invalid content.
- *   Set prepend.used to 0 to not use.
+ *   Set the pointer address to 0 to disable.
+ * @param ignore
+ *   An optional list of ranges within the string to ignore.
+ *   These ranges are only checked/ignored if there is a valid nested object open or a valid nested object close.
+ *   Any valid nested object open or valid nested object close inside an ingore range will not be escaped.
+ *   Set the pointer address to 0 to disable.
  * @param range
  *   The start/stop location within the content string to write as an content.
  * @param destination
@@ -200,9 +205,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
-#ifndef _di_fl_fss_extended_list_content_write_
-  extern f_return_status fl_fss_extended_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t prepend, f_string_range_t *range, f_string_dynamic_t *destination);
-#endif // _di_fl_fss_extended_list_content_write_
+#ifndef _di_fl_fss_extended_list_content_write_string_
+  extern f_return_status fl_fss_extended_list_content_write_string(const f_string_static_t content, const uint8_t complete, const f_string_static_t *prepend, const f_string_ranges_t *ignore, f_string_range_t *range, f_string_dynamic_t *destination);
+#endif // _di_fl_fss_extended_list_content_write_string_
 
 #ifdef __cplusplus
 } // extern "C"

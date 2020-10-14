@@ -42,7 +42,7 @@ extern "C" {
  *   This will be populated with all valid contents found.
  * @param quoted_objects
  *   An array of all objects discovered with quotes and the quote discovered.
- *   Set pointer address to 0 to disable.
+ *   Set the pointer address to 0 to disable.
  *
  * @return
  *   F_none on success.
@@ -88,13 +88,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors (with error bit) from: fl_fss_basic_content_write().
- *   Errors (with error bit) from: fl_fss_basic_object_write().
+ *   Errors (with error bit) from: fl_fss_basic_content_write_string().
+ *   Errors (with error bit) from: fl_fss_basic_object_write_string().
  *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
-#ifndef _di_fll_fss_basic_write_
-  extern f_return_status fll_fss_basic_write(const f_string_static_t object, const f_string_static_t content, const f_fss_quote_t quote, f_string_dynamic_t *destination);
-#endif // _di_fll_fss_basic_write_
+#ifndef _di_fll_fss_basic_write_string_
+  extern f_return_status fll_fss_basic_write_string(const f_string_static_t object, const f_string_static_t content, const f_fss_quote_t quote, f_string_dynamic_t *destination);
+#endif // _di_fll_fss_basic_write_string_
 
 #ifdef __cplusplus
 } // extern "C"

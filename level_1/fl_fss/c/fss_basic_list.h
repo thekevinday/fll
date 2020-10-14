@@ -76,7 +76,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_list_object_read_
 
 /**
- * Read an fss-0002 content.
+ * Read an fss-0002 content from a given string.
  *
  * This will update the buffer at the given range with any placeholders to unescape any escaped data.
  * Calling this more than once on the same buffer range could result in multiple unescaping.
@@ -154,12 +154,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
-#ifndef _di_fl_fss_basic_list_object_write_
-  extern f_return_status fl_fss_basic_list_object_write(const f_string_static_t object, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);
-#endif // _di_fl_fss_basic_list_object_write_
+#ifndef _di_fl_fss_basic_list_object_write_string_
+  extern f_return_status fl_fss_basic_list_object_write_string(const f_string_static_t object, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);
+#endif // _di_fl_fss_basic_list_object_write_string_
 
 /**
- * Write an fss-0002 content.
+ * Write an fss-0002 content from a given string.
  *
  * This will write the given string range as a valid content.
  * Anything within this range will be escaped as necessary.
@@ -177,7 +177,7 @@ extern "C" {
  * @param prepend
  *   A string of whitespace to prepend at the start of each line.
  *   This should only be whitespace, anything else could product invalid content.
- *   Set prepend.used to 0 to not use.
+ *   Set the pointer address to 0 to disable.
  * @param range
  *   The start/stop location within the content string to write as an content.
  * @param destination
@@ -197,9 +197,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
-#ifndef _di_fl_fss_basic_list_content_write_
-  extern f_return_status fl_fss_basic_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t prepend, f_string_range_t *range, f_string_dynamic_t *destination);
-#endif // _di_fl_fss_basic_list_content_write_
+#ifndef _di_fl_fss_basic_list_content_write_string_
+  extern f_return_status fl_fss_basic_list_content_write_string(const f_string_static_t content, const uint8_t complete, const f_string_static_t *prepend, f_string_range_t *range, f_string_dynamic_t *destination);
+#endif // _di_fl_fss_basic_list_content_write_string_
 
 #ifdef __cplusplus
 } // extern "C"

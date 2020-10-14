@@ -130,8 +130,8 @@ extern "C" {
   }
 #endif // _di_fll_fss_basic_list_read_
 
-#ifndef _di_fll_fss_basic_list_write_
-  f_return_status fll_fss_basic_list_write(const f_string_static_t object, const f_string_statics_t contents, const f_string_static_t contents_prepend, f_string_dynamic_t *destination) {
+#ifndef _di_fll_fss_basic_list_write_string_
+  f_return_status fll_fss_basic_list_write_string(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -139,24 +139,28 @@ extern "C" {
     f_status_t status = 0;
     f_string_range_t range = f_macro_string_range_t_initialize(object.used);
 
-    status = fl_fss_basic_list_object_write(object, f_fss_complete_full, &range, destination);
+    status = fl_fss_basic_list_object_write_string(object, f_fss_complete_full, &range, destination);
 
     if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
       return status;
     }
 
     if (status == F_none || status == F_none_stop || status == F_none_eos || status == F_none_eol) {
-      if (contents.used && contents.array[0].used) {
+      if (content.used) {
         range.start = 0;
-        range.stop = contents.array[0].used - 1;
-
-        status = fl_fss_basic_list_content_write(contents.array[0], f_fss_complete_full, contents_prepend, &range, destination);
+        range.stop = content.used - 1;
       }
+      else {
+        range.start = 1;
+        range.stop = 0;
+      }
+
+      status = fl_fss_basic_list_content_write_string(content, f_fss_complete_full, content_prepend, &range, destination);
     }
 
     return status;
   }
-#endif // _di_fll_fss_basic_list_write_
+#endif // _di_fll_fss_basic_list_write_string_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -69,10 +69,18 @@ extern "C" {
  *
  * @param object
  *   A string representing the object.
- * @param contents
- *   An array of strings representing multiple content to write.
- * @param buffer
- *   The buffer to write to.
+ * @param content
+ *   A string representing the content.
+ * @param content_prepend
+ *   A string to prepend at the start of each line in content, such as spaces.
+ *   Set the pointer address to 0 to disable.
+ * @param ignore
+ *   An optional list of ranges within the string to ignore.
+ *   These ranges are only checked/ignored if there is a valid nested object open or a valid nested object close.
+ *   Any valid nested object open or valid nested object close inside an ingore range will not be escaped.
+ *   Set the pointer address to 0 to disable.
+ * @param destination
+ *   The buffer where the content is written to.
  *
  * @return
  *   F_none on success.
@@ -85,13 +93,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors (with error bit) from: fl_fss_extended_list_content_write().
- *   Errors (with error bit) from: fl_fss_extended_list_object_write().
+ *   Errors (with error bit) from: fl_fss_extended_list_content_write_string().
+ *   Errors (with error bit) from: fl_fss_extended_list_object_write_string().
  *   Errors (with error bit) from: fl_string_dynamic_size_increase().
  */
-#ifndef _di_fll_fss_extended_list_write_
-  //extern f_return_status fll_fss_extended_list_write(const f_string_static_t object, const f_string_statics_t contents, f_string_dynamic_t *buffer);
-#endif // _di_fll_fss_extended_list_write_
+#ifndef _di_fll_fss_extended_list_write_string_
+  extern f_return_status fll_fss_extended_list_write_string(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_string_dynamic_t *destination);
+#endif // _di_fll_fss_extended_list_write_string_
 
 #ifdef __cplusplus
 } // extern "C"

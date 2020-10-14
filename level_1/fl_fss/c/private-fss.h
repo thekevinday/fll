@@ -31,12 +31,35 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_fss_is_space().
  *
- * @see fl_fss_basic_object_write()
- * @see fl_fss_extended_object_write()
+ * @see fl_fss_basic_object_write_string()
+ * @see fl_fss_extended_object_write_string()
  */
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
+#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_)
   extern f_return_status private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_string_length_t used_start, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
+#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_)
+
+/**
+ * Add all bytes to destination until stop point, buffer end, or EOL.
+ *
+ * @param buffer
+ *   The buffer to seek through.
+ * @param range
+ *   The start/stop location within the buffer string to process.
+ * @param destination
+ *   The buffer where the bytes are written to.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: private_fl_fss_destination_increase().
+ *
+ * @see fl_fss_basic_list_content_write_string()
+ * @see fl_fss_extended_list_content_write_string()
+ * @see private_fl_fss_destination_increase()
+ */
+#if !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+  extern f_return_status private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_string_range_t *range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
 
 /**
  * Trim a given object used by the basic list and extended list object write functions.
@@ -51,12 +74,33 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_fss_is_space().
  *
- * @see fl_fss_basic_list_object_write()
- * @see fl_fss_extended_list_object_write()
+ * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_extended_list_object_write_string()
  */
-#if !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
+#if !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_)
   extern f_return_status private_fl_fss_basic_list_write_object_trim(const f_string_length_t used_start, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
+#endif // !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_)
+
+/**
+ * Skip past whitespace, seeking until stop point, buffer end, or EOL.
+ *
+ * @param buffer
+ *   The buffer to seek through.
+ * @param range
+ *   The start/stop location within the buffer string to process.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_fss_is_space().
+ *   Errors (with error bit) from: f_utf_buffer_increment().
+ *
+ * @see fl_fss_basic_list_content_write_string()
+ * @see fl_fss_extended_list_content_write_string()
+ */
+#if !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+  extern f_return_status private_fl_fss_basic_list_write_skip_whitespace(const f_string_static_t buffer, f_string_range_t *range) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
 
 /**
  * Private implementation of fl_fss_basic_object_read().
@@ -117,7 +161,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
 
 /**
- * Private implementation of fl_fss_basic_object_write().
+ * Private implementation of fl_fss_basic_object_write_string().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -154,13 +198,13 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_buffer_increment().
  *
- * @see fl_fss_basic_object_write()
- * @see fl_fss_extended_object_write()
- * @see fl_fss_extended_content_write()
+ * @see fl_fss_basic_object_write_string()
+ * @see fl_fss_extended_object_write_string()
+ * @see fl_fss_extended_content_write_string()
  */
-#if !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
+#if !defined(fl_fss_basic_object_write_string) || !defined(fl_fss_extended_object_write_string) || !defined(_di_fl_fss_extended_content_write_string_)
   extern f_return_status private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
+#endif // !defined(fl_fss_basic_object_write_string) || !defined(fl_fss_extended_object_write_string) || !defined(_di_fl_fss_extended_content_write_string_)
 
 /**
  * Increase the size of destination buffer, but only if necessary.
@@ -173,18 +217,18 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
  *
- * @see fl_fss_basic_object_write()
- * @see fl_fss_basic_content_write()
- * @see fl_fss_basic_list_object_write()
- * @see fl_fss_basic_list_content_write()
- * @see fl_fss_extended_object_write()
- * @see fl_fss_extended_content_write()
- * @see fl_fss_extended_list_object_write()
- * @see fl_fss_extended_list_content_write()
+ * @see fl_fss_basic_object_write_string()
+ * @see fl_fss_basic_content_write_string()
+ * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_basic_list_content_write_string()
+ * @see fl_fss_extended_object_write_string()
+ * @see fl_fss_extended_content_write_string()
+ * @see fl_fss_extended_list_object_write_string()
+ * @see fl_fss_extended_list_content_write_string()
  */
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
+#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
   extern f_return_status private_fl_fss_destination_increase(f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
+#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
 
 /**
  * Increase the size of destination buffer by the given amount, but only if necessary.
@@ -199,25 +243,25 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
  *
- * @see fl_fss_basic_object_write()
- * @see fl_fss_basic_content_write()
- * @see fl_fss_basic_list_object_write()
- * @see fl_fss_basic_list_content_write()
- * @see fl_fss_extended_object_write()
- * @see fl_fss_extended_content_write()
- * @see fl_fss_extended_list_object_write()
- * @see fl_fss_extended_list_content_write()
+ * @see fl_fss_basic_object_write_string()
+ * @see fl_fss_basic_content_write_string()
+ * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_basic_list_content_write_string()
+ * @see fl_fss_extended_object_write_string()
+ * @see fl_fss_extended_content_write_string()
+ * @see fl_fss_extended_list_object_write_string()
+ * @see fl_fss_extended_list_content_write_string()
  */
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
+#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
   f_return_status private_fl_fss_destination_increase_by(const f_string_length_t amount, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_basic_content_write_) || !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_) || !defined(_di_fl_fss_extended_list_object_write_) || !defined(_di_fl_fss_extended_list_content_write_)
+#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
 
 /**
  * Prepend the given string onto the destination buffer, allocating space as necessary.
  *
  * @param prepend
  *   A string to prepend at the start of each line, such as spaces.
- *   Set prepend.used to 0 to not use.
+ *   Set the pointer address to 0 to disable.
  * @param destination
  *   The destination buffer to prepend to.
  *
@@ -226,12 +270,12 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
  *
- * @see fl_fss_basic_list_content_write()
- * @see fl_fss_extended_list_content_write()
+ * @see fl_fss_basic_list_content_write_string()
+ * @see fl_fss_extended_list_content_write_string()
  */
-#if !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_)
-  f_return_status private_fl_fss_destination_prepend(const f_string_static_t prepend, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_)
+#if !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+  f_return_status private_fl_fss_destination_prepend(const f_string_static_t *prepend, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
 
 #ifdef __cplusplus
 } // extern "C"

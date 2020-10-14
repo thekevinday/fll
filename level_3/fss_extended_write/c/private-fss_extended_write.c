@@ -78,7 +78,7 @@ extern "C" {
         }
       }
 
-      status = fl_fss_extended_object_write(*object, quote, complete, &range, buffer);
+      status = fl_fss_extended_object_write_string(*object, quote, complete, &range, buffer);
 
       if (F_status_set_fine(status) == F_none_eol) {
         fss_extended_write_error_parameter_unsupported_eol_print(data);
@@ -87,7 +87,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_object_write", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_object_write_string", F_true);
         return F_status_set_error(status);
       }
     }
@@ -105,7 +105,7 @@ extern "C" {
             range.stop = 0;
           }
 
-          status = fl_fss_extended_content_write(contents->array[i], quote, i + 1 < contents->used ? f_fss_complete_next : f_fss_complete_end, &range, buffer);
+          status = fl_fss_extended_content_write_string(contents->array[i], quote, i + 1 < contents->used ? f_fss_complete_next : f_fss_complete_end, &range, buffer);
 
           if (F_status_set_fine(status) == F_none_eol) {
             fss_extended_write_error_parameter_unsupported_eol_print(data);
@@ -114,7 +114,7 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_content_write", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_content_write_string", F_true);
             return F_status_set_error(status);
           }
         } // for

@@ -791,8 +791,8 @@ extern "C" {
   }
 #endif // _di_fl_fss_extended_list_content_read_
 
-#ifndef _di_fl_fss_extended_list_object_write_
-  f_return_status fl_fss_extended_list_object_write(const f_string_static_t object, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
+#ifndef _di_fl_fss_extended_list_object_write_string_
+  f_return_status fl_fss_extended_list_object_write_string(const f_string_static_t object, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -993,10 +993,10 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fl_fss_extended_list_object_write_
+#endif // _di_fl_fss_extended_list_object_write_string_
 
-#ifndef _di_fl_fss_extended_list_content_write_
-  f_return_status fl_fss_extended_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t prepend, f_string_range_t *range, f_string_dynamic_t *destination) {
+#ifndef _di_fl_fss_extended_list_content_write_string_
+  f_return_status fl_fss_extended_list_content_write_string(const f_string_static_t content, const uint8_t complete, const f_string_static_t *prepend, const f_string_ranges_t *ignore, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -1038,6 +1038,8 @@ extern "C" {
     f_string_length_t slash_count = 0;
     f_string_length_t start = 0;
 
+    f_array_length_t r = 0;
+
     uint8_t width = 0;
 
     while (range->start <= range->stop && range->start < content.used) {
@@ -1053,49 +1055,26 @@ extern "C" {
         }
 
         destination->string[destination->used++] = content.string[range->start];
-        has_graph = F_true;
 
-        status = f_utf_buffer_increment(content, range, 1);
-        if (F_status_is_error(status)) break;
+        for (range->start++; range->start <= range->stop && range->start < content.used; range->start++) {
 
-        for (; range->start <= range->stop && range->start < content.used; range->start++) {
-
-          if (content.string[range->start] == f_fss_delimit_placeholder) {
-            continue;
-          }
-          else if (content.string[range->start] != f_fss_delimit_slash) {
-            break;
-          }
+          if (content.string[range->start] == f_fss_delimit_placeholder) continue;
+          if (content.string[range->start] != f_fss_delimit_slash) break;
 
           destination->string[destination->used++] = f_fss_delimit_slash;
           slash_count++;
         } // for
 
-        if (content.string[range->start] == f_fss_extended_list_open) {
-          start = range->start;
+        if (content.string[range->start] == f_fss_extended_list_open || content.string[range->start] == f_fss_extended_list_close) {
+          start = range->start++;
 
-          status = f_utf_buffer_increment(content, range, 1);
+          status = private_fl_fss_basic_list_write_skip_whitespace(content, range);
           if (F_status_is_error(status)) break;
 
-          while (range->start < content.used && range->start <= range->stop) {
-
-            if (content.string[range->start] == f_fss_eol) {
-              do_prepend = F_true;
-              break;
-            }
-
-            status = f_fss_is_space(content, *range);
-            if (F_status_is_error(status)) break;
-
-            if (status == F_false) break;
-
-            status = f_utf_buffer_increment(content, range, 1);
-            if (F_status_is_error(status)) break;
-          } // while
-
-          if (F_status_is_error(status)) break;
-
-          if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
+          if (has_graph && content.string[range->start] == f_fss_extended_list_close) {
+            // do nothing.
+          }
+          else if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
 
             // increase by total slashes + 1, along with the extended list open and possible newline.
             status = private_fl_fss_destination_increase_by(slash_count + 3, destination);
@@ -1106,15 +1085,25 @@ extern "C" {
             } // while
 
             destination->string[destination->used++] = f_fss_delimit_slash;
-            has_graph = F_false;
-            is_comment = F_false;
-          }
-          else {
-            status = private_fl_fss_destination_increase(destination);
+            destination->string[destination->used++] = content.string[start];
+
+            range->start = start + 1;
+
+            status = private_fl_fss_basic_list_write_add_until_end(content, range, destination);
             if (F_status_is_error(status)) break;
+
+            if (content.string[range->start] != f_fss_eol) {
+              has_graph = F_true;
+            }
+
+            continue;
           }
 
-          destination->string[destination->used++] = f_fss_extended_list_open;
+          // increase by character at "start" and possible newline.
+          status = private_fl_fss_destination_increase_by(2, destination);
+          if (F_status_is_error(status)) break;
+
+          destination->string[destination->used++] = content.string[start];
 
           if (content.string[range->start] == f_fss_eol) {
             destination->string[destination->used++] = f_fss_eol;
@@ -1128,24 +1117,8 @@ extern "C" {
           continue;
         }
       }
-      else if (content.string[range->start] == f_fss_extended_list_open && !is_comment) {
+      else if ((content.string[range->start] == f_fss_extended_list_open || (!has_graph && content.string[range->start] == f_fss_extended_list_close)) && !is_comment) {
         start = range->start++;
-        has_graph = F_true;
-
-        while (range->start < content.used && range->start <= range->stop) {
-
-          if (content.string[range->start] == f_fss_eol) break;
-
-          status = f_fss_is_space(content, *range);
-          if (F_status_is_error(status)) break;
-
-          if (status == F_false) break;
-
-          status = f_utf_buffer_increment(content, range, 1);
-          if (F_status_is_error(status)) break;
-        } // while
-
-        if (F_status_is_error(status)) break;
 
         if (do_prepend) {
           status = private_fl_fss_destination_prepend(prepend, destination);
@@ -1154,9 +1127,30 @@ extern "C" {
           do_prepend = F_false;
         }
 
+        has_graph = F_true;
+
+        status = private_fl_fss_basic_list_write_skip_whitespace(content, range);
+        if (F_status_is_error(status)) break;
+
         if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
           if (content.string[range->start] == f_fss_eol) {
             do_prepend = F_true;
+          }
+
+          if (ignore && ignore->used) {
+            for (r = 0; r < ignore->used; r++) {
+              if (start >= ignore->array[r].start && start <= ignore->array[r].stop) break;
+            } // for
+
+            if (r < ignore->used) {
+              status = private_fl_fss_destination_increase(destination);
+              if (F_status_is_error(status)) break;
+
+              destination->string[destination->used++] = content.string[start];
+              range->start = start + 1;
+              ends_on_eol = F_false;
+              continue;
+            }
           }
 
           // increase by slash and extended list open and possible newline.
@@ -1164,24 +1158,20 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           destination->string[destination->used++] = f_fss_delimit_slash;
-          has_graph = F_false;
-          is_comment = F_false;
-        }
-        else {
-          status = private_fl_fss_destination_increase(destination);
+          destination->string[destination->used++] = content.string[start];
+
+          range->start = start + 1;
+
+          status = private_fl_fss_basic_list_write_add_until_end(content, range, destination);
           if (F_status_is_error(status)) break;
+
+          continue;
         }
 
-        destination->string[destination->used++] = f_fss_extended_list_open;
+        status = private_fl_fss_destination_increase(destination);
+        if (F_status_is_error(status)) break;
 
-        if (content.string[range->start] == f_fss_eol) {
-          destination->string[destination->used++] = f_fss_eol;
-          ends_on_eol = F_true;
-        }
-        else {
-          ends_on_eol = F_false;
-        }
-
+        destination->string[destination->used++] = content.string[start];
         range->start = start + 1;
         continue;
       }
@@ -1256,7 +1246,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fl_fss_extended_list_content_write_
+#endif // _di_fl_fss_extended_list_content_write_string_
 
 #ifdef __cplusplus
 } // extern "C"

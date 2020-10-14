@@ -78,7 +78,7 @@ extern "C" {
         }
       }
 
-      status = fl_fss_basic_list_object_write(*object, complete, &range, buffer);
+      status = fl_fss_basic_list_object_write_string(*object, complete, &range, buffer);
 
       if (F_status_set_fine(status) == F_none_eol) {
         fss_basic_list_write_error_parameter_unsupported_eol_print(data);
@@ -87,7 +87,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_list_object_write", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_list_object_write_string", F_true);
         return status;
       }
     }
@@ -96,10 +96,10 @@ extern "C" {
       range.start = 0;
       range.stop = content->used - 1;
 
-      status = fl_fss_basic_list_content_write(*content, object ? f_fss_complete_full : f_fss_complete_none, data.prepend, &range, buffer);
+      status = fl_fss_basic_list_content_write_string(*content, object ? f_fss_complete_full : f_fss_complete_none, &data.prepend, &range, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_list_content_write", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_list_content_write_string", F_true);
         return status;
       }
     }
