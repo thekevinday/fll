@@ -364,7 +364,7 @@ extern "C" {
       index = data.parameters[fss_extended_list_write_parameter_ignore].additional.array[i * 2];
 
       range.start = 0;
-      range.stop = strnlen(arguments.argv[index], f_console_length_size);
+      range.stop = strnlen(arguments.argv[index], f_console_length_size) - 1;
 
       // allow and ignore the positive sign.
       if (range.stop > 0 && arguments.argv[index][0] == '+') {
@@ -383,7 +383,7 @@ extern "C" {
       index = data.parameters[fss_extended_list_write_parameter_ignore].additional.array[(i * 2) + 1];
 
       range.start = 0;
-      range.stop = strnlen(arguments.argv[index], f_console_length_size);
+      range.stop = strnlen(arguments.argv[index], f_console_length_size) - 1;
 
       // allow and ignore the positive sign.
       if (range.stop > 0 && arguments.argv[index][0] == '+') {
