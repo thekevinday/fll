@@ -963,6 +963,9 @@ extern "C" {
           destination->used = used_start;
           return status;
         }
+
+        // prevent a space from being added post-trimming.
+        ends_on_space = F_true;
       }
 
       status = private_fl_fss_destination_increase_by(3, destination);
