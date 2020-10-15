@@ -194,6 +194,11 @@ extern "C" {
             break;
           }
 
+          if (block.string[range.start] == fss_basic_list_write_pipe_content_ignore) {
+            // this is not used by objects.
+            continue;
+          }
+
           object.string[object.used++] = block.string[range.start];
         } // for
 
@@ -240,6 +245,11 @@ extern "C" {
               state = 0x3;
               range.start++;
               break;
+            }
+
+            if (block.string[range.start] == fss_basic_list_write_pipe_content_ignore) {
+              // this is not used by this program.
+              continue;
             }
 
             content.string[content.used++] = block.string[range.start];

@@ -261,7 +261,7 @@ extern "C" {
 
     if (status == F_number) {
       if (error.verbosity != f_console_verbosity_quiet) {
-        fprintf(error.to.stream, "%c", argument[0]);
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
         fprintf(error.to.stream, "%s%sThe argument '", error.context.before->string, error.prefix ? error.prefix : "");
         fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, argument, error.notable.after->string);
         fprintf(error.to.stream, "%s' is not a valid number for the parameter '", error.context.before->string);
@@ -274,7 +274,7 @@ extern "C" {
 
     if (status == F_number_negative) {
       if (error.verbosity != f_console_verbosity_quiet) {
-        fprintf(error.to.stream, "%c", argument[0]);
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
         fprintf(error.to.stream, "%s%sThe argument '", error.context.before->string, error.prefix ? error.prefix : "");
         fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, argument, error.notable.after->string);
         fprintf(error.to.stream, "%s' is negative, which is not allowed for the parameter '", error.context.before->string);
@@ -287,7 +287,7 @@ extern "C" {
 
     if (status == F_number_overflow) {
       if (error.verbosity != f_console_verbosity_quiet) {
-        fprintf(error.to.stream, "%c", argument[0]);
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
         fprintf(error.to.stream, "%s%sThe argument '", error.context.before->string, error.prefix ? error.prefix : "");
         fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, argument, error.notable.after->string);
         fprintf(error.to.stream, "%s' is too large for the parameter '", error.context.before->string);
@@ -300,7 +300,7 @@ extern "C" {
 
     if (status == F_number_positive) {
       if (error.verbosity != f_console_verbosity_quiet) {
-        fprintf(error.to.stream, "%c", argument[0]);
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
         fprintf(error.to.stream, "%s%sThe argument '", error.context.before->string, error.prefix ? error.prefix : "");
         fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, argument, error.notable.after->string);
         fprintf(error.to.stream, "%s' is positive, which is not allowed for the parameter '", error.context.before->string);
@@ -313,7 +313,7 @@ extern "C" {
 
     if (status == F_number_underflow) {
       if (error.verbosity != f_console_verbosity_quiet) {
-        fprintf(error.to.stream, "%c", argument[0]);
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
         fprintf(error.to.stream, "%s%sThe argument '", error.context.before->string, error.prefix ? error.prefix : "");
         fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, argument, error.notable.after->string);
         fprintf(error.to.stream, "%s' is too small for the parameter '", error.context.before->string);

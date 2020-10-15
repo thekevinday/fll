@@ -70,8 +70,10 @@ extern "C" {
  *   This is either single our double quote.
  * @param object
  *   The object to validate and print.
+ *   Set pointer address to 0 to not use.
  * @param content
  *   The content to escape and print.
+ *   Set pointer address to 0 to not use.
  * @param buffer
  *   The buffer array used as a cache to construct the output before printing.
  *

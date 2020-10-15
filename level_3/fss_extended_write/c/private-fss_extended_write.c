@@ -218,6 +218,11 @@ extern "C" {
             break;
           }
 
+          if (block.string[range.start] == fss_extended_write_pipe_content_ignore) {
+            // this is not used by objects.
+            continue;
+          }
+
           object.string[object.used++] = block.string[range.start];
         } // for
 
@@ -268,12 +273,19 @@ extern "C" {
               contents.used++;
               continue;
             }
-            else if (block.string[range.start] == fss_extended_write_pipe_content_end) {
+
+            if (block.string[range.start] == fss_extended_write_pipe_content_end) {
               state = 0x4;
               range.start++;
               break;
             }
-            else if (F_status_set_fine(status) == F_none_eol) {
+
+            if (block.string[range.start] == fss_extended_write_pipe_content_ignore) {
+              // this is not used by this program.
+              continue;
+            }
+
+            if (F_status_set_fine(status) == F_none_eol) {
               fss_extended_write_error_parameter_unsupported_eol_print(data);
 
               status = F_status_set_error(F_unsupported);

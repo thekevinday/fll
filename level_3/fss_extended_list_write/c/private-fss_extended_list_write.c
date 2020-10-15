@@ -52,7 +52,7 @@ extern "C" {
 #endif // _di_fss_extended_list_write_error_parameter_value_missing_print_
 
 #ifndef _di_fss_extended_list_write_process_
-  f_return_status fss_extended_list_write_process(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
+  f_return_status fss_extended_list_write_process(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, const f_string_ranges_t *ignore, f_string_dynamic_t *buffer) {
     f_status_t status = F_none;
 
     f_string_range_t range = f_string_range_t_initialize;
@@ -96,8 +96,7 @@ extern "C" {
       range.start = 0;
       range.stop = content->used - 1;
 
-      // @todo: add const f_string_ranges_t *ignore parameter.
-      status = fl_fss_extended_list_content_write_string(*content, object ? f_fss_complete_full : f_fss_complete_none, &data.prepend, 0, &range, buffer);
+      status = fl_fss_extended_list_content_write_string(*content, object ? f_fss_complete_full : f_fss_complete_none, &data.prepend, ignore, &range, buffer);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_list_content_write_string", F_true);
@@ -122,7 +121,7 @@ extern "C" {
 #endif // _di_fss_extended_list_write_process_
 
 #ifndef _di_fss_extended_list_write_process_pipe_
-  f_return_status fss_extended_list_write_process_pipe(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
+  f_return_status fss_extended_list_write_process_pipe(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer, f_string_ranges_t *ignore) {
     f_status_t status = F_none;
     f_status_t status_pipe = F_none;
 
@@ -133,7 +132,9 @@ extern "C" {
 
     f_string_length_t total = 0;
     f_string_length_t previous = 0;
+
     f_string_range_t range = f_string_range_t_initialize;
+    f_string_range_t range_ignore = f_string_range_t_initialize;
 
     f_string_dynamic_t block = f_string_dynamic_t_initialize;
     f_string_dynamic_t object = f_string_dynamic_t_initialize;
@@ -170,6 +171,9 @@ extern "C" {
           content.used = 0;
 
           state = 0x1;
+
+          range_ignore.start = 1;
+          range_ignore.stop = 0;
         }
 
         if (object.used + block.used > object.size) {
@@ -193,6 +197,11 @@ extern "C" {
             state = 0x3;
             range.start++;
             break;
+          }
+
+          if (block.string[range.start] == fss_extended_list_write_pipe_content_ignore) {
+            // this is not used by objects.
+            continue;
           }
 
           object.string[object.used++] = block.string[range.start];
@@ -243,6 +252,45 @@ extern "C" {
               break;
             }
 
+            if (block.string[range.start] == fss_extended_list_write_pipe_content_ignore) {
+              if (ignore) {
+                if (range_ignore.start > range_ignore.stop) {
+                  range_ignore.start = content.used;
+                  range_ignore.stop = content.used;
+                }
+                else {
+                  if (ignore->used + 1 > ignore->size) {
+                    if (ignore->size + f_fss_default_allocation_step > f_array_length_t_size) {
+                      if (ignore->size + 1 > f_array_length_t_size) {
+                        fll_error_print(data.error, F_string_too_large, "fss_extended_list_write_process_pipe", F_true);
+
+                        status = F_status_set_error(F_string_too_large);
+                        break;
+                      }
+
+                      f_macro_string_ranges_t_resize(status, (*ignore), ignore->size + 1);
+                    }
+                    else {
+                      f_macro_string_ranges_t_resize(status, (*ignore), ignore->size + f_fss_default_allocation_step);
+                    }
+
+                    if (F_status_is_error(status)) {
+                      fll_error_print(data.error, F_string_too_large, "fss_extended_list_write_process_pipe", F_true);
+                      break;
+                    }
+                  }
+
+                  ignore->array[ignore->used].start = range_ignore.start;
+                  ignore->array[ignore->used++].stop = content.used - 1;
+
+                  range_ignore.start = 1;
+                  range_ignore.stop = 0;
+                }
+              }
+
+              continue;
+            }
+
             content.string[content.used++] = block.string[range.start];
           } // for
 
@@ -254,7 +302,7 @@ extern "C" {
       }
 
       if (state == 0x3) {
-        status = fss_extended_list_write_process(data, output, quote, &object, &content, buffer);
+        status = fss_extended_list_write_process(data, output, quote, &object, &content, ignore, buffer);
         if (F_status_is_error(status)) break;
 
         state = 0;
@@ -263,7 +311,7 @@ extern "C" {
 
     // if the pipe ended before finishing, then attempt to wrap up.
     if (F_status_is_error_not(status) && status_pipe == F_none_eof && state) {
-      status = fss_extended_list_write_process(data, output, quote, &object, &content, buffer);
+      status = fss_extended_list_write_process(data, output, quote, &object, &content, ignore, buffer);
     }
 
     f_macro_string_dynamic_t_delete_simple(block);
@@ -272,6 +320,89 @@ extern "C" {
     return status;
   }
 #endif // _di_fss_extended_list_write_process_pipe_
+
+#ifndef _di_fss_extended_list_write_process_parameter_ignore_
+  f_return_status fss_extended_list_write_process_parameter_ignore(const f_console_arguments_t arguments, const fss_extended_list_write_data_t data, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) {
+    f_status_t status = F_none;
+
+    f_array_length_t i = 0;
+    f_array_length_t l = 0;
+    f_array_length_t index = 0;
+
+    f_string_range_t range = f_string_range_t_initialize;
+
+    f_number_unsigned_t number = 0;
+
+    range.start = 0;
+
+    for (; i < data.parameters[fss_extended_list_write_parameter_ignore].locations.used; i++) {
+
+      l = data.parameters[fss_extended_list_write_parameter_ignore].locations.array[i];
+
+      if (l < contents.array[location]) continue;
+      if (location + 1 < contents.used && l > contents.array[location + 1]) continue;
+
+      if (ignore->used + 1 > ignore->size) {
+        if (ignore->size + f_fss_default_allocation_step > f_array_length_t_size) {
+          if (ignore->size + 1 > f_array_length_t_size) {
+            fll_error_print(data.error, F_string_too_large, "fss_extended_list_write_process_parameter_ignore", F_true);
+            return F_status_set_error(F_string_too_large);
+          }
+
+          f_macro_string_ranges_t_resize(status, (*ignore), ignore->size + 1);
+        }
+        else {
+          f_macro_string_ranges_t_resize(status, (*ignore), ignore->size + f_fss_default_allocation_step);
+        }
+
+        if (F_status_is_error(status)) {
+          fll_error_print(data.error, F_status_set_fine(status), "fss_extended_list_write_process_parameter_ignore", F_true);
+          return status;
+        }
+      }
+
+      index = data.parameters[fss_extended_list_write_parameter_ignore].additional.array[i * 2];
+
+      range.start = 0;
+      range.stop = strnlen(arguments.argv[index], f_console_length_size);
+
+      // allow and ignore the positive sign.
+      if (range.stop > 0 && arguments.argv[index][0] == '+') {
+        range.start = 1;
+      }
+
+      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+
+      if (F_status_is_error(status)) {
+        fll_error_parameter_integer_print(data.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_write_long_ignore, arguments.argv[index]);
+        return status;
+      }
+
+      ignore->array[ignore->used].start = number;
+
+      index = data.parameters[fss_extended_list_write_parameter_ignore].additional.array[(i * 2) + 1];
+
+      range.start = 0;
+      range.stop = strnlen(arguments.argv[index], f_console_length_size);
+
+      // allow and ignore the positive sign.
+      if (range.stop > 0 && arguments.argv[index][0] == '+') {
+        range.start = 1;
+      }
+
+      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+
+      if (F_status_is_error(status)) {
+        fll_error_parameter_integer_print(data.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_write_long_ignore, arguments.argv[index]);
+        return status;
+      }
+
+      ignore->array[ignore->used++].stop = number;
+    } // for
+
+    return F_none;
+  }
+#endif // _di_fss_extended_list_write_process_parameter_ignore_
 
 #ifdef __cplusplus
 } // extern "C"

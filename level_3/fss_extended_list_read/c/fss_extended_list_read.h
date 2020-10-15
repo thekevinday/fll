@@ -62,8 +62,9 @@ extern "C" {
 #endif // _di_fss_extended_list_read_name_
 
 #ifndef _di_fss_extended_list_read_defines_
-  #define fss_extended_list_read_pipe_content_start '\0'
-  #define fss_extended_list_read_pipe_content_end   '\f'
+  #define fss_extended_list_read_pipe_content_end    '\f'
+  #define fss_extended_list_read_pipe_content_ignore '\v'
+  #define fss_extended_list_read_pipe_content_start  '\b'
 
   #define fss_extended_list_read_short_at      "a"
   #define fss_extended_list_read_short_content "c"

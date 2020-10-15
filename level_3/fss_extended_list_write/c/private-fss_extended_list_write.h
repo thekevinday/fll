@@ -70,8 +70,13 @@ extern "C" {
  *   This is either single our double quote.
  * @param object
  *   The object to validate and print.
+ *   Set pointer address to 0 to not use.
  * @param content
  *   The content to escape and print.
+ *   Set pointer address to 0 to not use.
+ * @param ignore
+ *   An array of ranges within the Content to ignore.
+ *   Set pointer address to 0 to not use.
  * @param buffer
  *   The buffer array used as a cache to construct the output before printing.
  *
@@ -80,7 +85,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_extended_list_write_process_
-  extern f_return_status fss_extended_list_write_process(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_extended_list_write_process(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, const f_string_ranges_t *ignore, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_write_process_
 
 /**
@@ -95,14 +100,39 @@ extern "C" {
  *   This is either single our double quote.
  * @param buffer
  *   The buffer array used as a cache to construct the output before printing.
+ * @param ignore
+ *   An array of ranges within the Content to ignore.
+ *   Set pointer address to 0 to not use.
  *
  * @return
  *   F_none on success.
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_extended_list_write_process_pipe_
-  extern f_return_status fss_extended_list_write_process_pipe(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_extended_list_write_process_pipe(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer, f_string_ranges_t *ignore) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_write_process_pipe_
+
+/**
+ * Process the ignore parameter associated with a specific content parameter.
+ *
+ * @param arguments
+ *   The parameters passed to the process.
+ * @param data
+ *   The program data.
+ * @param contents
+ *   The console parameter locations array for the content parameter.
+ * @param location
+ *   The specific location within the contents locations array.
+ * @param ignore
+ *   An array of ranges within the Content to ignore.
+ *
+ * @return
+ *   F_none on success.
+ *   F_failure (with error bit) for any othe failure.
+ */
+#ifndef _di_fss_extended_list_write_process_parameter_ignore_
+  extern f_return_status fss_extended_list_write_process_parameter_ignore(const f_console_arguments_t arguments, const fss_extended_list_write_data_t data, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_write_process_parameter_ignore_
 
 #ifdef __cplusplus
 } // extern "C"

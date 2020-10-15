@@ -1133,11 +1133,13 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
+
           if (content.string[range->start] == f_fss_eol) {
             do_prepend = F_true;
           }
 
           if (ignore && ignore->used) {
+
             for (r = 0; r < ignore->used; r++) {
               if (start >= ignore->array[r].start && start <= ignore->array[r].stop) break;
             } // for

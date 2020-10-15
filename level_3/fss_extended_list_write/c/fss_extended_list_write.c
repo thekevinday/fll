@@ -25,6 +25,7 @@ extern "C" {
     fll_program_print_help_option(file, context, fss_extended_list_write_short_file, fss_extended_list_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
     fll_program_print_help_option(file, context, fss_extended_list_write_short_content, fss_extended_list_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "The Content to output.");
     fll_program_print_help_option(file, context, fss_extended_list_write_short_double, fss_extended_list_write_long_double, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use double quotes (default).");
+    fll_program_print_help_option(file, context, fss_extended_list_write_short_ignore, fss_extended_list_write_long_ignore, f_console_symbol_short_enable, f_console_symbol_long_enable, " Ignore a given range within a content.");
     fll_program_print_help_option(file, context, fss_extended_list_write_short_object, fss_extended_list_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The Object to output.");
     fll_program_print_help_option(file, context, fss_extended_list_write_short_partial, fss_extended_list_write_long_partial, f_console_symbol_short_enable, f_console_symbol_long_enable, "Do not output end of Object/Content character.");
     fll_program_print_help_option(file, context, fss_extended_list_write_short_prepend, fss_extended_list_write_long_prepend, f_console_symbol_short_enable, f_console_symbol_long_enable, "Prepend the given whitespace characters to the start of each multi-line Content.");
@@ -33,33 +34,56 @@ extern "C" {
 
     fll_program_print_help_usage(file, context, fss_extended_list_write_name, "");
 
-    printf("  The pipe uses the NULL character '");
-    fl_color_print(f_type_output, context.set.notable, "\\0");
+    printf("  The pipe uses the Backspace character '");
+    fl_color_print(f_type_output, context.set.notable, "\\b");
     printf("' (");
-    fl_color_print(f_type_output, context.set.notable, "U+0000");
-    printf(") to designate the start of a Content and uses the Form Feed character '");
+    fl_color_print(f_type_output, context.set.notable, "U+0008");
+    printf(") to designate the start of a Content.%c", f_string_eol[0]);
+
+    printf("  The pipe uses the Form Feed character '");
     fl_color_print(f_type_output, context.set.notable, "\\f");
     printf("' (");
     fl_color_print(f_type_output, context.set.notable, "U+000C");
     printf(") to designate the end of the last Content.%c", f_string_eol[0]);
-    printf("  For the pipe, an Object is terminated by either a NULL character '");
-    fl_color_print(f_type_output, context.set.notable, "\\0");
+
+    printf("  The pipe uses the Vertical Line character '");
+    fl_color_print(f_type_output, context.set.notable, "\\v");
     printf("' (");
-    fl_color_print(f_type_output, context.set.notable, "U+0000");
+    fl_color_print(f_type_output, context.set.notable, "U+000B");
+    printf(") is used to ignore a content range (use this both before and after the range).%c", f_string_eol[0]);
+
+    printf("  For the pipe, an Object is terminated by either a Backspace character '");
+    fl_color_print(f_type_output, context.set.notable, "\\b");
+    printf("' (");
+    fl_color_print(f_type_output, context.set.notable, "U+0008");
     printf(") or a Form Feed character '");
     fl_color_print(f_type_output, context.set.notable, "\\f");
     printf("' (");
     fl_color_print(f_type_output, context.set.notable, "U+000C");
     printf(").%c", f_string_eol[0]);
+
     printf("  The end of the pipe represents the end of any Object or Content.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
-    printf("  The FSS-0002 (Basic List) specification does not support quoted names, therefore the parameters '");
+    printf("  The FSS-0003 (Extended List) specification does not support quoted names, therefore the parameters '");
     fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_write_long_single);
     printf("' and '");
     fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_write_long_double);
     printf("' do nothing.%c", f_string_eol[0]);
+
+    printf("%c", f_string_eol[0]);
+
+    printf("  The parameter '");
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_write_long_ignore);
+    printf("' designates to not escape any valid nested Object or Content within some Content.%c", f_string_eol[0]);
+    printf("  This parameter requires two values.%c", f_string_eol[0]);
+    printf("  This is not used for ignoring anything within the input pipe.%c", f_string_eol[0]);
+    printf("  This parameter must be specified after a '");
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_write_long_content);
+    printf("' parameter and this applies only to the Content represented by that specific '");
+    fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_write_long_content);
+    printf("' parameter.%c", f_string_eol[0]);
 
     printf("%c", f_string_eol[0]);
 
@@ -322,6 +346,32 @@ extern "C" {
       }
     }
 
+    if (F_status_is_error_not(status)) {
+      if (data->parameters[fss_extended_list_write_parameter_ignore].result == f_console_result_found) {
+        if (data->error.verbosity != f_console_verbosity_quiet) {
+          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_write_long_ignore);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no values were given.%c", f_string_eol[0]);
+        }
+
+        status = F_status_set_error(F_parameter);
+      }
+      else if (data->parameters[fss_extended_list_write_parameter_ignore].result == f_console_result_additional) {
+        const f_array_length_t total_locations = data->parameters[fss_extended_list_write_parameter_ignore].locations.used;
+        const f_array_length_t total_arguments = data->parameters[fss_extended_list_write_parameter_ignore].additional.used;
+
+        if (total_locations * 2 > total_arguments) {
+          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_write_long_ignore);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' requires two values.%c", f_string_eol[0]);
+
+          status = F_status_set_error(F_parameter);
+        }
+      }
+    }
+
     f_fss_quote_t quote = f_fss_delimit_quote_double;
 
     if (F_status_is_error_not(status)) {
@@ -343,9 +393,10 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       f_string_dynamic_t escaped = f_string_dynamic_t_initialize;
+      f_string_ranges_t ignore = f_string_ranges_t_initialize;
 
       if (data->process_pipe) {
-        status = fss_extended_list_write_process_pipe(*data, output, quote, &buffer);
+        status = fss_extended_list_write_process_pipe(*data, output, quote, &buffer, &ignore);
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
@@ -355,6 +406,8 @@ extern "C" {
             fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
           }
         }
+
+        ignore.used = 0;
       }
 
       if (F_status_is_error_not(status)) {
@@ -367,24 +420,30 @@ extern "C" {
               object.used = strnlen(object.string, f_console_length_size);
               object.size = object.used;
 
-              status = fss_extended_list_write_process(*data, output, quote, &object, 0, &buffer);
+              status = fss_extended_list_write_process(*data, output, quote, &object, 0, 0, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
           else {
             for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_content].additional.used; i++) {
 
+              status = fss_extended_list_write_process_parameter_ignore(arguments, *data, data->parameters[fss_extended_list_write_parameter_content].locations, i, &ignore);
+              if (F_status_is_error(status)) break;
+
               content.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_content].additional.array[i]];
               content.used = strnlen(content.string, f_console_length_size);
               content.size = content.used;
 
-              status = fss_extended_list_write_process(*data, output, quote, 0, &content, &buffer);
+              status = fss_extended_list_write_process(*data, output, quote, 0, &content, &ignore, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
         }
         else {
           for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_object].additional.used; i++) {
+
+            status = fss_extended_list_write_process_parameter_ignore(arguments, *data, data->parameters[fss_extended_list_write_parameter_content].locations, i, &ignore);
+            if (F_status_is_error(status)) break;
 
             object.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_object].additional.array[i]];
             object.used = strnlen(object.string, f_console_length_size);
@@ -394,7 +453,7 @@ extern "C" {
             content.used = strnlen(content.string, f_console_length_size);
             content.size = content.used;
 
-            status = fss_extended_list_write_process(*data, output, quote, &object, &content, &buffer);
+            status = fss_extended_list_write_process(*data, output, quote, &object, &content, &ignore, &buffer);
             if (F_status_is_error(status)) break;
           } // for
         }
@@ -414,6 +473,7 @@ extern "C" {
       }
 
       f_macro_string_dynamic_t_delete_simple(escaped);
+      f_macro_string_ranges_t_delete_simple(ignore);
 
       // object and content, though being a "dynamic" type, is being used statically, so clear them up to avoid invalid free().
       object.string = 0;

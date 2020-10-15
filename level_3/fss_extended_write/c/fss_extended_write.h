@@ -54,12 +54,14 @@ extern "C" {
 #endif // _di_fss_extended_write_name_
 
 #ifndef _di_fss_extended_write_defines_
-  #define fss_extended_write_pipe_content_start '\0'
-  #define fss_extended_write_pipe_content_end   '\f'
+  #define fss_extended_write_pipe_content_end    '\f'
+  #define fss_extended_write_pipe_content_ignore '\v'
+  #define fss_extended_write_pipe_content_start  '\b'
 
   #define fss_extended_write_short_file     "f"
   #define fss_extended_write_short_content  "c"
   #define fss_extended_write_short_double   "d"
+  #define fss_extended_write_short_ignore   "I"
   #define fss_extended_write_short_object   "o"
   #define fss_extended_write_short_partial  "p"
   #define fss_extended_write_short_prepend  "P"
@@ -69,6 +71,7 @@ extern "C" {
   #define fss_extended_write_long_file    "file"
   #define fss_extended_write_long_content "content"
   #define fss_extended_write_long_double  "double"
+  #define fss_extended_write_long_ignore  "ignore"
   #define fss_extended_write_long_object  "object"
   #define fss_extended_write_long_partial "partial"
   #define fss_extended_write_long_prepend "prepend"
@@ -89,6 +92,7 @@ extern "C" {
     fss_extended_write_parameter_file,
     fss_extended_write_parameter_content,
     fss_extended_write_parameter_double,
+    fss_extended_write_parameter_ignore,
     fss_extended_write_parameter_object,
     fss_extended_write_parameter_partial,
     fss_extended_write_parameter_prepend,
@@ -110,6 +114,7 @@ extern "C" {
       f_console_parameter_t_initialize(fss_extended_write_short_file, fss_extended_write_long_file, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_write_short_content, fss_extended_write_long_content, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_write_short_double, fss_extended_write_long_double, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_ignore, fss_extended_write_long_ignore, 0, 2, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_write_short_object, fss_extended_write_long_object, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_write_short_partial, fss_extended_write_long_partial, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_write_short_prepend, fss_extended_write_long_prepend, 0, 1, f_console_type_normal), \
@@ -117,7 +122,7 @@ extern "C" {
       f_console_parameter_t_initialize(fss_extended_write_short_trim, fss_extended_write_long_trim, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_extended_write_total_parameters 17
+  #define fss_extended_write_total_parameters 18
 #endif // _di_fss_extended_write_defines_
 
 #ifndef _di_fss_extended_write_data_t_
