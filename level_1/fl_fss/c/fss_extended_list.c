@@ -1079,6 +1079,13 @@ extern "C" {
           }
           else if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
 
+            if (content.string[range->start] == f_fss_eol) {
+              ends_on_eol = F_true;
+            }
+            else {
+              ends_on_eol = F_false;
+            }
+
             // increase by total slashes + 1, along with the extended list open and possible newline.
             status = private_fl_fss_destination_increase_by(slash_count + 3, destination);
             if (F_status_is_error(status)) break;
@@ -1139,6 +1146,10 @@ extern "C" {
 
           if (content.string[range->start] == f_fss_eol) {
             do_prepend = F_true;
+            ends_on_eol = F_true;
+          }
+          else {
+            ends_on_eol = F_false;
           }
 
           if (ignore && ignore->used) {
@@ -1153,7 +1164,6 @@ extern "C" {
 
               destination->string[destination->used++] = content.string[start];
               range->start = start + 1;
-              ends_on_eol = F_false;
               continue;
             }
           }
