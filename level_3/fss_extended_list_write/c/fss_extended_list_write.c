@@ -78,7 +78,7 @@ extern "C" {
     fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_write_long_ignore);
     printf("' designates to not escape any valid nested Object or Content within some Content.%c", f_string_eol[0]);
     printf("  This parameter requires two values.%c", f_string_eol[0]);
-    printf("  This is not used for ignoring anything within the input pipe.%c", f_string_eol[0]);
+    printf("  This parameter is not used for ignoring anything from the input pipe.%c", f_string_eol[0]);
     printf("  This parameter must be specified after a '");
     fl_color_print(f_type_output, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_write_long_content);
     printf("' parameter and this applies only to the Content represented by that specific '");
@@ -467,6 +467,7 @@ extern "C" {
           }
         }
         else if (data->error.verbosity != f_console_verbosity_quiet && data->parameters[fss_extended_list_write_parameter_file].result == f_console_result_none) {
+
           // ensure there is always a newline at the end, unless in quiet mode.
           fprintf(f_type_output, "%c", f_string_eol[0]);
         }
