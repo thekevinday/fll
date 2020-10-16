@@ -4,7 +4,7 @@
 #
 # The purpose of this script is to create releases from the project source.
 # These release directories can then be used to compile the project or to package the project.
-# The dependencies of this script are: basename, bash, chmod, grep, and sed.
+# The dependencies of this script are: basename, bash, chmod, grep, sed, and sort.
 
 package_main() {
   local public_name="Simple FLL Project Package Script"
@@ -466,6 +466,10 @@ package_dependencies_individual() {
   local settings=
   local name=
   local dependencies=
+  local dependencies_0=
+  local dependencies_1=
+  local dependencies_2=
+  local dependencies_individual=
   local dependency=
   local sub_level=
   local sub_dependencies=
@@ -473,7 +477,6 @@ package_dependencies_individual() {
   local sub_sub_level=
   local sub_sub_dependencies=
   local sub_sub_dependency=
-  local individual_dependencies=
 
   for directory in ${path_sources}level_0/* ${path_sources}level_1/* ${path_sources}level_2/* ${path_sources}level_3/* ; do
     name="$(echo $directory | sed -e "s|${path_sources}level_0/||" -e "s|${path_sources}level_1/||" -e "s|${path_sources}level_2/||" -e "s|${path_sources}level_3/||")"
@@ -504,11 +507,15 @@ package_dependencies_individual() {
     fi
 
     dependencies=
+    dependencies_0=
+    dependencies_1=
+    dependencies_2=
+    dependencies_individual=
+
     if [[ -f ${directory}/data/build/dependencies ]] ; then
       dependencies=$(cat ${directory}/data/build/dependencies | sed -e "/^\s*#/d" -e "s|#\.*$||")
     fi
 
-    individual_dependencies=
     for dependency in $dependencies ; do
       if [[ $(echo "$dependency" | grep -o "^f_") != "" ]] ; then
         level=level_0
@@ -605,17 +612,17 @@ package_dependencies_individual() {
       break;
     fi
 
-    individual_dependencies=$(echo "$individual_dependencies" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-    if [[ $individual_dependencies != "" ]] ; then
+    dependencies_individual=$(echo "$dependencies_individual" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||' -e 's|[[:space:]][[:space:]]*$| |')
+    if [[ $dependencies_individual != "" ]] ; then
       if [[ $verbosity == "verbose" ]] ; then
-        echo -e " $individual_dependencies"
+        echo -e " $dependencies_individual"
       fi
 
-      individual_dependencies=" $individual_dependencies"
+      dependencies_individual=" $dependencies_individual"
     fi
 
     settings=${directory}/data/build/settings
-    sed -i -e "s|^\s*build_libraries-individual\>.*\$|build_libraries-individual$individual_dependencies|" $settings
+    sed -i -e "s|^\s*build_libraries-individual\>.*\$|build_libraries-individual$dependencies_individual|" $settings
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -671,8 +678,46 @@ package_dependencies_individual_append() {
 
   libraries=$(grep -o '^\s*build_sources_library\>.*$' $settings | sed -e 's|^\s*build_sources_library\>||' -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
   if [[ $libraries != "" ]] ; then
-    if [[ $(echo -n $individual_dependencies | grep -o "\-l$dependency\>") == "" ]] ; then
-      individual_dependencies="-l$dependency $individual_dependencies"
+    if [[ $(echo -n $dependencies_individual | grep -o "\-l$dependency\>") == "" ]] ; then
+
+      if [[ "$(type -p sort)" != "" ]] ; then
+        if [[ $level == "level_0" ]] ; then
+          dependencies_0="-l$dependency $dependencies_0"
+          dependencies_0="$(for i in $dependencies_0; do echo $i ; done | sort)"
+          dependencies_0=$(echo $dependencies_0)
+        elif [[ $level == "level_1" ]] ; then
+          dependencies_1="-l$dependency $dependencies_1"
+          dependencies_1=" $(for i in $dependencies_1; do echo $i ; done | sort)"
+          dependencies_1=$(echo $dependencies_1)
+        else
+          dependencies_2="-l$dependency $dependencies_2"
+          dependencies_2=" $(for i in $dependencies_2; do echo $i ; done | sort)"
+          dependencies_2=$(echo $dependencies_2)
+        fi
+      else
+        # sort is not available, so do not bother trying to sort.
+        if [[ $level == "level_0" ]] ; then
+          dependencies_0="-l$dependency $dependencies_0"
+        elif [[ $level == "level_1" ]] ; then
+          dependencies_1="-l$dependency $dependencies_1"
+        else
+          dependencies_2="-l$dependency $dependencies_2"
+        fi
+      fi
+
+      dependencies_individual=
+
+      if [[ $dependencies_0 != "" ]] ; then
+        dependencies_individual="$dependencies_0"
+      fi
+
+      if [[ $dependencies_1 != "" ]] ; then
+        dependencies_individual="$dependencies_individual $dependencies_1"
+      fi
+
+      if [[ $dependencies_2 != "" ]] ; then
+        dependencies_individual="$dependencies_individual $dependencies_2"
+      fi
     fi
   fi
 }

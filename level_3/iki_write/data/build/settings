@@ -19,7 +19,7 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lfll_program -lfll_error -lfll_iki -lfl_string -lfl_iki -lfl_console -lf_conversion -lfl_color -lf_print -lf_pipe -lf_iki -lf_file -lf_console -lf_utf -lf_memory
+build_libraries-individual -lf_console -lf_conversion -lf_file -lf_iki -lf_memory -lf_pipe -lf_print -lf_utf -lfl_color -lfl_console -lfl_iki -lfl_string -lfll_error -lfll_iki -lfll_program
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_sources_library iki_write.c private-iki_write.c

@@ -19,7 +19,7 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lfl_string -lfl_status -lfl_fss -lfl_conversion -lf_file -lf_fss -lf_conversion -lf_utf -lf_memory
+build_libraries-individual -lf_conversion -lf_file -lf_fss -lf_memory -lf_utf -lfl_conversion -lfl_fss -lfl_status -lfl_string
 build_sources_library fss.c private-fss.c fss_basic.c fss_basic_list.c fss_extended.c fss_extended_list.c fss_status.c
 build_sources_program
 build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_extended.h fss_extended_list.h fss_status.h
