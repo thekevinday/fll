@@ -125,6 +125,37 @@ extern "C" {
   #define f_macro_string_lengths_t_adjust(status, lengths, new_length) f_macro_memory_structure_t_adjust(status, lengths, f_string_length_t, new_length)
 #endif // _di_f_string_lengths_t_
 
+/**
+ * This holds an array of f_string_lengths_t.
+ *
+ * array: the array of string lenths arrays.
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
+#ifndef _di_f_string_lengthss_t_
+  typedef struct {
+    f_string_lengths_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_string_lengthss_t;
+
+  #define f_string_lengthss_t_initialize { 0, 0, 0 }
+
+  #define f_macro_string_lengthss_t_clear(lengthss) f_macro_memory_structures_t_clear(lengthss)
+
+  #define f_macro_string_lengthss_t_new(status, lengthss, length) f_macro_memory_structures_t_new(status, lengthss, f_string_length_t, length)
+
+  #define f_macro_string_lengthss_t_delete(status, lengthss)  f_macro_memory_structures_t_delete(status, lengthss, f_string_length_t, f_string_lengths_t)
+  #define f_macro_string_lengthss_t_destroy(status, lengthss) f_macro_memory_structures_t_destroy(status, lengthss, f_string_length_t, f_string_lengths_t)
+
+  #define f_macro_string_lengthss_t_delete_simple(lengthss)  f_macro_memory_structures_t_delete_simple(lengthss, f_string_length_t, f_string_lengths_t)
+  #define f_macro_string_lengthss_t_destroy_simple(lengthss) f_macro_memory_structures_t_destroy_simple(lengthss, f_string_length_t, f_string_lengths_t)
+
+  #define f_macro_string_lengthss_t_resize(status, lengthss, new_length) f_macro_memory_structures_t_resize(status, lengthss, f_string_length_t, f_string_lengths_t, new_length, f_array_length_t)
+  #define f_macro_string_lengthss_t_adjust(status, lengthss, new_length) f_macro_memory_structures_t_adjust(status, lengthss, f_string_length_t, f_string_lengths_t, new_length, f_array_length_t)
+#endif // _di_f_string_lengthss_t_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

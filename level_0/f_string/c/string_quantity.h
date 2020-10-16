@@ -68,6 +68,37 @@ extern "C" {
   #define f_macro_string_quantitys_t_adjust(status, quantitys, new_length) f_macro_memory_structure_t_adjust(status, quantitys, f_string_quantity_t, new_length)
 #endif // _di_f_string_quantitys_t_
 
+/**
+ * This holds an array of f_string_quantity_t.
+ *
+ * array: the array of quantitys arrays.
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
+#ifndef _di_f_string_quantityss_t_
+  typedef struct {
+    f_string_quantity_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_string_quantityss_t;
+
+  #define f_string_quantityss_t_initialize {0, 0, 0}
+
+  #define f_macro_string_quantityss_t_clear(quantityss) f_macro_memory_structures_t_clear(quantityss)
+
+  #define f_macro_string_quantityss_t_new(status, quantityss, length) f_macro_memory_structures_t_new(status, quantityss, f_string_quantity_t, length)
+
+  #define f_macro_string_quantityss_t_delete(status, quantityss)  f_macro_memory_structures_t_delete(status, quantityss, f_string_quantity_t, f_string_quantitys_t)
+  #define f_macro_string_quantityss_t_destroy(status, quantityss) f_macro_memory_structures_t_destroy(status, quantityss, f_string_quantity_t, f_string_quantitys_t)
+
+  #define f_macro_string_quantityss_t_delete_simple(quantityss)  f_macro_memory_structures_t_delete_simple(quantityss, f_string_quantity_t, f_string_quantitys_t)
+  #define f_macro_string_quantityss_t_destroy_simple(quantityss) f_macro_memory_structures_t_destroy_simple(quantityss, f_string_quantity_t, f_string_quantitys_t)
+
+  #define f_macro_string_quantityss_t_resize(status, quantityss, new_length) f_macro_memory_structures_t_resize(status, quantityss, f_string_quantity_t, f_string_quantitys_t, new_length, f_array_length_t)
+  #define f_macro_string_quantityss_t_adjust(status, quantityss, new_length) f_macro_memory_structures_t_adjust(status, quantityss, f_string_quantity_t, f_string_quantitys_t, new_length, f_array_length_t)
+#endif // _di_f_string_quantityss_t_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

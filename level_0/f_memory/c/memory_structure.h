@@ -165,7 +165,7 @@ extern "C" {
  *
  * status:         the status to return.
  * structures:     the structures to operate on.
- * type_stuctures: the structure type.
+ * type_stuctures: the structures type.
  * new_length:     the new size of the array.
  */
 #ifndef _di_f_macro_memory_structures_new_
@@ -184,7 +184,7 @@ extern "C" {
  * status:         the status to return.
  * structures:     the structures to operate on.
  * type_stucture:  the structure type.
- * type_stuctures: the structure type.
+ * type_stuctures: the structures type.
  */
 #ifndef _di_f_macro_memory_structures_delete_
   #define f_macro_memory_structures_t_delete(status, structures, type_structure, type_structures) \
@@ -205,7 +205,7 @@ extern "C" {
  * status:         the status to return.
  * structures:     the structures to operate on.
  * type_stucture:  the structure type.
- * type_stuctures: the structure type.
+ * type_stuctures: the structures type.
  */
 #ifndef _di_f_macro_memory_structures_destroy_
   #define f_macro_memory_structures_t_destroy(status, structures, type_structure, type_structures) \
@@ -225,7 +225,7 @@ extern "C" {
  *
  * structures:     the structures to operate on.
  * type_stucture:  the structure type.
- * type_stuctures: the structure type.
+ * type_stuctures: the structures type.
  */
 #ifndef _di_f_macro_memory_structures_delete_simple_
   #define f_macro_memory_structures_t_delete_simple(structures, type_structure, type_structures) \
@@ -246,7 +246,7 @@ extern "C" {
  *
  * structures:     the structures to operate on.
  * type_stucture:  the structure type.
- * type_stuctures: the structure type.
+ * type_stuctures: the structures type.
  */
 #ifndef _di_f_macro_memory_structures_destroy_simple_
   #define f_macro_memory_structures_t_destroy_simple(structures, type_structure, type_structures) \
@@ -268,7 +268,7 @@ extern "C" {
  * status:          the status to return.
  * structures:      the structures to operate on.
  * type_stucture:   the structure type.
- * type_stuctures:  the structure type.
+ * type_stuctures:  the structures type.
  * new_length:      the new size of the array.
  * length_variable: the data type of the length variable.
  */
@@ -299,7 +299,7 @@ extern "C" {
  * status:          the status to return.
  * structures:      the structures to operate on.
  * type_stucture:   the structure type.
- * type_stuctures:  the structure type.
+ * type_stuctures:  the structures type.
  * new_length:      the new size of the array.
  * length_variable: the data type of the length variable.
  */
