@@ -24,14 +24,18 @@ extern "C" {
  * To designate that either object or content is non-existent, set start position greater than stop position.
  * In particular, set start to 1 and stop to 0.
  *
+ * This does not have resize/adjust macros due to multiple things to potentially resize.
+ * Any resizing must be manually performed on each applicable property.
+ *
  * object:  The object.
  * content: The content associated with the object.
  * parent:  A location referencing a parrent object or content that this object content is nested under.
  */
 #ifndef _di_fss_item_t_
   typedef struct {
-    f_fss_object_t   object;
-    f_fss_content_t  content;
+    f_fss_object_t object;
+    f_fss_content_t content;
+
     f_array_length_t parent;
   } f_fss_item_t;
 
@@ -54,6 +58,7 @@ extern "C" {
    * Create a new fss item structure.
    *
    * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
+   * This does not allocate to item.delimits, allocation must be performed separately.
    *
    * status:    the status to return.
    * structure: the structure to operate on.
@@ -115,25 +120,6 @@ extern "C" {
     item.object.start = 1; \
     item.object.stop = 0; \
     item.parent = 0;
-
-  /**
-   * Resize a fss item.
-   *
-   * status:     the status to return.
-   * item:       the f_fss_item_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_item_t_resize(status, item, new_length) f_macro_fss_content_t_resize(status, item.content, new_length);
-
-  /**
-   * Adjust a fss item.
-   *
-   * status:     the status to return.
-   * item:       the f_fss_item_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_item_t_adjust(status, item, new_length) f_macro_fss_content_t_adjust(status, item.content, new_length);
-
 #endif // _di_fss_item_t_
 
 /**
@@ -161,8 +147,8 @@ extern "C" {
  *   }
  *
  * array: The array of object, their associated content, and their associated parent.
- * size: Total amount of allocated space.
- * used: Total number of allocated spaces used.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_fss_items_t_
   typedef struct {

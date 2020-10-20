@@ -25,6 +25,7 @@
 
 // fll-0 fss includes
 #include <level_0/fss-common.h>
+#include <level_0/fss_delimit.h>
 #include <level_0/fss_quote.h>
 #include <level_0/fss_named.h>
 #include <level_0/fss_nest.h>
@@ -33,6 +34,44 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * Replace all 1-byte character locations specified by the delimits within the given buffer by a delimit placeholder.
+ *
+ * Any delimits out of range (beyond the buffer.used) are ignored.
+ *
+ * @param delimits
+ *   An array of locations containing the delimits to apply within the buffer.
+ * @param buffer
+ *   The string to process.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_fss_apply_delimit_
+  extern f_return_status fl_fss_apply_delimit(const f_fss_delimits_t delimits, f_string_static_t *buffer);
+#endif // _di_fl_fss_apply_delimit_
+
+/**
+ * Replace all 1-byte character locations specified by the delimits within the given buffer by a delimit placeholder if within the given range.
+ *
+ * If the delimits are found to be (inclusively) within the range specified by range, then those delimits are applied.
+ *
+ * @param delimits
+ *   An array of locations containing the delimits to apply within the buffer.
+ * @param range
+ *   The range in which to restrict which delimits to apply.
+ * @param buffer
+ *   The string to process.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_fss_apply_delimit_between_
+  extern f_return_status fl_fss_apply_delimit_between(const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t *buffer);
+#endif // _di_fl_fss_apply_delimit_between_
 
 /**
  * Count the number of new lines from the buffer before the given location.
@@ -153,25 +192,65 @@ extern "C" {
 #endif // _di_f_fss_is_zero_width_
 
 /**
- * Shift all of the delimiters to the end of the used buffer.
+ * Seek until an EOL character is reached.
+ *
+ * @param buffer
+ *   The string to process.
+ * @param range
+ *   The start and stop positions in the buffer being processed.
+ *   This increments range->start.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_eos on success and EOS was reached.
+ *   F_none_stop on success and stop point was reached.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_seek_to_eol_
+  extern f_return_status f_fss_seek_to_eol(const f_string_dynamic_t buffer, f_string_range_t *range);
+#endif // _di_f_fss_seek_to_eol_
+
+/**
+ * Shift all of the delimit placeholders to the end of the used buffer.
  *
  * This allows one to do a printf on the dynamic string without the delimiters arbitrarily stopping the output.
  * No reallocations are performed, this will only shift characters.
  *
+ * @param range
+ *   A restriction on where within the buffer the shifting happens.
  * @param buffer
  *   The string to process.
  *   This gets updated.
- * @param range
- *   A restriction on where within the buffer the shifting happens.
  *
  * @return
  *   F_none on success.
+ *   F_none_eos on success and EOS was reached.
+ *   F_none_stop on success and stop point was reached.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if UTF-8 cannot be fully processed (buffer or range range not long enough).
+ */
+#ifndef _di_f_fss_shift_delimit_
+  extern f_return_status f_fss_shift_delimit(const f_string_range_t range, f_string_dynamic_t *buffer);
+#endif // _di_f_fss_shift_delimit_
+
+/**
+ * Skip past all delimit placeholders until a non-delimit placeholder is reached.
+ *
+ * @param buffer
+ *   The string to process.
+ * @param range
+ *   The start and stop positions in the buffer being processed.
+ *   This increments range->start.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_eos on success and EOS was reached.
+ *   F_none_stop on success and stop point was reached.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_fss_shift_delimiters_
-  extern f_return_status f_fss_shift_delimiters(f_string_dynamic_t *buffer, const f_string_range_t range);
-#endif // _di_f_fss_shift_delimiters_
+#ifndef _di_f_fss_skip_past_delimit_
+  extern f_return_status f_fss_skip_past_delimit(const f_string_static_t buffer, f_string_range_t *range);
+#endif // _di_f_fss_skip_past_delimit_
 
 /**
  * Skip past all whitespace and control characters, except newline.

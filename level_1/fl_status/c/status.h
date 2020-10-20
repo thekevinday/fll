@@ -203,6 +203,8 @@ extern "C" {
     #define FL_status_string_process          "F_process"
     #define FL_status_string_process_too_many "F_process_too_many"
     #define FL_status_string_prohibited       "F_prohibited"
+    #define FL_status_string_range            "F_range"
+    #define FL_status_string_range_not        "F_range_not"
     #define FL_status_string_read_only        "F_read_only"
     #define FL_status_string_recurse          "F_recurse"
     #define FL_status_string_relative         "F_relative"
@@ -215,6 +217,7 @@ extern "C" {
     #define FL_status_string_unknown          "F_unknown"
     #define FL_status_string_unsupported      "F_unsupported"
     #define FL_status_string_utf              "F_utf"
+    #define FL_status_string_utf_not          "F_utf_not"
     #define FL_status_string_value            "F_value"
     #define FL_status_string_value_not        "F_value_not"
     #define FL_status_string_warn             "F_warn"
@@ -260,6 +263,8 @@ extern "C" {
     #define FL_status_string_process_length          9
     #define FL_status_string_process_too_many_length 18
     #define FL_status_string_prohibited_length       12
+    #define FL_status_string_range_length            7
+    #define FL_status_string_range_not_length        11
     #define FL_status_string_read_only_length        11
     #define FL_status_string_recurse_length          9
     #define FL_status_string_relative_length         10
@@ -272,6 +277,7 @@ extern "C" {
     #define FL_status_string_unknown_length          9
     #define FL_status_string_unsupported_length      13
     #define FL_status_string_utf_length              5
+    #define FL_status_string_utf_not_length          9
     #define FL_status_string_value_length            7
     #define FL_status_string_value_not_length        11
     #define FL_status_string_warn_length             6

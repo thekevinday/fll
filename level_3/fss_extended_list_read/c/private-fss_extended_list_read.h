@@ -188,12 +188,14 @@ extern "C" {
  *   The name of the file being processed.
  * @param depths
  *   The processed depth parameters.
+ * @param delimits
+ *   An array of delimits detected during processing.
  *
  * @see fss_extended_list_read_main_preprocess_depth()
  * @see fss_extended_list_read_main_process_for_depth()
  */
 #ifndef _di_fss_extended_list_read_main_process_file_
-  extern f_return_status fss_extended_list_read_main_process_file(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t file_name, const fss_extended_list_read_depths_t depths) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_extended_list_read_main_process_file(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t file_name, const fss_extended_list_read_depths_t depths, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_main_process_file_
 
 /**
@@ -238,6 +240,18 @@ extern "C" {
 #ifndef _di_fss_extended_list_read_print_content_end_
   extern void fss_extended_list_read_print_content_end(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_print_content_end_
+
+/**
+ * Print the ignore character for content.
+ *
+ * This is only used in pipe output mode.
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_extended_list_read_print_content_ignore_
+  extern void fss_extended_list_read_print_content_ignore(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_print_content_ignore_
 
 /**
  * Print the end of an object/content set.

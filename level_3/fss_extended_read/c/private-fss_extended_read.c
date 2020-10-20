@@ -170,7 +170,7 @@ extern "C" {
 #endif // _di_fss_extended_read_main_preprocess_depth_
 
 #ifndef _di_fss_extended_read_main_process_file_
-  f_return_status fss_extended_read_main_process_file(const f_console_arguments_t arguments, fss_extended_read_data_t *data, const f_string_t filename, const fss_extended_read_depths_t depths) {
+  f_return_status fss_extended_read_main_process_file(const f_console_arguments_t arguments, fss_extended_read_data_t *data, const f_string_t filename, const fss_extended_read_depths_t depths, f_fss_delimits_t *delimits) {
     f_status_t status = F_none;
 
     {
@@ -179,26 +179,48 @@ extern "C" {
       input.start = 0;
       input.stop = data->buffer.used - 1;
 
-      status = fll_fss_extended_read(&data->buffer, &input, &data->objects, &data->contents, 0, 0);
+      delimits->used = 0;
+
+      status = fll_fss_extended_read(&data->buffer, &input, &data->objects, &data->contents, 0, 0, delimits);
 
       if (F_status_is_error(status)) {
         // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
         fll_error_file_print(data->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, filename, "process", fll_error_file_type_file);
-
-        return status;
-      }
-      else if (status == F_data_not_stop || status == F_data_not_eos) {
-        if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
-          fprintf(f_type_output, "0%c", f_string_eol[0]);
-          return F_none;
-        }
 
         // Clear buffers, then attempt the next file.
         f_macro_fss_contents_t_delete_simple(data->contents);
         f_macro_fss_objects_t_delete_simple(data->objects);
         f_macro_string_dynamic_t_delete_simple(data->buffer);
 
+        return status;
+      }
+
+      if (status == F_data_not_stop || status == F_data_not_eos) {
+
+        // Clear buffers, then attempt the next file.
+        f_macro_fss_contents_t_delete_simple(data->contents);
+        f_macro_fss_objects_t_delete_simple(data->objects);
+        f_macro_string_dynamic_t_delete_simple(data->buffer);
+
+        if (data->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
+          fprintf(f_type_output, "0%c", f_string_eol[0]);
+          return F_none;
+        }
+
         return F_status_set_warning(status);
+      }
+
+      status = fl_fss_apply_delimit(*delimits, &data->buffer);
+
+      if (F_status_is_error(status)) {
+        fll_error_file_print(data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, filename, "process", fll_error_file_type_file);
+
+        // Clear buffers, then attempt the next file.
+        f_macro_fss_contents_t_delete_simple(data->contents);
+        f_macro_fss_objects_t_delete_simple(data->objects);
+        f_macro_string_dynamic_t_delete_simple(data->buffer);
+
+        return status;
       }
     }
 

@@ -5,16 +5,18 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_extended_list_read_
-  f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest) {
+  f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *delimits) {
     #ifndef _di_level_3_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
+      if (!delimits) return F_status_set_error(F_parameter);
     #endif // _di_level_3_parameter_checking_
 
     f_status_t status = F_none;
     f_status_t status2 = F_none;
     f_string_length_t initial_used = 0;
+
     bool found_data = F_false;
 
     if (!nest->used) {
@@ -32,7 +34,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
         }
 
-        status = fl_fss_extended_list_object_read(buffer, range, &nest->depth[0].array[nest->depth[0].used].object);
+        status = fl_fss_extended_list_object_read(buffer, range, &nest->depth[0].array[nest->depth[0].used].object, delimits);
         if (F_status_is_error(status)) return status;
 
         if (range->start >= range->stop || range->start >= buffer->used) {
@@ -61,7 +63,7 @@ extern "C" {
         if (status == FL_fss_found_object) {
           found_data = F_true;
 
-          status = fl_fss_extended_list_content_read(buffer, range, nest);
+          status = fl_fss_extended_list_content_read(buffer, range, nest, delimits);
 
           break;
         }

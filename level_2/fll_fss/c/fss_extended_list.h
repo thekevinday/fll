@@ -36,6 +36,9 @@ extern "C" {
  *   The range within the buffer that is currently being read.
  * @param nest
  *   An nested set of all objects and content.
+ * @param delimits
+ *   An array of delimits detected during processing.
+ *   The caller is expected to decide if and when to process them.
  *
  * @return
  *   F_none on success (both valid object and valid content found with start location is at end of content).
@@ -61,7 +64,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_extended_list_object_read().
  */
 #ifndef _di_fll_fss_extended_list_read_
-  extern f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest);
+  extern f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *delimits);
 #endif // _di_fll_fss_extended_list_read_
 
 /**

@@ -335,6 +335,12 @@ extern "C" {
         case F_prohibited:
           *string = FL_status_string_prohibited;
           break;
+        case F_range:
+          *string = FL_status_string_range;
+          break;
+        case F_range_not:
+          *string = FL_status_string_range_not;
+          break;
         case F_read_only:
           *string = FL_status_string_read_only;
           break;
@@ -370,6 +376,9 @@ extern "C" {
           break;
         case F_utf:
           *string = FL_status_string_utf;
+          break;
+        case F_utf_not:
+          *string = FL_status_string_utf_not;
           break;
         case F_value:
           *string = FL_status_string_value;

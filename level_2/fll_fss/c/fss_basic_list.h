@@ -39,6 +39,9 @@ extern "C" {
  *   This will be populated with all valid objects found.
  * @param contents
  *   This will be populated with all valid contents found.
+ * @param delimits
+ *   An array of delimits detected during processing.
+ *   The caller is expected to decide if and when to process them.
  *
  * @return
  *   F_none on success.
@@ -57,7 +60,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_basic_list_object_read().
  */
 #ifndef _di_fll_fss_basic_list_read_
-  extern f_return_status fll_fss_basic_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents);
+  extern f_return_status fll_fss_basic_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_delimits_t *delimits);
 #endif // _di_fll_fss_basic_list_read_
 
 /**

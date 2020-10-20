@@ -122,32 +122,12 @@ extern "C" {
 
 /**
  * Default allocation steps.
+ *
+ * Recommended to be set to at least 4 to be UTF-8 friendlier.
  */
 #ifndef _di_f_fss_default_allocation_step_
-  // recommended to be set to at least 4 to be UTF-8 friendlier.
   #define f_fss_default_allocation_step f_memory_default_allocation_step
 #endif // _di_f_fss_default_allocation_step_
-
-/**
- * An array of string locations representing where a delimit was applied or is to be applied with respect to some string.
- */
-#ifndef _di_f_fss_delimits_t_
-  typedef f_string_ranges_t f_fss_delimits_t;
-
-  #define f_fss_delimits_initialize f_string_ranges_t_initialize
-
-  #define f_macro_fss_delimits_clear(delimits) f_macro_memory_structure_t_clear(delimits)
-
-  #define f_macro_fss_delimits_new(status, delimits)     f_macro_string_ranges_t_new(status, delimits)
-  #define f_macro_fss_delimits_delete(status, delimits)  f_macro_string_ranges_t_delete(status, delimits)
-  #define f_macro_fss_delimits_destroy(status, delimits) f_macro_string_ranges_t_destroy(status, delimits)
-
-  #define f_macro_fss_delimits_delete_simple(delimits)  f_macro_string_ranges_t_delete_simple(delimits)
-  #define f_macro_fss_delimits_destroy_simple(delimits) f_macro_string_ranges_t_destroy_simple(delimits)
-
-  #define f_macro_fss_delimits_resize(status, delimits, new_length) f_macro_string_ranges_t_resize(status, delimits, new_length)
-  #define f_macro_fss_delimits_adjust(status, delimits, new_length) f_macro_string_ranges_t_adjust(status, delimits, new_length)
-#endif // _di_f_fss_delimits_t_
 
 /**
  * Stores information about a particular fss file, otherwise known as its header.

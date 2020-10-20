@@ -561,6 +561,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_range, length, FL_status_string_range_length) == F_equal_to) {
+        *code = F_range;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_range_not, length, FL_status_string_range_not_length) == F_equal_to) {
+        *code = F_range_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_read_only, length, FL_status_string_read_only_length) == F_equal_to) {
         *code = F_read_only;
         return F_none;
@@ -618,6 +628,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_utf, length, FL_status_string_utf_length) == F_equal_to) {
         *code = F_utf;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_utf_not, length, FL_status_string_utf_not_length) == F_equal_to) {
+        *code = F_utf_not;
         return F_none;
       }
 

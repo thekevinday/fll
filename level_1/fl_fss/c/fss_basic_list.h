@@ -35,8 +35,7 @@ extern "C" {
 /**
  * Read an fss-0002 object.
  *
- * This will update the buffer at the given range with any placeholders to unescape any escaped data.
- * Calling this more than once on the same buffer range could result in multiple unescaping.
+ * This will record where delimit placeholders exist but will not apply the delimits.
  *
  * @param buffer
  *   The buffer to read from.
@@ -48,6 +47,8 @@ extern "C" {
  *   A start location past the stop location or buffer used means that the entire range was processed.
  * @param found
  *   A set of all locations where a valid object was found.
+ * @param delimits
+ *   A delimits array representing where delimits exist within the buffer.
  *
  * @return
  *   FL_fss_found_object on success and object was found (start location is at end of object).
@@ -69,17 +70,17 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  *   Errors (with error bit) from: f_fss_is_graph().
  *   Errors (with error bit) from: f_fss_is_space().
+ *   Errors (with error bit) from: f_fss_seek_to_eol().
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_basic_list_object_read_
-  extern f_return_status fl_fss_basic_list_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found);
+  extern f_return_status fl_fss_basic_list_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_delimits_t *delimits);
 #endif // _di_fl_fss_basic_list_object_read_
 
 /**
  * Read an fss-0002 content from a given string.
  *
- * This will update the buffer at the given range with any placeholders to unescape any escaped data.
- * Calling this more than once on the same buffer range could result in multiple unescaping.
+ * This will record where delimit placeholders exist but will not apply the delimits.
  *
  * @param buffer
  *   The buffer to read from.
@@ -91,6 +92,8 @@ extern "C" {
  *   A start location past the stop location or buffer used means that the entire range was processed.
  * @param found
  *   A set of all locations where a valid content was found.
+ * @param delimits
+ *   A delimits array representing where delimits exist within the buffer.
  *
  * @return
  *   FL_fss_found_content on success and content was found (start location is at end of content).
@@ -112,10 +115,11 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  *   Errors (with error bit) from: f_fss_is_graph().
  *   Errors (with error bit) from: f_fss_is_space().
+ *   Errors (with error bit) from: f_fss_skip_past_delimit().
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_basic_list_content_read_
-  extern f_return_status fl_fss_basic_list_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found);
+  extern f_return_status fl_fss_basic_list_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits);
 #endif // _di_fl_fss_basic_list_content_read_
 
 /**

@@ -5,12 +5,13 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_basic_read_
-  f_return_status fll_fss_basic_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *quoted_objects) {
+  f_return_status fll_fss_basic_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *quoted_objects, f_fss_delimits_t *delimits) {
     #ifndef _di_level_2_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
       if (!objects) return F_status_set_error(F_parameter);
       if (!contents) return F_status_set_error(F_parameter);
+      if (!delimits) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
@@ -40,7 +41,7 @@ extern "C" {
           quoted_object = &quoted_objects->array[quoted_objects->used];
         }
 
-        status = fl_fss_basic_object_read(buffer, range, &objects->array[objects->used], quoted_object);
+        status = fl_fss_basic_object_read(buffer, range, &objects->array[objects->used], quoted_object, delimits);
 
         if (F_status_is_error(status)) {
           return status;
@@ -83,7 +84,7 @@ extern "C" {
         if (status == FL_fss_found_object) {
           found_data = F_true;
 
-          status = fl_fss_basic_content_read(buffer, range, &contents->array[contents->used]);
+          status = fl_fss_basic_content_read(buffer, range, &contents->array[contents->used], delimits);
           if (F_status_is_error(status)) return status;
 
           break;

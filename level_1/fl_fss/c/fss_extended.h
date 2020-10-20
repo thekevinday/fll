@@ -34,8 +34,7 @@ extern "C" {
 /**
  * Read an fss-0001 object.
  *
- * This will update the buffer at the given range with any placeholders to unescape any escaped data.
- * Calling this more than once on the same buffer range could result in multiple unescaping.
+ * This will record where delimit placeholders exist but will not apply the delimits.
  *
  * @param buffer
  *   The buffer to read from.
@@ -50,6 +49,8 @@ extern "C" {
  * @param quoted
  *   This will store whether or not this object is quoted and what quote is in use.
  *   Set pointer address to 0 to not use.
+ * @param delimits
+ *   A delimits array representing where delimits exist within the buffer.
  *
  * @return
  *   FL_fss_found_object on success and object was found (start location is at end of object).
@@ -60,28 +61,24 @@ extern "C" {
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
  *   F_unterminated_group_eos if EOS was reached before the a group termination was reached.
  *   F_unterminated_group_stop if stop point was reached before the a group termination was reached.
- *   F_buffer_too_large (with error bit) if a buffer is too large.
- *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_buffer_increment().
  *   Errors (with error bit) from: f_fss_is_graph().
  *   Errors (with error bit) from: f_fss_is_space().
+ *   Errors (with error bit) from: f_fss_is_zero_width().
+ *   Errors (with error bit) from: f_fss_seek_to_eol().
+ *   Errors (with error bit) from: f_fss_skip_past_delimit().
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_object_read_
-  extern f_return_status fl_fss_extended_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted);
+  extern f_return_status fl_fss_extended_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_fss_delimits_t *delimits);
 #endif // _di_fl_fss_extended_object_read_
 
 /**
  * Read an fss-0001 content.
  *
- * This will update the buffer at the given range with any placeholders to unescape any escaped data.
- * Calling this more than once on the same buffer range could result in multiple unescaping.
+ * This will record where delimit placeholders exist but will not apply the delimits.
  *
  * @param buffer
  *   The buffer to read from.
@@ -96,6 +93,8 @@ extern "C" {
  * @param quotes
  *   An array of quotes designating whether or not content is quoted and what quote is in use.
  *   Set pointer address to 0 to not use.
+ * @param delimits
+ *   A delimits array representing where delimits exist within the buffer.
  *
  * @return
  *   FL_fss_found_content on success and content was found (start location is at end of content).
@@ -106,21 +105,17 @@ extern "C" {
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
  *   F_unterminated_group_eos if EOS was reached before the a group termination was reached.
  *   F_unterminated_group_stop if stop point was reached before the a group termination was reached.
- *   F_buffer_too_large (with error bit) if a buffer is too large.
- *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_buffer_increment().
  *   Errors (with error bit) from: f_fss_is_graph().
  *   Errors (with error bit) from: f_fss_is_space().
+ *   Errors (with error bit) from: f_fss_is_zero_width().
+ *   Errors (with error bit) from: f_fss_skip_past_delimit().
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_content_read_
-  extern f_return_status fl_fss_extended_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_quotes_t *quotes);
+  extern f_return_status fl_fss_extended_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_quotes_t *quotes, f_fss_delimits_t *delimits);
 #endif // _di_fl_fss_extended_content_read_
 
 /**
