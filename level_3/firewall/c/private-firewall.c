@@ -646,12 +646,12 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
               status = F_status_set_error(status);
             }
             else {
+              f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+
               {
-                f_string_range_t input = f_string_range_t_initialize;
+                f_string_range_t input = f_macro_string_range_t_initialize(local_buffer.used);
 
-                input.stop = local_buffer.used - 1;
-
-                status = fll_fss_basic_read(&local_buffer, &input, &basic_objects, &basic_contents, 0);
+                status = fll_fss_basic_read(&local_buffer, &input, &basic_objects, &basic_contents, 0, &delimits);
               }
 
               if (F_status_set_error(status)) {
@@ -672,7 +672,16 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
 
                 status = F_status_set_error(status);
               }
-              else {
+
+              if (F_status_is_error_not(status)) {
+                status = fl_fss_apply_delimit(delimits, &local_buffer);
+
+                if (F_status_is_error(status)) {
+                  fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+                }
+              }
+
+              if (F_status_is_error_not(status)) {
                 f_string_length_t buffer_counter = 0;
                 f_string_length_t ip_length = 0;
                 f_string_dynamic_t ip_list_action = f_string_dynamic_t_initialize;
@@ -787,6 +796,8 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
                   arguments.used--;
                 }
               }
+
+              f_macro_fss_delimits_t_delete_simple(delimits);
             }
           }
 
@@ -1316,9 +1327,8 @@ f_return_status firewall_default_lock(const firewall_data_t data) {
 
 f_return_status firewall_buffer_rules(const f_string_t filename, const bool optional, firewall_local_data_t *local, firewall_data_t *data) {
   f_file_t file = f_file_t_initialize;
-  f_status_t status = F_none;
 
-  status = f_file_open(filename, 0, &file);
+  f_status_t status = f_file_open(filename, 0, &file);
 
   if (F_status_is_error(status)) {
     status = F_status_set_fine(status);
@@ -1382,12 +1392,13 @@ f_return_status firewall_buffer_rules(const f_string_t filename, const bool opti
 
     return status;
   }
-  else {
-    f_string_range_t input = f_string_range_t_initialize;
 
-    input.stop = local->buffer.used - 1;
+  f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-    status = fll_fss_basic_list_read(&local->buffer, &input, &local->chain_objects, &local->chain_contents);
+  {
+    f_string_range_t input = f_macro_string_range_t_initialize(local->buffer.used);
+
+    status = fll_fss_basic_list_read(&local->buffer, &input, &local->chain_objects, &local->chain_contents, &delimits);
   }
 
   if (F_status_is_error(status)) {
@@ -1405,17 +1416,34 @@ f_return_status firewall_buffer_rules(const f_string_t filename, const bool opti
     else {
       fl_color_print(data->error.to.stream, data->context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_fss_basic_list_read() for the file '%s'.%c", fll_error_print_error, status, filename, f_string_eol[0]);
     }
-
-    return status;
   }
+  else {
+    status = fl_fss_apply_delimit(delimits, &local->buffer);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+    }
+  }
+
+  f_macro_fss_delimits_t_delete_simple(delimits);
 
   return status;
 }
 
 f_return_status firewall_process_rules(f_string_range_t *range, firewall_local_data_t *local, firewall_data_t *data) {
-  f_status_t status = F_none;
+  f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-  status = fll_fss_extended_read(&local->buffer, range, &local->rule_objects, &local->rule_contents, 0, 0);
+  f_status_t status = fll_fss_extended_read(&local->buffer, range, &local->rule_objects, &local->rule_contents, 0, 0, &delimits);
+
+  if (F_status_is_error_not(status)) {
+    status = fl_fss_apply_delimit(delimits, &local->buffer);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+    }
+  }
+
+  f_macro_fss_delimits_t_delete_simple(delimits);
 
   if (F_status_is_error_not(status)) {
     status = firewall_perform_commands(*local, *data);

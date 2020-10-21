@@ -174,10 +174,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_string_range_t input = f_string_range_t_initialize;
-
-      input.start = 0;
-      input.stop = data->buffer.used - 1;
+      f_string_range_t input = f_macro_string_range_t_initialize(data->buffer.used);
 
       delimits->used = 0;
 

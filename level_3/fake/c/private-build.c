@@ -1309,15 +1309,25 @@ extern "C" {
       }
       else if (F_status_is_error_not(*status)) {
         f_string_range_t range = f_macro_string_range_t_initialize(buffer.used);
+        f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-        *status = fll_fss_extended_read(&buffer, &range, &objects, &contents, 0, 0);
+        *status = fll_fss_extended_read(&buffer, &range, &objects, &contents, 0, 0, &delimits);
 
         if (F_status_is_error(*status)) {
           fake_print_error_fss(data, F_status_set_fine(*status), "fll_fss_extended_read", data.file_data_build_settings.string, range, F_true);
         }
         else {
-          fake_build_load_setting_process(data, setting_file.used ? path_file : data.file_data_build_settings.string, buffer, objects, contents, setting, status);
+          *status = fl_fss_apply_delimit(delimits, &buffer);
+
+          if (F_status_is_error(*status)) {
+            fll_error_print(data.error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
+          }
+          else {
+            fake_build_load_setting_process(data, setting_file.used ? path_file : data.file_data_build_settings.string, buffer, objects, contents, setting, status);
+          }
         }
+
+        f_macro_fss_delimits_t_delete_simple(delimits);
       }
 
       f_macro_string_dynamic_t_delete_simple(buffer);

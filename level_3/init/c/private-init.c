@@ -65,12 +65,14 @@
       }
 
       return F_status_set_error(status);
-    } else {
-      f_string_range_t input = f_string_range_t_initialize;
+    }
 
-      input.stop = buffer->used - 1;
+    f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-      status = fll_fss_basic_list_read(buffer, &input, objects, contents);
+    {
+      f_string_range_t input = f_macro_string_range_t_initialize(buffer->used);
+
+      status = fll_fss_basic_list_read(buffer, &input, objects, contents, &delimits);
     }
 
     if (F_status_is_error(status)) {
@@ -86,8 +88,19 @@
         fl_color_print(data.error.to.stream, data.context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_fss_basic_list_read() for the file '%s'.%c", fll_error_print_error, status, filename, f_string_eol[0]);
       }
 
+      f_macro_fss_delimits_t_delete_simple(delimits);
+
       return F_status_set_error(status);
     }
+    else {
+      *status = fl_fss_apply_delimit(delimits, &buffer);
+
+      if (F_status_is_error(*status)) {
+        fll_error_print(data.error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
+      }
+    }
+
+    f_macro_fss_delimits_t_delete_simple(delimits);
 
     return status;
   }
@@ -96,27 +109,28 @@
 #ifndef _di_init_rules_process_main_
   f_return_status init_rules_process_main(const init_data_t data, const f_string_t filename, f_string_dynamic_t *buffer, f_fss_objects_t *objects, f_fss_contents_t *contents) {
     f_status_t status  = F_none;
+    f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
     // @todo: resume replacing code below.
-    status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents, 0, 0);
+    status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents, 0, 0, &delimits);
+
+    if (F_status_is_error_not(*status)) {
+      status = fl_fss_apply_delimit(delimits, &buffer);
+    }
+
+    f_macro_fss_delimits_t_delete_simple(delimits);
 
     if (F_status_is_error_not(status)) {
       //status = init_perform_commands(*local, *data); // @fixme
 
       if (F_status_is_error(status)) {
-        status = F_status_set_fine(status);
-
-        if (status == F_memory_allocation || status == F_memory_reallocation) {
+        if (F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
           fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.", fll_error_print_error);
-        } else if (status == F_failure) {
+        } else if (F_status_set_fine(status) == F_failure) {
           // the error message has already been displayed.
         } else {
           fl_color_print(data.error.to.stream, data.context.set.error, "%sAn unhandled error (%u) has occurred while calling firewall_perform_commands().", fll_error_print_error, status);
         }
-
-        f_macro_fss_objects_t_delete_simple(local->rule_objects);
-        f_macro_fss_contents_t_delete_simple(local->rule_contents);
-        return F_status_set_error(status);
       }
     }
 
@@ -486,6 +500,7 @@
     f_fss_objects_t objects = f_fss_objects_t_initialize;
     f_fss_contents_t contents = f_fss_contents_t_initialize;
     f_string_length_t position = 0;
+    f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
     // load the main file into memory.
     status = init_rule_buffer(&data, init_rule_core_file, &buffer, &objects, &contents);
@@ -506,14 +521,20 @@
       f_macro_string_dynamic_t_delete(buffer);
       f_macro_fss_objects_t_delete(objects);
       f_macro_fss_contents_t_delete(contents);
+      f_macro_fss_delimits_t_delete_simple(delimits);
       return status;
     }
 
     while (position < objects.used) {
       location.start = objects.array[position].start;
       location.stop = objects.array[position].stop;
+      delimits.used = 0;
 
-      status = fll_fss_extended_read(&buffer, &location, &objects, &contents, 0, 0);
+      status = fll_fss_extended_read(&buffer, &location, &objects, &contents, 0, 0, &delimits);
+
+      if (F_status_is_error_not(*status)) {
+        status = fl_fss_apply_delimit(delimits, &buffer);
+      }
 
       position++;
     } // while
@@ -521,7 +542,13 @@
     // @fixme: resume here, below is just notes and copy&pasted code as examples/reminders.
 
     /*
-    status = fll_fss_extended_read(&buffer, &location, &objects, &contents, 0, 0);
+    delimits.used = 0;
+
+    status = fll_fss_extended_read(&buffer, &location, &objects, &contents, 0, 0, &delimits);
+
+    if (F_status_is_error_not(status)) {
+      status = fl_fss_apply_delimit(delimits, &buffer);
+    }
 
     if (F_status_is_error(status_process)) {
       if (status == F_memory_allocation || status == F_memory_reallocation) {
@@ -533,6 +560,8 @@
 
       // @todo: init_delete_data((*data));
       // @todo: init_delete_stack_memory(&stack_memory);
+      f_macro_fss_delimits_t_delete_simple(delimits);
+
       return status_process;
     }
     */
@@ -540,8 +569,17 @@
 
     /*
     f_status_t status  = F_none;
+    delimits.used = 0;
 
-    status = fll_fss_extended_read(buffer, location, objects, contents, 0, 0);
+    status = fll_fss_extended_read(buffer, location, objects, contents, 0, 0, &delimits);
+
+    if (F_status_is_error_not(status)) {
+      status = fl_fss_apply_delimit(delimits, &buffer);
+    }
+
+    if (F_status_is_error(*status)) {
+      fll_error_print(data.error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
+    }
 
     if (F_status_is_error_not(status)) {
       // @todo: process objects and contents.
@@ -560,6 +598,7 @@
 
         f_macro_fss_objects_t_delete_simple((*rule_objects));
         f_macro_fss_contents_t_delete_simple((*rule_contents));
+        f_macro_fss_delimits_t_delete_simple(delimits);
         return F_status_set_error(status);
       }
     }
@@ -576,6 +615,7 @@
     f_macro_fss_contents_t_delete_simple((*rule_contents));
     */
 /*
+    f_macro_fss_delimits_t_delete_simple(delimits);
     f_macro_string_dynamic_t_delete(buffer);
     f_macro_fss_objects_t_delete(objects);
     f_macro_fss_contents_t_delete(contents);
